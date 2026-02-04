@@ -1,3 +1,5 @@
+/* React JSX Runtime - https://react.dev/ */
+
 "use strict";
 var ReactJSXRuntime = (() => {
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -5,10 +7,10 @@ var ReactJSXRuntime = (() => {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
-  // react-external:react
+  // react-global:react
   var require_react = __commonJS({
-    "react-external:react"(exports, module) {
-      module.exports = globalThis.React;
+    "react-global:react"(exports, module) {
+      module.exports = window.React;
     }
   });
 

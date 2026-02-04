@@ -308,7 +308,6 @@
 			"textAlign": true,
 			"textColumns": false,
 			"textDecoration": true,
-			"textIndent": "subsequent",
 			"textTransform": true,
 			"writingMode": false
 		},

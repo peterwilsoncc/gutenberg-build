@@ -2963,7 +2963,7 @@ var wp;
     renderItemLink,
     isItemClickable: isItemClickable2
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Stack, { direction: "row", gap: "md", align: "flex-start", justify: "flex-start", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Stack, { direction: "row", gap: "sm", align: "flex-start", justify: "flex-start", children: [
       mediaField && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
         ItemClickWrapper,
         {
@@ -3090,7 +3090,7 @@ var wp;
     isVisible: isVisible2,
     onToggleVisibility
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components5.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(Stack, { direction: "row", gap: "sm", justify: "flex-start", align: "center", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components5.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(Stack, { direction: "row", gap: "xs", justify: "flex-start", align: "center", children: [
       /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { style: { height: 24, width: 24 }, children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components5.Icon, { icon: check_default }) }),
       /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { className: "dataviews-view-config__label", children: field.label })
     ] }) });
@@ -3728,17 +3728,16 @@ var wp;
     const id = getItemId(item);
     const instanceId = (0, import_compose4.useInstanceId)(GridItem2);
     const isSelected2 = selection.includes(id);
-    const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
-    const rendersMediaField = showMedia && mediaField?.render;
-    const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
       mediaField.render,
       {
         item,
         field: mediaField,
         config
       }
-    ) : mediaPlaceholder;
+    ) : null;
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(titleField.render, { item, field: titleField }) : null;
+    const shouldRenderMedia = showMedia && renderedMediaField;
     let mediaA11yProps;
     let titleA11yProps;
     if (isItemClickable2(item) && onClickItem) {
@@ -3783,21 +3782,19 @@ var wp;
           }
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+          shouldRenderMedia && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
             ItemClickWrapper,
             {
               item,
               isItemClickable: isItemClickable2,
               onClickItem,
               renderItemLink,
-              className: clsx_default("dataviews-view-grid__media", {
-                "dataviews-view-grid__media--placeholder": !rendersMediaField
-              }),
+              className: "dataviews-view-grid__media",
               ...mediaA11yProps,
               children: renderedMediaField
             }
           ),
-          hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+          hasBulkActions && shouldRenderMedia && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
             DataViewsSelectionCheckbox,
             {
               item,
@@ -3808,24 +3805,38 @@ var wp;
               disabled: !hasBulkAction
             }
           ),
-          !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(ItemActions, { item, actions, isCompact: true }) }),
-          showTitle && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "dataviews-view-grid__title", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-            ItemClickWrapper,
+          !showTitle && shouldRenderMedia && !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(ItemActions, { item, actions, isCompact: true }) }),
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+            Stack,
             {
-              item,
-              isItemClickable: isItemClickable2,
-              onClickItem,
-              renderItemLink,
-              className: "dataviews-view-grid__title-field dataviews-title-field",
-              ...titleA11yProps,
-              title: titleField?.getValueFormatted({
-                item,
-                field: titleField
-              }) || void 0,
-              children: renderedTitleField
+              direction: "row",
+              gap: "xs",
+              className: "dataviews-view-grid__title-actions",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                  ItemClickWrapper,
+                  {
+                    item,
+                    isItemClickable: isItemClickable2,
+                    onClickItem,
+                    renderItemLink,
+                    className: "dataviews-view-grid__title-field dataviews-title-field",
+                    ...titleA11yProps,
+                    children: renderedTitleField
+                  }
+                ),
+                !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                  ItemActions,
+                  {
+                    item,
+                    actions,
+                    isCompact: true
+                  }
+                )
+              ]
             }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(Stack, { direction: "column", gap: "2xs", children: [
             showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
               descriptionField2.render,
               {
@@ -3838,7 +3849,7 @@ var wp;
               {
                 direction: "row",
                 className: "dataviews-view-grid__badge-fields",
-                gap: "sm",
+                gap: "xs",
                 wrap: "wrap",
                 align: "top",
                 justify: "flex-start",
@@ -3865,7 +3876,7 @@ var wp;
               {
                 direction: "column",
                 className: "dataviews-view-grid__fields",
-                gap: "xs",
+                gap: "2xs",
                 children: regularFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
                     import_components8.Flex,
@@ -4054,12 +4065,12 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, {
       // Render multiple groups.
       children: [
-        hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
+        hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Stack, { direction: "column", gap: "md", children: Array.from(dataByGroup.entries()).map(
           ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
             Stack,
             {
               direction: "column",
-              gap: "sm",
+              gap: "xs",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n18.sprintf)(
                   // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
@@ -4245,7 +4256,7 @@ var wp;
       Stack,
       {
         direction: "row",
-        gap: "md",
+        gap: "sm",
         className: "dataviews-view-list__item-actions",
         children: [
           primaryAction && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
@@ -4346,25 +4357,26 @@ var wp;
                 Stack,
                 {
                   direction: "row",
-                  gap: "md",
+                  gap: "sm",
                   justify: "start",
                   align: "flex-start",
-                  style: { flex: 1, minWidth: 0 },
+                  style: { flex: 1 },
                   children: [
                     renderedMediaField,
                     /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
                       Stack,
                       {
                         direction: "column",
-                        gap: "xs",
+                        gap: "2xs",
                         className: "dataviews-view-list__field-wrapper",
                         children: [
                           /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(Stack, { direction: "row", align: "center", children: [
                             /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
                               "div",
                               {
-                                className: "dataviews-title-field dataviews-view-list__title-field",
+                                className: "dataviews-title-field",
                                 id: labelId,
+                                style: { flex: 1 },
                                 children: renderedTitleField
                               }
                             ),
@@ -4549,14 +4561,14 @@ var wp;
             Stack,
             {
               direction: "column",
-              gap: "lg",
+              gap: "md",
               className: clsx_default("dataviews-view-list", className),
               children: Array.from(dataByGroup.entries()).map(
                 ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
                   Stack,
                   {
                     direction: "column",
-                    gap: "sm",
+                    gap: "xs",
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n19.sprintf)(
                         // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
@@ -4740,9 +4752,9 @@ var wp;
     const verticalGap = (0, import_element15.useMemo)(() => {
       switch (density) {
         case "comfortable":
-          return "md";
-        default:
           return "sm";
+        default:
+          return "xs";
       }
     }, [density]);
     return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
@@ -4758,12 +4770,12 @@ var wp;
           density === "balanced" && "is-balanced",
           density === "comfortable" && "is-comfortable"
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(Stack, { direction: "row", gap: "md", justify: "start", align: "flex-start", children: [
           /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
             Stack,
             {
               direction: "column",
-              gap: "xs",
+              gap: "2xs",
               align: "center",
               className: "dataviews-view-activity__item-type",
               children: renderedMediaField
@@ -4900,7 +4912,7 @@ var wp;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const groupedEntries = dataByGroup ? Array.from(dataByGroup.entries()) : [];
     if (hasData && groupField && dataByGroup) {
-      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Stack, { direction: "column", gap: "sm", className: wrapperClassName, children: groupedEntries.map(
+      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Stack, { direction: "column", gap: "xs", className: wrapperClassName, children: groupedEntries.map(
         ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
           ActivityGroup,
           {
@@ -4982,7 +4994,7 @@ var wp;
         className: "dataviews-pagination",
         justify: "end",
         align: "center",
-        gap: "xl",
+        gap: "lg",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
             Stack,
@@ -4990,7 +5002,7 @@ var wp;
               direction: "row",
               justify: "flex-start",
               align: "center",
-              gap: "xs",
+              gap: "2xs",
               className: "dataviews-pagination__page-select",
               children: (0, import_element16.createInterpolateElement)(
                 (0, import_i18n21.sprintf)(
@@ -5024,7 +5036,7 @@ var wp;
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(Stack, { direction: "row", gap: "2xs", align: "center", children: [
             /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
               import_components13.Button,
               {
@@ -5113,7 +5125,7 @@ var wp;
     const [actionInProgress, setActionInProgress] = (0, import_element17.useState)(
       null
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Stack, { direction: "row", gap: "xs", children: actions.map((action) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Stack, { direction: "row", gap: "2xs", children: actions.map((action) => {
       if (!("callback" in action)) {
         return null;
       }
@@ -5169,14 +5181,14 @@ var wp;
         justify: "space-between",
         align: "center",
         className: "dataviews-footer",
-        gap: "sm",
+        gap: "xs",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
             Stack,
             {
               direction: "row",
               className: "dataviews-picker-footer__bulk-selection",
-              gap: "md",
+              gap: "sm",
               align: "center",
               children: [
                 isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
@@ -5301,7 +5313,7 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "dataviews-view-picker-grid__title-field dataviews-title-field", children: renderedTitleField })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(Stack, { direction: "column", gap: "2xs", children: [
             showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
               descriptionField2.render,
               {
@@ -5314,7 +5326,7 @@ var wp;
               {
                 direction: "row",
                 className: "dataviews-view-picker-grid__badge-fields",
-                gap: "sm",
+                gap: "xs",
                 wrap: "wrap",
                 align: "top",
                 justify: "flex-start",
@@ -5341,7 +5353,7 @@ var wp;
               {
                 direction: "column",
                 className: "dataviews-view-picker-grid__fields",
-                gap: "xs",
+                gap: "2xs",
                 children: regularFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
                     import_components15.Flex,
@@ -5395,7 +5407,7 @@ var wp;
       Stack,
       {
         direction: "column",
-        gap: "sm",
+        gap: "xs",
         role: "group",
         "aria-labelledby": headerId,
         children: [
@@ -5482,7 +5494,7 @@ var wp;
               Stack,
               {
                 direction: "column",
-                gap: "lg",
+                gap: "md",
                 children,
                 ...props
               }
@@ -12887,7 +12899,7 @@ If there's a particular need for this, please submit a feature request at https:
       Stack,
       {
         direction: "row",
-        gap: "sm",
+        gap: "xs",
         justify: "flex-start",
         className: "dataviews-filters__summary-operators-container",
         align: "center",
@@ -13340,7 +13352,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         direction: "row",
         justify: "flex-start",
-        gap: "sm",
+        gap: "xs",
         style: { width: "fit-content" },
         wrap: "wrap",
         className,
@@ -13845,13 +13857,13 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 direction: "column",
                 className: "dataviews-view-config",
-                gap: "xl",
+                gap: "lg",
                 children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(SettingsSection, { title: (0, import_i18n37.__)("Appearance"), children: [
                   /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
                     Stack,
                     {
                       direction: "row",
-                      gap: "sm",
+                      gap: "xs",
                       className: "is-divided-in-two",
                       children: [
                         /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SortFieldControl, {}),
@@ -13915,7 +13927,6 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     data,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { getValue, setValue, label, description, isValid: isValid2 } = field;
@@ -13928,7 +13939,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedCheckboxControl,
       {
         required: !!field.isValid?.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         label,
@@ -14044,7 +14054,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "xs", children: [
           /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
             import_components30.__experimentalNumberControl,
             {
@@ -14101,7 +14111,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
@@ -14182,12 +14191,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       timezone: { string: timezoneString }
     } = (0, import_date3.getSettings)();
-    let displayLabel = label;
-    if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-      displayLabel = `${label} (${(0, import_i18n39.__)("Required")})`;
-    } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-      displayLabel = `${label} (${(0, import_i18n39.__)("Optional")})`;
-    }
+    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n39.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       import_components31.BaseControl,
       {
@@ -14195,7 +14199,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: displayLabel,
         help: description,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "md", children: [
           /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
             DateCalendar,
             {
@@ -14233,7 +14237,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     operator,
     validity
   }) {
@@ -14257,7 +14260,6 @@ If there's a particular need for this, please submit a feature request at https:
         field,
         onChange,
         hideLabelFromVision,
-        markWhenOptional,
         validity
       }
     );
@@ -14433,7 +14435,8 @@ If there's a particular need for this, please submit a feature request at https:
         {
           className: clsx_default(
             "components-validated-control__indicator",
-            customValidity.type === "invalid" ? "is-invalid" : void 0
+            customValidity.type === "invalid" ? "is-invalid" : void 0,
+            customValidity.type === "valid" ? "is-valid" : void 0
           ),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
@@ -14456,7 +14459,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const {
@@ -14520,12 +14522,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       timezone: { string: timezoneString }
     } = (0, import_date4.getSettings)();
-    let displayLabel = label;
-    if (isValid2?.required && !markWhenOptional) {
-      displayLabel = `${label} (${(0, import_i18n40.__)("Required")})`;
-    } else if (!isValid2?.required && markWhenOptional) {
-      displayLabel = `${label} (${(0, import_i18n40.__)("Optional")})`;
-    }
+    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n40.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
       ValidatedDateControl,
       {
@@ -14541,12 +14538,12 @@ If there's a particular need for this, please submit a feature request at https:
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "md", children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
                 Stack,
                 {
                   direction: "row",
-                  gap: "sm",
+                  gap: "xs",
                   wrap: "wrap",
                   justify: "flex-start",
                   children: [
@@ -14616,7 +14613,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { id, label, getValue, setValue, format: fieldFormat } = field;
@@ -14708,12 +14704,7 @@ If there's a particular need for this, please submit a feature request at https:
       [value, updateDateRange]
     );
     const { timezone } = (0, import_date4.getSettings)();
-    let displayLabel = label;
-    if (field.isValid?.required && !markWhenOptional) {
-      displayLabel = `${label} (${(0, import_i18n40.__)("Required")})`;
-    } else if (!field.isValid?.required && markWhenOptional) {
-      displayLabel = `${label} (${(0, import_i18n40.__)("Optional")})`;
-    }
+    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n40.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
       ValidatedDateControl,
       {
@@ -14729,12 +14720,12 @@ If there's a particular need for this, please submit a feature request at https:
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "md", children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
                 Stack,
                 {
                   direction: "row",
-                  gap: "sm",
+                  gap: "xs",
                   wrap: "wrap",
                   justify: "flex-start",
                   children: [
@@ -14772,7 +14763,7 @@ If there's a particular need for this, please submit a feature request at https:
                 Stack,
                 {
                   direction: "row",
-                  gap: "sm",
+                  gap: "xs",
                   justify: "space-between",
                   className: "dataviews-controls__date-range-inputs",
                   children: [
@@ -14828,7 +14819,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     operator,
     validity
   }) {
@@ -14853,7 +14843,6 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
-          markWhenOptional,
           validity
         }
       );
@@ -14865,7 +14854,6 @@ If there's a particular need for this, please submit a feature request at https:
         field,
         onChange,
         hideLabelFromVision,
-        markWhenOptional,
         validity
       }
     );
@@ -14884,7 +14872,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     type,
     prefix,
     suffix,
@@ -14905,7 +14892,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedInputControl2,
       {
         required: !!isValid2.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -14931,7 +14917,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
@@ -14942,7 +14927,6 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
-          markWhenOptional,
           validity,
           type: "email",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_components34.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_components34.Icon, { icon: envelope_default }) })
@@ -14959,7 +14943,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
@@ -14970,7 +14953,6 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
-          markWhenOptional,
           validity,
           type: "tel",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components35.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components35.Icon, { icon: mobile_default }) })
@@ -14987,7 +14969,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
@@ -14998,7 +14979,6 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
-          markWhenOptional,
           validity,
           type: "url",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components36.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components36.Icon, { icon: link_default }) })
@@ -15073,7 +15053,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     operator,
     validity
   }) {
@@ -15127,7 +15106,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedNumberControl,
       {
         required: !!isValid2.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
@@ -15164,7 +15142,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -15184,7 +15161,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedRadioControl,
       {
         required: !!field.isValid?.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
@@ -15206,7 +15182,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -15227,7 +15202,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedSelectControl,
       {
         required: !!field.isValid?.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         value,
@@ -15249,7 +15223,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     config,
     validity
   }) {
@@ -15262,7 +15235,6 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
-          markWhenOptional,
           validity,
           prefix: prefix ? (0, import_element46.createElement)(prefix) : void 0,
           suffix: suffix ? (0, import_element46.createElement)(suffix) : void 0
@@ -15281,7 +15253,6 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     data,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -15294,7 +15265,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedToggleControl,
       {
         required: !!isValid2.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         label,
@@ -15315,7 +15285,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     config,
     validity
   }) {
@@ -15330,7 +15299,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedTextareaControl,
       {
         required: !!isValid2.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -15356,7 +15324,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { getValue, setValue, isValid: isValid2 } = field;
@@ -15380,7 +15347,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         __next40pxDefaultSize: true,
         isBlock: true,
@@ -15411,7 +15377,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
@@ -15448,7 +15413,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedFormTokenField,
       {
         required: !!isValid2?.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label: hideLabelFromVision ? void 0 : label,
         value: arrayValueAsElements,
@@ -15700,7 +15664,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
@@ -15721,7 +15684,6 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedInputControl3,
       {
         required: !!field.isValid?.required,
-        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -15751,7 +15713,6 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
-    markWhenOptional,
     validity
   }) {
     const [isVisible2, setIsVisible] = (0, import_element52.useState)(false);
@@ -15766,7 +15727,6 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
-          markWhenOptional,
           validity,
           type: isVisible2 ? "text" : "password",
           suffix: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_components45.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
@@ -16908,13 +16868,13 @@ If there's a particular need for this, please submit a feature request at https:
           align: "top",
           justify: "space-between",
           className: "dataviews__view-actions",
-          gap: "xs",
+          gap: "2xs",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
               Stack,
               {
                 direction: "row",
-                gap: "sm",
+                gap: "xs",
                 justify: "start",
                 className: "dataviews__search",
                 children: [
@@ -16923,7 +16883,7 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(dataviews_view_config_default, {}) })
+            /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Stack, { direction: "row", gap: "2xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(dataviews_view_config_default, {}) })
           ]
         }
       ),
@@ -17481,7 +17441,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!fileName) {
       return "";
     }
-    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components51.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components51.__experimentalTruncate, { limit: TRUNCATE_LENGTH, ellipsizeMode: "tail", children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_jsx_runtime104.Fragment, { children: fileName });
+    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components51.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components51.__experimentalTruncate, { children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_jsx_runtime104.Fragment, { children: fileName });
   }
 
   // packages/media-fields/build-module/filename/index.mjs
@@ -17741,7 +17701,7 @@ If there's a particular need for this, please submit a feature request at https:
   var NOTICES_CONTEXT = "media-modal";
   var NOTICE_ID_UPLOAD_PROGRESS = "media-modal-upload-progress";
   function MediaUploadModal({
-    allowedTypes,
+    allowedTypes = ["image"],
     multiple = false,
     value,
     onSelect,
@@ -17780,10 +17740,7 @@ If there's a particular need for this, please submit a feature request at https:
       search: "",
       page: 1,
       perPage: 20,
-      filters: [],
-      layout: {
-        previewSize: 170
-      }
+      filters: []
     }));
     const queryArgs = (0, import_element59.useMemo)(() => {
       const filters = {};
@@ -17810,7 +17767,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       });
       if (!filters.media_type) {
-        filters.media_type = allowedTypes?.includes("*") ? void 0 : allowedTypes;
+        filters.media_type = allowedTypes.includes("*") ? void 0 : allowedTypes;
       }
       return {
         per_page: view.perPage || 20,
@@ -18001,10 +17958,10 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const acceptTypes = (0, import_element59.useMemo)(() => {
-      if (allowedTypes?.includes("*")) {
+      if (allowedTypes.includes("*")) {
         return void 0;
       }
-      return allowedTypes?.join(",");
+      return allowedTypes.join(",");
     }, [allowedTypes]);
     if (!isOpen) {
       return null;

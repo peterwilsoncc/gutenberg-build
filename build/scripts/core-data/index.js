@@ -350,6 +350,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/block-editor
+  var require_block_editor = __commonJS({
+    "package-external:@wordpress/block-editor"(exports, module) {
+      module.exports = window.wp.blockEditor;
+    }
+  });
+
   // node_modules/diff/dist/diff.js
   var require_diff = __commonJS({
     "node_modules/diff/dist/diff.js"(exports, module) {
@@ -1468,13 +1475,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/block-editor
-  var require_block_editor = __commonJS({
-    "package-external:@wordpress/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
-    }
-  });
-
   // package-external:@wordpress/rich-text
   var require_rich_text = __commonJS({
     "package-external:@wordpress/rich-text"(exports, module) {
@@ -1599,8 +1599,8 @@ var wp;
   var if_matching_action_default = ifMatchingAction;
 
   // packages/core-data/build-module/utils/forward-resolver.mjs
-  var forwardResolver = (resolverName) => (...args2) => async ({ resolveSelect: resolveSelect2 }) => {
-    await resolveSelect2[resolverName](...args2);
+  var forwardResolver = (resolverName) => (...args2) => async ({ resolveSelect }) => {
+    await resolveSelect[resolverName](...args2);
   };
   var forward_resolver_default = forwardResolver;
 
@@ -1965,6 +1965,10 @@ var wp;
 
   // packages/core-data/build-module/awareness/post-editor-awareness.mjs
   var import_data3 = __toESM(require_data(), 1);
+  var import_block_editor = __toESM(require_block_editor(), 1);
+
+  // packages/core-data/build-module/awareness/base-awareness.mjs
+  var import_data2 = __toESM(require_data(), 1);
 
   // node_modules/yjs/dist/yjs.mjs
   var yjs_exports = {};
@@ -1977,7 +1981,6 @@ var wp;
     ContentAny: () => ContentAny,
     ContentBinary: () => ContentBinary,
     ContentDeleted: () => ContentDeleted,
-    ContentDoc: () => ContentDoc,
     ContentEmbed: () => ContentEmbed,
     ContentFormat: () => ContentFormat,
     ContentJSON: () => ContentJSON,
@@ -1990,15 +1993,11 @@ var wp;
     Map: () => YMap,
     PermanentUserData: () => PermanentUserData,
     RelativePosition: () => RelativePosition,
-    Skip: () => Skip,
     Snapshot: () => Snapshot,
     Text: () => YText,
     Transaction: () => Transaction,
     UndoManager: () => UndoManager,
-    UpdateDecoderV1: () => UpdateDecoderV1,
-    UpdateDecoderV2: () => UpdateDecoderV2,
     UpdateEncoderV1: () => UpdateEncoderV1,
-    UpdateEncoderV2: () => UpdateEncoderV2,
     XmlElement: () => YXmlElement,
     XmlFragment: () => YXmlFragment,
     XmlHook: () => YXmlHook,
@@ -2045,8 +2044,6 @@ var wp;
     findIndexSS: () => findIndexSS,
     findRootTypeKey: () => findRootTypeKey,
     getItem: () => getItem,
-    getItemCleanEnd: () => getItemCleanEnd,
-    getItemCleanStart: () => getItemCleanStart,
     getState: () => getState,
     getTypeChildren: () => getTypeChildren,
     isDeleted: () => isDeleted,
@@ -2055,7 +2052,6 @@ var wp;
     logType: () => logType,
     logUpdate: () => logUpdate,
     logUpdateV2: () => logUpdateV2,
-    mergeDeleteSets: () => mergeDeleteSets,
     mergeUpdates: () => mergeUpdates,
     mergeUpdatesV2: () => mergeUpdatesV2,
     obfuscateUpdate: () => obfuscateUpdate,
@@ -2070,7 +2066,6 @@ var wp;
     transact: () => transact,
     tryGc: () => tryGc,
     typeListToArraySnapshot: () => typeListToArraySnapshot,
-    typeMapGetAllSnapshot: () => typeMapGetAllSnapshot,
     typeMapGetSnapshot: () => typeMapGetSnapshot
   });
 
@@ -2135,75 +2130,6 @@ var wp;
   var isArray = Array.isArray;
 
   // node_modules/lib0/observable.js
-  var ObservableV2 = class {
-    constructor() {
-      this._observers = create();
-    }
-    /**
-     * @template {keyof EVENTS & string} NAME
-     * @param {NAME} name
-     * @param {EVENTS[NAME]} f
-     */
-    on(name, f) {
-      setIfUndefined(
-        this._observers,
-        /** @type {string} */
-        name,
-        create2
-      ).add(f);
-      return f;
-    }
-    /**
-     * @template {keyof EVENTS & string} NAME
-     * @param {NAME} name
-     * @param {EVENTS[NAME]} f
-     */
-    once(name, f) {
-      const _f = (...args2) => {
-        this.off(
-          name,
-          /** @type {any} */
-          _f
-        );
-        f(...args2);
-      };
-      this.on(
-        name,
-        /** @type {any} */
-        _f
-      );
-    }
-    /**
-     * @template {keyof EVENTS & string} NAME
-     * @param {NAME} name
-     * @param {EVENTS[NAME]} f
-     */
-    off(name, f) {
-      const observers = this._observers.get(name);
-      if (observers !== void 0) {
-        observers.delete(f);
-        if (observers.size === 0) {
-          this._observers.delete(name);
-        }
-      }
-    }
-    /**
-     * Emit a named event. All registered event listeners that listen to the
-     * specified name will receive the event.
-     *
-     * @todo This should catch exceptions
-     *
-     * @template {keyof EVENTS & string} NAME
-     * @param {NAME} name The event name.
-     * @param {Parameters<EVENTS[NAME]>} args The arguments that are applied to the event listener.
-     */
-    emit(name, args2) {
-      return from((this._observers.get(name) || create()).values()).forEach((f) => f(...args2));
-    }
-    destroy() {
-      this._observers = create();
-    }
-  };
   var Observable = class {
     constructor() {
       this._observers = create();
@@ -2264,6 +2190,238 @@ var wp;
   var isNaN = Number.isNaN;
   var isNegativeZero = (n) => n !== 0 ? n < 0 : 1 / n < 0;
 
+  // node_modules/lib0/string.js
+  var fromCharCode = String.fromCharCode;
+  var fromCodePoint = String.fromCodePoint;
+  var MAX_UTF16_CHARACTER = fromCharCode(65535);
+  var toLowerCase = (s) => s.toLowerCase();
+  var trimLeftRegex = /^\s*/g;
+  var trimLeft = (s) => s.replace(trimLeftRegex, "");
+  var fromCamelCaseRegex = /([A-Z])/g;
+  var fromCamelCase = (s, separator) => trimLeft(s.replace(fromCamelCaseRegex, (match) => `${separator}${toLowerCase(match)}`));
+  var _encodeUtf8Polyfill = (str) => {
+    const encodedString = unescape(encodeURIComponent(str));
+    const len = encodedString.length;
+    const buf = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      buf[i] = /** @type {number} */
+      encodedString.codePointAt(i);
+    }
+    return buf;
+  };
+  var utf8TextEncoder = (
+    /** @type {TextEncoder} */
+    typeof TextEncoder !== "undefined" ? new TextEncoder() : null
+  );
+  var _encodeUtf8Native = (str) => utf8TextEncoder.encode(str);
+  var encodeUtf8 = utf8TextEncoder ? _encodeUtf8Native : _encodeUtf8Polyfill;
+  var utf8TextDecoder = typeof TextDecoder === "undefined" ? null : new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
+  if (utf8TextDecoder && utf8TextDecoder.decode(new Uint8Array()).length === 1) {
+    utf8TextDecoder = null;
+  }
+  var repeat = (source, n) => unfold(n, () => source).join("");
+
+  // node_modules/lib0/conditions.js
+  var undefinedToNull = (v) => v === void 0 ? null : v;
+
+  // node_modules/lib0/storage.js
+  var VarStoragePolyfill = class {
+    constructor() {
+      this.map = /* @__PURE__ */ new Map();
+    }
+    /**
+     * @param {string} key
+     * @param {any} newValue
+     */
+    setItem(key, newValue) {
+      this.map.set(key, newValue);
+    }
+    /**
+     * @param {string} key
+     */
+    getItem(key) {
+      return this.map.get(key);
+    }
+  };
+  var _localStorage = new VarStoragePolyfill();
+  var usePolyfill = true;
+  try {
+    if (typeof localStorage !== "undefined") {
+      _localStorage = localStorage;
+      usePolyfill = false;
+    }
+  } catch (e) {
+  }
+  var varStorage = _localStorage;
+
+  // node_modules/lib0/object.js
+  var assign = Object.assign;
+  var keys = Object.keys;
+  var forEach = (obj, f) => {
+    for (const key in obj) {
+      f(obj[key], key);
+    }
+  };
+  var length = (obj) => keys(obj).length;
+  var isEmpty = (obj) => {
+    for (const _k in obj) {
+      return false;
+    }
+    return true;
+  };
+  var every = (obj, f) => {
+    for (const key in obj) {
+      if (!f(obj[key], key)) {
+        return false;
+      }
+    }
+    return true;
+  };
+  var hasProperty = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
+  var equalFlat = (a, b) => a === b || length(a) === length(b) && every(a, (val, key) => (val !== void 0 || hasProperty(b, key)) && b[key] === val);
+
+  // node_modules/lib0/function.js
+  var callAll = (fs, args2, i = 0) => {
+    try {
+      for (; i < fs.length; i++) {
+        fs[i](...args2);
+      }
+    } finally {
+      if (i < fs.length) {
+        callAll(fs, args2, i + 1);
+      }
+    }
+  };
+  var id = (a) => a;
+  var equalityStrict = (a, b) => a === b;
+  var equalityDeep = (a, b) => {
+    if (a == null || b == null) {
+      return equalityStrict(a, b);
+    }
+    if (a.constructor !== b.constructor) {
+      return false;
+    }
+    if (a === b) {
+      return true;
+    }
+    switch (a.constructor) {
+      case ArrayBuffer:
+        a = new Uint8Array(a);
+        b = new Uint8Array(b);
+      // eslint-disable-next-line no-fallthrough
+      case Uint8Array: {
+        if (a.byteLength !== b.byteLength) {
+          return false;
+        }
+        for (let i = 0; i < a.length; i++) {
+          if (a[i] !== b[i]) {
+            return false;
+          }
+        }
+        break;
+      }
+      case Set: {
+        if (a.size !== b.size) {
+          return false;
+        }
+        for (const value of a) {
+          if (!b.has(value)) {
+            return false;
+          }
+        }
+        break;
+      }
+      case Map: {
+        if (a.size !== b.size) {
+          return false;
+        }
+        for (const key of a.keys()) {
+          if (!b.has(key) || !equalityDeep(a.get(key), b.get(key))) {
+            return false;
+          }
+        }
+        break;
+      }
+      case Object:
+        if (length(a) !== length(b)) {
+          return false;
+        }
+        for (const key in a) {
+          if (!hasProperty(a, key) || !equalityDeep(a[key], b[key])) {
+            return false;
+          }
+        }
+        break;
+      case Array:
+        if (a.length !== b.length) {
+          return false;
+        }
+        for (let i = 0; i < a.length; i++) {
+          if (!equalityDeep(a[i], b[i])) {
+            return false;
+          }
+        }
+        break;
+      default:
+        return false;
+    }
+    return true;
+  };
+  var isOneOf = (value, options) => options.includes(value);
+
+  // node_modules/lib0/environment.js
+  var isNode = typeof process !== "undefined" && process.release && /node|io\.js/.test(process.release.name);
+  var isBrowser = typeof window !== "undefined" && typeof document !== "undefined" && !isNode;
+  var isMac = typeof navigator !== "undefined" ? /Mac/.test(navigator.platform) : false;
+  var params;
+  var args = [];
+  var computeParams = () => {
+    if (params === void 0) {
+      if (isNode) {
+        params = create();
+        const pargs = process.argv;
+        let currParamName = null;
+        for (let i = 0; i < pargs.length; i++) {
+          const parg = pargs[i];
+          if (parg[0] === "-") {
+            if (currParamName !== null) {
+              params.set(currParamName, "");
+            }
+            currParamName = parg;
+          } else {
+            if (currParamName !== null) {
+              params.set(currParamName, parg);
+              currParamName = null;
+            } else {
+              args.push(parg);
+            }
+          }
+        }
+        if (currParamName !== null) {
+          params.set(currParamName, "");
+        }
+      } else if (typeof location === "object") {
+        params = create();
+        (location.search || "?").slice(1).split("&").forEach((kv) => {
+          if (kv.length !== 0) {
+            const [key, value] = kv.split("=");
+            params.set(`--${fromCamelCase(key, "-")}`, value);
+            params.set(`-${fromCamelCase(key, "-")}`, value);
+          }
+        });
+      } else {
+        params = create();
+      }
+    }
+    return params;
+  };
+  var hasParam = (name) => computeParams().has(name);
+  var getVariable = (name) => isNode ? undefinedToNull(process.env[name.toUpperCase()]) : undefinedToNull(varStorage.getItem(name));
+  var hasConf = (name) => hasParam("--" + name) || getVariable(name) !== null;
+  var production = hasConf("production");
+  var forceColor = isNode && isOneOf(process.env.FORCE_COLOR, ["true", "1", "2"]);
+  var supportsColor = !hasParam("no-colors") && (!isNode || process.stdout.isTTY || forceColor) && (!isNode || hasParam("color") || forceColor || getVariable("COLORTERM") !== null || (getVariable("TERM") || "").includes("color"));
+
   // node_modules/lib0/binary.js
   var BIT1 = 1;
   var BIT2 = 2;
@@ -2314,345 +2472,6 @@ var wp;
   var isNaN2 = Number.isNaN;
   var parseInt2 = Number.parseInt;
 
-  // node_modules/lib0/string.js
-  var fromCharCode = String.fromCharCode;
-  var fromCodePoint = String.fromCodePoint;
-  var MAX_UTF16_CHARACTER = fromCharCode(65535);
-  var toLowerCase = (s) => s.toLowerCase();
-  var trimLeftRegex = /^\s*/g;
-  var trimLeft = (s) => s.replace(trimLeftRegex, "");
-  var fromCamelCaseRegex = /([A-Z])/g;
-  var fromCamelCase = (s, separator) => trimLeft(s.replace(fromCamelCaseRegex, (match) => `${separator}${toLowerCase(match)}`));
-  var _encodeUtf8Polyfill = (str) => {
-    const encodedString = unescape(encodeURIComponent(str));
-    const len = encodedString.length;
-    const buf = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-      buf[i] = /** @type {number} */
-      encodedString.codePointAt(i);
-    }
-    return buf;
-  };
-  var utf8TextEncoder = (
-    /** @type {TextEncoder} */
-    typeof TextEncoder !== "undefined" ? new TextEncoder() : null
-  );
-  var _encodeUtf8Native = (str) => utf8TextEncoder.encode(str);
-  var encodeUtf8 = utf8TextEncoder ? _encodeUtf8Native : _encodeUtf8Polyfill;
-  var utf8TextDecoder = typeof TextDecoder === "undefined" ? null : new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
-  if (utf8TextDecoder && utf8TextDecoder.decode(new Uint8Array()).length === 1) {
-    utf8TextDecoder = null;
-  }
-  var repeat = (source, n) => unfold(n, () => source).join("");
-
-  // node_modules/lib0/encoding.js
-  var Encoder = class {
-    constructor() {
-      this.cpos = 0;
-      this.cbuf = new Uint8Array(100);
-      this.bufs = [];
-    }
-  };
-  var createEncoder = () => new Encoder();
-  var length = (encoder) => {
-    let len = encoder.cpos;
-    for (let i = 0; i < encoder.bufs.length; i++) {
-      len += encoder.bufs[i].length;
-    }
-    return len;
-  };
-  var toUint8Array = (encoder) => {
-    const uint8arr = new Uint8Array(length(encoder));
-    let curPos = 0;
-    for (let i = 0; i < encoder.bufs.length; i++) {
-      const d = encoder.bufs[i];
-      uint8arr.set(d, curPos);
-      curPos += d.length;
-    }
-    uint8arr.set(new Uint8Array(encoder.cbuf.buffer, 0, encoder.cpos), curPos);
-    return uint8arr;
-  };
-  var verifyLen = (encoder, len) => {
-    const bufferLen = encoder.cbuf.length;
-    if (bufferLen - encoder.cpos < len) {
-      encoder.bufs.push(new Uint8Array(encoder.cbuf.buffer, 0, encoder.cpos));
-      encoder.cbuf = new Uint8Array(max(bufferLen, len) * 2);
-      encoder.cpos = 0;
-    }
-  };
-  var write = (encoder, num) => {
-    const bufferLen = encoder.cbuf.length;
-    if (encoder.cpos === bufferLen) {
-      encoder.bufs.push(encoder.cbuf);
-      encoder.cbuf = new Uint8Array(bufferLen * 2);
-      encoder.cpos = 0;
-    }
-    encoder.cbuf[encoder.cpos++] = num;
-  };
-  var writeUint8 = write;
-  var writeVarUint = (encoder, num) => {
-    while (num > BITS7) {
-      write(encoder, BIT8 | BITS7 & num);
-      num = floor(num / 128);
-    }
-    write(encoder, BITS7 & num);
-  };
-  var writeVarInt = (encoder, num) => {
-    const isNegative = isNegativeZero(num);
-    if (isNegative) {
-      num = -num;
-    }
-    write(encoder, (num > BITS6 ? BIT8 : 0) | (isNegative ? BIT7 : 0) | BITS6 & num);
-    num = floor(num / 64);
-    while (num > 0) {
-      write(encoder, (num > BITS7 ? BIT8 : 0) | BITS7 & num);
-      num = floor(num / 128);
-    }
-  };
-  var _strBuffer = new Uint8Array(3e4);
-  var _maxStrBSize = _strBuffer.length / 3;
-  var _writeVarStringNative = (encoder, str) => {
-    if (str.length < _maxStrBSize) {
-      const written = utf8TextEncoder.encodeInto(str, _strBuffer).written || 0;
-      writeVarUint(encoder, written);
-      for (let i = 0; i < written; i++) {
-        write(encoder, _strBuffer[i]);
-      }
-    } else {
-      writeVarUint8Array(encoder, encodeUtf8(str));
-    }
-  };
-  var _writeVarStringPolyfill = (encoder, str) => {
-    const encodedString = unescape(encodeURIComponent(str));
-    const len = encodedString.length;
-    writeVarUint(encoder, len);
-    for (let i = 0; i < len; i++) {
-      write(
-        encoder,
-        /** @type {number} */
-        encodedString.codePointAt(i)
-      );
-    }
-  };
-  var writeVarString = utf8TextEncoder && /** @type {any} */
-  utf8TextEncoder.encodeInto ? _writeVarStringNative : _writeVarStringPolyfill;
-  var writeBinaryEncoder = (encoder, append2) => writeUint8Array(encoder, toUint8Array(append2));
-  var writeUint8Array = (encoder, uint8Array) => {
-    const bufferLen = encoder.cbuf.length;
-    const cpos = encoder.cpos;
-    const leftCopyLen = min(bufferLen - cpos, uint8Array.length);
-    const rightCopyLen = uint8Array.length - leftCopyLen;
-    encoder.cbuf.set(uint8Array.subarray(0, leftCopyLen), cpos);
-    encoder.cpos += leftCopyLen;
-    if (rightCopyLen > 0) {
-      encoder.bufs.push(encoder.cbuf);
-      encoder.cbuf = new Uint8Array(max(bufferLen * 2, rightCopyLen));
-      encoder.cbuf.set(uint8Array.subarray(leftCopyLen));
-      encoder.cpos = rightCopyLen;
-    }
-  };
-  var writeVarUint8Array = (encoder, uint8Array) => {
-    writeVarUint(encoder, uint8Array.byteLength);
-    writeUint8Array(encoder, uint8Array);
-  };
-  var writeOnDataView = (encoder, len) => {
-    verifyLen(encoder, len);
-    const dview = new DataView(encoder.cbuf.buffer, encoder.cpos, len);
-    encoder.cpos += len;
-    return dview;
-  };
-  var writeFloat32 = (encoder, num) => writeOnDataView(encoder, 4).setFloat32(0, num, false);
-  var writeFloat64 = (encoder, num) => writeOnDataView(encoder, 8).setFloat64(0, num, false);
-  var writeBigInt64 = (encoder, num) => (
-    /** @type {any} */
-    writeOnDataView(encoder, 8).setBigInt64(0, num, false)
-  );
-  var floatTestBed = new DataView(new ArrayBuffer(4));
-  var isFloat32 = (num) => {
-    floatTestBed.setFloat32(0, num);
-    return floatTestBed.getFloat32(0) === num;
-  };
-  var writeAny = (encoder, data) => {
-    switch (typeof data) {
-      case "string":
-        write(encoder, 119);
-        writeVarString(encoder, data);
-        break;
-      case "number":
-        if (isInteger(data) && abs(data) <= BITS31) {
-          write(encoder, 125);
-          writeVarInt(encoder, data);
-        } else if (isFloat32(data)) {
-          write(encoder, 124);
-          writeFloat32(encoder, data);
-        } else {
-          write(encoder, 123);
-          writeFloat64(encoder, data);
-        }
-        break;
-      case "bigint":
-        write(encoder, 122);
-        writeBigInt64(encoder, data);
-        break;
-      case "object":
-        if (data === null) {
-          write(encoder, 126);
-        } else if (isArray(data)) {
-          write(encoder, 117);
-          writeVarUint(encoder, data.length);
-          for (let i = 0; i < data.length; i++) {
-            writeAny(encoder, data[i]);
-          }
-        } else if (data instanceof Uint8Array) {
-          write(encoder, 116);
-          writeVarUint8Array(encoder, data);
-        } else {
-          write(encoder, 118);
-          const keys2 = Object.keys(data);
-          writeVarUint(encoder, keys2.length);
-          for (let i = 0; i < keys2.length; i++) {
-            const key = keys2[i];
-            writeVarString(encoder, key);
-            writeAny(encoder, data[key]);
-          }
-        }
-        break;
-      case "boolean":
-        write(encoder, data ? 120 : 121);
-        break;
-      default:
-        write(encoder, 127);
-    }
-  };
-  var RleEncoder = class extends Encoder {
-    /**
-     * @param {function(Encoder, T):void} writer
-     */
-    constructor(writer) {
-      super();
-      this.w = writer;
-      this.s = null;
-      this.count = 0;
-    }
-    /**
-     * @param {T} v
-     */
-    write(v) {
-      if (this.s === v) {
-        this.count++;
-      } else {
-        if (this.count > 0) {
-          writeVarUint(this, this.count - 1);
-        }
-        this.count = 1;
-        this.w(this, v);
-        this.s = v;
-      }
-    }
-  };
-  var flushUintOptRleEncoder = (encoder) => {
-    if (encoder.count > 0) {
-      writeVarInt(encoder.encoder, encoder.count === 1 ? encoder.s : -encoder.s);
-      if (encoder.count > 1) {
-        writeVarUint(encoder.encoder, encoder.count - 2);
-      }
-    }
-  };
-  var UintOptRleEncoder = class {
-    constructor() {
-      this.encoder = new Encoder();
-      this.s = 0;
-      this.count = 0;
-    }
-    /**
-     * @param {number} v
-     */
-    write(v) {
-      if (this.s === v) {
-        this.count++;
-      } else {
-        flushUintOptRleEncoder(this);
-        this.count = 1;
-        this.s = v;
-      }
-    }
-    /**
-     * Flush the encoded state and transform this to a Uint8Array.
-     *
-     * Note that this should only be called once.
-     */
-    toUint8Array() {
-      flushUintOptRleEncoder(this);
-      return toUint8Array(this.encoder);
-    }
-  };
-  var flushIntDiffOptRleEncoder = (encoder) => {
-    if (encoder.count > 0) {
-      const encodedDiff = encoder.diff * 2 + (encoder.count === 1 ? 0 : 1);
-      writeVarInt(encoder.encoder, encodedDiff);
-      if (encoder.count > 1) {
-        writeVarUint(encoder.encoder, encoder.count - 2);
-      }
-    }
-  };
-  var IntDiffOptRleEncoder = class {
-    constructor() {
-      this.encoder = new Encoder();
-      this.s = 0;
-      this.count = 0;
-      this.diff = 0;
-    }
-    /**
-     * @param {number} v
-     */
-    write(v) {
-      if (this.diff === v - this.s) {
-        this.s = v;
-        this.count++;
-      } else {
-        flushIntDiffOptRleEncoder(this);
-        this.count = 1;
-        this.diff = v - this.s;
-        this.s = v;
-      }
-    }
-    /**
-     * Flush the encoded state and transform this to a Uint8Array.
-     *
-     * Note that this should only be called once.
-     */
-    toUint8Array() {
-      flushIntDiffOptRleEncoder(this);
-      return toUint8Array(this.encoder);
-    }
-  };
-  var StringEncoder = class {
-    constructor() {
-      this.sarr = [];
-      this.s = "";
-      this.lensE = new UintOptRleEncoder();
-    }
-    /**
-     * @param {string} string
-     */
-    write(string) {
-      this.s += string;
-      if (this.s.length > 19) {
-        this.sarr.push(this.s);
-        this.s = "";
-      }
-      this.lensE.write(string.length);
-    }
-    toUint8Array() {
-      const encoder = new Encoder();
-      this.sarr.push(this.s);
-      this.s = "";
-      writeVarString(encoder, this.sarr.join(""));
-      writeUint8Array(encoder, this.lensE.toUint8Array());
-      return toUint8Array(encoder);
-    }
-  };
-
   // node_modules/lib0/error.js
   var create3 = (s) => new Error(s);
   var methodUnimplemented = () => {
@@ -2677,7 +2496,7 @@ var wp;
   var createDecoder = (uint8Array) => new Decoder(uint8Array);
   var hasContent = (decoder) => decoder.pos !== decoder.arr.length;
   var readUint8Array = (decoder, len) => {
-    const view = new Uint8Array(decoder.arr.buffer, decoder.pos + decoder.arr.byteOffset, len);
+    const view = createUint8ArrayViewFromArrayBuffer(decoder.arr.buffer, decoder.pos + decoder.arr.byteOffset, len);
     decoder.pos += len;
     return view;
   };
@@ -2905,6 +2724,335 @@ var wp;
     }
   };
 
+  // node_modules/lib0/buffer.js
+  var createUint8ArrayFromLen = (len) => new Uint8Array(len);
+  var createUint8ArrayViewFromArrayBuffer = (buffer, byteOffset, length3) => new Uint8Array(buffer, byteOffset, length3);
+  var toBase64Browser = (bytes) => {
+    let s = "";
+    for (let i = 0; i < bytes.byteLength; i++) {
+      s += fromCharCode(bytes[i]);
+    }
+    return btoa(s);
+  };
+  var toBase64Node = (bytes) => Buffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength).toString("base64");
+  var fromBase64Browser = (s) => {
+    const a = atob(s);
+    const bytes = createUint8ArrayFromLen(a.length);
+    for (let i = 0; i < a.length; i++) {
+      bytes[i] = a.charCodeAt(i);
+    }
+    return bytes;
+  };
+  var fromBase64Node = (s) => {
+    const buf = Buffer.from(s, "base64");
+    return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
+  };
+  var toBase64 = isBrowser ? toBase64Browser : toBase64Node;
+  var fromBase64 = isBrowser ? fromBase64Browser : fromBase64Node;
+  var copyUint8Array = (uint8Array) => {
+    const newBuf = createUint8ArrayFromLen(uint8Array.byteLength);
+    newBuf.set(uint8Array);
+    return newBuf;
+  };
+
+  // node_modules/lib0/encoding.js
+  var Encoder = class {
+    constructor() {
+      this.cpos = 0;
+      this.cbuf = new Uint8Array(100);
+      this.bufs = [];
+    }
+  };
+  var createEncoder = () => new Encoder();
+  var length2 = (encoder) => {
+    let len = encoder.cpos;
+    for (let i = 0; i < encoder.bufs.length; i++) {
+      len += encoder.bufs[i].length;
+    }
+    return len;
+  };
+  var toUint8Array = (encoder) => {
+    const uint8arr = new Uint8Array(length2(encoder));
+    let curPos = 0;
+    for (let i = 0; i < encoder.bufs.length; i++) {
+      const d = encoder.bufs[i];
+      uint8arr.set(d, curPos);
+      curPos += d.length;
+    }
+    uint8arr.set(createUint8ArrayViewFromArrayBuffer(encoder.cbuf.buffer, 0, encoder.cpos), curPos);
+    return uint8arr;
+  };
+  var verifyLen = (encoder, len) => {
+    const bufferLen = encoder.cbuf.length;
+    if (bufferLen - encoder.cpos < len) {
+      encoder.bufs.push(createUint8ArrayViewFromArrayBuffer(encoder.cbuf.buffer, 0, encoder.cpos));
+      encoder.cbuf = new Uint8Array(max(bufferLen, len) * 2);
+      encoder.cpos = 0;
+    }
+  };
+  var write = (encoder, num) => {
+    const bufferLen = encoder.cbuf.length;
+    if (encoder.cpos === bufferLen) {
+      encoder.bufs.push(encoder.cbuf);
+      encoder.cbuf = new Uint8Array(bufferLen * 2);
+      encoder.cpos = 0;
+    }
+    encoder.cbuf[encoder.cpos++] = num;
+  };
+  var writeUint8 = write;
+  var writeVarUint = (encoder, num) => {
+    while (num > BITS7) {
+      write(encoder, BIT8 | BITS7 & num);
+      num = floor(num / 128);
+    }
+    write(encoder, BITS7 & num);
+  };
+  var writeVarInt = (encoder, num) => {
+    const isNegative = isNegativeZero(num);
+    if (isNegative) {
+      num = -num;
+    }
+    write(encoder, (num > BITS6 ? BIT8 : 0) | (isNegative ? BIT7 : 0) | BITS6 & num);
+    num = floor(num / 64);
+    while (num > 0) {
+      write(encoder, (num > BITS7 ? BIT8 : 0) | BITS7 & num);
+      num = floor(num / 128);
+    }
+  };
+  var _strBuffer = new Uint8Array(3e4);
+  var _maxStrBSize = _strBuffer.length / 3;
+  var _writeVarStringNative = (encoder, str) => {
+    if (str.length < _maxStrBSize) {
+      const written = utf8TextEncoder.encodeInto(str, _strBuffer).written || 0;
+      writeVarUint(encoder, written);
+      for (let i = 0; i < written; i++) {
+        write(encoder, _strBuffer[i]);
+      }
+    } else {
+      writeVarUint8Array(encoder, encodeUtf8(str));
+    }
+  };
+  var _writeVarStringPolyfill = (encoder, str) => {
+    const encodedString = unescape(encodeURIComponent(str));
+    const len = encodedString.length;
+    writeVarUint(encoder, len);
+    for (let i = 0; i < len; i++) {
+      write(
+        encoder,
+        /** @type {number} */
+        encodedString.codePointAt(i)
+      );
+    }
+  };
+  var writeVarString = utf8TextEncoder && /** @type {any} */
+  utf8TextEncoder.encodeInto ? _writeVarStringNative : _writeVarStringPolyfill;
+  var writeBinaryEncoder = (encoder, append2) => writeUint8Array(encoder, toUint8Array(append2));
+  var writeUint8Array = (encoder, uint8Array) => {
+    const bufferLen = encoder.cbuf.length;
+    const cpos = encoder.cpos;
+    const leftCopyLen = min(bufferLen - cpos, uint8Array.length);
+    const rightCopyLen = uint8Array.length - leftCopyLen;
+    encoder.cbuf.set(uint8Array.subarray(0, leftCopyLen), cpos);
+    encoder.cpos += leftCopyLen;
+    if (rightCopyLen > 0) {
+      encoder.bufs.push(encoder.cbuf);
+      encoder.cbuf = new Uint8Array(max(bufferLen * 2, rightCopyLen));
+      encoder.cbuf.set(uint8Array.subarray(leftCopyLen));
+      encoder.cpos = rightCopyLen;
+    }
+  };
+  var writeVarUint8Array = (encoder, uint8Array) => {
+    writeVarUint(encoder, uint8Array.byteLength);
+    writeUint8Array(encoder, uint8Array);
+  };
+  var writeOnDataView = (encoder, len) => {
+    verifyLen(encoder, len);
+    const dview = new DataView(encoder.cbuf.buffer, encoder.cpos, len);
+    encoder.cpos += len;
+    return dview;
+  };
+  var writeFloat32 = (encoder, num) => writeOnDataView(encoder, 4).setFloat32(0, num, false);
+  var writeFloat64 = (encoder, num) => writeOnDataView(encoder, 8).setFloat64(0, num, false);
+  var writeBigInt64 = (encoder, num) => (
+    /** @type {any} */
+    writeOnDataView(encoder, 8).setBigInt64(0, num, false)
+  );
+  var floatTestBed = new DataView(new ArrayBuffer(4));
+  var isFloat32 = (num) => {
+    floatTestBed.setFloat32(0, num);
+    return floatTestBed.getFloat32(0) === num;
+  };
+  var writeAny = (encoder, data) => {
+    switch (typeof data) {
+      case "string":
+        write(encoder, 119);
+        writeVarString(encoder, data);
+        break;
+      case "number":
+        if (isInteger(data) && abs(data) <= BITS31) {
+          write(encoder, 125);
+          writeVarInt(encoder, data);
+        } else if (isFloat32(data)) {
+          write(encoder, 124);
+          writeFloat32(encoder, data);
+        } else {
+          write(encoder, 123);
+          writeFloat64(encoder, data);
+        }
+        break;
+      case "bigint":
+        write(encoder, 122);
+        writeBigInt64(encoder, data);
+        break;
+      case "object":
+        if (data === null) {
+          write(encoder, 126);
+        } else if (isArray(data)) {
+          write(encoder, 117);
+          writeVarUint(encoder, data.length);
+          for (let i = 0; i < data.length; i++) {
+            writeAny(encoder, data[i]);
+          }
+        } else if (data instanceof Uint8Array) {
+          write(encoder, 116);
+          writeVarUint8Array(encoder, data);
+        } else {
+          write(encoder, 118);
+          const keys2 = Object.keys(data);
+          writeVarUint(encoder, keys2.length);
+          for (let i = 0; i < keys2.length; i++) {
+            const key = keys2[i];
+            writeVarString(encoder, key);
+            writeAny(encoder, data[key]);
+          }
+        }
+        break;
+      case "boolean":
+        write(encoder, data ? 120 : 121);
+        break;
+      default:
+        write(encoder, 127);
+    }
+  };
+  var RleEncoder = class extends Encoder {
+    /**
+     * @param {function(Encoder, T):void} writer
+     */
+    constructor(writer) {
+      super();
+      this.w = writer;
+      this.s = null;
+      this.count = 0;
+    }
+    /**
+     * @param {T} v
+     */
+    write(v) {
+      if (this.s === v) {
+        this.count++;
+      } else {
+        if (this.count > 0) {
+          writeVarUint(this, this.count - 1);
+        }
+        this.count = 1;
+        this.w(this, v);
+        this.s = v;
+      }
+    }
+  };
+  var flushUintOptRleEncoder = (encoder) => {
+    if (encoder.count > 0) {
+      writeVarInt(encoder.encoder, encoder.count === 1 ? encoder.s : -encoder.s);
+      if (encoder.count > 1) {
+        writeVarUint(encoder.encoder, encoder.count - 2);
+      }
+    }
+  };
+  var UintOptRleEncoder = class {
+    constructor() {
+      this.encoder = new Encoder();
+      this.s = 0;
+      this.count = 0;
+    }
+    /**
+     * @param {number} v
+     */
+    write(v) {
+      if (this.s === v) {
+        this.count++;
+      } else {
+        flushUintOptRleEncoder(this);
+        this.count = 1;
+        this.s = v;
+      }
+    }
+    toUint8Array() {
+      flushUintOptRleEncoder(this);
+      return toUint8Array(this.encoder);
+    }
+  };
+  var flushIntDiffOptRleEncoder = (encoder) => {
+    if (encoder.count > 0) {
+      const encodedDiff = encoder.diff * 2 + (encoder.count === 1 ? 0 : 1);
+      writeVarInt(encoder.encoder, encodedDiff);
+      if (encoder.count > 1) {
+        writeVarUint(encoder.encoder, encoder.count - 2);
+      }
+    }
+  };
+  var IntDiffOptRleEncoder = class {
+    constructor() {
+      this.encoder = new Encoder();
+      this.s = 0;
+      this.count = 0;
+      this.diff = 0;
+    }
+    /**
+     * @param {number} v
+     */
+    write(v) {
+      if (this.diff === v - this.s) {
+        this.s = v;
+        this.count++;
+      } else {
+        flushIntDiffOptRleEncoder(this);
+        this.count = 1;
+        this.diff = v - this.s;
+        this.s = v;
+      }
+    }
+    toUint8Array() {
+      flushIntDiffOptRleEncoder(this);
+      return toUint8Array(this.encoder);
+    }
+  };
+  var StringEncoder = class {
+    constructor() {
+      this.sarr = [];
+      this.s = "";
+      this.lensE = new UintOptRleEncoder();
+    }
+    /**
+     * @param {string} string
+     */
+    write(string) {
+      this.s += string;
+      if (this.s.length > 19) {
+        this.sarr.push(this.s);
+        this.s = "";
+      }
+      this.lensE.write(string.length);
+    }
+    toUint8Array() {
+      const encoder = new Encoder();
+      this.sarr.push(this.s);
+      this.s = "";
+      writeVarString(encoder, this.sarr.join(""));
+      writeUint8Array(encoder, this.lensE.toUint8Array());
+      return toUint8Array(encoder);
+    }
+  };
+
   // node_modules/lib0/webcrypto.js
   var subtle = crypto.subtle;
   var getRandomValues = crypto.getRandomValues.bind(crypto);
@@ -2927,250 +3075,6 @@ var wp;
     new Promise(f)
   );
   var all = Promise.all.bind(Promise);
-
-  // node_modules/lib0/conditions.js
-  var undefinedToNull = (v) => v === void 0 ? null : v;
-
-  // node_modules/lib0/storage.js
-  var VarStoragePolyfill = class {
-    constructor() {
-      this.map = /* @__PURE__ */ new Map();
-    }
-    /**
-     * @param {string} key
-     * @param {any} newValue
-     */
-    setItem(key, newValue) {
-      this.map.set(key, newValue);
-    }
-    /**
-     * @param {string} key
-     */
-    getItem(key) {
-      return this.map.get(key);
-    }
-  };
-  var _localStorage = new VarStoragePolyfill();
-  var usePolyfill = true;
-  try {
-    if (typeof localStorage !== "undefined" && localStorage) {
-      _localStorage = localStorage;
-      usePolyfill = false;
-    }
-  } catch (e) {
-  }
-  var varStorage = _localStorage;
-
-  // node_modules/lib0/object.js
-  var assign = Object.assign;
-  var keys = Object.keys;
-  var forEach = (obj, f) => {
-    for (const key in obj) {
-      f(obj[key], key);
-    }
-  };
-  var length2 = (obj) => keys(obj).length;
-  var size = (obj) => keys(obj).length;
-  var isEmpty = (obj) => {
-    for (const _k in obj) {
-      return false;
-    }
-    return true;
-  };
-  var every = (obj, f) => {
-    for (const key in obj) {
-      if (!f(obj[key], key)) {
-        return false;
-      }
-    }
-    return true;
-  };
-  var hasProperty = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
-  var equalFlat = (a, b) => a === b || size(a) === size(b) && every(a, (val, key) => (val !== void 0 || hasProperty(b, key)) && b[key] === val);
-  var freeze = Object.freeze;
-  var deepFreeze = (o) => {
-    for (const key in o) {
-      const c = o[key];
-      if (typeof c === "object" || typeof c === "function") {
-        deepFreeze(o[key]);
-      }
-    }
-    return freeze(o);
-  };
-
-  // node_modules/lib0/function.js
-  var callAll = (fs, args2, i = 0) => {
-    try {
-      for (; i < fs.length; i++) {
-        fs[i](...args2);
-      }
-    } finally {
-      if (i < fs.length) {
-        callAll(fs, args2, i + 1);
-      }
-    }
-  };
-  var id = (a) => a;
-  var equalityStrict = (a, b) => a === b;
-  var equalityDeep = (a, b) => {
-    if (a == null || b == null) {
-      return equalityStrict(a, b);
-    }
-    if (a.constructor !== b.constructor) {
-      return false;
-    }
-    if (a === b) {
-      return true;
-    }
-    switch (a.constructor) {
-      case ArrayBuffer:
-        a = new Uint8Array(a);
-        b = new Uint8Array(b);
-      // eslint-disable-next-line no-fallthrough
-      case Uint8Array: {
-        if (a.byteLength !== b.byteLength) {
-          return false;
-        }
-        for (let i = 0; i < a.length; i++) {
-          if (a[i] !== b[i]) {
-            return false;
-          }
-        }
-        break;
-      }
-      case Set: {
-        if (a.size !== b.size) {
-          return false;
-        }
-        for (const value of a) {
-          if (!b.has(value)) {
-            return false;
-          }
-        }
-        break;
-      }
-      case Map: {
-        if (a.size !== b.size) {
-          return false;
-        }
-        for (const key of a.keys()) {
-          if (!b.has(key) || !equalityDeep(a.get(key), b.get(key))) {
-            return false;
-          }
-        }
-        break;
-      }
-      case Object:
-        if (length2(a) !== length2(b)) {
-          return false;
-        }
-        for (const key in a) {
-          if (!hasProperty(a, key) || !equalityDeep(a[key], b[key])) {
-            return false;
-          }
-        }
-        break;
-      case Array:
-        if (a.length !== b.length) {
-          return false;
-        }
-        for (let i = 0; i < a.length; i++) {
-          if (!equalityDeep(a[i], b[i])) {
-            return false;
-          }
-        }
-        break;
-      default:
-        return false;
-    }
-    return true;
-  };
-  var isOneOf = (value, options) => options.includes(value);
-
-  // node_modules/lib0/environment.js
-  var isNode = typeof process !== "undefined" && process.release && /node|io\.js/.test(process.release.name) && Object.prototype.toString.call(typeof process !== "undefined" ? process : 0) === "[object process]";
-  var isBrowser = typeof window !== "undefined" && typeof document !== "undefined" && !isNode;
-  var isMac = typeof navigator !== "undefined" ? /Mac/.test(navigator.platform) : false;
-  var params;
-  var args = [];
-  var computeParams = () => {
-    if (params === void 0) {
-      if (isNode) {
-        params = create();
-        const pargs = process.argv;
-        let currParamName = null;
-        for (let i = 0; i < pargs.length; i++) {
-          const parg = pargs[i];
-          if (parg[0] === "-") {
-            if (currParamName !== null) {
-              params.set(currParamName, "");
-            }
-            currParamName = parg;
-          } else {
-            if (currParamName !== null) {
-              params.set(currParamName, parg);
-              currParamName = null;
-            } else {
-              args.push(parg);
-            }
-          }
-        }
-        if (currParamName !== null) {
-          params.set(currParamName, "");
-        }
-      } else if (typeof location === "object") {
-        params = create();
-        (location.search || "?").slice(1).split("&").forEach((kv) => {
-          if (kv.length !== 0) {
-            const [key, value] = kv.split("=");
-            params.set(`--${fromCamelCase(key, "-")}`, value);
-            params.set(`-${fromCamelCase(key, "-")}`, value);
-          }
-        });
-      } else {
-        params = create();
-      }
-    }
-    return params;
-  };
-  var hasParam = (name) => computeParams().has(name);
-  var getVariable = (name) => isNode ? undefinedToNull(process.env[name.toUpperCase().replaceAll("-", "_")]) : undefinedToNull(varStorage.getItem(name));
-  var hasConf = (name) => hasParam("--" + name) || getVariable(name) !== null;
-  var production = hasConf("production");
-  var forceColor = isNode && isOneOf(process.env.FORCE_COLOR, ["true", "1", "2"]);
-  var supportsColor = forceColor || !hasParam("--no-colors") && // @todo deprecate --no-colors
-  !hasConf("no-color") && (!isNode || process.stdout.isTTY) && (!isNode || hasParam("--color") || getVariable("COLORTERM") !== null || (getVariable("TERM") || "").includes("color"));
-
-  // node_modules/lib0/buffer.js
-  var createUint8ArrayFromLen = (len) => new Uint8Array(len);
-  var createUint8ArrayViewFromArrayBuffer = (buffer, byteOffset, length3) => new Uint8Array(buffer, byteOffset, length3);
-  var toBase64Browser = (bytes) => {
-    let s = "";
-    for (let i = 0; i < bytes.byteLength; i++) {
-      s += fromCharCode(bytes[i]);
-    }
-    return btoa(s);
-  };
-  var toBase64Node = (bytes) => Buffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength).toString("base64");
-  var fromBase64Browser = (s) => {
-    const a = atob(s);
-    const bytes = createUint8ArrayFromLen(a.length);
-    for (let i = 0; i < a.length; i++) {
-      bytes[i] = a.charCodeAt(i);
-    }
-    return bytes;
-  };
-  var fromBase64Node = (s) => {
-    const buf = Buffer.from(s, "base64");
-    return createUint8ArrayViewFromArrayBuffer(buf.buffer, buf.byteOffset, buf.byteLength);
-  };
-  var toBase64 = isBrowser ? toBase64Browser : toBase64Node;
-  var fromBase64 = isBrowser ? fromBase64Browser : fromBase64Node;
-  var copyUint8Array = (uint8Array) => {
-    const newBuf = createUint8ArrayFromLen(uint8Array.byteLength);
-    newBuf.set(uint8Array);
-    return newBuf;
-  };
 
   // node_modules/lib0/pair.js
   var Pair = class {
@@ -3217,31 +3121,15 @@ var wp;
   var ORANGE = create6();
   var UNCOLOR = create6();
   var computeNoColorLoggingArgs = (args2) => {
-    if (args2.length === 1 && args2[0]?.constructor === Function) {
-      args2 = /** @type {Array<string|Symbol|Object|number>} */
-      /** @type {[function]} */
-      args2[0]();
-    }
     const strBuilder = [];
     const logArgs = [];
     let i = 0;
     for (; i < args2.length; i++) {
       const arg = args2[i];
-      if (arg === void 0) {
-        break;
-      } else if (arg.constructor === String || arg.constructor === Number) {
+      if (arg.constructor === String || arg.constructor === Number) {
         strBuilder.push(arg);
       } else if (arg.constructor === Object) {
-        break;
-      }
-    }
-    if (i > 0) {
-      logArgs.push(strBuilder.join(""));
-    }
-    for (; i < args2.length; i++) {
-      const arg = args2[i];
-      if (!(arg instanceof Symbol)) {
-        logArgs.push(arg);
+        logArgs.push(JSON.stringify(arg));
       }
     }
     return logArgs;
@@ -3262,11 +3150,6 @@ var wp;
     [UNCOLOR]: create5("color", "black")
   };
   var computeBrowserLoggingArgs = (args2) => {
-    if (args2.length === 1 && args2[0]?.constructor === Function) {
-      args2 = /** @type {Array<string|Symbol|Object|number>} */
-      /** @type {[function]} */
-      args2[0]();
-    }
     const strBuilder = [];
     const styles = [];
     const currentStyle = create();
@@ -3278,9 +3161,6 @@ var wp;
       if (style !== void 0) {
         currentStyle.set(style.left, style.right);
       } else {
-        if (arg === void 0) {
-          break;
-        }
         if (arg.constructor === String || arg.constructor === Number) {
           const style2 = mapToStyleString(currentStyle);
           if (i > 0 || style2.length > 0) {
@@ -3311,11 +3191,6 @@ var wp;
     console.log(...computeLoggingArgs(args2));
     vconsoles.forEach((vc) => vc.print(args2));
   };
-  var warn = (...args2) => {
-    console.warn(...computeLoggingArgs(args2));
-    args2.unshift(ORANGE);
-    vconsoles.forEach((vc) => vc.print(args2));
-  };
   var vconsoles = create2();
 
   // node_modules/lib0/iterator.js
@@ -3342,7 +3217,7 @@ var wp;
   });
 
   // node_modules/yjs/dist/yjs.mjs
-  var AbstractConnector = class extends ObservableV2 {
+  var AbstractConnector = class extends Observable {
     /**
      * @param {Doc} ydoc
      * @param {any} awareness
@@ -3373,12 +3248,9 @@ var wp;
       /** @type {Array<GC|Item>} */
       transaction.doc.store.clients.get(clientid)
     );
-    if (structs != null) {
-      const lastStruct = structs[structs.length - 1];
-      const clockState = lastStruct.id.clock + lastStruct.length;
-      for (let i = 0, del = deletes[i]; i < deletes.length && del.clock < clockState; del = deletes[++i]) {
-        iterateStructs(transaction, structs, del.clock, del.len, f);
-      }
+    for (let i = 0; i < deletes.length; i++) {
+      const del = deletes[i];
+      iterateStructs(transaction, structs, del.clock, del.len, f);
     }
   });
   var findIndexDS = (dis, clock) => {
@@ -3568,7 +3440,7 @@ var wp;
     return true;
   };
   var generateNewClientId = uint32;
-  var Doc = class _Doc extends ObservableV2 {
+  var Doc = class _Doc extends Observable {
     /**
      * @param {DocOpts} opts configuration
      */
@@ -3590,7 +3462,6 @@ var wp;
       this.meta = meta;
       this.isLoaded = false;
       this.isSynced = false;
-      this.isDestroyed = false;
       this.whenLoaded = create4((resolve) => {
         this.on("load", () => {
           this.isLoaded = true;
@@ -3611,8 +3482,8 @@ var wp;
           this.whenSynced = provideSyncedPromise();
         }
         this.isSynced = isSynced === void 0 || isSynced === true;
-        if (this.isSynced && !this.isLoaded) {
-          this.emit("load", [this]);
+        if (!this.isLoaded) {
+          this.emit("load", []);
         }
       });
       this.whenSynced = provideSyncedPromise();
@@ -3664,34 +3535,30 @@ var wp;
     /**
      * Define a shared data type.
      *
-     * Multiple calls of `ydoc.get(name, TypeConstructor)` yield the same result
+     * Multiple calls of `y.get(name, TypeConstructor)` yield the same result
      * and do not overwrite each other. I.e.
-     * `ydoc.get(name, Y.Array) === ydoc.get(name, Y.Array)`
+     * `y.define(name, Y.Array) === y.define(name, Y.Array)`
      *
-     * After this method is called, the type is also available on `ydoc.share.get(name)`.
+     * After this method is called, the type is also available on `y.share.get(name)`.
      *
      * *Best Practices:*
-     * Define all types right after the Y.Doc instance is created and store them in a separate object.
+     * Define all types right after the Yjs instance is created and store them in a separate object.
      * Also use the typed methods `getText(name)`, `getArray(name)`, ..
      *
-     * @template {typeof AbstractType<any>} Type
      * @example
-     *   const ydoc = new Y.Doc(..)
+     *   const y = new Y(..)
      *   const appState = {
-     *     document: ydoc.getText('document')
-     *     comments: ydoc.getArray('comments')
+     *     document: y.getText('document')
+     *     comments: y.getArray('comments')
      *   }
      *
      * @param {string} name
-     * @param {Type} TypeConstructor The constructor of the type definition. E.g. Y.Text, Y.Array, Y.Map, ...
-     * @return {InstanceType<Type>} The created type. Constructed with TypeConstructor
+     * @param {Function} TypeConstructor The constructor of the type definition. E.g. Y.Text, Y.Array, Y.Map, ...
+     * @return {AbstractType<any>} The created type. Constructed with TypeConstructor
      *
      * @public
      */
-    get(name, TypeConstructor = (
-      /** @type {any} */
-      AbstractType
-    )) {
+    get(name, TypeConstructor = AbstractType) {
       const type = setIfUndefined(this.share, name, () => {
         const t = new TypeConstructor();
         t._integrate(this, null);
@@ -3717,18 +3584,12 @@ var wp;
           t._length = type._length;
           this.share.set(name, t);
           t._integrate(this, null);
-          return (
-            /** @type {InstanceType<Type>} */
-            t
-          );
+          return t;
         } else {
           throw new Error(`Type with the name ${name} has already been defined with a different constructor`);
         }
       }
-      return (
-        /** @type {InstanceType<Type>} */
-        type
-      );
+      return type;
     }
     /**
      * @template T
@@ -3738,10 +3599,7 @@ var wp;
      * @public
      */
     getArray(name = "") {
-      return (
-        /** @type {YArray<T>} */
-        this.get(name, YArray)
-      );
+      return this.get(name, YArray);
     }
     /**
      * @param {string} [name]
@@ -3760,22 +3618,7 @@ var wp;
      * @public
      */
     getMap(name = "") {
-      return (
-        /** @type {YMap<T>} */
-        this.get(name, YMap)
-      );
-    }
-    /**
-     * @param {string} [name]
-     * @return {YXmlElement}
-     *
-     * @public
-     */
-    getXmlElement(name = "") {
-      return (
-        /** @type {YXmlElement<{[key:string]:string}>} */
-        this.get(name, YXmlElement)
-      );
+      return this.get(name, YMap);
     }
     /**
      * @param {string} [name]
@@ -3805,7 +3648,6 @@ var wp;
      * Emit `destroy` event and unregister all event handlers.
      */
     destroy() {
-      this.isDestroyed = true;
       from(this.subdocs).forEach((subdoc) => subdoc.destroy());
       const item = this._item;
       if (item !== null) {
@@ -3833,6 +3675,20 @@ var wp;
       this.emit("destroyed", [true]);
       this.emit("destroy", [this]);
       super.destroy();
+    }
+    /**
+     * @param {string} eventName
+     * @param {function(...any):any} f
+     */
+    on(eventName, f) {
+      super.on(eventName, f);
+    }
+    /**
+     * @param {string} eventName
+     * @param {function} f
+     */
+    off(eventName, f) {
+      super.off(eventName, f);
     }
   };
   var DSDecoderV1 = class {
@@ -4388,7 +4244,7 @@ var wp;
             const struct = new Item(
               createID(client, clock),
               null,
-              // left
+              // leftd
               (info & BIT8) === BIT8 ? decoder.readLeftID() : null,
               // origin
               null,
@@ -4436,7 +4292,7 @@ var wp;
       return nextStructsTarget;
     };
     let curStructsTarget = getNextStructTarget();
-    if (curStructsTarget === null) {
+    if (curStructsTarget === null && stack.length === 0) {
       return null;
     }
     const restStructs = new StructStore();
@@ -4458,13 +4314,13 @@ var wp;
     const addStackToRestSS = () => {
       for (const item of stack) {
         const client = item.id.client;
-        const inapplicableItems = clientsStructRefs.get(client);
-        if (inapplicableItems) {
-          inapplicableItems.i--;
-          restStructs.clients.set(client, inapplicableItems.refs.slice(inapplicableItems.i));
+        const unapplicableItems = clientsStructRefs.get(client);
+        if (unapplicableItems) {
+          unapplicableItems.i--;
+          restStructs.clients.set(client, unapplicableItems.refs.slice(unapplicableItems.i));
           clientsStructRefs.delete(client);
-          inapplicableItems.i = 0;
-          inapplicableItems.refs = [];
+          unapplicableItems.i = 0;
+          unapplicableItems.refs = [];
         } else {
           restStructs.clients.set(client, [item]);
         }
@@ -4845,7 +4701,7 @@ var wp;
     }
     return json;
   };
-  var createRelativePositionFromJSON = (json) => new RelativePosition(json.type == null ? null : createID(json.type.client, json.type.clock), json.tname ?? null, json.item == null ? null : createID(json.item.client, json.item.clock), json.assoc == null ? 0 : json.assoc);
+  var createRelativePositionFromJSON = (json) => new RelativePosition(json.type == null ? null : createID(json.type.client, json.type.clock), json.tname || null, json.item == null ? null : createID(json.item.client, json.item.clock), json.assoc == null ? 0 : json.assoc);
   var AbsolutePosition = class {
     /**
      * @param {AbstractType<any>} type
@@ -4932,15 +4788,7 @@ var wp;
     return new RelativePosition(type, tname, itemID, assoc);
   };
   var decodeRelativePosition = (uint8Array) => readRelativePosition(createDecoder(uint8Array));
-  var getItemWithOffset = (store2, id2) => {
-    const item = getItem(store2, id2);
-    const diff = id2.clock - item.id.clock;
-    return {
-      item,
-      diff
-    };
-  };
-  var createAbsolutePositionFromRelativePosition = (rpos, doc2, followUndoneDeletions = true) => {
+  var createAbsolutePositionFromRelativePosition = (rpos, doc2) => {
     const store2 = doc2.store;
     const rightID = rpos.item;
     const typeID = rpos.type;
@@ -4952,7 +4800,7 @@ var wp;
       if (getState(store2, rightID.client) <= rightID.clock) {
         return null;
       }
-      const res = followUndoneDeletions ? followRedone(store2, rightID) : getItemWithOffset(store2, rightID);
+      const res = followRedone(store2, rightID);
       const right = res.item;
       if (!(right instanceof Item)) {
         return null;
@@ -4976,7 +4824,7 @@ var wp;
         if (getState(store2, typeID.client) <= typeID.clock) {
           return null;
         }
-        const { item } = followUndoneDeletions ? followRedone(store2, typeID) : { item: getItem(store2, typeID) };
+        const { item } = followRedone(store2, typeID);
         if (item instanceof Item && item.content instanceof ContentType) {
           type = item.content.type;
         } else {
@@ -5067,13 +4915,13 @@ var wp;
     const { sv, ds } = snapshot2;
     const encoder = new UpdateEncoderV2();
     originDoc.transact((transaction) => {
-      let size2 = 0;
+      let size = 0;
       sv.forEach((clock) => {
         if (clock > 0) {
-          size2++;
+          size++;
         }
       });
-      writeVarUint(encoder.restEncoder, size2);
+      writeVarUint(encoder.restEncoder, size);
       for (const [client, clock] of sv) {
         if (clock === 0) {
           continue;
@@ -5356,19 +5204,15 @@ var wp;
                 event._path = null;
               });
               events.sort((event1, event2) => event1.path.length - event2.path.length);
-              fs.push(() => {
-                callEventHandlerListeners(type._dEH, events, transaction);
-              });
-            }
-          });
-          fs.push(() => doc2.emit("afterTransaction", [transaction, doc2]));
-          fs.push(() => {
-            if (transaction._needFormattingCleanup) {
-              cleanupYTextAfterTransaction(transaction);
+              callEventHandlerListeners(type._dEH, events, transaction);
             }
           });
         });
+        fs.push(() => doc2.emit("afterTransaction", [transaction, doc2]));
         callAll(fs, []);
+        if (transaction._needFormattingCleanup) {
+          cleanupYTextAfterTransaction(transaction);
+        }
       } finally {
         if (doc2.gc) {
           tryGcDeleteSet(ds, store2, doc2.gcFilter);
@@ -5483,21 +5327,18 @@ var wp;
   };
   var clearUndoManagerStackItem = (tr, um, stackItem) => {
     iterateDeletedStructs(tr, stackItem.deletions, (item) => {
-      if (item instanceof Item && um.scope.some((type) => type === tr.doc || isParentOf(
-        /** @type {AbstractType<any>} */
-        type,
-        item
-      ))) {
+      if (item instanceof Item && um.scope.some((type) => isParentOf(type, item))) {
         keepItem(item, false);
       }
     });
   };
   var popStackItem = (undoManager2, stack, eventType) => {
+    let result = null;
     let _tr = null;
     const doc2 = undoManager2.doc;
     const scope = undoManager2.scope;
     transact(doc2, (transaction) => {
-      while (stack.length > 0 && undoManager2.currStackItem === null) {
+      while (stack.length > 0 && result === null) {
         const store2 = doc2.store;
         const stackItem = (
           /** @type {StackItem} */
@@ -5515,8 +5356,7 @@ var wp;
               }
               struct = item;
             }
-            if (!struct.deleted && scope.some((type) => type === transaction.doc || isParentOf(
-              /** @type {AbstractType<any>} */
+            if (!struct.deleted && scope.some((type) => isParentOf(
               type,
               /** @type {Item} */
               struct
@@ -5526,11 +5366,7 @@ var wp;
           }
         });
         iterateDeletedStructs(transaction, stackItem.deletions, (struct) => {
-          if (struct instanceof Item && scope.some((type) => type === transaction.doc || isParentOf(
-            /** @type {AbstractType<any>} */
-            type,
-            struct
-          )) && // Never redo structs in stackItem.insertions because they were created and deleted in the same capture interval.
+          if (struct instanceof Item && scope.some((type) => isParentOf(type, struct)) && // Never redo structs in stackItem.insertions because they were created and deleted in the same capture interval.
           !isDeleted(stackItem.insertions, struct.id)) {
             itemsToRedo.add(struct);
           }
@@ -5545,7 +5381,7 @@ var wp;
             performedChange = true;
           }
         }
-        undoManager2.currStackItem = performedChange ? stackItem : null;
+        result = performedChange ? stackItem : null;
       }
       transaction.changed.forEach((subProps, type) => {
         if (subProps.has(null) && type._searchMarker) {
@@ -5554,17 +5390,15 @@ var wp;
       });
       _tr = transaction;
     }, undoManager2);
-    const res = undoManager2.currStackItem;
-    if (res != null) {
+    if (result != null) {
       const changedParentTypes = _tr.changedParentTypes;
-      undoManager2.emit("stack-item-popped", [{ stackItem: res, type: eventType, changedParentTypes, origin: undoManager2 }, undoManager2]);
-      undoManager2.currStackItem = null;
+      undoManager2.emit("stack-item-popped", [{ stackItem: result, type: eventType, changedParentTypes }, undoManager2]);
     }
-    return res;
+    return result;
   };
-  var UndoManager = class extends ObservableV2 {
+  var UndoManager = class extends Observable {
     /**
-     * @param {Doc|AbstractType<any>|Array<AbstractType<any>>} typeScope Limits the scope of the UndoManager. If this is set to a ydoc instance, all changes on that ydoc will be undone. If set to a specific type, only changes on that type or its children will be undone. Also accepts an array of types.
+     * @param {AbstractType<any>|Array<AbstractType<any>>} typeScope Accepts either a single type, or an array of types
      * @param {UndoManagerOptions} options
      */
     constructor(typeScope, {
@@ -5575,12 +5409,11 @@ var wp;
       ignoreRemoteMapChanges = false,
       doc: doc2 = (
         /** @type {Doc} */
-        isArray(typeScope) ? typeScope[0].doc : typeScope instanceof Doc ? typeScope : typeScope.doc
+        isArray(typeScope) ? typeScope[0].doc : typeScope.doc
       )
     } = {}) {
       super();
       this.scope = [];
-      this.doc = doc2;
       this.addToScope(typeScope);
       this.deleteFilter = deleteFilter;
       trackedOrigins.add(this);
@@ -5590,15 +5423,12 @@ var wp;
       this.redoStack = [];
       this.undoing = false;
       this.redoing = false;
-      this.currStackItem = null;
+      this.doc = doc2;
       this.lastChange = 0;
       this.ignoreRemoteMapChanges = ignoreRemoteMapChanges;
       this.captureTimeout = captureTimeout;
       this.afterTransactionHandler = (transaction) => {
-        if (!this.captureTransaction(transaction) || !this.scope.some((type) => transaction.changedParentTypes.has(
-          /** @type {AbstractType<any>} */
-          type
-        ) || type === this.doc) || !this.trackedOrigins.has(transaction.origin) && (!transaction.origin || !this.trackedOrigins.has(transaction.origin.constructor))) {
+        if (!this.captureTransaction(transaction) || !this.scope.some((type) => transaction.changedParentTypes.has(type)) || !this.trackedOrigins.has(transaction.origin) && (!transaction.origin || !this.trackedOrigins.has(transaction.origin.constructor))) {
           return;
         }
         const undoing = this.undoing;
@@ -5635,11 +5465,7 @@ var wp;
           transaction.deleteSet,
           /** @param {Item|GC} item */
           (item) => {
-            if (item instanceof Item && this.scope.some((type) => type === transaction.doc || isParentOf(
-              /** @type {AbstractType<any>} */
-              type,
-              item
-            ))) {
+            if (item instanceof Item && this.scope.some((type) => isParentOf(type, item))) {
               keepItem(item, true);
             }
           }
@@ -5657,17 +5483,12 @@ var wp;
       });
     }
     /**
-     * Extend the scope.
-     *
-     * @param {Array<AbstractType<any> | Doc> | AbstractType<any> | Doc} ytypes
+     * @param {Array<AbstractType<any>> | AbstractType<any>} ytypes
      */
     addToScope(ytypes) {
-      const tmpSet = new Set(this.scope);
       ytypes = isArray(ytypes) ? ytypes : [ytypes];
       ytypes.forEach((ytype) => {
-        if (!tmpSet.has(ytype)) {
-          tmpSet.add(ytype);
-          if (ytype instanceof AbstractType ? ytype.doc !== this.doc : ytype !== this.doc) warn("[yjs#509] Not same Y.Doc");
+        if (this.scope.every((yt) => yt !== ytype)) {
           this.scope.push(ytype);
         }
       });
@@ -5881,14 +5702,14 @@ var wp;
     const updateDecoder = new LazyStructReader(new YDecoder(createDecoder(update)), false);
     let curr = updateDecoder.curr;
     if (curr !== null) {
-      let size2 = 0;
+      let size = 0;
       let currClient = curr.id.client;
       let stopCounting = curr.id.clock !== 0;
       let currClock = stopCounting ? 0 : curr.id.clock + curr.length;
       for (; curr !== null; curr = updateDecoder.next()) {
         if (currClient !== curr.id.client) {
           if (currClock !== 0) {
-            size2++;
+            size++;
             writeVarUint(encoder.restEncoder, currClient);
             writeVarUint(encoder.restEncoder, currClock);
           }
@@ -5904,12 +5725,12 @@ var wp;
         }
       }
       if (currClock !== 0) {
-        size2++;
+        size++;
         writeVarUint(encoder.restEncoder, currClient);
         writeVarUint(encoder.restEncoder, currClock);
       }
       const enc = createEncoder();
-      writeVarUint(enc, size2);
+      writeVarUint(enc, size);
       writeBinaryEncoder(enc, encoder.restEncoder);
       encoder.restEncoder = enc;
       return encoder.toUint8Array();
@@ -6304,7 +6125,7 @@ var wp;
       return isDeleted(this.transaction.deleteSet, struct.id);
     }
     /**
-     * @type {Map<string, { action: 'add' | 'update' | 'delete', oldValue: any }>}
+     * @type {Map<string, { action: 'add' | 'update' | 'delete', oldValue: any, newValue: any }>}
      */
     get keys() {
       if (this._keys === null) {
@@ -6472,8 +6293,8 @@ var wp;
           child._item.parent._start
         );
         while (c !== child._item && c !== null) {
-          if (!c.deleted && c.countable) {
-            i += c.length;
+          if (!c.deleted) {
+            i++;
           }
           c = c.right;
         }
@@ -6483,9 +6304,6 @@ var wp;
       child._item.parent;
     }
     return path;
-  };
-  var warnPrematureAccess = () => {
-    warn("Invalid access: Add Yjs type to a document before reading data.");
   };
   var maxSearchMarker = 80;
   var globalSearchMarkerTimestamp = 0;
@@ -6588,7 +6406,6 @@ var wp;
     }
   };
   var getTypeChildren = (t) => {
-    t.doc ?? warnPrematureAccess();
     let s = t._start;
     const arr = [];
     while (s) {
@@ -6651,10 +6468,6 @@ var wp;
       throw methodUnimplemented();
     }
     /**
-     * Makes a copy of this data type that can be included somewhere else.
-     *
-     * Note that the content is only readable _after_ it has been included somewhere in the Ydoc.
-     *
      * @return {AbstractType<EventType>}
      */
     clone() {
@@ -6727,7 +6540,6 @@ var wp;
     }
   };
   var typeListSlice = (type, start, end) => {
-    type.doc ?? warnPrematureAccess();
     if (start < 0) {
       start = type._length + start;
     }
@@ -6755,7 +6567,6 @@ var wp;
     return cs;
   };
   var typeListToArray = (type) => {
-    type.doc ?? warnPrematureAccess();
     const cs = [];
     let n = type._start;
     while (n !== null) {
@@ -6786,7 +6597,6 @@ var wp;
   var typeListForEach = (type, f) => {
     let index = 0;
     let n = type._start;
-    type.doc ?? warnPrematureAccess();
     while (n !== null) {
       if (n.countable && !n.deleted) {
         const c = n.content.getContent();
@@ -6839,7 +6649,6 @@ var wp;
     };
   };
   var typeListGet = (type, index) => {
-    type.doc ?? warnPrematureAccess();
     const marker = findMarker(type, index);
     let n = type._start;
     if (marker !== null) {
@@ -6912,10 +6721,10 @@ var wp;
     });
     packJsonContent();
   };
-  var lengthExceeded = () => create3("Length exceeded!");
+  var lengthExceeded = create3("Length exceeded!");
   var typeListInsertGenerics = (transaction, parent, index, content) => {
     if (index > parent._length) {
-      throw lengthExceeded();
+      throw lengthExceeded;
     }
     if (index === 0) {
       if (parent._searchMarker) {
@@ -6991,7 +6800,7 @@ var wp;
       n = n.right;
     }
     if (length3 > 0) {
-      throw lengthExceeded();
+      throw lengthExceeded;
     }
     if (parent._searchMarker) {
       updateMarkerChanges(
@@ -7022,8 +6831,6 @@ var wp;
         case Boolean:
         case Array:
         case String:
-        case Date:
-        case BigInt:
           content = new ContentAny([value]);
           break;
         case Uint8Array:
@@ -7049,13 +6856,11 @@ var wp;
     new Item(createID(ownClientId, getState(doc2.store, ownClientId)), left, left && left.lastId, null, null, parent, key, content).integrate(transaction, 0);
   };
   var typeMapGet = (parent, key) => {
-    parent.doc ?? warnPrematureAccess();
     const val = parent._map.get(key);
     return val !== void 0 && !val.deleted ? val.content.getContent()[val.length - 1] : void 0;
   };
   var typeMapGetAll = (parent) => {
     const res = {};
-    parent.doc ?? warnPrematureAccess();
     parent._map.forEach((value, key) => {
       if (!value.deleted) {
         res[key] = value.content.getContent()[value.length - 1];
@@ -7064,7 +6869,6 @@ var wp;
     return res;
   };
   var typeMapHas = (parent, key) => {
-    parent.doc ?? warnPrematureAccess();
     const val = parent._map.get(key);
     return val !== void 0 && !val.deleted;
   };
@@ -7075,28 +6879,20 @@ var wp;
     }
     return v !== null && isVisible(v, snapshot2) ? v.content.getContent()[v.length - 1] : void 0;
   };
-  var typeMapGetAllSnapshot = (parent, snapshot2) => {
-    const res = {};
-    parent._map.forEach((value, key) => {
-      let v = value;
-      while (v !== null && (!snapshot2.sv.has(v.id.client) || v.id.clock >= (snapshot2.sv.get(v.id.client) || 0))) {
-        v = v.left;
-      }
-      if (v !== null && isVisible(v, snapshot2)) {
-        res[key] = v.content.getContent()[v.length - 1];
-      }
-    });
-    return res;
-  };
-  var createMapIterator = (type) => {
-    type.doc ?? warnPrematureAccess();
-    return iteratorFilter(
-      type._map.entries(),
-      /** @param {any} entry */
-      (entry) => !entry[1].deleted
-    );
-  };
+  var createMapIterator = (map2) => iteratorFilter(
+    map2.entries(),
+    /** @param {any} entry */
+    (entry) => !entry[1].deleted
+  );
   var YArrayEvent = class extends YEvent {
+    /**
+     * @param {YArray<T>} yarray The changed type
+     * @param {Transaction} transaction The transaction object
+     */
+    constructor(yarray, transaction) {
+      super(yarray, transaction);
+      this._transaction = transaction;
+    }
   };
   var YArray = class _YArray extends AbstractType {
     constructor() {
@@ -7141,10 +6937,6 @@ var wp;
       return new _YArray();
     }
     /**
-     * Makes a copy of this data type that can be included somewhere else.
-     *
-     * Note that the content is only readable _after_ it has been included somewhere in the Ydoc.
-     *
      * @return {YArray<T>}
      */
     clone() {
@@ -7158,8 +6950,7 @@ var wp;
       return arr;
     }
     get length() {
-      this.doc ?? warnPrematureAccess();
-      return this._length;
+      return this._prelimContent === null ? this._length : this._prelimContent.length;
     }
     /**
      * Creates YArrayEvent and calls observers.
@@ -7224,9 +7015,9 @@ var wp;
       }
     }
     /**
-     * Prepends content to this YArray.
+     * Preppends content to this YArray.
      *
-     * @param {Array<T>} content Array of content to prepend.
+     * @param {Array<T>} content Array of content to preppend.
      */
     unshift(content) {
       this.insert(0, content);
@@ -7264,8 +7055,7 @@ var wp;
       return typeListToArray(this);
     }
     /**
-     * Returns a portion of this YArray into a JavaScript Array selected
-     * from start to end (end not included).
+     * Transforms this YArray to a JavaScript Array.
      *
      * @param {number} [start]
      * @param {number} [end]
@@ -7299,7 +7089,7 @@ var wp;
       );
     }
     /**
-     * Executes a provided function once on every element of this YArray.
+     * Executes a provided function once on overy element of this YArray.
      *
      * @param {function(T,number,YArray<T>):void} f A function to execute on every element of this YArray.
      */
@@ -7369,10 +7159,6 @@ var wp;
       return new _YMap();
     }
     /**
-     * Makes a copy of this data type that can be included somewhere else.
-     *
-     * Note that the content is only readable _after_ it has been included somewhere in the Ydoc.
-     *
      * @return {YMap<MapType>}
      */
     clone() {
@@ -7400,7 +7186,6 @@ var wp;
      * @return {Object<string,any>}
      */
     toJSON() {
-      this.doc ?? warnPrematureAccess();
       const map2 = {};
       this._map.forEach((item, key) => {
         if (!item.deleted) {
@@ -7416,7 +7201,7 @@ var wp;
      * @return {number}
      */
     get size() {
-      return [...createMapIterator(this)].length;
+      return [...createMapIterator(this._map)].length;
     }
     /**
      * Returns the keys for each element in the YMap Type.
@@ -7425,7 +7210,7 @@ var wp;
      */
     keys() {
       return iteratorMap(
-        createMapIterator(this),
+        createMapIterator(this._map),
         /** @param {any} v */
         (v) => v[0]
       );
@@ -7433,11 +7218,11 @@ var wp;
     /**
      * Returns the values for each element in the YMap Type.
      *
-     * @return {IterableIterator<MapType>}
+     * @return {IterableIterator<any>}
      */
     values() {
       return iteratorMap(
-        createMapIterator(this),
+        createMapIterator(this._map),
         /** @param {any} v */
         (v) => v[1].content.getContent()[v[1].length - 1]
       );
@@ -7445,16 +7230,13 @@ var wp;
     /**
      * Returns an Iterator of [key, value] pairs
      *
-     * @return {IterableIterator<[string, MapType]>}
+     * @return {IterableIterator<any>}
      */
     entries() {
       return iteratorMap(
-        createMapIterator(this),
+        createMapIterator(this._map),
         /** @param {any} v */
-        (v) => (
-          /** @type {any} */
-          [v[0], v[1].content.getContent()[v[1].length - 1]]
-        )
+        (v) => [v[0], v[1].content.getContent()[v[1].length - 1]]
       );
     }
     /**
@@ -7463,7 +7245,6 @@ var wp;
      * @param {function(MapType,string,YMap<MapType>):void} f A function to execute on every element of this YArray.
      */
     forEach(f) {
-      this.doc ?? warnPrematureAccess();
       this._map.forEach((item, key) => {
         if (!item.deleted) {
           f(item.content.getContent()[item.length - 1], key, this);
@@ -7473,7 +7254,7 @@ var wp;
     /**
      * Returns an Iterator of [key, value] pairs
      *
-     * @return {IterableIterator<[string, MapType]>}
+     * @return {IterableIterator<any>}
      */
     [Symbol.iterator]() {
       return this.entries();
@@ -7627,9 +7408,9 @@ var wp;
     }
     return pos;
   };
-  var findPosition = (transaction, parent, index, useSearchMarker) => {
+  var findPosition = (transaction, parent, index) => {
     const currentAttributes = /* @__PURE__ */ new Map();
-    const marker = useSearchMarker ? findMarker(parent, index) : null;
+    const marker = findMarker(parent, index);
     if (marker) {
       const pos = new ItemTextListPosition(marker.p.left, marker.p, marker.index, currentAttributes);
       return findNextPosition(transaction, pos, index - marker.index);
@@ -7682,7 +7463,7 @@ var wp;
         attributes[
           /** @type {ContentFormat} */
           currPos.right.content.key
-        ] ?? null,
+        ] || null,
         /** @type {ContentFormat} */
         currPos.right.content.value
       )) ;
@@ -7698,7 +7479,7 @@ var wp;
     const negatedAttributes = /* @__PURE__ */ new Map();
     for (const key in attributes) {
       const val = attributes[key];
-      const currentVal = currPos.currentAttributes.get(key) ?? null;
+      const currentVal = currPos.currentAttributes.get(key) || null;
       if (!equalAttrs(currentVal, val)) {
         negatedAttributes.set(key, currentVal);
         const { left, right } = currPos;
@@ -7811,11 +7592,11 @@ var wp;
               /** @type {ContentFormat} */
               content
             );
-            const startAttrValue = startAttributes.get(key) ?? null;
+            const startAttrValue = startAttributes.get(key) || null;
             if (endFormats.get(key) !== content || startAttrValue === value) {
               start.delete(transaction);
               cleanups++;
-              if (!reachedCurr && (currAttributes.get(key) ?? null) === value && startAttrValue !== value) {
+              if (!reachedCurr && (currAttributes.get(key) || null) === value && startAttrValue !== value) {
                 if (startAttrValue === null) {
                   currAttributes.delete(key);
                 } else {
@@ -8131,12 +7912,12 @@ var wp;
                 );
                 if (this.adds(item)) {
                   if (!this.deletes(item)) {
-                    const curVal = currentAttributes.get(key) ?? null;
+                    const curVal = currentAttributes.get(key) || null;
                     if (!equalAttrs(curVal, value)) {
                       if (action === "retain") {
                         addOp();
                       }
-                      if (equalAttrs(value, oldAttributes.get(key) ?? null)) {
+                      if (equalAttrs(value, oldAttributes.get(key) || null)) {
                         delete attributes[key];
                       } else {
                         attributes[key] = value;
@@ -8147,7 +7928,7 @@ var wp;
                   }
                 } else if (this.deletes(item)) {
                   oldAttributes.set(key, value);
-                  const curVal = currentAttributes.get(key) ?? null;
+                  const curVal = currentAttributes.get(key) || null;
                   if (!equalAttrs(curVal, value)) {
                     if (action === "retain") {
                       addOp();
@@ -8221,7 +8002,6 @@ var wp;
      * @type {number}
      */
     get length() {
-      this.doc ?? warnPrematureAccess();
       return this._length;
     }
     /**
@@ -8241,10 +8021,6 @@ var wp;
       return new _YText();
     }
     /**
-     * Makes a copy of this data type that can be included somewhere else.
-     *
-     * Note that the content is only readable _after_ it has been included somewhere in the Ydoc.
-     *
      * @return {YText}
      */
     clone() {
@@ -8272,7 +8048,6 @@ var wp;
      * @public
      */
     toString() {
-      this.doc ?? warnPrematureAccess();
       let str = "";
       let n = this._start;
       while (n !== null) {
@@ -8296,7 +8071,7 @@ var wp;
     /**
      * Apply a {@link Delta} on this shared YText type.
      *
-     * @param {Array<any>} delta The changes to apply on this element.
+     * @param {any} delta The changes to apply on this element.
      * @param {object}  opts
      * @param {boolean} [opts.sanitize] Sanitize input delta. Removes ending newlines if set to true.
      *
@@ -8336,7 +8111,6 @@ var wp;
      * @public
      */
     toDelta(snapshot2, prevSnapshot, computeYChange) {
-      this.doc ?? warnPrematureAccess();
       const ops = [];
       const currentAttributes = /* @__PURE__ */ new Map();
       const doc2 = (
@@ -8452,7 +8226,7 @@ var wp;
       const y = this.doc;
       if (y !== null) {
         transact(y, (transaction) => {
-          const pos = findPosition(transaction, this, index, !attributes);
+          const pos = findPosition(transaction, this, index);
           if (!attributes) {
             attributes = {};
             pos.currentAttributes.forEach((v, k) => {
@@ -8470,20 +8244,20 @@ var wp;
      *
      * @param {number} index The index to insert the embed at.
      * @param {Object | AbstractType<any>} embed The Object that represents the embed.
-     * @param {TextAttributes} [attributes] Attribute information to apply on the
+     * @param {TextAttributes} attributes Attribute information to apply on the
      *                                    embed
      *
      * @public
      */
-    insertEmbed(index, embed, attributes) {
+    insertEmbed(index, embed, attributes = {}) {
       const y = this.doc;
       if (y !== null) {
         transact(y, (transaction) => {
-          const pos = findPosition(transaction, this, index, !attributes);
-          insertText(transaction, this, pos, embed, attributes || {});
+          const pos = findPosition(transaction, this, index);
+          insertText(transaction, this, pos, embed, attributes);
         });
       } else {
-        this._pending.push(() => this.insertEmbed(index, embed, attributes || {}));
+        this._pending.push(() => this.insertEmbed(index, embed, attributes));
       }
     }
     /**
@@ -8501,7 +8275,7 @@ var wp;
       const y = this.doc;
       if (y !== null) {
         transact(y, (transaction) => {
-          deleteText(transaction, findPosition(transaction, this, index, true), length3);
+          deleteText(transaction, findPosition(transaction, this, index), length3);
         });
       } else {
         this._pending.push(() => this.delete(index, length3));
@@ -8524,7 +8298,7 @@ var wp;
       const y = this.doc;
       if (y !== null) {
         transact(y, (transaction) => {
-          const pos = findPosition(transaction, this, index, false);
+          const pos = findPosition(transaction, this, index);
           if (pos.right === null) {
             return;
           }
@@ -8619,7 +8393,6 @@ var wp;
       this._currentNode = /** @type {Item} */
       root._start;
       this._firstCall = true;
-      root.doc ?? warnPrematureAccess();
     }
     [Symbol.iterator]() {
       return this;
@@ -8643,9 +8416,8 @@ var wp;
             n = type._start;
           } else {
             while (n !== null) {
-              const nxt = n.next;
-              if (nxt !== null) {
-                n = nxt;
+              if (n.right !== null) {
+                n = n.right;
                 break;
               } else if (n.parent === this._root) {
                 n = null;
@@ -8706,10 +8478,6 @@ var wp;
       return new _YXmlFragment();
     }
     /**
-     * Makes a copy of this data type that can be included somewhere else.
-     *
-     * Note that the content is only readable _after_ it has been included somewhere in the Ydoc.
-     *
      * @return {YXmlFragment}
      */
     clone() {
@@ -8718,7 +8486,6 @@ var wp;
       return el;
     }
     get length() {
-      this.doc ?? warnPrematureAccess();
       return this._prelimContent === null ? this._length : this._prelimContent.length;
     }
     /**
@@ -8908,9 +8675,9 @@ var wp;
       this.insert(this.length, content);
     }
     /**
-     * Prepends content to this YArray.
+     * Preppends content to this YArray.
      *
-     * @param {Array<YXmlElement|YXmlText>} content Array of content to prepend.
+     * @param {Array<YXmlElement|YXmlText>} content Array of content to preppend.
      */
     unshift(content) {
       this.insert(0, content);
@@ -8925,8 +8692,7 @@ var wp;
       return typeListGet(this, index);
     }
     /**
-     * Returns a portion of this YXmlFragment into a JavaScript Array selected
-     * from start to end (end not included).
+     * Transforms this YArray to a JavaScript Array.
      *
      * @param {number} [start]
      * @param {number} [end]
@@ -8936,7 +8702,7 @@ var wp;
       return typeListSlice(this, start, end);
     }
     /**
-     * Executes a provided function on once on every child element.
+     * Executes a provided function on once on overy child element.
      *
      * @param {function(YXmlElement|YXmlText,number, typeof self):void} f A function to execute on every element of this YArray.
      */
@@ -9011,23 +8777,17 @@ var wp;
       return new _YXmlElement(this.nodeName);
     }
     /**
-     * Makes a copy of this data type that can be included somewhere else.
-     *
-     * Note that the content is only readable _after_ it has been included somewhere in the Ydoc.
-     *
      * @return {YXmlElement<KV>}
      */
     clone() {
       const el = new _YXmlElement(this.nodeName);
       const attrs = this.getAttributes();
       forEach(attrs, (value, key) => {
-        el.setAttribute(
-          key,
-          /** @type {any} */
-          value
-        );
+        if (typeof value === "string") {
+          el.setAttribute(key, value);
+        }
       });
-      el.insert(0, this.toArray().map((v) => v instanceof AbstractType ? v.clone() : v));
+      el.insert(0, this.toArray().map((item) => item instanceof AbstractType ? item.clone() : item));
       return el;
     }
     /**
@@ -9125,15 +8885,14 @@ var wp;
     /**
      * Returns all attribute name/value pairs in a JSON Object.
      *
-     * @param {Snapshot} [snapshot]
      * @return {{ [Key in Extract<keyof KV,string>]?: KV[Key]}} A JSON Object that describes the attributes.
      *
      * @public
      */
-    getAttributes(snapshot2) {
+    getAttributes() {
       return (
         /** @type {any} */
-        snapshot2 ? typeMapGetAllSnapshot(this, snapshot2) : typeMapGetAll(this)
+        typeMapGetAll(this)
       );
     }
     /**
@@ -9187,7 +8946,7 @@ var wp;
      * @param {YXmlElement|YXmlText|YXmlFragment} target The target on which the event is created.
      * @param {Set<string|null>} subs The set of changed attributes. `null` is included if the
      *                   child list changed.
-     * @param {Transaction} transaction The transaction instance with which the
+     * @param {Transaction} transaction The transaction instance with wich the
      *                                  change was created.
      */
     constructor(target, subs, transaction) {
@@ -9218,10 +8977,6 @@ var wp;
       return new _YXmlHook(this.hookName);
     }
     /**
-     * Makes a copy of this data type that can be included somewhere else.
-     *
-     * Note that the content is only readable _after_ it has been included somewhere in the Ydoc.
-     *
      * @return {YXmlHook}
      */
     clone() {
@@ -9301,10 +9056,6 @@ var wp;
       return new _YXmlText();
     }
     /**
-     * Makes a copy of this data type that can be included somewhere else.
-     *
-     * Note that the content is only readable _after_ it has been included somewhere in the Ydoc.
-     *
      * @return {YXmlText}
      */
     clone() {
@@ -9397,7 +9148,7 @@ var wp;
      * This method is already assuming that `this.id.clock + this.length === this.id.clock`.
      * Also this method does *not* remove right from StructStore!
      * @param {AbstractStruct} right
-     * @return {boolean} whether this merged with right
+     * @return {boolean} wether this merged with right
      */
     mergeWith(right) {
       return false;
@@ -9980,14 +9731,12 @@ var wp;
     }
     return new ContentJSON(cs);
   };
-  var isDevMode = getVariable("node_env") === "development";
   var ContentAny = class _ContentAny {
     /**
      * @param {Array<any>} arr
      */
     constructor(arr) {
       this.arr = arr;
-      isDevMode && deepFreeze(arr);
     }
     /**
      * @return {number}
@@ -10526,11 +10275,13 @@ var wp;
       }
       if (this.left && this.left.constructor === GC || this.right && this.right.constructor === GC) {
         this.parent = null;
-      } else if (!this.parent) {
+      }
+      if (!this.parent) {
         if (this.left && this.left.constructor === _Item) {
           this.parent = this.left.parent;
           this.parentSub = this.left.parentSub;
-        } else if (this.right && this.right.constructor === _Item) {
+        }
+        if (this.right && this.right.constructor === _Item) {
           this.parent = this.right.parent;
           this.parentSub = this.right.parentSub;
         }
@@ -12023,11 +11774,6 @@ var wp;
   var AwarenessState = class extends AwarenessWithEqualityChecks {
     /** CUSTOM PROPERTIES */
     /**
-     * Whether the setUp method has been called, to avoid running it multiple
-     * times.
-     */
-    hasSetupRun = false;
-    /**
      * We keep track of all seen states during the current session for two reasons:
      *
      * 1. So that we can represent recently disconnected users in our UI, even
@@ -12053,18 +11799,9 @@ var wp;
     throttleTimeouts = /* @__PURE__ */ new Map();
     /** CUSTOM METHODS */
     /**
-     * Set up the awareness state. This method is idempotent and will only run
-     * once. Subclasses should override `onSetUp()` instead of this method to
-     * add their own setup logic.
-     *
-     * This is defined as a readonly arrow function property to prevent
-     * subclasses from overriding it.
+     * Set up the awareness state.
      */
-    setUp = () => {
-      if (this.hasSetupRun) {
-        return;
-      }
-      this.hasSetupRun = true;
+    setUp() {
       this.on(
         "change",
         ({ added, removed, updated }) => {
@@ -12084,15 +11821,6 @@ var wp;
           this.updateSubscribers();
         }
       );
-      this.onSetUp();
-    };
-    /**
-     * Get the most recent state from the last processed change event.
-     *
-     * @return An array of EnhancedState< State >.
-     */
-    getCurrentState() {
-      return Array.from(this.previousSnapshot.values());
     }
     /**
      * Get all seen states in this session to enable debug reporting.
@@ -12538,6 +12266,7 @@ var wp;
         entityStates.delete(entityId);
       };
       const awareness = syncConfig.createAwareness?.(ydoc, objectId);
+      awareness?.setUp();
       const onRecordUpdate = (_events, transaction) => {
         if (transaction.local && !(transaction.origin instanceof UndoManager)) {
           return;
@@ -12766,12 +12495,6 @@ var wp;
     };
   }
 
-  // packages/core-data/build-module/awareness/post-editor-awareness.mjs
-  var import_block_editor = __toESM(require_block_editor(), 1);
-
-  // packages/core-data/build-module/awareness/base-awareness.mjs
-  var import_data2 = __toESM(require_data(), 1);
-
   // packages/core-data/build-module/name.mjs
   var STORE_NAME = "core";
 
@@ -12863,18 +12586,19 @@ var wp;
 
   // packages/core-data/build-module/awareness/base-awareness.mjs
   var BaseAwarenessState = class extends AwarenessState {
-    onSetUp() {
-      void this.setCurrentUserInfo();
+    setUp() {
+      super.setUp();
+      this.setCurrentUserInfo();
     }
     /**
      * Set the current user info in the local state.
      */
-    async setCurrentUserInfo() {
+    setCurrentUserInfo() {
       const states = this.getStates();
       const otherUserColors = Array.from(states.entries()).filter(
         ([clientId, state]) => state.userInfo && clientId !== this.clientID
       ).map(([, state]) => state.userInfo.color).filter(Boolean);
-      const currentUser2 = await (0, import_data2.resolveSelect)(STORE_NAME).getCurrentUser();
+      const currentUser2 = (0, import_data2.select)(STORE_NAME).getCurrentUser();
       const userInfo = generateUserInfo(currentUser2, otherUserColors);
       this.setLocalStateField("userInfo", userInfo);
     }
@@ -13079,8 +12803,8 @@ var wp;
       ...baseEqualityFieldChecks,
       editorState: this.areEditorStatesEqual
     };
-    onSetUp() {
-      super.onSetUp();
+    setUp() {
+      super.setUp();
       this.subscribeToUserSelectionChanges();
     }
     /**
@@ -13160,78 +12884,6 @@ var wp;
         return state1 === state2;
       }
       return areSelectionsStatesEqual(state1.selection, state2.selection);
-    }
-    /**
-     * Get the absolute position index from a selection cursor.
-     *
-     * @param selection - The selection cursor.
-     * @return The absolute position index, or null if not found.
-     */
-    getAbsolutePositionIndex(selection) {
-      return yjs_exports.createAbsolutePositionFromRelativePosition(
-        selection.cursorPosition.relativePosition,
-        this.doc
-      )?.index ?? null;
-    }
-    /**
-     * Type guard to check if a struct is a Y.Item (not Y.GC)
-     * @param struct - The struct to check.
-     * @return True if the struct is a Y.Item, false otherwise.
-     */
-    isYItem(struct) {
-      return "content" in struct;
-    }
-    /**
-     * Get data for debugging, using the awareness state.
-     *
-     * @return {YDocDebugData} The debug data.
-     */
-    getDebugData() {
-      const ydoc = this.doc;
-      const docData = Object.fromEntries(
-        Array.from(ydoc.share, ([key, value]) => [
-          key,
-          value.toJSON()
-        ])
-      );
-      const userMapData = new Map(
-        Array.from(this.getSeenStates().entries()).map(
-          ([clientId, userState]) => [
-            String(clientId),
-            {
-              name: userState.userInfo.name,
-              wpUserId: userState.userInfo.id
-            }
-          ]
-        )
-      );
-      const serializableClientItems = {};
-      ydoc.store.clients.forEach((structs, clientId) => {
-        const items2 = structs.filter(this.isYItem);
-        serializableClientItems[clientId] = items2.map((item) => {
-          const { left, right, ...rest } = item;
-          return {
-            ...rest,
-            left: left ? {
-              id: left.id,
-              length: left.length,
-              origin: left.origin,
-              content: left.content
-            } : null,
-            right: right ? {
-              id: right.id,
-              length: right.length,
-              origin: right.origin,
-              content: right.content
-            } : null
-          };
-        });
-      });
-      return {
-        doc: docData,
-        clients: serializableClientItems,
-        userMap: Object.fromEntries(userMapData)
-      };
     }
   };
 
@@ -14344,12 +13996,12 @@ var wp;
       return nextItemIds;
     }
     const nextItemIdsStartIndex = (page - 1) * perPage;
-    const size2 = Math.max(
+    const size = Math.max(
       itemIds?.length ?? 0,
       nextItemIdsStartIndex + nextItemIds.length
     );
-    const mergedItemIds = new Array(size2);
-    for (let i = 0; i < size2; i++) {
+    const mergedItemIds = new Array(size);
+    for (let i = 0; i < size; i++) {
       const isInNextItemsRange = i >= nextItemIdsStartIndex && i < nextItemIdsStartIndex + perPage;
       mergedItemIds[i] = isInNextItemsRange ? nextItemIds[i - nextItemIdsStartIndex] : itemIds?.[i];
     }
@@ -15038,24 +14690,24 @@ var wp;
     return state.navigationFallbackId;
   }
   var getBlockPatternsForPostType = (0, import_data7.createRegistrySelector)(
-    (select3) => (0, import_data7.createSelector)(
-      (state, postType) => select3(STORE_NAME).getBlockPatterns().filter(
+    (select4) => (0, import_data7.createSelector)(
+      (state, postType) => select4(STORE_NAME).getBlockPatterns().filter(
         ({ postTypes }) => !postTypes || Array.isArray(postTypes) && postTypes.includes(postType)
       ),
-      () => [select3(STORE_NAME).getBlockPatterns()]
+      () => [select4(STORE_NAME).getBlockPatterns()]
     )
   );
   var getEntityRecordsPermissions = (0, import_data7.createRegistrySelector)(
-    (select3) => (0, import_data7.createSelector)(
+    (select4) => (0, import_data7.createSelector)(
       (state, kind, name, ids) => {
         const normalizedIds = Array.isArray(ids) ? ids : [ids];
         return normalizedIds.map((id2) => ({
-          delete: select3(STORE_NAME).canUser("delete", {
+          delete: select4(STORE_NAME).canUser("delete", {
             kind,
             name,
             id: id2
           }),
-          update: select3(STORE_NAME).canUser("update", {
+          update: select4(STORE_NAME).canUser("update", {
             kind,
             name,
             id: id2
@@ -15082,9 +14734,9 @@ var wp;
     return value.toString();
   }
   var getHomePage = (0, import_data7.createRegistrySelector)(
-    (select3) => (0, import_data7.createSelector)(
+    (select4) => (0, import_data7.createSelector)(
       () => {
-        const siteData = select3(STORE_NAME).getEntityRecord(
+        const siteData = select4(STORE_NAME).getEntityRecord(
           "root",
           "__unstableBase"
         );
@@ -15095,7 +14747,7 @@ var wp;
         if (homepageId) {
           return { postType: "page", postId: homepageId };
         }
-        const frontPageTemplateId = select3(
+        const frontPageTemplateId = select4(
           STORE_NAME
         ).getDefaultTemplateId({
           slug: "front-page"
@@ -15116,21 +14768,21 @@ var wp;
       ]
     )
   );
-  var getPostsPageId = (0, import_data7.createRegistrySelector)((select3) => () => {
-    const siteData = select3(STORE_NAME).getEntityRecord(
+  var getPostsPageId = (0, import_data7.createRegistrySelector)((select4) => () => {
+    const siteData = select4(STORE_NAME).getEntityRecord(
       "root",
       "__unstableBase"
     );
     return siteData?.show_on_front === "page" ? normalizePageId(siteData.page_for_posts) : null;
   });
   var getTemplateId = (0, import_data7.createRegistrySelector)(
-    (select3) => (state, postType, postId) => {
-      const homepage = unlock(select3(STORE_NAME)).getHomePage();
+    (select4) => (state, postType, postId) => {
+      const homepage = unlock(select4(STORE_NAME)).getHomePage();
       if (!homepage) {
         return;
       }
       if (postType === "page" && postType === homepage?.postType && postId.toString() === homepage?.postId) {
-        const templates = select3(STORE_NAME).getEntityRecords(
+        const templates = select4(STORE_NAME).getEntityRecords(
           "postType",
           "wp_template",
           {
@@ -15145,7 +14797,7 @@ var wp;
           return id2;
         }
       }
-      const editedEntity = select3(STORE_NAME).getEditedEntityRecord(
+      const editedEntity = select4(STORE_NAME).getEditedEntityRecord(
         "postType",
         postType,
         postId
@@ -15153,15 +14805,15 @@ var wp;
       if (!editedEntity) {
         return;
       }
-      const postsPageId = unlock(select3(STORE_NAME)).getPostsPageId();
+      const postsPageId = unlock(select4(STORE_NAME)).getPostsPageId();
       if (postType === "page" && postsPageId === postId.toString()) {
-        return select3(STORE_NAME).getDefaultTemplateId({
+        return select4(STORE_NAME).getDefaultTemplateId({
           slug: "home"
         });
       }
       const currentTemplateSlug = editedEntity.template;
       if (currentTemplateSlug) {
-        const currentTemplate = select3(STORE_NAME).getEntityRecords("postType", "wp_template", {
+        const currentTemplate = select4(STORE_NAME).getEntityRecords("postType", "wp_template", {
           per_page: -1
         })?.find(({ slug }) => slug === currentTemplateSlug);
         if (currentTemplate) {
@@ -15174,7 +14826,7 @@ var wp;
       } else {
         slugToCheck = postType === "page" ? "page" : `single-${postType}`;
       }
-      return select3(STORE_NAME).getDefaultTemplateId({
+      return select4(STORE_NAME).getDefaultTemplateId({
         slug: slugToCheck
       });
     }
@@ -15189,8 +14841,8 @@ var wp;
   // packages/core-data/build-module/selectors.mjs
   var EMPTY_OBJECT = {};
   var isRequestingEmbedPreview = (0, import_data8.createRegistrySelector)(
-    (select3) => (state, url) => {
-      return select3(STORE_NAME).isResolving("getEmbedPreview", [
+    (select4) => (state, url) => {
+      return select4(STORE_NAME).isResolving("getEmbedPreview", [
         url
       ]);
     }
@@ -15607,8 +15259,8 @@ var wp;
     );
   }
   var hasFetchedAutosaves = (0, import_data8.createRegistrySelector)(
-    (select3) => (state, postType, postId) => {
-      return select3(STORE_NAME).hasFinishedResolution("getAutosaves", [
+    (select4) => (state, postType, postId) => {
+      return select4(STORE_NAME).hasFinishedResolution("getAutosaves", [
         postType,
         postId
       ]);
@@ -16013,9 +15665,9 @@ var wp;
       preview
     };
   }
-  var deleteEntityRecord = (kind, name, recordId, query, { __unstableFetch = import_api_fetch3.default, throwOnError = false } = {}) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var deleteEntityRecord = (kind, name, recordId, query, { __unstableFetch = import_api_fetch3.default, throwOnError = false } = {}) => async ({ dispatch: dispatch3, resolveSelect }) => {
     logEntityDeprecation(kind, name, "deleteEntityRecord");
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16077,17 +15729,17 @@ var wp;
       dispatch3.__unstableReleaseStoreLock(lock2);
     }
   };
-  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select: select3, dispatch: dispatch3 }) => {
+  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select: select4, dispatch: dispatch3 }) => {
     logEntityDeprecation(kind, name, "editEntityRecord");
-    const entityConfig = select3.getEntityConfig(kind, name);
+    const entityConfig = select4.getEntityConfig(kind, name);
     if (!entityConfig) {
       throw new Error(
         `The entity being edited (${kind}, ${name}) does not have a loaded config.`
       );
     }
     const { mergedEdits = {} } = entityConfig;
-    const record = select3.getRawEntityRecord(kind, name, recordId);
-    const editedRecord = select3.getEditedEntityRecord(
+    const record = select4.getRawEntityRecord(kind, name, recordId);
+    const editedRecord = select4.getEditedEntityRecord(
       kind,
       name,
       recordId
@@ -16124,7 +15776,7 @@ var wp;
       }
     }
     if (!options.undoIgnore) {
-      select3.getUndoManager().addRecord(
+      select4.getUndoManager().addRecord(
         [
           {
             id: { kind, name, recordId },
@@ -16145,8 +15797,8 @@ var wp;
       ...edit
     });
   };
-  var undo = () => ({ select: select3, dispatch: dispatch3 }) => {
-    const undoRecord = select3.getUndoManager().undo();
+  var undo = () => ({ select: select4, dispatch: dispatch3 }) => {
+    const undoRecord = select4.getUndoManager().undo();
     if (!undoRecord) {
       return;
     }
@@ -16155,8 +15807,8 @@ var wp;
       record: undoRecord
     });
   };
-  var redo = () => ({ select: select3, dispatch: dispatch3 }) => {
-    const redoRecord = select3.getUndoManager().redo();
+  var redo = () => ({ select: select4, dispatch: dispatch3 }) => {
+    const redoRecord = select4.getUndoManager().redo();
     if (!redoRecord) {
       return;
     }
@@ -16165,16 +15817,16 @@ var wp;
       record: redoRecord
     });
   };
-  var __unstableCreateUndoLevel = () => ({ select: select3 }) => {
-    select3.getUndoManager().addRecord();
+  var __unstableCreateUndoLevel = () => ({ select: select4 }) => {
+    select4.getUndoManager().addRecord();
   };
   var saveEntityRecord = (kind, name, record, {
     isAutosave = false,
     __unstableFetch = import_api_fetch3.default,
     throwOnError = false
-  } = {}) => async ({ select: select3, resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
+  } = {}) => async ({ select: select4, resolveSelect, dispatch: dispatch3 }) => {
     logEntityDeprecation(kind, name, "saveEntityRecord");
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16193,7 +15845,7 @@ var wp;
       for (const [key, value] of Object.entries(record)) {
         if (typeof value === "function") {
           const evaluatedValue = value(
-            select3.getEditedEntityRecord(kind, name, recordId)
+            select4.getEditedEntityRecord(kind, name, recordId)
           );
           dispatch3.editEntityRecord(
             kind,
@@ -16223,11 +15875,11 @@ var wp;
       }
       try {
         const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
-        const persistedRecord = !isNewRecord ? select3.getRawEntityRecord(kind, name, recordId) : {};
+        const persistedRecord = !isNewRecord ? select4.getRawEntityRecord(kind, name, recordId) : {};
         if (isAutosave) {
-          const currentUser2 = select3.getCurrentUser();
+          const currentUser2 = select4.getCurrentUser();
           const currentUserId = currentUser2 ? currentUser2.id : void 0;
-          const autosavePost = await resolveSelect2.getAutosave(
+          const autosavePost = await resolveSelect.getAutosave(
             persistedRecord.type,
             persistedRecord.id,
             currentUserId
@@ -16387,12 +16039,12 @@ var wp;
     ]);
     return results;
   };
-  var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select: select3, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select: select4, dispatch: dispatch3, resolveSelect }) => {
     logEntityDeprecation(kind, name, "saveEditedEntityRecord");
-    if (!select3.hasEditsForEntityRecord(kind, name, recordId)) {
+    if (!select4.hasEditsForEntityRecord(kind, name, recordId)) {
       return;
     }
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16400,7 +16052,7 @@ var wp;
       return;
     }
     const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
-    const edits = select3.getEntityRecordNonTransientEdits(
+    const edits = select4.getEntityRecordNonTransientEdits(
       kind,
       name,
       recordId
@@ -16408,16 +16060,16 @@ var wp;
     const record = { [entityIdKey]: recordId, ...edits };
     return await dispatch3.saveEntityRecord(kind, name, record, options);
   };
-  var __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({ select: select3, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({ select: select4, dispatch: dispatch3, resolveSelect }) => {
     logEntityDeprecation(
       kind,
       name,
       "__experimentalSaveSpecifiedEntityEdits"
     );
-    if (!select3.hasEditsForEntityRecord(kind, name, recordId)) {
+    if (!select4.hasEditsForEntityRecord(kind, name, recordId)) {
       return;
     }
-    const edits = select3.getEntityRecordNonTransientEdits(
+    const edits = select4.getEntityRecordNonTransientEdits(
       kind,
       name,
       recordId
@@ -16426,7 +16078,7 @@ var wp;
     for (const item of itemsToSave) {
       setNestedValue(editsToSave, item, getNestedValue(edits, item));
     }
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16481,9 +16133,9 @@ var wp;
       templateId
     };
   }
-  var receiveRevisions = (kind, name, recordKey, records, query, invalidateCache = false, meta) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var receiveRevisions = (kind, name, recordKey, records, query, invalidateCache = false, meta) => async ({ dispatch: dispatch3, resolveSelect }) => {
     logEntityDeprecation(kind, name, "receiveRevisions");
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16517,13 +16169,13 @@ var wp;
       registeredPostMeta: registeredPostMeta2
     };
   }
-  var editMediaEntity = (recordId, edits = {}, { __unstableFetch = import_api_fetch4.default, throwOnError = false } = {}) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var editMediaEntity = (recordId, edits = {}, { __unstableFetch = import_api_fetch4.default, throwOnError = false } = {}) => async ({ dispatch: dispatch3, resolveSelect }) => {
     if (!recordId) {
       return;
     }
     const kind = "postType";
     const name = "attachment";
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16849,8 +16501,8 @@ var wp;
     const currentUser2 = await (0, import_api_fetch8.default)({ path: "/wp/v2/users/me" });
     dispatch3.receiveCurrentUser(currentUser2);
   };
-  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select3, dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select4, dispatch: dispatch3, registry, resolveSelect }) => {
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
     );
@@ -16875,7 +16527,7 @@ var wp;
         };
       }
       if (query !== void 0 && query._fields) {
-        const hasRecord = select3.hasEntityRecord(
+        const hasRecord = select4.hasEntityRecord(
           kind,
           name,
           key,
@@ -16945,7 +16597,7 @@ var wp;
                 });
               },
               // Get the current entity record (with edits)
-              getEditedRecord: async () => await resolveSelect2.getEditedEntityRecord(
+              getEditedRecord: async () => await resolveSelect.getEditedEntityRecord(
                 kind,
                 name,
                 key
@@ -17008,8 +16660,8 @@ var wp;
   };
   var getRawEntityRecord2 = forward_resolver_default("getEntityRecord");
   var getEditedEntityRecord2 = forward_resolver_default("getEntityRecord");
-  var getEntityRecords2 = (kind, name, query = {}) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+  var getEntityRecords2 = (kind, name, query = {}) => async ({ dispatch: dispatch3, registry, resolveSelect }) => {
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
     );
@@ -17200,8 +16852,8 @@ var wp;
   };
   var getEntityRecordsTotalItems2 = forward_resolver_default("getEntityRecords");
   var getEntityRecordsTotalPages2 = forward_resolver_default("getEntityRecords");
-  var getCurrentTheme2 = () => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
-    const activeThemes = await resolveSelect2.getEntityRecords(
+  var getCurrentTheme2 = () => async ({ dispatch: dispatch3, resolveSelect }) => {
+    const activeThemes = await resolveSelect.getEntityRecords(
       "root",
       "theme",
       { status: "active" }
@@ -17219,7 +16871,7 @@ var wp;
       dispatch3.receiveEmbedPreview(url, false);
     }
   };
-  var canUser2 = (requestedAction, resource, id2) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
+  var canUser2 = (requestedAction, resource, id2) => async ({ dispatch: dispatch3, registry, resolveSelect }) => {
     if (!ALLOWED_RESOURCE_ACTIONS.includes(requestedAction)) {
       throw new Error(`'${requestedAction}' is not a valid action.`);
     }
@@ -17242,7 +16894,7 @@ var wp;
       if (!resource.kind || !resource.name) {
         throw new Error("The entity resource object is not valid.");
       }
-      const configs = await resolveSelect2.getEntitiesConfig(
+      const configs = await resolveSelect.getEntitiesConfig(
         resource.kind
       );
       const entityConfig = configs.find(
@@ -17285,12 +16937,12 @@ var wp;
   var canUserEditEntityRecord2 = (kind, name, recordId) => async ({ dispatch: dispatch3 }) => {
     await dispatch3(canUser2("update", { kind, name, id: recordId }));
   };
-  var getAutosaves2 = (postType, postId) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var getAutosaves2 = (postType, postId) => async ({ dispatch: dispatch3, resolveSelect }) => {
     const {
       rest_base: restBase,
       rest_namespace: restNamespace = "wp/v2",
       supports
-    } = await resolveSelect2.getPostType(postType);
+    } = await resolveSelect.getPostType(postType);
     if (!supports?.autosave) {
       return;
     }
@@ -17301,11 +16953,11 @@ var wp;
       dispatch3.receiveAutosaves(postId, autosaves2);
     }
   };
-  var getAutosave2 = (postType, postId) => async ({ resolveSelect: resolveSelect2 }) => {
-    await resolveSelect2.getAutosaves(postType, postId);
+  var getAutosave2 = (postType, postId) => async ({ resolveSelect }) => {
+    await resolveSelect.getAutosaves(postType, postId);
   };
-  var __experimentalGetCurrentGlobalStylesId2 = () => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
-    const activeThemes = await resolveSelect2.getEntityRecords(
+  var __experimentalGetCurrentGlobalStylesId2 = () => async ({ dispatch: dispatch3, resolveSelect }) => {
+    const activeThemes = await resolveSelect.getEntityRecords(
       "root",
       "theme",
       { status: "active" }
@@ -17320,8 +16972,8 @@ var wp;
       dispatch3.__experimentalReceiveCurrentGlobalStylesId(id2);
     }
   };
-  var __experimentalGetCurrentThemeBaseGlobalStyles2 = () => async ({ resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
-    const currentTheme2 = await resolveSelect2.getCurrentTheme();
+  var __experimentalGetCurrentThemeBaseGlobalStyles2 = () => async ({ resolveSelect, dispatch: dispatch3 }) => {
+    const currentTheme2 = await resolveSelect.getCurrentTheme();
     const themeGlobalStyles = await (0, import_api_fetch8.default)({
       path: `/wp/v2/global-styles/themes/${currentTheme2.stylesheet}?context=view`
     });
@@ -17330,8 +16982,8 @@ var wp;
       themeGlobalStyles
     );
   };
-  var __experimentalGetCurrentThemeGlobalStylesVariations2 = () => async ({ resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
-    const currentTheme2 = await resolveSelect2.getCurrentTheme();
+  var __experimentalGetCurrentThemeGlobalStylesVariations2 = () => async ({ resolveSelect, dispatch: dispatch3 }) => {
+    const currentTheme2 = await resolveSelect.getCurrentTheme();
     const variations = await (0, import_api_fetch8.default)({
       path: `/wp/v2/global-styles/themes/${currentTheme2.stylesheet}/variations?context=view`
     });
@@ -17340,9 +16992,9 @@ var wp;
       variations
     );
   };
-  var getCurrentThemeGlobalStylesRevisions2 = () => async ({ resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
-    const globalStylesId = await resolveSelect2.__experimentalGetCurrentGlobalStylesId();
-    const record = globalStylesId ? await resolveSelect2.getEntityRecord(
+  var getCurrentThemeGlobalStylesRevisions2 = () => async ({ resolveSelect, dispatch: dispatch3 }) => {
+    const globalStylesId = await resolveSelect.__experimentalGetCurrentGlobalStylesId();
+    const record = globalStylesId ? await resolveSelect.getEntityRecord(
       "root",
       "globalStyles",
       globalStylesId
@@ -17379,8 +17031,8 @@ var wp;
     });
     dispatch3({ type: "RECEIVE_BLOCK_PATTERN_CATEGORIES", categories });
   };
-  var getUserPatternCategories2 = () => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
-    const patternCategories = await resolveSelect2.getEntityRecords(
+  var getUserPatternCategories2 = () => async ({ dispatch: dispatch3, resolveSelect }) => {
+    const patternCategories = await resolveSelect.getEntityRecords(
       "taxonomy",
       "wp_pattern_category",
       {
@@ -17399,7 +17051,7 @@ var wp;
       patternCategories: mappedPatternCategories
     });
   };
-  var getNavigationFallbackId2 = () => async ({ dispatch: dispatch3, select: select3, registry }) => {
+  var getNavigationFallbackId2 = () => async ({ dispatch: dispatch3, select: select4, registry }) => {
     const fallback = await (0, import_api_fetch8.default)({
       path: (0, import_url6.addQueryArgs)("/wp-block-editor/v1/navigation-fallback", {
         _embed: true
@@ -17411,7 +17063,7 @@ var wp;
       if (!record) {
         return;
       }
-      const existingFallbackEntityRecord = select3.getEntityRecord(
+      const existingFallbackEntityRecord = select4.getEntityRecord(
         "postType",
         "wp_navigation",
         fallback.id
@@ -17431,11 +17083,11 @@ var wp;
       ]);
     });
   };
-  var getDefaultTemplateId2 = (query) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
+  var getDefaultTemplateId2 = (query) => async ({ dispatch: dispatch3, registry, resolveSelect }) => {
     const template = await (0, import_api_fetch8.default)({
       path: (0, import_url6.addQueryArgs)("/wp/v2/templates/lookup", query)
     });
-    await resolveSelect2.getEntitiesConfig("postType");
+    await resolveSelect.getEntitiesConfig("postType");
     const id2 = window?.__experimentalTemplateActivate ? template?.wp_id || template?.id : template?.id;
     if (id2) {
       template.id = id2;
@@ -17455,8 +17107,8 @@ var wp;
   getDefaultTemplateId2.shouldInvalidate = (action) => {
     return action.type === "RECEIVE_ITEMS" && action.kind === "root" && action.name === "site";
   };
-  var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+  var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch: dispatch3, registry, resolveSelect }) => {
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
     );
@@ -17532,8 +17184,8 @@ var wp;
     }
   };
   getRevisions2.shouldInvalidate = (action, kind, name, recordKey) => action.type === "SAVE_ENTITY_RECORD_FINISH" && name === action.name && kind === action.kind && !action.error && recordKey === action.recordId;
-  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
-    const configs = await resolveSelect2.getEntitiesConfig(kind);
+  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ dispatch: dispatch3, resolveSelect }) => {
+    const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
     );
@@ -17565,13 +17217,13 @@ var wp;
       dispatch3.receiveRevisions(kind, name, recordKey, record, query);
     }
   };
-  var getRegisteredPostMeta2 = (postType) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var getRegisteredPostMeta2 = (postType) => async ({ dispatch: dispatch3, resolveSelect }) => {
     let options;
     try {
       const {
         rest_namespace: restNamespace = "wp/v2",
         rest_base: restBase
-      } = await resolveSelect2.getPostType(postType) || {};
+      } = await resolveSelect.getPostType(postType) || {};
       options = await (0, import_api_fetch8.default)({
         path: `${restNamespace}/${restBase}/?context=edit`,
         method: "OPTIONS"
@@ -17829,7 +17481,7 @@ var wp;
 
   // node_modules/memize/dist/index.js
   function memize(fn, options) {
-    var size2 = 0;
+    var size = 0;
     var head;
     var tail;
     options = options || {};
@@ -17876,13 +17528,13 @@ var wp;
       } else {
         tail = node;
       }
-      if (size2 === /** @type {MemizeOptions} */
+      if (size === /** @type {MemizeOptions} */
       options.maxSize) {
         tail = /** @type {MemizeCacheNode} */
         tail.prev;
         tail.next = null;
       } else {
-        size2++;
+        size++;
       }
       head = node;
       return node.val;
@@ -17890,7 +17542,7 @@ var wp;
     memoized.clear = function() {
       head = null;
       tail = null;
-      size2 = 0;
+      size = 0;
     };
     return memoized;
   }
@@ -17916,8 +17568,8 @@ var wp;
     "getCachedResolvers"
   ];
   function useQuerySelect(mapQuerySelect, deps) {
-    return (0, import_data9.useSelect)((select3, registry) => {
-      const resolve = (store2) => enrichSelectors(select3(store2));
+    return (0, import_data9.useSelect)((select4, registry) => {
+      const resolve = (store2) => enrichSelectors(select4(store2));
       return mapQuerySelect(resolve, registry);
     }, deps);
   }
@@ -17977,7 +17629,7 @@ var wp;
       [editEntityRecord2, kind, name, recordId, saveEditedEntityRecord2]
     );
     const { editedRecord, hasEdits, edits } = (0, import_data10.useSelect)(
-      (select3) => {
+      (select4) => {
         if (!options.enabled) {
           return {
             editedRecord: EMPTY_OBJECT2,
@@ -17986,17 +17638,17 @@ var wp;
           };
         }
         return {
-          editedRecord: select3(store).getEditedEntityRecord(
+          editedRecord: select4(store).getEditedEntityRecord(
             kind,
             name,
             recordId
           ),
-          hasEdits: select3(store).hasEditsForEntityRecord(
+          hasEdits: select4(store).hasEditsForEntityRecord(
             kind,
             name,
             recordId
           ),
-          edits: select3(store).getEntityRecordNonTransientEdits(
+          edits: select4(store).getEntityRecordNonTransientEdits(
             kind,
             name,
             recordId
@@ -18054,7 +17706,7 @@ var wp;
       [kind, name, queryAsString, options.enabled]
     );
     const { totalItems, totalPages } = (0, import_data11.useSelect)(
-      (select3) => {
+      (select4) => {
         if (!options.enabled) {
           return {
             totalItems: null,
@@ -18062,12 +17714,12 @@ var wp;
           };
         }
         return {
-          totalItems: select3(store).getEntityRecordsTotalItems(
+          totalItems: select4(store).getEntityRecordsTotalItems(
             kind,
             name,
             queryArgs
           ),
-          totalPages: select3(store).getEntityRecordsTotalPages(
+          totalPages: select4(store).getEntityRecordsTotalPages(
             kind,
             name,
             queryArgs
@@ -18092,7 +17744,7 @@ var wp;
   }
   function useEntityRecordsWithPermissions(kind, name, queryArgs = {}, options = { enabled: true }) {
     const entityConfig = (0, import_data11.useSelect)(
-      (select3) => select3(store).getEntityConfig(kind, name),
+      (select4) => select4(store).getEntityConfig(kind, name),
       [kind, name]
     );
     const { records: data, ...ret } = useEntityRecords(
@@ -18122,9 +17774,9 @@ var wp;
       [data, entityConfig?.key]
     );
     const permissions = (0, import_data11.useSelect)(
-      (select3) => {
+      (select4) => {
         const { getEntityRecordsPermissions: getEntityRecordsPermissions2 } = unlock(
-          select3(store)
+          select4(store)
         );
         return getEntityRecordsPermissions2(kind, name, ids);
       },
@@ -18366,11 +18018,11 @@ var wp;
     const id2 = _id ?? providerId;
     const { getEntityRecord: getEntityRecord3, getEntityRecordEdits: getEntityRecordEdits2 } = (0, import_data12.useSelect)(STORE_NAME);
     const { content, editedBlocks, meta } = (0, import_data12.useSelect)(
-      (select3) => {
+      (select4) => {
         if (!id2) {
           return {};
         }
-        const { getEditedEntityRecord: getEditedEntityRecord3 } = select3(STORE_NAME);
+        const { getEditedEntityRecord: getEditedEntityRecord3 } = select4(STORE_NAME);
         const editedRecord = getEditedEntityRecord3(kind, name, id2);
         return {
           editedBlocks: editedRecord.blocks,
@@ -18458,8 +18110,8 @@ var wp;
     const providerId = useEntityId(kind, name);
     const id2 = _id ?? providerId;
     const { value, fullValue } = (0, import_data13.useSelect)(
-      (select3) => {
-        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select3(STORE_NAME);
+      (select4) => {
+        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select4(STORE_NAME);
         const record = getEntityRecord3(kind, name, id2);
         const editedRecord = getEditedEntityRecord3(kind, name, id2);
         return record && editedRecord ? {
@@ -18481,65 +18133,11 @@ var wp;
     return [value, setValue, fullValue];
   }
 
-  // packages/core-data/build-module/hooks/use-post-editor-awareness-state.mjs
-  var import_element8 = __toESM(require_element(), 1);
-  var defaultState = {
-    activeUsers: [],
-    getAbsolutePositionIndex: () => null,
-    getDebugData: () => ({
-      doc: {},
-      clients: {},
-      userMap: {}
-    }),
-    isCurrentUserDisconnected: false
-  };
-  function getAwarenessState(awareness, newState) {
-    const activeUsers = newState ?? awareness.getCurrentState();
-    return {
-      activeUsers,
-      getAbsolutePositionIndex: (selection) => awareness.getAbsolutePositionIndex(selection),
-      getDebugData: () => awareness.getDebugData(),
-      isCurrentUserDisconnected: activeUsers.find((user) => user.isMe)?.isConnected === false
-    };
-  }
-  function usePostEditorAwarenessState(postId, postType) {
-    const [state, setState] = (0, import_element8.useState)(defaultState);
-    (0, import_element8.useEffect)(() => {
-      if (null === postId || null === postType) {
-        setState(defaultState);
-        return;
-      }
-      const objectType = `postType/${postType}`;
-      const objectId = postId.toString();
-      const awareness = getSyncManager()?.getAwareness(
-        objectType,
-        objectId
-      );
-      if (!awareness) {
-        setState(defaultState);
-        return;
-      }
-      awareness.setUp();
-      setState(getAwarenessState(awareness));
-      const unsubscribe = awareness?.onStateChange(
-        (newState) => {
-          setState(getAwarenessState(awareness, newState));
-        }
-      );
-      return unsubscribe;
-    }, [postId, postType]);
-    return state;
-  }
-  function useActiveCollaborators(postId, postType) {
-    return usePostEditorAwarenessState(postId, postType).activeUsers;
-  }
-
   // packages/core-data/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
     useEntityRecordsWithPermissions,
-    RECEIVE_INTERMEDIATE_RESULTS,
-    useActiveCollaborators
+    RECEIVE_INTERMEDIATE_RESULTS
   });
 
   // packages/core-data/build-module/index.mjs

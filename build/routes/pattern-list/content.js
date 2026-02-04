@@ -856,71 +856,15 @@ function dequal(foo, bar) {
   return foo !== foo && bar !== bar;
 }
 
-// packages/views/build-module/use-view.mjs
-var import_element = __toESM(require_element(), 1);
-var import_data = __toESM(require_data(), 1);
-var import_preferences = __toESM(require_preferences(), 1);
-
 // packages/views/build-module/preference-keys.mjs
 function generatePreferenceKey(kind, name, slug) {
   return `dataviews-${kind}-${name}-${slug}`;
 }
 
-// packages/views/build-module/filter-utils.mjs
-function mergeActiveViewOverrides(view, activeViewOverrides, defaultView) {
-  if (!activeViewOverrides) {
-    return view;
-  }
-  let result = view;
-  if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
-    const activeFields = new Set(
-      activeViewOverrides.filters.map((f2) => f2.field)
-    );
-    const preserved = (view.filters ?? []).filter(
-      (f2) => !activeFields.has(f2.field)
-    );
-    result = {
-      ...result,
-      filters: [...preserved, ...activeViewOverrides.filters]
-    };
-  }
-  if (activeViewOverrides.sort) {
-    const isDefaultSort = defaultView && view.sort?.field === defaultView.sort?.field && view.sort?.direction === defaultView.sort?.direction;
-    if (isDefaultSort) {
-      result = {
-        ...result,
-        sort: activeViewOverrides.sort
-      };
-    }
-  }
-  return result;
-}
-function stripActiveViewOverrides(view, activeViewOverrides, defaultView) {
-  if (!activeViewOverrides) {
-    return view;
-  }
-  let result = view;
-  if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
-    const activeFields = new Set(
-      activeViewOverrides.filters.map((f2) => f2.field)
-    );
-    result = {
-      ...result,
-      filters: (view.filters ?? []).filter(
-        (f2) => !activeFields.has(f2.field)
-      )
-    };
-  }
-  if (activeViewOverrides.sort && view.sort?.field === activeViewOverrides.sort.field && view.sort?.direction === activeViewOverrides.sort.direction) {
-    result = {
-      ...result,
-      sort: defaultView?.sort
-    };
-  }
-  return result;
-}
-
 // packages/views/build-module/use-view.mjs
+var import_element = __toESM(require_element(), 1);
+var import_data = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
 function omit(obj, keys) {
   const result = { ...obj };
   for (const key of keys) {
@@ -929,15 +873,7 @@ function omit(obj, keys) {
   return result;
 }
 function useView(config) {
-  const {
-    kind,
-    name,
-    slug,
-    defaultView,
-    activeViewOverrides,
-    queryParams,
-    onChangeQueryParams
-  } = config;
+  const { kind, name, slug, defaultView, queryParams, onChangeQueryParams } = config;
   const preferenceKey = generatePreferenceKey(kind, name, slug);
   const persistedView = (0, import_data.useSelect)(
     (select2) => {
@@ -953,16 +889,12 @@ function useView(config) {
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
   const view = (0, import_element.useMemo)(() => {
-    return mergeActiveViewOverrides(
-      {
-        ...baseView,
-        page,
-        search
-      },
-      activeViewOverrides,
-      defaultView
-    );
-  }, [baseView, page, search, activeViewOverrides, defaultView]);
+    return {
+      ...baseView,
+      page,
+      search
+    };
+  }, [baseView, page, search]);
   const isModified = !!persistedView;
   const updateView = (0, import_element.useCallback)(
     (newView) => {
@@ -970,26 +902,12 @@ function useView(config) {
         page: newView?.page,
         search: newView?.search
       };
-      const preferenceView = stripActiveViewOverrides(
-        omit(newView, ["page", "search"]),
-        activeViewOverrides,
-        defaultView
-      );
+      const preferenceView = omit(newView, ["page", "search"]);
       if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
         onChangeQueryParams(urlParams);
       }
-      const comparableBaseView = stripActiveViewOverrides(
-        baseView,
-        activeViewOverrides,
-        defaultView
-      );
-      const comparableDefaultView = stripActiveViewOverrides(
-        defaultView,
-        activeViewOverrides,
-        defaultView
-      );
-      if (!dequal(comparableBaseView, preferenceView)) {
-        if (dequal(preferenceView, comparableDefaultView)) {
+      if (!dequal(baseView, preferenceView)) {
+        if (dequal(preferenceView, defaultView)) {
           set("core/views", preferenceKey, void 0);
         } else {
           set("core/views", preferenceKey, preferenceView);
@@ -1002,7 +920,6 @@ function useView(config) {
       search,
       baseView,
       defaultView,
-      activeViewOverrides,
       set,
       preferenceKey
     ]
@@ -2184,7 +2101,7 @@ function renderFooterContent(data, actions, getItemId, selection, actionsToShow,
     {
       direction: "row",
       className: "dataviews-bulk-actions-footer__container",
-      gap: "md",
+      gap: "sm",
       align: "center",
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
@@ -2203,7 +2120,7 @@ function renderFooterContent(data, actions, getItemId, selection, actionsToShow,
           {
             direction: "row",
             className: "dataviews-bulk-actions-footer__action-buttons",
-            gap: "xs",
+            gap: "2xs",
             children: [
               actionsToShow.map((action) => {
                 return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
@@ -2674,7 +2591,7 @@ function ColumnPrimary({
   renderItemLink,
   isItemClickable
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Stack, { direction: "row", gap: "md", align: "flex-start", justify: "flex-start", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Stack, { direction: "row", gap: "sm", align: "flex-start", justify: "flex-start", children: [
     mediaField && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
       ItemClickWrapper,
       {
@@ -2801,7 +2718,7 @@ function FieldItem({
   isVisible: isVisible2,
   onToggleVisibility
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components5.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(Stack, { direction: "row", gap: "sm", justify: "flex-start", align: "center", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components5.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(Stack, { direction: "row", gap: "xs", justify: "flex-start", align: "center", children: [
     /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { style: { height: 24, width: 24 }, children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components5.Icon, { icon: check_default }) }),
     /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { className: "dataviews-view-config__label", children: field.label })
   ] }) });
@@ -3439,17 +3356,16 @@ var GridItem = (0, import_element12.forwardRef)(function GridItem2({
   const id = getItemId(item);
   const instanceId = (0, import_compose4.useInstanceId)(GridItem2);
   const isSelected2 = selection.includes(id);
-  const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
-  const rendersMediaField = showMedia && mediaField?.render;
-  const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+  const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
     mediaField.render,
     {
       item,
       field: mediaField,
       config
     }
-  ) : mediaPlaceholder;
+  ) : null;
   const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(titleField.render, { item, field: titleField }) : null;
+  const shouldRenderMedia = showMedia && renderedMediaField;
   let mediaA11yProps;
   let titleA11yProps;
   if (isItemClickable(item) && onClickItem) {
@@ -3494,21 +3410,19 @@ var GridItem = (0, import_element12.forwardRef)(function GridItem2({
         }
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+        shouldRenderMedia && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
           ItemClickWrapper,
           {
             item,
             isItemClickable,
             onClickItem,
             renderItemLink,
-            className: clsx_default("dataviews-view-grid__media", {
-              "dataviews-view-grid__media--placeholder": !rendersMediaField
-            }),
+            className: "dataviews-view-grid__media",
             ...mediaA11yProps,
             children: renderedMediaField
           }
         ),
-        hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+        hasBulkActions && shouldRenderMedia && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
           DataViewsSelectionCheckbox,
           {
             item,
@@ -3519,24 +3433,38 @@ var GridItem = (0, import_element12.forwardRef)(function GridItem2({
             disabled: !hasBulkAction
           }
         ),
-        !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(ItemActions, { item, actions, isCompact: true }) }),
-        showTitle && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "dataviews-view-grid__title", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-          ItemClickWrapper,
+        !showTitle && shouldRenderMedia && !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(ItemActions, { item, actions, isCompact: true }) }),
+        showTitle && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+          Stack,
           {
-            item,
-            isItemClickable,
-            onClickItem,
-            renderItemLink,
-            className: "dataviews-view-grid__title-field dataviews-title-field",
-            ...titleA11yProps,
-            title: titleField?.getValueFormatted({
-              item,
-              field: titleField
-            }) || void 0,
-            children: renderedTitleField
+            direction: "row",
+            gap: "xs",
+            className: "dataviews-view-grid__title-actions",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+                ItemClickWrapper,
+                {
+                  item,
+                  isItemClickable,
+                  onClickItem,
+                  renderItemLink,
+                  className: "dataviews-view-grid__title-field dataviews-title-field",
+                  ...titleA11yProps,
+                  children: renderedTitleField
+                }
+              ),
+              !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+                ItemActions,
+                {
+                  item,
+                  actions,
+                  isCompact: true
+                }
+              )
+            ]
           }
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(Stack, { direction: "column", gap: "2xs", children: [
           showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
             descriptionField.render,
             {
@@ -3549,7 +3477,7 @@ var GridItem = (0, import_element12.forwardRef)(function GridItem2({
             {
               direction: "row",
               className: "dataviews-view-grid__badge-fields",
-              gap: "sm",
+              gap: "xs",
               wrap: "wrap",
               align: "top",
               justify: "flex-start",
@@ -3576,7 +3504,7 @@ var GridItem = (0, import_element12.forwardRef)(function GridItem2({
             {
               direction: "column",
               className: "dataviews-view-grid__fields",
-              gap: "xs",
+              gap: "2xs",
               children: regularFields.map((field) => {
                 return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                   import_components8.Flex,
@@ -3765,12 +3693,12 @@ function ViewGrid({
   return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_jsx_runtime34.Fragment, {
     // Render multiple groups.
     children: [
-      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
+      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Stack, { direction: "column", gap: "md", children: Array.from(dataByGroup.entries()).map(
         ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
           Stack,
           {
             direction: "column",
-            gap: "sm",
+            gap: "xs",
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n12.sprintf)(
                 // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
@@ -3956,7 +3884,7 @@ function ListItem({
     Stack,
     {
       direction: "row",
-      gap: "md",
+      gap: "sm",
       className: "dataviews-view-list__item-actions",
       children: [
         primaryAction && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
@@ -4057,25 +3985,26 @@ function ListItem({
               Stack,
               {
                 direction: "row",
-                gap: "md",
+                gap: "sm",
                 justify: "start",
                 align: "flex-start",
-                style: { flex: 1, minWidth: 0 },
+                style: { flex: 1 },
                 children: [
                   renderedMediaField,
                   /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
                     Stack,
                     {
                       direction: "column",
-                      gap: "xs",
+                      gap: "2xs",
                       className: "dataviews-view-list__field-wrapper",
                       children: [
                         /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Stack, { direction: "row", align: "center", children: [
                           /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
                             "div",
                             {
-                              className: "dataviews-title-field dataviews-view-list__title-field",
+                              className: "dataviews-title-field",
                               id: labelId,
+                              style: { flex: 1 },
                               children: renderedTitleField
                             }
                           ),
@@ -4260,14 +4189,14 @@ function ViewList(props) {
           Stack,
           {
             direction: "column",
-            gap: "lg",
+            gap: "md",
             className: clsx_default("dataviews-view-list", className),
             children: Array.from(dataByGroup.entries()).map(
               ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
                 Stack,
                 {
                   direction: "column",
-                  gap: "sm",
+                  gap: "xs",
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n13.sprintf)(
                       // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
@@ -4451,9 +4380,9 @@ function ActivityItem(props) {
   const verticalGap = (0, import_element15.useMemo)(() => {
     switch (density) {
       case "comfortable":
-        return "md";
-      default:
         return "sm";
+      default:
+        return "xs";
     }
   }, [density]);
   return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
@@ -4469,12 +4398,12 @@ function ActivityItem(props) {
         density === "balanced" && "is-balanced",
         density === "comfortable" && "is-comfortable"
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(Stack, { direction: "row", gap: "md", justify: "start", align: "flex-start", children: [
         /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
           Stack,
           {
             direction: "column",
-            gap: "xs",
+            gap: "2xs",
             align: "center",
             className: "dataviews-view-activity__item-type",
             children: renderedMediaField
@@ -4611,7 +4540,7 @@ function ViewActivity(props) {
   const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const groupedEntries = dataByGroup ? Array.from(dataByGroup.entries()) : [];
   if (hasData && groupField && dataByGroup) {
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Stack, { direction: "column", gap: "sm", className: wrapperClassName, children: groupedEntries.map(
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Stack, { direction: "column", gap: "xs", className: wrapperClassName, children: groupedEntries.map(
       ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
         ActivityGroup,
         {
@@ -4693,7 +4622,7 @@ function DataViewsPagination() {
       className: "dataviews-pagination",
       justify: "end",
       align: "center",
-      gap: "xl",
+      gap: "lg",
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
           Stack,
@@ -4701,7 +4630,7 @@ function DataViewsPagination() {
             direction: "row",
             justify: "flex-start",
             align: "center",
-            gap: "xs",
+            gap: "2xs",
             className: "dataviews-pagination__page-select",
             children: (0, import_element16.createInterpolateElement)(
               (0, import_i18n15.sprintf)(
@@ -4735,7 +4664,7 @@ function DataViewsPagination() {
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(Stack, { direction: "row", gap: "2xs", align: "center", children: [
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
             import_components13.Button,
             {
@@ -4874,7 +4803,7 @@ function GridItem3({
             children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "dataviews-view-picker-grid__title-field dataviews-title-field", children: renderedTitleField })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Stack, { direction: "column", gap: "2xs", children: [
           showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
             descriptionField.render,
             {
@@ -4887,7 +4816,7 @@ function GridItem3({
             {
               direction: "row",
               className: "dataviews-view-picker-grid__badge-fields",
-              gap: "sm",
+              gap: "xs",
               wrap: "wrap",
               align: "top",
               justify: "flex-start",
@@ -4914,7 +4843,7 @@ function GridItem3({
             {
               direction: "column",
               className: "dataviews-view-picker-grid__fields",
-              gap: "xs",
+              gap: "2xs",
               children: regularFields.map((field) => {
                 return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
                   import_components15.Flex,
@@ -4968,7 +4897,7 @@ function GridGroup({
     Stack,
     {
       direction: "column",
-      gap: "sm",
+      gap: "xs",
       role: "group",
       "aria-labelledby": headerId,
       children: [
@@ -5055,7 +4984,7 @@ function ViewPickerGrid({
             Stack,
             {
               direction: "column",
-              gap: "lg",
+              gap: "md",
               children,
               ...props
             }
@@ -12460,7 +12389,7 @@ function OperatorSelector({
     Stack,
     {
       direction: "row",
-      gap: "sm",
+      gap: "xs",
       justify: "flex-start",
       className: "dataviews-filters__summary-operators-container",
       align: "center",
@@ -12913,7 +12842,7 @@ function Filters({ className }) {
     {
       direction: "row",
       justify: "flex-start",
-      gap: "sm",
+      gap: "xs",
       style: { width: "fit-content" },
       wrap: "wrap",
       className,
@@ -13095,7 +13024,7 @@ function DataViewsFooter() {
       justify: "end",
       align: "center",
       className: "dataviews-footer",
-      gap: "sm",
+      gap: "xs",
       children: [
         hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(BulkActionsFooter, {}),
         /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(dataviews_pagination_default, {})
@@ -13449,13 +13378,13 @@ function DataviewsViewConfigDropdown() {
             {
               direction: "column",
               className: "dataviews-view-config",
-              gap: "xl",
+              gap: "lg",
               children: /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)(SettingsSection, { title: (0, import_i18n31.__)("Appearance"), children: [
                 /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)(
                   Stack,
                   {
                     direction: "row",
-                    gap: "sm",
+                    gap: "xs",
                     className: "is-divided-in-two",
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(SortFieldControl, {}),
@@ -13519,7 +13448,6 @@ function Checkbox({
   onChange,
   data,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
@@ -13532,7 +13460,6 @@ function Checkbox({
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       hidden: hideLabelFromVision,
       label,
@@ -13648,7 +13575,7 @@ function RelativeDateControl({
       className: clsx_default(className, "dataviews-controls__relative-date"),
       label,
       hideLabelFromVision,
-      children: /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(Stack, { direction: "row", gap: "xs", children: [
         /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
           import_components30.__experimentalNumberControl,
           {
@@ -13705,7 +13632,6 @@ function CalendarDateTimeControl({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
@@ -13786,12 +13712,7 @@ function CalendarDateTimeControl({
   const {
     timezone: { string: timezoneString }
   } = (0, import_date3.getSettings)();
-  let displayLabel = label;
-  if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n33.__)("Required")})`;
-  } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n33.__)("Optional")})`;
-  }
+  const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n33.__)("Required")})` : label;
   return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
     import_components31.BaseControl,
     {
@@ -13799,7 +13720,7 @@ function CalendarDateTimeControl({
       label: displayLabel,
       help: description,
       hideLabelFromVision,
-      children: /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(Stack, { direction: "column", gap: "md", children: [
         /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
           DateCalendar,
           {
@@ -13837,7 +13758,6 @@ function DateTime({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   operator,
   validity
 }) {
@@ -13861,7 +13781,6 @@ function DateTime({
       field,
       onChange,
       hideLabelFromVision,
-      markWhenOptional,
       validity
     }
   );
@@ -14037,7 +13956,8 @@ function ValidatedDateControl({
       {
         className: clsx_default(
           "components-validated-control__indicator",
-          customValidity.type === "invalid" ? "is-invalid" : void 0
+          customValidity.type === "invalid" ? "is-invalid" : void 0,
+          customValidity.type === "valid" ? "is-valid" : void 0
         ),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
@@ -14060,7 +13980,6 @@ function CalendarDateControl({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const {
@@ -14124,12 +14043,7 @@ function CalendarDateControl({
   const {
     timezone: { string: timezoneString }
   } = (0, import_date4.getSettings)();
-  let displayLabel = label;
-  if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n34.__)("Required")})`;
-  } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n34.__)("Optional")})`;
-  }
+  const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n34.__)("Required")})` : label;
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     ValidatedDateControl,
     {
@@ -14145,12 +14059,12 @@ function CalendarDateControl({
           className: "dataviews-controls__date",
           label: displayLabel,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(Stack, { direction: "column", gap: "md", children: [
             /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
               Stack,
               {
                 direction: "row",
-                gap: "sm",
+                gap: "xs",
                 wrap: "wrap",
                 justify: "flex-start",
                 children: [
@@ -14220,7 +14134,6 @@ function CalendarDateRangeControl({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { id, label, getValue, setValue, format: fieldFormat } = field;
@@ -14312,12 +14225,7 @@ function CalendarDateRangeControl({
     [value, updateDateRange]
   );
   const { timezone } = (0, import_date4.getSettings)();
-  let displayLabel = label;
-  if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n34.__)("Required")})`;
-  } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n34.__)("Optional")})`;
-  }
+  const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n34.__)("Required")})` : label;
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     ValidatedDateControl,
     {
@@ -14333,12 +14241,12 @@ function CalendarDateRangeControl({
           className: "dataviews-controls__date",
           label: displayLabel,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(Stack, { direction: "column", gap: "md", children: [
             /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
               Stack,
               {
                 direction: "row",
-                gap: "sm",
+                gap: "xs",
                 wrap: "wrap",
                 justify: "flex-start",
                 children: [
@@ -14376,7 +14284,7 @@ function CalendarDateRangeControl({
               Stack,
               {
                 direction: "row",
-                gap: "sm",
+                gap: "xs",
                 justify: "space-between",
                 className: "dataviews-controls__date-range-inputs",
                 children: [
@@ -14432,7 +14340,6 @@ function DateControl({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   operator,
   validity
 }) {
@@ -14457,7 +14364,6 @@ function DateControl({
         field,
         onChange,
         hideLabelFromVision,
-        markWhenOptional,
         validity
       }
     );
@@ -14469,7 +14375,6 @@ function DateControl({
       field,
       onChange,
       hideLabelFromVision,
-      markWhenOptional,
       validity
     }
   );
@@ -14488,7 +14393,6 @@ function ValidatedText({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   type,
   prefix,
   suffix,
@@ -14509,7 +14413,6 @@ function ValidatedText({
     ValidatedInputControl2,
     {
       required: !!isValid2.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
@@ -14535,7 +14438,6 @@ function Email({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
@@ -14546,7 +14448,6 @@ function Email({
         field,
         onChange,
         hideLabelFromVision,
-        markWhenOptional,
         validity,
         type: "email",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components34.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components34.Icon, { icon: envelope_default }) })
@@ -14563,7 +14464,6 @@ function Telephone({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
@@ -14574,7 +14474,6 @@ function Telephone({
         field,
         onChange,
         hideLabelFromVision,
-        markWhenOptional,
         validity,
         type: "tel",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components35.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components35.Icon, { icon: mobile_default }) })
@@ -14591,7 +14490,6 @@ function Url({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
@@ -14602,7 +14500,6 @@ function Url({
         field,
         onChange,
         hideLabelFromVision,
-        markWhenOptional,
         validity,
         type: "url",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_components36.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_components36.Icon, { icon: link_default }) })
@@ -14677,7 +14574,6 @@ function ValidatedNumber({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   operator,
   validity
 }) {
@@ -14731,7 +14627,6 @@ function ValidatedNumber({
     ValidatedNumberControl,
     {
       required: !!isValid2.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       help: description,
@@ -14768,7 +14663,6 @@ function Radio({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -14788,7 +14682,6 @@ function Radio({
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       help: description,
@@ -14810,7 +14703,6 @@ function Select({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -14831,7 +14723,6 @@ function Select({
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       value,
@@ -14853,7 +14744,6 @@ function Text2({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   config,
   validity
 }) {
@@ -14866,7 +14756,6 @@ function Text2({
         field,
         onChange,
         hideLabelFromVision,
-        markWhenOptional,
         validity,
         prefix: prefix ? (0, import_element47.createElement)(prefix) : void 0,
         suffix: suffix ? (0, import_element47.createElement)(suffix) : void 0
@@ -14885,7 +14774,6 @@ function Toggle({
   onChange,
   data,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -14898,7 +14786,6 @@ function Toggle({
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       hidden: hideLabelFromVision,
       label,
@@ -14919,7 +14806,6 @@ function Textarea({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   config,
   validity
 }) {
@@ -14934,7 +14820,6 @@ function Textarea({
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
@@ -14960,7 +14845,6 @@ function ToggleGroup({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { getValue, setValue, isValid: isValid2 } = field;
@@ -14984,7 +14868,6 @@ function ToggleGroup({
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       __next40pxDefaultSize: true,
       isBlock: true,
@@ -15015,7 +14898,6 @@ function ArrayControl({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
@@ -15052,7 +14934,6 @@ function ArrayControl({
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label: hideLabelFromVision ? void 0 : label,
       value: arrayValueAsElements,
@@ -15304,7 +15185,6 @@ function Color({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
@@ -15325,7 +15205,6 @@ function Color({
     ValidatedInputControl3,
     {
       required: !!field.isValid?.required,
-      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
@@ -15355,7 +15234,6 @@ function Password({
   field,
   onChange,
   hideLabelFromVision,
-  markWhenOptional,
   validity
 }) {
   const [isVisible2, setIsVisible] = (0, import_element53.useState)(false);
@@ -15370,7 +15248,6 @@ function Password({
         field,
         onChange,
         hideLabelFromVision,
-        markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
         suffix: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components45.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
@@ -16511,14 +16388,14 @@ function DefaultUI({
         align: "top",
         justify: "space-between",
         className: "dataviews__view-actions",
-        gap: "xs",
+        gap: "2xs",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(
             Stack,
             {
               direction: "row",
               justify: "start",
-              gap: "sm",
+              gap: "xs",
               className: "dataviews__search",
               children: [
                 search && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(dataviews_search_default, { label: searchLabel }),
@@ -16526,7 +16403,7 @@ function DefaultUI({
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(Stack, { direction: "row", gap: "2xs", style: { flexShrink: 0 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(dataviews_view_config_default, {}),
             header
           ] })
@@ -17429,7 +17306,7 @@ function PatternList() {
   const { view, isModified, updateView, resetToDefault } = useView({
     kind: "postType",
     name: "wp_block",
-    slug: "default-new",
+    slug: type,
     defaultView: DEFAULT_VIEW,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
