@@ -40158,9 +40158,9 @@ ${js}
   var import_components85 = __toESM(require_components(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
   var import_dom6 = __toESM(require_dom(), 1);
-  var import_block_editor152 = __toESM(require_block_editor(), 1);
-  var import_data79 = __toESM(require_data(), 1);
-  var import_core_data43 = __toESM(require_core_data(), 1);
+  var import_block_editor153 = __toESM(require_block_editor(), 1);
+  var import_data80 = __toESM(require_data(), 1);
+  var import_core_data44 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/navigation-link/shared/use-handle-link-change.mjs
   var import_element73 = __toESM(require_element(), 1);
@@ -40857,10 +40857,17 @@ ${js}
         badges.push({ label: capitalize(type), intent: "default" });
       }
     }
-    if (!url) {
+    if (hasBinding && !isEntityAvailable) {
+      badges.push({
+        label: (0, import_i18n133.sprintf)(
+          /* translators: %s is the entity type (e.g., "page", "post", "category") */
+          (0, import_i18n133.__)("Missing %s"),
+          type
+        ),
+        intent: "error"
+      });
+    } else if (!url) {
       badges.push({ label: (0, import_i18n133.__)("No link selected"), intent: "error" });
-    } else if (hasBinding && !isEntityAvailable) {
-      badges.push({ label: (0, import_i18n133.__)("Deleted"), intent: "error" });
     } else if (entityStatus) {
       const statusMap = {
         publish: { label: (0, import_i18n133.__)("Published"), intent: "success" },
@@ -40905,9 +40912,45 @@ ${js}
     };
   }
 
+  // packages/block-library/build-module/navigation-link/shared/use-is-invalid-link.mjs
+  var import_data79 = __toESM(require_data(), 1);
+  var import_core_data43 = __toESM(require_core_data(), 1);
+  var import_block_editor152 = __toESM(require_block_editor(), 1);
+  var useIsInvalidLink = (kind, type, id, enabled) => {
+    const isPostType = kind === "post-type" || type === "post" || type === "page";
+    const hasId = Number.isInteger(id);
+    const blockEditingMode = (0, import_block_editor152.useBlockEditingMode)();
+    const { postStatus, isDeleted } = (0, import_data79.useSelect)(
+      (select9) => {
+        if (!isPostType) {
+          return { postStatus: null, isDeleted: false };
+        }
+        if (blockEditingMode === "disabled" || !enabled) {
+          return { postStatus: null, isDeleted: false };
+        }
+        const { getEntityRecord, hasFinishedResolution } = select9(import_core_data43.store);
+        const entityRecord = getEntityRecord("postType", type, id);
+        const hasResolved = hasFinishedResolution("getEntityRecord", [
+          "postType",
+          type,
+          id
+        ]);
+        const deleted = hasResolved && entityRecord === void 0;
+        return {
+          postStatus: entityRecord?.status,
+          isDeleted: deleted
+        };
+      },
+      [isPostType, blockEditingMode, enabled, type, id]
+    );
+    const isInvalid = isPostType && hasId && (isDeleted || postStatus && "trash" === postStatus);
+    const isDraft = "draft" === postStatus;
+    return [isInvalid, isDraft];
+  };
+
   // packages/block-library/build-module/navigation-link/shared/controls.mjs
   var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
-  var { LinkPicker } = unlock(import_block_editor152.privateApis);
+  var { LinkPicker } = unlock(import_block_editor153.privateApis);
   function getEntityTypeName(type, kind) {
     if (kind === "post-type") {
       switch (type) {
@@ -40938,26 +40981,33 @@ ${js}
       clientId,
       attributes: attributes2
     });
-    const needsHelpText = hasUrlBinding;
-    const helpText = isBoundEntityAvailable ? BindingHelpText({
-      type: attributes2.type,
-      kind: attributes2.kind
-    }) : MissingEntityHelpText({
-      type: attributes2.type,
-      kind: attributes2.kind
-    });
+    const [isInvalid, isDraft] = useIsInvalidLink(
+      attributes2.kind,
+      attributes2.type,
+      entityRecord?.id,
+      hasUrlBinding
+    );
+    let helpText = "";
+    if (isInvalid || hasUrlBinding && !isBoundEntityAvailable) {
+      helpText = getInvalidLinkHelpText();
+    } else if (isDraft) {
+      helpText = getDraftHelpText({
+        type: attributes2.type,
+        kind: attributes2.kind
+      });
+    }
     const handleLinkChange = useHandleLinkChange({
       clientId,
       attributes: attributes2,
       setAttributes
     });
     const linkTitle = entityRecord?.title?.rendered || entityRecord?.title || entityRecord?.name;
-    const linkImage = (0, import_data79.useSelect)(
+    const linkImage = (0, import_data80.useSelect)(
       (select9) => {
         if (!entityRecord?.featured_media) {
           return null;
         }
-        const { getEntityRecord } = select9(import_core_data43.store);
+        const { getEntityRecord } = select9(import_core_data44.store);
         const media = getEntityRecord(
           "postType",
           "attachment",
@@ -41029,7 +41079,7 @@ ${js}
                     attributes2.kind
                   ),
                   label: (0, import_i18n134.__)("Link to"),
-                  help: needsHelpText ? helpText : void 0
+                  help: helpText ? helpText : void 0
                 }
               )
             }
@@ -41101,58 +41151,21 @@ ${js}
       }
     );
   }
-  function BindingHelpText({ type, kind }) {
+  function getInvalidLinkHelpText() {
+    return (0, import_i18n134.__)(
+      "This link is invalid and will not appear on your site. Please update the link."
+    );
+  }
+  function getDraftHelpText({ type, kind }) {
     const entityType = getEntityTypeName(type, kind);
     return (0, import_i18n134.sprintf)(
-      /* translators: %s is the entity type (e.g., "page", "post", "category") */
-      (0, import_i18n134.__)("Synced with the selected %s."),
+      /* translators: %1$s is the entity type (e.g., "page", "post", "category") */
+      (0, import_i18n134.__)(
+        "This link is to a draft %1$s and will not appear on your site until the %1$s is published."
+      ),
       entityType
     );
   }
-  function MissingEntityHelpText({ type, kind }) {
-    const entityType = getEntityTypeName(type, kind);
-    return (0, import_i18n134.sprintf)(
-      /* translators: %s is the entity type (e.g., "page", "post", "category") */
-      (0, import_i18n134.__)("Synced %s is missing. Please update or remove this link."),
-      entityType
-    );
-  }
-
-  // packages/block-library/build-module/navigation-link/shared/use-is-invalid-link.mjs
-  var import_data80 = __toESM(require_data(), 1);
-  var import_core_data44 = __toESM(require_core_data(), 1);
-  var import_block_editor153 = __toESM(require_block_editor(), 1);
-  var useIsInvalidLink = (kind, type, id, enabled) => {
-    const isPostType = kind === "post-type" || type === "post" || type === "page";
-    const hasId = Number.isInteger(id);
-    const blockEditingMode = (0, import_block_editor153.useBlockEditingMode)();
-    const { postStatus, isDeleted } = (0, import_data80.useSelect)(
-      (select9) => {
-        if (!isPostType) {
-          return { postStatus: null, isDeleted: false };
-        }
-        if (blockEditingMode === "disabled" || !enabled) {
-          return { postStatus: null, isDeleted: false };
-        }
-        const { getEntityRecord, hasFinishedResolution } = select9(import_core_data44.store);
-        const entityRecord = getEntityRecord("postType", type, id);
-        const hasResolved = hasFinishedResolution("getEntityRecord", [
-          "postType",
-          type,
-          id
-        ]);
-        const deleted = hasResolved && entityRecord === void 0;
-        return {
-          postStatus: entityRecord?.status,
-          isDeleted: deleted
-        };
-      },
-      [isPostType, blockEditingMode, enabled, type, id]
-    );
-    const isInvalid = isPostType && hasId && (isDeleted || postStatus && "trash" === postStatus);
-    const isDraft = "draft" === postStatus;
-    return [isInvalid, isDraft];
-  };
 
   // packages/block-library/build-module/navigation-link/shared/invalid-draft-display.mjs
   var import_i18n135 = __toESM(require_i18n(), 1);
@@ -43356,6 +43369,7 @@ ${js}
       "wp-block-navigation-link__placeholder": needsValidLink
     });
     const missingText = getMissingText(type);
+    const invalidLinkHelpText = getInvalidLinkHelpText();
     return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_jsx_runtime325.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(import_block_editor159.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_components89.ToolbarGroup, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
@@ -43389,7 +43403,7 @@ ${js}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)("div", { ...blockProps, children: [
-        hasMissingEntity && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(import_components89.VisuallyHidden, { id: missingEntityDescriptionId, children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(MissingEntityHelpText, { type, kind }) }),
+        hasMissingEntity && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(import_components89.VisuallyHidden, { id: missingEntityDescriptionId, children: invalidLinkHelpText }),
         /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)("a", { className: classes, children: [
           !url && !metadata?.bindings?.url ? /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("div", { className: "wp-block-navigation-link__placeholder-text", children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("span", { children: missingText }) }) : /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_jsx_runtime325.Fragment, { children: [
             !isInvalid && !isDraft && /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_jsx_runtime325.Fragment, { children: [
