@@ -23254,7 +23254,7 @@ var wp;
           return {};
         }
         const { getBlockParents: getBlockParents2, getBlockName: getBlockName2 } = select3(store);
-        const parents = getBlockParents2(clientId, true);
+        const parents = getBlockParents2(clientId, false);
         const foundParentId = parents.find((parentId) => {
           const parentName = getBlockName2(parentId);
           return parentName === "core/navigation" || (0, import_blocks23.hasBlockSupport)(parentName, "listView");
@@ -74404,20 +74404,17 @@ var wp;
     const { hasChildren, isNestedListView } = (0, import_data193.useSelect)(
       (select3) => {
         const { getBlockCount: getBlockCount2, getBlockParents: getBlockParents2, getBlockName: getBlockName2 } = select3(store);
-        let _isNestedListView = false;
-        if (isSelectionWithinCurrentSection) {
-          const parents = getBlockParents2(clientId, true);
-          _isNestedListView = parents.find((parentId) => {
-            const parentName = getBlockName2(parentId);
-            return parentName === "core/navigation" || (0, import_blocks120.hasBlockSupport)(parentName, "listView");
-          });
-        }
+        const parents = getBlockParents2(clientId, false);
+        const _isNestedListView = parents.find((parentId) => {
+          const parentName = getBlockName2(parentId);
+          return parentName === "core/navigation" || (0, import_blocks120.hasBlockSupport)(parentName, "listView");
+        });
         return {
           hasChildren: !!getBlockCount2(clientId),
           isNestedListView: _isNestedListView
         };
       },
-      [clientId, isSelectionWithinCurrentSection]
+      [clientId]
     );
     const title = useBlockDisplayTitle({
       clientId,
