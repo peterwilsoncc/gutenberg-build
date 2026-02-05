@@ -3131,8 +3131,6 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
 }
 
 .wp-block-playlist {
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-  border-radius: 2px;
   padding: 16px;
 }
 .wp-block-playlist .wp-block-playlist__current-item {
