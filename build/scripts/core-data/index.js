@@ -11938,7 +11938,7 @@ var wp;
     const filteredProviderCreators = (0, import_hooks.applyFilters)(
       "sync.providers",
       []
-      // Replace with `getDefaultProviderCreators()` to enable sync
+      // Replace `[]` with `getDefaultProviderCreators()` to enable sync.
     );
     if (!Array.isArray(filteredProviderCreators)) {
       providerCreators = [];
