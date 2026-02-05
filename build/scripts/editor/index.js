@@ -33672,7 +33672,7 @@ var wp;
       return;
     }
     const edits = {
-      blocks: void 0,
+      blocks: (0, import_blocks19.parse)(revision.content.raw),
       content: revision.content.raw
     };
     if (revision.title?.raw !== void 0) {
