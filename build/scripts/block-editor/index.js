@@ -62131,7 +62131,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
       import_components221.Modal,
       {
-        title: (0, import_i18n206.__)("Manage allowed blocks"),
+        title: (0, import_i18n206._x)("Manage allowed blocks", "modal title"),
         onRequestClose: onClose,
         overlayClassName: "block-editor-block-allowed-blocks-modal",
         focusOnMount: "firstContentElement",
