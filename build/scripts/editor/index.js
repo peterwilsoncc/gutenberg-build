@@ -56664,7 +56664,9 @@ var wp;
   function PostCardPanel({
     postType: postType2,
     postId: postId2,
-    onActionPerformed
+    hideActions = false,
+    onActionPerformed,
+    onClose
   }) {
     const postIds = (0, import_element196.useMemo)(
       () => Array.isArray(postId2) ? postId2 : [postId2],
@@ -56753,7 +56755,7 @@ var wp;
                 ]
               }
             ),
-            postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_jsx_runtime383.Fragment, { children: isRevision ? /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+            !hideActions && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_jsx_runtime383.Fragment, { children: isRevision ? /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
               import_components228.Button,
               {
                 size: "small",
@@ -56770,7 +56772,16 @@ var wp;
                 postId: postIds[0],
                 onActionPerformed
               }
-            ) })
+            ) }),
+            onClose && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+              import_components228.Button,
+              {
+                size: "small",
+                icon: close_default,
+                label: (0, import_i18n237.__)("Close"),
+                onClick: onClose
+              }
+            )
           ]
         }
       ),
