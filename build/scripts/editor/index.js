@@ -3018,6 +3018,7 @@ var wp;
     isBlockWithinSelection: () => isBlockWithinSelection,
     isCaretWithinFormattedText: () => isCaretWithinFormattedText,
     isCleanNewPost: () => isCleanNewPost,
+    isCollaborationEnabledForCurrentPost: () => isCollaborationEnabledForCurrentPost,
     isCurrentPostPending: () => isCurrentPostPending,
     isCurrentPostPublished: () => isCurrentPostPublished,
     isCurrentPostScheduled: () => isCurrentPostScheduled,
@@ -4418,6 +4419,16 @@ var wp;
   function isPublishSidebarOpened(state) {
     return state.publishSidebarActive;
   }
+  var isCollaborationEnabledForCurrentPost = (0, import_data3.createRegistrySelector)(
+    (select5) => (state) => {
+      const currentPostType = getCurrentPostType(state);
+      const entityConfig = select5(import_core_data.store).getEntityConfig(
+        "postType",
+        currentPostType
+      );
+      return Boolean(entityConfig?.syncConfig && window.__wpSyncEnabled);
+    }
+  );
 
   // packages/editor/build-module/store/actions.mjs
   var actions_exports = {};
@@ -39869,6 +39880,7 @@ var wp;
     const hookName = "core/editor/post-locked-modal-" + instanceId;
     const { autosave: autosave2, updatePostLock: updatePostLock2 } = (0, import_data127.useDispatch)(store);
     const {
+      isCollaborationEnabled,
       isLocked,
       isTakeover,
       user,
@@ -39876,23 +39888,22 @@ var wp;
       postLockUtils,
       activePostLock,
       postType: postType2,
-      previewLink,
-      supportsSync
+      previewLink
     } = (0, import_data127.useSelect)((select5) => {
       const {
+        isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2,
         isPostLocked: isPostLocked2,
         isPostLockTakeover: isPostLockTakeover2,
         getPostLockUser: getPostLockUser2,
         getCurrentPostId: getCurrentPostId2,
-        getCurrentPostType: getCurrentPostType2,
         getActivePostLock: getActivePostLock2,
         getEditedPostAttribute: getEditedPostAttribute2,
         getEditedPostPreviewLink: getEditedPostPreviewLink2,
         getEditorSettings: getEditorSettings2
       } = select5(store);
-      const { getPostType, getEntityConfig } = select5(import_core_data81.store);
-      const currentPostType = getCurrentPostType2();
+      const { getPostType } = select5(import_core_data81.store);
       return {
+        isCollaborationEnabled: isCollaborationEnabledForCurrentPost2(),
         isLocked: isPostLocked2(),
         isTakeover: isPostLockTakeover2(),
         user: getPostLockUser2(),
@@ -39900,10 +39911,7 @@ var wp;
         postLockUtils: getEditorSettings2().postLockUtils,
         activePostLock: getActivePostLock2(),
         postType: getPostType(getEditedPostAttribute2("type")),
-        previewLink: getEditedPostPreviewLink2(),
-        supportsSync: Boolean(
-          getEntityConfig("postType", currentPostType)?.syncConfig
-        )
+        previewLink: getEditedPostPreviewLink2()
       };
     }, []);
     (0, import_element111.useEffect)(() => {
@@ -39967,8 +39975,8 @@ var wp;
     if (!isLocked) {
       return null;
     }
-    if (supportsSync) {
-      if (true) {
+    if (true) {
+      if (isCollaborationEnabled) {
         return null;
       }
     }

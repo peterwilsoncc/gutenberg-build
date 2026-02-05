@@ -46,6 +46,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/api-fetch
+  var require_api_fetch = __commonJS({
+    "package-external:@wordpress/api-fetch"(exports, module) {
+      module.exports = window.wp.apiFetch;
+    }
+  });
+
   // node_modules/diff/dist/diff.js
   var require_diff = __commonJS({
     "node_modules/diff/dist/diff.js"(exports, module) {
@@ -10333,7 +10340,448 @@ var wp;
 
   // packages/sync/build-module/providers/index.mjs
   var import_hooks = __toESM(require_hooks(), 1);
+
+  // node_modules/y-protocols/sync.js
+  var messageYjsSyncStep1 = 0;
+  var messageYjsSyncStep2 = 1;
+  var messageYjsUpdate = 2;
+  var writeSyncStep1 = (encoder, doc2) => {
+    writeVarUint(encoder, messageYjsSyncStep1);
+    const sv = encodeStateVector(doc2);
+    writeVarUint8Array(encoder, sv);
+  };
+  var writeSyncStep2 = (encoder, doc2, encodedStateVector) => {
+    writeVarUint(encoder, messageYjsSyncStep2);
+    writeVarUint8Array(encoder, encodeStateAsUpdate(doc2, encodedStateVector));
+  };
+  var readSyncStep1 = (decoder, encoder, doc2) => writeSyncStep2(encoder, doc2, readVarUint8Array(decoder));
+  var readSyncStep2 = (decoder, doc2, transactionOrigin) => {
+    try {
+      applyUpdate(doc2, readVarUint8Array(decoder), transactionOrigin);
+    } catch (error) {
+      console.error("Caught error while handling a Yjs update", error);
+    }
+  };
+  var readUpdate2 = readSyncStep2;
+  var readSyncMessage = (decoder, encoder, doc2, transactionOrigin) => {
+    const messageType = readVarUint(decoder);
+    switch (messageType) {
+      case messageYjsSyncStep1:
+        readSyncStep1(decoder, encoder, doc2);
+        break;
+      case messageYjsSyncStep2:
+        readSyncStep2(decoder, doc2, transactionOrigin);
+        break;
+      case messageYjsUpdate:
+        readUpdate2(decoder, doc2, transactionOrigin);
+        break;
+      default:
+        throw new Error("Unknown message type");
+    }
+    return messageType;
+  };
+
+  // packages/sync/build-module/providers/http-polling/types.mjs
+  var SyncUpdateType = /* @__PURE__ */ ((SyncUpdateType2) => {
+    SyncUpdateType2["COMPACTION"] = "compaction";
+    SyncUpdateType2["SYNC_STEP_1"] = "sync_step1";
+    SyncUpdateType2["SYNC_STEP_2"] = "sync_step2";
+    SyncUpdateType2["UPDATE"] = "update";
+    return SyncUpdateType2;
+  })(SyncUpdateType || {});
+
+  // packages/sync/build-module/providers/http-polling/utils.mjs
+  var import_api_fetch = __toESM(require_api_fetch(), 1);
+  var SYNC_API_PATH = "/wp/v2/sync/updates";
+  function uint8ArrayToBase64(data) {
+    let binary = "";
+    const len = data.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(data[i]);
+    }
+    return globalThis.btoa(binary);
+  }
+  function base64ToUint8Array(base64) {
+    const binaryString = globalThis.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+  }
+  function createSyncUpdate(data, type) {
+    return {
+      data: uint8ArrayToBase64(data),
+      type
+    };
+  }
+  function createUpdateQueue(initial = [], paused = true) {
+    let isPaused = paused;
+    const updates = [...initial];
+    return {
+      add(update) {
+        updates.push(update);
+      },
+      addBulk(bulkUpdates) {
+        if (0 === bulkUpdates.length) {
+          return;
+        }
+        updates.push(...bulkUpdates);
+      },
+      clear() {
+        updates.splice(0, updates.length);
+      },
+      get() {
+        if (isPaused) {
+          return [];
+        }
+        return updates.splice(0, updates.length);
+      },
+      pause() {
+        isPaused = true;
+      },
+      restore(restoredUpdates) {
+        const filtered = restoredUpdates.filter(
+          (u) => u.type !== SyncUpdateType.COMPACTION
+        );
+        if (0 === filtered.length) {
+          return;
+        }
+        updates.unshift(...filtered);
+      },
+      resume() {
+        isPaused = false;
+      },
+      size() {
+        return updates.length;
+      }
+    };
+  }
+  async function postSyncUpdate(payload) {
+    const response = await (0, import_api_fetch.default)({
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      parse: false,
+      path: SYNC_API_PATH
+    });
+    if (!response.ok) {
+      throw new Error(
+        `Sync update failed with status ${response.status}`
+      );
+    }
+    return await response.json();
+  }
+
+  // packages/sync/build-module/providers/http-polling/polling-manager.mjs
+  var POLLING_INTERVAL_IN_MS = 1e3;
+  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = 250;
+  var MAX_ERROR_BACKOFF_IN_MS = 30 * 1e3;
+  var POLLING_MANAGER_ORIGIN = "polling-manager";
+  var roomStates = /* @__PURE__ */ new Map();
+  function createCompactionUpdate(updates) {
+    const mergeable = updates.filter(
+      (u) => [SyncUpdateType.COMPACTION, SyncUpdateType.UPDATE].includes(
+        u.type
+      )
+    ).map((u) => base64ToUint8Array(u.data));
+    return createSyncUpdate(
+      mergeUpdates(mergeable),
+      SyncUpdateType.COMPACTION
+    );
+  }
+  function createSyncStep1Update(doc2) {
+    const encoder = createEncoder();
+    writeSyncStep1(encoder, doc2);
+    return createSyncUpdate(
+      toUint8Array(encoder),
+      SyncUpdateType.SYNC_STEP_1
+    );
+  }
+  function createSyncStep2Update(doc2, step1) {
+    const decoder = createDecoder(step1);
+    const encoder = createEncoder();
+    readSyncMessage(
+      decoder,
+      encoder,
+      doc2,
+      POLLING_MANAGER_ORIGIN
+    );
+    return createSyncUpdate(
+      toUint8Array(encoder),
+      SyncUpdateType.SYNC_STEP_2
+    );
+  }
+  function processAwarenessUpdate(state, awareness) {
+    const currentStates = awareness.getStates();
+    const added = /* @__PURE__ */ new Set();
+    const updated = /* @__PURE__ */ new Set();
+    const removed = new Set(
+      currentStates.keys().filter((clientId) => !state[clientId])
+    );
+    Object.entries(state).forEach(([clientIdString, awarenessState]) => {
+      const clientId = Number(clientIdString);
+      if (clientId === awareness.clientID) {
+        return;
+      }
+      if (null === awarenessState) {
+        currentStates.delete(clientId);
+        removed.add(clientId);
+        return;
+      }
+      if (!currentStates.has(clientId)) {
+        currentStates.set(clientId, awarenessState);
+        added.add(clientId);
+        return;
+      }
+      const currentState = currentStates.get(clientId);
+      if (JSON.stringify(currentState) !== JSON.stringify(awarenessState)) {
+        currentStates.set(clientId, awarenessState);
+        updated.add(clientId);
+      }
+    });
+    if (added.size + updated.size > 0) {
+      awareness.emit("change", [
+        {
+          added: Array.from(added),
+          updated: Array.from(updated)
+        }
+      ]);
+    }
+    if (removed.size > 0) {
+      removeAwarenessStates(
+        awareness,
+        Array.from(removed),
+        POLLING_MANAGER_ORIGIN
+      );
+    }
+  }
+  function processDocUpdate(update, doc2, onSync) {
+    const data = base64ToUint8Array(update.data);
+    switch (update.type) {
+      case SyncUpdateType.SYNC_STEP_1: {
+        return createSyncStep2Update(doc2, data);
+      }
+      case SyncUpdateType.SYNC_STEP_2: {
+        const decoder = createDecoder(data);
+        const encoder = createEncoder();
+        readSyncMessage(
+          decoder,
+          encoder,
+          doc2,
+          POLLING_MANAGER_ORIGIN
+        );
+        onSync();
+        return;
+      }
+      case SyncUpdateType.COMPACTION:
+      case SyncUpdateType.UPDATE: {
+        applyUpdate(doc2, data, POLLING_MANAGER_ORIGIN);
+      }
+    }
+  }
+  var isPolling = false;
+  var pollInterval = POLLING_INTERVAL_IN_MS;
+  function poll() {
+    isPolling = true;
+    async function start() {
+      if (0 === roomStates.size) {
+        isPolling = false;
+        return;
+      }
+      const payload = {
+        rooms: Array.from(roomStates.entries()).map(
+          ([room, state]) => ({
+            after: state.endCursor ?? 0,
+            awareness: state.localAwarenessState,
+            client_id: state.clientId,
+            room,
+            updates: state.updateQueue.get()
+          })
+        )
+      };
+      try {
+        const { rooms } = await postSyncUpdate(payload);
+        pollInterval = POLLING_INTERVAL_IN_MS;
+        rooms.forEach((room) => {
+          if (!roomStates.has(room.room)) {
+            return;
+          }
+          const roomState = roomStates.get(room.room);
+          roomState.endCursor = room.end_cursor;
+          roomState.processAwarenessUpdate(room.awareness);
+          if (Object.keys(room.awareness).length > 1) {
+            pollInterval = POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS;
+            roomState.updateQueue.resume();
+          }
+          const responseUpdates = room.updates.map((update) => roomState.processDocUpdate(update)).filter(
+            (update) => Boolean(update)
+          );
+          roomState.updateQueue.addBulk(responseUpdates);
+          if (room.compaction_request) {
+            roomState.updateQueue.add(
+              createCompactionUpdate(room.compaction_request)
+            );
+          }
+        });
+      } catch (error) {
+        for (const room of payload.rooms) {
+          if (!roomStates.has(room.room)) {
+            continue;
+          }
+          const state = roomStates.get(room.room);
+          state.updateQueue.restore(room.updates);
+        }
+        pollInterval = Math.min(
+          pollInterval * 2,
+          MAX_ERROR_BACKOFF_IN_MS
+        );
+      }
+      setTimeout(poll, pollInterval);
+    }
+    void start();
+  }
+  function registerRoom(room, doc2, awareness, onSync) {
+    if (roomStates.has(room)) {
+      return;
+    }
+    const updateQueue = createUpdateQueue([createSyncStep1Update(doc2)]);
+    function onAwarenessUpdate() {
+      roomState.localAwarenessState = awareness.getLocalState() ?? {};
+    }
+    function onDocUpdate(update, origin2) {
+      if (POLLING_MANAGER_ORIGIN === origin2) {
+        return;
+      }
+      updateQueue.add(createSyncUpdate(update, SyncUpdateType.UPDATE));
+    }
+    function unregister() {
+      doc2.off("update", onDocUpdate);
+      awareness.off("change", onAwarenessUpdate);
+      updateQueue.clear();
+    }
+    const roomState = {
+      clientId: doc2.clientID,
+      endCursor: 0,
+      localAwarenessState: awareness.getLocalState() ?? {},
+      processAwarenessUpdate: (state) => processAwarenessUpdate(state, awareness),
+      processDocUpdate: (update) => processDocUpdate(update, doc2, onSync),
+      unregister,
+      updateQueue
+    };
+    doc2.on("update", onDocUpdate);
+    awareness.on("change", onAwarenessUpdate);
+    roomStates.set(room, roomState);
+    if (!isPolling) {
+      poll();
+    }
+  }
+  function unregisterRoom(room) {
+    roomStates.get(room)?.unregister();
+    roomStates.delete(room);
+  }
+  var pollingManager = {
+    registerRoom,
+    unregisterRoom
+  };
+
+  // packages/sync/build-module/providers/http-polling/http-polling-provider.mjs
+  var HttpPollingProvider = class extends ObservableV2 {
+    constructor(options) {
+      super();
+      this.options = options;
+      this.log("Initializing", { room: options.room });
+      this.awareness = options.awareness ?? new Awareness(options.ydoc);
+      this.connect();
+    }
+    awareness;
+    synced = false;
+    /**
+     * Connect to the endpoint and initialize sync.
+     */
+    connect() {
+      this.log("Connecting");
+      pollingManager.registerRoom(
+        this.options.room,
+        this.options.ydoc,
+        this.awareness,
+        this.onSync
+      );
+      this.emitStatus("connected");
+    }
+    /**
+     * Destroy the provider and cleanup resources.
+     */
+    destroy() {
+      this.disconnect();
+      super.destroy();
+    }
+    /**
+     * Disconnect the provider and allow reconnection later.
+     */
+    disconnect() {
+      this.log("Disconnecting");
+      pollingManager.unregisterRoom(this.options.room);
+      this.emitStatus("disconnected");
+    }
+    /**
+     * Emit connection status.
+     *
+     * @param status The connection status
+     */
+    emitStatus(status) {
+      this.emit("status", [{ status }]);
+    }
+    /**
+     * Log debug messages if debugging is enabled.
+     *
+     * @param message The debug message
+     * @param debug   Additional debug information
+     */
+    log(message, debug = {}) {
+      if (this.options.debug) {
+        console.log(`[${this.constructor.name}]: ${message}`, {
+          room: this.options.room,
+          ...debug
+        });
+      }
+    }
+    onSync = () => {
+      if (!this.synced) {
+        this.synced = true;
+        this.log("Synced");
+        this.emit("synced", [{ synced: true }]);
+      }
+    };
+  };
+  function createHttpPollingProvider() {
+    return async ({
+      awareness,
+      objectType,
+      objectId,
+      ydoc
+    }) => {
+      const room = objectId ? `${objectType}:${objectId}` : objectType;
+      const provider = new HttpPollingProvider({
+        awareness,
+        // debug: true,
+        room,
+        ydoc
+      });
+      return {
+        destroy: () => provider.destroy()
+      };
+    };
+  }
+
+  // packages/sync/build-module/providers/index.mjs
   var providerCreators = null;
+  function getDefaultProviderCreators() {
+    return [createHttpPollingProvider()];
+  }
   function isProviderCreator(creator) {
     return "function" === typeof creator;
   }
@@ -10341,10 +10789,12 @@ var wp;
     if (providerCreators) {
       return providerCreators;
     }
+    if (!window.__wpSyncEnabled) {
+      return [];
+    }
     const filteredProviderCreators = (0, import_hooks.applyFilters)(
       "sync.providers",
-      []
-      // Replace `[]` with `getDefaultProviderCreators()` to enable sync.
+      getDefaultProviderCreators()
     );
     if (!Array.isArray(filteredProviderCreators)) {
       providerCreators = [];
