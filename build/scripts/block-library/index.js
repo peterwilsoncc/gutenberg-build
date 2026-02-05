@@ -41067,7 +41067,12 @@ ${js}
             {
               hasValue: () => !!url,
               label: (0, import_i18n134.__)("Link to"),
-              onDeselect: () => setAttributes({ url: "" }),
+              onDeselect: () => setAttributes({
+                url: void 0,
+                id: void 0,
+                kind: void 0,
+                type: void 0
+              }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
                 LinkPicker,
