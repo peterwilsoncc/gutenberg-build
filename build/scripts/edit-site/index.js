@@ -46615,44 +46615,35 @@ If there's a particular need for this, please submit a feature request at https:
               hideActions: true
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(
-            import_components164.__experimentalVStack,
+          /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("div", { className: "dataviews-action-modal__quick-edit-content", children: hasFinishedResolution && /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+            DataForm,
             {
-              spacing: 4,
-              className: "dataviews-action-modal__quick-edit-content",
-              children: [
-                hasFinishedResolution && /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
-                  DataForm,
-                  {
-                    data: { ...record, ...localEdits },
-                    fields: fieldsWithDependency,
-                    form,
-                    onChange
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(import_components164.__experimentalHStack, { className: "dataviews-action-modal__quick-edit-footer", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
-                    import_components164.Button,
-                    {
-                      __next40pxDefaultSize: true,
-                      variant: "secondary",
-                      onClick: closeModal,
-                      children: (0, import_i18n154.__)("Cancel")
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
-                    import_components164.Button,
-                    {
-                      __next40pxDefaultSize: true,
-                      variant: "primary",
-                      onClick: onSave,
-                      children: (0, import_i18n154.__)("Done")
-                    }
-                  )
-                ] })
-              ]
+              data: { ...record, ...localEdits },
+              fields: fieldsWithDependency,
+              form,
+              onChange
             }
-          )
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(import_components164.__experimentalHStack, { className: "dataviews-action-modal__quick-edit-footer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+              import_components164.Button,
+              {
+                __next40pxDefaultSize: true,
+                variant: "secondary",
+                onClick: closeModal,
+                children: (0, import_i18n154.__)("Cancel")
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+              import_components164.Button,
+              {
+                __next40pxDefaultSize: true,
+                variant: "primary",
+                onClick: onSave,
+                children: (0, import_i18n154.__)("Done")
+              }
+            )
+          ] })
         ]
       }
     );

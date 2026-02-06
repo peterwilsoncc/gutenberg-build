@@ -5167,9 +5167,6 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   justify-content: flex-end;
   align-items: stretch;
 }
-.dataviews-action-modal__quick-edit .dataviews-action-modal__quick-edit-header {
-  margin-bottom: 16px;
-}
 .dataviews-action-modal__quick-edit .components-modal__frame {
   margin: 16px 0 16px 16px;
   height: calc(100% - 32px);
@@ -5187,16 +5184,33 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
 .dataviews-action-modal__quick-edit .components-modal__content {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  overflow: hidden;
+  padding: 0;
 }
-.dataviews-action-modal__quick-edit .dataviews-action-modal__quick-edit-content {
-  flex-grow: 1;
+.dataviews-action-modal__quick-edit .components-modal__content > * {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.dataviews-action-modal__quick-edit .dataviews-action-modal__quick-edit-header {
+  margin-bottom: 16px;
+  padding: 24px 24px 0;
+}
+.dataviews-action-modal__quick-edit .dataviews-action-modal__quick-edit-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+.dataviews-action-modal__quick-edit .dataviews-action-modal__quick-edit-content .dataforms-layouts__wrapper {
+  flex: 1;
+  padding: 0 24px 4px;
 }
 .dataviews-action-modal__quick-edit .dataviews-action-modal__quick-edit-footer {
-  margin-top: auto;
-  padding-top: 16px;
+  position: sticky;
+  bottom: 0;
+  flex-shrink: 0;
+  padding: 16px 24px 24px;
 }
 .dataviews-action-modal__quick-edit .dataviews-action-modal__quick-edit-footer .components-button {
   flex: 1;
