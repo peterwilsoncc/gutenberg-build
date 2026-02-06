@@ -48846,6 +48846,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     className: className2,
     onChange,
     disabled,
+    // Prevent passing to internal component.
+    __nextHasNoMarginBottom: _2,
     ...additionalProps
   }, ref) {
     function onChangeToggle(event) {
