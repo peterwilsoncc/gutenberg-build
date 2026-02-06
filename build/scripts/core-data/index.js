@@ -890,7 +890,7 @@ var wp;
   function generateRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  function getNewUserColor(existingColors) {
+  function getNewCollaboratorColor(existingColors) {
     const availableColors = COLOR_PALETTE.filter(
       (color) => !existingColors.includes(color)
     );
@@ -948,22 +948,22 @@ var wp;
     }
     return true;
   }
-  function areUserInfosEqual(userInfo1, userInfo2) {
-    if (!userInfo1 || !userInfo2) {
-      return userInfo1 === userInfo2;
+  function areCollaboratorInfosEqual(collaboratorInfo1, collaboratorInfo2) {
+    if (!collaboratorInfo1 || !collaboratorInfo2) {
+      return collaboratorInfo1 === collaboratorInfo2;
     }
-    if (Object.keys(userInfo1).length !== Object.keys(userInfo2).length) {
+    if (Object.keys(collaboratorInfo1).length !== Object.keys(collaboratorInfo2).length) {
       return false;
     }
-    return Object.entries(userInfo1).every(([key, value]) => {
-      return value === userInfo2[key];
+    return Object.entries(collaboratorInfo1).every(([key, value]) => {
+      return value === collaboratorInfo2[key];
     });
   }
-  function generateUserInfo(currentUser2, existingColors) {
+  function generateCollaboratorInfo(currentCollaborator, existingColors) {
     return {
-      ...currentUser2,
+      ...currentCollaborator,
       browserType: getBrowserName(),
-      color: getNewUserColor(existingColors),
+      color: getNewCollaboratorColor(existingColors),
       enteredAt: Date.now()
     };
   }
@@ -1072,12 +1072,12 @@ var wp;
     /**
      * We keep track of all seen states during the current session for two reasons:
      *
-     * 1. So that we can represent recently disconnected users in our UI, even
+     * 1. So that we can represent recently disconnected collaborators in our UI, even
      *    after they have been removed from the awareness document.
-     * 2. So that we can provide debug information about all users seen during
+     * 2. So that we can provide debug information about all collaborators seen during
      *    the session.
      */
-    disconnectedUsers = /* @__PURE__ */ new Set();
+    disconnectedCollaborators = /* @__PURE__ */ new Set();
     seenStates = /* @__PURE__ */ new Map();
     /**
      * Hold a snapshot of the previous awareness state allows us to compare the
@@ -1112,12 +1112,12 @@ var wp;
         "change",
         ({ added, removed, updated }) => {
           [...added, ...updated].forEach((id) => {
-            this.disconnectedUsers.delete(id);
+            this.disconnectedCollaborators.delete(id);
           });
           removed.forEach((id) => {
-            this.disconnectedUsers.add(id);
+            this.disconnectedCollaborators.add(id);
             setTimeout(() => {
-              this.disconnectedUsers.delete(id);
+              this.disconnectedCollaborators.delete(id);
               this.updateSubscribers(
                 true
                 /* force update */
@@ -1178,14 +1178,14 @@ var wp;
       );
     }
     /**
-     * Set the current user's connection status as awareness state.
+     * Set the current collaborator's connection status as awareness state.
      * @param isConnected - The connection status.
      */
     setConnectionStatus(isConnected) {
       if (isConnected) {
-        this.disconnectedUsers.delete(this.clientID);
+        this.disconnectedCollaborators.delete(this.clientID);
       } else {
-        this.disconnectedUsers.add(this.clientID);
+        this.disconnectedCollaborators.add(this.clientID);
       }
       this.updateSubscribers(
         true
@@ -1206,11 +1206,11 @@ var wp;
         ...states.entries()
       ]);
       const updatedStates = new Map(
-        [...this.disconnectedUsers, ...states.keys()].filter((clientId) => {
+        [...this.disconnectedCollaborators, ...states.keys()].filter((clientId) => {
           return Object.keys(this.seenStates.get(clientId) ?? {}).length > 0;
         }).map((clientId) => {
           const rawState = this.seenStates.get(clientId);
-          const isConnected = !this.disconnectedUsers.has(clientId);
+          const isConnected = !this.disconnectedCollaborators.has(clientId);
           const isMe = clientId === this.clientID;
           const myState = isMe ? this.myThrottledState : {};
           const state = {
@@ -1245,23 +1245,26 @@ var wp;
   // packages/core-data/build-module/awareness/base-awareness.mjs
   var BaseAwarenessState = class extends AwarenessState {
     onSetUp() {
-      void this.setCurrentUserInfo();
+      void this.setCurrentCollaboratorInfo();
     }
     /**
-     * Set the current user info in the local state.
+     * Set the current collaborator info in the local state.
      */
-    async setCurrentUserInfo() {
+    async setCurrentCollaboratorInfo() {
       const states = this.getStates();
-      const otherUserColors = Array.from(states.entries()).filter(
-        ([clientId, state]) => state.userInfo && clientId !== this.clientID
-      ).map(([, state]) => state.userInfo.color).filter(Boolean);
+      const otherCollaboratorColors = Array.from(states.entries()).filter(
+        ([clientId, state]) => state.collaboratorInfo && clientId !== this.clientID
+      ).map(([, state]) => state.collaboratorInfo.color).filter(Boolean);
       const currentUser2 = await (0, import_data2.resolveSelect)(STORE_NAME).getCurrentUser();
-      const userInfo = generateUserInfo(currentUser2, otherUserColors);
-      this.setLocalStateField("userInfo", userInfo);
+      const collaboratorInfo = generateCollaboratorInfo(
+        currentUser2,
+        otherCollaboratorColors
+      );
+      this.setLocalStateField("collaboratorInfo", collaboratorInfo);
     }
   };
   var baseEqualityFieldChecks = {
-    userInfo: areUserInfosEqual
+    collaboratorInfo: areCollaboratorInfosEqual
   };
   var BaseAwareness = class extends BaseAwarenessState {
     equalityFieldChecks = baseEqualityFieldChecks;
@@ -1481,12 +1484,12 @@ var wp;
     };
     onSetUp() {
       super.onSetUp();
-      this.subscribeToUserSelectionChanges();
+      this.subscribeToCollaboratorSelectionChanges();
     }
     /**
-     * Subscribe to user selection changes and update the selection state.
+     * Subscribe to collaborator selection changes and update the selection state.
      */
-    subscribeToUserSelectionChanges() {
+    subscribeToCollaboratorSelectionChanges() {
       const {
         getSelectionStart,
         getSelectionEnd,
@@ -1527,7 +1530,7 @@ var wp;
       });
     }
     /**
-     * Update the entity record with the current user's selection.
+     * Update the entity record with the current collaborator's selection.
      *
      * @param selectionStart  - The start position of the selection.
      * @param selectionEnd    - The end position of the selection.
@@ -1594,13 +1597,13 @@ var wp;
           value.toJSON()
         ])
       );
-      const userMapData = new Map(
+      const collaboratorMapData = new Map(
         Array.from(this.getSeenStates().entries()).map(
-          ([clientId, userState]) => [
+          ([clientId, collaboratorState]) => [
             String(clientId),
             {
-              name: userState.userInfo.name,
-              wpUserId: userState.userInfo.id
+              name: collaboratorState.collaboratorInfo.name,
+              wpUserId: collaboratorState.collaboratorInfo.id
             }
           ]
         )
@@ -1630,7 +1633,7 @@ var wp;
       return {
         doc: docData,
         clients: serializableClientItems,
-        userMap: Object.fromEntries(userMapData)
+        collaboratorMap: Object.fromEntries(collaboratorMapData)
       };
     }
   };
@@ -6881,22 +6884,22 @@ var wp;
   // packages/core-data/build-module/hooks/use-post-editor-awareness-state.mjs
   var import_element8 = __toESM(require_element(), 1);
   var defaultState = {
-    activeUsers: [],
+    activeCollaborators: [],
     getAbsolutePositionIndex: () => null,
     getDebugData: () => ({
       doc: {},
       clients: {},
-      userMap: {}
+      collaboratorMap: {}
     }),
-    isCurrentUserDisconnected: false
+    isCurrentCollaboratorDisconnected: false
   };
   function getAwarenessState(awareness, newState) {
-    const activeUsers = newState ?? awareness.getCurrentState();
+    const activeCollaborators = newState ?? awareness.getCurrentState();
     return {
-      activeUsers,
+      activeCollaborators,
       getAbsolutePositionIndex: (selection) => awareness.getAbsolutePositionIndex(selection),
       getDebugData: () => awareness.getDebugData(),
-      isCurrentUserDisconnected: activeUsers.find((user) => user.isMe)?.isConnected === false
+      isCurrentCollaboratorDisconnected: activeCollaborators.find((collaborator) => collaborator.isMe)?.isConnected === false
     };
   }
   function usePostEditorAwarenessState(postId, postType) {
@@ -6928,7 +6931,7 @@ var wp;
     return state;
   }
   function useActiveCollaborators(postId, postType) {
-    return usePostEditorAwarenessState(postId, postType).activeUsers;
+    return usePostEditorAwarenessState(postId, postType).activeCollaborators;
   }
 
   // packages/core-data/build-module/private-apis.mjs

@@ -45846,26 +45846,26 @@ var wp;
 
   // packages/editor/build-module/components/collaborators-presence/avatar.mjs
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='b7e4aee1a3']")) {
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='65857c2c7d']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "b7e4aee1a3");
-    style.appendChild(document.createTextNode(".editor-collaborators-presence__avatar{background-image:var(--avatar-url);background-position:50%;background-size:cover;border:1.5px solid #ddd;border-radius:6px;font-size:0}.editor-collaborators-presence__avatar--small{border-radius:6px;height:24px;width:24px}.editor-collaborators-presence__avatar--medium{border-radius:8px;height:32px;width:32px}.editor-collaborators-presence__avatar--with-color-border{background-clip:padding-box;border-color:var(--user-color);box-shadow:inset 0 0 0 1px #ffffffb3}"));
+    style.setAttribute("data-wp-hash", "65857c2c7d");
+    style.appendChild(document.createTextNode(".editor-collaborators-presence__avatar{background-image:var(--avatar-url);background-position:50%;background-size:cover;border:1.5px solid #ddd;border-radius:6px;font-size:0}.editor-collaborators-presence__avatar--small{border-radius:6px;height:24px;width:24px}.editor-collaborators-presence__avatar--medium{border-radius:8px;height:32px;width:32px}.editor-collaborators-presence__avatar--with-color-border{background-clip:padding-box;border-color:var(--collaborator-color);box-shadow:inset 0 0 0 1px #ffffffb3}"));
     document.head.appendChild(style);
   }
   function Avatar({
-    userInfo,
-    showUserColorBorder,
+    collaboratorInfo,
+    showCollaboratorColorBorder,
     size: size3 = "small"
   }) {
     const className = clsx(
       "editor-collaborators-presence__avatar",
       `editor-collaborators-presence__avatar--${size3}`,
-      showUserColorBorder && "editor-collaborators-presence__avatar--with-color-border"
+      showCollaboratorColorBorder && "editor-collaborators-presence__avatar--with-color-border"
     );
-    const avatarUrl = userInfo.avatar_urls?.[48] || userInfo.avatar_urls?.[96] || userInfo.avatar_urls?.[24];
+    const avatarUrl = collaboratorInfo.avatar_urls?.[48] || collaboratorInfo.avatar_urls?.[96] || collaboratorInfo.avatar_urls?.[24];
     const avatarStyles = {
       "--avatar-url": `url(${avatarUrl})`,
-      "--user-color": userInfo.color
+      "--collaborator-color": collaboratorInfo.color
     };
     return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
       "div",
@@ -45888,7 +45888,7 @@ var wp;
     document.head.appendChild(style);
   }
   function CollaboratorsList({
-    activeUsers,
+    activeCollaborators,
     popoverAnchor,
     setIsPopoverVisible
   }) {
@@ -45906,7 +45906,7 @@ var wp;
               (0, import_i18n205.__)("Collaborators"),
               /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("span", { children: [
                 " ",
-                activeUsers.length,
+                activeCollaborators.length,
                 " "
               ] })
             ] }),
@@ -45921,27 +45921,27 @@ var wp;
               }
             ) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "editor-collaborators-presence__list-items", children: activeUsers.map((userState) => /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "editor-collaborators-presence__list-items", children: activeCollaborators.map((collaboratorState) => /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(
             "button",
             {
               className: "editor-collaborators-presence__list-item",
               disabled: true,
               style: {
-                opacity: userState.isConnected ? 1 : 0.5
+                opacity: collaboratorState.isConnected ? 1 : 0.5
               },
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
                   Avatar,
                   {
-                    userInfo: userState.userInfo,
-                    showUserColorBorder: true,
+                    collaboratorInfo: collaboratorState.collaboratorInfo,
+                    showCollaboratorColorBorder: true,
                     size: "medium"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "editor-collaborators-presence__list-item-info", children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "editor-collaborators-presence__list-item-name", children: userState.userInfo.name }) })
+                /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "editor-collaborators-presence__list-item-info", children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "editor-collaborators-presence__list-item-name", children: collaboratorState.collaboratorInfo.name }) })
               ]
             },
-            userState.clientId
+            collaboratorState.clientId
           )) })
         ] })
       }
@@ -45961,22 +45961,24 @@ var wp;
     postId: postId2,
     postType: postType2
   }) {
-    const activeUsers = useActiveCollaborators(
+    const activeCollaborators = useActiveCollaborators(
       postId2,
       postType2
     );
-    const otherActiveUsers = activeUsers.filter((user) => !user.isMe);
+    const otherActiveCollaborators = activeCollaborators.filter(
+      (collaborator) => !collaborator.isMe
+    );
     const [isPopoverVisible, setIsPopoverVisible] = (0, import_element148.useState)(false);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element148.useState)(
       null
     );
-    if (otherActiveUsers.length === 0) {
+    if (otherActiveCollaborators.length === 0) {
       return null;
     }
-    const visibleUsers = otherActiveUsers.slice(0, 3);
-    const remainingUsers = otherActiveUsers.slice(3);
-    const remainingUsersText = remainingUsers.map(({ userInfo }) => userInfo.name).join(", ");
-    return visibleUsers.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", { className: "editor-collaborators-presence", children: [
+    const visibleCollaborators = otherActiveCollaborators.slice(0, 3);
+    const remainingCollaborators = otherActiveCollaborators.slice(3);
+    const remainingCollaboratorsText = remainingCollaborators.map(({ collaboratorInfo }) => collaboratorInfo.name).join(", ");
+    return visibleCollaborators.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", { className: "editor-collaborators-presence", children: [
       /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
         import_components190.Button,
         {
@@ -45988,26 +45990,26 @@ var wp;
           "aria-label": (0, import_i18n206.sprintf)(
             // translators: %d: number of online collaborators.
             (0, import_i18n206.__)("Collaborators list, %d online"),
-            otherActiveUsers.length
+            otherActiveCollaborators.length
           ),
           children: [
-            visibleUsers.map((userState) => /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+            visibleCollaborators.map((collaboratorState) => /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
               Avatar,
               {
-                userInfo: userState.userInfo,
-                showUserColorBorder: false,
+                collaboratorInfo: collaboratorState.collaboratorInfo,
+                showCollaboratorColorBorder: false,
                 size: "small"
               },
-              userState.clientId
+              collaboratorState.clientId
             )),
-            remainingUsers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
+            remainingCollaborators.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
               "div",
               {
                 className: "editor-collaborators-presence__remaining",
-                title: remainingUsersText,
+                title: remainingCollaboratorsText,
                 children: [
                   "+",
-                  remainingUsers.length
+                  remainingCollaborators.length
                 ]
               }
             )
@@ -46017,7 +46019,7 @@ var wp;
       isPopoverVisible && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
         CollaboratorsList,
         {
-          activeUsers: otherActiveUsers,
+          activeCollaborators: otherActiveCollaborators,
           popoverAnchor,
           setIsPopoverVisible
         }
