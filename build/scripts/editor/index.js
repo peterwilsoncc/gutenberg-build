@@ -58356,6 +58356,10 @@ var wp;
                 if (import_keycodes17.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
                   event.target.parentNode.requestSubmit();
                 }
+                if (event.key === "Escape") {
+                  event.preventDefault();
+                  onCancel(event);
+                }
               }
             }
           ),
