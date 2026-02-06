@@ -1107,6 +1107,7 @@ var wp;
         return;
       }
       this.hasSetupRun = true;
+      this.onSetUp();
       this.on(
         "change",
         ({ added, removed, updated }) => {
@@ -1126,7 +1127,6 @@ var wp;
           this.updateSubscribers();
         }
       );
-      this.onSetUp();
     };
     /**
      * Get the most recent state from the last processed change event.
