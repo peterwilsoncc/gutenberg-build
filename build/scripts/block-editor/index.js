@@ -49653,7 +49653,8 @@ var wp;
       hideLabelFromVision = false,
       suffix,
       isEntity = false,
-      customValidity: customValidityProp
+      customValidity: customValidityProp,
+      required
     }, ref) => {
       const genericSearchHandler = useSearchHandler(
         suggestionsQuery,
@@ -49720,7 +49721,8 @@ var wp;
             __experimentalHandleURLSuggestions: true,
             __experimentalShowInitialSuggestions: showInitialSuggestions,
             customValidity: customValidityProp,
-            markWhenOptional: true,
+            required,
+            markWhenOptional: required,
             onSubmit: (suggestion, event) => {
               const hasSuggestion = suggestion || focusedSuggestion;
               if (!hasSuggestion && !value?.trim()?.length) {
@@ -50430,6 +50432,7 @@ var wp;
                       hideLabelFromVision: !showTextControl,
                       isEntity,
                       customValidity,
+                      required: showTextControl,
                       suffix: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
                         SearchSuffixControl,
                         {
@@ -51333,7 +51336,7 @@ var wp;
       const inputProps = {
         id: inputId,
         value,
-        required: true,
+        required: this.props.required ?? true,
         type: "text",
         name: inputId,
         autoComplete: "off",
