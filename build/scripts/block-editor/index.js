@@ -68265,7 +68265,7 @@ var wp;
                   "dataforms-layouts-regular__field-label",
                   `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
                 ),
-                children: fieldDefinition.label
+                children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_components243.BaseControl.VisualLabel, { children: fieldDefinition.label })
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime427.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(

@@ -39467,7 +39467,7 @@ If there's a particular need for this, please submit a feature request at https:
                   "dataforms-layouts-regular__field-label",
                   `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
                 ),
-                children: fieldDefinition.label
+                children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(import_components137.BaseControl.VisualLabel, { children: fieldDefinition.label })
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(

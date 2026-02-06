@@ -3742,6 +3742,10 @@ div.dataviews-view-list {
   align-self: center;
 }
 
+.dataforms-layouts-regular__field-label .components-base-control__label {
+  margin-bottom: 0;
+}
+
 .dataforms-layouts-regular__field-control {
   flex-grow: 1;
   min-height: 32px;
