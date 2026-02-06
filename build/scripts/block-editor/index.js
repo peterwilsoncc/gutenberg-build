@@ -75794,7 +75794,9 @@ var wp;
     useBlockElement,
     useBlockElementRef,
     LinkPicker,
-    useRemoteUrlData: use_rich_url_data_default
+    useRemoteUrlData: use_rich_url_data_default,
+    isHashLink,
+    isRelativePath
   });
   return __toCommonJS(index_exports);
 })();
