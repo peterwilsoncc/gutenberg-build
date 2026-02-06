@@ -46904,7 +46904,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             activeView
           ),
-          quickEdit && !isLoadingData && selection.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+          quickEdit && !isLoadingData && selection.length > 0 && view.type !== LAYOUT_LIST && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
             QuickEditModal,
             {
               postType: postType2,
