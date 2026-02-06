@@ -2883,6 +2883,9 @@ return array(
 		'name' => 'core/gallery',
 		'title' => 'Gallery',
 		'category' => 'media',
+		'usesContext' => array(
+			'galleryId'
+		),
 		'allowedBlocks' => array(
 			'core/image'
 		),
@@ -2948,6 +2951,15 @@ return array(
 					
 				)
 			),
+			'navigationButtonType' => array(
+				'type' => 'string',
+				'default' => 'icon',
+				'enum' => array(
+					'icon',
+					'text',
+					'both'
+				)
+			),
 			'shortCodeTransforms' => array(
 				'type' => 'array',
 				'items' => array(
@@ -3002,7 +3014,8 @@ return array(
 		'providesContext' => array(
 			'allowResize' => 'allowResize',
 			'imageCrop' => 'imageCrop',
-			'fixedHeight' => 'fixedHeight'
+			'fixedHeight' => 'fixedHeight',
+			'navigationButtonType' => 'navigationButtonType'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -3350,9 +3363,11 @@ return array(
 			'allowResize',
 			'imageCrop',
 			'fixedHeight',
+			'navigationButtonType',
 			'postId',
 			'postType',
-			'queryId'
+			'queryId',
+			'galleryId'
 		),
 		'description' => 'Insert an image to make a visual statement.',
 		'keywords' => array(

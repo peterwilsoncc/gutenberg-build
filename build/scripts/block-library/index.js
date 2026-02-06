@@ -25681,6 +25681,20 @@ ${url}
       noticeText: (0, import_i18n75.__)("None")
     }
   ];
+  var NAVIGATION_BUTTON_TYPE_OPTIONS = [
+    {
+      label: (0, import_i18n75.__)("Icon"),
+      value: "icon"
+    },
+    {
+      label: (0, import_i18n75.__)("Text"),
+      value: "text"
+    },
+    {
+      label: (0, import_i18n75.__)("Both"),
+      value: "both"
+    }
+  ];
   var ALLOWED_MEDIA_TYPES4 = ["image"];
   var PLACEHOLDER_TEXT = import_element33.Platform.isNative ? (0, import_i18n75.__)("Add media") : (0, import_i18n75.__)("Drag and drop images, upload, or choose from your library.");
   var MOBILE_CONTROL_PROPS_RANGE_CONTROL = import_element33.Platform.isNative ? { type: "stepper" } : {};
@@ -25707,6 +25721,7 @@ ${url}
       (option) => option.value !== LINK_DESTINATION_LIGHTBOX
     ) : LINK_OPTIONS;
     const {
+      navigationButtonType,
       columns,
       imageCrop,
       randomOrder,
@@ -25765,6 +25780,9 @@ ${url}
     );
     const imageData = useGetMedia(innerBlockImages);
     const newImages = useGetNewImages(images, imageData);
+    const hasLightboxImages = lightboxSetting?.enabled ? images.filter(
+      (image) => image.attributes?.lightbox?.enabled === void 0 || image.attributes?.lightbox?.enabled === true
+    ).length > 0 : images.filter((image) => image.attributes.lightbox?.enabled).length > 0;
     const themeOptions = themeRatios?.map(({ name: name122, ratio }) => ({
       label: name122,
       value: ratio
@@ -26094,6 +26112,7 @@ ${url}
             label: (0, import_i18n75.__)("Settings"),
             resetAll: () => {
               setAttributes({
+                navigationButtonType: "icon",
                 columns: void 0,
                 imageCrop: true,
                 randomOrder: false
@@ -26226,6 +26245,42 @@ ${url}
                       value: aspectRatio,
                       options: aspectRatioOptions,
                       onChange: setAspectRatio
+                    }
+                  )
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+                import_components45.__experimentalToolsPanelItem,
+                {
+                  label: (0, import_i18n75.__)("Navigation button type"),
+                  isShownByDefault: true,
+                  hasValue: () => navigationButtonType !== "icon",
+                  onDeselect: () => setAttributes({
+                    navigationButtonType: "icon"
+                  }),
+                  children: hasLightboxImages && /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+                    import_components45.__experimentalToggleGroupControl,
+                    {
+                      label: (0, import_i18n75.__)("Navigation button type"),
+                      value: navigationButtonType,
+                      onChange: (value) => setAttributes({
+                        navigationButtonType: value
+                      }),
+                      isBlock: true,
+                      __next40pxDefaultSize: true,
+                      help: (0, import_i18n75.__)(
+                        "Adjust the appearance of buttons in the lightbox."
+                      ),
+                      children: NAVIGATION_BUTTON_TYPE_OPTIONS.map(
+                        (option) => /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+                          import_components45.__experimentalToggleGroupControlOption,
+                          {
+                            value: option.value,
+                            label: option.label
+                          },
+                          option.value
+                        )
+                      )
                     }
                   )
                 }
@@ -26388,6 +26443,7 @@ ${url}
     name: "core/gallery",
     title: "Gallery",
     category: "media",
+    usesContext: ["galleryId"],
     allowedBlocks: ["core/image"],
     description: "Display multiple images in a rich gallery.",
     keywords: ["images", "photos"],
@@ -26444,6 +26500,11 @@ ${url}
         },
         default: []
       },
+      navigationButtonType: {
+        type: "string",
+        default: "icon",
+        enum: ["icon", "text", "both"]
+      },
       shortCodeTransforms: {
         type: "array",
         items: {
@@ -26496,7 +26557,8 @@ ${url}
     providesContext: {
       allowResize: "allowResize",
       imageCrop: "imageCrop",
-      fixedHeight: "fixedHeight"
+      fixedHeight: "fixedHeight",
+      navigationButtonType: "navigationButtonType"
     },
     supports: {
       anchor: true,
@@ -31461,9 +31523,11 @@ ${js}
       "allowResize",
       "imageCrop",
       "fixedHeight",
+      "navigationButtonType",
       "postId",
       "postType",
-      "queryId"
+      "queryId",
+      "galleryId"
     ],
     description: "Insert an image to make a visual statement.",
     keywords: ["img", "photo", "picture"],
