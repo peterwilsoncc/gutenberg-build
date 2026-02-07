@@ -5447,11 +5447,6 @@ return array(
 		'category' => 'theme',
 		'description' => 'Display a post\'s comments form.',
 		'textdomain' => 'default',
-		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			)
-		),
 		'usesContext' => array(
 			'postId',
 			'postType'
@@ -5475,6 +5470,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontStyle' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalLetterSpacing' => true,
@@ -5504,7 +5500,11 @@ return array(
 		),
 		'example' => array(
 			'attributes' => array(
-				'textAlign' => 'center'
+				'style' => array(
+					'typography' => array(
+						'textAlign' => 'center'
+					)
+				)
 			)
 		)
 	),
