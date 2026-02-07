@@ -5389,11 +5389,6 @@ return array(
 		'category' => 'theme',
 		'description' => 'Display a post\'s comments count.',
 		'textdomain' => 'default',
-		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			)
-		),
 		'usesContext' => array(
 			'postId'
 		),
@@ -5417,6 +5412,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
