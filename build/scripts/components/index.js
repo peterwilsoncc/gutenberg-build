@@ -29166,10 +29166,11 @@ This message will only show in development mode. It won't appear in production. 
       ...props
     });
     FillComponent.displayName = `${baseName}Fill`;
-    const SlotComponent = (props) => /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Slot3, {
+    const SlotComponent = (0, import_element47.forwardRef)((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Slot3, {
       name: key,
+      ref,
       ...props
-    });
+    }));
     SlotComponent.displayName = `${baseName}Slot`;
     SlotComponent.__unstableName = key;
     return {
