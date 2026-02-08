@@ -9269,7 +9269,10 @@ var wp;
         "root",
         "user",
         {
-          per_page: -1
+          per_page: -1,
+          who: "authors",
+          _fields: "id,name",
+          context: "view"
         }
       ) ?? [];
       return authors.map(({ id, name: name2 }) => ({

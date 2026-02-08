@@ -17354,7 +17354,10 @@ If there's a particular need for this, please submit a feature request at https:
         "root",
         "user",
         {
-          per_page: -1
+          per_page: -1,
+          who: "authors",
+          _fields: "id,name",
+          context: "view"
         }
       ) ?? [];
       return authors.map(({ id, name }) => ({
