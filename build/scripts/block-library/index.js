@@ -4178,7 +4178,8 @@ var wp;
           fontSize: true
         }
       },
-      contentRole: true
+      contentRole: true,
+      listView: true
     },
     attributes: {
       iconPosition: {

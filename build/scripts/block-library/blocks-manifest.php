@@ -66,7 +66,8 @@ return array(
 					'fontSize' => true
 				)
 			),
-			'contentRole' => true
+			'contentRole' => true,
+			'listView' => true
 		),
 		'attributes' => array(
 			'iconPosition' => array(
