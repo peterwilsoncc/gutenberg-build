@@ -66623,7 +66623,7 @@ ${js}
         setAttributes({ editorActiveTabIndex: activeTabIndex });
       }
     }, []);
-    const tabsList = (0, import_data142.useSelect)(
+    const tabs = (0, import_data142.useSelect)(
       (select9) => {
         const { getBlocks } = select9(import_block_editor260.store);
         const innerBlocks = getBlocks(clientId);
@@ -66633,32 +66633,34 @@ ${js}
         if (!tabPanel) {
           return [];
         }
-        return tabPanel.innerBlocks.filter((block) => block.name === "core/tab").map((tab, index) => ({
-          id: tab.attributes.anchor || `tab-${index}`,
-          label: tab.attributes.label || "",
-          clientId: tab.clientId,
-          index
-        }));
+        return tabPanel.innerBlocks.filter(
+          (block) => block.name === "core/tab"
+        );
       },
       [clientId]
     );
-    const contextValue = (0, import_element125.useMemo)(
-      () => ({
-        "core/tabs-list": tabsList,
+    const contextValue = (0, import_element125.useMemo)(() => {
+      const tabList = tabs.map((tab, index) => ({
+        id: tab.attributes.anchor || `tab-${index}`,
+        label: tab.attributes.label || "",
+        clientId: tab.clientId,
+        index
+      }));
+      return {
+        "core/tabs-list": tabList,
         "core/tabs-id": anchor,
         "core/tabs-activeTabIndex": activeTabIndex,
         "core/tabs-editorActiveTabIndex": editorActiveTabIndex
-      }),
-      [tabsList, anchor, activeTabIndex, editorActiveTabIndex]
-    );
+      };
+    }, [tabs, anchor, activeTabIndex, editorActiveTabIndex]);
     const blockProps = (0, import_block_editor260.useBlockProps)({
       className: layoutClassNames
     });
     const innerBlockProps = (0, import_block_editor260.useInnerBlocksProps)(blockProps, {
+      __experimentalCaptureToolbars: true,
       template: TABS_TEMPLATE,
       templateLock: false,
-      renderAppender: false,
-      __experimentalCaptureToolbars: true
+      renderAppender: false
     });
     return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_block_editor260.BlockContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)("div", { ...innerBlockProps, children: [
       /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
@@ -66847,6 +66849,7 @@ ${js}
   var import_element126 = __toESM(require_element(), 1);
   var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   var TABS_MENU_ITEM_TEMPLATE = [["core/tabs-menu-item", {}]];
+  var EMPTY_ARRAY6 = [];
   function TabsMenuItemPreview({
     blocks,
     blockContextId,
@@ -66889,7 +66892,7 @@ ${js}
   }) {
     const { layout } = (0, import_block_editor262.useBlockEditContext)();
     const tabsId = context["core/tabs-id"] || null;
-    const tabsList = context["core/tabs-list"] || [];
+    const tabsList = context["core/tabs-list"] || EMPTY_ARRAY6;
     const activeTabIndex = context["core/tabs-activeTabIndex"] ?? 0;
     const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
     const effectiveActiveIndex = (0, import_element126.useMemo)(() => {
@@ -70092,7 +70095,7 @@ ${js}
   var import_compose58 = __toESM(require_compose(), 1);
   var import_html_entities18 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime523 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY6 = [];
+  var EMPTY_ARRAY7 = [];
   var BASE_QUERY3 = {
     order: "asc",
     _fields: "id,name",
@@ -70105,13 +70108,13 @@ ${js}
     ...props
   }) {
     const [search, setSearch] = (0, import_element136.useState)("");
-    const [value, setValue] = (0, import_element136.useState)(EMPTY_ARRAY6);
-    const [suggestions, setSuggestions] = (0, import_element136.useState)(EMPTY_ARRAY6);
+    const [value, setValue] = (0, import_element136.useState)(EMPTY_ARRAY7);
+    const [suggestions, setSuggestions] = (0, import_element136.useState)(EMPTY_ARRAY7);
     const debouncedSearch = (0, import_compose58.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data160.useSelect)(
       (select9) => {
         if (!search) {
-          return { searchResults: EMPTY_ARRAY6, searchHasResolved: true };
+          return { searchResults: EMPTY_ARRAY7, searchHasResolved: true };
         }
         const { getEntityRecords, hasFinishedResolution } = select9(import_core_data93.store);
         const selectorArgs = [
@@ -70138,7 +70141,7 @@ ${js}
     const currentTerms = (0, import_data160.useSelect)(
       (select9) => {
         if (!include?.length) {
-          return EMPTY_ARRAY6;
+          return EMPTY_ARRAY7;
         }
         const { getEntityRecords } = select9(import_core_data93.store);
         return getEntityRecords("taxonomy", taxonomy, {
@@ -70151,7 +70154,7 @@ ${js}
     );
     (0, import_element136.useEffect)(() => {
       if (!include?.length) {
-        setValue(EMPTY_ARRAY6);
+        setValue(EMPTY_ARRAY7);
       }
       if (!currentTerms?.length) {
         return;
@@ -70170,7 +70173,7 @@ ${js}
     }, [include, currentTerms]);
     const entitiesInfo = (0, import_element136.useMemo)(() => {
       if (!searchResults?.length) {
-        return { names: EMPTY_ARRAY6, mapByName: {} };
+        return { names: EMPTY_ARRAY7, mapByName: {} };
       }
       const names = [];
       const mapByName = {};
@@ -70198,7 +70201,7 @@ ${js}
           return accumulator;
         }, /* @__PURE__ */ new Set())
       );
-      setSuggestions(EMPTY_ARRAY6);
+      setSuggestions(EMPTY_ARRAY7);
       onChange(ids);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
