@@ -48836,8 +48836,7 @@ var wp;
       hideLabelFromVision = false,
       suffix,
       isEntity = false,
-      customValidity: customValidityProp,
-      required
+      customValidity: customValidityProp
     }, ref) => {
       const genericSearchHandler = useSearchHandler(
         suggestionsQuery,
@@ -48904,8 +48903,7 @@ var wp;
             __experimentalHandleURLSuggestions: true,
             __experimentalShowInitialSuggestions: showInitialSuggestions,
             customValidity: customValidityProp,
-            required,
-            markWhenOptional: required,
+            required: false,
             onSubmit: (suggestion, event) => {
               const hasSuggestion = suggestion || focusedSuggestion;
               if (!hasSuggestion && !value?.trim()?.length) {
@@ -49615,7 +49613,6 @@ var wp;
                       hideLabelFromVision: !showTextControl,
                       isEntity,
                       customValidity,
-                      required: showTextControl,
                       suffix: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
                         SearchSuffixControl,
                         {
