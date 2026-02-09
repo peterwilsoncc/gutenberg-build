@@ -10338,7 +10338,12 @@ ${p3}`
   var fieldsKey = /* @__PURE__ */ Symbol("fields");
   var formKey = /* @__PURE__ */ Symbol("form");
   var privateApis = {};
-  lock(privateApis, { isContentBlock, fieldsKey, formKey });
+  lock(privateApis, {
+    isContentBlock,
+    fieldsKey,
+    formKey,
+    parseRawBlock
+  });
 
   // packages/blocks/build-module/deprecated.mjs
   var import_deprecated11 = __toESM(require_deprecated(), 1);

@@ -75974,6 +75974,7 @@ var wp;
     InspectorControlsLastItem: last_item_default,
     useHasBlockToolbar,
     cleanEmptyObject,
+    usePrivateStyleOverride,
     BlockQuickNavigation,
     LayoutStyle,
     BlockManager,

@@ -5716,6 +5716,47 @@ div.dataviews-view-list {
   height: 100%;
 }
 
+.editor-revisions-canvas__content {
+  display: flex;
+  height: 100%;
+}
+.editor-revisions-canvas__content .editor-visual-editor {
+  flex: 1;
+  min-width: 0;
+}
+
+.revision-diff-markers {
+  position: relative;
+  flex-shrink: 0;
+  width: 12px;
+  background: rgba(0, 0, 0, 0.05);
+}
+.revision-diff-markers .revision-diff-marker {
+  position: absolute;
+  width: 100%;
+  min-height: 4px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.1s ease;
+}
+.revision-diff-markers .revision-diff-marker.is-added {
+  background: #00a32a;
+}
+.revision-diff-markers .revision-diff-marker.is-removed {
+  background: #d63638;
+}
+.revision-diff-markers .revision-diff-marker.is-modified {
+  background: #dba617;
+}
+.revision-diff-markers .revision-diff-marker:hover {
+  opacity: 0.7;
+}
+.revision-diff-markers .revision-diff-marker:focus {
+  outline: 2px solid #1e1e1e;
+  outline-offset: -2px;
+}
+
 .editor-post-saved-state {
   display: flex;
   align-items: center;
