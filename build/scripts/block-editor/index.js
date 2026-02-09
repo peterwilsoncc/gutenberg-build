@@ -7007,7 +7007,7 @@ var wp;
   var clsx_default = clsx;
 
   // packages/block-editor/build-module/hooks/utils.mjs
-  var import_blocks94 = __toESM(require_blocks(), 1);
+  var import_blocks95 = __toESM(require_blocks(), 1);
   var import_element219 = __toESM(require_element(), 1);
   var import_data176 = __toESM(require_data(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
@@ -9198,6 +9198,50 @@ var wp;
     }
     return state;
   }
+  function openedListViewPanels(state = { allOpen: false, panels: {} }, action) {
+    switch (action.type) {
+      case "SET_OPEN_LIST_VIEW_PANEL":
+        return {
+          allOpen: false,
+          panels: action.clientId ? { [action.clientId]: true } : {}
+        };
+      case "SET_ALL_LIST_VIEW_PANELS_OPEN":
+        return { allOpen: true, panels: {} };
+      case "TOGGLE_LIST_VIEW_PANEL":
+        return {
+          allOpen: false,
+          panels: {
+            ...state.panels,
+            [action.clientId]: action.isOpen
+          }
+        };
+      case "REPLACE_BLOCKS":
+      case "REMOVE_BLOCKS": {
+        if (!action.clientIds || action.clientIds.length === 0) {
+          return state;
+        }
+        const newPanels = { ...state.panels };
+        let hasChanges = false;
+        action.clientIds.forEach((clientId) => {
+          if (clientId in newPanels) {
+            delete newPanels[clientId];
+            hasChanges = true;
+          }
+        });
+        return hasChanges ? { ...state, panels: newPanels } : state;
+      }
+      case "RESET_BLOCKS":
+        return { allOpen: false, panels: {} };
+    }
+    return state;
+  }
+  function listViewExpandRevision(state = 0, action) {
+    switch (action.type) {
+      case "INCREMENT_LIST_VIEW_EXPAND_REVISION":
+        return state + 1;
+    }
+    return state;
+  }
   var combinedReducers = (0, import_data2.combineReducers)({
     blocks,
     isDragging,
@@ -9228,7 +9272,9 @@ var wp;
     blockRemovalRules,
     registeredInserterMediaCategories,
     zoomLevel,
-    hasBlockSpotlight
+    hasBlockSpotlight,
+    openedListViewPanels,
+    listViewExpandRevision
   });
   function getBlockTreeBlock(state, clientId) {
     if (clientId === "") {
@@ -9723,12 +9769,14 @@ var wp;
     __unstableGetClientIdWithClientIdsTree: () => __unstableGetClientIdWithClientIdsTree,
     __unstableGetClientIdsTree: () => __unstableGetClientIdsTree,
     __unstableGetContentLockingParent: () => __unstableGetContentLockingParent,
+    __unstableGetListViewExpandRevision: () => __unstableGetListViewExpandRevision,
     __unstableGetSelectedBlocksWithPartialSelection: () => __unstableGetSelectedBlocksWithPartialSelection,
     __unstableGetTemporarilyEditingAsBlocks: () => __unstableGetTemporarilyEditingAsBlocks,
     __unstableGetVisibleBlocks: () => __unstableGetVisibleBlocks,
     __unstableHasActiveBlockOverlayActive: () => __unstableHasActiveBlockOverlayActive,
     __unstableIsFullySelected: () => __unstableIsFullySelected,
     __unstableIsLastBlockChangeIgnored: () => __unstableIsLastBlockChangeIgnored,
+    __unstableIsListViewPanelOpened: () => __unstableIsListViewPanelOpened,
     __unstableIsSelectionCollapsed: () => __unstableIsSelectionCollapsed,
     __unstableIsSelectionMergeable: () => __unstableIsSelectionMergeable,
     __unstableIsWithinBlockOverlay: () => __unstableIsWithinBlockOverlay,
@@ -13013,6 +13061,15 @@ var wp;
     );
     return getEditedContentOnlySection(state);
   }
+  function __unstableIsListViewPanelOpened(state, clientId) {
+    if (state.openedListViewPanels?.allOpen) {
+      return true;
+    }
+    return state.openedListViewPanels?.panels?.[clientId] === true;
+  }
+  function __unstableGetListViewExpandRevision(state) {
+    return state.listViewExpandRevision || 0;
+  }
 
   // packages/block-editor/build-module/store/private-actions.mjs
   var private_actions_exports = {};
@@ -13266,13 +13323,17 @@ var wp;
   __export(actions_exports, {
     __unstableDeleteSelection: () => __unstableDeleteSelection,
     __unstableExpandSelection: () => __unstableExpandSelection,
+    __unstableIncrementListViewExpandRevision: () => __unstableIncrementListViewExpandRevision,
     __unstableMarkAutomaticChange: () => __unstableMarkAutomaticChange,
     __unstableMarkLastChangeAsPersistent: () => __unstableMarkLastChangeAsPersistent,
     __unstableMarkNextChangeAsNotPersistent: () => __unstableMarkNextChangeAsNotPersistent,
     __unstableSaveReusableBlock: () => __unstableSaveReusableBlock,
+    __unstableSetAllListViewPanelsOpen: () => __unstableSetAllListViewPanelsOpen,
     __unstableSetEditorMode: () => __unstableSetEditorMode,
+    __unstableSetOpenListViewPanel: () => __unstableSetOpenListViewPanel,
     __unstableSetTemporarilyEditingAsBlocks: () => __unstableSetTemporarilyEditingAsBlocks,
     __unstableSplitSelection: () => __unstableSplitSelection,
+    __unstableToggleListViewPanel: () => __unstableToggleListViewPanel,
     clearSelectedBlock: () => clearSelectedBlock,
     duplicateBlocks: () => duplicateBlocks,
     enterFormattedText: () => enterFormattedText,
@@ -14453,6 +14514,29 @@ var wp;
     return {
       type: "UNSET_BLOCK_EDITING_MODE",
       clientId
+    };
+  }
+  function __unstableSetOpenListViewPanel(clientId) {
+    return {
+      type: "SET_OPEN_LIST_VIEW_PANEL",
+      clientId
+    };
+  }
+  function __unstableSetAllListViewPanelsOpen() {
+    return {
+      type: "SET_ALL_LIST_VIEW_PANELS_OPEN"
+    };
+  }
+  function __unstableToggleListViewPanel(clientId, isOpen) {
+    return {
+      type: "TOGGLE_LIST_VIEW_PANEL",
+      clientId,
+      isOpen
+    };
+  }
+  function __unstableIncrementListViewExpandRevision() {
+    return {
+      type: "INCREMENT_LIST_VIEW_EXPAND_REVISION"
     };
   }
 
@@ -17557,9 +17641,9 @@ var wp;
         const {
           getAllBlockBindingsSources,
           getBlockBindingsSourceFieldsList,
-          getBlockType: getBlockType25
+          getBlockType: getBlockType27
         } = unlock(select3(import_blocks14.store));
-        const _attributeType = getBlockType25(blockName).attributes?.[attribute]?.type;
+        const _attributeType = getBlockType27(blockName).attributes?.[attribute]?.type;
         const attributeType = _attributeType === "rich-text" ? "string" : _attributeType;
         const sourceFields = {};
         Object.entries(getAllBlockBindingsSources()).forEach(
@@ -17756,9 +17840,9 @@ var wp;
           return null;
         }
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select3(store);
-        const { getBlockType: getBlockType25, getActiveBlockVariation } = select3(import_blocks15.store);
+        const { getBlockType: getBlockType27, getActiveBlockVariation } = select3(import_blocks15.store);
         const blockName = getBlockName2(clientId);
-        const blockType = getBlockType25(blockName);
+        const blockType = getBlockType27(blockName);
         if (!blockType) {
           return null;
         }
@@ -25769,7 +25853,7 @@ var wp;
   var import_notices4 = __toESM(require_notices(), 1);
   function useNotifyCopy() {
     const { getBlockName: getBlockName2 } = (0, import_data47.useSelect)(store);
-    const { getBlockType: getBlockType25 } = (0, import_data47.useSelect)(import_blocks26.store);
+    const { getBlockType: getBlockType27 } = (0, import_data47.useSelect)(import_blocks26.store);
     const { createSuccessNotice } = (0, import_data47.useDispatch)(import_notices4.store);
     return (0, import_element44.useCallback)(
       (eventType, selectedBlockClientIds) => {
@@ -25778,7 +25862,7 @@ var wp;
           notice = (0, import_i18n37.__)("Styles copied to clipboard.");
         } else if (selectedBlockClientIds.length === 1) {
           const clientId = selectedBlockClientIds[0];
-          const title = getBlockType25(getBlockName2(clientId))?.title;
+          const title = getBlockType27(getBlockName2(clientId))?.title;
           if (eventType === "copy") {
             notice = (0, import_i18n37.sprintf)(
               // Translators: %s: Name of the block being copied, e.g. "Paragraph".
@@ -25817,7 +25901,7 @@ var wp;
           type: "snackbar"
         });
       },
-      [createSuccessNotice, getBlockName2, getBlockType25]
+      [createSuccessNotice, getBlockName2, getBlockType27]
     );
   }
 
@@ -32702,7 +32786,7 @@ var wp;
       "replace"
     ];
   }
-  function isDropTargetValid(getBlockType25, allowedBlocks, draggedBlockNames, targetBlockName) {
+  function isDropTargetValid(getBlockType27, allowedBlocks, draggedBlockNames, targetBlockName) {
     let areBlocksAllowed = true;
     if (allowedBlocks) {
       const allowedBlockNames = allowedBlocks?.map(({ name }) => name);
@@ -32711,7 +32795,7 @@ var wp;
       );
     }
     const draggedBlockTypes = draggedBlockNames.map(
-      (name) => getBlockType25(name)
+      (name) => getBlockType27(name)
     );
     const targetMatchesDraggedBlockParents = draggedBlockTypes.every(
       (block) => {
@@ -32743,7 +32827,7 @@ var wp;
       index: null,
       operation: "insert"
     });
-    const { getBlockType: getBlockType25, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data76.useSelect)(import_blocks43.store);
+    const { getBlockType: getBlockType27, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data76.useSelect)(import_blocks43.store);
     const {
       canInsertBlockType: canInsertBlockType2,
       getBlockListSettings: getBlockListSettings2,
@@ -32797,7 +32881,7 @@ var wp;
             draggedBlockClientIds
           );
           const isBlockDroppingAllowed = isDropTargetValid(
-            getBlockType25,
+            getBlockType27,
             allowedBlocks,
             draggedBlockNames,
             targetBlockName
@@ -32904,7 +32988,7 @@ var wp;
           targetRootClientId,
           getBlockNamesByClientId2,
           getDraggedBlockClientIds2,
-          getBlockType25,
+          getBlockType27,
           getSectionRootClientId2,
           isZoomOut2,
           getBlocks2,
@@ -33064,7 +33148,7 @@ var wp;
             isDropZoneDisabled: isZoomOut2() && sectionRootClientId !== ""
           };
         }
-        const { hasBlockSupport: hasBlockSupport47, getBlockType: getBlockType25 } = select3(import_blocks44.store);
+        const { hasBlockSupport: hasBlockSupport48, getBlockType: getBlockType27 } = select3(import_blocks44.store);
         const blockName = getBlockName2(clientId);
         const blockEditingMode = getBlockEditingMode2(clientId);
         const parentClientId2 = getBlockRootClientId2(clientId);
@@ -33075,13 +33159,13 @@ var wp;
           _isDropZoneDisabled = clientId !== sectionRootClientId;
         }
         return {
-          __experimentalCaptureToolbars: hasBlockSupport47(
+          __experimentalCaptureToolbars: hasBlockSupport48(
             blockName,
             "__experimentalExposeControlsToChildren",
             false
           ),
           name: blockName,
-          blockType: getBlockType25(blockName),
+          blockType: getBlockType27(blockName),
           parentLock: getTemplateLock2(parentClientId2),
           parentClientId: parentClientId2,
           isDropZoneDisabled: _isDropZoneDisabled,
@@ -33950,9 +34034,9 @@ var wp;
           getBlockAttributes: getBlockAttributes3,
           __experimentalGetParsedPattern: __experimentalGetParsedPattern2
         } = select3(store);
-        const { getBlockType: getBlockType25, getActiveBlockVariation } = select3(import_blocks46.store);
+        const { getBlockType: getBlockType27, getActiveBlockVariation } = select3(import_blocks46.store);
         const blockName = getBlockName2(clientId);
-        const blockType = getBlockType25(blockName);
+        const blockType = getBlockType27(blockName);
         if (!blockType) {
           return null;
         }
@@ -34492,7 +34576,7 @@ var wp;
       isDraggable,
       icon,
       visibleInserter,
-      getBlockType: getBlockType25
+      getBlockType: getBlockType27
     } = (0, import_data86.useSelect)(
       (select3) => {
         const {
@@ -34554,14 +34638,14 @@ var wp;
           ])[0];
           const rootAllowedBlocks = getAllowedBlocks2(targetRootClientId);
           dropTargetValid = isDropTargetValid(
-            getBlockType25,
+            getBlockType27,
             rootAllowedBlocks,
             draggedBlockNames,
             targetRootBlockName
           );
         } else {
           dropTargetValid = isDropTargetValid(
-            getBlockType25,
+            getBlockType27,
             allowedBlocks,
             draggedBlockNames,
             targetBlockName
@@ -34589,7 +34673,7 @@ var wp;
       getAllowedBlocks2,
       getBlockNamesByClientId2,
       getBlockRootClientId2,
-      getBlockType25,
+      getBlockType27,
       visibleInserter
     ]);
     if (!isDraggable) {
@@ -35834,7 +35918,7 @@ var wp;
           isUngroupable: isUngroupable2,
           isGroupable: isGroupable2
         } = select3(store);
-        const { getGroupingBlockName, getBlockType: getBlockType25 } = select3(import_blocks54.store);
+        const { getGroupingBlockName, getBlockType: getBlockType27 } = select3(import_blocks54.store);
         const clientIds = selectedClientIds?.length ? selectedClientIds : getSelectedBlockClientIds2();
         const blocksSelection = getBlocksByClientId2(clientIds);
         const [firstSelectedBlock] = blocksSelection;
@@ -35845,7 +35929,7 @@ var wp;
           isUngroupable: _isUngroupable,
           blocksSelection,
           groupingBlockName: getGroupingBlockName(),
-          onUngroup: _isUngroupable && getBlockType25(firstSelectedBlock.name)?.transforms?.ungroup
+          onUngroup: _isUngroupable && getBlockType27(firstSelectedBlock.name)?.transforms?.ungroup
         };
       },
       [selectedClientIds]
@@ -42916,7 +43000,7 @@ var wp;
       hasMultiSelection: hasMultiSelection2,
       hasSelectedBlock: hasSelectedBlock2
     } = (0, import_data131.useSelect)(store);
-    const { getBlockType: getBlockType25 } = (0, import_data131.useSelect)(import_blocks79.store);
+    const { getBlockType: getBlockType27 } = (0, import_data131.useSelect)(import_blocks79.store);
     const updateBlockSelection = (0, import_element138.useCallback)(
       async (event, clientId, destinationClientId, focusPosition) => {
         if (!event?.shiftKey && event?.keyCode !== import_keycodes15.ESCAPE) {
@@ -42970,7 +43054,7 @@ var wp;
         );
         let label;
         if (selectionDiff.length === 1) {
-          const title = getBlockType25(
+          const title = getBlockType27(
             getBlockName2(selectionDiff[0])
           )?.title;
           if (title) {
@@ -42994,7 +43078,7 @@ var wp;
       [
         clearSelectedBlock2,
         getBlockName2,
-        getBlockType25,
+        getBlockType27,
         getBlockParents2,
         getBlockSelectionStart2,
         getSelectedBlockClientIds2,
@@ -54538,7 +54622,7 @@ var wp;
     onMouseOver,
     showSideInLabel = true,
     sides = ALL_SIDES,
-    useSelect: useSelect172,
+    useSelect: useSelect173,
     values
   }) {
     const spacingSizes = useSpacingSizes();
@@ -54562,7 +54646,7 @@ var wp;
       sides,
       spacingSizes,
       type: labelProp,
-      useSelect: useSelect172,
+      useSelect: useSelect173,
       values: inputValues
     };
     const renderControls = () => {
@@ -54678,7 +54762,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-inspector/index.mjs
   var import_i18n202 = __toESM(require_i18n(), 1);
-  var import_blocks93 = __toESM(require_blocks(), 1);
+  var import_blocks94 = __toESM(require_blocks(), 1);
   var import_components213 = __toESM(require_components(), 1);
   var import_data172 = __toESM(require_data(), 1);
 
@@ -60137,10 +60221,16 @@ var wp;
   var import_i18n201 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-quick-navigation/index.mjs
+  var import_blocks93 = __toESM(require_blocks(), 1);
   var import_data168 = __toESM(require_data(), 1);
   var import_components208 = __toESM(require_components(), 1);
   var import_jsx_runtime379 = __toESM(require_jsx_runtime(), 1);
-  function BlockQuickNavigation({ clientIds, onSelect }) {
+  function BlockQuickNavigation({
+    clientIds,
+    onSelect,
+    onSwitchToListView,
+    hasListViewTab
+  }) {
     if (!clientIds.length) {
       return null;
     }
@@ -60148,31 +60238,47 @@ var wp;
       BlockQuickNavigationItem,
       {
         onSelect,
+        onSwitchToListView,
+        hasListViewTab,
         clientId
       },
       clientId
     )) });
   }
-  function BlockQuickNavigationItem({ clientId, onSelect }) {
+  function BlockQuickNavigationItem({
+    clientId,
+    onSelect,
+    onSwitchToListView,
+    hasListViewTab
+  }) {
     const blockInformation = useBlockDisplayInformation(clientId);
-    const blockTitle = useBlockDisplayTitle({
-      clientId,
-      context: "list-view"
-    });
-    const { isSelected } = (0, import_data168.useSelect)(
+    const { isSelected, childBlocks, hasListViewSupport: hasListViewSupport2, blockName } = (0, import_data168.useSelect)(
       (select3) => {
-        const { isBlockSelected: isBlockSelected2, hasSelectedInnerBlock: hasSelectedInnerBlock2 } = select3(store);
+        const {
+          isBlockSelected: isBlockSelected2,
+          hasSelectedInnerBlock: hasSelectedInnerBlock2,
+          getBlockOrder: getBlockOrder2,
+          getBlockName: getBlockName2
+        } = select3(store);
+        const _blockName = getBlockName2(clientId);
         return {
           isSelected: isBlockSelected2(clientId) || hasSelectedInnerBlock2(
             clientId,
             /* deep: */
             true
-          )
+          ),
+          childBlocks: getBlockOrder2(clientId),
+          hasListViewSupport: _blockName === "core/navigation" || (0, import_blocks93.hasBlockSupport)(_blockName, "listView"),
+          blockName: _blockName
         };
       },
       [clientId]
     );
+    const blockType = (0, import_blocks93.getBlockType)(blockName);
+    const blockTitle = blockType?.title || blockName;
     const { selectBlock: selectBlock2 } = (0, import_data168.useDispatch)(store);
+    const hasChildren = childBlocks && childBlocks.length > 0;
+    const canNavigateToListView = hasChildren && hasListViewTab && hasListViewSupport2;
     return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
       import_components208.Button,
       {
@@ -60181,13 +60287,17 @@ var wp;
         isPressed: isSelected,
         onClick: async () => {
           await selectBlock2(clientId);
+          if (canNavigateToListView && onSwitchToListView) {
+            onSwitchToListView(clientId);
+          }
           if (onSelect) {
             onSelect(clientId);
           }
         },
         children: /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)(import_components208.Flex, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(import_components208.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(block_icon_default, { icon: blockInformation?.icon }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(import_components208.FlexBlock, { style: { textAlign: "left" }, children: /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(import_components208.__experimentalTruncate, { children: blockTitle }) })
+          /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(import_components208.FlexBlock, { style: { textAlign: "left" }, children: /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(import_components208.__experimentalTruncate, { children: blockTitle }) }),
+          canNavigateToListView && /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(import_components208.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(icon_default, { icon: chevron_right_default, size: 24 }) })
         ] })
       }
     );
@@ -60195,12 +60305,23 @@ var wp;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/content-tab.mjs
   var import_jsx_runtime380 = __toESM(require_jsx_runtime(), 1);
-  var ContentTab = ({ contentClientIds }) => {
+  var ContentTab = ({
+    contentClientIds,
+    onSwitchToListView,
+    hasListViewTab
+  }) => {
     if (!contentClientIds || contentClientIds.length === 0) {
       return null;
     }
     const shouldShowBlockFields = window?.__experimentalContentOnlyInspectorFields;
-    return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(import_jsx_runtime380.Fragment, { children: !shouldShowBlockFields && /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(import_components209.PanelBody, { title: (0, import_i18n201.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(BlockQuickNavigation, { clientIds: contentClientIds }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(import_jsx_runtime380.Fragment, { children: !shouldShowBlockFields && /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(import_components209.PanelBody, { title: (0, import_i18n201.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+      BlockQuickNavigation,
+      {
+        clientIds: contentClientIds,
+        onSwitchToListView,
+        hasListViewTab
+      }
+    ) }) });
   };
   var content_tab_default = ContentTab;
 
@@ -60220,6 +60341,12 @@ var wp;
     }, []);
     const [selectedTabId, setSelectedTabId] = (0, import_element213.useState)(tabs[0]?.name);
     const hasUserSelectionRef = (0, import_element213.useRef)(false);
+    const isProgrammaticSwitchRef = (0, import_element213.useRef)(false);
+    const {
+      __unstableSetOpenListViewPanel: setOpenListViewPanel,
+      __unstableIncrementListViewExpandRevision: incrementListViewExpandRevision,
+      __unstableSetAllListViewPanelsOpen: setAllListViewPanelsOpen
+    } = (0, import_data169.useDispatch)(store);
     (0, import_element213.useEffect)(() => {
       hasUserSelectionRef.current = false;
     }, [clientId]);
@@ -60235,6 +60362,22 @@ var wp;
     const handleTabSelect = (tabId) => {
       setSelectedTabId(tabId);
       hasUserSelectionRef.current = true;
+      if (tabId === TAB_LIST_VIEW.name && !isProgrammaticSwitchRef.current) {
+        setAllListViewPanelsOpen();
+        incrementListViewExpandRevision();
+      }
+      isProgrammaticSwitchRef.current = false;
+    };
+    const hasListViewTab = tabs.some(
+      (tab) => tab.name === TAB_LIST_VIEW.name
+    );
+    const switchToListView = (targetClientId) => {
+      if (hasListViewTab) {
+        setOpenListViewPanel(targetClientId);
+        incrementListViewExpandRevision();
+        isProgrammaticSwitchRef.current = true;
+        handleTabSelect(TAB_LIST_VIEW.name);
+      }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)("div", { className: "block-editor-block-inspector__tabs", children: /* @__PURE__ */ (0, import_jsx_runtime381.jsxs)(
       Tabs5,
@@ -60264,7 +60407,14 @@ var wp;
             }
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime381.jsxs)(Tabs5.TabPanel, { tabId: TAB_CONTENT.name, focusable: false, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(content_tab_default, { contentClientIds }),
+            /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
+              content_tab_default,
+              {
+                contentClientIds,
+                onSwitchToListView: switchToListView,
+                hasListViewTab
+              }
+            ),
             /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(inspector_controls_default.Slot, { group: "content" })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(Tabs5.TabPanel, { tabId: TAB_LIST_VIEW.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(inspector_controls_default.Slot, { group: "list" }) })
@@ -60456,14 +60606,14 @@ var wp;
         getEditedContentOnlySection: getEditedContentOnlySection2,
         isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2
       } = unlock(select3(store));
-      const { getBlockStyles: getBlockStyles2 } = select3(import_blocks93.store);
+      const { getBlockStyles: getBlockStyles2 } = select3(import_blocks94.store);
       const _selectedBlockClientId = getSelectedBlockClientId2();
       const isWithinEditedSection = isWithinEditedContentOnlySection2(
         _selectedBlockClientId
       );
       const _renderedBlockClientId = isWithinEditedSection ? _selectedBlockClientId : getParentSectionBlock2(_selectedBlockClientId) || _selectedBlockClientId;
       const _renderedBlockName = _renderedBlockClientId && getBlockName2(_renderedBlockClientId);
-      const _blockType = _renderedBlockName && (0, import_blocks93.getBlockType)(_renderedBlockName);
+      const _blockType = _renderedBlockName && (0, import_blocks94.getBlockType)(_renderedBlockName);
       const selectedBlockClientIds = getSelectedBlockClientIds2();
       const _isSectionBlockInSelection = selectedBlockClientIds.some(
         (id) => _isSectionBlock(id)
@@ -60497,7 +60647,7 @@ var wp;
         const listViewDescendants = /* @__PURE__ */ new Set();
         descendants.forEach((clientId) => {
           const blockName = getBlockName2(clientId);
-          if (blockName === "core/navigation" || (0, import_blocks93.hasBlockSupport)(blockName, "listView")) {
+          if (blockName === "core/navigation" || (0, import_blocks94.hasBlockSupport)(blockName, "listView")) {
             const listViewChildren = getClientIdsOfDescendants2(clientId);
             listViewChildren.forEach(
               (childId) => listViewDescendants.add(childId)
@@ -60536,7 +60686,7 @@ var wp;
     if (hasSelectedBlocks && isSectionBlockInSelection) {
       return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)("div", { className: "block-editor-block-inspector", children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(MultiSelectionInspector, {}) });
     }
-    const isRenderedBlockUnregistered = renderedBlockName === (0, import_blocks93.getUnregisteredTypeHandlerName)();
+    const isRenderedBlockUnregistered = renderedBlockName === (0, import_blocks94.getUnregisteredTypeHandlerName)();
     const shouldShowWarning = !blockType || !renderedBlockClientId || isRenderedBlockUnregistered;
     if (shouldShowWarning) {
       return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)("span", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n202.__)("No block selected.") });
@@ -61158,7 +61308,7 @@ var wp;
     return returnBlock;
   }
   function shouldSkipSerialization(blockNameOrType, featureSet, feature) {
-    const support = (0, import_blocks94.getBlockSupport)(blockNameOrType, featureSet);
+    const support = (0, import_blocks95.getBlockSupport)(blockNameOrType, featureSet);
     const skipSerialization = support?.__experimentalSkipSerialization;
     if (Array.isArray(skipSerialization)) {
       return skipSerialization.includes(feature);
@@ -61691,11 +61841,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/compat.mjs
-  var import_blocks95 = __toESM(require_blocks(), 1);
+  var import_blocks96 = __toESM(require_blocks(), 1);
   var import_hooks15 = __toESM(require_hooks(), 1);
   function migrateLightBlockWrapper(settings2) {
     const { apiVersion = 1 } = settings2;
-    if (apiVersion < 2 && (0, import_blocks95.hasBlockSupport)(settings2, "lightBlockWrapper", false)) {
+    if (apiVersion < 2 && (0, import_blocks96.hasBlockSupport)(settings2, "lightBlockWrapper", false)) {
       settings2.apiVersion = 2;
     }
     return settings2;
@@ -61808,7 +61958,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/align.mjs
   var import_hooks17 = __toESM(require_hooks(), 1);
-  var import_blocks96 = __toESM(require_blocks(), 1);
+  var import_blocks97 = __toESM(require_blocks(), 1);
   var import_jsx_runtime392 = __toESM(require_jsx_runtime(), 1);
   var ALL_ALIGNMENTS = ["left", "center", "right", "wide", "full"];
   var WIDE_ALIGNMENTS = ["wide", "full"];
@@ -61834,7 +61984,7 @@ var wp;
     if ("type" in (settings2.attributes?.align ?? {})) {
       return settings2;
     }
-    if ((0, import_blocks96.hasBlockSupport)(settings2, "align")) {
+    if ((0, import_blocks97.hasBlockSupport)(settings2, "align")) {
       settings2.attributes = {
         ...settings2.attributes,
         align: {
@@ -61853,8 +62003,8 @@ var wp;
     setAttributes
   }) {
     const blockAllowedAlignments = getValidAlignments(
-      (0, import_blocks96.getBlockSupport)(blockName, "align"),
-      (0, import_blocks96.hasBlockSupport)(blockName, "alignWide", true)
+      (0, import_blocks97.getBlockSupport)(blockName, "align"),
+      (0, import_blocks97.hasBlockSupport)(blockName, "alignWide", true)
     );
     const validAlignments = useAvailableAlignments(
       blockAllowedAlignments
@@ -61865,7 +62015,7 @@ var wp;
     }
     const updateAlignment = (nextAlign) => {
       if (!nextAlign) {
-        const blockType = (0, import_blocks96.getBlockType)(blockName);
+        const blockType = (0, import_blocks97.getBlockType)(blockName);
         const blockDefaultAlign = blockType?.attributes?.align?.default;
         if (blockDefaultAlign) {
           nextAlign = "";
@@ -61889,13 +62039,13 @@ var wp;
     addSaveProps: addAssignedAlign,
     attributeKeys: ["align"],
     hasSupport(name) {
-      return (0, import_blocks96.hasBlockSupport)(name, "align", false);
+      return (0, import_blocks97.hasBlockSupport)(name, "align", false);
     }
   };
   function useBlockProps7({ name, align }) {
     const blockAllowedAlignments = getValidAlignments(
-      (0, import_blocks96.getBlockSupport)(name, "align"),
-      (0, import_blocks96.hasBlockSupport)(name, "alignWide", true)
+      (0, import_blocks97.getBlockSupport)(name, "align"),
+      (0, import_blocks97.hasBlockSupport)(name, "alignWide", true)
     );
     const validAlignments = useAvailableAlignments(blockAllowedAlignments);
     if (validAlignments.some((alignment) => alignment.name === align)) {
@@ -61905,8 +62055,8 @@ var wp;
   }
   function addAssignedAlign(props, blockType, attributes) {
     const { align } = attributes;
-    const blockAlign = (0, import_blocks96.getBlockSupport)(blockType, "align");
-    const hasWideBlockSupport = (0, import_blocks96.hasBlockSupport)(blockType, "alignWide", true);
+    const blockAlign = (0, import_blocks97.getBlockSupport)(blockType, "align");
+    const hasWideBlockSupport = (0, import_blocks97.hasBlockSupport)(blockType, "alignWide", true);
     const isAlignValid = getValidAlignments(
       blockAlign,
       hasWideBlockSupport
@@ -61940,14 +62090,14 @@ var wp;
 
   // packages/block-editor/build-module/hooks/allowed-blocks.mjs
   var import_hooks19 = __toESM(require_hooks(), 1);
-  var import_blocks99 = __toESM(require_blocks(), 1);
+  var import_blocks100 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
   var import_components222 = __toESM(require_components(), 1);
   var import_i18n207 = __toESM(require_i18n(), 1);
   var import_element223 = __toESM(require_element(), 1);
   var import_data179 = __toESM(require_data(), 1);
-  var import_blocks98 = __toESM(require_blocks(), 1);
+  var import_blocks99 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.mjs
   var import_components221 = __toESM(require_components(), 1);
@@ -61956,7 +62106,7 @@ var wp;
   var import_data178 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/block-manager/index.mjs
-  var import_blocks97 = __toESM(require_blocks(), 1);
+  var import_blocks98 = __toESM(require_blocks(), 1);
   var import_data177 = __toESM(require_data(), 1);
   var import_components220 = __toESM(require_components(), 1);
   var import_i18n205 = __toESM(require_i18n(), 1);
@@ -62094,8 +62244,8 @@ var wp;
     const [search, setSearch] = (0, import_element221.useState)("");
     const { categories, isMatchingSearchTerm } = (0, import_data177.useSelect)((select3) => {
       return {
-        categories: select3(import_blocks97.store).getCategories(),
-        isMatchingSearchTerm: select3(import_blocks97.store).isMatchingSearchTerm
+        categories: select3(import_blocks98.store).getCategories(),
+        isMatchingSearchTerm: select3(import_blocks98.store).isMatchingSearchTerm
       };
     }, []);
     const filteredBlockTypes = blockTypes.filter((blockType) => {
@@ -62274,14 +62424,14 @@ var wp;
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
         return {
-          blockTypes: select3(import_blocks98.store).getBlockTypes(),
+          blockTypes: select3(import_blocks99.store).getBlockTypes(),
           selectedBlockNames: getBlockAttributes3(clientId)?.allowedBlocks
         };
       },
       [clientId]
     );
     const filteredBlockTypes = blockTypes.filter(
-      (blockType) => (0, import_blocks98.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
+      (blockType) => (0, import_blocks99.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
     );
     if (!filteredBlockTypes) {
       return null;
@@ -62339,14 +62489,14 @@ var wp;
     edit: BlockEditAllowedBlocksControlPure,
     attributeKeys: ["allowedBlocks"],
     hasSupport(name) {
-      return (0, import_blocks99.hasBlockSupport)(name, "allowedBlocks");
+      return (0, import_blocks100.hasBlockSupport)(name, "allowedBlocks");
     }
   };
   function addAttribute3(settings2) {
     if (settings2?.attributes?.allowedBlocks?.type) {
       return settings2;
     }
-    if ((0, import_blocks99.hasBlockSupport)(settings2, "allowedBlocks")) {
+    if ((0, import_blocks100.hasBlockSupport)(settings2, "allowedBlocks")) {
       settings2.attributes = {
         ...settings2.attributes,
         allowedBlocks: {
@@ -62362,7 +62512,7 @@ var wp;
     addAttribute3
   );
   function addTransforms2(result, source, index, results) {
-    if (!(0, import_blocks99.hasBlockSupport)(result.name, "allowedBlocks")) {
+    if (!(0, import_blocks100.hasBlockSupport)(result.name, "allowedBlocks")) {
       return result;
     }
     if (source.length !== 1 && results.length === 1 && result.innerBlocks.length === source.length) {
@@ -62381,7 +62531,7 @@ var wp;
     if (!sourceAllowedBlocks) {
       return result;
     }
-    const blockType = (0, import_blocks99.getBlockType)(result.name);
+    const blockType = (0, import_blocks100.getBlockType)(result.name);
     const destinationAllowedBlocks = blockType?.allowedBlocks || [];
     if (!destinationAllowedBlocks.length) {
       return {
@@ -62413,7 +62563,7 @@ var wp;
   var import_hooks20 = __toESM(require_hooks(), 1);
   var import_components223 = __toESM(require_components(), 1);
   var import_i18n208 = __toESM(require_i18n(), 1);
-  var import_blocks100 = __toESM(require_blocks(), 1);
+  var import_blocks101 = __toESM(require_blocks(), 1);
   var import_element224 = __toESM(require_element(), 1);
   var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
   var ANCHOR_REGEX = /[\s#]/g;
@@ -62421,7 +62571,7 @@ var wp;
     if ("type" in (settings2.attributes?.anchor ?? {})) {
       return settings2;
     }
-    if ((0, import_blocks100.hasBlockSupport)(settings2, "anchor")) {
+    if ((0, import_blocks101.hasBlockSupport)(settings2, "anchor")) {
       settings2.attributes = {
         ...settings2.attributes,
         anchor: {
@@ -62478,11 +62628,11 @@ var wp;
     edit: BlockEditAnchorControlPure,
     attributeKeys: ["anchor"],
     hasSupport(name) {
-      return (0, import_blocks100.hasBlockSupport)(name, "anchor");
+      return (0, import_blocks101.hasBlockSupport)(name, "anchor");
     }
   };
   function addSaveProps3(extraProps, blockType, attributes) {
-    if ((0, import_blocks100.hasBlockSupport)(blockType, "anchor")) {
+    if ((0, import_blocks101.hasBlockSupport)(blockType, "anchor")) {
       extraProps.id = attributes.anchor === "" ? null : attributes.anchor;
     }
     return extraProps;
@@ -62491,12 +62641,12 @@ var wp;
 
   // packages/block-editor/build-module/hooks/aria-label.mjs
   var import_hooks21 = __toESM(require_hooks(), 1);
-  var import_blocks101 = __toESM(require_blocks(), 1);
+  var import_blocks102 = __toESM(require_blocks(), 1);
   function addAttribute5(settings2) {
     if (settings2?.attributes?.ariaLabel?.type) {
       return settings2;
     }
-    if ((0, import_blocks101.hasBlockSupport)(settings2, "ariaLabel")) {
+    if ((0, import_blocks102.hasBlockSupport)(settings2, "ariaLabel")) {
       settings2.attributes = {
         ...settings2.attributes,
         ariaLabel: {
@@ -62507,7 +62657,7 @@ var wp;
     return settings2;
   }
   function addSaveProps4(extraProps, blockType, attributes) {
-    if ((0, import_blocks101.hasBlockSupport)(blockType, "ariaLabel") && !shouldSkipSerialization(blockType, "ariaLabel", "ariaLabel")) {
+    if ((0, import_blocks102.hasBlockSupport)(blockType, "ariaLabel") && !shouldSkipSerialization(blockType, "ariaLabel", "ariaLabel")) {
       extraProps["aria-label"] = attributes.ariaLabel === "" ? null : attributes.ariaLabel;
     }
     return extraProps;
@@ -62516,7 +62666,7 @@ var wp;
     addSaveProps: addSaveProps4,
     attributeKeys: ["ariaLabel"],
     hasSupport(name) {
-      return (0, import_blocks101.hasBlockSupport)(name, "ariaLabel");
+      return (0, import_blocks102.hasBlockSupport)(name, "ariaLabel");
     }
   };
   (0, import_hooks21.addFilter)(
@@ -62526,7 +62676,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/block-fields/index.mjs
-  var import_blocks102 = __toESM(require_blocks(), 1);
+  var import_blocks103 = __toESM(require_blocks(), 1);
   var import_components254 = __toESM(require_components(), 1);
   var import_data182 = __toESM(require_data(), 1);
 
@@ -70568,7 +70718,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-fields/index.mjs
   var import_jsx_runtime443 = __toESM(require_jsx_runtime(), 1);
-  var { fieldsKey, formKey } = unlock(import_blocks102.privateApis);
+  var { fieldsKey, formKey } = unlock(import_blocks103.privateApis);
   function createConfiguredControl2(ControlComponent, config2 = {}) {
     return function ConfiguredControl(props) {
       return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(ControlComponent, { ...props, config: config2 });
@@ -70673,7 +70823,7 @@ var wp;
     ] });
   }
   function hasBlockFieldsSupport(blockName) {
-    return !!(window?.__experimentalContentOnlyInspectorFields && (0, import_blocks102.getBlockType)(blockName)?.[fieldsKey]);
+    return !!(window?.__experimentalContentOnlyInspectorFields && (0, import_blocks103.getBlockType)(blockName)?.[fieldsKey]);
   }
   function BlockFieldsPanel(props) {
     const { blockType, isSelectionWithinCurrentSection } = (0, import_element258.useContext)(PrivateBlockContext);
@@ -70697,10 +70847,10 @@ var wp;
   var import_hooks22 = __toESM(require_hooks(), 1);
   var import_components255 = __toESM(require_components(), 1);
   var import_i18n232 = __toESM(require_i18n(), 1);
-  var import_blocks103 = __toESM(require_blocks(), 1);
+  var import_blocks104 = __toESM(require_blocks(), 1);
   var import_jsx_runtime444 = __toESM(require_jsx_runtime(), 1);
   function addAttribute6(settings2) {
-    if ((0, import_blocks103.hasBlockSupport)(settings2, "customClassName", true)) {
+    if ((0, import_blocks104.hasBlockSupport)(settings2, "customClassName", true)) {
       settings2.attributes = {
         ...settings2.attributes,
         className: {
@@ -70736,11 +70886,11 @@ var wp;
     addSaveProps: addSaveProps5,
     attributeKeys: ["className"],
     hasSupport(name) {
-      return (0, import_blocks103.hasBlockSupport)(name, "customClassName", true);
+      return (0, import_blocks104.hasBlockSupport)(name, "customClassName", true);
     }
   };
   function addSaveProps5(extraProps, blockType, attributes) {
-    if ((0, import_blocks103.hasBlockSupport)(blockType, "customClassName", true) && attributes.className) {
+    if ((0, import_blocks104.hasBlockSupport)(blockType, "customClassName", true) && attributes.className) {
       extraProps.className = clsx_default(
         extraProps.className,
         attributes.className
@@ -70749,7 +70899,7 @@ var wp;
     return extraProps;
   }
   function addTransforms3(result, source, index, results) {
-    if (!(0, import_blocks103.hasBlockSupport)(result.name, "customClassName", true)) {
+    if (!(0, import_blocks104.hasBlockSupport)(result.name, "customClassName", true)) {
       return result;
     }
     if (results.length === 1 && result.innerBlocks.length === source.length) {
@@ -70785,18 +70935,18 @@ var wp;
 
   // packages/block-editor/build-module/hooks/generated-class-name.mjs
   var import_hooks23 = __toESM(require_hooks(), 1);
-  var import_blocks104 = __toESM(require_blocks(), 1);
+  var import_blocks105 = __toESM(require_blocks(), 1);
   function addGeneratedClassName(extraProps, blockType) {
-    if ((0, import_blocks104.hasBlockSupport)(blockType, "className", true)) {
+    if ((0, import_blocks105.hasBlockSupport)(blockType, "className", true)) {
       if (typeof extraProps.className === "string") {
         extraProps.className = [
           .../* @__PURE__ */ new Set([
-            (0, import_blocks104.getBlockDefaultClassName)(blockType.name),
+            (0, import_blocks105.getBlockDefaultClassName)(blockType.name),
             ...extraProps.className.split(" ")
           ])
         ].join(" ").trim();
       } else {
-        extraProps.className = (0, import_blocks104.getBlockDefaultClassName)(blockType.name);
+        extraProps.className = (0, import_blocks105.getBlockDefaultClassName)(blockType.name);
       }
     }
     return extraProps;
@@ -70810,29 +70960,29 @@ var wp;
   // packages/block-editor/build-module/hooks/style.mjs
   var import_element264 = __toESM(require_element(), 1);
   var import_hooks27 = __toESM(require_hooks(), 1);
-  var import_blocks112 = __toESM(require_blocks(), 1);
+  var import_blocks113 = __toESM(require_blocks(), 1);
   var import_compose101 = __toESM(require_compose(), 1);
   var import_style_engine4 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/hooks/typography.mjs
-  var import_blocks110 = __toESM(require_blocks(), 1);
+  var import_blocks111 = __toESM(require_blocks(), 1);
   var import_element261 = __toESM(require_element(), 1);
   var import_data184 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/hooks/line-height.mjs
-  var import_blocks105 = __toESM(require_blocks(), 1);
+  var import_blocks106 = __toESM(require_blocks(), 1);
   var import_jsx_runtime445 = __toESM(require_jsx_runtime(), 1);
   var LINE_HEIGHT_SUPPORT_KEY2 = "typography.lineHeight";
 
   // packages/block-editor/build-module/hooks/font-family.mjs
   var import_hooks24 = __toESM(require_hooks(), 1);
-  var import_blocks106 = __toESM(require_blocks(), 1);
+  var import_blocks107 = __toESM(require_blocks(), 1);
   var import_token_list2 = __toESM(require_token_list(), 1);
   var import_components257 = __toESM(require_components(), 1);
   var FONT_FAMILY_SUPPORT_KEY2 = "typography.__experimentalFontFamily";
   var { kebabCase: kebabCase5 } = unlock(import_components257.privateApis);
   function addAttributes3(settings2) {
-    if (!(0, import_blocks106.hasBlockSupport)(settings2, FONT_FAMILY_SUPPORT_KEY2)) {
+    if (!(0, import_blocks107.hasBlockSupport)(settings2, FONT_FAMILY_SUPPORT_KEY2)) {
       return settings2;
     }
     if (!settings2.attributes.fontFamily) {
@@ -70845,7 +70995,7 @@ var wp;
     return settings2;
   }
   function addSaveProps6(props, blockType, attributes) {
-    if (!(0, import_blocks106.hasBlockSupport)(blockType, FONT_FAMILY_SUPPORT_KEY2)) {
+    if (!(0, import_blocks107.hasBlockSupport)(blockType, FONT_FAMILY_SUPPORT_KEY2)) {
       return props;
     }
     if (shouldSkipSerialization(
@@ -70872,7 +71022,7 @@ var wp;
     addSaveProps: addSaveProps6,
     attributeKeys: ["fontFamily"],
     hasSupport(name) {
-      return (0, import_blocks106.hasBlockSupport)(name, FONT_FAMILY_SUPPORT_KEY2);
+      return (0, import_blocks107.hasBlockSupport)(name, FONT_FAMILY_SUPPORT_KEY2);
     }
   };
   (0, import_hooks24.addFilter)(
@@ -70883,12 +71033,12 @@ var wp;
 
   // packages/block-editor/build-module/hooks/font-size.mjs
   var import_hooks25 = __toESM(require_hooks(), 1);
-  var import_blocks107 = __toESM(require_blocks(), 1);
+  var import_blocks108 = __toESM(require_blocks(), 1);
   var import_token_list3 = __toESM(require_token_list(), 1);
   var import_jsx_runtime446 = __toESM(require_jsx_runtime(), 1);
   var FONT_SIZE_SUPPORT_KEY2 = "typography.fontSize";
   function addAttributes4(settings2) {
-    if (!(0, import_blocks107.hasBlockSupport)(settings2, FONT_SIZE_SUPPORT_KEY2)) {
+    if (!(0, import_blocks108.hasBlockSupport)(settings2, FONT_SIZE_SUPPORT_KEY2)) {
       return settings2;
     }
     if (!settings2.attributes.fontSize) {
@@ -70901,7 +71051,7 @@ var wp;
     return settings2;
   }
   function addSaveProps7(props, blockNameOrType, attributes) {
-    if (!(0, import_blocks107.hasBlockSupport)(blockNameOrType, FONT_SIZE_SUPPORT_KEY2)) {
+    if (!(0, import_blocks108.hasBlockSupport)(blockNameOrType, FONT_SIZE_SUPPORT_KEY2)) {
       return props;
     }
     if (shouldSkipSerialization(
@@ -70923,7 +71073,7 @@ var wp;
       "typography.fluid",
       "layout"
     );
-    if (!(0, import_blocks107.hasBlockSupport)(name, FONT_SIZE_SUPPORT_KEY2) || shouldSkipSerialization(name, TYPOGRAPHY_SUPPORT_KEY, "fontSize") || !fontSize && !style?.typography?.fontSize) {
+    if (!(0, import_blocks108.hasBlockSupport)(name, FONT_SIZE_SUPPORT_KEY2) || shouldSkipSerialization(name, TYPOGRAPHY_SUPPORT_KEY, "fontSize") || !fontSize && !style?.typography?.fontSize) {
       return;
     }
     let props;
@@ -70963,7 +71113,7 @@ var wp;
     addSaveProps: addSaveProps7,
     attributeKeys: ["fontSize", "style"],
     hasSupport(name) {
-      return (0, import_blocks107.hasBlockSupport)(name, FONT_SIZE_SUPPORT_KEY2);
+      return (0, import_blocks108.hasBlockSupport)(name, FONT_SIZE_SUPPORT_KEY2);
     }
   };
   var MIGRATION_PATHS2 = {
@@ -70972,7 +71122,7 @@ var wp;
   function addTransforms4(result, source, index, results) {
     const destinationBlockType = result.name;
     const activeSupports = {
-      fontSize: (0, import_blocks107.hasBlockSupport)(
+      fontSize: (0, import_blocks108.hasBlockSupport)(
         destinationBlockType,
         FONT_SIZE_SUPPORT_KEY2
       )
@@ -70999,7 +71149,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/text-align.mjs
   var import_i18n233 = __toESM(require_i18n(), 1);
-  var import_blocks108 = __toESM(require_blocks(), 1);
+  var import_blocks109 = __toESM(require_blocks(), 1);
   var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
   var TEXT_ALIGN_SUPPORT_KEY2 = "typography.textAlign";
   var TEXT_ALIGNMENT_OPTIONS2 = [
@@ -71041,7 +71191,7 @@ var wp;
       return null;
     }
     const validTextAlignments = getValidTextAlignments(
-      (0, import_blocks108.getBlockSupport)(blockName, TEXT_ALIGN_SUPPORT_KEY2)
+      (0, import_blocks109.getBlockSupport)(blockName, TEXT_ALIGN_SUPPORT_KEY2)
     );
     if (!validTextAlignments.length) {
       return null;
@@ -71074,7 +71224,7 @@ var wp;
     addSaveProps: addAssignedTextAlign,
     attributeKeys: ["style"],
     hasSupport(name) {
-      return (0, import_blocks108.hasBlockSupport)(name, TEXT_ALIGN_SUPPORT_KEY2, false);
+      return (0, import_blocks109.hasBlockSupport)(name, TEXT_ALIGN_SUPPORT_KEY2, false);
     }
   };
   function useBlockProps10({ name, style }) {
@@ -71082,7 +71232,7 @@ var wp;
       return null;
     }
     const validTextAlignments = getValidTextAlignments(
-      (0, import_blocks108.getBlockSupport)(name, TEXT_ALIGN_SUPPORT_KEY2)
+      (0, import_blocks109.getBlockSupport)(name, TEXT_ALIGN_SUPPORT_KEY2)
     );
     if (!validTextAlignments.length) {
       return null;
@@ -71101,7 +71251,7 @@ var wp;
       return props;
     }
     const { textAlign } = attributes.style.typography;
-    const blockTextAlign = (0, import_blocks108.getBlockSupport)(blockType, TEXT_ALIGN_SUPPORT_KEY2);
+    const blockTextAlign = (0, import_blocks109.getBlockSupport)(blockType, TEXT_ALIGN_SUPPORT_KEY2);
     const isTextAlignValid = getValidTextAlignments(blockTextAlign).includes(textAlign);
     if (isTextAlignValid && !shouldSkipSerialization(
       blockType,
@@ -71118,7 +71268,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/fit-text.mjs
   var import_hooks26 = __toESM(require_hooks(), 1);
-  var import_blocks109 = __toESM(require_blocks(), 1);
+  var import_blocks110 = __toESM(require_blocks(), 1);
   var import_element260 = __toESM(require_element(), 1);
   var import_data183 = __toESM(require_data(), 1);
   var import_i18n235 = __toESM(require_i18n(), 1);
@@ -71207,7 +71357,7 @@ var wp;
   var MIN_FONT_SIZE_FOR_WARNING = 12;
   var FIT_TEXT_SUPPORT_KEY = "typography.fitText";
   function addAttributes5(settings2) {
-    if (!(0, import_blocks109.hasBlockSupport)(settings2, FIT_TEXT_SUPPORT_KEY)) {
+    if (!(0, import_blocks110.hasBlockSupport)(settings2, FIT_TEXT_SUPPORT_KEY)) {
       return settings2;
     }
     if (settings2.attributes?.fitText) {
@@ -71225,7 +71375,7 @@ var wp;
   }
   function useFitText({ fitText, name, clientId }) {
     const [fontSize, setFontSize] = (0, import_element260.useState)(null);
-    const hasFitTextSupport2 = (0, import_blocks109.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
+    const hasFitTextSupport2 = (0, import_blocks110.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
     const blockElement = useBlockElement(clientId);
     const { blockAttributes, parentId, blockMode } = (0, import_data183.useSelect)(
       (select3) => {
@@ -71346,7 +71496,7 @@ var wp;
     style,
     warning: warning6
   }) {
-    if (!(0, import_blocks109.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
+    if (!(0, import_blocks110.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)(
@@ -71393,7 +71543,7 @@ var wp;
     ) });
   }
   function addSaveProps8(props, blockType, attributes) {
-    if (!(0, import_blocks109.hasBlockSupport)(blockType, FIT_TEXT_SUPPORT_KEY)) {
+    if (!(0, import_blocks110.hasBlockSupport)(blockType, FIT_TEXT_SUPPORT_KEY)) {
       return props;
     }
     const { fitText } = attributes;
@@ -71407,7 +71557,7 @@ var wp;
     };
   }
   function useBlockProps11({ name, fitText }) {
-    if (fitText && (0, import_blocks109.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
+    if (fitText && (0, import_blocks110.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
       return {
         className: "has-fit-text"
       };
@@ -71420,7 +71570,7 @@ var wp;
     addAttributes5
   );
   var hasFitTextSupport = (blockNameOrType) => {
-    return (0, import_blocks109.hasBlockSupport)(blockNameOrType, FIT_TEXT_SUPPORT_KEY);
+    return (0, import_blocks110.hasBlockSupport)(blockNameOrType, FIT_TEXT_SUPPORT_KEY);
   };
   function WithFitTextFontSize({ fitText, name, clientId, children }) {
     const { fontSize } = useFitText({ fitText, name, clientId });
@@ -71430,7 +71580,7 @@ var wp;
     return function AddFitTextControl(props) {
       const { name, attributes, clientId, isSelected, setAttributes } = props;
       const { fitText } = attributes;
-      const supportsFitText = (0, import_blocks109.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
+      const supportsFitText = (0, import_blocks110.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
       if (!supportsFitText) {
         return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(BlockEdit2, { ...props });
       }
@@ -71600,7 +71750,7 @@ var wp;
     if (!isEnabled) {
       return null;
     }
-    const defaultControls = (0, import_blocks110.getBlockSupport)(name, [
+    const defaultControls = (0, import_blocks111.getBlockSupport)(name, [
       TYPOGRAPHY_SUPPORT_KEY,
       "__experimentalDefaultControls"
     ]);
@@ -71620,7 +71770,7 @@ var wp;
   // packages/block-editor/build-module/hooks/dimensions.mjs
   var import_element263 = __toESM(require_element(), 1);
   var import_data185 = __toESM(require_data(), 1);
-  var import_blocks111 = __toESM(require_blocks(), 1);
+  var import_blocks112 = __toESM(require_blocks(), 1);
   var import_deprecated36 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
@@ -71789,11 +71939,11 @@ var wp;
     if (!isEnabled) {
       return null;
     }
-    const defaultDimensionsControls = (0, import_blocks111.getBlockSupport)(name, [
+    const defaultDimensionsControls = (0, import_blocks112.getBlockSupport)(name, [
       DIMENSIONS_SUPPORT_KEY,
       "__experimentalDefaultControls"
     ]);
-    const defaultSpacingControls = (0, import_blocks111.getBlockSupport)(name, [
+    const defaultSpacingControls = (0, import_blocks112.getBlockSupport)(name, [
       SPACING_SUPPORT_KEY2,
       "__experimentalDefaultControls"
     ]);
@@ -71836,7 +71986,7 @@ var wp;
     if (import_element263.Platform.OS !== "web") {
       return false;
     }
-    const support = (0, import_blocks111.getBlockSupport)(blockName, DIMENSIONS_SUPPORT_KEY);
+    const support = (0, import_blocks112.getBlockSupport)(blockName, DIMENSIONS_SUPPORT_KEY);
     if (support === true) {
       return true;
     }
@@ -71886,7 +72036,7 @@ var wp;
     SPACING_SUPPORT_KEY2,
     SHADOW_SUPPORT_KEY
   ];
-  var hasStyleSupport2 = (nameOrType) => styleSupportKeys2.some((key) => (0, import_blocks112.hasBlockSupport)(nameOrType, key));
+  var hasStyleSupport2 = (nameOrType) => styleSupportKeys2.some((key) => (0, import_blocks113.hasBlockSupport)(nameOrType, key));
   function getInlineStyles(styles = {}) {
     const output = {};
     (0, import_style_engine4.getCSSRules)(styles).forEach((rule) => {
@@ -71969,7 +72119,7 @@ var wp;
     }
     let { style } = attributes;
     Object.entries(skipPaths).forEach(([indicator, path]) => {
-      const skipSerialization = skipSerializationPathsSaveChecks[indicator] || (0, import_blocks112.getBlockSupport)(blockNameOrType, indicator);
+      const skipSerialization = skipSerializationPathsSaveChecks[indicator] || (0, import_blocks113.getBlockSupport)(blockNameOrType, indicator);
       if (skipSerialization === true) {
         style = omitStyle(style, path);
       }
@@ -72060,7 +72210,7 @@ var wp;
         if (elementStyles) {
           const selector3 = scopeSelector(
             baseElementSelector,
-            import_blocks112.__EXPERIMENTAL_ELEMENTS[elementType]
+            import_blocks113.__EXPERIMENTAL_ELEMENTS[elementType]
           );
           elementCSSRules.push(
             (0, import_style_engine4.compileCSS)(elementStyles, { selector: selector3 })
@@ -72072,7 +72222,7 @@ var wp;
                   (0, import_style_engine4.compileCSS)(elementStyles[pseudoSelector], {
                     selector: scopeSelector(
                       baseElementSelector,
-                      `${import_blocks112.__EXPERIMENTAL_ELEMENTS[elementType]}${pseudoSelector}`
+                      `${import_blocks113.__EXPERIMENTAL_ELEMENTS[elementType]}${pseudoSelector}`
                     )
                   })
                 );
@@ -72087,7 +72237,7 @@ var wp;
                 (0, import_style_engine4.compileCSS)(blockElementStyles[element], {
                   selector: scopeSelector(
                     baseElementSelector,
-                    import_blocks112.__EXPERIMENTAL_ELEMENTS[element]
+                    import_blocks113.__EXPERIMENTAL_ELEMENTS[element]
                   )
                 })
               );
@@ -72113,8 +72263,8 @@ var wp;
 
   // packages/block-editor/build-module/hooks/settings.mjs
   var import_hooks28 = __toESM(require_hooks(), 1);
-  var import_blocks113 = __toESM(require_blocks(), 1);
-  var hasSettingsSupport = (blockType) => (0, import_blocks113.hasBlockSupport)(blockType, "__experimentalSettings", false);
+  var import_blocks114 = __toESM(require_blocks(), 1);
+  var hasSettingsSupport = (blockType) => (0, import_blocks114.hasBlockSupport)(blockType, "__experimentalSettings", false);
   function addAttribute8(settings2) {
     if (!hasSettingsSupport(settings2)) {
       return settings2;
@@ -72136,7 +72286,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/duotone.mjs
-  var import_blocks114 = __toESM(require_blocks(), 1);
+  var import_blocks115 = __toESM(require_blocks(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_hooks29 = __toESM(require_hooks(), 1);
   var import_element265 = __toESM(require_element(), 1);
@@ -72314,11 +72464,11 @@ var wp;
     useBlockProps: useBlockProps14,
     attributeKeys: ["style"],
     hasSupport(name) {
-      return (0, import_blocks114.hasBlockSupport)(name, "filter.duotone");
+      return (0, import_blocks115.hasBlockSupport)(name, "filter.duotone");
     }
   };
   function addDuotoneAttributes(settings2) {
-    if (!(0, import_blocks114.hasBlockSupport)(settings2, "filter.duotone")) {
+    if (!(0, import_blocks115.hasBlockSupport)(settings2, "filter.duotone")) {
       return settings2;
     }
     if (!settings2.attributes.style) {
@@ -72387,9 +72537,9 @@ var wp;
   function useBlockProps14({ clientId, name, style }) {
     const id = (0, import_compose102.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
     const selector3 = (0, import_element265.useMemo)(() => {
-      const blockType = (0, import_blocks114.getBlockType)(name);
+      const blockType = (0, import_blocks115.getBlockType)(name);
       if (blockType) {
-        const duotoneSupport = (0, import_blocks114.getBlockSupport)(
+        const duotoneSupport = (0, import_blocks115.getBlockSupport)(
           blockType,
           "filter.duotone",
           false
@@ -72397,7 +72547,7 @@ var wp;
         if (!duotoneSupport) {
           return null;
         }
-        const experimentalDuotone = (0, import_blocks114.getBlockSupport)(
+        const experimentalDuotone = (0, import_blocks115.getBlockSupport)(
           blockType,
           "color.__experimentalDuotone",
           false
@@ -72434,13 +72584,13 @@ var wp;
   var import_element266 = __toESM(require_element(), 1);
   var import_data186 = __toESM(require_data(), 1);
   var import_compose103 = __toESM(require_compose(), 1);
-  var import_blocks115 = __toESM(require_blocks(), 1);
+  var import_blocks116 = __toESM(require_blocks(), 1);
   var import_i18n236 = __toESM(require_i18n(), 1);
   var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
   var CUSTOM_CSS_INSTANCE_REFERENCE = {};
   var EMPTY_STYLE = {};
   function CustomCSSControl({ blockName, setAttributes, style }) {
-    const blockType = (0, import_blocks115.getBlockType)(blockName);
+    const blockType = (0, import_blocks116.getBlockType)(blockName);
     function onChange(newStyle) {
       const css = newStyle?.css?.trim() ? newStyle.css : void 0;
       setAttributes({
@@ -72510,7 +72660,7 @@ var wp;
     };
   }
   function addSaveProps10(props, blockType, attributes) {
-    if (!(0, import_blocks115.hasBlockSupport)(blockType, "customCSS", true)) {
+    if (!(0, import_blocks116.hasBlockSupport)(blockType, "customCSS", true)) {
       return props;
     }
     if (!attributes?.style?.css?.trim()) {
@@ -72528,14 +72678,14 @@ var wp;
     addSaveProps: addSaveProps10,
     attributeKeys: ["style"],
     hasSupport(name) {
-      return (0, import_blocks115.hasBlockSupport)(name, "customCSS", true);
+      return (0, import_blocks116.hasBlockSupport)(name, "customCSS", true);
     }
   };
 
   // packages/block-editor/build-module/hooks/layout.mjs
   var import_compose104 = __toESM(require_compose(), 1);
   var import_hooks30 = __toESM(require_hooks(), 1);
-  var import_blocks116 = __toESM(require_blocks(), 1);
+  var import_blocks117 = __toESM(require_blocks(), 1);
   var import_data187 = __toESM(require_data(), 1);
   var import_components262 = __toESM(require_components(), 1);
   var import_i18n237 = __toESM(require_i18n(), 1);
@@ -72543,11 +72693,11 @@ var wp;
   var layoutBlockSupportKey = "layout";
   var { kebabCase: kebabCase6 } = unlock(import_components262.privateApis);
   function hasLayoutBlockSupport(blockName) {
-    return (0, import_blocks116.hasBlockSupport)(blockName, "layout") || (0, import_blocks116.hasBlockSupport)(blockName, "__experimentalLayout");
+    return (0, import_blocks117.hasBlockSupport)(blockName, "layout") || (0, import_blocks117.hasBlockSupport)(blockName, "__experimentalLayout");
   }
   function useLayoutClasses(blockAttributes = {}, blockName = "") {
     const { layout } = blockAttributes;
-    const { default: defaultBlockLayout } = (0, import_blocks116.getBlockSupport)(blockName, layoutBlockSupportKey) || {};
+    const { default: defaultBlockLayout } = (0, import_blocks117.getBlockSupport)(blockName, layoutBlockSupportKey) || {};
     const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultBlockLayout || {};
     const layoutClassnames = [];
     if (LAYOUT_DEFINITIONS[usedLayout?.type || "default"]?.className) {
@@ -72616,7 +72766,7 @@ var wp;
     if (blockEditingMode !== "default") {
       return null;
     }
-    const layoutBlockSupport = (0, import_blocks116.getBlockSupport)(
+    const layoutBlockSupport = (0, import_blocks117.getBlockSupport)(
       blockName,
       layoutBlockSupportKey,
       {}
@@ -72767,7 +72917,7 @@ var wp;
     const { name, attributes } = props;
     const id = (0, import_compose104.useInstanceId)(BlockListBlock2);
     const { layout } = attributes;
-    const { default: defaultBlockLayout } = (0, import_blocks116.getBlockSupport)(name, layoutBlockSupportKey) || {};
+    const { default: defaultBlockLayout } = (0, import_blocks117.getBlockSupport)(name, layoutBlockSupportKey) || {};
     const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultBlockLayout || {};
     const selectorPrefix = `wp-container-${kebabCase6(name)}-is-layout-`;
     const selector3 = `.${selectorPrefix}${id}`;
@@ -74147,7 +74297,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/metadata.mjs
   var import_hooks31 = __toESM(require_hooks(), 1);
-  var import_blocks117 = __toESM(require_blocks(), 1);
+  var import_blocks118 = __toESM(require_blocks(), 1);
   var META_ATTRIBUTE_NAME = "metadata";
   function addMetaAttribute(blockTypeSettings) {
     if (blockTypeSettings?.attributes?.[META_ATTRIBUTE_NAME]?.type) {
@@ -74179,10 +74329,10 @@ var wp;
     if (sourceMetadata.noteId && !result.attributes?.metadata?.noteId) {
       preservedMetadata.noteId = sourceMetadata.noteId;
     }
-    if (sourceMetadata.name && !result.attributes?.metadata?.name && (0, import_blocks117.hasBlockSupport)(result.name, "renaming", true)) {
+    if (sourceMetadata.name && !result.attributes?.metadata?.name && (0, import_blocks118.hasBlockSupport)(result.name, "renaming", true)) {
       preservedMetadata.name = sourceMetadata.name;
     }
-    if (sourceMetadata.blockVisibility !== void 0 && !result.attributes?.metadata?.blockVisibility && (0, import_blocks117.hasBlockSupport)(result.name, "visibility", true)) {
+    if (sourceMetadata.blockVisibility !== void 0 && !result.attributes?.metadata?.blockVisibility && (0, import_blocks118.hasBlockSupport)(result.name, "visibility", true)) {
       preservedMetadata.blockVisibility = sourceMetadata.blockVisibility;
     }
     if (Object.keys(preservedMetadata).length > 0) {
@@ -74214,7 +74364,7 @@ var wp;
   var import_i18n239 = __toESM(require_i18n(), 1);
   var import_element271 = __toESM(require_element(), 1);
   var import_components266 = __toESM(require_components(), 1);
-  var import_blocks118 = __toESM(require_blocks(), 1);
+  var import_blocks119 = __toESM(require_blocks(), 1);
   var import_data192 = __toESM(require_data(), 1);
   var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT5 = {};
@@ -74224,7 +74374,7 @@ var wp;
     metadata: { ignoredHookedBlocks = [] } = {}
   }) {
     const blockTypes = (0, import_data192.useSelect)(
-      (select3) => select3(import_blocks118.store).getBlockTypes(),
+      (select3) => select3(import_blocks119.store).getBlockTypes(),
       []
     );
     const hookedBlocksForCurrentBlock = (0, import_element271.useMemo)(
@@ -74357,7 +74507,7 @@ var wp;
                       if (!checked) {
                         const relativePosition = block.blockHooks[name];
                         insertBlockIntoDesignatedLocation(
-                          (0, import_blocks118.createBlock)(block.name),
+                          (0, import_blocks119.createBlock)(block.name),
                           relativePosition
                         );
                         return;
@@ -74387,7 +74537,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-bindings.mjs
   var import_i18n240 = __toESM(require_i18n(), 1);
-  var import_blocks119 = __toESM(require_blocks(), 1);
+  var import_blocks120 = __toESM(require_blocks(), 1);
   var import_components268 = __toESM(require_components(), 1);
   var import_data193 = __toESM(require_data(), 1);
   var import_element272 = __toESM(require_element(), 1);
@@ -74413,7 +74563,7 @@ var wp;
         const {
           getAllBlockBindingsSources,
           getBlockBindingsSourceFieldsList
-        } = unlock(select3(import_blocks119.store));
+        } = unlock(select3(import_blocks120.store));
         return {
           bindableAttributes: __experimentalBlockBindingsSupportedAttributes?.[blockName],
           hasCompatibleFields: Object.values(
@@ -74473,24 +74623,54 @@ var wp;
   // packages/block-editor/build-module/hooks/list-view.mjs
   var import_i18n241 = __toESM(require_i18n(), 1);
   var import_components269 = __toESM(require_components(), 1);
-  var import_data194 = __toESM(require_data(), 1);
-  var import_blocks120 = __toESM(require_blocks(), 1);
+  var import_data195 = __toESM(require_data(), 1);
+  var import_blocks121 = __toESM(require_blocks(), 1);
   var import_element273 = __toESM(require_element(), 1);
+
+  // packages/block-editor/build-module/components/use-list-view-panel-state/index.mjs
+  var import_data194 = __toESM(require_data(), 1);
+  function useListViewPanelState(clientId) {
+    const { isOpened, expandRevision } = (0, import_data194.useSelect)(
+      (select3) => {
+        const {
+          __unstableIsListViewPanelOpened: __unstableIsListViewPanelOpened2,
+          __unstableGetListViewExpandRevision: __unstableGetListViewExpandRevision2
+        } = select3(store);
+        return {
+          isOpened: __unstableIsListViewPanelOpened2(clientId),
+          expandRevision: __unstableGetListViewExpandRevision2()
+        };
+      },
+      [clientId]
+    );
+    const { __unstableToggleListViewPanel: toggleListViewPanel } = (0, import_data194.useDispatch)(store);
+    const handleToggle = (opened) => {
+      toggleListViewPanel(clientId, opened);
+    };
+    return {
+      isOpened,
+      expandRevision,
+      handleToggle
+    };
+  }
+
+  // packages/block-editor/build-module/hooks/list-view.mjs
   var import_jsx_runtime463 = __toESM(require_jsx_runtime(), 1);
   var LIST_VIEW_SUPPORT_KEY = "listView";
   function hasListViewSupport(nameOrType) {
-    return (0, import_blocks120.hasBlockSupport)(nameOrType, LIST_VIEW_SUPPORT_KEY);
+    return (0, import_blocks121.hasBlockSupport)(nameOrType, LIST_VIEW_SUPPORT_KEY);
   }
   function ListViewPanel({ clientId, name }) {
     const { isSelectionWithinCurrentSection } = (0, import_element273.useContext)(PrivateBlockContext);
+    const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
     const isEnabled = hasListViewSupport(name);
-    const { hasChildren, isNestedListView } = (0, import_data194.useSelect)(
+    const { hasChildren, isNestedListView } = (0, import_data195.useSelect)(
       (select3) => {
         const { getBlockCount: getBlockCount2, getBlockParents: getBlockParents2, getBlockName: getBlockName2 } = select3(store);
         const parents = getBlockParents2(clientId, false);
         const _isNestedListView = parents.find((parentId) => {
           const parentName = getBlockName2(parentId);
-          return parentName === "core/navigation" || (0, import_blocks120.hasBlockSupport)(parentName, "listView");
+          return parentName === "core/navigation" || (0, import_blocks121.hasBlockSupport)(parentName, "listView");
         });
         return {
           hasChildren: !!getBlockCount2(clientId),
@@ -74499,26 +74679,33 @@ var wp;
       },
       [clientId]
     );
-    const title = useBlockDisplayTitle({
-      clientId,
-      context: "list-view"
-    });
+    const blockType = (0, import_blocks121.getBlockType)(name);
+    const title = blockType?.title || name;
     if (!isEnabled || isNestedListView) {
       return null;
     }
     const showBlockTitle = isSelectionWithinCurrentSection;
-    return /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(InspectorControlsFill, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(import_components269.PanelBody, { title: showBlockTitle ? title : void 0, children: [
-      !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)("p", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n241.__)("No items yet.") }),
-      /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
-        PrivateListView,
-        {
-          rootClientId: clientId,
-          isExpanded: true,
-          description: title,
-          showAppender: true
-        }
-      )
-    ] }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(InspectorControlsFill, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(
+      import_components269.PanelBody,
+      {
+        title: showBlockTitle ? title : void 0,
+        opened: isOpened,
+        onToggle: handleToggle,
+        children: [
+          !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)("p", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n241.__)("No items yet.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+            PrivateListView,
+            {
+              rootClientId: clientId,
+              isExpanded: true,
+              description: title,
+              showAppender: true
+            },
+            `${clientId}-${expandRevision}`
+          )
+        ]
+      }
+    ) });
   }
   var list_view_default3 = {
     edit: ListViewPanel,
@@ -74529,12 +74716,12 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-renaming.mjs
   var import_hooks32 = __toESM(require_hooks(), 1);
-  var import_blocks121 = __toESM(require_blocks(), 1);
+  var import_blocks122 = __toESM(require_blocks(), 1);
   function addLabelCallback(settings2) {
     if (settings2.__experimentalLabel) {
       return settings2;
     }
-    const supportsBlockNaming = (0, import_blocks121.hasBlockSupport)(
+    const supportsBlockNaming = (0, import_blocks122.hasBlockSupport)(
       settings2,
       "renaming",
       true
@@ -74559,13 +74746,13 @@ var wp;
   // packages/block-editor/build-module/hooks/grid-visualizer.mjs
   var import_compose110 = __toESM(require_compose(), 1);
   var import_hooks33 = __toESM(require_hooks(), 1);
-  var import_data195 = __toESM(require_data(), 1);
+  var import_data196 = __toESM(require_data(), 1);
   var import_jsx_runtime464 = __toESM(require_jsx_runtime(), 1);
   function GridLayoutSync(props) {
     useGridLayoutSync(props);
   }
   function GridTools2({ clientId, layout }) {
-    const { isVisible, blockVisibility: blockVisibility2, deviceType, isAnyAncestorHidden } = (0, import_data195.useSelect)(
+    const { isVisible, blockVisibility: blockVisibility2, deviceType, isAnyAncestorHidden } = (0, import_data196.useSelect)(
       (select3) => {
         const {
           isBlockSelected: isBlockSelected2,
@@ -74637,9 +74824,9 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/auto-inspector-controls.mjs
-  var import_blocks122 = __toESM(require_blocks(), 1);
+  var import_blocks123 = __toESM(require_blocks(), 1);
   var import_components270 = __toESM(require_components(), 1);
-  var import_data196 = __toESM(require_data(), 1);
+  var import_data197 = __toESM(require_data(), 1);
   var import_element274 = __toESM(require_element(), 1);
   var import_i18n242 = __toESM(require_i18n(), 1);
 
@@ -74695,11 +74882,11 @@ var wp;
   }
   function AutoRegisterControls({ name, clientId, setAttributes }) {
     const blockEditingMode = useBlockEditingMode();
-    const attributes = (0, import_data196.useSelect)(
+    const attributes = (0, import_data197.useSelect)(
       (select3) => select3(store).getBlockAttributes(clientId),
       [clientId]
     );
-    const blockType = (0, import_blocks122.getBlockType)(name);
+    const blockType = (0, import_blocks123.getBlockType)(name);
     const { fields, form } = (0, import_element274.useMemo)(() => {
       if (!blockType?.attributes) {
         return { fields: [], form: { fields: [] } };
@@ -74726,7 +74913,7 @@ var wp;
     edit: AutoRegisterControls,
     attributeKeys: [],
     hasSupport(name) {
-      const blockType = (0, import_blocks122.getBlockType)(name);
+      const blockType = (0, import_blocks123.getBlockType)(name);
       return hasAutoInspectorControlAttributes(blockType?.attributes);
     }
   };
@@ -74960,7 +75147,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/get-rich-text-values.mjs
   var import_element277 = __toESM(require_element(), 1);
-  var import_blocks123 = __toESM(require_blocks(), 1);
+  var import_blocks124 = __toESM(require_blocks(), 1);
   var import_rich_text21 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime466 = __toESM(require_jsx_runtime(), 1);
   function addValuesForElement(element, values, innerBlocks) {
@@ -75012,7 +75199,7 @@ var wp;
   function addValuesForBlocks(values, blocks2) {
     for (let i2 = 0; i2 < blocks2.length; i2++) {
       const { name, attributes, innerBlocks } = blocks2[i2];
-      const saveElement = (0, import_blocks123.getSaveElement)(
+      const saveElement = (0, import_blocks124.getSaveElement)(
         name,
         attributes,
         // Instead of letting save elements use `useInnerBlocksProps.save`,
@@ -75024,10 +75211,10 @@ var wp;
     }
   }
   function getRichTextValues(blocks2 = []) {
-    import_blocks123.__unstableGetBlockProps.skipFilters = true;
+    import_blocks124.__unstableGetBlockProps.skipFilters = true;
     const values = [];
     addValuesForBlocks(values, blocks2);
-    import_blocks123.__unstableGetBlockProps.skipFilters = false;
+    import_blocks124.__unstableGetBlockProps.skipFilters = false;
     return values.map(
       (value) => value instanceof import_rich_text21.RichTextData ? value : import_rich_text21.RichTextData.fromHTMLString(value)
     );
@@ -75054,20 +75241,20 @@ var wp;
 
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.mjs
   var import_element278 = __toESM(require_element(), 1);
-  var import_data197 = __toESM(require_data(), 1);
+  var import_data198 = __toESM(require_data(), 1);
   var import_components273 = __toESM(require_components(), 1);
   var import_i18n243 = __toESM(require_i18n(), 1);
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
     const [confirmed, setConfirmed] = (0, import_element278.useState)(false);
-    const { clientIds, selectPrevious, message: message2 } = (0, import_data197.useSelect)(
+    const { clientIds, selectPrevious, message: message2 } = (0, import_data198.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()
     );
     const {
       clearBlockRemovalPrompt: clearBlockRemovalPrompt2,
       setBlockRemovalRules: setBlockRemovalRules2,
       privateRemoveBlocks: privateRemoveBlocks2
-    } = unlock((0, import_data197.useDispatch)(store));
+    } = unlock((0, import_data198.useDispatch)(store));
     (0, import_element278.useEffect)(() => {
       setBlockRemovalRules2(rules);
       return () => {
@@ -75482,7 +75669,7 @@ var wp;
   // packages/block-editor/build-module/components/html-element-control/index.mjs
   var import_i18n248 = __toESM(require_i18n(), 1);
   var import_components277 = __toESM(require_components(), 1);
-  var import_data198 = __toESM(require_data(), 1);
+  var import_data199 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/html-element-control/messages.mjs
   var import_i18n247 = __toESM(require_i18n(), 1);
@@ -75536,7 +75723,7 @@ var wp;
     ]
   }) {
     const checkForMainTag = !!clientId && options.some((option) => option.value === "main");
-    const hasMainElementElsewhere = (0, import_data198.useSelect)(
+    const hasMainElementElsewhere = (0, import_data199.useSelect)(
       (select3) => {
         if (!checkForMainTag) {
           return false;
@@ -75804,6 +75991,8 @@ var wp;
     useBlockElementRef,
     LinkPicker,
     useRemoteUrlData: use_rich_url_data_default,
+    PrivateBlockContext,
+    useListViewPanelState,
     isHashLink,
     isRelativePath
   });
