@@ -10547,7 +10547,9 @@ var wp;
       awareness.emit("change", [
         {
           added: Array.from(added),
-          updated: Array.from(updated)
+          updated: Array.from(updated),
+          // Left blank on purpose, as the removal of clients is handled in the if condition below.
+          removed: []
         }
       ]);
     }
@@ -10628,23 +10630,30 @@ var wp;
           }
         });
       } catch (error) {
+        pollInterval = Math.min(
+          pollInterval * 2,
+          MAX_ERROR_BACKOFF_IN_MS
+        );
         for (const room of payload.rooms) {
           if (!roomStates.has(room.room)) {
             continue;
           }
           const state = roomStates.get(room.room);
           state.updateQueue.restore(room.updates);
+          state.log(
+            "Error posting sync update, will retry with backoff",
+            {
+              error,
+              nextPoll: pollInterval
+            }
+          );
         }
-        pollInterval = Math.min(
-          pollInterval * 2,
-          MAX_ERROR_BACKOFF_IN_MS
-        );
       }
       setTimeout(poll, pollInterval);
     }
     void start();
   }
-  function registerRoom(room, doc2, awareness, onSync) {
+  function registerRoom(room, doc2, awareness, onSync, log) {
     if (roomStates.has(room)) {
       return;
     }
@@ -10667,6 +10676,7 @@ var wp;
       clientId: doc2.clientID,
       endCursor: 0,
       localAwarenessState: awareness.getLocalState() ?? {},
+      log,
       processAwarenessUpdate: (state) => processAwarenessUpdate(state, awareness),
       processDocUpdate: (update) => processDocUpdate(update, doc2, onSync),
       unregister,
@@ -10708,7 +10718,8 @@ var wp;
         this.options.room,
         this.options.ydoc,
         this.awareness,
-        this.onSync
+        this.onSync,
+        this.log
       );
       this.emitStatus("connected");
     }
@@ -10741,14 +10752,17 @@ var wp;
      * @param message The debug message
      * @param debug   Additional debug information
      */
-    log(message, debug = {}) {
+    log = (message, debug = {}) => {
       if (this.options.debug) {
         console.log(`[${this.constructor.name}]: ${message}`, {
           room: this.options.room,
           ...debug
         });
       }
-    }
+    };
+    /**
+     * Handle synchronization events from the polling manager.
+     */
     onSync = () => {
       if (!this.synced) {
         this.synced = true;
