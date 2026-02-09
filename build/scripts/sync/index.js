@@ -10303,9 +10303,14 @@ var wp;
     recordMeta.set(CRDT_RECORD_METADATA_SAVED_AT_KEY, Date.now());
     recordMeta.set(CRDT_RECORD_METADATA_SAVED_BY_KEY, ydoc.clientID);
   }
+  function pseudoRandomID() {
+    return Math.floor(Math.random() * 1e9);
+  }
   function serializeCrdtDoc(crdtDoc) {
     return JSON.stringify({
-      document: toBase64(encodeStateAsUpdateV2(crdtDoc))
+      document: toBase64(encodeStateAsUpdateV2(crdtDoc)),
+      updateId: pseudoRandomID()
+      // helps with debugging
     });
   }
   function deserializeCrdtDoc(serializedCrdtDoc) {
@@ -10317,7 +10322,7 @@ var wp;
       const ydoc = createYjsDoc(docMeta);
       const yupdate = fromBase64(document2);
       applyUpdateV2(ydoc, yupdate);
-      ydoc.clientID = Math.floor(Math.random() * 1e9);
+      ydoc.clientID = pseudoRandomID();
       return ydoc;
     } catch (e) {
       return null;
