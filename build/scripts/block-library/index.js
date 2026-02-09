@@ -46719,8 +46719,7 @@ ${js}
       showNumbers,
       showImages,
       showArtists,
-      currentTrack,
-      tagName: TagName2 = showNumbers ? "ol" : "ul"
+      currentTrack
     } = attributes2;
     const [trackListIndex, setTrackListIndex] = (0, import_element87.useState)(0);
     const blockProps = (0, import_block_editor175.useBlockProps)();
@@ -47050,7 +47049,15 @@ ${js}
             onTrackEnd
           }
         ) }),
-        showTracklist && /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(TagName2, { className: "wp-block-playlist__tracklist", children: innerBlocksProps.children }),
+        showTracklist && /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
+          "ol",
+          {
+            className: clsx_default("wp-block-playlist__tracklist", {
+              "wp-block-playlist__tracklist-show-numbers": showNumbers
+            }),
+            children: innerBlocksProps.children
+          }
+        ),
         /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
           Caption,
           {
@@ -47072,22 +47079,17 @@ ${js}
   var import_block_editor176 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
   function saveWithInnerBlocks2({ attributes: attributes2 }) {
-    const {
-      caption,
-      showNumbers,
-      showTracklist,
-      showArtists,
-      tagName: TagName2 = showNumbers ? "ol" : "ul"
-    } = attributes2;
+    const { caption, showNumbers, showTracklist, showArtists } = attributes2;
     const blockProps = import_block_editor176.useBlockProps.save();
     const innerBlocksProps = import_block_editor176.useInnerBlocksProps.save(blockProps);
     return /* @__PURE__ */ (0, import_jsx_runtime345.jsxs)("figure", { ...innerBlocksProps, children: [
       /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
-        TagName2,
+        "ol",
         {
           className: clsx_default("wp-block-playlist__tracklist", {
             "wp-block-playlist__tracklist-is-hidden": !showTracklist,
-            "wp-block-playlist__tracklist-artist-is-hidden": !showArtists
+            "wp-block-playlist__tracklist-artist-is-hidden": !showArtists,
+            "wp-block-playlist__tracklist-show-numbers": showNumbers
           }),
           children: innerBlocksProps.children
         }
@@ -47175,7 +47177,6 @@ ${js}
       },
       reusable: false
     },
-    editorStyle: "wp-block-playlist-track-editor",
     style: "wp-block-playlist-track"
   };
 
@@ -47359,39 +47360,40 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime346.jsxs)("li", { ...blockProps, children: [
         !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(import_components98.Spinner, {}),
         /* @__PURE__ */ (0, import_jsx_runtime346.jsxs)(
-          import_components98.Button,
+          "button",
           {
             className: "wp-block-playlist-track__button",
-            __next40pxDefaultSize: true,
             "data-wp-context": JSON.stringify({ uniqueId }),
             "aria-current": currentTrack === uniqueId ? "true" : "false",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
-                import_block_editor177.RichText,
-                {
-                  tagName: "span",
-                  className: "wp-block-playlist-track__title",
-                  value: title,
-                  placeholder: (0, import_i18n154.__)("Add title"),
-                  onChange: (value) => {
-                    setAttributes({ title: value });
-                  },
-                  allowedFormats: [],
-                  withoutInteractiveFormatting: true
-                }
-              ),
-              showArtists && /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
-                import_block_editor177.RichText,
-                {
-                  tagName: "span",
-                  className: "wp-block-playlist-track__artist",
-                  value: artist,
-                  placeholder: (0, import_i18n154.__)("Add artist"),
-                  onChange: (value) => setAttributes({ artist: value }),
-                  allowedFormats: [],
-                  withoutInteractiveFormatting: true
-                }
-              ),
+              /* @__PURE__ */ (0, import_jsx_runtime346.jsxs)("span", { className: "wp-block-playlist-track__content", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
+                  import_block_editor177.RichText,
+                  {
+                    tagName: "span",
+                    className: "wp-block-playlist-track__title",
+                    value: title,
+                    placeholder: (0, import_i18n154.__)("Add title"),
+                    onChange: (value) => {
+                      setAttributes({ title: value });
+                    },
+                    allowedFormats: [],
+                    withoutInteractiveFormatting: true
+                  }
+                ),
+                showArtists && /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
+                  import_block_editor177.RichText,
+                  {
+                    tagName: "span",
+                    className: "wp-block-playlist-track__artist",
+                    value: artist,
+                    placeholder: (0, import_i18n154.__)("Add artist"),
+                    onChange: (value) => setAttributes({ artist: value }),
+                    allowedFormats: [],
+                    withoutInteractiveFormatting: true
+                  }
+                )
+              ] }),
               /* @__PURE__ */ (0, import_jsx_runtime346.jsxs)("span", { className: "wp-block-playlist-track__length", children: [
                 length && /* @__PURE__ */ (0, import_jsx_runtime346.jsx)("span", {
                   className: "screen-reader-text",

@@ -5112,7 +5112,6 @@ return array(
 			),
 			'reusable' => false
 		),
-		'editorStyle' => 'wp-block-playlist-track-editor',
 		'style' => 'wp-block-playlist-track'
 	),
 	'post-author' => array(
