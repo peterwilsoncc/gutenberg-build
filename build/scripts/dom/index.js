@@ -116,9 +116,6 @@ var wp;
       if (!isVisible(element)) {
         return false;
       }
-      if (element.closest("[inert]")) {
-        return false;
-      }
       const { nodeName } = element;
       if ("AREA" === nodeName) {
         return isValidFocusableArea(
@@ -430,16 +427,11 @@ var wp;
   }
 
   // packages/dom/build-module/dom/is-entirely-selected.mjs
-  var ZWNBSP = "\uFEFF";
   function isEntirelySelected(element) {
     if (isInputOrTextArea(element)) {
       return element.selectionStart === 0 && element.value.length === element.selectionEnd;
     }
     if (!element.isContentEditable) {
-      return true;
-    }
-    const text = element.textContent || "";
-    if (text === "" || text === ZWNBSP) {
       return true;
     }
     const { ownerDocument } = element;

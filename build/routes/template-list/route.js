@@ -64,51 +64,21 @@ var import_data3 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_i18n = __toESM(require_i18n());
 
-// packages/views/build-module/use-view.mjs
-var import_element = __toESM(require_element(), 1);
-var import_data = __toESM(require_data(), 1);
-var import_preferences = __toESM(require_preferences(), 1);
-
 // packages/views/build-module/preference-keys.mjs
 function generatePreferenceKey(kind, name, slug) {
   return `dataviews-${kind}-${name}-${slug}`;
 }
 
-// packages/views/build-module/filter-utils.mjs
-function mergeActiveViewOverrides(view, activeViewOverrides, defaultView) {
-  if (!activeViewOverrides) {
-    return view;
-  }
-  let result = view;
-  if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
-    const activeFields = new Set(
-      activeViewOverrides.filters.map((f) => f.field)
-    );
-    const preserved = (view.filters ?? []).filter(
-      (f) => !activeFields.has(f.field)
-    );
-    result = {
-      ...result,
-      filters: [...preserved, ...activeViewOverrides.filters]
-    };
-  }
-  if (activeViewOverrides.sort) {
-    const isDefaultSort = defaultView && view.sort?.field === defaultView.sort?.field && view.sort?.direction === defaultView.sort?.direction;
-    if (isDefaultSort) {
-      result = {
-        ...result,
-        sort: activeViewOverrides.sort
-      };
-    }
-  }
-  return result;
-}
+// packages/views/build-module/use-view.mjs
+var import_element = __toESM(require_element(), 1);
+var import_data = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
 
 // packages/views/build-module/load-view.mjs
 var import_data2 = __toESM(require_data(), 1);
 var import_preferences2 = __toESM(require_preferences(), 1);
 async function loadView(config) {
-  const { kind, name, slug, defaultView, activeViewOverrides, queryParams } = config;
+  const { kind, name, slug, defaultView, queryParams } = config;
   const preferenceKey = generatePreferenceKey(kind, name, slug);
   const persistedView = (0, import_data2.select)(import_preferences2.store).get(
     "core/views",
@@ -117,15 +87,11 @@ async function loadView(config) {
   const baseView = persistedView ?? defaultView;
   const page = queryParams?.page ?? 1;
   const search = queryParams?.search ?? "";
-  return mergeActiveViewOverrides(
-    {
-      ...baseView,
-      page,
-      search
-    },
-    activeViewOverrides,
-    defaultView
-  );
+  return {
+    ...baseView,
+    page,
+    search
+  };
 }
 
 // routes/template-list/view-utils.ts
@@ -142,20 +108,24 @@ var DEFAULT_VIEW = {
   mediaField: "preview",
   filters: []
 };
-var DEFAULT_VIEW_LEGACY = {
-  ...DEFAULT_VIEW,
-  fields: ["author"]
-};
-function getActiveViewOverridesForTab(activeView) {
+function getDefaultView(activeView) {
   if (activeView === "user") {
     return {
-      sort: { field: "date", direction: "desc" }
+      ...DEFAULT_VIEW,
+      sort: {
+        field: "date",
+        direction: "desc"
+      },
+      fields: ["author", "active", "slug", "theme"]
     };
   }
-  if (activeView === "active") {
-    return {};
+  if (activeView === "active" || !activeView) {
+    return {
+      ...DEFAULT_VIEW
+    };
   }
   return {
+    ...DEFAULT_VIEW,
     filters: [
       {
         field: "author",
@@ -166,14 +136,12 @@ function getActiveViewOverridesForTab(activeView) {
   };
 }
 async function ensureView(activeView, search) {
+  const defaultView = getDefaultView(activeView);
   return loadView({
     kind: "postType",
     name: "wp_template",
-    slug: "default-new",
-    defaultView: DEFAULT_VIEW,
-    activeViewOverrides: getActiveViewOverridesForTab(
-      activeView ?? "active"
-    ),
+    slug: activeView ?? "active",
+    defaultView,
     queryParams: search
   });
 }

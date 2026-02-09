@@ -66,8 +66,7 @@ return array(
 					'fontSize' => true
 				)
 			),
-			'contentRole' => true,
-			'listView' => true
+			'contentRole' => true
 		),
 		'attributes' => array(
 			'iconPosition' => array(
@@ -2884,9 +2883,6 @@ return array(
 		'name' => 'core/gallery',
 		'title' => 'Gallery',
 		'category' => 'media',
-		'usesContext' => array(
-			'galleryId'
-		),
 		'allowedBlocks' => array(
 			'core/image'
 		),
@@ -2952,15 +2948,6 @@ return array(
 					
 				)
 			),
-			'navigationButtonType' => array(
-				'type' => 'string',
-				'default' => 'icon',
-				'enum' => array(
-					'icon',
-					'text',
-					'both'
-				)
-			),
 			'shortCodeTransforms' => array(
 				'type' => 'array',
 				'items' => array(
@@ -3015,8 +3002,7 @@ return array(
 		'providesContext' => array(
 			'allowResize' => 'allowResize',
 			'imageCrop' => 'imageCrop',
-			'fixedHeight' => 'fixedHeight',
-			'navigationButtonType' => 'navigationButtonType'
+			'fixedHeight' => 'fixedHeight'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -3364,11 +3350,9 @@ return array(
 			'allowResize',
 			'imageCrop',
 			'fixedHeight',
-			'navigationButtonType',
 			'postId',
 			'postType',
-			'queryId',
-			'galleryId'
+			'queryId'
 		),
 		'description' => 'Insert an image to make a visual statement.',
 		'keywords' => array(
@@ -4526,6 +4510,7 @@ return array(
 	),
 	'navigation-overlay-close' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'__experimental' => true,
 		'apiVersion' => 3,
 		'name' => 'core/navigation-overlay-close',
 		'title' => 'Navigation Overlay Close',
@@ -4916,7 +4901,6 @@ return array(
 				'lineHeight' => true,
 				'textAlign' => true,
 				'textColumns' => true,
-				'textIndent' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalTextDecoration' => true,
 				'__experimentalFontStyle' => true,
@@ -4933,12 +4917,6 @@ return array(
 			'__unstablePasteTextInline' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
-			)
-		),
-		'selectors' => array(
-			'root' => 'p',
-			'typography' => array(
-				'textIndent' => '.wp-block-paragraph + .wp-block-paragraph'
 			)
 		),
 		'editorStyle' => 'wp-block-paragraph-editor',
@@ -4967,160 +4945,13 @@ return array(
 			)
 		)
 	),
-	'playlist' => array(
-		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'apiVersion' => 3,
-		'__experimental' => true,
-		'name' => 'core/playlist',
-		'title' => 'Playlist',
-		'category' => 'media',
-		'description' => 'Embed a simple playlist.',
-		'keywords' => array(
-			'music',
-			'sound'
-		),
-		'textdomain' => 'default',
-		'allowedBlocks' => array(
-			'core/playlist-track'
-		),
-		'attributes' => array(
-			'currentTrack' => array(
-				'type' => 'string'
-			),
-			'type' => array(
-				'type' => 'string',
-				'default' => 'audio'
-			),
-			'order' => array(
-				'type' => 'string',
-				'default' => 'asc'
-			),
-			'showTracklist' => array(
-				'type' => 'boolean',
-				'default' => true
-			),
-			'showImages' => array(
-				'type' => 'boolean',
-				'default' => true
-			),
-			'showArtists' => array(
-				'type' => 'boolean',
-				'default' => true
-			),
-			'showNumbers' => array(
-				'type' => 'boolean',
-				'default' => true
-			),
-			'caption' => array(
-				'type' => 'string'
-			)
-		),
-		'providesContext' => array(
-			'showArtists' => 'showArtists',
-			'currentTrack' => 'currentTrack'
-		),
-		'supports' => array(
-			'anchor' => true,
-			'align' => true,
-			'color' => array(
-				'gradients' => true,
-				'link' => true,
-				'__experimentalDefaultControls' => array(
-					'background' => true,
-					'text' => true
-				)
-			),
-			'__experimentalBorder' => array(
-				'color' => true,
-				'radius' => true,
-				'style' => true,
-				'width' => true,
-				'__experimentalDefaultControls' => array(
-					'color' => true,
-					'radius' => true,
-					'style' => true,
-					'width' => true
-				)
-			),
-			'interactivity' => true,
-			'spacing' => array(
-				'margin' => true,
-				'padding' => true
-			)
-		),
-		'editorStyle' => 'wp-block-playlist-editor',
-		'style' => 'wp-block-playlist'
-	),
-	'playlist-track' => array(
-		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'apiVersion' => 3,
-		'__experimental' => true,
-		'name' => 'core/playlist-track',
-		'title' => 'Playlist track',
-		'category' => 'media',
-		'parent' => array(
-			'core/playlist'
-		),
-		'description' => 'Playlist track.',
-		'keywords' => array(
-			'music',
-			'sound'
-		),
-		'textdomain' => 'default',
-		'usesContext' => array(
-			'showArtists',
-			'currentTrack'
-		),
-		'attributes' => array(
-			'blob' => array(
-				'type' => 'string',
-				'role' => 'local'
-			),
-			'id' => array(
-				'type' => 'number'
-			),
-			'uniqueId' => array(
-				'type' => 'string'
-			),
-			'src' => array(
-				'type' => 'string'
-			),
-			'type' => array(
-				'type' => 'string',
-				'default' => 'audio'
-			),
-			'album' => array(
-				'type' => 'string'
-			),
-			'artist' => array(
-				'type' => 'string'
-			),
-			'image' => array(
-				'type' => 'string'
-			),
-			'length' => array(
-				'type' => 'string'
-			),
-			'title' => array(
-				'type' => 'string'
-			)
-		),
-		'supports' => array(
-			'html' => false,
-			'interactivity' => array(
-				'clientNavigation' => true
-			),
-			'reusable' => false
-		),
-		'style' => 'wp-block-playlist-track'
-	),
 	'post-author' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'core/post-author',
-		'title' => 'Author (deprecated)',
+		'title' => 'Author',
 		'category' => 'theme',
-		'description' => 'This block is deprecated. Please use the Avatar block, the Author Name block, and the Author Biography block instead.',
+		'description' => 'Display post author details such as name, avatar, and bio.',
 		'textdomain' => 'default',
 		'attributes' => array(
 			'textAlign' => array(
@@ -5157,7 +4988,6 @@ return array(
 			'queryId'
 		),
 		'supports' => array(
-			'inserter' => false,
 			'anchor' => true,
 			'html' => false,
 			'spacing' => array(
@@ -5220,6 +5050,11 @@ return array(
 		'category' => 'theme',
 		'description' => 'The author biography.',
 		'textdomain' => 'default',
+		'attributes' => array(
+			'textAlign' => array(
+				'type' => 'string'
+			)
+		),
 		'usesContext' => array(
 			'postType',
 			'postId'
@@ -5244,7 +5079,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -5282,6 +5116,9 @@ return array(
 		'description' => 'The author name.',
 		'textdomain' => 'default',
 		'attributes' => array(
+			'textAlign' => array(
+				'type' => 'string'
+			),
 			'isLink' => array(
 				'type' => 'boolean',
 				'default' => false,
@@ -5319,7 +5156,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -5389,6 +5225,11 @@ return array(
 		'category' => 'theme',
 		'description' => 'Display a post\'s comments count.',
 		'textdomain' => 'default',
+		'attributes' => array(
+			'textAlign' => array(
+				'type' => 'string'
+			)
+		),
 		'usesContext' => array(
 			'postId'
 		),
@@ -5412,7 +5253,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -5443,6 +5283,11 @@ return array(
 		'category' => 'theme',
 		'description' => 'Display a post\'s comments form.',
 		'textdomain' => 'default',
+		'attributes' => array(
+			'textAlign' => array(
+				'type' => 'string'
+			)
+		),
 		'usesContext' => array(
 			'postId',
 			'postType'
@@ -5466,7 +5311,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontStyle' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalLetterSpacing' => true,
@@ -5496,11 +5340,7 @@ return array(
 		),
 		'example' => array(
 			'attributes' => array(
-				'style' => array(
-					'typography' => array(
-						'textAlign' => 'center'
-					)
-				)
+				'textAlign' => 'center'
 			)
 		)
 	),
@@ -6396,9 +6236,9 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'core/pullquote',
-		'title' => 'Pullquote',
+		'title' => 'Pullquote (deprecated)',
 		'category' => 'text',
-		'description' => 'Give special visual emphasis to a quote from your text.',
+		'description' => 'This block is deprecated. Please use the Quote block instead.',
 		'textdomain' => 'default',
 		'attributes' => array(
 			'value' => array(
@@ -6447,6 +6287,7 @@ return array(
 					'minHeight' => false
 				)
 			),
+			'inserter' => false,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
@@ -7956,7 +7797,7 @@ return array(
 			)
 		),
 		'parent' => array(
-			'core/tab-panel'
+			'core/tab-panels'
 		),
 		'usesContext' => array(
 			'core/tabs-activeTabIndex',
@@ -8003,12 +7844,12 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'style' => 'file:./style-index.css'
 	),
-	'tab-panel' => array(
+	'tab-panels' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'__experimental' => true,
 		'apiVersion' => 3,
-		'name' => 'core/tab-panel',
-		'title' => 'Tab Panel',
+		'name' => 'core/tab-panels',
+		'title' => 'Tab Panels',
 		'description' => 'Container for tab panel content in a tabbed interface.',
 		'version' => '1.0.0',
 		'category' => 'design',
@@ -8402,7 +8243,7 @@ return array(
 		'textdomain' => 'default',
 		'allowedBlocks' => array(
 			'core/tabs-menu',
-			'core/tab-panel'
+			'core/tab-panels'
 		),
 		'attributes' => array(
 			'activeTabIndex' => array(
@@ -8468,7 +8309,7 @@ return array(
 					)
 				),
 				array(
-					'name' => 'core/tab-panel',
+					'name' => 'core/tab-panels',
 					'attributes' => array(
 						
 					),

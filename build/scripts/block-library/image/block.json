@@ -8,11 +8,9 @@
 		"allowResize",
 		"imageCrop",
 		"fixedHeight",
-		"navigationButtonType",
 		"postId",
 		"postType",
-		"queryId",
-		"galleryId"
+		"queryId"
 	],
 	"description": "Insert an image to make a visual statement.",
 	"keywords": [ "img", "photo", "picture" ],

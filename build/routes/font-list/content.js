@@ -518,7 +518,6 @@ var VALID_SETTINGS = [
   "typography.textAlign",
   "typography.textColumns",
   "typography.textDecoration",
-  "typography.textIndent",
   "typography.textTransform",
   "typography.writingMode"
 ];

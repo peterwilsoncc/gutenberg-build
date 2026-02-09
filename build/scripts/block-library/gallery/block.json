@@ -4,7 +4,6 @@
 	"name": "core/gallery",
 	"title": "Gallery",
 	"category": "media",
-	"usesContext": [ "galleryId" ],
 	"allowedBlocks": [ "core/image" ],
 	"description": "Display multiple images in a rich gallery.",
 	"keywords": [ "images", "photos" ],
@@ -61,11 +60,6 @@
 			},
 			"default": []
 		},
-		"navigationButtonType": {
-			"type": "string",
-			"default": "icon",
-			"enum": [ "icon", "text", "both" ]
-		},
 		"shortCodeTransforms": {
 			"type": "array",
 			"items": {
@@ -118,8 +112,7 @@
 	"providesContext": {
 		"allowResize": "allowResize",
 		"imageCrop": "imageCrop",
-		"fixedHeight": "fixedHeight",
-		"navigationButtonType": "navigationButtonType"
+		"fixedHeight": "fixedHeight"
 	},
 	"supports": {
 		"anchor": true,

@@ -14,7 +14,9 @@
 			"default": ""
 		}
 	},
-	"parent": [ "core/tab-panel" ],
+	"parent": [
+		"core/tab-panels"
+	],
 	"usesContext": [
 		"core/tabs-activeTabIndex",
 		"core/tabs-editorActiveTabIndex"

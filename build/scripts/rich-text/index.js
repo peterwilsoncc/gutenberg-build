@@ -966,7 +966,7 @@ var wp;
     }
     return { startContainer, startOffset, endContainer, endOffset };
   }
-  function collapseWhiteSpace(element, isRoot = true, hasPrecedingSpace = false, hasTrailingSpace = false) {
+  function collapseWhiteSpace(element, isRoot = true) {
     const clone = element.cloneNode(true);
     clone.normalize();
     Array.from(clone.childNodes).forEach((node, i2, nodes) => {
@@ -978,25 +978,14 @@ var wp;
         if (newNodeValue.indexOf("  ") !== -1) {
           newNodeValue = newNodeValue.replace(/ {2,}/g, " ");
         }
-        if (i2 === 0 && newNodeValue.startsWith(" ") && (isRoot || hasPrecedingSpace)) {
+        if (i2 === 0 && newNodeValue.startsWith(" ")) {
           newNodeValue = newNodeValue.slice(1);
-        }
-        if (i2 === nodes.length - 1 && newNodeValue.endsWith(" ") && (isRoot || hasTrailingSpace)) {
+        } else if (isRoot && i2 === nodes.length - 1 && newNodeValue.endsWith(" ")) {
           newNodeValue = newNodeValue.slice(0, -1);
         }
         node.nodeValue = newNodeValue;
       } else if (node.nodeType === node.ELEMENT_NODE) {
-        const { previousSibling, nextSibling } = node;
-        const prevHasSpace = previousSibling?.textContent.endsWith(" ");
-        const nextHasSpace = nextSibling?.textContent.startsWith(" ");
-        node.replaceWith(
-          collapseWhiteSpace(
-            node,
-            false,
-            previousSibling ? prevHasSpace : isRoot || hasPrecedingSpace,
-            nextSibling ? nextHasSpace : isRoot || hasTrailingSpace
-          )
-        );
+        node.replaceWith(collapseWhiteSpace(node, false));
       }
     });
     return clone;
@@ -2314,12 +2303,11 @@ var wp;
       }
       const currentValue = createRecord();
       const { start, activeFormats: oldActiveFormats = [] } = record.current;
-      const clearFormats = !isCollapsed(record.current) && currentValue.start <= start;
       const change = updateFormats({
         value: currentValue,
         start,
         end: currentValue.start,
-        formats: clearFormats ? [] : oldActiveFormats
+        formats: oldActiveFormats
       });
       handleChange(change);
     }
