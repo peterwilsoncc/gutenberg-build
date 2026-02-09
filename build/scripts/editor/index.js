@@ -36397,6 +36397,15 @@ var wp;
         }
       });
       registerShortcut({
+        name: "core/editor/new-note",
+        category: "global",
+        description: (0, import_i18n130.__)("Add a new note."),
+        keyCombination: {
+          modifier: "primaryAlt",
+          character: "m"
+        }
+      });
+      registerShortcut({
         name: "core/editor/next-region",
         category: "global",
         description: (0, import_i18n130.__)("Navigate to the next part of the editor."),
@@ -58135,13 +58144,14 @@ var wp;
   var import_components249 = __toESM(require_components(), 1);
   var import_element214 = __toESM(require_element(), 1);
   var import_compose65 = __toESM(require_compose(), 1);
+  var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_preferences25 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/constants.mjs
-  var collabHistorySidebarName = "edit-post/collab-history-sidebar";
-  var collabSidebarName = "edit-post/collab-sidebar";
-  var SIDEBARS = [collabHistorySidebarName, collabSidebarName];
+  var ALL_NOTES_SIDEBAR = "edit-post/collab-history-sidebar";
+  var FLOATING_NOTES_SIDEBAR = "edit-post/collab-sidebar";
+  var SIDEBARS = [ALL_NOTES_SIDEBAR, FLOATING_NOTES_SIDEBAR];
 
   // packages/editor/build-module/components/collab-sidebar/comments.mjs
   var import_element212 = __toESM(require_element(), 1);
@@ -58867,13 +58877,13 @@ var wp;
       const { disableComplementaryArea: disableComplementaryArea2, enableComplementaryArea: enableComplementaryArea2 } = registry.dispatch(store2);
       const unsubscribe = registry.subscribe(() => {
         if (getActiveComplementaryArea2("core") === null) {
-          enableComplementaryArea2("core", collabSidebarName);
+          enableComplementaryArea2("core", FLOATING_NOTES_SIDEBAR);
         }
       });
       return () => {
         unsubscribe();
-        if (getActiveComplementaryArea2("core") === collabSidebarName) {
-          disableComplementaryArea2("core", collabSidebarName);
+        if (getActiveComplementaryArea2("core") === FLOATING_NOTES_SIDEBAR) {
+          disableComplementaryArea2("core", FLOATING_NOTES_SIDEBAR);
         }
       };
     }, [enabled, registry]);
@@ -59779,6 +59789,7 @@ var wp;
   var import_block_editor96 = __toESM(require_block_editor(), 1);
   var import_data234 = __toESM(require_data(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
+  var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
   var { CommentIconSlotFill } = unlock(import_block_editor96.privateApis);
   var AddCommentMenuItem = ({ clientId, onClick, isDistractionFree }) => {
@@ -59787,6 +59798,12 @@ var wp;
         return select5(import_block_editor96.store).getBlock(clientId);
       },
       [clientId]
+    );
+    const shortcut = (0, import_data234.useSelect)(
+      (select5) => select5(import_keyboard_shortcuts11.store).getShortcutRepresentation(
+        "core/editor/new-note"
+      ),
+      []
     );
     if (!block?.isValid || block?.name === (0, import_blocks37.getUnregisteredTypeHandlerName)()) {
       return null;
@@ -59801,11 +59818,11 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
       import_components247.MenuItem,
       {
-        icon: comment_default,
         onClick,
         "aria-haspopup": "dialog",
         disabled: isDisabled,
         info: infoText,
+        shortcut,
         children: (0, import_i18n259.__)("Add note")
       }
     );
@@ -59947,14 +59964,22 @@ var wp;
     const { selectNote: selectNote2 } = unlock((0, import_data235.useDispatch)(store));
     const isLargeViewport = (0, import_compose65.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element214.useRef)(null);
-    const { clientId, blockCommentId } = (0, import_data235.useSelect)((select5) => {
-      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor98.store);
-      const _clientId = getSelectedBlockClientId2();
-      return {
-        clientId: _clientId,
-        blockCommentId: _clientId ? getBlockAttributes2(_clientId)?.metadata?.noteId : null
-      };
-    }, []);
+    const { clientId, blockCommentId, isClassicBlock } = (0, import_data235.useSelect)(
+      (select5) => {
+        const {
+          getBlockAttributes: getBlockAttributes2,
+          getSelectedBlockClientId: getSelectedBlockClientId2,
+          getBlockName: getBlockName2
+        } = select5(import_block_editor98.store);
+        const _clientId = getSelectedBlockClientId2();
+        return {
+          clientId: _clientId,
+          blockCommentId: _clientId ? getBlockAttributes2(_clientId)?.metadata?.noteId : null,
+          isClassicBlock: _clientId ? getBlockName2(_clientId) === "core/freeform" : false
+        };
+      },
+      []
+    );
     const { isDistractionFree } = (0, import_data235.useSelect)((select5) => {
       const { get } = select5(import_preferences25.store);
       return {
@@ -59975,6 +60000,18 @@ var wp;
     useEnableFloatingSidebar(
       showFloatingSidebar && (unresolvedSortedThreads.length > 0 || selectedNote2 !== void 0)
     );
+    (0, import_keyboard_shortcuts12.useShortcut)(
+      "core/editor/new-note",
+      (event) => {
+        event.preventDefault();
+        openTheSidebar();
+      },
+      {
+        // When multiple notes per block are supported. Remove note ID check.
+        // See: https://github.com/WordPress/gutenberg/pull/75147.
+        isDisabled: isDistractionFree || isClassicBlock || !clientId || !!blockCommentId
+      }
+    );
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
     const currentThread = blockCommentId ? resultComments.find((thread) => thread.id === blockCommentId) : null;
@@ -59983,11 +60020,11 @@ var wp;
       const prevArea = await getActiveComplementaryArea2("core");
       const activeNotesArea = SIDEBARS.find((name2) => name2 === prevArea);
       if (currentThread?.status === "approved") {
-        enableComplementaryArea2("core", collabHistorySidebarName);
+        enableComplementaryArea2("core", ALL_NOTES_SIDEBAR);
       } else if (!activeNotesArea || !showAllNotesSidebar) {
         enableComplementaryArea2(
           "core",
-          showFloatingSidebar ? collabSidebarName : collabHistorySidebarName
+          showFloatingSidebar ? FLOATING_NOTES_SIDEBAR : ALL_NOTES_SIDEBAR
         );
       }
       const currentArea = await getActiveComplementaryArea2("core");
@@ -60018,8 +60055,8 @@ var wp;
       showAllNotesSidebar && /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
         PluginSidebar,
         {
-          identifier: collabHistorySidebarName,
-          name: collabHistorySidebarName,
+          identifier: ALL_NOTES_SIDEBAR,
+          name: ALL_NOTES_SIDEBAR,
           title: (0, import_i18n261.__)("All notes"),
           header: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)("h2", { className: "interface-complementary-area-header__title", children: (0, import_i18n261.__)("All notes") }),
           icon: comment_default,
@@ -60038,7 +60075,7 @@ var wp;
         {
           isPinnable: false,
           header: false,
-          identifier: collabSidebarName,
+          identifier: FLOATING_NOTES_SIDEBAR,
           className: "editor-collab-sidebar",
           headerClassName: "editor-collab-sidebar__header",
           backgroundColor,
