@@ -22307,10 +22307,11 @@ var wp;
   var import_components26 = __toESM(require_components(), 1);
   var import_element32 = __toESM(require_element(), 1);
   var import_data27 = __toESM(require_data(), 1);
+  var import_keyboard_shortcuts2 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
   function BlockVisibilityViewportMenuItem({ clientIds }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element32.useState)(false);
-    const { areBlocksHiddenAnywhere } = (0, import_data27.useSelect)(
+    const { areBlocksHiddenAnywhere, shortcut } = (0, import_data27.useSelect)(
       (select3) => {
         const { isBlockHiddenAnywhere: isBlockHiddenAnywhere2 } = unlock(
           select3(store)
@@ -22318,6 +22319,11 @@ var wp;
         return {
           areBlocksHiddenAnywhere: clientIds?.every(
             (clientId) => isBlockHiddenAnywhere2(clientId)
+          ),
+          shortcut: select3(
+            import_keyboard_shortcuts2.store
+          ).getShortcutRepresentation(
+            "core/block-editor/toggle-block-visibility"
           )
         };
       },
@@ -22327,8 +22333,8 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
         import_components26.MenuItem,
         {
-          icon: areBlocksHiddenAnywhere ? unseen_default : seen_default,
           onClick: () => setIsModalOpen(true),
+          shortcut,
           children: areBlocksHiddenAnywhere ? (0, import_i18n27.__)("Show") : (0, import_i18n27.__)("Hide")
         }
       ),
@@ -24494,13 +24500,13 @@ var wp;
   // packages/block-editor/build-module/components/keyboard-shortcuts/index.mjs
   var import_element40 = __toESM(require_element(), 1);
   var import_data36 = __toESM(require_data(), 1);
-  var import_keyboard_shortcuts2 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts3 = __toESM(require_keyboard_shortcuts(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
   function KeyboardShortcuts() {
     return null;
   }
   function KeyboardShortcutsRegister() {
-    const { registerShortcut } = (0, import_data36.useDispatch)(import_keyboard_shortcuts2.store);
+    const { registerShortcut } = (0, import_data36.useDispatch)(import_keyboard_shortcuts3.store);
     (0, import_element40.useEffect)(() => {
       registerShortcut({
         name: "core/block-editor/copy",
@@ -25275,12 +25281,12 @@ var wp;
   // packages/block-editor/build-module/components/writing-flow/use-select-all.mjs
   var import_dom12 = __toESM(require_dom(), 1);
   var import_data42 = __toESM(require_data(), 1);
-  var import_keyboard_shortcuts4 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts5 = __toESM(require_keyboard_shortcuts(), 1);
   var import_compose24 = __toESM(require_compose(), 1);
   function useSelectAll() {
     const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data42.useSelect)(store);
     const { multiSelect: multiSelect2, selectBlock: selectBlock2 } = (0, import_data42.useDispatch)(store);
-    const isMatch = (0, import_keyboard_shortcuts4.__unstableUseShortcutEventMatch)();
+    const isMatch = (0, import_keyboard_shortcuts5.__unstableUseShortcutEventMatch)();
     return (0, import_compose24.useRefEffect)((node) => {
       function onKeyDown(event) {
         if (!isMatch("core/block-editor/select-all", event)) {
@@ -33602,7 +33608,7 @@ var wp;
   var import_data123 = __toESM(require_data(), 1);
   var import_dom28 = __toESM(require_dom(), 1);
   var import_components115 = __toESM(require_components(), 1);
-  var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
   var import_element125 = __toESM(require_element(), 1);
   var import_blocks76 = __toESM(require_blocks(), 1);
   var import_a11y12 = __toESM(require_a11y(), 1);
@@ -34369,7 +34375,7 @@ var wp;
   // packages/block-editor/build-module/components/block-tools/block-toolbar-popover.mjs
   var import_data120 = __toESM(require_data(), 1);
   var import_element123 = __toESM(require_element(), 1);
-  var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
 
   // packages/block-editor/build-module/components/block-toolbar/index.mjs
   var import_i18n101 = __toESM(require_i18n(), 1);
@@ -35433,7 +35439,7 @@ var wp;
   var import_data106 = __toESM(require_data(), 1);
   var import_element112 = __toESM(require_element(), 1);
   var import_i18n89 = __toESM(require_i18n(), 1);
-  var import_keyboard_shortcuts6 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-actions/index.mjs
@@ -36358,7 +36364,7 @@ var wp;
   var import_i18n86 = __toESM(require_i18n(), 1);
   var import_element110 = __toESM(require_element(), 1);
   var import_data101 = __toESM(require_data(), 1);
-  var import_keyboard_shortcuts5 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts6 = __toESM(require_keyboard_shortcuts(), 1);
 
   // packages/block-editor/build-module/components/block-rename/modal.mjs
   var import_components92 = __toESM(require_components(), 1);
@@ -36484,7 +36490,7 @@ var wp;
   function BlockRenameControl({ clientId }) {
     const [renamingBlock, setRenamingBlock] = (0, import_element110.useState)(false);
     const shortcut = (0, import_data101.useSelect)(
-      (select3) => select3(import_keyboard_shortcuts5.store).getShortcutRepresentation(
+      (select3) => select3(import_keyboard_shortcuts6.store).getShortcutRepresentation(
         "core/block-editor/rename"
       ),
       []
@@ -36847,7 +36853,7 @@ var wp;
     );
     const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data106.useSelect)(store);
     const shortcuts = (0, import_data106.useSelect)((select3) => {
-      const { getShortcutRepresentation } = select3(import_keyboard_shortcuts6.store);
+      const { getShortcutRepresentation } = select3(import_keyboard_shortcuts7.store);
       return {
         copy: getShortcutRepresentation("core/block-editor/copy"),
         cut: getShortcutRepresentation("core/block-editor/cut"),
@@ -37104,7 +37110,7 @@ var wp;
   var import_data108 = __toESM(require_data(), 1);
   var import_deprecated12 = __toESM(require_deprecated(), 1);
   var import_dom27 = __toESM(require_dom(), 1);
-  var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes11 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
   function hasOnlyToolbarItem(elements) {
@@ -37178,7 +37184,7 @@ var wp;
         focusToolbar();
       }
     };
-    (0, import_keyboard_shortcuts7.useShortcut)("core/block-editor/focus-toolbar", focusToolbarViaShortcut);
+    (0, import_keyboard_shortcuts8.useShortcut)("core/block-editor/focus-toolbar", focusToolbarViaShortcut);
     (0, import_element113.useEffect)(() => {
       if (initialFocusOnMount) {
         focusToolbar();
@@ -40569,7 +40575,7 @@ var wp;
     }, [clientId]);
     const { stopTyping: stopTyping2 } = (0, import_data120.useDispatch)(store);
     const isToolbarForcedRef = (0, import_element123.useRef)(false);
-    (0, import_keyboard_shortcuts8.useShortcut)("core/block-editor/focus-toolbar", () => {
+    (0, import_keyboard_shortcuts9.useShortcut)("core/block-editor/focus-toolbar", () => {
       isToolbarForcedRef.current = true;
       stopTyping2(true);
     });
@@ -40770,7 +40776,7 @@ var wp;
   }) {
     const { clientId, hasFixedToolbar, isTyping: isTyping3, isZoomOutMode, isDragging: isDragging3 } = (0, import_data123.useSelect)(selector2, []);
     const [visibilityModalClientIds, setVisibilityModalClientIds] = (0, import_element125.useState)(null);
-    const isMatch = (0, import_keyboard_shortcuts9.__unstableUseShortcutEventMatch)();
+    const isMatch = (0, import_keyboard_shortcuts10.__unstableUseShortcutEventMatch)();
     const {
       getBlocksByClientId: getBlocksByClientId2,
       getSelectedBlockClientIds: getSelectedBlockClientIds2,
@@ -41499,7 +41505,7 @@ var wp;
   var import_i18n109 = __toESM(require_i18n(), 1);
   var import_keycodes14 = __toESM(require_keycodes(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
-  var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_a11y14 = __toESM(require_a11y(), 1);
 
   // packages/block-editor/build-module/components/list-view/leaf.mjs
@@ -42085,7 +42091,7 @@ var wp;
       treeGridElementRef,
       rootClientId
     } = useListViewContext();
-    const isMatch = (0, import_keyboard_shortcuts10.__unstableUseShortcutEventMatch)();
+    const isMatch = (0, import_keyboard_shortcuts11.__unstableUseShortcutEventMatch)();
     function getBlocksToUpdate() {
       const selectedBlockClientIds = getSelectedBlockClientIds2();
       const isUpdatingSelectedBlocks = selectedBlockClientIds.includes(clientId);
