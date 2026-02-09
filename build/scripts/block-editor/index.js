@@ -70736,9 +70736,31 @@ var wp;
     });
     const blockInformation = useBlockDisplayInformation(clientId);
     const blockTypeFields = blockType?.[fieldsKey];
+    const blockContext = (0, import_element258.useContext)(block_context_default);
     const attributes = (0, import_data182.useSelect)(
-      (select3) => select3(store).getBlockAttributes(clientId),
-      [clientId]
+      (select3) => {
+        const _attributes = select3(store).getBlockAttributes(clientId);
+        if (!_attributes?.metadata?.bindings) {
+          return _attributes;
+        }
+        const { getBlockBindingsSource: getBlockBindingsSource4 } = unlock(select3(import_blocks103.store));
+        return Object.entries(_attributes.metadata.bindings).reduce(
+          (acc, [attribute, binding]) => {
+            const source = getBlockBindingsSource4(binding.source);
+            if (!source) {
+              return acc;
+            }
+            const values = source.getValues({
+              select: select3,
+              context: blockContext,
+              bindings: { [attribute]: binding }
+            });
+            return { ...acc, ...values };
+          },
+          _attributes
+        );
+      },
+      [blockContext, clientId]
     );
     const computedForm = (0, import_element258.useMemo)(() => {
       if (!isCollapsed3) {
