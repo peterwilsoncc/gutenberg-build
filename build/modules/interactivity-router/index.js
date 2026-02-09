@@ -121,24 +121,16 @@ var prepareStylePromise = (element) => {
   stylePromiseCache.set(element, promise);
   return promise;
 };
-var styleSheetCache = /* @__PURE__ */ new Map();
-var preloadStyles = (doc, url) => {
-  if (!styleSheetCache.has(url)) {
-    const currentStyleElements = Array.from(
-      window.document.querySelectorAll(
-        "style,link[rel=stylesheet]"
-      )
-    );
-    const newStyleElements = Array.from(
-      doc.querySelectorAll("style,link[rel=stylesheet]")
-    );
-    const stylePromises = updateStylesWithSCS(
-      currentStyleElements,
-      newStyleElements
-    );
-    styleSheetCache.set(url, stylePromises);
-  }
-  return styleSheetCache.get(url);
+var preloadStyles = (doc) => {
+  const currentStyleElements = Array.from(
+    window.document.querySelectorAll(
+      "style,link[rel=stylesheet]"
+    )
+  );
+  const newStyleElements = Array.from(
+    doc.querySelectorAll("style,link[rel=stylesheet]")
+  );
+  return updateStylesWithSCS(currentStyleElements, newStyleElements);
 };
 var applyStyles = (styles) => {
   window.document.querySelectorAll("style,link[rel=stylesheet]").forEach((el) => {
@@ -750,7 +742,7 @@ var preparePage = async (url, dom, { vdom } = {}) => {
   const title = dom.querySelector("title")?.innerText;
   const initialData = parseServerData(dom);
   const [styles, scriptModules] = await Promise.all([
-    Promise.all(preloadStyles(dom, url)),
+    Promise.all(preloadStyles(dom)),
     Promise.all(preloadScriptModules(dom))
   ]);
   return {
