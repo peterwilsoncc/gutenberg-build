@@ -13398,43 +13398,31 @@ function ItemsPerPageControl() {
     }
   );
 }
-function SettingsSection({
-  title,
-  description,
-  children
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components27.__experimentalGrid, { columns: 12, className: "dataviews-settings-section", gap: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)("div", { className: "dataviews-settings-section__sidebar", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-        import_components27.__experimentalHeading,
-        {
-          level: 2,
-          className: "dataviews-settings-section__title",
-          children: title
+function ResetViewButton() {
+  const { onReset } = (0, import_element37.useContext)(dataviews_context_default);
+  if (onReset === void 0) {
+    return null;
+  }
+  const isDisabled = onReset === false;
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+    import_components27.Button,
+    {
+      variant: "tertiary",
+      size: "compact",
+      disabled: isDisabled,
+      accessibleWhenDisabled: true,
+      className: "dataviews-view-config__reset-button",
+      onClick: () => {
+        if (typeof onReset === "function") {
+          onReset();
         }
-      ),
-      description && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-        import_components27.__experimentalText,
-        {
-          variant: "muted",
-          className: "dataviews-settings-section__description",
-          children: description
-        }
-      )
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-      import_components27.__experimentalGrid,
-      {
-        columns: 8,
-        gap: 4,
-        className: "dataviews-settings-section__content",
-        children
-      }
-    )
-  ] });
+      },
+      children: (0, import_i18n31.__)("Reset view")
+    }
+  );
 }
 function DataviewsViewConfigDropdown() {
-  const { view } = (0, import_element37.useContext)(dataviews_context_default);
+  const { view, onReset } = (0, import_element37.useContext)(dataviews_context_default);
   const popoverId = (0, import_compose11.useInstanceId)(
     _DataViewsViewConfig,
     "dataviews-view-config-dropdown"
@@ -13442,6 +13430,7 @@ function DataviewsViewConfigDropdown() {
   const activeLayout = VIEW_LAYOUTS.find(
     (layout) => layout.type === view.type
   );
+  const isModified = typeof onReset === "function";
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     import_components27.Dropdown,
     {
@@ -13451,47 +13440,75 @@ function DataviewsViewConfigDropdown() {
         id: popoverId
       },
       renderToggle: ({ onToggle, isOpen }) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-          import_components27.Button,
-          {
-            size: "compact",
-            icon: cog_default,
-            label: (0, import_i18n31._x)("View options", "View is used as a noun"),
-            onClick: onToggle,
-            "aria-expanded": isOpen ? "true" : "false",
-            "aria-controls": popoverId
-          }
-        );
+        return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)("div", { className: "dataviews-view-config__toggle-wrapper", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+            import_components27.Button,
+            {
+              size: "compact",
+              icon: cog_default,
+              label: (0, import_i18n31._x)(
+                "View options",
+                "View is used as a noun"
+              ),
+              onClick: onToggle,
+              "aria-expanded": isOpen ? "true" : "false",
+              "aria-controls": popoverId
+            }
+          ),
+          isModified && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { className: "dataviews-view-config__modified-indicator" })
+        ] });
       },
       renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
         import_components27.__experimentalDropdownContentWrapper,
         {
           paddingSize: "medium",
           className: "dataviews-config__popover-content-wrapper",
-          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
             Stack,
             {
               direction: "column",
               className: "dataviews-view-config",
               gap: "xl",
-              children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(SettingsSection, { title: (0, import_i18n31.__)("Appearance"), children: [
+              children: [
                 /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
                   Stack,
                   {
                     direction: "row",
-                    gap: "sm",
-                    className: "is-divided-in-two",
+                    justify: "space-between",
+                    align: "center",
+                    className: "dataviews-view-config__header",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SortFieldControl, {}),
-                      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SortDirectionControl, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+                        import_components27.__experimentalHeading,
+                        {
+                          level: 2,
+                          className: "dataviews-settings-section__title",
+                          children: (0, import_i18n31.__)("Appearance")
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(ResetViewButton, {})
                     ]
                   }
                 ),
-                !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(activeLayout.viewConfigOptions, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(InfiniteScrollToggle, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(ItemsPerPageControl, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(PropertiesSection, {})
-              ] })
+                /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
+                    Stack,
+                    {
+                      direction: "row",
+                      gap: "sm",
+                      className: "dataviews-view-config__sort-controls",
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SortFieldControl, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SortDirectionControl, {})
+                      ]
+                    }
+                  ),
+                  !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(activeLayout.viewConfigOptions, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(InfiniteScrollToggle, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(ItemsPerPageControl, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(PropertiesSection, {})
+                ] })
+              ]
             }
           )
         }
@@ -14887,7 +14904,7 @@ function Radio({
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
 var import_element47 = __toESM(require_element(), 1);
 var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
-function Text2({
+function Text({
   data,
   field,
   onChange,
@@ -15449,7 +15466,7 @@ var FORM_CONTROLS = {
   password: Password,
   radio: Radio,
   select: Select,
-  text: Text2,
+  text: Text,
   toggle: Toggle,
   textarea: Textarea,
   toggleGroup: ToggleGroup
@@ -16599,7 +16616,8 @@ function DataViews({
   header,
   children,
   config = { perPageSizes: [10, 20, 50, 100] },
-  empty
+  empty,
+  onReset
 }) {
   const { infiniteScrollHandler } = paginationInfo;
   const containerRef = (0, import_element54.useRef)(null);
@@ -16710,7 +16728,8 @@ function DataViews({
         setIsShowingFilter,
         config,
         empty,
-        hasInfiniteScrollHandler: !!infiniteScrollHandler
+        hasInfiniteScrollHandler: !!infiniteScrollHandler,
+        onReset
       },
       children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { className: "dataviews-wrapper", ref: containerRef, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
         DefaultUI,
@@ -16841,7 +16860,6 @@ var import_components49 = __toESM(require_components());
 var import_data10 = __toESM(require_data());
 var import_element57 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
-var import_i18n45 = __toESM(require_i18n());
 
 // node_modules/tslib/tslib.es6.mjs
 var __assign = function() {
@@ -17440,15 +17458,7 @@ function TemplatePartList() {
       title: postTypeObject.labels?.name,
       subTitle: postTypeObject.labels?.description,
       className: "template-part-page",
-      actions: /* @__PURE__ */ React.createElement(React.Fragment, null, isModified && /* @__PURE__ */ React.createElement(
-        import_components49.Button,
-        {
-          variant: "tertiary",
-          size: "compact",
-          onClick: onReset
-        },
-        (0, import_i18n45.__)("Reset view")
-      ), labels?.add_new_item && canCreateRecord && /* @__PURE__ */ React.createElement(
+      actions: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ React.createElement(
         import_components49.Button,
         {
           variant: "primary",
@@ -17456,7 +17466,7 @@ function TemplatePartList() {
           size: "compact"
         },
         labels.add_new_item
-      )),
+      ),
       hasPadding: false
     },
     DEFAULT_VIEWS.length > 1 && /* @__PURE__ */ React.createElement("div", { className: "routes-template-part-list__tabs-wrapper" }, /* @__PURE__ */ React.createElement(
@@ -17492,6 +17502,7 @@ function TemplatePartList() {
         defaultLayouts: DEFAULT_LAYOUTS,
         getItemId,
         selection,
+        onReset: isModified ? onReset : false,
         onChangeSelection: (items) => {
           navigate({
             search: {
