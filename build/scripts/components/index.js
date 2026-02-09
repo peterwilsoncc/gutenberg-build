@@ -40280,7 +40280,7 @@ This message will only show in development mode. It won't appear in production. 
       seconds: Number((0, import_date2.date)("s", date)),
       ...updates
     };
-    const year = String(values.year);
+    const year = String(values.year).padStart(4, "0");
     const month = String(values.month + 1).padStart(2, "0");
     const day = String(values.date).padStart(2, "0");
     const hours = String(values.hours).padStart(2, "0");
