@@ -5138,6 +5138,11 @@ var wp;
       support: ["typography", "__experimentalLetterSpacing"],
       useEngine: true
     },
+    textIndent: {
+      value: ["typography", "textIndent"],
+      support: ["typography", "textIndent"],
+      useEngine: true
+    },
     writingMode: {
       value: ["typography", "writingMode"],
       support: ["typography", "__experimentalWritingMode"],
@@ -6076,6 +6081,7 @@ var wp;
     "blockGap",
     "textAlign",
     "textDecoration",
+    "textIndent",
     "textTransform",
     "letterSpacing"
   ];
@@ -6095,6 +6101,9 @@ var wp;
       if (support === "letterSpacing" && !name && !(["heading", "h1", "h2", "h3", "h4", "h5", "h6"].includes(
         element
       ) || element === "button" || element === "caption" || element === "text")) {
+        return false;
+      }
+      if (support === "textIndent" && !name) {
         return false;
       }
       if (support === "textColumns" && !name) {
@@ -10329,7 +10338,12 @@ ${p3}`
   var fieldsKey = /* @__PURE__ */ Symbol("fields");
   var formKey = /* @__PURE__ */ Symbol("form");
   var privateApis = {};
-  lock(privateApis, { isContentBlock, fieldsKey, formKey });
+  lock(privateApis, {
+    isContentBlock,
+    fieldsKey,
+    formKey,
+    parseRawBlock
+  });
 
   // packages/blocks/build-module/deprecated.mjs
   var import_deprecated11 = __toESM(require_deprecated(), 1);
