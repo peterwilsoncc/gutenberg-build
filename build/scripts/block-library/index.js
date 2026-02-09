@@ -27971,9 +27971,16 @@ ${url}
   // packages/block-library/build-module/heading/edit.mjs
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
   function HeadingEdit(props) {
-    const { attributes: attributes2, setAttributes, mergeBlocks, onReplace, clientId } = props;
+    const {
+      attributes: attributes2,
+      setAttributes,
+      mergeBlocks,
+      onReplace,
+      style: style2,
+      clientId
+    } = props;
     useDeprecatedTextAlign(props);
-    const { style: style2, content, level, placeholder: placeholder2, anchor } = attributes2;
+    const { content, level, placeholder: placeholder2, anchor } = attributes2;
     const tagName = "h" + level;
     const blockProps = (0, import_block_editor102.useBlockProps)({
       style: style2
