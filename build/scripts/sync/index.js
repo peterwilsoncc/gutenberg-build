@@ -10288,6 +10288,27 @@ var wp;
     "@wordpress/sync"
   );
 
+  // packages/sync/build-module/performance.mjs
+  function logPerformanceTiming(fn) {
+    return function(...args2) {
+      const start = performance.now();
+      const result = fn.apply(this, args2);
+      const end = performance.now();
+      console.log(`${fn.name} took ${(end - start).toFixed(2)} ms`);
+      return result;
+    };
+  }
+  function passThru(fn) {
+    return ((...args2) => fn(...args2));
+  }
+  function yieldToEventLoop(fn) {
+    return function(...args2) {
+      setTimeout(() => {
+        fn.apply(this, args2);
+      }, 0);
+    };
+  }
+
   // packages/sync/build-module/utils.mjs
   function createYjsDoc(documentMeta = {}) {
     const metaMap = new Map(
@@ -11102,7 +11123,11 @@ var wp;
   }
 
   // packages/sync/build-module/manager.mjs
-  function createSyncManager() {
+  function getEntityId(objectType, objectId) {
+    return `${objectType}_${objectId}`;
+  }
+  function createSyncManager(debug = false) {
+    const debugWrap = debug ? logPerformanceTiming : passThru;
     const collectionStates = /* @__PURE__ */ new Map();
     const entityStates = /* @__PURE__ */ new Map();
     let undoManager;
@@ -11115,6 +11140,14 @@ var wp;
       if (entityStates.has(entityId)) {
         return;
       }
+      handlers = {
+        addUndoMeta: debugWrap(handlers.addUndoMeta),
+        editRecord: debugWrap(handlers.editRecord),
+        getEditedRecord: debugWrap(handlers.getEditedRecord),
+        refetchRecord: debugWrap(handlers.refetchRecord),
+        restoreUndoMeta: debugWrap(handlers.restoreUndoMeta),
+        saveRecord: debugWrap(handlers.saveRecord)
+      };
       const ydoc = createYjsDoc({ objectType });
       const recordMap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
       const recordMetaMap = ydoc.getMap(CRDT_RECORD_METADATA_MAP_KEY);
@@ -11131,7 +11164,7 @@ var wp;
         if (transaction.local && !(transaction.origin instanceof UndoManager)) {
           return;
         }
-        void updateEntityRecord(objectType, objectId);
+        void internal.updateEntityRecord(objectType, objectId);
       };
       const onRecordMetaUpdate = (event, transaction) => {
         if (transaction.local) {
@@ -11174,7 +11207,7 @@ var wp;
       );
       recordMap.observeDeep(onRecordUpdate);
       recordMetaMap.observe(onRecordMetaUpdate);
-      applyPersistedCrdtDoc(objectType, objectId, record);
+      internal.applyPersistedCrdtDoc(objectType, objectId, record);
     }
     async function loadCollection(syncConfig, objectType, handlers) {
       const providerCreators2 = getProviderCreators();
@@ -11234,9 +11267,6 @@ var wp;
       entityStates.get(getEntityId(objectType, objectId))?.unload();
       updateCRDTDoc(objectType, null, {}, origin, { isSave: true });
     }
-    function getEntityId(objectType, objectId) {
-      return `${objectType}_${objectId}`;
-    }
     function getAwareness(objectType, objectId) {
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
@@ -11245,7 +11275,7 @@ var wp;
       }
       return entityState.awareness;
     }
-    function applyPersistedCrdtDoc(objectType, objectId, record) {
+    function _applyPersistedCrdtDoc(objectType, objectId, record) {
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
       if (!entityState) {
@@ -11316,7 +11346,7 @@ var wp;
         }, origin2);
       }
     }
-    async function updateEntityRecord(objectType, objectId) {
+    async function _updateEntityRecord(objectType, objectId) {
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
       if (!entityState) {
@@ -11340,17 +11370,21 @@ var wp;
       }
       return createPersistedCRDTDoc(entityState.ydoc);
     }
+    const internal = {
+      applyPersistedCrdtDoc: debugWrap(_applyPersistedCrdtDoc),
+      updateEntityRecord: debugWrap(_updateEntityRecord)
+    };
     return {
-      createMeta: createEntityMeta,
+      createMeta: debugWrap(createEntityMeta),
       getAwareness,
-      load: loadEntity,
-      loadCollection,
+      load: debugWrap(loadEntity),
+      loadCollection: debugWrap(loadCollection),
       // Use getter to ensure we always return the current value of `undoManager`.
       get undoManager() {
         return undoManager;
       },
-      unload: unloadEntity,
-      update: updateCRDTDoc
+      unload: debugWrap(unloadEntity),
+      update: debugWrap(yieldToEventLoop(updateCRDTDoc))
     };
   }
 

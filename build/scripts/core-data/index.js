@@ -5321,7 +5321,7 @@ var wp;
           ).forEach(([propName, transientConfig]) => {
             recordWithTransients[propName] = transientConfig.read(recordWithTransients);
           });
-          await getSyncManager()?.load(
+          void getSyncManager()?.load(
             entityConfig.syncConfig,
             objectType,
             objectId,
