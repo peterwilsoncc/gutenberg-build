@@ -50511,7 +50511,7 @@ ${js}
             {
               __next40pxDefaultSize: true,
               label: (0, import_i18n167.__)("Aspect ratio"),
-              value: aspectRatio,
+              value: aspectRatio || "auto",
               options: aspectRatioOptions,
               onChange: (nextAspectRatio) => setAttributes({ aspectRatio: nextAspectRatio })
             }
