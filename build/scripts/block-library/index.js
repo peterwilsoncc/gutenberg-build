@@ -63751,7 +63751,6 @@ ${js}
   var import_components152 = __toESM(require_components(), 1);
   var import_i18n233 = __toESM(require_i18n(), 1);
   var import_data137 = __toESM(require_data(), 1);
-  var import_html_entities14 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/tab/add-tab-toolbar-control.mjs
   var import_i18n231 = __toESM(require_i18n(), 1);
@@ -63868,6 +63867,54 @@ ${js}
     ) }) });
   }
 
+  // packages/block-library/build-module/tab/controls.mjs
+  var import_jsx_runtime480 = __toESM(require_jsx_runtime(), 1);
+  function Controls3({ tabsClientId, blockIndex, isDefaultTab }) {
+    const { updateBlockAttributes } = (0, import_data137.useDispatch)(import_block_editor248.store);
+    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+    return /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)(import_jsx_runtime480.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(AddTabToolbarControl, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(RemoveTabToolbarControl, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(import_block_editor248.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+        import_components152.__experimentalToolsPanel,
+        {
+          label: (0, import_i18n233.__)("Settings"),
+          resetAll: () => {
+            updateBlockAttributes(tabsClientId, {
+              activeTabIndex: 0
+            });
+          },
+          dropdownMenuProps,
+          children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+            import_components152.__experimentalToolsPanelItem,
+            {
+              label: (0, import_i18n233.__)("Default tab"),
+              hasValue: () => isDefaultTab && blockIndex !== 0,
+              onDeselect: () => {
+                updateBlockAttributes(tabsClientId, {
+                  activeTabIndex: 0
+                });
+              },
+              isShownByDefault: true,
+              children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+                import_components152.CheckboxControl,
+                {
+                  label: (0, import_i18n233.__)("Default tab"),
+                  checked: isDefaultTab,
+                  onChange: (value) => {
+                    updateBlockAttributes(tabsClientId, {
+                      activeTabIndex: value ? blockIndex : 0
+                    });
+                  }
+                }
+              )
+            }
+          )
+        }
+      ) })
+    ] });
+  }
+
   // packages/block-library/build-module/tab/slug-from-label.mjs
   var import_url19 = __toESM(require_url(), 1);
   function slugFromLabel(label, tabIndex) {
@@ -63879,51 +63926,6 @@ ${js}
       return (0, import_url19.cleanForSlug)(htmlDocument.body.textContent);
     }
     return `tab-panel-${tabIndex}`;
-  }
-
-  // packages/block-library/build-module/tab/controls.mjs
-  var import_jsx_runtime480 = __toESM(require_jsx_runtime(), 1);
-  function Controls3({
-    attributes: attributes2,
-    setAttributes,
-    tabsClientId,
-    blockIndex,
-    isDefaultTab
-  }) {
-    const { label } = attributes2;
-    const { updateBlockAttributes } = (0, import_data137.useDispatch)(import_block_editor248.store);
-    return /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)(import_jsx_runtime480.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(AddTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(RemoveTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(import_block_editor248.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)(import_components152.PanelBody, { title: (0, import_i18n233.__)("Settings"), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
-          import_components152.TextControl,
-          {
-            label: (0, import_i18n233.__)("Label"),
-            value: (0, import_html_entities14.decodeEntities)(label),
-            onChange: (value) => {
-              setAttributes({
-                label: value,
-                anchor: slugFromLabel(value, blockIndex)
-              });
-            },
-            __next40pxDefaultSize: true
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
-          import_components152.CheckboxControl,
-          {
-            label: (0, import_i18n233.__)("Default tab"),
-            checked: isDefaultTab,
-            onChange: (value) => {
-              updateBlockAttributes(tabsClientId, {
-                activeTabIndex: value ? blockIndex : 0
-              });
-            }
-          }
-        )
-      ] }) })
-    ] });
   }
 
   // packages/block-library/build-module/tab/edit.mjs
@@ -63942,7 +63944,6 @@ ${js}
     clientId,
     context,
     isSelected,
-    setAttributes,
     __unstableLayoutClassNames: layoutClassNames
   }) {
     const focusRef = (0, import_element122.useRef)();
@@ -64028,8 +64029,6 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(
         Controls3,
         {
-          attributes: attributes2,
-          setAttributes,
           tabsClientId,
           blockIndex,
           isDefaultTab
@@ -64084,14 +64083,7 @@ ${js}
           text: true
         }
       },
-      layout: {
-        allowSwitching: true,
-        allowInheriting: false,
-        allowVerticalAlignment: true,
-        allowJustification: true,
-        allowOrientation: true,
-        allowSizingOnChildren: true
-      },
+      layout: true,
       spacing: {
         blockGap: true,
         padding: true,
@@ -66641,25 +66633,51 @@ ${js}
         name: ""
       }
     } = attributes2;
+    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime493.jsxs)(import_jsx_runtime493.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(AddTabToolbarControl, { tabsClientId: clientId }),
       /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(RemoveTabToolbarControl, { tabsClientId: clientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_block_editor259.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_components156.PanelBody, { title: (0, import_i18n239.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
-        import_components156.TextControl,
+      /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_block_editor259.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+        import_components156.__experimentalToolsPanel,
         {
-          label: (0, import_i18n239.__)("Title"),
-          help: (0, import_i18n239.__)(
-            "The tabs title is used by screen readers to describe the purpose and content of the tab panel."
-          ),
-          value: metadata.name,
-          onChange: (value) => {
+          label: (0, import_i18n239.__)("Settings"),
+          resetAll: () => {
             setAttributes({
-              metadata: { ...metadata, name: value }
+              metadata: { ...metadata, name: "" }
             });
           },
-          __next40pxDefaultSize: true
+          dropdownMenuProps,
+          children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+            import_components156.__experimentalToolsPanelItem,
+            {
+              label: (0, import_i18n239.__)("Title"),
+              hasValue: () => !!metadata.name,
+              onDeselect: () => {
+                setAttributes({
+                  metadata: { ...metadata, name: "" }
+                });
+              },
+              isShownByDefault: true,
+              children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+                import_components156.TextControl,
+                {
+                  label: (0, import_i18n239.__)("Title"),
+                  help: (0, import_i18n239.__)(
+                    "The tabs title is used by screen readers to describe the purpose and content of the tab panel."
+                  ),
+                  value: metadata.name,
+                  onChange: (value) => {
+                    setAttributes({
+                      metadata: { ...metadata, name: value }
+                    });
+                  },
+                  __next40pxDefaultSize: true
+                }
+              )
+            }
+          )
         }
-      ) }) })
+      ) })
     ] });
   }
 
@@ -67205,7 +67223,7 @@ ${js}
   var import_i18n242 = __toESM(require_i18n(), 1);
   var import_block_editor265 = __toESM(require_block_editor(), 1);
   var import_data145 = __toESM(require_data(), 1);
-  var import_html_entities15 = __toESM(require_html_entities(), 1);
+  var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_element128 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tabs-menu-item/controls.mjs
@@ -67422,7 +67440,7 @@ ${js}
   var { requestAnimationFrame, cancelAnimationFrame: cancelAnimationFrame2 } = window;
   function StaticLabel({ label, index }) {
     if (label) {
-      return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)("span", { children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_element128.RawHTML, { children: (0, import_html_entities15.decodeEntities)(label) }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)("span", { children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_element128.RawHTML, { children: (0, import_html_entities14.decodeEntities)(label) }) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)("span", { children: (0, import_i18n242.sprintf)(
       /* translators: %d is the tab index + 1 */
@@ -67628,7 +67646,7 @@ ${js}
             (0, import_i18n242.__)("Tab title %d"),
             tabIndex + 1
           ),
-          value: (0, import_html_entities15.decodeEntities)(editingLabel),
+          value: (0, import_html_entities14.decodeEntities)(editingLabel),
           onChange: (value) => {
             setEditingLabel(value);
             handleLabelChange(value);
@@ -67747,16 +67765,7 @@ ${js}
         }
       },
       layout: {
-        default: {
-          type: "flex",
-          orientation: "vertical",
-          flexWrap: "nowrap"
-        },
-        allowVerticalAlignment: true,
-        allowJustification: true,
-        allowSwitching: false,
-        allowOrientation: false,
-        allowWrap: false
+        allowEditing: false
       },
       spacing: {
         padding: true,
@@ -68109,8 +68118,8 @@ ${js}
   });
   var import_core_data88 = __toESM(require_core_data(), 1);
   var import_data155 = __toESM(require_data(), 1);
-  var import_hooks80 = __toESM(require_hooks(), 1);
-  var import_html_entities16 = __toESM(require_html_entities(), 1);
+  var import_hooks82 = __toESM(require_hooks(), 1);
+  var import_html_entities15 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/template-part/block.json
   var block_default111 = {
@@ -69254,18 +69263,18 @@ ${js}
       if (!entity) {
         return;
       }
-      return (0, import_html_entities16.decodeEntities)(entity.title) || capitalCase(entity.slug || "");
+      return (0, import_html_entities15.decodeEntities)(entity.title) || capitalCase(entity.slug || "");
     },
     edit: TemplatePartEdit
   };
   var init111 = () => {
-    (0, import_hooks80.addFilter)(
+    (0, import_hooks82.addFilter)(
       "blocks.registerBlockType",
       "core/template-part",
       enhanceTemplatePartVariations
     );
     const DISALLOWED_PARENTS = ["core/post-template", "core/post-content"];
-    (0, import_hooks80.addFilter)(
+    (0, import_hooks82.addFilter)(
       "blockEditor.__unstableCanInsertBlockType",
       "core/block-library/removeTemplatePartsFromPostTemplates",
       (canInsert, blockType, rootClientId, { getBlock, getBlockParentsByBlockName }) => {
@@ -69769,7 +69778,7 @@ ${js}
   var import_i18n254 = __toESM(require_i18n(), 1);
   var import_block_editor275 = __toESM(require_block_editor(), 1);
   var import_components168 = __toESM(require_components(), 1);
-  var import_html_entities17 = __toESM(require_html_entities(), 1);
+  var import_html_entities16 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/term-name/use-term-name.mjs
   var import_core_data91 = __toESM(require_core_data(), 1);
@@ -69846,7 +69855,7 @@ ${js}
   }) {
     const { textAlign, level = 0, isLink, levelOptions } = attributes2;
     const { term } = useTermName(termId, taxonomy);
-    const termName2 = term?.name ? (0, import_html_entities17.decodeEntities)(term.name) : (0, import_i18n254.__)("Term Name");
+    const termName2 = term?.name ? (0, import_html_entities16.decodeEntities)(term.name) : (0, import_i18n254.__)("Term Name");
     const blockProps = (0, import_block_editor275.useBlockProps)({
       className: clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
@@ -70175,7 +70184,7 @@ ${js}
   var import_core_data93 = __toESM(require_core_data(), 1);
   var import_element137 = __toESM(require_element(), 1);
   var import_compose58 = __toESM(require_compose(), 1);
-  var import_html_entities18 = __toESM(require_html_entities(), 1);
+  var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime523 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY7 = [];
   var BASE_QUERY3 = {
@@ -70246,7 +70255,7 @@ ${js}
         if (entity) {
           accumulator.push({
             id,
-            value: (0, import_html_entities18.decodeEntities)(entity.name)
+            value: (0, import_html_entities17.decodeEntities)(entity.name)
           });
         }
         return accumulator;
@@ -70260,7 +70269,7 @@ ${js}
       const names = [];
       const mapByName = {};
       searchResults.forEach((result) => {
-        const decodedName = (0, import_html_entities18.decodeEntities)(result.name);
+        const decodedName = (0, import_html_entities17.decodeEntities)(result.name);
         names.push(decodedName);
         mapByName[decodedName] = result;
       });

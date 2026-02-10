@@ -7974,14 +7974,7 @@ return array(
 					'text' => true
 				)
 			),
-			'layout' => array(
-				'allowSwitching' => true,
-				'allowInheriting' => false,
-				'allowVerticalAlignment' => true,
-				'allowJustification' => true,
-				'allowOrientation' => true,
-				'allowSizingOnChildren' => true
-			),
+			'layout' => true,
 			'spacing' => array(
 				'blockGap' => true,
 				'padding' => true,
@@ -8665,16 +8658,7 @@ return array(
 				)
 			),
 			'layout' => array(
-				'default' => array(
-					'type' => 'flex',
-					'orientation' => 'vertical',
-					'flexWrap' => 'nowrap'
-				),
-				'allowVerticalAlignment' => true,
-				'allowJustification' => true,
-				'allowSwitching' => false,
-				'allowOrientation' => false,
-				'allowWrap' => false
+				'allowEditing' => false
 			),
 			'spacing' => array(
 				'padding' => true,
