@@ -1879,14 +1879,12 @@ var wp;
   // packages/rich-text/build-module/component/use-default-style.mjs
   var import_element3 = __toESM(require_element(), 1);
   var whiteSpace = "pre-wrap";
-  var minWidth = "1px";
   function useDefaultStyle() {
     return (0, import_element3.useCallback)((element) => {
       if (!element) {
         return;
       }
       element.style.whiteSpace = whiteSpace;
-      element.style.minWidth = minWidth;
     }, []);
   }
 
