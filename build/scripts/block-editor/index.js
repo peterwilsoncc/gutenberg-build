@@ -7856,7 +7856,6 @@ var wp;
   var sectionRootClientIdKey = /* @__PURE__ */ Symbol("sectionRootClientIdKey");
   var mediaEditKey = /* @__PURE__ */ Symbol("mediaEditKey");
   var getMediaSelectKey = /* @__PURE__ */ Symbol("getMediaSelect");
-  var essentialFormatKey = /* @__PURE__ */ Symbol("essentialFormat");
   var isIsolatedEditorKey = /* @__PURE__ */ Symbol("isIsolatedEditor");
   var deviceTypeKey = /* @__PURE__ */ Symbol("deviceTypeKey");
 
@@ -51432,37 +51431,21 @@ var wp;
   function useFormatTypes({
     clientId,
     identifier,
-    allowedFormats,
     withoutInteractiveFormatting,
-    disableNoneEssentialFormatting = false
+    allowedFormats
   }) {
     const allFormatTypes = (0, import_data149.useSelect)(formatTypesSelector, []);
     const formatTypes = (0, import_element175.useMemo)(() => {
-      return allFormatTypes.filter(
-        ({
-          name,
-          interactive,
-          tagName,
-          [essentialFormatKey]: isEssential
-        }) => {
-          if (allowedFormats && !allowedFormats.includes(name)) {
-            return false;
-          }
-          if (disableNoneEssentialFormatting && !isEssential) {
-            return false;
-          }
-          if (withoutInteractiveFormatting && (interactive || interactiveContentTags.has(tagName))) {
-            return false;
-          }
-          return true;
+      return allFormatTypes.filter(({ name, interactive, tagName }) => {
+        if (allowedFormats && !allowedFormats.includes(name)) {
+          return false;
         }
-      );
-    }, [
-      allFormatTypes,
-      allowedFormats,
-      disableNoneEssentialFormatting,
-      withoutInteractiveFormatting
-    ]);
+        if (withoutInteractiveFormatting && (interactive || interactiveContentTags.has(tagName))) {
+          return false;
+        }
+        return true;
+      });
+    }, [allFormatTypes, allowedFormats, withoutInteractiveFormatting]);
     const keyedSelected = (0, import_data149.useSelect)(
       (select3) => formatTypes.reduce((accumulator, type) => {
         if (!type.__experimentalGetPropsForEditableTreePreparation) {
@@ -52477,7 +52460,7 @@ var wp;
       if (!isBlockSelected2) {
         return { isSelected: false };
       }
-      const { getSelectionStart: getSelectionStart22, getSelectionEnd: getSelectionEnd22, getBlockEditingMode: getBlockEditingMode2 } = select3(store);
+      const { getSelectionStart: getSelectionStart22, getSelectionEnd: getSelectionEnd22 } = select3(store);
       const selectionStart2 = getSelectionStart22();
       const selectionEnd2 = getSelectionEnd22();
       let isSelected2;
@@ -52489,11 +52472,10 @@ var wp;
       return {
         selectionStart: isSelected2 ? selectionStart2.offset : void 0,
         selectionEnd: isSelected2 ? selectionEnd2.offset : void 0,
-        isSelected: isSelected2,
-        isContentOnly: getBlockEditingMode2(clientId) === "contentOnly"
+        isSelected: isSelected2
       };
     };
-    const { selectionStart, selectionEnd, isSelected, isContentOnly } = (0, import_data151.useSelect)(selector3, [
+    const { selectionStart, selectionEnd, isSelected } = (0, import_data151.useSelect)(selector3, [
       clientId,
       identifier,
       instanceId,
@@ -52629,9 +52611,8 @@ var wp;
     } = useFormatTypes({
       clientId,
       identifier,
-      allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
-      disableNoneEssentialFormatting: isContentOnly
+      allowedFormats: adjustedAllowedFormats
     });
     function addEditorOnlyFormats(value2) {
       return valueHandlers.reduce(
@@ -75101,7 +75082,6 @@ var wp;
     CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot_default,
     mediaEditKey,
     getMediaSelectKey,
-    essentialFormatKey,
     deviceTypeKey,
     isIsolatedEditorKey,
     useBlockElement,
