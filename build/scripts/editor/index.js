@@ -43428,6 +43428,7 @@ var wp;
 
   // packages/editor/build-module/components/post-title/index.mjs
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
+  var { useRichText } = unlock(import_rich_text2.privateApis);
   var PostTitle = (0, import_element131.forwardRef)((_, forwardedRef) => {
     const { placeholder, isEditingContentOnlySection, isPreview } = (0, import_data162.useSelect)(
       (select5) => {
@@ -43453,7 +43454,7 @@ var wp;
       value,
       onChange,
       ref: richTextRef
-    } = (0, import_rich_text2.__unstableUseRichText)({
+    } = useRichText({
       value: title,
       onChange(newValue) {
         onUpdate(newValue.replace(REGEXP_NEWLINES, " "));
