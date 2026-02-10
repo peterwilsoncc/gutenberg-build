@@ -7800,6 +7800,25 @@ var wp;
       block: name122,
       urlQueryArgs: { post_id: postId, invalidationKey }
     });
+    const prevContentRef = (0, import_element8.useRef)("");
+    (0, import_element8.useEffect)(() => {
+      if (status === "success") {
+        prevContentRef.current = content;
+      }
+    }, [content, status]);
+    const [showLoader, setShowLoader] = (0, import_element8.useState)(false);
+    (0, import_element8.useEffect)(() => {
+      if (status !== "loading") {
+        return;
+      }
+      const timeout = setTimeout(() => {
+        setShowLoader(true);
+      }, 400);
+      return () => {
+        clearTimeout(timeout);
+        setShowLoader(false);
+      };
+    }, [status]);
     const disabledRef = (0, import_compose5.useDisabled)();
     const blockProps = (0, import_block_editor17.useBlockProps)({ ref: disabledRef });
     if (isLoading) {
@@ -7952,7 +7971,19 @@ var wp;
           }
         )
       ] }),
-      status === "loading" && !showPlaceholder && /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(import_components9.Spinner, {}) }),
+      status === "loading" && !showPlaceholder && (prevContentRef.current ? /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+        html_renderer_default,
+        {
+          wrapperProps: {
+            ...blockProps,
+            style: {
+              ...blockProps.style,
+              opacity: showLoader ? 0.3 : 1
+            }
+          },
+          html: prevContentRef.current
+        }
+      ) : /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(import_components9.Spinner, {}) })),
       status === "error" && /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("p", { children: (0, import_i18n12.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n12.__)("Error: %s"),
