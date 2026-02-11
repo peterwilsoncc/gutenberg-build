@@ -655,8 +655,8 @@ var wp;
   }
   function getFormatBoundary(value, format, startIndex = value.start, endIndex = value.end) {
     const EMPTY_BOUNDARIES = {
-      start: null,
-      end: null
+      start: void 0,
+      end: void 0
     };
     const { formats } = value;
     let targetFormat;
@@ -693,7 +693,7 @@ var wp;
     startIndex = startIndex < 0 ? 0 : startIndex;
     return {
       start: startIndex,
-      end: endIndex
+      end: endIndex + 1
     };
   }
   function walkToBoundary(formats, initialIndex, targetFormatRef, formatIndex, direction) {
@@ -882,7 +882,15 @@ var wp;
         });
         return;
       } else if (newText === richTextText) {
-        newValue = (0, import_rich_text5.applyFormat)(value, linkFormat);
+        const boundary = getFormatBoundary(value, {
+          type: "core/link"
+        });
+        newValue = (0, import_rich_text5.applyFormat)(
+          value,
+          linkFormat,
+          boundary.start,
+          boundary.end
+        );
       } else {
         newValue = (0, import_rich_text5.create)({ text: newText });
         newValue = (0, import_rich_text5.applyFormat)(newValue, linkFormat, 0, newText.length);
@@ -990,7 +998,7 @@ var wp;
         type: "core/link"
       });
       textStart = boundary.start;
-      textEnd = boundary.end + 1;
+      textEnd = boundary.end;
     }
     return (0, import_rich_text5.slice)(value, textStart, textEnd);
   }
