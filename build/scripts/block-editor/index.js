@@ -57696,6 +57696,7 @@ var wp;
   // packages/block-editor/build-module/components/global-styles/background-panel.mjs
   var import_components208 = __toESM(require_components(), 1);
   var import_element207 = __toESM(require_element(), 1);
+  var import_i18n194 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/background-image-control/index.mjs
   var import_components207 = __toESM(require_components(), 1);
@@ -57766,47 +57767,32 @@ var wp;
       }
     }, [isOpen, onToggleCallback]);
     const renderPreviewContent = () => {
-      return /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(
-        import_components207.__experimentalHStack,
-        {
-          justify: "flex-start",
-          as: "span",
-          className: "block-editor-global-styles-background-panel__inspector-preview-inner",
-          children: [
-            imgUrl && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
-              "span",
-              {
-                className: "block-editor-global-styles-background-panel__inspector-image-indicator-wrapper",
-                "aria-hidden": true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
-                  "span",
-                  {
-                    className: "block-editor-global-styles-background-panel__inspector-image-indicator",
-                    style: {
-                      backgroundImage: `url(${imgUrl})`
-                    }
-                  }
-                )
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(import_components207.FlexItem, { as: "span", style: imgUrl ? {} : { flexGrow: 1 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
-                import_components207.__experimentalTruncate,
-                {
-                  numberOfLines: 1,
-                  className: "block-editor-global-styles-background-panel__inspector-media-replace-title",
-                  children: label
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(import_components207.VisuallyHidden, { as: "span", children: imgUrl ? (0, import_i18n193.sprintf)(
-                /* translators: %s: file name */
-                (0, import_i18n193.__)("Background image: %s"),
-                filename || label
-              ) : (0, import_i18n193.__)("No background image selected") })
-            ] })
-          ]
-        }
-      );
+      return /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(import_components207.__experimentalHStack, { className: "block-editor-global-styles-background-panel__inspector-preview-inner", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+          "span",
+          {
+            className: "block-editor-global-styles-background-panel__inspector-image-indicator",
+            style: {
+              backgroundImage: imgUrl ? `url(${imgUrl})` : void 0
+            }
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(import_components207.FlexBlock, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+            import_components207.__experimentalTruncate,
+            {
+              numberOfLines: 1,
+              className: "block-editor-global-styles-background-panel__inspector-media-replace-title",
+              children: label
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(import_components207.VisuallyHidden, { as: "span", children: imgUrl ? (0, import_i18n193.sprintf)(
+            /* translators: %s: file name */
+            (0, import_i18n193.__)("Background image: %s"),
+            filename || label
+          ) : (0, import_i18n193.__)("No background image selected") })
+        ] })
+      ] });
     };
     return as === "button" ? /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(import_components207.Button, { __next40pxDefaultSize: true, ...restToggleProps, children: renderPreviewContent() }) : renderPreviewContent();
   }
@@ -57823,7 +57809,7 @@ var wp;
     if (!hasImageValue) {
       return;
     }
-    const imgLabel = label || (0, import_url12.getFilename)(imgUrl) || (0, import_i18n193.__)("Add background image");
+    const imgLabel = label || (0, import_url12.getFilename)(imgUrl) || (0, import_i18n193.__)("Image");
     return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
       import_components207.Dropdown,
       {
@@ -57970,7 +57956,7 @@ var wp;
       })
     );
     const canRemove = !hasValue && hasBackgroundImageValue(inheritedValue);
-    const imgLabel = title || (0, import_url12.getFilename)(url) || (0, import_i18n193.__)("Add background image");
+    const imgLabel = title || (0, import_url12.getFilename)(url) || (0, import_i18n193.__)("Image");
     return /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)("div", { className: "block-editor-global-styles-background-panel__image-tools-panel-item", children: [
       isUploading && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(LoadingSpinner, {}),
       /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
@@ -58296,7 +58282,6 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/background-panel.mjs
-  var import_i18n194 = __toESM(require_i18n(), 1);
   var import_jsx_runtime372 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_CONTROLS8 = {
     backgroundImage: true
@@ -58341,7 +58326,7 @@ var wp;
     panelId,
     defaultControls = DEFAULT_CONTROLS8,
     defaultValues = {},
-    headerLabel = (0, import_i18n194.__)("Background image")
+    headerLabel = (0, import_i18n194.__)("Background")
   }) {
     const showBackgroundImageControl = useHasBackgroundPanel(settings2);
     const resetBackground = () => onChange(setImmutably(value, ["background"], {}));
