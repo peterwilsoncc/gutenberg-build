@@ -15698,8 +15698,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components44 = __toESM(require_components(), 1);
   var import_element51 = __toESM(require_element(), 1);
   var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock(import_components44.privateApis);
-  var ColorPicker = ({
+  var { ValidatedInputControl: ValidatedInputControl3 } = unlock(import_components44.privateApis);
+  var ColorPickerDropdown = ({
     color,
     onColorChange
   }) => {
@@ -15731,9 +15731,9 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ) }),
         renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-          Picker,
+          import_components44.ColorPicker,
           {
-            color: w(validColor),
+            color: validColor,
             onChange: onColorChange,
             enableAlpha: true
           }
@@ -15752,8 +15752,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data }) || "";
     const handleColorChange = (0, import_element51.useCallback)(
-      (colorObject) => {
-        onChange(setValue({ item: data, value: colorObject.toHex() }));
+      (newColor) => {
+        onChange(setValue({ item: data, value: newColor }));
       },
       [data, onChange, setValue]
     );
@@ -15777,7 +15777,7 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         type: "text",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-          ColorPicker,
+          ColorPickerDropdown,
           {
             color: value,
             onColorChange: handleColorChange

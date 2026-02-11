@@ -37867,8 +37867,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components135 = __toESM(require_components(), 1);
   var import_element116 = __toESM(require_element(), 1);
   var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock3(import_components135.privateApis);
-  var ColorPicker = ({
+  var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components135.privateApis);
+  var ColorPickerDropdown = ({
     color,
     onColorChange
   }) => {
@@ -37900,9 +37900,9 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ) }),
         renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
-          Picker,
+          import_components135.ColorPicker,
           {
-            color: w(validColor),
+            color: validColor,
             onChange: onColorChange,
             enableAlpha: true
           }
@@ -37921,8 +37921,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data }) || "";
     const handleColorChange = (0, import_element116.useCallback)(
-      (colorObject) => {
-        onChange(setValue({ item: data, value: colorObject.toHex() }));
+      (newColor) => {
+        onChange(setValue({ item: data, value: newColor }));
       },
       [data, onChange, setValue]
     );
@@ -37946,7 +37946,7 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         type: "text",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
-          ColorPicker,
+          ColorPickerDropdown,
           {
             color: value,
             onColorChange: handleColorChange

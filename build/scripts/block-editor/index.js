@@ -66014,8 +66014,8 @@ var wp;
   var import_components243 = __toESM(require_components(), 1);
   var import_element243 = __toESM(require_element(), 1);
   var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl4, Picker } = unlock2(import_components243.privateApis);
-  var ColorPicker = ({
+  var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components243.privateApis);
+  var ColorPickerDropdown = ({
     color,
     onColorChange
   }) => {
@@ -66047,9 +66047,9 @@ var wp;
           }
         ) }),
         renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
-          Picker,
+          import_components243.ColorPicker,
           {
-            color: w(validColor),
+            color: validColor,
             onChange: onColorChange,
             enableAlpha: true
           }
@@ -66068,8 +66068,8 @@ var wp;
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data }) || "";
     const handleColorChange = (0, import_element243.useCallback)(
-      (colorObject) => {
-        onChange(setValue({ item: data, value: colorObject.toHex() }));
+      (newColor) => {
+        onChange(setValue({ item: data, value: newColor }));
       },
       [data, onChange, setValue]
     );
@@ -66093,7 +66093,7 @@ var wp;
         hideLabelFromVision,
         type: "text",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
-          ColorPicker,
+          ColorPickerDropdown,
           {
             color: value,
             onColorChange: handleColorChange

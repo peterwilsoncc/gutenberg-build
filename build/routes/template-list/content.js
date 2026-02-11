@@ -15436,8 +15436,8 @@ var w = function(r3) {
 var import_components44 = __toESM(require_components(), 1);
 var import_element52 = __toESM(require_element(), 1);
 var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock(import_components44.privateApis);
-var ColorPicker = ({
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock(import_components44.privateApis);
+var ColorPickerDropdown = ({
   color,
   onColorChange
 }) => {
@@ -15469,9 +15469,9 @@ var ColorPicker = ({
         }
       ) }),
       renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
-        Picker,
+        import_components44.ColorPicker,
         {
-          color: w(validColor),
+          color: validColor,
           onChange: onColorChange,
           enableAlpha: true
         }
@@ -15490,8 +15490,8 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data }) || "";
   const handleColorChange = (0, import_element52.useCallback)(
-    (colorObject) => {
-      onChange(setValue({ item: data, value: colorObject.toHex() }));
+    (newColor) => {
+      onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
@@ -15515,7 +15515,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       prefix: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
-        ColorPicker,
+        ColorPickerDropdown,
         {
           color: value,
           onColorChange: handleColorChange
