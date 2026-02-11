@@ -40255,6 +40255,11 @@ var wp;
           if (!supportsBlockVisibility) {
             return;
           }
+          if (clientIds.some(
+            (id) => getBlockEditingMode2(id) !== "default"
+          )) {
+            return;
+          }
           showViewportModal2(clientIds);
         }
       }
@@ -40453,6 +40458,7 @@ var wp;
       canRemoveBlocks: canRemoveBlocks2,
       isBlockHiddenAnywhere: isBlockHiddenAnywhere2
     } = unlock((0, import_data122.useSelect)(store));
+    const { getBlockEditingMode: getBlockEditingMode2 } = (0, import_data122.useSelect)(store);
     const { getDefaultBlockName: getDefaultBlockName7, getGroupingBlockName } = (0, import_data122.useSelect)(import_blocks77.store);
     const blocks2 = getBlocksByClientId2(clientIds);
     const blockEditorDispatch = (0, import_data122.useDispatch)(store);
@@ -40555,7 +40561,10 @@ var wp;
     const supportsVisibility = blocks2.every(
       (block) => !!block && (0, import_blocks77.hasBlockSupport)(block.name, "visibility", true)
     );
-    if (supportsVisibility) {
+    const allBlocksDefaultMode = clientIds.every(
+      (id) => getBlockEditingMode2(id) === "default"
+    );
+    if (supportsVisibility && allBlocksDefaultMode) {
       const hasHiddenBlock = clientIds.some(
         (id) => isBlockHiddenAnywhere2(id)
       );
@@ -41585,6 +41594,11 @@ var wp;
           (_block) => (0, import_blocks78.hasBlockSupport)(_block.name, "visibility", true)
         );
         if (!supportsBlockVisibility) {
+          return;
+        }
+        if (blocksToUpdate.some(
+          (id) => getBlockEditingMode2(id) !== "default"
+        )) {
           return;
         }
         showViewportModal2(blocksToUpdate);
