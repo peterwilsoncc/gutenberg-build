@@ -1682,10 +1682,14 @@ var wp;
   var title13 = (0, import_i18n16.__)("Language");
   var language = {
     name: name13,
+    title: title13,
     tagName: "bdo",
     className: null,
-    edit: Edit3,
-    title: title13
+    attributes: {
+      lang: "lang",
+      dir: "dir"
+    },
+    edit: Edit3
   };
   function Edit3({ isActive, value, onChange, contentRef }) {
     const [isPopoverVisible, setIsPopoverVisible] = (0, import_element8.useState)(false);
