@@ -39673,7 +39673,8 @@ var wp;
       showGroupButtons,
       showLockButtons,
       showBlockVisibilityButton,
-      showSwitchSectionStyleButton
+      showSwitchSectionStyleButton,
+      areSelectedBlocksHiddenOnViewport
     } = (0, import_data117.useSelect)((select3) => {
       const {
         getBlockName: getBlockName2,
@@ -39683,10 +39684,12 @@ var wp;
         isBlockValid: isBlockValid2,
         getBlockEditingMode: getBlockEditingMode2,
         getBlockAttributes: getBlockAttributes3,
+        getSettings: getSettings7,
         getTemplateLock: getTemplateLock2,
         getParentSectionBlock: getParentSectionBlock2,
         isZoomOut: isZoomOut2,
-        isSectionBlock: isSectionBlock2
+        isSectionBlock: isSectionBlock2,
+        isBlockHiddenAtViewport: isBlockHiddenAtViewport2
       } = unlock(select3(store));
       const selectedBlockClientIds = getSelectedBlockClientIds2();
       const selectedBlockClientId = selectedBlockClientIds[0];
@@ -39713,6 +39716,10 @@ var wp;
       const _isZoomOut = isZoomOut2();
       const _isSectionBlock = isSectionBlock2(selectedBlockClientId);
       const _showSwitchSectionStyleButton = _isZoomOut || _isSectionBlock;
+      const _currentDeviceType = getSettings7()?.[deviceTypeKey]?.toLowerCase() || "desktop";
+      const _areSelectedBlocksHiddenOnViewport = selectedBlockClientIds.length > 0 && selectedBlockClientIds.every(
+        (id) => isBlockHiddenAtViewport2(id, _currentDeviceType)
+      );
       return {
         blockClientId: selectedBlockClientId,
         blockClientIds: selectedBlockClientIds,
@@ -39733,7 +39740,8 @@ var wp;
         showGroupButtons: !_isZoomOut,
         showLockButtons: !_isZoomOut,
         showBlockVisibilityButton: !_isZoomOut,
-        showSwitchSectionStyleButton: _showSwitchSectionStyleButton
+        showSwitchSectionStyleButton: _showSwitchSectionStyleButton,
+        areSelectedBlocksHiddenOnViewport: _areSelectedBlocksHiddenOnViewport
       };
     }, []);
     const toolbarWrapperRef = (0, import_element122.useRef)(null);
@@ -39795,10 +39803,10 @@ var wp;
               }
             )
           ] }) }),
-          !hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && showGroupButtons && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(toolbar_default, {}),
-          showShuffleButton && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(ChangeDesign, { clientId: blockClientIds[0] }),
-          showSwitchSectionStyleButton && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(switch_section_style_default, { clientId: blockClientIds[0] }),
-          shouldShowVisualToolbar && showSlots && /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(import_jsx_runtime253.Fragment, { children: [
+          !areSelectedBlocksHiddenOnViewport && !hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && showGroupButtons && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(toolbar_default, {}),
+          !areSelectedBlocksHiddenOnViewport && showShuffleButton && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(ChangeDesign, { clientId: blockClientIds[0] }),
+          !areSelectedBlocksHiddenOnViewport && showSwitchSectionStyleButton && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(switch_section_style_default, { clientId: blockClientIds[0] }),
+          !areSelectedBlocksHiddenOnViewport && shouldShowVisualToolbar && showSlots && /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(import_jsx_runtime253.Fragment, { children: [
             !isSectionContainer && /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(import_jsx_runtime253.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
                 block_controls_default.Slot,
