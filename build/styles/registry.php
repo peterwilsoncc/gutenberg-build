@@ -33,11 +33,6 @@ return array(
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
-		'handle' => 'wp-reusable-blocks',
-		'path' => 'reusable-blocks/style',
-		'dependencies' => array('wp-block-editor', 'wp-components'),
-	),
-	array(
 		'handle' => 'wp-widgets',
 		'path' => 'widgets/style',
 		'dependencies' => array('wp-block-editor', 'wp-components'),
@@ -46,6 +41,11 @@ return array(
 		'handle' => 'wp-commands',
 		'path' => 'commands/style',
 		'dependencies' => array('wp-components'),
+	),
+	array(
+		'handle' => 'wp-reusable-blocks',
+		'path' => 'reusable-blocks/style',
+		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
 		'handle' => 'wp-components',
