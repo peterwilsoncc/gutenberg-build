@@ -15830,7 +15830,8 @@ var wp;
     mediaEditKey,
     getMediaSelectKey,
     isIsolatedEditorKey,
-    deviceTypeKey
+    deviceTypeKey,
+    isNavigationOverlayContextKey
   } = unlock(import_block_editor7.privateApis);
   function useBlockEditorSettings(settings, postType2, postId2, renderingMode2) {
     const isLargeViewport = (0, import_compose7.useViewportMatch)("medium");
@@ -15850,7 +15851,8 @@ var wp;
       userPatternCategories,
       restBlockPatternCategories,
       sectionRootClientId,
-      deviceType: deviceType2
+      deviceType: deviceType2,
+      isNavigationOverlayContext
     } = (0, import_data29.useSelect)(
       (select5) => {
         const {
@@ -15905,7 +15907,12 @@ var wp;
           userPatternCategories: getUserPatternCategories(),
           restBlockPatternCategories: getBlockPatternCategories(),
           sectionRootClientId: getSectionRootBlock(),
-          deviceType: getDeviceType2()
+          deviceType: getDeviceType2(),
+          isNavigationOverlayContext: postType2 === "wp_template_part" && postId2 ? getEntityRecord(
+            "postType",
+            "wp_template_part",
+            postId2
+          )?.area === "navigation-overlay" : false
         };
       },
       [postType2, postId2, isLargeViewport, renderingMode2]
@@ -16038,7 +16045,8 @@ var wp;
           "wp_block",
           "wp_navigation"
         ].includes(postType2),
-        ...deviceType2 ? { [deviceTypeKey]: deviceType2 } : {}
+        ...deviceType2 ? { [deviceTypeKey]: deviceType2 } : {},
+        [isNavigationOverlayContextKey]: isNavigationOverlayContext
       };
       return blockEditorSettings;
     }, [
@@ -16068,7 +16076,8 @@ var wp;
       renderingMode2,
       editMediaEntity,
       wrappedOnNavigateToEntityRecord,
-      deviceType2
+      deviceType2,
+      isNavigationOverlayContext
     ]);
   }
   var use_block_editor_settings_default = useBlockEditorSettings;

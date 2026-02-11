@@ -7861,6 +7861,9 @@ var wp;
   var getMediaSelectKey = /* @__PURE__ */ Symbol("getMediaSelect");
   var isIsolatedEditorKey = /* @__PURE__ */ Symbol("isIsolatedEditor");
   var deviceTypeKey = /* @__PURE__ */ Symbol("deviceTypeKey");
+  var isNavigationOverlayContextKey = /* @__PURE__ */ Symbol(
+    "isNavigationOverlayContext"
+  );
 
   // packages/block-editor/build-module/store/reducer.mjs
   var { isContentBlock } = unlock(import_blocks2.privateApis);
@@ -27850,6 +27853,11 @@ var wp;
       () => ({ [isFiltered]: !!isQuick }),
       [isQuick]
     );
+    const isWithinNavigationOverlayContext = (0, import_data53.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
+      const settings2 = getSettings7();
+      return settings2[isNavigationOverlayContextKey] ?? false;
+    }, []);
     const { patternCategories, patterns, userPatternCategories } = (0, import_data53.useSelect)(
       (select3) => {
         const { getSettings: getSettings7, __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2 } = unlock(
@@ -27870,6 +27878,15 @@ var wp;
       },
       [rootClientId, options]
     );
+    const filteredPatterns = (0, import_element59.useMemo)(() => {
+      return patterns.filter((pattern) => {
+        const hasNavigationCategory = pattern.categories?.includes("navigation");
+        if (hasNavigationCategory && !isWithinNavigationOverlayContext) {
+          return false;
+        }
+        return true;
+      });
+    }, [patterns, isWithinNavigationOverlayContext]);
     const { getClosestAllowedInsertionPointForPattern: getClosestAllowedInsertionPointForPattern2 } = unlock(
       (0, import_data53.useSelect)(store)
     );
@@ -27932,7 +27949,7 @@ var wp;
         isQuick
       ]
     );
-    return [patterns, allCategories, onClickPattern];
+    return [filteredPatterns, allCategories, onClickPattern];
   };
   var use_patterns_state_default = usePatternsState;
 
@@ -75014,6 +75031,7 @@ var wp;
     getMediaSelectKey,
     deviceTypeKey,
     isIsolatedEditorKey,
+    isNavigationOverlayContextKey,
     useBlockElement,
     useBlockElementRef,
     LinkPicker,
