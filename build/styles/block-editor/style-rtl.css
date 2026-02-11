@@ -220,16 +220,35 @@
   word-break: break-all;
   white-space: normal;
   text-align: start;
+  text-align-last: center;
+}
+
+.block-editor-global-styles-background-panel__inspector-preview-inner .block-editor-global-styles-background-panel__inspector-image-indicator-wrapper {
+  width: 20px;
+  height: 20px;
+  min-width: auto;
 }
 
 .block-editor-global-styles-background-panel__inspector-image-indicator {
+  background-size: cover;
+  border-radius: 50%;
   width: 20px;
   height: 20px;
-  border-radius: 2px;
+  display: block;
+  position: relative;
+}
+
+.block-editor-global-styles-background-panel__inspector-image-indicator::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  border-radius: 50%;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-  background: #fff linear-gradient(45deg, transparent 48%, #ddd 48%, #ddd 52%, transparent 52%);
-  background-size: cover;
-  outline: 1px solid transparent;
+  border: 1px solid transparent;
+  box-sizing: inherit;
 }
 
 .block-editor-global-styles-background-panel__dropdown-content-wrapper {

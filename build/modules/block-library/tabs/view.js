@@ -80,12 +80,11 @@ var { actions: privateActions, state: privateState } = store(
       },
       /**
        * The value of the tabindex attribute.
-       * Only the active tab should be in the tab sequence.
        *
-       * @type {number}
+       * @type {false|string}
        */
       get tabIndexAttribute() {
-        return privateState.isActiveTab ? 0 : -1;
+        return privateState.isActiveTab ? -1 : 0;
       }
     },
     actions: {
@@ -95,24 +94,32 @@ var { actions: privateActions, state: privateState } = store(
        * @param {KeyboardEvent} event The keydown event.
        */
       handleTabKeyDown: withSyncEvent((event) => {
-        const context = getContext();
-        const { isVertical } = context;
-        const { tabIndex } = privateState;
-        if (tabIndex === null) {
-          return;
-        }
-        if (event.key === "ArrowRight" && !isVertical) {
-          event.preventDefault();
-          privateActions.moveFocus(tabIndex + 1);
+        const { isVertical } = getContext();
+        if (event.key === "Enter") {
+          const { tabIndex } = privateState;
+          if (tabIndex !== null) {
+            privateActions.setActiveTab(tabIndex);
+          }
+        } else if (event.key === "ArrowRight" && !isVertical) {
+          const { tabIndex } = privateState;
+          if (tabIndex !== null) {
+            privateActions.setActiveTab(tabIndex + 1);
+          }
         } else if (event.key === "ArrowLeft" && !isVertical) {
-          event.preventDefault();
-          privateActions.moveFocus(tabIndex - 1);
+          const { tabIndex } = privateState;
+          if (tabIndex !== null) {
+            privateActions.setActiveTab(tabIndex - 1);
+          }
         } else if (event.key === "ArrowDown" && isVertical) {
-          event.preventDefault();
-          privateActions.moveFocus(tabIndex + 1);
+          const { tabIndex } = privateState;
+          if (tabIndex !== null) {
+            privateActions.setActiveTab(tabIndex + 1);
+          }
         } else if (event.key === "ArrowUp" && isVertical) {
-          event.preventDefault();
-          privateActions.moveFocus(tabIndex - 1);
+          const { tabIndex } = privateState;
+          if (tabIndex !== null) {
+            privateActions.setActiveTab(tabIndex - 1);
+          }
         }
       }),
       /**
@@ -128,48 +135,16 @@ var { actions: privateActions, state: privateState } = store(
         }
       }),
       /**
-       * Moves focus to a specific tab without activating it.
-       *
-       * @param {number} tabIndex The index to move focus to.
-       */
-      moveFocus: (tabIndex) => {
-        const { tabsList } = privateState;
-        if (!tabsList || tabsList.length === 0) {
-          return;
-        }
-        let newIndex = tabIndex;
-        if (newIndex < 0) {
-          newIndex = tabsList.length - 1;
-        } else if (newIndex >= tabsList.length) {
-          newIndex = 0;
-        }
-        const tabId = tabsList[newIndex].id;
-        const tabElement = document.getElementById("tab__" + tabId);
-        if (tabElement) {
-          tabElement.focus();
-        }
-      },
-      /**
        * Sets the active tab index (internal implementation).
        *
        * @param {number}  tabIndex    The index of the active tab.
        * @param {boolean} scrollToTab Whether to scroll to the tab element.
        */
       setActiveTab: (tabIndex, scrollToTab = false) => {
-        const { tabsList } = privateState;
-        if (!tabsList || tabsList.length === 0) {
-          return;
-        }
-        let newIndex = tabIndex;
-        if (newIndex < 0) {
-          newIndex = 0;
-        } else if (newIndex >= tabsList.length) {
-          newIndex = tabsList.length - 1;
-        }
         const context = getContext();
-        context.activeTabIndex = newIndex;
+        context.activeTabIndex = tabIndex;
         if (scrollToTab) {
-          const tabId = tabsList[newIndex].id;
+          const tabId = privateState.tabsList[tabIndex].id;
           const tabElement = document.getElementById(tabId);
           if (tabElement) {
             setTimeout(() => {

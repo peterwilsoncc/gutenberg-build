@@ -8,7 +8,9 @@
 	"version": "1.0.0",
 	"category": "design",
 	"textdomain": "default",
-	"parent": [ "core/tabs-menu" ],
+	"parent": [
+		"core/tabs-menu"
+	],
 	"usesContext": [
 		"core/tabs-menu-item-index",
 		"core/tabs-menu-item-id",
@@ -66,7 +68,16 @@
 			}
 		},
 		"layout": {
-			"allowEditing": false
+			"default": {
+				"type": "flex",
+				"orientation": "vertical",
+				"flexWrap": "nowrap"
+			},
+			"allowVerticalAlignment": true,
+			"allowJustification": true,
+			"allowSwitching": false,
+			"allowOrientation": false,
+			"allowWrap": false
 		},
 		"spacing": {
 			"padding": true,

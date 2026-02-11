@@ -55,8 +55,7 @@
 				"fontSize": true
 			}
 		},
-		"contentRole": true,
-		"listView": true
+		"contentRole": true
 	},
 	"attributes": {
 		"iconPosition": {

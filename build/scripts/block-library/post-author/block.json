@@ -2,9 +2,9 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "core/post-author",
-	"title": "Author (deprecated)",
+	"title": "Author",
 	"category": "theme",
-	"description": "This block is deprecated. Please use the Avatar block, the Author Name block, and the Author Biography block instead.",
+	"description": "Display post author details such as name, avatar, and bio.",
 	"textdomain": "default",
 	"attributes": {
 		"textAlign": {
@@ -37,7 +37,6 @@
 	},
 	"usesContext": [ "postType", "postId", "queryId" ],
 	"supports": {
-		"inserter": false,
 		"anchor": true,
 		"html": false,
 		"spacing": {

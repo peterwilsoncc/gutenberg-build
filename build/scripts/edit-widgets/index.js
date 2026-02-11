@@ -2105,8 +2105,6 @@ var wp;
       inserter: false,
       customClassName: false,
       reusable: false,
-      renaming: false,
-      visibility: false,
       __experimentalToolbar: false,
       __experimentalParentSelector: false,
       __experimentalDisableBlockOverlay: true

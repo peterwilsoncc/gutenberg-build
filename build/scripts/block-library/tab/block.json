@@ -14,7 +14,9 @@
 			"default": ""
 		}
 	},
-	"parent": [ "core/tab-panel" ],
+	"parent": [
+		"core/tab-panels"
+	],
 	"usesContext": [
 		"core/tabs-activeTabIndex",
 		"core/tabs-editorActiveTabIndex"
@@ -31,7 +33,14 @@
 				"text": true
 			}
 		},
-		"layout": true,
+		"layout": {
+			"allowSwitching": true,
+			"allowInheriting": false,
+			"allowVerticalAlignment": true,
+			"allowJustification": true,
+			"allowOrientation": true,
+			"allowSizingOnChildren": true
+		},
 		"spacing": {
 			"blockGap": true,
 			"padding": true,
