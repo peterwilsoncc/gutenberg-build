@@ -6760,11 +6760,10 @@ var wp;
 
   // packages/core-data/build-module/hooks/use-entity-block-editor.mjs
   var EMPTY_ARRAY2 = [];
-  var parsedBlocksCache = /* @__PURE__ */ new WeakMap();
+  var parsedBlocksCache = /* @__PURE__ */ new Map();
   function useEntityBlockEditor(kind, name, { id: _id } = {}) {
     const providerId = useEntityId(kind, name);
     const id = _id ?? providerId;
-    const { getEntityRecord: getEntityRecord3, getEntityRecordEdits: getEntityRecordEdits2 } = (0, import_data12.useSelect)(STORE_NAME);
     const { content, editedBlocks, meta } = (0, import_data12.useSelect)(
       (select3) => {
         if (!id) {
@@ -6791,24 +6790,17 @@ var wp;
       if (!content || typeof content !== "string") {
         return EMPTY_ARRAY2;
       }
-      const edits = getEntityRecordEdits2(kind, name, id);
-      const isUnedited = !edits || !Object.keys(edits).length;
-      const cackeKey = isUnedited ? getEntityRecord3(kind, name, id) : edits;
-      let _blocks = parsedBlocksCache.get(cackeKey);
-      if (!_blocks) {
+      const cacheKey = `${kind}:${name}:${id}`;
+      const cached = parsedBlocksCache.get(cacheKey);
+      let _blocks;
+      if (cached && cached.content === content) {
+        _blocks = cached.blocks;
+      } else {
         _blocks = (0, import_blocks5.parse)(content);
-        parsedBlocksCache.set(cackeKey, _blocks);
+        parsedBlocksCache.set(cacheKey, { content, blocks: _blocks });
       }
       return _blocks;
-    }, [
-      kind,
-      name,
-      id,
-      editedBlocks,
-      content,
-      getEntityRecord3,
-      getEntityRecordEdits2
-    ]);
+    }, [kind, name, id, editedBlocks, content]);
     const onChange = (0, import_element6.useCallback)(
       (newBlocks, options) => {
         const noChange = blocks === newBlocks;
