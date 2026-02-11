@@ -9791,14 +9791,12 @@ var wp;
     __unstableGetClientIdWithClientIdsTree: () => __unstableGetClientIdWithClientIdsTree,
     __unstableGetClientIdsTree: () => __unstableGetClientIdsTree,
     __unstableGetContentLockingParent: () => __unstableGetContentLockingParent,
-    __unstableGetListViewExpandRevision: () => __unstableGetListViewExpandRevision,
     __unstableGetSelectedBlocksWithPartialSelection: () => __unstableGetSelectedBlocksWithPartialSelection,
     __unstableGetTemporarilyEditingAsBlocks: () => __unstableGetTemporarilyEditingAsBlocks,
     __unstableGetVisibleBlocks: () => __unstableGetVisibleBlocks,
     __unstableHasActiveBlockOverlayActive: () => __unstableHasActiveBlockOverlayActive,
     __unstableIsFullySelected: () => __unstableIsFullySelected,
     __unstableIsLastBlockChangeIgnored: () => __unstableIsLastBlockChangeIgnored,
-    __unstableIsListViewPanelOpened: () => __unstableIsListViewPanelOpened,
     __unstableIsSelectionCollapsed: () => __unstableIsSelectionCollapsed,
     __unstableIsSelectionMergeable: () => __unstableIsSelectionMergeable,
     __unstableIsWithinBlockOverlay: () => __unstableIsWithinBlockOverlay,
@@ -10722,6 +10720,7 @@ var wp;
     getInsertionPoint: () => getInsertionPoint,
     getLastFocus: () => getLastFocus,
     getLastInsertedBlocksClientIds: () => getLastInsertedBlocksClientIds,
+    getListViewExpandRevision: () => getListViewExpandRevision,
     getParentSectionBlock: () => getParentSectionBlock,
     getPatternBySlug: () => getPatternBySlug,
     getRegisteredInserterMediaCategories: () => getRegisteredInserterMediaCategories,
@@ -10743,6 +10742,7 @@ var wp;
     isDragging: () => isDragging2,
     isEditLockedBlock: () => isEditLockedBlock,
     isListViewContentPanelOpen: () => isListViewContentPanelOpen,
+    isListViewPanelOpened: () => isListViewPanelOpened,
     isLockedBlock: () => isLockedBlock,
     isMoveLockedBlock: () => isMoveLockedBlock,
     isRemoveLockedBlock: () => isRemoveLockedBlock,
@@ -11338,6 +11338,15 @@ var wp;
   }
   function isListViewContentPanelOpen(state) {
     return state.listViewContentPanelOpen;
+  }
+  function isListViewPanelOpened(state, clientId) {
+    if (state.openedListViewPanels?.allOpen) {
+      return true;
+    }
+    return state.openedListViewPanels?.panels?.[clientId] === true;
+  }
+  function getListViewExpandRevision(state) {
+    return state.listViewExpandRevision || 0;
   }
 
   // packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.mjs
@@ -13086,15 +13095,6 @@ var wp;
       }
     );
     return getEditedContentOnlySection(state);
-  }
-  function __unstableIsListViewPanelOpened(state, clientId) {
-    if (state.openedListViewPanels?.allOpen) {
-      return true;
-    }
-    return state.openedListViewPanels?.panels?.[clientId] === true;
-  }
-  function __unstableGetListViewExpandRevision(state) {
-    return state.listViewExpandRevision || 0;
   }
 
   // packages/block-editor/build-module/store/private-actions.mjs
@@ -73610,13 +73610,12 @@ var wp;
   function useListViewPanelState(clientId) {
     const { isOpened, expandRevision } = (0, import_data191.useSelect)(
       (select3) => {
-        const {
-          __unstableIsListViewPanelOpened: __unstableIsListViewPanelOpened2,
-          __unstableGetListViewExpandRevision: __unstableGetListViewExpandRevision2
-        } = select3(store);
+        const { isListViewPanelOpened: isListViewPanelOpened2, getListViewExpandRevision: getListViewExpandRevision2 } = unlock(
+          select3(store)
+        );
         return {
-          isOpened: __unstableIsListViewPanelOpened2(clientId),
-          expandRevision: __unstableGetListViewExpandRevision2()
+          isOpened: isListViewPanelOpened2(clientId),
+          expandRevision: getListViewExpandRevision2()
         };
       },
       [clientId]
