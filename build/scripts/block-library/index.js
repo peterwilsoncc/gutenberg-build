@@ -41128,6 +41128,11 @@ ${js}
     const homeUrl = (0, import_data80.useSelect)((select9) => {
       return select9(import_core_data44.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
+    const blockEditingMode = (0, import_data80.useSelect)(
+      (select9) => select9(import_block_editor153.store).getBlockEditingMode(clientId),
+      [clientId]
+    );
+    const isContentOnly = blockEditingMode === "contentOnly";
     const preview = useLinkPreview({
       url,
       title: linkTitle,
@@ -41276,7 +41281,7 @@ ${js}
               hasValue: () => !!description,
               label: (0, import_i18n134.__)("Description"),
               onDeselect: () => setAttributes({ description: "" }),
-              isShownByDefault: true,
+              isShownByDefault: !isContentOnly,
               children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
                 import_components85.TextareaControl,
                 {
@@ -41298,7 +41303,7 @@ ${js}
               hasValue: () => !!rel,
               label: (0, import_i18n134.__)("Rel attribute"),
               onDeselect: () => setAttributes({ rel: "" }),
-              isShownByDefault: true,
+              isShownByDefault: !isContentOnly,
               children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
                 import_components85.TextControl,
                 {
@@ -41533,6 +41538,9 @@ ${js}
       },
       [clientId]
     );
+    const { openListViewContentPanel } = unlock(
+      (0, import_data82.useDispatch)(import_block_editor155.store)
+    );
     const { navigationMenu } = useNavigationMenu(currentMenuId);
     if (currentMenuId && isNavigationMenuMissing) {
       return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(deleted_navigation_warning_default, { onCreateNew, isNotice: true });
@@ -41557,7 +41565,8 @@ ${js}
           description,
           showAppender: true,
           blockSettingsMenu: LeafMoreMenu,
-          additionalBlockContent: AdditionalBlockContent
+          additionalBlockContent: AdditionalBlockContent,
+          onSelect: openListViewContentPanel
         },
         `${clientId}-${expandRevision}`
       )
@@ -43610,7 +43619,7 @@ ${js}
           }
         )
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_block_editor159.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_block_editor159.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
         Controls2,
         {
           attributes: attributes2,
@@ -44283,7 +44292,7 @@ ${js}
           }
         )
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_block_editor162.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_block_editor162.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
         Controls2,
         {
           attributes: attributes2,
