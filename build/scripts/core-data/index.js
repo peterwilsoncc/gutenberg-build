@@ -2146,6 +2146,7 @@ var wp;
   var allowedPostProperties = /* @__PURE__ */ new Set([
     "author",
     "blocks",
+    "content",
     "categories",
     "comment_status",
     "date",
@@ -2191,18 +2192,22 @@ var wp;
       }
       switch (key) {
         case "blocks": {
+          if (!newValue) {
+            ymap.set(key, void 0);
+            break;
+          }
           let currentBlocks = ymap.get(key);
           if (!(currentBlocks instanceof import_sync12.Y.Array)) {
             currentBlocks = new import_sync12.Y.Array();
             ymap.set(key, currentBlocks);
           }
-          const newBlocks = newValue ?? [];
           const cursorPosition = changes.selection?.selectionStart?.offset ?? null;
-          mergeCrdtBlocks(currentBlocks, newBlocks, cursorPosition);
+          mergeCrdtBlocks(currentBlocks, newValue, cursorPosition);
           break;
         }
+        case "content":
         case "excerpt": {
-          const currentValue = ymap.get("excerpt");
+          const currentValue = ymap.get(key);
           const rawNewValue = getRawValue(newValue);
           updateMapValue(ymap, key, currentValue, rawNewValue);
           break;
@@ -2277,10 +2282,8 @@ var wp;
         switch (key) {
           case "blocks": {
             if (ydoc.meta?.get(CRDT_DOC_META_PERSISTENCE_KEY) && editedRecord.content) {
-              const blocks = ymap.get("blocks");
-              return (0, import_blocks3.__unstableSerializeAndClean)(
-                blocks.toJSON()
-              ).trim() !== editedRecord.content.raw.trim();
+              const blocksJson = ymap.get("blocks")?.toJSON() ?? [];
+              return (0, import_blocks3.__unstableSerializeAndClean)(blocksJson).trim() !== getRawValue(editedRecord.content);
             }
             return true;
           }
@@ -2311,6 +2314,7 @@ var wp;
             }
             return haveValuesChanged(currentValue, newValue);
           }
+          case "content":
           case "excerpt":
           case "title": {
             return haveValuesChanged(

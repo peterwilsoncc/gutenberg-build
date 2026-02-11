@@ -37000,7 +37000,7 @@ var wp;
       return;
     }
     const edits = {
-      blocks: (0, import_blocks19.parse)(revision.content.raw),
+      blocks: void 0,
       content: revision.content.raw
     };
     if (revision.title?.raw !== void 0) {
