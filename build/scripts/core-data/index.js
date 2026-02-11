@@ -3302,6 +3302,13 @@ var wp;
     }
     return state;
   }
+  function icons(state = [], action) {
+    switch (action.type) {
+      case "RECEIVE_ICONS":
+        return action.icons;
+    }
+    return state;
+  }
   var reducer_default2 = (0, import_data6.combineReducers)({
     users,
     currentTheme,
@@ -3323,7 +3330,8 @@ var wp;
     defaultTemplates,
     registeredPostMeta,
     editorSettings,
-    editorAssets
+    editorAssets,
+    icons
   });
 
   // packages/core-data/build-module/selectors.mjs
@@ -3394,6 +3402,7 @@ var wp;
     getEntityRecordPermissions: () => getEntityRecordPermissions,
     getEntityRecordsPermissions: () => getEntityRecordsPermissions,
     getHomePage: () => getHomePage,
+    getIcons: () => getIcons,
     getNavigationFallbackId: () => getNavigationFallbackId,
     getPostsPageId: () => getPostsPageId,
     getRegisteredPostMeta: () => getRegisteredPostMeta,
@@ -3588,6 +3597,9 @@ var wp;
   }
   function getEditorAssets(state) {
     return state.editorAssets;
+  }
+  function getIcons(state) {
+    return state.icons ?? [];
   }
 
   // packages/core-data/build-module/selectors.mjs
@@ -4911,6 +4923,7 @@ var wp;
     editMediaEntity: () => editMediaEntity,
     receiveEditorAssets: () => receiveEditorAssets,
     receiveEditorSettings: () => receiveEditorSettings,
+    receiveIcons: () => receiveIcons,
     receiveRegisteredPostMeta: () => receiveRegisteredPostMeta
   });
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
@@ -5001,6 +5014,12 @@ var wp;
       assets
     };
   }
+  function receiveIcons(icons2) {
+    return {
+      type: "RECEIVE_ICONS",
+      icons: icons2
+    };
+  }
 
   // packages/core-data/build-module/resolvers.mjs
   var resolvers_exports = {};
@@ -5028,6 +5047,7 @@ var wp;
     getEntityRecords: () => getEntityRecords2,
     getEntityRecordsTotalItems: () => getEntityRecordsTotalItems2,
     getEntityRecordsTotalPages: () => getEntityRecordsTotalPages2,
+    getIcons: () => getIcons2,
     getNavigationFallbackId: () => getNavigationFallbackId2,
     getRawEntityRecord: () => getRawEntityRecord2,
     getRegisteredPostMeta: () => getRegisteredPostMeta2,
@@ -6017,6 +6037,12 @@ var wp;
       path: "/wp-block-editor/v1/assets"
     });
     dispatch3.receiveEditorAssets(assets);
+  };
+  var getIcons2 = () => async ({ dispatch: dispatch3 }) => {
+    const icons2 = await (0, import_api_fetch8.default)({
+      path: "/wp/v2/icons"
+    });
+    dispatch3.receiveIcons(icons2);
   };
 
   // packages/core-data/build-module/locks/utils.mjs

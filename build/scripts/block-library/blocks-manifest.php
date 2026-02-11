@@ -3354,6 +3354,78 @@ return array(
 		),
 		'editorStyle' => 'wp-block-html-editor'
 	),
+	'icon' => array(
+		'apiVersion' => 3,
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'name' => 'core/icon',
+		'title' => 'Icon',
+		'__experimental' => true,
+		'category' => 'media',
+		'description' => 'Insert an SVG icon.',
+		'keywords' => array(
+			'icon',
+			'svg'
+		),
+		'textdomain' => 'default',
+		'attributes' => array(
+			'icon' => array(
+				'type' => 'string',
+				'role' => 'content'
+			),
+			'style' => array(
+				'type' => 'object',
+				'default' => array(
+					'dimensions' => array(
+						'width' => '24px'
+					)
+				)
+			)
+		),
+		'supports' => array(
+			'anchor' => true,
+			'ariaLabel' => array(
+				'__experimentalSkipSerialization' => true
+			),
+			'align' => array(
+				'left',
+				'center',
+				'right'
+			),
+			'html' => false,
+			'color' => array(
+				'background' => true,
+				'text' => true
+			),
+			'interactivity' => array(
+				'clientNavigation' => true
+			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true,
+				'__experimentalDefaultControls' => array(
+					'color' => false,
+					'radius' => false,
+					'style' => false,
+					'width' => false
+				)
+			),
+			'spacing' => array(
+				'padding' => true,
+				'margin' => true,
+				'__experimentalDefaultControls' => array(
+					'margin' => false,
+					'padding' => false
+				)
+			),
+			'dimensions' => array(
+				'width' => true
+			)
+		),
+		'style' => 'wp-block-icon',
+		'editorStyle' => 'wp-block-icon-editor'
+	),
 	'image' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
@@ -4267,6 +4339,7 @@ return array(
 			'core/page-list',
 			'core/spacer',
 			'core/home-link',
+			'core/icon',
 			'core/site-title',
 			'core/site-logo',
 			'core/navigation-submenu',
