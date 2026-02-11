@@ -2192,6 +2192,8 @@ var wp;
   function useShouldIframe() {
     return (0, import_data22.useSelect)((select3) => {
       const { getEditorSettings, getCurrentPostType, getDeviceType } = select3(import_editor15.store);
+      const { getClientIdsWithDescendants, getBlockName } = select3(import_block_editor.store);
+      const { getBlockType } = select3(import_blocks2.store);
       return (
         // If the theme is block based and the Gutenberg plugin is active,
         // we ALWAYS use the iframe for consistency across the post and site
@@ -2199,9 +2201,9 @@ var wp;
         isGutenbergPlugin && getEditorSettings().__unstableIsBlockBasedTheme || // We also still want to iframe all the special
         // editor features and modes such as device previews, zoom out, and
         // template/pattern editing.
-        getDeviceType() !== "Desktop" || ["wp_template", "wp_block"].includes(getCurrentPostType()) || unlock(select3(import_block_editor.store)).isZoomOut() || // Finally, still iframe the editor if all blocks are v3 (which means
-        // they are marked as iframe-compatible).
-        select3(import_blocks2.store).getBlockTypes().every((type) => type.apiVersion >= 3)
+        getDeviceType() !== "Desktop" || ["wp_template", "wp_block"].includes(getCurrentPostType()) || unlock(select3(import_block_editor.store)).isZoomOut() || // Finally, still iframe the editor if all present blocks are v3
+        // (which means they are marked as iframe-compatible).
+        [...new Set(getClientIdsWithDescendants().map(getBlockName))].map(getBlockType).filter(Boolean).every((blockType) => blockType.apiVersion >= 3)
       );
     }, []);
   }
@@ -2711,12 +2713,7 @@ var wp;
               onActionPerformed,
               initialSelection: previousSelectedBlockPath,
               extraSidebarPanels: showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxes, { location: "side" }),
-              extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-                MetaBoxesMain,
-                {
-                  isLegacy: !shouldIframe || isDevicePreview
-                }
-              ),
+              extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxesMain, { isLegacy: isDevicePreview }),
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.PostLockedModal, {}),
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(EditorInitialization, {}),

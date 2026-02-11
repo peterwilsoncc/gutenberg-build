@@ -465,9 +465,7 @@
 .has-metaboxes .interface-interface-skeleton__content:has(.edit-post-meta-boxes-main) .editor-visual-editor {
   flex-shrink: 1;
   flex-basis: 0%;
-}
-
-.has-metaboxes .editor-visual-editor.is-iframed {
+  overflow: hidden;
   isolation: isolate;
 }
 
