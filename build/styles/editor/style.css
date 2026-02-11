@@ -1915,6 +1915,13 @@ button.font-library__upload-area {
   background: var(--wp-admin-theme-color-darker-20, #183ad6);
 }
 
+.dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
 .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-description {
   display: block;
   overflow: hidden;
@@ -2011,6 +2018,7 @@ button.font-library__upload-area {
 }
 .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-multi-selection {
   --checkbox-size: 24px;
+  flex-shrink: 0;
   border: 1px solid #1e1e1e;
   margin-right: 12px;
   transition: none;

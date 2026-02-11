@@ -32734,7 +32734,14 @@ If there's a particular need for this, please submit a feature request at https:
                   selected: currentValue.includes(element.value)
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("span", { children: element.label })
+              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+                "span",
+                {
+                  className: "dataviews-filters__search-widget-listitem-value",
+                  title: element.label,
+                  children: element.label
+                }
+              )
             ]
           },
           element.value
@@ -32836,16 +32843,23 @@ If there's a particular need for this, please submit a feature request at https:
                             )
                           }
                         ),
-                        /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)("span", { children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
-                            ComboboxItemValue,
-                            {
-                              className: "dataviews-filters__search-widget-filter-combobox-item-value",
-                              value: element.label
-                            }
-                          ),
-                          !!element.description && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("span", { className: "dataviews-filters__search-widget-listitem-description", children: element.description })
-                        ] })
+                        /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
+                          "span",
+                          {
+                            className: "dataviews-filters__search-widget-listitem-value",
+                            title: element.label,
+                            children: [
+                              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+                                ComboboxItemValue,
+                                {
+                                  className: "dataviews-filters__search-widget-filter-combobox-item-value",
+                                  value: element.label
+                                }
+                              ),
+                              !!element.description && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("span", { className: "dataviews-filters__search-widget-listitem-description", children: element.description })
+                            ]
+                          }
+                        )
                       ]
                     },
                     element.value

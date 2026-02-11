@@ -10100,7 +10100,14 @@ function ListBox({ view, filter, onChangeView }) {
                 selected: currentValue.includes(element.value)
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("span", { children: element.label })
+            /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+              "span",
+              {
+                className: "dataviews-filters__search-widget-listitem-value",
+                title: element.label,
+                children: element.label
+              }
+            )
           ]
         },
         element.value
@@ -10202,16 +10209,23 @@ function ComboboxList22({ view, filter, onChangeView }) {
                           )
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)("span", { children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                          ComboboxItemValue,
-                          {
-                            className: "dataviews-filters__search-widget-filter-combobox-item-value",
-                            value: element.label
-                          }
-                        ),
-                        !!element.description && /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("span", { className: "dataviews-filters__search-widget-listitem-description", children: element.description })
-                      ] })
+                      /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)(
+                        "span",
+                        {
+                          className: "dataviews-filters__search-widget-listitem-value",
+                          title: element.label,
+                          children: [
+                            /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+                              ComboboxItemValue,
+                              {
+                                className: "dataviews-filters__search-widget-filter-combobox-item-value",
+                                value: element.label
+                              }
+                            ),
+                            !!element.description && /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("span", { className: "dataviews-filters__search-widget-listitem-description", children: element.description })
+                          ]
+                        }
+                      )
                     ]
                   },
                   element.value
