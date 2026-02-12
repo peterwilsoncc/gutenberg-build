@@ -58408,7 +58408,8 @@ var wp;
     const labelContent = get_label_content_default(showError, errorMessage, fieldLabel);
     const className = clsx_default(
       "dataforms-layouts-panel__field-trigger",
-      `dataforms-layouts-panel__field-trigger--label-${labelPosition}`
+      `dataforms-layouts-panel__field-trigger--label-${labelPosition}`,
+      { "is-disabled": disabled }
     );
     const controlId = (0, import_compose60.useInstanceId)(
       SummaryButton,
@@ -58423,7 +58424,7 @@ var wp;
       (0, import_i18n232._x)("Edit %s", "field"),
       fieldLabel || ""
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime368.jsxs)("div", { className, "aria-disabled": disabled || void 0, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime368.jsxs)("div", { className, children: [
       labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime368.jsx)("span", { className: labelClassName, children: labelContent }),
       labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(import_components219.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime368.jsx)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(import_components219.Icon, { icon: error_default, size: 16 }) }) }),
       /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(
@@ -58467,16 +58468,17 @@ var wp;
         }
       ),
       !disabled && /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(
-        "button",
+        import_components219.Button,
         {
-          type: "button",
           className: "dataforms-layouts-panel__field-trigger-icon",
-          "aria-label": ariaLabel,
+          label: ariaLabel,
+          showTooltip: false,
+          icon: pencil_default,
+          size: "small",
           "aria-expanded": ariaExpanded,
           "aria-haspopup": "dialog",
           "aria-describedby": `${controlId}`,
-          onClick,
-          children: /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(import_components219.Icon, { icon: pencil_default, size: 24 })
+          onClick
         }
       )
     ] });
