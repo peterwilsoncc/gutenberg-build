@@ -39744,7 +39744,7 @@ var wp;
       });
       registerShortcut({
         name: "core/editor/new-note",
-        category: "global",
+        category: "block",
         description: (0, import_i18n130.__)("Add a new note."),
         keyCombination: {
           modifier: "primaryAlt",
