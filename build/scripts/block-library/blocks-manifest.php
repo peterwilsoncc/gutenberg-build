@@ -66,7 +66,8 @@ return array(
 					'fontSize' => true
 				)
 			),
-			'contentRole' => true
+			'contentRole' => true,
+			'listView' => true
 		),
 		'attributes' => array(
 			'iconPosition' => array(
@@ -2883,6 +2884,9 @@ return array(
 		'name' => 'core/gallery',
 		'title' => 'Gallery',
 		'category' => 'media',
+		'usesContext' => array(
+			'galleryId'
+		),
 		'allowedBlocks' => array(
 			'core/image'
 		),
@@ -2948,6 +2952,15 @@ return array(
 					
 				)
 			),
+			'navigationButtonType' => array(
+				'type' => 'string',
+				'default' => 'icon',
+				'enum' => array(
+					'icon',
+					'text',
+					'both'
+				)
+			),
 			'shortCodeTransforms' => array(
 				'type' => 'array',
 				'items' => array(
@@ -3002,7 +3015,8 @@ return array(
 		'providesContext' => array(
 			'allowResize' => 'allowResize',
 			'imageCrop' => 'imageCrop',
-			'fixedHeight' => 'fixedHeight'
+			'fixedHeight' => 'fixedHeight',
+			'navigationButtonType' => 'navigationButtonType'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -3340,6 +3354,78 @@ return array(
 		),
 		'editorStyle' => 'wp-block-html-editor'
 	),
+	'icon' => array(
+		'apiVersion' => 3,
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'name' => 'core/icon',
+		'title' => 'Icon',
+		'__experimental' => true,
+		'category' => 'media',
+		'description' => 'Insert an SVG icon.',
+		'keywords' => array(
+			'icon',
+			'svg'
+		),
+		'textdomain' => 'default',
+		'attributes' => array(
+			'icon' => array(
+				'type' => 'string',
+				'role' => 'content'
+			),
+			'style' => array(
+				'type' => 'object',
+				'default' => array(
+					'dimensions' => array(
+						'width' => '24px'
+					)
+				)
+			)
+		),
+		'supports' => array(
+			'anchor' => true,
+			'ariaLabel' => array(
+				'__experimentalSkipSerialization' => true
+			),
+			'align' => array(
+				'left',
+				'center',
+				'right'
+			),
+			'html' => false,
+			'color' => array(
+				'background' => true,
+				'text' => true
+			),
+			'interactivity' => array(
+				'clientNavigation' => true
+			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true,
+				'__experimentalDefaultControls' => array(
+					'color' => false,
+					'radius' => false,
+					'style' => false,
+					'width' => false
+				)
+			),
+			'spacing' => array(
+				'padding' => true,
+				'margin' => true,
+				'__experimentalDefaultControls' => array(
+					'margin' => false,
+					'padding' => false
+				)
+			),
+			'dimensions' => array(
+				'width' => true
+			)
+		),
+		'style' => 'wp-block-icon',
+		'editorStyle' => 'wp-block-icon-editor'
+	),
 	'image' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
@@ -3350,9 +3436,11 @@ return array(
 			'allowResize',
 			'imageCrop',
 			'fixedHeight',
+			'navigationButtonType',
 			'postId',
 			'postType',
-			'queryId'
+			'queryId',
+			'galleryId'
 		),
 		'description' => 'Insert an image to make a visual statement.',
 		'keywords' => array(
@@ -4251,6 +4339,7 @@ return array(
 			'core/page-list',
 			'core/spacer',
 			'core/home-link',
+			'core/icon',
 			'core/site-title',
 			'core/site-logo',
 			'core/navigation-submenu',
@@ -4510,7 +4599,6 @@ return array(
 	),
 	'navigation-overlay-close' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'__experimental' => true,
 		'apiVersion' => 3,
 		'name' => 'core/navigation-overlay-close',
 		'title' => 'Navigation Overlay Close',
@@ -4901,6 +4989,7 @@ return array(
 				'lineHeight' => true,
 				'textAlign' => true,
 				'textColumns' => true,
+				'textIndent' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalTextDecoration' => true,
 				'__experimentalFontStyle' => true,
@@ -4917,6 +5006,12 @@ return array(
 			'__unstablePasteTextInline' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
+			)
+		),
+		'selectors' => array(
+			'root' => 'p',
+			'typography' => array(
+				'textIndent' => '.wp-block-paragraph + .wp-block-paragraph'
 			)
 		),
 		'editorStyle' => 'wp-block-paragraph-editor',
@@ -4945,13 +5040,160 @@ return array(
 			)
 		)
 	),
+	'playlist' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'__experimental' => true,
+		'name' => 'core/playlist',
+		'title' => 'Playlist',
+		'category' => 'media',
+		'description' => 'Embed a simple playlist.',
+		'keywords' => array(
+			'music',
+			'sound'
+		),
+		'textdomain' => 'default',
+		'allowedBlocks' => array(
+			'core/playlist-track'
+		),
+		'attributes' => array(
+			'currentTrack' => array(
+				'type' => 'string'
+			),
+			'type' => array(
+				'type' => 'string',
+				'default' => 'audio'
+			),
+			'order' => array(
+				'type' => 'string',
+				'default' => 'asc'
+			),
+			'showTracklist' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'showImages' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'showArtists' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'showNumbers' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'caption' => array(
+				'type' => 'string'
+			)
+		),
+		'providesContext' => array(
+			'showArtists' => 'showArtists',
+			'currentTrack' => 'currentTrack'
+		),
+		'supports' => array(
+			'anchor' => true,
+			'align' => true,
+			'color' => array(
+				'gradients' => true,
+				'link' => true,
+				'__experimentalDefaultControls' => array(
+					'background' => true,
+					'text' => true
+				)
+			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true,
+				'__experimentalDefaultControls' => array(
+					'color' => true,
+					'radius' => true,
+					'style' => true,
+					'width' => true
+				)
+			),
+			'interactivity' => true,
+			'spacing' => array(
+				'margin' => true,
+				'padding' => true
+			)
+		),
+		'editorStyle' => 'wp-block-playlist-editor',
+		'style' => 'wp-block-playlist'
+	),
+	'playlist-track' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'__experimental' => true,
+		'name' => 'core/playlist-track',
+		'title' => 'Playlist track',
+		'category' => 'media',
+		'parent' => array(
+			'core/playlist'
+		),
+		'description' => 'Playlist track.',
+		'keywords' => array(
+			'music',
+			'sound'
+		),
+		'textdomain' => 'default',
+		'usesContext' => array(
+			'showArtists',
+			'currentTrack'
+		),
+		'attributes' => array(
+			'blob' => array(
+				'type' => 'string',
+				'role' => 'local'
+			),
+			'id' => array(
+				'type' => 'number'
+			),
+			'uniqueId' => array(
+				'type' => 'string'
+			),
+			'src' => array(
+				'type' => 'string'
+			),
+			'type' => array(
+				'type' => 'string',
+				'default' => 'audio'
+			),
+			'album' => array(
+				'type' => 'string'
+			),
+			'artist' => array(
+				'type' => 'string'
+			),
+			'image' => array(
+				'type' => 'string'
+			),
+			'length' => array(
+				'type' => 'string'
+			),
+			'title' => array(
+				'type' => 'string'
+			)
+		),
+		'supports' => array(
+			'html' => false,
+			'interactivity' => array(
+				'clientNavigation' => true
+			),
+			'reusable' => false
+		),
+		'style' => 'wp-block-playlist-track'
+	),
 	'post-author' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'core/post-author',
-		'title' => 'Author',
+		'title' => 'Author (deprecated)',
 		'category' => 'theme',
-		'description' => 'Display post author details such as name, avatar, and bio.',
+		'description' => 'This block is deprecated. Please use the Avatar block, the Author Name block, and the Author Biography block instead.',
 		'textdomain' => 'default',
 		'attributes' => array(
 			'textAlign' => array(
@@ -4988,6 +5230,7 @@ return array(
 			'queryId'
 		),
 		'supports' => array(
+			'inserter' => false,
 			'anchor' => true,
 			'html' => false,
 			'spacing' => array(
@@ -5050,11 +5293,6 @@ return array(
 		'category' => 'theme',
 		'description' => 'The author biography.',
 		'textdomain' => 'default',
-		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			)
-		),
 		'usesContext' => array(
 			'postType',
 			'postId'
@@ -5079,6 +5317,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -5116,9 +5355,6 @@ return array(
 		'description' => 'The author name.',
 		'textdomain' => 'default',
 		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'isLink' => array(
 				'type' => 'boolean',
 				'default' => false,
@@ -5156,6 +5392,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -5225,11 +5462,6 @@ return array(
 		'category' => 'theme',
 		'description' => 'Display a post\'s comments count.',
 		'textdomain' => 'default',
-		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			)
-		),
 		'usesContext' => array(
 			'postId'
 		),
@@ -5253,6 +5485,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -5283,11 +5516,6 @@ return array(
 		'category' => 'theme',
 		'description' => 'Display a post\'s comments form.',
 		'textdomain' => 'default',
-		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			)
-		),
 		'usesContext' => array(
 			'postId',
 			'postType'
@@ -5311,6 +5539,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontStyle' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalLetterSpacing' => true,
@@ -5340,7 +5569,11 @@ return array(
 		),
 		'example' => array(
 			'attributes' => array(
-				'textAlign' => 'center'
+				'style' => array(
+					'typography' => array(
+						'textAlign' => 'center'
+					)
+				)
 			)
 		)
 	),
@@ -6236,9 +6469,9 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'core/pullquote',
-		'title' => 'Pullquote (deprecated)',
+		'title' => 'Pullquote',
 		'category' => 'text',
-		'description' => 'This block is deprecated. Please use the Quote block instead.',
+		'description' => 'Give special visual emphasis to a quote from your text.',
 		'textdomain' => 'default',
 		'attributes' => array(
 			'value' => array(
@@ -6287,7 +6520,6 @@ return array(
 					'minHeight' => false
 				)
 			),
-			'inserter' => false,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
@@ -7797,7 +8029,7 @@ return array(
 			)
 		),
 		'parent' => array(
-			'core/tab-panels'
+			'core/tab-panel'
 		),
 		'usesContext' => array(
 			'core/tabs-activeTabIndex',
@@ -7815,14 +8047,7 @@ return array(
 					'text' => true
 				)
 			),
-			'layout' => array(
-				'allowSwitching' => true,
-				'allowInheriting' => false,
-				'allowVerticalAlignment' => true,
-				'allowJustification' => true,
-				'allowOrientation' => true,
-				'allowSizingOnChildren' => true
-			),
+			'layout' => true,
 			'spacing' => array(
 				'blockGap' => true,
 				'padding' => true,
@@ -7844,12 +8069,12 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'style' => 'file:./style-index.css'
 	),
-	'tab-panels' => array(
+	'tab-panel' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'__experimental' => true,
 		'apiVersion' => 3,
-		'name' => 'core/tab-panels',
-		'title' => 'Tab Panels',
+		'name' => 'core/tab-panel',
+		'title' => 'Tab Panel',
 		'description' => 'Container for tab panel content in a tabbed interface.',
 		'version' => '1.0.0',
 		'category' => 'design',
@@ -8243,7 +8468,7 @@ return array(
 		'textdomain' => 'default',
 		'allowedBlocks' => array(
 			'core/tabs-menu',
-			'core/tab-panels'
+			'core/tab-panel'
 		),
 		'attributes' => array(
 			'activeTabIndex' => array(
@@ -8259,8 +8484,12 @@ return array(
 			'align' => true,
 			'anchor' => true,
 			'color' => array(
-				'text' => false,
-				'background' => false
+				'text' => true,
+				'background' => true,
+				'__experimentalDefaultControls' => array(
+					'text' => true,
+					'background' => true
+				)
 			),
 			'layout' => array(
 				'default' => array(
@@ -8309,7 +8538,7 @@ return array(
 					)
 				),
 				array(
-					'name' => 'core/tab-panels',
+					'name' => 'core/tab-panel',
 					'attributes' => array(
 						
 					),
@@ -8506,16 +8735,7 @@ return array(
 				)
 			),
 			'layout' => array(
-				'default' => array(
-					'type' => 'flex',
-					'orientation' => 'vertical',
-					'flexWrap' => 'nowrap'
-				),
-				'allowVerticalAlignment' => true,
-				'allowJustification' => true,
-				'allowSwitching' => false,
-				'allowOrientation' => false,
-				'allowWrap' => false
+				'allowEditing' => false
 			),
 			'spacing' => array(
 				'padding' => true,

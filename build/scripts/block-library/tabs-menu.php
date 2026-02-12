@@ -50,7 +50,7 @@ function gutenberg_block_core_tabs_menu_render_callback( array $attributes, stri
 
 	// Find the template block and replace it in $content with $tabs_markup
 	$content = preg_replace(
-		'/<a\b[^>]*\bwp-block-tabs-menu-item__template\b[^>]*>.*?<\/a>/si',
+		'/<button\b[^>]*\bwp-block-tabs-menu-item__template\b[^>]*>.*?<\/button>/si',
 		$tabs_markup,
 		$content
 	);

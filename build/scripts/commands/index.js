@@ -3515,6 +3515,9 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   var { withIgnoreIMEEvents } = unlock(import_components.privateApis);
   var inputLabel = (0, import_i18n.__)("Search commands and settings");
+  function isValidIcon(icon) {
+    return !!icon && (typeof icon === "string" || (0, import_element2.isValidElement)(icon) || typeof icon === "function" || icon instanceof import_element2.Component);
+  }
   function CommandMenuLoader({ name, search, hook, setLoader, close: close2 }) {
     const { isLoading, commands: commands2 = [] } = hook({ search }) ?? {};
     (0, import_element2.useEffect)(() => {
@@ -3538,7 +3541,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
               "has-icon": command.icon
             }),
             children: [
-              command.icon && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(icon_default, { icon: command.icon }),
+              isValidIcon(command.icon) ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(icon_default, { icon: command.icon }) : null,
               /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
                 import_components.TextHighlight,
                 {

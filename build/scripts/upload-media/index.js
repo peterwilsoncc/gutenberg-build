@@ -1,0 +1,1015 @@
+"use strict";
+var wp;
+(wp ||= {}).uploadMedia = (() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+  // package-external:@wordpress/data
+  var require_data = __commonJS({
+    "package-external:@wordpress/data"(exports, module) {
+      module.exports = window.wp.data;
+    }
+  });
+
+  // package-external:@wordpress/i18n
+  var require_i18n = __commonJS({
+    "package-external:@wordpress/i18n"(exports, module) {
+      module.exports = window.wp.i18n;
+    }
+  });
+
+  // package-external:@wordpress/blob
+  var require_blob = __commonJS({
+    "package-external:@wordpress/blob"(exports, module) {
+      module.exports = window.wp.blob;
+    }
+  });
+
+  // package-external:@wordpress/url
+  var require_url = __commonJS({
+    "package-external:@wordpress/url"(exports, module) {
+      module.exports = window.wp.url;
+    }
+  });
+
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
+    }
+  });
+
+  // package-external:@wordpress/element
+  var require_element = __commonJS({
+    "package-external:@wordpress/element"(exports, module) {
+      module.exports = window.wp.element;
+    }
+  });
+
+  // package-external:@wordpress/compose
+  var require_compose = __commonJS({
+    "package-external:@wordpress/compose"(exports, module) {
+      module.exports = window.wp.compose;
+    }
+  });
+
+  // vendor-external:react/jsx-runtime
+  var require_jsx_runtime = __commonJS({
+    "vendor-external:react/jsx-runtime"(exports, module) {
+      module.exports = window.ReactJSXRuntime;
+    }
+  });
+
+  // packages/upload-media/build-module/index.mjs
+  var index_exports = {};
+  __export(index_exports, {
+    MediaUploadProvider: () => provider_default,
+    UploadError: () => UploadError,
+    store: () => store
+  });
+
+  // packages/upload-media/build-module/store/index.mjs
+  var import_data = __toESM(require_data(), 1);
+
+  // packages/upload-media/build-module/store/types.mjs
+  var Type = /* @__PURE__ */ ((Type2) => {
+    Type2["Unknown"] = "REDUX_UNKNOWN";
+    Type2["Add"] = "ADD_ITEM";
+    Type2["Prepare"] = "PREPARE_ITEM";
+    Type2["Cancel"] = "CANCEL_ITEM";
+    Type2["Remove"] = "REMOVE_ITEM";
+    Type2["RetryItem"] = "RETRY_ITEM";
+    Type2["PauseItem"] = "PAUSE_ITEM";
+    Type2["ResumeItem"] = "RESUME_ITEM";
+    Type2["PauseQueue"] = "PAUSE_QUEUE";
+    Type2["ResumeQueue"] = "RESUME_QUEUE";
+    Type2["OperationStart"] = "OPERATION_START";
+    Type2["OperationFinish"] = "OPERATION_FINISH";
+    Type2["AddOperations"] = "ADD_OPERATIONS";
+    Type2["CacheBlobUrl"] = "CACHE_BLOB_URL";
+    Type2["RevokeBlobUrls"] = "REVOKE_BLOB_URLS";
+    Type2["UpdateProgress"] = "UPDATE_PROGRESS";
+    Type2["UpdateSettings"] = "UPDATE_SETTINGS";
+    return Type2;
+  })(Type || {});
+  var ItemStatus = /* @__PURE__ */ ((ItemStatus2) => {
+    ItemStatus2["Queued"] = "QUEUED";
+    ItemStatus2["Processing"] = "PROCESSING";
+    ItemStatus2["Paused"] = "PAUSED";
+    ItemStatus2["Uploaded"] = "UPLOADED";
+    ItemStatus2["Error"] = "ERROR";
+    return ItemStatus2;
+  })(ItemStatus || {});
+  var OperationType = /* @__PURE__ */ ((OperationType2) => {
+    OperationType2["Prepare"] = "PREPARE";
+    OperationType2["Upload"] = "UPLOAD";
+    return OperationType2;
+  })(OperationType || {});
+
+  // packages/upload-media/build-module/store/constants.mjs
+  var STORE_NAME = "core/upload-media";
+  var DEFAULT_MAX_CONCURRENT_UPLOADS = 5;
+
+  // packages/upload-media/build-module/store/reducer.mjs
+  var noop = () => {
+  };
+  var DEFAULT_STATE = {
+    queue: [],
+    queueStatus: "active",
+    blobUrls: {},
+    settings: {
+      mediaUpload: noop,
+      maxConcurrentUploads: DEFAULT_MAX_CONCURRENT_UPLOADS
+    }
+  };
+  function reducer(state = DEFAULT_STATE, action = { type: Type.Unknown }) {
+    switch (action.type) {
+      case Type.PauseQueue: {
+        return {
+          ...state,
+          queueStatus: "paused"
+        };
+      }
+      case Type.ResumeQueue: {
+        return {
+          ...state,
+          queueStatus: "active"
+        };
+      }
+      case Type.PauseItem:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              status: ItemStatus.Paused
+            } : item
+          )
+        };
+      case Type.ResumeItem:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              status: ItemStatus.Processing
+            } : item
+          )
+        };
+      case Type.Add:
+        return {
+          ...state,
+          queue: [...state.queue, action.item]
+        };
+      case Type.Cancel:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              error: action.error
+            } : item
+          )
+        };
+      case Type.RetryItem:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              status: ItemStatus.Processing,
+              error: void 0,
+              retryCount: (item.retryCount ?? 0) + 1
+            } : item
+          )
+        };
+      case Type.Remove:
+        return {
+          ...state,
+          queue: state.queue.filter((item) => item.id !== action.id)
+        };
+      case Type.OperationStart: {
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              currentOperation: action.operation
+            } : item
+          )
+        };
+      }
+      case Type.AddOperations:
+        return {
+          ...state,
+          queue: state.queue.map((item) => {
+            if (item.id !== action.id) {
+              return item;
+            }
+            return {
+              ...item,
+              operations: [
+                ...item.operations || [],
+                ...action.operations
+              ]
+            };
+          })
+        };
+      case Type.OperationFinish:
+        return {
+          ...state,
+          queue: state.queue.map((item) => {
+            if (item.id !== action.id) {
+              return item;
+            }
+            const operations = item.operations ? item.operations.slice(1) : [];
+            const attachment = item.attachment || action.item.attachment ? {
+              ...item.attachment,
+              ...action.item.attachment
+            } : void 0;
+            return {
+              ...item,
+              currentOperation: void 0,
+              operations,
+              ...action.item,
+              attachment,
+              additionalData: {
+                ...item.additionalData,
+                ...action.item.additionalData
+              }
+            };
+          })
+        };
+      case Type.CacheBlobUrl: {
+        const blobUrls = state.blobUrls[action.id] || [];
+        return {
+          ...state,
+          blobUrls: {
+            ...state.blobUrls,
+            [action.id]: [...blobUrls, action.blobUrl]
+          }
+        };
+      }
+      case Type.RevokeBlobUrls: {
+        const newBlobUrls = { ...state.blobUrls };
+        delete newBlobUrls[action.id];
+        return {
+          ...state,
+          blobUrls: newBlobUrls
+        };
+      }
+      case Type.UpdateProgress:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              progress: action.progress
+            } : item
+          )
+        };
+      case Type.UpdateSettings: {
+        return {
+          ...state,
+          settings: {
+            ...state.settings,
+            ...action.settings
+          }
+        };
+      }
+    }
+    return state;
+  }
+  var reducer_default = reducer;
+
+  // packages/upload-media/build-module/store/selectors.mjs
+  var selectors_exports = {};
+  __export(selectors_exports, {
+    getItems: () => getItems,
+    getSettings: () => getSettings,
+    isUploading: () => isUploading,
+    isUploadingById: () => isUploadingById,
+    isUploadingByUrl: () => isUploadingByUrl
+  });
+  function getItems(state) {
+    return state.queue;
+  }
+  function isUploading(state) {
+    return state.queue.length >= 1;
+  }
+  function isUploadingByUrl(state, url) {
+    return state.queue.some(
+      (item) => item.attachment?.url === url || item.sourceUrl === url
+    );
+  }
+  function isUploadingById(state, attachmentId) {
+    return state.queue.some(
+      (item) => item.attachment?.id === attachmentId || item.sourceAttachmentId === attachmentId
+    );
+  }
+  function getSettings(state) {
+    return state.settings;
+  }
+
+  // packages/upload-media/build-module/store/private-selectors.mjs
+  var private_selectors_exports = {};
+  __export(private_selectors_exports, {
+    getActiveUploadCount: () => getActiveUploadCount,
+    getAllItems: () => getAllItems,
+    getBlobUrls: () => getBlobUrls,
+    getFailedItems: () => getFailedItems,
+    getItem: () => getItem,
+    getItemProgress: () => getItemProgress,
+    getPausedUploadForPost: () => getPausedUploadForPost,
+    getPendingUploads: () => getPendingUploads,
+    isBatchUploaded: () => isBatchUploaded,
+    isPaused: () => isPaused,
+    isUploadingToPost: () => isUploadingToPost
+  });
+  function getAllItems(state) {
+    return state.queue;
+  }
+  function getItem(state, id) {
+    return state.queue.find((item) => item.id === id);
+  }
+  function isBatchUploaded(state, batchId) {
+    const batchItems = state.queue.filter(
+      (item) => batchId === item.batchId
+    );
+    return batchItems.length === 0;
+  }
+  function isUploadingToPost(state, postOrAttachmentId) {
+    return state.queue.some(
+      (item) => item.currentOperation === OperationType.Upload && item.additionalData.post === postOrAttachmentId
+    );
+  }
+  function getPausedUploadForPost(state, postOrAttachmentId) {
+    return state.queue.find(
+      (item) => item.status === ItemStatus.Paused && item.additionalData.post === postOrAttachmentId
+    );
+  }
+  function isPaused(state) {
+    return state.queueStatus === "paused";
+  }
+  function getBlobUrls(state, id) {
+    return state.blobUrls[id] || [];
+  }
+  function getActiveUploadCount(state) {
+    return state.queue.filter(
+      (item) => item.currentOperation === OperationType.Upload
+    ).length;
+  }
+  function getPendingUploads(state) {
+    return state.queue.filter((item) => {
+      const nextOperation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
+      return nextOperation === OperationType.Upload && item.currentOperation !== OperationType.Upload;
+    });
+  }
+  function getFailedItems(state) {
+    return state.queue.filter((item) => item.error !== void 0);
+  }
+  function getItemProgress(state, id) {
+    const item = state.queue.find((i) => i.id === id);
+    return item?.progress;
+  }
+
+  // packages/upload-media/build-module/store/actions.mjs
+  var actions_exports = {};
+  __export(actions_exports, {
+    addItems: () => addItems,
+    cancelItem: () => cancelItem,
+    retryItem: () => retryItem
+  });
+
+  // node_modules/uuid/dist/esm-browser/rng.js
+  var getRandomValues;
+  var rnds8 = new Uint8Array(16);
+  function rng() {
+    if (!getRandomValues) {
+      getRandomValues = typeof crypto !== "undefined" && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
+      if (!getRandomValues) {
+        throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
+      }
+    }
+    return getRandomValues(rnds8);
+  }
+
+  // node_modules/uuid/dist/esm-browser/stringify.js
+  var byteToHex = [];
+  for (let i = 0; i < 256; ++i) {
+    byteToHex.push((i + 256).toString(16).slice(1));
+  }
+  function unsafeStringify(arr, offset = 0) {
+    return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
+  }
+
+  // node_modules/uuid/dist/esm-browser/native.js
+  var randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+  var native_default = {
+    randomUUID
+  };
+
+  // node_modules/uuid/dist/esm-browser/v4.js
+  function v4(options, buf, offset) {
+    if (native_default.randomUUID && !buf && !options) {
+      return native_default.randomUUID();
+    }
+    options = options || {};
+    const rnds = options.random || (options.rng || rng)();
+    rnds[6] = rnds[6] & 15 | 64;
+    rnds[8] = rnds[8] & 63 | 128;
+    if (buf) {
+      offset = offset || 0;
+      for (let i = 0; i < 16; ++i) {
+        buf[offset + i] = rnds[i];
+      }
+      return buf;
+    }
+    return unsafeStringify(rnds);
+  }
+  var v4_default = v4;
+
+  // packages/upload-media/build-module/validate-mime-type.mjs
+  var import_i18n = __toESM(require_i18n(), 1);
+
+  // packages/upload-media/build-module/upload-error.mjs
+  var UploadError = class extends Error {
+    code;
+    file;
+    constructor({ code, message, file, cause }) {
+      super(message, { cause });
+      Object.setPrototypeOf(this, new.target.prototype);
+      this.code = code;
+      this.file = file;
+    }
+  };
+
+  // packages/upload-media/build-module/validate-mime-type.mjs
+  function validateMimeType(file, allowedTypes) {
+    if (!allowedTypes) {
+      return;
+    }
+    const isAllowedType = allowedTypes.some((allowedType) => {
+      if (allowedType.includes("/")) {
+        return allowedType === file.type;
+      }
+      return file.type.startsWith(`${allowedType}/`);
+    });
+    if (file.type && !isAllowedType) {
+      throw new UploadError({
+        code: "MIME_TYPE_NOT_SUPPORTED",
+        message: (0, import_i18n.sprintf)(
+          // translators: %s: file name.
+          (0, import_i18n.__)("%s: Sorry, this file type is not supported here."),
+          file.name
+        ),
+        file
+      });
+    }
+  }
+
+  // packages/upload-media/build-module/validate-mime-type-for-user.mjs
+  var import_i18n2 = __toESM(require_i18n(), 1);
+
+  // packages/upload-media/build-module/get-mime-types-array.mjs
+  function getMimeTypesArray(wpMimeTypesObject) {
+    if (!wpMimeTypesObject) {
+      return null;
+    }
+    return Object.entries(wpMimeTypesObject).flatMap(
+      ([extensionsString, mime]) => {
+        const [type] = mime.split("/");
+        const extensions = extensionsString.split("|");
+        return [
+          mime,
+          ...extensions.map(
+            (extension) => `${type}/${extension}`
+          )
+        ];
+      }
+    );
+  }
+
+  // packages/upload-media/build-module/validate-mime-type-for-user.mjs
+  function validateMimeTypeForUser(file, wpAllowedMimeTypes) {
+    const allowedMimeTypesForUser = getMimeTypesArray(wpAllowedMimeTypes);
+    if (!allowedMimeTypesForUser) {
+      return;
+    }
+    const isAllowedMimeTypeForUser = allowedMimeTypesForUser.includes(
+      file.type
+    );
+    if (file.type && !isAllowedMimeTypeForUser) {
+      throw new UploadError({
+        code: "MIME_TYPE_NOT_ALLOWED_FOR_USER",
+        message: (0, import_i18n2.sprintf)(
+          // translators: %s: file name.
+          (0, import_i18n2.__)(
+            "%s: Sorry, you are not allowed to upload this file type."
+          ),
+          file.name
+        ),
+        file
+      });
+    }
+  }
+
+  // packages/upload-media/build-module/validate-file-size.mjs
+  var import_i18n3 = __toESM(require_i18n(), 1);
+  function validateFileSize(file, maxUploadFileSize) {
+    if (file.size <= 0) {
+      throw new UploadError({
+        code: "EMPTY_FILE",
+        message: (0, import_i18n3.sprintf)(
+          // translators: %s: file name.
+          (0, import_i18n3.__)("%s: This file is empty."),
+          file.name
+        ),
+        file
+      });
+    }
+    if (maxUploadFileSize && file.size > maxUploadFileSize) {
+      throw new UploadError({
+        code: "SIZE_ABOVE_LIMIT",
+        message: (0, import_i18n3.sprintf)(
+          // translators: %s: file name.
+          (0, import_i18n3.__)(
+            "%s: This file exceeds the maximum upload size for this site."
+          ),
+          file.name
+        ),
+        file
+      });
+    }
+  }
+
+  // packages/upload-media/build-module/store/actions.mjs
+  function addItems({
+    files,
+    onChange,
+    onSuccess,
+    onError,
+    onBatchSuccess,
+    additionalData,
+    allowedTypes
+  }) {
+    return async ({ select, dispatch }) => {
+      const batchId = v4_default();
+      for (const file of files) {
+        try {
+          validateMimeType(file, allowedTypes);
+          validateMimeTypeForUser(
+            file,
+            select.getSettings().allowedMimeTypes
+          );
+        } catch (error) {
+          onError?.(error);
+          continue;
+        }
+        try {
+          validateFileSize(
+            file,
+            select.getSettings().maxUploadFileSize
+          );
+        } catch (error) {
+          onError?.(error);
+          continue;
+        }
+        dispatch.addItem({
+          file,
+          batchId,
+          onChange,
+          onSuccess,
+          onBatchSuccess,
+          onError,
+          additionalData
+        });
+      }
+    };
+  }
+  function cancelItem(id, error, silent = false) {
+    return async ({ select, dispatch }) => {
+      const item = select.getItem(id);
+      if (!item) {
+        return;
+      }
+      item.abortController?.abort();
+      if (!silent) {
+        const { onError } = item;
+        onError?.(error ?? new Error("Upload cancelled"));
+        if (!onError && error) {
+          console.error("Upload cancelled", error);
+        }
+      }
+      dispatch({
+        type: Type.Cancel,
+        id,
+        error
+      });
+      dispatch.removeItem(id);
+      dispatch.revokeBlobUrls(id);
+      if (item.batchId && select.isBatchUploaded(item.batchId)) {
+        item.onBatchSuccess?.();
+      }
+    };
+  }
+  function retryItem(id) {
+    return async ({ select, dispatch }) => {
+      const item = select.getItem(id);
+      if (!item) {
+        return;
+      }
+      if (!item.error) {
+        return;
+      }
+      dispatch({
+        type: Type.RetryItem,
+        id
+      });
+      dispatch.processItem(id);
+    };
+  }
+
+  // packages/upload-media/build-module/store/private-actions.mjs
+  var private_actions_exports = {};
+  __export(private_actions_exports, {
+    addItem: () => addItem,
+    finishOperation: () => finishOperation,
+    pauseItem: () => pauseItem,
+    pauseQueue: () => pauseQueue,
+    prepareItem: () => prepareItem,
+    processItem: () => processItem,
+    removeItem: () => removeItem,
+    resumeItem: () => resumeItem,
+    resumeQueue: () => resumeQueue,
+    revokeBlobUrls: () => revokeBlobUrls,
+    updateItemProgress: () => updateItemProgress,
+    updateSettings: () => updateSettings,
+    uploadItem: () => uploadItem
+  });
+  var import_blob = __toESM(require_blob(), 1);
+
+  // packages/upload-media/build-module/utils.mjs
+  var import_url = __toESM(require_url(), 1);
+  var import_i18n4 = __toESM(require_i18n(), 1);
+  function convertBlobToFile(fileOrBlob) {
+    if (fileOrBlob instanceof File) {
+      return fileOrBlob;
+    }
+    const ext = fileOrBlob.type.split("/")[1];
+    const mediaType = "application/pdf" === fileOrBlob.type ? "document" : fileOrBlob.type.split("/")[0];
+    return new File([fileOrBlob], `${mediaType}.${ext}`, {
+      type: fileOrBlob.type
+    });
+  }
+  function renameFile(file, name) {
+    return new File([file], name, {
+      type: file.type,
+      lastModified: file.lastModified
+    });
+  }
+  function cloneFile(file) {
+    return renameFile(file, file.name);
+  }
+
+  // packages/upload-media/build-module/stub-file.mjs
+  var StubFile = class extends File {
+    constructor(fileName = "stub-file") {
+      super([], fileName);
+    }
+  };
+
+  // packages/upload-media/build-module/store/private-actions.mjs
+  function addItem({
+    file: fileOrBlob,
+    batchId,
+    onChange,
+    onSuccess,
+    onBatchSuccess,
+    onError,
+    additionalData = {},
+    sourceUrl,
+    sourceAttachmentId,
+    abortController,
+    operations
+  }) {
+    return async ({ dispatch }) => {
+      const itemId = v4_default();
+      const file = convertBlobToFile(fileOrBlob);
+      let blobUrl;
+      if (!(file instanceof StubFile)) {
+        blobUrl = (0, import_blob.createBlobURL)(file);
+        dispatch({
+          type: Type.CacheBlobUrl,
+          id: itemId,
+          blobUrl
+        });
+      }
+      dispatch({
+        type: Type.Add,
+        item: {
+          id: itemId,
+          batchId,
+          status: ItemStatus.Processing,
+          sourceFile: cloneFile(file),
+          file,
+          attachment: {
+            url: blobUrl
+          },
+          additionalData: {
+            convert_format: false,
+            ...additionalData
+          },
+          onChange,
+          onSuccess,
+          onBatchSuccess,
+          onError,
+          sourceUrl,
+          sourceAttachmentId,
+          abortController: abortController || new AbortController(),
+          operations: Array.isArray(operations) ? operations : [OperationType.Prepare]
+        }
+      });
+      dispatch.processItem(itemId);
+    };
+  }
+  function processItem(id) {
+    return async ({ select, dispatch }) => {
+      if (select.isPaused()) {
+        return;
+      }
+      const item = select.getItem(id);
+      const { attachment, onChange, onSuccess, onBatchSuccess, batchId } = item;
+      const operation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
+      if (operation === OperationType.Upload) {
+        const settings = select.getSettings();
+        const activeCount = select.getActiveUploadCount();
+        if (activeCount >= settings.maxConcurrentUploads) {
+          return;
+        }
+      }
+      if (attachment) {
+        onChange?.([attachment]);
+      }
+      if (!operation) {
+        if (attachment) {
+          onSuccess?.([attachment]);
+        }
+        dispatch.removeItem(id);
+        dispatch.revokeBlobUrls(id);
+        if (batchId && select.isBatchUploaded(batchId)) {
+          onBatchSuccess?.();
+        }
+        return;
+      }
+      if (!operation) {
+        return;
+      }
+      dispatch({
+        type: Type.OperationStart,
+        id,
+        operation
+      });
+      switch (operation) {
+        case OperationType.Prepare:
+          dispatch.prepareItem(item.id);
+          break;
+        case OperationType.Upload:
+          dispatch.uploadItem(id);
+          break;
+      }
+    };
+  }
+  function pauseQueue() {
+    return {
+      type: Type.PauseQueue
+    };
+  }
+  function resumeQueue() {
+    return async ({ select, dispatch }) => {
+      dispatch({
+        type: Type.ResumeQueue
+      });
+      for (const item of select.getAllItems()) {
+        dispatch.processItem(item.id);
+      }
+    };
+  }
+  function pauseItem(id) {
+    return async ({ dispatch }) => {
+      dispatch({
+        type: Type.PauseItem,
+        id
+      });
+    };
+  }
+  function resumeItem(id) {
+    return async ({ select, dispatch }) => {
+      const item = select.getItem(id);
+      if (!item || item.status !== ItemStatus.Paused) {
+        return;
+      }
+      dispatch({
+        type: Type.ResumeItem,
+        id
+      });
+      dispatch.processItem(id);
+    };
+  }
+  function removeItem(id) {
+    return async ({ select, dispatch }) => {
+      const item = select.getItem(id);
+      if (!item) {
+        return;
+      }
+      dispatch({
+        type: Type.Remove,
+        id
+      });
+    };
+  }
+  function finishOperation(id, updates) {
+    return async ({ select, dispatch }) => {
+      const item = select.getItem(id);
+      const previousOperation = item?.currentOperation;
+      dispatch({
+        type: Type.OperationFinish,
+        id,
+        item: updates
+      });
+      dispatch.processItem(id);
+      if (previousOperation === OperationType.Upload) {
+        const pendingUploads = select.getPendingUploads();
+        for (const pendingItem of pendingUploads) {
+          dispatch.processItem(pendingItem.id);
+        }
+      }
+    };
+  }
+  function prepareItem(id) {
+    return async ({ dispatch }) => {
+      const operations = [OperationType.Upload];
+      dispatch({
+        type: Type.AddOperations,
+        id,
+        operations
+      });
+      dispatch.finishOperation(id, {});
+    };
+  }
+  function uploadItem(id) {
+    return async ({ select, dispatch }) => {
+      const item = select.getItem(id);
+      select.getSettings().mediaUpload({
+        filesList: [item.file],
+        additionalData: item.additionalData,
+        signal: item.abortController?.signal,
+        onFileChange: ([attachment]) => {
+          if (!(0, import_blob.isBlobURL)(attachment.url)) {
+            dispatch.finishOperation(id, {
+              attachment
+            });
+          }
+        },
+        onSuccess: ([attachment]) => {
+          dispatch.finishOperation(id, {
+            attachment
+          });
+        },
+        onError: (error) => {
+          dispatch.cancelItem(id, error);
+        }
+      });
+    };
+  }
+  function revokeBlobUrls(id) {
+    return async ({ select, dispatch }) => {
+      const blobUrls = select.getBlobUrls(id);
+      for (const blobUrl of blobUrls) {
+        (0, import_blob.revokeBlobURL)(blobUrl);
+      }
+      dispatch({
+        type: Type.RevokeBlobUrls,
+        id
+      });
+    };
+  }
+  function updateItemProgress(id, progress) {
+    return async ({ dispatch }) => {
+      dispatch({
+        type: Type.UpdateProgress,
+        id,
+        progress
+      });
+    };
+  }
+  function updateSettings(settings) {
+    return {
+      type: Type.UpdateSettings,
+      settings
+    };
+  }
+
+  // packages/upload-media/build-module/lock-unlock.mjs
+  var import_private_apis = __toESM(require_private_apis(), 1);
+  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/upload-media"
+  );
+
+  // packages/upload-media/build-module/store/index.mjs
+  var storeConfig = {
+    reducer: reducer_default,
+    selectors: selectors_exports,
+    actions: actions_exports
+  };
+  var store = (0, import_data.createReduxStore)(STORE_NAME, {
+    reducer: reducer_default,
+    selectors: selectors_exports,
+    actions: actions_exports
+  });
+  (0, import_data.register)(store);
+  unlock(store).registerPrivateActions(private_actions_exports);
+  unlock(store).registerPrivateSelectors(private_selectors_exports);
+
+  // packages/upload-media/build-module/components/provider/index.mjs
+  var import_element2 = __toESM(require_element(), 1);
+  var import_data3 = __toESM(require_data(), 1);
+
+  // packages/upload-media/build-module/components/provider/with-registry-provider.mjs
+  var import_element = __toESM(require_element(), 1);
+  var import_data2 = __toESM(require_data(), 1);
+  var import_compose = __toESM(require_compose(), 1);
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+  function getSubRegistry(subRegistries, registry, useSubRegistry) {
+    if (!useSubRegistry) {
+      return registry;
+    }
+    let subRegistry = subRegistries.get(registry);
+    if (!subRegistry) {
+      subRegistry = (0, import_data2.createRegistry)({}, registry);
+      subRegistry.registerStore(STORE_NAME, storeConfig);
+      subRegistries.set(registry, subRegistry);
+    }
+    return subRegistry;
+  }
+  var withRegistryProvider = (0, import_compose.createHigherOrderComponent)(
+    (WrappedComponent) => ({ useSubRegistry = true, ...props }) => {
+      const registry = (0, import_data2.useRegistry)();
+      const [subRegistries] = (0, import_element.useState)(() => /* @__PURE__ */ new WeakMap());
+      const subRegistry = getSubRegistry(
+        subRegistries,
+        registry,
+        useSubRegistry
+      );
+      if (subRegistry === registry) {
+        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WrappedComponent, { registry, ...props });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_data2.RegistryProvider, { value: subRegistry, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WrappedComponent, { registry: subRegistry, ...props }) });
+    },
+    "withRegistryProvider"
+  );
+  var with_registry_provider_default = withRegistryProvider;
+
+  // packages/upload-media/build-module/components/provider/index.mjs
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+  var MediaUploadProvider = with_registry_provider_default((props) => {
+    const { children, settings } = props;
+    const { updateSettings: updateSettings2 } = unlock((0, import_data3.useDispatch)(store));
+    (0, import_element2.useEffect)(() => {
+      updateSettings2(settings);
+    }, [settings, updateSettings2]);
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_jsx_runtime2.Fragment, { children });
+  });
+  var provider_default = MediaUploadProvider;
+  return __toCommonJS(index_exports);
+})();
+//# sourceMappingURL=index.js.map
