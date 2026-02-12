@@ -59933,6 +59933,7 @@ var wp;
         focusCommentThread(prevThread.id, commentSidebarRef.current);
       } else {
         selectNote2(void 0);
+        toggleBlockSpotlight(comment.blockClientId, false);
         relatedBlockElement?.focus();
       }
     };
