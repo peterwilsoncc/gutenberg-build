@@ -960,11 +960,16 @@ var wp;
     });
   }
   function generateCollaboratorInfo(currentCollaborator, existingColors) {
+    const { avatar_urls, id, name, slug } = currentCollaborator;
     return {
-      ...currentCollaborator,
+      avatar_urls,
+      // eslint-disable-line camelcase
       browserType: getBrowserName(),
       color: getNewCollaboratorColor(existingColors),
-      enteredAt: Date.now()
+      enteredAt: Date.now(),
+      id,
+      name,
+      slug
     };
   }
   function getRecordValue(obj, key) {
