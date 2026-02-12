@@ -71704,6 +71704,7 @@ var wp;
   var import_components264 = __toESM(require_components(), 1);
   var import_i18n233 = __toESM(require_i18n(), 1);
   var import_jsx_runtime456 = __toESM(require_jsx_runtime(), 1);
+  var VARIATION_PREFIX2 = "is-style-";
   var layoutBlockSupportKey = "layout";
   var { kebabCase: kebabCase6 } = unlock(import_components264.privateApis);
   function hasLayoutBlockSupport(blockName) {
@@ -71984,10 +71985,21 @@ var wp;
             "spacing.blockGap"
           );
           const globalStyles = settings2[globalStylesDataKey];
-          const globalBlockGapValue = globalStyles?.blocks?.[name]?.spacing?.blockGap ?? globalStyles?.spacing?.blockGap;
+          let variationBlockGapValue;
+          const className = attributes?.className;
+          if (className?.includes(VARIATION_PREFIX2)) {
+            const { getBlockStyles: getBlockStyles2 } = select3(import_blocks117.store);
+            const registeredStyles = getBlockStyles2(name);
+            const variationName = getVariationNameFromClass(
+              className,
+              registeredStyles
+            );
+            variationBlockGapValue = variationName ? globalStyles?.blocks?.[name]?.variations?.[variationName]?.spacing?.blockGap : void 0;
+          }
+          const globalBlockGapValue = variationBlockGapValue ?? globalStyles?.blocks?.[name]?.spacing?.blockGap ?? globalStyles?.spacing?.blockGap;
           return { blockGapSupport, globalBlockGapValue };
         },
-        [blockSupportsLayout, clientId]
+        [blockSupportsLayout, clientId, attributes?.className, name]
       );
       if (!extraProps) {
         return /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
