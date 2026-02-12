@@ -40853,7 +40853,7 @@ ${js}
     initialTitle = ""
   }) {
     const [title, setTitle] = (0, import_element76.useState)(initialTitle);
-    const [shouldPublish, setShouldPublish] = (0, import_element76.useState)(false);
+    const [shouldPublish, setShouldPublish] = (0, import_element76.useState)(true);
     const isTitleValid = title.trim().length > 0;
     const { lastError, isSaving } = (0, import_data78.useSelect)(
       (select9) => ({
@@ -40938,9 +40938,9 @@ ${js}
           /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
             import_components88.CheckboxControl,
             {
-              label: (0, import_i18n133.__)("Publish immediately"),
+              label: (0, import_i18n133.__)("Publish"),
               help: (0, import_i18n133.__)(
-                "If unchecked, the page will be created as a draft."
+                "Turn off to save as a draft. Drafts won't appear on your site until published."
               ),
               checked: shouldPublish,
               onChange: setShouldPublish
