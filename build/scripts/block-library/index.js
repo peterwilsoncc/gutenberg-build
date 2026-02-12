@@ -67940,9 +67940,11 @@ ${js}
     const blockProps = import_block_editor267.useBlockProps.save({
       className: "wp-block-tabs-menu-item__template",
       style: customColorStyles,
-      hidden: true
+      hidden: true,
+      type: "button",
+      role: "tab"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime507.jsx)("a", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime507.jsx)("span", { className: "screen-reader-text", children: (0, import_i18n246.__)("Tab menu item") }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime507.jsx)("button", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime507.jsx)("span", { className: "screen-reader-text", children: (0, import_i18n246.__)("Tab menu item") }) });
   }
 
   // packages/block-library/build-module/tabs-menu-item/block.json
