@@ -30044,6 +30044,22 @@ var wp;
     );
   }
 
+  // packages/block-editor/build-module/components/inserter/get-appender-label.mjs
+  var MAX_APPENDER_LABEL_LENGTH = 50;
+  function getAppenderLabel(defaultBlock, defaultBlockType) {
+    if (!defaultBlock || !defaultBlock.attributes || !defaultBlockType?.__experimentalLabel) {
+      return null;
+    }
+    const result = defaultBlockType.__experimentalLabel(
+      defaultBlock.attributes,
+      { context: "appender" }
+    );
+    if (typeof result === "string" && result.length < MAX_APPENDER_LABEL_LENGTH && result.length > 0) {
+      return result;
+    }
+    return null;
+  }
+
   // packages/block-editor/build-module/components/inserter/index.mjs
   var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
   var defaultRenderToggle = ({
@@ -30052,6 +30068,7 @@ var wp;
     isOpen,
     blockTitle,
     hasSingleBlockType,
+    appenderLabel,
     toggleProps = {}
   }) => {
     const {
@@ -30061,11 +30078,13 @@ var wp;
       ...rest
     } = toggleProps;
     let label = labelProp;
-    if (!label && hasSingleBlockType) {
+    if (!label && appenderLabel) {
+      label = appenderLabel;
+    } else if (!label && hasSingleBlockType) {
       label = (0, import_i18n60.sprintf)(
         // translators: %s: the name of the block when there is only one
         (0, import_i18n60._x)("Add %s", "directly add the only allowed block"),
-        blockTitle
+        blockTitle.toLowerCase()
       );
     } else if (!label) {
       label = (0, import_i18n60._x)("Add block", "Generic label for block inserter button");
@@ -30122,7 +30141,7 @@ var wp;
         disabled,
         blockTitle,
         hasSingleBlockType,
-        directInsertBlock,
+        appenderLabel,
         toggleProps,
         hasItems,
         renderToggle: renderToggle3 = defaultRenderToggle
@@ -30133,7 +30152,7 @@ var wp;
         disabled: disabled || !hasItems,
         blockTitle,
         hasSingleBlockType,
-        directInsertBlock,
+        appenderLabel,
         toggleProps
       });
     }
@@ -30229,7 +30248,7 @@ var wp;
           getAllowedBlocks: getAllowedBlocks2,
           getDirectInsertBlock: getDirectInsertBlock2
         } = select3(store);
-        const { getBlockVariations: getBlockVariations2 } = select3(import_blocks38.store);
+        const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType27 } = select3(import_blocks38.store);
         rootClientId = rootClientId || getBlockRootClientId2(clientId) || void 0;
         const allowedBlocks = getAllowedBlocks2(rootClientId);
         const directInsertBlock = shouldDirectInsert && getDirectInsertBlock2(rootClientId);
@@ -30238,12 +30257,18 @@ var wp;
         if (hasSingleBlockType) {
           allowedBlockType = allowedBlocks[0];
         }
+        const defaultBlockType = directInsertBlock ? getBlockType27(directInsertBlock.name) : null;
+        const appenderLabel = getAppenderLabel(
+          directInsertBlock,
+          defaultBlockType
+        );
         return {
           hasItems: hasInserterItems2(rootClientId),
           hasSingleBlockType,
           blockTitle: allowedBlockType ? allowedBlockType.title : "",
           allowedBlockType,
           directInsertBlock,
+          appenderLabel,
           rootClientId
         };
       }
@@ -30447,20 +30472,25 @@ var wp;
           disabled,
           isOpen,
           blockTitle,
-          hasSingleBlockType
+          hasSingleBlockType,
+          appenderLabel
         }) => {
           const isToggleButton = !hasSingleBlockType;
-          const label = hasSingleBlockType ? (0, import_i18n62.sprintf)(
-            // translators: %s: the name of the block when there is only one
-            (0, import_i18n62._x)(
-              "Add %s",
-              "directly add the only allowed block"
-            ),
-            blockTitle
-          ) : (0, import_i18n62._x)(
-            "Add block",
-            "Generic label for block inserter button"
-          );
+          let label;
+          if (appenderLabel) {
+            label = appenderLabel;
+          } else if (hasSingleBlockType) {
+            label = (0, import_i18n62.sprintf)(
+              // translators: %s: the name of the block when there is only one
+              (0, import_i18n62._x)("Add %s", "directly add the only allowed block"),
+              blockTitle.toLowerCase()
+            );
+          } else {
+            label = (0, import_i18n62._x)(
+              "Add block",
+              "Generic label for block inserter button"
+            );
+          }
           return (
             // Disable reason: There shouldn't be a case where this button is disabled but not visually hidden.
             // eslint-disable-next-line @wordpress/components-no-unsafe-button-disabled

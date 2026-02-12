@@ -44231,7 +44231,20 @@ ${js}
   var { name: name55 } = block_default55;
   var settings55 = {
     icon: custom_link_default,
-    __experimentalLabel: ({ label }) => label,
+    __experimentalLabel(attributes2, { context }) {
+      if (context === "list-view") {
+        return attributes2?.label;
+      }
+      if (context === "appender") {
+        const type = attributes2?.type || "link";
+        return (0, import_i18n144.sprintf)(
+          /* translators: %s: block type (e.g., 'page', 'post', 'category') */
+          (0, import_i18n144._x)("Add %s", "add default block type"),
+          type
+        );
+      }
+      return attributes2?.label;
+    },
     merge(leftAttributes, { label: rightLabel = "" }) {
       return {
         ...leftAttributes,
