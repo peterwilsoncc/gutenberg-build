@@ -63977,13 +63977,14 @@ var wp;
       (select5) => unlock(select5(store)).getSelectedNote(),
       []
     );
-    const showFloatingSidebar = isLargeViewport;
     const {
       resultComments,
       unresolvedSortedThreads,
       reflowComments,
       commentLastUpdated
     } = useBlockComments(postId2);
+    const showFloatingSidebar = isLargeViewport;
+    const showAllNotesSidebar = resultComments.length > 0 || !showFloatingSidebar;
     useEnableFloatingSidebar(
       showFloatingSidebar && (unresolvedSortedThreads.length > 0 || selectedNote2 !== void 0)
     );
@@ -64002,7 +64003,6 @@ var wp;
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
     const currentThread = blockCommentId ? resultComments.find((thread) => thread.id === blockCommentId) : null;
-    const showAllNotesSidebar = resultComments.length > 0;
     async function openTheSidebar() {
       const prevArea = await getActiveComplementaryArea2("core");
       const activeNotesArea = SIDEBARS.find((name2) => name2 === prevArea);
