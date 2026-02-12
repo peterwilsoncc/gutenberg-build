@@ -3679,7 +3679,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     }, [registerShortcut]);
     (0, import_keyboard_shortcuts.useShortcut)(
       "core/commands",
-      /** @type {import('react').KeyboardEventHandler} */
+      /** @type {React.KeyboardEventHandler} */
       withIgnoreIMEEvents((event) => {
         if (event.defaultPrevented) {
           return;

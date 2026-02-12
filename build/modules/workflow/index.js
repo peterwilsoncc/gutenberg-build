@@ -3389,7 +3389,7 @@ function WorkflowMenu() {
   }, [registerShortcut]);
   (0, import_keyboard_shortcuts.useShortcut)(
     "core/workflows",
-    /** @type {import('react').KeyboardEventHandler} */
+    /** @type {React.KeyboardEventHandler} */
     withIgnoreIMEEvents((event) => {
       if (event.defaultPrevented) {
         return;

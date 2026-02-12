@@ -38576,7 +38576,7 @@ var wp;
       return newOverrides;
     }, [config2, overrides, getBlockStyles2, getBlockName2]);
     if (!overridesWithConfig || !overridesWithConfig.length) {
-      return;
+      return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_jsx_runtime242.Fragment, { children: overridesWithConfig.map((override) => /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(OverrideStyles, { override }, override.id)) });
   }
