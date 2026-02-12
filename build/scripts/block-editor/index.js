@@ -50444,6 +50444,7 @@ var wp;
       this.bindSuggestionNode = this.bindSuggestionNode.bind(this);
       this.autocompleteRef = props.autocompleteRef || (0, import_element172.createRef)();
       this.inputRef = props.inputRef || (0, import_element172.createRef)();
+      this.hasRenderedValidation = { current: false };
       this.updateSuggestions = (0, import_compose87.debounce)(
         this.updateSuggestions.bind(this),
         200
@@ -50763,12 +50764,16 @@ var wp;
       if (renderControl) {
         return renderControl(controlProps, inputProps, loading);
       }
+      if (customValidity !== void 0) {
+        this.hasRenderedValidation.current = true;
+      }
+      const MaybeValidatedInputControl = this.hasRenderedValidation.current ? ValidatedInputControl : import_components173.__experimentalInputControl;
       return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_components173.BaseControl, { ...controlProps, children: [
         /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
-          ValidatedInputControl,
+          MaybeValidatedInputControl,
           {
             ...inputProps,
-            ...validationProps,
+            ...this.hasRenderedValidation.current ? validationProps : {},
             __next40pxDefaultSize: true
           }
         ),
