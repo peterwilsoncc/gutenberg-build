@@ -51906,8 +51906,8 @@ var wp;
       }
       const { plainText, html } = getPasteEventData(event);
       event.preventDefault();
-      window.console.log("Received HTML:\n\n", html);
-      window.console.log("Received plain text:\n\n", plainText);
+      window.console.log("Received HTML (RichText):\n\n", html);
+      window.console.log("Received plain text (RichText):\n\n", plainText);
       if (disableFormats) {
         onChange((0, import_rich_text8.insert)(value, plainText));
         return;

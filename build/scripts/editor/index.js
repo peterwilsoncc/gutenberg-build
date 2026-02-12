@@ -46675,8 +46675,6 @@ var wp;
       } catch (error) {
         return;
       }
-      window.console.log("Received HTML:\n\n", html);
-      window.console.log("Received plain text:\n\n", plainText);
       const content = (0, import_blocks27.pasteHandler)({
         HTML: html,
         plainText

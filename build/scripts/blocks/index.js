@@ -10123,6 +10123,8 @@ ${p3}`
     mode = "AUTO",
     tagName
   }) {
+    log("Received HTML (pasteHandler):\n\n", HTML);
+    log("Received plain text (pasteHandler):\n\n", plainText);
     HTML = HTML.replace(/<meta[^>]+>/g, "");
     HTML = HTML.replace(
       /^\s*<html[^>]*>\s*<body[^>]*>(?:\s*<!--\s*StartFragment\s*-->)?/i,
