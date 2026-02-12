@@ -854,7 +854,7 @@ var wp;
         ...linkValue,
         ...nextValue
       };
-      const newUrl = (0, import_url2.prependHTTP)(nextValue.url);
+      const newUrl = (0, import_url2.prependHTTPS)(nextValue.url);
       const linkFormat = createLinkFormat({
         url: newUrl,
         type: nextValue.type,

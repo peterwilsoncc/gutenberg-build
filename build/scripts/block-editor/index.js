@@ -48954,27 +48954,40 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/link-control/use-search-handler.mjs
-  var import_url5 = __toESM(require_url(), 1);
   var import_element165 = __toESM(require_element(), 1);
   var import_data142 = __toESM(require_data(), 1);
-  var handleNoop = () => Promise.resolve([]);
-  var handleDirectEntry = (val) => {
+
+  // packages/block-editor/build-module/components/link-control/normalize-url.mjs
+  var import_url5 = __toESM(require_url(), 1);
+  function normalizeUrl(url) {
+    const trimmedUrl = url?.trim();
+    if (!trimmedUrl) {
+      return { url: trimmedUrl, type: URL_TYPE };
+    }
     let type = URL_TYPE;
-    const protocol = (0, import_url5.getProtocol)(val) || "";
+    const protocol = (0, import_url5.getProtocol)(trimmedUrl) || "";
     if (protocol.includes("mailto")) {
       type = MAILTO_TYPE;
-    }
-    if (protocol.includes("tel")) {
+    } else if (protocol.includes("tel")) {
       type = TEL_TYPE;
-    }
-    if (val?.startsWith("#")) {
+    } else if (trimmedUrl?.startsWith("#")) {
       type = INTERNAL_TYPE;
     }
+    if (isHashLink(trimmedUrl) || isRelativePath(trimmedUrl) || trimmedUrl.startsWith("?") || protocol) {
+      return { url: trimmedUrl, type };
+    }
+    return { url: (0, import_url5.prependHTTPS)(trimmedUrl), type };
+  }
+
+  // packages/block-editor/build-module/components/link-control/use-search-handler.mjs
+  var handleNoop = () => Promise.resolve([]);
+  var handleDirectEntry = (val) => {
+    const { url, type } = normalizeUrl(val);
     return Promise.resolve([
       {
         id: val,
         title: val,
-        url: type === "URL" ? (0, import_url5.prependHTTPS)(val) : val,
+        url,
         type
       }
     ]);
@@ -49686,6 +49699,11 @@ var wp;
           setCustomValidity(validation);
           return;
         }
+        const { url: normalizedUrl } = normalizeUrl(urlToValidate);
+        updatedValue = {
+          ...updatedValue,
+          url: normalizedUrl
+        };
       }
       if (updatedValue?.kind === "taxonomy" && updatedValue?.url) {
         entityUrlFallbackRef.current = updatedValue.url;
@@ -49734,7 +49752,7 @@ var wp;
         onChange({
           ...value,
           ...internalControlValue,
-          url: currentUrlInputValue
+          url: normalizeUrl(currentUrlInputValue).url
         });
       }
       stopEditing();
