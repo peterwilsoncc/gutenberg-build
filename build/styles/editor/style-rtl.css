@@ -3658,6 +3658,10 @@ div.dataviews-view-list {
   min-width: 0;
 }
 
+.dataviews-controls__color-picker-dropdown {
+  display: flex;
+}
+
 .dataviews-controls__date-preset {
   border: 1px solid #ddd;
 }

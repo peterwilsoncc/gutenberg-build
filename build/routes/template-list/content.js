@@ -15435,6 +15435,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components44 = __toESM(require_components(), 1);
 var import_element52 = __toESM(require_element(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl3 } = unlock(import_components44.privateApis);
 var ColorPickerDropdown = ({
@@ -15445,30 +15446,18 @@ var ColorPickerDropdown = ({
   return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
     import_components44.Dropdown,
     {
-      renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components44.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
-        "button",
+      className: "dataviews-controls__color-picker-dropdown",
+      popoverProps: { resize: false },
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+        import_components44.Button,
         {
-          type: "button",
           onClick: onToggle,
-          style: {
-            width: "24px",
-            height: "24px",
-            borderRadius: "50%",
-            backgroundColor: validColor,
-            border: "1px solid #ddd",
-            cursor: "pointer",
-            outline: isOpen ? "2px solid #007cba" : "none",
-            outlineOffset: "2px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 0,
-            margin: 0
-          },
-          "aria-label": "Open color picker"
+          "aria-label": (0, import_i18n36.__)("Open color picker"),
+          size: "small",
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components44.ColorIndicator, { colorValue: validColor })
         }
-      ) }),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+      ),
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components44.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
         import_components44.ColorPicker,
         {
           color: validColor,
@@ -15514,13 +15503,13 @@ function Color({
       onChange: handleInputChange,
       hideLabelFromVision,
       type: "text",
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components44.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
         ColorPickerDropdown,
         {
           color: value,
           onColorChange: handleColorChange
         }
-      )
+      ) })
     }
   );
 }
@@ -15528,7 +15517,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components45 = __toESM(require_components(), 1);
 var import_element53 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -15559,7 +15548,7 @@ function Password({
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible2 ? (0, import_i18n36.__)("Hide password") : (0, import_i18n36.__)("Show password")
+            label: isVisible2 ? (0, import_i18n37.__)("Hide password") : (0, import_i18n37.__)("Show password")
           }
         ) })
       }
@@ -15681,7 +15670,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -15791,7 +15780,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n37.__)("Value must be a valid email address.");
+    return (0, import_i18n38.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -15828,7 +15817,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -15894,7 +15883,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n38.__)("Value must be an integer.");
+    return (0, import_i18n39.__)("Value must be an integer.");
   }
   return null;
 }
@@ -15941,7 +15930,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -15977,7 +15966,7 @@ function isEmpty2(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty2(value) && !Number.isFinite(value)) {
-    return (0, import_i18n39.__)("Value must be a number.");
+    return (0, import_i18n40.__)("Value must be a number.");
   }
   return null;
 }
@@ -16183,7 +16172,7 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -16198,17 +16187,17 @@ function getValueFormatted6({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n40.__)("True");
+    return (0, import_i18n41.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n40.__)("False");
+    return (0, import_i18n41.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n40.__)("Value must be true, false, or undefined");
+    return (0, import_i18n41.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -16260,7 +16249,7 @@ var media_default2 = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -16285,10 +16274,10 @@ function render2({ item, field }) {
 function isValidCustom5(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-    return (0, import_i18n41.__)("Value must be an array.");
+    return (0, import_i18n42.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n41.__)("Every value must be a string.");
+    return (0, import_i18n42.__)("Every value must be a string.");
   }
   return null;
 }
@@ -16386,7 +16375,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -16416,7 +16405,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n42.__)("Value must be a valid color.");
+    return (0, import_i18n43.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -17076,7 +17065,7 @@ var import_components53 = __toESM(require_components());
 var import_data13 = __toESM(require_data());
 var import_element63 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
-var import_i18n53 = __toESM(require_i18n());
+var import_i18n54 = __toESM(require_i18n());
 
 // routes/lock-unlock.ts
 var import_private_apis2 = __toESM(require_private_apis());
@@ -17149,7 +17138,7 @@ function getActiveViewOverridesForTabLegacy(activeView) {
 }
 
 // routes/template-list/fields/preview.tsx
-var import_i18n43 = __toESM(require_i18n());
+var import_i18n44 = __toESM(require_i18n());
 import { Preview } from "@wordpress/lazy-editor";
 function PreviewField({ item }) {
   const description = item.description;
@@ -17163,7 +17152,7 @@ function PreviewField({ item }) {
   );
 }
 var previewField = {
-  label: (0, import_i18n43.__)("Preview"),
+  label: (0, import_i18n44.__)("Preview"),
   id: "preview",
   render: PreviewField,
   enableSorting: false
@@ -17171,7 +17160,7 @@ var previewField = {
 
 // routes/template-list/fields/author.tsx
 var import_components48 = __toESM(require_components());
-var import_i18n44 = __toESM(require_i18n());
+var import_i18n45 = __toESM(require_i18n());
 var import_element56 = __toESM(require_element());
 var import_core_data = __toESM(require_core_data());
 var import_data8 = __toESM(require_data());
@@ -17202,7 +17191,7 @@ function useAddedBy(type, id) {
       };
     }
     return {
-      text: (0, import_i18n44.__)("Unknown"),
+      text: (0, import_i18n45.__)("Unknown"),
       icon: "admin-users"
     };
   }, [author, authorText]);
@@ -17231,14 +17220,14 @@ function AuthorField({ item }) {
   ), !imageUrl && /* @__PURE__ */ React.createElement("div", { className: "routes-template-list-author-field__icon" }, /* @__PURE__ */ React.createElement(import_components48.Icon, { icon })), /* @__PURE__ */ React.createElement("span", { className: "routes-template-list-author-field__name" }, text));
 }
 var authorField = {
-  label: (0, import_i18n44.__)("Author"),
+  label: (0, import_i18n45.__)("Author"),
   id: "author",
   getValue: ({ item }) => item.author_text ?? item.author,
   render: AuthorField
 };
 
 // routes/template-list/fields/description.tsx
-var import_i18n45 = __toESM(require_i18n());
+var import_i18n46 = __toESM(require_i18n());
 var import_html_entities = __toESM(require_html_entities());
 var import_core_data2 = __toESM(require_core_data());
 var { useEntityRecordsWithPermissions } = unlock2(import_core_data2.privateApis);
@@ -17256,7 +17245,7 @@ function useAllDefaultTemplateTypes() {
   });
 }
 var descriptionField = {
-  label: (0, import_i18n45.__)("Description"),
+  label: (0, import_i18n46.__)("Description"),
   id: "description",
   render: function RenderDescription({ item }) {
     const defaultTemplateTypes = useAllDefaultTemplateTypes();
@@ -17270,24 +17259,24 @@ var descriptionField = {
 };
 
 // routes/template-list/fields/active.tsx
-var import_i18n46 = __toESM(require_i18n());
+var import_i18n47 = __toESM(require_i18n());
 var import_components49 = __toESM(require_components());
 var { Badge: Badge3 } = unlock2(import_components49.privateApis);
 var activeField = {
-  label: (0, import_i18n46.__)("Status"),
+  label: (0, import_i18n47.__)("Status"),
   id: "active",
   type: "boolean",
   getValue: ({ item }) => item._isActive,
   render: function Render({ item }) {
-    const activeLabel = item._isCustom ? (0, import_i18n46._x)("Active when used", "template") : (0, import_i18n46._x)("Active", "template");
+    const activeLabel = item._isCustom ? (0, import_i18n47._x)("Active when used", "template") : (0, import_i18n47._x)("Active", "template");
     const activeIntent = item._isCustom ? "info" : "success";
     const isActive = item._isActive;
-    return /* @__PURE__ */ React.createElement(Badge3, { intent: isActive ? activeIntent : "default" }, isActive ? activeLabel : (0, import_i18n46._x)("Inactive", "template"));
+    return /* @__PURE__ */ React.createElement(Badge3, { intent: isActive ? activeIntent : "default" }, isActive ? activeLabel : (0, import_i18n47._x)("Inactive", "template"));
   }
 };
 
 // routes/template-list/fields/slug.tsx
-var import_i18n47 = __toESM(require_i18n());
+var import_i18n48 = __toESM(require_i18n());
 var import_core_data3 = __toESM(require_core_data());
 var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions2 } = unlock2(import_core_data3.privateApis);
 function useAllDefaultTemplateTypes2() {
@@ -17304,7 +17293,7 @@ function useAllDefaultTemplateTypes2() {
   });
 }
 var slugField = {
-  label: (0, import_i18n47.__)("Template Type"),
+  label: (0, import_i18n48.__)("Template Type"),
   id: "slug",
   getValue: ({ item }) => item.slug,
   render: function Render2({ item }) {
@@ -17312,7 +17301,7 @@ var slugField = {
     const defaultTemplateType = defaultTemplateTypes?.find(
       (type) => type.slug === item.slug
     );
-    return defaultTemplateType?.title || (0, import_i18n47._x)("Custom", "template type");
+    return defaultTemplateType?.title || (0, import_i18n48._x)("Custom", "template type");
   }
 };
 
@@ -17402,7 +17391,7 @@ function useTemplates(activeView = "active") {
 }
 
 // routes/template-list/actions/set-active-template.tsx
-var import_i18n48 = __toESM(require_i18n());
+var import_i18n49 = __toESM(require_i18n());
 var import_element58 = __toESM(require_element());
 var import_data10 = __toESM(require_data());
 var import_core_data5 = __toESM(require_core_data());
@@ -17416,7 +17405,7 @@ function useSetActiveTemplateAction() {
     () => ({
       id: "set-active-template",
       label(items) {
-        return items.some((item) => item._isActive) ? (0, import_i18n48.__)("Deactivate") : (0, import_i18n48.__)("Activate");
+        return items.some((item) => item._isActive) ? (0, import_i18n49.__)("Deactivate") : (0, import_i18n49.__)("Activate");
       },
       isPrimary: true,
       icon: pencil_default,
@@ -17466,14 +17455,14 @@ var import_element62 = __toESM(require_element());
 var import_data12 = __toESM(require_data());
 var import_core_data8 = __toESM(require_core_data());
 var import_compose14 = __toESM(require_compose());
-var import_i18n52 = __toESM(require_i18n());
+var import_i18n53 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_dom11 = __toESM(require_dom());
 import { useNavigate, useInvalidate } from "@wordpress/route";
 
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
 var import_element60 = __toESM(require_element());
-var import_i18n50 = __toESM(require_i18n());
+var import_i18n51 = __toESM(require_i18n());
 var import_components50 = __toESM(require_components());
 var import_core_data7 = __toESM(require_core_data());
 var import_html_entities3 = __toESM(require_html_entities());
@@ -17486,7 +17475,7 @@ var import_data11 = __toESM(require_data());
 var import_core_data6 = __toESM(require_core_data());
 var import_html_entities2 = __toESM(require_html_entities());
 var import_element59 = __toESM(require_element());
-var import_i18n49 = __toESM(require_i18n());
+var import_i18n50 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
 var TEMPLATE_POST_TYPE = "wp_template";
 var EMPTY_OBJECT2 = {};
@@ -17584,24 +17573,24 @@ function usePostTypeArchiveMenuItems() {
     ).map((postType) => {
       let title;
       if (needsUniqueIdentifier(postType)) {
-        title = (0, import_i18n49.sprintf)(
+        title = (0, import_i18n50.sprintf)(
           // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-          (0, import_i18n49.__)("Archive: %1$s (%2$s)"),
+          (0, import_i18n50.__)("Archive: %1$s (%2$s)"),
           postType.labels.singular_name,
           postType.slug
         );
       } else {
-        title = (0, import_i18n49.sprintf)(
+        title = (0, import_i18n50.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n49.__)("Archive: %s"),
+          (0, import_i18n50.__)("Archive: %s"),
           postType.labels.singular_name
         );
       }
       return {
         slug: "archive-" + postType.slug,
-        description: (0, import_i18n49.sprintf)(
+        description: (0, import_i18n50.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n49.__)(
+          (0, import_i18n50.__)(
             "Displays an archive with the latest posts of type: %s."
           ),
           postType.labels.singular_name
@@ -17655,20 +17644,20 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
         ({ slug: _slug }) => _slug === generalTemplateSlug
       );
       const _needsUniqueIdentifier = needsUniqueIdentifier(postType);
-      let menuItemTitle = labels.template_name || (0, import_i18n49.sprintf)(
+      let menuItemTitle = labels.template_name || (0, import_i18n50.sprintf)(
         // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n49.__)("Single item: %s"),
+        (0, import_i18n50.__)("Single item: %s"),
         labels.singular_name
       );
       if (_needsUniqueIdentifier) {
-        menuItemTitle = labels.template_name ? (0, import_i18n49.sprintf)(
+        menuItemTitle = labels.template_name ? (0, import_i18n50.sprintf)(
           // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-          (0, import_i18n49._x)("%1$s (%2$s)", "post type menu label"),
+          (0, import_i18n50._x)("%1$s (%2$s)", "post type menu label"),
           labels.template_name,
           slug
-        ) : (0, import_i18n49.sprintf)(
+        ) : (0, import_i18n50.sprintf)(
           // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-          (0, import_i18n49._x)(
+          (0, import_i18n50._x)(
             "Single item: %1$s (%2$s)",
             "post type menu label"
           ),
@@ -17682,9 +17671,9 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
       } : {
         slug: generalTemplateSlug,
         title: menuItemTitle,
-        description: (0, import_i18n49.sprintf)(
+        description: (0, import_i18n50.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n49.__)("Displays a single item: %s."),
+          (0, import_i18n50.__)("Displays a single item: %s."),
           labels.singular_name
         ),
         // `icon` is the `menu_icon` property of a post type. We
@@ -17800,14 +17789,14 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
       );
       let menuItemTitle = labels.template_name || labels.singular_name;
       if (_needsUniqueIdentifier) {
-        menuItemTitle = labels.template_name ? (0, import_i18n49.sprintf)(
+        menuItemTitle = labels.template_name ? (0, import_i18n50.sprintf)(
           // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-          (0, import_i18n49._x)("%1$s (%2$s)", "taxonomy template menu label"),
+          (0, import_i18n50._x)("%1$s (%2$s)", "taxonomy template menu label"),
           labels.template_name,
           slug
-        ) : (0, import_i18n49.sprintf)(
+        ) : (0, import_i18n50.sprintf)(
           // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-          (0, import_i18n49._x)("%1$s (%2$s)", "taxonomy menu label"),
+          (0, import_i18n50._x)("%1$s (%2$s)", "taxonomy menu label"),
           labels.singular_name,
           slug
         );
@@ -17818,9 +17807,9 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
       } : {
         slug: generalTemplateSlug,
         title: menuItemTitle,
-        description: (0, import_i18n49.sprintf)(
+        description: (0, import_i18n50.sprintf)(
           // translators: %s: Name of the taxonomy e.g: "Product Categories".
-          (0, import_i18n49.__)("Displays taxonomy: %s."),
+          (0, import_i18n50.__)("Displays taxonomy: %s."),
           labels.singular_name
         ),
         icon: block_meta_default,
@@ -17901,7 +17890,7 @@ function useAuthorMenuItem(onClickMenuItem) {
   );
   if (!authorMenuItem) {
     authorMenuItem = {
-      description: (0, import_i18n49.__)(
+      description: (0, import_i18n50.__)(
         "Displays latest posts written by a single author."
       ),
       slug: "author",
@@ -17932,9 +17921,9 @@ function useAuthorMenuItem(onClickMenuItem) {
               suggestion.slug
             );
             return {
-              title: (0, import_i18n49.sprintf)(
+              title: (0, import_i18n50.sprintf)(
                 // translators: %s: Name of the author e.g: "Admin".
-                (0, import_i18n49.__)("Author: %s"),
+                (0, import_i18n50.__)("Author: %s"),
                 suggestion.name
               ),
               slug: templateSlug,
@@ -17943,10 +17932,10 @@ function useAuthorMenuItem(onClickMenuItem) {
           }
         },
         labels: {
-          singular_name: (0, import_i18n49.__)("Author"),
-          search_items: (0, import_i18n49.__)("Search Authors"),
-          not_found: (0, import_i18n49.__)("No authors found."),
-          all_items: (0, import_i18n49.__)("All Authors")
+          singular_name: (0, import_i18n50.__)("Author"),
+          search_items: (0, import_i18n50.__)("Search Authors"),
+          not_found: (0, import_i18n50.__)("No authors found."),
+          all_items: (0, import_i18n50.__)("All Authors")
         },
         hasGeneralTemplate,
         template
@@ -18108,7 +18097,7 @@ function SuggestionList({
       orientation: "vertical",
       role: "listbox",
       className: "template-list-custom-template-modal__suggestions_list",
-      "aria-label": (0, import_i18n50.__)("Suggestions list")
+      "aria-label": (0, import_i18n51.__)("Suggestions list")
     },
     suggestions.map((suggestion) => /* @__PURE__ */ React.createElement(
       SuggestionListItem,
@@ -18151,7 +18140,7 @@ function AddCustomTemplateModalContent({
       className: "template-list-custom-template-modal__contents-wrapper",
       alignment: "left"
     },
-    !showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components50.__experimentalText, { as: "p" }, (0, import_i18n50.__)(
+    !showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components50.__experimentalText, { as: "p" }, (0, import_i18n51.__)(
       "Select whether to create a single template for all items or a specific one."
     )), /* @__PURE__ */ React.createElement(
       import_components50.Flex,
@@ -18196,7 +18185,7 @@ function AddCustomTemplateModalContent({
             lineHeight: 1.53846153846
           },
           // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-          (0, import_i18n50.__)("For all items")
+          (0, import_i18n51.__)("For all items")
         )
       ),
       /* @__PURE__ */ React.createElement(
@@ -18224,7 +18213,7 @@ function AddCustomTemplateModalContent({
             lineHeight: 1.53846153846
           },
           // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-          (0, import_i18n50.__)("For a specific item")
+          (0, import_i18n51.__)("For a specific item")
         )
       )
     ), /* @__PURE__ */ React.createElement(import_components50.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
@@ -18234,9 +18223,9 @@ function AddCustomTemplateModalContent({
         variant: "tertiary",
         onClick: onBack
       },
-      (0, import_i18n50.__)("Back")
+      (0, import_i18n51.__)("Back")
     ))),
-    showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components50.__experimentalText, { as: "p" }, (0, import_i18n50.__)(
+    showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components50.__experimentalText, { as: "p" }, (0, import_i18n51.__)(
       "This template will be used only for the specific item chosen."
     )), /* @__PURE__ */ React.createElement(
       SuggestionList,
@@ -18257,7 +18246,7 @@ function AddCustomTemplateModalContent({
           }
         }
       },
-      (0, import_i18n50.__)("Back")
+      (0, import_i18n51.__)("Back")
     )))
   );
 }
@@ -18323,14 +18312,14 @@ function paramCase(input, options) {
 
 // routes/template-list/add-new-template/add-custom-generic-template-modal-content.tsx
 var import_element61 = __toESM(require_element());
-var import_i18n51 = __toESM(require_i18n());
+var import_i18n52 = __toESM(require_i18n());
 var import_components51 = __toESM(require_components());
 function AddCustomGenericTemplateModalContent({
   createTemplate,
   onBack
 }) {
   const [title, setTitle] = (0, import_element61.useState)("");
-  const defaultTitle = (0, import_i18n51.__)("Custom Template");
+  const defaultTitle = (0, import_i18n52.__)("Custom Template");
   const [isBusy, setIsBusy] = (0, import_element61.useState)(false);
   const inputRef = (0, import_element61.useRef)(null);
   (0, import_element61.useEffect)(() => {
@@ -18360,13 +18349,13 @@ function AddCustomGenericTemplateModalContent({
     import_components51.TextControl,
     {
       __next40pxDefaultSize: true,
-      label: (0, import_i18n51.__)("Name"),
+      label: (0, import_i18n52.__)("Name"),
       value: title,
       onChange: setTitle,
       placeholder: defaultTitle,
       disabled: isBusy,
       ref: inputRef,
-      help: (0, import_i18n51.__)(
+      help: (0, import_i18n52.__)(
         // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
         'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
       )
@@ -18384,7 +18373,7 @@ function AddCustomGenericTemplateModalContent({
         variant: "tertiary",
         onClick: onBack
       },
-      (0, import_i18n51.__)("Back")
+      (0, import_i18n52.__)("Back")
     ),
     /* @__PURE__ */ React.createElement(
       import_components51.Button,
@@ -18395,7 +18384,7 @@ function AddCustomGenericTemplateModalContent({
         isBusy,
         "aria-disabled": isBusy
       },
-      (0, import_i18n51.__)("Create")
+      (0, import_i18n52.__)("Create")
     )
   )));
 }
@@ -18506,9 +18495,9 @@ function NewTemplateModal({ onClose }) {
   }, []);
   const TEMPLATE_SHORT_DESCRIPTIONS = {
     "front-page": homeUrl,
-    date: (0, import_i18n52.sprintf)(
+    date: (0, import_i18n53.sprintf)(
       // translators: %s: The homepage url.
-      (0, import_i18n52.__)("E.g. %s"),
+      (0, import_i18n53.__)("E.g. %s"),
       homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
     )
   };
@@ -18552,17 +18541,17 @@ function NewTemplateModal({ onClose }) {
       });
       invalidate();
       createSuccessNotice(
-        (0, import_i18n52.sprintf)(
+        (0, import_i18n53.sprintf)(
           // translators: %s: Title of the created post or template, e.g: "Hello world".
-          (0, import_i18n52.__)('"%s" successfully created.'),
-          (0, import_html_entities4.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n52.__)("(no title)")
+          (0, import_i18n53.__)('"%s" successfully created.'),
+          (0, import_html_entities4.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n53.__)("(no title)")
         ),
         {
           type: "snackbar"
         }
       );
     } catch (error) {
-      const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n52.__)("An error occurred while creating the template.");
+      const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n53.__)("An error occurred while creating the template.");
       createErrorNotice(errorMessage, {
         type: "snackbar"
       });
@@ -18574,15 +18563,15 @@ function NewTemplateModal({ onClose }) {
     onClose();
     setModalContent(modalContentMap.templatesList);
   };
-  let modalTitle = (0, import_i18n52.__)("Add template");
+  let modalTitle = (0, import_i18n53.__)("Add template");
   if (modalContent === modalContentMap.customTemplate && entityForSuggestions) {
-    modalTitle = (0, import_i18n52.sprintf)(
+    modalTitle = (0, import_i18n53.sprintf)(
       // translators: %s: Name of the post type e.g: "Post".
-      (0, import_i18n52.__)("Add template: %s"),
+      (0, import_i18n53.__)("Add template: %s"),
       entityForSuggestions.labels.singular_name
     );
   } else if (modalContent === modalContentMap.customGenericTemplate) {
-    modalTitle = (0, import_i18n52.__)("Create custom template");
+    modalTitle = (0, import_i18n53.__)("Create custom template");
   }
   return /* @__PURE__ */ React.createElement(
     import_components52.Modal,
@@ -18605,7 +18594,7 @@ function NewTemplateModal({ onClose }) {
         justify: "center",
         className: "template-list-add-new-template__template-list__contents"
       },
-      /* @__PURE__ */ React.createElement(import_components52.Flex, { className: "template-list-add-new-template__template-list__prompt" }, (0, import_i18n52.__)(
+      /* @__PURE__ */ React.createElement(import_components52.Flex, { className: "template-list-add-new-template__template-list__prompt" }, (0, import_i18n53.__)(
         "Select what the new template should apply to:"
       )),
       missingTemplates.map((template) => {
@@ -18626,7 +18615,7 @@ function NewTemplateModal({ onClose }) {
       /* @__PURE__ */ React.createElement(
         TemplateListItem,
         {
-          title: (0, import_i18n52.__)("Custom template"),
+          title: (0, import_i18n53.__)("Custom template"),
           direction: "row",
           className: "template-list-add-new-template__custom-template-button",
           icon: pencil_default,
@@ -18639,7 +18628,7 @@ function NewTemplateModal({ onClose }) {
           {
             lineHeight: 1.53846153846
           },
-          (0, import_i18n52.__)(
+          (0, import_i18n53.__)(
             "A custom template can be manually applied to any post or page."
           )
         )
@@ -18897,12 +18886,12 @@ function TemplateListActivation() {
     const baseTabs = [
       {
         slug: "active",
-        label: (0, import_i18n53.__)("Active"),
+        label: (0, import_i18n54.__)("Active"),
         icon: published_default
       },
       {
         slug: "user",
-        label: (0, import_i18n53.__)("Created templates"),
+        label: (0, import_i18n54.__)("Created templates"),
         icon: comment_author_avatar_default
       }
     ];
@@ -18947,7 +18936,7 @@ function TemplateListActivation() {
   return /* @__PURE__ */ React.createElement(
     page_default2,
     {
-      title: (0, import_i18n53.__)("Templates"),
+      title: (0, import_i18n54.__)("Templates"),
       className: "template-page",
       actions: /* @__PURE__ */ React.createElement(add_new_template_default, null),
       hasPadding: false
@@ -19000,7 +18989,7 @@ function TemplateListActivation() {
     selectedRegisteredTemplate && duplicateAction && /* @__PURE__ */ React.createElement(
       import_components53.Modal,
       {
-        title: (0, import_i18n53.__)("Duplicate"),
+        title: (0, import_i18n54.__)("Duplicate"),
         onRequestClose: () => setSelectedRegisteredTemplate(null),
         size: "small"
       },
@@ -19028,7 +19017,7 @@ var import_components54 = __toESM(require_components());
 var import_data14 = __toESM(require_data());
 var import_element65 = __toESM(require_element());
 var import_editor2 = __toESM(require_editor());
-var import_i18n54 = __toESM(require_i18n());
+var import_i18n55 = __toESM(require_i18n());
 
 // routes/template-list/use-templates-legacy.ts
 var import_element64 = __toESM(require_element());
@@ -19205,7 +19194,7 @@ function TemplateListLegacy() {
     const baseTabs = [
       {
         slug: "all",
-        label: (0, import_i18n54.__)("All templates"),
+        label: (0, import_i18n55.__)("All templates"),
         icon: layout_default
       }
     ];
@@ -19242,7 +19231,7 @@ function TemplateListLegacy() {
   return /* @__PURE__ */ React.createElement(
     page_default2,
     {
-      title: (0, import_i18n54.__)("Templates"),
+      title: (0, import_i18n55.__)("Templates"),
       className: "template-page",
       actions: /* @__PURE__ */ React.createElement(add_new_template_default, null),
       hasPadding: false

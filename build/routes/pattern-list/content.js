@@ -15301,6 +15301,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components44 = __toESM(require_components(), 1);
 var import_element52 = __toESM(require_element(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl3 } = unlock(import_components44.privateApis);
 var ColorPickerDropdown = ({
@@ -15311,30 +15312,18 @@ var ColorPickerDropdown = ({
   return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
     import_components44.Dropdown,
     {
-      renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components44.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
-        "button",
+      className: "dataviews-controls__color-picker-dropdown",
+      popoverProps: { resize: false },
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+        import_components44.Button,
         {
-          type: "button",
           onClick: onToggle,
-          style: {
-            width: "24px",
-            height: "24px",
-            borderRadius: "50%",
-            backgroundColor: validColor,
-            border: "1px solid #ddd",
-            cursor: "pointer",
-            outline: isOpen ? "2px solid #007cba" : "none",
-            outlineOffset: "2px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 0,
-            margin: 0
-          },
-          "aria-label": "Open color picker"
+          "aria-label": (0, import_i18n36.__)("Open color picker"),
+          size: "small",
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components44.ColorIndicator, { colorValue: validColor })
         }
-      ) }),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+      ),
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components44.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
         import_components44.ColorPicker,
         {
           color: validColor,
@@ -15380,13 +15369,13 @@ function Color({
       onChange: handleInputChange,
       hideLabelFromVision,
       type: "text",
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components44.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
         ColorPickerDropdown,
         {
           color: value,
           onColorChange: handleColorChange
         }
-      )
+      ) })
     }
   );
 }
@@ -15394,7 +15383,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components45 = __toESM(require_components(), 1);
 var import_element53 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -15425,7 +15414,7 @@ function Password({
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible2 ? (0, import_i18n36.__)("Hide password") : (0, import_i18n36.__)("Show password")
+            label: isVisible2 ? (0, import_i18n37.__)("Hide password") : (0, import_i18n37.__)("Show password")
           }
         ) })
       }
@@ -15547,7 +15536,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -15657,7 +15646,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n37.__)("Value must be a valid email address.");
+    return (0, import_i18n38.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -15694,7 +15683,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -15760,7 +15749,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n38.__)("Value must be an integer.");
+    return (0, import_i18n39.__)("Value must be an integer.");
   }
   return null;
 }
@@ -15807,7 +15796,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -15843,7 +15832,7 @@ function isEmpty2(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty2(value) && !Number.isFinite(value)) {
-    return (0, import_i18n39.__)("Value must be a number.");
+    return (0, import_i18n40.__)("Value must be a number.");
   }
   return null;
 }
@@ -16049,7 +16038,7 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -16064,17 +16053,17 @@ function getValueFormatted6({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n40.__)("True");
+    return (0, import_i18n41.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n40.__)("False");
+    return (0, import_i18n41.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n40.__)("Value must be true, false, or undefined");
+    return (0, import_i18n41.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -16126,7 +16115,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -16151,10 +16140,10 @@ function render2({ item, field }) {
 function isValidCustom5(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-    return (0, import_i18n41.__)("Value must be an array.");
+    return (0, import_i18n42.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n41.__)("Every value must be a string.");
+    return (0, import_i18n42.__)("Every value must be a string.");
   }
   return null;
 }
@@ -16252,7 +16241,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -16282,7 +16271,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n42.__)("Value must be a valid color.");
+    return (0, import_i18n43.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -16943,7 +16932,7 @@ var import_data10 = __toESM(require_data());
 var import_element58 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 var import_patterns3 = __toESM(require_patterns());
-var import_i18n47 = __toESM(require_i18n());
+var import_i18n48 = __toESM(require_i18n());
 
 // routes/lock-unlock.ts
 var import_private_apis2 = __toESM(require_private_apis());
@@ -16953,7 +16942,7 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
 );
 
 // routes/pattern-list/view-utils.ts
-var import_i18n43 = __toESM(require_i18n());
+var import_i18n44 = __toESM(require_i18n());
 var LAYOUT_GRID2 = "grid";
 var LAYOUT_TABLE2 = "table";
 var DEFAULT_VIEW = {
@@ -16974,15 +16963,15 @@ var DEFAULT_VIEW = {
 var DEFAULT_VIEWS = [
   {
     slug: "all",
-    label: (0, import_i18n43.__)("All patterns")
+    label: (0, import_i18n44.__)("All patterns")
   },
   {
     slug: "my-patterns",
-    label: (0, import_i18n43.__)("My patterns")
+    label: (0, import_i18n44.__)("My patterns")
   },
   {
     slug: "registered",
-    label: (0, import_i18n43.__)("Registered")
+    label: (0, import_i18n44.__)("Registered")
   }
 ];
 var DEFAULT_LAYOUTS = {
@@ -16995,7 +16984,7 @@ var DEFAULT_LAYOUTS = {
 };
 
 // routes/pattern-list/fields/preview.tsx
-var import_i18n44 = __toESM(require_i18n());
+var import_i18n45 = __toESM(require_i18n());
 import { Preview } from "@wordpress/lazy-editor";
 function PreviewField({ item }) {
   return /* @__PURE__ */ React.createElement(
@@ -17008,33 +16997,33 @@ function PreviewField({ item }) {
   );
 }
 var previewField = {
-  label: (0, import_i18n44.__)("Preview"),
+  label: (0, import_i18n45.__)("Preview"),
   id: "preview",
   render: PreviewField,
   enableSorting: false
 };
 
 // routes/pattern-list/fields/sync-status.tsx
-var import_i18n45 = __toESM(require_i18n());
+var import_i18n46 = __toESM(require_i18n());
 var import_patterns = __toESM(require_patterns());
 var { PATTERN_SYNC_TYPES } = unlock2(import_patterns.privateApis);
 var OPERATOR_IS2 = "is";
 var SYNC_FILTERS = [
   {
     value: PATTERN_SYNC_TYPES.full,
-    label: (0, import_i18n45._x)("Synced", "pattern (singular)"),
-    description: (0, import_i18n45.__)("Patterns that are kept in sync across the site.")
+    label: (0, import_i18n46._x)("Synced", "pattern (singular)"),
+    description: (0, import_i18n46.__)("Patterns that are kept in sync across the site.")
   },
   {
     value: PATTERN_SYNC_TYPES.unsynced,
-    label: (0, import_i18n45._x)("Not synced", "pattern (singular)"),
-    description: (0, import_i18n45.__)(
+    label: (0, import_i18n46._x)("Not synced", "pattern (singular)"),
+    description: (0, import_i18n46.__)(
       "Patterns that can be changed freely without affecting the site."
     )
   }
 ];
 var patternStatusField = {
-  label: (0, import_i18n45.__)("Sync status"),
+  label: (0, import_i18n46.__)("Sync status"),
   id: "sync-status",
   render: ({ item }) => {
     const syncStatus = item.syncStatus;
@@ -17055,7 +17044,7 @@ var patternStatusField = {
 };
 
 // routes/pattern-list/fields/category.tsx
-var import_i18n46 = __toESM(require_i18n());
+var import_i18n47 = __toESM(require_i18n());
 var import_data8 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_element56 = __toESM(require_element());
@@ -17116,7 +17105,7 @@ function usePatternCategories() {
 function usePatternCategoryField() {
   const categories = usePatternCategories();
   return {
-    label: (0, import_i18n46.__)("Category"),
+    label: (0, import_i18n47.__)("Category"),
     id: "category",
     render: CategoryField,
     elements: categories,
@@ -17601,8 +17590,8 @@ function PatternList() {
   return /* @__PURE__ */ React.createElement(
     page_default,
     {
-      title: (0, import_i18n47.__)("Patterns"),
-      subTitle: (0, import_i18n47.__)(
+      title: (0, import_i18n48.__)("Patterns"),
+      subTitle: (0, import_i18n48.__)(
         "Reusable design elements for your site. Create once, use everywhere."
       ),
       className: "pattern-page",

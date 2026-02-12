@@ -878,7 +878,7 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/navigation-list/stage.tsx
-var import_i18n45 = __toESM(require_i18n());
+var import_i18n46 = __toESM(require_i18n());
 
 // node_modules/dequal/dist/index.mjs
 var has = Object.prototype.hasOwnProperty;
@@ -15390,6 +15390,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components46 = __toESM(require_components(), 1);
 var import_element53 = __toESM(require_element(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl3 } = unlock(import_components46.privateApis);
 var ColorPickerDropdown = ({
@@ -15400,30 +15401,18 @@ var ColorPickerDropdown = ({
   return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
     import_components46.Dropdown,
     {
-      renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
-        "button",
+      className: "dataviews-controls__color-picker-dropdown",
+      popoverProps: { resize: false },
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+        import_components46.Button,
         {
-          type: "button",
           onClick: onToggle,
-          style: {
-            width: "24px",
-            height: "24px",
-            borderRadius: "50%",
-            backgroundColor: validColor,
-            border: "1px solid #ddd",
-            cursor: "pointer",
-            outline: isOpen ? "2px solid #007cba" : "none",
-            outlineOffset: "2px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 0,
-            margin: 0
-          },
-          "aria-label": "Open color picker"
+          "aria-label": (0, import_i18n36.__)("Open color picker"),
+          size: "small",
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components46.ColorIndicator, { colorValue: validColor })
         }
-      ) }),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+      ),
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components46.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
         import_components46.ColorPicker,
         {
           color: validColor,
@@ -15469,13 +15458,13 @@ function Color({
       onChange: handleInputChange,
       hideLabelFromVision,
       type: "text",
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
         ColorPickerDropdown,
         {
           color: value,
           onColorChange: handleColorChange
         }
-      )
+      ) })
     }
   );
 }
@@ -15483,7 +15472,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components47 = __toESM(require_components(), 1);
 var import_element54 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -15514,7 +15503,7 @@ function Password({
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible2 ? (0, import_i18n36.__)("Hide password") : (0, import_i18n36.__)("Show password")
+            label: isVisible2 ? (0, import_i18n37.__)("Hide password") : (0, import_i18n37.__)("Show password")
           }
         ) })
       }
@@ -15636,7 +15625,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -15746,7 +15735,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n37.__)("Value must be a valid email address.");
+    return (0, import_i18n38.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -15783,7 +15772,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -15849,7 +15838,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n38.__)("Value must be an integer.");
+    return (0, import_i18n39.__)("Value must be an integer.");
   }
   return null;
 }
@@ -15896,7 +15885,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -15932,7 +15921,7 @@ function isEmpty2(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty2(value) && !Number.isFinite(value)) {
-    return (0, import_i18n39.__)("Value must be a number.");
+    return (0, import_i18n40.__)("Value must be a number.");
   }
   return null;
 }
@@ -16138,7 +16127,7 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -16153,17 +16142,17 @@ function getValueFormatted6({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n40.__)("True");
+    return (0, import_i18n41.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n40.__)("False");
+    return (0, import_i18n41.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n40.__)("Value must be true, false, or undefined");
+    return (0, import_i18n41.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -16215,7 +16204,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -16240,10 +16229,10 @@ function render2({ item, field }) {
 function isValidCustom5(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-    return (0, import_i18n41.__)("Value must be an array.");
+    return (0, import_i18n42.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n41.__)("Every value must be a string.");
+    return (0, import_i18n42.__)("Every value must be a string.");
   }
   return null;
 }
@@ -16341,7 +16330,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -16371,7 +16360,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n42.__)("Value must be a valid color.");
+    return (0, import_i18n43.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -16859,13 +16848,13 @@ function getDefaultView() {
 }
 
 // routes/navigation-list/actions/edit-navigation.tsx
-var import_i18n43 = __toESM(require_i18n());
+var import_i18n44 = __toESM(require_i18n());
 import { useNavigate } from "@wordpress/route";
 function useEditNavigationAction() {
   const navigate = useNavigate();
   return {
     id: "edit",
-    label: (0, import_i18n43.__)("Edit"),
+    label: (0, import_i18n44.__)("Edit"),
     isPrimary: true,
     icon: pencil_default,
     callback: (items) => {
@@ -16882,7 +16871,7 @@ function useEditNavigationAction() {
 
 // routes/navigation-list/add-navigation.tsx
 var import_element56 = __toESM(require_element());
-var import_i18n44 = __toESM(require_i18n());
+var import_i18n45 = __toESM(require_i18n());
 var import_core_data = __toESM(require_core_data());
 var import_notices = __toESM(require_notices());
 var import_data8 = __toESM(require_data());
@@ -16917,7 +16906,7 @@ var AddNavigationModal = ({
       );
       if (savedRecord) {
         createSuccessNotice(
-          (0, import_i18n44.__)("Navigation menu created successfully."),
+          (0, import_i18n45.__)("Navigation menu created successfully."),
           {
             type: "snackbar"
           }
@@ -16931,9 +16920,9 @@ var AddNavigationModal = ({
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
       createErrorNotice(
-        (0, import_i18n44.sprintf)(
+        (0, import_i18n45.sprintf)(
           /* translators: %s: error message describing why the navigation menu could not be created. */
-          (0, import_i18n44.__)("Unable to create navigation menu: %s"),
+          (0, import_i18n45.__)("Unable to create navigation menu: %s"),
           errorMessage
         ),
         {
@@ -16947,7 +16936,7 @@ var AddNavigationModal = ({
   return /* @__PURE__ */ React.createElement(
     import_components48.Modal,
     {
-      title: (0, import_i18n44.__)("Add New Navigation Menu"),
+      title: (0, import_i18n45.__)("Add New Navigation Menu"),
       onRequestClose: () => closeModal?.(),
       focusOnMount: "firstContentElement",
       size: "small"
@@ -16966,8 +16955,8 @@ var AddNavigationModal = ({
           autoComplete: "off",
           value: menuTitle,
           onChange: setMenuTitle,
-          label: (0, import_i18n44.__)("Name"),
-          placeholder: (0, import_i18n44.__)("Enter menu name"),
+          label: (0, import_i18n45.__)("Name"),
+          placeholder: (0, import_i18n45.__)("Enter menu name"),
           disabled: isBusy
         }
       ), /* @__PURE__ */ React.createElement(import_components48.__experimentalHStack, { justify: "right", spacing: 2 }, /* @__PURE__ */ React.createElement(
@@ -16978,7 +16967,7 @@ var AddNavigationModal = ({
           disabled: isBusy,
           accessibleWhenDisabled: true
         },
-        (0, import_i18n44.__)("Cancel")
+        (0, import_i18n45.__)("Cancel")
       ), /* @__PURE__ */ React.createElement(
         import_components48.Button,
         {
@@ -16988,7 +16977,7 @@ var AddNavigationModal = ({
           disabled: isBusy || !menuTitle?.trim(),
           accessibleWhenDisabled: true
         },
-        (0, import_i18n44.__)("Create Menu")
+        (0, import_i18n45.__)("Create Menu")
       )))
     )
   );
@@ -17088,7 +17077,7 @@ function NavigationList() {
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
     page_default,
     {
-      title: (0, import_i18n45.__)("Navigation"),
+      title: (0, import_i18n46.__)("Navigation"),
       className: "navigation-page",
       hasPadding: false,
       actions: /* @__PURE__ */ React.createElement(
@@ -17098,7 +17087,7 @@ function NavigationList() {
           size: "compact",
           onClick: () => setShowAddModal(true)
         },
-        (0, import_i18n45.__)("Add New")
+        (0, import_i18n46.__)("Add New")
       )
     },
     /* @__PURE__ */ React.createElement(
