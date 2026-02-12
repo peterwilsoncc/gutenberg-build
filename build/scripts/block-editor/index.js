@@ -24740,6 +24740,13 @@ var wp;
             setContentEditableWrapper2(node, false);
             return;
           }
+          if (event.type === "mouseup" && !event.shiftKey && !isMultiSelecting3() && startClientId === endClientId) {
+            const clickedClientId = getBlockClientId(event.target);
+            if (clickedClientId && clickedClientId !== startClientId) {
+              selection2.removeAllRanges();
+              return;
+            }
+          }
           const isSingularSelection = startClientId === endClientId;
           if (isSingularSelection) {
             if (!isMultiSelecting3()) {
