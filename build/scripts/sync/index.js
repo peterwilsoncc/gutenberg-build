@@ -10418,7 +10418,7 @@ var wp;
 
   // packages/sync/build-module/providers/http-polling/utils.mjs
   var import_api_fetch = __toESM(require_api_fetch(), 1);
-  var SYNC_API_PATH = "/wp/v2/sync/updates";
+  var SYNC_API_PATH = "/wp-sync/v1/updates";
   function uint8ArrayToBase64(data) {
     let binary = "";
     const len = data.byteLength;
@@ -10829,7 +10829,7 @@ var wp;
     if (providerCreators) {
       return providerCreators;
     }
-    if (!window.__wpSyncEnabled) {
+    if (!window._wpCollaborationEnabled) {
       return [];
     }
     const filteredProviderCreators = (0, import_hooks.applyFilters)(

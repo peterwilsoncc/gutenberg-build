@@ -4513,7 +4513,9 @@ var wp;
         "postType",
         currentPostType
       );
-      return Boolean(entityConfig?.syncConfig && window.__wpSyncEnabled);
+      return Boolean(
+        entityConfig?.syncConfig && window._wpCollaborationEnabled
+      );
     }
   );
 
