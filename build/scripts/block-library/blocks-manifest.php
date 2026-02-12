@@ -4715,6 +4715,7 @@ return array(
 			'customFontSize',
 			'showSubmenuIcon',
 			'maxNestingLevel',
+			'openSubmenusOnClick',
 			'submenuVisibility',
 			'style'
 		),

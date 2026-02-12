@@ -44406,6 +44406,7 @@ ${js}
       "customFontSize",
       "showSubmenuIcon",
       "maxNestingLevel",
+      "openSubmenusOnClick",
       "submenuVisibility",
       "style"
     ],
