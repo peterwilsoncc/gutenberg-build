@@ -4128,6 +4128,7 @@ var wp;
     __experimentalSaveSpecifiedEntityEdits: () => __experimentalSaveSpecifiedEntityEdits,
     __unstableCreateUndoLevel: () => __unstableCreateUndoLevel,
     addEntities: () => addEntities,
+    clearEntityRecordEdits: () => clearEntityRecordEdits,
     deleteEntityRecord: () => deleteEntityRecord,
     editEntityRecord: () => editEntityRecord,
     receiveAutosaves: () => receiveAutosaves,
@@ -4559,6 +4560,37 @@ var wp;
     dispatch3({
       type: "EDIT_ENTITY_RECORD",
       ...edit
+    });
+  };
+  var clearEntityRecordEdits = (kind, name, recordId) => ({ select: select3, dispatch: dispatch3 }) => {
+    const entityConfig = select3.getEntityConfig(kind, name);
+    logEntityDeprecation(kind, name, "clearEntityRecordEdits");
+    if (!entityConfig) {
+      throw new Error(
+        `The entity being edited (${kind}, ${name}) does not have a loaded config.`
+      );
+    }
+    const currentEdits = select3.getEntityRecordEdits(
+      kind,
+      name,
+      recordId
+    );
+    if (!currentEdits) {
+      return;
+    }
+    const clearedEdits = Object.keys(currentEdits).reduce(
+      (acc, key) => {
+        acc[key] = void 0;
+        return acc;
+      },
+      {}
+    );
+    dispatch3({
+      type: "EDIT_ENTITY_RECORD",
+      kind,
+      name,
+      recordId,
+      edits: clearedEdits
     });
   };
   var undo = () => ({ select: select3, dispatch: dispatch3 }) => {
