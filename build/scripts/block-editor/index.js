@@ -22207,6 +22207,14 @@ var wp;
       ),
       [viewportChecked]
     );
+    const isDirty = (0, import_element30.useMemo)(() => {
+      if (hideEverywhere !== initialViewportValues.hideEverywhere) {
+        return true;
+      }
+      return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.some(
+        ([, { key }]) => viewportChecked[key] !== initialViewportValues.viewportChecked[key]
+      );
+    }, [hideEverywhere, viewportChecked, initialViewportValues]);
     const hasIndeterminateValues = (0, import_element30.useMemo)(() => {
       if (hideEverywhere === null) {
         return true;
@@ -22372,6 +22380,8 @@ var wp;
                   {
                     variant: "primary",
                     type: "submit",
+                    disabled: !isDirty,
+                    accessibleWhenDisabled: true,
                     __next40pxDefaultSize: true,
                     children: (0, import_i18n25.__)("Apply")
                   }
