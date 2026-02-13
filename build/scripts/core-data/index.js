@@ -417,6 +417,7 @@ var wp;
   var index_exports = {};
   __export(index_exports, {
     EntityProvider: () => EntityProvider,
+    SelectionType: () => SelectionType,
     __experimentalFetchLinkSuggestions: () => fetchLinkSuggestions,
     __experimentalFetchUrlData: () => experimental_fetch_url_data_default,
     __experimentalUseEntityRecord: () => __experimentalUseEntityRecord,
@@ -1346,6 +1347,14 @@ var wp;
   }
 
   // packages/core-data/build-module/utils/crdt-user-selections.mjs
+  var SelectionType = /* @__PURE__ */ ((SelectionType2) => {
+    SelectionType2["None"] = "none";
+    SelectionType2["Cursor"] = "cursor";
+    SelectionType2["SelectionInOneBlock"] = "selection-in-one-block";
+    SelectionType2["SelectionInMultipleBlocks"] = "selection-in-multiple-blocks";
+    SelectionType2["WholeBlock"] = "whole-block";
+    return SelectionType2;
+  })(SelectionType || {});
   function getSelectionState(selectionStart, selectionEnd, yDoc) {
     const ymap = getRootMap(yDoc, CRDT_RECORD_MAP_KEY);
     const yBlocks = ymap.get("blocks") ?? new import_sync5.Y.Array();
@@ -6992,13 +7001,17 @@ var wp;
   function useActiveCollaborators(postId, postType) {
     return usePostEditorAwarenessState(postId, postType).activeCollaborators;
   }
+  function useGetAbsolutePositionIndex(postId, postType) {
+    return usePostEditorAwarenessState(postId, postType).getAbsolutePositionIndex;
+  }
 
   // packages/core-data/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
     useEntityRecordsWithPermissions,
     RECEIVE_INTERMEDIATE_RESULTS,
-    useActiveCollaborators
+    useActiveCollaborators,
+    useGetAbsolutePositionIndex
   });
 
   // packages/core-data/build-module/index.mjs
