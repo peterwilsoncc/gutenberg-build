@@ -8015,7 +8015,6 @@ return array(
 	),
 	'tab' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'__experimental' => true,
 		'apiVersion' => 3,
 		'name' => 'core/tab',
 		'title' => 'Tab',
@@ -8072,7 +8071,6 @@ return array(
 	),
 	'tab-panel' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'__experimental' => true,
 		'apiVersion' => 3,
 		'name' => 'core/tab-panel',
 		'title' => 'Tab Panel',
@@ -8459,7 +8457,6 @@ return array(
 	),
 	'tabs' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'__experimental' => true,
 		'apiVersion' => 3,
 		'name' => 'core/tabs',
 		'title' => 'Tabs',
@@ -8589,7 +8586,6 @@ return array(
 	),
 	'tabs-menu' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'__experimental' => true,
 		'apiVersion' => 3,
 		'name' => 'core/tabs-menu',
 		'title' => 'Tabs Menu',
@@ -8668,7 +8664,6 @@ return array(
 	),
 	'tabs-menu-item' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'__experimental' => true,
 		'apiVersion' => 3,
 		'name' => 'core/tabs-menu-item',
 		'title' => 'Tab Menu Item',
