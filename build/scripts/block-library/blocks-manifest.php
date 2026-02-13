@@ -4449,6 +4449,7 @@ return array(
 			'customFontSize' => 'customFontSize',
 			'showSubmenuIcon' => 'showSubmenuIcon',
 			'submenuVisibility' => 'submenuVisibility',
+			'openSubmenusOnClick' => 'openSubmenusOnClick',
 			'style' => 'style',
 			'maxNestingLevel' => 'maxNestingLevel'
 		),

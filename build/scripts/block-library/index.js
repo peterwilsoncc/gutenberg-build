@@ -37888,6 +37888,7 @@ ${js}
       customFontSize: "customFontSize",
       showSubmenuIcon: "showSubmenuIcon",
       submenuVisibility: "submenuVisibility",
+      openSubmenusOnClick: "openSubmenusOnClick",
       style: "style",
       maxNestingLevel: "maxNestingLevel"
     },
@@ -41902,15 +41903,6 @@ ${js}
     return false;
   }
 
-  // packages/block-library/build-module/navigation/utils/get-submenu-visibility.mjs
-  function getSubmenuVisibility(attributes2) {
-    const { submenuVisibility, openSubmenusOnClick } = attributes2;
-    if (submenuVisibility) {
-      return submenuVisibility;
-    }
-    return openSubmenusOnClick ? "click" : "hover";
-  }
-
   // packages/block-library/build-module/navigation/edit/index.mjs
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   function NavigationAddPageButton({ clientId }) {
@@ -42382,8 +42374,7 @@ ${js}
       "wp-block-navigation__overlay-menu-preview",
       { open: overlayMenuPreview }
     );
-    const computedSubmenuVisibility = getSubmenuVisibility(attributes2);
-    const submenuAccessibilityNotice = !showSubmenuIcon && computedSubmenuVisibility !== "click" && computedSubmenuVisibility !== "always" ? (0, import_i18n141.__)(
+    const submenuAccessibilityNotice = !showSubmenuIcon && submenuVisibility !== "click" && submenuVisibility !== "always" ? (0, import_i18n141.__)(
       'The current menu options offer reduced accessibility for users and are not recommended. Enabling either "Open on Click" or "Show arrow" offers enhanced accessibility by allowing keyboard users to browse submenus selectively.'
     ) : "";
     const isFirstRender = (0, import_element80.useRef)(true);
@@ -42478,7 +42469,7 @@ ${js}
                 onDeselect: () => setAttributes({
                   showSubmenuIcon: true
                 }),
-                isDisabled: computedSubmenuVisibility === "click" || computedSubmenuVisibility === "always",
+                isDisabled: submenuVisibility === "click" || submenuVisibility === "always",
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
                   import_components93.ToggleControl,
@@ -42489,7 +42480,7 @@ ${js}
                         showSubmenuIcon: value
                       });
                     },
-                    disabled: computedSubmenuVisibility === "click" || computedSubmenuVisibility === "always",
+                    disabled: submenuVisibility === "click" || submenuVisibility === "always",
                     label: (0, import_i18n141.__)("Show arrow")
                   }
                 )
@@ -44345,9 +44336,8 @@ ${js}
     clientId
   }) {
     const { label, url, description, kind, type, id } = attributes2;
-    const { showSubmenuIcon, maxNestingLevel } = context;
+    const { showSubmenuIcon, maxNestingLevel, submenuVisibility } = context;
     const blockEditingMode = (0, import_block_editor163.useBlockEditingMode)();
-    const submenuVisibility = getSubmenuVisibility(context);
     const openSubmenusOnClick = blockEditingMode !== "default" ? true : submenuVisibility === "click";
     const { clearBinding, createBinding } = useEntityBinding({
       clientId,
