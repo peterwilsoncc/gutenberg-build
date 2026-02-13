@@ -26607,7 +26607,8 @@ ${url}
       },
       interactivity: {
         clientNavigation: true
-      }
+      },
+      listView: true
     },
     editorStyle: "wp-block-gallery-editor",
     style: "wp-block-gallery"

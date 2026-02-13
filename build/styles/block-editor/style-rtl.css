@@ -2102,6 +2102,10 @@ iframe[name=editor-canvas] {
   hyphens: auto;
 }
 
+.modal-open .block-editor-inspector-list-view-content-popover {
+  z-index: 99999;
+}
+
 .block-editor-block-inspector__tabs [role=tablist] {
   width: 100%;
 }
@@ -3007,7 +3011,7 @@ iframe[name=editor-canvas] {
 }
 
 .modal-open .block-editor-media-replace-flow__options {
-  display: none;
+  z-index: 99999;
 }
 
 .block-editor-media-replace-flow__indicator {

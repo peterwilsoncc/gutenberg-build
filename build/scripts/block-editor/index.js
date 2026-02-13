@@ -32995,6 +32995,7 @@ var wp;
       import_components70.Popover,
       {
         ...popoverProps3 ?? {},
+        className: "block-editor-inspector-list-view-content-popover",
         anchor: anchorElement,
         onClose: closeListViewContentPanel2,
         children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)("div", { style: { width: "280px" }, children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(Slot2, {}) })
@@ -73753,6 +73754,9 @@ var wp;
   function ListViewPanel({ clientId, name }) {
     const { isSelectionWithinCurrentSection } = (0, import_element272.useContext)(PrivateBlockContext);
     const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
+    const { openListViewContentPanel: openListViewContentPanel2 } = unlock(
+      (0, import_data192.useDispatch)(store)
+    );
     const isEnabled = hasListViewSupport(name);
     const { hasChildren, isNestedListView } = (0, import_data192.useSelect)(
       (select3) => {
@@ -73789,7 +73793,8 @@ var wp;
               rootClientId: clientId,
               isExpanded: true,
               description: title,
-              showAppender: true
+              showAppender: true,
+              onSelect: openListViewContentPanel2
             },
             `${clientId}-${expandRevision}`
           )
