@@ -37805,9 +37805,7 @@ var wp;
   // packages/editor/build-module/components/style-book/duotone-examples.mjs
   var import_components98 = __toESM(require_components(), 1);
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
-  var DuotoneExamples = ({
-    duotones
-  }) => {
+  var DuotoneExamples = ({ duotones }) => {
     if (!duotones) {
       return null;
     }
