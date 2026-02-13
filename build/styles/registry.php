@@ -43,11 +43,6 @@ return array(
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-widgets',
-		'path' => 'widgets/style',
-		'dependencies' => array('wp-block-editor', 'wp-components'),
-	),
-	array(
 		'handle' => 'wp-components',
 		'path' => 'components/style',
 		'dependencies' => array(),
@@ -55,6 +50,11 @@ return array(
 	array(
 		'handle' => 'wp-format-library',
 		'path' => 'format-library/style',
+		'dependencies' => array('wp-block-editor', 'wp-components'),
+	),
+	array(
+		'handle' => 'wp-widgets',
+		'path' => 'widgets/style',
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(

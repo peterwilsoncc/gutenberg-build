@@ -3916,19 +3916,12 @@ var wp;
   // packages/icons/build-module/library/archive.mjs
   var import_primitives9 = __toESM(require_primitives(), 1);
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
-  var archive_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives9.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-    import_primitives9.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M11.934 7.406a1 1 0 0 0 .914.594H19a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5h5.764a.5.5 0 0 1 .447.276l.723 1.63Zm1.064-1.216a.5.5 0 0 0 .462.31H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.764a2 2 0 0 1 1.789 1.106l.445 1.084ZM8.5 10.5h7V12h-7v-1.5Zm7 3.5h-7v1.5h7V14Z"
-    }
-  ) });
+  var archive_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives9.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M11.934 7.406a1 1 0 0 0 .914.594H19a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5h5.764a.5.5 0 0 1 .447.276l.723 1.63Zm1.064-1.216a.5.5 0 0 0 .462.31H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.764a2 2 0 0 1 1.789 1.106l.445 1.084ZM8.5 10.5h7V12h-7v-1.5Zm7 3.5h-7v1.5h7V14Z" }) });
 
   // packages/icons/build-module/library/audio.mjs
   var import_primitives10 = __toESM(require_primitives(), 1);
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-  var audio_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives10.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives10.Path, { d: "M17.7 4.3c-1.2 0-2.8 0-3.8 1-.6.6-.9 1.5-.9 2.6V14c-.6-.6-1.5-1-2.5-1C8.6 13 7 14.6 7 16.5S8.6 20 10.5 20c1.5 0 2.8-1 3.3-2.3.5-.8.7-1.8.7-2.5V7.9c0-.7.2-1.2.5-1.6.6-.6 1.8-.6 2.8-.6h.3V4.3h-.4z" }) });
+  var audio_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives10.Path, { d: "M17.7 4.3c-1.2 0-2.8 0-3.8 1-.6.6-.9 1.5-.9 2.6V14c-.6-.6-1.5-1-2.5-1C8.6 13 7 14.6 7 16.5S8.6 20 10.5 20c1.5 0 2.8-1 3.3-2.3.5-.8.7-1.8.7-2.5V7.9c0-.7.2-1.2.5-1.6.6-.6 1.8-.6 2.8-.6h.3V4.3h-.4z" }) });
 
   // packages/icons/build-module/library/block-default.mjs
   var import_primitives11 = __toESM(require_primitives(), 1);
@@ -3938,7 +3931,7 @@ var wp;
   // packages/icons/build-module/library/block-table.mjs
   var import_primitives12 = __toESM(require_primitives(), 1);
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives12.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives12.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
+  var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives12.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
 
   // packages/icons/build-module/library/breadcrumbs.mjs
   var import_primitives13 = __toESM(require_primitives(), 1);
@@ -3948,46 +3941,32 @@ var wp;
   // packages/icons/build-module/library/button.mjs
   var import_primitives14 = __toESM(require_primitives(), 1);
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  var button_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives14.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives14.Path, { d: "M8 12.5h8V11H8v1.5Z M19 6.5H5a2 2 0 0 0-2 2V15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2ZM5 8h14a.5.5 0 0 1 .5.5V15a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V8.5A.5.5 0 0 1 5 8Z" }) });
+  var button_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives14.Path, { d: "M8 12.5h8V11H8v1.5Z M19 6.5H5a2 2 0 0 0-2 2V15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2ZM5 8h14a.5.5 0 0 1 .5.5V15a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V8.5A.5.5 0 0 1 5 8Z" }) });
 
   // packages/icons/build-module/library/buttons.mjs
   var import_primitives15 = __toESM(require_primitives(), 1);
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  var buttons_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives15.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives15.Path, { d: "M14.5 17.5H9.5V16H14.5V17.5Z M14.5 8H9.5V6.5H14.5V8Z M7 3.5H17C18.1046 3.5 19 4.39543 19 5.5V9C19 10.1046 18.1046 11 17 11H7C5.89543 11 5 10.1046 5 9V5.5C5 4.39543 5.89543 3.5 7 3.5ZM17 5H7C6.72386 5 6.5 5.22386 6.5 5.5V9C6.5 9.27614 6.72386 9.5 7 9.5H17C17.2761 9.5 17.5 9.27614 17.5 9V5.5C17.5 5.22386 17.2761 5 17 5Z M7 13H17C18.1046 13 19 13.8954 19 15V18.5C19 19.6046 18.1046 20.5 17 20.5H7C5.89543 20.5 5 19.6046 5 18.5V15C5 13.8954 5.89543 13 7 13ZM17 14.5H7C6.72386 14.5 6.5 14.7239 6.5 15V18.5C6.5 18.7761 6.72386 19 7 19H17C17.2761 19 17.5 18.7761 17.5 18.5V15C17.5 14.7239 17.2761 14.5 17 14.5Z" }) });
+  var buttons_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives15.Path, { d: "M14.5 17.5H9.5V16H14.5V17.5Z M14.5 8H9.5V6.5H14.5V8Z M7 3.5H17C18.1046 3.5 19 4.39543 19 5.5V9C19 10.1046 18.1046 11 17 11H7C5.89543 11 5 10.1046 5 9V5.5C5 4.39543 5.89543 3.5 7 3.5ZM17 5H7C6.72386 5 6.5 5.22386 6.5 5.5V9C6.5 9.27614 6.72386 9.5 7 9.5H17C17.2761 9.5 17.5 9.27614 17.5 9V5.5C17.5 5.22386 17.2761 5 17 5Z M7 13H17C18.1046 13 19 13.8954 19 15V18.5C19 19.6046 18.1046 20.5 17 20.5H7C5.89543 20.5 5 19.6046 5 18.5V15C5 13.8954 5.89543 13 7 13ZM17 14.5H7C6.72386 14.5 6.5 14.7239 6.5 15V18.5C6.5 18.7761 6.72386 19 7 19H17C17.2761 19 17.5 18.7761 17.5 18.5V15C17.5 14.7239 17.2761 14.5 17 14.5Z" }) });
 
   // packages/icons/build-module/library/calendar.mjs
   var import_primitives16 = __toESM(require_primitives(), 1);
   var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-  var calendar_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives16.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives16.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z" }) });
+  var calendar_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives16.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z" }) });
 
   // packages/icons/build-module/library/caption.mjs
   var import_primitives17 = __toESM(require_primitives(), 1);
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  var caption_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives17.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
-    import_primitives17.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M6 5.5h12a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5ZM4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Zm4 10h2v-1.5H8V16Zm5 0h-2v-1.5h2V16Zm1 0h2v-1.5h-2V16Z"
-    }
-  ) });
+  var caption_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives17.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M6 5.5h12a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5ZM4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Zm4 10h2v-1.5H8V16Zm5 0h-2v-1.5h2V16Zm1 0h2v-1.5h-2V16Z" }) });
 
   // packages/icons/build-module/library/category.mjs
   var import_primitives18 = __toESM(require_primitives(), 1);
   var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
-  var category_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives18.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
-    import_primitives18.Path,
-    {
-      d: "M6 5.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM4 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm11-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM13 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2V6zm5 8.5h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zM15 13a2 2 0 00-2 2v3a2 2 0 002 2h3a2 2 0 002-2v-3a2 2 0 00-2-2h-3zm-9 1.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM4 15a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3z",
-      fillRule: "evenodd",
-      clipRule: "evenodd"
-    }
-  ) });
+  var category_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives18.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M6 5.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM4 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm11-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM13 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2V6zm5 8.5h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zM15 13a2 2 0 00-2 2v3a2 2 0 002 2h3a2 2 0 002-2v-3a2 2 0 00-2-2h-3zm-9 1.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM4 15a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3z" }) });
 
   // packages/icons/build-module/library/chevron-down.mjs
   var import_primitives19 = __toESM(require_primitives(), 1);
   var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives19.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives19.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
+  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives19.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
 
   // packages/icons/build-module/library/chevron-left-small.mjs
   var import_primitives20 = __toESM(require_primitives(), 1);
@@ -4012,12 +3991,12 @@ var wp;
   // packages/icons/build-module/library/chevron-up.mjs
   var import_primitives24 = __toESM(require_primitives(), 1);
   var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
-  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives24.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives24.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
+  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives24.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
 
   // packages/icons/build-module/library/classic.mjs
   var import_primitives25 = __toESM(require_primitives(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
-  var classic_default = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives25.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives25.Path, { d: "M20 6H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H4c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h16c.3 0 .5.2.5.5v9zM10 10H8v2h2v-2zm-5 2h2v-2H5v2zm8-2h-2v2h2v-2zm-5 6h8v-2H8v2zm6-4h2v-2h-2v2zm3 0h2v-2h-2v2zm0 4h2v-2h-2v2zM5 16h2v-2H5v2z" }) });
+  var classic_default = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives25.Path, { d: "M20 6H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H4c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h16c.3 0 .5.2.5.5v9zM10 10H8v2h2v-2zm-5 2h2v-2H5v2zm8-2h-2v2h2v-2zm-5 6h8v-2H8v2zm6-4h2v-2h-2v2zm3 0h2v-2h-2v2zm0 4h2v-2h-2v2zM5 16h2v-2H5v2z" }) });
 
   // packages/icons/build-module/library/close.mjs
   var import_primitives26 = __toESM(require_primitives(), 1);
@@ -4027,7 +4006,7 @@ var wp;
   // packages/icons/build-module/library/code.mjs
   var import_primitives27 = __toESM(require_primitives(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
-  var code_default = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives27.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives27.Path, { d: "M20.8 10.7l-4.3-4.3-1.1 1.1 4.3 4.3c.1.1.1.3 0 .4l-4.3 4.3 1.1 1.1 4.3-4.3c.7-.8.7-1.9 0-2.6zM4.2 11.8l4.3-4.3-1-1-4.3 4.3c-.7.7-.7 1.8 0 2.5l4.3 4.3 1.1-1.1-4.3-4.3c-.2-.1-.2-.3-.1-.4z" }) });
+  var code_default = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives27.Path, { d: "M20.8 10.7l-4.3-4.3-1.1 1.1 4.3 4.3c.1.1.1.3 0 .4l-4.3 4.3 1.1 1.1 4.3-4.3c.7-.8.7-1.9 0-2.6zM4.2 11.8l4.3-4.3-1-1-4.3 4.3c-.7.7-.7 1.8 0 2.5l4.3 4.3 1.1-1.1-4.3-4.3c-.2-.1-.2-.3-.1-.4z" }) });
 
   // packages/icons/build-module/library/column.mjs
   var import_primitives28 = __toESM(require_primitives(), 1);
@@ -4037,76 +4016,41 @@ var wp;
   // packages/icons/build-module/library/columns.mjs
   var import_primitives29 = __toESM(require_primitives(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-  var columns_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives29.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
-    import_primitives29.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M15 7.5h-5v10h5v-10Zm1.5 0v10H19a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.5-.5h-2.5ZM6 7.5h2.5v10H6a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5ZM6 6h13a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
-    }
-  ) });
+  var columns_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives29.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives29.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M15 7.5h-5v10h5v-10Zm1.5 0v10H19a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.5-.5h-2.5ZM6 7.5h2.5v10H6a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5ZM6 6h13a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" }) });
 
   // packages/icons/build-module/library/comment-author-avatar.mjs
   var import_primitives30 = __toESM(require_primitives(), 1);
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
-  var comment_author_avatar_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives30.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
-    import_primitives30.Path,
-    {
-      fillRule: "evenodd",
-      d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
-      clipRule: "evenodd"
-    }
-  ) });
+  var comment_author_avatar_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives30.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives30.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" }) });
 
   // packages/icons/build-module/library/comment-author-name.mjs
   var import_primitives31 = __toESM(require_primitives(), 1);
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
-  var comment_author_name_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_primitives31.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-      import_primitives31.Path,
-      {
-        d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z",
-        fillRule: "evenodd",
-        clipRule: "evenodd"
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-      import_primitives31.Path,
-      {
-        d: "M15 15V15C15 13.8954 14.1046 13 13 13L11 13C9.89543 13 9 13.8954 9 15V15",
-        fillRule: "evenodd",
-        clipRule: "evenodd"
-      }
-    ),
+  var comment_author_name_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_primitives31.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives31.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z" }),
+    /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives31.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M15 15V15C15 13.8954 14.1046 13 13 13L11 13C9.89543 13 9 13.8954 9 15V15" }),
     /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives31.Circle, { cx: "12", cy: "9", r: "2", fillRule: "evenodd", clipRule: "evenodd" })
   ] });
 
   // packages/icons/build-module/library/comment-content.mjs
   var import_primitives32 = __toESM(require_primitives(), 1);
   var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-  var comment_content_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives32.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-    import_primitives32.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M6.68822 16.625L5.5 17.8145L5.5 5.5L18.5 5.5L18.5 16.625L6.68822 16.625ZM7.31 18.125L19 18.125C19.5523 18.125 20 17.6773 20 17.125L20 5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19.5247C4 19.8173 4.16123 20.086 4.41935 20.2237C4.72711 20.3878 5.10601 20.3313 5.35252 20.0845L7.31 18.125ZM16 9.99997H8V8.49997H16V9.99997ZM8 14H13V12.5H8V14Z"
-    }
-  ) });
+  var comment_content_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives32.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives32.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M6.68822 16.625L5.5 17.8145L5.5 5.5L18.5 5.5L18.5 16.625L6.68822 16.625ZM7.31 18.125L19 18.125C19.5523 18.125 20 17.6773 20 17.125L20 5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19.5247C4 19.8173 4.16123 20.086 4.41935 20.2237C4.72711 20.3878 5.10601 20.3313 5.35252 20.0845L7.31 18.125ZM16 9.99997H8V8.49997H16V9.99997ZM8 14H13V12.5H8V14Z" }) });
 
   // packages/icons/build-module/library/comment-edit-link.mjs
   var import_primitives33 = __toESM(require_primitives(), 1);
   var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
-  var comment_edit_link_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives33.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives33.Path, { d: "m6.249 11.065.44-.44h3.186l-1.5 1.5H7.31l-1.957 1.96A.792.792 0 0 1 4 13.524V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5L12.5 8V5.5h-7v6.315l.749-.75ZM20 19.75H7v-1.5h13v1.5Zm0-12.653-8.967 9.064L8 17l.867-2.935L17.833 5 20 7.097Z" }) });
+  var comment_edit_link_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives33.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives33.Path, { d: "m6.249 11.065.44-.44h3.186l-1.5 1.5H7.31l-1.957 1.96A.792.792 0 0 1 4 13.524V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5L12.5 8V5.5h-7v6.315l.749-.75ZM20 19.75H7v-1.5h13v1.5Zm0-12.653-8.967 9.064L8 17l.867-2.935L17.833 5 20 7.097Z" }) });
 
   // packages/icons/build-module/library/comment-reply-link.mjs
   var import_primitives34 = __toESM(require_primitives(), 1);
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-  var comment_reply_link_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives34.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives34.Path, { d: "M6.68822 10.625L6.24878 11.0649L5.5 11.8145L5.5 5.5L12.5 5.5V8L14 6.5V5C14 4.44772 13.5523 4 13 4H5C4.44772 4 4 4.44771 4 5V13.5247C4 13.8173 4.16123 14.086 4.41935 14.2237C4.72711 14.3878 5.10601 14.3313 5.35252 14.0845L7.31 12.125H8.375L9.875 10.625H7.31H6.68822ZM14.5605 10.4983L11.6701 13.75H16.9975C17.9963 13.75 18.7796 14.1104 19.3553 14.7048C19.9095 15.2771 20.2299 16.0224 20.4224 16.7443C20.7645 18.0276 20.7543 19.4618 20.7487 20.2544C20.7481 20.345 20.7475 20.4272 20.7475 20.4999L19.2475 20.5001C19.2475 20.4191 19.248 20.3319 19.2484 20.2394V20.2394C19.2526 19.4274 19.259 18.2035 18.973 17.1307C18.8156 16.5401 18.586 16.0666 18.2778 15.7483C17.9909 15.4521 17.5991 15.25 16.9975 15.25H11.8106L14.5303 17.9697L13.4696 19.0303L8.96956 14.5303L13.4394 9.50171L14.5605 10.4983Z" }) });
+  var comment_reply_link_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives34.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives34.Path, { d: "M6.68822 10.625L6.24878 11.0649L5.5 11.8145L5.5 5.5L12.5 5.5V8L14 6.5V5C14 4.44772 13.5523 4 13 4H5C4.44772 4 4 4.44771 4 5V13.5247C4 13.8173 4.16123 14.086 4.41935 14.2237C4.72711 14.3878 5.10601 14.3313 5.35252 14.0845L7.31 12.125H8.375L9.875 10.625H7.31H6.68822ZM14.5605 10.4983L11.6701 13.75H16.9975C17.9963 13.75 18.7796 14.1104 19.3553 14.7048C19.9095 15.2771 20.2299 16.0224 20.4224 16.7443C20.7645 18.0276 20.7543 19.4618 20.7487 20.2544C20.7481 20.345 20.7475 20.4272 20.7475 20.4999L19.2475 20.5001C19.2475 20.4191 19.248 20.3319 19.2484 20.2394V20.2394C19.2526 19.4274 19.259 18.2035 18.973 17.1307C18.8156 16.5401 18.586 16.0666 18.2778 15.7483C17.9909 15.4521 17.5991 15.25 16.9975 15.25H11.8106L14.5303 17.9697L13.4696 19.0303L8.96956 14.5303L13.4394 9.50171L14.5605 10.4983Z" }) });
 
   // packages/icons/build-module/library/comment.mjs
   var import_primitives35 = __toESM(require_primitives(), 1);
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
-  var comment_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives35.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives35.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z" }) });
+  var comment_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives35.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z" }) });
 
   // packages/icons/build-module/library/contents.mjs
   var import_primitives36 = __toESM(require_primitives(), 1);
@@ -4136,15 +4080,8 @@ var wp;
   // packages/icons/build-module/library/details.mjs
   var import_primitives41 = __toESM(require_primitives(), 1);
   var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
-  var details_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_primitives41.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
-      import_primitives41.Path,
-      {
-        d: "M4 16h10v1.5H4V16Zm0-4.5h16V13H4v-1.5ZM10 7h10v1.5H10V7Z",
-        fillRule: "evenodd",
-        clipRule: "evenodd"
-      }
-    ),
+  var details_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_primitives41.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives41.Path, { d: "M4 16h10v1.5H4V16Zm0-4.5h16V13H4v-1.5ZM10 7h10v1.5H10V7Z", fillRule: "evenodd", clipRule: "evenodd" }),
     /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives41.Path, { d: "m4 5.25 4 2.5-4 2.5v-5Z" })
   ] });
 
@@ -4156,25 +4093,12 @@ var wp;
   // packages/icons/build-module/library/file.mjs
   var import_primitives43 = __toESM(require_primitives(), 1);
   var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
-  var file_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives43.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
-    import_primitives43.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M12.848 8a1 1 0 0 1-.914-.594l-.723-1.63a.5.5 0 0 0-.447-.276H5a.5.5 0 0 0-.5.5v11.5a.5.5 0 0 0 .5.5h14a.5.5 0 0 0 .5-.5v-9A.5.5 0 0 0 19 8h-6.152Zm.612-1.5a.5.5 0 0 1-.462-.31l-.445-1.084A2 2 0 0 0 10.763 4H5a2 2 0 0 0-2 2v11.5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-5.54Z"
-    }
-  ) });
+  var file_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives43.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives43.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.848 8a1 1 0 0 1-.914-.594l-.723-1.63a.5.5 0 0 0-.447-.276H5a.5.5 0 0 0-.5.5v11.5a.5.5 0 0 0 .5.5h14a.5.5 0 0 0 .5-.5v-9A.5.5 0 0 0 19 8h-6.152Zm.612-1.5a.5.5 0 0 1-.462-.31l-.445-1.084A2 2 0 0 0 10.763 4H5a2 2 0 0 0-2 2v11.5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-5.54Z" }) });
 
   // packages/icons/build-module/library/footer.mjs
   var import_primitives44 = __toESM(require_primitives(), 1);
   var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
-  var footer_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives44.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
-    import_primitives44.Path,
-    {
-      fillRule: "evenodd",
-      d: "M18 5.5h-8v8h8.5V6a.5.5 0 00-.5-.5zm-9.5 8h-3V6a.5.5 0 01.5-.5h2.5v8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-    }
-  ) });
+  var footer_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives44.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives44.Path, { fillRule: "evenodd", d: "M18 5.5h-8v8h8.5V6a.5.5 0 00-.5-.5zm-9.5 8h-3V6a.5.5 0 01.5-.5h2.5v8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
   // packages/icons/build-module/library/format-indent-rtl.mjs
   var import_primitives45 = __toESM(require_primitives(), 1);
@@ -4229,31 +4153,17 @@ var wp;
   // packages/icons/build-module/library/gallery.mjs
   var import_primitives55 = __toESM(require_primitives(), 1);
   var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
-  var gallery_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives55.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
-    import_primitives55.Path,
-    {
-      d: "M16.375 4.5H4.625a.125.125 0 0 0-.125.125v8.254l2.859-1.54a.75.75 0 0 1 .68-.016l2.384 1.142 2.89-2.074a.75.75 0 0 1 .874 0l2.313 1.66V4.625a.125.125 0 0 0-.125-.125Zm.125 9.398-2.75-1.975-2.813 2.02a.75.75 0 0 1-.76.067l-2.444-1.17L4.5 14.583v1.792c0 .069.056.125.125.125h11.75a.125.125 0 0 0 .125-.125v-2.477ZM4.625 3C3.728 3 3 3.728 3 4.625v11.75C3 17.273 3.728 18 4.625 18h11.75c.898 0 1.625-.727 1.625-1.625V4.625C18 3.728 17.273 3 16.375 3H4.625ZM20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z",
-      fillRule: "evenodd",
-      clipRule: "evenodd"
-    }
-  ) });
+  var gallery_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives55.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives55.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M16.375 4.5H4.625a.125.125 0 0 0-.125.125v8.254l2.859-1.54a.75.75 0 0 1 .68-.016l2.384 1.142 2.89-2.074a.75.75 0 0 1 .874 0l2.313 1.66V4.625a.125.125 0 0 0-.125-.125Zm.125 9.398-2.75-1.975-2.813 2.02a.75.75 0 0 1-.76.067l-2.444-1.17L4.5 14.583v1.792c0 .069.056.125.125.125h11.75a.125.125 0 0 0 .125-.125v-2.477ZM4.625 3C3.728 3 3 3.728 3 4.625v11.75C3 17.273 3.728 18 4.625 18h11.75c.898 0 1.625-.727 1.625-1.625V4.625C18 3.728 17.273 3 16.375 3H4.625ZM20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z" }) });
 
   // packages/icons/build-module/library/grid.mjs
   var import_primitives56 = __toESM(require_primitives(), 1);
   var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-  var grid_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives56.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-    import_primitives56.Path,
-    {
-      d: "m3 5c0-1.10457.89543-2 2-2h13.5c1.1046 0 2 .89543 2 2v13.5c0 1.1046-.8954 2-2 2h-13.5c-1.10457 0-2-.8954-2-2zm2-.5h6v6.5h-6.5v-6c0-.27614.22386-.5.5-.5zm-.5 8v6c0 .2761.22386.5.5.5h6v-6.5zm8 0v6.5h6c.2761 0 .5-.2239.5-.5v-6zm0-8v6.5h6.5v-6c0-.27614-.2239-.5-.5-.5z",
-      fillRule: "evenodd",
-      clipRule: "evenodd"
-    }
-  ) });
+  var grid_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives56.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives56.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "m3 5c0-1.10457.89543-2 2-2h13.5c1.1046 0 2 .89543 2 2v13.5c0 1.1046-.8954 2-2 2h-13.5c-1.10457 0-2-.8954-2-2zm2-.5h6v6.5h-6.5v-6c0-.27614.22386-.5.5-.5zm-.5 8v6c0 .2761.22386.5.5.5h6v-6.5zm8 0v6.5h6c.2761 0 .5-.2239.5-.5v-6zm0-8v6.5h6.5v-6c0-.27614-.2239-.5-.5-.5z" }) });
 
   // packages/icons/build-module/library/group.mjs
   var import_primitives57 = __toESM(require_primitives(), 1);
   var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-  var group_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives57.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives57.Path, { d: "M18 4h-7c-1.1 0-2 .9-2 2v3H6c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2v-3h3c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h3V13c0 1.1.9 2 2 2h2.5v3zm0-4.5H11c-.3 0-.5-.2-.5-.5v-2.5H13c.3 0 .5.2.5.5v2.5zm5-.5c0 .3-.2.5-.5.5h-3V11c0-1.1-.9-2-2-2h-2.5V6c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v7z" }) });
+  var group_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives57.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives57.Path, { d: "M18 4h-7c-1.1 0-2 .9-2 2v3H6c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2v-3h3c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h3V13c0 1.1.9 2 2 2h2.5v3zm0-4.5H11c-.3 0-.5-.2-.5-.5v-2.5H13c.3 0 .5.2.5.5v2.5zm5-.5c0 .3-.2.5-.5.5h-3V11c0-1.1-.9-2-2-2h-2.5V6c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v7z" }) });
 
   // packages/icons/build-module/library/header.mjs
   var import_primitives58 = __toESM(require_primitives(), 1);
@@ -4303,12 +4213,12 @@ var wp;
   // packages/icons/build-module/library/html.mjs
   var import_primitives67 = __toESM(require_primitives(), 1);
   var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
-  var html_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives67.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives67.Path, { d: "M4.8 11.4H2.1V9H1v6h1.1v-2.6h2.7V15h1.1V9H4.8v2.4zm1.9-1.3h1.7V15h1.1v-4.9h1.7V9H6.7v1.1zM16.2 9l-1.5 2.7L13.3 9h-.9l-.8 6h1.1l.5-4 1.5 2.8 1.5-2.8.5 4h1.1L17 9h-.8zm3.8 5V9h-1.1v6h3.6v-1H20z" }) });
+  var html_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives67.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives67.Path, { d: "M4.8 11.4H2.1V9H1v6h1.1v-2.6h2.7V15h1.1V9H4.8v2.4zm1.9-1.3h1.7V15h1.1v-4.9h1.7V9H6.7v1.1zM16.2 9l-1.5 2.7L13.3 9h-.9l-.8 6h1.1l.5-4 1.5 2.8 1.5-2.8.5 4h1.1L17 9h-.8zm3.8 5V9h-1.1v6h3.6v-1H20z" }) });
 
   // packages/icons/build-module/library/image.mjs
   var import_primitives68 = __toESM(require_primitives(), 1);
   var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
-  var image_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives68.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives68.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" }) });
+  var image_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives68.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives68.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" }) });
 
   // packages/icons/build-module/library/keyboard-return.mjs
   var import_primitives69 = __toESM(require_primitives(), 1);
@@ -4338,7 +4248,7 @@ var wp;
   // packages/icons/build-module/library/list.mjs
   var import_primitives74 = __toESM(require_primitives(), 1);
   var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
-  var list_default = /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives74.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives74.Path, { d: "M4 4v1.5h16V4H4zm8 8.5h8V11h-8v1.5zM4 20h16v-1.5H4V20zm4-8c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2z" }) });
+  var list_default = /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives74.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives74.Path, { d: "M4 4v1.5h16V4H4zm8 8.5h8V11h-8v1.5zM4 20h16v-1.5H4V20zm4-8c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2z" }) });
 
   // packages/icons/build-module/library/login.mjs
   var import_primitives75 = __toESM(require_primitives(), 1);
@@ -4348,7 +4258,7 @@ var wp;
   // packages/icons/build-module/library/loop.mjs
   var import_primitives76 = __toESM(require_primitives(), 1);
   var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-  var loop_default = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives76.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives76.Path, { d: "M18.1823 11.6392C18.1823 13.0804 17.0139 14.2487 15.5727 14.2487C14.3579 14.2487 13.335 13.4179 13.0453 12.2922L13.0377 12.2625L13.0278 12.2335L12.3985 10.377L12.3942 10.3785C11.8571 8.64997 10.246 7.39405 8.33961 7.39405C5.99509 7.39405 4.09448 9.29465 4.09448 11.6392C4.09448 13.9837 5.99509 15.8843 8.33961 15.8843C8.88499 15.8843 9.40822 15.781 9.88943 15.5923L9.29212 14.0697C8.99812 14.185 8.67729 14.2487 8.33961 14.2487C6.89838 14.2487 5.73003 13.0804 5.73003 11.6392C5.73003 10.1979 6.89838 9.02959 8.33961 9.02959C9.55444 9.02959 10.5773 9.86046 10.867 10.9862L10.8772 10.9836L11.4695 12.7311C11.9515 14.546 13.6048 15.8843 15.5727 15.8843C17.9172 15.8843 19.8178 13.9837 19.8178 11.6392C19.8178 9.29465 17.9172 7.39404 15.5727 7.39404C15.0287 7.39404 14.5066 7.4968 14.0264 7.6847L14.6223 9.20781C14.9158 9.093 15.2358 9.02959 15.5727 9.02959C17.0139 9.02959 18.1823 10.1979 18.1823 11.6392Z" }) });
+  var loop_default = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives76.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives76.Path, { d: "M18.1823 11.6392C18.1823 13.0804 17.0139 14.2487 15.5727 14.2487C14.3579 14.2487 13.335 13.4179 13.0453 12.2922L13.0377 12.2625L13.0278 12.2335L12.3985 10.377L12.3942 10.3785C11.8571 8.64997 10.246 7.39405 8.33961 7.39405C5.99509 7.39405 4.09448 9.29465 4.09448 11.6392C4.09448 13.9837 5.99509 15.8843 8.33961 15.8843C8.88499 15.8843 9.40822 15.781 9.88943 15.5923L9.29212 14.0697C8.99812 14.185 8.67729 14.2487 8.33961 14.2487C6.89838 14.2487 5.73003 13.0804 5.73003 11.6392C5.73003 10.1979 6.89838 9.02959 8.33961 9.02959C9.55444 9.02959 10.5773 9.86046 10.867 10.9862L10.8772 10.9836L11.4695 12.7311C11.9515 14.546 13.6048 15.8843 15.5727 15.8843C17.9172 15.8843 19.8178 13.9837 19.8178 11.6392C19.8178 9.29465 17.9172 7.39404 15.5727 7.39404C15.0287 7.39404 14.5066 7.4968 14.0264 7.6847L14.6223 9.20781C14.9158 9.093 15.2358 9.02959 15.5727 9.02959C17.0139 9.02959 18.1823 10.1979 18.1823 11.6392Z" }) });
 
   // packages/icons/build-module/library/map-marker.mjs
   var import_primitives77 = __toESM(require_primitives(), 1);
@@ -4370,14 +4280,7 @@ var wp;
   var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
   var media_default = /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_primitives80.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
     /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives80.Path, { d: "m7 6.5 4 2.5-4 2.5z" }),
-    /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
-      import_primitives80.Path,
-      {
-        fillRule: "evenodd",
-        clipRule: "evenodd",
-        d: "m5 3c-1.10457 0-2 .89543-2 2v14c0 1.1046.89543 2 2 2h14c1.1046 0 2-.8954 2-2v-14c0-1.10457-.8954-2-2-2zm14 1.5h-14c-.27614 0-.5.22386-.5.5v10.7072l3.62953-2.6465c.25108-.1831.58905-.1924.84981-.0234l2.92666 1.8969 3.5712-3.4719c.2911-.2831.7545-.2831 1.0456 0l2.9772 2.8945v-9.3568c0-.27614-.2239-.5-.5-.5zm-14.5 14.5v-1.4364l4.09643-2.987 2.99567 1.9417c.2936.1903.6798.1523.9307-.0917l3.4772-3.3806 3.4772 3.3806.0228-.0234v2.5968c0 .2761-.2239.5-.5.5h-14c-.27614 0-.5-.2239-.5-.5z"
-      }
-    )
+    /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives80.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "m5 3c-1.10457 0-2 .89543-2 2v14c0 1.1046.89543 2 2 2h14c1.1046 0 2-.8954 2-2v-14c0-1.10457-.8954-2-2-2zm14 1.5h-14c-.27614 0-.5.22386-.5.5v10.7072l3.62953-2.6465c.25108-.1831.58905-.1924.84981-.0234l2.92666 1.8969 3.5712-3.4719c.2911-.2831.7545-.2831 1.0456 0l2.9772 2.8945v-9.3568c0-.27614-.2239-.5-.5-.5zm-14.5 14.5v-1.4364l4.09643-2.987 2.99567 1.9417c.2936.1903.6798.1523.9307-.0917l3.4772-3.3806 3.4772 3.3806.0228-.0234v2.5968c0 .2761-.2239.5-.5.5h-14c-.27614 0-.5-.2239-.5-.5z" })
   ] });
 
   // packages/icons/build-module/library/menu.mjs
@@ -4393,7 +4296,7 @@ var wp;
   // packages/icons/build-module/library/more.mjs
   var import_primitives83 = __toESM(require_primitives(), 1);
   var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
-  var more_default = /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_primitives83.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_primitives83.Path, { d: "M4 9v1.5h16V9H4zm12 5.5h4V13h-4v1.5zm-6 0h4V13h-4v1.5zm-6 0h4V13H4v1.5z" }) });
+  var more_default = /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_primitives83.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_primitives83.Path, { d: "M4 9v1.5h16V9H4zm12 5.5h4V13h-4v1.5zm-6 0h4V13h-4v1.5zm-6 0h4V13H4v1.5z" }) });
 
   // packages/icons/build-module/library/navigation-overlay.mjs
   var import_primitives84 = __toESM(require_primitives(), 1);
@@ -4403,7 +4306,7 @@ var wp;
   // packages/icons/build-module/library/navigation.mjs
   var import_primitives85 = __toESM(require_primitives(), 1);
   var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
-  var navigation_default = /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_primitives85.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_primitives85.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5zM9 16l4.5-3L15 8.4l-4.5 3L9 16z" }) });
+  var navigation_default = /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_primitives85.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_primitives85.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5zM9 16l4.5-3L15 8.4l-4.5 3L9 16z" }) });
 
   // packages/icons/build-module/library/next.mjs
   var import_primitives86 = __toESM(require_primitives(), 1);
@@ -4480,26 +4383,12 @@ var wp;
   // packages/icons/build-module/library/post-author.mjs
   var import_primitives99 = __toESM(require_primitives(), 1);
   var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
-  var post_author_default = /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_primitives99.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-    import_primitives99.Path,
-    {
-      d: "M10 4.5a1 1 0 11-2 0 1 1 0 012 0zm1.5 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm2.25 7.5v-1A2.75 2.75 0 0011 8.25H7A2.75 2.75 0 004.25 11v1h1.5v-1c0-.69.56-1.25 1.25-1.25h4c.69 0 1.25.56 1.25 1.25v1h1.5zM4 20h9v-1.5H4V20zm16-4H4v-1.5h16V16z",
-      fillRule: "evenodd",
-      clipRule: "evenodd"
-    }
-  ) });
+  var post_author_default = /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_primitives99.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_primitives99.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M10 4.5a1 1 0 11-2 0 1 1 0 012 0zm1.5 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm2.25 7.5v-1A2.75 2.75 0 0011 8.25H7A2.75 2.75 0 004.25 11v1h1.5v-1c0-.69.56-1.25 1.25-1.25h4c.69 0 1.25.56 1.25 1.25v1h1.5zM4 20h9v-1.5H4V20zm16-4H4v-1.5h16V16z" }) });
 
   // packages/icons/build-module/library/post-categories.mjs
   var import_primitives100 = __toESM(require_primitives(), 1);
   var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
-  var post_categories_default = /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_primitives100.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-    import_primitives100.Path,
-    {
-      d: "M20 4H4v1.5h16V4zm-2 9h-3c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h3c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm.5 5c0 .3-.2.5-.5.5h-3c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h3c.3 0 .5.2.5.5v3zM4 9.5h9V8H4v1.5zM9 13H6c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h3c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm.5 5c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h3c.3 0 .5.2.5.5v3z",
-      fillRule: "evenodd",
-      clipRule: "evenodd"
-    }
-  ) });
+  var post_categories_default = /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_primitives100.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_primitives100.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M20 4H4v1.5h16V4zm-2 9h-3c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h3c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm.5 5c0 .3-.2.5-.5.5h-3c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h3c.3 0 .5.2.5.5v3zM4 9.5h9V8H4v1.5zM9 13H6c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h3c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm.5 5c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h3c.3 0 .5.2.5.5v3z" }) });
 
   // packages/icons/build-module/library/post-comments-count.mjs
   var import_primitives101 = __toESM(require_primitives(), 1);
@@ -4542,17 +4431,17 @@ var wp;
   // packages/icons/build-module/library/post-list.mjs
   var import_primitives108 = __toESM(require_primitives(), 1);
   var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
-  var post_list_default = /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_primitives108.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_primitives108.Path, { d: "M18 5.5H6a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5ZM6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm1 5h1.5v1.5H7V9Zm1.5 4.5H7V15h1.5v-1.5ZM10 9h7v1.5h-7V9Zm7 4.5h-7V15h7v-1.5Z" }) });
+  var post_list_default = /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_primitives108.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_primitives108.Path, { d: "M18 5.5H6a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5ZM6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm1 5h1.5v1.5H7V9Zm1.5 4.5H7V15h1.5v-1.5ZM10 9h7v1.5h-7V9Zm7 4.5h-7V15h7v-1.5Z" }) });
 
   // packages/icons/build-module/library/post-terms.mjs
   var import_primitives109 = __toESM(require_primitives(), 1);
   var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
-  var post_terms_default = /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_primitives109.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_primitives109.Path, { d: "M8.1 12.3c.1.1.3.3.5.3.2.1.4.1.6.1.2 0 .4 0 .6-.1.2-.1.4-.2.5-.3l3-3c.3-.3.5-.7.5-1.1 0-.4-.2-.8-.5-1.1L9.7 3.5c-.1-.2-.3-.3-.5-.3H5c-.4 0-.8.4-.8.8v4.2c0 .2.1.4.2.5l3.7 3.6zM5.8 4.8h3.1l3.4 3.4v.1l-3 3 .5.5-.7-.5-3.3-3.4V4.8zM4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4z" }) });
+  var post_terms_default = /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_primitives109.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_primitives109.Path, { d: "M8.1 12.3c.1.1.3.3.5.3.2.1.4.1.6.1.2 0 .4 0 .6-.1.2-.1.4-.2.5-.3l3-3c.3-.3.5-.7.5-1.1 0-.4-.2-.8-.5-1.1L9.7 3.5c-.1-.2-.3-.3-.5-.3H5c-.4 0-.8.4-.8.8v4.2c0 .2.1.4.2.5l3.7 3.6zM5.8 4.8h3.1l3.4 3.4v.1l-3 3 .5.5-.7-.5-3.3-3.4V4.8zM4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4z" }) });
 
   // packages/icons/build-module/library/preformatted.mjs
   var import_primitives110 = __toESM(require_primitives(), 1);
   var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
-  var preformatted_default = /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_primitives110.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_primitives110.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12zM7 16.5h6V15H7v1.5zm4-4h6V11h-6v1.5zM9 11H7v1.5h2V11zm6 5.5h2V15h-2v1.5z" }) });
+  var preformatted_default = /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_primitives110.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_primitives110.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12zM7 16.5h6V15H7v1.5zm4-4h6V11h-6v1.5zM9 11H7v1.5h2V11zm6 5.5h2V15h-2v1.5z" }) });
 
   // packages/icons/build-module/library/previous.mjs
   var import_primitives111 = __toESM(require_primitives(), 1);
@@ -4572,7 +4461,7 @@ var wp;
   // packages/icons/build-module/library/pullquote.mjs
   var import_primitives114 = __toESM(require_primitives(), 1);
   var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
-  var pullquote_default = /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_primitives114.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_primitives114.Path, { d: "M18 8H6c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zm.5 6c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-4c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v4zM4 4v1.5h16V4H4zm0 16h16v-1.5H4V20z" }) });
+  var pullquote_default = /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_primitives114.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_primitives114.Path, { d: "M18 8H6c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zm.5 6c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-4c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v4zM4 4v1.5h16V4H4zm0 16h16v-1.5H4V20z" }) });
 
   // packages/icons/build-module/library/query-pagination-next.mjs
   var import_primitives115 = __toESM(require_primitives(), 1);
@@ -4597,24 +4486,17 @@ var wp;
   // packages/icons/build-module/library/quote.mjs
   var import_primitives119 = __toESM(require_primitives(), 1);
   var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
-  var quote_default = /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_primitives119.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_primitives119.Path, { d: "M13 6v6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H13zm-9 6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H4v6z" }) });
+  var quote_default = /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_primitives119.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_primitives119.Path, { d: "M13 6v6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H13zm-9 6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H4v6z" }) });
 
   // packages/icons/build-module/library/remove-submenu.mjs
   var import_primitives120 = __toESM(require_primitives(), 1);
   var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
-  var remove_submenu_default = /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_primitives120.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-    import_primitives120.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "m13.955 20.748 8-17.5-.91-.416L19.597 6H13.5v1.5h5.411l-1.6 3.5H13.5v1.5h3.126l-1.6 3.5H13.5l.028 1.5h.812l-1.295 2.832.91.416ZM17.675 16l-.686 1.5h4.539L21.5 16h-3.825Zm2.286-5-.686 1.5H21.5V11h-1.54ZM2 12c0 3.58 2.42 5.5 6 5.5h.5V19l3-2.5-3-2.5v2H8c-2.48 0-4.5-1.52-4.5-4S5.52 7.5 8 7.5h3.5V6H8c-3.58 0-6 2.42-6 6Z"
-    }
-  ) });
+  var remove_submenu_default = /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_primitives120.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_primitives120.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "m13.955 20.748 8-17.5-.91-.416L19.597 6H13.5v1.5h5.411l-1.6 3.5H13.5v1.5h3.126l-1.6 3.5H13.5l.028 1.5h.812l-1.295 2.832.91.416ZM17.675 16l-.686 1.5h4.539L21.5 16h-3.825Zm2.286-5-.686 1.5H21.5V11h-1.54ZM2 12c0 3.58 2.42 5.5 6 5.5h.5V19l3-2.5-3-2.5v2H8c-2.48 0-4.5-1.52-4.5-4S5.52 7.5 8 7.5h3.5V6H8c-3.58 0-6 2.42-6 6Z" }) });
 
   // packages/icons/build-module/library/resize-corner-n-e.mjs
   var import_primitives121 = __toESM(require_primitives(), 1);
   var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
-  var resize_corner_n_e_default = /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_primitives121.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_primitives121.Path, { d: "M7 18h4.5v1.5h-7v-7H6V17L17 6h-4.5V4.5h7v7H18V7L7 18Z" }) });
+  var resize_corner_n_e_default = /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_primitives121.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_primitives121.Path, { d: "M7 18h4.5v1.5h-7v-7H6V17L17 6h-4.5V4.5h7v7H18V7L7 18Z" }) });
 
   // packages/icons/build-module/library/row.mjs
   var import_primitives122 = __toESM(require_primitives(), 1);
@@ -4634,17 +4516,17 @@ var wp;
   // packages/icons/build-module/library/separator.mjs
   var import_primitives125 = __toESM(require_primitives(), 1);
   var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
-  var separator_default = /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_primitives125.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_primitives125.Path, { d: "M4.5 12.5v4H3V7h1.5v3.987h15V7H21v9.5h-1.5v-4h-15Z" }) });
+  var separator_default = /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_primitives125.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_primitives125.Path, { d: "M4.5 12.5v4H3V7h1.5v3.987h15V7H21v9.5h-1.5v-4h-15Z" }) });
 
   // packages/icons/build-module/library/share.mjs
   var import_primitives126 = __toESM(require_primitives(), 1);
   var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
-  var share_default = /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_primitives126.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_primitives126.Path, { d: "M9 11.8l6.1-4.5c.1.4.4.7.9.7h2c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1h-2c-.6 0-1 .4-1 1v.4l-6.4 4.8c-.2-.1-.4-.2-.6-.2H6c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h2c.2 0 .4-.1.6-.2l6.4 4.8v.4c0 .6.4 1 1 1h2c.6 0 1-.4 1-1v-2c0-.6-.4-1-1-1h-2c-.5 0-.8.3-.9.7L9 12.2v-.4z" }) });
+  var share_default = /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_primitives126.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_primitives126.Path, { d: "M9 11.8l6.1-4.5c.1.4.4.7.9.7h2c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1h-2c-.6 0-1 .4-1 1v.4l-6.4 4.8c-.2-.1-.4-.2-.6-.2H6c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h2c.2 0 .4-.1.6-.2l6.4 4.8v.4c0 .6.4 1 1 1h2c.6 0 1-.4 1-1v-2c0-.6-.4-1-1-1h-2c-.5 0-.8.3-.9.7L9 12.2v-.4z" }) });
 
   // packages/icons/build-module/library/shortcode.mjs
   var import_primitives127 = __toESM(require_primitives(), 1);
   var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
-  var shortcode_default = /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_primitives127.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_primitives127.Path, { d: "M16 4.2v1.5h2.5v12.5H16v1.5h4V4.2h-4zM4.2 19.8h4v-1.5H5.8V5.8h2.5V4.2h-4l-.1 15.6zm5.1-3.1l1.4.6 4-10-1.4-.6-4 10z" }) });
+  var shortcode_default = /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_primitives127.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_primitives127.Path, { d: "M16 4.2v1.5h2.5v12.5H16v1.5h4V4.2h-4zM4.2 19.8h4v-1.5H5.8V5.8h2.5V4.2h-4l-.1 15.6zm5.1-3.1l1.4.6 4-10-1.4-.6-4 10z" }) });
 
   // packages/icons/build-module/library/sidebar.mjs
   var import_primitives128 = __toESM(require_primitives(), 1);
@@ -4659,16 +4541,7 @@ var wp;
   // packages/icons/build-module/library/square.mjs
   var import_primitives130 = __toESM(require_primitives(), 1);
   var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
-  var square_default = /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_primitives130.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-    import_primitives130.Path,
-    {
-      fill: "none",
-      d: "M5.75 12.75V18.25H11.25M12.75 5.75H18.25V11.25",
-      stroke: "currentColor",
-      strokeWidth: "1.5",
-      strokeLinecap: "square"
-    }
-  ) });
+  var square_default = /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_primitives130.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_primitives130.Path, { fill: "none", d: "M5.75 12.75V18.25H11.25M12.75 5.75H18.25V11.25", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "square" }) });
 
   // packages/icons/build-module/library/stack.mjs
   var import_primitives131 = __toESM(require_primitives(), 1);
@@ -4709,14 +4582,7 @@ var wp;
   var import_primitives138 = __toESM(require_primitives(), 1);
   var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
   var table_of_contents_default = /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(import_primitives138.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
-      import_primitives138.Path,
-      {
-        fillRule: "evenodd",
-        clipRule: "evenodd",
-        d: "M20 9.484h-8.889v-1.5H20v1.5Zm0 7h-4.889v-1.5H20v1.5Zm-14 .032a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
-      }
-    ),
+    /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_primitives138.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M20 9.484h-8.889v-1.5H20v1.5Zm0 7h-4.889v-1.5H20v1.5Zm-14 .032a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" }),
     /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_primitives138.Path, { d: "M13 15.516a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 8.484a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" })
   ] });
 
@@ -4799,12 +4665,12 @@ var wp;
   // packages/icons/build-module/library/verse.mjs
   var import_primitives153 = __toESM(require_primitives(), 1);
   var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
-  var verse_default = /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(import_primitives153.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(import_primitives153.Path, { d: "M17.8 2l-.9.3c-.1 0-3.6 1-5.2 2.1C10 5.5 9.3 6.5 8.9 7.1c-.6.9-1.7 4.7-1.7 6.3l-.9 2.3c-.2.4 0 .8.4 1 .1 0 .2.1.3.1.3 0 .6-.2.7-.5l.6-1.5c.3 0 .7-.1 1.2-.2.7-.1 1.4-.3 2.2-.5.8-.2 1.6-.5 2.4-.8.7-.3 1.4-.7 1.9-1.2s.8-1.2 1-1.9c.2-.7.3-1.6.4-2.4.1-.8.1-1.7.2-2.5 0-.8.1-1.5.2-2.1V2zm-1.9 5.6c-.1.8-.2 1.5-.3 2.1-.2.6-.4 1-.6 1.3-.3.3-.8.6-1.4.9-.7.3-1.4.5-2.2.8-.6.2-1.3.3-1.8.4L15 7.5c.3-.3.6-.7 1-1.1 0 .4 0 .8-.1 1.2zM6 20h8v-1.5H6V20z" }) });
+  var verse_default = /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(import_primitives153.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(import_primitives153.Path, { d: "M17.8 2l-.9.3c-.1 0-3.6 1-5.2 2.1C10 5.5 9.3 6.5 8.9 7.1c-.6.9-1.7 4.7-1.7 6.3l-.9 2.3c-.2.4 0 .8.4 1 .1 0 .2.1.3.1.3 0 .6-.2.7-.5l.6-1.5c.3 0 .7-.1 1.2-.2.7-.1 1.4-.3 2.2-.5.8-.2 1.6-.5 2.4-.8.7-.3 1.4-.7 1.9-1.2s.8-1.2 1-1.9c.2-.7.3-1.6.4-2.4.1-.8.1-1.7.2-2.5 0-.8.1-1.5.2-2.1V2zm-1.9 5.6c-.1.8-.2 1.5-.3 2.1-.2.6-.4 1-.6 1.3-.3.3-.8.6-1.4.9-.7.3-1.4.5-2.2.8-.6.2-1.3.3-1.8.4L15 7.5c.3-.3.6-.7 1-1.1 0 .4 0 .8-.1 1.2zM6 20h8v-1.5H6V20z" }) });
 
   // packages/icons/build-module/library/video.mjs
   var import_primitives154 = __toESM(require_primitives(), 1);
   var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
-  var video_default = /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_primitives154.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_primitives154.Path, { d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h13.4c.4 0 .8.4.8.8v13.4zM10 15l5-3-5-3v6z" }) });
+  var video_default = /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_primitives154.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_primitives154.Path, { d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h13.4c.4 0 .8.4.8.8v13.4zM10 15l5-3-5-3v6z" }) });
 
   // packages/icons/build-module/library/word-count.mjs
   var import_primitives155 = __toESM(require_primitives(), 1);

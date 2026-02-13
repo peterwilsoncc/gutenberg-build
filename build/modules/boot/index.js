@@ -302,7 +302,7 @@ var check_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitiv
 // packages/icons/build-module/library/chevron-down-small.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-var chevron_down_small_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives3.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives3.Path, { d: "m15.99 10.889-3.988 3.418-3.988-3.418.976-1.14 3.012 2.582 3.012-2.581.976 1.139Z" }) });
+var chevron_down_small_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives3.Path, { d: "m15.99 10.889-3.988 3.418-3.988-3.418.976-1.14 3.012 2.582 3.012-2.581.976 1.139Z" }) });
 
 // packages/icons/build-module/library/chevron-left-small.mjs
 var import_primitives4 = __toESM(require_primitives(), 1);

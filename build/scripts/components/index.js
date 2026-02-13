@@ -23996,14 +23996,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/caution.mjs
   var import_primitives4 = __toESM(require_primitives(), 1);
   var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-  var caution_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives4.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-    import_primitives4.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z"
-    }
-  ) });
+  var caution_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives4.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z" }) });
 
   // packages/icons/build-module/library/check.mjs
   var import_primitives5 = __toESM(require_primitives(), 1);
@@ -24013,7 +24006,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/chevron-down.mjs
   var import_primitives6 = __toESM(require_primitives(), 1);
   var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives6.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives6.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
+  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives6.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
 
   // packages/icons/build-module/library/chevron-left.mjs
   var import_primitives7 = __toESM(require_primitives(), 1);
@@ -24033,7 +24026,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/chevron-up.mjs
   var import_primitives10 = __toESM(require_primitives(), 1);
   var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
-  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives10.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives10.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
+  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives10.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
 
   // packages/icons/build-module/library/close-small.mjs
   var import_primitives11 = __toESM(require_primitives(), 1);
@@ -24048,62 +24041,27 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/copy.mjs
   var import_primitives13 = __toESM(require_primitives(), 1);
   var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
-  var copy_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
-    import_primitives13.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M5 4.5h11a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5ZM3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm17 3v10.75c0 .69-.56 1.25-1.25 1.25H6v1.5h12.75a2.75 2.75 0 0 0 2.75-2.75V8H20Z"
-    }
-  ) });
+  var copy_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives13.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5 4.5h11a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5ZM3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm17 3v10.75c0 .69-.56 1.25-1.25 1.25H6v1.5h12.75a2.75 2.75 0 0 0 2.75-2.75V8H20Z" }) });
 
   // packages/icons/build-module/library/error.mjs
   var import_primitives14 = __toESM(require_primitives(), 1);
   var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
-  var error_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives14.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
-    import_primitives14.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z"
-    }
-  ) });
+  var error_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives14.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z" }) });
 
   // packages/icons/build-module/library/info.mjs
   var import_primitives15 = __toESM(require_primitives(), 1);
   var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
-  var info_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives15.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
-    import_primitives15.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z"
-    }
-  ) });
+  var info_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives15.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z" }) });
 
   // packages/icons/build-module/library/line-dashed.mjs
   var import_primitives16 = __toESM(require_primitives(), 1);
   var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
-  var line_dashed_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-    import_primitives16.Path,
-    {
-      fillRule: "evenodd",
-      d: "M5 11.25h3v1.5H5v-1.5zm5.5 0h3v1.5h-3v-1.5zm8.5 0h-3v1.5h3v-1.5z",
-      clipRule: "evenodd"
-    }
-  ) });
+  var line_dashed_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives16.Path, { fillRule: "evenodd", d: "M5 11.25h3v1.5H5v-1.5zm5.5 0h3v1.5h-3v-1.5zm8.5 0h-3v1.5h3v-1.5z", clipRule: "evenodd" }) });
 
   // packages/icons/build-module/library/line-dotted.mjs
   var import_primitives17 = __toESM(require_primitives(), 1);
   var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
-  var line_dotted_default = /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
-    import_primitives17.Path,
-    {
-      fillRule: "evenodd",
-      d: "M5.25 11.25h1.5v1.5h-1.5v-1.5zm3 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5zm1.5 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5z",
-      clipRule: "evenodd"
-    }
-  ) });
+  var line_dotted_default = /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(import_primitives17.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.25 11.25h1.5v1.5h-1.5v-1.5zm3 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5zm1.5 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5z" }) });
 
   // packages/icons/build-module/library/line-solid.mjs
   var import_primitives18 = __toESM(require_primitives(), 1);
@@ -24138,14 +24096,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/published.mjs
   var import_primitives24 = __toESM(require_primitives(), 1);
   var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-  var published_default = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-    import_primitives24.Path,
-    {
-      fillRule: "evenodd",
-      clipRule: "evenodd",
-      d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z"
-    }
-  ) });
+  var published_default = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives24.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z" }) });
 
   // packages/icons/build-module/library/reset.mjs
   var import_primitives25 = __toESM(require_primitives(), 1);

@@ -600,12 +600,12 @@ var wp;
   // packages/icons/build-module/library/chevron-down.mjs
   var import_primitives2 = __toESM(require_primitives(), 1);
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives2.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives2.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
+  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives2.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
 
   // packages/icons/build-module/library/chevron-up.mjs
   var import_primitives3 = __toESM(require_primitives(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
+  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives3.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
 
   // packages/icons/build-module/library/fullscreen.mjs
   var import_primitives4 = __toESM(require_primitives(), 1);
