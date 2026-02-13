@@ -1949,7 +1949,7 @@ var wp;
     return cachedRichTextAttributes.get(blockName)?.has(attributeName) ?? false;
   }
   var localDoc;
-  function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition) {
+  function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition = null) {
     if (!localDoc) {
       localDoc = new import_sync8.Y.Doc();
     }
@@ -2206,10 +2206,19 @@ var wp;
           break;
         }
         case "content":
-        case "excerpt": {
+        case "excerpt":
+        case "title": {
           const currentValue = ymap.get(key);
-          const rawNewValue = getRawValue(newValue);
-          updateMapValue(ymap, key, currentValue, rawNewValue);
+          let rawValue = getRawValue(newValue);
+          if (key === "title" && !currentValue && "Auto Draft" === rawValue) {
+            rawValue = "";
+          }
+          if (currentValue instanceof import_sync12.Y.Text) {
+            mergeRichTextUpdate(currentValue, rawValue ?? "");
+          } else {
+            const newYText = new import_sync12.Y.Text(rawValue ?? "");
+            ymap.set(key, newYText);
+          }
           break;
         }
         // "Meta" is overloaded term; here, it refers to post meta.
@@ -2242,15 +2251,6 @@ var wp;
           }
           const currentValue = ymap.get(key);
           updateMapValue(ymap, key, currentValue, newValue);
-          break;
-        }
-        case "title": {
-          const currentValue = ymap.get(key);
-          let rawNewValue = getRawValue(newValue);
-          if (!currentValue && "Auto Draft" === rawNewValue) {
-            rawNewValue = "";
-          }
-          updateMapValue(ymap, key, currentValue, rawNewValue);
           break;
         }
         // Add support for additional properties here.
