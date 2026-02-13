@@ -3309,7 +3309,7 @@ var wp;
   }) {
     const { containerRef } = (0, import_element10.useContext)(dataviews_context_default);
     const headerMenuRefs = (0, import_element10.useRef)(/* @__PURE__ */ new Map());
-    const headerMenuToFocusRef = (0, import_element10.useRef)();
+    const headerMenuToFocusRef = (0, import_element10.useRef)(void 0);
     const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element10.useState)();
     const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
     const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element10.useState)(null);
@@ -5712,7 +5712,7 @@ var wp;
     empty
   }) {
     const headerMenuRefs = (0, import_element20.useRef)(/* @__PURE__ */ new Map());
-    const headerMenuToFocusRef = (0, import_element20.useRef)();
+    const headerMenuToFocusRef = (0, import_element20.useRef)(void 0);
     const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element20.useState)();
     const isMultiselect = useIsMultiselectPicker(actions) ?? false;
     (0, import_element20.useEffect)(() => {
@@ -14094,7 +14094,7 @@ If there's a particular need for this, please submit a feature request at https:
       return parsedDate || /* @__PURE__ */ new Date();
     });
     const inputControlRef = (0, import_element40.useRef)(null);
-    const validationTimeoutRef = (0, import_element40.useRef)();
+    const validationTimeoutRef = (0, import_element40.useRef)(void 0);
     const previousFocusRef = (0, import_element40.useRef)(null);
     const onChangeCallback = (0, import_element40.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),

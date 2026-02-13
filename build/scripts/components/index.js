@@ -27560,7 +27560,7 @@ This message will only show in development mode. It won't appear in production. 
         version: "6.3"
       });
     }
-    const inputRef = (0, import_element36.useRef)();
+    const inputRef = (0, import_element36.useRef)(null);
     const mergedRef = (0, import_compose7.useMergeRefs)([inputRef, forwardedRef]);
     const isStepAny = step === "any";
     const baseStep = isStepAny ? 1 : ensureNumber(step);
@@ -27746,8 +27746,8 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }) {
     const angleCircleRef = (0, import_element37.useRef)(null);
-    const angleCircleCenterRef = (0, import_element37.useRef)();
-    const previousCursorValueRef = (0, import_element37.useRef)();
+    const angleCircleCenterRef = (0, import_element37.useRef)(void 0);
+    const previousCursorValueRef = (0, import_element37.useRef)(void 0);
     const setAngleCircleCenter = () => {
       if (angleCircleRef.current === null) {
         return;
@@ -29460,7 +29460,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   function useAutocompleteProps(options2) {
     const ref = (0, import_element52.useRef)(null);
-    const onKeyDownRef = (0, import_element52.useRef)();
+    const onKeyDownRef = (0, import_element52.useRef)(void 0);
     const {
       record
     } = options2;
@@ -29919,7 +29919,7 @@ This message will only show in development mode. It won't appear in production. 
   var POLL_RATE = 100;
   function useTrackElementOffsetRect(targetElement, deps = []) {
     const [indicatorPosition, setIndicatorPosition] = (0, import_element59.useState)(NULL_ELEMENT_OFFSET_RECT);
-    const intervalRef = (0, import_element59.useRef)();
+    const intervalRef = (0, import_element59.useRef)(void 0);
     const measure = (0, import_compose22.useEvent)(() => {
       if (targetElement && targetElement.isConnected) {
         const elementOffsetRect = getElementOffsetRect(targetElement);
@@ -30409,7 +30409,7 @@ This message will only show in development mode. It won't appear in production. 
       });
     }
     const [fallbackPopoverAnchor, setFallbackPopoverAnchor] = (0, import_element67.useState)(null);
-    const containerRef = (0, import_element67.useRef)();
+    const containerRef = (0, import_element67.useRef)(null);
     const [isOpen, setIsOpen] = useControlledValue({
       defaultValue: defaultOpen,
       value: open,
@@ -31262,7 +31262,7 @@ This message will only show in development mode. It won't appear in production. 
     }
     const [showTooltip, setShowTooltip] = (0, import_element72.useState)(hasTooltip);
     const [isFocused, setIsFocused] = (0, import_element72.useState)(false);
-    const inputRef = (0, import_element72.useRef)();
+    const inputRef = (0, import_element72.useRef)(null);
     const isCurrentlyFocused = inputRef.current?.matches(":focus");
     const isThumbFocused = !disabled && isFocused;
     const isValueReset = value === null;
@@ -31496,7 +31496,7 @@ This message will only show in development mode. It won't appear in production. 
       colorType
     } = props;
     const [copiedColor, setCopiedColor] = (0, import_element73.useState)(null);
-    const copyTimerRef = (0, import_element73.useRef)();
+    const copyTimerRef = (0, import_element73.useRef)(void 0);
     const copyRef = (0, import_compose30.useCopyToClipboard)(() => {
       switch (colorType) {
         case "hsl": {
@@ -36166,7 +36166,7 @@ This message will only show in development mode. It won't appear in production. 
       since: "5.8",
       alternative: "wp.compose.useCopyToClipboard"
     });
-    const timeoutIdRef = (0, import_element106.useRef)();
+    const timeoutIdRef = (0, import_element106.useRef)(void 0);
     const ref = (0, import_compose40.useCopyToClipboard)(text, () => {
       onCopy();
       if (timeoutIdRef.current) {
@@ -36509,7 +36509,7 @@ This message will only show in development mode. It won't appear in production. 
     onStopControlPointChange,
     __experimentalIsRenderedInSidebar
   }) {
-    const controlPointMoveStateRef = (0, import_element109.useRef)();
+    const controlPointMoveStateRef = (0, import_element109.useRef)(void 0);
     const onMouseMove = (event) => {
       if (controlPointMoveStateRef.current === void 0 || gradientPickerDomRef.current === null) {
         return;
@@ -36533,7 +36533,7 @@ This message will only show in development mode. It won't appear in production. 
         controlPointMoveStateRef.current.listenersActivated = false;
       }
     };
-    const cleanEventListenersRef = (0, import_element109.useRef)();
+    const cleanEventListenersRef = (0, import_element109.useRef)(void 0);
     cleanEventListenersRef.current = cleanEventListeners;
     (0, import_element109.useEffect)(() => {
       return () => {
@@ -37924,7 +37924,7 @@ This message will only show in development mode. It won't appear in production. 
     popoverProps,
     addColorRef
   }) {
-    const elementsReferenceRef = (0, import_element115.useRef)();
+    const elementsReferenceRef = (0, import_element115.useRef)(void 0);
     (0, import_element115.useEffect)(() => {
       elementsReferenceRef.current = elements2;
     }, [elements2]);
@@ -38773,7 +38773,7 @@ This message will only show in development mode. It won't appear in production. 
   var FRAME_ANIMATION_DURATION_NUMBER = Number.parseInt(config_values_default.transitionDuration);
   var EXIT_ANIMATION_NAME = "components-modal__disappear-animation";
   function useModalExitAnimation() {
-    const frameRef = (0, import_element121.useRef)();
+    const frameRef = (0, import_element121.useRef)(null);
     const [isAnimatingOut, setIsAnimatingOut] = (0, import_element121.useState)(false);
     const isReducedMotion = (0, import_compose48.useReducedMotion)();
     const closeModal = (0, import_element121.useCallback)(() => new Promise((closeModalResolve) => {
@@ -38860,7 +38860,7 @@ This message will only show in development mode. It won't appear in production. 
       headerActions = null,
       __experimentalHideHeader = false
     } = props;
-    const ref = (0, import_element123.useRef)();
+    const ref = (0, import_element123.useRef)(null);
     const instanceId = (0, import_compose49.useInstanceId)(Modal);
     const headingId = title ? `components-modal-header-${instanceId}` : aria.labelledby;
     const focusOnMountRef = (0, import_compose49.useFocusOnMount)(focusOnMount === "firstContentElement" ? "firstElement" : focusOnMount);
@@ -38891,7 +38891,7 @@ This message will only show in development mode. It won't appear in production. 
       modalize(ref.current);
       return () => unmodalize();
     }, []);
-    const onRequestCloseRef = (0, import_element123.useRef)();
+    const onRequestCloseRef = (0, import_element123.useRef)(void 0);
     (0, import_element123.useEffect)(() => {
       onRequestCloseRef.current = onRequestClose;
     }, [onRequestClose]);
@@ -39086,8 +39086,8 @@ This message will only show in development mode. It won't appear in production. 
     } = useContextSystem(props, "ConfirmDialog");
     const cx3 = useCx();
     const wrapperClassName = cx3(wrapper2);
-    const cancelButtonRef = (0, import_element124.useRef)();
-    const confirmButtonRef = (0, import_element124.useRef)();
+    const cancelButtonRef = (0, import_element124.useRef)(null);
+    const confirmButtonRef = (0, import_element124.useRef)(null);
     const [isOpen, setIsOpen] = (0, import_element124.useState)();
     const [shouldSelfClose, setShouldSelfClose] = (0, import_element124.useState)();
     (0, import_element124.useEffect)(() => {
@@ -40395,7 +40395,7 @@ This message will only show in development mode. It won't appear in production. 
     onClick,
     onKeyDown
   }) {
-    const ref = (0, import_element128.useRef)();
+    const ref = (0, import_element128.useRef)(null);
     (0, import_element128.useEffect)(() => {
       if (ref.current && isFocusable2 && isFocusAllowed) {
         ref.current.focus();
@@ -45788,7 +45788,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setIsOpened(next2);
       onToggle(next2);
     };
-    const scrollAfterOpenRef = (0, import_element175.useRef)();
+    const scrollAfterOpenRef = (0, import_element175.useRef)(void 0);
     scrollAfterOpenRef.current = scrollAfterOpen;
     use_update_effect_default(() => {
       if (isOpened && scrollAfterOpenRef.current && nodeRef.current?.scrollIntoView) {
@@ -47323,7 +47323,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = sizes;
     const heightRef = (0, import_element184.useRef)(height);
     const widthRef = (0, import_element184.useRef)(width);
-    const moveTimeoutRef = (0, import_element184.useRef)();
+    const moveTimeoutRef = (0, import_element184.useRef)(void 0);
     const debounceUnsetMoveXY = (0, import_element184.useCallback)(() => {
       const unsetMoveXY = () => {
         if (isAxisControlled) {
@@ -47737,7 +47737,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onFocus,
     tabIndex
   }) {
-    const ref = (0, import_element189.useRef)();
+    const ref = (0, import_element189.useRef)(null);
     const [width, setWidth] = (0, import_element189.useState)(0);
     const [height, setHeight] = (0, import_element189.useState)(0);
     function isFrameAccessible() {
@@ -49520,7 +49520,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     as: Component9,
     ...props
   }, forwardedRef) {
-    const localRef = (0, import_element212.useRef)();
+    const localRef = (0, import_element212.useRef)(null);
     const ref = forwardedRef || localRef;
     const {
       lastFocusedElement,

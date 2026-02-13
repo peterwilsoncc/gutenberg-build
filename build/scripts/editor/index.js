@@ -8466,7 +8466,7 @@ var wp;
   }
   function useMovingAnimation(triggerAnimationOnChange) {
     const ref = (0, import_element5.useRef)(null);
-    const previousRef = (0, import_element5.useRef)(null);
+    const previousRef = (0, import_element5.useRef)(void 0);
     if (ref.current) {
       previousRef.current = getAbsolutePosition(ref.current);
     }
@@ -8992,7 +8992,7 @@ var wp;
     const { createErrorNotice } = (0, import_data6.useDispatch)(import_notices3.store);
     const { receiveEntityRecords } = (0, import_data6.useDispatch)(import_core_data4.store);
     const [targetItemId, setTargetItemId] = (0, import_element6.useState)();
-    const openModalRef = (0, import_element6.useRef)(null);
+    const openModalRef = (0, import_element6.useRef)(void 0);
     const [pendingOpen, setPendingOpen] = (0, import_element6.useState)(false);
     const [blobs, setBlobs] = (0, import_element6.useState)([]);
     (0, import_element6.useEffect)(() => {
@@ -55320,7 +55320,7 @@ var wp;
       return parsedDate || /* @__PURE__ */ new Date();
     });
     const inputControlRef = (0, import_element170.useRef)(null);
-    const validationTimeoutRef = (0, import_element170.useRef)();
+    const validationTimeoutRef = (0, import_element170.useRef)(void 0);
     const previousFocusRef = (0, import_element170.useRef)(null);
     const onChangeCallback = (0, import_element170.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),

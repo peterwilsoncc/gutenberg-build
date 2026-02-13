@@ -24857,7 +24857,7 @@ var wp;
     const [actionInProgress, setActionInProgress] = (0, import_element69.useState)(
       null
     );
-    const footerContentRef = (0, import_element69.useRef)(null);
+    const footerContentRef = (0, import_element69.useRef)(void 0);
     const isMobile = (0, import_compose13.useViewportMatch)("medium", "<");
     const bulkActions = (0, import_element69.useMemo)(
       () => actions.filter((action) => action.supportsBulk),
@@ -24885,7 +24885,7 @@ var wp;
     );
     if (!actionInProgress) {
       if (footerContentRef.current) {
-        footerContentRef.current = null;
+        footerContentRef.current = void 0;
       }
       return renderFooterContent(
         data,
@@ -25676,7 +25676,7 @@ var wp;
   }) {
     const { containerRef } = (0, import_element74.useContext)(dataviews_context_default);
     const headerMenuRefs = (0, import_element74.useRef)(/* @__PURE__ */ new Map());
-    const headerMenuToFocusRef = (0, import_element74.useRef)();
+    const headerMenuToFocusRef = (0, import_element74.useRef)(void 0);
     const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element74.useState)();
     const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
     const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element74.useState)(null);
@@ -27941,7 +27941,7 @@ var wp;
     empty
   }) {
     const headerMenuRefs = (0, import_element84.useRef)(/* @__PURE__ */ new Map());
-    const headerMenuToFocusRef = (0, import_element84.useRef)();
+    const headerMenuToFocusRef = (0, import_element84.useRef)(void 0);
     const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element84.useState)();
     const isMultiselect = useIsMultiselectPicker(actions) ?? false;
     (0, import_element84.useEffect)(() => {
@@ -36354,7 +36354,7 @@ If there's a particular need for this, please submit a feature request at https:
       return parsedDate || /* @__PURE__ */ new Date();
     });
     const inputControlRef = (0, import_element105.useRef)(null);
-    const validationTimeoutRef = (0, import_element105.useRef)();
+    const validationTimeoutRef = (0, import_element105.useRef)(void 0);
     const previousFocusRef = (0, import_element105.useRef)(null);
     const onChangeCallback = (0, import_element105.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),

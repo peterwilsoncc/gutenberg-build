@@ -2215,7 +2215,7 @@ function FooterContent({
   const [actionInProgress, setActionInProgress] = (0, import_element5.useState)(
     null
   );
-  const footerContentRef = (0, import_element5.useRef)(null);
+  const footerContentRef = (0, import_element5.useRef)(void 0);
   const isMobile = (0, import_compose2.useViewportMatch)("medium", "<");
   const bulkActions = (0, import_element5.useMemo)(
     () => actions.filter((action) => action.supportsBulk),
@@ -2243,7 +2243,7 @@ function FooterContent({
   );
   if (!actionInProgress) {
     if (footerContentRef.current) {
-      footerContentRef.current = null;
+      footerContentRef.current = void 0;
     }
     return renderFooterContent(
       data,
@@ -3034,7 +3034,7 @@ function ViewTable({
 }) {
   const { containerRef } = (0, import_element10.useContext)(dataviews_context_default);
   const headerMenuRefs = (0, import_element10.useRef)(/* @__PURE__ */ new Map());
-  const headerMenuToFocusRef = (0, import_element10.useRef)();
+  const headerMenuToFocusRef = (0, import_element10.useRef)(void 0);
   const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element10.useState)();
   const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
   const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element10.useState)(null);
@@ -5299,7 +5299,7 @@ function ViewPickerTable({
   empty
 }) {
   const headerMenuRefs = (0, import_element20.useRef)(/* @__PURE__ */ new Map());
-  const headerMenuToFocusRef = (0, import_element20.useRef)();
+  const headerMenuToFocusRef = (0, import_element20.useRef)(void 0);
   const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element20.useState)();
   const isMultiselect = useIsMultiselectPicker(actions) ?? false;
   (0, import_element20.useEffect)(() => {
@@ -13712,7 +13712,7 @@ function CalendarDateTimeControl({
     return parsedDate || /* @__PURE__ */ new Date();
   });
   const inputControlRef = (0, import_element41.useRef)(null);
-  const validationTimeoutRef = (0, import_element41.useRef)();
+  const validationTimeoutRef = (0, import_element41.useRef)(void 0);
   const previousFocusRef = (0, import_element41.useRef)(null);
   const onChangeCallback = (0, import_element41.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),

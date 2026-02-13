@@ -64614,7 +64614,7 @@ var wp;
       return parsedDate || /* @__PURE__ */ new Date();
     });
     const inputControlRef = (0, import_element231.useRef)(null);
-    const validationTimeoutRef = (0, import_element231.useRef)();
+    const validationTimeoutRef = (0, import_element231.useRef)(void 0);
     const previousFocusRef = (0, import_element231.useRef)(null);
     const onChangeCallback = (0, import_element231.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
