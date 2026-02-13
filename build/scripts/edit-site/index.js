@@ -6117,11 +6117,13 @@ var wp;
     variant
   }) => {
     const isDirtyProps = (0, import_editor5.useEntitiesSavedStatesIsDirty)();
-    let activateSaveLabel;
+    let activateSaveLabel, successNoticeContent;
     if (isDirtyProps.isDirty) {
       activateSaveLabel = (0, import_i18n7.__)("Activate & Save");
+      successNoticeContent = (0, import_i18n7.__)("Theme activated and site updated.");
     } else {
       activateSaveLabel = (0, import_i18n7.__)("Activate");
+      successNoticeContent = (0, import_i18n7.__)("Theme activated.");
     }
     const currentTheme = useActualCurrentTheme();
     const previewingTheme = (0, import_data12.useSelect)(
@@ -6152,7 +6154,8 @@ var wp;
           saveEnabled: true,
           saveLabel: activateSaveLabel,
           renderDialog,
-          variant
+          variant,
+          successNoticeContent
         }
       }
     );

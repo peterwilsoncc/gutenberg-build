@@ -36689,7 +36689,13 @@ var wp;
     ]);
     registry.dispatch(import_preferences9.store).set("core", "hiddenBlockTypes", [...mergedBlockNames]);
   };
-  var saveDirtyEntities = ({ onSave, dirtyEntityRecords = [], entitiesToSkip = [], close } = {}) => ({ registry }) => {
+  var saveDirtyEntities = ({
+    onSave,
+    dirtyEntityRecords = [],
+    entitiesToSkip = [],
+    close,
+    successNoticeContent
+  } = {}) => ({ registry }) => {
     const PUBLISH_ON_SAVE_ENTITIES = [
       { kind: "postType", name: "wp_navigation" }
     ];
@@ -36739,17 +36745,20 @@ var wp;
       if (values.some((value) => typeof value === "undefined")) {
         registry.dispatch(import_notices17.store).createErrorNotice((0, import_i18n121.__)("Saving failed."));
       } else {
-        registry.dispatch(import_notices17.store).createSuccessNotice((0, import_i18n121.__)("Site updated."), {
-          type: "snackbar",
-          id: saveNoticeId,
-          actions: [
-            {
-              label: (0, import_i18n121.__)("View site"),
-              url: homeUrl,
-              openInNewTab: true
-            }
-          ]
-        });
+        registry.dispatch(import_notices17.store).createSuccessNotice(
+          successNoticeContent || (0, import_i18n121.__)("Site updated."),
+          {
+            type: "snackbar",
+            id: saveNoticeId,
+            actions: [
+              {
+                label: (0, import_i18n121.__)("View site"),
+                url: homeUrl,
+                openInNewTab: true
+              }
+            ]
+          }
+        );
       }
     }).catch(
       (error) => registry.dispatch(import_notices17.store).createErrorNotice(
@@ -40218,7 +40227,8 @@ var wp;
     isDirty,
     setUnselectedEntities,
     unselectedEntities,
-    variant = "default"
+    variant = "default",
+    successNoticeContent
   }) {
     const saveButtonRef = (0, import_element94.useRef)();
     const { saveDirtyEntities: saveDirtyEntities2 } = unlock((0, import_data92.useDispatch)(store));
@@ -40283,7 +40293,8 @@ var wp;
             onSave,
             dirtyEntityRecords,
             entitiesToSkip: unselectedEntities,
-            close
+            close,
+            successNoticeContent
           }),
           className: "editor-entities-saved-states__save-button",
           children: saveLabel
