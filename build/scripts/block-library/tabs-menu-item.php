@@ -10,6 +10,8 @@
  *
  * Applies IAPI directives and tab-specific attributes to the saved content.
  *
+ * @since 7.0.0
+ *
  * @param array     $attributes Block attributes.
  * @param string    $content    Block content.
  * @param \WP_Block $block      WP_Block instance.
@@ -67,7 +69,7 @@ function gutenberg_block_core_tabs_menu_item_render_callback( array $attributes,
 /**
  * Registers the `core/tabs-menu-item` block on the server.
  *
- * @since 6.9.0
+ * @since 7.0.0
  */
 function gutenberg_register_block_core_tabs_menu_item() {
 	register_block_type_from_metadata(
