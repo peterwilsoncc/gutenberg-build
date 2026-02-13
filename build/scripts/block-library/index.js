@@ -67498,7 +67498,6 @@ ${js}
   var import_i18n245 = __toESM(require_i18n(), 1);
   var import_block_editor266 = __toESM(require_block_editor(), 1);
   var import_data146 = __toESM(require_data(), 1);
-  var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_element130 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tabs-menu-item/controls.mjs
@@ -67712,17 +67711,6 @@ ${js}
 
   // packages/block-library/build-module/tabs-menu-item/edit.mjs
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
-  var { requestAnimationFrame, cancelAnimationFrame: cancelAnimationFrame2 } = window;
-  function StaticLabel({ label, index }) {
-    if (label) {
-      return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("span", { children: /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(import_element130.RawHTML, { children: (0, import_html_entities14.decodeEntities)(label) }) });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("span", { children: (0, import_i18n245.sprintf)(
-      /* translators: %d is the tab index + 1 */
-      (0, import_i18n245.__)("Tab %d"),
-      index + 1
-    ) });
-  }
   function Edit23({
     attributes: attributes2,
     setAttributes,
@@ -67754,10 +67742,6 @@ ${js}
     }, [editorActiveTabIndex, activeTabIndex]);
     const isActiveTab = tabIndex === effectiveActiveIndex;
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data146.useDispatch)(import_block_editor266.store);
-    const focusRef = (0, import_element130.useRef)();
-    const labelElementRef = (0, import_element130.useRef)(null);
-    const [isEditing, setIsEditing] = (0, import_element130.useState)(false);
-    const [editingLabel, setEditingLabel] = (0, import_element130.useState)("");
     const { tabsClientId, tabsMenuClientId, selectedTabClientId } = (0, import_data146.useSelect)(
       (select9) => {
         const {
@@ -67805,11 +67789,8 @@ ${js}
             editorActiveTabIndex: tabIndex
           });
         }
-        if (isEditing) {
-        }
       },
       [
-        isEditing,
         tabsClientId,
         tabIndex,
         effectiveActiveIndex,
@@ -67817,27 +67798,6 @@ ${js}
         __unstableMarkNextChangeAsNotPersistent
       ]
     );
-    const labelRef = (0, import_element130.useCallback)(
-      (node) => {
-        labelElementRef.current = node;
-        if (node && isEditing) {
-          const animationId = requestAnimationFrame(() => {
-            if (node) {
-              node.focus();
-            }
-          });
-          focusRef.current = animationId;
-        }
-      },
-      [isEditing]
-    );
-    (0, import_element130.useEffect)(() => {
-      return () => {
-        if (focusRef.current) {
-          cancelAnimationFrame2(focusRef.current);
-        }
-      };
-    }, []);
     const customColorStyles = (0, import_element130.useMemo)(() => {
       const styles = {};
       const activeBg = activeBackgroundColor?.color || attributes2.customActiveBackgroundColor;
@@ -67879,12 +67839,8 @@ ${js}
       "aria-selected": isActiveTab,
       id: tabLabelId,
       role: "tab",
-      tabIndex: isActiveTab ? 0 : -1,
-      onClick: handleTabClick,
-      onDoubleClick: () => {
-        setIsEditing(true);
-        setEditingLabel(tabLabel || "");
-      }
+      tabIndex: -1,
+      onClick: handleTabClick
     });
     return /* @__PURE__ */ (0, import_jsx_runtime506.jsxs)(import_jsx_runtime506.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
@@ -67910,10 +67866,9 @@ ${js}
           }
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("div", { ...blockProps, children: isEditing ? /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
         import_block_editor266.RichText,
         {
-          ref: labelRef,
           tagName: "span",
           withoutInteractiveFormatting: true,
           placeholder: (0, import_i18n245.sprintf)(
@@ -67921,16 +67876,10 @@ ${js}
             (0, import_i18n245.__)("Tab title %d"),
             tabIndex + 1
           ),
-          value: (0, import_html_entities14.decodeEntities)(editingLabel),
-          onChange: (value) => {
-            setEditingLabel(value);
-            handleLabelChange(value);
-          },
-          onBlur: () => {
-            setIsEditing(false);
-          }
+          value: tabLabel || "",
+          onChange: handleLabelChange
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(StaticLabel, { label: tabLabel, index: tabIndex }) })
+      ) })
     ] });
   }
   var edit_default38 = (0, import_block_editor266.withColors)(
@@ -68390,7 +68339,7 @@ ${js}
   var import_core_data89 = __toESM(require_core_data(), 1);
   var import_data156 = __toESM(require_data(), 1);
   var import_hooks83 = __toESM(require_hooks(), 1);
-  var import_html_entities15 = __toESM(require_html_entities(), 1);
+  var import_html_entities14 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/template-part/block.json
   var block_default112 = {
@@ -69534,7 +69483,7 @@ ${js}
       if (!entity) {
         return;
       }
-      return (0, import_html_entities15.decodeEntities)(entity.title) || capitalCase(entity.slug || "");
+      return (0, import_html_entities14.decodeEntities)(entity.title) || capitalCase(entity.slug || "");
     },
     edit: TemplatePartEdit
   };
@@ -70049,7 +69998,7 @@ ${js}
   var import_i18n257 = __toESM(require_i18n(), 1);
   var import_block_editor276 = __toESM(require_block_editor(), 1);
   var import_components171 = __toESM(require_components(), 1);
-  var import_html_entities16 = __toESM(require_html_entities(), 1);
+  var import_html_entities15 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/term-name/use-term-name.mjs
   var import_core_data92 = __toESM(require_core_data(), 1);
@@ -70126,7 +70075,7 @@ ${js}
   }) {
     const { textAlign, level = 0, isLink, levelOptions } = attributes2;
     const { term } = useTermName(termId, taxonomy);
-    const termName2 = term?.name ? (0, import_html_entities16.decodeEntities)(term.name) : (0, import_i18n257.__)("Term Name");
+    const termName2 = term?.name ? (0, import_html_entities15.decodeEntities)(term.name) : (0, import_i18n257.__)("Term Name");
     const blockProps = (0, import_block_editor276.useBlockProps)({
       className: clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
@@ -70455,7 +70404,7 @@ ${js}
   var import_core_data94 = __toESM(require_core_data(), 1);
   var import_element139 = __toESM(require_element(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
-  var import_html_entities17 = __toESM(require_html_entities(), 1);
+  var import_html_entities16 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime527 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY7 = [];
   var BASE_QUERY3 = {
@@ -70526,7 +70475,7 @@ ${js}
         if (entity) {
           accumulator.push({
             id,
-            value: (0, import_html_entities17.decodeEntities)(entity.name)
+            value: (0, import_html_entities16.decodeEntities)(entity.name)
           });
         }
         return accumulator;
@@ -70540,7 +70489,7 @@ ${js}
       const names = [];
       const mapByName = {};
       searchResults.forEach((result) => {
-        const decodedName = (0, import_html_entities17.decodeEntities)(result.name);
+        const decodedName = (0, import_html_entities16.decodeEntities)(result.name);
         names.push(decodedName);
         mapByName[decodedName] = result;
       });
