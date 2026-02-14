@@ -7,7 +7,13 @@ var wp;
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __commonJS = (cb, mod) => function __require() {
+  var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+    get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+  }) : x)(function(x) {
+    if (typeof require !== "undefined") return require.apply(this, arguments);
+    throw Error('Dynamic require of "' + x + '" is not supported');
+  });
+  var __commonJS = (cb, mod) => function __require2() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __export = (target, all) => {
@@ -39,6 +45,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/url
+  var require_url = __commonJS({
+    "package-external:@wordpress/url"(exports, module) {
+      module.exports = window.wp.url;
+    }
+  });
+
   // package-external:@wordpress/i18n
   var require_i18n = __commonJS({
     "package-external:@wordpress/i18n"(exports, module) {
@@ -50,13 +63,6 @@ var wp;
   var require_blob = __commonJS({
     "package-external:@wordpress/blob"(exports, module) {
       module.exports = window.wp.blob;
-    }
-  });
-
-  // package-external:@wordpress/url
-  var require_url = __commonJS({
-    "package-external:@wordpress/url"(exports, module) {
-      module.exports = window.wp.url;
     }
   });
 
@@ -131,12 +137,16 @@ var wp;
   var OperationType = /* @__PURE__ */ ((OperationType2) => {
     OperationType2["Prepare"] = "PREPARE";
     OperationType2["Upload"] = "UPLOAD";
+    OperationType2["ResizeCrop"] = "RESIZE_CROP";
+    OperationType2["Rotate"] = "ROTATE";
+    OperationType2["ThumbnailGeneration"] = "THUMBNAIL_GENERATION";
     return OperationType2;
   })(OperationType || {});
 
   // packages/upload-media/build-module/store/constants.mjs
   var STORE_NAME = "core/upload-media";
   var DEFAULT_MAX_CONCURRENT_UPLOADS = 5;
+  var DEFAULT_MAX_CONCURRENT_IMAGE_PROCESSING = 2;
 
   // packages/upload-media/build-module/store/reducer.mjs
   var noop = () => {
@@ -147,7 +157,8 @@ var wp;
     blobUrls: {},
     settings: {
       mediaUpload: noop,
-      maxConcurrentUploads: DEFAULT_MAX_CONCURRENT_UPLOADS
+      maxConcurrentUploads: DEFAULT_MAX_CONCURRENT_UPLOADS,
+      maxConcurrentImageProcessing: DEFAULT_MAX_CONCURRENT_IMAGE_PROCESSING
     }
   };
   function reducer(state = DEFAULT_STATE, action = { type: Type.Unknown }) {
@@ -342,6 +353,7 @@ var wp;
   // packages/upload-media/build-module/store/private-selectors.mjs
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
+    getActiveImageProcessingCount: () => getActiveImageProcessingCount,
     getActiveUploadCount: () => getActiveUploadCount,
     getAllItems: () => getAllItems,
     getBlobUrls: () => getBlobUrls,
@@ -349,7 +361,9 @@ var wp;
     getItem: () => getItem,
     getItemProgress: () => getItemProgress,
     getPausedUploadForPost: () => getPausedUploadForPost,
+    getPendingImageProcessing: () => getPendingImageProcessing,
     getPendingUploads: () => getPendingUploads,
+    hasPendingItemsByParentId: () => hasPendingItemsByParentId,
     isBatchUploaded: () => isBatchUploaded,
     isPaused: () => isPaused,
     isUploadingToPost: () => isUploadingToPost
@@ -393,8 +407,22 @@ var wp;
       return nextOperation === OperationType.Upload && item.currentOperation !== OperationType.Upload;
     });
   }
+  function getActiveImageProcessingCount(state) {
+    return state.queue.filter(
+      (item) => item.currentOperation === OperationType.ResizeCrop || item.currentOperation === OperationType.Rotate
+    ).length;
+  }
+  function getPendingImageProcessing(state) {
+    return state.queue.filter((item) => {
+      const nextOperation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
+      return (nextOperation === OperationType.ResizeCrop || nextOperation === OperationType.Rotate) && item.currentOperation !== OperationType.ResizeCrop && item.currentOperation !== OperationType.Rotate;
+    });
+  }
   function getFailedItems(state) {
     return state.queue.filter((item) => item.error !== void 0);
+  }
+  function hasPendingItemsByParentId(state, parentId) {
+    return state.queue.some((item) => item.parentId === parentId);
   }
   function getItemProgress(state, id) {
     const item = state.queue.find((i) => i.id === id);
@@ -457,8 +485,150 @@ var wp;
   }
   var v4_default = v4;
 
-  // packages/upload-media/build-module/validate-mime-type.mjs
+  // packages/upload-media/build-module/image-file.mjs
+  var ImageFile = class extends File {
+    width = 0;
+    height = 0;
+    originalWidth = 0;
+    originalHeight = 0;
+    get wasResized() {
+      return (this.originalWidth || 0) > this.width || (this.originalHeight || 0) > this.height;
+    }
+    constructor(file, width, height, originalWidth, originalHeight) {
+      super([file], file.name, {
+        type: file.type,
+        lastModified: file.lastModified
+      });
+      this.width = width;
+      this.height = height;
+      this.originalWidth = originalWidth;
+      this.originalHeight = originalHeight;
+    }
+  };
+
+  // packages/upload-media/build-module/utils.mjs
+  var import_url = __toESM(require_url(), 1);
   var import_i18n = __toESM(require_i18n(), 1);
+  function convertBlobToFile(fileOrBlob) {
+    if (fileOrBlob instanceof File) {
+      return fileOrBlob;
+    }
+    const ext = fileOrBlob.type.split("/")[1];
+    const mediaType = "application/pdf" === fileOrBlob.type ? "document" : fileOrBlob.type.split("/")[0];
+    return new File([fileOrBlob], `${mediaType}.${ext}`, {
+      type: fileOrBlob.type
+    });
+  }
+  function renameFile(file, name) {
+    return new File([file], name, {
+      type: file.type,
+      lastModified: file.lastModified
+    });
+  }
+  function cloneFile(file) {
+    return renameFile(file, file.name);
+  }
+  function getFileBasename(name) {
+    return name.includes(".") ? name.split(".").slice(0, -1).join(".") : name;
+  }
+
+  // packages/upload-media/build-module/store/utils/vips.mjs
+  var vipsModulePromise;
+  var vipsModule;
+  function loadVipsModule() {
+    if (!vipsModulePromise) {
+      vipsModulePromise = import("@wordpress/vips/worker").then(
+        (mod) => {
+          vipsModule = mod;
+          return mod;
+        }
+      );
+    }
+    return vipsModulePromise;
+  }
+  async function vipsResizeImage(id, file, resize, smartCrop, addSuffix, signal, scaledSuffix) {
+    if (signal?.aborted) {
+      throw new Error("Operation aborted");
+    }
+    const { vipsResizeImage: resizeImage } = await loadVipsModule();
+    const { buffer, width, height, originalWidth, originalHeight } = await resizeImage(
+      id,
+      await file.arrayBuffer(),
+      file.type,
+      resize,
+      smartCrop
+    );
+    let fileName = file.name;
+    const wasResized = originalWidth > width || originalHeight > height;
+    if (wasResized) {
+      const basename = getFileBasename(file.name);
+      if (scaledSuffix) {
+        fileName = file.name.replace(basename, `${basename}-scaled`);
+      } else if (addSuffix) {
+        fileName = file.name.replace(
+          basename,
+          `${basename}-${width}x${height}`
+        );
+      }
+    }
+    const resultFile = new ImageFile(
+      new File(
+        [new Blob([buffer], { type: file.type })],
+        fileName,
+        {
+          type: file.type
+        }
+      ),
+      width,
+      height,
+      originalWidth,
+      originalHeight
+    );
+    return resultFile;
+  }
+  async function vipsRotateImage(id, file, orientation, signal) {
+    if (signal?.aborted) {
+      throw new Error("Operation aborted");
+    }
+    if (orientation === 1) {
+      return file;
+    }
+    const { vipsRotateImage: rotateImage } = await loadVipsModule();
+    const { buffer, width, height } = await rotateImage(
+      id,
+      await file.arrayBuffer(),
+      file.type,
+      orientation
+    );
+    const basename = getFileBasename(file.name);
+    const fileName = file.name.replace(basename, `${basename}-rotated`);
+    const resultFile = new ImageFile(
+      new File(
+        [new Blob([buffer], { type: file.type })],
+        fileName,
+        {
+          type: file.type
+        }
+      ),
+      width,
+      height
+    );
+    return resultFile;
+  }
+  async function vipsCancelOperations(id) {
+    if (!vipsModule) {
+      return false;
+    }
+    return vipsModule.vipsCancelOperations(id);
+  }
+  function terminateVipsWorker() {
+    if (vipsModule) {
+      vipsModule.terminateVipsWorker();
+    }
+  }
+
+  // packages/upload-media/build-module/validate-mime-type.mjs
+  var import_i18n2 = __toESM(require_i18n(), 1);
 
   // packages/upload-media/build-module/upload-error.mjs
   var UploadError = class extends Error {
@@ -486,9 +656,9 @@ var wp;
     if (file.type && !isAllowedType) {
       throw new UploadError({
         code: "MIME_TYPE_NOT_SUPPORTED",
-        message: (0, import_i18n.sprintf)(
+        message: (0, import_i18n2.sprintf)(
           // translators: %s: file name.
-          (0, import_i18n.__)("%s: Sorry, this file type is not supported here."),
+          (0, import_i18n2.__)("%s: Sorry, this file type is not supported here."),
           file.name
         ),
         file
@@ -497,7 +667,7 @@ var wp;
   }
 
   // packages/upload-media/build-module/validate-mime-type-for-user.mjs
-  var import_i18n2 = __toESM(require_i18n(), 1);
+  var import_i18n3 = __toESM(require_i18n(), 1);
 
   // packages/upload-media/build-module/get-mime-types-array.mjs
   function getMimeTypesArray(wpMimeTypesObject) {
@@ -530,9 +700,9 @@ var wp;
     if (file.type && !isAllowedMimeTypeForUser) {
       throw new UploadError({
         code: "MIME_TYPE_NOT_ALLOWED_FOR_USER",
-        message: (0, import_i18n2.sprintf)(
+        message: (0, import_i18n3.sprintf)(
           // translators: %s: file name.
-          (0, import_i18n2.__)(
+          (0, import_i18n3.__)(
             "%s: Sorry, you are not allowed to upload this file type."
           ),
           file.name
@@ -543,14 +713,14 @@ var wp;
   }
 
   // packages/upload-media/build-module/validate-file-size.mjs
-  var import_i18n3 = __toESM(require_i18n(), 1);
+  var import_i18n4 = __toESM(require_i18n(), 1);
   function validateFileSize(file, maxUploadFileSize) {
     if (file.size <= 0) {
       throw new UploadError({
         code: "EMPTY_FILE",
-        message: (0, import_i18n3.sprintf)(
+        message: (0, import_i18n4.sprintf)(
           // translators: %s: file name.
-          (0, import_i18n3.__)("%s: This file is empty."),
+          (0, import_i18n4.__)("%s: This file is empty."),
           file.name
         ),
         file
@@ -559,9 +729,9 @@ var wp;
     if (maxUploadFileSize && file.size > maxUploadFileSize) {
       throw new UploadError({
         code: "SIZE_ABOVE_LIMIT",
-        message: (0, import_i18n3.sprintf)(
+        message: (0, import_i18n4.sprintf)(
           // translators: %s: file name.
-          (0, import_i18n3.__)(
+          (0, import_i18n4.__)(
             "%s: This file exceeds the maximum upload size for this site."
           ),
           file.name
@@ -581,14 +751,14 @@ var wp;
     additionalData,
     allowedTypes
   }) {
-    return async ({ select, dispatch }) => {
+    return async ({ select: select2, dispatch }) => {
       const batchId = v4_default();
       for (const file of files) {
         try {
           validateMimeType(file, allowedTypes);
           validateMimeTypeForUser(
             file,
-            select.getSettings().allowedMimeTypes
+            select2.getSettings().allowedMimeTypes
           );
         } catch (error) {
           onError?.(error);
@@ -597,7 +767,7 @@ var wp;
         try {
           validateFileSize(
             file,
-            select.getSettings().maxUploadFileSize
+            select2.getSettings().maxUploadFileSize
           );
         } catch (error) {
           onError?.(error);
@@ -616,12 +786,13 @@ var wp;
     };
   }
   function cancelItem(id, error, silent = false) {
-    return async ({ select, dispatch }) => {
-      const item = select.getItem(id);
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
       if (!item) {
         return;
       }
       item.abortController?.abort();
+      await vipsCancelOperations(id);
       if (!silent) {
         const { onError } = item;
         onError?.(error ?? new Error("Upload cancelled"));
@@ -636,14 +807,14 @@ var wp;
       });
       dispatch.removeItem(id);
       dispatch.revokeBlobUrls(id);
-      if (item.batchId && select.isBatchUploaded(item.batchId)) {
+      if (item.batchId && select2.isBatchUploaded(item.batchId)) {
         item.onBatchSuccess?.();
       }
     };
   }
   function retryItem(id) {
-    return async ({ select, dispatch }) => {
-      const item = select.getItem(id);
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
       if (!item) {
         return;
       }
@@ -662,43 +833,25 @@ var wp;
   var private_actions_exports = {};
   __export(private_actions_exports, {
     addItem: () => addItem,
+    addSideloadItem: () => addSideloadItem,
     finishOperation: () => finishOperation,
+    generateThumbnails: () => generateThumbnails,
     pauseItem: () => pauseItem,
     pauseQueue: () => pauseQueue,
     prepareItem: () => prepareItem,
     processItem: () => processItem,
     removeItem: () => removeItem,
-    resumeItem: () => resumeItem,
+    resizeCropItem: () => resizeCropItem,
+    resumeItemByPostId: () => resumeItemByPostId,
     resumeQueue: () => resumeQueue,
     revokeBlobUrls: () => revokeBlobUrls,
+    rotateItem: () => rotateItem,
+    sideloadItem: () => sideloadItem,
     updateItemProgress: () => updateItemProgress,
     updateSettings: () => updateSettings,
     uploadItem: () => uploadItem
   });
   var import_blob = __toESM(require_blob(), 1);
-
-  // packages/upload-media/build-module/utils.mjs
-  var import_url = __toESM(require_url(), 1);
-  var import_i18n4 = __toESM(require_i18n(), 1);
-  function convertBlobToFile(fileOrBlob) {
-    if (fileOrBlob instanceof File) {
-      return fileOrBlob;
-    }
-    const ext = fileOrBlob.type.split("/")[1];
-    const mediaType = "application/pdf" === fileOrBlob.type ? "document" : fileOrBlob.type.split("/")[0];
-    return new File([fileOrBlob], `${mediaType}.${ext}`, {
-      type: fileOrBlob.type
-    });
-  }
-  function renameFile(file, name) {
-    return new File([file], name, {
-      type: file.type,
-      lastModified: file.lastModified
-    });
-  }
-  function cloneFile(file) {
-    return renameFile(file, file.name);
-  }
 
   // packages/upload-media/build-module/stub-file.mjs
   var StubFile = class extends File {
@@ -708,6 +861,12 @@ var wp;
   };
 
   // packages/upload-media/build-module/store/private-actions.mjs
+  function shouldPauseForSideload(item, operation, select2) {
+    if (operation !== OperationType.Upload || !item.parentId || !item.additionalData.post) {
+      return false;
+    }
+    return select2.isUploadingToPost(item.additionalData.post);
+  }
   function addItem({
     file: fileOrBlob,
     batchId,
@@ -746,6 +905,7 @@ var wp;
           },
           additionalData: {
             convert_format: false,
+            generate_sub_sizes: false,
             ...additionalData
           },
           onChange,
@@ -761,18 +921,73 @@ var wp;
       dispatch.processItem(itemId);
     };
   }
+  function addSideloadItem({
+    file,
+    onChange,
+    additionalData,
+    operations,
+    batchId,
+    parentId
+  }) {
+    return ({ dispatch }) => {
+      const itemId = v4_default();
+      dispatch({
+        type: Type.Add,
+        item: {
+          id: itemId,
+          batchId,
+          status: ItemStatus.Processing,
+          sourceFile: cloneFile(file),
+          file,
+          onChange,
+          additionalData: {
+            ...additionalData
+          },
+          parentId,
+          operations: Array.isArray(operations) ? operations : [OperationType.Prepare],
+          abortController: new AbortController()
+        }
+      });
+      dispatch.processItem(itemId);
+    };
+  }
   function processItem(id) {
-    return async ({ select, dispatch }) => {
-      if (select.isPaused()) {
+    return async ({ select: select2, dispatch }) => {
+      if (select2.isPaused()) {
         return;
       }
-      const item = select.getItem(id);
-      const { attachment, onChange, onSuccess, onBatchSuccess, batchId } = item;
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      const {
+        attachment,
+        onChange,
+        onSuccess,
+        onBatchSuccess,
+        batchId,
+        parentId
+      } = item;
       const operation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
+      const operationArgs = Array.isArray(item.operations?.[0]) ? item.operations[0][1] : void 0;
+      if (shouldPauseForSideload(item, operation, select2)) {
+        dispatch({
+          type: Type.PauseItem,
+          id
+        });
+        return;
+      }
       if (operation === OperationType.Upload) {
-        const settings = select.getSettings();
-        const activeCount = select.getActiveUploadCount();
+        const settings = select2.getSettings();
+        const activeCount = select2.getActiveUploadCount();
         if (activeCount >= settings.maxConcurrentUploads) {
+          return;
+        }
+      }
+      if (operation === OperationType.ResizeCrop || operation === OperationType.Rotate) {
+        const settings = select2.getSettings();
+        const activeCount = select2.getActiveImageProcessingCount();
+        if (activeCount >= settings.maxConcurrentImageProcessing) {
           return;
         }
       }
@@ -780,17 +995,30 @@ var wp;
         onChange?.([attachment]);
       }
       if (!operation) {
-        if (attachment) {
-          onSuccess?.([attachment]);
+        if (parentId || !parentId && !select2.hasPendingItemsByParentId(id)) {
+          if (attachment) {
+            onSuccess?.([attachment]);
+          }
+          dispatch.removeItem(id);
+          dispatch.revokeBlobUrls(id);
+          if (batchId && select2.isBatchUploaded(batchId)) {
+            onBatchSuccess?.();
+          }
         }
-        dispatch.removeItem(id);
-        dispatch.revokeBlobUrls(id);
-        if (batchId && select.isBatchUploaded(batchId)) {
-          onBatchSuccess?.();
+        if (parentId && batchId && select2.isBatchUploaded(batchId)) {
+          const parentItem = select2.getItem(parentId);
+          if (!parentItem) {
+            return;
+          }
+          if (attachment) {
+            parentItem.onSuccess?.([attachment]);
+          }
+          dispatch.removeItem(parentId);
+          dispatch.revokeBlobUrls(parentId);
+          if (parentItem.batchId && select2.isBatchUploaded(parentItem.batchId)) {
+            parentItem.onBatchSuccess?.();
+          }
         }
-        return;
-      }
-      if (!operation) {
         return;
       }
       dispatch({
@@ -802,8 +1030,27 @@ var wp;
         case OperationType.Prepare:
           dispatch.prepareItem(item.id);
           break;
+        case OperationType.ResizeCrop:
+          dispatch.resizeCropItem(
+            item.id,
+            operationArgs
+          );
+          break;
+        case OperationType.Rotate:
+          dispatch.rotateItem(
+            item.id,
+            operationArgs
+          );
+          break;
         case OperationType.Upload:
-          dispatch.uploadItem(id);
+          if (item.parentId) {
+            dispatch.sideloadItem(id);
+          } else {
+            dispatch.uploadItem(id);
+          }
+          break;
+        case OperationType.ThumbnailGeneration:
+          dispatch.generateThumbnails(id);
           break;
       }
     };
@@ -814,11 +1061,11 @@ var wp;
     };
   }
   function resumeQueue() {
-    return async ({ select, dispatch }) => {
+    return async ({ select: select2, dispatch }) => {
       dispatch({
         type: Type.ResumeQueue
       });
-      for (const item of select.getAllItems()) {
+      for (const item of select2.getAllItems()) {
         dispatch.processItem(item.id);
       }
     };
@@ -831,22 +1078,21 @@ var wp;
       });
     };
   }
-  function resumeItem(id) {
-    return async ({ select, dispatch }) => {
-      const item = select.getItem(id);
-      if (!item || item.status !== ItemStatus.Paused) {
-        return;
+  function resumeItemByPostId(postOrAttachmentId) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getPausedUploadForPost(postOrAttachmentId);
+      if (item) {
+        dispatch({
+          type: Type.ResumeItem,
+          id: item.id
+        });
+        dispatch.processItem(item.id);
       }
-      dispatch({
-        type: Type.ResumeItem,
-        id
-      });
-      dispatch.processItem(id);
     };
   }
   function removeItem(id) {
-    return async ({ select, dispatch }) => {
-      const item = select.getItem(id);
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
       if (!item) {
         return;
       }
@@ -854,11 +1100,14 @@ var wp;
         type: Type.Remove,
         id
       });
+      if (select2.getAllItems().length === 0) {
+        terminateVipsWorker();
+      }
     };
   }
   function finishOperation(id, updates) {
-    return async ({ select, dispatch }) => {
-      const item = select.getItem(id);
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
       const previousOperation = item?.currentOperation;
       dispatch({
         type: Type.OperationFinish,
@@ -867,16 +1116,49 @@ var wp;
       });
       dispatch.processItem(id);
       if (previousOperation === OperationType.Upload) {
-        const pendingUploads = select.getPendingUploads();
+        const pendingUploads = select2.getPendingUploads();
         for (const pendingItem of pendingUploads) {
+          dispatch.processItem(pendingItem.id);
+        }
+      }
+      if (previousOperation === OperationType.ResizeCrop || previousOperation === OperationType.Rotate) {
+        const pendingItems = select2.getPendingImageProcessing();
+        for (const pendingItem of pendingItems) {
           dispatch.processItem(pendingItem.id);
         }
       }
     };
   }
   function prepareItem(id) {
-    return async ({ dispatch }) => {
-      const operations = [OperationType.Upload];
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      const { file } = item;
+      const operations = [];
+      const isImage = file.type.startsWith("image/");
+      if (isImage) {
+        const bigImageSizeThreshold = select2.getSettings().bigImageSizeThreshold;
+        if (bigImageSizeThreshold) {
+          operations.push([
+            OperationType.ResizeCrop,
+            {
+              resize: {
+                width: bigImageSizeThreshold,
+                height: bigImageSizeThreshold
+              },
+              isThresholdResize: true
+            }
+          ]);
+        }
+        operations.push(
+          OperationType.Upload,
+          OperationType.ThumbnailGeneration
+        );
+      } else {
+        operations.push(OperationType.Upload);
+      }
       dispatch({
         type: Type.AddOperations,
         id,
@@ -886,9 +1168,12 @@ var wp;
     };
   }
   function uploadItem(id) {
-    return async ({ select, dispatch }) => {
-      const item = select.getItem(id);
-      select.getSettings().mediaUpload({
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      select2.getSettings().mediaUpload({
         filesList: [item.file],
         additionalData: item.additionalData,
         signal: item.abortController?.signal,
@@ -910,9 +1195,207 @@ var wp;
       });
     };
   }
+  function sideloadItem(id) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      const { post, ...additionalData } = item.additionalData;
+      const mediaSideload = select2.getSettings().mediaSideload;
+      if (!mediaSideload) {
+        dispatch.finishOperation(id, {});
+        return;
+      }
+      mediaSideload({
+        file: item.file,
+        attachmentId: post,
+        additionalData,
+        signal: item.abortController?.signal,
+        onFileChange: ([attachment]) => {
+          dispatch.finishOperation(id, { attachment });
+          dispatch.resumeItemByPostId(post);
+        },
+        onError: (error) => {
+          dispatch.cancelItem(id, error);
+          dispatch.resumeItemByPostId(post);
+        }
+      });
+    };
+  }
+  function resizeCropItem(id, args) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      if (!args?.resize) {
+        dispatch.finishOperation(id, {
+          file: item.file
+        });
+        return;
+      }
+      const addSuffix = Boolean(item.parentId);
+      const scaledSuffix = Boolean(args.isThresholdResize);
+      try {
+        const file = await vipsResizeImage(
+          item.id,
+          item.file,
+          args.resize,
+          false,
+          // smartCrop
+          addSuffix,
+          item.abortController?.signal,
+          scaledSuffix
+        );
+        const blobUrl = (0, import_blob.createBlobURL)(file);
+        dispatch({
+          type: Type.CacheBlobUrl,
+          id,
+          blobUrl
+        });
+        dispatch.finishOperation(id, {
+          file,
+          attachment: {
+            url: blobUrl
+          }
+        });
+      } catch (error) {
+        dispatch.cancelItem(
+          id,
+          new UploadError({
+            code: "IMAGE_TRANSCODING_ERROR",
+            message: "File could not be uploaded",
+            file: item.file,
+            cause: error instanceof Error ? error : void 0
+          })
+        );
+      }
+    };
+  }
+  function rotateItem(id, args) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      if (!args?.orientation || args.orientation === 1) {
+        dispatch.finishOperation(id, {
+          file: item.file
+        });
+        return;
+      }
+      try {
+        const file = await vipsRotateImage(
+          item.id,
+          item.file,
+          args.orientation,
+          item.abortController?.signal
+        );
+        const blobUrl = (0, import_blob.createBlobURL)(file);
+        dispatch({
+          type: Type.CacheBlobUrl,
+          id,
+          blobUrl
+        });
+        dispatch.finishOperation(id, {
+          file,
+          attachment: {
+            url: blobUrl
+          }
+        });
+      } catch (error) {
+        dispatch.cancelItem(
+          id,
+          new UploadError({
+            code: "IMAGE_ROTATION_ERROR",
+            message: "Image could not be rotated",
+            file: item.file,
+            cause: error instanceof Error ? error : void 0
+          })
+        );
+      }
+    };
+  }
+  function generateThumbnails(id) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      if (!item.attachment) {
+        dispatch.finishOperation(id, {});
+        return;
+      }
+      const attachment = item.attachment;
+      const needsRotation = attachment.exif_orientation && attachment.exif_orientation !== 1 && !item.file.name.includes("-scaled");
+      if (needsRotation && attachment.id) {
+        try {
+          const rotatedFile = await vipsRotateImage(
+            item.id,
+            item.sourceFile,
+            attachment.exif_orientation,
+            item.abortController?.signal
+          );
+          dispatch.addSideloadItem({
+            file: rotatedFile,
+            batchId: v4_default(),
+            parentId: item.id,
+            additionalData: {
+              post: attachment.id,
+              image_size: "original",
+              convert_format: false
+            },
+            operations: [OperationType.Upload]
+          });
+        } catch {
+          console.warn(
+            "Failed to rotate image, continuing with thumbnails"
+          );
+        }
+      }
+      if (!item.parentId && attachment.missing_image_sizes && attachment.missing_image_sizes.length > 0) {
+        const file = attachment.media_filename ? renameFile(item.sourceFile, attachment.media_filename) : item.sourceFile;
+        const batchId = v4_default();
+        const allImageSizes = select2.getSettings().allImageSizes || {};
+        for (const name of attachment.missing_image_sizes) {
+          const imageSize = allImageSizes[name];
+          if (!imageSize) {
+            console.warn(
+              `Image size "${name}" not found in configuration`
+            );
+            continue;
+          }
+          dispatch.addSideloadItem({
+            file,
+            onChange: ([updatedAttachment]) => {
+              if ((0, import_blob.isBlobURL)(updatedAttachment.url)) {
+                return;
+              }
+              item.onChange?.([updatedAttachment]);
+            },
+            batchId,
+            parentId: item.id,
+            additionalData: {
+              // Sideloading does not use the parent post ID but the
+              // attachment ID as the image sizes need to be added to it.
+              post: attachment.id,
+              image_size: name,
+              convert_format: false
+            },
+            operations: [
+              [OperationType.ResizeCrop, { resize: imageSize }],
+              OperationType.Upload
+            ]
+          });
+        }
+      }
+      dispatch.finishOperation(id, {});
+    };
+  }
   function revokeBlobUrls(id) {
-    return async ({ select, dispatch }) => {
-      const blobUrls = select.getBlobUrls(id);
+    return async ({ select: select2, dispatch }) => {
+      const blobUrls = select2.getBlobUrls(id);
       for (const blobUrl of blobUrls) {
         (0, import_blob.revokeBlobURL)(blobUrl);
       }
@@ -956,7 +1439,9 @@ var wp;
     selectors: selectors_exports,
     actions: actions_exports
   });
-  (0, import_data.register)(store);
+  if (!(0, import_data.select)(store)) {
+    (0, import_data.register)(store);
+  }
   unlock(store).registerPrivateActions(private_actions_exports);
   unlock(store).registerPrivateSelectors(private_selectors_exports);
 

@@ -15618,6 +15618,7 @@ var wp;
     "__experimentalDiscussionSettings",
     "__experimentalFeatures",
     "__experimentalGlobalStylesBaseStyles",
+    "allImageSizes",
     "alignWide",
     "blockInspectorTabs",
     "maxUploadFileSize",
@@ -15677,6 +15678,8 @@ var wp;
   function useBlockEditorSettings(settings, postType2, postId2, renderingMode2) {
     const isLargeViewport = (0, import_compose7.useViewportMatch)("medium");
     const {
+      allImageSizes,
+      bigImageSizeThreshold,
       allowRightClickOverrides,
       blockTypes,
       focusMode,
@@ -15711,6 +15714,7 @@ var wp;
           kind: "root",
           name: "site"
         }) ? getEntityRecord("root", "site") : void 0;
+        const baseData = getEntityRecord("root", "__unstableBase");
         function getSectionRootBlock() {
           if (renderingMode2 === "template-locked") {
             return getBlocksByName("core/post-content")?.[0] ?? "";
@@ -15720,6 +15724,8 @@ var wp;
           ) ?? "";
         }
         return {
+          allImageSizes: baseData?.image_sizes,
+          bigImageSizeThreshold: baseData?.image_size_threshold,
           allowRightClickOverrides: get(
             "core",
             "allowRightClickOverrides"
@@ -15831,6 +15837,8 @@ var wp;
         ),
         [globalStylesDataKey]: globalStylesData,
         [globalStylesLinksDataKey]: globalStylesLinksData,
+        allImageSizes,
+        bigImageSizeThreshold,
         allowedBlockTypes,
         allowRightClickOverrides,
         focusMode: focusMode && !forceDisableFocusMode,
@@ -15918,6 +15926,8 @@ var wp;
       editMediaEntity,
       wrappedOnNavigateToEntityRecord,
       deviceType2,
+      allImageSizes,
+      bigImageSizeThreshold,
       isNavigationOverlayContext
     ]);
   }

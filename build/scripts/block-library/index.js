@@ -3670,6 +3670,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/upload-media
+  var require_upload_media = __commonJS({
+    "package-external:@wordpress/upload-media"(exports, module) {
+      module.exports = window.wp.uploadMedia;
+    }
+  });
+
   // package-external:@wordpress/a11y
   var require_a11y = __commonJS({
     "package-external:@wordpress/a11y"(exports, module) {
@@ -30349,6 +30356,7 @@ ${js}
   var import_notices8 = __toESM(require_notices(), 1);
   var import_compose23 = __toESM(require_compose(), 1);
   var import_url10 = __toESM(require_url(), 1);
+  var import_upload_media = __toESM(require_upload_media(), 1);
 
   // packages/block-library/build-module/image/image.mjs
   var import_blob11 = __toESM(require_blob(), 1);
@@ -30601,6 +30609,7 @@ ${js}
   }
   function Image2({
     temporaryURL,
+    isSideloading,
     attributes: attributes2,
     setAttributes,
     isSingleSelected,
@@ -31082,7 +31091,7 @@ ${js}
                     onSelectURL,
                     onError: onUploadError,
                     onReset: () => onSelectImage(void 0),
-                    isUploading: !!temporaryURL,
+                    isUploading: !!temporaryURL || isSideloading,
                     emptyLabel: (0, import_i18n93.__)("Add image")
                   }
                 )
@@ -31261,7 +31270,7 @@ ${js}
           }
         }
       ),
-      temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components56.Spinner, {})
+      (temporaryURL || isSideloading) && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components56.Spinner, {})
     ] });
     if (canEditImage && isEditingImage) {
       img = /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(ImageWrapper, { href, children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
@@ -31637,6 +31646,15 @@ ${js}
     });
     const isExternal = isExternalImage(id, url);
     const src = isExternal ? url : void 0;
+    const isSideloading = (0, import_data48.useSelect)(
+      (select9) => {
+        if (!window.__experimentalMediaProcessing || !id) {
+          return false;
+        }
+        return select9(import_upload_media.store).isUploadingById(id);
+      },
+      [id]
+    );
     const mediaPreview = !!url && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
       "img",
       {
@@ -31649,7 +31667,7 @@ ${js}
     const borderProps = (0, import_block_editor113.__experimentalUseBorderProps)(attributes2);
     const shadowProps = (0, import_block_editor113.__experimentalGetShadowClassesAndStyles)(attributes2);
     const classes = clsx_default(className, {
-      "is-transient": !!temporaryURL,
+      "is-transient": !!temporaryURL || isSideloading,
       "is-resized": !!width || !!height,
       [`size-${sizeSlug}`]: sizeSlug,
       "has-custom-border": !!borderProps.className || borderProps.style && Object.keys(borderProps.style).length > 0
@@ -31716,6 +31734,7 @@ ${js}
           Image2,
           {
             temporaryURL,
+            isSideloading,
             attributes: attributes2,
             setAttributes,
             isSingleSelected,

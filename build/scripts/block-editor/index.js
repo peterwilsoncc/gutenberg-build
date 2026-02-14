@@ -23798,7 +23798,9 @@ var wp;
         mediaUpload: settings2.mediaUpload,
         mediaSideload: settings2.mediaSideload,
         maxUploadFileSize: settings2.maxUploadFileSize,
-        allowedMimeTypes: settings2.allowedMimeTypes
+        allowedMimeTypes: settings2.allowedMimeTypes,
+        allImageSizes: settings2.allImageSizes,
+        bigImageSizeThreshold: settings2.bigImageSizeThreshold
       }),
       [settings2]
     );
