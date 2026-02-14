@@ -5592,11 +5592,6 @@ return array(
 			'postType',
 			'postId'
 		),
-		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			)
-		),
 		'example' => array(
 			'viewportWidth' => 350
 		),
@@ -5618,6 +5613,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,

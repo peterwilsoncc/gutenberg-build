@@ -48986,9 +48986,16 @@ ${js}
       {
         type: "block",
         blocks: ["core/post-comments-link"],
-        transform: ({ textAlign }) => {
+        transform: ({ style: style2 }) => {
+          const textAlign = style2?.typography?.textAlign;
           return (0, import_blocks81.createBlock)("core/post-comments-link", {
-            textAlign
+            ...textAlign && {
+              style: {
+                typography: {
+                  textAlign
+                }
+              }
+            }
           });
         }
       }
@@ -49246,11 +49253,6 @@ ${js}
     description: "Displays the link to the current post comments.",
     textdomain: "default",
     usesContext: ["postType", "postId"],
-    attributes: {
-      textAlign: {
-        type: "string"
-      }
-    },
     example: {
       viewportWidth: 350
     },
@@ -49272,6 +49274,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -49310,15 +49313,10 @@ ${js}
   var import_i18n165 = __toESM(require_i18n(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
   var import_jsx_runtime363 = __toESM(require_jsx_runtime(), 1);
-  function PostCommentsLinkEdit({ context, attributes: attributes2, setAttributes }) {
-    const { textAlign } = attributes2;
+  function PostCommentsLinkEdit({ context }) {
     const { postType, postId } = context;
     const [commentsCount, setCommentsCount] = (0, import_element95.useState)();
-    const blockProps = (0, import_block_editor187.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+    const blockProps = (0, import_block_editor187.useBlockProps)();
     (0, import_element95.useEffect)(() => {
       if (!postId) {
         return;
@@ -49356,32 +49354,21 @@ ${js}
         );
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime363.jsxs)(import_jsx_runtime363.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_block_editor187.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
-        import_block_editor187.AlignmentControl,
-        {
-          value: textAlign,
-          onChange: (nextAlign) => {
-            setAttributes({ textAlign: nextAlign });
-          }
-        }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime363.jsx)("div", { ...blockProps, children: post?.link && commentsText !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
-        "a",
-        {
-          href: post?.link + "#comments",
-          onClick: (event) => event.preventDefault(),
-          children: commentsText
-        }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
-        "a",
-        {
-          href: "#post-comments-link-pseudo-link",
-          onClick: (event) => event.preventDefault(),
-          children: (0, import_i18n165.__)("No comments")
-        }
-      ) })
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)("div", { ...blockProps, children: post?.link && commentsText !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
+      "a",
+      {
+        href: post?.link + "#comments",
+        onClick: (event) => event.preventDefault(),
+        children: commentsText
+      }
+    ) : /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
+      "a",
+      {
+        href: "#post-comments-link-pseudo-link",
+        onClick: (event) => event.preventDefault(),
+        children: (0, import_i18n165.__)("No comments")
+      }
+    ) });
   }
   var edit_default28 = PostCommentsLinkEdit;
 
@@ -49402,12 +49389,74 @@ ${js}
   };
   var transforms_default25 = transforms24;
 
+  // packages/block-library/build-module/post-comments-link/deprecated.mjs
+  var v129 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      }
+    },
+    supports: {
+      anchor: true,
+      html: false,
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      color: {
+        link: true,
+        text: false,
+        __experimentalDefaultControls: {
+          background: true,
+          link: true
+        }
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
+  var deprecated_default34 = [v129];
+
   // packages/block-library/build-module/post-comments-link/index.mjs
   var { name: name72 } = block_default71;
   var settings71 = {
     edit: edit_default28,
     icon: post_comments_count_default,
-    transforms: transforms_default25
+    transforms: transforms_default25,
+    deprecated: deprecated_default34
   };
   var init71 = () => initBlock({ name: name72, metadata: block_default71, settings: settings71 });
 
@@ -50144,7 +50193,7 @@ ${js}
       return !attributes2.datetime && !attributes2?.metadata?.bindings?.datetime;
     }
   };
-  var v129 = {
+  var v130 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -50181,7 +50230,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default34 = [v38, v213, v129];
+  var deprecated_default35 = [v38, v213, v130];
 
   // packages/block-library/build-module/post-date/variations.mjs
   var import_i18n168 = __toESM(require_i18n(), 1);
@@ -50229,7 +50278,7 @@ ${js}
   var settings73 = {
     icon: post_date_default,
     edit: PostDateEdit,
-    deprecated: deprecated_default34,
+    deprecated: deprecated_default35,
     variations: variations_default10
   };
   var init73 = () => initBlock({ name: name74, metadata: block_default73, settings: settings73 });
@@ -52991,7 +53040,7 @@ ${js}
   }
 
   // packages/block-library/build-module/post-title/deprecated.mjs
-  var v130 = {
+  var v131 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -53041,14 +53090,14 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default35 = [v130];
+  var deprecated_default36 = [v131];
 
   // packages/block-library/build-module/post-title/index.mjs
   var { name: name81 } = block_default80;
   var settings80 = {
     icon: title_default,
     edit: PostTitleEdit,
-    deprecated: deprecated_default35
+    deprecated: deprecated_default36
   };
   var init80 = () => initBlock({ name: name81, metadata: block_default80, settings: settings80 });
 
@@ -53749,7 +53798,7 @@ ${js}
       };
     }
   };
-  var v131 = {
+  var v133 = {
     attributes: {
       ...blockAttributes6
     },
@@ -53794,7 +53843,7 @@ ${js}
       };
     }
   };
-  var deprecated_default36 = [v57, v48, v39, v214, v131, v02];
+  var deprecated_default37 = [v57, v48, v39, v214, v133, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n183 = __toESM(require_i18n(), 1);
@@ -54104,7 +54153,7 @@ ${js}
     transforms: transforms_default28,
     edit: edit_default30,
     save: save40,
-    deprecated: deprecated_default36
+    deprecated: deprecated_default37
   };
   if (window.__experimentalContentOnlyInspectorFields) {
     settings82[fieldsKey16] = [
@@ -56292,7 +56341,7 @@ ${js}
       replacePostTemplateBlock(innerBlocks, newPostTemplateBlock)
     ];
   };
-  var v133 = {
+  var v134 = {
     attributes: {
       queryId: {
         type: "number"
@@ -56644,8 +56693,8 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v49, v310, v215, v133];
-  var deprecated_default37 = deprecated14;
+  var deprecated14 = [v67, v58, v49, v310, v215, v134];
+  var deprecated_default38 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
   var { name: name84 } = block_default83;
@@ -56704,7 +56753,7 @@ ${js}
     },
     save: save41,
     variations: variations_default13,
-    deprecated: deprecated_default37
+    deprecated: deprecated_default38
   };
   var init83 = () => initBlock({ name: name84, metadata: block_default83, settings: settings83 });
 
@@ -57077,7 +57126,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default38 = deprecated15;
+  var deprecated_default39 = deprecated15;
 
   // packages/block-library/build-module/query-pagination/index.mjs
   var { name: name86 } = block_default85;
@@ -57085,7 +57134,7 @@ ${js}
     icon: query_pagination_default,
     edit: QueryPaginationEdit2,
     save: save43,
-    deprecated: deprecated_default38
+    deprecated: deprecated_default39
   };
   var init85 = () => initBlock({ name: name86, metadata: block_default85, settings: settings85 });
 
@@ -57898,7 +57947,7 @@ ${js}
   var variations_default14 = variations14;
 
   // packages/block-library/build-module/query-title/deprecated.mjs
-  var v134 = {
+  var v135 = {
     attributes: {
       type: {
         type: "string"
@@ -57934,7 +57983,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default39 = [v134];
+  var deprecated_default40 = [v135];
 
   // packages/block-library/build-module/query-title/index.mjs
   var { name: name90 } = block_default89;
@@ -57942,7 +57991,7 @@ ${js}
     icon: title_default,
     edit: QueryTitleEdit,
     variations: variations_default14,
-    deprecated: deprecated_default39
+    deprecated: deprecated_default40
   };
   var init89 = () => initBlock({ name: name90, metadata: block_default89, settings: settings89 });
 
@@ -58322,7 +58371,7 @@ ${js}
       ] });
     }
   };
-  var v135 = {
+  var v136 = {
     attributes: {
       value: {
         type: "string",
@@ -58414,7 +58463,7 @@ ${js}
       );
     }
   };
-  var deprecated_default40 = [v410, v311, v216, v135, v03];
+  var deprecated_default41 = [v410, v311, v216, v136, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n214 = __toESM(require_i18n(), 1);
@@ -58422,7 +58471,7 @@ ${js}
   var import_components141 = __toESM(require_components(), 1);
   var import_data126 = __toESM(require_data(), 1);
   var import_element114 = __toESM(require_element(), 1);
-  var import_deprecated43 = __toESM(require_deprecated(), 1);
+  var import_deprecated44 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime416 = __toESM(require_jsx_runtime(), 1);
   var isWebPlatform2 = import_element114.Platform.OS === "web";
   var TEMPLATE16 = [["core/paragraph", {}]];
@@ -58434,7 +58483,7 @@ ${js}
         return;
       }
       const [newAttributes, newInnerBlocks] = migrateToQuoteV2(attributes2);
-      (0, import_deprecated43.default)("Value attribute on the quote block", {
+      (0, import_deprecated44.default)("Value attribute on the quote block", {
         since: "6.0",
         version: "6.5",
         alternative: "inner blocks"
@@ -58853,7 +58902,7 @@ ${js}
     transforms: transforms_default29,
     edit: QuoteEdit,
     save: save44,
-    deprecated: deprecated_default40
+    deprecated: deprecated_default41
   };
   var init91 = () => initBlock({ name: name92, metadata: block_default91, settings: settings91 });
 
@@ -59126,7 +59175,7 @@ ${js}
       return attributes2;
     }
   };
-  var v136 = {
+  var v137 = {
     attributes: {
       ref: {
         type: "number"
@@ -59171,12 +59220,12 @@ ${js}
       };
     }
   };
-  var deprecated_default41 = [v217, v136];
+  var deprecated_default42 = [v217, v137];
 
   // packages/block-library/build-module/block/index.mjs
   var { name: name93 } = block_default92;
   var settings92 = {
-    deprecated: deprecated_default41,
+    deprecated: deprecated_default42,
     edit: ReusableBlockEditRecursionWrapper,
     icon: symbol_default,
     __experimentalLabel: ({ ref }) => {
@@ -60615,7 +60664,7 @@ ${js}
   // packages/block-library/build-module/separator/deprecated.mjs
   var import_block_editor234 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
-  var v137 = {
+  var v138 = {
     attributes: {
       color: {
         type: "string"
@@ -60650,7 +60699,7 @@ ${js}
       };
     }
   };
-  var deprecated_default42 = [v137];
+  var deprecated_default43 = [v138];
 
   // packages/block-library/build-module/separator/index.mjs
   var { name: name97 } = block_default96;
@@ -60665,7 +60714,7 @@ ${js}
     transforms: transforms_default30,
     edit: SeparatorEdit,
     save: separatorSave,
-    deprecated: deprecated_default42
+    deprecated: deprecated_default43
   };
   var init96 = () => initBlock({ name: name97, metadata: block_default96, settings: settings96 });
 
@@ -61611,7 +61660,7 @@ ${js}
   var icon_default4 = /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_components149.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_components149.Path, { d: "M4 10.5h16V9H4v1.5ZM4 15h9v-1.5H4V15Z" }) });
 
   // packages/block-library/build-module/site-tagline/deprecated.mjs
-  var v138 = {
+  var v139 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -61645,14 +61694,14 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default43 = [v138];
+  var deprecated_default44 = [v139];
 
   // packages/block-library/build-module/site-tagline/index.mjs
   var { name: name100 } = block_default99;
   var settings99 = {
     icon: icon_default4,
     edit: SiteTaglineEdit,
-    deprecated: deprecated_default43
+    deprecated: deprecated_default44
   };
   var init99 = () => initBlock({ name: name100, metadata: block_default99, settings: settings99 });
 
@@ -61889,7 +61938,7 @@ ${js}
   }
 
   // packages/block-library/build-module/site-title/deprecated.mjs
-  var v139 = {
+  var v140 = {
     attributes: {
       level: {
         type: "number",
@@ -61936,7 +61985,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default44 = [v139];
+  var deprecated_default45 = [v140];
 
   // packages/block-library/build-module/site-title/transforms.mjs
   var import_blocks107 = __toESM(require_blocks(), 1);
@@ -61968,7 +62017,7 @@ ${js}
     },
     edit: SiteTitleEdit,
     transforms: transforms_default33,
-    deprecated: deprecated_default44
+    deprecated: deprecated_default45
   };
   var init100 = () => initBlock({ name: name101, metadata: block_default100, settings: settings100 });
 
@@ -62980,7 +63029,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default45 = deprecated17;
+  var deprecated_default46 = deprecated17;
 
   // packages/block-library/build-module/social-links/edit.mjs
   var import_element122 = __toESM(require_element(), 1);
@@ -63374,7 +63423,7 @@ ${js}
     icon: share_default,
     edit: edit_default33,
     save: save46,
-    deprecated: deprecated_default45
+    deprecated: deprecated_default46
   };
   var init102 = () => initBlock({ name: name103, metadata: block_default102, settings: settings102 });
 
@@ -63425,7 +63474,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default46 = deprecated18;
+  var deprecated_default47 = deprecated18;
 
   // packages/block-library/build-module/spacer/edit.mjs
   var import_block_editor245 = __toESM(require_block_editor(), 1);
@@ -63911,7 +63960,7 @@ ${js}
     transforms: transforms_default34,
     edit: edit_default34,
     save: save47,
-    deprecated: deprecated_default46
+    deprecated: deprecated_default47
   };
   var init103 = () => initBlock({ name: name104, metadata: block_default103, settings: settings103 });
 
@@ -64986,7 +65035,7 @@ ${js}
       attribute: "scope"
     }
   };
-  var v140 = {
+  var v141 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -65082,7 +65131,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default47 = [v411, v312, v218, v140];
+  var deprecated_default48 = [v411, v312, v218, v141];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -66228,7 +66277,7 @@ ${js}
     transforms: transforms_default35,
     edit: edit_default35,
     save: save50,
-    deprecated: deprecated_default47
+    deprecated: deprecated_default48
   };
   var init106 = () => initBlock({ name: name107, metadata: block_default106, settings: settings106 });
 
@@ -71044,11 +71093,11 @@ ${js}
   var import_i18n265 = __toESM(require_i18n(), 1);
   var import_components182 = __toESM(require_components(), 1);
   var import_block_editor285 = __toESM(require_block_editor(), 1);
-  var import_deprecated53 = __toESM(require_deprecated(), 1);
+  var import_deprecated54 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
   function TextColumnsEdit({ attributes: attributes2, setAttributes }) {
     const { width, content, columns } = attributes2;
-    (0, import_deprecated53.default)("The Text Columns block", {
+    (0, import_deprecated54.default)("The Text Columns block", {
       since: "5.3",
       alternative: "the Columns block"
     });
@@ -71234,7 +71283,7 @@ ${js}
   // packages/block-library/build-module/verse/deprecated.mjs
   var import_block_editor287 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
-  var v141 = {
+  var v143 = {
     attributes: {
       content: {
         type: "string",
@@ -71366,7 +71415,7 @@ ${js}
       );
     }
   };
-  var deprecated_default48 = [v313, v219, v141];
+  var deprecated_default49 = [v313, v219, v143];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n266 = __toESM(require_i18n(), 1);
@@ -71531,7 +71580,7 @@ ${js}
       }
     },
     transforms: transforms_default38,
-    deprecated: deprecated_default48,
+    deprecated: deprecated_default49,
     merge(attributes2, attributesToMerge) {
       return {
         content: attributes2.content + "\n\n" + attributesToMerge.content
@@ -71686,7 +71735,7 @@ ${js}
   // packages/block-library/build-module/video/deprecated.mjs
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default120;
-  var v143 = {
+  var v144 = {
     attributes: blockAttributes7,
     save({ attributes: attributes2 }) {
       const {
@@ -71720,8 +71769,8 @@ ${js}
       ] });
     }
   };
-  var deprecated20 = [v143];
-  var deprecated_default49 = deprecated20;
+  var deprecated20 = [v144];
+  var deprecated_default50 = deprecated20;
 
   // packages/block-library/build-module/video/edit.mjs
   var import_blob19 = __toESM(require_blob(), 1);
@@ -72587,7 +72636,7 @@ ${js}
       }
     },
     transforms: transforms_default39,
-    deprecated: deprecated_default49,
+    deprecated: deprecated_default50,
     edit: edit_default41,
     save: save58
   };
