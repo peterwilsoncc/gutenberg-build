@@ -8935,11 +8935,6 @@ return array(
 			'termId',
 			'taxonomy'
 		),
-		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			)
-		),
 		'supports' => array(
 			'anchor' => true,
 			'align' => array(
@@ -8961,6 +8956,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,

@@ -69704,11 +69704,6 @@ ${js}
     description: "Display the description of categories, tags and custom taxonomies when viewing an archive.",
     textdomain: "default",
     usesContext: ["termId", "taxonomy"],
-    attributes: {
-      textAlign: {
-        type: "string"
-      }
-    },
     supports: {
       anchor: true,
       align: ["wide", "full"],
@@ -69727,6 +69722,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -69824,44 +69820,86 @@ ${js}
   // packages/block-library/build-module/term-description/edit.mjs
   var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
   function TermDescriptionEdit({
-    attributes: attributes2,
-    setAttributes,
-    mergedStyle,
     context: { termId, taxonomy }
   }) {
-    const { textAlign } = attributes2;
     const { termDescription } = useTermDescription(termId, taxonomy);
-    const blockProps = (0, import_block_editor275.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      }),
-      style: mergedStyle
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_jsx_runtime518.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_block_editor275.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-        import_block_editor275.AlignmentControl,
-        {
-          value: textAlign,
-          onChange: (nextAlign) => {
-            setAttributes({ textAlign: nextAlign });
-          }
-        }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("div", { ...blockProps, children: termDescription ? /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-        "div",
-        {
-          dangerouslySetInnerHTML: { __html: termDescription }
-        }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("div", { className: "wp-block-term-description__placeholder", children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("span", { children: (0, import_i18n256.__)("Term Description") }) }) })
-    ] });
+    const blockProps = (0, import_block_editor275.useBlockProps)();
+    return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_jsx_runtime518.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("div", { ...blockProps, children: termDescription ? /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+      "div",
+      {
+        dangerouslySetInnerHTML: { __html: termDescription }
+      }
+    ) : /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("div", { className: "wp-block-term-description__placeholder", children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("span", { children: (0, import_i18n256.__)("Term Description") }) }) }) });
   }
+
+  // packages/block-library/build-module/term-description/deprecated.mjs
+  var v144 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: ["wide", "full"],
+      html: false,
+      color: {
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
+  var deprecated_default50 = [v144];
 
   // packages/block-library/build-module/term-description/index.mjs
   var { name: name115 } = block_default114;
   var settings114 = {
     icon: term_description_default,
     edit: TermDescriptionEdit,
-    example: {}
+    example: {},
+    deprecated: deprecated_default50
   };
   var init114 = () => initBlock({ name: name115, metadata: block_default114, settings: settings114 });
 
@@ -71141,11 +71179,11 @@ ${js}
   var import_i18n265 = __toESM(require_i18n(), 1);
   var import_components182 = __toESM(require_components(), 1);
   var import_block_editor285 = __toESM(require_block_editor(), 1);
-  var import_deprecated55 = __toESM(require_deprecated(), 1);
+  var import_deprecated56 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
   function TextColumnsEdit({ attributes: attributes2, setAttributes }) {
     const { width, content, columns } = attributes2;
-    (0, import_deprecated55.default)("The Text Columns block", {
+    (0, import_deprecated56.default)("The Text Columns block", {
       since: "5.3",
       alternative: "the Columns block"
     });
@@ -71331,7 +71369,7 @@ ${js}
   // packages/block-library/build-module/verse/deprecated.mjs
   var import_block_editor287 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
-  var v144 = {
+  var v145 = {
     attributes: {
       content: {
         type: "string",
@@ -71463,7 +71501,7 @@ ${js}
       );
     }
   };
-  var deprecated_default50 = [v313, v219, v144];
+  var deprecated_default51 = [v313, v219, v145];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n266 = __toESM(require_i18n(), 1);
@@ -71628,7 +71666,7 @@ ${js}
       }
     },
     transforms: transforms_default38,
-    deprecated: deprecated_default50,
+    deprecated: deprecated_default51,
     merge(attributes2, attributesToMerge) {
       return {
         content: attributes2.content + "\n\n" + attributesToMerge.content
@@ -71783,7 +71821,7 @@ ${js}
   // packages/block-library/build-module/video/deprecated.mjs
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default120;
-  var v145 = {
+  var v146 = {
     attributes: blockAttributes7,
     save({ attributes: attributes2 }) {
       const {
@@ -71817,8 +71855,8 @@ ${js}
       ] });
     }
   };
-  var deprecated20 = [v145];
-  var deprecated_default51 = deprecated20;
+  var deprecated20 = [v146];
+  var deprecated_default52 = deprecated20;
 
   // packages/block-library/build-module/video/edit.mjs
   var import_blob19 = __toESM(require_blob(), 1);
@@ -72684,7 +72722,7 @@ ${js}
       }
     },
     transforms: transforms_default39,
-    deprecated: deprecated_default51,
+    deprecated: deprecated_default52,
     edit: edit_default41,
     save: save58
   };
