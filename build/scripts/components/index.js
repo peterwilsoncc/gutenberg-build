@@ -41555,7 +41555,11 @@ This message will only show in development mode. It won't appear in production. 
           className: "components-external-link__contents",
           children
         }), /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("span", {
-          className: "components-external-link__icon",
+          className: clsx_default(
+            "components-external-link__icon",
+            // This class prevents the arrow from being replaced by a Twemoji image.
+            "wp-exclude-emoji"
+          ),
           "aria-label": (
             /* translators: accessibility text */
             (0, import_i18n49.__)("(opens in a new tab)")
