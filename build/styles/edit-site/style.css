@@ -2516,6 +2516,15 @@ div.dataviews-view-list {
   font-weight: var(--wpds-font-weight-regular);
 }
 
+.dataforms-layouts-panel__field-trigger--edit-always .dataforms-layouts-panel__field-trigger-icon {
+  opacity: 1;
+  fill: currentColor;
+}
+
+.dataforms-layouts-panel__field-trigger--edit-always .dataforms-layouts-panel__field-trigger-icon:hover, .dataforms-layouts-panel__field-trigger--edit-always .dataforms-layouts-panel__field-trigger-icon:focus-visible {
+  fill: var(--wp-admin-theme-color);
+}
+
 .dataforms-layouts-panel__field-trigger-icon {
   padding: 0;
   color: var(--wp-admin-theme-color);
@@ -2532,6 +2541,7 @@ div.dataviews-view-list {
 
 .dataforms-layouts-panel__field-trigger-icon:focus-visible {
   opacity: 1;
+  outline: var(--wpds-border-width-focus) solid var(--wp-admin-theme-color);
 }
 
 .dataforms-layouts-panel__field-dropdown-anchor {

@@ -58410,7 +58410,8 @@ var wp;
         type: "panel",
         labelPosition: layout?.labelPosition ?? "side",
         openAs: layout?.openAs ?? "dropdown",
-        summary: normalizedSummary
+        summary: normalizedSummary,
+        editVisibility: layout?.editVisibility ?? "on-hover"
       };
     } else if (layout?.type === "card") {
       if (layout.withHeader === false) {
@@ -58673,7 +58674,7 @@ var wp;
     onClick,
     "aria-expanded": ariaExpanded
   }) {
-    const labelPosition = field.layout.labelPosition;
+    const { labelPosition, editVisibility } = field.layout;
     const errorMessage = get_first_validation_error_default(validity);
     const showError = touched && !!errorMessage;
     const labelClassName = get_label_classname_default(labelPosition, showError);
@@ -58681,7 +58682,10 @@ var wp;
     const className = clsx_default(
       "dataforms-layouts-panel__field-trigger",
       `dataforms-layouts-panel__field-trigger--label-${labelPosition}`,
-      { "is-disabled": disabled }
+      {
+        "is-disabled": disabled,
+        "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
+      }
     );
     const controlId = (0, import_compose61.useInstanceId)(
       SummaryButton,
