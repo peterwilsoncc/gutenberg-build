@@ -52224,9 +52224,6 @@ ${js}
       term: {
         type: "string"
       },
-      textAlign: {
-        type: "string"
-      },
       separator: {
         type: "string",
         default: ", "
@@ -52265,6 +52262,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -52358,10 +52356,8 @@ ${js}
     setAttributes,
     insertBlocksAfter
   }) {
-    const { term, textAlign, separator, prefix, suffix } = attributes2;
+    const { term, separator, prefix, suffix } = attributes2;
     const { postId, postType } = context;
-    const blockEditingMode = (0, import_block_editor198.useBlockEditingMode)();
-    const showControls = blockEditingMode === "default";
     const selectedTerm = (0, import_data109.useSelect)(
       (select9) => {
         if (!term) {
@@ -52380,21 +52376,9 @@ ${js}
     const hasPost = postId && postType;
     const blockInformation = (0, import_block_editor198.useBlockDisplayInformation)(clientId);
     const blockProps = (0, import_block_editor198.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign,
-        [`taxonomy-${term}`]: term
-      })
+      className: term && `taxonomy-${term}`
     });
     return /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(import_jsx_runtime374.Fragment, { children: [
-      showControls && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor198.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-        import_block_editor198.AlignmentToolbar,
-        {
-          value: textAlign,
-          onChange: (nextAlign) => {
-            setAttributes({ textAlign: nextAlign });
-          }
-        }
-      ) }),
       /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor198.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
         import_components115.TextControl,
         {
@@ -52480,11 +52464,91 @@ ${js}
     };
   }
 
+  // packages/block-library/build-module/post-terms/deprecated.mjs
+  var v131 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      term: {
+        type: "string"
+      },
+      separator: {
+        type: "string",
+        default: ", "
+      },
+      prefix: {
+        type: "string",
+        default: "",
+        role: "content"
+      },
+      suffix: {
+        type: "string",
+        default: "",
+        role: "content"
+      }
+    },
+    supports: {
+      anchor: true,
+      html: false,
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true,
+          link: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
+  var deprecated_default36 = [v131];
+
   // packages/block-library/build-module/post-terms/index.mjs
   var { name: name79 } = block_default78;
   var settings78 = {
     icon: post_categories_default,
-    edit: PostTermsEdit
+    edit: PostTermsEdit,
+    deprecated: deprecated_default36
   };
   var init78 = () => {
     (0, import_hooks57.addFilter)(
@@ -52730,7 +52794,7 @@ ${js}
   var variations_default12 = variations12;
 
   // packages/block-library/build-module/post-time-to-read/deprecated.mjs
-  var v131 = {
+  var v133 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -52789,7 +52853,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default36 = [v131];
+  var deprecated_default37 = [v133];
 
   // packages/block-library/build-module/post-time-to-read/index.mjs
   var { name: name80 } = block_default79;
@@ -52798,7 +52862,7 @@ ${js}
     edit: edit_default29,
     variations: variations_default12,
     example: {},
-    deprecated: deprecated_default36
+    deprecated: deprecated_default37
   };
   var init79 = () => initBlock({ name: name80, metadata: block_default79, settings: settings79 });
 
@@ -53107,7 +53171,7 @@ ${js}
   }
 
   // packages/block-library/build-module/post-title/deprecated.mjs
-  var v133 = {
+  var v134 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -53157,14 +53221,14 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default37 = [v133];
+  var deprecated_default38 = [v134];
 
   // packages/block-library/build-module/post-title/index.mjs
   var { name: name81 } = block_default80;
   var settings80 = {
     icon: title_default,
     edit: PostTitleEdit,
-    deprecated: deprecated_default37
+    deprecated: deprecated_default38
   };
   var init80 = () => initBlock({ name: name81, metadata: block_default80, settings: settings80 });
 
@@ -53865,7 +53929,7 @@ ${js}
       };
     }
   };
-  var v134 = {
+  var v135 = {
     attributes: {
       ...blockAttributes6
     },
@@ -53910,7 +53974,7 @@ ${js}
       };
     }
   };
-  var deprecated_default38 = [v57, v48, v39, v214, v134, v02];
+  var deprecated_default39 = [v57, v48, v39, v214, v135, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n183 = __toESM(require_i18n(), 1);
@@ -54220,7 +54284,7 @@ ${js}
     transforms: transforms_default28,
     edit: edit_default30,
     save: save40,
-    deprecated: deprecated_default38
+    deprecated: deprecated_default39
   };
   if (window.__experimentalContentOnlyInspectorFields) {
     settings82[fieldsKey16] = [
@@ -56408,7 +56472,7 @@ ${js}
       replacePostTemplateBlock(innerBlocks, newPostTemplateBlock)
     ];
   };
-  var v135 = {
+  var v136 = {
     attributes: {
       queryId: {
         type: "number"
@@ -56760,8 +56824,8 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v49, v310, v215, v135];
-  var deprecated_default39 = deprecated14;
+  var deprecated14 = [v67, v58, v49, v310, v215, v136];
+  var deprecated_default40 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
   var { name: name84 } = block_default83;
@@ -56820,7 +56884,7 @@ ${js}
     },
     save: save41,
     variations: variations_default13,
-    deprecated: deprecated_default39
+    deprecated: deprecated_default40
   };
   var init83 = () => initBlock({ name: name84, metadata: block_default83, settings: settings83 });
 
@@ -57193,7 +57257,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default40 = deprecated15;
+  var deprecated_default41 = deprecated15;
 
   // packages/block-library/build-module/query-pagination/index.mjs
   var { name: name86 } = block_default85;
@@ -57201,7 +57265,7 @@ ${js}
     icon: query_pagination_default,
     edit: QueryPaginationEdit2,
     save: save43,
-    deprecated: deprecated_default40
+    deprecated: deprecated_default41
   };
   var init85 = () => initBlock({ name: name86, metadata: block_default85, settings: settings85 });
 
@@ -58014,7 +58078,7 @@ ${js}
   var variations_default14 = variations14;
 
   // packages/block-library/build-module/query-title/deprecated.mjs
-  var v136 = {
+  var v137 = {
     attributes: {
       type: {
         type: "string"
@@ -58050,7 +58114,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default41 = [v136];
+  var deprecated_default42 = [v137];
 
   // packages/block-library/build-module/query-title/index.mjs
   var { name: name90 } = block_default89;
@@ -58058,7 +58122,7 @@ ${js}
     icon: title_default,
     edit: QueryTitleEdit,
     variations: variations_default14,
-    deprecated: deprecated_default41
+    deprecated: deprecated_default42
   };
   var init89 = () => initBlock({ name: name90, metadata: block_default89, settings: settings89 });
 
@@ -58438,7 +58502,7 @@ ${js}
       ] });
     }
   };
-  var v137 = {
+  var v138 = {
     attributes: {
       value: {
         type: "string",
@@ -58530,7 +58594,7 @@ ${js}
       );
     }
   };
-  var deprecated_default42 = [v410, v311, v216, v137, v03];
+  var deprecated_default43 = [v410, v311, v216, v138, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n214 = __toESM(require_i18n(), 1);
@@ -58538,7 +58602,7 @@ ${js}
   var import_components141 = __toESM(require_components(), 1);
   var import_data126 = __toESM(require_data(), 1);
   var import_element114 = __toESM(require_element(), 1);
-  var import_deprecated45 = __toESM(require_deprecated(), 1);
+  var import_deprecated46 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime416 = __toESM(require_jsx_runtime(), 1);
   var isWebPlatform2 = import_element114.Platform.OS === "web";
   var TEMPLATE16 = [["core/paragraph", {}]];
@@ -58550,7 +58614,7 @@ ${js}
         return;
       }
       const [newAttributes, newInnerBlocks] = migrateToQuoteV2(attributes2);
-      (0, import_deprecated45.default)("Value attribute on the quote block", {
+      (0, import_deprecated46.default)("Value attribute on the quote block", {
         since: "6.0",
         version: "6.5",
         alternative: "inner blocks"
@@ -58969,7 +59033,7 @@ ${js}
     transforms: transforms_default29,
     edit: QuoteEdit,
     save: save44,
-    deprecated: deprecated_default42
+    deprecated: deprecated_default43
   };
   var init91 = () => initBlock({ name: name92, metadata: block_default91, settings: settings91 });
 
@@ -59242,7 +59306,7 @@ ${js}
       return attributes2;
     }
   };
-  var v138 = {
+  var v139 = {
     attributes: {
       ref: {
         type: "number"
@@ -59287,12 +59351,12 @@ ${js}
       };
     }
   };
-  var deprecated_default43 = [v217, v138];
+  var deprecated_default44 = [v217, v139];
 
   // packages/block-library/build-module/block/index.mjs
   var { name: name93 } = block_default92;
   var settings92 = {
-    deprecated: deprecated_default43,
+    deprecated: deprecated_default44,
     edit: ReusableBlockEditRecursionWrapper,
     icon: symbol_default,
     __experimentalLabel: ({ ref }) => {
@@ -60731,7 +60795,7 @@ ${js}
   // packages/block-library/build-module/separator/deprecated.mjs
   var import_block_editor234 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
-  var v139 = {
+  var v140 = {
     attributes: {
       color: {
         type: "string"
@@ -60766,7 +60830,7 @@ ${js}
       };
     }
   };
-  var deprecated_default44 = [v139];
+  var deprecated_default45 = [v140];
 
   // packages/block-library/build-module/separator/index.mjs
   var { name: name97 } = block_default96;
@@ -60781,7 +60845,7 @@ ${js}
     transforms: transforms_default30,
     edit: SeparatorEdit,
     save: separatorSave,
-    deprecated: deprecated_default44
+    deprecated: deprecated_default45
   };
   var init96 = () => initBlock({ name: name97, metadata: block_default96, settings: settings96 });
 
@@ -61727,7 +61791,7 @@ ${js}
   var icon_default4 = /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_components149.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_components149.Path, { d: "M4 10.5h16V9H4v1.5ZM4 15h9v-1.5H4V15Z" }) });
 
   // packages/block-library/build-module/site-tagline/deprecated.mjs
-  var v140 = {
+  var v141 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -61761,14 +61825,14 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default45 = [v140];
+  var deprecated_default46 = [v141];
 
   // packages/block-library/build-module/site-tagline/index.mjs
   var { name: name100 } = block_default99;
   var settings99 = {
     icon: icon_default4,
     edit: SiteTaglineEdit,
-    deprecated: deprecated_default45
+    deprecated: deprecated_default46
   };
   var init99 = () => initBlock({ name: name100, metadata: block_default99, settings: settings99 });
 
@@ -62005,7 +62069,7 @@ ${js}
   }
 
   // packages/block-library/build-module/site-title/deprecated.mjs
-  var v141 = {
+  var v143 = {
     attributes: {
       level: {
         type: "number",
@@ -62052,7 +62116,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default46 = [v141];
+  var deprecated_default47 = [v143];
 
   // packages/block-library/build-module/site-title/transforms.mjs
   var import_blocks107 = __toESM(require_blocks(), 1);
@@ -62084,7 +62148,7 @@ ${js}
     },
     edit: SiteTitleEdit,
     transforms: transforms_default33,
-    deprecated: deprecated_default46
+    deprecated: deprecated_default47
   };
   var init100 = () => initBlock({ name: name101, metadata: block_default100, settings: settings100 });
 
@@ -63096,7 +63160,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default47 = deprecated17;
+  var deprecated_default48 = deprecated17;
 
   // packages/block-library/build-module/social-links/edit.mjs
   var import_element122 = __toESM(require_element(), 1);
@@ -63490,7 +63554,7 @@ ${js}
     icon: share_default,
     edit: edit_default33,
     save: save46,
-    deprecated: deprecated_default47
+    deprecated: deprecated_default48
   };
   var init102 = () => initBlock({ name: name103, metadata: block_default102, settings: settings102 });
 
@@ -63541,7 +63605,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default48 = deprecated18;
+  var deprecated_default49 = deprecated18;
 
   // packages/block-library/build-module/spacer/edit.mjs
   var import_block_editor245 = __toESM(require_block_editor(), 1);
@@ -64027,7 +64091,7 @@ ${js}
     transforms: transforms_default34,
     edit: edit_default34,
     save: save47,
-    deprecated: deprecated_default48
+    deprecated: deprecated_default49
   };
   var init103 = () => initBlock({ name: name104, metadata: block_default103, settings: settings103 });
 
@@ -65102,7 +65166,7 @@ ${js}
       attribute: "scope"
     }
   };
-  var v143 = {
+  var v144 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -65198,7 +65262,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default49 = [v411, v312, v218, v143];
+  var deprecated_default50 = [v411, v312, v218, v144];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -66344,7 +66408,7 @@ ${js}
     transforms: transforms_default35,
     edit: edit_default35,
     save: save50,
-    deprecated: deprecated_default49
+    deprecated: deprecated_default50
   };
   var init106 = () => initBlock({ name: name107, metadata: block_default106, settings: settings106 });
 
@@ -69852,7 +69916,7 @@ ${js}
   }
 
   // packages/block-library/build-module/term-description/deprecated.mjs
-  var v144 = {
+  var v145 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -69910,7 +69974,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default50 = [v144];
+  var deprecated_default51 = [v145];
 
   // packages/block-library/build-module/term-description/index.mjs
   var { name: name115 } = block_default114;
@@ -69918,7 +69982,7 @@ ${js}
     icon: term_description_default,
     edit: TermDescriptionEdit,
     example: {},
-    deprecated: deprecated_default50
+    deprecated: deprecated_default51
   };
   var init114 = () => initBlock({ name: name115, metadata: block_default114, settings: settings114 });
 
@@ -71198,11 +71262,11 @@ ${js}
   var import_i18n265 = __toESM(require_i18n(), 1);
   var import_components182 = __toESM(require_components(), 1);
   var import_block_editor285 = __toESM(require_block_editor(), 1);
-  var import_deprecated56 = __toESM(require_deprecated(), 1);
+  var import_deprecated57 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
   function TextColumnsEdit({ attributes: attributes2, setAttributes }) {
     const { width, content, columns } = attributes2;
-    (0, import_deprecated56.default)("The Text Columns block", {
+    (0, import_deprecated57.default)("The Text Columns block", {
       since: "5.3",
       alternative: "the Columns block"
     });
@@ -71388,7 +71452,7 @@ ${js}
   // packages/block-library/build-module/verse/deprecated.mjs
   var import_block_editor287 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
-  var v145 = {
+  var v146 = {
     attributes: {
       content: {
         type: "string",
@@ -71520,7 +71584,7 @@ ${js}
       );
     }
   };
-  var deprecated_default51 = [v313, v219, v145];
+  var deprecated_default52 = [v313, v219, v146];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n266 = __toESM(require_i18n(), 1);
@@ -71685,7 +71749,7 @@ ${js}
       }
     },
     transforms: transforms_default38,
-    deprecated: deprecated_default51,
+    deprecated: deprecated_default52,
     merge(attributes2, attributesToMerge) {
       return {
         content: attributes2.content + "\n\n" + attributesToMerge.content
@@ -71840,7 +71904,7 @@ ${js}
   // packages/block-library/build-module/video/deprecated.mjs
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default120;
-  var v146 = {
+  var v147 = {
     attributes: blockAttributes7,
     save({ attributes: attributes2 }) {
       const {
@@ -71874,8 +71938,8 @@ ${js}
       ] });
     }
   };
-  var deprecated20 = [v146];
-  var deprecated_default52 = deprecated20;
+  var deprecated20 = [v147];
+  var deprecated_default53 = deprecated20;
 
   // packages/block-library/build-module/video/edit.mjs
   var import_blob19 = __toESM(require_blob(), 1);
@@ -72741,7 +72805,7 @@ ${js}
       }
     },
     transforms: transforms_default39,
-    deprecated: deprecated_default52,
+    deprecated: deprecated_default53,
     edit: edit_default41,
     save: save58
   };

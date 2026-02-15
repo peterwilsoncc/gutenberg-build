@@ -6165,9 +6165,6 @@ return array(
 			'term' => array(
 				'type' => 'string'
 			),
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'separator' => array(
 				'type' => 'string',
 				'default' => ', '
@@ -6209,6 +6206,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
