@@ -79,7 +79,7 @@ var { actions: privateActions, state: privateState } = store(
         return activeTabIndex === tabIndex;
       },
       /**
-       * The value of the tabindex attribute.
+       * The value of the tabindex attribute for tab buttons.
        * Only the active tab should be in the tab sequence.
        *
        * @type {number}
