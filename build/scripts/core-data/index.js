@@ -2224,7 +2224,7 @@ var wp;
         case "title": {
           const currentValue = ymap.get(key);
           let rawValue = getRawValue(newValue);
-          if (key === "title" && !currentValue && "Auto Draft" === rawValue) {
+          if (key === "title" && !currentValue?.toString() && "Auto Draft" === rawValue) {
             rawValue = "";
           }
           if (currentValue instanceof import_sync12.Y.Text) {
