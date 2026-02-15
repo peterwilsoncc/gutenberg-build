@@ -139,6 +139,7 @@ var wp;
     OperationType2["Upload"] = "UPLOAD";
     OperationType2["ResizeCrop"] = "RESIZE_CROP";
     OperationType2["Rotate"] = "ROTATE";
+    OperationType2["TranscodeImage"] = "TRANSCODE_IMAGE";
     OperationType2["ThumbnailGeneration"] = "THUMBNAIL_GENERATION";
     return OperationType2;
   })(OperationType || {});
@@ -546,6 +547,30 @@ var wp;
     }
     return vipsModulePromise;
   }
+  async function vipsConvertImageFormat(id, file, type, quality, interlaced) {
+    const { vipsConvertImageFormat: convertImageFormat } = await loadVipsModule();
+    const buffer = await convertImageFormat(
+      id,
+      await file.arrayBuffer(),
+      file.type,
+      type,
+      quality,
+      interlaced
+    );
+    const ext = type.split("/")[1];
+    const fileName = `${getFileBasename(file.name)}.${ext}`;
+    return new File([new Blob([buffer])], fileName, {
+      type
+    });
+  }
+  async function vipsHasTransparency(url) {
+    const { vipsHasTransparency: hasTransparency } = await loadVipsModule();
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.status}`);
+    }
+    return hasTransparency(await response.arrayBuffer());
+  }
   async function vipsResizeImage(id, file, resize, smartCrop, addSuffix, signal, scaledSuffix) {
     if (signal?.aborted) {
       throw new Error("Operation aborted");
@@ -836,6 +861,7 @@ var wp;
     addSideloadItem: () => addSideloadItem,
     finishOperation: () => finishOperation,
     generateThumbnails: () => generateThumbnails,
+    getTranscodeImageOperation: () => getTranscodeImageOperation,
     pauseItem: () => pauseItem,
     pauseQueue: () => pauseQueue,
     prepareItem: () => prepareItem,
@@ -847,6 +873,7 @@ var wp;
     revokeBlobUrls: () => revokeBlobUrls,
     rotateItem: () => rotateItem,
     sideloadItem: () => sideloadItem,
+    transcodeImageItem: () => transcodeImageItem,
     updateItemProgress: () => updateItemProgress,
     updateSettings: () => updateSettings,
     uploadItem: () => uploadItem
@@ -861,6 +888,7 @@ var wp;
   };
 
   // packages/upload-media/build-module/store/private-actions.mjs
+  var DEFAULT_OUTPUT_QUALITY = 0.82;
   function shouldPauseForSideload(item, operation, select2) {
     if (operation !== OperationType.Upload || !item.parentId || !item.additionalData.post) {
       return false;
@@ -1042,6 +1070,12 @@ var wp;
             operationArgs
           );
           break;
+        case OperationType.TranscodeImage:
+          dispatch.transcodeImageItem(
+            item.id,
+            operationArgs
+          );
+          break;
         case OperationType.Upload:
           if (item.parentId) {
             dispatch.sideloadItem(id);
@@ -1129,6 +1163,49 @@ var wp;
       }
     };
   }
+  var VALID_IMAGE_FORMATS = ["jpeg", "webp", "avif", "png", "gif"];
+  function isValidImageFormat(format) {
+    return VALID_IMAGE_FORMATS.includes(format);
+  }
+  function getInterlacedSetting(outputMimeType, settings) {
+    switch (outputMimeType) {
+      case "image/jpeg":
+        return settings.jpegInterlaced ?? false;
+      case "image/png":
+        return settings.pngInterlaced ?? false;
+      case "image/gif":
+        return settings.gifInterlaced ?? false;
+      default:
+        return false;
+    }
+  }
+  async function getTranscodeImageOperation(file, outputMimeType, settings) {
+    if (file.type === "image/png" && outputMimeType === "image/jpeg") {
+      const blobUrl = (0, import_blob.createBlobURL)(file);
+      try {
+        const hasAlpha = await vipsHasTransparency(blobUrl);
+        if (hasAlpha) {
+          return null;
+        }
+      } catch {
+        return null;
+      } finally {
+        (0, import_blob.revokeBlobURL)(blobUrl);
+      }
+    }
+    const formatPart = outputMimeType.split("/")[1];
+    if (!isValidImageFormat(formatPart)) {
+      return null;
+    }
+    return [
+      OperationType.TranscodeImage,
+      {
+        outputFormat: formatPart,
+        outputQuality: DEFAULT_OUTPUT_QUALITY,
+        interlaced: getInterlacedSetting(outputMimeType, settings)
+      }
+    ];
+  }
   function prepareItem(id) {
     return async ({ select: select2, dispatch }) => {
       const item = select2.getItem(id);
@@ -1137,9 +1214,10 @@ var wp;
       }
       const { file } = item;
       const operations = [];
+      const settings = select2.getSettings();
       const isImage = file.type.startsWith("image/");
       if (isImage) {
-        const bigImageSizeThreshold = select2.getSettings().bigImageSizeThreshold;
+        const { bigImageSizeThreshold, imageOutputFormats } = settings;
         if (bigImageSizeThreshold) {
           operations.push([
             OperationType.ResizeCrop,
@@ -1151,6 +1229,17 @@ var wp;
               isThresholdResize: true
             }
           ]);
+        }
+        const outputMimeType = imageOutputFormats?.[file.type];
+        if (outputMimeType && outputMimeType !== file.type) {
+          const transcodeOperation = await getTranscodeImageOperation(
+            file,
+            outputMimeType,
+            settings
+          );
+          if (transcodeOperation) {
+            operations.push(transcodeOperation);
+          }
         }
         operations.push(
           OperationType.Upload,
@@ -1317,6 +1406,54 @@ var wp;
       }
     };
   }
+  function transcodeImageItem(id, args) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      if (!args?.outputFormat) {
+        dispatch.finishOperation(id, {
+          file: item.file
+        });
+        return;
+      }
+      const outputMimeType = `image/${args.outputFormat}`;
+      const quality = args.outputQuality ?? DEFAULT_OUTPUT_QUALITY;
+      const interlaced = args.interlaced ?? false;
+      try {
+        const file = await vipsConvertImageFormat(
+          item.id,
+          item.file,
+          outputMimeType,
+          quality,
+          interlaced
+        );
+        const blobUrl = (0, import_blob.createBlobURL)(file);
+        dispatch({
+          type: Type.CacheBlobUrl,
+          id,
+          blobUrl
+        });
+        dispatch.finishOperation(id, {
+          file,
+          attachment: {
+            url: blobUrl
+          }
+        });
+      } catch (error) {
+        dispatch.cancelItem(
+          id,
+          new UploadError({
+            code: "MEDIA_TRANSCODING_ERROR",
+            message: "Image could not be transcoded to the target format",
+            file: item.file,
+            cause: error instanceof Error ? error : void 0
+          })
+        );
+      }
+    };
+  }
   function generateThumbnails(id) {
     return async ({ select: select2, dispatch }) => {
       const item = select2.getItem(id);
@@ -1357,7 +1494,19 @@ var wp;
       if (!item.parentId && attachment.missing_image_sizes && attachment.missing_image_sizes.length > 0) {
         const file = attachment.media_filename ? renameFile(item.sourceFile, attachment.media_filename) : item.sourceFile;
         const batchId = v4_default();
-        const allImageSizes = select2.getSettings().allImageSizes || {};
+        const settings = select2.getSettings();
+        const allImageSizes = settings.allImageSizes || {};
+        const { imageOutputFormats } = settings;
+        const sourceType = item.sourceFile.type;
+        const outputMimeType = imageOutputFormats?.[sourceType];
+        let thumbnailTranscodeOperation = null;
+        if (outputMimeType && outputMimeType !== sourceType) {
+          thumbnailTranscodeOperation = await getTranscodeImageOperation(
+            item.sourceFile,
+            outputMimeType,
+            settings
+          );
+        }
         for (const name of attachment.missing_image_sizes) {
           const imageSize = allImageSizes[name];
           if (!imageSize) {
@@ -1366,6 +1515,13 @@ var wp;
             );
             continue;
           }
+          const thumbnailOperations = [
+            [OperationType.ResizeCrop, { resize: imageSize }]
+          ];
+          if (thumbnailTranscodeOperation) {
+            thumbnailOperations.push(thumbnailTranscodeOperation);
+          }
+          thumbnailOperations.push(OperationType.Upload);
           dispatch.addSideloadItem({
             file,
             onChange: ([updatedAttachment]) => {
@@ -1383,10 +1539,7 @@ var wp;
               image_size: name,
               convert_format: false
             },
-            operations: [
-              [OperationType.ResizeCrop, { resize: imageSize }],
-              OperationType.Upload
-            ]
+            operations: thumbnailOperations
           });
         }
       }
