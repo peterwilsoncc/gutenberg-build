@@ -8510,61 +8510,6 @@ return array(
 			),
 			'renaming' => true
 		),
-		'example' => array(
-			'attributes' => array(
-				'className' => 'is-example'
-			),
-			'innerBlocks' => array(
-				array(
-					'name' => 'core/tabs-menu',
-					'attributes' => array(
-						
-					),
-					'innerBlocks' => array(
-						array(
-							'name' => 'core/tabs-menu-item',
-							'attributes' => array(
-								
-							)
-						)
-					)
-				),
-				array(
-					'name' => 'core/tab-panel',
-					'attributes' => array(
-						
-					),
-					'innerBlocks' => array(
-						array(
-							'name' => 'core/tab',
-							'attributes' => array(
-								'label' => 'Tab 1'
-							),
-							'innerBlocks' => array(
-								array(
-									'name' => 'core/paragraph',
-									'attributes' => array(
-										'content' => 'Pariatur commodo sint mollit. Veniam Lorem labore voluptate fugiat. Ad nulla est labore cillum cillum qui nostrud do incididunt eiusmod.'
-									)
-								)
-							)
-						),
-						array(
-							'name' => 'core/tab',
-							'attributes' => array(
-								'label' => 'Tab 2'
-							)
-						),
-						array(
-							'name' => 'core/tab',
-							'attributes' => array(
-								'label' => 'Tab 3'
-							)
-						)
-					)
-				)
-			)
-		),
 		'providesContext' => array(
 			'core/tabs-activeTabIndex' => 'activeTabIndex',
 			'core/tabs-editorActiveTabIndex' => 'editorActiveTabIndex'
