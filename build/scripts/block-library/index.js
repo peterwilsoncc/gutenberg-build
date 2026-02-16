@@ -39068,7 +39068,7 @@ ${js}
         (templatePart2) => templatePart2.title?.rendered
       );
       const uniqueTitle = getUniqueTemplatePartTitle(
-        (0, import_i18n119.__)("Overlay"),
+        (0, import_i18n119.__)("Navigation Overlay"),
         templatePartsWithTitles
       );
       const cleanSlug = getCleanTemplatePartSlug(uniqueTitle);
