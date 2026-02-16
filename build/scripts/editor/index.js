@@ -64096,7 +64096,7 @@ var wp;
         clientId,
         isDistractionFree,
         onClick: () => {
-          onClick();
+          onClick(clientId);
           onClose();
         }
       }
@@ -64222,7 +64222,9 @@ var wp;
   function NotesSidebar({ postId: postId2 }) {
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data237.useSelect)(store2);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data237.useDispatch)(store2);
-    const { toggleBlockSpotlight } = unlock((0, import_data237.useDispatch)(import_block_editor101.store));
+    const { toggleBlockSpotlight, selectBlock: selectBlock2 } = unlock(
+      (0, import_data237.useDispatch)(import_block_editor101.store)
+    );
     const { selectNote: selectNote2 } = unlock((0, import_data237.useDispatch)(store));
     const isLargeViewport = (0, import_compose68.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element220.useRef)(null);
@@ -64278,10 +64280,14 @@ var wp;
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
     const currentThread = blockCommentId ? resultComments.find((thread) => thread.id === blockCommentId) : null;
-    async function openTheSidebar() {
+    async function openTheSidebar(selectedClientId) {
       const prevArea = await getActiveComplementaryArea2("core");
       const activeNotesArea = SIDEBARS.find((name2) => name2 === prevArea);
-      if (currentThread?.status === "approved") {
+      const targetClientId = selectedClientId && selectedClientId !== clientId ? selectedClientId : clientId;
+      const targetNote = resultComments.find(
+        (note) => note.blockClientId === targetClientId
+      );
+      if (targetNote?.status === "approved") {
         enableComplementaryArea2("core", ALL_NOTES_SIDEBAR);
       } else if (!activeNotesArea || !showAllNotesSidebar) {
         enableComplementaryArea2(
@@ -64293,14 +64299,9 @@ var wp;
       if (!SIDEBARS.includes(currentArea)) {
         return;
       }
-      selectNote2(currentThread ? currentThread.id : "new");
-      focusCommentThread(
-        currentThread?.id,
-        commentSidebarRef.current,
-        // Focus the textarea when creating a new note.
-        !currentThread ? "textarea" : void 0
-      );
-      toggleBlockSpotlight(clientId, true);
+      selectBlock2(targetClientId, null);
+      toggleBlockSpotlight(targetClientId, true);
+      selectNote2(targetNote ? targetNote.id : "new", { focus: true });
     }
     if (isDistractionFree) {
       return /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(comment_menu_item_default, { isDistractionFree: true });
