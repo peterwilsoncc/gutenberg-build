@@ -52310,7 +52310,7 @@ ${js}
     return (0, import_data108.useSelect)(
       (select9) => {
         const visible = term?.visibility?.publicly_queryable;
-        if (!visible) {
+        if (!visible || !postId) {
           return {
             postTerms: EMPTY_ARRAY3,
             isLoading: false,
