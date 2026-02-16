@@ -671,7 +671,8 @@ var {
   batch,
   routerRegions,
   h: createElement,
-  navigationSignal
+  navigationSignal,
+  warn
 } = privateApis(
   "I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress."
 );
@@ -844,12 +845,27 @@ var navigationTexts = {
   loading: "Loading page, please wait.",
   loaded: "Page Loaded."
 };
+var { state: privateState } = store(
+  "core/router/private",
+  {
+    state: {
+      navigation: {
+        hasStarted: false,
+        hasFinished: false
+      }
+    }
+  },
+  { lock: true }
+);
 var { state, actions } = store("core/router", {
   state: {
-    url: window.location.href,
-    navigation: {
-      hasStarted: false,
-      hasFinished: false
+    get navigation() {
+      if (true) {
+        warn(
+          `The usage of state.navigation.{hasStarted|hasFinished} from core/router is deprecated and will stop working in WordPress 7.1.`
+        );
+      }
+      return privateState.navigation;
     }
   },
   actions: {
@@ -877,7 +893,7 @@ var { state, actions } = store("core/router", {
         yield forcePageReload(href);
       }
       const pagePath = getPagePath(href);
-      const { navigation } = state;
+      const { navigation } = privateState;
       const {
         loadingAnimation = true,
         screenReaderAnnouncement = true,
@@ -959,6 +975,7 @@ var { state, actions } = store("core/router", {
     }
   }
 });
+state.url = state.url || window.location.href;
 function a11ySpeak(messageKey) {
   if (!hasLoadedNavigationTextsData) {
     hasLoadedNavigationTextsData = true;

@@ -3113,7 +3113,8 @@ var privateApis = (lock) => {
       batch: r3,
       routerRegions,
       deepReadOnly,
-      navigationSignal
+      navigationSignal,
+      warn
     };
   }
   throw new Error("Forbidden access.");
