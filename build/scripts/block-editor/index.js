@@ -35358,6 +35358,7 @@ var wp;
     }, [isEditLocked, isMoveLocked, isRemoveLocked, allowsEditLocking]);
     const isAllChecked = Object.values(lock3).every(Boolean);
     const isMixed = Object.values(lock3).some(Boolean) && !isAllChecked;
+    const isDirty = lock3.move !== isMoveLocked || lock3.remove !== isRemoveLocked || allowsEditLocking && lock3.edit !== isEditLocked || hasTemplateLock && applyTemplateLock !== !!templateLock;
     return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
       import_components89.Modal,
       {
@@ -35374,6 +35375,9 @@ var wp;
           {
             onSubmit: (event) => {
               event.preventDefault();
+              if (!isDirty) {
+                return;
+              }
               updateBlockAttributes2([clientId], {
                 lock: lock3,
                 templateLock: applyTemplateLock ? getTemplateLockValue(lock3) : void 0
@@ -35507,6 +35511,8 @@ var wp;
                       {
                         variant: "primary",
                         type: "submit",
+                        disabled: !isDirty,
+                        accessibleWhenDisabled: true,
                         __next40pxDefaultSize: true,
                         children: (0, import_i18n77.__)("Apply")
                       }
