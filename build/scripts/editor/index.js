@@ -51464,7 +51464,10 @@ var wp;
     );
     const resizeObserverRef = (0, import_compose60.useResizeObserver)(rerenderCursorsAfterDelay);
     (0, import_element161.useEffect)(rerenderCursorsAfterDelay, [rerenderCursorsAfterDelay]);
-    const mergedRef = (0, import_compose60.useMergeRefs)([setOverlayElement, resizeObserverRef]);
+    const mergedRef = (0, import_compose60.useMergeRefs)([
+      setOverlayElement,
+      resizeObserverRef
+    ]);
     useBlockHighlighting(
       blockEditorDocument ?? null,
       postId2 ?? null,

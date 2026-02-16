@@ -2059,7 +2059,7 @@ var wp;
     }
   }
   function useMergeRefs(refs) {
-    const element = (0, import_element12.useRef)();
+    const element = (0, import_element12.useRef)(null);
     const isAttachedRef = (0, import_element12.useRef)(false);
     const didElementChangeRef = (0, import_element12.useRef)(false);
     const previousRefsRef = (0, import_element12.useRef)([]);
