@@ -59381,6 +59381,17 @@ var wp;
       hasUserSelectionRef.current = false;
     }, [clientId]);
     (0, import_element211.useEffect)(() => {
+      if (selectedTabId === TAB_LIST_VIEW.name && !hasUserSelectionRef.current) {
+        setAllListViewPanelsOpen();
+        incrementListViewExpandRevision();
+      }
+    }, [
+      clientId,
+      selectedTabId,
+      setAllListViewPanelsOpen,
+      incrementListViewExpandRevision
+    ]);
+    (0, import_element211.useEffect)(() => {
       if (!tabs?.length || hasUserSelectionRef.current && tabs.some((tab) => tab.name === selectedTabId)) {
         return;
       }
