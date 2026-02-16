@@ -2278,6 +2278,7 @@ iframe[name=editor-canvas] {
 .block-editor-link-control__preview.is-url-title .block-editor-link-control__preview-title {
   word-break: break-all;
 }
+.block-editor-link-control__preview .block-editor-link-control__preview-image,
 .block-editor-link-control__preview .block-editor-link-control__preview-icon {
   position: relative;
   flex-shrink: 0;

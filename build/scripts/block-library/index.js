@@ -40942,6 +40942,14 @@ ${js}
   }
   function UnforwardedLinkUI(props, ref) {
     const { label, url, opensInNewTab, type, kind, id } = props.link;
+    const { entityRecord, hasBinding, isEntityAvailable } = props.entity || {};
+    const { image, badges } = useLinkPreview({
+      url,
+      entityRecord,
+      type,
+      hasBinding,
+      isEntityAvailable
+    });
     const { clientId } = props;
     const postType = type || "page";
     const [addingBlock, setAddingBlock] = (0, import_element77.useState)(false);
@@ -40966,9 +40974,11 @@ ${js}
         title: label && (0, import_dom5.__unstableStripHTML)(label),
         kind,
         type,
-        id
+        id,
+        image,
+        badges
       }),
-      [label, opensInNewTab, url, kind, type, id]
+      [label, opensInNewTab, url, kind, type, id, image, badges]
     );
     const handlePageCreated = (pageLink) => {
       props.onChange(pageLink);
@@ -41235,10 +41245,8 @@ ${js}
   }
   function useLinkPreview({
     url,
-    title,
-    image,
+    entityRecord,
     type,
-    entityStatus,
     hasBinding,
     isEntityAvailable
   }) {
@@ -41249,16 +41257,32 @@ ${js}
       );
       return siteEntity?.url;
     }, []);
+    const title = entityRecord?.title?.rendered || entityRecord?.title || entityRecord?.name;
     const { richData } = useRemoteUrlData(title ? null : url);
     const { displayUrl, isExternal } = computeDisplayUrl({
       linkUrl: url,
       siteUrl
     });
+    const image = (0, import_data80.useSelect)(
+      (select9) => {
+        if (!entityRecord?.featured_media) {
+          return null;
+        }
+        const { getEntityRecord } = select9(import_core_data44.store);
+        const media = getEntityRecord(
+          "postType",
+          "attachment",
+          entityRecord.featured_media
+        );
+        return media?.media_details?.sizes?.thumbnail?.source_url || media?.media_details?.sizes?.medium?.source_url || media?.source_url || null;
+      },
+      [entityRecord?.featured_media]
+    );
     const badges = computeBadges({
       url,
       type,
       isExternal,
-      entityStatus,
+      entityStatus: entityRecord?.status,
       hasBinding,
       isEntityAvailable
     });
@@ -41362,22 +41386,6 @@ ${js}
       attributes: attributes2,
       setAttributes
     });
-    const linkTitle = entityRecord?.title?.rendered || entityRecord?.title || entityRecord?.name;
-    const linkImage = (0, import_data82.useSelect)(
-      (select9) => {
-        if (!entityRecord?.featured_media) {
-          return null;
-        }
-        const { getEntityRecord } = select9(import_core_data46.store);
-        const media = getEntityRecord(
-          "postType",
-          "attachment",
-          entityRecord.featured_media
-        );
-        return media?.media_details?.sizes?.thumbnail?.source_url || media?.media_details?.sizes?.medium?.source_url || media?.source_url || null;
-      },
-      [entityRecord?.featured_media]
-    );
     const onNavigateToEntityRecord = (0, import_data82.useSelect)(
       (select9) => select9(import_block_editor154.store).getSettings().onNavigateToEntityRecord,
       []
@@ -41392,10 +41400,8 @@ ${js}
     const isContentOnly = blockEditingMode === "contentOnly";
     const preview = useLinkPreview({
       url,
-      title: linkTitle,
-      image: linkImage,
+      entityRecord,
       type: attributes2.type,
-      entityStatus: entityRecord?.status,
       hasBinding: hasUrlBinding,
       isEntityAvailable: isBoundEntityAvailable
     });
@@ -43712,7 +43718,7 @@ ${js}
     );
     const validateLinkStatus = useEnableLinkStatusValidation(clientId);
     const { getBlocks } = (0, import_data88.useSelect)(import_block_editor160.store);
-    const { hasUrlBinding, isBoundEntityAvailable } = useEntityBinding({
+    const { hasUrlBinding, isBoundEntityAvailable, entityRecord } = useEntityBinding({
       clientId,
       attributes: attributes2
     });
@@ -43921,6 +43927,11 @@ ${js}
               ref: linkUIref,
               clientId,
               link: attributes2,
+              entity: {
+                entityRecord,
+                hasBinding: hasUrlBinding,
+                isEntityAvailable: isBoundEntityAvailable
+              },
               onClose: () => {
                 setIsLinkOpen(false);
                 if (!url && !hasUrlBinding) {
@@ -44385,7 +44396,13 @@ ${js}
     const { showSubmenuIcon, maxNestingLevel, submenuVisibility } = context;
     const blockEditingMode = (0, import_block_editor163.useBlockEditingMode)();
     const openSubmenusOnClick = blockEditingMode !== "default" ? true : submenuVisibility === "click";
-    const { clearBinding, createBinding } = useEntityBinding({
+    const {
+      clearBinding,
+      createBinding,
+      hasUrlBinding,
+      isBoundEntityAvailable,
+      entityRecord
+    } = useEntityBinding({
       clientId,
       attributes: attributes2
     });
@@ -44599,6 +44616,11 @@ ${js}
             {
               clientId,
               link: attributes2,
+              entity: {
+                entityRecord,
+                hasBinding: hasUrlBinding,
+                isEntityAvailable: isBoundEntityAvailable
+              },
               onClose: () => {
                 setIsLinkOpen(false);
               },

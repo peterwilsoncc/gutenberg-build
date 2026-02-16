@@ -49169,9 +49169,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/link-preview.mjs
   var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
-  function filterTitleForDisplay(title) {
-    return title.replace(/^[a-z\-.\+]+[0-9]*:(\/\/)?/i, "").replace(/^www\./i, "");
-  }
+  var { Badge: Badge4 } = unlock(import_components167.privateApis);
   function LinkPreview({
     value,
     onEditClick,
@@ -49189,7 +49187,6 @@ var wp;
     const displayURL = value && (0, import_url6.filterURLForDisplay)((0, import_url6.safeDecodeURI)(value.url), 24) || "";
     const isEmptyURL = !value?.url?.length;
     const displayTitle = !isEmptyURL && (0, import_dom34.__unstableStripHTML)(richData?.title || value?.title || displayURL);
-    const isUrlRedundant = !value?.url || filterTitleForDisplay(displayTitle) === displayURL;
     let icon;
     if (richData?.icon) {
       icon = /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("img", { src: richData?.icon, alt: "" });
@@ -49218,7 +49215,7 @@ var wp;
           "is-error": isEmptyURL,
           "is-url-title": displayTitle === displayURL
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_components167.Flex, { gap: 0, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_components167.Flex, { gap: 0, align: "flex-start", children: [
           /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(
             import_components167.Flex,
             {
@@ -49229,8 +49226,16 @@ var wp;
                 (0, import_i18n152.__)("Link information")
               ),
               justify: "start",
+              align: "flex-start",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+                value?.image ? /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+                  import_components167.Flex,
+                  {
+                    className: "block-editor-link-control__preview-image",
+                    justify: "center",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("img", { src: value?.image, alt: "" })
+                  }
+                ) : /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
                   import_components167.Flex,
                   {
                     className: clsx_default(
@@ -49248,7 +49253,7 @@ var wp;
                   {
                     className: "block-editor-link-control__preview-details",
                     direction: "column",
-                    gap: 1,
+                    gap: 2,
                     children: !isEmptyURL ? /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
                       /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
                         import_components167.ExternalLink,
@@ -49258,7 +49263,25 @@ var wp;
                           children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components167.__experimentalTruncate, { numberOfLines: 1, children: displayTitle })
                         }
                       ),
-                      !isUrlRedundant && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("span", { className: "block-editor-link-control__preview-info", children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components167.__experimentalTruncate, { numberOfLines: 1, children: displayURL }) })
+                      /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("span", { className: "block-editor-link-control__preview-info", children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components167.__experimentalTruncate, { numberOfLines: 1, children: displayURL }) }),
+                      value?.badges?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+                        import_components167.__experimentalHStack,
+                        {
+                          className: "block-editor-link-control__preview-badges",
+                          alignment: "left",
+                          gap: 1,
+                          children: value.badges.map(
+                            (badge, index) => /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+                              Badge4,
+                              {
+                                intent: badge.intent,
+                                children: badge.label
+                              },
+                              `${badge.label}|${badge.intent}|${index}`
+                            )
+                          )
+                        }
+                      )
                     ] }) : /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("span", { className: "block-editor-link-control__preview-error-notice", children: (0, import_i18n152.__)("Link is empty") })
                   }
                 )
@@ -62167,7 +62190,7 @@ var wp;
     document.head.appendChild(style);
   }
   var style_default = { "badge": "_96e6251aad1a6136__badge", "is-high-intent": "_99f7158cb520f750__is-high-intent", "is-medium-intent": "c20ebef2365bc8b7__is-medium-intent", "is-low-intent": "_365e1626c6202e52__is-low-intent", "is-stable-intent": "_33f8198127ddf4ef__is-stable-intent", "is-informational-intent": "_04c1aca8fc449412__is-informational-intent", "is-draft-intent": "_90726e69d495ec19__is-draft-intent", "is-none-intent": "_898f4a544993bd39__is-none-intent" };
-  var Badge4 = (0, import_element224.forwardRef)(function Badge22({ children, intent = "none", render: render4, className, ...props }, ref) {
+  var Badge5 = (0, import_element224.forwardRef)(function Badge22({ children, intent = "none", render: render4, className, ...props }, ref) {
     const element = useRender({
       render: render4,
       defaultTagName: "span",
@@ -68680,7 +68703,7 @@ var wp;
     if (invalidCount === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(Badge4, { intent: "high", children: (0, import_i18n223.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(Badge5, { intent: "high", children: (0, import_i18n223.sprintf)(
       /* translators: %d: Number of fields that need attention */
       (0, import_i18n223._n)(
         "%d field needs attention",
@@ -74855,7 +74878,7 @@ var wp;
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
   var import_components281 = __toESM(require_components(), 1);
   var import_jsx_runtime473 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge5 } = unlock(import_components281.privateApis);
+  var { Badge: Badge6 } = unlock(import_components281.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
     return /* @__PURE__ */ (0, import_jsx_runtime473.jsxs)(import_components281.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
       /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(import_components281.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime473.jsxs)(import_components281.__experimentalHStack, { alignment: "top", children: [
@@ -74895,7 +74918,7 @@ var wp;
                   className: "link-preview-button__badges",
                   alignment: "left",
                   children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
-                    Badge5,
+                    Badge6,
                     {
                       intent: badge.intent,
                       children: badge.label
