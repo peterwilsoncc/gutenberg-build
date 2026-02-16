@@ -23502,12 +23502,6 @@ var wp;
       __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2
     } = registry.dispatch(store);
     const { getBlockName: getBlockName2, getBlocks: getBlocks2, getSelectionStart: getSelectionStart2, getSelectionEnd: getSelectionEnd2 } = registry.select(store);
-    const isControlled = (0, import_data32.useSelect)(
-      (select3) => {
-        return !clientId || select3(store).areInnerBlocksControlled(clientId);
-      },
-      [clientId]
-    );
     const pendingChangesRef = (0, import_element36.useRef)({ incoming: null, outgoing: [] });
     const subscribedRef = (0, import_element36.useRef)(false);
     const idMappingRef = (0, import_element36.useRef)({
@@ -23573,23 +23567,11 @@ var wp;
         }
       }
     }, [controlledBlocks, clientId]);
-    const isMountedRef = (0, import_element36.useRef)(false);
-    (0, import_element36.useEffect)(() => {
-      if (!isMountedRef.current) {
-        isMountedRef.current = true;
-        return;
-      }
-      if (!isControlled) {
-        pendingChangesRef.current.outgoing = [];
-        setControlledBlocks();
-      }
-    }, [isControlled]);
     (0, import_element36.useEffect)(() => {
       const {
         getSelectedBlocksInitialCaretPosition: getSelectedBlocksInitialCaretPosition2,
         isLastBlockChangePersistent: isLastBlockChangePersistent2,
-        __unstableIsLastBlockChangeIgnored: __unstableIsLastBlockChangeIgnored2,
-        areInnerBlocksControlled: areInnerBlocksControlled2
+        __unstableIsLastBlockChangeIgnored: __unstableIsLastBlockChangeIgnored2
       } = registry.select(store);
       let blocks2 = getBlocks2(clientId);
       let isPersistent = isLastBlockChangePersistent2();
@@ -23597,10 +23579,6 @@ var wp;
       subscribedRef.current = true;
       const unsubscribe = registry.subscribe(() => {
         if (clientId !== null && getBlockName2(clientId) === null) {
-          return;
-        }
-        const isStillControlled = !clientId || areInnerBlocksControlled2(clientId);
-        if (!isStillControlled) {
           return;
         }
         const newIsPersistent = isLastBlockChangePersistent2();
@@ -53724,7 +53702,7 @@ var wp;
     onMouseOver,
     showSideInLabel = true,
     sides = ALL_SIDES,
-    useSelect: useSelect173,
+    useSelect: useSelect172,
     values
   }) {
     const spacingSizes = useSpacingSizes();
@@ -53748,7 +53726,7 @@ var wp;
       sides,
       spacingSizes,
       type: labelProp,
-      useSelect: useSelect173,
+      useSelect: useSelect172,
       values: inputValues
     };
     const renderControls = () => {
