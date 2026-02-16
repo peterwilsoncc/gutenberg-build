@@ -6967,6 +6967,7 @@ var wp;
     getColorObjectByColorValue: () => getColorObjectByColorValue,
     getComputedFluidTypographyValue: () => getComputedFluidTypographyValue,
     getCustomValueFromPreset: () => getCustomValueFromPreset,
+    getDimensionsClassesAndStyles: () => getDimensionsClassesAndStyles,
     getFontSize: () => getFontSize,
     getFontSizeClass: () => getFontSizeClass,
     getFontSizeObjectByValue: () => getFontSizeObjectByValue,
@@ -73982,6 +73983,17 @@ var wp;
       return hasAutoInspectorControlAttributes(blockType?.attributes);
     }
   };
+
+  // packages/block-editor/build-module/hooks/use-dimensions-props.mjs
+  function getDimensionsClassesAndStyles(attributes) {
+    const { style } = attributes;
+    const dimensionsStyles = style?.dimensions || {};
+    const styleProp = getInlineStyles({ dimensions: dimensionsStyles });
+    return {
+      className: dimensionsStyles.aspectRatio ? "has-aspect-ratio" : void 0,
+      style: styleProp
+    };
+  }
 
   // packages/block-editor/build-module/hooks/use-border-props.mjs
   function getBorderClassesAndStyles(attributes) {
