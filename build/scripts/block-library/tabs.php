@@ -40,7 +40,7 @@ function gutenberg_block_core_tabs_generate_tabs_list( array $innerblocks = arra
 
 					$tabs_list[] = array(
 						'id'    => $tab_id,
-						'label' => esc_html( (string) $tab_label ),
+						'label' => $tab_label,
 						'index' => $tab_index,
 					);
 					++$tab_index;
