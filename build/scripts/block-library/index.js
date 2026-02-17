@@ -64541,6 +64541,7 @@ ${js}
   // packages/block-library/build-module/tab/block.json
   var block_default104 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
+    __experimental: true,
     apiVersion: 3,
     name: "core/tab",
     title: "Tab",
@@ -64651,6 +64652,7 @@ ${js}
   // packages/block-library/build-module/tab-panel/block.json
   var block_default105 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
+    __experimental: true,
     apiVersion: 3,
     name: "core/tab-panel",
     title: "Tab Panel",
@@ -67202,6 +67204,7 @@ ${js}
   // packages/block-library/build-module/tabs/block.json
   var block_default108 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
+    __experimental: true,
     apiVersion: 3,
     name: "core/tabs",
     title: "Tabs",
@@ -67500,6 +67503,7 @@ ${js}
   // packages/block-library/build-module/tabs-menu/block.json
   var block_default109 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
+    __experimental: true,
     apiVersion: 3,
     name: "core/tabs-menu",
     title: "Tabs Menu",
@@ -68041,6 +68045,7 @@ ${js}
   // packages/block-library/build-module/tabs-menu-item/block.json
   var block_default110 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
+    __experimental: true,
     apiVersion: 3,
     name: "core/tabs-menu-item",
     title: "Tab Menu Item",
@@ -73483,12 +73488,7 @@ ${js}
       term_template_exports,
       query_title_exports,
       post_author_biography_exports,
-      breadcrumbs_exports,
-      tab_exports,
-      tabs_exports,
-      tabs_menu_exports,
-      tabs_menu_item_exports,
-      tab_panel_exports
+      breadcrumbs_exports
     ];
     if (window?.__experimentalEnableFormBlocks) {
       blocks.push(form_exports);
@@ -73497,6 +73497,11 @@ ${js}
       blocks.push(form_submission_notification_exports);
     }
     if (window?.__experimentalEnableBlockExperiments) {
+      blocks.push(tab_exports);
+      blocks.push(tabs_exports);
+      blocks.push(tabs_menu_exports);
+      blocks.push(tabs_menu_item_exports);
+      blocks.push(tab_panel_exports);
       blocks.push(playlist_exports);
       blocks.push(playlist_track_exports);
     }
