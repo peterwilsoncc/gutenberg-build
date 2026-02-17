@@ -3395,7 +3395,8 @@ return array(
 			'html' => false,
 			'color' => array(
 				'background' => true,
-				'text' => true
+				'text' => true,
+				'__experimentalSkipSerialization' => true
 			),
 			'interactivity' => array(
 				'clientNavigation' => true
@@ -3405,6 +3406,7 @@ return array(
 				'radius' => true,
 				'style' => true,
 				'width' => true,
+				'__experimentalSkipSerialization' => true,
 				'__experimentalDefaultControls' => array(
 					'color' => false,
 					'radius' => false,
@@ -3415,13 +3417,29 @@ return array(
 			'spacing' => array(
 				'padding' => true,
 				'margin' => true,
+				'__experimentalSkipSerialization' => array(
+					'padding'
+				),
 				'__experimentalDefaultControls' => array(
 					'margin' => false,
 					'padding' => false
 				)
 			),
 			'dimensions' => array(
-				'width' => true
+				'width' => true,
+				'__experimentalSkipSerialization' => array(
+					'width'
+				),
+				'__experimentalDefaultControls' => array(
+					'width' => true
+				)
+			)
+		),
+		'selectors' => array(
+			'root' => '.wp-block-icon',
+			'dimensions' => array(
+				'root' => '.wp-block-icon svg',
+				'width' => '.wp-block-icon svg'
 			)
 		),
 		'style' => 'wp-block-icon',

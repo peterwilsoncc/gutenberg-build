@@ -29121,6 +29121,10 @@ ${js}
     const [isInserterOpen, setInserterOpen] = (0, import_element42.useState)(false);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data45.useDispatch)(import_block_editor109.store);
     const isContentOnlyMode = (0, import_block_editor109.useBlockEditingMode)() === "contentOnly";
+    const colorProps = (0, import_block_editor109.__experimentalUseColorProps)(attributes2);
+    const spacingProps = (0, import_block_editor109.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const borderProps = (0, import_block_editor109.__experimentalUseBorderProps)(attributes2);
+    const dimensionsProps = (0, import_block_editor109.getDimensionsClassesAndStyles)(attributes2);
     const allIcons = (0, import_data45.useSelect)((select9) => {
       return unlock(select9(import_core_data22.store)).getIcons();
     }, []);
@@ -29213,13 +29217,39 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
       blockControls,
       inspectorControls,
-      /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { ...(0, import_block_editor109.useBlockProps)(), children: icon4 ? /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(html_renderer_default, { html: iconToDisplay }) : /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { ...(0, import_block_editor109.useBlockProps)(), children: icon4 ? /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
+        html_renderer_default,
+        {
+          html: iconToDisplay,
+          wrapperProps: {
+            className: clsx_default(
+              colorProps.className,
+              borderProps.className,
+              spacingProps.className,
+              dimensionsProps.className
+            ),
+            style: {
+              ...colorProps.style,
+              ...borderProps.style,
+              ...spacingProps.style,
+              ...dimensionsProps.style
+            }
+          }
+        }
+      ) : /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
         import_components52.Placeholder,
         {
           withIllustration: true,
+          className: clsx_default(
+            borderProps.className,
+            spacingProps.className,
+            dimensionsProps.className
+          ),
           style: {
-            height: attributes2?.style?.dimensions?.width,
-            width: attributes2?.style?.dimensions?.width
+            ...borderProps.style,
+            ...spacingProps.style,
+            ...dimensionsProps.style,
+            aspectRatio: "1"
           }
         }
       ) }),
@@ -29270,7 +29300,8 @@ ${js}
       html: false,
       color: {
         background: true,
-        text: true
+        text: true,
+        __experimentalSkipSerialization: true
       },
       interactivity: {
         clientNavigation: true
@@ -29280,6 +29311,7 @@ ${js}
         radius: true,
         style: true,
         width: true,
+        __experimentalSkipSerialization: true,
         __experimentalDefaultControls: {
           color: false,
           radius: false,
@@ -29290,13 +29322,25 @@ ${js}
       spacing: {
         padding: true,
         margin: true,
+        __experimentalSkipSerialization: ["padding"],
         __experimentalDefaultControls: {
           margin: false,
           padding: false
         }
       },
       dimensions: {
-        width: true
+        width: true,
+        __experimentalSkipSerialization: ["width"],
+        __experimentalDefaultControls: {
+          width: true
+        }
+      }
+    },
+    selectors: {
+      root: ".wp-block-icon",
+      dimensions: {
+        root: ".wp-block-icon svg",
+        width: ".wp-block-icon svg"
       }
     },
     style: "wp-block-icon",

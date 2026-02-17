@@ -5,7 +5,12 @@
 .wp-block-icon {
   line-height: 0;
 }
+.wp-block-icon.aligncenter {
+  display: flex;
+  justify-content: center;
+}
 .wp-block-icon svg {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   fill: currentColor;
