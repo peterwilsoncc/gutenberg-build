@@ -71704,8 +71704,8 @@ ${js}
             content: nextContent
           });
         },
-        "aria-label": (0, import_i18n265.__)("Verse text"),
-        placeholder: (0, import_i18n265.__)("Write verse\u2026"),
+        "aria-label": (0, import_i18n265.__)("Poetry text"),
+        placeholder: (0, import_i18n265.__)("Write poetry\u2026"),
         onRemove,
         onMerge: mergeBlocks,
         ...blockProps,
@@ -71720,10 +71720,10 @@ ${js}
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
     name: "core/verse",
-    title: "Verse",
+    title: "Poetry",
     category: "text",
     description: "Insert poetry. Use special spacing formats. Or quote song lyrics.",
-    keywords: ["poetry", "poem"],
+    keywords: ["poetry", "poem", "verse", "stanza", "song", "lyrics"],
     textdomain: "default",
     attributes: {
       content: {

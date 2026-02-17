@@ -9205,12 +9205,16 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'core/verse',
-		'title' => 'Verse',
+		'title' => 'Poetry',
 		'category' => 'text',
 		'description' => 'Insert poetry. Use special spacing formats. Or quote song lyrics.',
 		'keywords' => array(
 			'poetry',
-			'poem'
+			'poem',
+			'verse',
+			'stanza',
+			'song',
+			'lyrics'
 		),
 		'textdomain' => 'default',
 		'attributes' => array(
