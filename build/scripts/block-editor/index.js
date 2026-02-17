@@ -9088,9 +9088,20 @@ var wp;
   }
   var blockListSettings = (state = {}, action) => {
     switch (action.type) {
-      // Even if the replaced blocks have the same client ID, our logic
-      // should correct the state.
-      case "REPLACE_BLOCKS":
+      case "REPLACE_BLOCKS": {
+        const replacementIds = /* @__PURE__ */ new Set();
+        const stack = [...action.blocks];
+        while (stack.length) {
+          const block = stack.shift();
+          replacementIds.add(block.clientId);
+          stack.push(...block.innerBlocks);
+        }
+        return Object.fromEntries(
+          Object.entries(state).filter(
+            ([id]) => !action.clientIds.includes(id) || replacementIds.has(id)
+          )
+        );
+      }
       case "REMOVE_BLOCKS": {
         return Object.fromEntries(
           Object.entries(state).filter(
