@@ -23902,6 +23902,34 @@ var wp;
   var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
   var noop5 = () => {
   };
+  var hasLoggedFallback = false;
+  var isClientSideMediaEnabledCache = null;
+  function shouldEnableClientSideMediaProcessing() {
+    if (isClientSideMediaEnabledCache !== null) {
+      return isClientSideMediaEnabledCache;
+    }
+    if (!window.__experimentalMediaProcessing) {
+      isClientSideMediaEnabledCache = false;
+      return false;
+    }
+    if (typeof import_upload_media.detectClientSideMediaSupport !== "function") {
+      isClientSideMediaEnabledCache = false;
+      return false;
+    }
+    const detection = (0, import_upload_media.detectClientSideMediaSupport)();
+    if (!detection || !detection.supported) {
+      if (!hasLoggedFallback) {
+        console.info(
+          `Client-side media processing unavailable: ${detection.reason}. Using server-side processing.`
+        );
+        hasLoggedFallback = true;
+      }
+      isClientSideMediaEnabledCache = false;
+      return false;
+    }
+    isClientSideMediaEnabledCache = true;
+    return true;
+  }
   function mediaUpload(registry, {
     allowedTypes,
     additionalData = {},
@@ -23929,15 +23957,16 @@ var wp;
         stripExperimentalSettings = false
       } = props;
       const mediaUploadSettings = use_media_upload_settings_default(_settings);
+      const isClientSideMediaEnabled = shouldEnableClientSideMediaProcessing();
       const settings2 = (0, import_element39.useMemo)(() => {
-        if (window.__experimentalMediaProcessing && _settings?.mediaUpload) {
+        if (isClientSideMediaEnabled && _settings?.mediaUpload) {
           return {
             ..._settings,
             mediaUpload: mediaUpload.bind(null, registry)
           };
         }
         return _settings;
-      }, [_settings, registry]);
+      }, [_settings, registry, isClientSideMediaEnabled]);
       const { __experimentalUpdateSettings: __experimentalUpdateSettings2 } = unlock(
         (0, import_data34.useDispatch)(store)
       );
@@ -23962,7 +23991,7 @@ var wp;
         !settings2?.isPreviewMode && /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(keyboard_shortcuts_default.Register, {}),
         /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(BlockRefsProvider, { children: props.children })
       ] });
-      if (window.__experimentalMediaProcessing) {
+      if (isClientSideMediaEnabled) {
         return /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
           import_upload_media.MediaUploadProvider,
           {

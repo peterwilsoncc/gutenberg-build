@@ -99,6 +99,9 @@ var wp;
   __export(index_exports, {
     MediaUploadProvider: () => provider_default,
     UploadError: () => UploadError,
+    clearFeatureDetectionCache: () => clearFeatureDetectionCache,
+    detectClientSideMediaSupport: () => detectClientSideMediaSupport,
+    isClientSideMediaSupported: () => isClientSideMediaSupported,
     store: () => store
   });
 
@@ -1648,6 +1651,56 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_jsx_runtime2.Fragment, { children });
   });
   var provider_default = MediaUploadProvider;
+
+  // packages/upload-media/build-module/feature-detection.mjs
+  var cachedResult = null;
+  function detectClientSideMediaSupport() {
+    if (cachedResult !== null) {
+      return cachedResult;
+    }
+    if (typeof WebAssembly === "undefined") {
+      cachedResult = {
+        supported: false,
+        reason: "WebAssembly is not supported in this browser"
+      };
+      return cachedResult;
+    }
+    if (typeof SharedArrayBuffer === "undefined") {
+      cachedResult = {
+        supported: false,
+        reason: "SharedArrayBuffer is not available. This may be due to missing cross-origin isolation headers."
+      };
+      return cachedResult;
+    }
+    if (typeof window !== "undefined" && typeof Worker !== "undefined") {
+      try {
+        const testBlob = new Blob([""], {
+          type: "application/javascript"
+        });
+        const testUrl = URL.createObjectURL(testBlob);
+        try {
+          const testWorker = new Worker(testUrl);
+          testWorker.terminate();
+        } finally {
+          URL.revokeObjectURL(testUrl);
+        }
+      } catch {
+        cachedResult = {
+          supported: false,
+          reason: "The site's Content Security Policy (CSP) does not allow blob: workers. The worker-src directive must include blob: to enable client-side media processing."
+        };
+        return cachedResult;
+      }
+    }
+    cachedResult = { supported: true };
+    return cachedResult;
+  }
+  function isClientSideMediaSupported() {
+    return detectClientSideMediaSupport().supported;
+  }
+  function clearFeatureDetectionCache() {
+    cachedResult = null;
+  }
   return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map
