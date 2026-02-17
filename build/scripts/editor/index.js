@@ -62106,7 +62106,14 @@ var wp;
   }
   function filterPatterns(patterns2, template2) {
     const filterOutDuplicatesByName = (currentItem, index2, items) => index2 === items.findIndex((item) => currentItem.name === item.name);
-    const filterOutExcludedPatternSources = (pattern) => !EXCLUDED_PATTERN_SOURCES.includes(pattern.source);
+    const filterOutExcludedPatternSources = (pattern) => {
+      if (template2.area === "navigation-overlay" && pattern.blockTypes?.includes(
+        "core/template-part/navigation-overlay"
+      )) {
+        return true;
+      }
+      return !EXCLUDED_PATTERN_SOURCES.includes(pattern.source);
+    };
     const filterCompatiblePatterns = (pattern) => pattern.templateTypes?.includes(template2.slug) || pattern.blockTypes?.includes("core/template-part/" + template2.area);
     return patterns2.filter((pattern, index2, items) => {
       return filterOutDuplicatesByName(pattern, index2, items) && filterOutExcludedPatternSources(pattern) && filterCompatiblePatterns(pattern);
