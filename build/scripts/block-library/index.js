@@ -73479,6 +73479,7 @@ ${js}
       post_comments_form_exports,
       table_of_contents_exports,
       home_link_exports,
+      icon_exports,
       loginout_exports,
       navigation_overlay_close_exports,
       term_count_exports,
@@ -73504,9 +73505,6 @@ ${js}
       blocks.push(tab_panel_exports);
       blocks.push(playlist_exports);
       blocks.push(playlist_track_exports);
-    }
-    if (window?.__experimentalEnableIconBlock) {
-      blocks.push(icon_exports);
     }
     if (window?.wp?.oldEditor && (window?.wp?.needsClassicBlock || !window?.__experimentalDisableTinymce || !!new URLSearchParams(window?.location?.search).get(
       "requiresTinymce"
