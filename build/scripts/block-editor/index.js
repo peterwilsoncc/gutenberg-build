@@ -11415,11 +11415,13 @@ var wp;
     return [
       state.blockListSettings[rootClientId],
       state.blocks.byClientId.get(rootClientId),
+      state.blocks.order.get(rootClientId || ""),
       state.settings.allowedBlockTypes,
       state.settings.templateLock,
       getBlockEditingMode(state, rootClientId),
       getSectionRootClientId(state),
-      isSectionBlock(state, rootClientId)
+      isSectionBlock(state, rootClientId),
+      getParentSectionBlock(state, rootClientId)
     ];
   };
 
@@ -12156,7 +12158,7 @@ var wp;
       return false;
     }
     const blockEditingMode = getBlockEditingMode(state, rootClientId ?? "");
-    if (blockEditingMode === "disabled") {
+    if (blockEditingMode === "disabled" && blockName !== (0, import_blocks6.getDefaultBlockName)()) {
       return false;
     }
     const parentBlockListSettings = getBlockListSettings(state, rootClientId);
@@ -12165,11 +12167,12 @@ var wp;
     }
     const isContentRoleBlock = isContentBlock3(blockName);
     const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
-    const isBlockWithinSection = !!getParentSectionBlock(
-      state,
-      rootClientId
-    );
-    if ((isParentSectionBlock || isBlockWithinSection) && !isContentRoleBlock) {
+    const sectionClientId = isParentSectionBlock ? rootClientId : getParentSectionBlock(state, rootClientId);
+    const isWithinSection = !!sectionClientId;
+    if (isWithinSection && !isContentRoleBlock) {
+      return false;
+    }
+    if (isWithinSection && getBlockName(state, sectionClientId) === "core/block") {
       return false;
     }
     if ((isParentSectionBlock || blockEditingMode === "contentOnly") && !isContainerInsertableToInContentOnlyMode(
@@ -12177,7 +12180,17 @@ var wp;
       blockName,
       rootClientId
     )) {
-      return false;
+      if (blockName === (0, import_blocks6.getDefaultBlockName)()) {
+        const existingBlocks = getBlockOrder(state, rootClientId);
+        const hasDefaultBlock = existingBlocks.some(
+          (clientId) => getBlockName(state, clientId) === (0, import_blocks6.getDefaultBlockName)()
+        );
+        if (!hasDefaultBlock) {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
     const parentName = getBlockName(state, rootClientId);
     const parentBlockType = (0, import_blocks6.getBlockType)(parentName);
@@ -12263,21 +12276,36 @@ var wp;
     if (rootTemplateLock && rootTemplateLock !== "contentOnly") {
       return false;
     }
-    const isBlockWithinSection = !!getParentSectionBlock(state, clientId);
+    const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
+    const sectionClientId = isParentSectionBlock ? rootClientId : getParentSectionBlock(state, rootClientId);
+    const isWithinSection = !!sectionClientId;
     const isContentRoleBlock = isContentBlock3(
       getBlockName(state, clientId)
     );
-    if (isBlockWithinSection && !isContentRoleBlock) {
+    if (isWithinSection && !isContentRoleBlock) {
       return false;
     }
-    const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
+    if (isWithinSection && getBlockName(state, sectionClientId) === "core/block") {
+      return false;
+    }
     const rootBlockEditingMode = getBlockEditingMode(state, rootClientId);
-    if ((isParentSectionBlock || rootBlockEditingMode === "contentOnly") && !isContainerInsertableToInContentOnlyMode(
+    const blockName = getBlockName(state, clientId);
+    if ((isParentSectionBlock || rootBlockEditingMode === "contentOnly" || blockName === (0, import_blocks6.getDefaultBlockName)()) && !isContainerInsertableToInContentOnlyMode(
       state,
       getBlockName(state, clientId),
       rootClientId
     )) {
-      return false;
+      if (blockName === (0, import_blocks6.getDefaultBlockName)()) {
+        const existingBlocks = getBlockOrder(state, rootClientId);
+        const defaultBlocks = existingBlocks.filter(
+          (id) => getBlockName(state, id) === (0, import_blocks6.getDefaultBlockName)()
+        );
+        if (defaultBlocks.length > 1) {
+          return true;
+        }
+      } else {
+        return false;
+      }
     }
     return rootBlockEditingMode !== "disabled";
   }
@@ -24843,6 +24871,9 @@ var wp;
               return;
             }
             if (canInsertBlockType2(
+              (0, import_blocks25.getDefaultBlockName)(),
+              getBlockRootClientId2(clientId)
+            ) || canInsertBlockType2(
               blockName,
               getBlockRootClientId2(clientId)
             )) {
@@ -34942,7 +34973,7 @@ var wp;
     children,
     __experimentalUpdateSelection: updateSelection
   }) {
-    const { getDefaultBlockName: getDefaultBlockName7, getGroupingBlockName } = (0, import_data90.useSelect)(import_blocks52.store);
+    const { getDefaultBlockName: getDefaultBlockName8, getGroupingBlockName } = (0, import_data90.useSelect)(import_blocks52.store);
     const selected = (0, import_data90.useSelect)(
       (select3) => {
         const {
@@ -34955,7 +34986,7 @@ var wp;
         const blocks2 = getBlocksByClientId22(clientIds);
         const rootClientId = getBlockRootClientId2(clientIds[0]);
         const canInsertDefaultBlock = canInsertBlockType2(
-          getDefaultBlockName7(),
+          getDefaultBlockName8(),
           rootClientId
         );
         const directInsertBlock = rootClientId ? getDirectInsertBlock2(rootClientId) : null;
@@ -34972,7 +35003,7 @@ var wp;
           })
         };
       },
-      [clientIds, getDefaultBlockName7]
+      [clientIds, getDefaultBlockName8]
     );
     const { getBlocksByClientId: getBlocksByClientId2, getBlocks: getBlocks2 } = (0, import_data90.useSelect)(store);
     const { canRemove, canInsertBlock, canCopyStyles, canDuplicate } = selected;
@@ -40410,7 +40441,7 @@ var wp;
       isBlockHiddenAnywhere: isBlockHiddenAnywhere2
     } = unlock((0, import_data122.useSelect)(store));
     const { getBlockEditingMode: getBlockEditingMode2 } = (0, import_data122.useSelect)(store);
-    const { getDefaultBlockName: getDefaultBlockName7, getGroupingBlockName } = (0, import_data122.useSelect)(import_blocks77.store);
+    const { getDefaultBlockName: getDefaultBlockName8, getGroupingBlockName } = (0, import_data122.useSelect)(import_blocks77.store);
     const blocks2 = getBlocksByClientId2(clientIds);
     const blockEditorDispatch = (0, import_data122.useDispatch)(store);
     const {
@@ -40447,7 +40478,7 @@ var wp;
     const { showViewportModal: showViewportModal2 } = unlock(blockEditorDispatch);
     const rootClientId = getBlockRootClientId2(clientIds[0]);
     const canInsertDefaultBlock = canInsertBlockType2(
-      getDefaultBlockName7(),
+      getDefaultBlockName8(),
       rootClientId
     );
     const canDuplicate = blocks2.every((block) => {
