@@ -67591,7 +67591,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform/index.mjs
-  var import_element255 = __toESM(require_element(), 1);
+  var import_element256 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-context/index.mjs
   var import_element245 = __toESM(require_element(), 1);
@@ -67609,7 +67609,7 @@ var wp;
   var dataform_context_default = DataFormContext;
 
   // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-  var import_element254 = __toESM(require_element(), 1);
+  var import_element255 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
   var import_element246 = __toESM(require_element(), 1);
@@ -67832,13 +67832,14 @@ var wp;
   var import_deepmerge2 = __toESM(require_cjs(), 1);
   var import_components249 = __toESM(require_components(), 1);
   var import_i18n222 = __toESM(require_i18n(), 1);
-  var import_element250 = __toESM(require_element(), 1);
+  var import_element251 = __toESM(require_element(), 1);
   var import_compose97 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components248 = __toESM(require_components(), 1);
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_compose96 = __toESM(require_compose(), 1);
+  var import_element247 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
   function getLabelClassName(labelPosition, showError) {
@@ -67935,70 +67936,92 @@ var wp;
       (0, import_i18n220._x)("Edit %s", "field"),
       fieldLabel || ""
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)("div", { className, children: [
-      labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)("span", { className: labelClassName, children: labelContent }),
-      labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_components248.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_components248.Icon, { icon: error_default, size: 16 }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-        "span",
-        {
-          id: `${controlId}`,
-          className: "dataforms-layouts-panel__field-control",
-          children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+    const rowRef = (0, import_element247.useRef)(null);
+    const handleRowClick = () => {
+      const selection2 = rowRef.current?.ownerDocument.defaultView?.getSelection();
+      if (selection2 && selection2.toString().length > 0) {
+        return;
+      }
+      onClick();
+    };
+    const handleKeyDown = (event) => {
+      if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        onClick();
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(
+      "div",
+      {
+        ref: rowRef,
+        className,
+        onClick: !disabled ? handleRowClick : void 0,
+        onKeyDown: !disabled ? handleKeyDown : void 0,
+        children: [
+          labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)("span", { className: labelClassName, children: labelContent }),
+          labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_components248.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_components248.Icon, { icon: error_default, size: 16 }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
             "span",
             {
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                width: "100%",
-                gap: "2px"
-              },
-              children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+              id: `${controlId}`,
+              className: "dataforms-layouts-panel__field-control",
+              children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
                 "span",
                 {
-                  style: { width: "100%" },
-                  children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-                    summaryField.render,
+                  style: {
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    width: "100%",
+                    gap: "2px"
+                  },
+                  children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                    "span",
                     {
-                      item: data,
-                      field: summaryField
-                    }
-                  )
+                      style: { width: "100%" },
+                      children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                        summaryField.render,
+                        {
+                          item: data,
+                          field: summaryField
+                        }
+                      )
+                    },
+                    summaryField.id
+                  ))
+                }
+              ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                summaryField.render,
+                {
+                  item: data,
+                  field: summaryField
                 },
                 summaryField.id
               ))
             }
-          ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-            summaryField.render,
+          ),
+          !disabled && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+            import_components248.Button,
             {
-              item: data,
-              field: summaryField
-            },
-            summaryField.id
-          ))
-        }
-      ),
-      !disabled && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-        import_components248.Button,
-        {
-          className: "dataforms-layouts-panel__field-trigger-icon",
-          label: ariaLabel,
-          showTooltip: false,
-          icon: pencil_default,
-          size: "small",
-          "aria-expanded": ariaExpanded,
-          "aria-haspopup": "dialog",
-          "aria-describedby": `${controlId}`,
-          onClick
-        }
-      )
-    ] });
+              className: "dataforms-layouts-panel__field-trigger-icon",
+              label: ariaLabel,
+              showTooltip: false,
+              icon: pencil_default,
+              size: "small",
+              "aria-expanded": ariaExpanded,
+              "aria-haspopup": "dialog",
+              "aria-describedby": `${controlId}`
+            }
+          )
+        ]
+      }
+    );
   }
 
   // packages/dataviews/build-module/hooks/use-form-validity.mjs
   var import_deepmerge = __toESM(require_cjs(), 1);
   var import_es66 = __toESM(require_es6(), 1);
-  var import_element247 = __toESM(require_element(), 1);
+  var import_element248 = __toESM(require_element(), 1);
   var import_i18n221 = __toESM(require_i18n(), 1);
   function isFormValid(formValidity) {
     if (!formValidity) {
@@ -68420,11 +68443,11 @@ var wp;
     };
   }
   function useFormValidity(item, fields, form) {
-    const [formValidity, setFormValidity] = (0, import_element247.useState)();
-    const customCounterRef = (0, import_element247.useRef)({});
-    const elementsCounterRef = (0, import_element247.useRef)({});
-    const previousValuesRef = (0, import_element247.useRef)({});
-    const validate = (0, import_element247.useCallback)(() => {
+    const [formValidity, setFormValidity] = (0, import_element248.useState)();
+    const customCounterRef = (0, import_element248.useRef)({});
+    const elementsCounterRef = (0, import_element248.useRef)({});
+    const previousValuesRef = (0, import_element248.useRef)({});
+    const validate = (0, import_element248.useCallback)(() => {
       const promiseHandler = {
         customCounterRef,
         elementsCounterRef,
@@ -68482,7 +68505,7 @@ var wp;
         return validity;
       });
     }, [item, fields, form]);
-    (0, import_element247.useEffect)(() => {
+    (0, import_element248.useEffect)(() => {
       validate();
     }, [validate]);
     return {
@@ -68493,9 +68516,9 @@ var wp;
   var use_form_validity_default = useFormValidity;
 
   // packages/dataviews/build-module/hooks/use-report-validity.mjs
-  var import_element248 = __toESM(require_element(), 1);
+  var import_element249 = __toESM(require_element(), 1);
   function useReportValidity(ref, shouldReport) {
-    (0, import_element248.useEffect)(() => {
+    (0, import_element249.useEffect)(() => {
       if (shouldReport && ref.current) {
         const inputs = ref.current.querySelectorAll(
           "input, textarea, select"
@@ -68508,7 +68531,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-  var import_element249 = __toESM(require_element(), 1);
+  var import_element250 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
   function extractSummaryIds(summary) {
@@ -68549,7 +68572,7 @@ var wp;
     return fieldDefinition;
   };
   function useFieldFromFormField(field) {
-    const { fields } = (0, import_element249.useContext)(dataform_context_default);
+    const { fields } = (0, import_element250.useContext)(dataform_context_default);
     const layout = field.layout;
     const summaryFields = getSummaryFields(layout.summary, fields);
     const fieldDefinition = getFieldDefinition(field, fields);
@@ -68579,14 +68602,14 @@ var wp;
     onClose,
     touched
   }) {
-    const { fields } = (0, import_element250.useContext)(dataform_context_default);
-    const [changes, setChanges] = (0, import_element250.useState)({});
-    const modalData = (0, import_element250.useMemo)(() => {
+    const { fields } = (0, import_element251.useContext)(dataform_context_default);
+    const [changes, setChanges] = (0, import_element251.useState)({});
+    const modalData = (0, import_element251.useMemo)(() => {
       return (0, import_deepmerge2.default)(data, changes, {
         arrayMerge: (target, source) => source
       });
     }, [data, changes]);
-    const form = (0, import_element250.useMemo)(
+    const form = (0, import_element251.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -68622,7 +68645,7 @@ var wp;
       );
     };
     const focusOnMountRef = (0, import_compose97.useFocusOnMount)("firstInputElement");
-    const contentRef = (0, import_element250.useRef)(null);
+    const contentRef = (0, import_element251.useRef)(null);
     const mergedRef = (0, import_compose97.useMergeRefs)([focusOnMountRef, contentRef]);
     useReportValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime428.jsxs)(
@@ -68694,8 +68717,8 @@ var wp;
     onChange,
     validity
   }) {
-    const [touched, setTouched] = (0, import_element250.useState)(false);
-    const [isOpen, setIsOpen] = (0, import_element250.useState)(false);
+    const [touched, setTouched] = (0, import_element251.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element251.useState)(false);
     const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
     if (!fieldDefinition) {
       return null;
@@ -68737,7 +68760,7 @@ var wp;
   // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
   var import_components250 = __toESM(require_components(), 1);
   var import_i18n223 = __toESM(require_i18n(), 1);
-  var import_element251 = __toESM(require_element(), 1);
+  var import_element252 = __toESM(require_element(), 1);
   var import_compose98 = __toESM(require_compose(), 1);
   var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
@@ -68770,7 +68793,7 @@ var wp;
     touched,
     children
   }) {
-    const ref = (0, import_element251.useRef)(null);
+    const ref = (0, import_element252.useRef)(null);
     useReportValidity(ref, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)("div", { ref, children });
   }
@@ -68780,11 +68803,11 @@ var wp;
     onChange,
     validity
   }) {
-    const [touched, setTouched] = (0, import_element251.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element251.useState)(
+    const [touched, setTouched] = (0, import_element252.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element252.useState)(
       null
     );
-    const popoverProps3 = (0, import_element251.useMemo)(
+    const popoverProps3 = (0, import_element252.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -68798,7 +68821,7 @@ var wp;
     const [dialogRef, dialogProps] = (0, import_compose98.__experimentalUseDialog)({
       focusOnMount: "firstInputElement"
     });
-    const form = (0, import_element251.useMemo)(
+    const form = (0, import_element252.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -68808,7 +68831,7 @@ var wp;
       }),
       [field]
     );
-    const formValidity = (0, import_element251.useMemo)(() => {
+    const formValidity = (0, import_element252.useMemo)(() => {
       if (validity === void 0) {
         return void 0;
       }
@@ -68921,7 +68944,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_components251 = __toESM(require_components(), 1);
-  var import_element252 = __toESM(require_element(), 1);
+  var import_element253 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
   var import_i18n224 = __toESM(require_i18n(), 1);
@@ -68986,18 +69009,18 @@ var wp;
   ) });
   function useCardHeader(layout) {
     const { isOpened, isCollapsible } = layout;
-    const [isOpen, setIsOpen] = (0, import_element252.useState)(isOpened);
-    const [touched, setTouched] = (0, import_element252.useState)(false);
-    (0, import_element252.useEffect)(() => {
+    const [isOpen, setIsOpen] = (0, import_element253.useState)(isOpened);
+    const [touched, setTouched] = (0, import_element253.useState)(false);
+    (0, import_element253.useEffect)(() => {
       setIsOpen(isOpened);
     }, [isOpened]);
-    const toggle = (0, import_element252.useCallback)(() => {
+    const toggle = (0, import_element253.useCallback)(() => {
       if (isOpen) {
         setTouched(true);
       }
       setIsOpen((prev) => !prev);
     }, [isOpen]);
-    const CollapsibleCardHeader = (0, import_element252.useCallback)(
+    const CollapsibleCardHeader = (0, import_element253.useCallback)(
       ({
         children,
         ...props
@@ -69081,10 +69104,10 @@ var wp;
     markWhenOptional,
     validity
   }) {
-    const { fields } = (0, import_element252.useContext)(dataform_context_default);
+    const { fields } = (0, import_element253.useContext)(dataform_context_default);
     const layout = field.layout;
-    const cardBodyRef = (0, import_element252.useRef)(null);
-    const form = (0, import_element252.useMemo)(
+    const cardBodyRef = (0, import_element253.useRef)(null);
+    const form = (0, import_element253.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
@@ -69092,7 +69115,7 @@ var wp;
       [field]
     );
     const { isOpen, CardHeader, touched, setTouched } = useCardHeader(layout);
-    const handleBlur = (0, import_element252.useCallback)(() => {
+    const handleBlur = (0, import_element253.useCallback)(() => {
       setTouched(true);
     }, [setTouched]);
     useReportValidity(cardBodyRef, isOpen && touched);
@@ -69289,7 +69312,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-  var import_element253 = __toESM(require_element(), 1);
+  var import_element254 = __toESM(require_element(), 1);
   var import_i18n225 = __toESM(require_i18n(), 1);
   var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
@@ -69298,19 +69321,19 @@ var wp;
     onChange,
     validity
   }) {
-    const { fields } = (0, import_element253.useContext)(dataform_context_default);
-    const detailsRef = (0, import_element253.useRef)(null);
-    const contentRef = (0, import_element253.useRef)(null);
-    const [touched, setTouched] = (0, import_element253.useState)(false);
-    const [isOpen, setIsOpen] = (0, import_element253.useState)(false);
-    const form = (0, import_element253.useMemo)(
+    const { fields } = (0, import_element254.useContext)(dataform_context_default);
+    const detailsRef = (0, import_element254.useRef)(null);
+    const contentRef = (0, import_element254.useRef)(null);
+    const [touched, setTouched] = (0, import_element254.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element254.useState)(false);
+    const form = (0, import_element254.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
       }),
       [field]
     );
-    (0, import_element253.useEffect)(() => {
+    (0, import_element254.useEffect)(() => {
       const details = detailsRef.current;
       if (!details) {
         return;
@@ -69328,7 +69351,7 @@ var wp;
       };
     }, []);
     useReportValidity(contentRef, isOpen && touched);
-    const handleBlur = (0, import_element253.useCallback)(() => {
+    const handleBlur = (0, import_element254.useCallback)(() => {
       setTouched(true);
     }, []);
     if (!field.children) {
@@ -69469,8 +69492,8 @@ var wp;
     children,
     as
   }) {
-    const { fields: fieldDefinitions } = (0, import_element254.useContext)(dataform_context_default);
-    const markWhenOptional = (0, import_element254.useMemo)(() => {
+    const { fields: fieldDefinitions } = (0, import_element255.useContext)(dataform_context_default);
+    const markWhenOptional = (0, import_element255.useMemo)(() => {
       const requiredCount = fieldDefinitions.filter(
         (f2) => !!f2.isValid?.required
       ).length;
@@ -69523,8 +69546,8 @@ var wp;
     onChange,
     validity
   }) {
-    const normalizedForm = (0, import_element255.useMemo)(() => normalize_form_default(form), [form]);
-    const normalizedFields = (0, import_element255.useMemo)(
+    const normalizedForm = (0, import_element256.useMemo)(() => normalize_form_default(form), [form]);
+    const normalizedFields = (0, import_element256.useMemo)(
       () => normalizeFields(fields),
       [fields]
     );
@@ -69543,7 +69566,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/block-fields/index.mjs
-  var import_element258 = __toESM(require_element(), 1);
+  var import_element259 = __toESM(require_element(), 1);
   var import_i18n229 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/block-fields/fields-dropdown-menu.mjs
@@ -69606,7 +69629,7 @@ var wp;
   var import_components254 = __toESM(require_components(), 1);
   var import_compose100 = __toESM(require_compose(), 1);
   var import_data177 = __toESM(require_data(), 1);
-  var import_element256 = __toESM(require_element(), 1);
+  var import_element257 = __toESM(require_element(), 1);
   var import_rich_text17 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime439 = __toESM(require_jsx_runtime(), 1);
   var { useRichText: useRichText2 } = unlock(import_rich_text17.privateApis);
@@ -69621,14 +69644,14 @@ var wp;
     const attrValue = field.getValue({ item: data });
     const fieldConfig = field.config || {};
     const { clientId } = config2;
-    const [selection2, setSelection] = (0, import_element256.useState)({
+    const [selection2, setSelection] = (0, import_element257.useState)({
       start: void 0,
       end: void 0
     });
-    const [isSelected, setIsSelected] = (0, import_element256.useState)(false);
-    const anchorRef = (0, import_element256.useRef)();
-    const inputEvents = (0, import_element256.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element256.useRef)(/* @__PURE__ */ new Set());
+    const [isSelected, setIsSelected] = (0, import_element257.useState)(false);
+    const anchorRef = (0, import_element257.useRef)();
+    const inputEvents = (0, import_element257.useRef)(/* @__PURE__ */ new Set());
+    const keyboardShortcuts = (0, import_element257.useRef)(/* @__PURE__ */ new Set());
     const adjustedAllowedFormats = getAllowedFormats({
       allowedFormats: fieldConfig?.allowedFormats,
       disableFormats: fieldConfig?.disableFormats
@@ -69656,7 +69679,7 @@ var wp;
       __unstableDisableFormats: fieldConfig?.disableFormats,
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting: fieldConfig?.withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element256.useMemo)(
+      __unstableFormatTypeHandlerContext: (0, import_element257.useMemo)(
         () => ({ richTextIdentifier: field.id, blockClientId: clientId }),
         [field.id, clientId]
       )
@@ -69895,7 +69918,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-fields/link/index.mjs
   var import_components256 = __toESM(require_components(), 1);
-  var import_element257 = __toESM(require_element(), 1);
+  var import_element258 = __toESM(require_element(), 1);
   var import_i18n228 = __toESM(require_i18n(), 1);
   var import_url15 = __toESM(require_url(), 1);
   var import_jsx_runtime441 = __toESM(require_jsx_runtime(), 1);
@@ -69930,7 +69953,7 @@ var wp;
     };
   }
   function Link({ data, field, onChange }) {
-    const [isLinkControlOpen, setIsLinkControlOpen] = (0, import_element257.useState)(false);
+    const [isLinkControlOpen, setIsLinkControlOpen] = (0, import_element258.useState)(false);
     const { popoverProps: popoverProps3 } = useInspectorPopoverPlacement2({
       isControl: true
     });
@@ -69940,7 +69963,7 @@ var wp;
     const target = value?.linkTarget;
     const opensInNewTab = target === NEW_TAB_TARGET;
     const nofollow = rel === NOFOLLOW_REL;
-    const linkValue = (0, import_element257.useMemo)(
+    const linkValue = (0, import_element258.useMemo)(
       () => ({ url, opensInNewTab, nofollow }),
       [url, opensInNewTab, nofollow]
     );
@@ -70039,7 +70062,7 @@ var wp;
     });
     const blockInformation = useBlockDisplayInformation(clientId);
     const blockTypeFields = blockType?.[fieldsKey];
-    const blockContext = (0, import_element258.useContext)(block_context_default);
+    const blockContext = (0, import_element259.useContext)(block_context_default);
     const attributes = (0, import_data179.useSelect)(
       (select3) => {
         const _attributes = select3(store).getBlockAttributes(clientId);
@@ -70065,7 +70088,7 @@ var wp;
       },
       [blockContext, clientId]
     );
-    const computedForm = (0, import_element258.useMemo)(() => {
+    const computedForm = (0, import_element259.useMemo)(() => {
       if (!isCollapsed3) {
         return blockType?.[formKey];
       }
@@ -70074,8 +70097,8 @@ var wp;
         fields: [blockType?.[formKey]?.fields?.[0]]
       };
     }, [blockType, isCollapsed3]);
-    const [form, setForm] = (0, import_element258.useState)(computedForm);
-    const dataFormFields = (0, import_element258.useMemo)(() => {
+    const [form, setForm] = (0, import_element259.useState)(computedForm);
+    const dataFormFields = (0, import_element259.useMemo)(() => {
       if (!blockTypeFields?.length) {
         return [];
       }
@@ -70151,7 +70174,7 @@ var wp;
     return !!(window?.__experimentalContentOnlyInspectorFields && (0, import_blocks103.getBlockType)(blockName)?.[fieldsKey]);
   }
   function BlockFieldsPanel(props) {
-    const { blockType, isSelectionWithinCurrentSection } = (0, import_element258.useContext)(PrivateBlockContext);
+    const { blockType, isSelectionWithinCurrentSection } = (0, import_element259.useContext)(PrivateBlockContext);
     return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(InspectorControlsFill, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
       BlockFields,
       {
@@ -70283,7 +70306,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/style.mjs
-  var import_element264 = __toESM(require_element(), 1);
+  var import_element265 = __toESM(require_element(), 1);
   var import_hooks27 = __toESM(require_hooks(), 1);
   var import_blocks113 = __toESM(require_blocks(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
@@ -70291,7 +70314,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/typography.mjs
   var import_blocks111 = __toESM(require_blocks(), 1);
-  var import_element261 = __toESM(require_element(), 1);
+  var import_element262 = __toESM(require_element(), 1);
   var import_data181 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/hooks/line-height.mjs
@@ -70594,7 +70617,7 @@ var wp;
   // packages/block-editor/build-module/hooks/fit-text.mjs
   var import_hooks26 = __toESM(require_hooks(), 1);
   var import_blocks110 = __toESM(require_blocks(), 1);
-  var import_element260 = __toESM(require_element(), 1);
+  var import_element261 = __toESM(require_element(), 1);
   var import_data180 = __toESM(require_data(), 1);
   var import_i18n233 = __toESM(require_i18n(), 1);
   var import_components263 = __toESM(require_components(), 1);
@@ -70653,7 +70676,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/fit-text-size-warning/index.mjs
-  var import_element259 = __toESM(require_element(), 1);
+  var import_element260 = __toESM(require_element(), 1);
   var import_i18n232 = __toESM(require_i18n(), 1);
   var import_components262 = __toESM(require_components(), 1);
   var import_a11y20 = __toESM(require_a11y(), 1);
@@ -70662,7 +70685,7 @@ var wp;
     const message2 = (0, import_i18n232.__)(
       "The text may be too small to read. Consider using a larger container or less text."
     );
-    (0, import_element259.useEffect)(() => {
+    (0, import_element260.useEffect)(() => {
       (0, import_a11y20.speak)(message2);
     }, [message2]);
     return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)("div", { className: "block-editor-fit-text-size-warning", children: /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
@@ -70699,7 +70722,7 @@ var wp;
     };
   }
   function useFitText({ fitText, name, clientId }) {
-    const [fontSize, setFontSize] = (0, import_element260.useState)(null);
+    const [fontSize, setFontSize] = (0, import_element261.useState)(null);
     const hasFitTextSupport2 = (0, import_blocks110.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
     const blockElement = useBlockElement(clientId);
     const { blockAttributes, parentId, blockMode } = (0, import_data180.useSelect)(
@@ -70719,7 +70742,7 @@ var wp;
       },
       [clientId, hasFitTextSupport2, fitText]
     );
-    const applyFitText = (0, import_element260.useCallback)(() => {
+    const applyFitText = (0, import_element261.useCallback)(() => {
       if (!blockElement || !hasFitTextSupport2 || !fitText) {
         return;
       }
@@ -70741,7 +70764,7 @@ var wp;
       const optimalSize = optimizeFitText(blockElement, applyFontSizeStyle);
       setFontSize(optimalSize);
     }, [blockElement, clientId, hasFitTextSupport2, fitText]);
-    (0, import_element260.useEffect)(() => {
+    (0, import_element261.useEffect)(() => {
       if (!fitText || !blockElement || !clientId || !hasFitTextSupport2 || blockMode === "html") {
         return;
       }
@@ -70793,7 +70816,7 @@ var wp;
       hasFitTextSupport2,
       blockMode
     ]);
-    (0, import_element260.useEffect)(() => {
+    (0, import_element261.useEffect)(() => {
       if (fitText && blockElement && hasFitTextSupport2 && blockMode !== "html") {
         const frameId = window.requestAnimationFrame(() => {
           if (blockElement) {
@@ -71018,7 +71041,7 @@ var wp;
     };
   }
   function TypographyInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element261.useCallback)(
+    const attributesResetAllFilter = (0, import_element262.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle3(attributes);
         const updatedStyle = resetAllFilter(existingStyle);
@@ -71060,7 +71083,7 @@ var wp;
       },
       [clientId, isEnabled]
     );
-    const value = (0, import_element261.useMemo)(
+    const value = (0, import_element262.useMemo)(
       () => attributesToStyle3({ style, fontFamily, fontSize }),
       [style, fontSize, fontFamily]
     );
@@ -71093,26 +71116,26 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/dimensions.mjs
-  var import_element263 = __toESM(require_element(), 1);
+  var import_element264 = __toESM(require_element(), 1);
   var import_data182 = __toESM(require_data(), 1);
   var import_blocks112 = __toESM(require_blocks(), 1);
   var import_deprecated36 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
-  var import_element262 = __toESM(require_element(), 1);
+  var import_element263 = __toESM(require_element(), 1);
   var import_is_shallow_equal4 = __toESM(require_is_shallow_equal(), 1);
   var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
   function SpacingVisualizer({ clientId, value, computeStyle, forceShow }) {
     const blockElement = useBlockElement(clientId);
-    const [style, updateStyle] = (0, import_element262.useReducer)(
+    const [style, updateStyle] = (0, import_element263.useReducer)(
       () => computeStyle(blockElement)
     );
-    (0, import_element262.useEffect)(() => {
+    (0, import_element263.useEffect)(() => {
       if (blockElement && forceShow) {
         updateStyle();
       }
     }, [blockElement, forceShow]);
-    (0, import_element262.useEffect)(() => {
+    (0, import_element263.useEffect)(() => {
       if (!blockElement) {
         return;
       }
@@ -71125,9 +71148,9 @@ var wp;
         observer.disconnect();
       };
     }, [blockElement]);
-    const previousValueRef = (0, import_element262.useRef)(value);
-    const [isActive, setIsActive] = (0, import_element262.useState)(false);
-    (0, import_element262.useEffect)(() => {
+    const previousValueRef = (0, import_element263.useRef)(value);
+    const [isActive, setIsActive] = (0, import_element263.useState)(false);
+    (0, import_element263.useEffect)(() => {
       if ((0, import_is_shallow_equal4.isShallowEqual)(value, previousValueRef.current) || forceShow) {
         return;
       }
@@ -71210,11 +71233,11 @@ var wp;
   var DIMENSIONS_SUPPORT_KEY = "dimensions";
   var SPACING_SUPPORT_KEY2 = "spacing";
   function useVisualizer() {
-    const [property, setProperty] = (0, import_element263.useState)(false);
+    const [property, setProperty] = (0, import_element264.useState)(false);
     const { hideBlockInterface: hideBlockInterface2, showBlockInterface: showBlockInterface2 } = unlock(
       (0, import_data182.useDispatch)(store)
     );
-    (0, import_element263.useEffect)(() => {
+    (0, import_element264.useEffect)(() => {
       if (!property) {
         showBlockInterface2();
       } else {
@@ -71224,7 +71247,7 @@ var wp;
     return [property, setProperty];
   }
   function DimensionsInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element263.useCallback)(
+    const attributesResetAllFilter = (0, import_element264.useCallback)(
       (attributes) => {
         const existingStyle = attributes.style;
         const updatedStyle = resetAllFilter(existingStyle);
@@ -71308,7 +71331,7 @@ var wp;
     ] });
   }
   function hasDimensionsSupport(blockName, feature = "any") {
-    if (import_element263.Platform.OS !== "web") {
+    if (import_element264.Platform.OS !== "web") {
       return false;
     }
     const support = (0, import_blocks112.getBlockSupport)(blockName, DIMENSIONS_SUPPORT_KEY);
@@ -71517,7 +71540,7 @@ var wp;
     );
     const baseElementSelector = `.${blockElementsContainerIdentifier}`;
     const blockElementStyles = style?.elements;
-    const styles = (0, import_element264.useMemo)(() => {
+    const styles = (0, import_element265.useMemo)(() => {
       if (!blockElementStyles) {
         return;
       }
@@ -71614,7 +71637,7 @@ var wp;
   var import_blocks115 = __toESM(require_blocks(), 1);
   var import_compose103 = __toESM(require_compose(), 1);
   var import_hooks29 = __toESM(require_hooks(), 1);
-  var import_element265 = __toESM(require_element(), 1);
+  var import_element266 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/duotone/utils.mjs
   function getValuesFromColors(colors2 = []) {
@@ -71680,7 +71703,7 @@ var wp;
       `${presetSetting}.theme`,
       `${presetSetting}.default`
     );
-    return (0, import_element265.useMemo)(
+    return (0, import_element266.useMemo)(
       () => [
         ...userPresets || EMPTY_ARRAY17,
         ...themePresets || EMPTY_ARRAY17,
@@ -71846,7 +71869,7 @@ var wp;
       } : void 0
     );
     const blockElement = useBlockElement(clientId);
-    (0, import_element265.useEffect)(() => {
+    (0, import_element266.useEffect)(() => {
       if (!isValidFilter) {
         return;
       }
@@ -71861,7 +71884,7 @@ var wp;
   var DUOTONE_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps14({ clientId, name, style }) {
     const id = (0, import_compose103.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
-    const selector3 = (0, import_element265.useMemo)(() => {
+    const selector3 = (0, import_element266.useMemo)(() => {
       const blockType = (0, import_blocks115.getBlockType)(name);
       if (blockType) {
         const duotoneSupport = (0, import_blocks115.getBlockSupport)(
@@ -71906,7 +71929,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/custom-css.mjs
-  var import_element266 = __toESM(require_element(), 1);
+  var import_element267 = __toESM(require_element(), 1);
   var import_data183 = __toESM(require_data(), 1);
   var import_compose104 = __toESM(require_compose(), 1);
   var import_blocks116 = __toESM(require_blocks(), 1);
@@ -71970,7 +71993,7 @@ var wp;
       "wp-custom-css"
     );
     const customCSSSelector = `.${customCSSIdentifier}`;
-    const transformedCSS = (0, import_element266.useMemo)(() => {
+    const transformedCSS = (0, import_element267.useMemo)(() => {
       if (!isValidCSS) {
         return void 0;
       }
@@ -72347,10 +72370,10 @@ var wp;
   // packages/block-editor/build-module/hooks/layout-child.mjs
   var import_compose109 = __toESM(require_compose(), 1);
   var import_data188 = __toESM(require_data(), 1);
-  var import_element270 = __toESM(require_element(), 1);
+  var import_element271 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.mjs
-  var import_element267 = __toESM(require_element(), 1);
+  var import_element268 = __toESM(require_element(), 1);
   var import_data185 = __toESM(require_data(), 1);
   var import_compose106 = __toESM(require_compose(), 1);
 
@@ -72521,20 +72544,20 @@ var wp;
       }
     );
   }
-  var GridVisualizerGrid = (0, import_element267.forwardRef)(
+  var GridVisualizerGrid = (0, import_element268.forwardRef)(
     ({ gridClientId, gridElement, isManualGrid, childGridClientId }, ref) => {
-      const [gridInfo, setGridInfo] = (0, import_element267.useState)(
+      const [gridInfo, setGridInfo] = (0, import_element268.useState)(
         () => getGridInfo(gridElement)
       );
-      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element267.useState)(false);
+      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element268.useState)(false);
       const childGridElement = useBlockElement(childGridClientId);
-      const childGridRect = (0, import_element267.useMemo)(() => {
+      const childGridRect = (0, import_element268.useMemo)(() => {
         if (!childGridElement) {
           return null;
         }
         return getGridItemRect(childGridElement);
       }, [childGridElement]);
-      (0, import_element267.useEffect)(() => {
+      (0, import_element268.useEffect)(() => {
         const resizeCallback = () => setGridInfo(getGridInfo(gridElement));
         const borderBoxSpy = new window.ResizeObserver(resizeCallback);
         borderBoxSpy.observe(gridElement, { box: "border-box" });
@@ -72545,7 +72568,7 @@ var wp;
           contentBoxSpy.disconnect();
         };
       }, [gridElement]);
-      (0, import_element267.useEffect)(() => {
+      (0, import_element268.useEffect)(() => {
         function onGlobalDrag() {
           setIsDroppingAllowed(true);
         }
@@ -72611,7 +72634,7 @@ var wp;
     );
   }
   function ManualGridVisualizer({ gridClientId, gridInfo, childGridRect }) {
-    const [highlightedRect, setHighlightedRect] = (0, import_element267.useState)(null);
+    const [highlightedRect, setHighlightedRect] = (0, import_element268.useState)(null);
     const gridItemStyles = (0, import_data185.useSelect)(
       (select3) => {
         const { getBlockOrder: getBlockOrder2, getBlockStyles: getBlockStyles2 } = unlock(
@@ -72622,7 +72645,7 @@ var wp;
       },
       [gridClientId]
     );
-    const occupiedRects = (0, import_element267.useMemo)(() => {
+    const occupiedRects = (0, import_element268.useMemo)(() => {
       const rects = [];
       for (const style of Object.values(gridItemStyles)) {
         const {
@@ -72879,7 +72902,7 @@ var wp;
 
   // packages/block-editor/build-module/components/grid/grid-item-resizer.mjs
   var import_components267 = __toESM(require_components(), 1);
-  var import_element268 = __toESM(require_element(), 1);
+  var import_element269 = __toESM(require_element(), 1);
   var import_jsx_runtime457 = __toESM(require_jsx_runtime(), 1);
   function GridItemResizer({
     clientId,
@@ -72913,14 +72936,14 @@ var wp;
     onChange,
     isManualGrid
   }) {
-    const [resizeDirection, setResizeDirection] = (0, import_element268.useState)(null);
-    const [enableSide, setEnableSide] = (0, import_element268.useState)({
+    const [resizeDirection, setResizeDirection] = (0, import_element269.useState)(null);
+    const [enableSide, setEnableSide] = (0, import_element269.useState)({
       top: false,
       bottom: false,
       left: false,
       right: false
     });
-    (0, import_element268.useEffect)(() => {
+    (0, import_element269.useEffect)(() => {
       const observer = new window.ResizeObserver(() => {
         const blockClientRect = blockElement.getBoundingClientRect();
         const rootBlockClientRect = rootBlockElement.getBoundingClientRect();
@@ -73195,7 +73218,7 @@ var wp;
 
   // packages/block-editor/build-module/components/grid/use-grid-layout-sync.mjs
   var import_data187 = __toESM(require_data(), 1);
-  var import_element269 = __toESM(require_element(), 1);
+  var import_element270 = __toESM(require_element(), 1);
   var import_compose108 = __toESM(require_compose(), 1);
   function useGridLayoutSync({ clientId: gridClientId }) {
     const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data187.useSelect)(
@@ -73212,7 +73235,7 @@ var wp;
     );
     const { getBlockAttributes: getBlockAttributes3, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data187.useSelect)(store);
     const { updateBlockAttributes: updateBlockAttributes2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data187.useDispatch)(store);
-    const selectedBlockRect = (0, import_element269.useMemo)(
+    const selectedBlockRect = (0, import_element270.useMemo)(
       () => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null,
       [selectedBlockLayout]
     );
@@ -73221,7 +73244,7 @@ var wp;
       gridLayout.isManualPlacement
     );
     const previousBlockOrder = (0, import_compose108.usePrevious)(blockOrder);
-    (0, import_element269.useEffect)(() => {
+    (0, import_element270.useEffect)(() => {
       const updates = {};
       if (gridLayout.isManualPlacement) {
         const occupiedRects = [];
@@ -73575,7 +73598,7 @@ var wp;
       blockVisibility: blockBlockVisibility,
       deviceType
     });
-    const [resizerBounds, setResizerBounds] = (0, import_element270.useState)();
+    const [resizerBounds, setResizerBounds] = (0, import_element271.useState)();
     const childGridClientId = isChildBlockAGrid ? clientId : void 0;
     if (!isVisible || isParentBlockCurrentlyHidden) {
       return null;
@@ -73699,7 +73722,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-hooks.mjs
   var import_i18n237 = __toESM(require_i18n(), 1);
-  var import_element271 = __toESM(require_element(), 1);
+  var import_element272 = __toESM(require_element(), 1);
   var import_components269 = __toESM(require_components(), 1);
   var import_blocks119 = __toESM(require_blocks(), 1);
   var import_data189 = __toESM(require_data(), 1);
@@ -73714,7 +73737,7 @@ var wp;
       (select3) => select3(import_blocks119.store).getBlockTypes(),
       []
     );
-    const hookedBlocksForCurrentBlock = (0, import_element271.useMemo)(
+    const hookedBlocksForCurrentBlock = (0, import_element272.useMemo)(
       () => blockTypes?.filter(
         ({ name: blockName, blockHooks }) => blockHooks && name in blockHooks || ignoredHookedBlocks.includes(blockName)
       ),
@@ -73831,7 +73854,7 @@ var wp;
             "Manage the inclusion of blocks added automatically by plugins."
           ) }),
           Object.keys(groupedHookedBlocks).map((vendor) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime460.jsxs)(import_element271.Fragment, { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime460.jsxs)(import_element272.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime460.jsx)("h3", { children: vendor }),
               groupedHookedBlocks[vendor].map((block) => {
                 const checked = block.name in hookedBlockClientIds;
@@ -73877,7 +73900,7 @@ var wp;
   var import_blocks120 = __toESM(require_blocks(), 1);
   var import_components271 = __toESM(require_components(), 1);
   var import_data190 = __toESM(require_data(), 1);
-  var import_element272 = __toESM(require_element(), 1);
+  var import_element273 = __toESM(require_element(), 1);
   var import_compose110 = __toESM(require_compose(), 1);
   var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
   var useToolsPanelDropdownMenuProps2 = () => {
@@ -73891,7 +73914,7 @@ var wp;
     } : {};
   };
   var BlockBindingsPanel = ({ name: blockName, metadata }) => {
-    const blockContext = (0, import_element272.useContext)(block_context_default);
+    const blockContext = (0, import_element273.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
     const { bindableAttributes, hasCompatibleFields } = (0, import_data190.useSelect)(
@@ -73962,7 +73985,7 @@ var wp;
   var import_components272 = __toESM(require_components(), 1);
   var import_data192 = __toESM(require_data(), 1);
   var import_blocks121 = __toESM(require_blocks(), 1);
-  var import_element273 = __toESM(require_element(), 1);
+  var import_element274 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/use-list-view-panel-state/index.mjs
   var import_data191 = __toESM(require_data(), 1);
@@ -73997,7 +74020,7 @@ var wp;
     return (0, import_blocks121.hasBlockSupport)(nameOrType, LIST_VIEW_SUPPORT_KEY);
   }
   function ListViewPanel({ clientId, name }) {
-    const { isSelectionWithinCurrentSection } = (0, import_element273.useContext)(PrivateBlockContext);
+    const { isSelectionWithinCurrentSection } = (0, import_element274.useContext)(PrivateBlockContext);
     const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
     const { openListViewContentPanel: openListViewContentPanel2 } = unlock(
       (0, import_data192.useDispatch)(store)
@@ -74167,7 +74190,7 @@ var wp;
   var import_blocks123 = __toESM(require_blocks(), 1);
   var import_components273 = __toESM(require_components(), 1);
   var import_data194 = __toESM(require_data(), 1);
-  var import_element274 = __toESM(require_element(), 1);
+  var import_element275 = __toESM(require_element(), 1);
   var import_i18n240 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/generate-fields-from-attributes.mjs
@@ -74224,7 +74247,7 @@ var wp;
       [clientId]
     );
     const blockType = (0, import_blocks123.getBlockType)(name);
-    const { fields, form } = (0, import_element274.useMemo)(() => {
+    const { fields, form } = (0, import_element275.useMemo)(() => {
       if (!blockType?.attributes) {
         return { fields: [], form: { fields: [] } };
       }
@@ -74298,7 +74321,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/use-color-props.mjs
-  var import_element275 = __toESM(require_element(), 1);
+  var import_element276 = __toESM(require_element(), 1);
   function getColorClassesAndStyles(attributes) {
     const { backgroundColor, textColor, gradient, style } = attributes;
     const backgroundClass = getColorClassName(
@@ -74339,7 +74362,7 @@ var wp;
       "color.gradients.theme",
       "color.gradients.default"
     );
-    const colors2 = (0, import_element275.useMemo)(
+    const colors2 = (0, import_element276.useMemo)(
       () => [
         ...userPalette || [],
         ...themePalette || [],
@@ -74347,7 +74370,7 @@ var wp;
       ],
       [userPalette, themePalette, defaultPalette]
     );
-    const gradients = (0, import_element275.useMemo)(
+    const gradients = (0, import_element276.useMemo)(
       () => [
         ...userGradients || [],
         ...themeGradients || [],
@@ -74416,10 +74439,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/use-cached-truthy.mjs
-  var import_element276 = __toESM(require_element(), 1);
+  var import_element277 = __toESM(require_element(), 1);
   function useCachedTruthy(value) {
-    const [cachedValue, setCachedValue] = (0, import_element276.useState)(value);
-    (0, import_element276.useEffect)(() => {
+    const [cachedValue, setCachedValue] = (0, import_element277.useState)(value);
+    (0, import_element277.useEffect)(() => {
       if (value) {
         setCachedValue(value);
       }
@@ -74494,7 +74517,7 @@ var wp;
   var get_px_from_css_unit_default = () => "";
 
   // packages/block-editor/build-module/components/rich-text/get-rich-text-values.mjs
-  var import_element277 = __toESM(require_element(), 1);
+  var import_element278 = __toESM(require_element(), 1);
   var import_blocks124 = __toESM(require_blocks(), 1);
   var import_rich_text20 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime465 = __toESM(require_jsx_runtime(), 1);
@@ -74512,10 +74535,10 @@ var wp;
     }
     const { type, props } = element;
     switch (type) {
-      case import_element277.StrictMode:
-      case import_element277.Fragment:
+      case import_element278.StrictMode:
+      case import_element278.Fragment:
         return addValuesForElements(props.children, values, innerBlocks);
-      case import_element277.RawHTML:
+      case import_element278.RawHTML:
         return;
       case inner_blocks_default.Content:
         return addValuesForBlocks(values, innerBlocks);
@@ -74588,13 +74611,13 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.mjs
-  var import_element278 = __toESM(require_element(), 1);
+  var import_element279 = __toESM(require_element(), 1);
   var import_data195 = __toESM(require_data(), 1);
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n241 = __toESM(require_i18n(), 1);
   var import_jsx_runtime467 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
-    const [confirmed, setConfirmed] = (0, import_element278.useState)(false);
+    const [confirmed, setConfirmed] = (0, import_element279.useState)(false);
     const { clientIds, selectPrevious, message: message2 } = (0, import_data195.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()
     );
@@ -74603,13 +74626,13 @@ var wp;
       setBlockRemovalRules: setBlockRemovalRules2,
       privateRemoveBlocks: privateRemoveBlocks2
     } = unlock((0, import_data195.useDispatch)(store));
-    (0, import_element278.useEffect)(() => {
+    (0, import_element279.useEffect)(() => {
       setBlockRemovalRules2(rules);
       return () => {
         setBlockRemovalRules2();
       };
     }, [rules, setBlockRemovalRules2]);
-    (0, import_element278.useEffect)(() => {
+    (0, import_element279.useEffect)(() => {
       setConfirmed(false);
     }, [clientIds]);
     if (!message2) {
@@ -74679,11 +74702,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/index.mjs
-  var import_element280 = __toESM(require_element(), 1);
+  var import_element281 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.mjs
   var import_components277 = __toESM(require_components(), 1);
-  var import_element279 = __toESM(require_element(), 1);
+  var import_element280 = __toESM(require_element(), 1);
   var import_i18n242 = __toESM(require_i18n(), 1);
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCALE_OPTIONS = [
@@ -74726,7 +74749,7 @@ var wp;
     isShownByDefault = true
   }) {
     const displayValue = value ?? "fill";
-    const scaleHelp = (0, import_element279.useMemo)(() => {
+    const scaleHelp = (0, import_element280.useMemo)(() => {
       return options.reduce((acc, option) => {
         acc[option.value] = option.help;
         return acc;
@@ -74860,8 +74883,8 @@ var wp;
     const height = value.height === void 0 || value.height === "auto" ? null : value.height;
     const aspectRatio = value.aspectRatio === void 0 || value.aspectRatio === "auto" ? null : value.aspectRatio;
     const scale = value.scale === void 0 || value.scale === "fill" ? null : value.scale;
-    const [lastScale, setLastScale] = (0, import_element280.useState)(scale);
-    const [lastAspectRatio, setLastAspectRatio] = (0, import_element280.useState)(aspectRatio);
+    const [lastScale, setLastScale] = (0, import_element281.useState)(scale);
+    const [lastAspectRatio, setLastAspectRatio] = (0, import_element281.useState)(aspectRatio);
     const aspectRatioValue = width && height ? "custom" : lastAspectRatio;
     const showScaleControl = aspectRatio || width && height;
     return /* @__PURE__ */ (0, import_jsx_runtime470.jsxs)(import_jsx_runtime470.Fragment, { children: [
@@ -75120,7 +75143,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-picker/link-picker.mjs
   var import_components282 = __toESM(require_components(), 1);
-  var import_element281 = __toESM(require_element(), 1);
+  var import_element282 = __toESM(require_element(), 1);
   var import_i18n247 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
@@ -75192,11 +75215,11 @@ var wp;
     label,
     help
   }) {
-    const [isOpen, setIsOpen] = (0, import_element281.useState)(false);
-    const instanceId = (0, import_element281.useId)();
+    const [isOpen, setIsOpen] = (0, import_element282.useState)(false);
+    const instanceId = (0, import_element282.useId)();
     const dialogTitleId = `link-picker-title-${instanceId}`;
     const dialogDescriptionId = `link-picker-description-${instanceId}`;
-    const anchorRef = (0, import_element281.useRef)(null);
+    const anchorRef = (0, import_element282.useRef)(null);
     const { baseControlProps, controlProps } = (0, import_components282.useBaseControlProps)({
       help
     });

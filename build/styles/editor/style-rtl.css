@@ -3734,12 +3734,6 @@ div.dataviews-view-list {
   border-radius: var(--wpds-border-radius-xs);
 }
 
-.dataforms-layouts-panel__field-trigger-icon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
 .dataforms-layouts-panel__field-trigger-icon:focus-visible {
   opacity: 1;
   outline: var(--wpds-border-width-focus) solid var(--wp-admin-theme-color);

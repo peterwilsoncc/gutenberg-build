@@ -2533,12 +2533,6 @@ div.dataviews-view-list {
   border-radius: var(--wpds-border-radius-xs);
 }
 
-.dataforms-layouts-panel__field-trigger-icon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
 .dataforms-layouts-panel__field-trigger-icon:focus-visible {
   opacity: 1;
   outline: var(--wpds-border-width-focus) solid var(--wp-admin-theme-color);
@@ -3233,36 +3227,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   border: 0;
   padding: 0;
   margin: 0;
-}
-
-.fields-controls__template {
-  border: 0;
-  padding: 0;
-  margin: 0;
-}
-
-.fields-controls__template-modal {
-  z-index: 1000001;
-}
-
-.fields-controls__template-content .block-editor-block-patterns-list {
-  column-count: 2;
-  column-gap: 24px;
-  padding-top: 2px;
-}
-
-@media (min-width: 782px) {
-  .fields-controls__template-content .block-editor-block-patterns-list {
-    column-count: 3;
-  }
-}
-@media (min-width: 1280px) {
-  .fields-controls__template-content .block-editor-block-patterns-list {
-    column-count: 4;
-  }
-}
-.fields-controls__template-content .block-editor-block-patterns-list .block-editor-block-patterns-list__list-item {
-  break-inside: avoid-column;
 }
 
 .fields-field__title > span:first-child {
