@@ -13,13 +13,13 @@ return array(
 		'dependencies' => array(),
 	),
 	array(
-		'handle' => 'wp-nux',
-		'path' => 'nux/style',
+		'handle' => 'wp-preferences',
+		'path' => 'preferences/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-preferences',
-		'path' => 'preferences/style',
+		'handle' => 'wp-nux',
+		'path' => 'nux/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(

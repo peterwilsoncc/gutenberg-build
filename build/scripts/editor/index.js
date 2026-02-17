@@ -64294,7 +64294,7 @@ var wp;
       {
         className: "comment-avatar-indicator",
         label: (0, import_i18n264.__)("View notes"),
-        onClick,
+        onClick: () => onClick(),
         showTooltip: true,
         children: /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(import_components249.__experimentalHStack, { spacing: "1", children: [
           visibleParticipants.map((participant) => /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
