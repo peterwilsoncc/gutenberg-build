@@ -17249,6 +17249,7 @@ var wp;
       name: "core/open-shortcut-help",
       label: (0, import_i18n65.__)("Keyboard shortcuts"),
       icon: keyboard_default,
+      category: "view",
       callback: ({ close }) => {
         close();
         openModal2("editor/keyboard-shortcut-help");
@@ -17257,6 +17258,7 @@ var wp;
     commands.push({
       name: "core/toggle-distraction-free",
       label: isDistractionFree ? (0, import_i18n65.__)("Exit Distraction free") : (0, import_i18n65.__)("Enter Distraction free"),
+      category: "command",
       callback: ({ close }) => {
         toggleDistractionFree2();
         close();
@@ -17265,6 +17267,7 @@ var wp;
     commands.push({
       name: "core/open-preferences",
       label: (0, import_i18n65.__)("Editor preferences"),
+      category: "view",
       callback: ({ close }) => {
         close();
         openModal2("editor/preferences");
@@ -17273,6 +17276,7 @@ var wp;
     commands.push({
       name: "core/toggle-spotlight-mode",
       label: isFocusMode ? (0, import_i18n65.__)("Exit Spotlight mode") : (0, import_i18n65.__)("Enter Spotlight mode"),
+      category: "command",
       callback: ({ close }) => {
         toggleSpotlightMode2();
         close();
@@ -17282,6 +17286,7 @@ var wp;
       name: "core/toggle-list-view",
       label: isListViewOpen ? (0, import_i18n65.__)("Close List View") : (0, import_i18n65.__)("Open List View"),
       icon: list_view_default,
+      category: "command",
       callback: ({ close }) => {
         setIsListViewOpened2(!isListViewOpen);
         close();
@@ -17297,6 +17302,7 @@ var wp;
     commands.push({
       name: "core/toggle-top-toolbar",
       label: (0, import_i18n65.__)("Top toolbar"),
+      category: "command",
       callback: ({ close }) => {
         toggleTopToolbar2();
         close();
@@ -17307,6 +17313,7 @@ var wp;
         name: "core/toggle-code-editor",
         label: editorMode === "visual" ? (0, import_i18n65.__)("Open code editor") : (0, import_i18n65.__)("Exit code editor"),
         icon: code_default,
+        category: "command",
         callback: ({ close }) => {
           switchEditorMode2(
             editorMode === "visual" ? "text" : "visual"
@@ -17318,6 +17325,7 @@ var wp;
     commands.push({
       name: "core/toggle-breadcrumbs",
       label: showBlockBreadcrumbs ? (0, import_i18n65.__)("Hide block breadcrumbs") : (0, import_i18n65.__)("Show block breadcrumbs"),
+      category: "command",
       callback: ({ close }) => {
         toggle("core", "showBlockBreadcrumbs");
         close();
@@ -17334,6 +17342,7 @@ var wp;
       name: "core/open-settings-sidebar",
       label: (0, import_i18n65.__)("Show or hide the Settings panel"),
       icon: (0, import_i18n65.isRTL)() ? drawer_left_default : drawer_right_default,
+      category: "command",
       callback: ({ close }) => {
         const activeSidebar = getActiveComplementaryArea2("core");
         close();
@@ -17348,6 +17357,7 @@ var wp;
       name: "core/open-block-inspector",
       label: (0, import_i18n65.__)("Show or hide the Block settings panel"),
       icon: block_default_default,
+      category: "command",
       callback: ({ close }) => {
         const activeSidebar = getActiveComplementaryArea2("core");
         close();
@@ -17362,6 +17372,7 @@ var wp;
       name: "core/toggle-publish-sidebar",
       label: isPublishSidebarEnabled2 ? (0, import_i18n65.__)("Disable pre-publish checks") : (0, import_i18n65.__)("Enable pre-publish checks"),
       icon: format_list_bullets_default,
+      category: "command",
       callback: ({ close }) => {
         close();
         toggle("core", "isPublishSidebarEnabled");
@@ -17379,6 +17390,7 @@ var wp;
         name: "core/preview-link",
         label: (0, import_i18n65.__)("Preview in a new tab"),
         icon: external_default,
+        category: "view",
         callback: async ({ close }) => {
           close();
           const postId2 = getCurrentPostId2();
@@ -17406,6 +17418,7 @@ var wp;
         name: "core/rename-pattern",
         label: (0, import_i18n65.__)("Rename pattern"),
         icon: pencil_default,
+        category: "edit",
         callback: ({ close }) => {
           openModal2(modalName);
           close();
@@ -17415,6 +17428,7 @@ var wp;
         name: "core/duplicate-pattern",
         label: (0, import_i18n65.__)("Duplicate pattern"),
         icon: symbol_default,
+        category: "command",
         callback: ({ close }) => {
           openModal2(modalName2);
           close();
@@ -17470,6 +17484,7 @@ var wp;
           (0, import_html_entities8.decodeEntities)(template2.title)
         ),
         icon: layout_default,
+        category: "edit",
         callback: ({ close }) => {
           onNavigateToEntityRecord({
             postId: templateId2,
@@ -17484,6 +17499,7 @@ var wp;
         name: "core/switch-to-previous-entity",
         label: (0, import_i18n65.__)("Go back"),
         icon: page_default,
+        category: "view",
         callback: ({ close }) => {
           goBack();
           close();
@@ -17526,6 +17542,7 @@ var wp;
         name: "core/reset-template",
         label,
         icon: (0, import_i18n65.isRTL)() ? rotate_right_default : rotate_left_default,
+        category: "command",
         callback: ({ close }) => {
           revertTemplate3(template2);
           close();

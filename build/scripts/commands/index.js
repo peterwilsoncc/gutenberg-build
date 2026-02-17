@@ -3353,6 +3353,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
             label: action.label,
             searchLabel: action.searchLabel,
             context: action.context,
+            category: action.category,
             callback: action.callback,
             icon: action.icon,
             keywords: action.keywords
@@ -3417,10 +3418,21 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     unregisterCommand: () => unregisterCommand,
     unregisterCommandLoader: () => unregisterCommandLoader
   });
+  var REGISTERABLE_CATEGORIES = /* @__PURE__ */ new Set([
+    "command",
+    "view",
+    "edit",
+    "action"
+  ]);
   function registerCommand(config) {
+    let { category } = config;
+    if (!category || !REGISTERABLE_CATEGORIES.has(category)) {
+      category = "action";
+    }
     return {
       type: "REGISTER_COMMAND",
-      ...config
+      ...config,
+      category
     };
   }
   function unregisterCommand(name) {
@@ -3799,6 +3811,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
       registerCommand2({
         name: command.name,
         context: command.context,
+        category: command.category,
         label: command.label,
         searchLabel: command.searchLabel,
         icon: command.icon,
@@ -3814,6 +3827,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
       command.searchLabel,
       command.icon,
       command.context,
+      command.category,
       command.keywords,
       command.disabled,
       registerCommand2,
@@ -3844,6 +3858,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
         registerCommand2({
           name: command.name,
           context: command.context,
+          category: command.category,
           label: command.label,
           searchLabel: command.searchLabel,
           icon: command.icon,

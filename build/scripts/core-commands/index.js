@@ -197,6 +197,7 @@ var wp;
           name: "core/view-site",
           label: (0, import_i18n.__)("View site"),
           icon: external_default,
+          category: "view",
           callback: ({ close }) => {
             close();
             window.open(homeUrl, "_blank");
@@ -221,6 +222,7 @@ var wp;
           name: menuCommand.name,
           label,
           searchLabel: label,
+          category: "view",
           callback: ({ close }) => {
             document.location = menuCommand.url;
             close();
@@ -370,7 +372,8 @@ var wp;
           name: postType + "-" + record.id,
           searchLabel: record.title?.rendered + " " + record.id,
           label: record.title?.rendered ? (0, import_html_entities.decodeEntities)(record.title?.rendered) : (0, import_i18n2.__)("(no title)"),
-          icon: icons[postType]
+          icon: icons[postType],
+          category: "edit"
         };
         if (!canCreateTemplate || postType === "post" || postType === "page" && !isBlockBasedTheme) {
           return {
@@ -456,6 +459,7 @@ var wp;
             searchLabel: record.title?.rendered + " " + record.id,
             label: record.title?.rendered ? record.title?.rendered : (0, import_i18n2.__)("(no title)"),
             icon: icons[templateType],
+            category: "edit",
             callback: ({ close }) => {
               if (isSiteEditor) {
                 history.navigate(
@@ -480,6 +484,7 @@ var wp;
           name: "core/edit-site/open-template-parts",
           label: (0, import_i18n2.__)("Go to: Template parts"),
           icon: symbol_filled_default,
+          category: "view",
           callback: ({ close }) => {
             if (isSiteEditor) {
               history.navigate(
@@ -531,6 +536,7 @@ var wp;
           name: "core/edit-site/open-styles",
           label: (0, import_i18n2.__)("Go to: Styles"),
           icon: styles_default,
+          category: "view",
           callback: ({ close }) => {
             if (isSiteEditor) {
               history.navigate("/styles");
@@ -549,6 +555,7 @@ var wp;
           name: "core/edit-site/open-navigation",
           label: (0, import_i18n2.__)("Go to: Navigation"),
           icon: navigation_default,
+          category: "view",
           callback: ({ close }) => {
             if (isSiteEditor) {
               history.navigate("/navigation");
@@ -567,6 +574,7 @@ var wp;
           name: "core/edit-site/open-templates",
           label: (0, import_i18n2.__)("Go to: Templates"),
           icon: layout_default,
+          category: "view",
           callback: ({ close }) => {
             if (isSiteEditor) {
               history.navigate(mapRoute("/template"));
@@ -587,6 +595,7 @@ var wp;
           name: "core/edit-site/open-patterns",
           label: (0, import_i18n2.__)("Go to: Patterns"),
           icon: symbol_default,
+          category: "view",
           callback: ({ close }) => {
             if (canCreateTemplate) {
               if (isSiteEditor) {
@@ -639,6 +648,7 @@ var wp;
           name: "core/open-styles-css",
           label: (0, import_i18n2.__)("Open custom CSS"),
           icon: brush_default,
+          category: "view",
           callback: ({ close }) => {
             close();
             if (isSiteEditor) {

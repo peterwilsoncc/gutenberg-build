@@ -2161,6 +2161,7 @@ var wp;
       name: "core/toggle-fullscreen-mode",
       label: isFullscreen ? (0, import_i18n13.__)("Exit fullscreen") : (0, import_i18n13.__)("Enter fullscreen"),
       icon: fullscreen_default,
+      category: "command",
       callback: ({ close }) => {
         toggle("core/edit-post", "fullscreenMode");
         close();

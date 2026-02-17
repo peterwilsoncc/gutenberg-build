@@ -40436,6 +40436,7 @@ var wp;
           /* translators: %s: Block or block variation name. */
           label: (0, import_i18n101.sprintf)((0, import_i18n101.__)("Transform to %s"), title),
           icon: blockIcon?.src,
+          category: "command",
           callback: ({ close }) => {
             onBlockTransform(name);
             close();
@@ -40591,6 +40592,7 @@ var wp;
       commands: commands.map((command) => ({
         ...command,
         name: "core/block-editor/action-" + command.name,
+        category: "command",
         callback: ({ close }) => {
           command.callback();
           close();
