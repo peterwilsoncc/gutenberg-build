@@ -3274,6 +3274,23 @@ var wp;
     }
     return state;
   }
+  function syncConnectionStatuses(state = {}, action) {
+    switch (action.type) {
+      case "SET_SYNC_CONNECTION_STATUS": {
+        const key = `${action.kind}/${action.name}:${action.key}`;
+        return {
+          ...state,
+          [key]: action.status
+        };
+      }
+      case "CLEAR_SYNC_CONNECTION_STATUS": {
+        const key = `${action.kind}/${action.name}:${action.key}`;
+        const { [key]: _, ...rest } = state;
+        return rest;
+      }
+    }
+    return state;
+  }
   var reducer_default2 = (0, import_data6.combineReducers)({
     users,
     currentTheme,
@@ -3296,7 +3313,8 @@ var wp;
     registeredPostMeta,
     editorSettings,
     editorAssets,
-    icons
+    icons,
+    syncConnectionStatuses
   });
 
   // packages/core-data/build-module/selectors.mjs
@@ -3338,6 +3356,7 @@ var wp;
     getReferenceByDistinctEdits: () => getReferenceByDistinctEdits,
     getRevision: () => getRevision,
     getRevisions: () => getRevisions,
+    getSyncConnectionStatus: () => getSyncConnectionStatus,
     getThemeSupports: () => getThemeSupports,
     getUndoEdit: () => getUndoEdit,
     getUserPatternCategories: () => getUserPatternCategories,
@@ -4082,6 +4101,19 @@ var wp;
       ];
     }
   );
+  function getSyncConnectionStatus(state) {
+    if (!state.syncConnectionStatuses) {
+      return void 0;
+    }
+    const PRIORITIZED_STATUSES = ["disconnected", "connecting", "connected"];
+    let coalesced;
+    for (const status of Object.values(state.syncConnectionStatuses)) {
+      if (!coalesced || PRIORITIZED_STATUSES.indexOf(status.status) < PRIORITIZED_STATUSES.indexOf(coalesced.status)) {
+        coalesced = status;
+      }
+    }
+    return coalesced;
+  }
 
   // packages/core-data/build-module/actions.mjs
   var actions_exports = {};
@@ -4113,6 +4145,7 @@ var wp;
     redo: () => redo,
     saveEditedEntityRecord: () => saveEditedEntityRecord,
     saveEntityRecord: () => saveEntityRecord,
+    setSyncConnectionStatus: () => setSyncConnectionStatus,
     undo: () => undo
   });
   var import_es65 = __toESM(require_es6(), 1);
@@ -4913,6 +4946,23 @@ var wp;
       invalidateCache
     });
   };
+  function setSyncConnectionStatus(kind, name, key, status) {
+    if (!status) {
+      return {
+        type: "CLEAR_SYNC_CONNECTION_STATUS",
+        kind,
+        name,
+        key
+      };
+    }
+    return {
+      type: "SET_SYNC_CONNECTION_STATUS",
+      kind,
+      name,
+      key,
+      status
+    };
+  }
 
   // packages/core-data/build-module/private-actions.mjs
   var private_actions_exports = {};
@@ -5371,6 +5421,15 @@ var wp;
                 name,
                 key
               ),
+              // Handle sync connection status changes.
+              onStatusChange: (status) => {
+                dispatch3.setSyncConnectionStatus(
+                  kind,
+                  name,
+                  key,
+                  status
+                );
+              },
               // Refetch the current entity record from the database.
               refetchRecord: async () => {
                 dispatch3.receiveEntityRecords(
@@ -5542,6 +5601,14 @@ var wp;
             entityConfig.syncConfig,
             objectType,
             {
+              onStatusChange: (status) => {
+                dispatch3.setSyncConnectionStatus(
+                  kind,
+                  name,
+                  null,
+                  status
+                );
+              },
               refetchRecords: async () => {
                 dispatch3.receiveEntityRecords(
                   kind,

@@ -10620,6 +10620,9 @@ var wp;
         isPolling = false;
         return;
       }
+      roomStates.forEach((state) => {
+        state.onStatusChange({ status: "connecting" });
+      });
       const payload = {
         rooms: Array.from(roomStates.entries()).map(
           ([room, state]) => ({
@@ -10634,6 +10637,9 @@ var wp;
       try {
         const { rooms } = await postSyncUpdate(payload);
         pollInterval = POLLING_INTERVAL_IN_MS;
+        roomStates.forEach((state) => {
+          state.onStatusChange({ status: "connected" });
+        });
         rooms.forEach((room) => {
           if (!roomStates.has(room.room)) {
             return;
@@ -10674,12 +10680,22 @@ var wp;
             }
           );
         }
+        roomStates.forEach((state) => {
+          state.onStatusChange({ status: "disconnected" });
+        });
       }
       setTimeout(poll, pollInterval);
     }
     void start();
   }
-  function registerRoom(room, doc2, awareness, onSync, log) {
+  function registerRoom({
+    room,
+    doc: doc2,
+    awareness,
+    log,
+    onSync,
+    onStatusChange
+  }) {
     if (roomStates.has(room)) {
       return;
     }
@@ -10703,6 +10719,7 @@ var wp;
       endCursor: 0,
       localAwarenessState: awareness.getLocalState() ?? {},
       log,
+      onStatusChange,
       processAwarenessUpdate: (state) => processAwarenessUpdate(state, awareness),
       processDocUpdate: (update) => processDocUpdate(update, doc2, onSync),
       unregister,
@@ -10734,20 +10751,21 @@ var wp;
       this.connect();
     }
     awareness;
+    status = "disconnected";
     synced = false;
     /**
      * Connect to the endpoint and initialize sync.
      */
     connect() {
       this.log("Connecting");
-      pollingManager.registerRoom(
-        this.options.room,
-        this.options.ydoc,
-        this.awareness,
-        this.onSync,
-        this.log
-      );
-      this.emitStatus("connected");
+      pollingManager.registerRoom({
+        room: this.options.room,
+        doc: this.options.ydoc,
+        awareness: this.awareness,
+        log: this.log,
+        onStatusChange: this.emitStatus,
+        onSync: this.onSync
+      });
     }
     /**
      * Destroy the provider and cleanup resources.
@@ -10762,16 +10780,26 @@ var wp;
     disconnect() {
       this.log("Disconnecting");
       pollingManager.unregisterRoom(this.options.room);
-      this.emitStatus("disconnected");
+      this.emitStatus({ status: "disconnected" });
     }
     /**
      * Emit connection status.
      *
-     * @param status The connection status
+     * @param status        The connection status
+     * @param status.error  Optional error information when status is 'disconnected'
+     * @param status.status The connection status ('connected', 'connecting', 'disconnected')
      */
-    emitStatus(status) {
-      this.emit("status", [{ status }]);
-    }
+    emitStatus = ({ error, status }) => {
+      if (this.status === status && !error) {
+        return;
+      }
+      if (status === "connecting" && this.status !== "disconnected") {
+        return;
+      }
+      this.log("Status change", { status, error });
+      this.status = status;
+      this.emit("status", [{ error, status }]);
+    };
     /**
      * Log debug messages if debugging is enabled.
      *
@@ -10793,7 +10821,6 @@ var wp;
       if (!this.synced) {
         this.synced = true;
         this.log("Synced");
-        this.emit("synced", [{ synced: true }]);
       }
     };
   };
@@ -10812,7 +10839,12 @@ var wp;
         ydoc
       });
       return {
-        destroy: () => provider.destroy()
+        destroy: () => provider.destroy(),
+        // Adapter: ObservableV2.on is compatible with ProviderOn
+        // The callback receives data as the first parameter
+        on: (event, callback) => {
+          provider.on(event, callback);
+        }
       };
     };
   }
@@ -11144,6 +11176,7 @@ var wp;
         addUndoMeta: debugWrap(handlers.addUndoMeta),
         editRecord: debugWrap(handlers.editRecord),
         getEditedRecord: debugWrap(handlers.getEditedRecord),
+        onStatusChange: debugWrap(handlers.onStatusChange),
         refetchRecord: debugWrap(handlers.refetchRecord),
         restoreUndoMeta: debugWrap(handlers.restoreUndoMeta),
         saveRecord: debugWrap(handlers.saveRecord)
@@ -11154,6 +11187,7 @@ var wp;
       const now = Date.now();
       const unload = () => {
         providerResults.forEach((result) => result.destroy());
+        handlers.onStatusChange(null);
         recordMap.unobserveDeep(onRecordUpdate);
         recordMetaMap.unobserve(onRecordMetaUpdate);
         ydoc.destroy();
@@ -11201,9 +11235,16 @@ var wp;
       };
       entityStates.set(entityId, entityState);
       const providerResults = await Promise.all(
-        providerCreators2.map(
-          (create7) => create7({ objectType, objectId, ydoc, awareness })
-        )
+        providerCreators2.map(async (create7) => {
+          const provider = await create7({
+            objectType,
+            objectId,
+            ydoc,
+            awareness
+          });
+          provider.on("status", handlers.onStatusChange);
+          return provider;
+        })
       );
       recordMap.observeDeep(onRecordUpdate);
       recordMetaMap.observe(onRecordMetaUpdate);
@@ -11222,6 +11263,7 @@ var wp;
       const now = Date.now();
       const unload = () => {
         providerResults.forEach((result) => result.destroy());
+        handlers.onStatusChange(null);
         recordMetaMap.unobserve(onRecordMetaUpdate);
         ydoc.destroy();
         collectionStates.delete(objectType);
@@ -11252,13 +11294,15 @@ var wp;
       };
       collectionStates.set(objectType, collectionState);
       const providerResults = await Promise.all(
-        providerCreators2.map((create7) => {
-          return create7({
+        providerCreators2.map(async (create7) => {
+          const provider = await create7({
             awareness,
             objectType,
             objectId: null,
             ydoc
           });
+          provider.on("status", handlers.onStatusChange);
+          return provider;
         })
       );
       recordMetaMap.observe(onRecordMetaUpdate);
