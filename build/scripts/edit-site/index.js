@@ -28417,73 +28417,7 @@ var wp;
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_element92 = __toESM(require_element(), 1);
 
-  // node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
-  var __defProp2 = Object.defineProperty;
-  var __defProps = Object.defineProperties;
-  var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
-  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-  var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-  var __propIsEnum = Object.prototype.propertyIsEnumerable;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-  var __spreadValues = (a2, b2) => {
-    for (var prop in b2 || (b2 = {}))
-      if (__hasOwnProp2.call(b2, prop))
-        __defNormalProp(a2, prop, b2[prop]);
-    if (__getOwnPropSymbols)
-      for (var prop of __getOwnPropSymbols(b2)) {
-        if (__propIsEnum.call(b2, prop))
-          __defNormalProp(a2, prop, b2[prop]);
-      }
-    return a2;
-  };
-  var __spreadProps = (a2, b2) => __defProps(a2, __getOwnPropDescs(b2));
-  var __objRest = (source, exclude) => {
-    var target = {};
-    for (var prop in source)
-      if (__hasOwnProp2.call(source, prop) && exclude.indexOf(prop) < 0)
-        target[prop] = source[prop];
-    if (source != null && __getOwnPropSymbols)
-      for (var prop of __getOwnPropSymbols(source)) {
-        if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
-          target[prop] = source[prop];
-      }
-    return target;
-  };
-
-  // node_modules/@ariakit/core/esm/__chunks/3YLGPPWQ.js
-  var __defProp3 = Object.defineProperty;
-  var __defProps2 = Object.defineProperties;
-  var __getOwnPropDescs2 = Object.getOwnPropertyDescriptors;
-  var __getOwnPropSymbols2 = Object.getOwnPropertySymbols;
-  var __hasOwnProp3 = Object.prototype.hasOwnProperty;
-  var __propIsEnum2 = Object.prototype.propertyIsEnumerable;
-  var __defNormalProp2 = (obj, key, value) => key in obj ? __defProp3(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-  var __spreadValues2 = (a2, b2) => {
-    for (var prop in b2 || (b2 = {}))
-      if (__hasOwnProp3.call(b2, prop))
-        __defNormalProp2(a2, prop, b2[prop]);
-    if (__getOwnPropSymbols2)
-      for (var prop of __getOwnPropSymbols2(b2)) {
-        if (__propIsEnum2.call(b2, prop))
-          __defNormalProp2(a2, prop, b2[prop]);
-      }
-    return a2;
-  };
-  var __spreadProps2 = (a2, b2) => __defProps2(a2, __getOwnPropDescs2(b2));
-  var __objRest2 = (source, exclude) => {
-    var target = {};
-    for (var prop in source)
-      if (__hasOwnProp3.call(source, prop) && exclude.indexOf(prop) < 0)
-        target[prop] = source[prop];
-    if (source != null && __getOwnPropSymbols2)
-      for (var prop of __getOwnPropSymbols2(source)) {
-        if (exclude.indexOf(prop) < 0 && __propIsEnum2.call(source, prop))
-          target[prop] = source[prop];
-      }
-    return target;
-  };
-
-  // node_modules/@ariakit/core/esm/__chunks/PBFD2E7P.js
+  // node_modules/@ariakit/core/esm/__chunks/XMCVU3LR.js
   function noop3(..._) {
   }
   function applyState(argument, currentValue) {
@@ -28518,7 +28452,7 @@ var wp;
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
   function omit(object, keys) {
-    const result = __spreadValues2({}, object);
+    const result = { ...object };
     for (const key of keys) {
       if (hasOwnProperty(result, key)) {
         delete result[key];
@@ -28570,7 +28504,7 @@ var wp;
     return void 0;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/SK3NAZA3.js
+  // node_modules/@ariakit/react-core/esm/__chunks/YXGXYGQX.js
   var import_react8 = __toESM(require_react(), 1);
   function setRef(ref, value) {
     if (typeof ref === "function") {
@@ -28588,11 +28522,11 @@ var wp;
   }
   function getRefProperty(element) {
     if (!isValidElementWithRef(element)) return null;
-    const props = __spreadValues({}, element.props);
+    const props = { ...element.props };
     return props.ref || element.ref;
   }
   function mergeProps2(base, overrides) {
-    const props = __spreadValues({}, base);
+    const props = { ...base };
     for (const key in overrides) {
       if (!hasOwnProperty(overrides, key)) continue;
       if (key === "className") {
@@ -28602,7 +28536,7 @@ var wp;
       }
       if (key === "style") {
         const prop = "style";
-        props[prop] = base[prop] ? __spreadValues(__spreadValues({}, base[prop]), overrides[prop]) : overrides[prop];
+        props[prop] = base[prop] ? { ...base[prop], ...overrides[prop] } : overrides[prop];
         continue;
       }
       const overrideValue = overrides[key];
@@ -28621,7 +28555,7 @@ var wp;
     return props;
   }
 
-  // node_modules/@ariakit/core/esm/__chunks/DTR5TSDJ.js
+  // node_modules/@ariakit/core/esm/__chunks/3DNM6L6E.js
   var canUseDOM = checkIsBrowser();
   function checkIsBrowser() {
     var _a;
@@ -28633,11 +28567,12 @@ var wp;
     return node.ownerDocument || document;
   }
   function getActiveElement(node, activeDescendant = false) {
+    var _a;
     const { activeElement } = getDocument(node);
     if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
       return null;
     }
-    if (isFrame(activeElement) && activeElement.contentDocument) {
+    if (isFrame(activeElement) && ((_a = activeElement.contentDocument) == null ? void 0 : _a.body)) {
       return getActiveElement(
         activeElement.contentDocument.body,
         activeDescendant
@@ -28688,7 +28623,7 @@ var wp;
       const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
       const isTextArea = element.tagName === "TEXTAREA";
       return isTextInput || isTextArea || false;
-    } catch (error) {
+    } catch (_error) {
       return false;
     }
   }
@@ -28785,7 +28720,7 @@ var wp;
     );
   }
 
-  // node_modules/@ariakit/core/esm/__chunks/QAGXQEUG.js
+  // node_modules/@ariakit/core/esm/__chunks/SNHYQNEZ.js
   function isTouchDevice() {
     return canUseDOM && !!navigator.maxTouchPoints;
   }
@@ -28834,7 +28769,7 @@ var wp;
   function fireBlurEvent(element, eventInit) {
     const event = new FocusEvent("blur", eventInit);
     const defaultAllowed = element.dispatchEvent(event);
-    const bubbleInit = __spreadProps2(__spreadValues2({}, eventInit), { bubbles: true });
+    const bubbleInit = { ...eventInit, bubbles: true };
     element.dispatchEvent(new FocusEvent("focusout", bubbleInit));
     return defaultAllowed;
   }
@@ -28892,10 +28827,10 @@ var wp;
     return removeEventListener;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/ABQUS43J.js
-  var import_react9 = __toESM(require_react(), 1);
+  // node_modules/@ariakit/react-core/esm/__chunks/KPHZR4MB.js
   var React7 = __toESM(require_react(), 1);
-  var _React = __spreadValues({}, React7);
+  var import_react9 = __toESM(require_react(), 1);
+  var _React = { ...React7 };
   var useReactId = _React.useId;
   var useReactDeferredValue = _React.useDeferredValue;
   var useReactInsertionEffect = _React.useInsertionEffect;
@@ -29044,23 +28979,26 @@ var wp;
       },
       [...deps, props.wrapElement]
     );
-    return __spreadProps(__spreadValues({}, props), { wrapElement });
+    return { ...props, wrapElement };
   }
   function useMetadataProps(props, key, value) {
     const parent = props.onLoadedMetadataCapture;
     const onLoadedMetadataCapture = (0, import_react9.useMemo)(() => {
       return Object.assign(() => {
-      }, __spreadProps(__spreadValues({}, parent), { [key]: value }));
+      }, { ...parent, [key]: value });
     }, [parent, key, value]);
     return [parent == null ? void 0 : parent[key], { onLoadedMetadataCapture }];
   }
+  var hasInstalledGlobalEventListeners = false;
   function useIsMouseMoving() {
     (0, import_react9.useEffect)(() => {
+      if (hasInstalledGlobalEventListeners) return;
       addGlobalEventListener("mousemove", setMouseMoving, true);
       addGlobalEventListener("mousedown", resetMouseMoving, true);
       addGlobalEventListener("mouseup", resetMouseMoving, true);
       addGlobalEventListener("keydown", resetMouseMoving, true);
       addGlobalEventListener("scroll", resetMouseMoving, true);
+      hasInstalledGlobalEventListeners = true;
     }, []);
     const isMouseMoving = useEvent(() => mouseMoving);
     return isMouseMoving;
@@ -29083,11 +29021,14 @@ var wp;
     mouseMoving = false;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/LMDWO4NN.js
+  // node_modules/@ariakit/react-core/esm/__chunks/GWSL6KNJ.js
   var React8 = __toESM(require_react(), 1);
   var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   function forwardRef22(render4) {
-    const Role = React8.forwardRef((props, ref) => render4(__spreadProps(__spreadValues({}, props), { ref })));
+    const Role = React8.forwardRef(
+      // @ts-ignore Incompatible with React 19 types. Ignore for now.
+      (props, ref) => render4({ ...props, ref })
+    );
     Role.displayName = render4.displayName || render4.name;
     return Role;
   }
@@ -29095,16 +29036,20 @@ var wp;
     return React8.memo(Component, propsAreEqual);
   }
   function createElement5(Type, props) {
-    const _a = props, { wrapElement, render: render4 } = _a, rest = __objRest(_a, ["wrapElement", "render"]);
+    const { wrapElement, render: render4, ...rest } = props;
     const mergedRef = useMergeRefs(props.ref, getRefProperty(render4));
     let element;
     if (React8.isValidElement(render4)) {
-      const renderProps = __spreadProps(__spreadValues({}, render4.props), { ref: mergedRef });
+      const renderProps = {
+        // @ts-ignore Incompatible with React 19 types. Ignore for now.
+        ...render4.props,
+        ref: mergedRef
+      };
       element = React8.cloneElement(render4, mergeProps2(rest, renderProps));
     } else if (render4) {
       element = render4(rest);
     } else {
-      element = /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Type, __spreadValues({}, rest));
+      element = /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Type, { ...rest });
     }
     if (wrapElement) {
       return wrapElement(element);
@@ -29136,15 +29081,15 @@ var wp;
     };
     const ContextProvider = (props) => {
       return providers.reduceRight(
-        (children, Provider) => /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Provider, __spreadProps(__spreadValues({}, props), { children })),
-        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(context.Provider, __spreadValues({}, props))
+        (children, Provider) => /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Provider, { ...props, children }),
+        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(context.Provider, { ...props })
       );
     };
     const ScopedContextProvider = (props) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(ContextProvider, __spreadProps(__spreadValues({}, props), { children: scopedProviders.reduceRight(
-        (children, Provider) => /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Provider, __spreadProps(__spreadValues({}, props), { children })),
-        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(scopedContext.Provider, __spreadValues({}, props))
-      ) }));
+      return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(ContextProvider, { ...props, children: scopedProviders.reduceRight(
+        (children, Provider) => /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Provider, { ...props, children }),
+        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(scopedContext.Provider, { ...props })
+      ) });
     };
     return {
       context,
@@ -29157,7 +29102,7 @@ var wp;
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/VDHZ5F7K.js
+  // node_modules/@ariakit/react-core/esm/__chunks/SMPCIMZM.js
   var ctx2 = createStoreContext();
   var useCollectionContext = ctx2.useContext;
   var useCollectionScopedContext = ctx2.useScopedContext;
@@ -29165,7 +29110,7 @@ var wp;
   var CollectionContextProvider = ctx2.ContextProvider;
   var CollectionScopedContextProvider = ctx2.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/P7GR5CS5.js
+  // node_modules/@ariakit/react-core/esm/__chunks/AVVXDJMZ.js
   var import_react10 = __toESM(require_react(), 1);
   var ctx3 = createStoreContext(
     [CollectionContextProvider],
@@ -29183,1138 +29128,8 @@ var wp;
     void 0
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/3XAVFTCA.js
-  var import_react11 = __toESM(require_react(), 1);
-  var TagValueContext = (0, import_react11.createContext)(null);
-  var TagRemoveIdContext = (0, import_react11.createContext)(
-    null
-  );
-  var ctx4 = createStoreContext(
-    [CompositeContextProvider],
-    [CompositeScopedContextProvider]
-  );
-  var useTagContext = ctx4.useContext;
-  var useTagScopedContext = ctx4.useScopedContext;
-  var useTagProviderContext = ctx4.useProviderContext;
-  var TagContextProvider = ctx4.ContextProvider;
-  var TagScopedContextProvider = ctx4.ScopedContextProvider;
-
-  // node_modules/@ariakit/core/esm/__chunks/BCALMBPZ.js
-  function getInternal(store2, key) {
-    const internals = store2.__unstableInternals;
-    invariant(internals, "Invalid store");
-    return internals[key];
-  }
-  function createStore(initialState, ...stores) {
-    let state = initialState;
-    let prevStateBatch = state;
-    let lastUpdate = /* @__PURE__ */ Symbol();
-    let destroy = noop3;
-    const instances = /* @__PURE__ */ new Set();
-    const updatedKeys = /* @__PURE__ */ new Set();
-    const setups = /* @__PURE__ */ new Set();
-    const listeners = /* @__PURE__ */ new Set();
-    const batchListeners = /* @__PURE__ */ new Set();
-    const disposables = /* @__PURE__ */ new WeakMap();
-    const listenerKeys = /* @__PURE__ */ new WeakMap();
-    const storeSetup = (callback) => {
-      setups.add(callback);
-      return () => setups.delete(callback);
-    };
-    const storeInit = () => {
-      const initialized = instances.size;
-      const instance = /* @__PURE__ */ Symbol();
-      instances.add(instance);
-      const maybeDestroy = () => {
-        instances.delete(instance);
-        if (instances.size) return;
-        destroy();
-      };
-      if (initialized) return maybeDestroy;
-      const desyncs = getKeys(state).map(
-        (key) => chain(
-          ...stores.map((store2) => {
-            var _a;
-            const storeState = (_a = store2 == null ? void 0 : store2.getState) == null ? void 0 : _a.call(store2);
-            if (!storeState) return;
-            if (!hasOwnProperty(storeState, key)) return;
-            return sync2(store2, [key], (state2) => {
-              setState(
-                key,
-                state2[key],
-                // @ts-expect-error - Not public API. This is just to prevent
-                // infinite loops.
-                true
-              );
-            });
-          })
-        )
-      );
-      const teardowns = [];
-      for (const setup2 of setups) {
-        teardowns.push(setup2());
-      }
-      const cleanups = stores.map(init);
-      destroy = chain(...desyncs, ...teardowns, ...cleanups);
-      return maybeDestroy;
-    };
-    const sub = (keys, listener, set = listeners) => {
-      set.add(listener);
-      listenerKeys.set(listener, keys);
-      return () => {
-        var _a;
-        (_a = disposables.get(listener)) == null ? void 0 : _a();
-        disposables.delete(listener);
-        listenerKeys.delete(listener);
-        set.delete(listener);
-      };
-    };
-    const storeSubscribe = (keys, listener) => sub(keys, listener);
-    const storeSync = (keys, listener) => {
-      disposables.set(listener, listener(state, state));
-      return sub(keys, listener);
-    };
-    const storeBatch = (keys, listener) => {
-      disposables.set(listener, listener(state, prevStateBatch));
-      return sub(keys, listener, batchListeners);
-    };
-    const storePick = (keys) => createStore(pick(state, keys), finalStore);
-    const storeOmit = (keys) => createStore(omit(state, keys), finalStore);
-    const getState = () => state;
-    const setState = (key, value, fromStores = false) => {
-      var _a;
-      if (!hasOwnProperty(state, key)) return;
-      const nextValue = applyState(value, state[key]);
-      if (nextValue === state[key]) return;
-      if (!fromStores) {
-        for (const store2 of stores) {
-          (_a = store2 == null ? void 0 : store2.setState) == null ? void 0 : _a.call(store2, key, nextValue);
-        }
-      }
-      const prevState = state;
-      state = __spreadProps2(__spreadValues2({}, state), { [key]: nextValue });
-      const thisUpdate = /* @__PURE__ */ Symbol();
-      lastUpdate = thisUpdate;
-      updatedKeys.add(key);
-      const run = (listener, prev, uKeys) => {
-        var _a2;
-        const keys = listenerKeys.get(listener);
-        const updated = (k2) => uKeys ? uKeys.has(k2) : k2 === key;
-        if (!keys || keys.some(updated)) {
-          (_a2 = disposables.get(listener)) == null ? void 0 : _a2();
-          disposables.set(listener, listener(state, prev));
-        }
-      };
-      for (const listener of listeners) {
-        run(listener, prevState);
-      }
-      queueMicrotask(() => {
-        if (lastUpdate !== thisUpdate) return;
-        const snapshot = state;
-        for (const listener of batchListeners) {
-          run(listener, prevStateBatch, updatedKeys);
-        }
-        prevStateBatch = snapshot;
-        updatedKeys.clear();
-      });
-    };
-    const finalStore = {
-      getState,
-      setState,
-      __unstableInternals: {
-        setup: storeSetup,
-        init: storeInit,
-        subscribe: storeSubscribe,
-        sync: storeSync,
-        batch: storeBatch,
-        pick: storePick,
-        omit: storeOmit
-      }
-    };
-    return finalStore;
-  }
-  function setup(store2, ...args) {
-    if (!store2) return;
-    return getInternal(store2, "setup")(...args);
-  }
-  function init(store2, ...args) {
-    if (!store2) return;
-    return getInternal(store2, "init")(...args);
-  }
-  function subscribe(store2, ...args) {
-    if (!store2) return;
-    return getInternal(store2, "subscribe")(...args);
-  }
-  function sync2(store2, ...args) {
-    if (!store2) return;
-    return getInternal(store2, "sync")(...args);
-  }
-  function batch(store2, ...args) {
-    if (!store2) return;
-    return getInternal(store2, "batch")(...args);
-  }
-  function omit2(store2, ...args) {
-    if (!store2) return;
-    return getInternal(store2, "omit")(...args);
-  }
-  function pick2(store2, ...args) {
-    if (!store2) return;
-    return getInternal(store2, "pick")(...args);
-  }
-  function mergeStore(...stores) {
-    const initialState = stores.reduce((state, store22) => {
-      var _a;
-      const nextState = (_a = store22 == null ? void 0 : store22.getState) == null ? void 0 : _a.call(store22);
-      if (!nextState) return state;
-      return Object.assign(state, nextState);
-    }, {});
-    const store2 = createStore(initialState, ...stores);
-    return Object.assign({}, ...stores, store2);
-  }
-  function throwOnConflictingProps(props, store2) {
-    if (false) return;
-    if (!store2) return;
-    const defaultKeys = Object.entries(props).filter(([key, value]) => key.startsWith("default") && value !== void 0).map(([key]) => {
-      var _a;
-      const stateKey = key.replace("default", "");
-      return `${((_a = stateKey[0]) == null ? void 0 : _a.toLowerCase()) || ""}${stateKey.slice(1)}`;
-    });
-    if (!defaultKeys.length) return;
-    const storeState = store2.getState();
-    const conflictingProps = defaultKeys.filter(
-      (key) => hasOwnProperty(storeState, key)
-    );
-    if (!conflictingProps.length) return;
-    throw new Error(
-      `Passing a store prop in conjunction with a default state is not supported.
-
-const store = useSelectStore();
-<SelectProvider store={store} defaultValue="Apple" />
-                ^             ^
-
-Instead, pass the default state to the topmost store:
-
-const store = useSelectStore({ defaultValue: "Apple" });
-<SelectProvider store={store} />
-
-See https://github.com/ariakit/ariakit/pull/2745 for more details.
-
-If there's a particular need for this, please submit a feature request at https://github.com/ariakit/ariakit
-`
-    );
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/YV4JVR4I.js
-  var React9 = __toESM(require_react(), 1);
-  var import_shim = __toESM(require_shim(), 1);
-  var { useSyncExternalStore } = import_shim.default;
-  var noopSubscribe = () => () => {
-  };
-  function useStoreState(store2, keyOrSelector = identity) {
-    const storeSubscribe = React9.useCallback(
-      (callback) => {
-        if (!store2) return noopSubscribe();
-        return subscribe(store2, null, callback);
-      },
-      [store2]
-    );
-    const getSnapshot = () => {
-      const key = typeof keyOrSelector === "string" ? keyOrSelector : null;
-      const selector2 = typeof keyOrSelector === "function" ? keyOrSelector : null;
-      const state = store2 == null ? void 0 : store2.getState();
-      if (selector2) return selector2(state);
-      if (!state) return;
-      if (!key) return;
-      if (!hasOwnProperty(state, key)) return;
-      return state[key];
-    };
-    return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
-  }
-  function useStoreStateObject(store2, object) {
-    const objRef = React9.useRef(
-      {}
-    );
-    const storeSubscribe = React9.useCallback(
-      (callback) => {
-        if (!store2) return noopSubscribe();
-        return subscribe(store2, null, callback);
-      },
-      [store2]
-    );
-    const getSnapshot = () => {
-      const state = store2 == null ? void 0 : store2.getState();
-      let updated = false;
-      const obj = objRef.current;
-      for (const prop in object) {
-        const keyOrSelector = object[prop];
-        if (typeof keyOrSelector === "function") {
-          const value = keyOrSelector(state);
-          if (value !== obj[prop]) {
-            obj[prop] = value;
-            updated = true;
-          }
-        }
-        if (typeof keyOrSelector === "string") {
-          if (!state) continue;
-          if (!hasOwnProperty(state, keyOrSelector)) continue;
-          const value = state[keyOrSelector];
-          if (value !== obj[prop]) {
-            obj[prop] = value;
-            updated = true;
-          }
-        }
-      }
-      if (updated) {
-        objRef.current = __spreadValues({}, obj);
-      }
-      return objRef.current;
-    };
-    return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
-  }
-  function useStoreProps(store2, props, key, setKey) {
-    const value = hasOwnProperty(props, key) ? props[key] : void 0;
-    const setValue = setKey ? props[setKey] : void 0;
-    const propsRef = useLiveRef({ value, setValue });
-    useSafeLayoutEffect(() => {
-      return sync2(store2, [key], (state, prev) => {
-        const { value: value2, setValue: setValue2 } = propsRef.current;
-        if (!setValue2) return;
-        if (state[key] === prev[key]) return;
-        if (state[key] === value2) return;
-        setValue2(state[key]);
-      });
-    }, [store2, key]);
-    useSafeLayoutEffect(() => {
-      if (value === void 0) return;
-      store2.setState(key, value);
-      return batch(store2, [key], () => {
-        if (value === void 0) return;
-        store2.setState(key, value);
-      });
-    });
-  }
-  function useStore(createStore2, props) {
-    const [store2, setStore] = React9.useState(() => createStore2(props));
-    useSafeLayoutEffect(() => init(store2), [store2]);
-    const useState210 = React9.useCallback(
-      (keyOrSelector) => useStoreState(store2, keyOrSelector),
-      [store2]
-    );
-    const memoizedStore = React9.useMemo(
-      () => __spreadProps(__spreadValues({}, store2), { useState: useState210 }),
-      [store2, useState210]
-    );
-    const updateStore = useEvent(() => {
-      setStore((store22) => createStore2(__spreadValues(__spreadValues({}, props), store22.getState())));
-    });
-    return [memoizedStore, updateStore];
-  }
-
-  // node_modules/@ariakit/core/esm/__chunks/CYQWQL4J.js
-  function getCommonParent(items) {
-    var _a;
-    const firstItem = items.find((item) => !!item.element);
-    const lastItem = [...items].reverse().find((item) => !!item.element);
-    let parentElement = (_a = firstItem == null ? void 0 : firstItem.element) == null ? void 0 : _a.parentElement;
-    while (parentElement && (lastItem == null ? void 0 : lastItem.element)) {
-      const parent = parentElement;
-      if (lastItem && parent.contains(lastItem.element)) {
-        return parentElement;
-      }
-      parentElement = parentElement.parentElement;
-    }
-    return getDocument(parentElement).body;
-  }
-  function getPrivateStore(store2) {
-    return store2 == null ? void 0 : store2.__unstablePrivateStore;
-  }
-  function createCollectionStore(props = {}) {
-    var _a;
-    throwOnConflictingProps(props, props.store);
-    const syncState = (_a = props.store) == null ? void 0 : _a.getState();
-    const items = defaultValue(
-      props.items,
-      syncState == null ? void 0 : syncState.items,
-      props.defaultItems,
-      []
-    );
-    const itemsMap = new Map(items.map((item) => [item.id, item]));
-    const initialState = {
-      items,
-      renderedItems: defaultValue(syncState == null ? void 0 : syncState.renderedItems, [])
-    };
-    const syncPrivateStore = getPrivateStore(props.store);
-    const privateStore = createStore(
-      { items, renderedItems: initialState.renderedItems },
-      syncPrivateStore
-    );
-    const collection = createStore(initialState, props.store);
-    const sortItems = (renderedItems) => {
-      const sortedItems = sortBasedOnDOMPosition(renderedItems, (i2) => i2.element);
-      privateStore.setState("renderedItems", sortedItems);
-      collection.setState("renderedItems", sortedItems);
-    };
-    setup(collection, () => init(privateStore));
-    setup(privateStore, () => {
-      return batch(privateStore, ["items"], (state) => {
-        collection.setState("items", state.items);
-      });
-    });
-    setup(privateStore, () => {
-      return batch(privateStore, ["renderedItems"], (state) => {
-        let firstRun = true;
-        let raf2 = requestAnimationFrame(() => {
-          const { renderedItems } = collection.getState();
-          if (state.renderedItems === renderedItems) return;
-          sortItems(state.renderedItems);
-        });
-        if (typeof IntersectionObserver !== "function") {
-          return () => cancelAnimationFrame(raf2);
-        }
-        const ioCallback = () => {
-          if (firstRun) {
-            firstRun = false;
-            return;
-          }
-          cancelAnimationFrame(raf2);
-          raf2 = requestAnimationFrame(() => sortItems(state.renderedItems));
-        };
-        const root = getCommonParent(state.renderedItems);
-        const observer = new IntersectionObserver(ioCallback, { root });
-        for (const item of state.renderedItems) {
-          if (!item.element) continue;
-          observer.observe(item.element);
-        }
-        return () => {
-          cancelAnimationFrame(raf2);
-          observer.disconnect();
-        };
-      });
-    });
-    const mergeItem = (item, setItems, canDeleteFromMap = false) => {
-      let prevItem;
-      setItems((items2) => {
-        const index = items2.findIndex(({ id }) => id === item.id);
-        const nextItems = items2.slice();
-        if (index !== -1) {
-          prevItem = items2[index];
-          const nextItem = __spreadValues2(__spreadValues2({}, prevItem), item);
-          nextItems[index] = nextItem;
-          itemsMap.set(item.id, nextItem);
-        } else {
-          nextItems.push(item);
-          itemsMap.set(item.id, item);
-        }
-        return nextItems;
-      });
-      const unmergeItem = () => {
-        setItems((items2) => {
-          if (!prevItem) {
-            if (canDeleteFromMap) {
-              itemsMap.delete(item.id);
-            }
-            return items2.filter(({ id }) => id !== item.id);
-          }
-          const index = items2.findIndex(({ id }) => id === item.id);
-          if (index === -1) return items2;
-          const nextItems = items2.slice();
-          nextItems[index] = prevItem;
-          itemsMap.set(item.id, prevItem);
-          return nextItems;
-        });
-      };
-      return unmergeItem;
-    };
-    const registerItem = (item) => mergeItem(
-      item,
-      (getItems) => privateStore.setState("items", getItems),
-      true
-    );
-    return __spreadProps2(__spreadValues2({}, collection), {
-      registerItem,
-      renderItem: (item) => chain(
-        registerItem(item),
-        mergeItem(
-          item,
-          (getItems) => privateStore.setState("renderedItems", getItems)
-        )
-      ),
-      item: (id) => {
-        if (!id) return null;
-        let item = itemsMap.get(id);
-        if (!item) {
-          const { items: items2 } = privateStore.getState();
-          item = items2.find((item2) => item2.id === id);
-          if (item) {
-            itemsMap.set(id, item);
-          }
-        }
-        return item || null;
-      },
-      // @ts-expect-error Internal
-      __unstablePrivateStore: privateStore
-    });
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/C3IKGW5T.js
-  function useCollectionStoreProps(store2, update4, props) {
-    useUpdateEffect(update4, [props.store]);
-    useStoreProps(store2, props, "items", "setItems");
-    return store2;
-  }
-
-  // node_modules/@ariakit/core/esm/__chunks/7PRQYBBV.js
-  function toArray2(arg) {
-    if (Array.isArray(arg)) {
-      return arg;
-    }
-    return typeof arg !== "undefined" ? [arg] : [];
-  }
-  function flatten2DArray(array) {
-    const flattened = [];
-    for (const row of array) {
-      flattened.push(...row);
-    }
-    return flattened;
-  }
-  function reverseArray(array) {
-    return array.slice().reverse();
-  }
-
-  // node_modules/@ariakit/core/esm/__chunks/AJZ4BYF3.js
-  var NULL_ITEM = { id: null };
-  function findFirstEnabledItem(items, excludeId) {
-    return items.find((item) => {
-      if (excludeId) {
-        return !item.disabled && item.id !== excludeId;
-      }
-      return !item.disabled;
-    });
-  }
-  function getEnabledItems(items, excludeId) {
-    return items.filter((item) => {
-      if (excludeId) {
-        return !item.disabled && item.id !== excludeId;
-      }
-      return !item.disabled;
-    });
-  }
-  function getItemsInRow(items, rowId) {
-    return items.filter((item) => item.rowId === rowId);
-  }
-  function flipItems(items, activeId, shouldInsertNullItem = false) {
-    const index = items.findIndex((item) => item.id === activeId);
-    return [
-      ...items.slice(index + 1),
-      ...shouldInsertNullItem ? [NULL_ITEM] : [],
-      ...items.slice(0, index)
-    ];
-  }
-  function groupItemsByRows(items) {
-    const rows = [];
-    for (const item of items) {
-      const row = rows.find((currentRow) => {
-        var _a;
-        return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
-      });
-      if (row) {
-        row.push(item);
-      } else {
-        rows.push([item]);
-      }
-    }
-    return rows;
-  }
-  function getMaxRowLength(array) {
-    let maxLength = 0;
-    for (const { length } of array) {
-      if (length > maxLength) {
-        maxLength = length;
-      }
-    }
-    return maxLength;
-  }
-  function createEmptyItem(rowId) {
-    return {
-      id: "__EMPTY_ITEM__",
-      disabled: true,
-      rowId
-    };
-  }
-  function normalizeRows(rows, activeId, focusShift) {
-    const maxLength = getMaxRowLength(rows);
-    for (const row of rows) {
-      for (let i2 = 0; i2 < maxLength; i2 += 1) {
-        const item = row[i2];
-        if (!item || focusShift && item.disabled) {
-          const isFirst = i2 === 0;
-          const previousItem = isFirst && focusShift ? findFirstEnabledItem(row) : row[i2 - 1];
-          row[i2] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem == null ? void 0 : previousItem.rowId);
-        }
-      }
-    }
-    return rows;
-  }
-  function verticalizeItems(items) {
-    const rows = groupItemsByRows(items);
-    const maxLength = getMaxRowLength(rows);
-    const verticalized = [];
-    for (let i2 = 0; i2 < maxLength; i2 += 1) {
-      for (const row of rows) {
-        const item = row[i2];
-        if (item) {
-          verticalized.push(__spreadProps2(__spreadValues2({}, item), {
-            // If there's no rowId, it means that it's not a grid composite, but
-            // a single row instead. So, instead of verticalizing it, that is,
-            // assigning a different rowId based on the column index, we keep it
-            // undefined so they will be part of the same row. This is useful
-            // when using up/down on one-dimensional composites.
-            rowId: item.rowId ? `${i2}` : void 0
-          }));
-        }
-      }
-    }
-    return verticalized;
-  }
-  function createCompositeStore(props = {}) {
-    var _a;
-    const syncState = (_a = props.store) == null ? void 0 : _a.getState();
-    const collection = createCollectionStore(props);
-    const activeId = defaultValue(
-      props.activeId,
-      syncState == null ? void 0 : syncState.activeId,
-      props.defaultActiveId
-    );
-    const initialState = __spreadProps2(__spreadValues2({}, collection.getState()), {
-      id: defaultValue(
-        props.id,
-        syncState == null ? void 0 : syncState.id,
-        `id-${Math.random().toString(36).slice(2, 8)}`
-      ),
-      activeId,
-      baseElement: defaultValue(syncState == null ? void 0 : syncState.baseElement, null),
-      includesBaseElement: defaultValue(
-        props.includesBaseElement,
-        syncState == null ? void 0 : syncState.includesBaseElement,
-        activeId === null
-      ),
-      moves: defaultValue(syncState == null ? void 0 : syncState.moves, 0),
-      orientation: defaultValue(
-        props.orientation,
-        syncState == null ? void 0 : syncState.orientation,
-        "both"
-      ),
-      rtl: defaultValue(props.rtl, syncState == null ? void 0 : syncState.rtl, false),
-      virtualFocus: defaultValue(
-        props.virtualFocus,
-        syncState == null ? void 0 : syncState.virtualFocus,
-        false
-      ),
-      focusLoop: defaultValue(props.focusLoop, syncState == null ? void 0 : syncState.focusLoop, false),
-      focusWrap: defaultValue(props.focusWrap, syncState == null ? void 0 : syncState.focusWrap, false),
-      focusShift: defaultValue(props.focusShift, syncState == null ? void 0 : syncState.focusShift, false)
-    });
-    const composite = createStore(initialState, collection, props.store);
-    setup(
-      composite,
-      () => sync2(composite, ["renderedItems", "activeId"], (state) => {
-        composite.setState("activeId", (activeId2) => {
-          var _a2;
-          if (activeId2 !== void 0) return activeId2;
-          return (_a2 = findFirstEnabledItem(state.renderedItems)) == null ? void 0 : _a2.id;
-        });
-      })
-    );
-    const getNextId = (direction = "next", options = {}) => {
-      var _a2, _b;
-      const defaultState = composite.getState();
-      const {
-        skip = 0,
-        activeId: activeId2 = defaultState.activeId,
-        focusShift = defaultState.focusShift,
-        focusLoop = defaultState.focusLoop,
-        focusWrap = defaultState.focusWrap,
-        includesBaseElement = defaultState.includesBaseElement,
-        renderedItems = defaultState.renderedItems,
-        rtl = defaultState.rtl
-      } = options;
-      const isVerticalDirection = direction === "up" || direction === "down";
-      const isNextDirection = direction === "next" || direction === "down";
-      const canReverse = isNextDirection ? rtl && !isVerticalDirection : !rtl || isVerticalDirection;
-      const canShift = focusShift && !skip;
-      let items = !isVerticalDirection ? renderedItems : flatten2DArray(
-        normalizeRows(groupItemsByRows(renderedItems), activeId2, canShift)
-      );
-      items = canReverse ? reverseArray(items) : items;
-      items = isVerticalDirection ? verticalizeItems(items) : items;
-      if (activeId2 == null) {
-        return (_a2 = findFirstEnabledItem(items)) == null ? void 0 : _a2.id;
-      }
-      const activeItem = items.find((item) => item.id === activeId2);
-      if (!activeItem) {
-        return (_b = findFirstEnabledItem(items)) == null ? void 0 : _b.id;
-      }
-      const isGrid2 = items.some((item) => item.rowId);
-      const activeIndex = items.indexOf(activeItem);
-      const nextItems = items.slice(activeIndex + 1);
-      const nextItemsInRow = getItemsInRow(nextItems, activeItem.rowId);
-      if (skip) {
-        const nextEnabledItemsInRow = getEnabledItems(nextItemsInRow, activeId2);
-        const nextItem2 = nextEnabledItemsInRow.slice(skip)[0] || // If we can't find an item, just return the last one.
-        nextEnabledItemsInRow[nextEnabledItemsInRow.length - 1];
-        return nextItem2 == null ? void 0 : nextItem2.id;
-      }
-      const canLoop = focusLoop && (isVerticalDirection ? focusLoop !== "horizontal" : focusLoop !== "vertical");
-      const canWrap = isGrid2 && focusWrap && (isVerticalDirection ? focusWrap !== "horizontal" : focusWrap !== "vertical");
-      const hasNullItem = isNextDirection ? (!isGrid2 || isVerticalDirection) && canLoop && includesBaseElement : isVerticalDirection ? includesBaseElement : false;
-      if (canLoop) {
-        const loopItems = canWrap && !hasNullItem ? items : getItemsInRow(items, activeItem.rowId);
-        const sortedItems = flipItems(loopItems, activeId2, hasNullItem);
-        const nextItem2 = findFirstEnabledItem(sortedItems, activeId2);
-        return nextItem2 == null ? void 0 : nextItem2.id;
-      }
-      if (canWrap) {
-        const nextItem2 = findFirstEnabledItem(
-          // We can use nextItems, which contains all the next items, including
-          // items from other rows, to wrap between rows. However, if there is a
-          // null item (the composite container), we'll only use the next items in
-          // the row. So moving next from the last item will focus on the
-          // composite container. On grid composites, horizontal navigation never
-          // focuses on the composite container, only vertical.
-          hasNullItem ? nextItemsInRow : nextItems,
-          activeId2
-        );
-        const nextId2 = hasNullItem ? (nextItem2 == null ? void 0 : nextItem2.id) || null : nextItem2 == null ? void 0 : nextItem2.id;
-        return nextId2;
-      }
-      const nextItem = findFirstEnabledItem(nextItemsInRow, activeId2);
-      if (!nextItem && hasNullItem) {
-        return null;
-      }
-      return nextItem == null ? void 0 : nextItem.id;
-    };
-    return __spreadProps2(__spreadValues2(__spreadValues2({}, collection), composite), {
-      setBaseElement: (element) => composite.setState("baseElement", element),
-      setActiveId: (id) => composite.setState("activeId", id),
-      move: (id) => {
-        if (id === void 0) return;
-        composite.setState("activeId", id);
-        composite.setState("moves", (moves) => moves + 1);
-      },
-      first: () => {
-        var _a2;
-        return (_a2 = findFirstEnabledItem(composite.getState().renderedItems)) == null ? void 0 : _a2.id;
-      },
-      last: () => {
-        var _a2;
-        return (_a2 = findFirstEnabledItem(reverseArray(composite.getState().renderedItems))) == null ? void 0 : _a2.id;
-      },
-      next: (options) => {
-        if (options !== void 0 && typeof options === "number") {
-          options = { skip: options };
-        }
-        return getNextId("next", options);
-      },
-      previous: (options) => {
-        if (options !== void 0 && typeof options === "number") {
-          options = { skip: options };
-        }
-        return getNextId("previous", options);
-      },
-      down: (options) => {
-        if (options !== void 0 && typeof options === "number") {
-          options = { skip: options };
-        }
-        return getNextId("down", options);
-      },
-      up: (options) => {
-        if (options !== void 0 && typeof options === "number") {
-          options = { skip: options };
-        }
-        return getNextId("up", options);
-      }
-    });
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/4CMBR7SL.js
-  function useCompositeStoreOptions(props) {
-    const id = useId5(props.id);
-    return __spreadValues({ id }, props);
-  }
-  function useCompositeStoreProps(store2, update4, props) {
-    store2 = useCollectionStoreProps(store2, update4, props);
-    useStoreProps(store2, props, "activeId", "setActiveId");
-    useStoreProps(store2, props, "includesBaseElement");
-    useStoreProps(store2, props, "virtualFocus");
-    useStoreProps(store2, props, "orientation");
-    useStoreProps(store2, props, "rtl");
-    useStoreProps(store2, props, "focusLoop");
-    useStoreProps(store2, props, "focusWrap");
-    useStoreProps(store2, props, "focusShift");
-    return store2;
-  }
-
-  // node_modules/@ariakit/core/esm/__chunks/RCQ5P4YE.js
-  function createDisclosureStore(props = {}) {
-    const store2 = mergeStore(
-      props.store,
-      omit2(props.disclosure, ["contentElement", "disclosureElement"])
-    );
-    throwOnConflictingProps(props, store2);
-    const syncState = store2 == null ? void 0 : store2.getState();
-    const open = defaultValue(
-      props.open,
-      syncState == null ? void 0 : syncState.open,
-      props.defaultOpen,
-      false
-    );
-    const animated2 = defaultValue(props.animated, syncState == null ? void 0 : syncState.animated, false);
-    const initialState = {
-      open,
-      animated: animated2,
-      animating: !!animated2 && open,
-      mounted: open,
-      contentElement: defaultValue(syncState == null ? void 0 : syncState.contentElement, null),
-      disclosureElement: defaultValue(syncState == null ? void 0 : syncState.disclosureElement, null)
-    };
-    const disclosure = createStore(initialState, store2);
-    setup(
-      disclosure,
-      () => sync2(disclosure, ["animated", "animating"], (state) => {
-        if (state.animated) return;
-        disclosure.setState("animating", false);
-      })
-    );
-    setup(
-      disclosure,
-      () => subscribe(disclosure, ["open"], () => {
-        if (!disclosure.getState().animated) return;
-        disclosure.setState("animating", true);
-      })
-    );
-    setup(
-      disclosure,
-      () => sync2(disclosure, ["open", "animating"], (state) => {
-        disclosure.setState("mounted", state.open || state.animating);
-      })
-    );
-    return __spreadProps2(__spreadValues2({}, disclosure), {
-      disclosure: props.disclosure,
-      setOpen: (value) => disclosure.setState("open", value),
-      show: () => disclosure.setState("open", true),
-      hide: () => disclosure.setState("open", false),
-      toggle: () => disclosure.setState("open", (open2) => !open2),
-      stopAnimation: () => disclosure.setState("animating", false),
-      setContentElement: (value) => disclosure.setState("contentElement", value),
-      setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
-    });
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/WYCIER3C.js
-  function useDisclosureStoreProps(store2, update4, props) {
-    useUpdateEffect(update4, [props.store, props.disclosure]);
-    useStoreProps(store2, props, "open", "setOpen");
-    useStoreProps(store2, props, "mounted", "setMounted");
-    useStoreProps(store2, props, "animated");
-    return Object.assign(store2, { disclosure: props.disclosure });
-  }
-
-  // node_modules/@ariakit/core/esm/__chunks/FZZ2AVHF.js
-  function createDialogStore(props = {}) {
-    return createDisclosureStore(props);
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/BM6PGYQY.js
-  function useDialogStoreProps(store2, update4, props) {
-    return useDisclosureStoreProps(store2, update4, props);
-  }
-
-  // node_modules/@ariakit/core/esm/__chunks/ME2CUF3F.js
-  function createPopoverStore(_a = {}) {
-    var _b = _a, {
-      popover: otherPopover
-    } = _b, props = __objRest2(_b, [
-      "popover"
-    ]);
-    const store2 = mergeStore(
-      props.store,
-      omit2(otherPopover, [
-        "arrowElement",
-        "anchorElement",
-        "contentElement",
-        "popoverElement",
-        "disclosureElement"
-      ])
-    );
-    throwOnConflictingProps(props, store2);
-    const syncState = store2 == null ? void 0 : store2.getState();
-    const dialog = createDialogStore(__spreadProps2(__spreadValues2({}, props), { store: store2 }));
-    const placement = defaultValue(
-      props.placement,
-      syncState == null ? void 0 : syncState.placement,
-      "bottom"
-    );
-    const initialState = __spreadProps2(__spreadValues2({}, dialog.getState()), {
-      placement,
-      currentPlacement: placement,
-      anchorElement: defaultValue(syncState == null ? void 0 : syncState.anchorElement, null),
-      popoverElement: defaultValue(syncState == null ? void 0 : syncState.popoverElement, null),
-      arrowElement: defaultValue(syncState == null ? void 0 : syncState.arrowElement, null),
-      rendered: /* @__PURE__ */ Symbol("rendered")
-    });
-    const popover = createStore(initialState, dialog, store2);
-    return __spreadProps2(__spreadValues2(__spreadValues2({}, dialog), popover), {
-      setAnchorElement: (element) => popover.setState("anchorElement", element),
-      setPopoverElement: (element) => popover.setState("popoverElement", element),
-      setArrowElement: (element) => popover.setState("arrowElement", element),
-      render: () => popover.setState("rendered", /* @__PURE__ */ Symbol("rendered"))
-    });
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/O2PQ2652.js
-  function usePopoverStoreProps(store2, update4, props) {
-    useUpdateEffect(update4, [props.popover]);
-    useStoreProps(store2, props, "placement");
-    return useDialogStoreProps(store2, update4, props);
-  }
-
-  // node_modules/@ariakit/core/esm/combobox/combobox-store.js
-  var isTouchSafari = isSafari() && isTouchDevice();
-  function createComboboxStore(_a = {}) {
-    var _b = _a, {
-      tag
-    } = _b, props = __objRest2(_b, [
-      "tag"
-    ]);
-    const store2 = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
-    throwOnConflictingProps(props, store2);
-    const tagState = tag == null ? void 0 : tag.getState();
-    const syncState = store2 == null ? void 0 : store2.getState();
-    const activeId = defaultValue(
-      props.activeId,
-      syncState == null ? void 0 : syncState.activeId,
-      props.defaultActiveId,
-      null
-    );
-    const composite = createCompositeStore(__spreadProps2(__spreadValues2({}, props), {
-      activeId,
-      includesBaseElement: defaultValue(
-        props.includesBaseElement,
-        syncState == null ? void 0 : syncState.includesBaseElement,
-        true
-      ),
-      orientation: defaultValue(
-        props.orientation,
-        syncState == null ? void 0 : syncState.orientation,
-        "vertical"
-      ),
-      focusLoop: defaultValue(props.focusLoop, syncState == null ? void 0 : syncState.focusLoop, true),
-      focusWrap: defaultValue(props.focusWrap, syncState == null ? void 0 : syncState.focusWrap, true),
-      virtualFocus: defaultValue(
-        props.virtualFocus,
-        syncState == null ? void 0 : syncState.virtualFocus,
-        true
-      )
-    }));
-    const popover = createPopoverStore(__spreadProps2(__spreadValues2({}, props), {
-      placement: defaultValue(
-        props.placement,
-        syncState == null ? void 0 : syncState.placement,
-        "bottom-start"
-      )
-    }));
-    const value = defaultValue(
-      props.value,
-      syncState == null ? void 0 : syncState.value,
-      props.defaultValue,
-      ""
-    );
-    const selectedValue = defaultValue(
-      props.selectedValue,
-      syncState == null ? void 0 : syncState.selectedValue,
-      tagState == null ? void 0 : tagState.values,
-      props.defaultSelectedValue,
-      ""
-    );
-    const multiSelectable = Array.isArray(selectedValue);
-    const initialState = __spreadProps2(__spreadValues2(__spreadValues2({}, composite.getState()), popover.getState()), {
-      value,
-      selectedValue,
-      resetValueOnSelect: defaultValue(
-        props.resetValueOnSelect,
-        syncState == null ? void 0 : syncState.resetValueOnSelect,
-        multiSelectable
-      ),
-      resetValueOnHide: defaultValue(
-        props.resetValueOnHide,
-        syncState == null ? void 0 : syncState.resetValueOnHide,
-        multiSelectable && !tag
-      ),
-      activeValue: syncState == null ? void 0 : syncState.activeValue
-    });
-    const combobox = createStore(initialState, composite, popover, store2);
-    if (isTouchSafari) {
-      setup(
-        combobox,
-        () => sync2(combobox, ["virtualFocus"], () => {
-          combobox.setState("virtualFocus", false);
-        })
-      );
-    }
-    setup(combobox, () => {
-      if (!tag) return;
-      return chain(
-        sync2(combobox, ["selectedValue"], (state) => {
-          if (!Array.isArray(state.selectedValue)) return;
-          tag.setValues(state.selectedValue);
-        }),
-        sync2(tag, ["values"], (state) => {
-          combobox.setState("selectedValue", state.values);
-        })
-      );
-    });
-    setup(
-      combobox,
-      () => sync2(combobox, ["resetValueOnHide", "mounted"], (state) => {
-        if (!state.resetValueOnHide) return;
-        if (state.mounted) return;
-        combobox.setState("value", value);
-      })
-    );
-    setup(
-      combobox,
-      () => sync2(combobox, ["open"], (state) => {
-        if (state.open) return;
-        combobox.setState("activeId", activeId);
-        combobox.setState("moves", 0);
-      })
-    );
-    setup(
-      combobox,
-      () => sync2(combobox, ["moves", "activeId"], (state, prevState) => {
-        if (state.moves === prevState.moves) {
-          combobox.setState("activeValue", void 0);
-        }
-      })
-    );
-    setup(
-      combobox,
-      () => batch(combobox, ["moves", "renderedItems"], (state, prev) => {
-        if (state.moves === prev.moves) return;
-        const { activeId: activeId2 } = combobox.getState();
-        const activeItem = composite.item(activeId2);
-        combobox.setState("activeValue", activeItem == null ? void 0 : activeItem.value);
-      })
-    );
-    return __spreadProps2(__spreadValues2(__spreadValues2(__spreadValues2({}, popover), composite), combobox), {
-      tag,
-      setValue: (value2) => combobox.setState("value", value2),
-      resetValue: () => combobox.setState("value", initialState.value),
-      setSelectedValue: (selectedValue2) => combobox.setState("selectedValue", selectedValue2)
-    });
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/FEOFMWBY.js
-  function useComboboxStoreOptions(props) {
-    const tag = useTagContext();
-    props = __spreadProps(__spreadValues({}, props), {
-      tag: props.tag !== void 0 ? props.tag : tag
-    });
-    return useCompositeStoreOptions(props);
-  }
-  function useComboboxStoreProps(store2, update4, props) {
-    useUpdateEffect(update4, [props.tag]);
-    useStoreProps(store2, props, "value", "setValue");
-    useStoreProps(store2, props, "selectedValue", "setSelectedValue");
-    useStoreProps(store2, props, "resetValueOnHide");
-    useStoreProps(store2, props, "resetValueOnSelect");
-    return Object.assign(
-      useCompositeStoreProps(
-        usePopoverStoreProps(store2, update4, props),
-        update4,
-        props
-      ),
-      { tag: props.tag }
-    );
-  }
-  function useComboboxStore(props = {}) {
-    props = useComboboxStoreOptions(props);
-    const [store2, update4] = useStore(createComboboxStore, props);
-    return useComboboxStoreProps(store2, update4, props);
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/S6EF7IVO.js
-  var ctx5 = createStoreContext();
-  var useDisclosureContext = ctx5.useContext;
-  var useDisclosureScopedContext = ctx5.useScopedContext;
-  var useDisclosureProviderContext = ctx5.useProviderContext;
-  var DisclosureContextProvider = ctx5.ContextProvider;
-  var DisclosureScopedContextProvider = ctx5.ScopedContextProvider;
-
-  // node_modules/@ariakit/react-core/esm/__chunks/RS7LB2H4.js
-  var import_react12 = __toESM(require_react(), 1);
-  var ctx6 = createStoreContext(
-    [DisclosureContextProvider],
-    [DisclosureScopedContextProvider]
-  );
-  var useDialogContext = ctx6.useContext;
-  var useDialogScopedContext = ctx6.useScopedContext;
-  var useDialogProviderContext = ctx6.useProviderContext;
-  var DialogContextProvider = ctx6.ContextProvider;
-  var DialogScopedContextProvider = ctx6.ScopedContextProvider;
-  var DialogHeadingContext = (0, import_react12.createContext)(void 0);
-  var DialogDescriptionContext = (0, import_react12.createContext)(void 0);
-
-  // node_modules/@ariakit/react-core/esm/__chunks/MTZPJQMC.js
-  var ctx7 = createStoreContext(
-    [DialogContextProvider],
-    [DialogScopedContextProvider]
-  );
-  var usePopoverContext = ctx7.useContext;
-  var usePopoverScopedContext = ctx7.useScopedContext;
-  var usePopoverProviderContext = ctx7.useProviderContext;
-  var PopoverContextProvider = ctx7.ContextProvider;
-  var PopoverScopedContextProvider = ctx7.ScopedContextProvider;
-
-  // node_modules/@ariakit/react-core/esm/__chunks/VEVQD5MH.js
-  var import_react13 = __toESM(require_react(), 1);
-  var ComboboxListRoleContext = (0, import_react13.createContext)(
-    void 0
-  );
-  var ctx8 = createStoreContext(
-    [PopoverContextProvider, CompositeContextProvider],
-    [PopoverScopedContextProvider, CompositeScopedContextProvider]
-  );
-  var useComboboxContext = ctx8.useContext;
-  var useComboboxScopedContext = ctx8.useScopedContext;
-  var useComboboxProviderContext = ctx8.useProviderContext;
-  var ComboboxContextProvider = ctx8.ContextProvider;
-  var ComboboxScopedContextProvider = ctx8.ScopedContextProvider;
-  var ComboboxItemValueContext = (0, import_react13.createContext)(
-    void 0
-  );
-  var ComboboxItemCheckedContext = (0, import_react13.createContext)(false);
-
-  // node_modules/@ariakit/react-core/esm/__chunks/OMU7RWRV.js
-  var TagName = "div";
-  var usePopoverAnchor = createHook(
-    function usePopoverAnchor2(_a) {
-      var _b = _a, { store: store2 } = _b, props = __objRest(_b, ["store"]);
-      const context = usePopoverProviderContext();
-      store2 = store2 || context;
-      props = __spreadProps(__spreadValues({}, props), {
-        ref: useMergeRefs(store2 == null ? void 0 : store2.setAnchorElement, props.ref)
-      });
-      return props;
-    }
-  );
-  var PopoverAnchor = forwardRef22(function PopoverAnchor2(props) {
-    const htmlProps = usePopoverAnchor(props);
-    return createElement5(TagName, htmlProps);
-  });
-
   // node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
-  function findFirstEnabledItem2(items, excludeId) {
+  function findFirstEnabledItem(items, excludeId) {
     return items.find((item) => {
       if (excludeId) {
         return !item.disabled && item.id !== excludeId;
@@ -30326,7 +29141,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!id) return null;
     return store2.item(id) || null;
   }
-  function groupItemsByRows2(items) {
+  function groupItemsByRows(items) {
     const rows = [];
     for (const item of items) {
       const row = rows.find((currentRow) => {
@@ -30374,9 +29189,45 @@ If there's a particular need for this, please submit a feature request at https:
     return true;
   }
 
+  // node_modules/@ariakit/react-core/esm/__chunks/Z2O3VLAQ.js
+  var import_react11 = __toESM(require_react(), 1);
+  var TagName = "div";
+  var useCollectionItem = createHook(
+    function useCollectionItem2({
+      store: store2,
+      shouldRegisterItem = true,
+      getItem = identity,
+      // @ts-expect-error This prop may come from a collection renderer.
+      element,
+      ...props
+    }) {
+      const context = useCollectionContext();
+      store2 = store2 || context;
+      const id = useId5(props.id);
+      const ref = (0, import_react11.useRef)(element);
+      (0, import_react11.useEffect)(() => {
+        const element2 = ref.current;
+        if (!id) return;
+        if (!element2) return;
+        if (!shouldRegisterItem) return;
+        const item = getItem({ id, element: element2 });
+        return store2 == null ? void 0 : store2.renderItem(item);
+      }, [id, shouldRegisterItem, getItem, store2]);
+      props = {
+        ...props,
+        ref: useMergeRefs(ref, props.ref)
+      };
+      return removeUndefinedValues(props);
+    }
+  );
+  var CollectionItem = forwardRef22(function CollectionItem2(props) {
+    const htmlProps = useCollectionItem(props);
+    return createElement5(TagName, htmlProps);
+  });
+
   // node_modules/@ariakit/react-core/esm/__chunks/SWN3JYXT.js
-  var import_react14 = __toESM(require_react(), 1);
-  var FocusableContext = (0, import_react14.createContext)(true);
+  var import_react12 = __toESM(require_react(), 1);
+  var FocusableContext = (0, import_react12.createContext)(true);
 
   // node_modules/@ariakit/core/esm/utils/focus.js
   var selector = "input:not([type='hidden']):not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex], summary, iframe, object, embed, area[href], audio[controls], video[controls], [contenteditable]:not([contenteditable='false'])";
@@ -30420,12 +29271,12 @@ If there's a particular need for this, please submit a feature request at https:
       element.focus();
     } else {
       element.focus({ preventScroll: true });
-      element.scrollIntoView(__spreadValues2({ block: "nearest", inline: "nearest" }, options));
+      element.scrollIntoView({ block: "nearest", inline: "nearest", ...options });
     }
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/LVA2YJMS.js
-  var import_react15 = __toESM(require_react(), 1);
+  // node_modules/@ariakit/react-core/esm/__chunks/U6HHPQDW.js
+  var import_react13 = __toESM(require_react(), 1);
   var TagName2 = "div";
   var isSafariBrowser = isSafari();
   var alwaysFocusVisibleInputTypes = [
@@ -30508,6 +29359,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
   }
+  var hasInstalledGlobalEventListeners2 = false;
   var isKeyboardModality = true;
   function onGlobalMouseDown(event) {
     const target = event.target;
@@ -30524,26 +29376,23 @@ If there's a particular need for this, please submit a feature request at https:
     isKeyboardModality = true;
   }
   var useFocusable = createHook(
-    function useFocusable2(_a) {
-      var _b = _a, {
-        focusable = true,
-        accessibleWhenDisabled,
-        autoFocus,
-        onFocusVisible
-      } = _b, props = __objRest(_b, [
-        "focusable",
-        "accessibleWhenDisabled",
-        "autoFocus",
-        "onFocusVisible"
-      ]);
-      const ref = (0, import_react15.useRef)(null);
-      (0, import_react15.useEffect)(() => {
+    function useFocusable2({
+      focusable = true,
+      accessibleWhenDisabled,
+      autoFocus,
+      onFocusVisible,
+      ...props
+    }) {
+      const ref = (0, import_react13.useRef)(null);
+      (0, import_react13.useEffect)(() => {
         if (!focusable) return;
+        if (hasInstalledGlobalEventListeners2) return;
         addGlobalEventListener("mousedown", onGlobalMouseDown, true);
         addGlobalEventListener("keydown", onGlobalKeyDown, true);
+        hasInstalledGlobalEventListeners2 = true;
       }, [focusable]);
       if (isSafariBrowser) {
-        (0, import_react15.useEffect)(() => {
+        (0, import_react13.useEffect)(() => {
           if (!focusable) return;
           const element = ref.current;
           if (!element) return;
@@ -30563,14 +29412,14 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const disabled = focusable && disabledFromProps(props);
       const trulyDisabled = !!disabled && !accessibleWhenDisabled;
-      const [focusVisible, setFocusVisible] = (0, import_react15.useState)(false);
-      (0, import_react15.useEffect)(() => {
+      const [focusVisible, setFocusVisible] = (0, import_react13.useState)(false);
+      (0, import_react13.useEffect)(() => {
         if (!focusable) return;
         if (trulyDisabled && focusVisible) {
           setFocusVisible(false);
         }
       }, [focusable, trulyDisabled, focusVisible]);
-      (0, import_react15.useEffect)(() => {
+      (0, import_react13.useEffect)(() => {
         if (!focusable) return;
         if (!focusVisible) return;
         const element = ref.current;
@@ -30666,9 +29515,10 @@ If there's a particular need for this, please submit a feature request at https:
         onBlurProp == null ? void 0 : onBlurProp(event);
         if (!focusable) return;
         if (!isFocusEventOutside(event)) return;
+        event.currentTarget.removeAttribute("data-focus-visible");
         setFocusVisible(false);
       });
-      const autoFocusOnShow = (0, import_react15.useContext)(FocusableContext);
+      const autoFocusOnShow = (0, import_react13.useContext)(FocusableContext);
       const autoFocusRef = useEvent((element) => {
         if (!focusable) return;
         if (!autoFocus) return;
@@ -30684,17 +29534,17 @@ If there's a particular need for this, please submit a feature request at https:
       const nativeTabbable = focusable && isNativeTabbable(tagName);
       const supportsDisabled = focusable && supportsDisabledAttribute(tagName);
       const styleProp = props.style;
-      const style = (0, import_react15.useMemo)(() => {
+      const style = (0, import_react13.useMemo)(() => {
         if (trulyDisabled) {
-          return __spreadValues({ pointerEvents: "none" }, styleProp);
+          return { pointerEvents: "none", ...styleProp };
         }
         return styleProp;
       }, [trulyDisabled, styleProp]);
-      props = __spreadProps(__spreadValues({
+      props = {
         "data-focus-visible": focusable && focusVisible || void 0,
         "data-autofocus": autoFocus || void 0,
-        "aria-disabled": disabled || void 0
-      }, props), {
+        "aria-disabled": disabled || void 0,
+        ...props,
         ref: useMergeRefs(ref, autoFocusRef, props.ref),
         style,
         tabIndex: getTabIndex(
@@ -30714,7 +29564,7 @@ If there's a particular need for this, please submit a feature request at https:
         onKeyDownCapture,
         onFocusCapture,
         onBlur
-      });
+      };
       return removeUndefinedValues(props);
     }
   );
@@ -30723,702 +29573,9 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName2, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/ITI7HKP4.js
-  var import_react16 = __toESM(require_react(), 1);
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
-  var TagName3 = "div";
-  function isGrid(items) {
-    return items.some((item) => !!item.rowId);
-  }
-  function isPrintableKey(event) {
-    const target = event.target;
-    if (target && !isTextField(target)) return false;
-    return event.key.length === 1 && !event.ctrlKey && !event.metaKey;
-  }
-  function isModifierKey(event) {
-    return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
-  }
-  function useKeyboardEventProxy(store2, onKeyboardEvent, previousElementRef) {
-    return useEvent((event) => {
-      var _a;
-      onKeyboardEvent == null ? void 0 : onKeyboardEvent(event);
-      if (event.defaultPrevented) return;
-      if (event.isPropagationStopped()) return;
-      if (!isSelfTarget(event)) return;
-      if (isModifierKey(event)) return;
-      if (isPrintableKey(event)) return;
-      const state = store2.getState();
-      const activeElement = (_a = getEnabledItem(store2, state.activeId)) == null ? void 0 : _a.element;
-      if (!activeElement) return;
-      const _b = event, { view } = _b, eventInit = __objRest(_b, ["view"]);
-      const previousElement = previousElementRef == null ? void 0 : previousElementRef.current;
-      if (activeElement !== previousElement) {
-        activeElement.focus();
-      }
-      if (!fireKeyboardEvent(activeElement, event.type, eventInit)) {
-        event.preventDefault();
-      }
-      if (event.currentTarget.contains(activeElement)) {
-        event.stopPropagation();
-      }
-    });
-  }
-  function findFirstEnabledItemInTheLastRow(items) {
-    return findFirstEnabledItem2(
-      flatten2DArray(reverseArray(groupItemsByRows2(items)))
-    );
-  }
-  function useScheduleFocus(store2) {
-    const [scheduled, setScheduled] = (0, import_react16.useState)(false);
-    const schedule2 = (0, import_react16.useCallback)(() => setScheduled(true), []);
-    const activeItem = store2.useState(
-      (state) => getEnabledItem(store2, state.activeId)
-    );
-    (0, import_react16.useEffect)(() => {
-      const activeElement = activeItem == null ? void 0 : activeItem.element;
-      if (!scheduled) return;
-      if (!activeElement) return;
-      setScheduled(false);
-      activeElement.focus({ preventScroll: true });
-    }, [activeItem, scheduled]);
-    return schedule2;
-  }
-  var useComposite = createHook(
-    function useComposite2(_a) {
-      var _b = _a, {
-        store: store2,
-        composite = true,
-        focusOnMove = composite,
-        moveOnKeyPress = true
-      } = _b, props = __objRest(_b, [
-        "store",
-        "composite",
-        "focusOnMove",
-        "moveOnKeyPress"
-      ]);
-      const context = useCompositeProviderContext();
-      store2 = store2 || context;
-      invariant(
-        store2,
-        "Composite must receive a `store` prop or be wrapped in a CompositeProvider component."
-      );
-      const ref = (0, import_react16.useRef)(null);
-      const previousElementRef = (0, import_react16.useRef)(null);
-      const scheduleFocus = useScheduleFocus(store2);
-      const moves = store2.useState("moves");
-      const [, setBaseElement] = useTransactionState(
-        composite ? store2.setBaseElement : null
-      );
-      (0, import_react16.useEffect)(() => {
-        var _a2;
-        if (!store2) return;
-        if (!moves) return;
-        if (!composite) return;
-        if (!focusOnMove) return;
-        const { activeId: activeId2 } = store2.getState();
-        const itemElement = (_a2 = getEnabledItem(store2, activeId2)) == null ? void 0 : _a2.element;
-        if (!itemElement) return;
-        focusIntoView(itemElement);
-      }, [store2, moves, composite, focusOnMove]);
-      useSafeLayoutEffect(() => {
-        if (!store2) return;
-        if (!moves) return;
-        if (!composite) return;
-        const { baseElement, activeId: activeId2 } = store2.getState();
-        const isSelfAcive = activeId2 === null;
-        if (!isSelfAcive) return;
-        if (!baseElement) return;
-        const previousElement = previousElementRef.current;
-        previousElementRef.current = null;
-        if (previousElement) {
-          fireBlurEvent(previousElement, { relatedTarget: baseElement });
-        }
-        if (!hasFocus(baseElement)) {
-          baseElement.focus();
-        }
-      }, [store2, moves, composite]);
-      const activeId = store2.useState("activeId");
-      const virtualFocus = store2.useState("virtualFocus");
-      useSafeLayoutEffect(() => {
-        var _a2;
-        if (!store2) return;
-        if (!composite) return;
-        if (!virtualFocus) return;
-        const previousElement = previousElementRef.current;
-        previousElementRef.current = null;
-        if (!previousElement) return;
-        const activeElement = (_a2 = getEnabledItem(store2, activeId)) == null ? void 0 : _a2.element;
-        const relatedTarget = activeElement || getActiveElement(previousElement);
-        if (relatedTarget === previousElement) return;
-        fireBlurEvent(previousElement, { relatedTarget });
-      }, [store2, activeId, virtualFocus, composite]);
-      const onKeyDownCapture = useKeyboardEventProxy(
-        store2,
-        props.onKeyDownCapture,
-        previousElementRef
-      );
-      const onKeyUpCapture = useKeyboardEventProxy(
-        store2,
-        props.onKeyUpCapture,
-        previousElementRef
-      );
-      const onFocusCaptureProp = props.onFocusCapture;
-      const onFocusCapture = useEvent((event) => {
-        onFocusCaptureProp == null ? void 0 : onFocusCaptureProp(event);
-        if (event.defaultPrevented) return;
-        if (!store2) return;
-        const { virtualFocus: virtualFocus2 } = store2.getState();
-        if (!virtualFocus2) return;
-        const previousActiveElement = event.relatedTarget;
-        const isSilentlyFocused = silentlyFocused(event.currentTarget);
-        if (isSelfTarget(event) && isSilentlyFocused) {
-          event.stopPropagation();
-          previousElementRef.current = previousActiveElement;
-        }
-      });
-      const onFocusProp = props.onFocus;
-      const onFocus = useEvent((event) => {
-        onFocusProp == null ? void 0 : onFocusProp(event);
-        if (event.defaultPrevented) return;
-        if (!composite) return;
-        if (!store2) return;
-        const { relatedTarget } = event;
-        const { virtualFocus: virtualFocus2 } = store2.getState();
-        if (virtualFocus2) {
-          if (isSelfTarget(event) && !isItem(store2, relatedTarget)) {
-            queueMicrotask(scheduleFocus);
-          }
-        } else if (isSelfTarget(event)) {
-          store2.setActiveId(null);
-        }
-      });
-      const onBlurCaptureProp = props.onBlurCapture;
-      const onBlurCapture = useEvent((event) => {
-        var _a2;
-        onBlurCaptureProp == null ? void 0 : onBlurCaptureProp(event);
-        if (event.defaultPrevented) return;
-        if (!store2) return;
-        const { virtualFocus: virtualFocus2, activeId: activeId2 } = store2.getState();
-        if (!virtualFocus2) return;
-        const activeElement = (_a2 = getEnabledItem(store2, activeId2)) == null ? void 0 : _a2.element;
-        const nextActiveElement = event.relatedTarget;
-        const nextActiveElementIsItem = isItem(store2, nextActiveElement);
-        const previousElement = previousElementRef.current;
-        previousElementRef.current = null;
-        if (isSelfTarget(event) && nextActiveElementIsItem) {
-          if (nextActiveElement === activeElement) {
-            if (previousElement && previousElement !== nextActiveElement) {
-              fireBlurEvent(previousElement, event);
-            }
-          } else if (activeElement) {
-            fireBlurEvent(activeElement, event);
-          } else if (previousElement) {
-            fireBlurEvent(previousElement, event);
-          }
-          event.stopPropagation();
-        } else {
-          const targetIsItem = isItem(store2, event.target);
-          if (!targetIsItem && activeElement) {
-            fireBlurEvent(activeElement, event);
-          }
-        }
-      });
-      const onKeyDownProp = props.onKeyDown;
-      const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-      const onKeyDown = useEvent((event) => {
-        var _a2;
-        onKeyDownProp == null ? void 0 : onKeyDownProp(event);
-        if (event.defaultPrevented) return;
-        if (!store2) return;
-        if (!isSelfTarget(event)) return;
-        const { orientation, renderedItems, activeId: activeId2 } = store2.getState();
-        const activeItem = getEnabledItem(store2, activeId2);
-        if ((_a2 = activeItem == null ? void 0 : activeItem.element) == null ? void 0 : _a2.isConnected) return;
-        const isVertical = orientation !== "horizontal";
-        const isHorizontal = orientation !== "vertical";
-        const grid = isGrid(renderedItems);
-        const isHorizontalKey = event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End";
-        if (isHorizontalKey && isTextField(event.currentTarget)) return;
-        const up = () => {
-          if (grid) {
-            const item = findFirstEnabledItemInTheLastRow(renderedItems);
-            return item == null ? void 0 : item.id;
-          }
-          return store2 == null ? void 0 : store2.last();
-        };
-        const keyMap = {
-          ArrowUp: (grid || isVertical) && up,
-          ArrowRight: (grid || isHorizontal) && store2.first,
-          ArrowDown: (grid || isVertical) && store2.first,
-          ArrowLeft: (grid || isHorizontal) && store2.last,
-          Home: store2.first,
-          End: store2.last,
-          PageUp: store2.first,
-          PageDown: store2.last
-        };
-        const action = keyMap[event.key];
-        if (action) {
-          const id = action();
-          if (id !== void 0) {
-            if (!moveOnKeyPressProp(event)) return;
-            event.preventDefault();
-            store2.move(id);
-          }
-        }
-      });
-      props = useWrapElement(
-        props,
-        (element) => /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(CompositeContextProvider, { value: store2, children: element }),
-        [store2]
-      );
-      const activeDescendant = store2.useState((state) => {
-        var _a2;
-        if (!store2) return;
-        if (!composite) return;
-        if (!state.virtualFocus) return;
-        return (_a2 = getEnabledItem(store2, state.activeId)) == null ? void 0 : _a2.id;
-      });
-      props = __spreadProps(__spreadValues({
-        "aria-activedescendant": activeDescendant
-      }, props), {
-        ref: useMergeRefs(ref, setBaseElement, props.ref),
-        onKeyDownCapture,
-        onKeyUpCapture,
-        onFocusCapture,
-        onFocus,
-        onBlurCapture,
-        onKeyDown
-      });
-      const focusable = store2.useState(
-        (state) => composite && (state.virtualFocus || state.activeId === null)
-      );
-      props = useFocusable(__spreadValues({ focusable }, props));
-      return props;
-    }
-  );
-  var Composite6 = forwardRef22(function Composite22(props) {
-    const htmlProps = useComposite(props);
-    return createElement5(TagName3, htmlProps);
-  });
-
-  // node_modules/@ariakit/react-core/esm/combobox/combobox.js
-  var import_react17 = __toESM(require_react(), 1);
-  var TagName4 = "input";
-  function isFirstItemAutoSelected(items, activeValue, autoSelect) {
-    if (!autoSelect) return false;
-    const firstItem = items.find((item) => !item.disabled && item.value);
-    return (firstItem == null ? void 0 : firstItem.value) === activeValue;
-  }
-  function hasCompletionString(value, activeValue) {
-    if (!activeValue) return false;
-    if (value == null) return false;
-    value = normalizeString2(value);
-    return activeValue.length > value.length && activeValue.toLowerCase().indexOf(value.toLowerCase()) === 0;
-  }
-  function isInputEvent(event) {
-    return event.type === "input";
-  }
-  function isAriaAutoCompleteValue(value) {
-    return value === "inline" || value === "list" || value === "both" || value === "none";
-  }
-  function getDefaultAutoSelectId(items) {
-    const item = items.find((item2) => {
-      var _a;
-      if (item2.disabled) return false;
-      return ((_a = item2.element) == null ? void 0 : _a.getAttribute("role")) !== "tab";
-    });
-    return item == null ? void 0 : item.id;
-  }
-  var useCombobox = createHook(
-    function useCombobox2(_a) {
-      var _b = _a, {
-        store: store2,
-        focusable = true,
-        autoSelect: autoSelectProp = false,
-        getAutoSelectId,
-        setValueOnChange,
-        showMinLength = 0,
-        showOnChange,
-        showOnMouseDown,
-        showOnClick = showOnMouseDown,
-        showOnKeyDown,
-        showOnKeyPress = showOnKeyDown,
-        blurActiveItemOnClick,
-        setValueOnClick = true,
-        moveOnKeyPress = true,
-        autoComplete = "list"
-      } = _b, props = __objRest(_b, [
-        "store",
-        "focusable",
-        "autoSelect",
-        "getAutoSelectId",
-        "setValueOnChange",
-        "showMinLength",
-        "showOnChange",
-        "showOnMouseDown",
-        "showOnClick",
-        "showOnKeyDown",
-        "showOnKeyPress",
-        "blurActiveItemOnClick",
-        "setValueOnClick",
-        "moveOnKeyPress",
-        "autoComplete"
-      ]);
-      const context = useComboboxProviderContext();
-      store2 = store2 || context;
-      invariant(
-        store2,
-        "Combobox must receive a `store` prop or be wrapped in a ComboboxProvider component."
-      );
-      const ref = (0, import_react17.useRef)(null);
-      const [valueUpdated, forceValueUpdate] = useForceUpdate2();
-      const canAutoSelectRef = (0, import_react17.useRef)(false);
-      const composingRef = (0, import_react17.useRef)(false);
-      const autoSelect = store2.useState(
-        (state) => state.virtualFocus && autoSelectProp
-      );
-      const inline = autoComplete === "inline" || autoComplete === "both";
-      const [canInline, setCanInline] = (0, import_react17.useState)(inline);
-      useUpdateLayoutEffect(() => {
-        if (!inline) return;
-        setCanInline(true);
-      }, [inline]);
-      const storeValue = store2.useState("value");
-      const prevSelectedValueRef = (0, import_react17.useRef)();
-      (0, import_react17.useEffect)(() => {
-        return sync2(store2, ["selectedValue", "activeId"], (_, prev) => {
-          prevSelectedValueRef.current = prev.selectedValue;
-        });
-      }, []);
-      const inlineActiveValue = store2.useState((state) => {
-        var _a2;
-        if (!inline) return;
-        if (!canInline) return;
-        if (state.activeValue && Array.isArray(state.selectedValue)) {
-          if (state.selectedValue.includes(state.activeValue)) return;
-          if ((_a2 = prevSelectedValueRef.current) == null ? void 0 : _a2.includes(state.activeValue)) return;
-        }
-        return state.activeValue;
-      });
-      const items = store2.useState("renderedItems");
-      const open = store2.useState("open");
-      const contentElement = store2.useState("contentElement");
-      const value = (0, import_react17.useMemo)(() => {
-        if (!inline) return storeValue;
-        if (!canInline) return storeValue;
-        const firstItemAutoSelected = isFirstItemAutoSelected(
-          items,
-          inlineActiveValue,
-          autoSelect
-        );
-        if (firstItemAutoSelected) {
-          if (hasCompletionString(storeValue, inlineActiveValue)) {
-            const slice = (inlineActiveValue == null ? void 0 : inlineActiveValue.slice(storeValue.length)) || "";
-            return storeValue + slice;
-          }
-          return storeValue;
-        }
-        return inlineActiveValue || storeValue;
-      }, [inline, canInline, items, inlineActiveValue, autoSelect, storeValue]);
-      (0, import_react17.useEffect)(() => {
-        const element = ref.current;
-        if (!element) return;
-        const onCompositeItemMove = () => setCanInline(true);
-        element.addEventListener("combobox-item-move", onCompositeItemMove);
-        return () => {
-          element.removeEventListener("combobox-item-move", onCompositeItemMove);
-        };
-      }, []);
-      (0, import_react17.useEffect)(() => {
-        if (!inline) return;
-        if (!canInline) return;
-        if (!inlineActiveValue) return;
-        const firstItemAutoSelected = isFirstItemAutoSelected(
-          items,
-          inlineActiveValue,
-          autoSelect
-        );
-        if (!firstItemAutoSelected) return;
-        if (!hasCompletionString(storeValue, inlineActiveValue)) return;
-        let cleanup = noop3;
-        queueMicrotask(() => {
-          const element = ref.current;
-          if (!element) return;
-          const { start: prevStart, end: prevEnd } = getTextboxSelection(element);
-          const nextStart = storeValue.length;
-          const nextEnd = inlineActiveValue.length;
-          setSelectionRange(element, nextStart, nextEnd);
-          cleanup = () => {
-            if (!hasFocus(element)) return;
-            const { start: start2, end } = getTextboxSelection(element);
-            if (start2 !== nextStart) return;
-            if (end !== nextEnd) return;
-            setSelectionRange(element, prevStart, prevEnd);
-          };
-        });
-        return () => cleanup();
-      }, [
-        valueUpdated,
-        inline,
-        canInline,
-        inlineActiveValue,
-        items,
-        autoSelect,
-        storeValue
-      ]);
-      const scrollingElementRef = (0, import_react17.useRef)(null);
-      const getAutoSelectIdProp = useEvent(getAutoSelectId);
-      const autoSelectIdRef = (0, import_react17.useRef)(null);
-      (0, import_react17.useEffect)(() => {
-        if (!open) return;
-        if (!contentElement) return;
-        const scrollingElement = getScrollingElement(contentElement);
-        if (!scrollingElement) return;
-        scrollingElementRef.current = scrollingElement;
-        const onUserScroll = () => {
-          canAutoSelectRef.current = false;
-        };
-        const onScroll = () => {
-          if (!store2) return;
-          if (!canAutoSelectRef.current) return;
-          const { activeId } = store2.getState();
-          if (activeId === null) return;
-          if (activeId === autoSelectIdRef.current) return;
-          canAutoSelectRef.current = false;
-        };
-        const options = { passive: true, capture: true };
-        scrollingElement.addEventListener("wheel", onUserScroll, options);
-        scrollingElement.addEventListener("touchmove", onUserScroll, options);
-        scrollingElement.addEventListener("scroll", onScroll, options);
-        return () => {
-          scrollingElement.removeEventListener("wheel", onUserScroll, true);
-          scrollingElement.removeEventListener("touchmove", onUserScroll, true);
-          scrollingElement.removeEventListener("scroll", onScroll, true);
-        };
-      }, [open, contentElement, store2]);
-      useSafeLayoutEffect(() => {
-        if (!storeValue) return;
-        if (composingRef.current) return;
-        canAutoSelectRef.current = true;
-      }, [storeValue]);
-      useSafeLayoutEffect(() => {
-        if (autoSelect !== "always" && open) return;
-        canAutoSelectRef.current = open;
-      }, [autoSelect, open]);
-      const resetValueOnSelect = store2.useState("resetValueOnSelect");
-      useUpdateEffect(() => {
-        var _a2, _b2;
-        const canAutoSelect = canAutoSelectRef.current;
-        if (!store2) return;
-        if (!open) return;
-        if (!canAutoSelect && !resetValueOnSelect) return;
-        const { baseElement, contentElement: contentElement2, activeId } = store2.getState();
-        if (baseElement && !hasFocus(baseElement)) return;
-        if (contentElement2 == null ? void 0 : contentElement2.hasAttribute("data-placing")) {
-          const observer = new MutationObserver(forceValueUpdate);
-          observer.observe(contentElement2, { attributeFilter: ["data-placing"] });
-          return () => observer.disconnect();
-        }
-        if (autoSelect && canAutoSelect) {
-          const userAutoSelectId = getAutoSelectIdProp(items);
-          const autoSelectId = userAutoSelectId !== void 0 ? userAutoSelectId : (_a2 = getDefaultAutoSelectId(items)) != null ? _a2 : store2.first();
-          autoSelectIdRef.current = autoSelectId;
-          store2.move(autoSelectId != null ? autoSelectId : null);
-        } else {
-          const element = (_b2 = store2.item(activeId || store2.first())) == null ? void 0 : _b2.element;
-          if (element && "scrollIntoView" in element) {
-            element.scrollIntoView({ block: "nearest", inline: "nearest" });
-          }
-        }
-        return;
-      }, [
-        store2,
-        open,
-        valueUpdated,
-        storeValue,
-        autoSelect,
-        resetValueOnSelect,
-        getAutoSelectIdProp,
-        items
-      ]);
-      (0, import_react17.useEffect)(() => {
-        if (!inline) return;
-        const combobox = ref.current;
-        if (!combobox) return;
-        const elements2 = [combobox, contentElement].filter(
-          (value2) => !!value2
-        );
-        const onBlur2 = (event) => {
-          if (elements2.every((el) => isFocusEventOutside(event, el))) {
-            store2 == null ? void 0 : store2.setValue(value);
-          }
-        };
-        for (const element of elements2) {
-          element.addEventListener("focusout", onBlur2);
-        }
-        return () => {
-          for (const element of elements2) {
-            element.removeEventListener("focusout", onBlur2);
-          }
-        };
-      }, [inline, contentElement, store2, value]);
-      const canShow = (event) => {
-        const currentTarget = event.currentTarget;
-        return currentTarget.value.length >= showMinLength;
-      };
-      const onChangeProp = props.onChange;
-      const showOnChangeProp = useBooleanEvent(showOnChange != null ? showOnChange : canShow);
-      const setValueOnChangeProp = useBooleanEvent(
-        // If the combobox is combined with tags, the value will be set by the tag
-        // input component.
-        setValueOnChange != null ? setValueOnChange : !store2.tag
-      );
-      const onChange = useEvent((event) => {
-        onChangeProp == null ? void 0 : onChangeProp(event);
-        if (event.defaultPrevented) return;
-        if (!store2) return;
-        const currentTarget = event.currentTarget;
-        const { value: value2, selectionStart, selectionEnd } = currentTarget;
-        const nativeEvent = event.nativeEvent;
-        canAutoSelectRef.current = true;
-        if (isInputEvent(nativeEvent)) {
-          if (nativeEvent.isComposing) {
-            canAutoSelectRef.current = false;
-            composingRef.current = true;
-          }
-          if (inline) {
-            const textInserted = nativeEvent.inputType === "insertText" || nativeEvent.inputType === "insertCompositionText";
-            const caretAtEnd = selectionStart === value2.length;
-            setCanInline(textInserted && caretAtEnd);
-          }
-        }
-        if (setValueOnChangeProp(event)) {
-          const isSameValue = value2 === store2.getState().value;
-          store2.setValue(value2);
-          queueMicrotask(() => {
-            setSelectionRange(currentTarget, selectionStart, selectionEnd);
-          });
-          if (inline && autoSelect && isSameValue) {
-            forceValueUpdate();
-          }
-        }
-        if (showOnChangeProp(event)) {
-          store2.show();
-        }
-        if (!autoSelect || !canAutoSelectRef.current) {
-          store2.setActiveId(null);
-        }
-      });
-      const onCompositionEndProp = props.onCompositionEnd;
-      const onCompositionEnd = useEvent((event) => {
-        canAutoSelectRef.current = true;
-        composingRef.current = false;
-        onCompositionEndProp == null ? void 0 : onCompositionEndProp(event);
-        if (event.defaultPrevented) return;
-        if (!autoSelect) return;
-        forceValueUpdate();
-      });
-      const onMouseDownProp = props.onMouseDown;
-      const blurActiveItemOnClickProp = useBooleanEvent(
-        blurActiveItemOnClick != null ? blurActiveItemOnClick : () => !!(store2 == null ? void 0 : store2.getState().includesBaseElement)
-      );
-      const setValueOnClickProp = useBooleanEvent(setValueOnClick);
-      const showOnClickProp = useBooleanEvent(showOnClick != null ? showOnClick : canShow);
-      const onMouseDown = useEvent((event) => {
-        onMouseDownProp == null ? void 0 : onMouseDownProp(event);
-        if (event.defaultPrevented) return;
-        if (event.button) return;
-        if (event.ctrlKey) return;
-        if (!store2) return;
-        if (blurActiveItemOnClickProp(event)) {
-          store2.setActiveId(null);
-        }
-        if (setValueOnClickProp(event)) {
-          store2.setValue(value);
-        }
-        if (showOnClickProp(event)) {
-          queueBeforeEvent(event.currentTarget, "mouseup", store2.show);
-        }
-      });
-      const onKeyDownProp = props.onKeyDown;
-      const showOnKeyPressProp = useBooleanEvent(showOnKeyPress != null ? showOnKeyPress : canShow);
-      const onKeyDown = useEvent((event) => {
-        onKeyDownProp == null ? void 0 : onKeyDownProp(event);
-        if (!event.repeat) {
-          canAutoSelectRef.current = false;
-        }
-        if (event.defaultPrevented) return;
-        if (event.ctrlKey) return;
-        if (event.altKey) return;
-        if (event.shiftKey) return;
-        if (event.metaKey) return;
-        if (!store2) return;
-        const { open: open2 } = store2.getState();
-        if (open2) return;
-        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-          if (showOnKeyPressProp(event)) {
-            event.preventDefault();
-            store2.show();
-          }
-        }
-      });
-      const onBlurProp = props.onBlur;
-      const onBlur = useEvent((event) => {
-        canAutoSelectRef.current = false;
-        onBlurProp == null ? void 0 : onBlurProp(event);
-        if (event.defaultPrevented) return;
-      });
-      const id = useId5(props.id);
-      const ariaAutoComplete = isAriaAutoCompleteValue(autoComplete) ? autoComplete : void 0;
-      const isActiveItem = store2.useState((state) => state.activeId === null);
-      props = __spreadProps(__spreadValues({
-        id,
-        role: "combobox",
-        "aria-autocomplete": ariaAutoComplete,
-        "aria-haspopup": getPopupRole(contentElement, "listbox"),
-        "aria-expanded": open,
-        "aria-controls": contentElement == null ? void 0 : contentElement.id,
-        "data-active-item": isActiveItem || void 0,
-        value
-      }, props), {
-        ref: useMergeRefs(ref, props.ref),
-        onChange,
-        onCompositionEnd,
-        onMouseDown,
-        onKeyDown,
-        onBlur
-      });
-      props = useComposite(__spreadProps(__spreadValues({
-        store: store2,
-        focusable
-      }, props), {
-        // Enable inline autocomplete when the user moves from the combobox input
-        // to an item.
-        moveOnKeyPress: (event) => {
-          if (isFalsyBooleanCallback(moveOnKeyPress, event)) return false;
-          if (inline) setCanInline(true);
-          return true;
-        }
-      }));
-      props = usePopoverAnchor(__spreadValues({ store: store2 }, props));
-      return __spreadValues({ autoComplete: "off" }, props);
-    }
-  );
-  var Combobox = forwardRef22(function Combobox2(props) {
-    const htmlProps = useCombobox(props);
-    return createElement5(TagName4, htmlProps);
-  });
-
-  // node_modules/@ariakit/react-core/esm/combobox/combobox-provider.js
-  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
-  function ComboboxProvider(props = {}) {
-    const store2 = useComboboxStore(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(ComboboxContextProvider, { value: store2, children: props.children });
-  }
-
-  // node_modules/@ariakit/react-core/esm/__chunks/KUU7WJ55.js
-  var import_react18 = __toESM(require_react(), 1);
-  var TagName5 = "button";
+  // node_modules/@ariakit/react-core/esm/__chunks/PZ3OL7I2.js
+  var import_react14 = __toESM(require_react(), 1);
+  var TagName3 = "button";
   function isNativeClick(event) {
     if (!event.isTrusted) return false;
     const element = event.currentTarget;
@@ -31432,16 +29589,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var symbol = /* @__PURE__ */ Symbol("command");
   var useCommand = createHook(
-    function useCommand2(_a) {
-      var _b = _a, { clickOnEnter = true, clickOnSpace = true } = _b, props = __objRest(_b, ["clickOnEnter", "clickOnSpace"]);
-      const ref = (0, import_react18.useRef)(null);
-      const [isNativeButton, setIsNativeButton] = (0, import_react18.useState)(false);
-      (0, import_react18.useEffect)(() => {
+    function useCommand2({ clickOnEnter = true, clickOnSpace = true, ...props }) {
+      const ref = (0, import_react14.useRef)(null);
+      const [isNativeButton, setIsNativeButton] = (0, import_react14.useState)(false);
+      (0, import_react14.useEffect)(() => {
         if (!ref.current) return;
         setIsNativeButton(isButton(ref.current));
       }, []);
-      const [active, setActive] = (0, import_react18.useState)(false);
-      const activeRef = (0, import_react18.useRef)(false);
+      const [active, setActive] = (0, import_react14.useState)(false);
+      const activeRef = (0, import_react14.useRef)(false);
       const disabled = disabledFromProps(props);
       const [isDuplicate, metadataProps] = useMetadataProps(props, symbol, true);
       const onKeyDownProp = props.onKeyDown;
@@ -31467,7 +29623,7 @@ If there's a particular need for this, please submit a feature request at https:
           if (isEnter) {
             if (!nativeClick) {
               event.preventDefault();
-              const _a2 = event, { view } = _a2, eventInit = __objRest(_a2, ["view"]);
+              const { view, ...eventInit } = event;
               const click = () => fireClickEvent(element, eventInit);
               if (isFirefox()) {
                 queueBeforeEvent(element, "keyup", click);
@@ -31498,258 +29654,346 @@ If there's a particular need for this, please submit a feature request at https:
             event.preventDefault();
             setActive(false);
             const element = event.currentTarget;
-            const _a2 = event, { view } = _a2, eventInit = __objRest(_a2, ["view"]);
+            const { view, ...eventInit } = event;
             queueMicrotask(() => fireClickEvent(element, eventInit));
           }
         }
       });
-      props = __spreadProps(__spreadValues(__spreadValues({
+      props = {
         "data-active": active || void 0,
-        type: isNativeButton ? "button" : void 0
-      }, metadataProps), props), {
+        type: isNativeButton ? "button" : void 0,
+        ...metadataProps,
+        ...props,
         ref: useMergeRefs(ref, props.ref),
         onKeyDown,
         onKeyUp
-      });
+      };
       props = useFocusable(props);
       return props;
     }
   );
   var Command = forwardRef22(function Command2(props) {
     const htmlProps = useCommand(props);
-    return createElement5(TagName5, htmlProps);
+    return createElement5(TagName3, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/combobox/combobox-item-value.js
-  var import_react19 = __toESM(require_react(), 1);
-  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
-  var TagName6 = "span";
-  function normalizeValue(value) {
-    return normalizeString2(value).toLowerCase();
+  // node_modules/@ariakit/core/esm/__chunks/SXKM4CGU.js
+  function getInternal(store2, key) {
+    const internals = store2.__unstableInternals;
+    invariant(internals, "Invalid store");
+    return internals[key];
   }
-  function getOffsets(string, values) {
-    const offsets = [];
-    for (const value of values) {
-      let pos = 0;
-      const length = value.length;
-      while (string.indexOf(value, pos) !== -1) {
-        const index = string.indexOf(value, pos);
-        if (index !== -1) {
-          offsets.push([index, length]);
+  function createStore(initialState, ...stores) {
+    let state = initialState;
+    let prevStateBatch = state;
+    let lastUpdate = /* @__PURE__ */ Symbol();
+    let destroy = noop3;
+    const instances = /* @__PURE__ */ new Set();
+    const updatedKeys = /* @__PURE__ */ new Set();
+    const setups = /* @__PURE__ */ new Set();
+    const listeners = /* @__PURE__ */ new Set();
+    const batchListeners = /* @__PURE__ */ new Set();
+    const disposables = /* @__PURE__ */ new WeakMap();
+    const listenerKeys = /* @__PURE__ */ new WeakMap();
+    const storeSetup = (callback) => {
+      setups.add(callback);
+      return () => setups.delete(callback);
+    };
+    const storeInit = () => {
+      const initialized = instances.size;
+      const instance = /* @__PURE__ */ Symbol();
+      instances.add(instance);
+      const maybeDestroy = () => {
+        instances.delete(instance);
+        if (instances.size) return;
+        destroy();
+      };
+      if (initialized) return maybeDestroy;
+      const desyncs = getKeys(state).map(
+        (key) => chain(
+          ...stores.map((store2) => {
+            var _a;
+            const storeState = (_a = store2 == null ? void 0 : store2.getState) == null ? void 0 : _a.call(store2);
+            if (!storeState) return;
+            if (!hasOwnProperty(storeState, key)) return;
+            return sync2(store2, [key], (state2) => {
+              setState(
+                key,
+                state2[key],
+                // @ts-expect-error - Not public API. This is just to prevent
+                // infinite loops.
+                true
+              );
+            });
+          })
+        )
+      );
+      const teardowns = [];
+      for (const setup2 of setups) {
+        teardowns.push(setup2());
+      }
+      const cleanups = stores.map(init);
+      destroy = chain(...desyncs, ...teardowns, ...cleanups);
+      return maybeDestroy;
+    };
+    const sub = (keys, listener, set = listeners) => {
+      set.add(listener);
+      listenerKeys.set(listener, keys);
+      return () => {
+        var _a;
+        (_a = disposables.get(listener)) == null ? void 0 : _a();
+        disposables.delete(listener);
+        listenerKeys.delete(listener);
+        set.delete(listener);
+      };
+    };
+    const storeSubscribe = (keys, listener) => sub(keys, listener);
+    const storeSync = (keys, listener) => {
+      disposables.set(listener, listener(state, state));
+      return sub(keys, listener);
+    };
+    const storeBatch = (keys, listener) => {
+      disposables.set(listener, listener(state, prevStateBatch));
+      return sub(keys, listener, batchListeners);
+    };
+    const storePick = (keys) => createStore(pick(state, keys), finalStore);
+    const storeOmit = (keys) => createStore(omit(state, keys), finalStore);
+    const getState = () => state;
+    const setState = (key, value, fromStores = false) => {
+      var _a;
+      if (!hasOwnProperty(state, key)) return;
+      const nextValue = applyState(value, state[key]);
+      if (nextValue === state[key]) return;
+      if (!fromStores) {
+        for (const store2 of stores) {
+          (_a = store2 == null ? void 0 : store2.setState) == null ? void 0 : _a.call(store2, key, nextValue);
         }
-        pos = index + 1;
+      }
+      const prevState = state;
+      state = { ...state, [key]: nextValue };
+      const thisUpdate = /* @__PURE__ */ Symbol();
+      lastUpdate = thisUpdate;
+      updatedKeys.add(key);
+      const run = (listener, prev, uKeys) => {
+        var _a2;
+        const keys = listenerKeys.get(listener);
+        const updated = (k2) => uKeys ? uKeys.has(k2) : k2 === key;
+        if (!keys || keys.some(updated)) {
+          (_a2 = disposables.get(listener)) == null ? void 0 : _a2();
+          disposables.set(listener, listener(state, prev));
+        }
+      };
+      for (const listener of listeners) {
+        run(listener, prevState);
+      }
+      queueMicrotask(() => {
+        if (lastUpdate !== thisUpdate) return;
+        const snapshot = state;
+        for (const listener of batchListeners) {
+          run(listener, prevStateBatch, updatedKeys);
+        }
+        prevStateBatch = snapshot;
+        updatedKeys.clear();
+      });
+    };
+    const finalStore = {
+      getState,
+      setState,
+      __unstableInternals: {
+        setup: storeSetup,
+        init: storeInit,
+        subscribe: storeSubscribe,
+        sync: storeSync,
+        batch: storeBatch,
+        pick: storePick,
+        omit: storeOmit
+      }
+    };
+    return finalStore;
+  }
+  function setup(store2, ...args) {
+    if (!store2) return;
+    return getInternal(store2, "setup")(...args);
+  }
+  function init(store2, ...args) {
+    if (!store2) return;
+    return getInternal(store2, "init")(...args);
+  }
+  function subscribe(store2, ...args) {
+    if (!store2) return;
+    return getInternal(store2, "subscribe")(...args);
+  }
+  function sync2(store2, ...args) {
+    if (!store2) return;
+    return getInternal(store2, "sync")(...args);
+  }
+  function batch(store2, ...args) {
+    if (!store2) return;
+    return getInternal(store2, "batch")(...args);
+  }
+  function omit2(store2, ...args) {
+    if (!store2) return;
+    return getInternal(store2, "omit")(...args);
+  }
+  function pick2(store2, ...args) {
+    if (!store2) return;
+    return getInternal(store2, "pick")(...args);
+  }
+  function mergeStore(...stores) {
+    var _a;
+    const initialState = {};
+    for (const store22 of stores) {
+      const nextState = (_a = store22 == null ? void 0 : store22.getState) == null ? void 0 : _a.call(store22);
+      if (nextState) {
+        Object.assign(initialState, nextState);
       }
     }
-    return offsets;
+    const store2 = createStore(initialState, ...stores);
+    return Object.assign({}, ...stores, store2);
   }
-  function filterOverlappingOffsets(offsets) {
-    return offsets.filter(([offset, length], i2, arr) => {
-      return !arr.some(
-        ([o3, l2], j2) => j2 !== i2 && o3 <= offset && o3 + l2 >= offset + length
-      );
+  function throwOnConflictingProps(props, store2) {
+    if (false) return;
+    if (!store2) return;
+    const defaultKeys = Object.entries(props).filter(([key, value]) => key.startsWith("default") && value !== void 0).map(([key]) => {
+      var _a;
+      const stateKey = key.replace("default", "");
+      return `${((_a = stateKey[0]) == null ? void 0 : _a.toLowerCase()) || ""}${stateKey.slice(1)}`;
     });
-  }
-  function sortOffsets(offsets) {
-    return offsets.sort(([a2], [b2]) => a2 - b2);
-  }
-  function splitValue(itemValue, userValue) {
-    if (!itemValue) return itemValue;
-    if (!userValue) return itemValue;
-    const userValues = toArray2(userValue).filter(Boolean).map(normalizeValue);
-    const parts = [];
-    const span = (value, autocomplete = false) => /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
-      "span",
-      {
-        "data-autocomplete-value": autocomplete ? "" : void 0,
-        "data-user-value": autocomplete ? void 0 : "",
-        children: value
-      },
-      parts.length
+    if (!defaultKeys.length) return;
+    const storeState = store2.getState();
+    const conflictingProps = defaultKeys.filter(
+      (key) => hasOwnProperty(storeState, key)
     );
-    const offsets = sortOffsets(
-      filterOverlappingOffsets(
-        // Convert userValues into a set to avoid duplicates
-        getOffsets(normalizeValue(itemValue), new Set(userValues))
-      )
-    );
-    if (!offsets.length) {
-      parts.push(span(itemValue, true));
-      return parts;
-    }
-    const [firstOffset] = offsets[0];
-    const values = [
-      itemValue.slice(0, firstOffset),
-      ...offsets.flatMap(([offset, length], i2) => {
-        var _a;
-        const value = itemValue.slice(offset, offset + length);
-        const nextOffset = (_a = offsets[i2 + 1]) == null ? void 0 : _a[0];
-        const nextValue = itemValue.slice(offset + length, nextOffset);
-        return [value, nextValue];
-      })
-    ];
-    values.forEach((value, i2) => {
-      if (!value) return;
-      parts.push(span(value, i2 % 2 === 0));
-    });
-    return parts;
-  }
-  var useComboboxItemValue = createHook(function useComboboxItemValue2(_a) {
-    var _b = _a, { store: store2, value, userValue } = _b, props = __objRest(_b, ["store", "value", "userValue"]);
-    const context = useComboboxScopedContext();
-    store2 = store2 || context;
-    const itemContext = (0, import_react19.useContext)(ComboboxItemValueContext);
-    const itemValue = value != null ? value : itemContext;
-    const inputValue = useStoreState(store2, (state) => userValue != null ? userValue : state == null ? void 0 : state.value);
-    const children = (0, import_react19.useMemo)(() => {
-      if (!itemValue) return;
-      if (!inputValue) return itemValue;
-      return splitValue(itemValue, inputValue);
-    }, [itemValue, inputValue]);
-    props = __spreadValues({
-      children
-    }, props);
-    return removeUndefinedValues(props);
-  });
-  var ComboboxItemValue = forwardRef22(function ComboboxItemValue2(props) {
-    const htmlProps = useComboboxItemValue(props);
-    return createElement5(TagName6, htmlProps);
-  });
+    if (!conflictingProps.length) return;
+    throw new Error(
+      `Passing a store prop in conjunction with a default state is not supported.
 
-  // node_modules/@ariakit/react-core/esm/__chunks/UQQRIHDV.js
-  var import_react20 = __toESM(require_react(), 1);
-  var TagName7 = "div";
-  function getMouseDestination(event) {
-    const relatedTarget = event.relatedTarget;
-    if ((relatedTarget == null ? void 0 : relatedTarget.nodeType) === Node.ELEMENT_NODE) {
-      return relatedTarget;
-    }
-    return null;
+const store = useSelectStore();
+<SelectProvider store={store} defaultValue="Apple" />
+                ^             ^
+
+Instead, pass the default state to the topmost store:
+
+const store = useSelectStore({ defaultValue: "Apple" });
+<SelectProvider store={store} />
+
+See https://github.com/ariakit/ariakit/pull/2745 for more details.
+
+If there's a particular need for this, please submit a feature request at https://github.com/ariakit/ariakit
+`
+    );
   }
-  function hoveringInside(event) {
-    const nextElement = getMouseDestination(event);
-    if (!nextElement) return false;
-    return contains(event.currentTarget, nextElement);
+
+  // node_modules/@ariakit/react-core/esm/__chunks/Q5W46E73.js
+  var React9 = __toESM(require_react(), 1);
+  var import_shim = __toESM(require_shim(), 1);
+  var { useSyncExternalStore } = import_shim.default;
+  var noopSubscribe = () => () => {
+  };
+  function useStoreState(store2, keyOrSelector = identity) {
+    const storeSubscribe = React9.useCallback(
+      (callback) => {
+        if (!store2) return noopSubscribe();
+        return subscribe(store2, null, callback);
+      },
+      [store2]
+    );
+    const getSnapshot = () => {
+      const key = typeof keyOrSelector === "string" ? keyOrSelector : null;
+      const selector2 = typeof keyOrSelector === "function" ? keyOrSelector : null;
+      const state = store2 == null ? void 0 : store2.getState();
+      if (selector2) return selector2(state);
+      if (!state) return;
+      if (!key) return;
+      if (!hasOwnProperty(state, key)) return;
+      return state[key];
+    };
+    return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
   }
-  var symbol2 = /* @__PURE__ */ Symbol("composite-hover");
-  function movingToAnotherItem(event) {
-    let dest = getMouseDestination(event);
-    if (!dest) return false;
-    do {
-      if (hasOwnProperty(dest, symbol2) && dest[symbol2]) return true;
-      dest = dest.parentElement;
-    } while (dest);
-    return false;
-  }
-  var useCompositeHover = createHook(
-    function useCompositeHover2(_a) {
-      var _b = _a, {
-        store: store2,
-        focusOnHover = true,
-        blurOnHoverEnd = !!focusOnHover
-      } = _b, props = __objRest(_b, [
-        "store",
-        "focusOnHover",
-        "blurOnHoverEnd"
-      ]);
-      const context = useCompositeContext();
-      store2 = store2 || context;
-      invariant(
-        store2,
-        "CompositeHover must be wrapped in a Composite component."
-      );
-      const isMouseMoving = useIsMouseMoving();
-      const onMouseMoveProp = props.onMouseMove;
-      const focusOnHoverProp = useBooleanEvent(focusOnHover);
-      const onMouseMove = useEvent((event) => {
-        onMouseMoveProp == null ? void 0 : onMouseMoveProp(event);
-        if (event.defaultPrevented) return;
-        if (!isMouseMoving()) return;
-        if (!focusOnHoverProp(event)) return;
-        if (!hasFocusWithin(event.currentTarget)) {
-          const baseElement = store2 == null ? void 0 : store2.getState().baseElement;
-          if (baseElement && !hasFocus(baseElement)) {
-            baseElement.focus();
+  function useStoreStateObject(store2, object) {
+    const objRef = React9.useRef(
+      {}
+    );
+    const storeSubscribe = React9.useCallback(
+      (callback) => {
+        if (!store2) return noopSubscribe();
+        return subscribe(store2, null, callback);
+      },
+      [store2]
+    );
+    const getSnapshot = () => {
+      const state = store2 == null ? void 0 : store2.getState();
+      let updated = false;
+      const obj = objRef.current;
+      for (const prop in object) {
+        const keyOrSelector = object[prop];
+        if (typeof keyOrSelector === "function") {
+          const value = keyOrSelector(state);
+          if (value !== obj[prop]) {
+            obj[prop] = value;
+            updated = true;
           }
         }
-        store2 == null ? void 0 : store2.setActiveId(event.currentTarget.id);
+        if (typeof keyOrSelector === "string") {
+          if (!state) continue;
+          if (!hasOwnProperty(state, keyOrSelector)) continue;
+          const value = state[keyOrSelector];
+          if (value !== obj[prop]) {
+            obj[prop] = value;
+            updated = true;
+          }
+        }
+      }
+      if (updated) {
+        objRef.current = { ...obj };
+      }
+      return objRef.current;
+    };
+    return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
+  }
+  function useStoreProps(store2, props, key, setKey) {
+    const value = hasOwnProperty(props, key) ? props[key] : void 0;
+    const setValue = setKey ? props[setKey] : void 0;
+    const propsRef = useLiveRef({ value, setValue });
+    useSafeLayoutEffect(() => {
+      return sync2(store2, [key], (state, prev) => {
+        const { value: value2, setValue: setValue2 } = propsRef.current;
+        if (!setValue2) return;
+        if (state[key] === prev[key]) return;
+        if (state[key] === value2) return;
+        setValue2(state[key]);
       });
-      const onMouseLeaveProp = props.onMouseLeave;
-      const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
-      const onMouseLeave = useEvent((event) => {
-        var _a2;
-        onMouseLeaveProp == null ? void 0 : onMouseLeaveProp(event);
-        if (event.defaultPrevented) return;
-        if (!isMouseMoving()) return;
-        if (hoveringInside(event)) return;
-        if (movingToAnotherItem(event)) return;
-        if (!focusOnHoverProp(event)) return;
-        if (!blurOnHoverEndProp(event)) return;
-        store2 == null ? void 0 : store2.setActiveId(null);
-        (_a2 = store2 == null ? void 0 : store2.getState().baseElement) == null ? void 0 : _a2.focus();
+    }, [store2, key]);
+    useSafeLayoutEffect(() => {
+      if (value === void 0) return;
+      store2.setState(key, value);
+      return batch(store2, [key], () => {
+        if (value === void 0) return;
+        store2.setState(key, value);
       });
-      const ref = (0, import_react20.useCallback)((element) => {
-        if (!element) return;
-        element[symbol2] = true;
-      }, []);
-      props = __spreadProps(__spreadValues({}, props), {
-        ref: useMergeRefs(ref, props.ref),
-        onMouseMove,
-        onMouseLeave
-      });
-      return removeUndefinedValues(props);
-    }
-  );
-  var CompositeHover = memo22(
-    forwardRef22(function CompositeHover2(props) {
-      const htmlProps = useCompositeHover(props);
-      return createElement5(TagName7, htmlProps);
-    })
-  );
+    });
+  }
+  function useStore(createStore2, props) {
+    const [store2, setStore] = React9.useState(() => createStore2(props));
+    useSafeLayoutEffect(() => init(store2), [store2]);
+    const useState210 = React9.useCallback(
+      (keyOrSelector) => useStoreState(store2, keyOrSelector),
+      [store2]
+    );
+    const memoizedStore = React9.useMemo(
+      () => ({ ...store2, useState: useState210 }),
+      [store2, useState210]
+    );
+    const updateStore = useEvent(() => {
+      setStore((store22) => createStore2({ ...props, ...store22.getState() }));
+    });
+    return [memoizedStore, updateStore];
+  }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/RZ4GPYOB.js
-  var import_react21 = __toESM(require_react(), 1);
-  var TagName8 = "div";
-  var useCollectionItem = createHook(
-    function useCollectionItem2(_a) {
-      var _b = _a, {
-        store: store2,
-        shouldRegisterItem = true,
-        getItem = identity,
-        element
-      } = _b, props = __objRest(_b, [
-        "store",
-        "shouldRegisterItem",
-        "getItem",
-        // @ts-expect-error This prop may come from a collection renderer.
-        "element"
-      ]);
-      const context = useCollectionContext();
-      store2 = store2 || context;
-      const id = useId5(props.id);
-      const ref = (0, import_react21.useRef)(element);
-      (0, import_react21.useEffect)(() => {
-        const element2 = ref.current;
-        if (!id) return;
-        if (!element2) return;
-        if (!shouldRegisterItem) return;
-        const item = getItem({ id, element: element2 });
-        return store2 == null ? void 0 : store2.renderItem(item);
-      }, [id, shouldRegisterItem, getItem, store2]);
-      props = __spreadProps(__spreadValues({}, props), {
-        ref: useMergeRefs(ref, props.ref)
-      });
-      return removeUndefinedValues(props);
-    }
-  );
-  var CollectionItem = forwardRef22(function CollectionItem2(props) {
-    const htmlProps = useCollectionItem(props);
-    return createElement5(TagName8, htmlProps);
-  });
-
-  // node_modules/@ariakit/react-core/esm/__chunks/P2CTZE2T.js
-  var import_react22 = __toESM(require_react(), 1);
-  var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
-  var TagName9 = "button";
+  // node_modules/@ariakit/react-core/esm/__chunks/WZWDIE3S.js
+  var import_react15 = __toESM(require_react(), 1);
+  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+  var TagName4 = "button";
   function isEditableElement(element) {
     if (isTextbox(element)) return true;
     return element.tagName === "INPUT" && !isButton(element);
@@ -31806,31 +30050,22 @@ If there's a particular need for this, please submit a feature request at https:
     return isItem(store2, event.target);
   }
   var useCompositeItem = createHook(
-    function useCompositeItem2(_a) {
-      var _b = _a, {
-        store: store2,
-        rowId: rowIdProp,
-        preventScrollOnKeyDown = false,
-        moveOnKeyPress = true,
-        tabbable = false,
-        getItem: getItemProp,
-        "aria-setsize": ariaSetSizeProp,
-        "aria-posinset": ariaPosInSetProp
-      } = _b, props = __objRest(_b, [
-        "store",
-        "rowId",
-        "preventScrollOnKeyDown",
-        "moveOnKeyPress",
-        "tabbable",
-        "getItem",
-        "aria-setsize",
-        "aria-posinset"
-      ]);
+    function useCompositeItem2({
+      store: store2,
+      rowId: rowIdProp,
+      preventScrollOnKeyDown = false,
+      moveOnKeyPress = true,
+      tabbable = false,
+      getItem: getItemProp,
+      "aria-setsize": ariaSetSizeProp,
+      "aria-posinset": ariaPosInSetProp,
+      ...props
+    }) {
       const context = useCompositeContext();
       store2 = store2 || context;
       const id = useId5(props.id);
-      const ref = (0, import_react22.useRef)(null);
-      const row = (0, import_react22.useContext)(CompositeRowContext);
+      const ref = (0, import_react15.useRef)(null);
+      const row = (0, import_react15.useContext)(CompositeRowContext);
       const disabled = disabledFromProps(props);
       const trulyDisabled = disabled && !props.accessibleWhenDisabled;
       const {
@@ -31882,15 +30117,16 @@ If there's a particular need for this, please submit a feature request at https:
           return state.activeId === id;
         }
       });
-      const getItem = (0, import_react22.useCallback)(
+      const getItem = (0, import_react15.useCallback)(
         (item) => {
-          var _a2;
-          const nextItem = __spreadProps(__spreadValues({}, item), {
+          var _a;
+          const nextItem = {
+            ...item,
             id: id || item.id,
             rowId,
             disabled: !!trulyDisabled,
-            children: (_a2 = item.element) == null ? void 0 : _a2.textContent
-          });
+            children: (_a = item.element) == null ? void 0 : _a.textContent
+          };
           if (getItemProp) {
             return getItemProp(nextItem);
           }
@@ -31899,7 +30135,7 @@ If there's a particular need for this, please submit a feature request at https:
         [id, rowId, trulyDisabled, getItemProp]
       );
       const onFocusProp = props.onFocus;
-      const hasFocusedComposite = (0, import_react22.useRef)(false);
+      const hasFocusedComposite = (0, import_react15.useRef)(false);
       const onFocus = useEvent((event) => {
         onFocusProp == null ? void 0 : onFocusProp(event);
         if (event.defaultPrevented) return;
@@ -32009,244 +30245,365 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
       });
-      const providerValue = (0, import_react22.useMemo)(
+      const providerValue = (0, import_react15.useMemo)(
         () => ({ id, baseElement }),
         [id, baseElement]
       );
       props = useWrapElement(
         props,
-        (element) => /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(CompositeItemContext.Provider, { value: providerValue, children: element }),
+        (element) => /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(CompositeItemContext.Provider, { value: providerValue, children: element }),
         [providerValue]
       );
-      props = __spreadProps(__spreadValues({
+      props = {
         id,
-        "data-active-item": isActiveItem || void 0
-      }, props), {
+        "data-active-item": isActiveItem || void 0,
+        ...props,
         ref: useMergeRefs(ref, props.ref),
         tabIndex: isTabbable ? props.tabIndex : -1,
         onFocus,
         onBlurCapture,
         onKeyDown
-      });
+      };
       props = useCommand(props);
-      props = useCollectionItem(__spreadProps(__spreadValues({
-        store: store2
-      }, props), {
+      props = useCollectionItem({
+        store: store2,
+        ...props,
         getItem,
         shouldRegisterItem: id ? props.shouldRegisterItem : false
-      }));
-      return removeUndefinedValues(__spreadProps(__spreadValues({}, props), {
+      });
+      return removeUndefinedValues({
+        ...props,
         "aria-setsize": ariaSetSize,
         "aria-posinset": ariaPosInSet
-      }));
+      });
     }
   );
   var CompositeItem = memo22(
     forwardRef22(function CompositeItem2(props) {
       const htmlProps = useCompositeItem(props);
-      return createElement5(TagName9, htmlProps);
+      return createElement5(TagName4, htmlProps);
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/ZTDSJLD6.js
-  var import_react23 = __toESM(require_react(), 1);
-  var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
-  var TagName10 = "div";
-  function isSelected(storeValue, itemValue) {
-    if (itemValue == null) return;
-    if (storeValue == null) return false;
-    if (Array.isArray(storeValue)) {
-      return storeValue.includes(itemValue);
+  // node_modules/@ariakit/core/esm/__chunks/7PRQYBBV.js
+  function toArray2(arg) {
+    if (Array.isArray(arg)) {
+      return arg;
     }
-    return storeValue === itemValue;
+    return typeof arg !== "undefined" ? [arg] : [];
   }
-  function getItemRole(popupRole) {
-    var _a;
-    const itemRoleByPopupRole = {
-      menu: "menuitem",
-      listbox: "option",
-      tree: "treeitem"
-    };
-    const key = popupRole;
-    return (_a = itemRoleByPopupRole[key]) != null ? _a : "option";
+  function flatten2DArray(array) {
+    const flattened = [];
+    for (const row of array) {
+      flattened.push(...row);
+    }
+    return flattened;
   }
-  var useComboboxItem = createHook(
-    function useComboboxItem2(_a) {
-      var _b = _a, {
-        store: store2,
-        value,
-        hideOnClick,
-        setValueOnClick,
-        selectValueOnClick = true,
-        resetValueOnSelect,
-        focusOnHover = false,
-        moveOnKeyPress = true,
-        getItem: getItemProp
-      } = _b, props = __objRest(_b, [
-        "store",
-        "value",
-        "hideOnClick",
-        "setValueOnClick",
-        "selectValueOnClick",
-        "resetValueOnSelect",
-        "focusOnHover",
-        "moveOnKeyPress",
-        "getItem"
-      ]);
-      var _a2;
-      const context = useComboboxScopedContext();
+  function reverseArray(array) {
+    return array.slice().reverse();
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/ZMWF7ASR.js
+  var import_react16 = __toESM(require_react(), 1);
+  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
+  var TagName5 = "div";
+  function isGrid(items) {
+    return items.some((item) => !!item.rowId);
+  }
+  function isPrintableKey(event) {
+    const target = event.target;
+    if (target && !isTextField(target)) return false;
+    return event.key.length === 1 && !event.ctrlKey && !event.metaKey;
+  }
+  function isModifierKey(event) {
+    return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
+  }
+  function useKeyboardEventProxy(store2, onKeyboardEvent, previousElementRef) {
+    return useEvent((event) => {
+      var _a;
+      onKeyboardEvent == null ? void 0 : onKeyboardEvent(event);
+      if (event.defaultPrevented) return;
+      if (event.isPropagationStopped()) return;
+      if (!isSelfTarget(event)) return;
+      if (isModifierKey(event)) return;
+      if (isPrintableKey(event)) return;
+      const state = store2.getState();
+      const activeElement = (_a = getEnabledItem(store2, state.activeId)) == null ? void 0 : _a.element;
+      if (!activeElement) return;
+      const { view, ...eventInit } = event;
+      const previousElement = previousElementRef == null ? void 0 : previousElementRef.current;
+      if (activeElement !== previousElement) {
+        activeElement.focus();
+      }
+      if (!fireKeyboardEvent(activeElement, event.type, eventInit)) {
+        event.preventDefault();
+      }
+      if (event.currentTarget.contains(activeElement)) {
+        event.stopPropagation();
+      }
+    });
+  }
+  function findFirstEnabledItemInTheLastRow(items) {
+    return findFirstEnabledItem(
+      flatten2DArray(reverseArray(groupItemsByRows(items)))
+    );
+  }
+  function useScheduleFocus(store2) {
+    const [scheduled, setScheduled] = (0, import_react16.useState)(false);
+    const schedule2 = (0, import_react16.useCallback)(() => setScheduled(true), []);
+    const activeItem = store2.useState(
+      (state) => getEnabledItem(store2, state.activeId)
+    );
+    (0, import_react16.useEffect)(() => {
+      const activeElement = activeItem == null ? void 0 : activeItem.element;
+      if (!scheduled) return;
+      if (!activeElement) return;
+      setScheduled(false);
+      activeElement.focus({ preventScroll: true });
+    }, [activeItem, scheduled]);
+    return schedule2;
+  }
+  var useComposite = createHook(
+    function useComposite2({
+      store: store2,
+      composite = true,
+      focusOnMove = composite,
+      moveOnKeyPress = true,
+      ...props
+    }) {
+      const context = useCompositeProviderContext();
       store2 = store2 || context;
       invariant(
         store2,
-        "ComboboxItem must be wrapped in a ComboboxList or ComboboxPopover component."
+        "Composite must receive a `store` prop or be wrapped in a CompositeProvider component."
       );
-      const { resetValueOnSelectState, multiSelectable, selected } = useStoreStateObject(store2, {
-        resetValueOnSelectState: "resetValueOnSelect",
-        multiSelectable(state) {
-          return Array.isArray(state.selectedValue);
-        },
-        selected(state) {
-          return isSelected(state.selectedValue, value);
+      const ref = (0, import_react16.useRef)(null);
+      const previousElementRef = (0, import_react16.useRef)(null);
+      const scheduleFocus = useScheduleFocus(store2);
+      const moves = store2.useState("moves");
+      const [, setBaseElement] = useTransactionState(
+        composite ? store2.setBaseElement : null
+      );
+      (0, import_react16.useEffect)(() => {
+        var _a;
+        if (!store2) return;
+        if (!moves) return;
+        if (!composite) return;
+        if (!focusOnMove) return;
+        const { activeId: activeId2 } = store2.getState();
+        const itemElement = (_a = getEnabledItem(store2, activeId2)) == null ? void 0 : _a.element;
+        if (!itemElement) return;
+        focusIntoView(itemElement);
+      }, [store2, moves, composite, focusOnMove]);
+      useSafeLayoutEffect(() => {
+        if (!store2) return;
+        if (!moves) return;
+        if (!composite) return;
+        const { baseElement, activeId: activeId2 } = store2.getState();
+        const isSelfAcive = activeId2 === null;
+        if (!isSelfAcive) return;
+        if (!baseElement) return;
+        const previousElement = previousElementRef.current;
+        previousElementRef.current = null;
+        if (previousElement) {
+          fireBlurEvent(previousElement, { relatedTarget: baseElement });
+        }
+        if (!hasFocus(baseElement)) {
+          baseElement.focus();
+        }
+      }, [store2, moves, composite]);
+      const activeId = store2.useState("activeId");
+      const virtualFocus = store2.useState("virtualFocus");
+      useSafeLayoutEffect(() => {
+        var _a;
+        if (!store2) return;
+        if (!composite) return;
+        if (!virtualFocus) return;
+        const previousElement = previousElementRef.current;
+        previousElementRef.current = null;
+        if (!previousElement) return;
+        const activeElement = (_a = getEnabledItem(store2, activeId)) == null ? void 0 : _a.element;
+        const relatedTarget = activeElement || getActiveElement(previousElement);
+        if (relatedTarget === previousElement) return;
+        fireBlurEvent(previousElement, { relatedTarget });
+      }, [store2, activeId, virtualFocus, composite]);
+      const onKeyDownCapture = useKeyboardEventProxy(
+        store2,
+        props.onKeyDownCapture,
+        previousElementRef
+      );
+      const onKeyUpCapture = useKeyboardEventProxy(
+        store2,
+        props.onKeyUpCapture,
+        previousElementRef
+      );
+      const onFocusCaptureProp = props.onFocusCapture;
+      const onFocusCapture = useEvent((event) => {
+        onFocusCaptureProp == null ? void 0 : onFocusCaptureProp(event);
+        if (event.defaultPrevented) return;
+        if (!store2) return;
+        const { virtualFocus: virtualFocus2 } = store2.getState();
+        if (!virtualFocus2) return;
+        const previousActiveElement = event.relatedTarget;
+        const isSilentlyFocused = silentlyFocused(event.currentTarget);
+        if (isSelfTarget(event) && isSilentlyFocused) {
+          event.stopPropagation();
+          previousElementRef.current = previousActiveElement;
         }
       });
-      const getItem = (0, import_react23.useCallback)(
-        (item) => {
-          const nextItem = __spreadProps(__spreadValues({}, item), { value });
-          if (getItemProp) {
-            return getItemProp(nextItem);
-          }
-          return nextItem;
-        },
-        [value, getItemProp]
-      );
-      setValueOnClick = setValueOnClick != null ? setValueOnClick : !multiSelectable;
-      hideOnClick = hideOnClick != null ? hideOnClick : value != null && !multiSelectable;
-      const onClickProp = props.onClick;
-      const setValueOnClickProp = useBooleanEvent(setValueOnClick);
-      const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
-      const resetValueOnSelectProp = useBooleanEvent(
-        (_a2 = resetValueOnSelect != null ? resetValueOnSelect : resetValueOnSelectState) != null ? _a2 : multiSelectable
-      );
-      const hideOnClickProp = useBooleanEvent(hideOnClick);
-      const onClick = useEvent((event) => {
-        onClickProp == null ? void 0 : onClickProp(event);
+      const onFocusProp = props.onFocus;
+      const onFocus = useEvent((event) => {
+        onFocusProp == null ? void 0 : onFocusProp(event);
         if (event.defaultPrevented) return;
-        if (isDownloading(event)) return;
-        if (isOpeningInNewTab(event)) return;
-        if (value != null) {
-          if (selectValueOnClickProp(event)) {
-            if (resetValueOnSelectProp(event)) {
-              store2 == null ? void 0 : store2.resetValue();
-            }
-            store2 == null ? void 0 : store2.setSelectedValue((prevValue) => {
-              if (!Array.isArray(prevValue)) return value;
-              if (prevValue.includes(value)) {
-                return prevValue.filter((v2) => v2 !== value);
-              }
-              return [...prevValue, value];
-            });
+        if (!composite) return;
+        if (!store2) return;
+        const { relatedTarget } = event;
+        const { virtualFocus: virtualFocus2 } = store2.getState();
+        if (virtualFocus2) {
+          if (isSelfTarget(event) && !isItem(store2, relatedTarget)) {
+            queueMicrotask(scheduleFocus);
           }
-          if (setValueOnClickProp(event)) {
-            store2 == null ? void 0 : store2.setValue(value);
-          }
+        } else if (isSelfTarget(event)) {
+          store2.setActiveId(null);
         }
-        if (hideOnClickProp(event)) {
-          store2 == null ? void 0 : store2.hide();
+      });
+      const onBlurCaptureProp = props.onBlurCapture;
+      const onBlurCapture = useEvent((event) => {
+        var _a;
+        onBlurCaptureProp == null ? void 0 : onBlurCaptureProp(event);
+        if (event.defaultPrevented) return;
+        if (!store2) return;
+        const { virtualFocus: virtualFocus2, activeId: activeId2 } = store2.getState();
+        if (!virtualFocus2) return;
+        const activeElement = (_a = getEnabledItem(store2, activeId2)) == null ? void 0 : _a.element;
+        const nextActiveElement = event.relatedTarget;
+        const nextActiveElementIsItem = isItem(store2, nextActiveElement);
+        const previousElement = previousElementRef.current;
+        previousElementRef.current = null;
+        if (isSelfTarget(event) && nextActiveElementIsItem) {
+          if (nextActiveElement === activeElement) {
+            if (previousElement && previousElement !== nextActiveElement) {
+              fireBlurEvent(previousElement, event);
+            }
+          } else if (activeElement) {
+            fireBlurEvent(activeElement, event);
+          } else if (previousElement) {
+            fireBlurEvent(previousElement, event);
+          }
+          event.stopPropagation();
+        } else {
+          const targetIsItem = isItem(store2, event.target);
+          if (!targetIsItem && activeElement) {
+            fireBlurEvent(activeElement, event);
+          }
         }
       });
       const onKeyDownProp = props.onKeyDown;
+      const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
       const onKeyDown = useEvent((event) => {
+        var _a;
         onKeyDownProp == null ? void 0 : onKeyDownProp(event);
+        if (event.nativeEvent.isComposing) return;
         if (event.defaultPrevented) return;
-        const baseElement = store2 == null ? void 0 : store2.getState().baseElement;
-        if (!baseElement) return;
-        if (hasFocus(baseElement)) return;
-        const printable = event.key.length === 1;
-        if (printable || event.key === "Backspace" || event.key === "Delete") {
-          queueMicrotask(() => baseElement.focus());
-          if (isTextField(baseElement)) {
-            store2 == null ? void 0 : store2.setValue(baseElement.value);
+        if (!store2) return;
+        if (!isSelfTarget(event)) return;
+        const { orientation, renderedItems, activeId: activeId2 } = store2.getState();
+        const activeItem = getEnabledItem(store2, activeId2);
+        if ((_a = activeItem == null ? void 0 : activeItem.element) == null ? void 0 : _a.isConnected) return;
+        const isVertical = orientation !== "horizontal";
+        const isHorizontal = orientation !== "vertical";
+        const grid = isGrid(renderedItems);
+        const isHorizontalKey = event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End";
+        if (isHorizontalKey && isTextField(event.currentTarget)) return;
+        const up = () => {
+          if (grid) {
+            const item = findFirstEnabledItemInTheLastRow(renderedItems);
+            return item == null ? void 0 : item.id;
+          }
+          return store2 == null ? void 0 : store2.last();
+        };
+        const keyMap = {
+          ArrowUp: (grid || isVertical) && up,
+          ArrowRight: (grid || isHorizontal) && store2.first,
+          ArrowDown: (grid || isVertical) && store2.first,
+          ArrowLeft: (grid || isHorizontal) && store2.last,
+          Home: store2.first,
+          End: store2.last,
+          PageUp: store2.first,
+          PageDown: store2.last
+        };
+        const action = keyMap[event.key];
+        if (action) {
+          const id = action();
+          if (id !== void 0) {
+            if (!moveOnKeyPressProp(event)) return;
+            event.preventDefault();
+            store2.move(id);
           }
         }
       });
-      if (multiSelectable && selected != null) {
-        props = __spreadValues({
-          "aria-selected": selected
-        }, props);
-      }
       props = useWrapElement(
         props,
-        (element) => /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(ComboboxItemValueContext.Provider, { value, children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(ComboboxItemCheckedContext.Provider, { value: selected != null ? selected : false, children: element }) }),
-        [value, selected]
+        (element) => /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(CompositeContextProvider, { value: store2, children: element }),
+        [store2]
       );
-      const popupRole = (0, import_react23.useContext)(ComboboxListRoleContext);
-      props = __spreadProps(__spreadValues({
-        role: getItemRole(popupRole),
-        children: value
-      }, props), {
-        onClick,
-        onKeyDown
+      const activeDescendant = store2.useState((state) => {
+        var _a;
+        if (!store2) return;
+        if (!composite) return;
+        if (!state.virtualFocus) return;
+        return (_a = getEnabledItem(store2, state.activeId)) == null ? void 0 : _a.id;
       });
-      const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-      props = useCompositeItem(__spreadProps(__spreadValues({
-        store: store2
-      }, props), {
-        getItem,
-        // Dispatch a custom event on the combobox input when moving to an item
-        // with the keyboard so the Combobox component can enable inline
-        // autocompletion.
-        moveOnKeyPress: (event) => {
-          if (!moveOnKeyPressProp(event)) return false;
-          const moveEvent = new Event("combobox-item-move");
-          const baseElement = store2 == null ? void 0 : store2.getState().baseElement;
-          baseElement == null ? void 0 : baseElement.dispatchEvent(moveEvent);
-          return true;
-        }
-      }));
-      props = useCompositeHover(__spreadValues({ store: store2, focusOnHover }, props));
+      props = {
+        "aria-activedescendant": activeDescendant,
+        ...props,
+        ref: useMergeRefs(ref, setBaseElement, props.ref),
+        onKeyDownCapture,
+        onKeyUpCapture,
+        onFocusCapture,
+        onFocus,
+        onBlurCapture,
+        onKeyDown
+      };
+      const focusable = store2.useState(
+        (state) => composite && (state.virtualFocus || state.activeId === null)
+      );
+      props = useFocusable({ focusable, ...props });
       return props;
     }
   );
-  var ComboboxItem = memo22(
-    forwardRef22(function ComboboxItem2(props) {
-      const htmlProps = useComboboxItem(props);
-      return createElement5(TagName10, htmlProps);
-    })
-  );
+  var Composite6 = forwardRef22(function Composite22(props) {
+    const htmlProps = useComposite(props);
+    return createElement5(TagName5, htmlProps);
+  });
 
-  // node_modules/@ariakit/react-core/esm/combobox/combobox-label.js
-  var TagName11 = "label";
-  var useComboboxLabel = createHook(
-    function useComboboxLabel2(_a) {
-      var _b = _a, { store: store2 } = _b, props = __objRest(_b, ["store"]);
-      const context = useComboboxProviderContext();
-      store2 = store2 || context;
-      invariant(
-        store2,
-        "ComboboxLabel must receive a `store` prop or be wrapped in a ComboboxProvider component."
-      );
-      const comboboxId = store2.useState((state) => {
-        var _a2;
-        return (_a2 = state.baseElement) == null ? void 0 : _a2.id;
-      });
-      props = __spreadValues({
-        htmlFor: comboboxId
-      }, props);
-      return removeUndefinedValues(props);
-    }
-  );
-  var ComboboxLabel = memo22(
-    forwardRef22(function ComboboxLabel2(props) {
-      const htmlProps = useComboboxLabel(props);
-      return createElement5(TagName11, htmlProps);
-    })
-  );
+  // node_modules/@ariakit/react-core/esm/__chunks/LVDQFHCH.js
+  var ctx4 = createStoreContext();
+  var useDisclosureContext = ctx4.useContext;
+  var useDisclosureScopedContext = ctx4.useScopedContext;
+  var useDisclosureProviderContext = ctx4.useProviderContext;
+  var DisclosureContextProvider = ctx4.ContextProvider;
+  var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/VGCJ63VH.js
-  var import_react24 = __toESM(require_react(), 1);
+  // node_modules/@ariakit/react-core/esm/__chunks/A62MDFCW.js
+  var import_react17 = __toESM(require_react(), 1);
+  var ctx5 = createStoreContext(
+    [DisclosureContextProvider],
+    [DisclosureScopedContextProvider]
+  );
+  var useDialogContext = ctx5.useContext;
+  var useDialogScopedContext = ctx5.useScopedContext;
+  var useDialogProviderContext = ctx5.useProviderContext;
+  var DialogContextProvider = ctx5.ContextProvider;
+  var DialogScopedContextProvider = ctx5.ScopedContextProvider;
+  var DialogHeadingContext = (0, import_react17.createContext)(void 0);
+  var DialogDescriptionContext = (0, import_react17.createContext)(void 0);
+
+  // node_modules/@ariakit/react-core/esm/__chunks/6B3RXHKP.js
+  var import_react18 = __toESM(require_react(), 1);
   var import_react_dom2 = __toESM(require_react_dom(), 1);
-  var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
-  var TagName12 = "div";
+  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
+  var TagName6 = "div";
   function afterTimeout(timeoutMs, cb) {
     const timeoutId = setTimeout(cb, timeoutMs);
     return () => clearTimeout(timeoutId);
@@ -32268,17 +30625,16 @@ If there's a particular need for this, please submit a feature request at https:
   function isHidden(mounted, hidden, alwaysVisible) {
     return !alwaysVisible && hidden !== false && (!mounted || !!hidden);
   }
-  var useDisclosureContent = createHook(function useDisclosureContent2(_a) {
-    var _b = _a, { store: store2, alwaysVisible } = _b, props = __objRest(_b, ["store", "alwaysVisible"]);
+  var useDisclosureContent = createHook(function useDisclosureContent2({ store: store2, alwaysVisible, ...props }) {
     const context = useDisclosureProviderContext();
     store2 = store2 || context;
     invariant(
       store2,
       "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component."
     );
-    const ref = (0, import_react24.useRef)(null);
+    const ref = (0, import_react18.useRef)(null);
     const id = useId5(props.id);
-    const [transition, setTransition] = (0, import_react24.useState)(null);
+    const [transition, setTransition] = (0, import_react18.useState)(null);
     const open = store2.useState("open");
     const mounted = store2.useState("mounted");
     const animated2 = store2.useState("animated");
@@ -32360,39 +30716,37 @@ If there's a particular need for this, please submit a feature request at https:
     }, [store2, animated2, contentElement, otherElement, open, transition]);
     props = useWrapElement(
       props,
-      (element) => /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(DialogScopedContextProvider, { value: store2, children: element }),
+      (element) => /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(DialogScopedContextProvider, { value: store2, children: element }),
       [store2]
     );
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
     const styleProp = props.style;
-    const style = (0, import_react24.useMemo)(() => {
+    const style = (0, import_react18.useMemo)(() => {
       if (hidden) {
-        return __spreadProps(__spreadValues({}, styleProp), { display: "none" });
+        return { ...styleProp, display: "none" };
       }
       return styleProp;
     }, [hidden, styleProp]);
-    props = __spreadProps(__spreadValues({
+    props = {
       id,
       "data-open": open || void 0,
       "data-enter": transition === "enter" || void 0,
       "data-leave": transition === "leave" || void 0,
-      hidden
-    }, props), {
+      hidden,
+      ...props,
       ref: useMergeRefs(id ? store2.setContentElement : null, ref, props.ref),
       style
-    });
+    };
     return removeUndefinedValues(props);
   });
   var DisclosureContentImpl = forwardRef22(function DisclosureContentImpl2(props) {
     const htmlProps = useDisclosureContent(props);
-    return createElement5(TagName12, htmlProps);
+    return createElement5(TagName6, htmlProps);
   });
-  var DisclosureContent = forwardRef22(function DisclosureContent2(_a) {
-    var _b = _a, {
-      unmountOnHide
-    } = _b, props = __objRest(_b, [
-      "unmountOnHide"
-    ]);
+  var DisclosureContent = forwardRef22(function DisclosureContent2({
+    unmountOnHide,
+    ...props
+  }) {
     const context = useDisclosureProviderContext();
     const store2 = props.store || context;
     const mounted = useStoreState(
@@ -32400,16 +30754,1380 @@ If there's a particular need for this, please submit a feature request at https:
       (state) => !unmountOnHide || (state == null ? void 0 : state.mounted)
     );
     if (mounted === false) return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(DisclosureContentImpl, __spreadValues({}, props));
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(DisclosureContentImpl, { ...props });
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/HUWAI7RB.js
-  var import_react25 = __toESM(require_react(), 1);
-  var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
+  // node_modules/@ariakit/core/esm/__chunks/75BJEVSH.js
+  function createDisclosureStore(props = {}) {
+    const store2 = mergeStore(
+      props.store,
+      omit2(props.disclosure, ["contentElement", "disclosureElement"])
+    );
+    throwOnConflictingProps(props, store2);
+    const syncState = store2 == null ? void 0 : store2.getState();
+    const open = defaultValue(
+      props.open,
+      syncState == null ? void 0 : syncState.open,
+      props.defaultOpen,
+      false
+    );
+    const animated2 = defaultValue(props.animated, syncState == null ? void 0 : syncState.animated, false);
+    const initialState = {
+      open,
+      animated: animated2,
+      animating: !!animated2 && open,
+      mounted: open,
+      contentElement: defaultValue(syncState == null ? void 0 : syncState.contentElement, null),
+      disclosureElement: defaultValue(syncState == null ? void 0 : syncState.disclosureElement, null)
+    };
+    const disclosure = createStore(initialState, store2);
+    setup(
+      disclosure,
+      () => sync2(disclosure, ["animated", "animating"], (state) => {
+        if (state.animated) return;
+        disclosure.setState("animating", false);
+      })
+    );
+    setup(
+      disclosure,
+      () => subscribe(disclosure, ["open"], () => {
+        if (!disclosure.getState().animated) return;
+        disclosure.setState("animating", true);
+      })
+    );
+    setup(
+      disclosure,
+      () => sync2(disclosure, ["open", "animating"], (state) => {
+        disclosure.setState("mounted", state.open || state.animating);
+      })
+    );
+    return {
+      ...disclosure,
+      disclosure: props.disclosure,
+      setOpen: (value) => disclosure.setState("open", value),
+      show: () => disclosure.setState("open", true),
+      hide: () => disclosure.setState("open", false),
+      toggle: () => disclosure.setState("open", (open2) => !open2),
+      stopAnimation: () => disclosure.setState("animating", false),
+      setContentElement: (value) => disclosure.setState("contentElement", value),
+      setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
+    };
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/WLZ6H5FH.js
+  function useDisclosureStoreProps(store2, update4, props) {
+    useUpdateEffect(update4, [props.store, props.disclosure]);
+    useStoreProps(store2, props, "open", "setOpen");
+    useStoreProps(store2, props, "mounted", "setMounted");
+    useStoreProps(store2, props, "animated");
+    return Object.assign(store2, { disclosure: props.disclosure });
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/JMU4N4M5.js
+  var ctx6 = createStoreContext(
+    [DialogContextProvider],
+    [DialogScopedContextProvider]
+  );
+  var usePopoverContext = ctx6.useContext;
+  var usePopoverScopedContext = ctx6.useScopedContext;
+  var usePopoverProviderContext = ctx6.useProviderContext;
+  var PopoverContextProvider = ctx6.ContextProvider;
+  var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
+
+  // node_modules/@ariakit/core/esm/__chunks/N5XGANPW.js
+  function getCommonParent(items) {
+    var _a;
+    const firstItem = items.find((item) => !!item.element);
+    const lastItem = [...items].reverse().find((item) => !!item.element);
+    let parentElement = (_a = firstItem == null ? void 0 : firstItem.element) == null ? void 0 : _a.parentElement;
+    while (parentElement && (lastItem == null ? void 0 : lastItem.element)) {
+      const parent = parentElement;
+      if (lastItem && parent.contains(lastItem.element)) {
+        return parentElement;
+      }
+      parentElement = parentElement.parentElement;
+    }
+    return getDocument(parentElement).body;
+  }
+  function getPrivateStore(store2) {
+    return store2 == null ? void 0 : store2.__unstablePrivateStore;
+  }
+  function createCollectionStore(props = {}) {
+    var _a;
+    throwOnConflictingProps(props, props.store);
+    const syncState = (_a = props.store) == null ? void 0 : _a.getState();
+    const items = defaultValue(
+      props.items,
+      syncState == null ? void 0 : syncState.items,
+      props.defaultItems,
+      []
+    );
+    const itemsMap = new Map(items.map((item) => [item.id, item]));
+    const initialState = {
+      items,
+      renderedItems: defaultValue(syncState == null ? void 0 : syncState.renderedItems, [])
+    };
+    const syncPrivateStore = getPrivateStore(props.store);
+    const privateStore = createStore(
+      { items, renderedItems: initialState.renderedItems },
+      syncPrivateStore
+    );
+    const collection = createStore(initialState, props.store);
+    const sortItems = (renderedItems) => {
+      const sortedItems = sortBasedOnDOMPosition(renderedItems, (i2) => i2.element);
+      privateStore.setState("renderedItems", sortedItems);
+      collection.setState("renderedItems", sortedItems);
+    };
+    setup(collection, () => init(privateStore));
+    setup(privateStore, () => {
+      return batch(privateStore, ["items"], (state) => {
+        collection.setState("items", state.items);
+      });
+    });
+    setup(privateStore, () => {
+      return batch(privateStore, ["renderedItems"], (state) => {
+        let firstRun = true;
+        let raf2 = requestAnimationFrame(() => {
+          const { renderedItems } = collection.getState();
+          if (state.renderedItems === renderedItems) return;
+          sortItems(state.renderedItems);
+        });
+        if (typeof IntersectionObserver !== "function") {
+          return () => cancelAnimationFrame(raf2);
+        }
+        const ioCallback = () => {
+          if (firstRun) {
+            firstRun = false;
+            return;
+          }
+          cancelAnimationFrame(raf2);
+          raf2 = requestAnimationFrame(() => sortItems(state.renderedItems));
+        };
+        const root = getCommonParent(state.renderedItems);
+        const observer = new IntersectionObserver(ioCallback, { root });
+        for (const item of state.renderedItems) {
+          if (!item.element) continue;
+          observer.observe(item.element);
+        }
+        return () => {
+          cancelAnimationFrame(raf2);
+          observer.disconnect();
+        };
+      });
+    });
+    const mergeItem = (item, setItems, canDeleteFromMap = false) => {
+      let prevItem;
+      setItems((items2) => {
+        const index = items2.findIndex(({ id }) => id === item.id);
+        const nextItems = items2.slice();
+        if (index !== -1) {
+          prevItem = items2[index];
+          const nextItem = { ...prevItem, ...item };
+          nextItems[index] = nextItem;
+          itemsMap.set(item.id, nextItem);
+        } else {
+          nextItems.push(item);
+          itemsMap.set(item.id, item);
+        }
+        return nextItems;
+      });
+      const unmergeItem = () => {
+        setItems((items2) => {
+          if (!prevItem) {
+            if (canDeleteFromMap) {
+              itemsMap.delete(item.id);
+            }
+            return items2.filter(({ id }) => id !== item.id);
+          }
+          const index = items2.findIndex(({ id }) => id === item.id);
+          if (index === -1) return items2;
+          const nextItems = items2.slice();
+          nextItems[index] = prevItem;
+          itemsMap.set(item.id, prevItem);
+          return nextItems;
+        });
+      };
+      return unmergeItem;
+    };
+    const registerItem = (item) => mergeItem(
+      item,
+      (getItems) => privateStore.setState("items", getItems),
+      true
+    );
+    return {
+      ...collection,
+      registerItem,
+      renderItem: (item) => chain(
+        registerItem(item),
+        mergeItem(
+          item,
+          (getItems) => privateStore.setState("renderedItems", getItems)
+        )
+      ),
+      item: (id) => {
+        if (!id) return null;
+        let item = itemsMap.get(id);
+        if (!item) {
+          const { items: items2 } = privateStore.getState();
+          item = items2.find((item2) => item2.id === id);
+          if (item) {
+            itemsMap.set(id, item);
+          }
+        }
+        return item || null;
+      },
+      // @ts-expect-error Internal
+      __unstablePrivateStore: privateStore
+    };
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/GVAFFF2B.js
+  function useCollectionStoreProps(store2, update4, props) {
+    useUpdateEffect(update4, [props.store]);
+    useStoreProps(store2, props, "items", "setItems");
+    return store2;
+  }
+
+  // node_modules/@ariakit/core/esm/__chunks/RVTIKFRL.js
+  var NULL_ITEM = { id: null };
+  function findFirstEnabledItem2(items, excludeId) {
+    return items.find((item) => {
+      if (excludeId) {
+        return !item.disabled && item.id !== excludeId;
+      }
+      return !item.disabled;
+    });
+  }
+  function getEnabledItems(items, excludeId) {
+    return items.filter((item) => {
+      if (excludeId) {
+        return !item.disabled && item.id !== excludeId;
+      }
+      return !item.disabled;
+    });
+  }
+  function getItemsInRow(items, rowId) {
+    return items.filter((item) => item.rowId === rowId);
+  }
+  function flipItems(items, activeId, shouldInsertNullItem = false) {
+    const index = items.findIndex((item) => item.id === activeId);
+    return [
+      ...items.slice(index + 1),
+      ...shouldInsertNullItem ? [NULL_ITEM] : [],
+      ...items.slice(0, index)
+    ];
+  }
+  function groupItemsByRows2(items) {
+    const rows = [];
+    for (const item of items) {
+      const row = rows.find((currentRow) => {
+        var _a;
+        return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
+      });
+      if (row) {
+        row.push(item);
+      } else {
+        rows.push([item]);
+      }
+    }
+    return rows;
+  }
+  function getMaxRowLength(array) {
+    let maxLength = 0;
+    for (const { length } of array) {
+      if (length > maxLength) {
+        maxLength = length;
+      }
+    }
+    return maxLength;
+  }
+  function createEmptyItem(rowId) {
+    return {
+      id: "__EMPTY_ITEM__",
+      disabled: true,
+      rowId
+    };
+  }
+  function normalizeRows(rows, activeId, focusShift) {
+    const maxLength = getMaxRowLength(rows);
+    for (const row of rows) {
+      for (let i2 = 0; i2 < maxLength; i2 += 1) {
+        const item = row[i2];
+        if (!item || focusShift && item.disabled) {
+          const isFirst = i2 === 0;
+          const previousItem = isFirst && focusShift ? findFirstEnabledItem2(row) : row[i2 - 1];
+          row[i2] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem == null ? void 0 : previousItem.rowId);
+        }
+      }
+    }
+    return rows;
+  }
+  function verticalizeItems(items) {
+    const rows = groupItemsByRows2(items);
+    const maxLength = getMaxRowLength(rows);
+    const verticalized = [];
+    for (let i2 = 0; i2 < maxLength; i2 += 1) {
+      for (const row of rows) {
+        const item = row[i2];
+        if (item) {
+          verticalized.push({
+            ...item,
+            // If there's no rowId, it means that it's not a grid composite, but
+            // a single row instead. So, instead of verticalizing it, that is,
+            // assigning a different rowId based on the column index, we keep it
+            // undefined so they will be part of the same row. This is useful
+            // when using up/down on one-dimensional composites.
+            rowId: item.rowId ? `${i2}` : void 0
+          });
+        }
+      }
+    }
+    return verticalized;
+  }
+  function createCompositeStore(props = {}) {
+    var _a;
+    const syncState = (_a = props.store) == null ? void 0 : _a.getState();
+    const collection = createCollectionStore(props);
+    const activeId = defaultValue(
+      props.activeId,
+      syncState == null ? void 0 : syncState.activeId,
+      props.defaultActiveId
+    );
+    const initialState = {
+      ...collection.getState(),
+      id: defaultValue(
+        props.id,
+        syncState == null ? void 0 : syncState.id,
+        `id-${Math.random().toString(36).slice(2, 8)}`
+      ),
+      activeId,
+      baseElement: defaultValue(syncState == null ? void 0 : syncState.baseElement, null),
+      includesBaseElement: defaultValue(
+        props.includesBaseElement,
+        syncState == null ? void 0 : syncState.includesBaseElement,
+        activeId === null
+      ),
+      moves: defaultValue(syncState == null ? void 0 : syncState.moves, 0),
+      orientation: defaultValue(
+        props.orientation,
+        syncState == null ? void 0 : syncState.orientation,
+        "both"
+      ),
+      rtl: defaultValue(props.rtl, syncState == null ? void 0 : syncState.rtl, false),
+      virtualFocus: defaultValue(
+        props.virtualFocus,
+        syncState == null ? void 0 : syncState.virtualFocus,
+        false
+      ),
+      focusLoop: defaultValue(props.focusLoop, syncState == null ? void 0 : syncState.focusLoop, false),
+      focusWrap: defaultValue(props.focusWrap, syncState == null ? void 0 : syncState.focusWrap, false),
+      focusShift: defaultValue(props.focusShift, syncState == null ? void 0 : syncState.focusShift, false)
+    };
+    const composite = createStore(initialState, collection, props.store);
+    setup(
+      composite,
+      () => sync2(composite, ["renderedItems", "activeId"], (state) => {
+        composite.setState("activeId", (activeId2) => {
+          var _a2;
+          if (activeId2 !== void 0) return activeId2;
+          return (_a2 = findFirstEnabledItem2(state.renderedItems)) == null ? void 0 : _a2.id;
+        });
+      })
+    );
+    const getNextId = (direction = "next", options = {}) => {
+      var _a2, _b;
+      const defaultState = composite.getState();
+      const {
+        skip = 0,
+        activeId: activeId2 = defaultState.activeId,
+        focusShift = defaultState.focusShift,
+        focusLoop = defaultState.focusLoop,
+        focusWrap = defaultState.focusWrap,
+        includesBaseElement = defaultState.includesBaseElement,
+        renderedItems = defaultState.renderedItems,
+        rtl = defaultState.rtl
+      } = options;
+      const isVerticalDirection = direction === "up" || direction === "down";
+      const isNextDirection = direction === "next" || direction === "down";
+      const canReverse = isNextDirection ? rtl && !isVerticalDirection : !rtl || isVerticalDirection;
+      const canShift = focusShift && !skip;
+      let items = !isVerticalDirection ? renderedItems : flatten2DArray(
+        normalizeRows(groupItemsByRows2(renderedItems), activeId2, canShift)
+      );
+      items = canReverse ? reverseArray(items) : items;
+      items = isVerticalDirection ? verticalizeItems(items) : items;
+      if (activeId2 == null) {
+        return (_a2 = findFirstEnabledItem2(items)) == null ? void 0 : _a2.id;
+      }
+      const activeItem = items.find((item) => item.id === activeId2);
+      if (!activeItem) {
+        return (_b = findFirstEnabledItem2(items)) == null ? void 0 : _b.id;
+      }
+      const isGrid2 = items.some((item) => item.rowId);
+      const activeIndex = items.indexOf(activeItem);
+      const nextItems = items.slice(activeIndex + 1);
+      const nextItemsInRow = getItemsInRow(nextItems, activeItem.rowId);
+      if (skip) {
+        const nextEnabledItemsInRow = getEnabledItems(nextItemsInRow, activeId2);
+        const nextItem2 = nextEnabledItemsInRow.slice(skip)[0] || // If we can't find an item, just return the last one.
+        nextEnabledItemsInRow[nextEnabledItemsInRow.length - 1];
+        return nextItem2 == null ? void 0 : nextItem2.id;
+      }
+      const canLoop = focusLoop && (isVerticalDirection ? focusLoop !== "horizontal" : focusLoop !== "vertical");
+      const canWrap = isGrid2 && focusWrap && (isVerticalDirection ? focusWrap !== "horizontal" : focusWrap !== "vertical");
+      const hasNullItem = isNextDirection ? (!isGrid2 || isVerticalDirection) && canLoop && includesBaseElement : isVerticalDirection ? includesBaseElement : false;
+      if (canLoop) {
+        const loopItems = canWrap && !hasNullItem ? items : getItemsInRow(items, activeItem.rowId);
+        const sortedItems = flipItems(loopItems, activeId2, hasNullItem);
+        const nextItem2 = findFirstEnabledItem2(sortedItems, activeId2);
+        return nextItem2 == null ? void 0 : nextItem2.id;
+      }
+      if (canWrap) {
+        const nextItem2 = findFirstEnabledItem2(
+          // We can use nextItems, which contains all the next items, including
+          // items from other rows, to wrap between rows. However, if there is a
+          // null item (the composite container), we'll only use the next items in
+          // the row. So moving next from the last item will focus on the
+          // composite container. On grid composites, horizontal navigation never
+          // focuses on the composite container, only vertical.
+          hasNullItem ? nextItemsInRow : nextItems,
+          activeId2
+        );
+        const nextId2 = hasNullItem ? (nextItem2 == null ? void 0 : nextItem2.id) || null : nextItem2 == null ? void 0 : nextItem2.id;
+        return nextId2;
+      }
+      const nextItem = findFirstEnabledItem2(nextItemsInRow, activeId2);
+      if (!nextItem && hasNullItem) {
+        return null;
+      }
+      return nextItem == null ? void 0 : nextItem.id;
+    };
+    return {
+      ...collection,
+      ...composite,
+      setBaseElement: (element) => composite.setState("baseElement", element),
+      setActiveId: (id) => composite.setState("activeId", id),
+      move: (id) => {
+        if (id === void 0) return;
+        composite.setState("activeId", id);
+        composite.setState("moves", (moves) => moves + 1);
+      },
+      first: () => {
+        var _a2;
+        return (_a2 = findFirstEnabledItem2(composite.getState().renderedItems)) == null ? void 0 : _a2.id;
+      },
+      last: () => {
+        var _a2;
+        return (_a2 = findFirstEnabledItem2(reverseArray(composite.getState().renderedItems))) == null ? void 0 : _a2.id;
+      },
+      next: (options) => {
+        if (options !== void 0 && typeof options === "number") {
+          options = { skip: options };
+        }
+        return getNextId("next", options);
+      },
+      previous: (options) => {
+        if (options !== void 0 && typeof options === "number") {
+          options = { skip: options };
+        }
+        return getNextId("previous", options);
+      },
+      down: (options) => {
+        if (options !== void 0 && typeof options === "number") {
+          options = { skip: options };
+        }
+        return getNextId("down", options);
+      },
+      up: (options) => {
+        if (options !== void 0 && typeof options === "number") {
+          options = { skip: options };
+        }
+        return getNextId("up", options);
+      }
+    };
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/IQYAUKXT.js
+  function useCompositeStoreOptions(props) {
+    const id = useId5(props.id);
+    return { id, ...props };
+  }
+  function useCompositeStoreProps(store2, update4, props) {
+    store2 = useCollectionStoreProps(store2, update4, props);
+    useStoreProps(store2, props, "activeId", "setActiveId");
+    useStoreProps(store2, props, "includesBaseElement");
+    useStoreProps(store2, props, "virtualFocus");
+    useStoreProps(store2, props, "orientation");
+    useStoreProps(store2, props, "rtl");
+    useStoreProps(store2, props, "focusLoop");
+    useStoreProps(store2, props, "focusWrap");
+    useStoreProps(store2, props, "focusShift");
+    return store2;
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/CVCFNOHX.js
+  var import_react19 = __toESM(require_react(), 1);
+  var ComboboxListRoleContext = (0, import_react19.createContext)(
+    void 0
+  );
+  var ctx7 = createStoreContext(
+    [PopoverContextProvider, CompositeContextProvider],
+    [PopoverScopedContextProvider, CompositeScopedContextProvider]
+  );
+  var useComboboxContext = ctx7.useContext;
+  var useComboboxScopedContext = ctx7.useScopedContext;
+  var useComboboxProviderContext = ctx7.useProviderContext;
+  var ComboboxContextProvider = ctx7.ContextProvider;
+  var ComboboxScopedContextProvider = ctx7.ScopedContextProvider;
+  var ComboboxItemValueContext = (0, import_react19.createContext)(
+    void 0
+  );
+  var ComboboxItemCheckedContext = (0, import_react19.createContext)(false);
+
+  // node_modules/@ariakit/core/esm/__chunks/KMAUV3TY.js
+  function createDialogStore(props = {}) {
+    return createDisclosureStore(props);
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/4NYSH4UO.js
+  function useDialogStoreProps(store2, update4, props) {
+    return useDisclosureStoreProps(store2, update4, props);
+  }
+
+  // node_modules/@ariakit/core/esm/__chunks/BFGNM53A.js
+  function createPopoverStore({
+    popover: otherPopover,
+    ...props
+  } = {}) {
+    const store2 = mergeStore(
+      props.store,
+      omit2(otherPopover, [
+        "arrowElement",
+        "anchorElement",
+        "contentElement",
+        "popoverElement",
+        "disclosureElement"
+      ])
+    );
+    throwOnConflictingProps(props, store2);
+    const syncState = store2 == null ? void 0 : store2.getState();
+    const dialog = createDialogStore({ ...props, store: store2 });
+    const placement = defaultValue(
+      props.placement,
+      syncState == null ? void 0 : syncState.placement,
+      "bottom"
+    );
+    const initialState = {
+      ...dialog.getState(),
+      placement,
+      currentPlacement: placement,
+      anchorElement: defaultValue(syncState == null ? void 0 : syncState.anchorElement, null),
+      popoverElement: defaultValue(syncState == null ? void 0 : syncState.popoverElement, null),
+      arrowElement: defaultValue(syncState == null ? void 0 : syncState.arrowElement, null),
+      rendered: /* @__PURE__ */ Symbol("rendered")
+    };
+    const popover = createStore(initialState, dialog, store2);
+    return {
+      ...dialog,
+      ...popover,
+      setAnchorElement: (element) => popover.setState("anchorElement", element),
+      setPopoverElement: (element) => popover.setState("popoverElement", element),
+      setArrowElement: (element) => popover.setState("arrowElement", element),
+      render: () => popover.setState("rendered", /* @__PURE__ */ Symbol("rendered"))
+    };
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/B6FLPFJM.js
+  function usePopoverStoreProps(store2, update4, props) {
+    useUpdateEffect(update4, [props.popover]);
+    useStoreProps(store2, props, "placement");
+    return useDialogStoreProps(store2, update4, props);
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/4POTBZ2J.js
+  var TagName7 = "div";
+  var usePopoverAnchor = createHook(
+    function usePopoverAnchor2({ store: store2, ...props }) {
+      const context = usePopoverProviderContext();
+      store2 = store2 || context;
+      props = {
+        ...props,
+        ref: useMergeRefs(store2 == null ? void 0 : store2.setAnchorElement, props.ref)
+      };
+      return props;
+    }
+  );
+  var PopoverAnchor = forwardRef22(function PopoverAnchor2(props) {
+    const htmlProps = usePopoverAnchor(props);
+    return createElement5(TagName7, htmlProps);
+  });
+
+  // node_modules/@ariakit/react-core/esm/__chunks/X6LNAU2F.js
+  var import_react20 = __toESM(require_react(), 1);
+  var TagName8 = "div";
+  function getMouseDestination(event) {
+    const relatedTarget = event.relatedTarget;
+    if ((relatedTarget == null ? void 0 : relatedTarget.nodeType) === Node.ELEMENT_NODE) {
+      return relatedTarget;
+    }
+    return null;
+  }
+  function hoveringInside(event) {
+    const nextElement = getMouseDestination(event);
+    if (!nextElement) return false;
+    return contains(event.currentTarget, nextElement);
+  }
+  var symbol2 = /* @__PURE__ */ Symbol("composite-hover");
+  function movingToAnotherItem(event) {
+    let dest = getMouseDestination(event);
+    if (!dest) return false;
+    do {
+      if (hasOwnProperty(dest, symbol2) && dest[symbol2]) return true;
+      dest = dest.parentElement;
+    } while (dest);
+    return false;
+  }
+  var useCompositeHover = createHook(
+    function useCompositeHover2({
+      store: store2,
+      focusOnHover = true,
+      blurOnHoverEnd = !!focusOnHover,
+      ...props
+    }) {
+      const context = useCompositeContext();
+      store2 = store2 || context;
+      invariant(
+        store2,
+        "CompositeHover must be wrapped in a Composite component."
+      );
+      const isMouseMoving = useIsMouseMoving();
+      const onMouseMoveProp = props.onMouseMove;
+      const focusOnHoverProp = useBooleanEvent(focusOnHover);
+      const onMouseMove = useEvent((event) => {
+        onMouseMoveProp == null ? void 0 : onMouseMoveProp(event);
+        if (event.defaultPrevented) return;
+        if (!isMouseMoving()) return;
+        if (!focusOnHoverProp(event)) return;
+        if (!hasFocusWithin(event.currentTarget)) {
+          const baseElement = store2 == null ? void 0 : store2.getState().baseElement;
+          if (baseElement && !hasFocus(baseElement)) {
+            baseElement.focus();
+          }
+        }
+        store2 == null ? void 0 : store2.setActiveId(event.currentTarget.id);
+      });
+      const onMouseLeaveProp = props.onMouseLeave;
+      const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
+      const onMouseLeave = useEvent((event) => {
+        var _a;
+        onMouseLeaveProp == null ? void 0 : onMouseLeaveProp(event);
+        if (event.defaultPrevented) return;
+        if (!isMouseMoving()) return;
+        if (hoveringInside(event)) return;
+        if (movingToAnotherItem(event)) return;
+        if (!focusOnHoverProp(event)) return;
+        if (!blurOnHoverEndProp(event)) return;
+        store2 == null ? void 0 : store2.setActiveId(null);
+        (_a = store2 == null ? void 0 : store2.getState().baseElement) == null ? void 0 : _a.focus();
+      });
+      const ref = (0, import_react20.useCallback)((element) => {
+        if (!element) return;
+        element[symbol2] = true;
+      }, []);
+      props = {
+        ...props,
+        ref: useMergeRefs(ref, props.ref),
+        onMouseMove,
+        onMouseLeave
+      };
+      return removeUndefinedValues(props);
+    }
+  );
+  var CompositeHover = memo22(
+    forwardRef22(function CompositeHover2(props) {
+      const htmlProps = useCompositeHover(props);
+      return createElement5(TagName8, htmlProps);
+    })
+  );
+
+  // node_modules/@ariakit/react-core/esm/combobox/combobox.js
+  var import_react21 = __toESM(require_react(), 1);
+  var TagName9 = "input";
+  function isFirstItemAutoSelected(items, activeValue, autoSelect) {
+    if (!autoSelect) return false;
+    const firstItem = items.find((item) => !item.disabled && item.value);
+    return (firstItem == null ? void 0 : firstItem.value) === activeValue;
+  }
+  function hasCompletionString(value, activeValue) {
+    if (!activeValue) return false;
+    if (value == null) return false;
+    value = normalizeString2(value);
+    return activeValue.length > value.length && activeValue.toLowerCase().indexOf(value.toLowerCase()) === 0;
+  }
+  function isInputEvent(event) {
+    return event.type === "input";
+  }
+  function isAriaAutoCompleteValue(value) {
+    return value === "inline" || value === "list" || value === "both" || value === "none";
+  }
+  function getDefaultAutoSelectId(items) {
+    const item = items.find((item2) => {
+      var _a;
+      if (item2.disabled) return false;
+      return ((_a = item2.element) == null ? void 0 : _a.getAttribute("role")) !== "tab";
+    });
+    return item == null ? void 0 : item.id;
+  }
+  var useCombobox = createHook(
+    function useCombobox2({
+      store: store2,
+      focusable = true,
+      autoSelect: autoSelectProp = false,
+      getAutoSelectId,
+      setValueOnChange,
+      showMinLength = 0,
+      showOnChange,
+      showOnMouseDown,
+      showOnClick = showOnMouseDown,
+      showOnKeyDown,
+      showOnKeyPress = showOnKeyDown,
+      blurActiveItemOnClick,
+      setValueOnClick = true,
+      moveOnKeyPress = true,
+      autoComplete = "list",
+      ...props
+    }) {
+      const context = useComboboxProviderContext();
+      store2 = store2 || context;
+      invariant(
+        store2,
+        "Combobox must receive a `store` prop or be wrapped in a ComboboxProvider component."
+      );
+      const ref = (0, import_react21.useRef)(null);
+      const [valueUpdated, forceValueUpdate] = useForceUpdate2();
+      const canAutoSelectRef = (0, import_react21.useRef)(false);
+      const composingRef = (0, import_react21.useRef)(false);
+      const autoSelect = store2.useState(
+        (state) => state.virtualFocus && autoSelectProp
+      );
+      const inline = autoComplete === "inline" || autoComplete === "both";
+      const [canInline, setCanInline] = (0, import_react21.useState)(inline);
+      useUpdateLayoutEffect(() => {
+        if (!inline) return;
+        setCanInline(true);
+      }, [inline]);
+      const storeValue = store2.useState("value");
+      const prevSelectedValueRef = (0, import_react21.useRef)(void 0);
+      (0, import_react21.useEffect)(() => {
+        return sync2(store2, ["selectedValue", "activeId"], (_, prev) => {
+          prevSelectedValueRef.current = prev.selectedValue;
+        });
+      }, []);
+      const inlineActiveValue = store2.useState((state) => {
+        var _a;
+        if (!inline) return;
+        if (!canInline) return;
+        if (state.activeValue && Array.isArray(state.selectedValue)) {
+          if (state.selectedValue.includes(state.activeValue)) return;
+          if ((_a = prevSelectedValueRef.current) == null ? void 0 : _a.includes(state.activeValue)) return;
+        }
+        return state.activeValue;
+      });
+      const items = store2.useState("renderedItems");
+      const open = store2.useState("open");
+      const contentElement = store2.useState("contentElement");
+      const value = (0, import_react21.useMemo)(() => {
+        if (!inline) return storeValue;
+        if (!canInline) return storeValue;
+        const firstItemAutoSelected = isFirstItemAutoSelected(
+          items,
+          inlineActiveValue,
+          autoSelect
+        );
+        if (firstItemAutoSelected) {
+          if (hasCompletionString(storeValue, inlineActiveValue)) {
+            const slice = (inlineActiveValue == null ? void 0 : inlineActiveValue.slice(storeValue.length)) || "";
+            return storeValue + slice;
+          }
+          return storeValue;
+        }
+        return inlineActiveValue || storeValue;
+      }, [inline, canInline, items, inlineActiveValue, autoSelect, storeValue]);
+      (0, import_react21.useEffect)(() => {
+        const element = ref.current;
+        if (!element) return;
+        const onCompositeItemMove = () => setCanInline(true);
+        element.addEventListener("combobox-item-move", onCompositeItemMove);
+        return () => {
+          element.removeEventListener("combobox-item-move", onCompositeItemMove);
+        };
+      }, []);
+      (0, import_react21.useEffect)(() => {
+        if (!inline) return;
+        if (!canInline) return;
+        if (!inlineActiveValue) return;
+        const firstItemAutoSelected = isFirstItemAutoSelected(
+          items,
+          inlineActiveValue,
+          autoSelect
+        );
+        if (!firstItemAutoSelected) return;
+        if (!hasCompletionString(storeValue, inlineActiveValue)) return;
+        let cleanup = noop3;
+        queueMicrotask(() => {
+          const element = ref.current;
+          if (!element) return;
+          const { start: prevStart, end: prevEnd } = getTextboxSelection(element);
+          const nextStart = storeValue.length;
+          const nextEnd = inlineActiveValue.length;
+          setSelectionRange(element, nextStart, nextEnd);
+          cleanup = () => {
+            if (!hasFocus(element)) return;
+            const { start: start2, end } = getTextboxSelection(element);
+            if (start2 !== nextStart) return;
+            if (end !== nextEnd) return;
+            setSelectionRange(element, prevStart, prevEnd);
+          };
+        });
+        return () => cleanup();
+      }, [
+        valueUpdated,
+        inline,
+        canInline,
+        inlineActiveValue,
+        items,
+        autoSelect,
+        storeValue
+      ]);
+      const scrollingElementRef = (0, import_react21.useRef)(null);
+      const getAutoSelectIdProp = useEvent(getAutoSelectId);
+      const autoSelectIdRef = (0, import_react21.useRef)(null);
+      (0, import_react21.useEffect)(() => {
+        if (!open) return;
+        if (!contentElement) return;
+        const scrollingElement = getScrollingElement(contentElement);
+        if (!scrollingElement) return;
+        scrollingElementRef.current = scrollingElement;
+        const onUserScroll = () => {
+          canAutoSelectRef.current = false;
+        };
+        const onScroll = () => {
+          if (!store2) return;
+          if (!canAutoSelectRef.current) return;
+          const { activeId } = store2.getState();
+          if (activeId === null) return;
+          if (activeId === autoSelectIdRef.current) return;
+          canAutoSelectRef.current = false;
+        };
+        const options = { passive: true, capture: true };
+        scrollingElement.addEventListener("wheel", onUserScroll, options);
+        scrollingElement.addEventListener("touchmove", onUserScroll, options);
+        scrollingElement.addEventListener("scroll", onScroll, options);
+        return () => {
+          scrollingElement.removeEventListener("wheel", onUserScroll, true);
+          scrollingElement.removeEventListener("touchmove", onUserScroll, true);
+          scrollingElement.removeEventListener("scroll", onScroll, true);
+        };
+      }, [open, contentElement, store2]);
+      useSafeLayoutEffect(() => {
+        if (!storeValue) return;
+        if (composingRef.current) return;
+        canAutoSelectRef.current = true;
+      }, [storeValue]);
+      useSafeLayoutEffect(() => {
+        if (autoSelect !== "always" && open) return;
+        canAutoSelectRef.current = open;
+      }, [autoSelect, open]);
+      const resetValueOnSelect = store2.useState("resetValueOnSelect");
+      useUpdateEffect(() => {
+        var _a, _b;
+        const canAutoSelect = canAutoSelectRef.current;
+        if (!store2) return;
+        if (!open) return;
+        if (!canAutoSelect && !resetValueOnSelect) return;
+        const { baseElement, contentElement: contentElement2, activeId } = store2.getState();
+        if (baseElement && !hasFocus(baseElement)) return;
+        if (contentElement2 == null ? void 0 : contentElement2.hasAttribute("data-placing")) {
+          const observer = new MutationObserver(forceValueUpdate);
+          observer.observe(contentElement2, { attributeFilter: ["data-placing"] });
+          return () => observer.disconnect();
+        }
+        if (autoSelect && canAutoSelect) {
+          const userAutoSelectId = getAutoSelectIdProp(items);
+          const autoSelectId = userAutoSelectId !== void 0 ? userAutoSelectId : (_a = getDefaultAutoSelectId(items)) != null ? _a : store2.first();
+          autoSelectIdRef.current = autoSelectId;
+          store2.move(autoSelectId != null ? autoSelectId : null);
+        } else {
+          const element = (_b = store2.item(activeId || store2.first())) == null ? void 0 : _b.element;
+          if (element && "scrollIntoView" in element) {
+            element.scrollIntoView({ block: "nearest", inline: "nearest" });
+          }
+        }
+        return;
+      }, [
+        store2,
+        open,
+        valueUpdated,
+        storeValue,
+        autoSelect,
+        resetValueOnSelect,
+        getAutoSelectIdProp,
+        items
+      ]);
+      (0, import_react21.useEffect)(() => {
+        if (!inline) return;
+        const combobox = ref.current;
+        if (!combobox) return;
+        const elements2 = [combobox, contentElement].filter(
+          (value2) => !!value2
+        );
+        const onBlur2 = (event) => {
+          if (elements2.every((el) => isFocusEventOutside(event, el))) {
+            store2 == null ? void 0 : store2.setValue(value);
+          }
+        };
+        for (const element of elements2) {
+          element.addEventListener("focusout", onBlur2);
+        }
+        return () => {
+          for (const element of elements2) {
+            element.removeEventListener("focusout", onBlur2);
+          }
+        };
+      }, [inline, contentElement, store2, value]);
+      const canShow = (event) => {
+        const currentTarget = event.currentTarget;
+        return currentTarget.value.length >= showMinLength;
+      };
+      const onChangeProp = props.onChange;
+      const showOnChangeProp = useBooleanEvent(showOnChange != null ? showOnChange : canShow);
+      const setValueOnChangeProp = useBooleanEvent(
+        // If the combobox is combined with tags, the value will be set by the tag
+        // input component.
+        setValueOnChange != null ? setValueOnChange : !store2.tag
+      );
+      const onChange = useEvent((event) => {
+        onChangeProp == null ? void 0 : onChangeProp(event);
+        if (event.defaultPrevented) return;
+        if (!store2) return;
+        const currentTarget = event.currentTarget;
+        const { value: value2, selectionStart, selectionEnd } = currentTarget;
+        const nativeEvent = event.nativeEvent;
+        canAutoSelectRef.current = true;
+        if (isInputEvent(nativeEvent)) {
+          if (nativeEvent.isComposing) {
+            canAutoSelectRef.current = false;
+            composingRef.current = true;
+          }
+          if (inline) {
+            const textInserted = nativeEvent.inputType === "insertText" || nativeEvent.inputType === "insertCompositionText";
+            const caretAtEnd = selectionStart === value2.length;
+            setCanInline(textInserted && caretAtEnd);
+          }
+        }
+        if (setValueOnChangeProp(event)) {
+          const isSameValue = value2 === store2.getState().value;
+          store2.setValue(value2);
+          queueMicrotask(() => {
+            setSelectionRange(currentTarget, selectionStart, selectionEnd);
+          });
+          if (inline && autoSelect && isSameValue) {
+            forceValueUpdate();
+          }
+        }
+        if (showOnChangeProp(event)) {
+          store2.show();
+        }
+        if (!autoSelect || !canAutoSelectRef.current) {
+          store2.setActiveId(null);
+        }
+      });
+      const onCompositionEndProp = props.onCompositionEnd;
+      const onCompositionEnd = useEvent((event) => {
+        canAutoSelectRef.current = true;
+        composingRef.current = false;
+        onCompositionEndProp == null ? void 0 : onCompositionEndProp(event);
+        if (event.defaultPrevented) return;
+        if (!autoSelect) return;
+        forceValueUpdate();
+      });
+      const onMouseDownProp = props.onMouseDown;
+      const blurActiveItemOnClickProp = useBooleanEvent(
+        blurActiveItemOnClick != null ? blurActiveItemOnClick : (() => !!(store2 == null ? void 0 : store2.getState().includesBaseElement))
+      );
+      const setValueOnClickProp = useBooleanEvent(setValueOnClick);
+      const showOnClickProp = useBooleanEvent(showOnClick != null ? showOnClick : canShow);
+      const onMouseDown = useEvent((event) => {
+        onMouseDownProp == null ? void 0 : onMouseDownProp(event);
+        if (event.defaultPrevented) return;
+        if (event.button) return;
+        if (event.ctrlKey) return;
+        if (!store2) return;
+        if (blurActiveItemOnClickProp(event)) {
+          store2.setActiveId(null);
+        }
+        if (setValueOnClickProp(event)) {
+          store2.setValue(value);
+        }
+        if (showOnClickProp(event)) {
+          queueBeforeEvent(event.currentTarget, "mouseup", store2.show);
+        }
+      });
+      const onKeyDownProp = props.onKeyDown;
+      const showOnKeyPressProp = useBooleanEvent(showOnKeyPress != null ? showOnKeyPress : canShow);
+      const onKeyDown = useEvent((event) => {
+        onKeyDownProp == null ? void 0 : onKeyDownProp(event);
+        if (!event.repeat) {
+          canAutoSelectRef.current = false;
+        }
+        if (event.defaultPrevented) return;
+        if (event.ctrlKey) return;
+        if (event.altKey) return;
+        if (event.shiftKey) return;
+        if (event.metaKey) return;
+        if (!store2) return;
+        const { open: open2 } = store2.getState();
+        if (open2) return;
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+          if (showOnKeyPressProp(event)) {
+            event.preventDefault();
+            store2.show();
+          }
+        }
+      });
+      const onBlurProp = props.onBlur;
+      const onBlur = useEvent((event) => {
+        canAutoSelectRef.current = false;
+        onBlurProp == null ? void 0 : onBlurProp(event);
+        if (event.defaultPrevented) return;
+      });
+      const id = useId5(props.id);
+      const ariaAutoComplete = isAriaAutoCompleteValue(autoComplete) ? autoComplete : void 0;
+      const isActiveItem = store2.useState((state) => state.activeId === null);
+      props = {
+        id,
+        role: "combobox",
+        "aria-autocomplete": ariaAutoComplete,
+        "aria-haspopup": getPopupRole(contentElement, "listbox"),
+        "aria-expanded": open,
+        "aria-controls": contentElement == null ? void 0 : contentElement.id,
+        "data-active-item": isActiveItem || void 0,
+        value,
+        ...props,
+        ref: useMergeRefs(ref, props.ref),
+        onChange,
+        onCompositionEnd,
+        onMouseDown,
+        onKeyDown,
+        onBlur
+      };
+      props = useComposite({
+        store: store2,
+        focusable,
+        ...props,
+        // Enable inline autocomplete when the user moves from the combobox input
+        // to an item.
+        moveOnKeyPress: (event) => {
+          if (isFalsyBooleanCallback(moveOnKeyPress, event)) return false;
+          if (inline) setCanInline(true);
+          return true;
+        }
+      });
+      props = usePopoverAnchor({ store: store2, ...props });
+      return { autoComplete: "off", ...props };
+    }
+  );
+  var Combobox = forwardRef22(function Combobox2(props) {
+    const htmlProps = useCombobox(props);
+    return createElement5(TagName9, htmlProps);
+  });
+
+  // node_modules/@ariakit/react-core/esm/__chunks/IBXZ2LQC.js
+  var import_react22 = __toESM(require_react(), 1);
+  var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
+  var TagName10 = "div";
+  function isSelected(storeValue, itemValue) {
+    if (itemValue == null) return;
+    if (storeValue == null) return false;
+    if (Array.isArray(storeValue)) {
+      return storeValue.includes(itemValue);
+    }
+    return storeValue === itemValue;
+  }
+  function getItemRole(popupRole) {
+    var _a;
+    const itemRoleByPopupRole = {
+      menu: "menuitem",
+      listbox: "option",
+      tree: "treeitem"
+    };
+    const key = popupRole;
+    return (_a = itemRoleByPopupRole[key]) != null ? _a : "option";
+  }
+  var useComboboxItem = createHook(
+    function useComboboxItem2({
+      store: store2,
+      value,
+      hideOnClick,
+      setValueOnClick,
+      selectValueOnClick = true,
+      resetValueOnSelect,
+      focusOnHover = false,
+      moveOnKeyPress = true,
+      getItem: getItemProp,
+      ...props
+    }) {
+      var _a;
+      const context = useComboboxScopedContext();
+      store2 = store2 || context;
+      invariant(
+        store2,
+        "ComboboxItem must be wrapped in a ComboboxList or ComboboxPopover component."
+      );
+      const { resetValueOnSelectState, multiSelectable, selected } = useStoreStateObject(store2, {
+        resetValueOnSelectState: "resetValueOnSelect",
+        multiSelectable(state) {
+          return Array.isArray(state.selectedValue);
+        },
+        selected(state) {
+          return isSelected(state.selectedValue, value);
+        }
+      });
+      const getItem = (0, import_react22.useCallback)(
+        (item) => {
+          const nextItem = { ...item, value };
+          if (getItemProp) {
+            return getItemProp(nextItem);
+          }
+          return nextItem;
+        },
+        [value, getItemProp]
+      );
+      setValueOnClick = setValueOnClick != null ? setValueOnClick : !multiSelectable;
+      hideOnClick = hideOnClick != null ? hideOnClick : value != null && !multiSelectable;
+      const onClickProp = props.onClick;
+      const setValueOnClickProp = useBooleanEvent(setValueOnClick);
+      const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
+      const resetValueOnSelectProp = useBooleanEvent(
+        (_a = resetValueOnSelect != null ? resetValueOnSelect : resetValueOnSelectState) != null ? _a : multiSelectable
+      );
+      const hideOnClickProp = useBooleanEvent(hideOnClick);
+      const onClick = useEvent((event) => {
+        onClickProp == null ? void 0 : onClickProp(event);
+        if (event.defaultPrevented) return;
+        if (isDownloading(event)) return;
+        if (isOpeningInNewTab(event)) return;
+        if (value != null) {
+          if (selectValueOnClickProp(event)) {
+            if (resetValueOnSelectProp(event)) {
+              store2 == null ? void 0 : store2.resetValue();
+            }
+            store2 == null ? void 0 : store2.setSelectedValue((prevValue) => {
+              if (!Array.isArray(prevValue)) return value;
+              if (prevValue.includes(value)) {
+                return prevValue.filter((v2) => v2 !== value);
+              }
+              return [...prevValue, value];
+            });
+          }
+          if (setValueOnClickProp(event)) {
+            store2 == null ? void 0 : store2.setValue(value);
+          }
+        }
+        if (hideOnClickProp(event)) {
+          store2 == null ? void 0 : store2.hide();
+        }
+      });
+      const onKeyDownProp = props.onKeyDown;
+      const onKeyDown = useEvent((event) => {
+        onKeyDownProp == null ? void 0 : onKeyDownProp(event);
+        if (event.defaultPrevented) return;
+        const baseElement = store2 == null ? void 0 : store2.getState().baseElement;
+        if (!baseElement) return;
+        if (hasFocus(baseElement)) return;
+        const printable = event.key.length === 1;
+        if (printable || event.key === "Backspace" || event.key === "Delete") {
+          queueMicrotask(() => baseElement.focus());
+          if (isTextField(baseElement)) {
+            store2 == null ? void 0 : store2.setValue(baseElement.value);
+          }
+        }
+      });
+      if (multiSelectable && selected != null) {
+        props = {
+          "aria-selected": selected,
+          ...props
+        };
+      }
+      props = useWrapElement(
+        props,
+        (element) => /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(ComboboxItemValueContext.Provider, { value, children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(ComboboxItemCheckedContext.Provider, { value: selected != null ? selected : false, children: element }) }),
+        [value, selected]
+      );
+      const popupRole = (0, import_react22.useContext)(ComboboxListRoleContext);
+      props = {
+        role: getItemRole(popupRole),
+        children: value,
+        ...props,
+        onClick,
+        onKeyDown
+      };
+      const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
+      props = useCompositeItem({
+        store: store2,
+        ...props,
+        getItem,
+        // Dispatch a custom event on the combobox input when moving to an item
+        // with the keyboard so the Combobox component can enable inline
+        // autocompletion.
+        moveOnKeyPress: (event) => {
+          if (!moveOnKeyPressProp(event)) return false;
+          const moveEvent = new Event("combobox-item-move");
+          const baseElement = store2 == null ? void 0 : store2.getState().baseElement;
+          baseElement == null ? void 0 : baseElement.dispatchEvent(moveEvent);
+          return true;
+        }
+      });
+      props = useCompositeHover({ store: store2, focusOnHover, ...props });
+      return props;
+    }
+  );
+  var ComboboxItem = memo22(
+    forwardRef22(function ComboboxItem2(props) {
+      const htmlProps = useComboboxItem(props);
+      return createElement5(TagName10, htmlProps);
+    })
+  );
+
+  // node_modules/@ariakit/react-core/esm/combobox/combobox-item-value.js
+  var import_react23 = __toESM(require_react(), 1);
+  var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
+  var TagName11 = "span";
+  function normalizeValue(value) {
+    return normalizeString2(value).toLowerCase();
+  }
+  function getOffsets(string, values) {
+    const offsets = [];
+    for (const value of values) {
+      let pos = 0;
+      const length = value.length;
+      while (string.indexOf(value, pos) !== -1) {
+        const index = string.indexOf(value, pos);
+        if (index !== -1) {
+          offsets.push([index, length]);
+        }
+        pos = index + 1;
+      }
+    }
+    return offsets;
+  }
+  function filterOverlappingOffsets(offsets) {
+    return offsets.filter(([offset, length], i2, arr) => {
+      return !arr.some(
+        ([o3, l2], j2) => j2 !== i2 && o3 <= offset && o3 + l2 >= offset + length
+      );
+    });
+  }
+  function sortOffsets(offsets) {
+    return offsets.sort(([a2], [b2]) => a2 - b2);
+  }
+  function splitValue(itemValue, userValue) {
+    if (!itemValue) return itemValue;
+    if (!userValue) return itemValue;
+    const userValues = toArray2(userValue).filter(Boolean).map(normalizeValue);
+    const parts = [];
+    const span = (value, autocomplete = false) => /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
+      "span",
+      {
+        "data-autocomplete-value": autocomplete ? "" : void 0,
+        "data-user-value": autocomplete ? void 0 : "",
+        children: value
+      },
+      parts.length
+    );
+    const offsets = sortOffsets(
+      filterOverlappingOffsets(
+        // Convert userValues into a set to avoid duplicates
+        getOffsets(normalizeValue(itemValue), new Set(userValues))
+      )
+    );
+    if (!offsets.length) {
+      parts.push(span(itemValue, true));
+      return parts;
+    }
+    const [firstOffset] = offsets[0];
+    const values = [
+      itemValue.slice(0, firstOffset),
+      ...offsets.flatMap(([offset, length], i2) => {
+        var _a;
+        const value = itemValue.slice(offset, offset + length);
+        const nextOffset = (_a = offsets[i2 + 1]) == null ? void 0 : _a[0];
+        const nextValue = itemValue.slice(offset + length, nextOffset);
+        return [value, nextValue];
+      })
+    ];
+    values.forEach((value, i2) => {
+      if (!value) return;
+      parts.push(span(value, i2 % 2 === 0));
+    });
+    return parts;
+  }
+  var useComboboxItemValue = createHook(function useComboboxItemValue2({ store: store2, value, userValue, ...props }) {
+    const context = useComboboxScopedContext();
+    store2 = store2 || context;
+    const itemContext = (0, import_react23.useContext)(ComboboxItemValueContext);
+    const itemValue = value != null ? value : itemContext;
+    const inputValue = useStoreState(store2, (state) => userValue != null ? userValue : state == null ? void 0 : state.value);
+    const children = (0, import_react23.useMemo)(() => {
+      if (!itemValue) return;
+      if (!inputValue) return itemValue;
+      return splitValue(itemValue, inputValue);
+    }, [itemValue, inputValue]);
+    props = {
+      children,
+      ...props
+    };
+    return removeUndefinedValues(props);
+  });
+  var ComboboxItemValue = forwardRef22(function ComboboxItemValue2(props) {
+    const htmlProps = useComboboxItemValue(props);
+    return createElement5(TagName11, htmlProps);
+  });
+
+  // node_modules/@ariakit/react-core/esm/combobox/combobox-label.js
+  var TagName12 = "label";
+  var useComboboxLabel = createHook(
+    function useComboboxLabel2({ store: store2, ...props }) {
+      const context = useComboboxProviderContext();
+      store2 = store2 || context;
+      invariant(
+        store2,
+        "ComboboxLabel must receive a `store` prop or be wrapped in a ComboboxProvider component."
+      );
+      const comboboxId = store2.useState((state) => {
+        var _a;
+        return (_a = state.baseElement) == null ? void 0 : _a.id;
+      });
+      props = {
+        htmlFor: comboboxId,
+        ...props
+      };
+      return removeUndefinedValues(props);
+    }
+  );
+  var ComboboxLabel = memo22(
+    forwardRef22(function ComboboxLabel2(props) {
+      const htmlProps = useComboboxLabel(props);
+      return createElement5(TagName12, htmlProps);
+    })
+  );
+
+  // node_modules/@ariakit/react-core/esm/__chunks/2G6YEJT4.js
+  var import_react24 = __toESM(require_react(), 1);
+  var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   var TagName13 = "div";
   var useComboboxList = createHook(
-    function useComboboxList2(_a) {
-      var _b = _a, { store: store2, alwaysVisible } = _b, props = __objRest(_b, ["store", "alwaysVisible"]);
+    function useComboboxList2({ store: store2, alwaysVisible, ...props }) {
       const scopedContext = useComboboxScopedContext(true);
       const context = useComboboxContext();
       store2 = store2 || context;
@@ -32418,18 +32136,18 @@ If there's a particular need for this, please submit a feature request at https:
         store2,
         "ComboboxList must receive a `store` prop or be wrapped in a ComboboxProvider component."
       );
-      const ref = (0, import_react25.useRef)(null);
+      const ref = (0, import_react24.useRef)(null);
       const id = useId5(props.id);
       const mounted = store2.useState("mounted");
       const hidden = isHidden(mounted, props.hidden, alwaysVisible);
-      const style = hidden ? __spreadProps(__spreadValues({}, props.style), { display: "none" }) : props.style;
+      const style = hidden ? { ...props.style, display: "none" } : props.style;
       const multiSelectable = store2.useState(
         (state) => Array.isArray(state.selectedValue)
       );
       const role = useAttribute(ref, "role", props.role);
       const isCompositeRole = role === "listbox" || role === "tree" || role === "grid";
       const ariaMultiSelectable = isCompositeRole ? multiSelectable || void 0 : void 0;
-      const [hasListboxInside, setHasListboxInside] = (0, import_react25.useState)(false);
+      const [hasListboxInside, setHasListboxInside] = (0, import_react24.useState)(false);
       const contentElement = store2.useState("contentElement");
       useSafeLayoutEffect(() => {
         if (!mounted) return;
@@ -32449,24 +32167,25 @@ If there's a particular need for this, please submit a feature request at https:
         return () => observer.disconnect();
       }, [mounted, contentElement]);
       if (!hasListboxInside) {
-        props = __spreadValues({
+        props = {
           role: "listbox",
-          "aria-multiselectable": ariaMultiSelectable
-        }, props);
+          "aria-multiselectable": ariaMultiSelectable,
+          ...props
+        };
       }
       props = useWrapElement(
         props,
-        (element) => /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(ComboboxScopedContextProvider, { value: store2, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(ComboboxListRoleContext.Provider, { value: role, children: element }) }),
+        (element) => /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(ComboboxScopedContextProvider, { value: store2, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(ComboboxListRoleContext.Provider, { value: role, children: element }) }),
         [store2, role]
       );
       const setContentElement = id && (!scopedContext || !scopedContextSameStore) ? store2.setContentElement : null;
-      props = __spreadProps(__spreadValues({
+      props = {
         id,
-        hidden
-      }, props), {
+        hidden,
+        ...props,
         ref: useMergeRefs(setContentElement, ref, props.ref),
         style
-      });
+      };
       return removeUndefinedValues(props);
     }
   );
@@ -32474,6 +32193,200 @@ If there's a particular need for this, please submit a feature request at https:
     const htmlProps = useComboboxList(props);
     return createElement5(TagName13, htmlProps);
   });
+
+  // node_modules/@ariakit/react-core/esm/__chunks/XSIEPKGA.js
+  var import_react25 = __toESM(require_react(), 1);
+  var TagValueContext = (0, import_react25.createContext)(null);
+  var TagRemoveIdContext = (0, import_react25.createContext)(
+    null
+  );
+  var ctx8 = createStoreContext(
+    [CompositeContextProvider],
+    [CompositeScopedContextProvider]
+  );
+  var useTagContext = ctx8.useContext;
+  var useTagScopedContext = ctx8.useScopedContext;
+  var useTagProviderContext = ctx8.useProviderContext;
+  var TagContextProvider = ctx8.ContextProvider;
+  var TagScopedContextProvider = ctx8.ScopedContextProvider;
+
+  // node_modules/@ariakit/core/esm/combobox/combobox-store.js
+  var isTouchSafari = isSafari() && isTouchDevice();
+  function createComboboxStore({
+    tag,
+    ...props
+  } = {}) {
+    const store2 = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
+    throwOnConflictingProps(props, store2);
+    const tagState = tag == null ? void 0 : tag.getState();
+    const syncState = store2 == null ? void 0 : store2.getState();
+    const activeId = defaultValue(
+      props.activeId,
+      syncState == null ? void 0 : syncState.activeId,
+      props.defaultActiveId,
+      null
+    );
+    const composite = createCompositeStore({
+      ...props,
+      activeId,
+      includesBaseElement: defaultValue(
+        props.includesBaseElement,
+        syncState == null ? void 0 : syncState.includesBaseElement,
+        true
+      ),
+      orientation: defaultValue(
+        props.orientation,
+        syncState == null ? void 0 : syncState.orientation,
+        "vertical"
+      ),
+      focusLoop: defaultValue(props.focusLoop, syncState == null ? void 0 : syncState.focusLoop, true),
+      focusWrap: defaultValue(props.focusWrap, syncState == null ? void 0 : syncState.focusWrap, true),
+      virtualFocus: defaultValue(
+        props.virtualFocus,
+        syncState == null ? void 0 : syncState.virtualFocus,
+        true
+      )
+    });
+    const popover = createPopoverStore({
+      ...props,
+      placement: defaultValue(
+        props.placement,
+        syncState == null ? void 0 : syncState.placement,
+        "bottom-start"
+      )
+    });
+    const value = defaultValue(
+      props.value,
+      syncState == null ? void 0 : syncState.value,
+      props.defaultValue,
+      ""
+    );
+    const selectedValue = defaultValue(
+      props.selectedValue,
+      syncState == null ? void 0 : syncState.selectedValue,
+      tagState == null ? void 0 : tagState.values,
+      props.defaultSelectedValue,
+      ""
+    );
+    const multiSelectable = Array.isArray(selectedValue);
+    const initialState = {
+      ...composite.getState(),
+      ...popover.getState(),
+      value,
+      selectedValue,
+      resetValueOnSelect: defaultValue(
+        props.resetValueOnSelect,
+        syncState == null ? void 0 : syncState.resetValueOnSelect,
+        multiSelectable
+      ),
+      resetValueOnHide: defaultValue(
+        props.resetValueOnHide,
+        syncState == null ? void 0 : syncState.resetValueOnHide,
+        multiSelectable && !tag
+      ),
+      activeValue: syncState == null ? void 0 : syncState.activeValue
+    };
+    const combobox = createStore(initialState, composite, popover, store2);
+    if (isTouchSafari) {
+      setup(
+        combobox,
+        () => sync2(combobox, ["virtualFocus"], () => {
+          combobox.setState("virtualFocus", false);
+        })
+      );
+    }
+    setup(combobox, () => {
+      if (!tag) return;
+      return chain(
+        sync2(combobox, ["selectedValue"], (state) => {
+          if (!Array.isArray(state.selectedValue)) return;
+          tag.setValues(state.selectedValue);
+        }),
+        sync2(tag, ["values"], (state) => {
+          combobox.setState("selectedValue", state.values);
+        })
+      );
+    });
+    setup(
+      combobox,
+      () => sync2(combobox, ["resetValueOnHide", "mounted"], (state) => {
+        if (!state.resetValueOnHide) return;
+        if (state.mounted) return;
+        combobox.setState("value", value);
+      })
+    );
+    setup(
+      combobox,
+      () => sync2(combobox, ["open"], (state) => {
+        if (state.open) return;
+        combobox.setState("activeId", activeId);
+        combobox.setState("moves", 0);
+      })
+    );
+    setup(
+      combobox,
+      () => sync2(combobox, ["moves", "activeId"], (state, prevState) => {
+        if (state.moves === prevState.moves) {
+          combobox.setState("activeValue", void 0);
+        }
+      })
+    );
+    setup(
+      combobox,
+      () => batch(combobox, ["moves", "renderedItems"], (state, prev) => {
+        if (state.moves === prev.moves) return;
+        const { activeId: activeId2 } = combobox.getState();
+        const activeItem = composite.item(activeId2);
+        combobox.setState("activeValue", activeItem == null ? void 0 : activeItem.value);
+      })
+    );
+    return {
+      ...popover,
+      ...composite,
+      ...combobox,
+      tag,
+      setValue: (value2) => combobox.setState("value", value2),
+      resetValue: () => combobox.setState("value", initialState.value),
+      setSelectedValue: (selectedValue2) => combobox.setState("selectedValue", selectedValue2)
+    };
+  }
+
+  // node_modules/@ariakit/react-core/esm/__chunks/SVN33SY6.js
+  function useComboboxStoreOptions(props) {
+    const tag = useTagContext();
+    props = {
+      ...props,
+      tag: props.tag !== void 0 ? props.tag : tag
+    };
+    return useCompositeStoreOptions(props);
+  }
+  function useComboboxStoreProps(store2, update4, props) {
+    useUpdateEffect(update4, [props.tag]);
+    useStoreProps(store2, props, "value", "setValue");
+    useStoreProps(store2, props, "selectedValue", "setSelectedValue");
+    useStoreProps(store2, props, "resetValueOnHide");
+    useStoreProps(store2, props, "resetValueOnSelect");
+    return Object.assign(
+      useCompositeStoreProps(
+        usePopoverStoreProps(store2, update4, props),
+        update4,
+        props
+      ),
+      { tag: props.tag }
+    );
+  }
+  function useComboboxStore(props = {}) {
+    props = useComboboxStoreOptions(props);
+    const [store2, update4] = useStore(createComboboxStore, props);
+    return useComboboxStoreProps(store2, update4, props);
+  }
+
+  // node_modules/@ariakit/react-core/esm/combobox/combobox-provider.js
+  var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
+  function ComboboxProvider(props = {}) {
+    const store2 = useComboboxStore(props);
+    return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(ComboboxContextProvider, { value: store2, children: props.children });
+  }
 
   // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
   var import_remove_accents = __toESM(require_remove_accents(), 1);
