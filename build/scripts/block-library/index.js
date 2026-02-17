@@ -42249,8 +42249,34 @@ ${js}
       isInnerBlockSelected,
       innerBlocks
     } = useInnerBlocks(clientId);
-    const hasSubmenus = !!innerBlocks.find(
-      (block) => block.name === "core/navigation-submenu"
+    const hasPageListWithSubmenuRef = (0, import_element80.useRef)(false);
+    const hasSubmenus = (0, import_data86.useSelect)(
+      (select9) => {
+        const hasNavigationSubmenu = innerBlocks.some(
+          (block) => block.name === "core/navigation-submenu"
+        );
+        if (hasNavigationSubmenu) {
+          return true;
+        }
+        const pageList = innerBlocks.find(
+          (block) => block.name === "core/page-list"
+        );
+        if (!pageList) {
+          hasPageListWithSubmenuRef.current = false;
+          return false;
+        }
+        if (hasPageListWithSubmenuRef.current) {
+          return true;
+        }
+        const { getBlocks } = select9(import_block_editor157.store);
+        const pageListBlocks = getBlocks(pageList.clientId);
+        if (pageListBlocks.length > 0) {
+          hasPageListWithSubmenuRef.current = true;
+          return true;
+        }
+        return false;
+      },
+      [innerBlocks]
     );
     const { records: overlayTemplateParts } = (0, import_core_data49.useEntityRecords)(
       "postType",
@@ -45332,7 +45358,8 @@ ${js}
       "customFontSize",
       "showSubmenuIcon",
       "style",
-      "openSubmenusOnClick"
+      "openSubmenusOnClick",
+      "submenuVisibility"
     ],
     supports: {
       anchor: true,
@@ -45640,7 +45667,9 @@ ${js}
         [(0, import_block_editor169.getColorClassName)(
           "background-color",
           context.backgroundColor
-        )]: !!context.backgroundColor
+        )]: !!context.backgroundColor,
+        "open-on-click": context.submenuVisibility === "click",
+        "open-always": context.submenuVisibility === "always"
       }),
       style: { ...context.style?.color }
     });
@@ -45906,7 +45935,8 @@ ${js}
       "customFontSize",
       "showSubmenuIcon",
       "style",
-      "openSubmenusOnClick"
+      "openSubmenusOnClick",
+      "submenuVisibility"
     ],
     supports: {
       anchor: true,
@@ -45964,6 +45994,8 @@ ${js}
     const { id, label, link, hasChildren, title } = attributes2;
     const isNavigationChild = "showSubmenuIcon" in context;
     const frontPageId = useFrontPageId();
+    const submenuVisibility = context.submenuVisibility;
+    const openOnClick = submenuVisibility === "click";
     const innerBlocksColors = getColors(context, true);
     const navigationChildBlockProps = getNavigationChildBlockProps(innerBlocksColors);
     const blockProps = (0, import_block_editor170.useBlockProps)(navigationChildBlockProps, {
@@ -45976,12 +46008,15 @@ ${js}
         className: clsx_default("wp-block-pages-list__item", {
           "has-child": hasChildren,
           "wp-block-navigation-item": isNavigationChild,
-          "open-on-click": context.openSubmenusOnClick,
-          "open-on-hover-click": !context.openSubmenusOnClick && context.showSubmenuIcon,
+          // Class assignment logic matches PHP rendering in page-list/index.php
+          "open-on-click": openOnClick,
+          "open-always": submenuVisibility === "always",
+          // Must check hover mode explicitly to match PHP elseif structure (index.php:212)
+          "open-on-hover-click": submenuVisibility === "hover" && context.showSubmenuIcon,
           "menu-item-home": id === frontPageId
         }),
         children: [
-          hasChildren && context.openSubmenusOnClick ? /* @__PURE__ */ (0, import_jsx_runtime349.jsxs)(import_jsx_runtime349.Fragment, { children: [
+          hasChildren && openOnClick ? /* @__PURE__ */ (0, import_jsx_runtime349.jsxs)(import_jsx_runtime349.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
               "button",
               {
@@ -46003,7 +46038,7 @@ ${js}
             }
           ),
           hasChildren && /* @__PURE__ */ (0, import_jsx_runtime349.jsxs)(import_jsx_runtime349.Fragment, { children: [
-            !context.openSubmenusOnClick && context.showSubmenuIcon && /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
+            !openOnClick && context.showSubmenuIcon && /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
               "button",
               {
                 className: "wp-block-navigation-item__content wp-block-navigation-submenu__toggle wp-block-page-list__submenu-icon wp-block-navigation__submenu-icon",

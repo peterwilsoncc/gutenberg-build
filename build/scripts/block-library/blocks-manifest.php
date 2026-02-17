@@ -4828,7 +4828,8 @@ return array(
 			'customFontSize',
 			'showSubmenuIcon',
 			'style',
-			'openSubmenusOnClick'
+			'openSubmenusOnClick',
+			'submenuVisibility'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -4926,7 +4927,8 @@ return array(
 			'customFontSize',
 			'showSubmenuIcon',
 			'style',
-			'openSubmenusOnClick'
+			'openSubmenusOnClick',
+			'submenuVisibility'
 		),
 		'supports' => array(
 			'anchor' => true,
