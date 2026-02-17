@@ -39191,6 +39191,7 @@ ${js}
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   function OverlayTemplatePartSelector({
     overlay,
+    overlayMenu,
     setAttributes,
     onNavigateToEntityRecord,
     isCreatingOverlay,
@@ -39280,10 +39281,14 @@ ${js}
       }
       const theme = selectedTemplatePart.theme || currentTheme;
       const templatePartId = createTemplatePartId(theme, overlay);
-      onNavigateToEntityRecord({
+      const params = {
         postId: templatePartId,
         postType: "wp_template_part"
-      });
+      };
+      if (overlayMenu === "mobile") {
+        params.viewport = "mobile";
+      }
+      onNavigateToEntityRecord(params);
     };
     const handleCreateOverlay = (0, import_element67.useCallback)(async () => {
       try {
@@ -39298,10 +39303,14 @@ ${js}
             theme,
             templatePart.slug
           );
-          onNavigateToEntityRecord({
+          const params = {
             postId: templatePartId,
             postType: "wp_template_part"
-          });
+          };
+          if (overlayMenu === "mobile") {
+            params.viewport = "mobile";
+          }
+          onNavigateToEntityRecord(params);
         } else {
           setIsCreating(false);
         }
@@ -39316,7 +39325,8 @@ ${js}
       onNavigateToEntityRecord,
       createErrorNotice,
       currentTheme,
-      setIsCreating
+      setIsCreating,
+      overlayMenu
     ]);
     const handleClearOverlay = (0, import_element67.useCallback)(() => {
       setAttributes({ overlay: void 0 });
@@ -39715,6 +39725,7 @@ ${js}
         OverlayTemplatePartSelector,
         {
           overlay,
+          overlayMenu,
           setAttributes,
           onNavigateToEntityRecord,
           isCreatingOverlay,
