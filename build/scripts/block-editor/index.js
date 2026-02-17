@@ -61238,6 +61238,26 @@ var wp;
     }
   }
   if (window.crossOriginIsolated) {
+    let startObservingBody = function() {
+      if (document.body) {
+        observer.observe(document.body, {
+          childList: true,
+          attributes: true,
+          subtree: true
+        });
+      } else if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => {
+          if (document.body) {
+            observer.observe(document.body, {
+              childList: true,
+              attributes: true,
+              subtree: true
+            });
+          }
+        });
+      }
+    };
+    startObservingBody2 = startObservingBody;
     const observer = new window.MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         [mutation.addedNodes, mutation.target].forEach((value) => {
@@ -61259,15 +61279,18 @@ var wp;
               );
               if (!isEmbedSandboxIframe) {
                 iframeNode.addEventListener("load", () => {
-                  if (iframeNode.contentDocument) {
-                    observer.observe(
-                      iframeNode.contentDocument,
-                      {
-                        childList: true,
-                        attributes: true,
-                        subtree: true
-                      }
-                    );
+                  try {
+                    if (iframeNode.contentDocument && iframeNode.contentDocument.body) {
+                      observer.observe(
+                        iframeNode.contentDocument,
+                        {
+                          childList: true,
+                          attributes: true,
+                          subtree: true
+                        }
+                      );
+                    }
+                  } catch (e2) {
                   }
                 });
               }
@@ -61286,12 +61309,9 @@ var wp;
         });
       });
     });
-    observer.observe(document.body, {
-      childList: true,
-      attributes: true,
-      subtree: true
-    });
+    startObservingBody();
   }
+  var startObservingBody2;
   if (window.crossOriginIsolated) {
     const supportsCredentialless = "credentialless" in window.HTMLIFrameElement.prototype;
     const disableEmbedPreviews = (0, import_compose93.createHigherOrderComponent)(
