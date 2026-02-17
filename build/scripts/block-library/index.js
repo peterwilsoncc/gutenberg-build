@@ -67732,7 +67732,14 @@ ${js}
                 setAttributes({
                   customActiveBackgroundColor: value
                 });
-              }
+              },
+              resetAllFilter: () => {
+                setActiveBackgroundColor(void 0);
+                setAttributes({
+                  customActiveBackgroundColor: void 0
+                });
+              },
+              clearable: true
             },
             {
               label: (0, import_i18n244.__)("Active text"),
@@ -67742,7 +67749,14 @@ ${js}
                 setAttributes({
                   customActiveTextColor: value
                 });
-              }
+              },
+              resetAllFilter: () => {
+                setActiveTextColor(void 0);
+                setAttributes({
+                  customActiveTextColor: void 0
+                });
+              },
+              clearable: true
             },
             {
               label: (0, import_i18n244.__)("Hover background"),
@@ -67752,7 +67766,14 @@ ${js}
                 setAttributes({
                   customHoverBackgroundColor: value
                 });
-              }
+              },
+              resetAllFilter: () => {
+                setHoverBackgroundColor(void 0);
+                setAttributes({
+                  customHoverBackgroundColor: void 0
+                });
+              },
+              clearable: true
             },
             {
               label: (0, import_i18n244.__)("Hover text"),
@@ -67762,7 +67783,14 @@ ${js}
                 setAttributes({
                   customHoverTextColor: value
                 });
-              }
+              },
+              resetAllFilter: () => {
+                setHoverTextColor(void 0);
+                setAttributes({
+                  customHoverTextColor: void 0
+                });
+              },
+              clearable: true
             }
           ],
           panelId: clientId,
