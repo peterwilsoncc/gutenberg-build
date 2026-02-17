@@ -6858,8 +6858,10 @@ var wp;
     const onInput = (0, import_element6.useCallback)(
       (newBlocks, options) => {
         const { selection, ...rest } = options;
-        const footnotesChanges = updateFootnotesFromMeta(newBlocks, meta);
-        const edits = { selection, ...footnotesChanges };
+        const edits = {
+          selection,
+          ...updateFootnotesFromMeta(newBlocks, meta)
+        };
         editEntityRecord2(kind, name, id, edits, {
           isCached: true,
           ...rest

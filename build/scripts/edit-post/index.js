@@ -624,7 +624,7 @@ var wp;
   var import_block_library = __toESM(require_block_library(), 1);
   var import_url5 = __toESM(require_url(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
-  var import_core_data6 = __toESM(require_core_data(), 1);
+  var import_core_data7 = __toESM(require_core_data(), 1);
   var import_components9 = __toESM(require_components(), 1);
   var import_compose3 = __toESM(require_compose(), 1);
 
@@ -2216,17 +2216,17 @@ var wp;
   var import_element10 = __toESM(require_element(), 1);
   var import_data23 = __toESM(require_data(), 1);
   var import_editor16 = __toESM(require_editor(), 1);
-  var { useGenerateBlockPath } = unlock(import_editor16.privateApis);
+  var import_core_data6 = __toESM(require_core_data(), 1);
   function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRenderingMode) {
-    const generateBlockPath = useGenerateBlockPath();
+    const registry = (0, import_data23.useRegistry)();
     const [postHistory, dispatch2] = (0, import_element10.useReducer)(
-      (historyState, { type, post: post2, previousRenderingMode: previousRenderingMode2, selectedBlockPath: selectedBlockPath2 }) => {
+      (historyState, { type, post: post2, previousRenderingMode: previousRenderingMode2, selectedBlockClientId }) => {
         if (type === "push") {
           const updatedHistory = [...historyState];
           const currentIndex = updatedHistory.length - 1;
           updatedHistory[currentIndex] = {
             ...updatedHistory[currentIndex],
-            selectedBlockPath: selectedBlockPath2
+            selectedBlockClientId
           };
           return [...updatedHistory, { post: post2, previousRenderingMode: previousRenderingMode2 }];
         }
@@ -2243,42 +2243,70 @@ var wp;
         }
       ]
     );
-    const { post, previousRenderingMode, selectedBlockPath } = postHistory[postHistory.length - 1];
+    const { post, previousRenderingMode } = postHistory[postHistory.length - 1];
     const { getRenderingMode } = (0, import_data23.useSelect)(import_editor16.store);
     const { setRenderingMode } = (0, import_data23.useDispatch)(import_editor16.store);
+    const { editEntityRecord } = (0, import_data23.useDispatch)(import_core_data6.store);
     const onNavigateToEntityRecord = (0, import_element10.useCallback)(
       (params) => {
-        const blockPath = params.selectedBlockClientId ? generateBlockPath(params.selectedBlockClientId) : null;
+        const entityEdits = registry.select(import_core_data6.store).getEntityRecordEdits("postType", post.postType, post.postId);
+        const externalClientId = entityEdits?.selection?.selectionStart?.clientId ?? null;
         dispatch2({
           type: "push",
           post: { postId: params.postId, postType: params.postType },
           // Save the current rendering mode so we can restore it when navigating back.
           previousRenderingMode: getRenderingMode(),
-          selectedBlockPath: blockPath
+          selectedBlockClientId: externalClientId
         });
         setRenderingMode(defaultRenderingMode);
       },
       [
+        registry,
+        post.postType,
+        post.postId,
         getRenderingMode,
         setRenderingMode,
-        defaultRenderingMode,
-        generateBlockPath
+        defaultRenderingMode
       ]
     );
     const onNavigateToPreviousEntityRecord = (0, import_element10.useCallback)(() => {
+      if (postHistory.length > 1) {
+        const previousItem = postHistory[postHistory.length - 2];
+        if (previousItem.selectedBlockClientId) {
+          editEntityRecord(
+            "postType",
+            previousItem.post.postType,
+            previousItem.post.postId,
+            {
+              selection: {
+                selectionStart: {
+                  clientId: previousItem.selectedBlockClientId
+                },
+                selectionEnd: {
+                  clientId: previousItem.selectedBlockClientId
+                }
+              }
+            },
+            { undoIgnore: true }
+          );
+        }
+      }
       dispatch2({
         type: "pop"
       });
       if (previousRenderingMode) {
         setRenderingMode(previousRenderingMode);
       }
-    }, [setRenderingMode, previousRenderingMode]);
+    }, [
+      setRenderingMode,
+      previousRenderingMode,
+      postHistory,
+      editEntityRecord
+    ]);
     return {
       currentPost: post,
       onNavigateToEntityRecord,
-      onNavigateToPreviousEntityRecord: postHistory.length > 1 ? onNavigateToPreviousEntityRecord : void 0,
-      // Return the selected block path from the current history item
-      previousSelectedBlockPath: selectedBlockPath
+      onNavigateToPreviousEntityRecord: postHistory.length > 1 ? onNavigateToPreviousEntityRecord : void 0
     };
   }
 
@@ -2539,8 +2567,7 @@ var wp;
     const {
       currentPost: { postId: currentPostId, postType: currentPostType },
       onNavigateToEntityRecord,
-      onNavigateToPreviousEntityRecord,
-      previousSelectedBlockPath
+      onNavigateToPreviousEntityRecord
     } = useNavigateToEntityRecord(
       initialPostId,
       initialPostType,
@@ -2564,7 +2591,7 @@ var wp;
         const { get } = select3(import_preferences10.store);
         const { isFeatureActive: isFeatureActive2, hasMetaBoxes: hasMetaBoxes2 } = select3(store);
         const { canUser, getPostType, getTemplateId } = unlock(
-          select3(import_core_data6.store)
+          select3(import_core_data7.store)
         );
         const supportsTemplateMode = settings.supportsTemplateMode;
         const isViewable = getPostType(currentPostType)?.viewable ?? false;
@@ -2715,7 +2742,6 @@ var wp;
               disableIframe: !shouldIframe,
               autoFocus: !isWelcomeGuideVisible,
               onActionPerformed,
-              initialSelection: previousSelectedBlockPath,
               extraSidebarPanels: showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxes, { location: "side" }),
               extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxesMain, { isLegacy: isDevicePreview }),
               children: [
