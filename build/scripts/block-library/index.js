@@ -29117,9 +29117,8 @@ ${js}
   // packages/block-library/build-module/icon/edit.mjs
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
   function Edit16({ attributes: attributes2, setAttributes }) {
-    const { icon: icon4, ariaLabel, style: style2 } = attributes2;
+    const { icon: icon4, ariaLabel } = attributes2;
     const [isInserterOpen, setInserterOpen] = (0, import_element42.useState)(false);
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data45.useDispatch)(import_block_editor109.store);
     const isContentOnlyMode = (0, import_block_editor109.useBlockEditingMode)() === "contentOnly";
     const colorProps = (0, import_block_editor109.__experimentalUseColorProps)(attributes2);
     const spacingProps = (0, import_block_editor109.__experimentalGetSpacingClassesAndStyles)(attributes2);
@@ -29128,22 +29127,6 @@ ${js}
     const allIcons = (0, import_data45.useSelect)((select9) => {
       return unlock(select9(import_core_data22.store)).getIcons();
     }, []);
-    (0, import_element42.useEffect)(() => {
-      if (!style2?.dimensions?.width || parseFloat(style2?.dimensions?.width) === 0) {
-        __unstableMarkNextChangeAsNotPersistent();
-        setAttributes({
-          style: {
-            ...style2,
-            dimensions: { ...style2?.dimensions, width: "12px" }
-          }
-        });
-      }
-    }, [
-      icon4,
-      style2,
-      setAttributes,
-      __unstableMarkNextChangeAsNotPersistent
-    ]);
     const iconToDisplay = allIcons?.length > 0 ? allIcons?.find(({ name: name123 }) => name123 === icon4)?.content : "";
     const blockControls = /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_block_editor109.BlockControls, { group: isContentOnlyMode ? "inline" : "other", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
