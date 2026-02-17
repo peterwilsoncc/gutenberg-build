@@ -38,16 +38,6 @@ return array(
 		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/vips/worker',
-		'path' => 'vips/worker',
-		'asset' => 'vips/worker.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/vips/loader',
-		'path' => 'vips/loader',
-		'asset' => 'vips/loader.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/abilities',
 		'path' => 'abilities/index',
 		'asset' => 'abilities/index.min.asset.php',
@@ -71,6 +61,16 @@ return array(
 		'id' => '@wordpress/lazy-editor',
 		'path' => 'lazy-editor/index',
 		'asset' => 'lazy-editor/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/vips/worker',
+		'path' => 'vips/worker',
+		'asset' => 'vips/worker.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/vips/loader',
+		'path' => 'vips/loader',
+		'asset' => 'vips/loader.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/workflow',

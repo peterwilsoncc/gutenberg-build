@@ -73993,7 +73993,7 @@ var wp;
     const fields = [];
     const fieldIds = [];
     Object.entries(attributes).forEach(([name, def]) => {
-      if (!def.__experimentalAutoInspectorControl) {
+      if (!def.autoGenerateControl) {
         return;
       }
       const field = createFieldFromAttribute(name, def);
@@ -74030,12 +74030,12 @@ var wp;
 
   // packages/block-editor/build-module/hooks/auto-inspector-controls.mjs
   var import_jsx_runtime464 = __toESM(require_jsx_runtime(), 1);
-  function hasAutoInspectorControlAttributes(blockTypeAttributes) {
+  function hasAutoGenerateControl(blockTypeAttributes) {
     if (!blockTypeAttributes) {
       return false;
     }
     return Object.values(blockTypeAttributes).some(
-      (attr) => attr?.__experimentalAutoInspectorControl
+      (attr) => attr?.autoGenerateControl
     );
   }
   function AutoRegisterControls({ name, clientId, setAttributes }) {
@@ -74072,7 +74072,7 @@ var wp;
     attributeKeys: [],
     hasSupport(name) {
       const blockType = (0, import_blocks123.getBlockType)(name);
-      return hasAutoInspectorControlAttributes(blockType?.attributes);
+      return hasAutoGenerateControl(blockType?.attributes);
     }
   };
 
