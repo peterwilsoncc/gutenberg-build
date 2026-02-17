@@ -9338,6 +9338,18 @@ var wp;
     }
     return state;
   }
+  function requestedInspectorTab(state = null, action) {
+    switch (action.type) {
+      case "REQUEST_INSPECTOR_TAB":
+        return {
+          tabName: action.tabName,
+          options: action.options
+        };
+      case "CLEAR_REQUESTED_INSPECTOR_TAB":
+        return null;
+    }
+    return state;
+  }
   var combinedReducers = (0, import_data2.combineReducers)({
     blocks,
     isDragging,
@@ -9372,7 +9384,8 @@ var wp;
     hasBlockSpotlight,
     openedListViewPanels,
     listViewExpandRevision,
-    listViewContentPanelOpen
+    listViewContentPanelOpen,
+    requestedInspectorTab
   });
   function getBlockTreeBlock(state, clientId) {
     if (clientId === "") {
@@ -10639,6 +10652,7 @@ var wp;
     getPatternBySlug: () => getPatternBySlug,
     getRegisteredInserterMediaCategories: () => getRegisteredInserterMediaCategories,
     getRemovalPromptData: () => getRemovalPromptData,
+    getRequestedInspectorTab: () => getRequestedInspectorTab,
     getReusableBlocks: () => getReusableBlocks,
     getSectionRootClientId: () => getSectionRootClientId,
     getStyleOverrides: () => getStyleOverrides,
@@ -11265,6 +11279,9 @@ var wp;
   }
   function getViewportModalClientIds(state) {
     return state.viewportModalClientIds;
+  }
+  function getRequestedInspectorTab(state) {
+    return state.requestedInspectorTab;
   }
 
   // packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.mjs
@@ -13048,6 +13065,7 @@ var wp;
   __export(private_actions_exports, {
     __experimentalUpdateSettings: () => __experimentalUpdateSettings,
     clearBlockRemovalPrompt: () => clearBlockRemovalPrompt,
+    clearRequestedInspectorTab: () => clearRequestedInspectorTab,
     closeListViewContentPanel: () => closeListViewContentPanel,
     deleteStyleOverride: () => deleteStyleOverride,
     editContentOnlySection: () => editContentOnlySection,
@@ -13057,6 +13075,7 @@ var wp;
     hideViewportModal: () => hideViewportModal,
     openListViewContentPanel: () => openListViewContentPanel,
     privateRemoveBlocks: () => privateRemoveBlocks,
+    requestInspectorTab: () => requestInspectorTab,
     resetZoomLevel: () => resetZoomLevel,
     setBlockRemovalRules: () => setBlockRemovalRules,
     setInsertionPoint: () => setInsertionPoint,
@@ -13312,6 +13331,18 @@ var wp;
   function hideViewportModal() {
     return {
       type: "HIDE_VIEWPORT_MODAL"
+    };
+  }
+  function requestInspectorTab(tabName, options = {}) {
+    return {
+      type: "REQUEST_INSPECTOR_TAB",
+      tabName,
+      options
+    };
+  }
+  function clearRequestedInspectorTab() {
+    return {
+      type: "CLEAR_REQUESTED_INSPECTOR_TAB"
     };
   }
 
@@ -59616,7 +59647,14 @@ var wp;
     const showIconLabels = (0, import_data166.useSelect)((select3) => {
       return select3(import_preferences5.store).get("core", "showIconLabels");
     }, []);
-    const [selectedTabId, setSelectedTabId] = (0, import_element212.useState)(tabs[0]?.name);
+    const { requestedTab } = (0, import_data166.useSelect)((select3) => ({
+      requestedTab: unlock(
+        select3(store)
+      ).getRequestedInspectorTab()
+    }));
+    const [selectedTabId, setSelectedTabId] = (0, import_element212.useState)(
+      () => requestedTab?.tabName ?? tabs[0]?.name
+    );
     const hasUserSelectionRef = (0, import_element212.useRef)(false);
     const isProgrammaticSwitchRef = (0, import_element212.useRef)(false);
     const {
@@ -59624,9 +59662,30 @@ var wp;
       __unstableIncrementListViewExpandRevision: incrementListViewExpandRevision,
       __unstableSetAllListViewPanelsOpen: setAllListViewPanelsOpen
     } = (0, import_data166.useDispatch)(store);
+    const { clearRequestedInspectorTab: clearRequestedInspectorTab2 } = unlock(
+      (0, import_data166.useDispatch)(store)
+    );
     (0, import_element212.useEffect)(() => {
       hasUserSelectionRef.current = false;
     }, [clientId]);
+    (0, import_element212.useEffect)(() => {
+      if (!requestedTab) {
+        return;
+      }
+      setSelectedTabId(requestedTab.tabName);
+      if (requestedTab.tabName === TAB_LIST_VIEW.name && requestedTab.options?.openPanel) {
+        setOpenListViewPanel(requestedTab.options.openPanel);
+        incrementListViewExpandRevision();
+      }
+      isProgrammaticSwitchRef.current = true;
+      hasUserSelectionRef.current = true;
+      clearRequestedInspectorTab2();
+    }, [
+      requestedTab,
+      setOpenListViewPanel,
+      incrementListViewExpandRevision,
+      clearRequestedInspectorTab2
+    ]);
     (0, import_element212.useEffect)(() => {
       if (selectedTabId === TAB_LIST_VIEW.name && !hasUserSelectionRef.current) {
         setAllListViewPanelsOpen();

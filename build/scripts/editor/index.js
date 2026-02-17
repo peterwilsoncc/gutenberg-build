@@ -47698,7 +47698,9 @@ var wp;
   var TEMPLATE_PART_BLOCK_NAME = "core/template-part";
   var BLOCK_INSPECTOR_AREA = "edit-post/block";
   function TemplatePartNavigationEditButton({ clientId }) {
+    const registry = (0, import_data179.useRegistry)();
     const { selectBlock: selectBlock2, flashBlock } = (0, import_data179.useDispatch)(import_block_editor66.store);
+    const { requestInspectorTab } = unlock((0, import_data179.useDispatch)(import_block_editor66.store));
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data179.useDispatch)(store2);
     const {
       hasNavigationBlocks,
@@ -47729,15 +47731,22 @@ var wp;
     );
     const onEditNavigation = (0, import_element143.useCallback)(() => {
       if (firstNavigationBlockId) {
-        selectBlock2(firstNavigationBlockId);
-        flashBlock(firstNavigationBlockId, 500);
-        enableComplementaryArea2("core", BLOCK_INSPECTOR_AREA);
+        registry.batch(() => {
+          selectBlock2(firstNavigationBlockId);
+          flashBlock(firstNavigationBlockId, 500);
+          enableComplementaryArea2("core", BLOCK_INSPECTOR_AREA);
+          requestInspectorTab("list", {
+            openPanel: firstNavigationBlockId
+          });
+        });
       }
     }, [
       firstNavigationBlockId,
+      registry,
       selectBlock2,
       flashBlock,
-      enableComplementaryArea2
+      enableComplementaryArea2,
+      requestInspectorTab
     ]);
     if (!hasNavigationBlocks || !isNavigationEditable) {
       return null;
