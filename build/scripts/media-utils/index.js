@@ -17907,6 +17907,12 @@ If there's a particular need for this, please submit a feature request at https:
               id: NOTICE_ID_UPLOAD_PROGRESS
             }
           );
+          const uploadedIds = attachments.map((attachment) => String(attachment.id)).filter(Boolean);
+          if (multiple) {
+            setSelection((prev) => [...prev, ...uploadedIds]);
+          } else {
+            setSelection(uploadedIds.slice(0, 1));
+          }
           invalidateResolution("getEntityRecords", [
             "postType",
             "attachment",
@@ -17914,7 +17920,7 @@ If there's a particular need for this, please submit a feature request at https:
           ]);
         }
       },
-      [createSuccessNotice, invalidateResolution, queryArgs]
+      [createSuccessNotice, invalidateResolution, queryArgs, multiple]
     );
     const handleUploadError = (0, import_element59.useCallback)(
       (error) => {
