@@ -9472,7 +9472,8 @@ var wp;
       (clientId) => state.blockListSettings[clientId]?.templateLock === "contentOnly"
     );
     const isIsolatedEditor = state.settings?.[isIsolatedEditorKey];
-    const unsyncedPatternClientIds = isIsolatedEditor ? [] : Array.from(state.blocks.attributes.keys()).filter(
+    const disableContentOnlyForUnsyncedPatterns = state.settings?.disableContentOnlyForUnsyncedPatterns;
+    const unsyncedPatternClientIds = isIsolatedEditor || disableContentOnlyForUnsyncedPatterns ? [] : Array.from(state.blocks.attributes.keys()).filter(
       (clientId) => state.blocks.attributes.get(clientId)?.metadata?.patternName
     );
     const contentOnlyParents = [
@@ -9663,6 +9664,10 @@ var wp;
           break;
         }
         case "UPDATE_BLOCK_ATTRIBUTES": {
+          const disableContentOnlyForUnsyncedPatterns = nextState.settings?.disableContentOnlyForUnsyncedPatterns;
+          if (disableContentOnlyForUnsyncedPatterns) {
+            break;
+          }
           const addedBlocks = [];
           const removedClientIds = [];
           for (const clientId of action?.clientIds) {
@@ -9814,7 +9819,7 @@ var wp;
           break;
         }
         case "UPDATE_SETTINGS": {
-          if (state?.settings?.[sectionRootClientIdKey] !== nextState?.settings?.[sectionRootClientIdKey]) {
+          if (state?.settings?.[sectionRootClientIdKey] !== nextState?.settings?.[sectionRootClientIdKey] || !!state?.settings?.disableContentOnlyForUnsyncedPatterns !== !!nextState?.settings?.disableContentOnlyForUnsyncedPatterns) {
             return {
               ...nextState,
               derivedBlockEditingModes: getDerivedBlockEditingModesForTree(nextState)
@@ -11110,7 +11115,8 @@ var wp;
     const attributes = getBlockAttributes(state, clientId);
     const isTemplatePart9 = blockName === "core/template-part";
     const isIsolatedEditor = state.settings?.[isIsolatedEditorKey];
-    if ((attributes?.metadata?.patternName || isTemplatePart9) && !isIsolatedEditor) {
+    const disableContentOnlyForUnsyncedPatterns = state.settings?.disableContentOnlyForUnsyncedPatterns;
+    if ((!disableContentOnlyForUnsyncedPatterns && attributes?.metadata?.patternName || isTemplatePart9) && !isIsolatedEditor) {
       return true;
     }
     const hasContentOnlyTempateLock = getTemplateLock(state, clientId) === "contentOnly";

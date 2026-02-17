@@ -15631,6 +15631,7 @@ var wp;
     "clearBlockSelection",
     "codeEditingEnabled",
     "colors",
+    "disableContentOnlyForUnsyncedPatterns",
     "disableCustomColors",
     "disableCustomFontSizes",
     "disableCustomSpacingSizes",
