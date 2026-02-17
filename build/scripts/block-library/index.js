@@ -41550,9 +41550,9 @@ ${js}
                     iconPosition: "right",
                     __next40pxDefaultSize: true,
                     children: (0, import_i18n137.sprintf)(
-                      /* translators: %s: entity type (e.g., "page", "post", "category") or "site" for external links */
+                      /* translators: %s: entity type (e.g., "page", "post", "category") or "link" for external links */
                       (0, import_i18n137.__)("View %s"),
-                      entityTypeName !== "item" ? entityTypeName : (0, import_i18n137.__)("site")
+                      attributes2.kind && attributes2.type && attributes2.kind !== "custom" ? entityTypeName : (0, import_i18n137.__)("link")
                     )
                   }
                 )
