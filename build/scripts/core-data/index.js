@@ -870,53 +870,6 @@ var wp;
   var import_sync = __toESM(require_sync(), 1);
 
   // packages/core-data/build-module/awareness/utils.mjs
-  var COLOR_PALETTE = [
-    "#3858E9",
-    // blueberry
-    "#B42AED",
-    // purple
-    "#E33184",
-    // pink
-    "#F3661D",
-    // orange
-    "#ECBD3A",
-    // yellow
-    "#97FE17",
-    // green
-    "#00FDD9",
-    // teal
-    "#37C5F0"
-    // cyan
-  ];
-  function generateRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  function getNewCollaboratorColor(existingColors) {
-    const availableColors = COLOR_PALETTE.filter(
-      (color) => !existingColors.includes(color)
-    );
-    let hexColor;
-    if (availableColors.length > 0) {
-      const randomIndex = generateRandomInt(0, availableColors.length - 1);
-      hexColor = availableColors[randomIndex];
-    } else {
-      const randomIndex = generateRandomInt(0, COLOR_PALETTE.length - 1);
-      const baseColor = COLOR_PALETTE[randomIndex];
-      hexColor = generateColorVariation(baseColor);
-    }
-    return hexColor;
-  }
-  function generateColorVariation(hexColor) {
-    const r = parseInt(hexColor.slice(1, 3), 16);
-    const g = parseInt(hexColor.slice(3, 5), 16);
-    const b = parseInt(hexColor.slice(5, 7), 16);
-    const shift = generateRandomInt(-30, 30);
-    const newR = Math.min(255, Math.max(0, r + shift));
-    const newG = Math.min(255, Math.max(0, g + shift));
-    const newB = Math.min(255, Math.max(0, b + shift));
-    const toHex = (n) => n.toString(16).padStart(2, "0").toUpperCase();
-    return `#${toHex(newR)}${toHex(newG)}${toHex(newB)}`;
-  }
   function getBrowserName() {
     const userAgent = window.navigator.userAgent;
     let browserName = "Unknown";
@@ -960,13 +913,12 @@ var wp;
       return value === collaboratorInfo2[key];
     });
   }
-  function generateCollaboratorInfo(currentCollaborator, existingColors) {
+  function generateCollaboratorInfo(currentCollaborator) {
     const { avatar_urls, id, name, slug } = currentCollaborator;
     return {
       avatar_urls,
       // eslint-disable-line camelcase
       browserType: getBrowserName(),
-      color: getNewCollaboratorColor(existingColors),
       enteredAt: Date.now(),
       id,
       name,
@@ -1257,15 +1209,8 @@ var wp;
      * Set the current collaborator info in the local state.
      */
     async setCurrentCollaboratorInfo() {
-      const states = this.getStates();
-      const otherCollaboratorColors = Array.from(states.entries()).filter(
-        ([clientId, state]) => state.collaboratorInfo && clientId !== this.clientID
-      ).map(([, state]) => state.collaboratorInfo.color).filter(Boolean);
       const currentUser2 = await (0, import_data2.resolveSelect)(STORE_NAME).getCurrentUser();
-      const collaboratorInfo = generateCollaboratorInfo(
-        currentUser2,
-        otherCollaboratorColors
-      );
+      const collaboratorInfo = generateCollaboratorInfo(currentUser2);
       this.setLocalStateField("collaboratorInfo", collaboratorInfo);
     }
   };
