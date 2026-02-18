@@ -25935,6 +25935,46 @@ var wp;
       };
     });
   }
+  var iframeSrcCache = /* @__PURE__ */ new WeakMap();
+  var iframeSrcCleanup = globalThis.FinalizationRegistry ? new globalThis.FinalizationRegistry(
+    (url) => URL.revokeObjectURL(url)
+  ) : void 0;
+  function getIframeSrc(resolvedAssets) {
+    let src = iframeSrcCache.get(resolvedAssets);
+    if (src) {
+      return src;
+    }
+    const html = `<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<base href="${window.location.href}">
+		<script>window.frameElement._load()<\/script>
+		<style>
+			html{
+				height: auto !important;
+				min-height: 100%;
+			}
+			/* Lowest specificity to not override global styles */
+			:where(body) {
+				margin: 0;
+				/* Default background color in case zoom out mode background
+				colors the html element */
+				background-color: white;
+			}
+		</style>
+		${resolvedAssets.styles ?? ""}
+		${resolvedAssets.scripts ?? ""}
+	</head>
+	<body>
+		<script>document.currentScript.parentElement.remove()<\/script>
+	</body>
+</html>`;
+    src = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+    iframeSrcCache.set(resolvedAssets, src);
+    iframeSrcCleanup?.register(resolvedAssets, src);
+    return src;
+  }
   function Iframe({
     contentRef,
     children,
@@ -25947,14 +25987,12 @@ var wp;
     ...props
   }) {
     const { resolvedAssets, isPreviewMode } = (0, import_data47.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
-      const settings2 = getSettings7();
+      const settings2 = select3(store).getSettings();
       return {
         resolvedAssets: settings2.__unstableResolvedAssets,
         isPreviewMode: settings2.isPreviewMode
       };
     }, []);
-    const { styles = "", scripts = "" } = resolvedAssets;
     const [iframeDocument, setIframeDocument] = (0, import_element45.useState)();
     const [bodyClasses, setBodyClasses] = (0, import_element45.useState)([]);
     const [before, writingFlowRef, after] = useWritingFlow();
@@ -26043,39 +26081,7 @@ var wp;
       writingFlowRef,
       disabledRef
     ]);
-    const html = `<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<base href="${window.location.origin}">
-		<script>window.frameElement._load()<\/script>
-		<style>
-			html{
-				height: auto !important;
-				min-height: 100%;
-			}
-			/* Lowest specificity to not override global styles */
-			:where(body) {
-				margin: 0;
-				/* Default background color in case zoom out mode background
-				colors the html element */
-				background-color: white;
-			}
-		</style>
-		${styles}
-		${scripts}
-	</head>
-	<body>
-		<script>document.currentScript.parentElement.remove()<\/script>
-	</body>
-</html>`;
-    const [src, cleanup] = (0, import_element45.useMemo)(() => {
-      const _src = URL.createObjectURL(
-        new window.Blob([html], { type: "text/html" })
-      );
-      return [_src, () => URL.revokeObjectURL(_src)];
-    }, [html]);
-    (0, import_element45.useEffect)(() => cleanup, [cleanup]);
+    const src = getIframeSrc(resolvedAssets);
     const shouldRenderFocusCaptureElements = tabIndex >= 0 && !isPreviewMode;
     const iframe = /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(import_jsx_runtime159.Fragment, { children: [
       shouldRenderFocusCaptureElements && before,
