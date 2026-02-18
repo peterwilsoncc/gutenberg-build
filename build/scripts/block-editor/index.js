@@ -1040,7 +1040,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment92 = REACT_FRAGMENT_TYPE;
+          var Fragment93 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1099,7 +1099,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment92;
+          exports.Fragment = Fragment93;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -2074,10 +2074,10 @@ var wp;
         };
         return function(d2, b2) {
           extendStatics2(d2, b2);
-          function __221() {
+          function __222() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__221.prototype = b2.prototype, new __221());
+          d2.prototype = b2 === null ? Object.create(b2) : (__222.prototype = b2.prototype, new __222());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t3) {
@@ -15450,10 +15450,10 @@ var wp;
     if (typeof b2 !== "function" && b2 !== null)
       throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
     extendStatics(d2, b2);
-    function __221() {
+    function __222() {
       this.constructor = d2;
     }
-    d2.prototype = b2 === null ? Object.create(b2) : (__221.prototype = b2.prototype, new __221());
+    d2.prototype = b2 === null ? Object.create(b2) : (__222.prototype = b2.prototype, new __222());
   }
   var __assign = function() {
     __assign = Object.assign || function __assign2(t3) {
@@ -69001,7 +69001,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_components251 = __toESM(require_components(), 1);
+  var import_compose99 = __toESM(require_compose(), 1);
   var import_element253 = __toESM(require_element(), 1);
+  var import_i18n225 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
   var import_i18n224 = __toESM(require_i18n(), 1);
@@ -69047,87 +69049,6 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_jsx_runtime432 = __toESM(require_jsx_runtime(), 1);
-  var NonCollapsibleCardHeader = ({
-    children,
-    ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components251.CardHeader, { isBorderless: true, ...props, children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-    "div",
-    {
-      style: {
-        height: "40px",
-        // This is to match the chevron's __next40pxDefaultSize
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center"
-      },
-      children
-    }
-  ) });
-  function useCardHeader(layout) {
-    const { isOpened, isCollapsible } = layout;
-    const [isOpen, setIsOpen] = (0, import_element253.useState)(isOpened);
-    const [touched, setTouched] = (0, import_element253.useState)(false);
-    (0, import_element253.useEffect)(() => {
-      setIsOpen(isOpened);
-    }, [isOpened]);
-    const toggle = (0, import_element253.useCallback)(() => {
-      if (isOpen) {
-        setTouched(true);
-      }
-      setIsOpen((prev) => !prev);
-    }, [isOpen]);
-    const CollapsibleCardHeader = (0, import_element253.useCallback)(
-      ({
-        children,
-        ...props
-      }) => /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
-        import_components251.CardHeader,
-        {
-          ...props,
-          onClick: toggle,
-          style: {
-            cursor: "pointer",
-            ...props.style
-          },
-          isBorderless: true,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-              "div",
-              {
-                style: {
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                },
-                children
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-              import_components251.Button,
-              {
-                __next40pxDefaultSize: true,
-                variant: "tertiary",
-                icon: isOpen ? chevron_up_default : chevron_down_default,
-                "aria-expanded": isOpen,
-                "aria-label": isOpen ? "Collapse" : "Expand"
-              }
-            )
-          ]
-        }
-      ),
-      [toggle, isOpen]
-    );
-    const effectiveIsOpen = isCollapsible ? isOpen : true;
-    const CardHeaderComponent = isCollapsible ? CollapsibleCardHeader : NonCollapsibleCardHeader;
-    return {
-      isOpen: effectiveIsOpen,
-      CardHeader: CardHeaderComponent,
-      touched,
-      setTouched
-    };
-  }
   function isSummaryFieldVisible(summaryField, summaryConfig, isOpen) {
     if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
       return false;
@@ -69164,6 +69085,10 @@ var wp;
     const { fields } = (0, import_element253.useContext)(dataform_context_default);
     const layout = field.layout;
     const cardBodyRef = (0, import_element253.useRef)(null);
+    const bodyId = (0, import_compose99.useInstanceId)(
+      FormCardField,
+      "dataforms-layouts-card-card-body"
+    );
     const form = (0, import_element253.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
@@ -69171,7 +69096,21 @@ var wp;
       }),
       [field]
     );
-    const { isOpen, CardHeader, touched, setTouched } = useCardHeader(layout);
+    const { isOpened, isCollapsible } = layout;
+    const [internalIsOpen, setIsOpen] = (0, import_element253.useState)(isOpened);
+    const [touched, setTouched] = (0, import_element253.useState)(false);
+    (0, import_element253.useEffect)(() => {
+      setIsOpen(isOpened);
+    }, [isOpened]);
+    const toggle = (0, import_element253.useCallback)(() => {
+      setIsOpen((prev) => {
+        if (prev) {
+          setTouched(true);
+        }
+        return !prev;
+      });
+    }, []);
+    const isOpen = isCollapsible ? internalIsOpen : true;
     const handleBlur = (0, import_element253.useCallback)(() => {
       setTouched(true);
     }, [setTouched]);
@@ -69187,65 +69126,48 @@ var wp;
       inlineStart: "medium",
       inlineEnd: "medium"
     };
-    if (!!field.children) {
-      const withHeader2 = !!field.label && layout.withHeader;
-      const sizeCardBody2 = {
-        blockStart: withHeader2 ? "none" : "medium",
-        blockEnd: "medium",
-        inlineStart: "medium",
-        inlineEnd: "medium"
-      };
-      return /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(import_components251.Card, { className: "dataforms-layouts-card__field", size: sizeCard, children: [
-        withHeader2 && /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: field.label }),
-          validationBadge,
-          visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map(
-            (summaryField) => /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-              summaryField.render,
-              {
-                item: data,
-                field: summaryField
-              },
-              summaryField.id
-            )
-          ) })
-        ] }),
-        (isOpen || !withHeader2) && // If it doesn't have a header, keep it open.
-        // Otherwise, the card will not be visible.
-        /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
-          import_components251.CardBody,
+    let label = field.label;
+    let withHeader;
+    let bodyContent;
+    if (field.children) {
+      withHeader = !!label && layout.withHeader;
+      bodyContent = /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(import_jsx_runtime432.Fragment, { children: [
+        field.description && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+        /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+          DataFormLayout,
           {
-            size: sizeCardBody2,
-            className: "dataforms-layouts-card__field-control",
-            ref: cardBodyRef,
-            onBlur: handleBlur,
-            children: [
-              field.description && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-              /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-                DataFormLayout,
-                {
-                  data,
-                  form,
-                  onChange,
-                  validity: validity?.children
-                }
-              )
-            ]
+            data,
+            form,
+            onChange,
+            validity: validity?.children
           }
         )
       ] });
+    } else {
+      const fieldDefinition = fields.find(
+        (fieldDef) => fieldDef.id === field.id
+      );
+      if (!fieldDefinition || !fieldDefinition.Edit) {
+        return null;
+      }
+      const SingleFieldLayout = getFormFieldLayout("regular")?.component;
+      if (!SingleFieldLayout) {
+        return null;
+      }
+      label = fieldDefinition.label;
+      withHeader = !!label && layout.withHeader;
+      bodyContent = /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+        SingleFieldLayout,
+        {
+          data,
+          field,
+          onChange,
+          hideLabelFromVision: hideLabelFromVision || withHeader,
+          markWhenOptional,
+          validity
+        }
+      );
     }
-    const fieldDefinition = fields.find(
-      (fieldDef) => fieldDef.id === field.id
-    );
-    if (!fieldDefinition || !fieldDefinition.Edit) {
-      return null;
-    }
-    const RegularLayout = getFormFieldLayout("regular")?.component;
-    if (!RegularLayout) {
-      return null;
-    }
-    const withHeader = !!fieldDefinition.label && layout.withHeader;
     const sizeCardBody = {
       blockStart: withHeader ? "none" : "medium",
       blockEnd: "medium",
@@ -69253,38 +69175,69 @@ var wp;
       inlineEnd: "medium"
     };
     return /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(import_components251.Card, { className: "dataforms-layouts-card__field", size: sizeCard, children: [
-      withHeader && /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: fieldDefinition.label }),
-        validationBadge,
-        visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-          summaryField.render,
-          {
-            item: data,
-            field: summaryField
+      withHeader && /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
+        import_components251.CardHeader,
+        {
+          className: "dataforms-layouts-card__field-header",
+          onClick: isCollapsible ? toggle : void 0,
+          style: {
+            cursor: isCollapsible ? "pointer" : void 0
           },
-          summaryField.id
-        )) })
-      ] }),
+          isBorderless: true,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
+              "div",
+              {
+                style: {
+                  // Match the expand/collapse button's height to avoid layout
+                  // differences when that button is not displayed.
+                  height: isCollapsible ? void 0 : "40px",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: label }),
+                  validationBadge,
+                  visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map(
+                    (summaryField) => /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+                      summaryField.render,
+                      {
+                        item: data,
+                        field: summaryField
+                      },
+                      summaryField.id
+                    )
+                  ) })
+                ]
+              }
+            ),
+            isCollapsible && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+              import_components251.Button,
+              {
+                __next40pxDefaultSize: true,
+                variant: "tertiary",
+                icon: isOpen ? chevron_up_default : chevron_down_default,
+                "aria-expanded": isOpen,
+                "aria-controls": bodyId,
+                "aria-label": isOpen ? (0, import_i18n225.__)("Collapse") : (0, import_i18n225.__)("Expand")
+              }
+            )
+          ]
+        }
+      ),
       (isOpen || !withHeader) && // If it doesn't have a header, keep it open.
       // Otherwise, the card will not be visible.
       /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
         import_components251.CardBody,
         {
+          id: bodyId,
           size: sizeCardBody,
           className: "dataforms-layouts-card__field-control",
           ref: cardBodyRef,
           onBlur: handleBlur,
-          children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-            RegularLayout,
-            {
-              data,
-              field,
-              onChange,
-              hideLabelFromVision: hideLabelFromVision || withHeader,
-              markWhenOptional,
-              validity
-            }
-          )
+          children: bodyContent
         }
       )
     ] });
@@ -69370,7 +69323,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
   var import_element254 = __toESM(require_element(), 1);
-  var import_i18n225 = __toESM(require_i18n(), 1);
+  var import_i18n226 = __toESM(require_i18n(), 1);
   var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
     data,
@@ -69420,7 +69373,7 @@ var wp;
     if (summaryField && summaryField.render) {
       summaryContent = /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(summaryField.render, { item: data, field: summaryField });
     } else {
-      summaryContent = field.label || (0, import_i18n225.__)("More details");
+      summaryContent = field.label || (0, import_i18n226.__)("More details");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(
       "details",
@@ -69624,16 +69577,16 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-fields/index.mjs
   var import_element259 = __toESM(require_element(), 1);
-  var import_i18n229 = __toESM(require_i18n(), 1);
+  var import_i18n230 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/block-fields/fields-dropdown-menu.mjs
   var import_components253 = __toESM(require_components(), 1);
-  var import_i18n226 = __toESM(require_i18n(), 1);
+  var import_i18n227 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/block-fields/use-inspector-popover-placement.mjs
-  var import_compose99 = __toESM(require_compose(), 1);
+  var import_compose100 = __toESM(require_compose(), 1);
   function useInspectorPopoverPlacement2({ isControl } = { isControl: false }) {
-    const isMobile = (0, import_compose99.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose100.useViewportMatch)("medium", "<");
     return !isMobile ? {
       popoverProps: {
         placement: "left-start",
@@ -69658,10 +69611,10 @@ var wp;
       import_components253.DropdownMenu,
       {
         icon: more_vertical_default,
-        label: (0, import_i18n226.__)("Options"),
+        label: (0, import_i18n227.__)("Options"),
         popoverProps: popoverProps3,
         toggleProps: { size: "small" },
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(import_components253.MenuGroup, { label: (0, import_i18n226.__)("Show / Hide"), children: fields.map((field) => {
+        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(import_components253.MenuGroup, { label: (0, import_i18n227.__)("Show / Hide"), children: fields.map((field) => {
           const isVisible = visibleFields.includes(field.id);
           return /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
             import_components253.MenuItem,
@@ -69684,7 +69637,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-fields/rich-text/index.mjs
   var import_components254 = __toESM(require_components(), 1);
-  var import_compose100 = __toESM(require_compose(), 1);
+  var import_compose101 = __toESM(require_compose(), 1);
   var import_data178 = __toESM(require_data(), 1);
   var import_element257 = __toESM(require_element(), 1);
   var import_rich_text17 = __toESM(require_rich_text(), 1);
@@ -69763,7 +69716,7 @@ var wp;
           className: "block-editor-content-only-controls__rich-text",
           role: "textbox",
           "aria-multiline": !fieldConfig?.disableLineBreaks,
-          ref: (0, import_compose100.useMergeRefs)([
+          ref: (0, import_compose101.useMergeRefs)([
             richTextRef,
             useEventListeners({
               registry,
@@ -69793,7 +69746,7 @@ var wp;
   // packages/block-editor/build-module/hooks/block-fields/media/index.mjs
   var import_components255 = __toESM(require_components(), 1);
   var import_data179 = __toESM(require_data(), 1);
-  var import_i18n227 = __toESM(require_i18n(), 1);
+  var import_i18n228 = __toESM(require_i18n(), 1);
   var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
   function MediaThumbnail({ data, field, attachment, config: config2 }) {
     const { allowedTypes = [], multiple = false } = config2 || {};
@@ -69863,16 +69816,16 @@ var wp;
     if (allowedTypes.length === 1) {
       const allowedType = allowedTypes[0];
       if (allowedType === "image") {
-        chooseItemLabel = (0, import_i18n227.__)("Choose an image\u2026");
+        chooseItemLabel = (0, import_i18n228.__)("Choose an image\u2026");
       } else if (allowedType === "video") {
-        chooseItemLabel = (0, import_i18n227.__)("Choose a video\u2026");
+        chooseItemLabel = (0, import_i18n228.__)("Choose a video\u2026");
       } else if (allowedType === "application") {
-        chooseItemLabel = (0, import_i18n227.__)("Choose a file\u2026");
+        chooseItemLabel = (0, import_i18n228.__)("Choose a file\u2026");
       } else {
-        chooseItemLabel = (0, import_i18n227.__)("Choose a media item\u2026");
+        chooseItemLabel = (0, import_i18n228.__)("Choose a media item\u2026");
       }
     } else {
-      chooseItemLabel = (0, import_i18n227.__)("Choose a media item\u2026");
+      chooseItemLabel = (0, import_i18n228.__)("Choose a media item\u2026");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
       media_replace_flow_default,
@@ -69976,7 +69929,7 @@ var wp;
   // packages/block-editor/build-module/hooks/block-fields/link/index.mjs
   var import_components256 = __toESM(require_components(), 1);
   var import_element258 = __toESM(require_element(), 1);
-  var import_i18n228 = __toESM(require_i18n(), 1);
+  var import_i18n229 = __toESM(require_i18n(), 1);
   var import_url15 = __toESM(require_url(), 1);
   var import_jsx_runtime441 = __toESM(require_jsx_runtime(), 1);
   var NEW_TAB_REL2 = "noreferrer noopener";
@@ -70054,7 +70007,7 @@ var wp;
                       style: { opacity: 0.3 }
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime441.jsx)("span", { className: "block-editor-content-only-controls__link-title", children: (0, import_i18n228.__)("Link") })
+                  /* @__PURE__ */ (0, import_jsx_runtime441.jsx)("span", { className: "block-editor-content-only-controls__link-title", children: (0, import_i18n229.__)("Link") })
                 ] })
               ]
             }
@@ -70214,7 +70167,7 @@ var wp;
             }
           )
         ] }),
-        !isCollapsed3 && /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("h2", { className: "block-editor-block-fields__header-title", children: (0, import_i18n229.__)("Content") })
+        !isCollapsed3 && /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("h2", { className: "block-editor-block-fields__header-title", children: (0, import_i18n230.__)("Content") })
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
         DataForm,
@@ -70251,7 +70204,7 @@ var wp;
   // packages/block-editor/build-module/hooks/custom-class-name.mjs
   var import_hooks22 = __toESM(require_hooks(), 1);
   var import_components258 = __toESM(require_components(), 1);
-  var import_i18n230 = __toESM(require_i18n(), 1);
+  var import_i18n231 = __toESM(require_i18n(), 1);
   var import_blocks105 = __toESM(require_blocks(), 1);
   var import_jsx_runtime443 = __toESM(require_jsx_runtime(), 1);
   function addAttribute6(settings2) {
@@ -70275,14 +70228,14 @@ var wp;
       {
         __next40pxDefaultSize: true,
         autoComplete: "off",
-        label: (0, import_i18n230.__)("Additional CSS class(es)"),
+        label: (0, import_i18n231.__)("Additional CSS class(es)"),
         value: className || "",
         onChange: (nextValue) => {
           setAttributes({
             className: nextValue !== "" ? nextValue : void 0
           });
         },
-        help: (0, import_i18n230.__)("Separate multiple classes with spaces.")
+        help: (0, import_i18n231.__)("Separate multiple classes with spaces.")
       }
     ) });
   }
@@ -70366,7 +70319,7 @@ var wp;
   var import_element265 = __toESM(require_element(), 1);
   var import_hooks27 = __toESM(require_hooks(), 1);
   var import_blocks114 = __toESM(require_blocks(), 1);
-  var import_compose102 = __toESM(require_compose(), 1);
+  var import_compose103 = __toESM(require_compose(), 1);
   var import_style_engine4 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/hooks/typography.mjs
@@ -70553,24 +70506,24 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/text-align.mjs
-  var import_i18n231 = __toESM(require_i18n(), 1);
+  var import_i18n232 = __toESM(require_i18n(), 1);
   var import_blocks110 = __toESM(require_blocks(), 1);
   var import_jsx_runtime446 = __toESM(require_jsx_runtime(), 1);
   var TEXT_ALIGN_SUPPORT_KEY2 = "typography.textAlign";
   var TEXT_ALIGNMENT_OPTIONS2 = [
     {
       icon: align_left_default,
-      title: (0, import_i18n231.__)("Align text left"),
+      title: (0, import_i18n232.__)("Align text left"),
       align: "left"
     },
     {
       icon: align_center_default,
-      title: (0, import_i18n231.__)("Align text center"),
+      title: (0, import_i18n232.__)("Align text center"),
       align: "center"
     },
     {
       icon: align_right_default,
-      title: (0, import_i18n231.__)("Align text right"),
+      title: (0, import_i18n232.__)("Align text right"),
       align: "right"
     }
   ];
@@ -70676,9 +70629,9 @@ var wp;
   var import_blocks111 = __toESM(require_blocks(), 1);
   var import_element261 = __toESM(require_element(), 1);
   var import_data181 = __toESM(require_data(), 1);
-  var import_i18n233 = __toESM(require_i18n(), 1);
+  var import_i18n234 = __toESM(require_i18n(), 1);
   var import_components263 = __toESM(require_components(), 1);
-  var import_compose101 = __toESM(require_compose(), 1);
+  var import_compose102 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/utils/fit-text-utils.mjs
   function findOptimalFontSize(textElement, applyFontSize) {
@@ -70734,12 +70687,12 @@ var wp;
 
   // packages/block-editor/build-module/components/fit-text-size-warning/index.mjs
   var import_element260 = __toESM(require_element(), 1);
-  var import_i18n232 = __toESM(require_i18n(), 1);
+  var import_i18n233 = __toESM(require_i18n(), 1);
   var import_components262 = __toESM(require_components(), 1);
   var import_a11y20 = __toESM(require_a11y(), 1);
   var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
   function FitTextSizeWarning() {
-    const message2 = (0, import_i18n232.__)(
+    const message2 = (0, import_i18n233.__)(
       "The text may be too small to read. Consider using a larger container or less text."
     );
     (0, import_element260.useEffect)(() => {
@@ -70908,7 +70861,7 @@ var wp;
       import_components263.__experimentalToolsPanelItem,
       {
         hasValue: () => fitText,
-        label: (0, import_i18n233.__)("Fit text"),
+        label: (0, import_i18n234.__)("Fit text"),
         onDeselect: () => setAttributes({ fitText: void 0 }),
         resetAllFilter: () => ({ fitText: void 0 }),
         panelId: clientId,
@@ -70916,7 +70869,7 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
             import_components263.ToggleControl,
             {
-              label: (0, import_i18n233.__)("Fit text"),
+              label: (0, import_i18n234.__)("Fit text"),
               checked: fitText,
               onChange: () => {
                 const newFitText = !fitText || void 0;
@@ -70937,7 +70890,7 @@ var wp;
                 }
                 setAttributes(updates);
               },
-              help: fitText ? (0, import_i18n233.__)("Text will resize to fit its container.") : (0, import_i18n233.__)(
+              help: fitText ? (0, import_i18n234.__)("Text will resize to fit its container.") : (0, import_i18n234.__)(
                 "The text will resize to fit its container, resetting other font size settings."
               )
             }
@@ -70981,7 +70934,7 @@ var wp;
     const { fontSize } = useFitText({ fitText, name, clientId });
     return children(fontSize);
   }
-  var addFitTextControl = (0, import_compose101.createHigherOrderComponent)((BlockEdit2) => {
+  var addFitTextControl = (0, import_compose102.createHigherOrderComponent)((BlockEdit2) => {
     return function AddFitTextControl(props) {
       const { name, attributes, clientId, isSelected, setAttributes } = props;
       const { fitText } = attributes;
@@ -71591,7 +71544,7 @@ var wp;
   ];
   var STYLE_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps13({ name, style }) {
-    const blockElementsContainerIdentifier = (0, import_compose102.useInstanceId)(
+    const blockElementsContainerIdentifier = (0, import_compose103.useInstanceId)(
       STYLE_BLOCK_PROPS_REFERENCE,
       "wp-elements"
     );
@@ -71692,7 +71645,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/duotone.mjs
   var import_blocks116 = __toESM(require_blocks(), 1);
-  var import_compose103 = __toESM(require_compose(), 1);
+  var import_compose104 = __toESM(require_compose(), 1);
   var import_hooks29 = __toESM(require_hooks(), 1);
   var import_element266 = __toESM(require_element(), 1);
 
@@ -71940,7 +71893,7 @@ var wp;
   }
   var DUOTONE_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps14({ clientId, name, style }) {
-    const id = (0, import_compose103.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
+    const id = (0, import_compose104.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
     const selector3 = (0, import_element266.useMemo)(() => {
       const blockType = (0, import_blocks116.getBlockType)(name);
       if (blockType) {
@@ -71988,9 +71941,9 @@ var wp;
   // packages/block-editor/build-module/hooks/custom-css.mjs
   var import_element267 = __toESM(require_element(), 1);
   var import_data184 = __toESM(require_data(), 1);
-  var import_compose104 = __toESM(require_compose(), 1);
+  var import_compose105 = __toESM(require_compose(), 1);
   var import_blocks117 = __toESM(require_blocks(), 1);
-  var import_i18n234 = __toESM(require_i18n(), 1);
+  var import_i18n235 = __toESM(require_i18n(), 1);
   var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
   var CUSTOM_CSS_INSTANCE_REFERENCE = {};
   var EMPTY_STYLE = {};
@@ -72002,9 +71955,9 @@ var wp;
         style: cleanEmptyObject({ ...newStyle, css })
       });
     }
-    const cssHelpText = (0, import_i18n234.sprintf)(
+    const cssHelpText = (0, import_i18n235.sprintf)(
       // translators: %s: is the name of a block e.g., 'Image' or 'Quote'.
-      (0, import_i18n234.__)(
+      (0, import_i18n235.__)(
         "Add your own CSS to customize the appearance of the %s block. You do not need to include a CSS selector, just add the property and value, e.g. color: red;."
       ),
       blockType?.title
@@ -72045,7 +71998,7 @@ var wp;
   function useBlockProps15({ style }) {
     const customCSS = style?.css;
     const isValidCSS = typeof customCSS === "string" && customCSS.trim().length > 0 && validateCSS(customCSS);
-    const customCSSIdentifier = (0, import_compose104.useInstanceId)(
+    const customCSSIdentifier = (0, import_compose105.useInstanceId)(
       CUSTOM_CSS_INSTANCE_REFERENCE,
       "wp-custom-css"
     );
@@ -72088,12 +72041,12 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/layout.mjs
-  var import_compose105 = __toESM(require_compose(), 1);
+  var import_compose106 = __toESM(require_compose(), 1);
   var import_hooks30 = __toESM(require_hooks(), 1);
   var import_blocks118 = __toESM(require_blocks(), 1);
   var import_data185 = __toESM(require_data(), 1);
   var import_components265 = __toESM(require_components(), 1);
-  var import_i18n235 = __toESM(require_i18n(), 1);
+  var import_i18n236 = __toESM(require_i18n(), 1);
   var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
   var VARIATION_PREFIX2 = "is-style-";
   var layoutBlockSupportKey = "layout";
@@ -72209,20 +72162,20 @@ var wp;
     const onChangeType = (newType) => setAttributes({ layout: { type: newType } });
     const onChangeLayout = (newLayout) => setAttributes({ layout: newLayout });
     return /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)(import_jsx_runtime455.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)(import_components265.PanelBody, { title: (0, import_i18n235.__)("Layout"), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)(import_components265.PanelBody, { title: (0, import_i18n236.__)("Layout"), children: [
         showInheritToggle && /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(import_jsx_runtime455.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
           import_components265.ToggleControl,
           {
-            label: (0, import_i18n235.__)("Inner blocks use content width"),
+            label: (0, import_i18n236.__)("Inner blocks use content width"),
             checked: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings,
             onChange: () => setAttributes({
               layout: {
                 type: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings ? "default" : "constrained"
               }
             }),
-            help: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings ? (0, import_i18n235.__)(
+            help: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings ? (0, import_i18n236.__)(
               "Nested blocks use content width with options for full and wide widths."
-            ) : (0, import_i18n235.__)(
+            ) : (0, import_i18n236.__)(
               "Nested blocks will fill the width of this container."
             )
           }
@@ -72281,7 +72234,7 @@ var wp;
       {
         __next40pxDefaultSize: true,
         isBlock: true,
-        label: (0, import_i18n235.__)("Layout type"),
+        label: (0, import_i18n236.__)("Layout type"),
         hideLabelFromVision: true,
         isAdaptiveWidth: true,
         value: type,
@@ -72321,7 +72274,7 @@ var wp;
     layoutClasses
   }) {
     const { name, attributes } = props;
-    const id = (0, import_compose105.useInstanceId)(BlockListBlock2);
+    const id = (0, import_compose106.useInstanceId)(BlockListBlock2);
     const { layout } = attributes;
     const { default: defaultBlockLayout } = (0, import_blocks118.getBlockSupport)(name, layoutBlockSupportKey) || {};
     const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultBlockLayout || {};
@@ -72353,7 +72306,7 @@ var wp;
       }
     );
   }
-  var withLayoutStyles = (0, import_compose105.createHigherOrderComponent)(
+  var withLayoutStyles = (0, import_compose106.createHigherOrderComponent)(
     (BlockListBlock2) => function WithLayoutStyles(props) {
       const { clientId, name, attributes } = props;
       const blockSupportsLayout = hasLayoutBlockSupport(name);
@@ -72425,14 +72378,14 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/layout-child.mjs
-  var import_compose109 = __toESM(require_compose(), 1);
+  var import_compose110 = __toESM(require_compose(), 1);
   var import_data189 = __toESM(require_data(), 1);
   var import_element271 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.mjs
   var import_element268 = __toESM(require_element(), 1);
   var import_data186 = __toESM(require_data(), 1);
-  var import_compose106 = __toESM(require_compose(), 1);
+  var import_compose107 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/grid/utils.mjs
   function range(start2, length) {
@@ -72938,7 +72891,7 @@ var wp;
     onDrop
   }) {
     const { getDraggedBlockClientIds: getDraggedBlockClientIds2 } = (0, import_data186.useSelect)(store);
-    return (0, import_compose106.__experimentalUseDropZone)({
+    return (0, import_compose107.__experimentalUseDropZone)({
       onDragEnter() {
         const [srcClientId] = getDraggedBlockClientIds2();
         if (srcClientId && validateDrag(srcClientId)) {
@@ -73115,10 +73068,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/grid/grid-item-movers.mjs
-  var import_i18n236 = __toESM(require_i18n(), 1);
+  var import_i18n237 = __toESM(require_i18n(), 1);
   var import_components268 = __toESM(require_components(), 1);
   var import_data187 = __toESM(require_data(), 1);
-  var import_compose107 = __toESM(require_compose(), 1);
+  var import_compose108 = __toESM(require_compose(), 1);
   var import_jsx_runtime458 = __toESM(require_jsx_runtime(), 1);
   function GridItemMovers({
     layout,
@@ -73144,9 +73097,9 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime458.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-left", children: /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
         GridItemMover,
         {
-          icon: (0, import_i18n236.isRTL)() ? chevron_right_default : chevron_left_default,
-          label: (0, import_i18n236.__)("Move left"),
-          description: (0, import_i18n236.__)("Move left"),
+          icon: (0, import_i18n237.isRTL)() ? chevron_right_default : chevron_left_default,
+          label: (0, import_i18n237.__)("Move left"),
+          description: (0, import_i18n237.__)("Move left"),
           isDisabled: columnStart <= 1,
           onClick: () => {
             onChange({
@@ -73171,8 +73124,8 @@ var wp;
           {
             className: "is-up-button",
             icon: chevron_up_default,
-            label: (0, import_i18n236.__)("Move up"),
-            description: (0, import_i18n236.__)("Move up"),
+            label: (0, import_i18n237.__)("Move up"),
+            description: (0, import_i18n237.__)("Move up"),
             isDisabled: rowStart <= 1,
             onClick: () => {
               onChange({
@@ -73196,8 +73149,8 @@ var wp;
           {
             className: "is-down-button",
             icon: chevron_down_default,
-            label: (0, import_i18n236.__)("Move down"),
-            description: (0, import_i18n236.__)("Move down"),
+            label: (0, import_i18n237.__)("Move down"),
+            description: (0, import_i18n237.__)("Move down"),
             isDisabled: rowCount && rowEnd >= rowCount,
             onClick: () => {
               onChange({
@@ -73220,9 +73173,9 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime458.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-right", children: /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
         GridItemMover,
         {
-          icon: (0, import_i18n236.isRTL)() ? chevron_left_default : chevron_right_default,
-          label: (0, import_i18n236.__)("Move right"),
-          description: (0, import_i18n236.__)("Move right"),
+          icon: (0, import_i18n237.isRTL)() ? chevron_left_default : chevron_right_default,
+          label: (0, import_i18n237.__)("Move right"),
+          description: (0, import_i18n237.__)("Move right"),
           isDisabled: columnCount && columnEnd >= columnCount,
           onClick: () => {
             onChange({
@@ -73251,7 +73204,7 @@ var wp;
     onClick,
     description
   }) {
-    const instanceId = (0, import_compose107.useInstanceId)(GridItemMover);
+    const instanceId = (0, import_compose108.useInstanceId)(GridItemMover);
     const descriptionId = `block-editor-grid-item-mover-button__description-${instanceId}`;
     return /* @__PURE__ */ (0, import_jsx_runtime458.jsxs)(import_jsx_runtime458.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
@@ -73276,7 +73229,7 @@ var wp;
   // packages/block-editor/build-module/components/grid/use-grid-layout-sync.mjs
   var import_data188 = __toESM(require_data(), 1);
   var import_element270 = __toESM(require_element(), 1);
-  var import_compose108 = __toESM(require_compose(), 1);
+  var import_compose109 = __toESM(require_compose(), 1);
   function useGridLayoutSync({ clientId: gridClientId }) {
     const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data188.useSelect)(
       (select3) => {
@@ -73296,11 +73249,11 @@ var wp;
       () => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null,
       [selectedBlockLayout]
     );
-    const previouslySelectedBlockRect = (0, import_compose108.usePrevious)(selectedBlockRect);
-    const previousIsManualPlacement = (0, import_compose108.usePrevious)(
+    const previouslySelectedBlockRect = (0, import_compose109.usePrevious)(selectedBlockRect);
+    const previousIsManualPlacement = (0, import_compose109.usePrevious)(
       gridLayout.isManualPlacement
     );
-    const previousBlockOrder = (0, import_compose108.usePrevious)(blockOrder);
+    const previousBlockOrder = (0, import_compose109.usePrevious)(blockOrder);
     (0, import_element270.useEffect)(() => {
       const updates = {};
       if (gridLayout.isManualPlacement) {
@@ -73485,7 +73438,7 @@ var wp;
     } = layout;
     const parentLayout = useLayout() || {};
     const { columnCount, minimumColumnWidth } = parentLayout;
-    const id = (0, import_compose109.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
+    const id = (0, import_compose110.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
     const selector3 = `.wp-container-content-${id}`;
     if (true) {
       if (columnStart && typeof columnStart !== "number") {
@@ -73778,7 +73731,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/block-hooks.mjs
-  var import_i18n237 = __toESM(require_i18n(), 1);
+  var import_i18n238 = __toESM(require_i18n(), 1);
   var import_element272 = __toESM(require_element(), 1);
   var import_components269 = __toESM(require_components(), 1);
   var import_blocks120 = __toESM(require_blocks(), 1);
@@ -73904,10 +73857,10 @@ var wp;
       import_components269.PanelBody,
       {
         className: "block-editor-hooks__block-hooks",
-        title: (0, import_i18n237.__)("Plugins"),
+        title: (0, import_i18n238.__)("Plugins"),
         initialOpen: true,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime460.jsx)("p", { className: "block-editor-hooks__block-hooks-helptext", children: (0, import_i18n237.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime460.jsx)("p", { className: "block-editor-hooks__block-hooks-helptext", children: (0, import_i18n238.__)(
             "Manage the inclusion of blocks added automatically by plugins."
           ) }),
           Object.keys(groupedHookedBlocks).map((vendor) => {
@@ -73953,15 +73906,15 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/block-bindings.mjs
-  var import_i18n238 = __toESM(require_i18n(), 1);
+  var import_i18n239 = __toESM(require_i18n(), 1);
   var import_blocks121 = __toESM(require_blocks(), 1);
   var import_components271 = __toESM(require_components(), 1);
   var import_data191 = __toESM(require_data(), 1);
   var import_element273 = __toESM(require_element(), 1);
-  var import_compose110 = __toESM(require_compose(), 1);
+  var import_compose111 = __toESM(require_compose(), 1);
   var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
   var useToolsPanelDropdownMenuProps2 = () => {
-    const isMobile = (0, import_compose110.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose111.useViewportMatch)("medium", "<");
     return !isMobile ? {
       popoverProps: {
         placement: "left-start",
@@ -74002,7 +73955,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(inspector_controls_default, { group: "bindings", children: /* @__PURE__ */ (0, import_jsx_runtime461.jsxs)(
       import_components271.__experimentalToolsPanel,
       {
-        label: (0, import_i18n238.__)("Attributes"),
+        label: (0, import_i18n239.__)("Attributes"),
         resetAll: () => {
           removeAllBlockBindings();
         },
@@ -74018,7 +73971,7 @@ var wp;
             },
             attribute
           )) }),
-          /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(import_components271.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)("p", { children: (0, import_i18n238.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(import_components271.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)("p", { children: (0, import_i18n239.__)(
             "Attributes connected to custom fields or other dynamic data."
           ) }) })
         ]
@@ -74038,7 +73991,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/list-view.mjs
-  var import_i18n239 = __toESM(require_i18n(), 1);
+  var import_i18n240 = __toESM(require_i18n(), 1);
   var import_components272 = __toESM(require_components(), 1);
   var import_data193 = __toESM(require_data(), 1);
   var import_blocks122 = __toESM(require_blocks(), 1);
@@ -74111,7 +74064,7 @@ var wp;
         opened: isOpened,
         onToggle: handleToggle,
         children: [
-          !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)("p", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n239.__)("No items yet.") }),
+          !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)("p", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n240.__)("No items yet.") }),
           /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
             PrivateListView,
             {
@@ -74164,7 +74117,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/grid-visualizer.mjs
-  var import_compose111 = __toESM(require_compose(), 1);
+  var import_compose112 = __toESM(require_compose(), 1);
   var import_hooks33 = __toESM(require_hooks(), 1);
   var import_data194 = __toESM(require_data(), 1);
   var import_jsx_runtime463 = __toESM(require_jsx_runtime(), 1);
@@ -74219,7 +74172,7 @@ var wp;
       )
     ] });
   }
-  var addGridVisualizerToBlockEdit = (0, import_compose111.createHigherOrderComponent)(
+  var addGridVisualizerToBlockEdit = (0, import_compose112.createHigherOrderComponent)(
     (BlockEdit2) => function AddGridVisualizerToBlockEdit(props) {
       if (props.attributes.layout?.type !== "grid") {
         return /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(BlockEdit2, { ...props }, "edit");
@@ -74248,7 +74201,7 @@ var wp;
   var import_components273 = __toESM(require_components(), 1);
   var import_data195 = __toESM(require_data(), 1);
   var import_element275 = __toESM(require_element(), 1);
-  var import_i18n240 = __toESM(require_i18n(), 1);
+  var import_i18n241 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/generate-fields-from-attributes.mjs
   function generateFieldsFromAttributes(attributes) {
@@ -74316,7 +74269,7 @@ var wp;
     if (!fields || fields.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(import_components273.PanelBody, { title: (0, import_i18n240.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(import_components273.PanelBody, { title: (0, import_i18n241.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
       DataForm,
       {
         data: attributes,
@@ -74671,7 +74624,7 @@ var wp;
   var import_element279 = __toESM(require_element(), 1);
   var import_data196 = __toESM(require_data(), 1);
   var import_components276 = __toESM(require_components(), 1);
-  var import_i18n241 = __toESM(require_i18n(), 1);
+  var import_i18n242 = __toESM(require_i18n(), 1);
   var import_jsx_runtime467 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
     const [confirmed, setConfirmed] = (0, import_element279.useState)(false);
@@ -74711,7 +74664,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(
       import_components276.Modal,
       {
-        title: (0, import_i18n241.__)("Confirm deletion"),
+        title: (0, import_i18n242.__)("Confirm deletion"),
         onRequestClose: clearBlockRemovalPrompt2,
         size: "medium",
         children: /* @__PURE__ */ (0, import_jsx_runtime467.jsxs)(import_components276.__experimentalVStack, { spacing: 4, children: [
@@ -74726,7 +74679,7 @@ var wp;
           requireConfirmation && /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(
             import_components276.CheckboxControl,
             {
-              label: (0, import_i18n241.__)("I understand the consequences"),
+              label: (0, import_i18n242.__)("I understand the consequences"),
               checked: confirmed,
               onChange: setConfirmed
             }
@@ -74738,7 +74691,7 @@ var wp;
                 variant: "tertiary",
                 onClick: clearBlockRemovalPrompt2,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n241.__)("Cancel")
+                children: (0, import_i18n242.__)("Cancel")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(
@@ -74749,7 +74702,7 @@ var wp;
                 disabled: isRemoveDisabled,
                 accessibleWhenDisabled: true,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n241.__)("Delete")
+                children: (0, import_i18n242.__)("Delete")
               }
             )
           ] })
@@ -74764,35 +74717,35 @@ var wp;
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.mjs
   var import_components277 = __toESM(require_components(), 1);
   var import_element280 = __toESM(require_element(), 1);
-  var import_i18n242 = __toESM(require_i18n(), 1);
+  var import_i18n243 = __toESM(require_i18n(), 1);
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCALE_OPTIONS = [
     {
       value: "fill",
-      label: (0, import_i18n242._x)("Fill", "Scale option for dimensions control"),
-      help: (0, import_i18n242.__)("Fill the space by stretching the content.")
+      label: (0, import_i18n243._x)("Fill", "Scale option for dimensions control"),
+      help: (0, import_i18n243.__)("Fill the space by stretching the content.")
     },
     {
       value: "contain",
-      label: (0, import_i18n242._x)("Contain", "Scale option for dimensions control"),
-      help: (0, import_i18n242.__)("Fit the content to the space without clipping.")
+      label: (0, import_i18n243._x)("Contain", "Scale option for dimensions control"),
+      help: (0, import_i18n243.__)("Fit the content to the space without clipping.")
     },
     {
       value: "cover",
-      label: (0, import_i18n242._x)("Cover", "Scale option for dimensions control"),
-      help: (0, import_i18n242.__)("Fill the space by clipping what doesn't fit.")
+      label: (0, import_i18n243._x)("Cover", "Scale option for dimensions control"),
+      help: (0, import_i18n243.__)("Fill the space by clipping what doesn't fit.")
     },
     {
       value: "none",
-      label: (0, import_i18n242._x)("None", "Scale option for dimensions control"),
-      help: (0, import_i18n242.__)(
+      label: (0, import_i18n243._x)("None", "Scale option for dimensions control"),
+      help: (0, import_i18n243.__)(
         "Do not adjust the sizing of the content. Content that is too large will be clipped, and content that is too small will have additional padding."
       )
     },
     {
       value: "scale-down",
-      label: (0, import_i18n242._x)("Scale down", "Scale option for dimensions control"),
-      help: (0, import_i18n242.__)(
+      label: (0, import_i18n243._x)("Scale down", "Scale option for dimensions control"),
+      help: (0, import_i18n243.__)(
         "Scale down the content to fit the space if it is too big. Content that is too small will have additional padding."
       )
     }
@@ -74815,7 +74768,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
       import_components277.__experimentalToolsPanelItem,
       {
-        label: (0, import_i18n242.__)("Scale"),
+        label: (0, import_i18n243.__)("Scale"),
         isShownByDefault,
         hasValue: () => displayValue !== defaultValue,
         onDeselect: () => onChange(defaultValue),
@@ -74823,7 +74776,7 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
           import_components277.__experimentalToggleGroupControl,
           {
-            label: (0, import_i18n242.__)("Scale"),
+            label: (0, import_i18n243.__)("Scale"),
             isBlock: true,
             help: scaleHelp[displayValue],
             value: displayValue,
@@ -74844,7 +74797,7 @@ var wp;
 
   // packages/block-editor/build-module/components/dimensions-tool/width-height-tool.mjs
   var import_components278 = __toESM(require_components(), 1);
-  var import_i18n243 = __toESM(require_i18n(), 1);
+  var import_i18n244 = __toESM(require_i18n(), 1);
   var import_jsx_runtime469 = __toESM(require_jsx_runtime(), 1);
   function WidthHeightTool({
     panelId,
@@ -74870,7 +74823,7 @@ var wp;
         import_components278.__experimentalToolsPanelItem,
         {
           style: { gridColumn: "span 1" },
-          label: (0, import_i18n243.__)("Width"),
+          label: (0, import_i18n244.__)("Width"),
           isShownByDefault,
           hasValue: () => width !== "",
           onDeselect: onDimensionChange("width"),
@@ -74878,8 +74831,8 @@ var wp;
           children: /* @__PURE__ */ (0, import_jsx_runtime469.jsx)(
             import_components278.__experimentalUnitControl,
             {
-              label: (0, import_i18n243.__)("Width"),
-              placeholder: (0, import_i18n243.__)("Auto"),
+              label: (0, import_i18n244.__)("Width"),
+              placeholder: (0, import_i18n244.__)("Auto"),
               labelPosition: "top",
               units: units2,
               min: 0,
@@ -74894,7 +74847,7 @@ var wp;
         import_components278.__experimentalToolsPanelItem,
         {
           style: { gridColumn: "span 1" },
-          label: (0, import_i18n243.__)("Height"),
+          label: (0, import_i18n244.__)("Height"),
           isShownByDefault,
           hasValue: () => height !== "",
           onDeselect: onDimensionChange("height"),
@@ -74902,8 +74855,8 @@ var wp;
           children: /* @__PURE__ */ (0, import_jsx_runtime469.jsx)(
             import_components278.__experimentalUnitControl,
             {
-              label: (0, import_i18n243.__)("Height"),
-              placeholder: (0, import_i18n243.__)("Auto"),
+              label: (0, import_i18n244.__)("Height"),
+              placeholder: (0, import_i18n244.__)("Auto"),
               labelPosition: "top",
               units: units2,
               min: 0,
@@ -75040,23 +74993,23 @@ var wp;
 
   // packages/block-editor/build-module/components/resolution-tool/index.mjs
   var import_components279 = __toESM(require_components(), 1);
-  var import_i18n244 = __toESM(require_i18n(), 1);
+  var import_i18n245 = __toESM(require_i18n(), 1);
   var import_jsx_runtime471 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SIZE_OPTIONS = [
     {
-      label: (0, import_i18n244._x)("Thumbnail", "Image size option for resolution control"),
+      label: (0, import_i18n245._x)("Thumbnail", "Image size option for resolution control"),
       value: "thumbnail"
     },
     {
-      label: (0, import_i18n244._x)("Medium", "Image size option for resolution control"),
+      label: (0, import_i18n245._x)("Medium", "Image size option for resolution control"),
       value: "medium"
     },
     {
-      label: (0, import_i18n244._x)("Large", "Image size option for resolution control"),
+      label: (0, import_i18n245._x)("Large", "Image size option for resolution control"),
       value: "large"
     },
     {
-      label: (0, import_i18n244._x)("Full Size", "Image size option for resolution control"),
+      label: (0, import_i18n245._x)("Full Size", "Image size option for resolution control"),
       value: "full"
     }
   ];
@@ -75074,7 +75027,7 @@ var wp;
       import_components279.__experimentalToolsPanelItem,
       {
         hasValue: () => displayValue !== defaultValue,
-        label: (0, import_i18n244.__)("Resolution"),
+        label: (0, import_i18n245.__)("Resolution"),
         onDeselect: () => onChange(defaultValue),
         isShownByDefault,
         panelId,
@@ -75082,11 +75035,11 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
           import_components279.SelectControl,
           {
-            label: (0, import_i18n244.__)("Resolution"),
+            label: (0, import_i18n245.__)("Resolution"),
             value: displayValue,
             options,
             onChange,
-            help: (0, import_i18n244.__)("Select the size of the source image."),
+            help: (0, import_i18n245.__)("Select the size of the source image."),
             size: "__unstable-large"
           }
         )
@@ -75095,41 +75048,41 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/html-element-control/index.mjs
-  var import_i18n246 = __toESM(require_i18n(), 1);
+  var import_i18n247 = __toESM(require_i18n(), 1);
   var import_components280 = __toESM(require_components(), 1);
   var import_data197 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/html-element-control/messages.mjs
-  var import_i18n245 = __toESM(require_i18n(), 1);
+  var import_i18n246 = __toESM(require_i18n(), 1);
   var htmlElementMessages = {
-    a: (0, import_i18n245.__)(
+    a: (0, import_i18n246.__)(
       "The <a> element should be used for links that navigate to a different page or to a different section within the same page."
     ),
-    article: (0, import_i18n245.__)(
+    article: (0, import_i18n246.__)(
       "The <article> element should represent a self-contained, syndicatable portion of the document."
     ),
-    aside: (0, import_i18n245.__)(
+    aside: (0, import_i18n246.__)(
       "The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."
     ),
-    button: (0, import_i18n245.__)(
+    button: (0, import_i18n246.__)(
       "The <button> element should be used for interactive controls that perform an action on the current page, such as opening a modal or toggling content visibility."
     ),
-    div: (0, import_i18n245.__)(
+    div: (0, import_i18n246.__)(
       "The <div> element should only be used if the block is a design element with no semantic meaning."
     ),
-    footer: (0, import_i18n245.__)(
+    footer: (0, import_i18n246.__)(
       "The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.)."
     ),
-    header: (0, import_i18n245.__)(
+    header: (0, import_i18n246.__)(
       "The <header> element should represent introductory content, typically a group of introductory or navigational aids."
     ),
-    main: (0, import_i18n245.__)(
+    main: (0, import_i18n246.__)(
       "The <main> element should be used for the primary content of your document only."
     ),
-    nav: (0, import_i18n245.__)(
+    nav: (0, import_i18n246.__)(
       "The <nav> element should be used to identify groups of links that are intended to be used for website or page content navigation."
     ),
-    section: (0, import_i18n245.__)(
+    section: (0, import_i18n246.__)(
       "The <section> element should represent a standalone portion of the document that can't be better represented by another element."
     )
   };
@@ -75141,7 +75094,7 @@ var wp;
     onChange,
     clientId,
     options = [
-      { label: (0, import_i18n246.__)("Default (<div>)"), value: "div" },
+      { label: (0, import_i18n247.__)("Default (<div>)"), value: "div" },
       { label: "<header>", value: "header" },
       { label: "<main>", value: "main" },
       { label: "<section>", value: "section" },
@@ -75171,9 +75124,9 @@ var wp;
         return {
           ...option,
           disabled: true,
-          label: (0, import_i18n246.sprintf)(
+          label: (0, import_i18n247.sprintf)(
             /* translators: %s: HTML element name */
-            (0, import_i18n246.__)("%s (Already in use)"),
+            (0, import_i18n247.__)("%s (Already in use)"),
             option.label
           )
         };
@@ -75185,14 +75138,14 @@ var wp;
         import_components280.SelectControl,
         {
           __next40pxDefaultSize: true,
-          label: (0, import_i18n246.__)("HTML element"),
+          label: (0, import_i18n247.__)("HTML element"),
           options: modifiedOptions,
           value: tagName,
           onChange,
           help: htmlElementMessages[tagName]
         }
       ),
-      tagName === "main" && hasMainElementElsewhere && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(import_components280.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n246.__)(
+      tagName === "main" && hasMainElementElsewhere && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(import_components280.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n247.__)(
         "Multiple <main> elements detected. The duplicate may be in your content or template. This is not valid HTML and may cause accessibility issues. Please change this HTML element."
       ) })
     ] });
@@ -75201,7 +75154,7 @@ var wp;
   // packages/block-editor/build-module/components/link-picker/link-picker.mjs
   var import_components282 = __toESM(require_components(), 1);
   var import_element282 = __toESM(require_element(), 1);
-  var import_i18n247 = __toESM(require_i18n(), 1);
+  var import_i18n248 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
   var import_components281 = __toESM(require_components(), 1);
@@ -75314,7 +75267,7 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(
               LinkPreview2,
               {
-                title: preview.title || (0, import_i18n247.__)("Add link"),
+                title: preview.title || (0, import_i18n248.__)("Add link"),
                 url: preview.url,
                 image: preview.image,
                 badges: preview.badges
@@ -75339,8 +75292,8 @@ var wp;
               "aria-describedby": dialogDescriptionId,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)(import_components282.VisuallyHidden, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("h2", { id: dialogTitleId, children: (0, import_i18n247.__)("Select a link") }),
-                  /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("p", { id: dialogDescriptionId, children: (0, import_i18n247.__)(
+                  /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("h2", { id: dialogTitleId, children: (0, import_i18n248.__)("Select a link") }),
+                  /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("p", { id: dialogDescriptionId, children: (0, import_i18n248.__)(
                     "Search for and add a link to the navigation item."
                   ) })
                 ] }),
