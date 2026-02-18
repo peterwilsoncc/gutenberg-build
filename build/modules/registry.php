@@ -28,6 +28,11 @@ return array(
 		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/abilities',
+		'path' => 'abilities/index',
+		'asset' => 'abilities/index.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/vips/worker',
 		'path' => 'vips/worker',
 		'asset' => 'vips/worker.min.asset.php',
@@ -51,11 +56,6 @@ return array(
 		'id' => '@wordpress/core-abilities',
 		'path' => 'core-abilities/index',
 		'asset' => 'core-abilities/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/abilities',
-		'path' => 'abilities/index',
-		'asset' => 'abilities/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/route',

@@ -49540,9 +49540,16 @@ ${js}
       {
         type: "block",
         blocks: ["core/post-comments-count"],
-        transform: ({ textAlign }) => {
+        transform: ({ style: style2 }) => {
+          const textAlign = style2?.typography?.textAlign;
           return (0, import_blocks82.createBlock)("core/post-comments-count", {
-            style: { typography: { textAlign } }
+            ...textAlign && {
+              style: {
+                typography: {
+                  textAlign
+                }
+              }
+            }
           });
         }
       }
