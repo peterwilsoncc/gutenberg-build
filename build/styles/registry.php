@@ -28,24 +28,24 @@ return array(
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-reusable-blocks',
-		'path' => 'reusable-blocks/style',
-		'dependencies' => array('wp-block-editor', 'wp-components'),
-	),
-	array(
 		'handle' => 'wp-patterns',
 		'path' => 'patterns/style',
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
-		'handle' => 'wp-widgets',
-		'path' => 'widgets/style',
+		'handle' => 'wp-reusable-blocks',
+		'path' => 'reusable-blocks/style',
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
 		'handle' => 'wp-components',
 		'path' => 'components/style',
 		'dependencies' => array(),
+	),
+	array(
+		'handle' => 'wp-widgets',
+		'path' => 'widgets/style',
+		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
 		'handle' => 'wp-commands',
@@ -68,14 +68,14 @@ return array(
 		'dependencies' => array('wp-commands', 'wp-components', 'wp-preferences', 'wp-theme'),
 	),
 	array(
-		'handle' => 'wp-media-utils',
-		'path' => 'media-utils/style',
-		'dependencies' => array('wp-components', 'wp-theme'),
-	),
-	array(
 		'handle' => 'wp-customize-widgets',
 		'path' => 'customize-widgets/style',
 		'dependencies' => array('wp-block-editor', 'wp-block-library', 'wp-components', 'wp-media-utils', 'wp-preferences', 'wp-widgets'),
+	),
+	array(
+		'handle' => 'wp-media-utils',
+		'path' => 'media-utils/style',
+		'dependencies' => array('wp-components', 'wp-theme'),
 	),
 	array(
 		'handle' => 'wp-block-library',
