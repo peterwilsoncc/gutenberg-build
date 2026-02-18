@@ -43222,10 +43222,8 @@ var wp;
     if (!isLocked) {
       return null;
     }
-    if (true) {
-      if (isCollaborationEnabled) {
-        return null;
-      }
+    if (isCollaborationEnabled) {
+      return null;
     }
     const userDisplayName = user.name;
     const userAvatar = user.avatar;
