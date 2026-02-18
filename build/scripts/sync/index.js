@@ -9028,7 +9028,7 @@ var wp;
   }
   glo[importIdentifier] = true;
 
-  // node_modules/y-protocols/awareness.js
+  // packages/sync/node_modules/y-protocols/awareness.js
   var outdatedTimeout = 3e4;
   var Awareness = class extends Observable {
     /**
@@ -9256,7 +9256,7 @@ var wp;
   // packages/sync/build-module/providers/index.mjs
   var import_hooks = __toESM(require_hooks(), 1);
 
-  // node_modules/y-protocols/sync.js
+  // packages/sync/node_modules/y-protocols/sync.js
   var messageYjsSyncStep1 = 0;
   var messageYjsSyncStep2 = 1;
   var messageYjsUpdate = 2;
@@ -9270,25 +9270,29 @@ var wp;
     writeVarUint8Array(encoder, encodeStateAsUpdate(doc2, encodedStateVector));
   };
   var readSyncStep1 = (decoder, encoder, doc2) => writeSyncStep2(encoder, doc2, readVarUint8Array(decoder));
-  var readSyncStep2 = (decoder, doc2, transactionOrigin) => {
+  var readSyncStep2 = (decoder, doc2, transactionOrigin, errorHandler) => {
     try {
       applyUpdate(doc2, readVarUint8Array(decoder), transactionOrigin);
     } catch (error) {
+      if (errorHandler != null) errorHandler(
+        /** @type {Error} */
+        error
+      );
       console.error("Caught error while handling a Yjs update", error);
     }
   };
   var readUpdate2 = readSyncStep2;
-  var readSyncMessage = (decoder, encoder, doc2, transactionOrigin) => {
+  var readSyncMessage = (decoder, encoder, doc2, transactionOrigin, errorHandler) => {
     const messageType = readVarUint(decoder);
     switch (messageType) {
       case messageYjsSyncStep1:
         readSyncStep1(decoder, encoder, doc2);
         break;
       case messageYjsSyncStep2:
-        readSyncStep2(decoder, doc2, transactionOrigin);
+        readSyncStep2(decoder, doc2, transactionOrigin, errorHandler);
         break;
       case messageYjsUpdate:
-        readUpdate2(decoder, doc2, transactionOrigin);
+        readUpdate2(decoder, doc2, transactionOrigin, errorHandler);
         break;
       default:
         throw new Error("Unknown message type");
