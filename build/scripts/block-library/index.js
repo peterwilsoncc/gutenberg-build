@@ -69474,7 +69474,7 @@ ${js}
                 postType: "wp_template_part"
               });
             },
-            children: (0, import_i18n253.__)("Edit section")
+            children: (0, import_i18n253.__)("Edit original")
           }
         ) }),
         canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(import_block_editor272.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(

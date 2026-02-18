@@ -38923,7 +38923,7 @@ var wp;
         editContentOnlySection2(clientId);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(import_components104.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(import_components104.ToolbarButton, { onClick: handleClick, children: isEditing ? (0, import_i18n90.__)("Exit section") : (0, import_i18n90.__)("Edit section") }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(import_components104.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(import_components104.ToolbarButton, { onClick: handleClick, children: isEditing ? (0, import_i18n90.__)("Exit pattern") : (0, import_i18n90.__)("Edit pattern") }) });
   }
 
   // packages/block-editor/build-module/components/block-toolbar/block-toolbar-icon.mjs
@@ -54111,7 +54111,7 @@ var wp;
         __next40pxDefaultSize: true,
         variant: "secondary",
         onClick: handleClick,
-        children: (0, import_i18n175.__)("Edit section")
+        children: (0, import_i18n175.__)("Edit original")
       }
     ) });
   }
@@ -54135,7 +54135,7 @@ var wp;
         __next40pxDefaultSize: true,
         variant: "secondary",
         onClick: handleClick,
-        children: editedContentOnlySection2 ? (0, import_i18n175.__)("Exit section") : (0, import_i18n175.__)("Edit section")
+        children: editedContentOnlySection2 ? (0, import_i18n175.__)("Exit pattern") : (0, import_i18n175.__)("Edit pattern")
       }
     ) });
   }
