@@ -33,21 +33,6 @@ return array(
 		'asset' => 'interactivity-router/full-page.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/vips/worker',
-		'path' => 'vips/worker',
-		'asset' => 'vips/worker.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/vips/loader',
-		'path' => 'vips/loader',
-		'asset' => 'vips/loader.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/a11y',
-		'path' => 'a11y/index',
-		'asset' => 'a11y/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/abilities',
 		'path' => 'abilities/index',
 		'asset' => 'abilities/index.min.asset.php',
@@ -56,6 +41,11 @@ return array(
 		'id' => '@wordpress/core-abilities',
 		'path' => 'core-abilities/index',
 		'asset' => 'core-abilities/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/a11y',
+		'path' => 'a11y/index',
+		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/route',
@@ -68,6 +58,16 @@ return array(
 		'asset' => 'edit-site-init/index.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/vips/worker',
+		'path' => 'vips/worker',
+		'asset' => 'vips/worker.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/vips/loader',
+		'path' => 'vips/loader',
+		'asset' => 'vips/loader.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/lazy-editor',
 		'path' => 'lazy-editor/index',
 		'asset' => 'lazy-editor/index.min.asset.php',
@@ -78,14 +78,14 @@ return array(
 		'asset' => 'workflow/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
-		'path' => 'block-editor/utils/fit-text-frontend',
-		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/boot',
 		'path' => 'boot/index',
 		'asset' => 'boot/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
+		'path' => 'block-editor/utils/fit-text-frontend',
+		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/block-library/accordion/view',
