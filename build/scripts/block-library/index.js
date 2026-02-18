@@ -41013,7 +41013,12 @@ ${js}
     const [addingBlock, setAddingBlock] = (0, import_element77.useState)(false);
     const [addingPage, setAddingPage] = (0, import_element77.useState)(false);
     const [shouldFocusPane, setShouldFocusPane] = (0, import_element77.useState)(null);
+    const [initialSearchValue, setInitialSearchValue] = (0, import_element77.useState)("");
     const searchInputValueRef = (0, import_element77.useRef)("");
+    const updateSearchValue = (value) => {
+      searchInputValueRef.current = value;
+      setInitialSearchValue(value);
+    };
     const linkControlWrapperRef = (0, import_element77.useRef)();
     const addPageButtonRef = (0, import_element77.useRef)();
     const addBlockButtonRef = (0, import_element77.useRef)();
@@ -41042,7 +41047,7 @@ ${js}
       props.onChange(pageLink);
       setAddingPage(false);
       setShouldFocusPane(true);
-      searchInputValueRef.current = "";
+      updateSearchValue("");
     };
     const dialogTitleId = (0, import_compose33.useInstanceId)(
       LinkUI,
@@ -41105,7 +41110,7 @@ ${js}
                     onInputChange: (value) => {
                       searchInputValueRef.current = value;
                     },
-                    inputValue: searchInputValueRef.current,
+                    inputValue: initialSearchValue,
                     onRemove: props.onRemove,
                     onCancel: props.onCancel,
                     handleEntities: isBoundEntityAvailable,
@@ -41142,6 +41147,7 @@ ${js}
               onBack: () => {
                 setAddingBlock(false);
                 setShouldFocusPane(addBlockButtonRef);
+                updateSearchValue(searchInputValueRef.current);
               },
               onBlockInsert: props?.onBlockInsert
             }
@@ -41153,6 +41159,7 @@ ${js}
               onBack: () => {
                 setAddingPage(false);
                 setShouldFocusPane(addPageButtonRef);
+                updateSearchValue(searchInputValueRef.current);
               },
               onPageCreated: handlePageCreated,
               initialTitle: searchInputValueRef.current && !(0, import_url13.isURL)(searchInputValueRef.current) ? searchInputValueRef.current : ""
