@@ -6229,7 +6229,7 @@ var wp;
                 ) })
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_editor6.EditorSnackbars, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_notices.SnackbarNotices, { className: "edit-site-layout__snackbar" }),
             isMobileViewport && areas2.mobile && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("div", { className: "edit-site-layout__mobile", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(SidebarNavigationProvider, { children: canvas !== "edit" ? /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(import_jsx_runtime77.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
                 SiteHubMobile,

@@ -17663,17 +17663,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return Array.isArray(value) ? value.map(String) : [String(value)];
     });
-    const {
-      createSuccessNotice,
-      createErrorNotice,
-      createInfoNotice,
-      removeNotice
-    } = (0, import_data9.useDispatch)(import_notices.store);
+    const { createSuccessNotice, createErrorNotice, createInfoNotice } = (0, import_data9.useDispatch)(import_notices.store);
     const { invalidateResolution } = (0, import_data9.useDispatch)(import_core_data4.store);
-    const notices = (0, import_data9.useSelect)(
-      (select) => select(import_notices.store).getNotices(NOTICES_CONTEXT),
-      []
-    );
     const [view, setView] = (0, import_element59.useState)(() => ({
       type: LAYOUT_PICKER_GRID2,
       fields: [],
@@ -18009,13 +18000,10 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
-            import_components53.SnackbarList,
+            import_notices.SnackbarNotices,
             {
-              notices: notices.filter(
-                ({ type }) => type === "snackbar"
-              ),
               className: "media-upload-modal__snackbar",
-              onRemove: (id) => removeNotice(id, NOTICES_CONTEXT)
+              context: NOTICES_CONTEXT
             }
           )
         ]

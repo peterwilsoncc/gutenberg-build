@@ -2759,7 +2759,7 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_plugins.PluginArea, { onError: onPluginAreaError }),
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(more_menu_default, {}),
                 backButton,
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.EditorSnackbars, {})
+                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_notices3.SnackbarNotices, { className: "edit-post-layout__snackbar" })
               ]
             }
           )

@@ -4638,24 +4638,12 @@ div.dataviews-view-list {
   flex: 1 0 auto;
 }
 
-.components-editor-notices__dismissible,
-.components-editor-notices__pinned {
+.editor-notices__dismissible,
+.editor-notices__pinned {
   position: relative;
   right: 0;
   top: 0;
   left: 0;
-  color: #1e1e1e;
-}
-.components-editor-notices__dismissible .components-notice,
-.components-editor-notices__pinned .components-notice {
-  box-sizing: border-box;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 0 12px;
-  min-height: 64px;
-}
-.components-editor-notices__dismissible .components-notice .components-notice__dismiss,
-.components-editor-notices__pinned .components-notice .components-notice__dismiss {
-  margin-top: 12px;
 }
 
 .entities-saved-states__panel-header {

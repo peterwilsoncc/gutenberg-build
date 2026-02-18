@@ -994,18 +994,6 @@ body.is-fullscreen-mode .edit-widgets-notices__snackbar {
   left: 0 !important;
 }
 
-.edit-widgets-notices__dismissible .components-notice,
-.edit-widgets-notices__pinned .components-notice {
-  box-sizing: border-box;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 0 12px;
-  min-height: 64px;
-}
-.edit-widgets-notices__dismissible .components-notice .components-notice__dismiss,
-.edit-widgets-notices__pinned .components-notice .components-notice__dismiss {
-  margin-top: 12px;
-}
-
 .edit-widgets-layout__inserter-panel {
   height: 100%;
   display: flex;

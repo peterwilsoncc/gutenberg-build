@@ -8,6 +8,11 @@
 
 return array(
 	array(
+		'id' => '@wordpress/interactivity',
+		'path' => 'interactivity/index',
+		'asset' => 'interactivity/index.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/latex-to-mathml',
 		'path' => 'latex-to-mathml/index',
 		'asset' => 'latex-to-mathml/index.min.asset.php',
@@ -16,21 +21,6 @@ return array(
 		'id' => '@wordpress/latex-to-mathml/loader',
 		'path' => 'latex-to-mathml/loader',
 		'asset' => 'latex-to-mathml/loader.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/interactivity',
-		'path' => 'interactivity/index',
-		'asset' => 'interactivity/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/vips/worker',
-		'path' => 'vips/worker',
-		'asset' => 'vips/worker.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/vips/loader',
-		'path' => 'vips/loader',
-		'asset' => 'vips/loader.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/interactivity-router',
@@ -51,6 +41,16 @@ return array(
 		'id' => '@wordpress/abilities',
 		'path' => 'abilities/index',
 		'asset' => 'abilities/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/vips/worker',
+		'path' => 'vips/worker',
+		'asset' => 'vips/worker.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/vips/loader',
+		'path' => 'vips/loader',
+		'asset' => 'vips/loader.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/core-abilities',
