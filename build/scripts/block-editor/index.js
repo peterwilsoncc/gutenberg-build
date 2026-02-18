@@ -74191,9 +74191,6 @@ var wp;
   }
   function createFieldFromAttribute(name, def) {
     const type = def.type;
-    if (!["string", "number", "integer", "boolean"].includes(type)) {
-      return null;
-    }
     const field = {
       id: name,
       label: def.label || name,
