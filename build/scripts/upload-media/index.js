@@ -536,7 +536,7 @@ var wp;
     return name.includes(".") ? name.split(".").slice(0, -1).join(".") : name;
   }
 
-  // packages/upload-media/build-module/store/utils/vips.mjs
+  // packages/upload-media/build-module/store/utils/index.mjs
   var vipsModulePromise;
   var vipsModule;
   function loadVipsModule() {

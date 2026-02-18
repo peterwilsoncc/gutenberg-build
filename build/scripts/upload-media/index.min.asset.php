@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('react-jsx-runtime', 'wp-blob', 'wp-compose', 'wp-data', 'wp-element', 'wp-i18n', 'wp-private-apis', 'wp-url'), 'module_dependencies' => array(array('id' => '@wordpress/vips/worker', 'import' => 'dynamic')), 'version' => '7cc90224cf86a9edc4d3');
+<?php return array('dependencies' => array('react-jsx-runtime', 'wp-blob', 'wp-compose', 'wp-data', 'wp-element', 'wp-i18n', 'wp-private-apis', 'wp-url'), 'module_dependencies' => array(array('id' => '@wordpress/vips/worker', 'import' => 'dynamic')), 'version' => 'bc35d09a9bea1e56521d');
