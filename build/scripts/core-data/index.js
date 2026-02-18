@@ -2527,10 +2527,8 @@ var wp;
     }
   ].map((entity2) => {
     const syncEnabledRootEntities = /* @__PURE__ */ new Set(["comment"]);
-    if (true) {
-      if (syncEnabledRootEntities.has(entity2.name)) {
-        entity2.syncConfig = defaultSyncConfig;
-      }
+    if (syncEnabledRootEntities.has(entity2.name)) {
+      entity2.syncConfig = defaultSyncConfig;
     }
     return entity2;
   });
@@ -2565,16 +2563,14 @@ var wp;
         newEdits.title = "";
       }
     }
-    if (true) {
-      if (persistedRecord) {
-        const objectType = `postType/${name}`;
-        const objectId = persistedRecord.id;
-        const meta = getSyncManager()?.createMeta(objectType, objectId);
-        newEdits.meta = {
-          ...edits.meta,
-          ...meta
-        };
-      }
+    if (persistedRecord) {
+      const objectType = `postType/${name}`;
+      const objectId = persistedRecord.id;
+      const meta = getSyncManager()?.createMeta(objectType, objectId);
+      newEdits.meta = {
+        ...edits.meta,
+        ...meta
+      };
     }
     return newEdits;
   };
@@ -2606,52 +2602,46 @@ var wp;
         getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
         revisionKey: isTemplate && !window?.__experimentalTemplateActivate ? "wp_id" : DEFAULT_ENTITY_KEY
       };
-      if (true) {
-        entity2.syncConfig = {
-          /**
-           * Apply changes from the local editor to the local CRDT document so
-           * that those changes can be synced to other peers (via the provider).
-           *
-           * @param {import('@wordpress/sync').CRDTDoc}               crdtDoc
-           * @param {Partial< import('@wordpress/sync').ObjectData >} changes
-           * @return {void}
-           */
-          applyChangesToCRDTDoc: (crdtDoc, changes) => applyPostChangesToCRDTDoc(crdtDoc, changes, postType),
-          /**
-           * Create the awareness instance for the entity's CRDT document.
-           *
-           * @param {import('@wordpress/sync').CRDTDoc}  ydoc
-           * @param {import('@wordpress/sync').ObjectID} objectId
-           * @return {import('@wordpress/sync').Awareness} Awareness instance
-           */
-          createAwareness: (ydoc, objectId) => {
-            const kind = "postType";
-            const id = parseInt(objectId, 10);
-            return new PostEditorAwareness(ydoc, kind, name, id);
-          },
-          /**
-           * Extract changes from a CRDT document that can be used to update the
-           * local editor state.
-           *
-           * @param {import('@wordpress/sync').CRDTDoc}    crdtDoc
-           * @param {import('@wordpress/sync').ObjectData} editedRecord
-           * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
-           */
-          getChangesFromCRDTDoc: (crdtDoc, editedRecord) => getPostChangesFromCRDTDoc(
-            crdtDoc,
-            editedRecord,
-            postType
-          ),
-          /**
-           * Sync features supported by the entity.
-           *
-           * @type {Record< string, boolean >}
-           */
-          supports: {
-            crdtPersistence: true
-          }
-        };
-      }
+      entity2.syncConfig = {
+        /**
+         * Apply changes from the local editor to the local CRDT document so
+         * that those changes can be synced to other peers (via the provider).
+         *
+         * @param {import('@wordpress/sync').CRDTDoc}               crdtDoc
+         * @param {Partial< import('@wordpress/sync').ObjectData >} changes
+         * @return {void}
+         */
+        applyChangesToCRDTDoc: (crdtDoc, changes) => applyPostChangesToCRDTDoc(crdtDoc, changes, postType),
+        /**
+         * Create the awareness instance for the entity's CRDT document.
+         *
+         * @param {import('@wordpress/sync').CRDTDoc}  ydoc
+         * @param {import('@wordpress/sync').ObjectID} objectId
+         * @return {import('@wordpress/sync').Awareness} Awareness instance
+         */
+        createAwareness: (ydoc, objectId) => {
+          const kind = "postType";
+          const id = parseInt(objectId, 10);
+          return new PostEditorAwareness(ydoc, kind, name, id);
+        },
+        /**
+         * Extract changes from a CRDT document that can be used to update the
+         * local editor state.
+         *
+         * @param {import('@wordpress/sync').CRDTDoc}    crdtDoc
+         * @param {import('@wordpress/sync').ObjectData} editedRecord
+         * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
+         */
+        getChangesFromCRDTDoc: (crdtDoc, editedRecord) => getPostChangesFromCRDTDoc(crdtDoc, editedRecord, postType),
+        /**
+         * Sync features supported by the entity.
+         *
+         * @type {Record< string, boolean >}
+         */
+        supports: {
+          crdtPersistence: true
+        }
+      };
       return entity2;
     });
   }
@@ -2670,9 +2660,7 @@ var wp;
         getTitle: (record) => record?.name,
         supportsPagination: true
       };
-      if (true) {
-        entity2.syncConfig = defaultSyncConfig;
-      }
+      entity2.syncConfig = defaultSyncConfig;
       return entity2;
     });
   }
@@ -3426,10 +3414,7 @@ var wp;
 
   // packages/core-data/build-module/private-selectors.mjs
   function getUndoManager(state) {
-    if (true) {
-      return getSyncManager()?.undoManager ?? state.undoManager;
-    }
-    return state.undoManager;
+    return getSyncManager()?.undoManager ?? state.undoManager;
   }
   function getNavigationFallbackId(state) {
     return state.navigationFallbackId;
@@ -4466,12 +4451,10 @@ var wp;
           method: "DELETE"
         });
         await dispatch3(removeItems(kind, name, recordId, true));
-        if (true) {
-          if (entityConfig.syncConfig) {
-            const objectType = `${kind}/${name}`;
-            const objectId = recordId;
-            getSyncManager()?.unload(objectType, objectId);
-          }
+        if (entityConfig.syncConfig) {
+          const objectType = `${kind}/${name}`;
+          const objectId = recordId;
+          getSyncManager()?.unload(objectType, objectId);
         }
       } catch (_error) {
         hasError = true;
@@ -4524,19 +4507,17 @@ var wp;
         return acc;
       }, {})
     };
-    if (true) {
-      if (entityConfig.syncConfig) {
-        const objectType = `${kind}/${name}`;
-        const objectId = recordId;
-        const isNewUndoLevel = options.undoIgnore ? false : !options.isCached;
-        getSyncManager()?.update(
-          objectType,
-          objectId,
-          editsWithMerges,
-          LOCAL_EDITOR_ORIGIN,
-          { isNewUndoLevel }
-        );
-      }
+    if (entityConfig.syncConfig) {
+      const objectType = `${kind}/${name}`;
+      const objectId = recordId;
+      const isNewUndoLevel = options.undoIgnore ? false : !options.isCached;
+      getSyncManager()?.update(
+        objectType,
+        objectId,
+        editsWithMerges,
+        LOCAL_EDITOR_ORIGIN,
+        { isNewUndoLevel }
+      );
     }
     if (!options.undoIgnore) {
       select3.getUndoManager().addRecord(
@@ -4766,16 +4747,14 @@ var wp;
             true,
             edits
           );
-          if (true) {
-            if (entityConfig.syncConfig) {
-              getSyncManager()?.update(
-                `${kind}/${name}`,
-                recordId,
-                updatedRecord,
-                LOCAL_EDITOR_ORIGIN,
-                { isSave: true }
-              );
-            }
+          if (entityConfig.syncConfig) {
+            getSyncManager()?.update(
+              `${kind}/${name}`,
+              recordId,
+              updatedRecord,
+              LOCAL_EDITOR_ORIGIN,
+              { isSave: true }
+            );
           }
         }
       } catch (_error) {
@@ -5382,94 +5361,85 @@ var wp;
           { kind, name, id: key }
         ]);
       }
-      if (true) {
-        if (entityConfig.syncConfig && isNumericID(key) && !query) {
-          const objectType = `${kind}/${name}`;
-          const objectId = key;
-          const recordWithTransients = { ...record };
-          Object.entries(entityConfig.transientEdits ?? {}).filter(
-            ([propName, transientConfig]) => void 0 === recordWithTransients[propName] && transientConfig && "object" === typeof transientConfig && "read" in transientConfig && "function" === typeof transientConfig.read
-          ).forEach(([propName, transientConfig]) => {
-            recordWithTransients[propName] = transientConfig.read(recordWithTransients);
-          });
-          void getSyncManager()?.load(
-            entityConfig.syncConfig,
-            objectType,
-            objectId,
-            recordWithTransients,
-            {
-              // Handle edits sourced from the sync manager.
-              editRecord: (edits, options = {}) => {
-                if (!Object.keys(edits).length) {
-                  return;
-                }
-                dispatch3({
-                  type: "EDIT_ENTITY_RECORD",
-                  kind,
-                  name,
-                  recordId: key,
-                  edits,
-                  meta: {
-                    undo: void 0
-                  },
-                  options
-                });
-              },
-              // Get the current entity record (with edits)
-              getEditedRecord: async () => await resolveSelect2.getEditedEntityRecord(
+      if (entityConfig.syncConfig && isNumericID(key) && !query) {
+        const objectType = `${kind}/${name}`;
+        const objectId = key;
+        const recordWithTransients = { ...record };
+        Object.entries(entityConfig.transientEdits ?? {}).filter(
+          ([propName, transientConfig]) => void 0 === recordWithTransients[propName] && transientConfig && "object" === typeof transientConfig && "read" in transientConfig && "function" === typeof transientConfig.read
+        ).forEach(([propName, transientConfig]) => {
+          recordWithTransients[propName] = transientConfig.read(recordWithTransients);
+        });
+        void getSyncManager()?.load(
+          entityConfig.syncConfig,
+          objectType,
+          objectId,
+          recordWithTransients,
+          {
+            // Handle edits sourced from the sync manager.
+            editRecord: (edits, options = {}) => {
+              if (!Object.keys(edits).length) {
+                return;
+              }
+              dispatch3({
+                type: "EDIT_ENTITY_RECORD",
                 kind,
                 name,
-                key
-              ),
-              // Handle sync connection status changes.
-              onStatusChange: (status) => {
-                dispatch3.setSyncConnectionStatus(
-                  kind,
-                  name,
-                  key,
-                  status
+                recordId: key,
+                edits,
+                meta: {
+                  undo: void 0
+                },
+                options
+              });
+            },
+            // Get the current entity record (with edits)
+            getEditedRecord: async () => await resolveSelect2.getEditedEntityRecord(
+              kind,
+              name,
+              key
+            ),
+            // Handle sync connection status changes.
+            onStatusChange: (status) => {
+              dispatch3.setSyncConnectionStatus(
+                kind,
+                name,
+                key,
+                status
+              );
+            },
+            // Refetch the current entity record from the database.
+            refetchRecord: async () => {
+              dispatch3.receiveEntityRecords(
+                kind,
+                name,
+                await (0, import_api_fetch8.default)({ path, parse: true }),
+                query
+              );
+            },
+            // Save the current entity record's unsaved edits.
+            saveRecord: () => {
+              dispatch3.saveEditedEntityRecord(kind, name, key);
+            },
+            addUndoMeta: (ydoc, meta) => {
+              const selectionHistory = getSelectionHistory(ydoc);
+              if (selectionHistory) {
+                meta.set(
+                  "selectionHistory",
+                  selectionHistory
                 );
-              },
-              // Refetch the current entity record from the database.
-              refetchRecord: async () => {
-                dispatch3.receiveEntityRecords(
-                  kind,
-                  name,
-                  await (0, import_api_fetch8.default)({ path, parse: true }),
-                  query
-                );
-              },
-              // Save the current entity record's unsaved edits.
-              saveRecord: () => {
-                dispatch3.saveEditedEntityRecord(
-                  kind,
-                  name,
-                  key
-                );
-              },
-              addUndoMeta: (ydoc, meta) => {
-                const selectionHistory = getSelectionHistory(ydoc);
-                if (selectionHistory) {
-                  meta.set(
-                    "selectionHistory",
-                    selectionHistory
-                  );
-                }
-              },
-              restoreUndoMeta: (ydoc, meta) => {
-                const selectionHistory = meta.get("selectionHistory");
-                if (selectionHistory) {
-                  setTimeout(() => {
-                    restoreSelection(
-                      selectionHistory,
-                      ydoc
-                    );
-                  }, 0);
-                }
+              }
+            },
+            restoreUndoMeta: (ydoc, meta) => {
+              const selectionHistory = meta.get("selectionHistory");
+              if (selectionHistory) {
+                setTimeout(() => {
+                  restoreSelection(selectionHistory, ydoc);
+                }, 0);
               }
             }
-          );
-        }
+          }
+        );
       }
       registry.batch(() => {
         dispatch3.receiveEntityRecords(kind, name, record, query);
@@ -5594,32 +5564,30 @@ var wp;
           totalPages: 1
         };
       }
-      if (true) {
-        if (entityConfig.syncConfig && -1 === query.per_page) {
-          const objectType = `${kind}/${name}`;
-          getSyncManager()?.loadCollection(
-            entityConfig.syncConfig,
-            objectType,
-            {
-              onStatusChange: (status) => {
-                dispatch3.setSyncConnectionStatus(
-                  kind,
-                  name,
-                  null,
-                  status
-                );
-              },
-              refetchRecords: async () => {
-                dispatch3.receiveEntityRecords(
-                  kind,
-                  name,
-                  await (0, import_api_fetch8.default)({ path, parse: true }),
-                  query
-                );
-              }
+      if (entityConfig.syncConfig && -1 === query.per_page) {
+        const objectType = `${kind}/${name}`;
+        getSyncManager()?.loadCollection(
+          entityConfig.syncConfig,
+          objectType,
+          {
+            onStatusChange: (status) => {
+              dispatch3.setSyncConnectionStatus(
+                kind,
+                name,
+                null,
+                status
+              );
+            },
+            refetchRecords: async () => {
+              dispatch3.receiveEntityRecords(
+                kind,
+                name,
+                await (0, import_api_fetch8.default)({ path, parse: true }),
+                query
+              );
             }
-          );
-        }
+          }
+        );
       }
       if (query._fields) {
         records = records.map((record) => {
