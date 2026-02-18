@@ -151,6 +151,13 @@ var wp;
   var STORE_NAME = "core/upload-media";
   var DEFAULT_MAX_CONCURRENT_UPLOADS = 5;
   var DEFAULT_MAX_CONCURRENT_IMAGE_PROCESSING = 2;
+  var CLIENT_SIDE_SUPPORTED_MIME_TYPES = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+    "image/avif"
+  ];
 
   // packages/upload-media/build-module/store/reducer.mjs
   var noop = () => {
@@ -1219,7 +1226,10 @@ var wp;
       const operations = [];
       const settings = select2.getSettings();
       const isImage = file.type.startsWith("image/");
-      if (isImage) {
+      const isVipsSupported = CLIENT_SIDE_SUPPORTED_MIME_TYPES.includes(
+        file.type
+      );
+      if (isImage && isVipsSupported) {
         const { bigImageSizeThreshold, imageOutputFormats } = settings;
         if (bigImageSizeThreshold) {
           operations.push([
@@ -1256,7 +1266,13 @@ var wp;
         id,
         operations
       });
-      dispatch.finishOperation(id, {});
+      const updates = !isVipsSupported || !isImage ? {
+        additionalData: {
+          ...item.additionalData,
+          generate_sub_sizes: true
+        }
+      } : {};
+      dispatch.finishOperation(id, updates);
     };
   }
   function uploadItem(id) {
