@@ -9401,7 +9401,7 @@ var wp;
   var MAX_ERROR_BACKOFF_IN_MS = 30 * 1e3;
   var POLLING_MANAGER_ORIGIN = "polling-manager";
   var roomStates = /* @__PURE__ */ new Map();
-  function createCompactionUpdate(updates) {
+  function createDeprecatedCompactionUpdate(updates) {
     const mergeable = updates.filter(
       (u) => [SyncUpdateType.COMPACTION, SyncUpdateType.UPDATE].includes(
         u.type
@@ -9548,9 +9548,18 @@ var wp;
             (update) => Boolean(update)
           );
           roomState.updateQueue.addBulk(responseUpdates);
-          if (room.compaction_request) {
+          if (room.should_compact) {
+            roomState.log("Server requested compaction update");
+            roomState.updateQueue.clear();
             roomState.updateQueue.add(
-              createCompactionUpdate(room.compaction_request)
+              roomState.createCompactionUpdate()
+            );
+          } else if (room.compaction_request) {
+            roomState.log("Server requested (old) compaction update");
+            roomState.updateQueue.add(
+              createDeprecatedCompactionUpdate(
+                room.compaction_request
+              )
             );
           }
         });
@@ -9609,6 +9618,10 @@ var wp;
     }
     const roomState = {
       clientId: doc2.clientID,
+      createCompactionUpdate: () => createSyncUpdate(
+        encodeStateAsUpdate(doc2),
+        SyncUpdateType.COMPACTION
+      ),
       endCursor: 0,
       localAwarenessState: awareness.getLocalState() ?? {},
       log,
