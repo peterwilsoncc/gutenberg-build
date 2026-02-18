@@ -28228,7 +28228,11 @@ ${url}
       attributes: {
         content: (0, import_i18n82.__)("Code is Poetry"),
         level: 2,
-        textAlign: "center"
+        style: {
+          typography: {
+            textAlign: "center"
+          }
+        }
       }
     },
     __experimentalLabel(attributes2, { context }) {
