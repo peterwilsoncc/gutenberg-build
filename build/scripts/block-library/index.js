@@ -41424,7 +41424,12 @@ ${js}
     }
     return type || (0, import_i18n137.__)("item");
   }
-  function Controls2({ attributes: attributes2, setAttributes, clientId }) {
+  function Controls2({
+    attributes: attributes2,
+    setAttributes,
+    clientId,
+    isLinkEditable = true
+  }) {
     const { label, url, description, rel, opensInNewTab } = attributes2;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { hasUrlBinding, isBoundEntityAvailable, entityRecord } = useEntityBinding({
@@ -41512,97 +41517,99 @@ ${js}
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-            import_components90.__experimentalToolsPanelItem,
-            {
-              hasValue: () => !!url,
-              label: (0, import_i18n137.__)("Link to"),
-              onDeselect: () => setAttributes({
-                url: void 0,
-                id: void 0,
-                kind: void 0,
-                type: void 0
-              }),
-              isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-                LinkPicker,
-                {
-                  preview,
-                  onSelect: handleLinkChange,
-                  suggestionsQuery: getSuggestionsQuery(
-                    attributes2.type,
-                    attributes2.kind
-                  ),
-                  label: (0, import_i18n137.__)("Link to"),
-                  help: helpText ? helpText : void 0
-                }
-              )
-            }
-          ),
-          url && /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(
-            import_components90.__experimentalHStack,
-            {
-              className: "navigation-link-to__actions",
-              alignment: "left",
-              justify: "left",
-              style: { gridColumn: "1 / -1" },
-              children: [
-                hasUrlBinding && isBoundEntityAvailable && entityRecord?.id && attributes2.kind === "post-type" && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-                  import_components90.Button,
+          isLinkEditable && /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(import_jsx_runtime327.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+              import_components90.__experimentalToolsPanelItem,
+              {
+                hasValue: () => !!url,
+                label: (0, import_i18n137.__)("Link to"),
+                onDeselect: () => setAttributes({
+                  url: void 0,
+                  id: void 0,
+                  kind: void 0,
+                  type: void 0
+                }),
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+                  LinkPicker,
                   {
-                    size: "compact",
-                    variant: "secondary",
-                    onClick: () => {
-                      onNavigateToEntityRecord({
-                        postId: entityRecord.id,
-                        postType: attributes2.type
-                      });
-                    },
-                    __next40pxDefaultSize: true,
-                    children: (0, import_i18n137.sprintf)(
-                      /* translators: %s: entity type (e.g., "page", "post", "category") */
-                      (0, import_i18n137.__)("Edit %s"),
-                      entityTypeName
-                    )
-                  }
-                ),
-                isViewableUrl && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-                  import_components90.Button,
-                  {
-                    size: "compact",
-                    variant: "secondary",
-                    href: viewUrl,
-                    target: "_blank",
-                    icon: external_default,
-                    iconPosition: "right",
-                    __next40pxDefaultSize: true,
-                    children: (0, import_i18n137.sprintf)(
-                      /* translators: %s: entity type (e.g., "page", "post", "category") or "link" for external links */
-                      (0, import_i18n137.__)("View %s"),
-                      attributes2.kind && attributes2.type && attributes2.kind !== "custom" ? entityTypeName : (0, import_i18n137.__)("link")
-                    )
+                    preview,
+                    onSelect: handleLinkChange,
+                    suggestionsQuery: getSuggestionsQuery(
+                      attributes2.type,
+                      attributes2.kind
+                    ),
+                    label: (0, import_i18n137.__)("Link to"),
+                    help: helpText ? helpText : void 0
                   }
                 )
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-            import_components90.__experimentalToolsPanelItem,
-            {
-              hasValue: () => !!opensInNewTab,
-              label: (0, import_i18n137.__)("Open in new tab"),
-              onDeselect: () => setAttributes({ opensInNewTab: false }),
-              isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-                import_components90.CheckboxControl,
-                {
-                  label: (0, import_i18n137.__)("Open in new tab"),
-                  checked: opensInNewTab,
-                  onChange: (value) => setAttributes({ opensInNewTab: value })
-                }
-              )
-            }
-          ),
+              }
+            ),
+            url && /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(
+              import_components90.__experimentalHStack,
+              {
+                className: "navigation-link-to__actions",
+                alignment: "left",
+                justify: "left",
+                style: { gridColumn: "1 / -1" },
+                children: [
+                  hasUrlBinding && isBoundEntityAvailable && entityRecord?.id && attributes2.kind === "post-type" && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+                    import_components90.Button,
+                    {
+                      size: "compact",
+                      variant: "secondary",
+                      onClick: () => {
+                        onNavigateToEntityRecord({
+                          postId: entityRecord.id,
+                          postType: attributes2.type
+                        });
+                      },
+                      __next40pxDefaultSize: true,
+                      children: (0, import_i18n137.sprintf)(
+                        /* translators: %s: entity type (e.g., "page", "post", "category") */
+                        (0, import_i18n137.__)("Edit %s"),
+                        entityTypeName
+                      )
+                    }
+                  ),
+                  isViewableUrl && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+                    import_components90.Button,
+                    {
+                      size: "compact",
+                      variant: "secondary",
+                      href: viewUrl,
+                      target: "_blank",
+                      icon: external_default,
+                      iconPosition: "right",
+                      __next40pxDefaultSize: true,
+                      children: (0, import_i18n137.sprintf)(
+                        /* translators: %s: entity type (e.g., "page", "post", "category") or "link" for external links */
+                        (0, import_i18n137.__)("View %s"),
+                        attributes2.kind && attributes2.type && attributes2.kind !== "custom" ? entityTypeName : (0, import_i18n137.__)("link")
+                      )
+                    }
+                  )
+                ]
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+              import_components90.__experimentalToolsPanelItem,
+              {
+                hasValue: () => !!opensInNewTab,
+                label: (0, import_i18n137.__)("Open in new tab"),
+                onDeselect: () => setAttributes({ opensInNewTab: false }),
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+                  import_components90.CheckboxControl,
+                  {
+                    label: (0, import_i18n137.__)("Open in new tab"),
+                    checked: opensInNewTab,
+                    onChange: (value) => setAttributes({ opensInNewTab: value })
+                  }
+                )
+              }
+            )
+          ] }),
           /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
             import_components90.__experimentalToolsPanelItem,
             {
@@ -44665,7 +44672,8 @@ ${js}
         {
           attributes: attributes2,
           setAttributes,
-          clientId
+          clientId,
+          isLinkEditable: !openSubmenusOnClick
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)("div", { ...blockProps, children: [
