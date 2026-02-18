@@ -3372,14 +3372,6 @@ return array(
 			'icon' => array(
 				'type' => 'string',
 				'role' => 'content'
-			),
-			'style' => array(
-				'type' => 'object',
-				'default' => array(
-					'dimensions' => array(
-						'width' => '24px'
-					)
-				)
 			)
 		),
 		'supports' => array(

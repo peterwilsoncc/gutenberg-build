@@ -1759,9 +1759,12 @@ h6.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]) {
 }
 .wp-block-icon svg {
   box-sizing: border-box;
+  fill: currentColor;
+}
+
+:where(.wp-block-icon) svg {
   width: 100%;
   height: 100%;
-  fill: currentColor;
 }
 
 .wp-block-image > a,
