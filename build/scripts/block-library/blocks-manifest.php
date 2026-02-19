@@ -3428,6 +3428,15 @@ return array(
 		),
 		'selectors' => array(
 			'root' => '.wp-block-icon',
+			'color' => array(
+				'root' => '.wp-block-icon svg'
+			),
+			'border' => array(
+				'root' => '.wp-block-icon svg'
+			),
+			'spacing' => array(
+				'padding' => '.wp-block-icon svg'
+			),
 			'dimensions' => array(
 				'root' => '.wp-block-icon svg',
 				'width' => '.wp-block-icon svg'
