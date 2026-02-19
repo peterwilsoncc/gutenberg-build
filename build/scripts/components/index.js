@@ -47876,7 +47876,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             ...restNotice
           } = notice;
           return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(motion.div, {
-            layout: !isReducedMotion,
+            layout: isReducedMotion ? false : "position",
+            style: {
+              width: "100%"
+            },
             initial: "init",
             animate: "open",
             exit: "exit",
