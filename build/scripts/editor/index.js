@@ -8956,7 +8956,7 @@ var wp;
           return null;
         }
         const normalizedValue = normalizeValue(value);
-        const sortedIds = [...normalizedValue].sort((a3, b3) => a3 - b3);
+        const sortedIds = normalizedValue.toSorted((a3, b3) => a3 - b3);
         const { getEntityRecords } = select6(import_core_data4.store);
         return getEntityRecords("postType", "attachment", {
           include: sortedIds

@@ -3065,7 +3065,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .components-dr
 fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-preview {
   position: relative;
   width: 100%;
-  aspect-ratio: 3/2;
+  aspect-ratio: var(--fields-media-edit-expanded-multiple-aspect-ratio, 3/2);
   border-radius: 2px;
   padding: 4px;
   overflow: hidden;
@@ -3148,22 +3148,13 @@ fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .fields__media
 }
 
 fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty) {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
 }
 
-@container (max-width: 768px) {
+@container (max-width: 500px) {
   fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty) {
-  /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
-}
-
-@container (max-width: 280px) {
-  fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
   }
 }
 fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields__media-edit-picker-button {
@@ -3174,7 +3165,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 3/2;
+  aspect-ratio: var(--fields-media-edit-expanded-multiple-aspect-ratio, 3/2);
 }
 
 .fields-controls__slug {
