@@ -50941,6 +50941,7 @@ var wp;
     !isPreview && // Disable resizing in mobile viewport.
     !isMobileViewport && // Disable resizing in zoomed-out mode.
     !isZoomedOut;
+    const isNavigationPreview = postType2 === NAVIGATION_POST_TYPE && isPreview;
     const calculatedMinHeight = (0, import_element159.useMemo)(() => {
       if (!localRef.current) {
         return canvasMinHeight2;
@@ -50952,6 +50953,7 @@ var wp;
     const [paddingAppenderRef, paddingStyle] = usePaddingAppender(
       !isPreview && renderingMode2 === "post-only" && !isDesignPostType
     );
+    const centerContentCSS = `display:flex;align-items:center;justify-content:center;`;
     const iframeStyles = (0, import_element159.useMemo)(() => {
       return [
         ...styles ?? [],
@@ -50961,14 +50963,21 @@ var wp;
           // important mostly for post-only views yet conceivably an issue in templated views too.
           css: `:where(.block-editor-iframe__body){display:flow-root;${calculatedMinHeight ? `min-height:${calculatedMinHeight}px;` : ""}}.is-root-container{display:flow-root;${// Some themes will have `min-height: 100vh` for the root container,
           // which isn't a requirement in auto resize mode.
-          enableResizing ? "min-height:0!important;" : ""}}
+          enableResizing || isNavigationPreview ? "min-height:0!important;" : ""}}
 				${paddingStyle ? paddingStyle : ""}
-				${enableResizing ? `.block-editor-iframe__html{background:var(--wp-editor-canvas-background);display:flex;align-items:center;justify-content:center;min-height:100vh;}.block-editor-iframe__body{width:100%;}` : ""}`
-          // The CSS above centers the body content vertically when resizing is enabled and applies a background
+				${enableResizing ? `.block-editor-iframe__html{background:var(--wp-editor-canvas-background);min-height:100vh;${centerContentCSS}}.block-editor-iframe__body{width:100%;}` : ""}${isNavigationPreview ? `.block-editor-iframe__body{${centerContentCSS}}` : ""}`
+          // The CSS for enableResizing centers the body content vertically when resizing is enabled and applies a background
           // color to the iframe HTML element to match the background color of the editor canvas.
+          // The CSS for isNavigationPreview centers the body content vertically and horizontally when the navigation is in preview mode.
         }
       ];
-    }, [styles, enableResizing, calculatedMinHeight, paddingStyle]);
+    }, [
+      styles,
+      enableResizing,
+      isNavigationPreview,
+      calculatedMinHeight,
+      paddingStyle
+    ]);
     const typewriterRef = (0, import_block_editor81.__unstableUseTypewriter)();
     contentRef = (0, import_compose59.useMergeRefs)([
       localRef,
