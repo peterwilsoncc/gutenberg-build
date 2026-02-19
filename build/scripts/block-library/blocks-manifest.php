@@ -3360,7 +3360,6 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'name' => 'core/icon',
 		'title' => 'Icon',
-		'__experimental' => true,
 		'category' => 'media',
 		'description' => 'Insert an SVG icon.',
 		'keywords' => array(
