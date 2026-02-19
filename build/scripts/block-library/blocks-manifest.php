@@ -6033,9 +6033,6 @@ return array(
 		'description' => 'Displays the next or previous post link that is adjacent to the current post.',
 		'textdomain' => 'default',
 		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'type' => array(
 				'type' => 'string',
 				'default' => 'next'
@@ -6074,6 +6071,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,

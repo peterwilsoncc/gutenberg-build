@@ -51608,9 +51608,6 @@ ${js}
     description: "Displays the next or previous post link that is adjacent to the current post.",
     textdomain: "default",
     attributes: {
-      textAlign: {
-        type: "string"
-      },
       type: {
         type: "string",
         default: "next"
@@ -51647,6 +51644,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -51674,19 +51672,9 @@ ${js}
   var import_jsx_runtime371 = __toESM(require_jsx_runtime(), 1);
   function PostNavigationLinkEdit({
     context: { postType },
-    attributes: {
-      type,
-      label,
-      showTitle,
-      textAlign,
-      linkLabel,
-      arrow,
-      taxonomy
-    },
+    attributes: { type, label, showTitle, linkLabel, arrow, taxonomy },
     setAttributes
   }) {
-    const blockEditingMode = (0, import_block_editor195.useBlockEditingMode)();
-    const showControls = blockEditingMode === "default";
     const isNext = type === "next";
     let placeholder2 = isNext ? (0, import_i18n173.__)("Next") : (0, import_i18n173.__)("Previous");
     const arrowMap5 = {
@@ -51705,11 +51693,7 @@ ${js}
       );
     }
     const ariaLabel = isNext ? (0, import_i18n173.__)("Next post") : (0, import_i18n173.__)("Previous post");
-    const blockProps = (0, import_block_editor195.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+    const blockProps = (0, import_block_editor195.useBlockProps)();
     const taxonomies = (0, import_data107.useSelect)(
       (select9) => {
         const { getTaxonomies } = select9(import_core_data62.store);
@@ -51868,15 +51852,6 @@ ${js}
           )
         }
       ) }),
-      showControls && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(import_block_editor195.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
-        import_block_editor195.AlignmentToolbar,
-        {
-          value: textAlign,
-          onChange: (nextAlign) => {
-            setAttributes({ textAlign: nextAlign });
-          }
-        }
-      ) }),
       /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)("div", { ...blockProps, children: [
         !isNext && displayArrow && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
           "span",
@@ -51962,11 +51937,77 @@ ${js}
   });
   var variations_default11 = variations11;
 
+  // packages/block-library/build-module/post-navigation-link/deprecated.mjs
+  var v131 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      type: {
+        type: "string",
+        default: "next"
+      },
+      label: {
+        type: "string",
+        role: "content"
+      },
+      showTitle: {
+        type: "boolean",
+        default: false
+      },
+      linkLabel: {
+        type: "boolean",
+        default: false
+      },
+      arrow: {
+        type: "string",
+        default: "none"
+      },
+      taxonomy: {
+        type: "string",
+        default: ""
+      }
+    },
+    supports: {
+      anchor: true,
+      reusable: false,
+      html: false,
+      color: {
+        link: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
+  var deprecated_default36 = [v131];
+
   // packages/block-library/build-module/post-navigation-link/index.mjs
   var { name: name77 } = block_default76;
   var settings76 = {
     edit: PostNavigationLinkEdit,
     variations: variations_default11,
+    deprecated: deprecated_default36,
     example: {
       attributes: {
         label: (0, import_i18n175.__)("Next post"),
@@ -52630,7 +52671,7 @@ ${js}
   }
 
   // packages/block-library/build-module/post-terms/deprecated.mjs
-  var v131 = {
+  var v133 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -52706,14 +52747,14 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default36 = [v131];
+  var deprecated_default37 = [v133];
 
   // packages/block-library/build-module/post-terms/index.mjs
   var { name: name79 } = block_default78;
   var settings78 = {
     icon: post_categories_default,
     edit: PostTermsEdit,
-    deprecated: deprecated_default36
+    deprecated: deprecated_default37
   };
   var init78 = () => {
     (0, import_hooks57.addFilter)(
@@ -52959,7 +53000,7 @@ ${js}
   var variations_default12 = variations12;
 
   // packages/block-library/build-module/post-time-to-read/deprecated.mjs
-  var v133 = {
+  var v134 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -53018,7 +53059,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default37 = [v133];
+  var deprecated_default38 = [v134];
 
   // packages/block-library/build-module/post-time-to-read/index.mjs
   var { name: name80 } = block_default79;
@@ -53027,7 +53068,7 @@ ${js}
     edit: edit_default29,
     variations: variations_default12,
     example: {},
-    deprecated: deprecated_default37
+    deprecated: deprecated_default38
   };
   var init79 = () => initBlock({ name: name80, metadata: block_default79, settings: settings79 });
 
@@ -53336,7 +53377,7 @@ ${js}
   }
 
   // packages/block-library/build-module/post-title/deprecated.mjs
-  var v134 = {
+  var v135 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -53386,14 +53427,14 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default38 = [v134];
+  var deprecated_default39 = [v135];
 
   // packages/block-library/build-module/post-title/index.mjs
   var { name: name81 } = block_default80;
   var settings80 = {
     icon: title_default,
     edit: PostTitleEdit,
-    deprecated: deprecated_default38
+    deprecated: deprecated_default39
   };
   var init80 = () => initBlock({ name: name81, metadata: block_default80, settings: settings80 });
 
@@ -54094,7 +54135,7 @@ ${js}
       };
     }
   };
-  var v135 = {
+  var v136 = {
     attributes: {
       ...blockAttributes6
     },
@@ -54139,7 +54180,7 @@ ${js}
       };
     }
   };
-  var deprecated_default39 = [v57, v48, v39, v214, v135, v02];
+  var deprecated_default40 = [v57, v48, v39, v214, v136, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n183 = __toESM(require_i18n(), 1);
@@ -54449,7 +54490,7 @@ ${js}
     transforms: transforms_default28,
     edit: edit_default30,
     save: save40,
-    deprecated: deprecated_default39
+    deprecated: deprecated_default40
   };
   if (window.__experimentalContentOnlyInspectorFields) {
     settings82[fieldsKey16] = [
@@ -56637,7 +56678,7 @@ ${js}
       replacePostTemplateBlock(innerBlocks, newPostTemplateBlock)
     ];
   };
-  var v136 = {
+  var v137 = {
     attributes: {
       queryId: {
         type: "number"
@@ -56989,8 +57030,8 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v49, v310, v215, v136];
-  var deprecated_default40 = deprecated14;
+  var deprecated14 = [v67, v58, v49, v310, v215, v137];
+  var deprecated_default41 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
   var { name: name84 } = block_default83;
@@ -57049,7 +57090,7 @@ ${js}
     },
     save: save41,
     variations: variations_default13,
-    deprecated: deprecated_default40
+    deprecated: deprecated_default41
   };
   var init83 = () => initBlock({ name: name84, metadata: block_default83, settings: settings83 });
 
@@ -57422,7 +57463,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default41 = deprecated15;
+  var deprecated_default42 = deprecated15;
 
   // packages/block-library/build-module/query-pagination/index.mjs
   var { name: name86 } = block_default85;
@@ -57430,7 +57471,7 @@ ${js}
     icon: query_pagination_default,
     edit: QueryPaginationEdit2,
     save: save43,
-    deprecated: deprecated_default41
+    deprecated: deprecated_default42
   };
   var init85 = () => initBlock({ name: name86, metadata: block_default85, settings: settings85 });
 
@@ -58243,7 +58284,7 @@ ${js}
   var variations_default14 = variations14;
 
   // packages/block-library/build-module/query-title/deprecated.mjs
-  var v137 = {
+  var v138 = {
     attributes: {
       type: {
         type: "string"
@@ -58279,7 +58320,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default42 = [v137];
+  var deprecated_default43 = [v138];
 
   // packages/block-library/build-module/query-title/index.mjs
   var { name: name90 } = block_default89;
@@ -58287,7 +58328,7 @@ ${js}
     icon: title_default,
     edit: QueryTitleEdit,
     variations: variations_default14,
-    deprecated: deprecated_default42
+    deprecated: deprecated_default43
   };
   var init89 = () => initBlock({ name: name90, metadata: block_default89, settings: settings89 });
 
@@ -58667,7 +58708,7 @@ ${js}
       ] });
     }
   };
-  var v138 = {
+  var v139 = {
     attributes: {
       value: {
         type: "string",
@@ -58759,7 +58800,7 @@ ${js}
       );
     }
   };
-  var deprecated_default43 = [v410, v311, v216, v138, v03];
+  var deprecated_default44 = [v410, v311, v216, v139, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n214 = __toESM(require_i18n(), 1);
@@ -58767,7 +58808,7 @@ ${js}
   var import_components141 = __toESM(require_components(), 1);
   var import_data127 = __toESM(require_data(), 1);
   var import_element114 = __toESM(require_element(), 1);
-  var import_deprecated46 = __toESM(require_deprecated(), 1);
+  var import_deprecated47 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime416 = __toESM(require_jsx_runtime(), 1);
   var isWebPlatform2 = import_element114.Platform.OS === "web";
   var TEMPLATE16 = [["core/paragraph", {}]];
@@ -58779,7 +58820,7 @@ ${js}
         return;
       }
       const [newAttributes, newInnerBlocks] = migrateToQuoteV2(attributes2);
-      (0, import_deprecated46.default)("Value attribute on the quote block", {
+      (0, import_deprecated47.default)("Value attribute on the quote block", {
         since: "6.0",
         version: "6.5",
         alternative: "inner blocks"
@@ -59198,7 +59239,7 @@ ${js}
     transforms: transforms_default29,
     edit: QuoteEdit,
     save: save44,
-    deprecated: deprecated_default43
+    deprecated: deprecated_default44
   };
   var init91 = () => initBlock({ name: name92, metadata: block_default91, settings: settings91 });
 
@@ -59471,7 +59512,7 @@ ${js}
       return attributes2;
     }
   };
-  var v139 = {
+  var v140 = {
     attributes: {
       ref: {
         type: "number"
@@ -59516,12 +59557,12 @@ ${js}
       };
     }
   };
-  var deprecated_default44 = [v217, v139];
+  var deprecated_default45 = [v217, v140];
 
   // packages/block-library/build-module/block/index.mjs
   var { name: name93 } = block_default92;
   var settings92 = {
-    deprecated: deprecated_default44,
+    deprecated: deprecated_default45,
     edit: ReusableBlockEditRecursionWrapper,
     icon: symbol_default,
     __experimentalLabel: ({ ref }) => {
@@ -60960,7 +61001,7 @@ ${js}
   // packages/block-library/build-module/separator/deprecated.mjs
   var import_block_editor234 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
-  var v140 = {
+  var v141 = {
     attributes: {
       color: {
         type: "string"
@@ -60995,7 +61036,7 @@ ${js}
       };
     }
   };
-  var deprecated_default45 = [v140];
+  var deprecated_default46 = [v141];
 
   // packages/block-library/build-module/separator/index.mjs
   var { name: name97 } = block_default96;
@@ -61010,7 +61051,7 @@ ${js}
     transforms: transforms_default30,
     edit: SeparatorEdit,
     save: separatorSave,
-    deprecated: deprecated_default45
+    deprecated: deprecated_default46
   };
   var init96 = () => initBlock({ name: name97, metadata: block_default96, settings: settings96 });
 
@@ -61956,7 +61997,7 @@ ${js}
   var icon_default4 = /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_components149.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_components149.Path, { d: "M4 10.5h16V9H4v1.5ZM4 15h9v-1.5H4V15Z" }) });
 
   // packages/block-library/build-module/site-tagline/deprecated.mjs
-  var v141 = {
+  var v143 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -61990,14 +62031,14 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default46 = [v141];
+  var deprecated_default47 = [v143];
 
   // packages/block-library/build-module/site-tagline/index.mjs
   var { name: name100 } = block_default99;
   var settings99 = {
     icon: icon_default4,
     edit: SiteTaglineEdit,
-    deprecated: deprecated_default46
+    deprecated: deprecated_default47
   };
   var init99 = () => initBlock({ name: name100, metadata: block_default99, settings: settings99 });
 
@@ -62234,7 +62275,7 @@ ${js}
   }
 
   // packages/block-library/build-module/site-title/deprecated.mjs
-  var v143 = {
+  var v144 = {
     attributes: {
       level: {
         type: "number",
@@ -62281,7 +62322,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default47 = [v143];
+  var deprecated_default48 = [v144];
 
   // packages/block-library/build-module/site-title/transforms.mjs
   var import_blocks107 = __toESM(require_blocks(), 1);
@@ -62313,7 +62354,7 @@ ${js}
     },
     edit: SiteTitleEdit,
     transforms: transforms_default33,
-    deprecated: deprecated_default47
+    deprecated: deprecated_default48
   };
   var init100 = () => initBlock({ name: name101, metadata: block_default100, settings: settings100 });
 
@@ -63325,7 +63366,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default48 = deprecated17;
+  var deprecated_default49 = deprecated17;
 
   // packages/block-library/build-module/social-links/edit.mjs
   var import_element122 = __toESM(require_element(), 1);
@@ -63719,7 +63760,7 @@ ${js}
     icon: share_default,
     edit: edit_default33,
     save: save46,
-    deprecated: deprecated_default48
+    deprecated: deprecated_default49
   };
   var init102 = () => initBlock({ name: name103, metadata: block_default102, settings: settings102 });
 
@@ -63770,7 +63811,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default49 = deprecated18;
+  var deprecated_default50 = deprecated18;
 
   // packages/block-library/build-module/spacer/edit.mjs
   var import_block_editor245 = __toESM(require_block_editor(), 1);
@@ -64256,7 +64297,7 @@ ${js}
     transforms: transforms_default34,
     edit: edit_default34,
     save: save47,
-    deprecated: deprecated_default49
+    deprecated: deprecated_default50
   };
   var init103 = () => initBlock({ name: name104, metadata: block_default103, settings: settings103 });
 
@@ -65335,7 +65376,7 @@ ${js}
       attribute: "scope"
     }
   };
-  var v144 = {
+  var v145 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -65431,7 +65472,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default50 = [v411, v312, v218, v144];
+  var deprecated_default51 = [v411, v312, v218, v145];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -66577,7 +66618,7 @@ ${js}
     transforms: transforms_default35,
     edit: edit_default35,
     save: save50,
-    deprecated: deprecated_default50
+    deprecated: deprecated_default51
   };
   var init106 = () => initBlock({ name: name107, metadata: block_default106, settings: settings106 });
 
@@ -70047,7 +70088,7 @@ ${js}
   }
 
   // packages/block-library/build-module/term-description/deprecated.mjs
-  var v145 = {
+  var v146 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -70105,7 +70146,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default51 = [v145];
+  var deprecated_default52 = [v146];
 
   // packages/block-library/build-module/term-description/index.mjs
   var { name: name115 } = block_default114;
@@ -70113,7 +70154,7 @@ ${js}
     icon: term_description_default,
     edit: TermDescriptionEdit,
     example: {},
-    deprecated: deprecated_default51
+    deprecated: deprecated_default52
   };
   var init114 = () => initBlock({ name: name115, metadata: block_default114, settings: settings114 });
 
@@ -71393,11 +71434,11 @@ ${js}
   var import_i18n264 = __toESM(require_i18n(), 1);
   var import_components181 = __toESM(require_components(), 1);
   var import_block_editor284 = __toESM(require_block_editor(), 1);
-  var import_deprecated57 = __toESM(require_deprecated(), 1);
+  var import_deprecated58 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
   function TextColumnsEdit({ attributes: attributes2, setAttributes }) {
     const { width, content, columns } = attributes2;
-    (0, import_deprecated57.default)("The Text Columns block", {
+    (0, import_deprecated58.default)("The Text Columns block", {
       since: "5.3",
       alternative: "the Columns block"
     });
@@ -71583,7 +71624,7 @@ ${js}
   // packages/block-library/build-module/verse/deprecated.mjs
   var import_block_editor286 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
-  var v146 = {
+  var v147 = {
     attributes: {
       content: {
         type: "string",
@@ -71715,7 +71756,7 @@ ${js}
       );
     }
   };
-  var deprecated_default52 = [v313, v219, v146];
+  var deprecated_default53 = [v313, v219, v147];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n265 = __toESM(require_i18n(), 1);
@@ -71880,7 +71921,7 @@ ${js}
       }
     },
     transforms: transforms_default38,
-    deprecated: deprecated_default52,
+    deprecated: deprecated_default53,
     merge(attributes2, attributesToMerge) {
       return {
         content: attributes2.content + "\n\n" + attributesToMerge.content
@@ -72035,7 +72076,7 @@ ${js}
   // packages/block-library/build-module/video/deprecated.mjs
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default120;
-  var v147 = {
+  var v148 = {
     attributes: blockAttributes7,
     save({ attributes: attributes2 }) {
       const {
@@ -72069,8 +72110,8 @@ ${js}
       ] });
     }
   };
-  var deprecated20 = [v147];
-  var deprecated_default53 = deprecated20;
+  var deprecated20 = [v148];
+  var deprecated_default54 = deprecated20;
 
   // packages/block-library/build-module/video/edit.mjs
   var import_blob19 = __toESM(require_blob(), 1);
@@ -72936,7 +72977,7 @@ ${js}
       }
     },
     transforms: transforms_default39,
-    deprecated: deprecated_default53,
+    deprecated: deprecated_default54,
     edit: edit_default41,
     save: save58
   };
