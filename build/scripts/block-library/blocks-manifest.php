@@ -6640,8 +6640,7 @@ return array(
 			),
 			'html' => false,
 			'layout' => true,
-			'interactivity' => true,
-			'contentRole' => true
+			'interactivity' => true
 		),
 		'editorStyle' => 'wp-block-query-editor'
 	),
