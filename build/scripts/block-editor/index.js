@@ -8590,6 +8590,9 @@ var wp;
           if (fromRootClientId === toRootClientId) {
             const subState = state.get(toRootClientId);
             const fromIndex = subState.indexOf(clientIds[0]);
+            if (fromIndex === -1) {
+              return state;
+            }
             const newState2 = new Map(state);
             newState2.set(
               toRootClientId,
