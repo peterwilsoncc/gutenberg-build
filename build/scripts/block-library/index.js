@@ -29340,6 +29340,15 @@ ${js}
     },
     selectors: {
       root: ".wp-block-icon",
+      color: {
+        root: ".wp-block-icon svg"
+      },
+      border: {
+        root: ".wp-block-icon svg"
+      },
+      spacing: {
+        padding: ".wp-block-icon svg"
+      },
       dimensions: {
         root: ".wp-block-icon svg",
         width: ".wp-block-icon svg"
