@@ -8646,30 +8646,7 @@ return array(
 			'core/tabs-editorActiveTabIndex'
 		),
 		'attributes' => array(
-			'activeBackgroundColor' => array(
-				'type' => 'string'
-			),
-			'customActiveBackgroundColor' => array(
-				'type' => 'string'
-			),
-			'activeTextColor' => array(
-				'type' => 'string'
-			),
-			'customActiveTextColor' => array(
-				'type' => 'string'
-			),
-			'hoverBackgroundColor' => array(
-				'type' => 'string'
-			),
-			'customHoverBackgroundColor' => array(
-				'type' => 'string'
-			),
-			'hoverTextColor' => array(
-				'type' => 'string'
-			),
-			'customHoverTextColor' => array(
-				'type' => 'string'
-			)
+			
 		),
 		'supports' => array(
 			'html' => false,

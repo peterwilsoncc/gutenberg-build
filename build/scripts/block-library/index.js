@@ -67814,30 +67814,12 @@ ${js}
     ) });
   }
   function Controls5({
-    attributes: attributes2,
-    setAttributes,
-    clientId,
     tabsClientId,
     tabClientId,
     tabIndex,
     tabsCount,
-    tabsMenuClientId,
-    activeBackgroundColor,
-    setActiveBackgroundColor,
-    activeTextColor,
-    setActiveTextColor,
-    hoverBackgroundColor,
-    setHoverBackgroundColor,
-    hoverTextColor,
-    setHoverTextColor
+    tabsMenuClientId
   }) {
-    const {
-      customActiveBackgroundColor,
-      customActiveTextColor,
-      customHoverBackgroundColor,
-      customHoverTextColor
-    } = attributes2;
-    const colorSettings = (0, import_block_editor264.__experimentalUseMultipleOriginColorsAndGradients)();
     return /* @__PURE__ */ (0, import_jsx_runtime505.jsxs)(import_jsx_runtime505.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
         TabBlockMover,
@@ -67850,105 +67832,15 @@ ${js}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(AddTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(RemoveTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(import_block_editor264.InspectorControls, { group: "color", children: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
-        import_block_editor264.__experimentalColorGradientSettingsDropdown,
-        {
-          settings: [
-            {
-              label: (0, import_i18n244.__)("Active background"),
-              colorValue: activeBackgroundColor?.color ?? customActiveBackgroundColor,
-              onColorChange: (value) => {
-                setActiveBackgroundColor(value);
-                setAttributes({
-                  customActiveBackgroundColor: value
-                });
-              },
-              resetAllFilter: () => {
-                setActiveBackgroundColor(void 0);
-                setAttributes({
-                  customActiveBackgroundColor: void 0
-                });
-              },
-              clearable: true
-            },
-            {
-              label: (0, import_i18n244.__)("Active text"),
-              colorValue: activeTextColor?.color ?? customActiveTextColor,
-              onColorChange: (value) => {
-                setActiveTextColor(value);
-                setAttributes({
-                  customActiveTextColor: value
-                });
-              },
-              resetAllFilter: () => {
-                setActiveTextColor(void 0);
-                setAttributes({
-                  customActiveTextColor: void 0
-                });
-              },
-              clearable: true
-            },
-            {
-              label: (0, import_i18n244.__)("Hover background"),
-              colorValue: hoverBackgroundColor?.color ?? customHoverBackgroundColor,
-              onColorChange: (value) => {
-                setHoverBackgroundColor(value);
-                setAttributes({
-                  customHoverBackgroundColor: value
-                });
-              },
-              resetAllFilter: () => {
-                setHoverBackgroundColor(void 0);
-                setAttributes({
-                  customHoverBackgroundColor: void 0
-                });
-              },
-              clearable: true
-            },
-            {
-              label: (0, import_i18n244.__)("Hover text"),
-              colorValue: hoverTextColor?.color ?? customHoverTextColor,
-              onColorChange: (value) => {
-                setHoverTextColor(value);
-                setAttributes({
-                  customHoverTextColor: value
-                });
-              },
-              resetAllFilter: () => {
-                setHoverTextColor(void 0);
-                setAttributes({
-                  customHoverTextColor: void 0
-                });
-              },
-              clearable: true
-            }
-          ],
-          panelId: clientId,
-          disableCustomColors: false,
-          __experimentalIsRenderedInSidebar: true,
-          __next40pxDefaultSize: true,
-          ...colorSettings
-        }
-      ) })
+      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(RemoveTabToolbarControl, { tabsClientId })
     ] });
   }
 
   // packages/block-library/build-module/tabs-menu-item/edit.mjs
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
   function Edit23({
-    attributes: attributes2,
-    setAttributes,
     context,
     clientId,
-    activeBackgroundColor,
-    setActiveBackgroundColor,
-    activeTextColor,
-    setActiveTextColor,
-    hoverBackgroundColor,
-    setHoverBackgroundColor,
-    hoverTextColor,
-    setHoverTextColor,
     __unstableLayoutClassNames: layoutClassNames
   }) {
     const tabIndex = context["core/tabs-menu-item-index"] ?? 0;
@@ -68023,35 +67915,6 @@ ${js}
         __unstableMarkNextChangeAsNotPersistent
       ]
     );
-    const customColorStyles = (0, import_element130.useMemo)(() => {
-      const styles = {};
-      const activeBg = activeBackgroundColor?.color || attributes2.customActiveBackgroundColor;
-      const activeText = activeTextColor?.color || attributes2.customActiveTextColor;
-      const hoverBg = hoverBackgroundColor?.color || attributes2.customHoverBackgroundColor;
-      const hoverText = hoverTextColor?.color || attributes2.customHoverTextColor;
-      if (activeBg) {
-        styles["--custom-tab-active-color"] = activeBg;
-      }
-      if (activeText) {
-        styles["--custom-tab-active-text-color"] = activeText;
-      }
-      if (hoverBg) {
-        styles["--custom-tab-hover-color"] = hoverBg;
-      }
-      if (hoverText) {
-        styles["--custom-tab-hover-text-color"] = hoverText;
-      }
-      return styles;
-    }, [
-      activeBackgroundColor?.color,
-      attributes2.customActiveBackgroundColor,
-      activeTextColor?.color,
-      attributes2.customActiveTextColor,
-      hoverBackgroundColor?.color,
-      attributes2.customHoverBackgroundColor,
-      hoverTextColor?.color,
-      attributes2.customHoverTextColor
-    ]);
     const tabPanelId = tabId || `tab-${tabIndex}`;
     const tabLabelId = `${tabPanelId}--tab`;
     const blockProps = (0, import_block_editor265.useBlockProps)({
@@ -68059,7 +67922,6 @@ ${js}
         "is-active": isActiveTab,
         "is-selected": isSelectedTab
       }),
-      style: customColorStyles,
       "aria-controls": tabPanelId,
       "aria-selected": isActiveTab,
       id: tabLabelId,
@@ -68071,24 +67933,11 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
         Controls5,
         {
-          ...{
-            attributes: attributes2,
-            setAttributes,
-            clientId,
-            tabsClientId,
-            tabClientId,
-            tabIndex,
-            tabsCount: tabsList.length,
-            tabsMenuClientId,
-            activeBackgroundColor,
-            setActiveBackgroundColor,
-            activeTextColor,
-            setActiveTextColor,
-            hoverBackgroundColor,
-            setHoverBackgroundColor,
-            hoverTextColor,
-            setHoverTextColor
-          }
+          tabsClientId,
+          tabClientId,
+          tabIndex,
+          tabsCount: tabsList.length,
+          tabsMenuClientId
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
@@ -68107,33 +67956,13 @@ ${js}
       ) })
     ] });
   }
-  var edit_default38 = (0, import_block_editor265.withColors)(
-    "activeBackgroundColor",
-    "activeTextColor",
-    "hoverBackgroundColor",
-    "hoverTextColor"
-  )(Edit23);
 
   // packages/block-library/build-module/tabs-menu-item/save.mjs
   var import_block_editor266 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
-  function save54({ attributes: attributes2 }) {
-    const customColorStyles = {};
-    if (attributes2.customActiveBackgroundColor) {
-      customColorStyles["--custom-tab-active-color"] = attributes2.customActiveBackgroundColor;
-    }
-    if (attributes2.customActiveTextColor) {
-      customColorStyles["--custom-tab-active-text-color"] = attributes2.customActiveTextColor;
-    }
-    if (attributes2.customHoverBackgroundColor) {
-      customColorStyles["--custom-tab-hover-color"] = attributes2.customHoverBackgroundColor;
-    }
-    if (attributes2.customHoverTextColor) {
-      customColorStyles["--custom-tab-hover-text-color"] = attributes2.customHoverTextColor;
-    }
+  function save54() {
     const blockProps = import_block_editor266.useBlockProps.save({
       className: "wp-block-tabs-menu-item__template",
-      style: customColorStyles,
       type: "button",
       role: "tab"
     });
@@ -68161,32 +67990,7 @@ ${js}
       "core/tabs-activeTabIndex",
       "core/tabs-editorActiveTabIndex"
     ],
-    attributes: {
-      activeBackgroundColor: {
-        type: "string"
-      },
-      customActiveBackgroundColor: {
-        type: "string"
-      },
-      activeTextColor: {
-        type: "string"
-      },
-      customActiveTextColor: {
-        type: "string"
-      },
-      hoverBackgroundColor: {
-        type: "string"
-      },
-      customHoverBackgroundColor: {
-        type: "string"
-      },
-      hoverTextColor: {
-        type: "string"
-      },
-      customHoverTextColor: {
-        type: "string"
-      }
-    },
+    attributes: {},
     supports: {
       html: false,
       reusable: false,
@@ -68233,7 +68037,7 @@ ${js}
   var { name: name111 } = block_default110;
   var settings110 = {
     icon: tabs_menu_item_default,
-    edit: edit_default38,
+    edit: Edit23,
     save: save54
   };
   var init110 = () => initBlock({ name: name111, metadata: block_default110, settings: settings110 });
@@ -68540,14 +68344,14 @@ ${js}
       status === "success" && /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
     ] });
   }
-  var edit_default39 = TagCloudEdit;
+  var edit_default38 = TagCloudEdit;
 
   // packages/block-library/build-module/tag-cloud/index.mjs
   var { name: name112 } = block_default111;
   var settings111 = {
     icon: tag_default,
     example: {},
-    edit: edit_default39,
+    edit: edit_default38,
     transforms: transforms_default36
   };
   var init111 = () => initBlock({ name: name112, metadata: block_default111, settings: settings111 });
@@ -71102,7 +70906,7 @@ ${js}
     const Component = hasInnerBlocks ? TermsQueryContent : TermsQueryPlaceholder;
     return /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(Component, { ...props });
   };
-  var edit_default40 = TermsQueryEdit;
+  var edit_default39 = TermsQueryEdit;
 
   // packages/block-library/build-module/terms-query/save.mjs
   var import_block_editor281 = __toESM(require_block_editor(), 1);
@@ -71165,7 +70969,7 @@ ${js}
   var { name: name117 } = block_default116;
   var settings116 = {
     icon: loop_default,
-    edit: edit_default40,
+    edit: edit_default39,
     save: save55,
     example: {},
     variations: variations_default17
@@ -72853,7 +72657,7 @@ ${js}
       ] })
     ] });
   }
-  var edit_default41 = VideoEdit;
+  var edit_default40 = VideoEdit;
 
   // packages/block-library/build-module/video/save.mjs
   var import_block_editor292 = __toESM(require_block_editor(), 1);
@@ -72993,7 +72797,7 @@ ${js}
     },
     transforms: transforms_default39,
     deprecated: deprecated_default54,
-    edit: edit_default41,
+    edit: edit_default40,
     save: save58
   };
   if (window.__experimentalContentOnlyInspectorFields) {
