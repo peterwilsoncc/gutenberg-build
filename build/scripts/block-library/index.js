@@ -28975,10 +28975,10 @@ ${js}
   var import_i18n91 = __toESM(require_i18n(), 1);
   var import_components52 = __toESM(require_components(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
-  var import_data45 = __toESM(require_data(), 1);
-  var import_core_data22 = __toESM(require_core_data(), 1);
   var import_element42 = __toESM(require_element(), 1);
   var import_primitives162 = __toESM(require_primitives(), 1);
+  var import_data45 = __toESM(require_data(), 1);
+  var import_core_data22 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/icon/components/custom-inserter/index.mjs
   var import_i18n90 = __toESM(require_i18n(), 1);
@@ -28991,7 +28991,7 @@ ${js}
   var import_components50 = __toESM(require_components(), 1);
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
   function IconGrid({ icons, onChange, attributes: attributes2 }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("div", { className: "wp-block-icon__inserter-grid", children: icons.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("div", { className: "wp-block-icon__inserter-grid-no-results", children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("p", { children: (0, import_i18n89.__)("No results found.") }) }) : /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("div", { className: "wp-block-icon__inserter-grid", children: !icons?.length ? /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("div", { className: "wp-block-icon__inserter-grid-no-results", children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("p", { children: (0, import_i18n89.__)("No results found.") }) }) : /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
       "div",
       {
         className: "wp-block-icon__inserter-grid-icons-list",
@@ -29064,7 +29064,7 @@ ${js}
   // packages/block-library/build-module/icon/components/custom-inserter/index.mjs
   var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
   function CustomInserterModal({
-    icons,
+    icons = [],
     setInserterOpen,
     attributes: attributes2,
     setAttributes
@@ -29153,10 +29153,19 @@ ${js}
     const spacingProps = (0, import_block_editor109.__experimentalGetSpacingClassesAndStyles)(attributes2);
     const borderProps = (0, import_block_editor109.__experimentalUseBorderProps)(attributes2);
     const dimensionsProps = (0, import_block_editor109.getDimensionsClassesAndStyles)(attributes2);
-    const allIcons = (0, import_data45.useSelect)((select9) => {
-      return unlock(select9(import_core_data22.store)).getIcons();
-    }, []);
-    const iconToDisplay = allIcons?.length > 0 ? allIcons?.find(({ name: name123 }) => name123 === icon4)?.content : "";
+    const { selectedIcon, allIcons = [] } = (0, import_data45.useSelect)(
+      (select9) => {
+        const { getEntityRecord, getEntityRecords } = select9(import_core_data22.store);
+        return {
+          selectedIcon: icon4 ? getEntityRecord("root", "icon", icon4) : null,
+          allIcons: isInserterOpen ? getEntityRecords("root", "icon", {
+            per_page: -1
+          }) : void 0
+        };
+      },
+      [isInserterOpen, icon4]
+    );
+    const iconToDisplay = selectedIcon?.content || "";
     const blockControls = /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_block_editor109.BlockControls, { group: isContentOnlyMode ? "inline" : "other", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
         import_components52.ToolbarButton,
