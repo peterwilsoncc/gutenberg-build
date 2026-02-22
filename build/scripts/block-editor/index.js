@@ -11097,20 +11097,7 @@ var wp;
     }
     return result;
   };
-  var getParentSectionBlock = (state, clientId) => {
-    let current = clientId;
-    let result;
-    while (current = state.blocks.parents.get(current)) {
-      if (isSectionBlock(state, current)) {
-        result = current;
-      }
-    }
-    return result;
-  };
-  function isSectionBlock(state, clientId) {
-    if (clientId === state.editedContentOnlySection) {
-      return false;
-    }
+  function isSectionBlockCandidate(state, clientId) {
     const blockName = getBlockName(state, clientId);
     if (blockName === "core/block") {
       return true;
@@ -11122,13 +11109,32 @@ var wp;
     if ((!disableContentOnlyForUnsyncedPatterns && attributes?.metadata?.patternName || isTemplatePart9) && !isIsolatedEditor) {
       return true;
     }
-    const hasContentOnlyTempateLock = getTemplateLock(state, clientId) === "contentOnly";
+    const hasContentOnlyTemplateLock = getTemplateLock(state, clientId) === "contentOnly";
     const rootClientId = getBlockRootClientId(state, clientId);
     const hasRootContentOnlyTemplateLock = getTemplateLock(state, rootClientId) === "contentOnly";
-    if (hasContentOnlyTempateLock && !hasRootContentOnlyTemplateLock) {
+    if (hasContentOnlyTemplateLock && !hasRootContentOnlyTemplateLock) {
       return true;
     }
     return false;
+  }
+  var getParentSectionBlock = (state, clientId) => {
+    if (isWithinEditedContentOnlySection(state, clientId)) {
+      return void 0;
+    }
+    let current = clientId;
+    let result;
+    while (current = state.blocks.parents.get(current)) {
+      if (isSectionBlockCandidate(state, current)) {
+        result = current;
+      }
+    }
+    return result;
+  };
+  function isSectionBlock(state, clientId) {
+    if (isWithinEditedContentOnlySection(state, clientId) || getParentSectionBlock(state, clientId)) {
+      return false;
+    }
+    return isSectionBlockCandidate(state, clientId);
   }
   function getEditedContentOnlySection(state) {
     return state.editedContentOnlySection;
