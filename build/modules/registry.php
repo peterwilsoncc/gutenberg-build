@@ -23,6 +23,16 @@ return array(
 		'asset' => 'latex-to-mathml/loader.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/vips/worker',
+		'path' => 'vips/worker',
+		'asset' => 'vips/worker.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/vips/loader',
+		'path' => 'vips/loader',
+		'asset' => 'vips/loader.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/interactivity-router',
 		'path' => 'interactivity-router/index',
 		'asset' => 'interactivity-router/index.min.asset.php',
@@ -56,16 +66,6 @@ return array(
 		'id' => '@wordpress/edit-site-init',
 		'path' => 'edit-site-init/index',
 		'asset' => 'edit-site-init/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/vips/worker',
-		'path' => 'vips/worker',
-		'asset' => 'vips/worker.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/vips/loader',
-		'path' => 'vips/loader',
-		'asset' => 'vips/loader.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/lazy-editor',
