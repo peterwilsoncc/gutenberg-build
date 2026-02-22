@@ -2080,7 +2080,7 @@ var wp;
     if (isSelectionInSameBlock) {
       const block = getBlock(selectionStart.clientId);
       const isBlockEmpty = block && (0, import_blocks2.isUnmodifiedBlock)(block);
-      const isBeginningOfEmptyBlock = 0 === selectionStart.offset && 0 === selectionEnd.offset && isBlockEmpty;
+      const isBeginningOfEmptyBlock = 0 === selectionStart.offset && 0 === selectionEnd.offset && isBlockEmpty && !selectionStart.attributeKey && !selectionEnd.attributeKey;
       if (isBeginningOfEmptyBlock) {
         const selectionStartWithoutOffset = {
           clientId: selectionStart.clientId
