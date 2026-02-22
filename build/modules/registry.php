@@ -58,11 +58,6 @@ return array(
 		'asset' => 'edit-site-init/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/lazy-editor',
-		'path' => 'lazy-editor/index',
-		'asset' => 'lazy-editor/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/vips/worker',
 		'path' => 'vips/worker',
 		'asset' => 'vips/worker.min.asset.php',
@@ -71,6 +66,11 @@ return array(
 		'id' => '@wordpress/vips/loader',
 		'path' => 'vips/loader',
 		'asset' => 'vips/loader.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/lazy-editor',
+		'path' => 'lazy-editor/index',
+		'asset' => 'lazy-editor/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/workflow',
