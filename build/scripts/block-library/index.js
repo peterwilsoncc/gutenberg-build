@@ -53884,8 +53884,8 @@ ${js}
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
         borderColor: isSolidColorStyle ? void 0 : mainColor,
         textAlign: isSolidColorStyle ? "left" : void 0,
-        style: style2,
-        ...attributes2
+        ...attributes2,
+        style: style2
       };
     }
   };
@@ -54009,8 +54009,8 @@ ${js}
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
         borderColor: isSolidColorStyle ? void 0 : mainColor,
         textAlign: isSolidColorStyle ? "left" : void 0,
-        style: style2,
-        ...attributes2
+        ...attributes2,
+        style: style2
       };
     }
   };
@@ -54106,8 +54106,8 @@ ${js}
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
         borderColor: isSolidColorStyle ? void 0 : mainColor,
         textAlign: isSolidColorStyle ? "left" : void 0,
-        style: style2,
-        ...attributes2
+        ...attributes2,
+        style: style2
       };
     }
   };
