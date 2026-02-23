@@ -44989,6 +44989,7 @@ ${js}
     const { displayMode, text } = attributes2;
     const showIcon = displayMode === "icon" || displayMode === "both";
     const showText = displayMode === "text" || displayMode === "both";
+    const displayText = text || (0, import_i18n148.__)("Close");
     const blockProps = (0, import_block_editor166.useBlockProps)({
       className: "wp-block-navigation-overlay-close"
     });
@@ -45056,10 +45057,8 @@ ${js}
               import_block_editor166.RichText,
               {
                 identifier: "text",
-                value: text,
+                value: displayText,
                 onChange: (value) => setAttributes({ text: value }),
-                placeholder: (0, import_i18n148.__)("Close"),
-                withoutInteractiveFormatting: true,
                 tagName: "span",
                 className: "wp-block-navigation-overlay-close__text",
                 allowedFormats: ["core/bold", "core/italic"]
