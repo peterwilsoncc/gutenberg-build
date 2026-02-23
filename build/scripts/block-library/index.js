@@ -57942,9 +57942,6 @@ ${js}
       type: {
         type: "string"
       },
-      textAlign: {
-        type: "string"
-      },
       level: {
         type: "number",
         default: 1
@@ -57985,6 +57982,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontStyle: true,
         __experimentalFontWeight: true,
@@ -58116,26 +58114,19 @@ ${js}
   // packages/block-library/build-module/query-title/edit.mjs
   var import_jsx_runtime412 = __toESM(require_jsx_runtime(), 1);
   var SUPPORTED_TYPES = ["archive", "search", "post-type"];
-  function QueryTitleEdit({
-    attributes: {
-      type,
-      level,
-      levelOptions,
-      textAlign,
-      showPrefix,
-      showSearchTerm
-    },
-    setAttributes,
-    context: { query }
-  }) {
+  function QueryTitleEdit(props) {
+    useDeprecatedTextAlign(props);
+    const {
+      attributes: { type, level, levelOptions, showPrefix, showSearchTerm },
+      setAttributes,
+      context: { query }
+    } = props;
     const { archiveTypeLabel, archiveNameLabel } = useArchiveLabel();
     const { postTypeLabel } = usePostTypeLabel(query?.postType);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const TagName2 = level === 0 ? "p" : `h${level}`;
     const blockProps = (0, import_block_editor222.useBlockProps)({
-      className: clsx_default("wp-block-query-title__placeholder", {
-        [`has-text-align-${textAlign}`]: textAlign
-      })
+      className: "wp-block-query-title__placeholder"
     });
     if (!SUPPORTED_TYPES.includes(type)) {
       return /* @__PURE__ */ (0, import_jsx_runtime412.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(import_block_editor222.Warning, { children: (0, import_i18n211.__)("Provided type is not supported.") }) });
@@ -58287,25 +58278,14 @@ ${js}
       ] });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime412.jsxs)(import_jsx_runtime412.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime412.jsxs)(import_block_editor222.BlockControls, { group: "block", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
-          import_block_editor222.HeadingLevelDropdown,
-          {
-            value: level,
-            options: levelOptions,
-            onChange: (newLevel) => setAttributes({ level: newLevel })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
-          import_block_editor222.AlignmentControl,
-          {
-            value: textAlign,
-            onChange: (nextAlign) => {
-              setAttributes({ textAlign: nextAlign });
-            }
-          }
-        )
-      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(import_block_editor222.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
+        import_block_editor222.HeadingLevelDropdown,
+        {
+          value: level,
+          options: levelOptions,
+          onChange: (newLevel) => setAttributes({ level: newLevel })
+        }
+      ) }),
       titleElement
     ] });
   }
@@ -58362,6 +58342,74 @@ ${js}
   var variations_default14 = variations14;
 
   // packages/block-library/build-module/query-title/deprecated.mjs
+  var v217 = {
+    attributes: {
+      type: {
+        type: "string"
+      },
+      textAlign: {
+        type: "string"
+      },
+      level: {
+        type: "number",
+        default: 1
+      },
+      levelOptions: {
+        type: "array"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: ["wide", "full"],
+      html: false,
+      color: {
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      spacing: {
+        padding: true,
+        margin: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalFontStyle: true,
+        __experimentalFontWeight: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
   var v138 = {
     attributes: {
       type: {
@@ -58398,7 +58446,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default43 = [v138];
+  var deprecated_default43 = [v217, v138];
 
   // packages/block-library/build-module/query-title/index.mjs
   var { name: name90 } = block_default89;
@@ -58756,7 +58804,7 @@ ${js}
       return migrateTextAlign3(...migrateToQuoteV2(attributes2));
     }
   };
-  var v217 = {
+  var v218 = {
     attributes: {
       value: {
         type: "string",
@@ -58878,7 +58926,7 @@ ${js}
       );
     }
   };
-  var deprecated_default44 = [v410, v311, v217, v139, v03];
+  var deprecated_default44 = [v410, v311, v218, v139, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n214 = __toESM(require_i18n(), 1);
@@ -59533,7 +59581,7 @@ ${js}
 
   // packages/block-library/build-module/block/deprecated.mjs
   var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
-  var v218 = {
+  var v219 = {
     attributes: {
       ref: {
         type: "number"
@@ -59635,7 +59683,7 @@ ${js}
       };
     }
   };
-  var deprecated_default45 = [v218, v140];
+  var deprecated_default45 = [v219, v140];
 
   // packages/block-library/build-module/block/index.mjs
   var { name: name93 } = block_default92;
@@ -65307,7 +65355,7 @@ ${js}
       attribute: "data-align"
     }
   };
-  var v219 = {
+  var v220 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -65550,7 +65598,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default51 = [v411, v312, v219, v145];
+  var deprecated_default51 = [v411, v312, v220, v145];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -71531,7 +71579,7 @@ ${js}
     },
     migrate: migrate_text_align_default
   };
-  var v220 = {
+  var v221 = {
     attributes: {
       content: {
         type: "string",
@@ -71638,7 +71686,7 @@ ${js}
       );
     }
   };
-  var deprecated_default53 = [v313, v220, v147];
+  var deprecated_default53 = [v313, v221, v147];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n265 = __toESM(require_i18n(), 1);

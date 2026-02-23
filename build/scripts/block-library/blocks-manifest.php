@@ -6936,9 +6936,6 @@ return array(
 			'type' => array(
 				'type' => 'string'
 			),
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'level' => array(
 				'type' => 'number',
 				'default' => 1
@@ -6984,6 +6981,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontStyle' => true,
 				'__experimentalFontWeight' => true,
