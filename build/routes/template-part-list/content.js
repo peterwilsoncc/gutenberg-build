@@ -13037,7 +13037,9 @@ var DataViewsSearch = (0, import_element35.memo)(function Search({ label }) {
     view.search
   );
   (0, import_element35.useEffect)(() => {
-    setSearch(view.search ?? "");
+    if (view.search !== debouncedSearch) {
+      setSearch(view.search ?? "");
+    }
   }, [view.search, setSearch]);
   const onChangeViewRef = (0, import_element35.useRef)(onChangeView);
   const viewRef = (0, import_element35.useRef)(view);

@@ -13401,7 +13401,9 @@ If there's a particular need for this, please submit a feature request at https:
       view.search
     );
     (0, import_element34.useEffect)(() => {
-      setSearch(view.search ?? "");
+      if (view.search !== debouncedSearch) {
+        setSearch(view.search ?? "");
+      }
     }, [view.search, setSearch]);
     const onChangeViewRef = (0, import_element34.useRef)(onChangeView);
     const viewRef = (0, import_element34.useRef)(view);
