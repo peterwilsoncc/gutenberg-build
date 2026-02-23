@@ -53108,9 +53108,6 @@ ${js}
     textdomain: "default",
     usesContext: ["postId", "postType", "queryId"],
     attributes: {
-      textAlign: {
-        type: "string"
-      },
       level: {
         type: "number",
         default: 2
@@ -53158,6 +53155,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -53197,7 +53195,7 @@ ${js}
   var import_element102 = __toESM(require_element(), 1);
   var import_jsx_runtime376 = __toESM(require_jsx_runtime(), 1);
   function PostTitleEdit({
-    attributes: { level, levelOptions, textAlign, isLink, rel, linkTarget },
+    attributes: { level, levelOptions, isLink, rel, linkTarget },
     setAttributes,
     context: { postType, postId, queryId },
     insertBlocksAfter
@@ -53227,11 +53225,7 @@ ${js}
     const onSplitAtEnd = () => {
       insertBlocksAfter((0, import_blocks88.createBlock)((0, import_blocks88.getDefaultBlockName)()));
     };
-    const blockProps = (0, import_block_editor200.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+    const blockProps = (0, import_block_editor200.useBlockProps)();
     const blockEditingMode = (0, import_block_editor200.useBlockEditingMode)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     let titleElement = /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(TagName2, { ...blockProps, children: (0, import_i18n180.__)("Title") });
@@ -53286,25 +53280,14 @@ ${js}
     }
     return /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(import_jsx_runtime376.Fragment, { children: [
       blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(import_jsx_runtime376.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(import_block_editor200.BlockControls, { group: "block", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-            import_block_editor200.HeadingLevelDropdown,
-            {
-              value: level,
-              options: levelOptions,
-              onChange: (newLevel) => setAttributes({ level: newLevel })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-            import_block_editor200.AlignmentControl,
-            {
-              value: textAlign,
-              onChange: (nextAlign) => {
-                setAttributes({ textAlign: nextAlign });
-              }
-            }
-          )
-        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_block_editor200.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
+          import_block_editor200.HeadingLevelDropdown,
+          {
+            value: level,
+            options: levelOptions,
+            onChange: (newLevel) => setAttributes({ level: newLevel })
+          }
+        ) }),
         /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_block_editor200.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(
           import_components117.__experimentalToolsPanel,
           {
@@ -53393,6 +53376,86 @@ ${js}
   }
 
   // packages/block-library/build-module/post-title/deprecated.mjs
+  var v214 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      level: {
+        type: "number",
+        default: 2
+      },
+      levelOptions: {
+        type: "array"
+      },
+      isLink: {
+        type: "boolean",
+        default: false
+      },
+      rel: {
+        type: "string",
+        attribute: "rel",
+        default: ""
+      },
+      linkTarget: {
+        type: "string",
+        default: "_self"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: ["wide", "full"],
+      html: false,
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true,
+          link: true
+        }
+      },
+      spacing: {
+        padding: true,
+        margin: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalFontStyle: true,
+        __experimentalFontWeight: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
   var v135 = {
     attributes: {
       textAlign: {
@@ -53443,7 +53506,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default39 = [v135];
+  var deprecated_default39 = [v214, v135];
 
   // packages/block-library/build-module/post-title/index.mjs
   var { name: name81 } = block_default80;
@@ -54054,7 +54117,7 @@ ${js}
       };
     }
   };
-  var v214 = {
+  var v215 = {
     attributes: blockAttributes6,
     save({ attributes: attributes2 }) {
       const {
@@ -54196,7 +54259,7 @@ ${js}
       };
     }
   };
-  var deprecated_default40 = [v57, v48, v39, v214, v136, v02];
+  var deprecated_default40 = [v57, v48, v39, v215, v136, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n183 = __toESM(require_i18n(), 1);
@@ -56739,7 +56802,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_block_editor213.InnerBlocks.Content, {});
     }
   };
-  var v215 = {
+  var v216 = {
     attributes: {
       queryId: {
         type: "number"
@@ -57045,7 +57108,7 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v49, v310, v215, v137];
+  var deprecated14 = [v67, v58, v49, v310, v216, v137];
   var deprecated_default41 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
@@ -58693,7 +58756,7 @@ ${js}
       return migrateTextAlign3(...migrateToQuoteV2(attributes2));
     }
   };
-  var v216 = {
+  var v217 = {
     attributes: {
       value: {
         type: "string",
@@ -58815,7 +58878,7 @@ ${js}
       );
     }
   };
-  var deprecated_default44 = [v410, v311, v216, v139, v03];
+  var deprecated_default44 = [v410, v311, v217, v139, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n214 = __toESM(require_i18n(), 1);
@@ -59470,7 +59533,7 @@ ${js}
 
   // packages/block-library/build-module/block/deprecated.mjs
   var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
-  var v217 = {
+  var v218 = {
     attributes: {
       ref: {
         type: "number"
@@ -59572,7 +59635,7 @@ ${js}
       };
     }
   };
-  var deprecated_default45 = [v217, v140];
+  var deprecated_default45 = [v218, v140];
 
   // packages/block-library/build-module/block/index.mjs
   var { name: name93 } = block_default92;
@@ -65244,7 +65307,7 @@ ${js}
       attribute: "data-align"
     }
   };
-  var v218 = {
+  var v219 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -65487,7 +65550,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default51 = [v411, v312, v218, v145];
+  var deprecated_default51 = [v411, v312, v219, v145];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -71468,7 +71531,7 @@ ${js}
     },
     migrate: migrate_text_align_default
   };
-  var v219 = {
+  var v220 = {
     attributes: {
       content: {
         type: "string",
@@ -71575,7 +71638,7 @@ ${js}
       );
     }
   };
-  var deprecated_default53 = [v313, v219, v147];
+  var deprecated_default53 = [v313, v220, v147];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n265 = __toESM(require_i18n(), 1);
