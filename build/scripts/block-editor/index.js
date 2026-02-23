@@ -9486,23 +9486,6 @@ var wp;
     ];
     traverseBlockTree(state, treeClientId, (block) => {
       const { clientId, name: blockName } = block;
-      if (state.editedContentOnlySection) {
-        if (state.editedContentOnlySection === clientId) {
-          derivedBlockEditingModes.set(clientId, "default");
-          return;
-        }
-        const parentTempEditedClientId = findParentInClientIdsList(
-          state,
-          clientId,
-          [state.editedContentOnlySection]
-        );
-        if (parentTempEditedClientId) {
-          derivedBlockEditingModes.set(clientId, "default");
-          return;
-        }
-        derivedBlockEditingModes.set(clientId, "disabled");
-        return;
-      }
       if (state.blockEditingModes.has(clientId)) {
         return;
       }
@@ -9551,15 +9534,15 @@ var wp;
           }
           return;
         }
-        const parentPatternClientId = findParentInClientIdsList(
+        const parentSyncedPatternClientId = findParentInClientIdsList(
           state,
           clientId,
           syncedPatternClientIds
         );
-        if (parentPatternClientId) {
+        if (parentSyncedPatternClientId) {
           if (findParentInClientIdsList(
             state,
-            parentPatternClientId,
+            parentSyncedPatternClientId,
             syncedPatternClientIds
           )) {
             derivedBlockEditingModes.set(clientId, "disabled");
@@ -9570,7 +9553,25 @@ var wp;
             return;
           }
           derivedBlockEditingModes.set(clientId, "disabled");
+          return;
         }
+      }
+      if (state.editedContentOnlySection) {
+        if (state.editedContentOnlySection === clientId) {
+          derivedBlockEditingModes.set(clientId, "default");
+          return;
+        }
+        const parentTempEditedClientId = findParentInClientIdsList(
+          state,
+          clientId,
+          [state.editedContentOnlySection]
+        );
+        if (parentTempEditedClientId) {
+          derivedBlockEditingModes.set(clientId, "default");
+          return;
+        }
+        derivedBlockEditingModes.set(clientId, "disabled");
+        return;
       }
       if (contentOnlyParents.length) {
         const hasContentOnlyParent = !!findParentInClientIdsList(
