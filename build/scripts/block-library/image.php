@@ -310,10 +310,7 @@ function gutenberg_block_core_image_render_lightbox( $block_content, $block, $bl
 
 	$body_content = preg_replace( '/<img[^>]+>/', $button, $body_content );
 
-	$overlay_callback = function () {
-		gutenberg_block_core_image_print_lightbox_overlay();
-	};
-	add_action( 'wp_footer', $overlay_callback );
+	add_action( 'wp_footer', 'gutenberg_block_core_image_print_lightbox_overlay' );
 
 	return $body_content;
 }
