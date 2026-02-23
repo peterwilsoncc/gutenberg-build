@@ -46343,8 +46343,14 @@ If there's a particular need for this, please submit a feature request at https:
         },
         {
           id: "status",
-          label: (0, import_i18n156.__)("Status & Visibility"),
-          children: ["status", "password"]
+          label: (0, import_i18n156.__)("Status"),
+          children: [
+            {
+              id: "status",
+              layout: { type: "regular", labelPosition: "none" }
+            },
+            "password"
+          ]
         },
         "author",
         "date",
@@ -46353,7 +46359,13 @@ If there's a particular need for this, please submit a feature request at https:
         {
           id: "discussion",
           label: (0, import_i18n156.__)("Discussion"),
-          children: ["comment_status", "ping_status"]
+          children: [
+            {
+              id: "comment_status",
+              layout: { type: "regular", labelPosition: "none" }
+            },
+            "ping_status"
+          ]
         },
         "template"
       ];
