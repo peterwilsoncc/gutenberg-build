@@ -23092,8 +23092,8 @@ var wp;
           __unstableHasActiveBlockOverlayActive: __unstableHasActiveBlockOverlayActive2,
           getSelectedBlocksInitialCaretPosition: getSelectedBlocksInitialCaretPosition2
         } = unlock(select3(store));
-        const blockWithoutAttributes2 = getBlockWithoutAttributes2(clientId);
-        if (!blockWithoutAttributes2) {
+        const blockWithoutAttributes = getBlockWithoutAttributes2(clientId);
+        if (!blockWithoutAttributes) {
           return;
         }
         const {
@@ -23101,7 +23101,7 @@ var wp;
           getActiveBlockVariation
         } = select3(import_blocks22.store);
         const attributes2 = getBlockAttributes3(clientId);
-        const { name: blockName, isValid: isValid22 } = blockWithoutAttributes2;
+        const { name: blockName, isValid: isValid22 } = blockWithoutAttributes;
         const blockType2 = (0, import_blocks22.getBlockType)(blockName);
         const settings2 = getSettings7();
         const {
@@ -23117,7 +23117,7 @@ var wp;
         const blockEditingMode2 = getBlockEditingMode2(clientId);
         const previewContext = {
           isPreviewMode: isPreviewMode2,
-          blockWithoutAttributes: blockWithoutAttributes2,
+          blockWithoutAttributes,
           name: blockName,
           attributes: attributes2,
           isValid: isValid22,
@@ -23191,6 +23191,20 @@ var wp;
       },
       [clientId, rootClientId]
     );
+    const { isBlockCurrentlyHidden } = useBlockVisibility({
+      blockVisibility: selectedProps?.blockVisibility,
+      deviceType: selectedProps?.deviceType
+    });
+    const block = (0, import_element33.useMemo)(
+      () => ({
+        ...selectedProps?.blockWithoutAttributes,
+        attributes: selectedProps?.attributes
+      }),
+      [selectedProps?.blockWithoutAttributes, selectedProps?.attributes]
+    );
+    if (!selectedProps) {
+      return null;
+    }
     const {
       isPreviewMode,
       // Fill values that end up as a public API and may not be defined in
@@ -23200,7 +23214,6 @@ var wp;
       isLocked = false,
       canRemove = false,
       canMove = false,
-      blockWithoutAttributes,
       name,
       attributes,
       isValid: isValid2,
@@ -23235,17 +23248,6 @@ var wp;
       blockVisibility: blockVisibility2,
       deviceType
     } = selectedProps;
-    const { isBlockCurrentlyHidden } = useBlockVisibility({
-      blockVisibility: blockVisibility2,
-      deviceType
-    });
-    const block = (0, import_element33.useMemo)(
-      () => ({ ...blockWithoutAttributes, attributes }),
-      [blockWithoutAttributes, attributes]
-    );
-    if (!selectedProps) {
-      return null;
-    }
     const privateContext = {
       isPreviewMode,
       clientId,
