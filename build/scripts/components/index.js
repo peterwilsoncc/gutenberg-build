@@ -27490,7 +27490,7 @@ This message will only show in development mode. It won't appear in production. 
           constrainValue(currentValue)
         );
       }
-      return nextState;
+      return stateReducerProp?.(nextState, action) ?? nextState;
     };
     const buildSpinButtonClickHandler = (direction) => (event) => onChange(String(spinValue(valueProp, direction, event)), {
       // Set event.target to the <input> so that consumers can use
@@ -27516,10 +27516,7 @@ This message will only show in development mode. It won't appear in production. 
       step,
       type: typeProp,
       value: valueProp,
-      __unstableStateReducer: (state, action) => {
-        const baseState = numberControlStateReducer(state, action);
-        return stateReducerProp?.(baseState, action) ?? baseState;
-      },
+      __unstableStateReducer: numberControlStateReducer,
       size: size3,
       __shouldNotWarnDeprecated36pxSize: true,
       suffix: spinControls === "custom" ? /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_jsx_runtime98.Fragment, {
