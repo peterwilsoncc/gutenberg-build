@@ -61976,9 +61976,6 @@ ${js}
     keywords: ["description"],
     textdomain: "default",
     attributes: {
-      textAlign: {
-        type: "string"
-      },
       level: {
         type: "number",
         default: 0
@@ -61991,7 +61988,11 @@ ${js}
     example: {
       viewportWidth: 350,
       attributes: {
-        textAlign: "center"
+        style: {
+          typography: {
+            textAlign: "center"
+          }
+        }
       }
     },
     supports: {
@@ -62017,6 +62018,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalTextTransform: true,
         __experimentalTextDecoration: true,
@@ -62049,12 +62051,10 @@ ${js}
   var import_i18n226 = __toESM(require_i18n(), 1);
   var import_blocks105 = __toESM(require_blocks(), 1);
   var import_jsx_runtime428 = __toESM(require_jsx_runtime(), 1);
-  function SiteTaglineEdit({
-    attributes: attributes2,
-    setAttributes,
-    insertBlocksAfter
-  }) {
-    const { textAlign, level, levelOptions } = attributes2;
+  function SiteTaglineEdit(props) {
+    useDeprecatedTextAlign(props);
+    const { attributes: attributes2, setAttributes, insertBlocksAfter } = props;
+    const { level, levelOptions } = attributes2;
     const { canUserEdit, tagline } = (0, import_data132.useSelect)((select9) => {
       const { canUser, getEntityRecord, getEditedEntityRecord } = select9(import_core_data80.store);
       const canEdit = canUser("update", {
@@ -62076,10 +62076,7 @@ ${js}
       });
     }
     const blockProps = (0, import_block_editor237.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign,
-        "wp-block-site-tagline__placeholder": !canUserEdit && !tagline
-      })
+      className: !canUserEdit && !tagline && "wp-block-site-tagline__placeholder"
     });
     const siteTaglineContent = canUserEdit ? /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
       import_block_editor237.RichText,
@@ -62096,23 +62093,14 @@ ${js}
       }
     ) : /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(TagName2, { ...blockProps, children: tagline || (0, import_i18n226.__)("Site Tagline placeholder") });
     return /* @__PURE__ */ (0, import_jsx_runtime428.jsxs)(import_jsx_runtime428.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime428.jsxs)(import_block_editor237.BlockControls, { group: "block", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
-          import_block_editor237.HeadingLevelDropdown,
-          {
-            value: level,
-            options: levelOptions,
-            onChange: (newLevel) => setAttributes({ level: newLevel })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
-          import_block_editor237.AlignmentControl,
-          {
-            onChange: (newAlign) => setAttributes({ textAlign: newAlign }),
-            value: textAlign
-          }
-        )
-      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_block_editor237.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
+        import_block_editor237.HeadingLevelDropdown,
+        {
+          value: level,
+          options: levelOptions,
+          onChange: (newLevel) => setAttributes({ level: newLevel })
+        }
+      ) }),
       siteTaglineContent
     ] });
   }
@@ -62123,6 +62111,70 @@ ${js}
   var icon_default4 = /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_components149.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_components149.Path, { d: "M4 10.5h16V9H4v1.5ZM4 15h9v-1.5H4V15Z" }) });
 
   // packages/block-library/build-module/site-tagline/deprecated.mjs
+  var v220 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      level: {
+        type: "number"
+      },
+      levelOptions: {
+        type: "array",
+        default: [0, 1, 2, 3, 4, 5, 6]
+      }
+    },
+    supports: {
+      anchor: true,
+      reusable: false,
+      html: false,
+      color: {
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true,
+        __experimentalDefaultControls: {
+          margin: false,
+          padding: false
+        }
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalFontStyle: true,
+        __experimentalFontWeight: true,
+        __experimentalLetterSpacing: true,
+        __experimentalWritingMode: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
   var v143 = {
     attributes: {
       textAlign: {
@@ -62157,7 +62209,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default47 = [v143];
+  var deprecated_default47 = [v220, v143];
 
   // packages/block-library/build-module/site-tagline/index.mjs
   var { name: name100 } = block_default99;
@@ -65355,7 +65407,7 @@ ${js}
       attribute: "data-align"
     }
   };
-  var v220 = {
+  var v221 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -65598,7 +65650,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default51 = [v411, v312, v220, v145];
+  var deprecated_default51 = [v411, v312, v221, v145];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -71579,7 +71631,7 @@ ${js}
     },
     migrate: migrate_text_align_default
   };
-  var v221 = {
+  var v222 = {
     attributes: {
       content: {
         type: "string",
@@ -71686,7 +71738,7 @@ ${js}
       );
     }
   };
-  var deprecated_default53 = [v313, v221, v147];
+  var deprecated_default53 = [v313, v222, v147];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n265 = __toESM(require_i18n(), 1);
