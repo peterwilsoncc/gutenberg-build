@@ -1708,7 +1708,7 @@ var wp;
     if (typeof WebAssembly === "undefined") {
       cachedResult = {
         supported: false,
-        reason: "WebAssembly is not supported in this browser"
+        reason: "WebAssembly is not supported in this browser."
       };
       return cachedResult;
     }
@@ -1719,7 +1719,54 @@ var wp;
       };
       return cachedResult;
     }
-    if (typeof window !== "undefined" && typeof Worker !== "undefined") {
+    if (typeof Worker === "undefined") {
+      cachedResult = {
+        supported: false,
+        reason: "Web Workers are not supported in this browser."
+      };
+      return cachedResult;
+    }
+    if (typeof window !== "undefined" && window.HTMLIFrameElement && !("credentialless" in window.HTMLIFrameElement.prototype)) {
+      cachedResult = {
+        supported: false,
+        reason: "Browser does not support credentialless iframes. Cross-origin isolation would break third-party embeds"
+      };
+      return cachedResult;
+    }
+    if (typeof navigator !== "undefined" && "deviceMemory" in navigator && navigator.deviceMemory <= 2) {
+      cachedResult = {
+        supported: false,
+        reason: "Device has insufficient memory for client-side media processing."
+      };
+      return cachedResult;
+    }
+    if (typeof navigator !== "undefined" && "hardwareConcurrency" in navigator && navigator.hardwareConcurrency < 4) {
+      cachedResult = {
+        supported: false,
+        reason: "Device has insufficient CPU cores for client-side media processing."
+      };
+      return cachedResult;
+    }
+    if (typeof navigator !== "undefined") {
+      const connection = navigator.connection;
+      if (connection) {
+        if (connection.saveData) {
+          cachedResult = {
+            supported: false,
+            reason: "Data saver mode is enabled."
+          };
+          return cachedResult;
+        }
+        if (connection.effectiveType === "slow-2g" || connection.effectiveType === "2g" || connection.effectiveType === "3g") {
+          cachedResult = {
+            supported: false,
+            reason: "Network connection is too slow for client-side media processing."
+          };
+          return cachedResult;
+        }
+      }
+    }
+    if (typeof window !== "undefined") {
       try {
         const testBlob = new Blob([""], {
           type: "application/javascript"
