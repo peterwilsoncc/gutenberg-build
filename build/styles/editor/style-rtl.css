@@ -3887,6 +3887,7 @@ div.dataviews-view-list {
   display: flex;
   flex-direction: row;
   gap: 16px;
+  align-items: center;
 }
 
 .dataforms-layouts-details__summary-content {
