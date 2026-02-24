@@ -72650,6 +72650,9 @@ var wp;
         borderBoxSpy.observe(gridElement, { box: "border-box" });
         const contentBoxSpy = new window.ResizeObserver(resizeCallback);
         contentBoxSpy.observe(gridElement);
+        for (const element of gridElement.children) {
+          contentBoxSpy.observe(element);
+        }
         return () => {
           borderBoxSpy.disconnect();
           contentBoxSpy.disconnect();
