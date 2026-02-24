@@ -2091,7 +2091,15 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
   blocks.forEach((blockType) => {
     const blockStyles = updatedConfig?.styles?.blocks?.[blockType.name];
     if (blockStyles?.css) {
-      const selector = blockSelectors[blockType.name].selector;
+      const { featureSelectors } = blockSelectors[blockType.name];
+      const cssFeatureSelector = typeof featureSelectors === "object" ? featureSelectors?.css : void 0;
+      let resolvedCssSelector;
+      if (typeof cssFeatureSelector === "string") {
+        resolvedCssSelector = cssFeatureSelector;
+      } else if (typeof cssFeatureSelector === "object") {
+        resolvedCssSelector = cssFeatureSelector?.root;
+      }
+      const selector = resolvedCssSelector ?? blockSelectors[blockType.name].selector;
       styles.push({
         css: processCSSNesting(blockStyles.css, selector),
         isGlobalStyles: true
