@@ -49113,9 +49113,9 @@ var wp;
 
   // packages/editor/build-module/components/collaborators-presence/list.mjs
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='a651f71aa4']")) {
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='1557ba3acd']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "a651f71aa4");
+    style.setAttribute("data-wp-hash", "1557ba3acd");
     style.appendChild(document.createTextNode(".editor-collaborators-presence__list.components-popover .components-popover__content{background:#fff;border:1px solid #ddd;border-radius:8px;border-width:1px 0 0 1px;box-shadow:0 1px 2px #0000000d,0 2px 3px #0000000a,0 6px 6px #00000008,0 8px 8px #00000005}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-content{min-width:280px}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-header{align-items:center;display:flex;justify-content:space-between;padding:0 16px}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-header-title{font-size:13px;font-weight:499;line-height:20px;padding:14px 0;text-transform:uppercase}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-header-title span{color:#757575}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-header-action{padding:8px 0}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-header-action button{color:#1e1e1e;height:24px;padding:0;width:24px}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-items{display:flex;flex-direction:column;padding:0 10px 16px}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item{all:unset;align-items:center;border-radius:12px;box-sizing:border-box;cursor:pointer;display:flex;gap:8px;padding:6px;transition:background-color .2s ease;width:100%}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item:hover:not(:disabled){background-color:#0000000d}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item:active:not(:disabled){background-color:#00000014}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item:focus-visible{outline:2px solid var(--wp-admin-theme-color,#007cba);outline-offset:-2px}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item:disabled{cursor:default}.editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item-info{display:flex;flex:1;flex-direction:column;font-size:12px;line-height:16px}"));
     document.head.appendChild(style);
   }
@@ -49197,10 +49197,14 @@ var wp;
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
   var import_core_data108 = __toESM(require_core_data(), 1);
   var import_element149 = __toESM(require_element(), 1);
-  var { useActiveCollaborators } = unlock(import_core_data108.privateApis);
+  var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data108.privateApis);
   function useBlockHighlighting(blockEditorDocument, postId2, postType2) {
     const highlightedBlockIds = (0, import_element149.useRef)(/* @__PURE__ */ new Set());
     const userStates = useActiveCollaborators(
+      postId2 ?? null,
+      postType2 ?? null
+    );
+    const resolveSelection = useResolvedSelection(
       postId2 ?? null,
       postType2 ?? null
     );
@@ -49227,9 +49231,14 @@ var wp;
         const isWholeBlockSelected = userState.editorState?.selection?.type === import_core_data108.SelectionType.WholeBlock;
         const shouldDrawUser = !userState.isMe;
         if (isWholeBlockSelected && shouldDrawUser) {
-          const selection = userState.editorState?.selection;
+          const { localClientId } = resolveSelection(
+            userState.editorState?.selection
+          );
+          if (!localClientId) {
+            return null;
+          }
           return {
-            blockId: selection.blockId,
+            blockId: localClientId,
             color: getAvatarBorderColor(
               userState.collaboratorInfo.id
             )
@@ -49262,7 +49271,7 @@ var wp;
           highlightedBlockIds.current.add(blockId);
         }
       });
-    }, [userStates, blockEditorDocument]);
+    }, [userStates, blockEditorDocument, resolveSelection]);
   }
   var getBlockElementById = (blockEditorDocument, blockId) => {
     return blockEditorDocument.querySelector(`[data-block="${blockId}"]`);
@@ -49271,13 +49280,13 @@ var wp;
   // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
   var import_core_data109 = __toESM(require_core_data(), 1);
   var import_element150 = __toESM(require_element(), 1);
-  var { useActiveCollaborators: useActiveCollaborators2, useGetAbsolutePositionIndex } = unlock(import_core_data109.privateApis);
+  var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data109.privateApis);
   function useRenderCursors(overlayElement, blockEditorDocument, postId2, postType2) {
     const sortedUsers = useActiveCollaborators2(
       postId2 ?? null,
       postType2 ?? null
     );
-    const getAbsolutePositionIndex = useGetAbsolutePositionIndex(
+    const resolveSelection = useResolvedSelection2(
       postId2 ?? null,
       postType2 ?? null
     );
@@ -49308,36 +49317,28 @@ var wp;
           if (selection.type === import_core_data109.SelectionType.None) {
           } else if (selection.type === import_core_data109.SelectionType.WholeBlock) {
           } else if (selection.type === import_core_data109.SelectionType.Cursor) {
-            coords = getCursorPosition(
-              getAbsolutePositionIndex(selection),
-              selection.blockId,
-              blockEditorDocument,
-              overlayElement
-            );
-          } else if (selection.type === import_core_data109.SelectionType.SelectionInOneBlock) {
-            const selectionAsCursor = {
+            const { textIndex, localClientId } = resolveSelection(selection);
+            if (localClientId) {
+              coords = getCursorPosition(
+                textIndex,
+                localClientId,
+                blockEditorDocument,
+                overlayElement
+              );
+            }
+          } else if (selection.type === import_core_data109.SelectionType.SelectionInOneBlock || selection.type === import_core_data109.SelectionType.SelectionInMultipleBlocks) {
+            const { textIndex, localClientId } = resolveSelection({
               type: import_core_data109.SelectionType.Cursor,
-              blockId: selection.blockId,
               cursorPosition: selection.cursorStartPosition
-            };
-            coords = getCursorPosition(
-              getAbsolutePositionIndex(selectionAsCursor),
-              selectionAsCursor.blockId,
-              blockEditorDocument,
-              overlayElement
-            );
-          } else if (selection.type === import_core_data109.SelectionType.SelectionInMultipleBlocks) {
-            const selectionAsCursor = {
-              type: import_core_data109.SelectionType.Cursor,
-              blockId: selection.blockStartId,
-              cursorPosition: selection.cursorStartPosition
-            };
-            coords = getCursorPosition(
-              getAbsolutePositionIndex(selectionAsCursor),
-              selectionAsCursor.blockId,
-              blockEditorDocument,
-              overlayElement
-            );
+            });
+            if (localClientId) {
+              coords = getCursorPosition(
+                textIndex,
+                localClientId,
+                blockEditorDocument,
+                overlayElement
+              );
+            }
           }
           if (coords) {
             results.push({
@@ -49351,12 +49352,7 @@ var wp;
         });
         setCursorPositions(results);
       },
-      [
-        blockEditorDocument,
-        getAbsolutePositionIndex,
-        overlayElement,
-        sortedUsers
-      ]
+      [blockEditorDocument, resolveSelection, overlayElement, sortedUsers]
     );
     (0, import_element150.useEffect)(computeCursors, [computeCursors]);
     const rerenderCursorsAfterDelay = (0, import_element150.useMemo)(
@@ -49753,9 +49749,9 @@ var wp;
 
   // packages/editor/build-module/components/collaborators-presence/index.mjs
   var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='e90599814e']")) {
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='b0cd8d54c3']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "e90599814e");
+    style.setAttribute("data-wp-hash", "b0cd8d54c3");
     style.appendChild(document.createTextNode(".editor-collaborators-presence{align-items:center;background:#f0f0f0;border-radius:4px;display:flex;flex-shrink:0;height:32px;margin-right:8px}.editor-collaborators-presence:hover{background-color:#e0e0e0}.editor-collaborators-presence__button.editor-collaborators-presence__button.components-button{align-items:center;background:#0000;border-radius:4px;box-sizing:border-box;color:#2f2f2f;cursor:pointer;display:flex;height:100%;padding:4px;position:relative}.editor-collaborators-presence__button.editor-collaborators-presence__button.components-button:hover{background:#0000;color:#2f2f2f}.editor-collaborators-presence__button.editor-collaborators-presence__button.components-button.is-pressed,.editor-collaborators-presence__button.editor-collaborators-presence__button.components-button.is-pressed:hover{background:#ddd;color:#2f2f2f}.editor-collaborators-presence__button.editor-collaborators-presence__button.components-button:focus:not(:active){box-shadow:inset 0 0 0 var(--wp-admin-border-width-focus,2px) var(--wp-admin-theme-color,#007cba);outline:none}"));
     document.head.appendChild(style);
   }
