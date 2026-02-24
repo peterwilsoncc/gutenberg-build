@@ -5570,9 +5570,16 @@ var wp;
                 query
               );
             },
-            // Save the current entity record's unsaved edits.
+            // Save the current entity record, whether or not it has unsaved
+            // edits. This is used to trigger a persisted CRDT document.
             saveRecord: () => {
-              dispatch3.saveEditedEntityRecord(kind, name, key);
+              resolveSelect2.getEditedEntityRecord(kind, name, key).then((editedRecord) => {
+                dispatch3.saveEntityRecord(
+                  kind,
+                  name,
+                  editedRecord
+                );
+              });
             },
             addUndoMeta: (ydoc, meta) => {
               const selectionHistory = getSelectionHistory(ydoc);
