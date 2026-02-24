@@ -41492,12 +41492,8 @@ ${js}
       hasBinding: hasUrlBinding,
       isEntityAvailable: isBoundEntityAvailable
     });
-    const isViewableUrl = url && (!isHashLink2(url) || isRelativePath2(url) && !url.startsWith("/"));
+    const isViewableUrl = !!url && (!isHashLink2(url) || isRelativePath2(url) && !url.startsWith("/"));
     const viewUrl = isViewableUrl && url.startsWith("/") && homeUrl ? homeUrl + url : url;
-    const entityTypeName = getEntityTypeName(
-      attributes2.type,
-      attributes2.kind
-    );
     return /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(
       import_components90.__experimentalToolsPanel,
       {
@@ -41562,53 +41558,6 @@ ${js}
                 )
               }
             ),
-            url && /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(
-              import_components90.__experimentalHStack,
-              {
-                className: "navigation-link-to__actions",
-                alignment: "left",
-                justify: "left",
-                style: { gridColumn: "1 / -1" },
-                children: [
-                  hasUrlBinding && isBoundEntityAvailable && entityRecord?.id && attributes2.kind === "post-type" && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-                    import_components90.Button,
-                    {
-                      size: "compact",
-                      variant: "secondary",
-                      onClick: () => {
-                        onNavigateToEntityRecord({
-                          postId: entityRecord.id,
-                          postType: attributes2.type
-                        });
-                      },
-                      __next40pxDefaultSize: true,
-                      children: (0, import_i18n137.sprintf)(
-                        /* translators: %s: entity type (e.g., "page", "post", "category") */
-                        (0, import_i18n137.__)("Edit %s"),
-                        entityTypeName
-                      )
-                    }
-                  ),
-                  isViewableUrl && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-                    import_components90.Button,
-                    {
-                      size: "compact",
-                      variant: "secondary",
-                      href: viewUrl,
-                      target: "_blank",
-                      icon: external_default,
-                      iconPosition: "right",
-                      __next40pxDefaultSize: true,
-                      children: (0, import_i18n137.sprintf)(
-                        /* translators: %s: entity type (e.g., "page", "post", "category") or "link" for external links */
-                        (0, import_i18n137.__)("View %s"),
-                        attributes2.kind && attributes2.type && attributes2.kind !== "custom" ? entityTypeName : (0, import_i18n137.__)("link")
-                      )
-                    }
-                  )
-                ]
-              }
-            ),
             /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
               import_components90.__experimentalToolsPanelItem,
               {
@@ -41624,6 +41573,34 @@ ${js}
                     onChange: (value) => setAttributes({ opensInNewTab: value })
                   }
                 )
+              }
+            ),
+            !!url && hasUrlBinding && isBoundEntityAvailable && entityRecord?.id && attributes2.kind === "post-type" && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+              import_components90.Button,
+              {
+                variant: "secondary",
+                onClick: () => {
+                  onNavigateToEntityRecord({
+                    postId: entityRecord.id,
+                    postType: attributes2.type
+                  });
+                },
+                __next40pxDefaultSize: true,
+                className: "navigation-link-to__action-button",
+                children: (0, import_i18n137.__)("Edit")
+              }
+            ),
+            isViewableUrl && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+              import_components90.Button,
+              {
+                variant: "secondary",
+                href: viewUrl,
+                target: "_blank",
+                icon: external_default,
+                iconPosition: "right",
+                __next40pxDefaultSize: true,
+                className: "navigation-link-to__action-button",
+                children: (0, import_i18n137.__)("View")
               }
             )
           ] }),
