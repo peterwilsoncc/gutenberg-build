@@ -60241,7 +60241,7 @@ var wp;
         block_card_default,
         {
           ...parentBlockInformation,
-          className: parentBlockInformation.isSynced && "is-synced",
+          className: parentBlockInformation?.isSynced && "is-synced",
           parentClientId: editedContentOnlySection2
         }
       ),
