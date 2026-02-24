@@ -62247,9 +62247,6 @@ ${js}
         type: "array",
         default: [0, 1, 2, 3, 4, 5, 6]
       },
-      textAlign: {
-        type: "string"
-      },
       isLink: {
         type: "boolean",
         default: true,
@@ -62288,6 +62285,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalTextTransform: true,
         __experimentalTextDecoration: true,
@@ -62322,12 +62320,10 @@ ${js}
   var import_blocks106 = __toESM(require_blocks(), 1);
   var import_html_entities13 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
-  function SiteTitleEdit({
-    attributes: attributes2,
-    setAttributes,
-    insertBlocksAfter
-  }) {
-    const { level, levelOptions, textAlign, isLink, linkTarget } = attributes2;
+  function SiteTitleEdit(props) {
+    useDeprecatedTextAlign(props);
+    const { attributes: attributes2, setAttributes, insertBlocksAfter } = props;
+    const { level, levelOptions, isLink, linkTarget } = attributes2;
     const { canUserEdit, title } = (0, import_data133.useSelect)((select9) => {
       const { canUser, getEntityRecord, getEditedEntityRecord } = select9(import_core_data81.store);
       const canEdit = canUser("update", {
@@ -62351,10 +62347,7 @@ ${js}
     }
     const TagName2 = level === 0 ? "p" : `h${level}`;
     const blockProps = (0, import_block_editor238.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign,
-        "wp-block-site-title__placeholder": !canUserEdit && !title
-      })
+      className: !canUserEdit && !title && "wp-block-site-title__placeholder"
     });
     const siteTitleContent = canUserEdit ? /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
       import_block_editor238.RichText,
@@ -62378,25 +62371,14 @@ ${js}
       }
     ) : /* @__PURE__ */ (0, import_jsx_runtime430.jsx)("span", { children: (0, import_html_entities13.decodeEntities)(title) || (0, import_i18n227.__)("Site Title placeholder") }) });
     return /* @__PURE__ */ (0, import_jsx_runtime430.jsxs)(import_jsx_runtime430.Fragment, { children: [
-      blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime430.jsxs)(import_block_editor238.BlockControls, { group: "block", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
-          import_block_editor238.HeadingLevelDropdown,
-          {
-            value: level,
-            options: levelOptions,
-            onChange: (newLevel) => setAttributes({ level: newLevel })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
-          import_block_editor238.AlignmentControl,
-          {
-            value: textAlign,
-            onChange: (nextAlign) => {
-              setAttributes({ textAlign: nextAlign });
-            }
-          }
-        )
-      ] }),
+      blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(import_block_editor238.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
+        import_block_editor238.HeadingLevelDropdown,
+        {
+          value: level,
+          options: levelOptions,
+          onChange: (newLevel) => setAttributes({ level: newLevel })
+        }
+      ) }),
       /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(import_block_editor238.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime430.jsxs)(
         import_components150.__experimentalToolsPanel,
         {
@@ -62453,6 +62435,83 @@ ${js}
   }
 
   // packages/block-library/build-module/site-title/deprecated.mjs
+  var v221 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      level: {
+        type: "number",
+        default: 1
+      },
+      levelOptions: {
+        type: "array",
+        default: [0, 1, 2, 3, 4, 5, 6]
+      },
+      isLink: {
+        type: "boolean",
+        default: true,
+        role: "content"
+      },
+      linkTarget: {
+        type: "string",
+        default: "_self",
+        role: "content"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: ["wide", "full"],
+      html: false,
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true,
+          link: true
+        }
+      },
+      spacing: {
+        padding: true,
+        margin: true,
+        __experimentalDefaultControls: {
+          margin: false,
+          padding: false
+        }
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalFontStyle: true,
+        __experimentalFontWeight: true,
+        __experimentalLetterSpacing: true,
+        __experimentalWritingMode: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
   var v144 = {
     attributes: {
       level: {
@@ -62500,7 +62559,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default48 = [v144];
+  var deprecated_default48 = [v221, v144];
 
   // packages/block-library/build-module/site-title/transforms.mjs
   var import_blocks107 = __toESM(require_blocks(), 1);
@@ -65407,7 +65466,7 @@ ${js}
       attribute: "data-align"
     }
   };
-  var v221 = {
+  var v222 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -65650,7 +65709,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default51 = [v411, v312, v221, v145];
+  var deprecated_default51 = [v411, v312, v222, v145];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -71631,7 +71690,7 @@ ${js}
     },
     migrate: migrate_text_align_default
   };
-  var v222 = {
+  var v223 = {
     attributes: {
       content: {
         type: "string",
@@ -71738,7 +71797,7 @@ ${js}
       );
     }
   };
-  var deprecated_default53 = [v313, v222, v147];
+  var deprecated_default53 = [v313, v223, v147];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n265 = __toESM(require_i18n(), 1);

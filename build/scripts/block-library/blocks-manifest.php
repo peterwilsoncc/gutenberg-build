@@ -7737,9 +7737,6 @@ return array(
 					6
 				)
 			),
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'isLink' => array(
 				'type' => 'boolean',
 				'default' => true,
@@ -7781,6 +7778,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalTextTransform' => true,
 				'__experimentalTextDecoration' => true,
