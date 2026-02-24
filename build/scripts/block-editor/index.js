@@ -71426,7 +71426,7 @@ var wp;
     return output;
   }
   function addAttribute7(settings2) {
-    if (!hasStyleSupport2(settings2)) {
+    if (!hasStyleSupport2(settings2) && !(0, import_blocks114.hasBlockSupport)(settings2, "customCSS", true)) {
       return settings2;
     }
     if (!settings2.attributes.style) {
