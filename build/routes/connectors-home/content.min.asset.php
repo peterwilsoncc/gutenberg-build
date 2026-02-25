@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('react-jsx-runtime', 'wp-api-fetch', 'wp-components', 'wp-data', 'wp-element', 'wp-i18n', 'wp-private-apis'), 'module_dependencies' => array(array('id' => '@wordpress/connectors', 'import' => 'static'), array('id' => '@wordpress/route', 'import' => 'static')), 'version' => '5deb6c384125847435f4');
