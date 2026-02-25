@@ -1958,31 +1958,23 @@ var wp;
             }
             Object.entries(value).forEach(
               ([attributeName, attributeValue]) => {
-                if ((0, import_es62.default)(
-                  currentAttributes?.get(attributeName),
-                  attributeValue
-                )) {
-                  return;
-                }
-                const currentAttribute = currentAttributes.get(attributeName);
-                const isRichText = isRichTextAttribute(
+                const currentAttribute = currentAttributes?.get(attributeName);
+                const isExpectedType = isExpectedAttributeType(
                   block.name,
-                  attributeName
+                  attributeName,
+                  currentAttribute
                 );
-                if (isRichText && "string" === typeof attributeValue && currentAttributes.has(attributeName) && currentAttribute instanceof import_sync9.Y.Text) {
-                  mergeRichTextUpdate(
-                    currentAttribute,
-                    attributeValue,
-                    cursorPosition
-                  );
-                } else {
-                  currentAttributes.set(
+                const isAttributeChanged = !isExpectedType || !(0, import_es62.default)(
+                  currentAttribute,
+                  attributeValue
+                );
+                if (isAttributeChanged) {
+                  updateYBlockAttribute(
+                    block.name,
                     attributeName,
-                    createNewYAttributeValue(
-                      block.name,
-                      attributeName,
-                      attributeValue
-                    )
+                    attributeValue,
+                    currentAttributes,
+                    cursorPosition
                   );
                 }
               }
@@ -2048,26 +2040,53 @@ var wp;
     }
     return true;
   }
-  var cachedRichTextAttributes;
-  function isRichTextAttribute(blockName, attributeName) {
-    if (!cachedRichTextAttributes) {
-      cachedRichTextAttributes = /* @__PURE__ */ new Map();
+  function updateYBlockAttribute(blockName, attributeName, attributeValue, currentAttributes, cursorPosition) {
+    const isRichText = isRichTextAttribute(blockName, attributeName);
+    const currentAttribute = currentAttributes.get(attributeName);
+    if (isRichText && "string" === typeof attributeValue && currentAttributes.has(attributeName) && currentAttribute instanceof import_sync9.Y.Text) {
+      mergeRichTextUpdate(currentAttribute, attributeValue, cursorPosition);
+    } else {
+      currentAttributes.set(
+        attributeName,
+        createNewYAttributeValue(blockName, attributeName, attributeValue)
+      );
+    }
+  }
+  var cachedBlockAttributeTypes;
+  function getBlockAttributeType(blockName, attributeName) {
+    if (!cachedBlockAttributeTypes) {
+      cachedBlockAttributeTypes = /* @__PURE__ */ new Map();
       for (const blockType of (0, import_blocks.getBlockTypes)()) {
-        const richTextAttributeMap = /* @__PURE__ */ new Map();
+        const blockAttributeTypeMap = /* @__PURE__ */ new Map();
         for (const [name, definition] of Object.entries(
           blockType.attributes ?? {}
         )) {
-          if ("rich-text" === definition.type) {
-            richTextAttributeMap.set(name, true);
+          if (definition.type) {
+            blockAttributeTypeMap.set(name, definition.type);
           }
         }
-        cachedRichTextAttributes.set(
+        cachedBlockAttributeTypes.set(
           blockType.name,
-          richTextAttributeMap
+          blockAttributeTypeMap
         );
       }
     }
-    return cachedRichTextAttributes.get(blockName)?.has(attributeName) ?? false;
+    return cachedBlockAttributeTypes.get(blockName)?.get(attributeName);
+  }
+  function isExpectedAttributeType(blockName, attributeName, attributeValue) {
+    const expectedAttributeType = getBlockAttributeType(
+      blockName,
+      attributeName
+    );
+    if (expectedAttributeType === "rich-text") {
+      return attributeValue instanceof import_sync9.Y.Text;
+    } else if (expectedAttributeType === "string") {
+      return typeof attributeValue === "string";
+    }
+    return true;
+  }
+  function isRichTextAttribute(blockName, attributeName) {
+    return "rich-text" === getBlockAttributeType(blockName, attributeName);
   }
   var localDoc;
   function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition = null) {
