@@ -9161,11 +9161,10 @@ var wp;
   var CRDT_DOC_VERSION = 1;
   var CRDT_DOC_META_PERSISTENCE_KEY = "fromPersistence";
   var CRDT_RECORD_MAP_KEY = "document";
-  var CRDT_RECORD_METADATA_MAP_KEY = "documentMeta";
-  var CRDT_RECORD_METADATA_SAVED_AT_KEY = "savedAt";
-  var CRDT_RECORD_METADATA_SAVED_BY_KEY = "savedBy";
   var CRDT_STATE_MAP_KEY = "state";
-  var CRDT_STATE_VERSION_KEY = "version";
+  var CRDT_STATE_MAP_SAVED_AT_KEY = "savedAt";
+  var CRDT_STATE_MAP_SAVED_BY_KEY = "savedBy";
+  var CRDT_STATE_MAP_VERSION_KEY = "version";
   var LOCAL_EDITOR_ORIGIN = "gutenberg";
   var LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
   var WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE = "_crdt_document";
@@ -9205,13 +9204,13 @@ var wp;
     );
     const ydoc = new Doc({ meta: metaMap });
     const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
-    stateMap.set(CRDT_STATE_VERSION_KEY, CRDT_DOC_VERSION);
+    stateMap.set(CRDT_STATE_MAP_VERSION_KEY, CRDT_DOC_VERSION);
     return ydoc;
   }
   function markEntityAsSaved(ydoc) {
-    const recordMeta = ydoc.getMap(CRDT_RECORD_METADATA_MAP_KEY);
-    recordMeta.set(CRDT_RECORD_METADATA_SAVED_AT_KEY, Date.now());
-    recordMeta.set(CRDT_RECORD_METADATA_SAVED_BY_KEY, ydoc.clientID);
+    const recordMeta = ydoc.getMap(CRDT_STATE_MAP_KEY);
+    recordMeta.set(CRDT_STATE_MAP_SAVED_AT_KEY, Date.now());
+    recordMeta.set(CRDT_STATE_MAP_SAVED_BY_KEY, ydoc.clientID);
   }
   function pseudoRandomID() {
     return Math.floor(Math.random() * 1e9);
@@ -10137,13 +10136,13 @@ var wp;
       };
       const ydoc = createYjsDoc({ objectType });
       const recordMap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
-      const recordMetaMap = ydoc.getMap(CRDT_RECORD_METADATA_MAP_KEY);
+      const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
       const now = Date.now();
       const unload = () => {
         providerResults.forEach((result) => result.destroy());
         handlers.onStatusChange(null);
         recordMap.unobserveDeep(onRecordUpdate);
-        recordMetaMap.unobserve(onRecordMetaUpdate);
+        stateMap.unobserve(onStateMapUpdate);
         ydoc.destroy();
         entityStates.delete(entityId);
       };
@@ -10154,14 +10153,14 @@ var wp;
         }
         void internal.updateEntityRecord(objectType, objectId);
       };
-      const onRecordMetaUpdate = (event, transaction) => {
+      const onStateMapUpdate = (event, transaction) => {
         if (transaction.local) {
           return;
         }
         event.keysChanged.forEach((key) => {
           switch (key) {
-            case CRDT_RECORD_METADATA_SAVED_AT_KEY:
-              const newValue = recordMetaMap.get(CRDT_RECORD_METADATA_SAVED_AT_KEY);
+            case CRDT_STATE_MAP_SAVED_AT_KEY:
+              const newValue = stateMap.get(CRDT_STATE_MAP_SAVED_AT_KEY);
               if ("number" === typeof newValue && newValue > now) {
                 void handlers.refetchRecord().catch(() => {
                 });
@@ -10201,7 +10200,7 @@ var wp;
         })
       );
       recordMap.observeDeep(onRecordUpdate);
-      recordMetaMap.observe(onRecordMetaUpdate);
+      stateMap.observe(onStateMapUpdate);
       internal.applyPersistedCrdtDoc(objectType, objectId, record);
     }
     async function loadCollection(syncConfig, objectType, handlers) {
@@ -10213,23 +10212,23 @@ var wp;
         return;
       }
       const ydoc = createYjsDoc({ collection: true, objectType });
-      const recordMetaMap = ydoc.getMap(CRDT_RECORD_METADATA_MAP_KEY);
+      const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
       const now = Date.now();
       const unload = () => {
         providerResults.forEach((result) => result.destroy());
         handlers.onStatusChange(null);
-        recordMetaMap.unobserve(onRecordMetaUpdate);
+        stateMap.unobserve(onStateMapUpdate);
         ydoc.destroy();
         collectionStates.delete(objectType);
       };
-      const onRecordMetaUpdate = (event, transaction) => {
+      const onStateMapUpdate = (event, transaction) => {
         if (transaction.local) {
           return;
         }
         event.keysChanged.forEach((key) => {
           switch (key) {
-            case CRDT_RECORD_METADATA_SAVED_AT_KEY:
-              const newValue = recordMetaMap.get(CRDT_RECORD_METADATA_SAVED_AT_KEY);
+            case CRDT_STATE_MAP_SAVED_AT_KEY:
+              const newValue = stateMap.get(CRDT_STATE_MAP_SAVED_AT_KEY);
               if ("number" === typeof newValue && newValue > now) {
                 void handlers.refetchRecords().catch(() => {
                 });
@@ -10259,7 +10258,7 @@ var wp;
           return provider;
         })
       );
-      recordMetaMap.observe(onRecordMetaUpdate);
+      stateMap.observe(onStateMapUpdate);
     }
     function unloadEntity(objectType, objectId) {
       entityStates.get(getEntityId(objectType, objectId))?.unload();
@@ -11461,11 +11460,7 @@ var wp;
     Delta: Delta_default,
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
-    CRDT_RECORD_METADATA_MAP_KEY,
-    CRDT_RECORD_METADATA_SAVED_AT_KEY,
-    CRDT_RECORD_METADATA_SAVED_BY_KEY,
     LOCAL_EDITOR_ORIGIN,
-    LOCAL_SYNC_MANAGER_ORIGIN,
     WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE
   });
 
