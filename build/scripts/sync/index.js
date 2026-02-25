@@ -9394,6 +9394,20 @@ var wp;
     }
     return await response.json();
   }
+  function postSyncUpdateNonBlocking(payload) {
+    if (payload.rooms.length === 0) {
+      return;
+    }
+    (0, import_api_fetch.default)({
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+      keepalive: true,
+      method: "POST",
+      parse: false,
+      path: SYNC_API_PATH
+    }).catch(() => {
+    });
+  }
 
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
   var POLLING_INTERVAL_IN_MS = 1e3;
@@ -9506,6 +9520,19 @@ var wp;
   }
   var isPolling = false;
   var pollInterval = POLLING_INTERVAL_IN_MS;
+  var pageHideListenerRegistered = false;
+  function handlePageHide() {
+    const rooms = Array.from(roomStates.entries()).map(
+      ([room, state]) => ({
+        after: 0,
+        awareness: null,
+        client_id: state.clientId,
+        room,
+        updates: []
+      })
+    );
+    postSyncUpdateNonBlocking({ rooms });
+  }
   function poll() {
     isPolling = true;
     async function start() {
@@ -9634,13 +9661,34 @@ var wp;
     doc2.on("update", onDocUpdate);
     awareness.on("change", onAwarenessUpdate);
     roomStates.set(room, roomState);
+    if (!pageHideListenerRegistered) {
+      window.addEventListener("pagehide", handlePageHide);
+      pageHideListenerRegistered = true;
+    }
     if (!isPolling) {
       poll();
     }
   }
   function unregisterRoom(room) {
-    roomStates.get(room)?.unregister();
-    roomStates.delete(room);
+    const state = roomStates.get(room);
+    if (state) {
+      const rooms = [
+        {
+          after: 0,
+          awareness: null,
+          client_id: state.clientId,
+          room,
+          updates: []
+        }
+      ];
+      postSyncUpdateNonBlocking({ rooms });
+      state.unregister();
+      roomStates.delete(room);
+    }
+    if (roomStates.size === 0 && pageHideListenerRegistered) {
+      window.removeEventListener("pagehide", handlePageHide);
+      pageHideListenerRegistered = false;
+    }
   }
   var pollingManager = {
     registerRoom,
