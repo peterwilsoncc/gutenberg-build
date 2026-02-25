@@ -524,6 +524,12 @@ var wp;
     if (fileOrBlob instanceof File) {
       return fileOrBlob;
     }
+    if ("name" in fileOrBlob && typeof fileOrBlob.name === "string") {
+      return new File([fileOrBlob], fileOrBlob.name, {
+        type: fileOrBlob.type,
+        lastModified: fileOrBlob.lastModified
+      });
+    }
     const ext = fileOrBlob.type.split("/")[1];
     const mediaType = "application/pdf" === fileOrBlob.type ? "document" : fileOrBlob.type.split("/")[0];
     return new File([fileOrBlob], `${mediaType}.${ext}`, {
@@ -1230,19 +1236,7 @@ var wp;
         file.type
       );
       if (isImage && isVipsSupported) {
-        const { bigImageSizeThreshold, imageOutputFormats } = settings;
-        if (bigImageSizeThreshold) {
-          operations.push([
-            OperationType.ResizeCrop,
-            {
-              resize: {
-                width: bigImageSizeThreshold,
-                height: bigImageSizeThreshold
-              },
-              isThresholdResize: true
-            }
-          ]);
-        }
+        const { imageOutputFormats } = settings;
         const outputMimeType = imageOutputFormats?.[file.type];
         if (outputMimeType && outputMimeType !== file.type) {
           const transcodeOperation = await getTranscodeImageOperation(
@@ -1511,7 +1505,7 @@ var wp;
         }
       }
       if (!item.parentId && attachment.missing_image_sizes && attachment.missing_image_sizes.length > 0) {
-        const file = attachment.media_filename ? renameFile(item.sourceFile, attachment.media_filename) : item.sourceFile;
+        const file = attachment.filename ? renameFile(item.sourceFile, attachment.filename) : item.sourceFile;
         const batchId = v4_default();
         const settings = select2.getSettings();
         const allImageSizes = settings.allImageSizes || {};
@@ -1559,6 +1553,43 @@ var wp;
               convert_format: false
             },
             operations: thumbnailOperations
+          });
+        }
+        const { bigImageSizeThreshold } = settings;
+        if (bigImageSizeThreshold && attachment.id) {
+          const sourceForScaled = attachment.filename ? renameFile(item.sourceFile, attachment.filename) : item.sourceFile;
+          const scaledOperations = [
+            [
+              OperationType.ResizeCrop,
+              {
+                resize: {
+                  width: bigImageSizeThreshold,
+                  height: bigImageSizeThreshold
+                },
+                isThresholdResize: true
+              }
+            ]
+          ];
+          if (thumbnailTranscodeOperation) {
+            scaledOperations.push(thumbnailTranscodeOperation);
+          }
+          scaledOperations.push(OperationType.Upload);
+          dispatch.addSideloadItem({
+            file: sourceForScaled,
+            onChange: ([updatedAttachment]) => {
+              if ((0, import_blob.isBlobURL)(updatedAttachment.url)) {
+                return;
+              }
+              item.onChange?.([updatedAttachment]);
+            },
+            batchId,
+            parentId: item.id,
+            additionalData: {
+              post: attachment.id,
+              image_size: "scaled",
+              convert_format: false
+            },
+            operations: scaledOperations
           });
         }
       }
