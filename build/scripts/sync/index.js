@@ -10268,11 +10268,11 @@ var wp;
         syncConfig: {
           applyChangesToCRDTDoc,
           getChangesFromCRDTDoc,
-          getPersistedCrdtDoc
+          getPersistedCRDTDoc
         },
         ydoc: targetDoc
       } = entityState;
-      const serialized = getPersistedCrdtDoc?.(record);
+      const serialized = getPersistedCRDTDoc?.(record);
       const tempDoc = serialized ? deserializeCrdtDoc(serialized) : null;
       if (!tempDoc) {
         targetDoc.transact(() => {
