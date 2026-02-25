@@ -432,6 +432,8 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   font-family: Menlo, Consolas, monaco, monospace;
   font-size: 15px;
   line-height: 1.5;
+  /*rtl:ignore*/
+  direction: ltr;
 }
 @media not (prefers-reduced-motion) {
   .block-editor-block-list__block .block-editor-block-list__block-html-textarea {
