@@ -24506,7 +24506,6 @@ var wp;
     ));
     return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(Menu5.Group, { children: [
       renderActionGroup(primaryActions),
-      primaryActions.length > 0 && regularActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu5.Separator, {}),
       renderActionGroup(regularActions)
     ] });
   }
