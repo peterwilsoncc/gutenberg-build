@@ -1119,6 +1119,10 @@
   z-index: 1000001;
 }
 
+.dataviews-item-actions .components-button:not(.dataviews-all-actions-button) {
+  padding: 0 4px;
+}
+
 .dataviews-selection-checkbox {
   --checkbox-input-size: 24px;
 }
