@@ -1905,7 +1905,6 @@ function ActionsMenuGroup({
   ));
   return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(Menu.Group, { children: [
     renderActionGroup(primaryActions),
-    primaryActions.length > 0 && regularActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Menu.Separator, {}),
     renderActionGroup(regularActions)
   ] });
 }
