@@ -1119,6 +1119,10 @@
   z-index: 1000001;
 }
 
+.dataviews-item-actions .components-button:not(.dataviews-all-actions-button) {
+  padding: 0 4px;
+}
+
 .dataviews-selection-checkbox {
   --checkbox-input-size: 24px;
 }
@@ -2635,8 +2639,9 @@ div.dataviews-view-list {
 }
 
 .dataforms-layouts-regular__field .components-base-control__label,
-.dataforms-layouts-regular__field .components-input-control__label {
-  color: #757575;
+.dataforms-layouts-regular__field .components-input-control__label,
+.dataforms-layouts-regular__field .components-form-token-field__label {
+  color: #1e1e1e;
 }
 
 .dataforms-layouts-regular__field-label {
