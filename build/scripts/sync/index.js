@@ -9181,7 +9181,9 @@ var wp;
       const start = performance.now();
       const result = fn.apply(this, args2);
       const end = performance.now();
-      console.log(`${fn.name} took ${(end - start).toFixed(2)} ms`);
+      console.log(
+        `[SyncManager][performance]: ${fn.name} took ${(end - start).toFixed(2)} ms`
+      );
       return result;
     };
   }
@@ -10101,15 +10103,27 @@ var wp;
     const collectionStates = /* @__PURE__ */ new Map();
     const entityStates = /* @__PURE__ */ new Map();
     let undoManager;
+    function log(component, message, entityId, context = {}) {
+      if (!debug) {
+        return;
+      }
+      console.log(`[SyncManager][${component}]: ${message}`, {
+        ...context,
+        entityId
+      });
+    }
     async function loadEntity(syncConfig, objectType, objectId, record, handlers) {
       const providerCreators2 = getProviderCreators();
-      if (0 === providerCreators2.length) {
-        return;
-      }
       const entityId = getEntityId(objectType, objectId);
-      if (entityStates.has(entityId)) {
+      if (0 === providerCreators2.length) {
+        log("loadEntity", "no providers, skipping", entityId);
         return;
       }
+      if (entityStates.has(entityId)) {
+        log("loadEntity", "already loaded", entityId);
+        return;
+      }
+      log("loadEntity", "loading", entityId);
       handlers = {
         addUndoMeta: debugWrap(handlers.addUndoMeta),
         editRecord: debugWrap(handlers.editRecord),
@@ -10124,6 +10138,7 @@ var wp;
       const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
       const now = Date.now();
       const unload = () => {
+        log("loadEntity", "unloading", entityId);
         providerResults.forEach((result) => result.destroy());
         handlers.onStatusChange(null);
         recordMap.unobserveDeep(onRecordUpdate);
@@ -10147,6 +10162,7 @@ var wp;
             case CRDT_STATE_MAP_SAVED_AT_KEY:
               const newValue = stateMap.get(CRDT_STATE_MAP_SAVED_AT_KEY);
               if ("number" === typeof newValue && newValue > now) {
+                log("loadEntity", "refetching record", entityId);
                 void handlers.refetchRecord().catch(() => {
                 });
               }
@@ -10172,6 +10188,7 @@ var wp;
         ydoc
       };
       entityStates.set(entityId, entityState);
+      log("loadEntity", "connecting", entityId);
       const providerResults = await Promise.all(
         providerCreators2.map(async (create7) => {
           const provider = await create7({
@@ -10190,16 +10207,21 @@ var wp;
     }
     async function loadCollection(syncConfig, objectType, handlers) {
       const providerCreators2 = getProviderCreators();
+      const entityId = getEntityId(objectType, null);
       if (0 === providerCreators2.length) {
+        log("loadCollection", "no providers, skipping", entityId);
         return;
       }
       if (collectionStates.has(objectType)) {
+        log("loadCollection", "already loaded", entityId);
         return;
       }
+      log("loadCollection", "loading", entityId);
       const ydoc = createYjsDoc({ collection: true, objectType });
       const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
       const now = Date.now();
       const unload = () => {
+        log("loadCollection", "unloading", entityId);
         providerResults.forEach((result) => result.destroy());
         handlers.onStatusChange(null);
         stateMap.unobserve(onStateMapUpdate);
@@ -10231,6 +10253,7 @@ var wp;
         ydoc
       };
       collectionStates.set(objectType, collectionState);
+      log("loadCollection", "connecting", entityId);
       const providerResults = await Promise.all(
         providerCreators2.map(async (create7) => {
           const provider = await create7({
@@ -10246,7 +10269,9 @@ var wp;
       stateMap.observe(onStateMapUpdate);
     }
     function unloadEntity(objectType, objectId) {
-      entityStates.get(getEntityId(objectType, objectId))?.unload();
+      const entityId = getEntityId(objectType, objectId);
+      log("unloadEntity", "unloading", entityId);
+      entityStates.get(entityId)?.unload();
       updateCRDTDoc(objectType, null, {}, origin, { isSave: true });
     }
     function getAwareness(objectType, objectId) {
@@ -10261,6 +10286,7 @@ var wp;
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
       if (!entityState) {
+        log("applyPersistedCrdtDoc", "no entity state", entityId);
         return;
       }
       const {
@@ -10275,6 +10301,7 @@ var wp;
       const serialized = getPersistedCRDTDoc?.(record);
       const tempDoc = serialized ? deserializeCrdtDoc(serialized) : null;
       if (!tempDoc) {
+        log("applyPersistedCrdtDoc", "no persisted doc", entityId);
         targetDoc.transact(() => {
           applyChangesToCRDTDoc(targetDoc, record);
           handlers.saveRecord();
@@ -10287,8 +10314,12 @@ var wp;
       const invalidatedKeys = Object.keys(invalidations);
       tempDoc.destroy();
       if (0 === invalidatedKeys.length) {
+        log("applyPersistedCrdtDoc", "valid persisted doc", entityId);
         return;
       }
+      log("applyPersistedCrdtDoc", "invalidated keys", entityId, {
+        invalidatedKeys
+      });
       const changes = invalidatedKeys.reduce(
         (acc, key) => Object.assign(acc, {
           [key]: record[key]
@@ -10311,6 +10342,9 @@ var wp;
           undoManager.stopCapturing?.();
         }
         ydoc.transact(() => {
+          log("updateCRDTDoc", "applying changes", entityId, {
+            changedKeys: Object.keys(changes)
+          });
           syncConfig.applyChangesToCRDTDoc(ydoc, changes);
           if (isSave) {
             markEntityAsSaved(ydoc);
@@ -10327,6 +10361,7 @@ var wp;
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
       if (!entityState) {
+        log("updateEntityRecord", "no entity state", entityId);
         return;
       }
       const { handlers, syncConfig, ydoc } = entityState;
@@ -10334,9 +10369,13 @@ var wp;
         ydoc,
         await handlers.getEditedRecord()
       );
-      if (0 === Object.keys(changes).length) {
+      const changedKeys = Object.keys(changes);
+      if (0 === changedKeys.length) {
         return;
       }
+      log("updateEntityRecord", "changes", entityId, {
+        changedKeys
+      });
       handlers.editRecord(changes);
     }
     function createPersistedCRDTDoc(objectType, objectId) {
