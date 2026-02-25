@@ -9167,7 +9167,6 @@ var wp;
   var CRDT_STATE_MAP_VERSION_KEY = "version";
   var LOCAL_EDITOR_ORIGIN = "gutenberg";
   var LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
-  var WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE = "_crdt_document";
 
   // packages/sync/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
@@ -9194,61 +9193,6 @@ var wp;
       setTimeout(() => {
         fn.apply(this, args2);
       }, 0);
-    };
-  }
-
-  // packages/sync/build-module/utils.mjs
-  function createYjsDoc(documentMeta = {}) {
-    const metaMap = new Map(
-      Object.entries(documentMeta)
-    );
-    const ydoc = new Doc({ meta: metaMap });
-    const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
-    stateMap.set(CRDT_STATE_MAP_VERSION_KEY, CRDT_DOC_VERSION);
-    return ydoc;
-  }
-  function markEntityAsSaved(ydoc) {
-    const recordMeta = ydoc.getMap(CRDT_STATE_MAP_KEY);
-    recordMeta.set(CRDT_STATE_MAP_SAVED_AT_KEY, Date.now());
-    recordMeta.set(CRDT_STATE_MAP_SAVED_BY_KEY, ydoc.clientID);
-  }
-  function pseudoRandomID() {
-    return Math.floor(Math.random() * 1e9);
-  }
-  function serializeCrdtDoc(crdtDoc) {
-    return JSON.stringify({
-      document: toBase64(encodeStateAsUpdateV2(crdtDoc)),
-      updateId: pseudoRandomID()
-      // helps with debugging
-    });
-  }
-  function deserializeCrdtDoc(serializedCrdtDoc) {
-    try {
-      const { document: document2 } = JSON.parse(serializedCrdtDoc);
-      const docMeta = {
-        [CRDT_DOC_META_PERSISTENCE_KEY]: true
-      };
-      const ydoc = createYjsDoc(docMeta);
-      const yupdate = fromBase64(document2);
-      applyUpdateV2(ydoc, yupdate);
-      ydoc.clientID = pseudoRandomID();
-      return ydoc;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  // packages/sync/build-module/persistence.mjs
-  function getPersistedCrdtDoc(record) {
-    const serializedCrdtDoc = record.meta?.[WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE];
-    if (serializedCrdtDoc) {
-      return deserializeCrdtDoc(serializedCrdtDoc);
-    }
-    return null;
-  }
-  function createPersistedCRDTDoc(ydoc) {
-    return {
-      [WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE]: serializeCrdtDoc(ydoc)
     };
   }
 
@@ -10107,6 +10051,47 @@ var wp;
     };
   }
 
+  // packages/sync/build-module/utils.mjs
+  function createYjsDoc(documentMeta = {}) {
+    const metaMap = new Map(
+      Object.entries(documentMeta)
+    );
+    const ydoc = new Doc({ meta: metaMap });
+    const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
+    stateMap.set(CRDT_STATE_MAP_VERSION_KEY, CRDT_DOC_VERSION);
+    return ydoc;
+  }
+  function markEntityAsSaved(ydoc) {
+    const recordMeta = ydoc.getMap(CRDT_STATE_MAP_KEY);
+    recordMeta.set(CRDT_STATE_MAP_SAVED_AT_KEY, Date.now());
+    recordMeta.set(CRDT_STATE_MAP_SAVED_BY_KEY, ydoc.clientID);
+  }
+  function pseudoRandomID() {
+    return Math.floor(Math.random() * 1e9);
+  }
+  function serializeCrdtDoc(crdtDoc) {
+    return JSON.stringify({
+      document: toBase64(encodeStateAsUpdateV2(crdtDoc)),
+      updateId: pseudoRandomID()
+      // helps with debugging
+    });
+  }
+  function deserializeCrdtDoc(serializedCrdtDoc) {
+    try {
+      const { document: document2 } = JSON.parse(serializedCrdtDoc);
+      const docMeta = {
+        [CRDT_DOC_META_PERSISTENCE_KEY]: true
+      };
+      const ydoc = createYjsDoc(docMeta);
+      const yupdate = fromBase64(document2);
+      applyUpdateV2(ydoc, yupdate);
+      ydoc.clientID = pseudoRandomID();
+      return ydoc;
+    } catch (e) {
+      return null;
+    }
+  }
+
   // packages/sync/build-module/manager.mjs
   function getEntityId(objectType, objectId) {
     return `${objectType}_${objectId}`;
@@ -10283,23 +10268,16 @@ var wp;
         syncConfig: {
           applyChangesToCRDTDoc,
           getChangesFromCRDTDoc,
-          supports
+          getPersistedCrdtDoc
         },
         ydoc: targetDoc
       } = entityState;
-      if (!supports?.crdtPersistence) {
-        targetDoc.transact(() => {
-          applyChangesToCRDTDoc(targetDoc, record);
-        }, LOCAL_SYNC_MANAGER_ORIGIN);
-        return;
-      }
-      const tempDoc = getPersistedCrdtDoc(record);
+      const serialized = getPersistedCrdtDoc?.(record);
+      const tempDoc = serialized ? deserializeCrdtDoc(serialized) : null;
       if (!tempDoc) {
         targetDoc.transact(() => {
           applyChangesToCRDTDoc(targetDoc, record);
-          if ("auto-draft" !== record.status) {
-            handlers.saveRecord();
-          }
+          handlers.saveRecord();
         }, LOCAL_SYNC_MANAGER_ORIGIN);
         return;
       }
@@ -10361,20 +10339,20 @@ var wp;
       }
       handlers.editRecord(changes);
     }
-    function createEntityMeta(objectType, objectId) {
+    function createPersistedCRDTDoc(objectType, objectId) {
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
-      if (!entityState?.syncConfig.supports?.crdtPersistence) {
-        return {};
+      if (!entityState?.ydoc) {
+        return null;
       }
-      return createPersistedCRDTDoc(entityState.ydoc);
+      return serializeCrdtDoc(entityState.ydoc);
     }
     const internal = {
       applyPersistedCrdtDoc: debugWrap(_applyPersistedCrdtDoc),
       updateEntityRecord: debugWrap(_updateEntityRecord)
     };
     return {
-      createMeta: debugWrap(createEntityMeta),
+      createPersistedCRDTDoc: debugWrap(createPersistedCRDTDoc),
       getAwareness,
       load: debugWrap(loadEntity),
       loadCollection: debugWrap(loadCollection),
@@ -11460,8 +11438,7 @@ var wp;
     Delta: Delta_default,
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
-    LOCAL_EDITOR_ORIGIN,
-    WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE
+    LOCAL_EDITOR_ORIGIN
   });
 
   // packages/sync/build-module/index.mjs

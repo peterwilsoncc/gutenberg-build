@@ -1240,8 +1240,7 @@ var wp;
     Delta,
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
-    LOCAL_EDITOR_ORIGIN,
-    WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE
+    LOCAL_EDITOR_ORIGIN
   } = unlock(import_sync2.privateApis);
   var syncManager;
   function getSyncManager() {
@@ -2146,6 +2145,7 @@ var wp;
   }
 
   // packages/core-data/build-module/utils/crdt.mjs
+  var POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE = "_crdt_document";
   var allowedPostProperties = /* @__PURE__ */ new Set([
     "author",
     "blocks",
@@ -2166,7 +2166,7 @@ var wp;
     "title"
   ]);
   var disallowedPostMetaKeys = /* @__PURE__ */ new Set([
-    WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE
+    POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE
   ]);
   function defaultApplyChangesToCRDTDoc(ydoc, changes) {
     const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
@@ -2627,11 +2627,16 @@ var wp;
     if (persistedRecord) {
       const objectType = `postType/${name}`;
       const objectId = persistedRecord.id;
-      const meta = getSyncManager()?.createMeta(objectType, objectId);
-      newEdits.meta = {
-        ...edits.meta,
-        ...meta
-      };
+      const serializedDoc = getSyncManager()?.createPersistedCRDTDoc(
+        objectType,
+        objectId
+      );
+      if (serializedDoc) {
+        newEdits.meta = {
+          ...edits.meta,
+          [POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE]: serializedDoc
+        };
+      }
     }
     return newEdits;
   };
@@ -2695,13 +2700,13 @@ var wp;
          */
         getChangesFromCRDTDoc: (crdtDoc, editedRecord) => getPostChangesFromCRDTDoc(crdtDoc, editedRecord, postType),
         /**
-         * Sync features supported by the entity.
+         * Extract changes from a CRDT document that can be used to update the
+         * local editor state.
          *
-         * @type {Record< string, boolean >}
+         * @param {import('@wordpress/sync').ObjectData} record
+         * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
          */
-        supports: {
-          crdtPersistence: true
-        }
+        getPersistedCRDTDoc: (record) => record[POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE] || null
       };
       return entity2;
     });
@@ -5462,6 +5467,10 @@ var wp;
             // edits. This is used to trigger a persisted CRDT document.
             saveRecord: () => {
               resolveSelect2.getEditedEntityRecord(kind, name, key).then((editedRecord) => {
+                const { status } = editedRecord;
+                if ("auto-draft" === status) {
+                  return;
+                }
                 dispatch3.saveEntityRecord(
                   kind,
                   name,
