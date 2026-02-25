@@ -2635,8 +2635,9 @@ div.dataviews-view-list {
 }
 
 .dataforms-layouts-regular__field .components-base-control__label,
-.dataforms-layouts-regular__field .components-input-control__label {
-  color: #757575;
+.dataforms-layouts-regular__field .components-input-control__label,
+.dataforms-layouts-regular__field .components-form-token-field__label {
+  color: #1e1e1e;
 }
 
 .dataforms-layouts-regular__field-label {
