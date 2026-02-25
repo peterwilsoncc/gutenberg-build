@@ -139,7 +139,7 @@ var wp;
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect2(
+          useLayoutEffect3(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -173,7 +173,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React8 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState27 = React8.useState, useEffect19 = React8.useEffect, useLayoutEffect2 = React8.useLayoutEffect, useDebugValue = React8.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React8 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState27 = React8.useState, useEffect19 = React8.useEffect, useLayoutEffect3 = React8.useLayoutEffect, useDebugValue = React8.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React8.useSyncExternalStore ? React8.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2018,6 +2018,7 @@ var wp;
     }
     return outProps;
   }
+  var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
   function evaluateRenderProp(element, render4, props, state) {
     if (render4) {
       if (typeof render4 === "function") {
@@ -2025,7 +2026,17 @@ var wp;
       }
       const mergedProps = mergeProps(props, render4.props);
       mergedProps.ref = props.ref;
-      return /* @__PURE__ */ React4.cloneElement(render4, mergedProps);
+      let newElement = render4;
+      if (newElement?.$$typeof === REACT_LAZY_TYPE) {
+        const children = React4.Children.toArray(render4);
+        newElement = children[0];
+      }
+      if (true) {
+        if (!/* @__PURE__ */ React4.isValidElement(newElement)) {
+          throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
+        }
+      }
+      return /* @__PURE__ */ React4.cloneElement(newElement, mergedProps);
     }
     if (element) {
       if (typeof element === "string") {
@@ -2075,16 +2086,25 @@ var wp;
 
   // packages/ui/build-module/stack/stack.mjs
   var import_element2 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
     const style = document.createElement("style");
     style.setAttribute("data-wp-hash", "71d20935c2");
     style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
     document.head.appendChild(style);
   }
   var style_default = { "stack": "_19ce0419607e1896__stack" };
+  var gapTokens = {
+    xs: "var(--wpds-dimension-gap-xs, 4px)",
+    sm: "var(--wpds-dimension-gap-sm, 8px)",
+    md: "var(--wpds-dimension-gap-md, 12px)",
+    lg: "var(--wpds-dimension-gap-lg, 16px)",
+    xl: "var(--wpds-dimension-gap-xl, 24px)",
+    "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+    "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+  };
   var Stack = (0, import_element2.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
     const style = {
-      gap: gap && `var(--wpds-dimension-gap-${gap})`,
+      gap: gap && gapTokens[gap],
       alignItems: align,
       justifyContent: justify,
       flexDirection: direction,
@@ -2326,7 +2346,6 @@ var wp;
     ));
     return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(Menu.Group, { children: [
       renderActionGroup(primaryActions),
-      primaryActions.length > 0 && regularActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Menu.Separator, {}),
       renderActionGroup(regularActions)
     ] });
   }
@@ -3400,7 +3419,7 @@ var wp;
                   className: clsx_default(
                     `dataviews-view-table__col-${column}`,
                     {
-                      "dataviews-view-table__col-first-data": !hasPrimaryColumn && index === 0
+                      "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1
                     }
                   )
                 },
@@ -13390,7 +13409,9 @@ If there's a particular need for this, please submit a feature request at https:
       view.search
     );
     (0, import_element34.useEffect)(() => {
-      setSearch(view.search ?? "");
+      if (view.search !== debouncedSearch) {
+        setSearch(view.search ?? "");
+      }
     }, [view.search, setSearch]);
     const onChangeViewRef = (0, import_element34.useRef)(onChangeView);
     const viewRef = (0, import_element34.useRef)(view);
@@ -17530,6 +17551,34 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
   var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+  function getBestImageUrl(featuredMedia, configSizes) {
+    const sizes = featuredMedia?.media_details?.sizes;
+    if (!sizes) {
+      return featuredMedia.source_url;
+    }
+    const sizeEntries = Object.values(sizes);
+    if (!sizeEntries.length) {
+      return featuredMedia.source_url;
+    }
+    const targetWidth = configSizes ? parseInt(configSizes, 10) : NaN;
+    if (!Number.isNaN(targetWidth)) {
+      const validEntries = sizeEntries.filter(
+        (s2) => typeof s2.width === "number" && !Number.isNaN(s2.width)
+      );
+      if (!validEntries.length) {
+        return featuredMedia.source_url;
+      }
+      const sorted = [...validEntries].sort(
+        (a2, b2) => a2.width - b2.width
+      );
+      const match2 = sorted.find((s2) => s2.width >= targetWidth);
+      if (match2) {
+        return match2.source_url;
+      }
+      return sorted[sorted.length - 1].source_url;
+    }
+    return featuredMedia.source_url;
+  }
   function FallbackView({
     item,
     filename
@@ -17554,6 +17603,48 @@ If there's a particular need for this, please submit a feature request at https:
         ]
       }
     ) });
+  }
+  function ImageView({
+    item,
+    configSizes,
+    onError
+  }) {
+    const imageUrl = getBestImageUrl(item, configSizes);
+    const imgRef = (0, import_element58.useRef)(null);
+    const [loadingState, setLoadingState] = (0, import_element58.useState)("loading");
+    (0, import_element58.useLayoutEffect)(() => {
+      if (imgRef.current?.complete) {
+        setLoadingState("instant");
+      } else {
+        setLoadingState("loading");
+      }
+    }, [imageUrl]);
+    const handleLoad = () => {
+      if (loadingState === "loading") {
+        setLoadingState("loaded");
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+      "div",
+      {
+        className: clsx_default("dataviews-media-field__media-thumbnail", {
+          "is-loading": loadingState === "loading",
+          "is-loaded": loadingState === "loaded"
+        }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+          "img",
+          {
+            ref: imgRef,
+            className: "dataviews-media-field__media-thumbnail--image",
+            src: imageUrl,
+            alt: item.alt_text || item.title.raw,
+            onLoad: handleLoad,
+            onError,
+            loading: "lazy"
+          }
+        )
+      }
+    );
   }
   function MediaThumbnailView({
     item,
@@ -17581,21 +17672,14 @@ If there's a particular need for this, please submit a feature request at https:
     if (imageError || getMediaTypeFromMimeType(featuredMedia.mime_type).type !== "image") {
       return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
-      "img",
+    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+      ImageView,
       {
-        className: "dataviews-media-field__media-thumbnail--image",
-        src: featuredMedia.source_url,
-        srcSet: featuredMedia?.media_details?.sizes ? Object.values(
-          featuredMedia.media_details.sizes
-        ).map(
-          (size) => `${size.source_url} ${size.width}w`
-        ).join(", ") : void 0,
-        sizes: config?.sizes || "100vw",
-        alt: featuredMedia.alt_text || featuredMedia.title.raw,
+        item: featuredMedia,
+        configSizes: config?.sizes,
         onError: () => setImageError(true)
       }
-    ) });
+    );
   }
 
   // packages/media-fields/build-module/media_thumbnail/index.mjs

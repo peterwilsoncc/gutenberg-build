@@ -1372,6 +1372,7 @@ function useRenderElementProps(componentProps, params = {}) {
   }
   return outProps;
 }
+var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
 function evaluateRenderProp(element, render4, props, state) {
   if (render4) {
     if (typeof render4 === "function") {
@@ -1379,7 +1380,17 @@ function evaluateRenderProp(element, render4, props, state) {
     }
     const mergedProps = mergeProps(props, render4.props);
     mergedProps.ref = props.ref;
-    return /* @__PURE__ */ React5.cloneElement(render4, mergedProps);
+    let newElement = render4;
+    if (newElement?.$$typeof === REACT_LAZY_TYPE) {
+      const children = React5.Children.toArray(render4);
+      newElement = children[0];
+    }
+    if (true) {
+      if (!/* @__PURE__ */ React5.isValidElement(newElement)) {
+        throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
+      }
+    }
+    return /* @__PURE__ */ React5.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -1544,16 +1555,25 @@ var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primit
 
 // packages/ui/build-module/stack/stack.mjs
 var import_element2 = __toESM(require_element(), 1);
-if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "71d20935c2");
   style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
   document.head.appendChild(style);
 }
 var style_default = { "stack": "_19ce0419607e1896__stack" };
+var gapTokens = {
+  xs: "var(--wpds-dimension-gap-xs, 4px)",
+  sm: "var(--wpds-dimension-gap-sm, 8px)",
+  md: "var(--wpds-dimension-gap-md, 12px)",
+  lg: "var(--wpds-dimension-gap-lg, 16px)",
+  xl: "var(--wpds-dimension-gap-xl, 24px)",
+  "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+  "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+};
 var Stack = (0, import_element2.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
   const style = {
-    gap: gap && `var(--wpds-dimension-gap-${gap})`,
+    gap: gap && gapTokens[gap],
     alignItems: align,
     justifyContent: justify,
     flexDirection: direction,
@@ -1795,7 +1815,6 @@ function ActionsMenuGroup({
   ));
   return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(Menu.Group, { children: [
     renderActionGroup(primaryActions),
-    primaryActions.length > 0 && regularActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Menu.Separator, {}),
     renderActionGroup(regularActions)
   ] });
 }
@@ -3125,7 +3144,7 @@ function ViewTable({
                 className: clsx_default(
                   `dataviews-view-table__col-${column}`,
                   {
-                    "dataviews-view-table__col-first-data": !hasPrimaryColumn && index === 0
+                    "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1
                   }
                 )
               },
@@ -13008,7 +13027,9 @@ var DataViewsSearch = (0, import_element35.memo)(function Search({ label }) {
     view.search
   );
   (0, import_element35.useEffect)(() => {
-    setSearch(view.search ?? "");
+    if (view.search !== debouncedSearch) {
+      setSearch(view.search ?? "");
+    }
   }, [view.search, setSearch]);
   const onChangeViewRef = (0, import_element35.useRef)(onChangeView);
   const viewRef = (0, import_element35.useRef)(view);
@@ -17300,7 +17321,7 @@ var usePatterns = (postType, categoryId, { search = "", syncStatus } = {}) => {
 var use_patterns_default = usePatterns;
 
 // routes/pattern-list/style.scss
-if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='2d52a92b3c']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='2d52a92b3c']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "2d52a92b3c");
   style.appendChild(document.createTextNode(":root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.patterns-menu-items__convert-modal{z-index:1000001}.patterns-menu-items__convert-modal [role=dialog]>[role=document]{width:350px}.patterns-menu-items__convert-modal .patterns-menu-items__convert-modal-categories{position:relative}.patterns-menu-items__convert-modal .components-form-token-field__suggestions-list:not(:empty){background-color:#fff;border:1px solid var(--wp-admin-theme-color);border-bottom-left-radius:2px;border-bottom-right-radius:2px;box-shadow:0 0 .5px .5px var(--wp-admin-theme-color);box-sizing:border-box;left:-1px;max-height:96px;min-width:auto;position:absolute;width:calc(100% + 2px);z-index:1}.patterns-create-modal__name-input input[type=text]{margin:0}.patterns-rename-pattern-category-modal__validation-message{color:#cc1818}@media (min-width:782px){.patterns-rename-pattern-category-modal__validation-message{width:320px}}.pattern-overrides-control__allow-overrides-button{justify-content:center;width:100%}.routes-pattern-list__tabs-wrapper{border-bottom:1px solid #f0f0f0;padding:0 24px}.dataviews-view-grid__badge-fields .dataviews-view-grid__field-value:has(.routes-pattern-list__field-sync-status-fully){background:rgba(var(--wp-block-synced-color--rgb),.04);color:var(--wp-block-synced-color)}"));
