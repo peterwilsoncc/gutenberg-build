@@ -2091,15 +2091,7 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
   blocks.forEach((blockType) => {
     const blockStyles = updatedConfig?.styles?.blocks?.[blockType.name];
     if (blockStyles?.css) {
-      const { featureSelectors } = blockSelectors[blockType.name];
-      const cssFeatureSelector = typeof featureSelectors === "object" ? featureSelectors?.css : void 0;
-      let resolvedCssSelector;
-      if (typeof cssFeatureSelector === "string") {
-        resolvedCssSelector = cssFeatureSelector;
-      } else if (typeof cssFeatureSelector === "object") {
-        resolvedCssSelector = cssFeatureSelector?.root;
-      }
-      const selector = resolvedCssSelector ?? blockSelectors[blockType.name].selector;
+      const selector = blockSelectors[blockType.name].selector;
       styles.push({
         css: processCSSNesting(blockStyles.css, selector),
         isGlobalStyles: true
@@ -2549,7 +2541,7 @@ var import_block_editor = __toESM(require_block_editor(), 1);
 var import_editor2 = __toESM(require_editor(), 1);
 var import_blocks2 = __toESM(require_blocks(), 1);
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7c8bb0a596']")) {
+if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='7c8bb0a596']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "7c8bb0a596");
   style.appendChild(document.createTextNode(".lazy-editor-block-preview__container{align-items:center;border-radius:4px;display:flex;flex-direction:column;height:100%;justify-content:center}.dataviews-view-grid .lazy-editor-block-preview__container .block-editor-block-preview__container{height:100%}.dataviews-view-table .lazy-editor-block-preview__container{text-wrap:balance;text-wrap:pretty;flex-grow:0;width:96px}"));

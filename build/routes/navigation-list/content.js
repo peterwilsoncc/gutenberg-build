@@ -1472,7 +1472,6 @@ function useRenderElementProps(componentProps, params = {}) {
   }
   return outProps;
 }
-var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
 function evaluateRenderProp(element, render4, props, state) {
   if (render4) {
     if (typeof render4 === "function") {
@@ -1480,17 +1479,7 @@ function evaluateRenderProp(element, render4, props, state) {
     }
     const mergedProps = mergeProps(props, render4.props);
     mergedProps.ref = props.ref;
-    let newElement = render4;
-    if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React5.Children.toArray(render4);
-      newElement = children[0];
-    }
-    if (true) {
-      if (!/* @__PURE__ */ React5.isValidElement(newElement)) {
-        throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
-      }
-    }
-    return /* @__PURE__ */ React5.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React5.cloneElement(render4, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -1644,25 +1633,16 @@ var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primit
 
 // packages/ui/build-module/stack/stack.mjs
 var import_element3 = __toESM(require_element(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "71d20935c2");
   style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
   document.head.appendChild(style);
 }
 var style_default = { "stack": "_19ce0419607e1896__stack" };
-var gapTokens = {
-  xs: "var(--wpds-dimension-gap-xs, 4px)",
-  sm: "var(--wpds-dimension-gap-sm, 8px)",
-  md: "var(--wpds-dimension-gap-md, 12px)",
-  lg: "var(--wpds-dimension-gap-lg, 16px)",
-  xl: "var(--wpds-dimension-gap-xl, 24px)",
-  "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-  "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
-};
 var Stack = (0, import_element3.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
   const style = {
-    gap: gap && gapTokens[gap],
+    gap: gap && `var(--wpds-dimension-gap-${gap})`,
     alignItems: align,
     justifyContent: justify,
     flexDirection: direction,
@@ -1904,6 +1884,7 @@ function ActionsMenuGroup({
   ));
   return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Menu.Group, { children: [
     renderActionGroup(primaryActions),
+    primaryActions.length > 0 && regularActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Menu.Separator, {}),
     renderActionGroup(regularActions)
   ] });
 }
@@ -3233,7 +3214,7 @@ function ViewTable({
                 className: clsx_default(
                   `dataviews-view-table__col-${column}`,
                   {
-                    "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1
+                    "dataviews-view-table__col-first-data": !hasPrimaryColumn && index === 0
                   }
                 )
               },
@@ -13116,9 +13097,7 @@ var DataViewsSearch = (0, import_element36.memo)(function Search({ label }) {
     view.search
   );
   (0, import_element36.useEffect)(() => {
-    if (view.search !== debouncedSearch) {
-      setSearch(view.search ?? "");
-    }
+    setSearch(view.search ?? "");
   }, [view.search, setSearch]);
   const onChangeViewRef = (0, import_element36.useRef)(onChangeView);
   const viewRef = (0, import_element36.useRef)(view);
@@ -16883,7 +16862,7 @@ var AddNavigationModal = ({
 };
 
 // routes/navigation-list/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='4cd54e4f28']")) {
+if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='4cd54e4f28']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "4cd54e4f28");
   style.appendChild(document.createTextNode(""));

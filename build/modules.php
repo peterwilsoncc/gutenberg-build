@@ -42,4 +42,5 @@ if ( ! function_exists( 'gutenberg_register_script_modules' ) ) {
 	}
 
 	add_action( 'wp_default_scripts', 'gutenberg_register_script_modules' );
+	remove_action( 'wp_default_scripts', 'wp_default_script_modules' );
 }

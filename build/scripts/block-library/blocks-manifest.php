@@ -6041,6 +6041,9 @@ return array(
 		'description' => 'Displays the next or previous post link that is adjacent to the current post.',
 		'textdomain' => 'default',
 		'attributes' => array(
+			'textAlign' => array(
+				'type' => 'string'
+			),
 			'type' => array(
 				'type' => 'string',
 				'default' => 'next'
@@ -6079,7 +6082,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -6337,6 +6339,9 @@ return array(
 			'queryId'
 		),
 		'attributes' => array(
+			'textAlign' => array(
+				'type' => 'string'
+			),
 			'level' => array(
 				'type' => 'number',
 				'default' => 2
@@ -6387,7 +6392,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -6936,6 +6940,9 @@ return array(
 			'type' => array(
 				'type' => 'string'
 			),
+			'textAlign' => array(
+				'type' => 'string'
+			),
 			'level' => array(
 				'type' => 'number',
 				'default' => 1
@@ -6981,7 +6988,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontStyle' => true,
 				'__experimentalFontWeight' => true,
@@ -7634,6 +7640,9 @@ return array(
 		),
 		'textdomain' => 'default',
 		'attributes' => array(
+			'textAlign' => array(
+				'type' => 'string'
+			),
 			'level' => array(
 				'type' => 'number',
 				'default' => 0
@@ -7654,11 +7663,7 @@ return array(
 		'example' => array(
 			'viewportWidth' => 350,
 			'attributes' => array(
-				'style' => array(
-					'typography' => array(
-						'textAlign' => 'center'
-					)
-				)
+				'textAlign' => 'center'
 			)
 		),
 		'supports' => array(
@@ -7687,7 +7692,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalTextTransform' => true,
 				'__experimentalTextDecoration' => true,
@@ -7737,6 +7741,9 @@ return array(
 					6
 				)
 			),
+			'textAlign' => array(
+				'type' => 'string'
+			),
 			'isLink' => array(
 				'type' => 'boolean',
 				'default' => true,
@@ -7778,7 +7785,6 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
-				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalTextTransform' => true,
 				'__experimentalTextDecoration' => true,
@@ -8642,7 +8648,30 @@ return array(
 			'core/tabs-editorActiveTabIndex'
 		),
 		'attributes' => array(
-			
+			'activeBackgroundColor' => array(
+				'type' => 'string'
+			),
+			'customActiveBackgroundColor' => array(
+				'type' => 'string'
+			),
+			'activeTextColor' => array(
+				'type' => 'string'
+			),
+			'customActiveTextColor' => array(
+				'type' => 'string'
+			),
+			'hoverBackgroundColor' => array(
+				'type' => 'string'
+			),
+			'customHoverBackgroundColor' => array(
+				'type' => 'string'
+			),
+			'hoverTextColor' => array(
+				'type' => 'string'
+			),
+			'customHoverTextColor' => array(
+				'type' => 'string'
+			)
 		),
 		'supports' => array(
 			'html' => false,

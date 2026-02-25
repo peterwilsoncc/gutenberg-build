@@ -1316,6 +1316,7 @@ var wp;
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
     LOCAL_EDITOR_ORIGIN,
+    LOCAL_SYNC_MANAGER_ORIGIN,
     WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE
   } = unlock(import_sync3.privateApis);
   var syncManager;
@@ -2202,35 +2203,29 @@ var wp;
     }
     return null;
   }
-  function convertYFullSelectionToWPSelection(yFullSelection, ydoc) {
-    const { start, end } = yFullSelection;
-    const startBlock = findBlockByClientIdInDoc(start.clientId, ydoc);
-    const endBlock = findBlockByClientIdInDoc(end.clientId, ydoc);
-    if (!startBlock || !endBlock) {
-      return null;
-    }
-    const startBlockSelection = convertYSelectionToBlockSelection(
-      start,
-      ydoc
-    );
-    const endBlockSelection = convertYSelectionToBlockSelection(end, ydoc);
-    if (startBlockSelection === null || endBlockSelection === null) {
-      return null;
-    }
-    return {
-      selectionStart: startBlockSelection,
-      selectionEnd: endBlockSelection
-    };
-  }
   function findSelectionFromHistory(ydoc, selectionHistory) {
     for (const positionToTry of selectionHistory) {
-      const result = convertYFullSelectionToWPSelection(
-        positionToTry,
+      const { start, end } = positionToTry;
+      const startBlock = findBlockByClientIdInDoc(start.clientId, ydoc);
+      const endBlock = findBlockByClientIdInDoc(end.clientId, ydoc);
+      if (!startBlock || !endBlock) {
+        continue;
+      }
+      const startBlockSelection = convertYSelectionToBlockSelection(
+        start,
         ydoc
       );
-      if (result !== null) {
-        return result;
+      const endBlockSelection = convertYSelectionToBlockSelection(
+        end,
+        ydoc
+      );
+      if (startBlockSelection === null || endBlockSelection === null) {
+        continue;
       }
+      return {
+        selectionStart: startBlockSelection,
+        selectionEnd: endBlockSelection
+      };
     }
     return null;
   }
@@ -2268,26 +2263,6 @@ var wp;
     } else {
       resetSelection(selectionEnd, selectionEnd, 0);
     }
-  }
-  function getShiftedSelection(ydoc, selectionHistory) {
-    if (selectionHistory.length === 0) {
-      return null;
-    }
-    const { start, end } = selectionHistory[0];
-    if (start.type === YSelectionType.BlockSelection || end.type === YSelectionType.BlockSelection) {
-      return null;
-    }
-    const selectionStart = convertYSelectionToBlockSelection(start, ydoc);
-    const selectionEnd = convertYSelectionToBlockSelection(end, ydoc);
-    if (!selectionStart || !selectionEnd) {
-      return null;
-    }
-    const startShifted = selectionStart.offset !== start.offset;
-    const endShifted = selectionEnd.offset !== end.offset;
-    if (!startShifted && !endShifted) {
-      return null;
-    }
-    return { selectionStart, selectionEnd };
   }
 
   // packages/core-data/build-module/utils/crdt.mjs
@@ -2481,14 +2456,6 @@ var wp;
       changes.meta = {
         ...editedRecord.meta,
         ...allowedMetaChanges
-      };
-    }
-    const selectionHistory = getSelectionHistory(ydoc);
-    const shiftedSelection = getShiftedSelection(ydoc, selectionHistory);
-    if (shiftedSelection) {
-      changes.selection = {
-        ...shiftedSelection,
-        initialPosition: 0
       };
     }
     return changes;

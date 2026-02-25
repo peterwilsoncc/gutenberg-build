@@ -4026,47 +4026,47 @@ var wp;
     ],
     [
       "--wp-components-color-accent-inverted",
-      "var(--wpds-color-fg-interactive-brand-strong, #fff)"
+      "var(--wpds-color-fg-interactive-brand-strong)"
     ],
     [
       "--wp-components-color-background",
-      "var(--wpds-color-bg-surface-neutral-strong, #ffffff)"
+      "var(--wpds-color-bg-surface-neutral-strong)"
     ],
     [
       "--wp-components-color-foreground",
-      "var(--wpds-color-fg-content-neutral, #1e1e1e)"
+      "var(--wpds-color-fg-content-neutral)"
     ],
     [
       "--wp-components-color-foreground-inverted",
-      "var(--wpds-color-bg-surface-neutral, #f8f8f8)"
+      "var(--wpds-color-bg-surface-neutral)"
     ],
     [
       "--wp-components-color-gray-100",
-      "var(--wpds-color-bg-surface-neutral, #f8f8f8)"
+      "var(--wpds-color-bg-surface-neutral)"
     ],
     [
       "--wp-components-color-gray-200",
-      "var(--wpds-color-stroke-surface-neutral, #d8d8d8)"
+      "var(--wpds-color-stroke-surface-neutral)"
     ],
     [
       "--wp-components-color-gray-300",
-      "var(--wpds-color-stroke-surface-neutral, #d8d8d8)"
+      "var(--wpds-color-stroke-surface-neutral)"
     ],
     [
       "--wp-components-color-gray-400",
-      "var(--wpds-color-stroke-interactive-neutral, #8a8a8a)"
+      "var(--wpds-color-stroke-interactive-neutral)"
     ],
     [
       "--wp-components-color-gray-600",
-      "var(--wpds-color-stroke-interactive-neutral, #8a8a8a)"
+      "var(--wpds-color-stroke-interactive-neutral)"
     ],
     [
       "--wp-components-color-gray-700",
-      "var(--wpds-color-fg-content-neutral-weak, #6d6d6d)"
+      "var(--wpds-color-fg-content-neutral-weak)"
     ],
     [
       "--wp-components-color-gray-800",
-      "var(--wpds-color-fg-content-neutral, #1e1e1e)"
+      "var(--wpds-color-fg-content-neutral)"
     ]
   ];
   function customRgbFormat(color) {
@@ -4176,7 +4176,7 @@ var wp;
 
   // packages/theme/build-module/theme-provider.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='662a5161a8']")) {
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='662a5161a8']")) {
     const style = document.createElement("style");
     style.setAttribute("data-wp-hash", "662a5161a8");
     style.appendChild(document.createTextNode(".dba930ea7a9438fd__root{display:contents}"));

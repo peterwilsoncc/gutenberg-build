@@ -213,7 +213,7 @@ var seen_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitive
 var import_element2 = __toESM(require_element());
 
 // routes/styles/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7be460f5dc']")) {
+if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='7be460f5dc']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "7be460f5dc");
   style.appendChild(document.createTextNode(".routes-styles__page .global-styles-ui-screen-root{box-shadow:none}.routes-styles__page .global-styles-ui-screen-root>div>hr{display:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider .components-tools-panel{border-top:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider{overflow-y:auto;padding-left:0;padding-right:0}"));

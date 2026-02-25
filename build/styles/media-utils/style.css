@@ -142,19 +142,6 @@
   height: 100%;
 }
 
-@media not (prefers-reduced-motion) {
-  .dataviews-media-field__media-thumbnail.is-loading img, .dataviews-media-field__media-thumbnail.is-loaded img {
-    transition: opacity 0.1s linear;
-  }
-}
-.dataviews-media-field__media-thumbnail.is-loading img {
-  opacity: 0;
-}
-
-.dataviews-media-field__media-thumbnail.is-loaded img {
-  opacity: 1;
-}
-
 .dataviews-media-field__media-thumbnail--image {
   display: block;
   width: 100%;
