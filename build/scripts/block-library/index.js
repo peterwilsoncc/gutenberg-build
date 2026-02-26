@@ -38138,54 +38138,12 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/navigation/use-navigation-entities.mjs
-  var import_core_data27 = __toESM(require_core_data(), 1);
-  function useNavigationEntities(menuId) {
-    const {
-      records: menus,
-      isResolving: isResolvingMenus,
-      hasResolved: hasResolvedMenus
-    } = (0, import_core_data27.useEntityRecords)("root", "menu", { per_page: -1, context: "view" });
-    const {
-      records: pages,
-      isResolving: isResolvingPages,
-      hasResolved: hasResolvedPages
-    } = (0, import_core_data27.useEntityRecords)("postType", "page", {
-      parent: 0,
-      order: "asc",
-      orderby: "id",
-      per_page: -1,
-      context: "view"
-    });
-    const { records: menuItems, hasResolved: hasResolvedMenuItems } = (0, import_core_data27.useEntityRecords)(
-      "root",
-      "menuItem",
-      {
-        menus: menuId,
-        per_page: -1,
-        context: "view"
-      },
-      { enabled: !!menuId }
-    );
-    return {
-      pages,
-      isResolvingPages,
-      hasResolvedPages,
-      hasPages: !!(hasResolvedPages && pages?.length),
-      menus,
-      isResolvingMenus,
-      hasResolvedMenus,
-      hasMenus: !!(hasResolvedMenus && menus?.length),
-      menuItems,
-      hasResolvedMenuItems
-    };
-  }
-
   // packages/block-library/build-module/navigation/edit/placeholder/index.mjs
   var import_components70 = __toESM(require_components(), 1);
   var import_i18n114 = __toESM(require_i18n(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
   var import_element60 = __toESM(require_element(), 1);
+  var import_core_data28 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/navigation/edit/placeholder/placeholder-preview.mjs
   var import_i18n112 = __toESM(require_i18n(), 1);
@@ -38210,7 +38168,7 @@ ${js}
   var import_i18n113 = __toESM(require_i18n(), 1);
   var import_html_entities3 = __toESM(require_html_entities(), 1);
   var import_element59 = __toESM(require_element(), 1);
-  var import_core_data28 = __toESM(require_core_data(), 1);
+  var import_core_data27 = __toESM(require_core_data(), 1);
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
   function buildMenuLabel(title, id, status) {
     if (!title) {
@@ -38238,7 +38196,10 @@ ${js}
     const createActionLabel = (0, import_i18n113.__)("Create from '%s'");
     const [isUpdatingMenuRef, setIsUpdatingMenuRef] = (0, import_element59.useState)(false);
     actionLabel3 = actionLabel3 || createActionLabel;
-    const { menus: classicMenus } = useNavigationEntities();
+    const { records: classicMenus } = (0, import_core_data27.useEntityRecords)("root", "menu", {
+      per_page: -1,
+      context: "view"
+    });
     const {
       navigationMenus,
       isResolvingNavigationMenus,
@@ -38247,7 +38208,7 @@ ${js}
       canSwitchNavigationMenu,
       isNavigationMenuMissing
     } = useNavigationMenu(currentMenuId);
-    const [currentTitle] = (0, import_core_data28.useEntityProp)(
+    const [currentTitle] = (0, import_core_data27.useEntityProp)(
       "postType",
       "wp_navigation",
       "title"
@@ -38374,7 +38335,7 @@ ${js}
     onSelectClassicMenu,
     onCreateEmpty
   }) {
-    const { isResolvingMenus, hasResolvedMenus } = useNavigationEntities();
+    const { isResolving: isResolvingMenus, hasResolved: hasResolvedMenus } = (0, import_core_data28.useEntityRecords)("root", "menu", { per_page: -1, context: "view" });
     (0, import_element60.useEffect)(() => {
       if (!isSelected) {
         return;
@@ -42270,7 +42231,10 @@ ${js}
     );
     const hasAlreadyRendered = isPreviewMode ? false : recursionDetected;
     const blockEditingMode = (0, import_block_editor159.useBlockEditingMode)();
-    const { menus: classicMenus } = useNavigationEntities();
+    const { records: classicMenus } = (0, import_core_data49.useEntityRecords)("root", "menu", {
+      per_page: -1,
+      context: "view"
+    });
     const [showNavigationMenuStatusNotice, hideNavigationMenuStatusNotice] = use_navigation_notice_default({
       name: "block-library/core/navigation/status"
     });
