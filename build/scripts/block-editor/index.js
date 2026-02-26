@@ -39083,6 +39083,8 @@ var wp;
         },
         onMouseLeave: () => setHoveredTransformItemName(null),
         onMouseEnter: () => setHoveredTransformItemName(name),
+        onFocus: () => setHoveredTransformItemName(name),
+        onBlur: () => setHoveredTransformItemName(null),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(block_icon_default, { icon, showColors: true }),
           title
@@ -39214,6 +39216,8 @@ var wp;
         disabled: isDisabled,
         onMouseLeave: () => setHoveredTransformItemName(null),
         onMouseEnter: () => setHoveredTransformItemName(name),
+        onFocus: () => setHoveredTransformItemName(name),
+        onBlur: () => setHoveredTransformItemName(null),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(block_icon_default, { icon, showColors: true }),
           title
@@ -39249,6 +39253,8 @@ var wp;
         {
           icon: activeStyle.name === style.name ? check_default : null,
           onClick: () => onSelect(style),
+          onFocus: () => onHoverStyle(style),
+          onBlur: () => onHoverStyle(null),
           onMouseEnter: () => onHoverStyle(style),
           onMouseLeave: () => onHoverStyle(null),
           children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
