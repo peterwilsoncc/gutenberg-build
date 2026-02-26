@@ -58,14 +58,14 @@ return array(
 		'dependencies' => array('wp-block-editor', 'wp-components', 'wp-editor'),
 	),
 	array(
-		'handle' => 'wp-media-utils',
-		'path' => 'media-utils/style',
-		'dependencies' => array('wp-components'),
-	),
-	array(
 		'handle' => 'wp-block-editor',
 		'path' => 'block-editor/style',
 		'dependencies' => array('wp-commands', 'wp-components', 'wp-preferences'),
+	),
+	array(
+		'handle' => 'wp-media-utils',
+		'path' => 'media-utils/style',
+		'dependencies' => array('wp-components'),
 	),
 	array(
 		'handle' => 'wp-customize-widgets',
