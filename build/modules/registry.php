@@ -13,11 +13,6 @@ return array(
 		'asset' => 'interactivity/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/abilities',
-		'path' => 'abilities/index',
-		'asset' => 'abilities/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/vips/worker',
 		'path' => 'vips/worker',
 		'asset' => 'vips/worker.min.asset.php',
@@ -58,14 +53,19 @@ return array(
 		'asset' => 'core-abilities/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/route',
-		'path' => 'route/index',
-		'asset' => 'route/index.min.asset.php',
+		'id' => '@wordpress/abilities',
+		'path' => 'abilities/index',
+		'asset' => 'abilities/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/connectors',
 		'path' => 'connectors/index',
 		'asset' => 'connectors/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/route',
+		'path' => 'route/index',
+		'asset' => 'route/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/edit-site-init',
