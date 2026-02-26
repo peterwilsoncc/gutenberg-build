@@ -9464,8 +9464,12 @@ var wp;
     }
   }
   var isPolling = false;
+  var isUnloadPending = false;
   var pollInterval = POLLING_INTERVAL_IN_MS;
   var pageHideListenerRegistered = false;
+  function handleBeforeUnload() {
+    isUnloadPending = true;
+  }
   function handlePageHide() {
     const rooms = Array.from(roomStates.entries()).map(
       ([room, state]) => ({
@@ -9485,6 +9489,7 @@ var wp;
         isPolling = false;
         return;
       }
+      isUnloadPending = false;
       roomStates.forEach((state) => {
         state.onStatusChange({ status: "connecting" });
       });
@@ -9554,9 +9559,11 @@ var wp;
             }
           );
         }
-        roomStates.forEach((state) => {
-          state.onStatusChange({ status: "disconnected" });
-        });
+        if (!isUnloadPending) {
+          roomStates.forEach((state) => {
+            state.onStatusChange({ status: "disconnected" });
+          });
+        }
       }
       setTimeout(poll, pollInterval);
     }
@@ -9607,6 +9614,7 @@ var wp;
     awareness.on("change", onAwarenessUpdate);
     roomStates.set(room, roomState);
     if (!pageHideListenerRegistered) {
+      window.addEventListener("beforeunload", handleBeforeUnload);
       window.addEventListener("pagehide", handlePageHide);
       pageHideListenerRegistered = true;
     }
@@ -9631,6 +9639,7 @@ var wp;
       roomStates.delete(room);
     }
     if (roomStates.size === 0 && pageHideListenerRegistered) {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("pagehide", handlePageHide);
       pageHideListenerRegistered = false;
     }
