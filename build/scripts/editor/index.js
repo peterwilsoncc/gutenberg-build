@@ -37185,7 +37185,12 @@ var wp;
       if (!revisions) {
         return null;
       }
-      return revisions.find((r4) => r4.id === revisionId2) ?? null;
+      const entityConfig = select6(import_core_data51.store).getEntityConfig(
+        "postType",
+        postType2
+      );
+      const revKey = entityConfig?.revisionKey || "id";
+      return revisions.find((r4) => r4[revKey] === revisionId2) ?? null;
     }
   );
   function getSelectedNote(state) {
@@ -37213,8 +37218,13 @@ var wp;
       const sortedRevisions = [...revisions].sort(
         (a3, b3) => new Date(a3.date) - new Date(b3.date)
       );
+      const entityConfig = select6(import_core_data51.store).getEntityConfig(
+        "postType",
+        postType2
+      );
+      const revKey = entityConfig?.revisionKey || "id";
       const currentIndex = sortedRevisions.findIndex(
-        (r4) => r4.id === currentRevisionId
+        (r4) => r4[revKey] === currentRevisionId
       );
       if (currentIndex > 0) {
         return sortedRevisions[currentIndex - 1];
@@ -50147,15 +50157,16 @@ var wp;
   var import_date9 = __toESM(require_date(), 1);
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   function RevisionsSlider() {
-    const { revisions, isLoading, currentRevisionId } = (0, import_data193.useSelect)(
+    const { revisions, isLoading, currentRevisionId, revisionKey } = (0, import_data193.useSelect)(
       (select6) => {
         const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select6(store);
-        const { getRevisions, isResolving } = select6(import_core_data110.store);
+        const { getRevisions, isResolving, getEntityConfig } = select6(import_core_data110.store);
         const postId2 = getCurrentPostId2();
         const postType2 = getCurrentPostType2();
         if (!postId2 || !postType2) {
           return {};
         }
+        const entityConfig = getEntityConfig("postType", postType2);
         const query = { per_page: -1, context: "edit" };
         return {
           revisions: getRevisions("postType", postType2, postId2, query),
@@ -50167,7 +50178,8 @@ var wp;
           ]),
           currentRevisionId: unlock(
             select6(store)
-          ).getCurrentRevisionId()
+          ).getCurrentRevisionId(),
+          revisionKey: entityConfig?.revisionKey || "id"
         };
       },
       []
@@ -50177,12 +50189,12 @@ var wp;
       return revisions?.slice().sort((a3, b3) => new Date(a3.date) - new Date(b3.date)) ?? [];
     }, [revisions]);
     const selectedIndex = sortedRevisions.findIndex(
-      (r4) => r4.id === currentRevisionId
+      (r4) => r4[revisionKey] === currentRevisionId
     );
     const handleSliderChange = (index2) => {
       const revision = sortedRevisions[index2];
       if (revision) {
-        setCurrentRevisionId2(revision.id);
+        setCurrentRevisionId2(revision[revisionKey]);
       }
     };
     const dateSettings = (0, import_date9.getSettings)();
