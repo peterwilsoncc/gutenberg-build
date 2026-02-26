@@ -58,14 +58,14 @@ return array(
 		'asset' => 'core-abilities/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/route',
-		'path' => 'route/index',
-		'asset' => 'route/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/connectors',
 		'path' => 'connectors/index',
 		'asset' => 'connectors/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/route',
+		'path' => 'route/index',
+		'asset' => 'route/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/edit-site-init',
