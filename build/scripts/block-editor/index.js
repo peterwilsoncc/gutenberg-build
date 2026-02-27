@@ -59796,7 +59796,11 @@ var wp;
       [clientId]
     );
     const blockType = (0, import_blocks94.getBlockType)(blockName);
-    const blockTitle = blockType?.title || blockName;
+    const displayTitle = useBlockDisplayTitle({
+      clientId,
+      context: "list-view"
+    });
+    const blockTitle = displayTitle || blockType?.title || blockName;
     const { selectBlock: selectBlock2 } = (0, import_data166.useDispatch)(store);
     const hasChildren = childBlocks && childBlocks.length > 0;
     const canNavigateToListView = hasChildren && hasListViewTab && hasListViewSupport2;

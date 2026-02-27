@@ -41926,9 +41926,12 @@ ${js}
     /* translators: %s: The name of a menu. */
     (0, import_i18n140.__)("Switch to '%s'")
   );
-  var { PrivateListView, PrivateBlockContext, useListViewPanelState } = unlock(
-    import_block_editor158.privateApis
-  );
+  var {
+    PrivateListView,
+    PrivateBlockContext,
+    useListViewPanelState,
+    useBlockDisplayTitle: useBlockDisplayTitle2
+  } = unlock(import_block_editor158.privateApis);
   var MainContent = ({
     clientId,
     currentMenuId,
@@ -41990,6 +41993,10 @@ ${js}
       blockEditingMode
     } = props;
     const { isSelectionWithinCurrentSection } = (0, import_element79.useContext)(PrivateBlockContext);
+    const blockTitle = useBlockDisplayTitle2({
+      clientId,
+      context: "list-view"
+    });
     const showBlockTitle = isSelectionWithinCurrentSection;
     const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
     if (!showBlockTitle) {
@@ -42020,7 +42027,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_block_editor158.InspectorControls, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(
       import_components92.PanelBody,
       {
-        title: (0, import_i18n140.__)("Navigation"),
+        title: blockTitle,
         opened: isOpened,
         onToggle: handleToggle,
         children: [
