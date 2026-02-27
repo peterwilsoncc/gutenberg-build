@@ -36222,6 +36222,7 @@ var wp;
     clientIds,
     children,
     __experimentalSelectBlock,
+    isContentOnlyListView,
     ...props
   }) {
     const count = clientIds.length;
@@ -36233,7 +36234,10 @@ var wp;
       selectedBlockClientIds,
       isContentOnly,
       isZoomOut: isZoomOut2,
-      canEdit
+      canEdit,
+      canMove,
+      isFirst,
+      isLast
     } = (0, import_data102.useSelect)(
       (select3) => {
         const {
@@ -36244,7 +36248,10 @@ var wp;
           getBlockAttributes: getBlockAttributes3,
           getBlockEditingMode: getBlockEditingMode2,
           isZoomOut: _isZoomOut,
-          canEditBlock: canEditBlock2
+          canEditBlock: canEditBlock2,
+          canMoveBlocks: canMoveBlocks2,
+          getBlockIndex: getBlockIndex2,
+          getBlockCount: getBlockCount2
         } = unlock(select3(store));
         const { getActiveBlockVariation } = select3(import_blocks61.store);
         const _firstParentClientId = getBlockRootClientId2(firstBlockClientId);
@@ -36259,12 +36266,16 @@ var wp;
           selectedBlockClientIds: getSelectedBlockClientIds22(),
           isContentOnly: getBlockEditingMode2(firstBlockClientId) === "contentOnly",
           isZoomOut: _isZoomOut(),
-          canEdit: canEditBlock2(firstBlockClientId)
+          canEdit: canEditBlock2(firstBlockClientId),
+          canMove: canMoveBlocks2(clientIds),
+          isFirst: getBlockIndex2(firstBlockClientId) === 0,
+          isLast: getBlockIndex2(firstBlockClientId) === getBlockCount2(_firstParentClientId) - 1
         };
       },
-      [firstBlockClientId]
+      [firstBlockClientId, clientIds]
     );
     const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data102.useSelect)(store);
+    const { moveBlocksDown: moveBlocksDown2, moveBlocksUp: moveBlocksUp2 } = (0, import_data102.useDispatch)(store);
     const shortcuts = (0, import_data102.useSelect)((select3) => {
       const { getShortcutRepresentation } = select3(import_keyboard_shortcuts7.store);
       return {
@@ -36350,6 +36361,38 @@ var wp;
                       parentBlockType
                     }
                   ),
+                  canMove && isContentOnlyListView && /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(import_jsx_runtime236.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+                      import_components97.MenuItem,
+                      {
+                        icon: chevron_up_default,
+                        disabled: isFirst,
+                        accessibleWhenDisabled: true,
+                        onClick: (0, import_compose64.pipe)(onClose, () => {
+                          moveBlocksUp2(
+                            clientIds,
+                            firstParentClientId
+                          );
+                        }),
+                        children: (0, import_i18n85.__)("Move up")
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+                      import_components97.MenuItem,
+                      {
+                        icon: chevron_down_default,
+                        disabled: isLast,
+                        accessibleWhenDisabled: true,
+                        onClick: (0, import_compose64.pipe)(onClose, () => {
+                          moveBlocksDown2(
+                            clientIds,
+                            firstParentClientId
+                          );
+                        }),
+                        children: (0, import_i18n85.__)("Move down")
+                      }
+                    )
+                  ] }),
                   canEdit && count === 1 && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
                     block_html_convert_button_default,
                     {
@@ -42139,7 +42182,8 @@ var wp;
                   expand,
                   expandedState,
                   setInsertedBlock,
-                  __experimentalSelectBlock: updateFocusAndSelection
+                  __experimentalSelectBlock: updateFocusAndSelection,
+                  isContentOnlyListView: !!rootClientId && getBlockEditingMode2(rootClientId) === "contentOnly"
                 }
               )
             }

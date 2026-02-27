@@ -40443,18 +40443,44 @@ ${js}
   function LeafMoreMenu(props) {
     const { block } = props;
     const { clientId } = block;
-    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data76.useDispatch)(import_block_editor148.store);
+    const {
+      moveBlocksDown,
+      moveBlocksUp,
+      removeBlocks,
+      duplicateBlocks,
+      insertBeforeBlock,
+      insertAfterBlock
+    } = (0, import_data76.useDispatch)(import_block_editor148.store);
     const removeLabel = (0, import_i18n131.sprintf)(
       /* translators: %s: block name */
       (0, import_i18n131.__)("Remove %s"),
       (0, import_block_editor148.BlockTitle)({ clientId, maximumLength: 25 })
     );
-    const rootClientId = (0, import_data76.useSelect)(
+    const { rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, import_data76.useSelect)(
       (select9) => {
-        const { getBlockRootClientId } = select9(import_block_editor148.store);
-        return getBlockRootClientId(clientId);
+        const {
+          getBlockRootClientId,
+          canInsertBlockType,
+          getDirectInsertBlock,
+          getBlockIndex,
+          getBlockCount
+        } = select9(import_block_editor148.store);
+        const { getDefaultBlockName: getDefaultBlockName16 } = select9(import_blocks61.store);
+        const _rootClientId = getBlockRootClientId(clientId);
+        const canInsertDefaultBlock = canInsertBlockType(
+          getDefaultBlockName16(),
+          _rootClientId
+        );
+        const directInsertBlock = _rootClientId ? getDirectInsertBlock(_rootClientId) : null;
+        return {
+          rootClientId: _rootClientId,
+          canDuplicate: !!block && (0, import_blocks61.hasBlockSupport)(block.name, "multiple", true) && canInsertBlockType(block.name, _rootClientId),
+          canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && !!block && canInsertBlockType(block.name, _rootClientId),
+          isFirst: getBlockIndex(clientId) === 0,
+          isLast: getBlockIndex(clientId) === getBlockCount(_rootClientId) - 1
+        };
       },
-      [clientId]
+      [clientId, block]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
       import_components86.DropdownMenu,
@@ -40471,6 +40497,8 @@ ${js}
               import_components86.MenuItem,
               {
                 icon: chevron_up_default,
+                disabled: isFirst,
+                accessibleWhenDisabled: true,
                 onClick: () => {
                   moveBlocksUp([clientId], rootClientId);
                   onClose();
@@ -40482,6 +40510,8 @@ ${js}
               import_components86.MenuItem,
               {
                 icon: chevron_down_default,
+                disabled: isLast,
+                accessibleWhenDisabled: true,
                 onClick: () => {
                   moveBlocksDown([clientId], rootClientId);
                   onClose();
@@ -40498,7 +40528,39 @@ ${js}
                 expand: props.expand,
                 setInsertedBlock: props.setInsertedBlock
               }
-            )
+            ),
+            canDuplicate && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+              import_components86.MenuItem,
+              {
+                onClick: () => {
+                  duplicateBlocks([clientId]);
+                  onClose();
+                },
+                children: (0, import_i18n131.__)("Duplicate")
+              }
+            ),
+            canInsertBlock && /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+                import_components86.MenuItem,
+                {
+                  onClick: () => {
+                    insertBeforeBlock(clientId);
+                    onClose();
+                  },
+                  children: (0, import_i18n131.__)("Add before")
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+                import_components86.MenuItem,
+                {
+                  onClick: () => {
+                    insertAfterBlock(clientId);
+                    onClose();
+                  },
+                  children: (0, import_i18n131.__)("Add after")
+                }
+              )
+            ] })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components86.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
             import_components86.MenuItem,
