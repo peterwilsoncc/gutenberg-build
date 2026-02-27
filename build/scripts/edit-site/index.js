@@ -25625,6 +25625,15 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/table/index.mjs
   var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
+  function getEffectiveAlign(explicitAlign, fieldType) {
+    if (explicitAlign) {
+      return explicitAlign;
+    }
+    if (fieldType === "integer" || fieldType === "number") {
+      return "end";
+    }
+    return void 0;
+  }
   function TableColumnField({
     item,
     fields,
@@ -25730,6 +25739,8 @@ var wp;
           ) }),
           columns.map((column) => {
             const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+            const field = fields.find((f2) => f2.id === column);
+            const effectiveAlign = getEffectiveAlign(align, field?.type);
             return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
               "td",
               {
@@ -25744,7 +25755,7 @@ var wp;
                     fields,
                     item,
                     column,
-                    align
+                    align: effectiveAlign
                   }
                 )
               },
@@ -25954,6 +25965,13 @@ var wp;
               ) }),
               columns.map((column, index) => {
                 const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+                const field = fields.find(
+                  (f2) => f2.id === column
+                );
+                const effectiveAlign = getEffectiveAlign(
+                  align,
+                  field?.type
+                );
                 const canInsertOrMove = view.layout?.enableMoving ?? true;
                 return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
                   "th",
@@ -25962,7 +25980,7 @@ var wp;
                       width,
                       maxWidth,
                       minWidth,
-                      textAlign: align
+                      textAlign: effectiveAlign
                     },
                     "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
                     scope: "col",
@@ -46094,7 +46112,15 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/post-list/view-utils.mjs
   var import_i18n154 = __toESM(require_i18n(), 1);
   var defaultLayouts3 = {
-    table: {},
+    table: {
+      layout: {
+        styles: {
+          author: {
+            align: "start"
+          }
+        }
+      }
+    },
     grid: {},
     list: {}
   };
@@ -46229,11 +46255,15 @@ If there's a particular need for this, please submit a feature request at https:
     trash: "trash"
   };
   function getActiveViewOverridesForTab2(activeView) {
+    const base = {
+      ...defaultLayouts3.table
+    };
     const status = SLUG_TO_STATUS[activeView];
     if (!status) {
-      return {};
+      return base;
     }
     return {
+      ...base,
       filters: [
         {
           field: "status",
