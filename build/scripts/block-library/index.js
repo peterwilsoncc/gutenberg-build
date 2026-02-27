@@ -41243,7 +41243,7 @@ ${js}
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
-  function computeDisplayUrl({ linkUrl, siteUrl } = {}) {
+  function computeDisplayUrl({ linkUrl, homeUrl } = {}) {
     if (!linkUrl) {
       return { displayUrl: "", isExternal: false };
     }
@@ -41254,7 +41254,7 @@ ${js}
     }
     try {
       const parsedUrl = new URL(linkUrl);
-      const siteDomain = siteUrl || window.location.origin;
+      const siteDomain = homeUrl ? new URL(homeUrl).origin : window.location.origin;
       if (parsedUrl.origin === siteDomain) {
         let path = parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
         if (path.endsWith("/") && path.length > 1) {
@@ -41332,18 +41332,17 @@ ${js}
     hasBinding,
     isEntityAvailable
   }) {
-    const siteUrl = (0, import_data80.useSelect)((select9) => {
-      const siteEntity = select9(import_core_data44.store).getEntityRecord(
+    const homeUrl = (0, import_data80.useSelect)((select9) => {
+      return select9(import_core_data44.store).getEntityRecord(
         "root",
-        "site"
-      );
-      return siteEntity?.url;
+        "__unstableBase"
+      )?.home;
     }, []);
     const title = entityRecord?.title?.rendered || entityRecord?.title || entityRecord?.name;
     const { richData } = useRemoteUrlData(title ? null : url);
     const { displayUrl, isExternal } = computeDisplayUrl({
       linkUrl: url,
-      siteUrl
+      homeUrl
     });
     const image = (0, import_data80.useSelect)(
       (select9) => {
