@@ -26903,6 +26903,7 @@ var wp;
       [generateCompositeItemIdPrefix]
     );
     const [activeCompositeId, setActiveCompositeId] = (0, import_element79.useState)(void 0);
+    const compositeRef = (0, import_element79.useRef)(null);
     (0, import_element79.useEffect)(() => {
       if (selectedItem) {
         setActiveCompositeId(
@@ -26931,7 +26932,11 @@ var wp;
         );
         const targetCompositeItemId = generateCompositeId(itemIdPrefix);
         setActiveCompositeId(targetCompositeItemId);
-        document.getElementById(targetCompositeItemId)?.focus();
+        if (compositeRef.current?.contains(
+          compositeRef.current.ownerDocument.activeElement
+        )) {
+          document.getElementById(targetCompositeItemId)?.focus();
+        }
       },
       [data, generateCompositeItemIdPrefix]
     );
@@ -26982,6 +26987,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
         import_components101.Composite,
         {
+          ref: compositeRef,
           id: `${baseId}`,
           render: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", {}),
           className: "dataviews-view-list__group",
@@ -27041,6 +27047,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
         import_components101.Composite,
         {
+          ref: compositeRef,
           id: baseId,
           render: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", {}),
           className: clsx_default("dataviews-view-list", className, {
