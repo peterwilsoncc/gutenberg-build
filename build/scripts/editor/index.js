@@ -63502,6 +63502,9 @@ var wp;
           { top: y3, opacity: !y3 ? 0 : void 0 }
         ) : void 0,
         onBlur: (event) => {
+          if (!document.hasFocus()) {
+            return;
+          }
           if (event.currentTarget.contains(event.relatedTarget)) {
             return;
           }
@@ -63856,6 +63859,9 @@ var wp;
       toggleBlockHighlight(thread.blockClientId, true);
     };
     const onBlur = (event) => {
+      if (!document.hasFocus()) {
+        return;
+      }
       const isNoteFocused2 = event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__thread"
       );
