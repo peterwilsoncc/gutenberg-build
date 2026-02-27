@@ -9357,6 +9357,7 @@ var wp;
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
   var POLLING_INTERVAL_IN_MS = 1e3;
   var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = 250;
+  var POLLING_INTERVAL_BACKGROUND_TAB_IN_MS = 30 * 1e3;
   var MAX_ERROR_BACKOFF_IN_MS = 30 * 1e3;
   var POLLING_MANAGER_ORIGIN = "polling-manager";
   var roomStates = /* @__PURE__ */ new Map();
@@ -9463,10 +9464,13 @@ var wp;
       }
     }
   }
+  var areListenersRegistered = false;
+  var hasCollaborators = false;
+  var isActiveBrowser = "visible" === document.visibilityState;
   var isPolling = false;
   var isUnloadPending = false;
   var pollInterval = POLLING_INTERVAL_IN_MS;
-  var pageHideListenerRegistered = false;
+  var pollingTimeoutId = null;
   function handleBeforeUnload() {
     isUnloadPending = true;
   }
@@ -9481,6 +9485,19 @@ var wp;
       })
     );
     postSyncUpdateNonBlocking({ rooms });
+  }
+  function handleVisibilityChange() {
+    const wasActive = isActiveBrowser;
+    isActiveBrowser = document.visibilityState === "visible";
+    if (isActiveBrowser && !wasActive) {
+      if (pollingTimeoutId) {
+        clearTimeout(pollingTimeoutId);
+        pollingTimeoutId = null;
+      }
+      if (isPolling) {
+        poll();
+      }
+    }
   }
   function poll() {
     isPolling = true;
@@ -9506,7 +9523,6 @@ var wp;
       };
       try {
         const { rooms } = await postSyncUpdate(payload);
-        pollInterval = POLLING_INTERVAL_IN_MS;
         roomStates.forEach((state) => {
           state.onStatusChange({ status: "connected" });
         });
@@ -9518,7 +9534,7 @@ var wp;
           roomState.endCursor = room.end_cursor;
           roomState.processAwarenessUpdate(room.awareness);
           if (Object.keys(room.awareness).length > 1) {
-            pollInterval = POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS;
+            hasCollaborators = true;
             roomState.updateQueue.resume();
           }
           const responseUpdates = room.updates.map((update) => roomState.processDocUpdate(update)).filter(
@@ -9540,6 +9556,13 @@ var wp;
             );
           }
         });
+        if (isActiveBrowser && hasCollaborators) {
+          pollInterval = POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS;
+        } else if (isActiveBrowser) {
+          pollInterval = POLLING_INTERVAL_IN_MS;
+        } else {
+          pollInterval = POLLING_INTERVAL_BACKGROUND_TAB_IN_MS;
+        }
       } catch (error) {
         pollInterval = Math.min(
           pollInterval * 2,
@@ -9565,7 +9588,7 @@ var wp;
           });
         }
       }
-      setTimeout(poll, pollInterval);
+      pollingTimeoutId = setTimeout(poll, pollInterval);
     }
     void start();
   }
@@ -9613,10 +9636,11 @@ var wp;
     doc2.on("update", onDocUpdate);
     awareness.on("change", onAwarenessUpdate);
     roomStates.set(room, roomState);
-    if (!pageHideListenerRegistered) {
+    if (!areListenersRegistered) {
       window.addEventListener("beforeunload", handleBeforeUnload);
       window.addEventListener("pagehide", handlePageHide);
-      pageHideListenerRegistered = true;
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+      areListenersRegistered = true;
     }
     if (!isPolling) {
       poll();
@@ -9638,10 +9662,14 @@ var wp;
       state.unregister();
       roomStates.delete(room);
     }
-    if (roomStates.size === 0 && pageHideListenerRegistered) {
+    if (0 === roomStates.size && areListenersRegistered) {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("pagehide", handlePageHide);
-      pageHideListenerRegistered = false;
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange
+      );
+      areListenersRegistered = false;
     }
   }
   var pollingManager = {
