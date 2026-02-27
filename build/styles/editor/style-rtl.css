@@ -3173,6 +3173,7 @@ div.dataviews-view-list {
 
 .dataviews-view-table tbody .dataviews-view-table__cell-content-wrapper.dataviews-view-table__cell-align-end {
   justify-content: flex-end;
+  font-variant-numeric: tabular-nums;
 }
 
 .dataviews-view-table tbody .dataviews-view-table__cell-content-wrapper.dataviews-view-table__cell-align-center {
