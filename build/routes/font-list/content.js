@@ -7176,8 +7176,8 @@ var unbrotli_default = (function() {
                           ringbuffer,
                           ringbuffer_size
                         );
-                        for (var _x9 = 0; _x9 < copy_dst - ringbuffer_end; _x9++)
-                          ringbuffer[_x9] = ringbuffer[ringbuffer_end + _x9];
+                        for (var _x10 = 0; _x10 < copy_dst - ringbuffer_end; _x10++)
+                          ringbuffer[_x10] = ringbuffer[ringbuffer_end + _x10];
                       }
                     } else {
                       throw new Error(
@@ -15030,13 +15030,13 @@ function FontLibraryPage() {
   const tabs = [
     {
       id: "installed-fonts",
-      title: (0, import_i18n46.__)("Library")
+      title: (0, import_i18n46._x)("Library", "Font library")
     }
   ];
   if (canUserCreate) {
     tabs.push({
       id: "upload-fonts",
-      title: (0, import_i18n46.__)("Upload")
+      title: (0, import_i18n46._x)("Upload", "noun")
     });
     tabs.push(
       ...(collections || []).map(({ slug, name: name2 }) => ({
