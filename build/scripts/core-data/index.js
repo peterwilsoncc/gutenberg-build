@@ -5947,18 +5947,17 @@ var wp;
     const permissions = getUserPermissionsFromAllowHeader(
       response.headers?.get("allow")
     );
-    registry.batch(() => {
-      for (const action of ALLOWED_RESOURCE_ACTIONS) {
-        const key = getUserPermissionCacheKey(action, resource, id);
-        dispatch3.receiveUserPermission(key, permissions[action]);
-        if (action !== requestedAction) {
-          dispatch3.finishResolution("canUser", [
-            action,
-            resource,
-            id
-          ]);
-        }
+    const receiveUserPermissionArgs = {};
+    const canUserResolutionsArgs = [];
+    for (const action of ALLOWED_RESOURCE_ACTIONS) {
+      receiveUserPermissionArgs[getUserPermissionCacheKey(action, resource, id)] = permissions[action];
+      if (action !== requestedAction) {
+        canUserResolutionsArgs.push([action, resource, id]);
       }
+    }
+    registry.batch(() => {
+      dispatch3.receiveUserPermissions(receiveUserPermissionArgs);
+      dispatch3.finishResolutions("canUser", canUserResolutionsArgs);
     });
   };
   var canUserEditEntityRecord2 = (kind, name, recordId) => async ({ dispatch: dispatch3 }) => {
