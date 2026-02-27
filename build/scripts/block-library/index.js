@@ -41254,8 +41254,8 @@ ${js}
     }
     try {
       const parsedUrl = new URL(linkUrl);
-      const siteDomain = homeUrl ? new URL(homeUrl).origin : window.location.origin;
-      if (parsedUrl.origin === siteDomain) {
+      const siteHost = new URL(homeUrl).host;
+      if (parsedUrl.host === siteHost) {
         let path = parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
         if (path.endsWith("/") && path.length > 1) {
           path = path.slice(0, -1);
