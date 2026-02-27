@@ -9486,6 +9486,17 @@ var wp;
     ];
     traverseBlockTree(state, treeClientId, (block) => {
       const { clientId, name: blockName } = block;
+      const hasEditedContentOnlySection = !!state.editedContentOnlySection;
+      let isWithinEditedContentOnlySection2 = false;
+      if (hasEditedContentOnlySection) {
+        isWithinEditedContentOnlySection2 = clientId === state.editedContentOnlySection || !!findParentInClientIdsList(state, clientId, [
+          state.editedContentOnlySection
+        ]);
+        if (!isWithinEditedContentOnlySection2) {
+          derivedBlockEditingModes.set(clientId, "disabled");
+          return;
+        }
+      }
       if (state.blockEditingModes.has(clientId)) {
         return;
       }
@@ -9556,21 +9567,8 @@ var wp;
           return;
         }
       }
-      if (state.editedContentOnlySection) {
-        if (state.editedContentOnlySection === clientId) {
-          derivedBlockEditingModes.set(clientId, "default");
-          return;
-        }
-        const parentTempEditedClientId = findParentInClientIdsList(
-          state,
-          clientId,
-          [state.editedContentOnlySection]
-        );
-        if (parentTempEditedClientId) {
-          derivedBlockEditingModes.set(clientId, "default");
-          return;
-        }
-        derivedBlockEditingModes.set(clientId, "disabled");
+      if (hasEditedContentOnlySection && isWithinEditedContentOnlySection2) {
+        derivedBlockEditingModes.set(clientId, "default");
         return;
       }
       if (contentOnlyParents.length) {
