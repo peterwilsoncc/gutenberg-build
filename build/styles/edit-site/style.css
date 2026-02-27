@@ -2633,6 +2633,7 @@ div.dataviews-view-list {
   line-height: 20px;
   hyphens: auto;
   color: #757575;
+  text-transform: capitalize;
 }
 
 .dataforms-layouts-panel__field-label .components-base-control__label {
