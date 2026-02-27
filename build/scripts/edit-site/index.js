@@ -41397,11 +41397,26 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/filter-utils.mjs
+  var SCALAR_VALUES = [
+    "titleField",
+    "mediaField",
+    "descriptionField",
+    "showTitle",
+    "showMedia",
+    "showDescription",
+    "showLevels",
+    "infiniteScrollEnabled"
+  ];
   function mergeActiveViewOverrides(view, activeViewOverrides, defaultView) {
     if (!activeViewOverrides) {
       return view;
     }
     let result = view;
+    for (const key of SCALAR_VALUES) {
+      if (key in activeViewOverrides) {
+        result = { ...result, [key]: activeViewOverrides[key] };
+      }
+    }
     if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
       const activeFields = new Set(
         activeViewOverrides.filters.map((f2) => f2.field)
@@ -41423,6 +41438,21 @@ If there's a particular need for this, please submit a feature request at https:
         };
       }
     }
+    if (activeViewOverrides.layout) {
+      result = {
+        ...result,
+        layout: {
+          ...result.layout,
+          ...activeViewOverrides.layout
+        }
+      };
+    }
+    if (activeViewOverrides.groupBy) {
+      result = {
+        ...result,
+        groupBy: activeViewOverrides.groupBy
+      };
+    }
     return result;
   }
   function stripActiveViewOverrides(view, activeViewOverrides, defaultView) {
@@ -41430,6 +41460,12 @@ If there's a particular need for this, please submit a feature request at https:
       return view;
     }
     let result = view;
+    for (const key of SCALAR_VALUES) {
+      if (key in activeViewOverrides) {
+        const { [key]: _, ...rest } = result;
+        result = rest;
+      }
+    }
     if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
       const activeFields = new Set(
         activeViewOverrides.filters.map((f2) => f2.field)
@@ -41446,6 +41482,20 @@ If there's a particular need for this, please submit a feature request at https:
         ...result,
         sort: defaultView?.sort
       };
+    }
+    if (activeViewOverrides.layout && "layout" in result && result.layout) {
+      const layout = { ...result.layout };
+      for (const key of Object.keys(activeViewOverrides.layout)) {
+        delete layout[key];
+      }
+      result = {
+        ...result,
+        layout: Object.keys(layout).length > 0 ? layout : void 0
+      };
+    }
+    if (activeViewOverrides.groupBy && "groupBy" in result) {
+      const { groupBy: _, ...rest } = result;
+      result = rest;
     }
     return result;
   }
