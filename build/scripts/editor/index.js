@@ -14617,6 +14617,53 @@ var wp;
     }
     return featureDeclarations;
   };
+  var updateButtonWidthDeclarations = (featureDeclarations, settings) => {
+    const buttonSelector = ".wp-block-button";
+    if (!(buttonSelector in featureDeclarations)) {
+      return featureDeclarations;
+    }
+    const updated = { ...featureDeclarations };
+    updated[buttonSelector] = updated[buttonSelector].map(
+      (declaration) => {
+        const match3 = declaration.match(/^width:\s*(.+)$/);
+        if (!match3) {
+          return declaration;
+        }
+        const value = match3[1];
+        let percentage = null;
+        if (value.endsWith("%")) {
+          percentage = parseFloat(value);
+        }
+        const presetPrefix = "var(--wp--preset--dimension--";
+        if (percentage === null && value.startsWith(presetPrefix) && value.endsWith(")")) {
+          const slug = value.slice(presetPrefix.length, -1);
+          const dimensionSizes = {
+            ...settings?.dimensions?.dimensionSizes ?? {},
+            ...settings?.blocks?.["core/button"]?.dimensions?.dimensionSizes ?? {}
+          };
+          for (const origin of Object.values(dimensionSizes)) {
+            if (!Array.isArray(origin)) {
+              continue;
+            }
+            for (const preset of origin) {
+              if (preset.slug === slug && typeof preset.size === "string" && preset.size.endsWith("%")) {
+                percentage = parseFloat(preset.size);
+                break;
+              }
+            }
+            if (percentage !== null) {
+              break;
+            }
+          }
+        }
+        if (percentage === null || isNaN(percentage)) {
+          return declaration;
+        }
+        return `width: calc(${percentage} * 1% - (var(--wp--style--block-gap, 0.5em) * (1 - ${percentage} / 100)))`;
+      }
+    );
+    return updated;
+  };
   var getFeatureDeclarations = (selectors, styles) => {
     const declarations = {};
     Object.entries(selectors).forEach(([feature, selector]) => {
@@ -15178,6 +15225,10 @@ var wp;
               tree.settings,
               name2
             );
+            featureDeclarations = updateButtonWidthDeclarations(
+              featureDeclarations,
+              tree.settings
+            );
             Object.entries(featureDeclarations).forEach(
               ([cssSelector, declarations]) => {
                 if (declarations.length) {
@@ -15242,6 +15293,10 @@ var wp;
                       featureDeclarations,
                       tree.settings,
                       name2
+                    );
+                    featureDeclarations = updateButtonWidthDeclarations(
+                      featureDeclarations,
+                      tree.settings
                     );
                     Object.entries(
                       featureDeclarations

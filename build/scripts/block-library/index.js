@@ -7898,6 +7898,22 @@ var wp;
 
   // packages/block-library/build-module/button/deprecated.mjs
   var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
+  var migrateWidth = (attributes2) => {
+    const { width, ...otherAttributes } = attributes2;
+    if (!width) {
+      return otherAttributes;
+    }
+    return {
+      ...otherAttributes,
+      style: {
+        ...otherAttributes.style,
+        dimensions: {
+          ...otherAttributes.style?.dimensions,
+          width: `${width}%`
+        }
+      }
+    };
+  };
   var migrateBorderRadius = (attributes2) => {
     const { borderRadius, ...newAttributes } = attributes2;
     const oldBorderRadius = [
@@ -7984,6 +8000,205 @@ var wp;
       source: "html",
       selector: "a"
     }
+  };
+  var v14 = {
+    attributes: {
+      tagName: {
+        type: "string",
+        enum: ["a", "button"],
+        default: "a"
+      },
+      type: {
+        type: "string",
+        default: "button"
+      },
+      url: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "href",
+        role: "content"
+      },
+      title: {
+        type: "string",
+        source: "attribute",
+        selector: "a,button",
+        attribute: "title",
+        role: "content"
+      },
+      text: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "a,button",
+        role: "content"
+      },
+      linkTarget: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "target",
+        role: "content"
+      },
+      rel: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "rel",
+        role: "content"
+      },
+      placeholder: {
+        type: "string"
+      },
+      backgroundColor: {
+        type: "string"
+      },
+      textColor: {
+        type: "string"
+      },
+      gradient: {
+        type: "string"
+      },
+      width: {
+        type: "number"
+      }
+    },
+    supports: {
+      anchor: true,
+      splitting: true,
+      align: false,
+      alignWide: false,
+      color: {
+        __experimentalSkipSerialization: true,
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      typography: {
+        __experimentalSkipSerialization: [
+          "fontSize",
+          "lineHeight",
+          "textAlign",
+          "fontFamily",
+          "fontWeight",
+          "fontStyle",
+          "textTransform",
+          "textDecoration",
+          "letterSpacing"
+        ],
+        fontSize: true,
+        lineHeight: true,
+        textAlign: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalWritingMode: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      reusable: false,
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
+      spacing: {
+        __experimentalSkipSerialization: true,
+        padding: ["horizontal", "vertical"],
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    selectors: {
+      root: ".wp-block-button .wp-block-button__link",
+      typography: {
+        writingMode: ".wp-block-button"
+      }
+    },
+    save({ attributes: attributes2, className }) {
+      const {
+        tagName,
+        type,
+        fontSize,
+        linkTarget,
+        rel,
+        style: style2,
+        text,
+        title,
+        url,
+        width
+      } = attributes2;
+      const TagName2 = tagName || "a";
+      const isButtonTag = "button" === TagName2;
+      const buttonType = type || "button";
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
+      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes2);
+      const buttonClasses = clsx_default(
+        "wp-block-button__link",
+        colorProps.className,
+        borderProps.className,
+        typographyProps.className,
+        {
+          // For backwards compatibility add style that isn't
+          // provided via block support.
+          "no-border-radius": style2?.border?.radius === 0,
+          [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
+        },
+        (0, import_block_editor19.__experimentalGetElementClassName)("button")
+      );
+      const buttonStyle = {
+        ...borderProps.style,
+        ...colorProps.style,
+        ...spacingProps.style,
+        ...shadowProps.style,
+        ...typographyProps.style,
+        writingMode: void 0
+      };
+      const wrapperClasses = clsx_default(className, {
+        [`has-custom-width wp-block-button__width-${width}`]: width
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime175.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
+        import_block_editor19.RichText.Content,
+        {
+          tagName: TagName2,
+          type: isButtonTag ? buttonType : null,
+          className: buttonClasses,
+          href: isButtonTag ? null : url,
+          title,
+          style: buttonStyle,
+          value: text,
+          target: isButtonTag ? null : linkTarget,
+          rel: isButtonTag ? null : rel
+        }
+      ) });
+    },
+    isEligible(attributes2) {
+      return typeof attributes2.width === "number";
+    },
+    migrate: migrateWidth
   };
   var v13 = {
     attributes: {
@@ -8182,9 +8397,9 @@ var wp;
       ) });
     },
     isEligible(attributes2) {
-      return !!attributes2.textAlign;
+      return !!attributes2.textAlign || typeof attributes2.width === "number";
     },
-    migrate: migrate_text_align_default
+    migrate: (0, import_compose6.compose)(migrateWidth, migrate_text_align_default)
   };
   var v12 = {
     attributes: {
@@ -8361,7 +8576,11 @@ var wp;
           rel: isButtonTag ? null : rel
         }
       ) });
-    }
+    },
+    isEligible(attributes2) {
+      return typeof attributes2.width === "number";
+    },
+    migrate: migrateWidth
   };
   var v11 = {
     attributes: {
@@ -8602,12 +8821,13 @@ var wp;
         }
       ) });
     },
-    migrate: migrate_font_family_default,
-    isEligible({ style: style2 }) {
-      return style2?.typography?.fontFamily;
+    migrate: (0, import_compose6.compose)(migrateWidth, migrate_font_family_default),
+    isEligible({ style: style2, width }) {
+      return style2?.typography?.fontFamily || typeof width === "number";
     }
   };
   var deprecated = [
+    v14,
     v13,
     v12,
     v11,
@@ -8706,7 +8926,11 @@ var wp;
           }
         ) });
       },
-      migrate: (0, import_compose6.compose)(migrate_font_family_default, migrateBorderRadius)
+      migrate: (0, import_compose6.compose)(
+        migrateWidth,
+        migrate_font_family_default,
+        migrateBorderRadius
+      )
     },
     {
       supports: {
@@ -8786,7 +9010,11 @@ var wp;
           }
         ) });
       },
-      migrate: (0, import_compose6.compose)(migrate_font_family_default, migrateBorderRadius)
+      migrate: (0, import_compose6.compose)(
+        migrateWidth,
+        migrate_font_family_default,
+        migrateBorderRadius
+      )
     },
     {
       supports: {
@@ -8866,7 +9094,11 @@ var wp;
           }
         ) });
       },
-      migrate: (0, import_compose6.compose)(migrate_font_family_default, migrateBorderRadius)
+      migrate: (0, import_compose6.compose)(
+        migrateWidth,
+        migrate_font_family_default,
+        migrateBorderRadius
+      )
     },
     {
       supports: {
@@ -8929,7 +9161,7 @@ var wp;
           }
         );
       },
-      migrate: migrateBorderRadius
+      migrate: (0, import_compose6.compose)(migrateWidth, migrateBorderRadius)
     },
     {
       supports: {
@@ -8977,6 +9209,7 @@ var wp;
       },
       isEligible: (attributes2) => !!attributes2.customTextColor || !!attributes2.customBackgroundColor || !!attributes2.customGradient || !!attributes2.align,
       migrate: (0, import_compose6.compose)(
+        migrateWidth,
         migrateBorderRadius,
         migrateCustomColorsAndGradients,
         migrateAlign
@@ -9141,7 +9374,7 @@ var wp;
           type: "string"
         }
       },
-      migrate: oldColorsMigration,
+      migrate: (0, import_compose6.compose)(migrateWidth, oldColorsMigration),
       save({ attributes: attributes2 }) {
         const {
           url,
@@ -9213,7 +9446,7 @@ var wp;
           }
         ) });
       },
-      migrate: oldColorsMigration
+      migrate: (0, import_compose6.compose)(migrateWidth, oldColorsMigration)
     },
     {
       attributes: {
@@ -9249,7 +9482,7 @@ var wp;
           }
         );
       },
-      migrate: oldColorsMigration
+      migrate: (0, import_compose6.compose)(migrateWidth, oldColorsMigration)
     }
   ];
   var deprecated_default3 = deprecated;
@@ -9340,6 +9573,35 @@ var wp;
     }, [textAlign, updateStyleWithAlign]);
   }
 
+  // packages/block-library/build-module/button/utils.mjs
+  function isPercentageWidth(width) {
+    return typeof width === "string" && width.endsWith("%");
+  }
+  function getWidthClasses(width) {
+    if (!width) {
+      return {};
+    }
+    if (isPercentageWidth(width)) {
+      const legacyWidthClasses = {
+        "25%": "wp-block-button__width-25",
+        "50%": "wp-block-button__width-50",
+        "75%": "wp-block-button__width-75",
+        "100%": "wp-block-button__width-100"
+      };
+      return {
+        "has-custom-width": true,
+        "wp-block-button__width": true,
+        // Maintain legacy class for backwards compatibility.
+        ...legacyWidthClasses[width] && {
+          [legacyWidthClasses[width]]: true
+        }
+      };
+    }
+    return {
+      "has-custom-width": true
+    };
+  }
+
   // packages/block-library/build-module/button/edit.mjs
   var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl } = unlock(import_block_editor21.privateApis);
@@ -9399,50 +9661,6 @@ var wp;
       };
     }, []);
   }
-  function WidthPanel({ selectedWidth, setAttributes }) {
-    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
-      import_components10.__experimentalToolsPanel,
-      {
-        label: (0, import_i18n13.__)("Settings"),
-        resetAll: () => setAttributes({ width: void 0 }),
-        dropdownMenuProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
-          import_components10.__experimentalToolsPanelItem,
-          {
-            label: (0, import_i18n13.__)("Width"),
-            isShownByDefault: true,
-            hasValue: () => !!selectedWidth,
-            onDeselect: () => setAttributes({ width: void 0 }),
-            children: /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
-              import_components10.__experimentalToggleGroupControl,
-              {
-                label: (0, import_i18n13.__)("Width"),
-                value: selectedWidth,
-                onChange: (newWidth) => setAttributes({ width: newWidth }),
-                isBlock: true,
-                __next40pxDefaultSize: true,
-                children: [25, 50, 75, 100].map((widthValue) => {
-                  return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
-                    import_components10.__experimentalToggleGroupControlOption,
-                    {
-                      value: widthValue,
-                      label: (0, import_i18n13.sprintf)(
-                        /* translators: %d: Percentage value. */
-                        (0, import_i18n13.__)("%d%%"),
-                        widthValue
-                      )
-                    },
-                    widthValue
-                  );
-                })
-              }
-            )
-          }
-        )
-      }
-    );
-  }
   function ButtonEdit(props) {
     const {
       attributes: attributes2,
@@ -9462,9 +9680,9 @@ var wp;
       style: style2,
       text,
       url,
-      width,
       metadata
     } = attributes2;
+    const width = style2?.dimensions?.width;
     useDeprecatedTextAlign(props);
     const TagName2 = tagName || "a";
     function onKeyDown(event) {
@@ -9480,6 +9698,7 @@ var wp;
     const colorProps = (0, import_block_editor21.__experimentalUseColorProps)(attributes2);
     const spacingProps = (0, import_block_editor21.__experimentalGetSpacingClassesAndStyles)(attributes2);
     const shadowProps = (0, import_block_editor21.__experimentalGetShadowClassesAndStyles)(attributes2);
+    const dimensionsProps = (0, import_block_editor21.__experimentalGetDimensionsClassesAndStyles)(attributes2);
     const ref = (0, import_element10.useRef)();
     const richTextRef = (0, import_element10.useRef)();
     const blockProps = (0, import_block_editor21.useBlockProps)({
@@ -9563,10 +9782,21 @@ var wp;
     );
     const useEnterRef = useEnter({ content: text, clientId });
     const mergedRef = (0, import_compose8.useMergeRefs)([useEnterRef, richTextRef]);
-    const [fluidTypographySettings, layout] = (0, import_block_editor21.useSettings)(
+    const [fluidTypographySettings, layout, dimensionSizes] = (0, import_block_editor21.useSettings)(
       "typography.fluid",
-      "layout"
+      "layout",
+      "dimensions.dimensionSizes"
     );
+    const dimensionPresets = (0, import_element10.useMemo)(() => {
+      if (!dimensionSizes) {
+        return [];
+      }
+      return [
+        ...dimensionSizes?.custom ?? [],
+        ...dimensionSizes?.theme ?? [],
+        ...dimensionSizes?.default ?? []
+      ];
+    }, [dimensionSizes]);
     const typographyProps = (0, import_block_editor21.getTypographyClassesAndStyles)(attributes2, {
       typography: {
         fluid: fluidTypographySettings
@@ -9575,16 +9805,42 @@ var wp;
         wideSize: layout?.wideSize
       }
     });
+    const resolvedWidth = (0, import_element10.useMemo)(() => {
+      if (!width) {
+        return void 0;
+      }
+      const presetPrefix = "var:preset|dimension|";
+      if (width.startsWith(presetPrefix)) {
+        const slug = width.slice(presetPrefix.length);
+        const preset = dimensionPresets?.find((p2) => p2.slug === slug);
+        return preset?.size ?? width;
+      }
+      return width;
+    }, [width, dimensionPresets]);
     const hasNonContentControls = blockEditingMode === "default";
     const hasBlockControls = hasNonContentControls || isLinkTag && !lockUrlControls;
+    const classes = clsx_default(
+      blockProps.className,
+      getWidthClasses(resolvedWidth)
+    );
+    const widthStyle = (0, import_element10.useMemo)(() => {
+      if (!width) {
+        return {};
+      }
+      if (isPercentageWidth(resolvedWidth)) {
+        return {
+          "--wp--block-button--width": parseFloat(resolvedWidth)
+        };
+      }
+      return dimensionsProps.style;
+    }, [width, resolvedWidth, dimensionsProps.style]);
     return /* @__PURE__ */ (0, import_jsx_runtime176.jsxs)(import_jsx_runtime176.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
         "div",
         {
           ...blockProps,
-          className: clsx_default(blockProps.className, {
-            [`has-custom-width wp-block-button__width-${width}`]: width
-          }),
+          className: classes,
+          style: { ...blockProps.style, ...widthStyle },
           children: /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
             import_block_editor21.RichText,
             {
@@ -9677,13 +9933,6 @@ var wp;
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(import_block_editor21.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
-        WidthPanel,
-        {
-          selectedWidth: width,
-          setAttributes
-        }
-      ) }),
       /* @__PURE__ */ (0, import_jsx_runtime176.jsxs)(import_block_editor21.InspectorControls, { group: "advanced", children: [
         /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
           HTMLElementControl,
@@ -9784,9 +10033,6 @@ var wp;
       },
       gradient: {
         type: "string"
-      },
-      width: {
-        type: "number"
       }
     },
     supports: {
@@ -9800,6 +10046,13 @@ var wp;
         __experimentalDefaultControls: {
           background: true,
           text: true
+        }
+      },
+      dimensions: {
+        width: true,
+        __experimentalSkipSerialization: ["width"],
+        __experimentalDefaultControls: {
+          width: true
         }
       },
       typography: {
@@ -9866,6 +10119,10 @@ var wp;
       root: ".wp-block-button .wp-block-button__link",
       typography: {
         writingMode: ".wp-block-button"
+      },
+      dimensions: {
+        root: ".wp-block-button",
+        width: ".wp-block-button"
       }
     }
   };
@@ -9873,7 +10130,7 @@ var wp;
   // packages/block-library/build-module/button/save.mjs
   var import_block_editor22 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
-  function save6({ attributes: attributes2, className }) {
+  function save6({ attributes: attributes2 }) {
     const {
       tagName,
       type,
@@ -9883,8 +10140,7 @@ var wp;
       style: style2,
       text,
       title,
-      url,
-      width
+      url
     } = attributes2;
     const TagName2 = tagName || "a";
     const isButtonTag = "button" === TagName2;
@@ -9915,10 +10171,7 @@ var wp;
       ...typographyProps.style,
       writingMode: void 0
     };
-    const wrapperClasses = clsx_default(className, {
-      [`has-custom-width wp-block-button__width-${width}`]: width
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("div", { ...import_block_editor22.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("div", { ...import_block_editor22.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
       import_block_editor22.RichText.Content,
       {
         tagName: TagName2,
@@ -12714,7 +12967,7 @@ var wp;
   // packages/block-library/build-module/comments/deprecated.mjs
   var import_block_editor39 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
-  var v14 = {
+  var v15 = {
     attributes: {
       tagName: {
         type: "string",
@@ -12749,7 +13002,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(Tag, { ...newBlockProps, children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(import_block_editor39.InnerBlocks.Content, {}) });
     }
   };
-  var deprecated_default7 = [v14];
+  var deprecated_default7 = [v15];
 
   // packages/block-library/build-module/comments/edit/index.mjs
   var import_block_editor44 = __toESM(require_block_editor(), 1);
@@ -13560,7 +13813,7 @@ var wp;
       );
     }
   };
-  var v15 = {
+  var v16 = {
     attributes: {
       isLink: {
         type: "boolean",
@@ -13595,7 +13848,7 @@ var wp;
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default8 = [v22, v15];
+  var deprecated_default8 = [v22, v16];
 
   // packages/block-library/build-module/comment-author-name/index.mjs
   var { name: name19 } = block_default20;
@@ -13700,7 +13953,7 @@ var wp;
   }
 
   // packages/block-library/build-module/comment-content/deprecated.mjs
-  var v16 = {
+  var v17 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -13744,7 +13997,7 @@ var wp;
       );
     }
   };
-  var deprecated_default9 = [v16];
+  var deprecated_default9 = [v17];
 
   // packages/block-library/build-module/comment-content/index.mjs
   var { name: name20 } = block_default21;
@@ -13924,7 +14177,7 @@ var wp;
   }
 
   // packages/block-library/build-module/comment-date/deprecated.mjs
-  var v17 = {
+  var v18 = {
     attributes: {
       format: {
         type: "string"
@@ -13958,7 +14211,7 @@ var wp;
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default10 = [v17];
+  var deprecated_default10 = [v18];
 
   // packages/block-library/build-module/comment-date/index.mjs
   var { name: name21 } = block_default22;
@@ -14099,7 +14352,7 @@ var wp;
   }
 
   // packages/block-library/build-module/comment-edit-link/deprecated.mjs
-  var v18 = {
+  var v19 = {
     attributes: {
       linkTarget: {
         type: "string",
@@ -14152,7 +14405,7 @@ var wp;
       );
     }
   };
-  var deprecated_default11 = [v18];
+  var deprecated_default11 = [v19];
 
   // packages/block-library/build-module/comment-edit-link/index.mjs
   var { name: name22 } = block_default23;
@@ -14247,7 +14500,7 @@ var wp;
   var edit_default6 = Edit11;
 
   // packages/block-library/build-module/comment-reply-link/deprecated.mjs
-  var v19 = {
+  var v110 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -14293,7 +14546,7 @@ var wp;
       );
     }
   };
-  var deprecated_default12 = [v19];
+  var deprecated_default12 = [v110];
 
   // packages/block-library/build-module/comment-reply-link/index.mjs
   var { name: name23 } = block_default24;
@@ -15542,7 +15795,7 @@ var wp;
     },
     save: () => null
   };
-  var v110 = {
+  var v111 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -15617,7 +15870,7 @@ var wp;
     isEligible: ({ multipleCommentsLabel, singleCommentLabel }) => multipleCommentsLabel || singleCommentLabel,
     save: () => null
   };
-  var deprecated_default13 = [v23, v110];
+  var deprecated_default13 = [v23, v111];
 
   // packages/block-library/build-module/comments-title/index.mjs
   var { name: name29 } = block_default30;
@@ -17404,7 +17657,7 @@ var wp;
       ];
     }
   };
-  var v111 = {
+  var v113 = {
     attributes: {
       ...blockAttributes2,
       title: {
@@ -17461,7 +17714,7 @@ var wp;
       ];
     }
   };
-  var deprecated_default14 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v24, v111];
+  var deprecated_default14 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v24, v113];
 
   // packages/block-library/build-module/cover/edit/index.mjs
   var import_core_data16 = __toESM(require_core_data(), 1);
@@ -19044,7 +19297,7 @@ var wp;
   );
 
   // packages/block-library/build-module/cover/edit/color-utils.mjs
-  var import_hooks20 = __toESM(require_hooks(), 1);
+  var import_hooks19 = __toESM(require_hooks(), 1);
   k([names_default]);
   var DEFAULT_BACKGROUND_COLOR = "#FFF";
   var DEFAULT_OVERLAY_COLOR = "#000";
@@ -19068,7 +19321,7 @@ var wp;
     }
     const { r: r3, g: g3, b: b2, a: a2 } = w(DEFAULT_BACKGROUND_COLOR).toRgb();
     try {
-      const imgCrossOrigin = (0, import_hooks20.applyFilters)(
+      const imgCrossOrigin = (0, import_hooks19.applyFilters)(
         "media.crossOrigin",
         void 0,
         url
@@ -21656,7 +21909,7 @@ ${url}
       ] });
     }
   };
-  var v113 = {
+  var v114 = {
     attributes: blockAttributes3,
     save({ attributes: { url, caption, type, providerNameSlug } }) {
       if (!url) {
@@ -21674,7 +21927,7 @@ ${url}
       ] });
     }
   };
-  var deprecated5 = [v25, v113];
+  var deprecated5 = [v25, v114];
   var deprecated_default15 = deprecated5;
 
   // packages/block-library/build-module/embed/index.mjs
@@ -21923,7 +22176,7 @@ ${url}
       ] });
     }
   };
-  var v114 = {
+  var v115 = {
     attributes: {
       id: {
         type: "number"
@@ -22020,7 +22273,7 @@ ${url}
       ] });
     }
   };
-  var deprecated6 = [v32, v26, v114];
+  var deprecated6 = [v32, v26, v115];
   var deprecated_default16 = deprecated6;
 
   // packages/block-library/build-module/file/edit.mjs
@@ -22873,7 +23126,7 @@ ${url}
     name: () => name34,
     settings: () => settings34
   });
-  var import_hooks26 = __toESM(require_hooks(), 1);
+  var import_hooks25 = __toESM(require_hooks(), 1);
 
   // packages/block-library/build-module/form/edit.mjs
   var import_i18n67 = __toESM(require_i18n(), 1);
@@ -23310,7 +23563,7 @@ ${url}
   // packages/block-library/build-module/form/deprecated.mjs
   var import_block_editor84 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
-  var v115 = {
+  var v116 = {
     // The block supports here are deliberately empty despite this
     // deprecated version of the block having adopted block supports.
     // The attributes added by these supports have been manually
@@ -23392,7 +23645,7 @@ ${url}
       );
     }
   };
-  var deprecated_default17 = [v115];
+  var deprecated_default17 = [v116];
 
   // packages/block-library/build-module/form/icons.mjs
   var import_primitives157 = __toESM(require_primitives(), 1);
@@ -23411,7 +23664,7 @@ ${url}
   };
   var init34 = () => {
     const DISALLOWED_PARENTS = ["core/form"];
-    (0, import_hooks26.addFilter)(
+    (0, import_hooks25.addFilter)(
       "blockEditor.__unstableCanInsertBlockType",
       "core/block-library/preventInsertingFormIntoAnotherForm",
       (canInsert, blockType, rootClientId, { getBlock, getBlockParentsByBlockName }) => {
@@ -23553,7 +23806,7 @@ ${url}
       ) });
     }
   };
-  var v116 = {
+  var v117 = {
     attributes: {
       type: {
         type: "string",
@@ -23656,7 +23909,7 @@ ${url}
       );
     }
   };
-  var deprecated7 = [v27, v116];
+  var deprecated7 = [v27, v117];
   var deprecated_default18 = deprecated7;
 
   // packages/block-library/build-module/form-input/edit.mjs
@@ -25144,7 +25397,7 @@ ${url}
       );
     }
   };
-  var v117 = {
+  var v118 = {
     attributes: {
       images: {
         type: "array",
@@ -25230,7 +25483,7 @@ ${url}
       return runV2Migration(attributes2);
     }
   };
-  var deprecated_default19 = [v72, v62, v52, v42, v33, v28, v117];
+  var deprecated_default19 = [v72, v62, v52, v42, v33, v28, v118];
 
   // packages/block-library/build-module/gallery/edit.mjs
   var import_components45 = __toESM(require_components(), 1);
@@ -26518,7 +26771,7 @@ ${url}
   // packages/block-library/build-module/gallery/transforms.mjs
   var import_blocks31 = __toESM(require_blocks(), 1);
   var import_blob10 = __toESM(require_blob(), 1);
-  var import_hooks29 = __toESM(require_hooks(), 1);
+  var import_hooks28 = __toESM(require_hooks(), 1);
   var parseShortcodeIds = (ids) => {
     if (!ids) {
       return [];
@@ -26544,7 +26797,7 @@ ${url}
     }
     return block;
   }
-  (0, import_hooks29.addFilter)(
+  (0, import_hooks28.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/gallery/update-third-party-transform-to",
     updateThirdPartyTransformToGallery
@@ -26568,7 +26821,7 @@ ${url}
     }
     return toBlock;
   }
-  (0, import_hooks29.addFilter)(
+  (0, import_hooks28.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/gallery/update-third-party-transform-from",
     updateThirdPartyTransformFromGallery
@@ -27588,7 +27841,7 @@ ${url}
     const { align, ...rest } = attributes2;
     return TEXT_ALIGN_OPTIONS.includes(align) ? { ...rest, textAlign: align } : attributes2;
   };
-  var v118 = {
+  var v119 = {
     supports: blockSupports,
     attributes: {
       ...blockAttributes4,
@@ -27877,7 +28130,7 @@ ${url}
       );
     }
   };
-  var deprecated9 = [v63, v53, v43, v34, v29, v118];
+  var deprecated9 = [v63, v53, v43, v34, v29, v119];
   var deprecated_default21 = deprecated9;
 
   // packages/block-library/build-module/heading/edit.mjs
@@ -29405,7 +29658,7 @@ ${js}
   // packages/block-library/build-module/image/deprecated.mjs
   var import_block_editor110 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
-  var v119 = {
+  var v120 = {
     attributes: {
       url: {
         type: "string",
@@ -30407,7 +30660,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)("figure", { ...import_block_editor110.useBlockProps.save({ className: classes }), children: figure });
     }
   };
-  var deprecated_default22 = [v82, v73, v64, v54, v44, v35, v210, v119];
+  var deprecated_default22 = [v82, v73, v64, v54, v44, v35, v210, v120];
 
   // packages/block-library/build-module/image/edit.mjs
   var import_blob12 = __toESM(require_blob(), 1);
@@ -32563,7 +32816,7 @@ ${js}
   }
 
   // packages/block-library/build-module/latest-comments/deprecated.mjs
-  var v120 = {
+  var v121 = {
     attributes: {
       commentsToShow: {
         type: "number",
@@ -32594,7 +32847,7 @@ ${js}
       };
     }
   };
-  var deprecated_default23 = [v120];
+  var deprecated_default23 = [v121];
 
   // packages/block-library/build-module/latest-comments/index.mjs
   var { name: name45 } = block_default45;
@@ -33607,7 +33860,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var v121 = {
+  var v123 = {
     attributes: {
       ordered: {
         type: "boolean",
@@ -33829,7 +34082,7 @@ ${js}
       );
     }
   };
-  var deprecated_default25 = [v36, v211, v121, v0];
+  var deprecated_default25 = [v36, v211, v123, v0];
 
   // packages/block-library/build-module/list/edit.mjs
   var import_block_editor119 = __toESM(require_block_editor(), 1);
@@ -34599,7 +34852,7 @@ ${js}
   // packages/block-library/build-module/math/deprecated.mjs
   var import_block_editor123 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
-  var v123 = {
+  var v124 = {
     attributes: {
       latex: {
         type: "string",
@@ -34626,7 +34879,7 @@ ${js}
       );
     }
   };
-  var deprecated_default26 = [v123];
+  var deprecated_default26 = [v124];
 
   // packages/block-library/build-module/math/index.mjs
   var { name: name48 } = block_default48;
@@ -36288,7 +36541,7 @@ ${js}
       ] });
     }
   };
-  var v124 = {
+  var v125 = {
     attributes: {
       ...v0Attributes,
       backgroundColor: {
@@ -36343,7 +36596,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default27 = [v74, v65, v55, v45, v37, v212, v124];
+  var deprecated_default27 = [v74, v65, v55, v45, v37, v212, v125];
 
   // packages/block-library/build-module/media-text/edit.mjs
   var import_i18n107 = __toESM(require_i18n(), 1);
@@ -39731,7 +39984,7 @@ ${js}
 
   // packages/block-library/build-module/navigation/menu-items-to-blocks.mjs
   var import_blocks59 = __toESM(require_blocks(), 1);
-  var import_hooks40 = __toESM(require_hooks(), 1);
+  var import_hooks39 = __toESM(require_hooks(), 1);
 
   // packages/block-library/build-module/navigation-link/shared/use-entity-binding.mjs
   var import_element70 = __toESM(require_element(), 1);
@@ -39835,7 +40088,7 @@ ${js}
     }
     const menuTree = createDataTree(menuItems);
     const blocks = mapMenuItemsToBlocks(menuTree);
-    return (0, import_hooks40.applyFilters)(
+    return (0, import_hooks39.applyFilters)(
       "blocks.navigation.__unstableMenuItemsToBlocks",
       blocks,
       menuItems
@@ -43686,7 +43939,7 @@ ${js}
   });
   var import_i18n145 = __toESM(require_i18n(), 1);
   var import_block_editor164 = __toESM(require_block_editor(), 1);
-  var import_hooks43 = __toESM(require_hooks(), 1);
+  var import_hooks42 = __toESM(require_hooks(), 1);
   var import_blocks65 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/navigation-link/block.json
@@ -44408,7 +44661,7 @@ ${js}
     };
   }
   var init55 = () => {
-    (0, import_hooks43.addFilter)(
+    (0, import_hooks42.addFilter)(
       "blocks.registerBlockType",
       "core/navigation-link",
       enhanceNavigationLinkVariations
@@ -45025,7 +45278,7 @@ ${js}
     name: () => name58,
     settings: () => settings58
   });
-  var import_hooks46 = __toESM(require_hooks(), 1);
+  var import_hooks45 = __toESM(require_hooks(), 1);
 
   // packages/block-library/build-module/navigation-overlay-close/edit.mjs
   var import_block_editor168 = __toESM(require_block_editor(), 1);
@@ -45183,7 +45436,7 @@ ${js}
     edit: NavigationOverlayCloseEdit
   };
   var init58 = () => {
-    (0, import_hooks46.addFilter)(
+    (0, import_hooks45.addFilter)(
       "blockEditor.__unstableCanInsertBlockType",
       "core/navigation-overlay-close/restrict-to-overlay-template-parts",
       (canInsert, blockType) => {
@@ -49394,7 +49647,7 @@ ${js}
   var edit_default26 = PostAuthorNameEdit;
 
   // packages/block-library/build-module/post-author-name/deprecated.mjs
-  var v125 = {
+  var v126 = {
     attributes: {
       isLink: {
         type: "boolean",
@@ -49462,7 +49715,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default30 = [v125];
+  var deprecated_default30 = [v126];
 
   // packages/block-library/build-module/post-author-name/transforms.mjs
   var import_blocks80 = __toESM(require_blocks(), 1);
@@ -49596,7 +49849,7 @@ ${js}
   var edit_default27 = PostAuthorBiographyEdit;
 
   // packages/block-library/build-module/post-author-biography/deprecated.mjs
-  var v126 = {
+  var v127 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -49653,7 +49906,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default31 = [v126];
+  var deprecated_default31 = [v127];
 
   // packages/block-library/build-module/post-author-biography/index.mjs
   var { name: name68 } = block_default67;
@@ -49904,7 +50157,7 @@ ${js}
   var transforms_default24 = transforms23;
 
   // packages/block-library/build-module/post-comments-count/deprecated.mjs
-  var v127 = {
+  var v128 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -49955,7 +50208,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default32 = [v127];
+  var deprecated_default32 = [v128];
 
   // packages/block-library/build-module/post-comments-count/index.mjs
   var { name: name70 } = block_default69;
@@ -50064,7 +50317,7 @@ ${js}
   }
 
   // packages/block-library/build-module/post-comments-form/deprecated.mjs
-  var v128 = {
+  var v129 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -50123,7 +50376,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default33 = [v128];
+  var deprecated_default33 = [v129];
 
   // packages/block-library/build-module/post-comments-form/index.mjs
   var { name: name71 } = block_default70;
@@ -50297,7 +50550,7 @@ ${js}
   var transforms_default25 = transforms24;
 
   // packages/block-library/build-module/post-comments-link/deprecated.mjs
-  var v129 = {
+  var v130 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -50355,7 +50608,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default34 = [v129];
+  var deprecated_default34 = [v130];
 
   // packages/block-library/build-module/post-comments-link/index.mjs
   var { name: name72 } = block_default71;
@@ -51100,7 +51353,7 @@ ${js}
       return !attributes2.datetime && !attributes2?.metadata?.bindings?.datetime;
     }
   };
-  var v130 = {
+  var v131 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -51137,7 +51390,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default35 = [v38, v213, v130];
+  var deprecated_default35 = [v38, v213, v131];
 
   // packages/block-library/build-module/post-date/variations.mjs
   var import_i18n169 = __toESM(require_i18n(), 1);
@@ -52662,7 +52915,7 @@ ${js}
   var variations_default11 = variations11;
 
   // packages/block-library/build-module/post-navigation-link/deprecated.mjs
-  var v131 = {
+  var v133 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -52724,7 +52977,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default36 = [v131];
+  var deprecated_default36 = [v133];
 
   // packages/block-library/build-module/post-navigation-link/index.mjs
   var { name: name77 } = block_default76;
@@ -53139,7 +53392,7 @@ ${js}
     name: () => name79,
     settings: () => settings78
   });
-  var import_hooks57 = __toESM(require_hooks(), 1);
+  var import_hooks56 = __toESM(require_hooks(), 1);
 
   // packages/block-library/build-module/post-terms/block.json
   var block_default78 = {
@@ -53395,7 +53648,7 @@ ${js}
   }
 
   // packages/block-library/build-module/post-terms/deprecated.mjs
-  var v133 = {
+  var v134 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -53471,7 +53724,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default37 = [v133];
+  var deprecated_default37 = [v134];
 
   // packages/block-library/build-module/post-terms/index.mjs
   var { name: name79 } = block_default78;
@@ -53481,7 +53734,7 @@ ${js}
     deprecated: deprecated_default37
   };
   var init78 = () => {
-    (0, import_hooks57.addFilter)(
+    (0, import_hooks56.addFilter)(
       "blocks.registerBlockType",
       "core/template-part",
       enhanceVariations
@@ -53724,7 +53977,7 @@ ${js}
   var variations_default12 = variations12;
 
   // packages/block-library/build-module/post-time-to-read/deprecated.mjs
-  var v134 = {
+  var v135 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -53783,7 +54036,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default38 = [v134];
+  var deprecated_default38 = [v135];
 
   // packages/block-library/build-module/post-time-to-read/index.mjs
   var { name: name80 } = block_default79;
@@ -54164,7 +54417,7 @@ ${js}
     },
     save: () => null
   };
-  var v135 = {
+  var v136 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -54214,7 +54467,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default39 = [v214, v135];
+  var deprecated_default39 = [v214, v136];
 
   // packages/block-library/build-module/post-title/index.mjs
   var { name: name81 } = block_default80;
@@ -54922,7 +55175,7 @@ ${js}
       };
     }
   };
-  var v136 = {
+  var v137 = {
     attributes: {
       ...blockAttributes6
     },
@@ -54967,7 +55220,7 @@ ${js}
       };
     }
   };
-  var deprecated_default40 = [v57, v48, v39, v215, v136, v02];
+  var deprecated_default40 = [v57, v48, v39, v215, v137, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n184 = __toESM(require_i18n(), 1);
@@ -57464,7 +57717,7 @@ ${js}
       replacePostTemplateBlock(innerBlocks, newPostTemplateBlock)
     ];
   };
-  var v137 = {
+  var v138 = {
     attributes: {
       queryId: {
         type: "number"
@@ -57816,7 +58069,7 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v49, v310, v216, v137];
+  var deprecated14 = [v67, v58, v49, v310, v216, v138];
   var deprecated_default41 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
@@ -59118,7 +59371,7 @@ ${js}
     },
     save: () => null
   };
-  var v138 = {
+  var v139 = {
     attributes: {
       type: {
         type: "string"
@@ -59154,7 +59407,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default43 = [v217, v138];
+  var deprecated_default43 = [v217, v139];
 
   // packages/block-library/build-module/query-title/index.mjs
   var { name: name90 } = block_default89;
@@ -59542,7 +59795,7 @@ ${js}
       ] });
     }
   };
-  var v139 = {
+  var v140 = {
     attributes: {
       value: {
         type: "string",
@@ -59634,7 +59887,7 @@ ${js}
       );
     }
   };
-  var deprecated_default44 = [v410, v311, v218, v139, v03];
+  var deprecated_default44 = [v410, v311, v218, v140, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n215 = __toESM(require_i18n(), 1);
@@ -60346,7 +60599,7 @@ ${js}
       return attributes2;
     }
   };
-  var v140 = {
+  var v141 = {
     attributes: {
       ref: {
         type: "number"
@@ -60391,7 +60644,7 @@ ${js}
       };
     }
   };
-  var deprecated_default45 = [v219, v140];
+  var deprecated_default45 = [v219, v141];
 
   // packages/block-library/build-module/block/index.mjs
   var { name: name93 } = block_default92;
@@ -61835,7 +62088,7 @@ ${js}
   // packages/block-library/build-module/separator/deprecated.mjs
   var import_block_editor236 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime427 = __toESM(require_jsx_runtime(), 1);
-  var v141 = {
+  var v143 = {
     attributes: {
       color: {
         type: "string"
@@ -61870,7 +62123,7 @@ ${js}
       };
     }
   };
-  var deprecated_default46 = [v141];
+  var deprecated_default46 = [v143];
 
   // packages/block-library/build-module/separator/index.mjs
   var { name: name97 } = block_default96;
@@ -62883,7 +63136,7 @@ ${js}
     },
     save: () => null
   };
-  var v143 = {
+  var v144 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -62917,7 +63170,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default47 = [v220, v143];
+  var deprecated_default47 = [v220, v144];
 
   // packages/block-library/build-module/site-tagline/index.mjs
   var { name: name100 } = block_default99;
@@ -63220,7 +63473,7 @@ ${js}
     },
     save: () => null
   };
-  var v144 = {
+  var v145 = {
     attributes: {
       level: {
         type: "number",
@@ -63267,7 +63520,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default48 = [v221, v144];
+  var deprecated_default48 = [v221, v145];
 
   // packages/block-library/build-module/site-title/transforms.mjs
   var import_blocks107 = __toESM(require_blocks(), 1);
@@ -66321,7 +66574,7 @@ ${js}
       attribute: "scope"
     }
   };
-  var v145 = {
+  var v146 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -66417,7 +66670,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default51 = [v411, v312, v222, v145];
+  var deprecated_default51 = [v411, v312, v222, v146];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -69296,7 +69549,7 @@ ${js}
   });
   var import_core_data90 = __toESM(require_core_data(), 1);
   var import_data158 = __toESM(require_data(), 1);
-  var import_hooks82 = __toESM(require_hooks(), 1);
+  var import_hooks81 = __toESM(require_hooks(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/template-part/block.json
@@ -70446,13 +70699,13 @@ ${js}
     edit: TemplatePartEdit
   };
   var init112 = () => {
-    (0, import_hooks82.addFilter)(
+    (0, import_hooks81.addFilter)(
       "blocks.registerBlockType",
       "core/template-part",
       enhanceTemplatePartVariations
     );
     const DISALLOWED_PARENTS = ["core/post-template", "core/post-content"];
-    (0, import_hooks82.addFilter)(
+    (0, import_hooks81.addFilter)(
       "blockEditor.__unstableCanInsertBlockType",
       "core/block-library/removeTemplatePartsFromPostTemplates",
       (canInsert, blockType, rootClientId, { getBlock, getBlockParentsByBlockName }) => {
@@ -70837,7 +71090,7 @@ ${js}
   }
 
   // packages/block-library/build-module/term-description/deprecated.mjs
-  var v146 = {
+  var v147 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -70895,7 +71148,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default52 = [v146];
+  var deprecated_default52 = [v147];
 
   // packages/block-library/build-module/term-description/index.mjs
   var { name: name115 } = block_default114;
@@ -72373,7 +72626,7 @@ ${js}
   // packages/block-library/build-module/verse/deprecated.mjs
   var import_block_editor288 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
-  var v147 = {
+  var v148 = {
     attributes: {
       content: {
         type: "string",
@@ -72505,7 +72758,7 @@ ${js}
       );
     }
   };
-  var deprecated_default53 = [v313, v223, v147];
+  var deprecated_default53 = [v313, v223, v148];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n266 = __toESM(require_i18n(), 1);
@@ -72825,7 +73078,7 @@ ${js}
   // packages/block-library/build-module/video/deprecated.mjs
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default120;
-  var v148 = {
+  var v149 = {
     attributes: blockAttributes7,
     save({ attributes: attributes2 }) {
       const {
@@ -72859,7 +73112,7 @@ ${js}
       ] });
     }
   };
-  var deprecated20 = [v148];
+  var deprecated20 = [v149];
   var deprecated_default54 = deprecated20;
 
   // packages/block-library/build-module/video/edit.mjs

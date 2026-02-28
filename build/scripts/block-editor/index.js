@@ -6914,6 +6914,7 @@ var wp;
     __experimentalFontFamilyControl: () => FontFamilyControl,
     __experimentalGetBorderClassesAndStyles: () => getBorderClassesAndStyles,
     __experimentalGetColorClassesAndStyles: () => getColorClassesAndStyles,
+    __experimentalGetDimensionsClassesAndStyles: () => getDimensionsClassesAndStyles,
     __experimentalGetElementClassName: () => __experimentalGetElementClassName,
     __experimentalGetGapCSSValue: () => getGapCSSValue,
     __experimentalGetGradientClass: () => __experimentalGetGradientClass,
@@ -37855,6 +37856,53 @@ var wp;
     }
     return featureDeclarations;
   };
+  var updateButtonWidthDeclarations = (featureDeclarations, settings2) => {
+    const buttonSelector = ".wp-block-button";
+    if (!(buttonSelector in featureDeclarations)) {
+      return featureDeclarations;
+    }
+    const updated = { ...featureDeclarations };
+    updated[buttonSelector] = updated[buttonSelector].map(
+      (declaration) => {
+        const match2 = declaration.match(/^width:\s*(.+)$/);
+        if (!match2) {
+          return declaration;
+        }
+        const value = match2[1];
+        let percentage = null;
+        if (value.endsWith("%")) {
+          percentage = parseFloat(value);
+        }
+        const presetPrefix = "var(--wp--preset--dimension--";
+        if (percentage === null && value.startsWith(presetPrefix) && value.endsWith(")")) {
+          const slug = value.slice(presetPrefix.length, -1);
+          const dimensionSizes = {
+            ...settings2?.dimensions?.dimensionSizes ?? {},
+            ...settings2?.blocks?.["core/button"]?.dimensions?.dimensionSizes ?? {}
+          };
+          for (const origin of Object.values(dimensionSizes)) {
+            if (!Array.isArray(origin)) {
+              continue;
+            }
+            for (const preset of origin) {
+              if (preset.slug === slug && typeof preset.size === "string" && preset.size.endsWith("%")) {
+                percentage = parseFloat(preset.size);
+                break;
+              }
+            }
+            if (percentage !== null) {
+              break;
+            }
+          }
+        }
+        if (percentage === null || isNaN(percentage)) {
+          return declaration;
+        }
+        return `width: calc(${percentage} * 1% - (var(--wp--style--block-gap, 0.5em) * (1 - ${percentage} / 100)))`;
+      }
+    );
+    return updated;
+  };
   var getFeatureDeclarations = (selectors, styles) => {
     const declarations = {};
     Object.entries(selectors).forEach(([feature, selector3]) => {
@@ -38331,6 +38379,10 @@ var wp;
               tree.settings,
               name
             );
+            featureDeclarations = updateButtonWidthDeclarations(
+              featureDeclarations,
+              tree.settings
+            );
             Object.entries(featureDeclarations).forEach(
               ([cssSelector, declarations]) => {
                 if (declarations.length) {
@@ -38395,6 +38447,10 @@ var wp;
                       featureDeclarations,
                       tree.settings,
                       name
+                    );
+                    featureDeclarations = updateButtonWidthDeclarations(
+                      featureDeclarations,
+                      tree.settings
                     );
                     Object.entries(
                       featureDeclarations
@@ -46580,12 +46636,14 @@ var wp;
   function DimensionControl({
     label = (0, import_i18n139.__)("Dimension"),
     onChange,
-    value
+    value,
+    dimensionSizes: dimensionSizesProp
   }) {
-    const [dimensionSizes, availableUnits] = useSettings(
+    const [dimensionSizesFromSettings, availableUnits] = useSettings(
       "dimensions.dimensionSizes",
       "spacing.units"
     );
+    const dimensionSizes = dimensionSizesProp ?? dimensionSizesFromSettings;
     const units2 = (0, import_components153.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || [
         "%",
@@ -56728,7 +56786,8 @@ var wp;
                 {
                   label: (0, import_i18n188.__)("Minimum height"),
                   value: minHeightValue,
-                  onChange: setMinHeightValue
+                  onChange: setMinHeightValue,
+                  dimensionSizes: dimensions?.dimensionSizes
                 }
               )
             }
@@ -56746,7 +56805,8 @@ var wp;
                 {
                   label: (0, import_i18n188.__)("Height"),
                   value: heightValue,
-                  onChange: setHeightValue
+                  onChange: setHeightValue,
+                  dimensionSizes: dimensions?.dimensionSizes
                 }
               )
             }
@@ -56764,7 +56824,8 @@ var wp;
                 {
                   label: (0, import_i18n188.__)("Width"),
                   value: widthValue,
-                  onChange: setWidthValue
+                  onChange: setWidthValue,
+                  dimensionSizes: dimensions?.dimensionSizes
                 }
               )
             }

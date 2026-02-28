@@ -761,9 +761,6 @@ return array(
 			),
 			'gradient' => array(
 				'type' => 'string'
-			),
-			'width' => array(
-				'type' => 'number'
 			)
 		),
 		'supports' => array(
@@ -777,6 +774,15 @@ return array(
 				'__experimentalDefaultControls' => array(
 					'background' => true,
 					'text' => true
+				)
+			),
+			'dimensions' => array(
+				'width' => true,
+				'__experimentalSkipSerialization' => array(
+					'width'
+				),
+				'__experimentalDefaultControls' => array(
+					'width' => true
 				)
 			),
 			'typography' => array(
@@ -853,6 +859,10 @@ return array(
 			'root' => '.wp-block-button .wp-block-button__link',
 			'typography' => array(
 				'writingMode' => '.wp-block-button'
+			),
+			'dimensions' => array(
+				'root' => '.wp-block-button',
+				'width' => '.wp-block-button'
 			)
 		)
 	),
