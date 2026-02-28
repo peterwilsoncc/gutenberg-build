@@ -38265,7 +38265,8 @@ var wp;
           nodes.push({
             presets: blockPresets,
             custom: blockCustom,
-            selector: blockSelectors[blockName]?.selector
+            selector: blockSelectors[blockName]?.selector,
+            featureSelectors: blockSelectors[blockName]?.featureSelectors
           });
         }
       }

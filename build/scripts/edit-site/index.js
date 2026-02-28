@@ -7898,38 +7898,6 @@ var wp;
     spacing: "spacing",
     typography: "typography"
   };
-  function getPresetsDeclarations(blockPresets = {}, mergedSettings) {
-    return PRESET_METADATA.reduce(
-      (declarations, { path, valueKey, valueFunc, cssVarInfix }) => {
-        const presetByOrigin = getValueFromObjectPath(
-          blockPresets,
-          path,
-          []
-        );
-        ["default", "theme", "custom"].forEach((origin) => {
-          if (presetByOrigin[origin]) {
-            presetByOrigin[origin].forEach((value) => {
-              if (valueKey && !valueFunc) {
-                declarations.push(
-                  `--wp--preset--${cssVarInfix}--${kebabCase(
-                    value.slug
-                  )}: ${value[valueKey]}`
-                );
-              } else if (valueFunc && typeof valueFunc === "function") {
-                declarations.push(
-                  `--wp--preset--${cssVarInfix}--${kebabCase(
-                    value.slug
-                  )}: ${valueFunc(value, mergedSettings)}`
-                );
-              }
-            });
-          }
-        });
-        return declarations;
-      },
-      []
-    );
-  }
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
       (declarations, { path, cssVarInfix, classes }) => {
@@ -8445,26 +8413,97 @@ var wp;
           nodes.push({
             presets: blockPresets,
             custom: blockCustom,
-            selector: blockSelectors[blockName]?.selector
+            selector: blockSelectors[blockName]?.selector,
+            featureSelectors: blockSelectors[blockName]?.featureSelectors
           });
         }
       }
     );
     return nodes;
   };
+  function resolveFeatureSelector(featureSelectors, featureKey, fallback) {
+    if (!featureSelectors || typeof featureSelectors === "string") {
+      return fallback;
+    }
+    const feature = featureSelectors[featureKey];
+    if (typeof feature === "string") {
+      return feature;
+    }
+    if (typeof feature === "object" && feature.root) {
+      return feature.root;
+    }
+    return fallback;
+  }
+  function getPresetVarDeclarations(presets, mergedSettings, { path, valueKey, valueFunc, cssVarInfix }) {
+    const presetByOrigin = getValueFromObjectPath(
+      presets,
+      path,
+      []
+    );
+    const declarations = [];
+    for (const origin of ["default", "theme", "custom"]) {
+      if (!presetByOrigin[origin]) {
+        continue;
+      }
+      for (const value of presetByOrigin[origin]) {
+        const slug = kebabCase(value.slug);
+        if (valueKey && !valueFunc) {
+          declarations.push(
+            `--wp--preset--${cssVarInfix}--${slug}: ${value[valueKey]}`
+          );
+        } else if (valueFunc && typeof valueFunc === "function") {
+          declarations.push(
+            `--wp--preset--${cssVarInfix}--${slug}: ${valueFunc(
+              value,
+              mergedSettings
+            )}`
+          );
+        }
+      }
+    }
+    return declarations;
+  }
   var generateCustomProperties = (tree, blockSelectors) => {
-    const settings2 = getNodesWithSettings(tree, blockSelectors);
+    const nodes = getNodesWithSettings(tree, blockSelectors);
     let ruleset = "";
-    settings2.forEach(({ presets, custom, selector: selector2 }) => {
-      const declarations = tree?.settings ? getPresetsDeclarations(presets, tree?.settings) : [];
+    for (const { presets, custom, selector: selector2, featureSelectors } of nodes) {
+      const defaultSelector = selector2;
+      const varsBySelector = {
+        [defaultSelector]: []
+      };
+      if (tree?.settings) {
+        for (const metadata of PRESET_METADATA) {
+          const declarations = getPresetVarDeclarations(
+            presets,
+            tree.settings,
+            metadata
+          );
+          if (declarations.length === 0) {
+            continue;
+          }
+          const target = resolveFeatureSelector(
+            featureSelectors,
+            metadata.path[0],
+            defaultSelector
+          );
+          if (!varsBySelector[target]) {
+            varsBySelector[target] = [];
+          }
+          varsBySelector[target].push(...declarations);
+        }
+      }
       const customProps = flattenTree(custom, "--wp--custom--", "--");
       if (customProps.length > 0) {
-        declarations.push(...customProps);
+        varsBySelector[defaultSelector].push(...customProps);
       }
-      if (declarations.length > 0) {
-        ruleset += `${selector2}{${declarations.join(";")};}`;
+      for (const [ruleSelector, declarations] of Object.entries(
+        varsBySelector
+      )) {
+        if (declarations.length > 0) {
+          ruleset += `${ruleSelector}{${declarations.join(";")};}`;
+        }
       }
-    });
+    }
     return ruleset;
   };
   var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => {
