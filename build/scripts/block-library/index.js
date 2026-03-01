@@ -54091,6 +54091,9 @@ ${js}
         type: "string",
         default: "_self",
         role: "content"
+      },
+      placeholder: {
+        type: "string"
       }
     },
     example: {
@@ -54156,7 +54159,7 @@ ${js}
   var import_element102 = __toESM(require_element(), 1);
   var import_jsx_runtime379 = __toESM(require_jsx_runtime(), 1);
   function PostTitleEdit({
-    attributes: { level, levelOptions, isLink, rel, linkTarget },
+    attributes: { level, levelOptions, isLink, rel, linkTarget, placeholder: placeholder2 },
     setAttributes,
     context: { postType, postId, queryId },
     insertBlocksAfter
@@ -54189,7 +54192,7 @@ ${js}
     const blockProps = (0, import_block_editor202.useBlockProps)();
     const blockEditingMode = (0, import_block_editor202.useBlockEditingMode)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    let titleElement = /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(TagName2, { ...blockProps, children: (0, import_i18n181.__)("Title") });
+    let titleElement = /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(TagName2, { ...blockProps, children: placeholder2 || (0, import_i18n181.__)("Title") });
     if (postType && postId) {
       titleElement = userCanEdit ? /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
         import_block_editor202.PlainText,

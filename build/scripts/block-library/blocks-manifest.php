@@ -6369,6 +6369,9 @@ return array(
 				'type' => 'string',
 				'default' => '_self',
 				'role' => 'content'
+			),
+			'placeholder' => array(
+				'type' => 'string'
 			)
 		),
 		'example' => array(
