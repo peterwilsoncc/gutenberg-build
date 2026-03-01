@@ -1557,40 +1557,45 @@ var wp;
         }
         const { bigImageSizeThreshold } = settings;
         if (bigImageSizeThreshold && attachment.id) {
-          const sourceForScaled = attachment.filename ? renameFile(item.sourceFile, attachment.filename) : item.sourceFile;
-          const scaledOperations = [
-            [
-              OperationType.ResizeCrop,
-              {
-                resize: {
-                  width: bigImageSizeThreshold,
-                  height: bigImageSizeThreshold
-                },
-                isThresholdResize: true
-              }
-            ]
-          ];
-          if (thumbnailTranscodeOperation) {
-            scaledOperations.push(thumbnailTranscodeOperation);
+          const bitmap = await createImageBitmap(item.sourceFile);
+          const needsScaling = bitmap.width > bigImageSizeThreshold || bitmap.height > bigImageSizeThreshold;
+          bitmap.close();
+          if (needsScaling) {
+            const sourceForScaled = attachment.filename ? renameFile(item.sourceFile, attachment.filename) : item.sourceFile;
+            const scaledOperations = [
+              [
+                OperationType.ResizeCrop,
+                {
+                  resize: {
+                    width: bigImageSizeThreshold,
+                    height: bigImageSizeThreshold
+                  },
+                  isThresholdResize: true
+                }
+              ]
+            ];
+            if (thumbnailTranscodeOperation) {
+              scaledOperations.push(thumbnailTranscodeOperation);
+            }
+            scaledOperations.push(OperationType.Upload);
+            dispatch.addSideloadItem({
+              file: sourceForScaled,
+              onChange: ([updatedAttachment]) => {
+                if ((0, import_blob.isBlobURL)(updatedAttachment.url)) {
+                  return;
+                }
+                item.onChange?.([updatedAttachment]);
+              },
+              batchId,
+              parentId: item.id,
+              additionalData: {
+                post: attachment.id,
+                image_size: "scaled",
+                convert_format: false
+              },
+              operations: scaledOperations
+            });
           }
-          scaledOperations.push(OperationType.Upload);
-          dispatch.addSideloadItem({
-            file: sourceForScaled,
-            onChange: ([updatedAttachment]) => {
-              if ((0, import_blob.isBlobURL)(updatedAttachment.url)) {
-                return;
-              }
-              item.onChange?.([updatedAttachment]);
-            },
-            batchId,
-            parentId: item.id,
-            additionalData: {
-              post: attachment.id,
-              image_size: "scaled",
-              convert_format: false
-            },
-            operations: scaledOperations
-          });
         }
       }
       dispatch.finishOperation(id, {});
