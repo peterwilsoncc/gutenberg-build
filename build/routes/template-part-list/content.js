@@ -4050,6 +4050,8 @@ function ListItem({
     }
   ) }) : null;
   const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(titleField.render, { item, field: titleField }) : null;
+  const renderDescription = showDescription && descriptionField?.render;
+  const hasOnlyMediaAndTitle = !!renderedMediaField && !renderDescription && !otherFields.length;
   const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
     Stack,
     {
@@ -4157,7 +4159,7 @@ function ListItem({
                 direction: "row",
                 gap: "md",
                 justify: "start",
-                align: "flex-start",
+                align: hasOnlyMediaAndTitle ? "center" : "flex-start",
                 style: { flex: 1, minWidth: 0 },
                 children: [
                   renderedMediaField,
@@ -4179,7 +4181,7 @@ function ListItem({
                           ),
                           usedActions
                         ] }),
-                        showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+                        renderDescription && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                           descriptionField.render,
                           {
                             item,

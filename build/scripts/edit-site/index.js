@@ -26795,6 +26795,8 @@ var wp;
       }
     ) }) : null;
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(titleField.render, { item, field: titleField }) : null;
+    const renderDescription = showDescription && descriptionField2?.render;
+    const hasOnlyMediaAndTitle = !!renderedMediaField && !renderDescription && !otherFields.length;
     const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(
       Stack,
       {
@@ -26902,7 +26904,7 @@ var wp;
                   direction: "row",
                   gap: "md",
                   justify: "start",
-                  align: "flex-start",
+                  align: hasOnlyMediaAndTitle ? "center" : "flex-start",
                   style: { flex: 1, minWidth: 0 },
                   children: [
                     renderedMediaField,
@@ -26924,7 +26926,7 @@ var wp;
                             ),
                             usedActions
                           ] }),
-                          showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+                          renderDescription && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
                             descriptionField2.render,
                             {
                               item,

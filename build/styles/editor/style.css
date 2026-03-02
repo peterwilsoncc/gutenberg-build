@@ -2904,7 +2904,6 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-list .dataviews-view-list__field-wrapper {
-  min-height: 52px;
   flex-grow: 1;
   min-width: 0;
 }
@@ -2954,10 +2953,6 @@ div.dataviews-view-list {
   height: 32px;
 }
 
-.dataviews-view-list.has-compact-density div[role=row] .dataviews-view-list__field-wrapper {
-  min-height: 32px;
-}
-
 .dataviews-view-list.has-compact-density div[role=row] .dataviews-view-list__fields {
   gap: 8px;
   row-gap: 4px;
@@ -2980,10 +2975,6 @@ div.dataviews-view-list {
 .dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__media-wrapper {
   width: 64px;
   height: 64px;
-}
-
-.dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__field-wrapper {
-  min-height: 64px;
 }
 
 .dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__fields {
