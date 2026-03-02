@@ -17804,6 +17804,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { useEntityRecordsWithPermissions } = unlock2(import_core_data4.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
+  var NOTICES_CONTEXT = "media-modal";
   var NOTICE_ID_UPLOAD_PROGRESS = "media-modal-upload-progress";
   function MediaUploadModal({
     allowedTypes,
@@ -17969,6 +17970,7 @@ If there's a particular need for this, please submit a feature request at https:
             ),
             {
               type: "snackbar",
+              context: NOTICES_CONTEXT,
               id: NOTICE_ID_UPLOAD_PROGRESS
             }
           );
@@ -17991,6 +17993,7 @@ If there's a particular need for this, please submit a feature request at https:
       (error) => {
         createErrorNotice(error.message, {
           type: "snackbar",
+          context: NOTICES_CONTEXT,
           id: NOTICE_ID_UPLOAD_PROGRESS
         });
       },
@@ -18013,6 +18016,7 @@ If there's a particular need for this, please submit a feature request at https:
             ),
             {
               type: "snackbar",
+              context: NOTICES_CONTEXT,
               id: NOTICE_ID_UPLOAD_PROGRESS,
               explicitDismiss: true
             }
@@ -18123,6 +18127,7 @@ If there's a particular need for this, please submit a feature request at https:
                     ),
                     {
                       type: "snackbar",
+                      context: NOTICES_CONTEXT,
                       id: NOTICE_ID_UPLOAD_PROGRESS,
                       explicitDismiss: true
                     }
@@ -18156,6 +18161,16 @@ If there's a particular need for this, please submit a feature request at https:
               searchLabel,
               itemListLabel: (0, import_i18n66.__)("Media items")
             }
+          ),
+          (0, import_element60.createPortal)(
+            /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+              import_notices.SnackbarNotices,
+              {
+                className: "media-upload-modal__snackbar",
+                context: NOTICES_CONTEXT
+              }
+            ),
+            document.body
           )
         ]
       }
