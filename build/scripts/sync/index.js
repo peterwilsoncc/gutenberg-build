@@ -9493,8 +9493,6 @@ var wp;
       if (pollingTimeoutId) {
         clearTimeout(pollingTimeoutId);
         pollingTimeoutId = null;
-      }
-      if (isPolling) {
         poll();
       }
     }
