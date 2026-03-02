@@ -1315,7 +1315,8 @@ var wp;
     Delta,
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
-    LOCAL_EDITOR_ORIGIN
+    LOCAL_EDITOR_ORIGIN,
+    retrySyncConnection
   } = unlock(import_sync3.privateApis);
   var syncManager;
   function getSyncManager() {
@@ -7218,6 +7219,7 @@ var wp;
   lock(privateApis, {
     useEntityRecordsWithPermissions,
     RECEIVE_INTERMEDIATE_RESULTS,
+    retrySyncConnection,
     useActiveCollaborators,
     useResolvedSelection
   });
