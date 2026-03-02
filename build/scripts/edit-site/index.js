@@ -14017,12 +14017,12 @@ var wp;
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__150) {
+            } catch (__149) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__150) {
+            } catch (__149) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
@@ -23936,7 +23936,7 @@ var wp;
   }
 
   // packages/edit-site/build-module/components/page-patterns/index.mjs
-  var import_i18n139 = __toESM(require_i18n(), 1);
+  var import_i18n138 = __toESM(require_i18n(), 1);
   var import_element141 = __toESM(require_element(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
 
@@ -40760,7 +40760,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components142 = __toESM(require_components(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
   var import_element130 = __toESM(require_element(), 1);
-  var import_i18n131 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
   var import_i18n130 = __toESM(require_i18n(), 1);
@@ -40842,10 +40841,9 @@ If there's a particular need for this, please submit a feature request at https:
     const { fields } = (0, import_element130.useContext)(dataform_context_default);
     const layout = field.layout;
     const cardBodyRef = (0, import_element130.useRef)(null);
-    const bodyId = (0, import_compose27.useInstanceId)(
-      FormCardField,
-      "dataforms-layouts-card-card-body"
-    );
+    const instanceId = (0, import_compose27.useInstanceId)(FormCardField);
+    const bodyId = `dataforms-layouts-card-card-body-${instanceId}`;
+    const titleId = `dataforms-layouts-card-card-title-${instanceId}`;
     const form = (0, import_element130.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
@@ -40955,7 +40953,14 @@ If there's a particular need for this, please submit a feature request at https:
                   alignItems: "center"
                 },
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime262.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: label }),
+                  /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(
+                    "span",
+                    {
+                      id: titleId,
+                      className: "dataforms-layouts-card__field-header-label",
+                      children: label
+                    }
+                  ),
                   validationBadge,
                   visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map(
                     (summaryField) => /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(
@@ -40978,7 +40983,7 @@ If there's a particular need for this, please submit a feature request at https:
                 icon: isOpen ? chevron_up_default : chevron_down_default,
                 "aria-expanded": isOpen,
                 "aria-controls": bodyId,
-                "aria-label": isOpen ? (0, import_i18n131.__)("Collapse") : (0, import_i18n131.__)("Expand")
+                "aria-labelledby": titleId
               }
             )
           ]
@@ -41080,7 +41085,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
   var import_element131 = __toESM(require_element(), 1);
-  var import_i18n132 = __toESM(require_i18n(), 1);
+  var import_i18n131 = __toESM(require_i18n(), 1);
   var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
     data,
@@ -41130,7 +41135,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (summaryField && summaryField.render) {
       summaryContent = /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(summaryField.render, { item: data, field: summaryField });
     } else {
-      summaryContent = field.label || (0, import_i18n132.__)("More details");
+      summaryContent = field.label || (0, import_i18n131.__)("More details");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)(
       "details",
@@ -41795,12 +41800,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/actions.mjs
   var import_components147 = __toESM(require_components(), 1);
-  var import_i18n136 = __toESM(require_i18n(), 1);
+  var import_i18n135 = __toESM(require_i18n(), 1);
 
   // packages/edit-site/build-module/components/add-new-pattern/index.mjs
   var import_components144 = __toESM(require_components(), 1);
   var import_element136 = __toESM(require_element(), 1);
-  var import_i18n133 = __toESM(require_i18n(), 1);
+  var import_i18n132 = __toESM(require_i18n(), 1);
   var import_data67 = __toESM(require_data(), 1);
   var import_router28 = __toESM(require_router(), 1);
   var import_patterns2 = __toESM(require_patterns(), 1);
@@ -41881,7 +41886,7 @@ If there's a particular need for this, please submit a feature request at https:
         onClick: () => {
           patternUploadInputRef.current.click();
         },
-        title: (0, import_i18n133.__)("Import pattern from JSON")
+        title: (0, import_i18n132.__)("Import pattern from JSON")
       });
     }
     const { categoryMap, findOrCreateTerm } = useAddPatternCategory();
@@ -41956,9 +41961,9 @@ If there's a particular need for this, please submit a feature request at https:
                 );
               }
               createSuccessNotice(
-                (0, import_i18n133.sprintf)(
+                (0, import_i18n132.sprintf)(
                   // translators: %s: The imported pattern's title.
-                  (0, import_i18n133.__)('Imported "%s" from JSON.'),
+                  (0, import_i18n132.__)('Imported "%s" from JSON.'),
                   pattern.title.raw
                 ),
                 {
@@ -41983,14 +41988,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/rename-category-menu-item.mjs
   var import_components145 = __toESM(require_components(), 1);
   var import_element137 = __toESM(require_element(), 1);
-  var import_i18n134 = __toESM(require_i18n(), 1);
+  var import_i18n133 = __toESM(require_i18n(), 1);
   var import_patterns3 = __toESM(require_patterns(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
   var { RenamePatternCategoryModal } = unlock(import_patterns3.privateApis);
   function RenameCategoryMenuItem({ category, onClose }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element137.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)(import_jsx_runtime269.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(import_components145.MenuItem, { onClick: () => setIsModalOpen(true), children: (0, import_i18n134.__)("Rename") }),
+      /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(import_components145.MenuItem, { onClick: () => setIsModalOpen(true), children: (0, import_i18n133.__)("Rename") }),
       isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
         RenameModal2,
         {
@@ -42029,7 +42034,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data68 = __toESM(require_data(), 1);
   var import_element138 = __toESM(require_element(), 1);
   var import_html_entities9 = __toESM(require_html_entities(), 1);
-  var import_i18n135 = __toESM(require_i18n(), 1);
+  var import_i18n134 = __toESM(require_i18n(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
   var import_router29 = __toESM(require_router(), 1);
   var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
@@ -42055,9 +42060,9 @@ If there's a particular need for this, please submit a feature request at https:
           { per_page: -1 }
         ]);
         createSuccessNotice(
-          (0, import_i18n135.sprintf)(
+          (0, import_i18n134.sprintf)(
             /* translators: %s: The pattern category's name */
-            (0, import_i18n135._x)('"%s" deleted.', "pattern category"),
+            (0, import_i18n134._x)('"%s" deleted.', "pattern category"),
             category.label
           ),
           { type: "snackbar", id: "pattern-category-delete" }
@@ -42067,7 +42072,7 @@ If there's a particular need for this, please submit a feature request at https:
           `/pattern?categoryId=${PATTERN_DEFAULT_CATEGORY}`
         );
       } catch (error) {
-        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n135.__)(
+        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n134.__)(
           "An error occurred while deleting the pattern category."
         );
         createErrorNotice(errorMessage, {
@@ -42077,25 +42082,25 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(import_jsx_runtime270.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(import_components146.MenuItem, { isDestructive: true, onClick: () => setIsModalOpen(true), children: (0, import_i18n135.__)("Delete") }),
+      /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(import_components146.MenuItem, { isDestructive: true, onClick: () => setIsModalOpen(true), children: (0, import_i18n134.__)("Delete") }),
       /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
         import_components146.__experimentalConfirmDialog,
         {
           isOpen: isModalOpen,
           onConfirm: onDelete,
           onCancel: () => setIsModalOpen(false),
-          confirmButtonText: (0, import_i18n135.__)("Delete"),
+          confirmButtonText: (0, import_i18n134.__)("Delete"),
           className: "edit-site-patterns__delete-modal",
-          title: (0, import_i18n135.sprintf)(
+          title: (0, import_i18n134.sprintf)(
             // translators: %s: The pattern category's name.
-            (0, import_i18n135._x)('Delete "%s"?', "pattern category"),
+            (0, import_i18n134._x)('Delete "%s"?', "pattern category"),
             (0, import_html_entities9.decodeEntities)(category.label)
           ),
           size: "medium",
           __experimentalHideHeader: false,
-          children: (0, import_i18n135.sprintf)(
+          children: (0, import_i18n134.sprintf)(
             // translators: %s: The pattern category's name.
-            (0, import_i18n135.__)(
+            (0, import_i18n134.__)(
               'Are you sure you want to delete the category "%s"? The patterns will not be deleted.'
             ),
             (0, import_html_entities9.decodeEntities)(category.label)
@@ -42121,7 +42126,7 @@ If there's a particular need for this, please submit a feature request at https:
         import_components147.DropdownMenu,
         {
           icon: more_vertical_default,
-          label: (0, import_i18n136.__)("Actions"),
+          label: (0, import_i18n135.__)("Actions"),
           toggleProps: {
             className: "edit-site-patterns__button",
             size: "compact"
@@ -42148,7 +42153,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/dataviews-actions/index.mjs
-  var import_i18n137 = __toESM(require_i18n(), 1);
+  var import_i18n136 = __toESM(require_i18n(), 1);
   var import_element139 = __toESM(require_element(), 1);
   var import_router30 = __toESM(require_router(), 1);
   var import_data69 = __toESM(require_data(), 1);
@@ -42165,7 +42170,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => ({
         id: "set-active-template",
         label(items) {
-          return items.some((item) => item._isActive) ? (0, import_i18n137.__)("Deactivate") : (0, import_i18n137.__)("Activate");
+          return items.some((item) => item._isActive) ? (0, import_i18n136.__)("Deactivate") : (0, import_i18n136.__)("Activate");
         },
         isPrimary: true,
         icon: pencil_default,
@@ -42209,7 +42214,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_element139.useMemo)(
       () => ({
         id: "edit-post",
-        label: (0, import_i18n137.__)("Edit"),
+        label: (0, import_i18n136.__)("Edit"),
         icon: pencil_default,
         isEligible(post2) {
           if (post2.status === "trash") {
@@ -42231,7 +42236,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_element139.useMemo)(
       () => ({
         id: "quick-edit",
-        label: (0, import_i18n137.__)("Quick Edit"),
+        label: (0, import_i18n136.__)("Quick Edit"),
         icon: drawer_right_default,
         isPrimary: true,
         supportsBulk: true,
@@ -42257,7 +42262,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/fields.mjs
   var import_components148 = __toESM(require_components(), 1);
-  var import_i18n138 = __toESM(require_i18n(), 1);
+  var import_i18n137 = __toESM(require_i18n(), 1);
   var import_element140 = __toESM(require_element(), 1);
   var import_block_editor23 = __toESM(require_block_editor(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
@@ -42348,8 +42353,8 @@ If there's a particular need for this, please submit a feature request at https:
         style: { backgroundColor },
         "aria-describedby": !!description ? descriptionId : void 0,
         children: [
-          isEmpty3 && isTemplatePart2 && (0, import_i18n138.__)("Empty template part"),
-          isEmpty3 && !isTemplatePart2 && (0, import_i18n138.__)("Empty pattern"),
+          isEmpty3 && isTemplatePart2 && (0, import_i18n137.__)("Empty template part"),
+          isEmpty3 && !isTemplatePart2 && (0, import_i18n137.__)("Empty pattern"),
           !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_block_editor23.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
             import_block_editor23.BlockPreview,
             {
@@ -42363,7 +42368,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   var previewField = {
-    label: (0, import_i18n138.__)("Preview"),
+    label: (0, import_i18n137.__)("Preview"),
     id: "preview",
     render: PreviewField,
     enableSorting: false
@@ -42371,19 +42376,19 @@ If there's a particular need for this, please submit a feature request at https:
   var SYNC_FILTERS = [
     {
       value: PATTERN_SYNC_TYPES.full,
-      label: (0, import_i18n138._x)("Synced", "pattern (singular)"),
-      description: (0, import_i18n138.__)("Patterns that are kept in sync across the site.")
+      label: (0, import_i18n137._x)("Synced", "pattern (singular)"),
+      description: (0, import_i18n137.__)("Patterns that are kept in sync across the site.")
     },
     {
       value: PATTERN_SYNC_TYPES.unsynced,
-      label: (0, import_i18n138._x)("Not synced", "pattern (singular)"),
-      description: (0, import_i18n138.__)(
+      label: (0, import_i18n137._x)("Not synced", "pattern (singular)"),
+      description: (0, import_i18n137.__)(
         "Patterns that can be changed freely without affecting the site."
       )
     }
   ];
   var patternStatusField = {
-    label: (0, import_i18n138.__)("Sync status"),
+    label: (0, import_i18n137.__)("Sync status"),
     id: "sync-status",
     render: ({ item }) => {
       const syncStatus = "wp_pattern_sync_status" in item ? item.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full : PATTERN_SYNC_TYPES.unsynced;
@@ -42427,7 +42432,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   var templatePartAuthorField = {
-    label: (0, import_i18n138.__)("Author"),
+    label: (0, import_i18n137.__)("Author"),
     id: "author",
     getValue: ({ item }) => item.author_text,
     render: AuthorField,
@@ -42478,8 +42483,8 @@ If there's a particular need for this, please submit a feature request at https:
       const templatePartArea = templatePartAreas.find(
         (area) => area.area === categoryId
       );
-      title = templatePartArea?.label || (0, import_i18n139.__)("All Template Parts");
-      description = templatePartArea?.description || (0, import_i18n139.__)("Includes every template part defined for any area.");
+      title = templatePartArea?.label || (0, import_i18n138.__)("All Template Parts");
+      description = templatePartArea?.description || (0, import_i18n138.__)("Includes every template part defined for any area.");
     } else if (type === PATTERN_TYPES.user && !!categoryId) {
       patternCategory = patternCategories.find(
         (category) => category.name === categoryId
@@ -42669,13 +42674,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.mjs
-  var import_i18n142 = __toESM(require_i18n(), 1);
+  var import_i18n141 = __toESM(require_i18n(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
   var import_core_data49 = __toESM(require_core_data(), 1);
   var import_element142 = __toESM(require_element(), 1);
   var import_components149 = __toESM(require_components(), 1);
-  var import_i18n140 = __toESM(require_i18n(), 1);
+  var import_i18n139 = __toESM(require_i18n(), 1);
   var import_router32 = __toESM(require_router(), 1);
   var import_url18 = __toESM(require_url(), 1);
   var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
@@ -42720,7 +42725,7 @@ If there's a particular need for this, please submit a feature request at https:
           to: "/template",
           icon: published_default,
           "aria-current": activeView === "active",
-          children: (0, import_i18n140.__)("Active templates")
+          children: (0, import_i18n139.__)("Active templates")
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
@@ -42733,7 +42738,7 @@ If there's a particular need for this, please submit a feature request at https:
           // confusion. "Created" is closest to meaning database
           // templates, created by users.
           // https://developer.wordpress.org/themes/classic-themes/templates/page-template-files/#creating-custom-page-templates-for-global-use
-          children: (0, import_i18n140.__)("Created templates")
+          children: (0, import_i18n139.__)("Created templates")
         }
       ),
       firstItemPerAuthorText.map((template) => {
@@ -42753,7 +42758,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data50 = __toESM(require_core_data(), 1);
   var import_element143 = __toESM(require_element(), 1);
   var import_components150 = __toESM(require_components(), 1);
-  var import_i18n141 = __toESM(require_i18n(), 1);
+  var import_i18n140 = __toESM(require_i18n(), 1);
   var import_router33 = __toESM(require_router(), 1);
   var import_url19 = __toESM(require_url(), 1);
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
@@ -42795,7 +42800,7 @@ If there's a particular need for this, please submit a feature request at https:
           to: "/template",
           icon: layout_default,
           "aria-current": activeView === "all",
-          children: (0, import_i18n141.__)("All templates")
+          children: (0, import_i18n140.__)("All templates")
         }
       ),
       firstItemPerAuthorText.map((template) => {
@@ -42817,8 +42822,8 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
       SidebarNavigationScreen,
       {
-        title: (0, import_i18n142.__)("Templates"),
-        description: (0, import_i18n142.__)(
+        title: (0, import_i18n141.__)("Templates"),
+        description: (0, import_i18n141.__)(
           "Create new templates, or reset any customizations made to the templates supplied by your theme."
         ),
         backPath,
@@ -42828,7 +42833,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
-  var import_i18n148 = __toESM(require_i18n(), 1);
+  var import_i18n147 = __toESM(require_i18n(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_element149 = __toESM(require_element(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
@@ -42847,14 +42852,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data73 = __toESM(require_data(), 1);
   var import_core_data53 = __toESM(require_core_data(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
-  var import_i18n146 = __toESM(require_i18n(), 1);
+  var import_i18n145 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
   var import_router34 = __toESM(require_router(), 1);
   var import_dom13 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
   var import_element145 = __toESM(require_element(), 1);
-  var import_i18n144 = __toESM(require_i18n(), 1);
+  var import_i18n143 = __toESM(require_i18n(), 1);
   var import_components151 = __toESM(require_components(), 1);
   var import_core_data52 = __toESM(require_core_data(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
@@ -42867,7 +42872,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data51 = __toESM(require_core_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_element144 = __toESM(require_element(), 1);
-  var import_i18n143 = __toESM(require_i18n(), 1);
+  var import_i18n142 = __toESM(require_i18n(), 1);
   var import_url20 = __toESM(require_url(), 1);
   var EMPTY_OBJECT2 = {};
   var getValueFromObjectPath2 = (object, path) => {
@@ -42962,24 +42967,24 @@ If there's a particular need for this, please submit a feature request at https:
       ).map((postType2) => {
         let title;
         if (needsUniqueIdentifier(postType2)) {
-          title = (0, import_i18n143.sprintf)(
+          title = (0, import_i18n142.sprintf)(
             // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-            (0, import_i18n143.__)("Archive: %1$s (%2$s)"),
+            (0, import_i18n142.__)("Archive: %1$s (%2$s)"),
             postType2.labels.singular_name,
             postType2.slug
           );
         } else {
-          title = (0, import_i18n143.sprintf)(
+          title = (0, import_i18n142.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n143.__)("Archive: %s"),
+            (0, import_i18n142.__)("Archive: %s"),
             postType2.labels.singular_name
           );
         }
         return {
           slug: "archive-" + postType2.slug,
-          description: (0, import_i18n143.sprintf)(
+          description: (0, import_i18n142.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n143.__)(
+            (0, import_i18n142.__)(
               "Displays an archive with the latest posts of type: %s."
             ),
             postType2.labels.singular_name
@@ -43033,20 +43038,20 @@ If there's a particular need for this, please submit a feature request at https:
           ({ slug: _slug }) => _slug === generalTemplateSlug
         );
         const _needsUniqueIdentifier = needsUniqueIdentifier(postType2);
-        let menuItemTitle = labels.template_name || (0, import_i18n143.sprintf)(
+        let menuItemTitle = labels.template_name || (0, import_i18n142.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n143.__)("Single item: %s"),
+          (0, import_i18n142.__)("Single item: %s"),
           labels.singular_name
         );
         if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n143.sprintf)(
+          menuItemTitle = labels.template_name ? (0, import_i18n142.sprintf)(
             // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n143._x)("%1$s (%2$s)", "post type menu label"),
+            (0, import_i18n142._x)("%1$s (%2$s)", "post type menu label"),
             labels.template_name,
             slug
-          ) : (0, import_i18n143.sprintf)(
+          ) : (0, import_i18n142.sprintf)(
             // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n143._x)(
+            (0, import_i18n142._x)(
               "Single item: %1$s (%2$s)",
               "post type menu label"
             ),
@@ -43060,9 +43065,9 @@ If there's a particular need for this, please submit a feature request at https:
         } : {
           slug: generalTemplateSlug,
           title: menuItemTitle,
-          description: (0, import_i18n143.sprintf)(
+          description: (0, import_i18n142.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n143.__)("Displays a single item: %s."),
+            (0, import_i18n142.__)("Displays a single item: %s."),
             labels.singular_name
           ),
           // `icon` is the `menu_icon` property of a post type. We
@@ -43178,14 +43183,14 @@ If there's a particular need for this, please submit a feature request at https:
         );
         let menuItemTitle = labels.template_name || labels.singular_name;
         if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n143.sprintf)(
+          menuItemTitle = labels.template_name ? (0, import_i18n142.sprintf)(
             // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n143._x)("%1$s (%2$s)", "taxonomy template menu label"),
+            (0, import_i18n142._x)("%1$s (%2$s)", "taxonomy template menu label"),
             labels.template_name,
             slug
-          ) : (0, import_i18n143.sprintf)(
+          ) : (0, import_i18n142.sprintf)(
             // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n143._x)("%1$s (%2$s)", "taxonomy menu label"),
+            (0, import_i18n142._x)("%1$s (%2$s)", "taxonomy menu label"),
             labels.singular_name,
             slug
           );
@@ -43196,9 +43201,9 @@ If there's a particular need for this, please submit a feature request at https:
         } : {
           slug: generalTemplateSlug,
           title: menuItemTitle,
-          description: (0, import_i18n143.sprintf)(
+          description: (0, import_i18n142.sprintf)(
             // translators: %s: Name of the taxonomy e.g: "Product Categories".
-            (0, import_i18n143.__)("Displays taxonomy: %s."),
+            (0, import_i18n142.__)("Displays taxonomy: %s."),
             labels.singular_name
           ),
           icon: block_meta_default,
@@ -43275,7 +43280,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     if (!authorMenuItem) {
       authorMenuItem = {
-        description: (0, import_i18n143.__)(
+        description: (0, import_i18n142.__)(
           "Displays latest posts written by a single author."
         ),
         slug: "author",
@@ -43306,9 +43311,9 @@ If there's a particular need for this, please submit a feature request at https:
                 suggestion.slug
               );
               return {
-                title: (0, import_i18n143.sprintf)(
+                title: (0, import_i18n142.sprintf)(
                   // translators: %s: Name of the author e.g: "Admin".
-                  (0, import_i18n143.__)("Author: %s"),
+                  (0, import_i18n142.__)("Author: %s"),
                   suggestion.name
                 ),
                 slug: templateSlug,
@@ -43317,10 +43322,10 @@ If there's a particular need for this, please submit a feature request at https:
             }
           },
           labels: {
-            singular_name: (0, import_i18n143.__)("Author"),
-            search_items: (0, import_i18n143.__)("Search Authors"),
-            not_found: (0, import_i18n143.__)("No authors found."),
-            all_items: (0, import_i18n143.__)("All Authors")
+            singular_name: (0, import_i18n142.__)("Author"),
+            search_items: (0, import_i18n142.__)("Search Authors"),
+            not_found: (0, import_i18n142.__)("No authors found."),
+            all_items: (0, import_i18n142.__)("All Authors")
           },
           hasGeneralTemplate,
           template
@@ -43484,7 +43489,7 @@ If there's a particular need for this, please submit a feature request at https:
           orientation: "vertical",
           role: "listbox",
           className: "edit-site-custom-template-modal__suggestions_list",
-          "aria-label": (0, import_i18n144.__)("Suggestions list"),
+          "aria-label": (0, import_i18n143.__)("Suggestions list"),
           children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
             SuggestionListItem,
             {
@@ -43530,7 +43535,7 @@ If there's a particular need for this, please submit a feature request at https:
         alignment: "left",
         children: [
           !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(import_jsx_runtime280.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components151.__experimentalText, { as: "p", children: (0, import_i18n144.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components151.__experimentalText, { as: "p", children: (0, import_i18n143.__)(
               "Select whether to create a single template for all items or a specific one."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(
@@ -43575,7 +43580,7 @@ If there's a particular need for this, please submit a feature request at https:
                             as: "span",
                             lineHeight: 1.53846153846,
                             // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n144.__)("For all items")
+                            children: (0, import_i18n143.__)("For all items")
                           }
                         )
                       ]
@@ -43605,7 +43610,7 @@ If there's a particular need for this, please submit a feature request at https:
                             as: "span",
                             lineHeight: 1.53846153846,
                             // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n144.__)("For a specific item")
+                            children: (0, import_i18n143.__)("For a specific item")
                           }
                         )
                       ]
@@ -43620,12 +43625,12 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onBack,
-                children: (0, import_i18n144.__)("Back")
+                children: (0, import_i18n143.__)("Back")
               }
             ) })
           ] }),
           showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(import_jsx_runtime280.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components151.__experimentalText, { as: "p", children: (0, import_i18n144.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components151.__experimentalText, { as: "p", children: (0, import_i18n143.__)(
               "This template will be used only for the specific item chosen."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
@@ -43647,7 +43652,7 @@ If there's a particular need for this, please submit a feature request at https:
                     setShowSearchEntities(false);
                   }
                 },
-                children: (0, import_i18n144.__)("Back")
+                children: (0, import_i18n143.__)("Back")
               }
             ) })
           ] })
@@ -43717,12 +43722,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-generic-template-modal-content.mjs
   var import_element146 = __toESM(require_element(), 1);
-  var import_i18n145 = __toESM(require_i18n(), 1);
+  var import_i18n144 = __toESM(require_i18n(), 1);
   var import_components152 = __toESM(require_components(), 1);
   var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent({ createTemplate, onBack }) {
     const [title, setTitle] = (0, import_element146.useState)("");
-    const defaultTitle = (0, import_i18n145.__)("Custom Template");
+    const defaultTitle = (0, import_i18n144.__)("Custom Template");
     const [isBusy, setIsBusy] = (0, import_element146.useState)(false);
     const inputRef = (0, import_element146.useRef)();
     (0, import_element146.useEffect)(() => {
@@ -43753,13 +43758,13 @@ If there's a particular need for this, please submit a feature request at https:
         import_components152.TextControl,
         {
           __next40pxDefaultSize: true,
-          label: (0, import_i18n145.__)("Name"),
+          label: (0, import_i18n144.__)("Name"),
           value: title,
           onChange: setTitle,
           placeholder: defaultTitle,
           disabled: isBusy,
           ref: inputRef,
-          help: (0, import_i18n145.__)(
+          help: (0, import_i18n144.__)(
             // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
             'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
           )
@@ -43777,7 +43782,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onBack,
-                children: (0, import_i18n145.__)("Back")
+                children: (0, import_i18n144.__)("Back")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
@@ -43788,7 +43793,7 @@ If there's a particular need for this, please submit a feature request at https:
                 type: "submit",
                 isBusy,
                 "aria-disabled": isBusy,
-                children: (0, import_i18n145.__)("Create")
+                children: (0, import_i18n144.__)("Create")
               }
             )
           ]
@@ -43910,9 +43915,9 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
       "front-page": homeUrl,
-      date: (0, import_i18n146.sprintf)(
+      date: (0, import_i18n145.sprintf)(
         // translators: %s: The homepage url.
-        (0, import_i18n146.__)("E.g. %s"),
+        (0, import_i18n145.__)("E.g. %s"),
         homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
       )
     };
@@ -43951,17 +43956,17 @@ If there's a particular need for this, please submit a feature request at https:
           `/${TEMPLATE_POST_TYPE}/${newTemplate.id}?canvas=edit`
         );
         createSuccessNotice(
-          (0, import_i18n146.sprintf)(
+          (0, import_i18n145.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
-            (0, import_i18n146.__)('"%s" successfully created.'),
-            (0, import_html_entities12.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n146.__)("(no title)")
+            (0, import_i18n145.__)('"%s" successfully created.'),
+            (0, import_html_entities12.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n145.__)("(no title)")
           ),
           {
             type: "snackbar"
           }
         );
       } catch (error) {
-        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n146.__)("An error occurred while creating the template.");
+        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n145.__)("An error occurred while creating the template.");
         createErrorNotice(errorMessage, {
           type: "snackbar"
         });
@@ -43973,15 +43978,15 @@ If there's a particular need for this, please submit a feature request at https:
       onClose();
       setModalContent(modalContentMap.templatesList);
     };
-    let modalTitle = (0, import_i18n146.__)("Add template");
+    let modalTitle = (0, import_i18n145.__)("Add template");
     if (modalContent === modalContentMap.customTemplate) {
-      modalTitle = (0, import_i18n146.sprintf)(
+      modalTitle = (0, import_i18n145.sprintf)(
         // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n146.__)("Add template: %s"),
+        (0, import_i18n145.__)("Add template: %s"),
         entityForSuggestions.labels.singular_name
       );
     } else if (modalContent === modalContentMap.customGenericTemplate) {
-      modalTitle = (0, import_i18n146.__)("Create custom template");
+      modalTitle = (0, import_i18n145.__)("Create custom template");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(
       import_components153.Modal,
@@ -44004,7 +44009,7 @@ If there's a particular need for this, please submit a feature request at https:
               justify: "center",
               className: "edit-site-add-new-template__template-list__contents",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components153.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n146.__)(
+                /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components153.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n145.__)(
                   "Select what the new template should apply to:"
                 ) }),
                 missingTemplates.map((template) => {
@@ -44025,7 +44030,7 @@ If there's a particular need for this, please submit a feature request at https:
                 /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
                   TemplateListItem,
                   {
-                    title: (0, import_i18n146.__)("Custom template"),
+                    title: (0, import_i18n145.__)("Custom template"),
                     direction: "row",
                     className: "edit-site-add-new-template__custom-template-button",
                     icon: pencil_default,
@@ -44036,7 +44041,7 @@ If there's a particular need for this, please submit a feature request at https:
                       import_components153.__experimentalText,
                       {
                         lineHeight: 1.53846153846,
-                        children: (0, import_i18n146.__)(
+                        children: (0, import_i18n145.__)(
                           "A custom template can be manually applied to any post or page."
                         )
                       }
@@ -44136,7 +44141,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-templates/fields.mjs
   var import_components154 = __toESM(require_components(), 1);
-  var import_i18n147 = __toESM(require_i18n(), 1);
+  var import_i18n146 = __toESM(require_i18n(), 1);
   var import_element148 = __toESM(require_element(), 1);
   var import_html_entities13 = __toESM(require_html_entities(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
@@ -44178,20 +44183,20 @@ If there's a particular need for this, please submit a feature request at https:
         className: "page-templates-preview-field",
         style: { backgroundColor },
         children: [
-          isEmpty3 && (0, import_i18n147.__)("Empty template"),
+          isEmpty3 && (0, import_i18n146.__)("Empty template"),
           !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_block_editor25.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_block_editor25.BlockPreview, { blocks }) })
         ]
       }
     ) });
   }
   var previewField2 = {
-    label: (0, import_i18n147.__)("Preview"),
+    label: (0, import_i18n146.__)("Preview"),
     id: "preview",
     render: PreviewField2,
     enableSorting: false
   };
   var descriptionField = {
-    label: (0, import_i18n147.__)("Description"),
+    label: (0, import_i18n146.__)("Description"),
     id: "description",
     render: window?.__experimentalTemplateActivate ? function RenderDescription({ item }) {
       const defaultTemplateTypes = useAllDefaultTemplateTypes();
@@ -44230,21 +44235,21 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   var authorField = {
-    label: (0, import_i18n147.__)("Author"),
+    label: (0, import_i18n146.__)("Author"),
     id: "author",
     getValue: ({ item }) => item.author_text ?? item.author,
     render: AuthorField2
   };
   var activeField = {
-    label: (0, import_i18n147.__)("Status"),
+    label: (0, import_i18n146.__)("Status"),
     id: "active",
     type: "boolean",
     getValue: ({ item }) => item._isActive,
     render: function Render({ item }) {
-      const activeLabel = item._isCustom ? (0, import_i18n147._x)("Active when used", "template") : (0, import_i18n147._x)("Active", "template");
+      const activeLabel = item._isCustom ? (0, import_i18n146._x)("Active when used", "template") : (0, import_i18n146._x)("Active", "template");
       const activeIntent = item._isCustom ? "info" : "success";
       const isActive = item._isActive;
-      return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(Badge5, { intent: isActive ? activeIntent : "default", children: isActive ? activeLabel : (0, import_i18n147._x)("Inactive", "template") });
+      return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(Badge5, { intent: isActive ? activeIntent : "default", children: isActive ? activeLabel : (0, import_i18n146._x)("Inactive", "template") });
     }
   };
   var useThemeField = () => {
@@ -44253,7 +44258,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return (0, import_element148.useMemo)(
       () => ({
-        label: (0, import_i18n147.__)("Compatible Theme"),
+        label: (0, import_i18n146.__)("Compatible Theme"),
         id: "theme",
         getValue: ({ item }) => item.theme,
         render: function Render3({ item }) {
@@ -44267,7 +44272,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   var slugField = {
-    label: (0, import_i18n147.__)("Template Type"),
+    label: (0, import_i18n146.__)("Template Type"),
     id: "slug",
     getValue: ({ item }) => item.slug,
     render: function Render2({ item }) {
@@ -44275,7 +44280,7 @@ If there's a particular need for this, please submit a feature request at https:
       const defaultTemplateType = defaultTemplateTypes.find(
         (type) => type.slug === item.slug
       );
-      return defaultTemplateType?.title || (0, import_i18n147._x)("Custom", "template type");
+      return defaultTemplateType?.title || (0, import_i18n146._x)("Custom", "template type");
     }
   };
 
@@ -44518,17 +44523,17 @@ If there's a particular need for this, please submit a feature request at https:
               const _title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
               history.navigate(`/template?activeView=user`);
               createSuccessNotice(
-                (0, import_i18n148.sprintf)(
+                (0, import_i18n147.sprintf)(
                   // translators: %s: Title of the created post or template, e.g: "Hello world".
-                  (0, import_i18n148.__)('"%s" successfully created.'),
-                  (0, import_html_entities14.decodeEntities)(_title) || (0, import_i18n148.__)("(no title)")
+                  (0, import_i18n147.__)('"%s" successfully created.'),
+                  (0, import_html_entities14.decodeEntities)(_title) || (0, import_i18n147.__)("(no title)")
                 ),
                 {
                   type: "snackbar",
                   id: "duplicate-post-action",
                   actions: [
                     {
-                      label: (0, import_i18n148.__)("Edit"),
+                      label: (0, import_i18n147.__)("Edit"),
                       onClick: () => {
                         history.navigate(
                           `/${newItem.type}/${newItem.id}?canvas=edit`
@@ -44568,7 +44573,7 @@ If there's a particular need for this, please submit a feature request at https:
       page_default,
       {
         className: "edit-site-page-templates",
-        title: (0, import_i18n148.__)("Templates"),
+        title: (0, import_i18n147.__)("Templates"),
         actions: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(add_new_template_default, {}),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
@@ -44604,7 +44609,7 @@ If there's a particular need for this, please submit a feature request at https:
           selectedRegisteredTemplate && duplicateAction && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
             import_components155.Modal,
             {
-              title: (0, import_i18n148.__)("Duplicate"),
+              title: (0, import_i18n147.__)("Duplicate"),
               onRequestClose: () => setSelectedRegisteredTemplate(),
               size: "small",
               children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
@@ -44622,7 +44627,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
-  var import_i18n153 = __toESM(require_i18n(), 1);
+  var import_i18n152 = __toESM(require_i18n(), 1);
   var import_element154 = __toESM(require_element(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
   var import_router37 = __toESM(require_router(), 1);
@@ -44637,14 +44642,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data77 = __toESM(require_data(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_compose32 = __toESM(require_compose(), 1);
-  var import_i18n152 = __toESM(require_i18n(), 1);
+  var import_i18n151 = __toESM(require_i18n(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
   var import_router36 = __toESM(require_router(), 1);
   var import_dom15 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
   var import_element151 = __toESM(require_element(), 1);
-  var import_i18n150 = __toESM(require_i18n(), 1);
+  var import_i18n149 = __toESM(require_i18n(), 1);
   var import_components156 = __toESM(require_components(), 1);
   var import_core_data57 = __toESM(require_core_data(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
@@ -44657,7 +44662,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data56 = __toESM(require_core_data(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
   var import_element150 = __toESM(require_element(), 1);
-  var import_i18n149 = __toESM(require_i18n(), 1);
+  var import_i18n148 = __toESM(require_i18n(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var EMPTY_OBJECT3 = {};
   var getValueFromObjectPath3 = (object, path) => {
@@ -44752,24 +44757,24 @@ If there's a particular need for this, please submit a feature request at https:
       ).map((postType2) => {
         let title;
         if (needsUniqueIdentifier(postType2)) {
-          title = (0, import_i18n149.sprintf)(
+          title = (0, import_i18n148.sprintf)(
             // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-            (0, import_i18n149.__)("Archive: %1$s (%2$s)"),
+            (0, import_i18n148.__)("Archive: %1$s (%2$s)"),
             postType2.labels.singular_name,
             postType2.slug
           );
         } else {
-          title = (0, import_i18n149.sprintf)(
+          title = (0, import_i18n148.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n149.__)("Archive: %s"),
+            (0, import_i18n148.__)("Archive: %s"),
             postType2.labels.singular_name
           );
         }
         return {
           slug: "archive-" + postType2.slug,
-          description: (0, import_i18n149.sprintf)(
+          description: (0, import_i18n148.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n149.__)(
+            (0, import_i18n148.__)(
               "Displays an archive with the latest posts of type: %s."
             ),
             postType2.labels.singular_name
@@ -44828,20 +44833,20 @@ If there's a particular need for this, please submit a feature request at https:
         );
         const hasGeneralTemplate = existingTemplateSlugs?.includes(generalTemplateSlug);
         const _needsUniqueIdentifier = needsUniqueIdentifier(postType2);
-        let menuItemTitle = labels.template_name || (0, import_i18n149.sprintf)(
+        let menuItemTitle = labels.template_name || (0, import_i18n148.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n149.__)("Single item: %s"),
+          (0, import_i18n148.__)("Single item: %s"),
           labels.singular_name
         );
         if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n149.sprintf)(
+          menuItemTitle = labels.template_name ? (0, import_i18n148.sprintf)(
             // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n149._x)("%1$s (%2$s)", "post type menu label"),
+            (0, import_i18n148._x)("%1$s (%2$s)", "post type menu label"),
             labels.template_name,
             slug
-          ) : (0, import_i18n149.sprintf)(
+          ) : (0, import_i18n148.sprintf)(
             // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n149._x)(
+            (0, import_i18n148._x)(
               "Single item: %1$s (%2$s)",
               "post type menu label"
             ),
@@ -44855,9 +44860,9 @@ If there's a particular need for this, please submit a feature request at https:
         } : {
           slug: generalTemplateSlug,
           title: menuItemTitle,
-          description: (0, import_i18n149.sprintf)(
+          description: (0, import_i18n148.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n149.__)("Displays a single item: %s."),
+            (0, import_i18n148.__)("Displays a single item: %s."),
             labels.singular_name
           ),
           // `icon` is the `menu_icon` property of a post type. We
@@ -44974,14 +44979,14 @@ If there's a particular need for this, please submit a feature request at https:
         );
         let menuItemTitle = labels.template_name || labels.singular_name;
         if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n149.sprintf)(
+          menuItemTitle = labels.template_name ? (0, import_i18n148.sprintf)(
             // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n149._x)("%1$s (%2$s)", "taxonomy template menu label"),
+            (0, import_i18n148._x)("%1$s (%2$s)", "taxonomy template menu label"),
             labels.template_name,
             slug
-          ) : (0, import_i18n149.sprintf)(
+          ) : (0, import_i18n148.sprintf)(
             // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n149._x)("%1$s (%2$s)", "taxonomy menu label"),
+            (0, import_i18n148._x)("%1$s (%2$s)", "taxonomy menu label"),
             labels.singular_name,
             slug
           );
@@ -44992,9 +44997,9 @@ If there's a particular need for this, please submit a feature request at https:
         } : {
           slug: generalTemplateSlug,
           title: menuItemTitle,
-          description: (0, import_i18n149.sprintf)(
+          description: (0, import_i18n148.sprintf)(
             // translators: %s: Name of the taxonomy e.g: "Product Categories".
-            (0, import_i18n149.__)("Displays taxonomy: %s."),
+            (0, import_i18n148.__)("Displays taxonomy: %s."),
             labels.singular_name
           ),
           icon: block_meta_default,
@@ -45071,7 +45076,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     if (!authorMenuItem) {
       authorMenuItem = {
-        description: (0, import_i18n149.__)(
+        description: (0, import_i18n148.__)(
           "Displays latest posts written by a single author."
         ),
         slug: "author",
@@ -45109,10 +45114,10 @@ If there's a particular need for this, please submit a feature request at https:
             }
           },
           labels: {
-            singular_name: (0, import_i18n149.__)("Author"),
-            search_items: (0, import_i18n149.__)("Search Authors"),
-            not_found: (0, import_i18n149.__)("No authors found."),
-            all_items: (0, import_i18n149.__)("All Authors")
+            singular_name: (0, import_i18n148.__)("Author"),
+            search_items: (0, import_i18n148.__)("Search Authors"),
+            not_found: (0, import_i18n148.__)("No authors found."),
+            all_items: (0, import_i18n148.__)("All Authors")
           },
           hasGeneralTemplate,
           template
@@ -45349,7 +45354,7 @@ If there's a particular need for this, please submit a feature request at https:
           orientation: "vertical",
           role: "listbox",
           className: "edit-site-custom-template-modal__suggestions_list",
-          "aria-label": (0, import_i18n150.__)("Suggestions list"),
+          "aria-label": (0, import_i18n149.__)("Suggestions list"),
           children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
             SuggestionListItem2,
             {
@@ -45397,7 +45402,7 @@ If there's a particular need for this, please submit a feature request at https:
         alignment: "left",
         children: [
           !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(import_jsx_runtime285.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components156.__experimentalText, { as: "p", children: (0, import_i18n150.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components156.__experimentalText, { as: "p", children: (0, import_i18n149.__)(
               "Select whether to create a single template for all items or a specific one."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(
@@ -45442,7 +45447,7 @@ If there's a particular need for this, please submit a feature request at https:
                             as: "span",
                             lineHeight: 1.53846153846,
                             // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n150.__)("For all items")
+                            children: (0, import_i18n149.__)("For all items")
                           }
                         )
                       ]
@@ -45472,7 +45477,7 @@ If there's a particular need for this, please submit a feature request at https:
                             as: "span",
                             lineHeight: 1.53846153846,
                             // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n150.__)("For a specific item")
+                            children: (0, import_i18n149.__)("For a specific item")
                           }
                         )
                       ]
@@ -45487,12 +45492,12 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onBack,
-                children: (0, import_i18n150.__)("Back")
+                children: (0, import_i18n149.__)("Back")
               }
             ) })
           ] }),
           showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(import_jsx_runtime285.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components156.__experimentalText, { as: "p", children: (0, import_i18n150.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components156.__experimentalText, { as: "p", children: (0, import_i18n149.__)(
               "This template will be used only for the specific item chosen."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
@@ -45514,7 +45519,7 @@ If there's a particular need for this, please submit a feature request at https:
                     setShowSearchEntities(false);
                   }
                 },
-                children: (0, import_i18n150.__)("Back")
+                children: (0, import_i18n149.__)("Back")
               }
             ) })
           ] })
@@ -45526,12 +45531,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-generic-template-modal-content.mjs
   var import_element152 = __toESM(require_element(), 1);
-  var import_i18n151 = __toESM(require_i18n(), 1);
+  var import_i18n150 = __toESM(require_i18n(), 1);
   var import_components157 = __toESM(require_components(), 1);
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent2({ createTemplate, onBack }) {
     const [title, setTitle] = (0, import_element152.useState)("");
-    const defaultTitle = (0, import_i18n151.__)("Custom Template");
+    const defaultTitle = (0, import_i18n150.__)("Custom Template");
     const [isBusy, setIsBusy] = (0, import_element152.useState)(false);
     const inputRef = (0, import_element152.useRef)();
     (0, import_element152.useEffect)(() => {
@@ -45562,13 +45567,13 @@ If there's a particular need for this, please submit a feature request at https:
         import_components157.TextControl,
         {
           __next40pxDefaultSize: true,
-          label: (0, import_i18n151.__)("Name"),
+          label: (0, import_i18n150.__)("Name"),
           value: title,
           onChange: setTitle,
           placeholder: defaultTitle,
           disabled: isBusy,
           ref: inputRef,
-          help: (0, import_i18n151.__)(
+          help: (0, import_i18n150.__)(
             // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
             'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
           )
@@ -45586,7 +45591,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onBack,
-                children: (0, import_i18n151.__)("Back")
+                children: (0, import_i18n150.__)("Back")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
@@ -45597,7 +45602,7 @@ If there's a particular need for this, please submit a feature request at https:
                 type: "submit",
                 isBusy,
                 "aria-disabled": isBusy,
-                children: (0, import_i18n151.__)("Create")
+                children: (0, import_i18n150.__)("Create")
               }
             )
           ]
@@ -45719,9 +45724,9 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
       "front-page": homeUrl,
-      date: (0, import_i18n152.sprintf)(
+      date: (0, import_i18n151.sprintf)(
         // translators: %s: The homepage url.
-        (0, import_i18n152.__)("E.g. %s"),
+        (0, import_i18n151.__)("E.g. %s"),
         homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
       )
     };
@@ -45758,17 +45763,17 @@ If there's a particular need for this, please submit a feature request at https:
           `/${TEMPLATE_POST_TYPE}/${newTemplate.id}?canvas=edit`
         );
         createSuccessNotice(
-          (0, import_i18n152.sprintf)(
+          (0, import_i18n151.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
-            (0, import_i18n152.__)('"%s" successfully created.'),
-            (0, import_html_entities17.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n152.__)("(no title)")
+            (0, import_i18n151.__)('"%s" successfully created.'),
+            (0, import_html_entities17.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n151.__)("(no title)")
           ),
           {
             type: "snackbar"
           }
         );
       } catch (error) {
-        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n152.__)("An error occurred while creating the template.");
+        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n151.__)("An error occurred while creating the template.");
         createErrorNotice(errorMessage, {
           type: "snackbar"
         });
@@ -45780,15 +45785,15 @@ If there's a particular need for this, please submit a feature request at https:
       onClose();
       setModalContent(modalContentMap2.templatesList);
     };
-    let modalTitle = (0, import_i18n152.__)("Add template");
+    let modalTitle = (0, import_i18n151.__)("Add template");
     if (modalContent === modalContentMap2.customTemplate) {
-      modalTitle = (0, import_i18n152.sprintf)(
+      modalTitle = (0, import_i18n151.sprintf)(
         // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n152.__)("Add template: %s"),
+        (0, import_i18n151.__)("Add template: %s"),
         entityForSuggestions.labels.singular_name
       );
     } else if (modalContent === modalContentMap2.customGenericTemplate) {
-      modalTitle = (0, import_i18n152.__)("Create custom template");
+      modalTitle = (0, import_i18n151.__)("Create custom template");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(
       import_components158.Modal,
@@ -45811,7 +45816,7 @@ If there's a particular need for this, please submit a feature request at https:
               justify: "center",
               className: "edit-site-add-new-template__template-list__contents",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(import_components158.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n152.__)(
+                /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(import_components158.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n151.__)(
                   "Select what the new template should apply to:"
                 ) }),
                 missingTemplates.map((template) => {
@@ -45832,7 +45837,7 @@ If there's a particular need for this, please submit a feature request at https:
                 /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
                   TemplateListItem2,
                   {
-                    title: (0, import_i18n152.__)("Custom template"),
+                    title: (0, import_i18n151.__)("Custom template"),
                     direction: "row",
                     className: "edit-site-add-new-template__custom-template-button",
                     icon: pencil_default,
@@ -45843,7 +45848,7 @@ If there's a particular need for this, please submit a feature request at https:
                       import_components158.__experimentalText,
                       {
                         lineHeight: 1.53846153846,
-                        children: (0, import_i18n152.__)(
+                        children: (0, import_i18n151.__)(
                           "A custom template can be manually applied to any post or page."
                         )
                       }
@@ -46043,7 +46048,7 @@ If there's a particular need for this, please submit a feature request at https:
       page_default,
       {
         className: "edit-site-page-templates",
-        title: (0, import_i18n153.__)("Templates"),
+        title: (0, import_i18n152.__)("Templates"),
         actions: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(add_new_template_legacy_default, {}),
         children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
           dataviews_default,
@@ -46150,7 +46155,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
   var import_router41 = __toESM(require_router(), 1);
-  var import_i18n157 = __toESM(require_i18n(), 1);
+  var import_i18n156 = __toESM(require_i18n(), 1);
 
   // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
   var import_components160 = __toESM(require_components(), 1);
@@ -46204,7 +46209,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/view-utils.mjs
-  var import_i18n154 = __toESM(require_i18n(), 1);
+  var import_i18n153 = __toESM(require_i18n(), 1);
   var defaultLayouts3 = {
     table: {
       layout: {
@@ -46235,13 +46240,13 @@ If there's a particular need for this, please submit a feature request at https:
   function getDefaultViews(postType2) {
     return [
       {
-        title: postType2?.labels?.all_items || (0, import_i18n154.__)("All items"),
+        title: postType2?.labels?.all_items || (0, import_i18n153.__)("All items"),
         slug: "all",
         icon: pages_default,
         view: DEFAULT_VIEW3
       },
       {
-        title: (0, import_i18n154.__)("Published"),
+        title: (0, import_i18n153.__)("Published"),
         slug: "published",
         icon: published_default,
         view: {
@@ -46257,7 +46262,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       },
       {
-        title: (0, import_i18n154.__)("Scheduled"),
+        title: (0, import_i18n153.__)("Scheduled"),
         slug: "future",
         icon: scheduled_default,
         view: {
@@ -46273,7 +46278,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       },
       {
-        title: (0, import_i18n154.__)("Drafts"),
+        title: (0, import_i18n153.__)("Drafts"),
         slug: "drafts",
         icon: drafts_default,
         view: {
@@ -46289,7 +46294,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       },
       {
-        title: (0, import_i18n154.__)("Pending"),
+        title: (0, import_i18n153.__)("Pending"),
         slug: "pending",
         icon: pending_default,
         view: {
@@ -46305,7 +46310,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       },
       {
-        title: (0, import_i18n154.__)("Private"),
+        title: (0, import_i18n153.__)("Private"),
         slug: "private",
         icon: not_allowed_default,
         view: {
@@ -46321,7 +46326,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       },
       {
-        title: (0, import_i18n154.__)("Trash"),
+        title: (0, import_i18n153.__)("Trash"),
         slug: "trash",
         icon: trash_default,
         view: {
@@ -46417,7 +46422,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-post/index.mjs
   var import_components161 = __toESM(require_components(), 1);
-  var import_i18n155 = __toESM(require_i18n(), 1);
+  var import_i18n154 = __toESM(require_i18n(), 1);
   var import_data79 = __toESM(require_data(), 1);
   var import_element156 = __toESM(require_element(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
@@ -46461,15 +46466,15 @@ If there's a particular need for this, please submit a feature request at https:
         );
         onSave(newPage);
         createSuccessNotice(
-          (0, import_i18n155.sprintf)(
+          (0, import_i18n154.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
-            (0, import_i18n155.__)('"%s" successfully created.'),
-            (0, import_html_entities18.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n155.__)("(no title)")
+            (0, import_i18n154.__)('"%s" successfully created.'),
+            (0, import_html_entities18.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n154.__)("(no title)")
           ),
           { type: "snackbar" }
         );
       } catch (error) {
-        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n155.__)("An error occurred while creating the item.");
+        const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n154.__)("An error occurred while creating the item.");
         createErrorNotice(errorMessage, {
           type: "snackbar"
         });
@@ -46482,7 +46487,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         title: (
           // translators: %s: post type singular_name label e.g: "Page".
-          (0, import_i18n155.sprintf)((0, import_i18n155.__)("Draft new: %s"), labels?.singular_name)
+          (0, import_i18n154.sprintf)((0, import_i18n154.__)("Draft new: %s"), labels?.singular_name)
         ),
         onRequestClose: onClose,
         focusOnMount: "firstContentElement",
@@ -46492,9 +46497,9 @@ If there's a particular need for this, please submit a feature request at https:
             import_components161.TextControl,
             {
               __next40pxDefaultSize: true,
-              label: (0, import_i18n155.__)("Title"),
+              label: (0, import_i18n154.__)("Title"),
               onChange: setTitle,
-              placeholder: (0, import_i18n155.__)("No title"),
+              placeholder: (0, import_i18n154.__)("No title"),
               value: title
             }
           ),
@@ -46505,7 +46510,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onClose,
-                children: (0, import_i18n155.__)("Cancel")
+                children: (0, import_i18n154.__)("Cancel")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
@@ -46516,7 +46521,7 @@ If there's a particular need for this, please submit a feature request at https:
                 type: "submit",
                 isBusy: isCreatingPost,
                 "aria-disabled": isCreatingPost,
-                children: (0, import_i18n155.__)("Create draft")
+                children: (0, import_i18n154.__)("Create draft")
               }
             )
           ] })
@@ -46558,7 +46563,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/quick-edit-modal.mjs
-  var import_i18n156 = __toESM(require_i18n(), 1);
+  var import_i18n155 = __toESM(require_i18n(), 1);
   var import_data80 = __toESM(require_data(), 1);
   var import_core_data63 = __toESM(require_core_data(), 1);
   var import_components162 = __toESM(require_components(), 1);
@@ -46633,7 +46638,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         {
           id: "status",
-          label: (0, import_i18n156.__)("Status"),
+          label: (0, import_i18n155.__)("Status"),
           children: [
             {
               id: "status",
@@ -46648,7 +46653,7 @@ If there's a particular need for this, please submit a feature request at https:
         "parent",
         {
           id: "discussion",
-          label: (0, import_i18n156.__)("Discussion"),
+          label: (0, import_i18n155.__)("Discussion"),
           children: [
             {
               id: "comment_status",
@@ -46731,7 +46736,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "secondary",
                 onClick: closeModal,
-                children: (0, import_i18n156.__)("Cancel")
+                children: (0, import_i18n155.__)("Cancel")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
@@ -46740,7 +46745,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "primary",
                 onClick: onSave,
-                children: (0, import_i18n156.__)("Done")
+                children: (0, import_i18n155.__)("Done")
               }
             )
           ] })
@@ -47033,7 +47038,7 @@ If there's a particular need for this, please submit a feature request at https:
         return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n157.__)("Pages"),
+            title: (0, import_i18n156.__)("Pages"),
             backPath: "/",
             content: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(DataViewsSidebarContent, { postType: "page" })
           }
@@ -47065,7 +47070,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/page-item.mjs
-  var import_i18n158 = __toESM(require_i18n(), 1);
+  var import_i18n157 = __toESM(require_i18n(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   var pageItemRoute = {
     name: "page-item",
@@ -47076,7 +47081,7 @@ If there's a particular need for this, please submit a feature request at https:
         return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n158.__)("Pages"),
+            title: (0, import_i18n157.__)("Pages"),
             backPath: "/",
             content: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(DataViewsSidebarContent, { postType: "page" })
           }
@@ -47094,7 +47099,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/attachment-item.mjs
-  var import_i18n159 = __toESM(require_i18n(), 1);
+  var import_i18n158 = __toESM(require_i18n(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   var attachmentItemRoute = {
     name: "attachment-item",
@@ -47103,7 +47108,7 @@ If there's a particular need for this, please submit a feature request at https:
       sidebar: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
         SidebarNavigationScreen,
         {
-          title: (0, import_i18n159.__)("Media"),
+          title: (0, import_i18n158.__)("Media"),
           backPath: "/",
           content: null
         }
@@ -47114,7 +47119,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
-  var import_i18n160 = __toESM(require_i18n(), 1);
+  var import_i18n159 = __toESM(require_i18n(), 1);
   var import_editor44 = __toESM(require_editor(), 1);
   var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
   var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor44.privateApis);
@@ -47126,9 +47131,9 @@ If there's a particular need for this, please submit a feature request at https:
         return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n160.__)("Styles"),
+            title: (0, import_i18n159.__)("Styles"),
             backPath: "/",
-            description: (0, import_i18n160.__)(
+            description: (0, import_i18n159.__)(
               `Preview your website's visual identity: colors, typography, and blocks.`
             )
           }
@@ -47144,11 +47149,11 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/notfound.mjs
-  var import_i18n161 = __toESM(require_i18n(), 1);
+  var import_i18n160 = __toESM(require_i18n(), 1);
   var import_components164 = __toESM(require_components(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
   function NotFoundError() {
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components164.Notice, { status: "error", isDismissible: false, children: (0, import_i18n161.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components164.Notice, { status: "error", isDismissible: false, children: (0, import_i18n160.__)(
       "The requested page could not be found. Please check the URL."
     ) });
   }
