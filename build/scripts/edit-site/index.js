@@ -35739,11 +35739,10 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeView, setIsShowingFilter]
     );
-    const visibleFilters = filters.filter((filter) => filter.isVisible);
-    const hasVisibleFilters = !!visibleFilters.length;
     if (filters.length === 0) {
       return null;
     }
+    const hasVisibleFilters = filters.some((filter) => filter.isVisible);
     const addFilterButtonProps = {
       label: (0, import_i18n109.__)("Add filter"),
       "aria-expanded": false,
@@ -35760,6 +35759,9 @@ If there's a particular need for this, please submit a feature request at https:
         setIsShowingFilter(!isShowingFilter);
       }
     };
+    const hasPrimaryOrLockedFilters = filters.some(
+      (filter) => filter.isPrimary || filter.isLocked
+    );
     const buttonComponent = /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
       import_components115.Button,
       {
@@ -35767,6 +35769,8 @@ If there's a particular need for this, please submit a feature request at https:
         className: "dataviews-filters__visibility-toggle",
         size: "compact",
         icon: funnel_default,
+        disabled: hasPrimaryOrLockedFilters,
+        accessibleWhenDisabled: true,
         ...hasVisibleFilters ? toggleFiltersButtonProps : addFilterButtonProps
       }
     );

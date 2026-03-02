@@ -13065,11 +13065,10 @@ function FiltersToggle() {
     },
     [onChangeView, setIsShowingFilter]
   );
-  const visibleFilters = filters.filter((filter) => filter.isVisible);
-  const hasVisibleFilters = !!visibleFilters.length;
   if (filters.length === 0) {
     return null;
   }
+  const hasVisibleFilters = filters.some((filter) => filter.isVisible);
   const addFilterButtonProps = {
     label: (0, import_i18n27.__)("Add filter"),
     "aria-expanded": false,
@@ -13086,6 +13085,9 @@ function FiltersToggle() {
       setIsShowingFilter(!isShowingFilter);
     }
   };
+  const hasPrimaryOrLockedFilters = filters.some(
+    (filter) => filter.isPrimary || filter.isLocked
+  );
   const buttonComponent = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
     import_components26.Button,
     {
@@ -13093,6 +13095,8 @@ function FiltersToggle() {
       className: "dataviews-filters__visibility-toggle",
       size: "compact",
       icon: funnel_default,
+      disabled: hasPrimaryOrLockedFilters,
+      accessibleWhenDisabled: true,
       ...hasVisibleFilters ? toggleFiltersButtonProps : addFilterButtonProps
     }
   );
