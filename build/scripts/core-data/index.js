@@ -2778,7 +2778,7 @@ var wp;
       loadEntities: loadSiteEntity
     }
   ];
-  var prePersistPostType = (persistedRecord, edits, name, isTemplate) => {
+  var prePersistPostType = async (persistedRecord, edits, name, isTemplate) => {
     const newEdits = {};
     if (!isTemplate && persistedRecord?.status === "auto-draft") {
       if (!edits.status && !newEdits.status) {
@@ -2791,7 +2791,7 @@ var wp;
     if (persistedRecord) {
       const objectType = `postType/${name}`;
       const objectId = persistedRecord.id;
-      const serializedDoc = getSyncManager()?.createPersistedCRDTDoc(
+      const serializedDoc = await getSyncManager()?.createPersistedCRDTDoc(
         objectType,
         objectId
       );
@@ -4948,7 +4948,7 @@ var wp;
           if (entityConfig.__unstablePrePersist) {
             edits = {
               ...edits,
-              ...entityConfig.__unstablePrePersist(
+              ...await entityConfig.__unstablePrePersist(
                 persistedRecord,
                 edits
               )

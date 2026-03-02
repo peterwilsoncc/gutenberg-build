@@ -10418,12 +10418,13 @@ var wp;
       });
       handlers.editRecord(changes);
     }
-    function createPersistedCRDTDoc(objectType, objectId) {
+    async function createPersistedCRDTDoc(objectType, objectId) {
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
       if (!entityState?.ydoc) {
         return null;
       }
+      await new Promise((resolve) => setTimeout(resolve, 0));
       return serializeCrdtDoc(entityState.ydoc);
     }
     const internal = {
