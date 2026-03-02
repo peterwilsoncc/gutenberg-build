@@ -10855,6 +10855,12 @@ var wp;
     return JSON.parse(JSON.stringify(value));
   }
   var NULL_CHARACTER = String.fromCharCode(0);
+  function normalizeChangeCounts(changes) {
+    return changes.map((change) => ({
+      ...change,
+      count: change.value.length
+    }));
+  }
   var getEmbedTypeAndData = (a, b) => {
     if (typeof a !== "object" || a === null) {
       throw new Error(`cannot retain a ${typeof a}`);
@@ -11116,7 +11122,9 @@ var wp;
         return new _Delta();
       }
       const strings = this.deltasToStrings(other);
-      const diffResult = diffChars(strings[0], strings[1]);
+      const diffResult = normalizeChangeCounts(
+        diffChars(strings[0], strings[1])
+      );
       const thisIter = new Iterator(this.ops);
       const otherIter = new Iterator(other.ops);
       const retDelta = this.convertChangesToDelta(
@@ -11286,7 +11294,9 @@ var wp;
         return this.diff(other);
       }
       const strings = this.deltasToStrings(other);
-      let diffs = diffChars(strings[0], strings[1]);
+      let diffs = normalizeChangeCounts(
+        diffChars(strings[0], strings[1])
+      );
       let lastDiffPosition = 0;
       const adjustedDiffs = [];
       for (let i = 0; i < diffs.length; i++) {
