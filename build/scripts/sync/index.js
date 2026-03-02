@@ -10095,10 +10095,11 @@ var wp;
     const metaMap = new Map(
       Object.entries(documentMeta)
     );
-    const ydoc = new Doc({ meta: metaMap });
+    return new Doc({ meta: metaMap });
+  }
+  function initializeYjsDoc(ydoc) {
     const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
     stateMap.set(CRDT_STATE_MAP_VERSION_KEY, CRDT_DOC_VERSION);
-    return ydoc;
   }
   function markEntityAsSaved(ydoc) {
     const recordMeta = ydoc.getMap(CRDT_STATE_MAP_KEY);
@@ -10240,6 +10241,7 @@ var wp;
       );
       recordMap.observeDeep(onRecordUpdate);
       stateMap.observe(onStateMapUpdate);
+      initializeYjsDoc(ydoc);
       internal.applyPersistedCrdtDoc(objectType, objectId, record);
     }
     async function loadCollection(syncConfig, objectType, handlers) {
@@ -10304,6 +10306,7 @@ var wp;
         })
       );
       stateMap.observe(onStateMapUpdate);
+      initializeYjsDoc(ydoc);
     }
     function unloadEntity(objectType, objectId) {
       const entityId = getEntityId(objectType, objectId);
