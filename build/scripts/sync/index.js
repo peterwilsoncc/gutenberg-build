@@ -9501,6 +9501,7 @@ var wp;
   }
   function poll() {
     isPolling = true;
+    pollingTimeoutId = null;
     async function start() {
       if (0 === roomStates.size) {
         isPolling = false;
@@ -9584,7 +9585,10 @@ var wp;
         }
         if (!isUnloadPending) {
           roomStates.forEach((state) => {
-            state.onStatusChange({ status: "disconnected" });
+            state.onStatusChange({
+              status: "disconnected",
+              retryInMs: pollInterval
+            });
           });
         }
       }
@@ -9672,8 +9676,17 @@ var wp;
       areListenersRegistered = false;
     }
   }
+  function retryNow() {
+    pollInterval = POLLING_INTERVAL_IN_MS * 2;
+    if (pollingTimeoutId) {
+      clearTimeout(pollingTimeoutId);
+      pollingTimeoutId = null;
+      poll();
+    }
+  }
   var pollingManager = {
     registerRoom,
+    retryNow,
     unregisterRoom
   };
 
@@ -9719,13 +9732,14 @@ var wp;
       this.emitStatus({ status: "disconnected" });
     }
     /**
-     * Emit connection status.
+     * Emit connection status, passing the full object through so that
+     * additional fields (e.g. `retryInMs`) are preserved for consumers.
      *
-     * @param status        The connection status
-     * @param status.error  Optional error information when status is 'disconnected'
-     * @param status.status The connection status ('connected', 'connecting', 'disconnected')
+     * @param connectionStatus The connection status object
      */
-    emitStatus = ({ error, status }) => {
+    emitStatus = (connectionStatus) => {
+      const { status } = connectionStatus;
+      const error = status === "disconnected" ? connectionStatus.error : void 0;
       if (this.status === status && !error) {
         return;
       }
@@ -9734,7 +9748,7 @@ var wp;
       }
       this.log("Status change", { status, error });
       this.status = status;
-      this.emit("status", [{ error, status }]);
+      this.emit("status", [connectionStatus]);
     };
     /**
      * Log debug messages if debugging is enabled.
@@ -11527,7 +11541,8 @@ var wp;
     Delta: Delta_default,
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
-    LOCAL_EDITOR_ORIGIN
+    LOCAL_EDITOR_ORIGIN,
+    retrySyncConnection: () => pollingManager.retryNow()
   });
 
   // packages/sync/build-module/index.mjs
