@@ -74494,9 +74494,31 @@ var wp;
   }
   function AutoRegisterControls({ name, clientId, setAttributes }) {
     const blockEditingMode = useBlockEditingMode();
+    const blockContext = (0, import_element275.useContext)(block_context_default);
     const attributes = (0, import_data195.useSelect)(
-      (select3) => select3(store).getBlockAttributes(clientId),
-      [clientId]
+      (select3) => {
+        const _attributes = select3(store).getBlockAttributes(clientId);
+        if (!_attributes?.metadata?.bindings) {
+          return _attributes;
+        }
+        const { getBlockBindingsSource: getBlockBindingsSource4 } = unlock(select3(import_blocks124.store));
+        return Object.entries(_attributes.metadata.bindings).reduce(
+          (acc, [attribute, binding]) => {
+            const source = getBlockBindingsSource4(binding.source);
+            if (!source) {
+              return acc;
+            }
+            const values = source.getValues({
+              select: select3,
+              context: blockContext,
+              bindings: { [attribute]: binding }
+            });
+            return { ...acc, ...values };
+          },
+          _attributes
+        );
+      },
+      [blockContext, clientId]
     );
     const blockType = (0, import_blocks124.getBlockType)(name);
     const { fields, form } = (0, import_element275.useMemo)(() => {
