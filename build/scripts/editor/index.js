@@ -49224,10 +49224,14 @@ var wp;
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
   var import_core_data108 = __toESM(require_core_data(), 1);
   var import_element149 = __toESM(require_element(), 1);
-  var { useActiveCollaborators } = unlock(import_core_data108.privateApis);
+  var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data108.privateApis);
   function useBlockHighlighting(blockEditorDocument, postId2, postType2) {
     const highlightedBlockIds = (0, import_element149.useRef)(/* @__PURE__ */ new Set());
     const userStates = useActiveCollaborators(
+      postId2 ?? null,
+      postType2 ?? null
+    );
+    const resolveSelection = useResolvedSelection(
       postId2 ?? null,
       postType2 ?? null
     );
@@ -49254,9 +49258,14 @@ var wp;
         const isWholeBlockSelected = userState.editorState?.selection?.type === import_core_data108.SelectionType.WholeBlock;
         const shouldDrawUser = !userState.isMe;
         if (isWholeBlockSelected && shouldDrawUser) {
-          const selection = userState.editorState?.selection;
+          const { localClientId } = resolveSelection(
+            userState.editorState?.selection
+          );
+          if (!localClientId) {
+            return null;
+          }
           return {
-            blockId: selection.blockId,
+            blockId: localClientId,
             color: getAvatarBorderColor(
               userState.collaboratorInfo.id
             )
@@ -49289,7 +49298,7 @@ var wp;
           highlightedBlockIds.current.add(blockId);
         }
       });
-    }, [userStates, blockEditorDocument]);
+    }, [userStates, blockEditorDocument, resolveSelection]);
   }
   var getBlockElementById = (blockEditorDocument, blockId) => {
     return blockEditorDocument.querySelector(`[data-block="${blockId}"]`);
@@ -49298,13 +49307,13 @@ var wp;
   // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
   var import_core_data109 = __toESM(require_core_data(), 1);
   var import_element150 = __toESM(require_element(), 1);
-  var { useActiveCollaborators: useActiveCollaborators2, useGetAbsolutePositionIndex } = unlock(import_core_data109.privateApis);
+  var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data109.privateApis);
   function useRenderCursors(overlayElement, blockEditorDocument, postId2, postType2) {
     const sortedUsers = useActiveCollaborators2(
       postId2 ?? null,
       postType2 ?? null
     );
-    const getAbsolutePositionIndex = useGetAbsolutePositionIndex(
+    const resolveSelection = useResolvedSelection2(
       postId2 ?? null,
       postType2 ?? null
     );
@@ -49335,36 +49344,28 @@ var wp;
           if (selection.type === import_core_data109.SelectionType.None) {
           } else if (selection.type === import_core_data109.SelectionType.WholeBlock) {
           } else if (selection.type === import_core_data109.SelectionType.Cursor) {
-            coords = getCursorPosition(
-              getAbsolutePositionIndex(selection),
-              selection.blockId,
-              blockEditorDocument,
-              overlayElement
-            );
-          } else if (selection.type === import_core_data109.SelectionType.SelectionInOneBlock) {
-            const selectionAsCursor = {
+            const { textIndex, localClientId } = resolveSelection(selection);
+            if (localClientId) {
+              coords = getCursorPosition(
+                textIndex,
+                localClientId,
+                blockEditorDocument,
+                overlayElement
+              );
+            }
+          } else if (selection.type === import_core_data109.SelectionType.SelectionInOneBlock || selection.type === import_core_data109.SelectionType.SelectionInMultipleBlocks) {
+            const { textIndex, localClientId } = resolveSelection({
               type: import_core_data109.SelectionType.Cursor,
-              blockId: selection.blockId,
               cursorPosition: selection.cursorStartPosition
-            };
-            coords = getCursorPosition(
-              getAbsolutePositionIndex(selectionAsCursor),
-              selectionAsCursor.blockId,
-              blockEditorDocument,
-              overlayElement
-            );
-          } else if (selection.type === import_core_data109.SelectionType.SelectionInMultipleBlocks) {
-            const selectionAsCursor = {
-              type: import_core_data109.SelectionType.Cursor,
-              blockId: selection.blockStartId,
-              cursorPosition: selection.cursorStartPosition
-            };
-            coords = getCursorPosition(
-              getAbsolutePositionIndex(selectionAsCursor),
-              selectionAsCursor.blockId,
-              blockEditorDocument,
-              overlayElement
-            );
+            });
+            if (localClientId) {
+              coords = getCursorPosition(
+                textIndex,
+                localClientId,
+                blockEditorDocument,
+                overlayElement
+              );
+            }
           }
           if (coords) {
             results.push({
@@ -49378,12 +49379,7 @@ var wp;
         });
         setCursorPositions(results);
       },
-      [
-        blockEditorDocument,
-        getAbsolutePositionIndex,
-        overlayElement,
-        sortedUsers
-      ]
+      [blockEditorDocument, resolveSelection, overlayElement, sortedUsers]
     );
     (0, import_element150.useEffect)(computeCursors, [computeCursors]);
     const rerenderCursorsAfterDelay = (0, import_element150.useMemo)(
