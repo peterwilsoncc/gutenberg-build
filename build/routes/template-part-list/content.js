@@ -16900,11 +16900,13 @@ function Page({
   children,
   className,
   actions,
+  ariaLabel,
   hasPadding = false,
   showSidebarToggle = true
 }) {
   const classes = clsx_default("admin-ui-page", className);
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(navigable_region_default, { className: classes, ariaLabel: title, children: [
+  const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
     (title || breadcrumbs || badges) && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
       Header,
       {

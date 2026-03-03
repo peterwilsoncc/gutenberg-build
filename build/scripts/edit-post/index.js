@@ -2551,7 +2551,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
       navigable_region_default,
       {
-        "aria-label": paneLabel,
+        ariaLabel: paneLabel,
         ref: setMainRefs,
         className: clsx_default(
           "edit-post-meta-boxes-main",
