@@ -39799,7 +39799,7 @@ var wp;
     const _showPatternOverrides = hasPatternOverrides && hasParentPattern;
     if (_showBlockSwitcher) {
       return "switcher";
-    } else if (isContentOnlyMode && hasBlockStyles && !hasPatternOverrides) {
+    } else if (isContentOnlyMode && hasBlockStyles && !hasPatternOverrides && canEdit) {
       return "styles-only";
     } else if (_showPatternOverrides) {
       return "pattern-overrides";
