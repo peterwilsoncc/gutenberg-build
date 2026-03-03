@@ -1364,6 +1364,9 @@ var wp;
     }
     const attributes = block.get("attributes");
     const currentYText = attributes?.get(selection.attributeKey);
+    if (!(currentYText instanceof import_sync5.Y.Text)) {
+      return null;
+    }
     const relativePosition = import_sync5.Y.createRelativePositionFromTypeIndex(
       currentYText,
       selection.offset
