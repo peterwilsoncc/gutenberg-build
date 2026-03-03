@@ -239,6 +239,11 @@ function useConnectorPlugin({
   }, [settingName]);
   (0, import_element2.useEffect)(() => {
     const checkPluginStatus = async () => {
+      if (!pluginSlug) {
+        await fetchApiKey();
+        setPluginStatus("active");
+        return;
+      }
       try {
         const plugins = await (0, import_api_fetch.default)({
           path: "/wp/v2/plugins"
@@ -261,6 +266,9 @@ function useConnectorPlugin({
     checkPluginStatus();
   }, [pluginSlug, fetchApiKey]);
   const installPlugin = async () => {
+    if (!pluginSlug) {
+      return;
+    }
     setIsBusy(true);
     try {
       await (0, import_api_fetch.default)({
@@ -277,6 +285,9 @@ function useConnectorPlugin({
     }
   };
   const activatePlugin = async () => {
+    if (!pluginSlug) {
+      return;
+    }
     setIsBusy(true);
     try {
       await (0, import_api_fetch.default)({
@@ -483,6 +494,23 @@ var GeminiLogo = () => /* @__PURE__ */ React.createElement(
 );
 
 // routes/connectors-home/default-connectors.tsx
+function getConnectorData() {
+  try {
+    const parsed = JSON.parse(
+      document.getElementById(
+        "wp-script-module-data-connectors-wp-admin"
+      )?.textContent ?? ""
+    );
+    return parsed?.connectors ?? {};
+  } catch {
+    return {};
+  }
+}
+var CONNECTOR_LOGOS = {
+  google: GeminiLogo,
+  openai: OpenAILogo,
+  anthropic: ClaudeLogo
+};
 var ConnectedBadge = () => /* @__PURE__ */ React.createElement(
   "span",
   {
@@ -498,15 +526,21 @@ var ConnectedBadge = () => /* @__PURE__ */ React.createElement(
   },
   (0, import_i18n2.__)("Connected")
 );
-function ProviderConnector({
+function ApiKeyConnector({
   label,
   description,
   pluginSlug,
   settingName,
   helpUrl,
-  helpLabel,
   Logo
 }) {
+  let helpLabel;
+  try {
+    if (helpUrl) {
+      helpLabel = new URL(helpUrl).hostname;
+    }
+  } catch {
+  }
   const {
     pluginStatus,
     isExpanded,
@@ -525,8 +559,8 @@ function ProviderConnector({
   return /* @__PURE__ */ React.createElement(
     ConnectorItem,
     {
-      className: `connector-item--${pluginSlug}`,
-      icon: /* @__PURE__ */ React.createElement(Logo, null),
+      className: pluginSlug ? `connector-item--${pluginSlug}` : void 0,
+      icon: Logo ? /* @__PURE__ */ React.createElement(Logo, null) : void 0,
       name: label,
       description,
       actionArea: /* @__PURE__ */ React.createElement(import_components3.__experimentalHStack, { spacing: 3, expanded: false }, isConnected && /* @__PURE__ */ React.createElement(ConnectedBadge, null), /* @__PURE__ */ React.createElement(
@@ -559,65 +593,32 @@ function ProviderConnector({
     )
   );
 }
-function OpenAIConnector(props) {
-  return /* @__PURE__ */ React.createElement(
-    ProviderConnector,
-    {
-      ...props,
-      pluginSlug: "ai-provider-for-openai",
-      settingName: "connectors_ai_openai_api_key",
-      helpUrl: "https://platform.openai.com",
-      helpLabel: "platform.openai.com",
-      Logo: OpenAILogo
-    }
-  );
-}
-function ClaudeConnector(props) {
-  return /* @__PURE__ */ React.createElement(
-    ProviderConnector,
-    {
-      ...props,
-      pluginSlug: "ai-provider-for-anthropic",
-      settingName: "connectors_ai_anthropic_api_key",
-      helpUrl: "https://console.anthropic.com",
-      helpLabel: "console.anthropic.com",
-      Logo: ClaudeLogo
-    }
-  );
-}
-function GeminiConnector(props) {
-  return /* @__PURE__ */ React.createElement(
-    ProviderConnector,
-    {
-      ...props,
-      pluginSlug: "ai-provider-for-google",
-      settingName: "connectors_ai_google_api_key",
-      helpUrl: "https://aistudio.google.com",
-      helpLabel: "aistudio.google.com",
-      Logo: GeminiLogo
-    }
-  );
-}
 function registerDefaultConnectors() {
-  registerConnector("core/openai", {
-    label: (0, import_i18n2.__)("OpenAI"),
-    description: (0, import_i18n2.__)(
-      "Text, image, and code generation with GPT and DALL-E."
-    ),
-    render: OpenAIConnector
-  });
-  registerConnector("core/claude", {
-    label: (0, import_i18n2.__)("Claude"),
-    description: (0, import_i18n2.__)("Writing, research, and analysis with Claude."),
-    render: ClaudeConnector
-  });
-  registerConnector("core/gemini", {
-    label: (0, import_i18n2.__)("Gemini"),
-    description: (0, import_i18n2.__)(
-      "Content generation, translation, and vision with Google's Gemini."
-    ),
-    render: GeminiConnector
-  });
+  const connectors = getConnectorData();
+  const sanitize = (s) => s.replace(/[^a-z0-9-]/gi, "-");
+  for (const [connectorId, data] of Object.entries(connectors)) {
+    const { authentication } = data;
+    if (data.type !== "ai_provider" || authentication.method !== "api_key") {
+      continue;
+    }
+    const connectorName = `${sanitize(data.type)}/${sanitize(
+      connectorId
+    )}`;
+    registerConnector(connectorName, {
+      label: data.name,
+      description: data.description,
+      render: (props) => /* @__PURE__ */ React.createElement(
+        ApiKeyConnector,
+        {
+          ...props,
+          pluginSlug: data.plugin?.slug,
+          settingName: authentication.settingName,
+          helpUrl: authentication.credentialsUrl ?? void 0,
+          Logo: CONNECTOR_LOGOS[connectorId]
+        }
+      )
+    });
+  }
 }
 
 // routes/lock-unlock.ts

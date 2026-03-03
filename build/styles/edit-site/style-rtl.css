@@ -2661,6 +2661,7 @@ div.dataviews-view-list {
   display: flex;
   align-items: center;
   overflow: hidden;
+  word-break: break-word;
   font-weight: var(--wpds-font-weight-medium, 499);
 }
 
