@@ -3505,6 +3505,13 @@ var wp;
     }
     return state;
   }
+  function collaborationSupported(state = true, action) {
+    switch (action.type) {
+      case "SET_COLLABORATION_SUPPORTED":
+        return action.supported;
+    }
+    return state;
+  }
   var reducer_default2 = (0, import_data8.combineReducers)({
     users,
     currentTheme,
@@ -3527,7 +3534,8 @@ var wp;
     registeredPostMeta,
     editorSettings,
     editorAssets,
-    syncConnectionStatuses
+    syncConnectionStatuses,
+    collaborationSupported
   });
 
   // packages/core-data/build-module/selectors.mjs
@@ -3603,7 +3611,8 @@ var wp;
     getPostsPageId: () => getPostsPageId,
     getRegisteredPostMeta: () => getRegisteredPostMeta,
     getTemplateId: () => getTemplateId,
-    getUndoManager: () => getUndoManager
+    getUndoManager: () => getUndoManager,
+    isCollaborationSupported: () => isCollaborationSupported
   });
   var import_data9 = __toESM(require_data(), 1);
 
@@ -3790,6 +3799,9 @@ var wp;
   }
   function getEditorAssets(state) {
     return state.editorAssets;
+  }
+  function isCollaborationSupported(state) {
+    return state.collaborationSupported;
   }
 
   // packages/core-data/build-module/selectors.mjs
@@ -5170,7 +5182,8 @@ var wp;
     editMediaEntity: () => editMediaEntity,
     receiveEditorAssets: () => receiveEditorAssets,
     receiveEditorSettings: () => receiveEditorSettings,
-    receiveRegisteredPostMeta: () => receiveRegisteredPostMeta
+    receiveRegisteredPostMeta: () => receiveRegisteredPostMeta,
+    setCollaborationSupported: () => setCollaborationSupported
   });
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   function receiveRegisteredPostMeta(postType, registeredPostMeta2) {
@@ -5260,6 +5273,9 @@ var wp;
       assets
     };
   }
+  var setCollaborationSupported = (supported) => ({ dispatch: dispatch3 }) => {
+    dispatch3({ type: "SET_COLLABORATION_SUPPORTED", supported });
+  };
 
   // packages/core-data/build-module/resolvers.mjs
   var resolvers_exports = {};

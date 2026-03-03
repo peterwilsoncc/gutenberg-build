@@ -4353,6 +4353,9 @@ var wp;
   }
   var isCollaborationEnabledForCurrentPost = (0, import_data3.createRegistrySelector)(
     (select6) => (state) => {
+      if (!unlock(select6(import_core_data.store)).isCollaborationSupported()) {
+        return false;
+      }
       const currentPostType = getCurrentPostType(state);
       const entityConfig = select6(import_core_data.store).getEntityConfig(
         "postType",
@@ -43240,6 +43243,17 @@ var wp;
   var import_compose28 = __toESM(require_compose(), 1);
   var import_core_data83 = __toESM(require_core_data(), 1);
   var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
+  function CollaborationContext() {
+    const isCollaborationSupported = (0, import_data128.useSelect)((select6) => {
+      return unlock(select6(import_core_data83.store)).isCollaborationSupported();
+    }, []);
+    if (isCollaborationSupported) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("p", { children: (0, import_i18n160.__)(
+      "Because this post uses plugins that aren\u2019t compatible with real-time collaboration, only one person can edit at a time."
+    ) });
+  }
   function PostLockedModal() {
     const instanceId = (0, import_compose28.useInstanceId)(PostLockedModal);
     const hookName = "core/editor/post-locked-modal-" + instanceId;
@@ -43378,21 +43392,24 @@ var wp;
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)("div", { children: [
-            !!isTakeover && /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("p", { children: (0, import_element113.createInterpolateElement)(
-              userDisplayName ? (0, import_i18n160.sprintf)(
-                /* translators: %s: user's display name */
-                (0, import_i18n160.__)(
-                  "<strong>%s</strong> now has editing control of this post (<PreviewLink />). Don\u2019t worry, your changes up to this moment have been saved."
+            !!isTakeover && /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(import_jsx_runtime271.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("p", { children: (0, import_element113.createInterpolateElement)(
+                userDisplayName ? (0, import_i18n160.sprintf)(
+                  /* translators: %s: user's display name */
+                  (0, import_i18n160.__)(
+                    "<strong>%s</strong> now has editing control of this post (<PreviewLink />). Don\u2019t worry, your changes up to this moment have been saved."
+                  ),
+                  userDisplayName
+                ) : (0, import_i18n160.__)(
+                  "Another user now has editing control of this post (<PreviewLink />). Don\u2019t worry, your changes up to this moment have been saved."
                 ),
-                userDisplayName
-              ) : (0, import_i18n160.__)(
-                "Another user now has editing control of this post (<PreviewLink />). Don\u2019t worry, your changes up to this moment have been saved."
-              ),
-              {
-                strong: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("strong", {}),
-                PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(import_components144.ExternalLink, { href: previewLink, children: (0, import_i18n160.__)("preview") })
-              }
-            ) }),
+                {
+                  strong: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("strong", {}),
+                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(import_components144.ExternalLink, { href: previewLink, children: (0, import_i18n160.__)("preview") })
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(CollaborationContext, {})
+            ] }),
             !isTakeover && /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(import_jsx_runtime271.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("p", { children: (0, import_element113.createInterpolateElement)(
                 userDisplayName ? (0, import_i18n160.sprintf)(
@@ -43409,6 +43426,7 @@ var wp;
                   PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(import_components144.ExternalLink, { href: previewLink, children: (0, import_i18n160.__)("preview") })
                 }
               ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(CollaborationContext, {}),
               /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("p", { children: (0, import_i18n160.__)(
                 "If you take over, the other user will lose editing control to the post, but their changes will be saved."
               ) })
