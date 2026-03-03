@@ -587,7 +587,7 @@ var wp;
     }
     return hasTransparency(await response.arrayBuffer());
   }
-  async function vipsResizeImage(id, file, resize, smartCrop, addSuffix, signal, scaledSuffix) {
+  async function vipsResizeImage(id, file, resize, smartCrop, addSuffix, signal, scaledSuffix, quality) {
     if (signal?.aborted) {
       throw new Error("Operation aborted");
     }
@@ -597,7 +597,8 @@ var wp;
       await file.arrayBuffer(),
       file.type,
       resize,
-      smartCrop
+      smartCrop,
+      quality
     );
     let fileName = file.name;
     const wasResized = originalWidth > width || originalHeight > height;
