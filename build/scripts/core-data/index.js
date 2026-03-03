@@ -7229,6 +7229,42 @@ var wp;
   function useResolvedSelection(postId, postType) {
     return usePostEditorAwarenessState(postId, postType).resolveSelection;
   }
+  function useLastPostSave(postId, postType) {
+    const [lastSave, setLastSave] = (0, import_element8.useState)(null);
+    (0, import_element8.useEffect)(() => {
+      if (null === postId || null === postType) {
+        setLastSave(null);
+        return;
+      }
+      const awareness = getSyncManager()?.getAwareness(
+        `postType/${postType}`,
+        postId.toString()
+      );
+      if (!awareness) {
+        setLastSave(null);
+        return;
+      }
+      awareness.setUp();
+      const stateMap = awareness.doc.getMap("state");
+      const recordMap = awareness.doc.getMap("document");
+      const setupTime = Date.now();
+      const observer = (event) => {
+        if (event.keysChanged.has("savedAt")) {
+          const savedAt = stateMap.get("savedAt");
+          const savedByClientId = stateMap.get("savedBy");
+          if (typeof savedAt === "number" && typeof savedByClientId === "number" && savedAt > setupTime) {
+            const postStatus = recordMap.get("status");
+            setLastSave({ savedAt, savedByClientId, postStatus });
+          }
+        }
+      };
+      stateMap.observe(observer);
+      return () => {
+        stateMap.unobserve(observer);
+      };
+    }, [postId, postType]);
+    return lastSave;
+  }
 
   // packages/core-data/build-module/private-apis.mjs
   var privateApis = {};
@@ -7237,7 +7273,8 @@ var wp;
     RECEIVE_INTERMEDIATE_RESULTS,
     retrySyncConnection,
     useActiveCollaborators,
-    useResolvedSelection
+    useResolvedSelection,
+    useLastPostSave
   });
 
   // packages/core-data/build-module/index.mjs
