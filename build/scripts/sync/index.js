@@ -9357,7 +9357,7 @@ var wp;
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
   var POLLING_INTERVAL_IN_MS = 1e3;
   var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = 250;
-  var POLLING_INTERVAL_BACKGROUND_TAB_IN_MS = 30 * 1e3;
+  var POLLING_INTERVAL_BACKGROUND_TAB_IN_MS = 25 * 1e3;
   var MAX_ERROR_BACKOFF_IN_MS = 30 * 1e3;
   var POLLING_MANAGER_ORIGIN = "polling-manager";
   var roomStates = /* @__PURE__ */ new Map();
