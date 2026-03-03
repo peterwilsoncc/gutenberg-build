@@ -74463,7 +74463,8 @@ ${js}
   var privateApis3 = {};
   lock(privateApis3, {
     BlockKeyboardShortcuts: block_keyboard_shortcuts_default,
-    NAVIGATION_OVERLAY_TEMPLATE_PART_AREA
+    NAVIGATION_OVERLAY_TEMPLATE_PART_AREA,
+    NavigationLinkUI
   });
 
   // packages/block-library/build-module/index.mjs
