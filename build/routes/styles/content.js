@@ -310,7 +310,7 @@ function Stage() {
       {
         path: section,
         onPathChange: onChangeSection,
-        editorSettings
+        settings: editorSettings
       }
     )
   );

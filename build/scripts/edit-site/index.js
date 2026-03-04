@@ -22345,7 +22345,7 @@ var wp;
           {
             path: section,
             onPathChange: onChangeSection,
-            editorSettings: settings2
+            settings: settings2
           }
         )
       }

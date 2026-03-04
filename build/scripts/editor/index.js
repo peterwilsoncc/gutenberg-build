@@ -36329,12 +36329,7 @@ var wp;
 
   // packages/editor/build-module/components/global-styles/index.mjs
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
-  function useServerData(editorSettings2) {
-    const editorStoreSettings = (0, import_data68.useSelect)(
-      (select6) => select6(store).getEditorSettings(),
-      []
-    );
-    const settings = editorSettings2 || editorStoreSettings;
+  function useServerData(settings) {
     const styles = settings?.styles;
     const __unstableResolvedAssets = settings?.__unstableResolvedAssets;
     const colors2 = settings?.colors;
@@ -36386,7 +36381,7 @@ var wp;
   function GlobalStylesUIWrapper({
     path,
     onPathChange,
-    editorSettings: editorSettings2
+    settings
   }) {
     const {
       user: userConfig,
@@ -36394,7 +36389,7 @@ var wp;
       setUser: setUserConfig,
       isReady: isReady2
     } = useGlobalStyles();
-    const { serverCSS, serverSettings, fontLibraryEnabled } = useServerData(editorSettings2);
+    const { serverCSS, serverSettings, fontLibraryEnabled } = useServerData(settings);
     if (!isReady2) {
       return null;
     }
@@ -65353,7 +65348,7 @@ var wp;
             {
               path: stylesPath2,
               onPathChange: setStylesPath2,
-              editorSettings: editorSettings2
+              settings: editorSettings2
             }
           )
         }
