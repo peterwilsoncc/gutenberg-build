@@ -28915,7 +28915,8 @@ ${js}
       interactivity: {
         clientNavigation: true
       },
-      customCSS: false
+      customCSS: false,
+      visibility: false
     },
     editorStyle: "wp-block-html-editor"
   };
@@ -61094,7 +61095,8 @@ ${js}
       className: false,
       customClassName: false,
       html: false,
-      customCSS: false
+      customCSS: false,
+      visibility: false
     },
     editorStyle: "wp-block-shortcode-editor"
   };

@@ -3351,7 +3351,8 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
-			'customCSS' => false
+			'customCSS' => false,
+			'visibility' => false
 		),
 		'editorStyle' => 'wp-block-html-editor'
 	),
@@ -7548,7 +7549,8 @@ return array(
 			'className' => false,
 			'customClassName' => false,
 			'html' => false,
-			'customCSS' => false
+			'customCSS' => false,
+			'visibility' => false
 		),
 		'editorStyle' => 'wp-block-shortcode-editor'
 	),
