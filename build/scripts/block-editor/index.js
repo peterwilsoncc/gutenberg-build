@@ -24101,15 +24101,23 @@ var wp;
       } = props;
       const mediaUploadSettings = use_media_upload_settings_default(_settings);
       const isClientSideMediaEnabled = shouldEnableClientSideMediaProcessing();
+      const isMediaUploadIntercepted = !!_settings?.mediaUpload?.__isMediaUploadInterceptor;
       const settings2 = (0, import_element40.useMemo)(() => {
-        if (isClientSideMediaEnabled && _settings?.mediaUpload) {
+        if (isClientSideMediaEnabled && _settings?.mediaUpload && !isMediaUploadIntercepted) {
+          const interceptor = mediaUpload.bind(null, registry);
+          interceptor.__isMediaUploadInterceptor = true;
           return {
             ..._settings,
-            mediaUpload: mediaUpload.bind(null, registry)
+            mediaUpload: interceptor
           };
         }
         return _settings;
-      }, [_settings, registry, isClientSideMediaEnabled]);
+      }, [
+        _settings,
+        registry,
+        isClientSideMediaEnabled,
+        isMediaUploadIntercepted
+      ]);
       const { __experimentalUpdateSettings: __experimentalUpdateSettings2 } = unlock(
         (0, import_data34.useDispatch)(store)
       );
@@ -24156,7 +24164,7 @@ var wp;
         ),
         children
       ] });
-      if (isClientSideMediaEnabled) {
+      if (isClientSideMediaEnabled && !isMediaUploadIntercepted) {
         return /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
           import_upload_media.MediaUploadProvider,
           {
