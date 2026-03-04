@@ -213,10 +213,10 @@ import {
 } from "@wordpress/connectors";
 
 // routes/connectors-home/style.scss
-if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='2ca9f0b249']")) {
+if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='2df87bd25d']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "2ca9f0b249");
-  style.appendChild(document.createTextNode(".connectors-page{margin:0 auto;max-width:680px;padding:24px;width:100%}.connectors-page .components-item{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;padding:20px}.connectors-page .connector-settings .components-text-control__input{font-family:monospace}.connectors-page>p{color:#949494;text-align:center}"));
+  style.setAttribute("data-wp-hash", "2df87bd25d");
+  style.appendChild(document.createTextNode(".connectors-page{box-sizing:border-box;margin:0 auto;max-width:680px;padding:24px;width:100%}.connectors-page .components-item{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;padding:20px}.connectors-page .connector-settings .components-text-control__input{font-family:monospace}.connectors-page>p{color:#949494;text-align:center}@media (max-width:480px){.connectors-page,.connectors-page .components-item{padding:16px}.connectors-page .components-item>.components-v-stack>.components-h-stack:first-child svg{height:32px;width:32px}}"));
   document.head.appendChild(style);
 }
 

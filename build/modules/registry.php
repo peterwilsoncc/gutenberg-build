@@ -43,24 +43,24 @@ return array(
 		'asset' => 'vips/loader.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/abilities',
-		'path' => 'abilities/index',
-		'asset' => 'abilities/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/a11y',
 		'path' => 'a11y/index',
 		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/route',
-		'path' => 'route/index',
-		'asset' => 'route/index.min.asset.php',
+		'id' => '@wordpress/abilities',
+		'path' => 'abilities/index',
+		'asset' => 'abilities/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/core-abilities',
 		'path' => 'core-abilities/index',
 		'asset' => 'core-abilities/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/route',
+		'path' => 'route/index',
+		'asset' => 'route/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/connectors',
