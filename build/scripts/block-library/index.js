@@ -31452,7 +31452,7 @@ ${js}
         type: "snackbar"
       });
     };
-    const featuredImageControl = /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor112.BlockSettingsMenuControls, { children: ({ selectedClientIds }) => selectedClientIds.length === 1 && !isDescendentOfQueryLoop && postId && id && clientId === selectedClientIds[0] && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components56.MenuItem, { onClick: setPostFeatureImage, children: (0, import_i18n93.__)("Set as featured image") }) });
+    const featuredImageControl = !isDescendentOfQueryLoop && postId && id ? /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor112.BlockSettingsMenuControls, { children: ({ canEdit, selectedClientIds }) => canEdit && selectedClientIds.length === 1 && clientId === selectedClientIds[0] && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components56.MenuItem, { onClick: setPostFeatureImage, children: (0, import_i18n93.__)("Set as featured image") }) }) : null;
     return /* @__PURE__ */ (0, import_jsx_runtime278.jsxs)(import_jsx_runtime278.Fragment, { children: [
       editMediaButton,
       mediaReplaceFlow,

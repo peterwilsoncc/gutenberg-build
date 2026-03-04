@@ -36085,6 +36085,7 @@ var wp;
       {
         fillProps: {
           ...fillProps,
+          canEdit,
           selectedBlocks,
           selectedClientIds
         },
