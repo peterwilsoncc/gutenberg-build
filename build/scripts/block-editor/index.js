@@ -7865,6 +7865,7 @@ var wp;
   var isNavigationOverlayContextKey = /* @__PURE__ */ Symbol(
     "isNavigationOverlayContext"
   );
+  var mediaUploadOnSuccessKey = /* @__PURE__ */ Symbol("mediaUploadOnSuccess");
 
   // packages/block-editor/build-module/store/reducer.mjs
   var { isContentBlock } = unlock(import_blocks2.privateApis);
@@ -24063,7 +24064,7 @@ var wp;
     isClientSideMediaEnabledCache = true;
     return true;
   }
-  function mediaUpload(registry, {
+  function mediaUpload(registry, settings2, {
     allowedTypes,
     additionalData = {},
     filesList,
@@ -24075,7 +24076,10 @@ var wp;
     void registry.dispatch(import_upload_media.store).addItems({
       files: Array.from(filesList),
       onChange: onFileChange,
-      onSuccess,
+      onSuccess: (attachments) => {
+        settings2?.[mediaUploadOnSuccessKey]?.(attachments);
+        onSuccess?.(attachments);
+      },
       onBatchSuccess,
       onError: ({ message: message2 }) => onError(message2),
       additionalData,
@@ -24098,7 +24102,11 @@ var wp;
       const isMediaUploadIntercepted = !!_settings?.mediaUpload?.__isMediaUploadInterceptor;
       const settings2 = (0, import_element40.useMemo)(() => {
         if (isClientSideMediaEnabled && _settings?.mediaUpload && !isMediaUploadIntercepted) {
-          const interceptor = mediaUpload.bind(null, registry);
+          const interceptor = mediaUpload.bind(
+            null,
+            registry,
+            _settings
+          );
           interceptor.__isMediaUploadInterceptor = true;
           return {
             ..._settings,
@@ -75478,6 +75486,7 @@ var wp;
     deviceTypeKey,
     isIsolatedEditorKey,
     isNavigationOverlayContextKey,
+    mediaUploadOnSuccessKey,
     useBlockElement,
     useBlockElementRef,
     LinkPicker,
