@@ -66,6 +66,20 @@ var require_compose = __commonJS({
   }
 });
 
+// package-external:@wordpress/data
+var require_data = __commonJS({
+  "package-external:@wordpress/data"(exports, module) {
+    module.exports = window.wp.data;
+  }
+});
+
+// package-external:@wordpress/core-data
+var require_core_data = __commonJS({
+  "package-external:@wordpress/core-data"(exports, module) {
+    module.exports = window.wp.coreData;
+  }
+});
+
 // package-external:@wordpress/primitives
 var require_primitives = __commonJS({
   "package-external:@wordpress/primitives"(exports, module) {
@@ -204,6 +218,8 @@ var page_default = Page;
 var import_i18n = __toESM(require_i18n());
 var import_editor = __toESM(require_editor());
 var import_compose = __toESM(require_compose());
+var import_data = __toESM(require_data());
+var import_core_data = __toESM(require_core_data());
 var import_components3 = __toESM(require_components());
 
 // packages/icons/build-module/library/seen.mjs
@@ -213,6 +229,7 @@ var seen_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitive
 
 // routes/styles/stage.tsx
 var import_element2 = __toESM(require_element());
+import { useEditorSettings } from "@wordpress/lazy-editor";
 
 // routes/styles/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7be460f5dc']")) {
@@ -235,6 +252,13 @@ function Stage() {
   const navigate = useNavigate();
   const search = useSearch({ strict: false });
   const isMobileViewport = (0, import_compose.useViewportMatch)("medium", "<");
+  const globalStylesId = (0, import_data.useSelect)(
+    (select) => select(import_core_data.store).__experimentalGetCurrentGlobalStylesId(),
+    []
+  );
+  const { editorSettings } = useEditorSettings({
+    stylesId: globalStylesId
+  });
   const section = search.section ?? "/";
   const [isStyleBookOpened, setIsStyleBookOpened] = (0, import_element2.useState)(
     search.preview === "stylebook"
@@ -285,7 +309,8 @@ function Stage() {
       GlobalStylesUIWrapper,
       {
         path: section,
-        onPathChange: onChangeSection
+        onPathChange: onChangeSection,
+        editorSettings
       }
     )
   );

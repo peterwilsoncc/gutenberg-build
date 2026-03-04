@@ -36329,32 +36329,25 @@ var wp;
 
   // packages/editor/build-module/components/global-styles/index.mjs
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
-  function useServerData() {
-    const {
-      styles,
-      __unstableResolvedAssets,
-      colors: colors2,
-      gradients,
-      __experimentalDiscussionSettings,
-      mediaUploadHandler,
-      fontLibraryEnabled
-    } = (0, import_data68.useSelect)((select6) => {
-      const { getEditorSettings: getEditorSettings2 } = select6(store);
+  function useServerData(editorSettings2) {
+    const editorStoreSettings = (0, import_data68.useSelect)(
+      (select6) => select6(store).getEditorSettings(),
+      []
+    );
+    const settings = editorSettings2 || editorStoreSettings;
+    const styles = settings?.styles;
+    const __unstableResolvedAssets = settings?.__unstableResolvedAssets;
+    const colors2 = settings?.colors;
+    const gradients = settings?.gradients;
+    const __experimentalDiscussionSettings = settings?.__experimentalDiscussionSettings;
+    const fontLibraryEnabled = settings?.fontLibraryEnabled ?? true;
+    const mediaUploadHandler = (0, import_data68.useSelect)((select6) => {
       const { canUser } = select6(import_core_data47.store);
-      const editorSettings2 = getEditorSettings2();
       const canUserUploadMedia = canUser("create", {
         kind: "postType",
         name: "attachment"
       });
-      return {
-        styles: editorSettings2?.styles,
-        __unstableResolvedAssets: editorSettings2?.__unstableResolvedAssets,
-        colors: editorSettings2?.colors,
-        gradients: editorSettings2?.gradients,
-        __experimentalDiscussionSettings: editorSettings2?.__experimentalDiscussionSettings,
-        mediaUploadHandler: canUserUploadMedia ? import_media_utils4.uploadMedia : void 0,
-        fontLibraryEnabled: editorSettings2?.fontLibraryEnabled ?? true
-      };
+      return canUserUploadMedia ? import_media_utils4.uploadMedia : void 0;
     }, []);
     const serverCSS = (0, import_element77.useMemo)(() => {
       if (!styles) {
@@ -36390,14 +36383,18 @@ var wp;
     ]);
     return { serverCSS, serverSettings, fontLibraryEnabled };
   }
-  function GlobalStylesUIWrapper({ path, onPathChange }) {
+  function GlobalStylesUIWrapper({
+    path,
+    onPathChange,
+    editorSettings: editorSettings2
+  }) {
     const {
       user: userConfig,
       base: baseConfig,
       setUser: setUserConfig,
       isReady: isReady2
     } = useGlobalStyles();
-    const { serverCSS, serverSettings, fontLibraryEnabled } = useServerData();
+    const { serverCSS, serverSettings, fontLibraryEnabled } = useServerData(editorSettings2);
     if (!isReady2) {
       return null;
     }
@@ -65236,7 +65233,8 @@ var wp;
       showStylebook: showStylebook2,
       showListViewByDefault,
       hasRevisions,
-      activeComplementaryArea
+      activeComplementaryArea,
+      editorSettings: editorSettings2
     } = (0, import_data241.useSelect)((select6) => {
       const { getActiveComplementaryArea: getActiveComplementaryArea2 } = select6(store2);
       const { getStylesPath: getStylesPath2, getShowStylebook: getShowStylebook2 } = unlock(
@@ -65256,7 +65254,8 @@ var wp;
         shouldResetNavigation: "edit-site/global-styles" !== getActiveComplementaryArea2("core") || !_isVisualEditorMode,
         showListViewByDefault: _showListViewByDefault,
         hasRevisions: !!globalStyles?._links?.["version-history"]?.[0]?.count,
-        activeComplementaryArea: select6(store2).getActiveComplementaryArea("core")
+        activeComplementaryArea: select6(store2).getActiveComplementaryArea("core"),
+        editorSettings: select6(store).getEditorSettings()
       };
     }, []);
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
@@ -65353,7 +65352,8 @@ var wp;
             GlobalStylesUIWrapper,
             {
               path: stylesPath2,
-              onPathChange: setStylesPath2
+              onPathChange: setStylesPath2,
+              editorSettings: editorSettings2
             }
           )
         }
