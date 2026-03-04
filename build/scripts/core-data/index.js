@@ -2456,9 +2456,7 @@ var wp;
             return true;
           }
           case "date": {
-            const currentDateIsFloating = ["draft", "auto-draft", "pending"].includes(
-              ymap.get("status")
-            ) && (null === currentValue || editedRecord.modified === currentValue);
+            const currentDateIsFloating = null === currentValue || editedRecord.modified === currentValue;
             if (currentDateIsFloating) {
               return false;
             }

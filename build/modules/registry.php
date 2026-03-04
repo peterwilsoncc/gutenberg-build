@@ -23,9 +23,14 @@ return array(
 		'asset' => 'latex-to-mathml/loader.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/a11y',
-		'path' => 'a11y/index',
-		'asset' => 'a11y/index.min.asset.php',
+		'id' => '@wordpress/interactivity-router',
+		'path' => 'interactivity-router/index',
+		'asset' => 'interactivity-router/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/interactivity-router/full-page',
+		'path' => 'interactivity-router/full-page',
+		'asset' => 'interactivity-router/full-page.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/vips/worker',
@@ -38,14 +43,9 @@ return array(
 		'asset' => 'vips/loader.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/interactivity-router',
-		'path' => 'interactivity-router/index',
-		'asset' => 'interactivity-router/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/interactivity-router/full-page',
-		'path' => 'interactivity-router/full-page',
-		'asset' => 'interactivity-router/full-page.min.asset.php',
+		'id' => '@wordpress/a11y',
+		'path' => 'a11y/index',
+		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/abilities',
@@ -58,14 +58,14 @@ return array(
 		'asset' => 'core-abilities/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/connectors',
-		'path' => 'connectors/index',
-		'asset' => 'connectors/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/route',
 		'path' => 'route/index',
 		'asset' => 'route/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/connectors',
+		'path' => 'connectors/index',
+		'asset' => 'connectors/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/edit-site-init',
