@@ -6497,17 +6497,26 @@ var wp;
 
   // packages/core-data/build-module/entity-provider.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-  function EntityProvider({ kind, type: name, id, children }) {
+  function EntityProvider({
+    kind,
+    type: name,
+    id,
+    revisionId,
+    children
+  }) {
     const parent = (0, import_element2.useContext)(EntityContext);
     const childContext = (0, import_element2.useMemo)(
       () => ({
         ...parent,
-        [kind]: {
-          ...parent?.[kind],
-          [name]: id
-        }
+        ...kind && {
+          [kind]: {
+            ...parent?.[kind],
+            [name]: id
+          }
+        },
+        ...revisionId !== void 0 && { revisionId }
       }),
-      [parent, kind, name, id]
+      [parent, kind, name, id, revisionId]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntityContext.Provider, { value: childContext, children });
   }
@@ -7144,8 +7153,33 @@ var wp;
   function useEntityProp(kind, name, prop, _id) {
     const providerId = useEntityId(kind, name);
     const id = _id ?? providerId;
+    const context = (0, import_element7.useContext)(EntityContext);
+    const revisionId = context?.revisionId;
     const { value, fullValue } = (0, import_data15.useSelect)(
       (select5) => {
+        if (revisionId) {
+          const revisions = select5(STORE_NAME).getRevisions(
+            kind,
+            name,
+            id,
+            {
+              per_page: -1,
+              context: "edit"
+            }
+          );
+          const entityConfig = select5(STORE_NAME).getEntityConfig(
+            kind,
+            name
+          );
+          const revKey = entityConfig?.revisionKey || DEFAULT_ENTITY_KEY;
+          const revision = revisions?.find(
+            (r) => r[revKey] === revisionId
+          );
+          return revision ? {
+            value: revision[prop],
+            fullValue: revision[prop]
+          } : {};
+        }
         const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select5(STORE_NAME);
         const record = getEntityRecord3(kind, name, id);
         const editedRecord = getEditedEntityRecord3(kind, name, id);
@@ -7154,16 +7188,19 @@ var wp;
           fullValue: record[prop]
         } : {};
       },
-      [kind, name, id, prop]
+      [kind, name, id, prop, revisionId]
     );
     const { editEntityRecord: editEntityRecord2 } = (0, import_data15.useDispatch)(STORE_NAME);
     const setValue = (0, import_element7.useCallback)(
       (newValue) => {
+        if (revisionId) {
+          return;
+        }
         editEntityRecord2(kind, name, id, {
           [prop]: newValue
         });
       },
-      [editEntityRecord2, kind, name, id, prop]
+      [editEntityRecord2, kind, name, id, prop, revisionId]
     );
     return [value, setValue, fullValue];
   }
