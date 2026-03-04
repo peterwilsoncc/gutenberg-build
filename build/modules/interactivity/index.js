@@ -1465,7 +1465,7 @@ function deepReadOnly(obj, options) {
   return readOnlyMap.get(obj);
 }
 var navigationSignal = d3(0);
-var sessionId = crypto.randomUUID();
+var sessionId = Math.random().toString(36).slice(2);
 function deepClone(source) {
   if (isPlainObject(source)) {
     return Object.fromEntries(
