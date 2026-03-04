@@ -30978,16 +30978,12 @@ ${js}
           { context: "view" }
         ) : null;
         let canEdit = false;
-        if (id && isSingleSelected && window?.__experimentalMediaEditor) {
-          const { getEntityRecordPermissions } = unlock(
-            select9(import_core_data23.store)
-          );
-          const permissions = getEntityRecordPermissions(
-            "postType",
-            "attachment",
+        if (imageRecord && window?.__experimentalMediaEditor) {
+          canEdit = !!select9(import_core_data23.store).canUser("update", {
+            kind: "postType",
+            name: "attachment",
             id
-          );
-          canEdit = permissions?.update || false;
+          });
         }
         return {
           image: imageRecord,
