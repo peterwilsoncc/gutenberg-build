@@ -17,13 +17,6 @@ return array(
 	array(
 		'name'        => 'font-list',
 		'path'        => '/font-list',
-		'page'        => 'site-editor',
-		'has_route'   => true,
-		'has_content' => true,
-	),
-	array(
-		'name'        => 'font-list',
-		'path'        => '/font-list',
 		'page'        => 'font-library',
 		'has_route'   => true,
 		'has_content' => true,
