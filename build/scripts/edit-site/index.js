@@ -26005,7 +26005,7 @@ var wp;
                   className: clsx_default(
                     `dataviews-view-table__col-${column}`,
                     {
-                      "dataviews-view-table__col-first-expand": !hasPrimaryColumn && index === columns.length - 1
+                      "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1
                     }
                   )
                 },
