@@ -40510,7 +40510,8 @@ var wp;
       getBlockEditingMode: getBlockEditingMode2,
       getBlockName: getBlockName2,
       isGroupable: isGroupable2,
-      getEditedContentOnlySection: getEditedContentOnlySection2
+      getEditedContentOnlySection: getEditedContentOnlySection2,
+      canEditBlock: canEditBlock2
     } = unlock((0, import_data121.useSelect)(store));
     const { getGroupingBlockName } = (0, import_data121.useSelect)(import_blocks76.store);
     const { showEmptyBlockSideInserter, showBlockToolbarPopover } = useShowBlockTools();
@@ -40625,7 +40626,7 @@ var wp;
         const clientIds = getSelectedBlockClientIds2();
         if (clientIds.length === 1) {
           const isContentOnly = getBlockEditingMode2(clientIds[0]) === "contentOnly";
-          const canRenameBlock = canRename && !isContentOnly;
+          const canRenameBlock = canRename && !isContentOnly && canEditBlock2(clientIds[0]);
           if (canRenameBlock) {
             event.preventDefault();
             setRenamingBlockClientId(clientIds[0]);
@@ -40643,7 +40644,7 @@ var wp;
             return;
           }
           if (clientIds.some(
-            (id) => getBlockEditingMode2(id) !== "default"
+            (id) => getBlockEditingMode2(id) !== "default" || !canEditBlock2(id)
           )) {
             return;
           }
