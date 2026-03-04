@@ -40087,8 +40087,10 @@ var wp;
       showLockButtons,
       showBlockVisibilityButton,
       showSwitchSectionStyleButton,
-      areSelectedBlocksHiddenOnViewport
+      areSelectedBlocksHiddenOnViewport,
+      canEdit
     } = (0, import_data117.useSelect)((select3) => {
+      const { canEditBlock: canEditBlock2 } = select3(store);
       const {
         getBlockName: getBlockName2,
         getBlockMode: getBlockMode2,
@@ -40128,7 +40130,8 @@ var wp;
       );
       const _isZoomOut = isZoomOut2();
       const _isSectionBlock = isSectionBlock2(selectedBlockClientId);
-      const _showSwitchSectionStyleButton = _isZoomOut || _isSectionBlock;
+      const _canEditBlock = canEditBlock2(selectedBlockClientId);
+      const _showSwitchSectionStyleButton = _canEditBlock && (_isZoomOut || _isSectionBlock);
       const _currentDeviceType = getSettings7()?.[deviceTypeKey]?.toLowerCase() || "desktop";
       const _areSelectedBlocksHiddenOnViewport = selectedBlockClientIds.length > 0 && selectedBlockClientIds.every(
         (id) => isBlockHiddenAtViewport2(id, _currentDeviceType)
@@ -40154,7 +40157,8 @@ var wp;
         showLockButtons: !_isZoomOut,
         showBlockVisibilityButton: !_isZoomOut,
         showSwitchSectionStyleButton: _showSwitchSectionStyleButton,
-        areSelectedBlocksHiddenOnViewport: _areSelectedBlocksHiddenOnViewport
+        areSelectedBlocksHiddenOnViewport: _areSelectedBlocksHiddenOnViewport,
+        canEdit: _canEditBlock
       };
     }, []);
     const toolbarWrapperRef = (0, import_element123.useRef)(null);
@@ -40217,7 +40221,7 @@ var wp;
             )
           ] }) }),
           !areSelectedBlocksHiddenOnViewport && !hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && showGroupButtons && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(toolbar_default, {}),
-          !isMultiToolbar && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(EditSectionButton, { clientId: blockClientIds[0] }),
+          !isMultiToolbar && canEdit && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(EditSectionButton, { clientId: blockClientIds[0] }),
           !areSelectedBlocksHiddenOnViewport && showShuffleButton && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(ChangeDesign, { clientId: blockClientIds[0] }),
           !areSelectedBlocksHiddenOnViewport && showSwitchSectionStyleButton && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(switch_section_style_default, { clientId: blockClientIds[0] }),
           !areSelectedBlocksHiddenOnViewport && shouldShowVisualToolbar && showSlots && /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(import_jsx_runtime254.Fragment, { children: [
