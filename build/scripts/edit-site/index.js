@@ -23836,7 +23836,7 @@ var wp;
   // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_i18n139 = __toESM(require_i18n(), 1);
   var import_element141 = __toESM(require_element(), 1);
-  var import_block_editor24 = __toESM(require_block_editor(), 1);
+  var import_block_editor25 = __toESM(require_block_editor(), 1);
 
   // packages/dataviews/build-module/dataviews/index.mjs
   var import_element121 = __toESM(require_element(), 1);
@@ -41631,8 +41631,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data43 = __toESM(require_core_data(), 1);
   var import_data66 = __toESM(require_data(), 1);
   var import_element135 = __toESM(require_element(), 1);
+  var import_block_editor23 = __toESM(require_block_editor(), 1);
   var import_editor28 = __toESM(require_editor(), 1);
   var { useGlobalStyles: useGlobalStyles3 } = unlock(import_editor28.privateApis);
+  var { globalStylesDataKey } = unlock(import_block_editor23.privateApis);
   function usePatternSettings() {
     const { merged: mergedConfig } = useGlobalStyles3();
     const storedSettings = (0, import_data66.useSelect)((select3) => {
@@ -41668,10 +41670,17 @@ If there's a particular need for this, please submit a feature request at https:
         ...restStoredSettings,
         styles: globalStyles,
         __experimentalFeatures: globalSettings,
+        [globalStylesDataKey]: mergedConfig.styles ?? {},
         __experimentalBlockPatterns: blockPatterns,
         isPreviewMode: true
       };
-    }, [storedSettings, blockPatterns, globalStyles, globalSettings]);
+    }, [
+      storedSettings,
+      blockPatterns,
+      globalStyles,
+      globalSettings,
+      mergedConfig
+    ]);
     return settings2;
   }
 
@@ -42141,7 +42150,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components148 = __toESM(require_components(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
   var import_element140 = __toESM(require_element(), 1);
-  var import_block_editor23 = __toESM(require_block_editor(), 1);
+  var import_block_editor24 = __toESM(require_block_editor(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_editor30 = __toESM(require_editor(), 1);
 
@@ -42232,8 +42241,8 @@ If there's a particular need for this, please submit a feature request at https:
         children: [
           isEmpty3 && isTemplatePart2 && (0, import_i18n138.__)("Empty template part"),
           isEmpty3 && !isTemplatePart2 && (0, import_i18n138.__)("Empty pattern"),
-          !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_block_editor23.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
-            import_block_editor23.BlockPreview,
+          !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_block_editor24.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+            import_block_editor24.BlockPreview,
             {
               blocks,
               viewportWidth: item.viewportWidth
@@ -42320,7 +42329,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
-  var { ExperimentalBlockEditorProvider } = unlock(import_block_editor24.privateApis);
+  var { ExperimentalBlockEditorProvider } = unlock(import_block_editor25.privateApis);
   var { usePostActions, patternTitleField } = unlock(import_editor31.privateApis);
   var { useLocation: useLocation27, useHistory: useHistory20 } = unlock(import_router31.privateApis);
   var EMPTY_ARRAY11 = [];
@@ -44022,7 +44031,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element148 = __toESM(require_element(), 1);
   var import_html_entities13 = __toESM(require_html_entities(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
-  var import_block_editor25 = __toESM(require_block_editor(), 1);
+  var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_editor34 = __toESM(require_editor(), 1);
   var import_core_data54 = __toESM(require_core_data(), 1);
   var import_data74 = __toESM(require_data(), 1);
@@ -44061,7 +44070,7 @@ If there's a particular need for this, please submit a feature request at https:
         style: { backgroundColor },
         children: [
           isEmpty3 && (0, import_i18n147.__)("Empty template"),
-          !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_block_editor25.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_block_editor25.BlockPreview, { blocks }) })
+          !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_block_editor26.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_block_editor26.BlockPreview, { blocks }) })
         ]
       }
     ) });
