@@ -47338,6 +47338,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     }
     (0, import_data84.dispatch)(store).updateSettings(settings2);
+    (0, import_data84.dispatch)(import_editor46.store).updateEditorSettings(settings2);
     window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
     window.addEventListener("drop", (e2) => e2.preventDefault(), false);
     root.render(
