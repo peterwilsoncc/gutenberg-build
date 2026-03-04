@@ -13712,7 +13712,7 @@ function RelativeDateControl({
   operator
 }) {
   const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
-  const { id, label, getValue, setValue } = field;
+  const { id, label, description, getValue, setValue } = field;
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
   const onChangeValue = (0, import_element41.useCallback)(
@@ -13740,6 +13740,7 @@ function RelativeDateControl({
       className: clsx_default(className, "dataviews-controls__relative-date"),
       label,
       hideLabelFromVision,
+      help: description,
       children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", children: [
         /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
           import_components30.__experimentalNumberControl,
@@ -13893,18 +13894,6 @@ function CalendarDateTimeControl({
       hideLabelFromVision,
       children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
         /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-          DateCalendar,
-          {
-            style: { width: "100%" },
-            selected: value ? parseDateTime(value) || void 0 : void 0,
-            onSelect: onSelectDate,
-            month: calendarMonth,
-            onMonthChange: setCalendarMonth,
-            timeZone: timezoneString || void 0,
-            weekStartsOn
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
           ValidatedInputControl,
           {
             ref: inputControlRef,
@@ -13918,6 +13907,18 @@ function CalendarDateTimeControl({
               parseDateTime(value) || void 0
             ) : "",
             onChange: handleManualDateTimeChange
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+          DateCalendar,
+          {
+            style: { width: "100%" },
+            selected: value ? parseDateTime(value) || void 0 : void 0,
+            onSelect: onSelectDate,
+            month: calendarMonth,
+            onMonthChange: setCalendarMonth,
+            timeZone: timezoneString || void 0,
+            weekStartsOn
           }
         )
       ] })
@@ -14158,6 +14159,7 @@ function CalendarDateControl({
   const {
     id,
     label,
+    description,
     setValue,
     getValue,
     isValid: isValid2,
@@ -14236,6 +14238,7 @@ function CalendarDateControl({
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
+          help: description,
           hideLabelFromVision,
           children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
             /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
@@ -14315,7 +14318,14 @@ function CalendarDateRangeControl({
   markWhenOptional,
   validity
 }) {
-  const { id, label, getValue, setValue, format: fieldFormat } = field;
+  const {
+    id,
+    label,
+    description,
+    getValue,
+    setValue,
+    format: fieldFormat
+  } = field;
   let value;
   const fieldValue = getValue({ item: data });
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -14424,6 +14434,7 @@ function CalendarDateRangeControl({
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
+          help: description,
           hideLabelFromVision,
           children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
             /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(

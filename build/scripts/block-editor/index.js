@@ -65169,7 +65169,7 @@ var wp;
     operator
   }) {
     const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
-    const { id, label, getValue, setValue } = field;
+    const { id, label, description, getValue, setValue } = field;
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
     const onChangeValue = (0, import_element231.useCallback)(
@@ -65197,6 +65197,7 @@ var wp;
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
+        help: description,
         children: /* @__PURE__ */ (0, import_jsx_runtime401.jsxs)(Stack, { direction: "row", gap: "sm", children: [
           /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
             import_components231.__experimentalNumberControl,
@@ -65350,18 +65351,6 @@ var wp;
         hideLabelFromVision,
         children: /* @__PURE__ */ (0, import_jsx_runtime402.jsxs)(Stack, { direction: "column", gap: "lg", children: [
           /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
-            DateCalendar,
-            {
-              style: { width: "100%" },
-              selected: value ? parseDateTime(value) || void 0 : void 0,
-              onSelect: onSelectDate,
-              month: calendarMonth,
-              onMonthChange: setCalendarMonth,
-              timeZone: timezoneString || void 0,
-              weekStartsOn
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
             ValidatedInputControl2,
             {
               ref: inputControlRef,
@@ -65375,6 +65364,18 @@ var wp;
                 parseDateTime(value) || void 0
               ) : "",
               onChange: handleManualDateTimeChange
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
+            DateCalendar,
+            {
+              style: { width: "100%" },
+              selected: value ? parseDateTime(value) || void 0 : void 0,
+              onSelect: onSelectDate,
+              month: calendarMonth,
+              onMonthChange: setCalendarMonth,
+              timeZone: timezoneString || void 0,
+              weekStartsOn
             }
           )
         ] })
@@ -65615,6 +65616,7 @@ var wp;
     const {
       id,
       label,
+      description,
       setValue,
       getValue,
       isValid: isValid2,
@@ -65693,6 +65695,7 @@ var wp;
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
+            help: description,
             hideLabelFromVision,
             children: /* @__PURE__ */ (0, import_jsx_runtime403.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime403.jsxs)(
@@ -65772,7 +65775,14 @@ var wp;
     markWhenOptional,
     validity
   }) {
-    const { id, label, getValue, setValue, format: fieldFormat } = field;
+    const {
+      id,
+      label,
+      description,
+      getValue,
+      setValue,
+      format: fieldFormat
+    } = field;
     let value;
     const fieldValue = getValue({ item: data });
     if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -65881,6 +65891,7 @@ var wp;
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
+            help: description,
             hideLabelFromVision,
             children: /* @__PURE__ */ (0, import_jsx_runtime403.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime403.jsxs)(

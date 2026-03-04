@@ -14012,7 +14012,7 @@ If there's a particular need for this, please submit a feature request at https:
     operator
   }) {
     const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
-    const { id, label, getValue, setValue } = field;
+    const { id, label, description, getValue, setValue } = field;
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
     const onChangeValue = (0, import_element40.useCallback)(
@@ -14040,6 +14040,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
+        help: description,
         children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", children: [
           /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
             import_components30.__experimentalNumberControl,
@@ -14193,18 +14194,6 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
           /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-            DateCalendar,
-            {
-              style: { width: "100%" },
-              selected: value ? parseDateTime(value) || void 0 : void 0,
-              onSelect: onSelectDate,
-              month: calendarMonth,
-              onMonthChange: setCalendarMonth,
-              timeZone: timezoneString || void 0,
-              weekStartsOn
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
             ValidatedInputControl,
             {
               ref: inputControlRef,
@@ -14218,6 +14207,18 @@ If there's a particular need for this, please submit a feature request at https:
                 parseDateTime(value) || void 0
               ) : "",
               onChange: handleManualDateTimeChange
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+            DateCalendar,
+            {
+              style: { width: "100%" },
+              selected: value ? parseDateTime(value) || void 0 : void 0,
+              onSelect: onSelectDate,
+              month: calendarMonth,
+              onMonthChange: setCalendarMonth,
+              timeZone: timezoneString || void 0,
+              weekStartsOn
             }
           )
         ] })
@@ -14458,6 +14459,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       id,
       label,
+      description,
       setValue,
       getValue,
       isValid: isValid2,
@@ -14536,6 +14538,7 @@ If there's a particular need for this, please submit a feature request at https:
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
+            help: description,
             hideLabelFromVision,
             children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
@@ -14615,7 +14618,14 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const { id, label, getValue, setValue, format: fieldFormat } = field;
+    const {
+      id,
+      label,
+      description,
+      getValue,
+      setValue,
+      format: fieldFormat
+    } = field;
     let value;
     const fieldValue = getValue({ item: data });
     if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -14724,6 +14734,7 @@ If there's a particular need for this, please submit a feature request at https:
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
+            help: description,
             hideLabelFromVision,
             children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
