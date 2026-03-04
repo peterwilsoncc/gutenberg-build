@@ -967,7 +967,7 @@ function getConnectorData() {
   try {
     const parsed = JSON.parse(
       document.getElementById(
-        "wp-script-module-data-connectors-wp-admin"
+        "wp-script-module-data-options-connectors-wp-admin"
       )?.textContent ?? ""
     );
     return parsed?.connectors ?? {};

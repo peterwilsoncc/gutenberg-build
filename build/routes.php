@@ -92,24 +92,24 @@ function gutenberg_register_page_routes( $page_routes, $register_function_name )
 }
 
 // Page-specific route registration functions
-// Page-specific route registration functions for connectors
+// Page-specific route registration functions for options-connectors
 /**
- * Register routes for connectors page (full-page mode).
+ * Register routes for options-connectors page (full-page mode).
  */
-function gutenberg_register_connectors_page_routes() {
-	global $gutenberg_connectors_routes_data;
-	gutenberg_register_page_routes( $gutenberg_connectors_routes_data, 'gutenberg_register_connectors_route' );
+function gutenberg_register_options_connectors_page_routes() {
+	global $gutenberg_options_connectors_routes_data;
+	gutenberg_register_page_routes( $gutenberg_options_connectors_routes_data, 'gutenberg_register_options_connectors_route' );
 }
-add_action( 'connectors_init', 'gutenberg_register_connectors_page_routes' );
+add_action( 'options-connectors_init', 'gutenberg_register_options_connectors_page_routes' );
 
 /**
- * Register routes for connectors page (wp-admin mode).
+ * Register routes for options-connectors page (wp-admin mode).
  */
-function gutenberg_register_connectors_wp_admin_page_routes() {
-	global $gutenberg_connectors_routes_data;
-	gutenberg_register_page_routes( $gutenberg_connectors_routes_data, 'gutenberg_register_connectors_wp_admin_route' );
+function gutenberg_register_options_connectors_wp_admin_page_routes() {
+	global $gutenberg_options_connectors_routes_data;
+	gutenberg_register_page_routes( $gutenberg_options_connectors_routes_data, 'gutenberg_register_options_connectors_wp_admin_route' );
 }
-add_action( 'connectors-wp-admin_init', 'gutenberg_register_connectors_wp_admin_page_routes' );
+add_action( 'options-connectors-wp-admin_init', 'gutenberg_register_options_connectors_wp_admin_page_routes' );
 
 // Page-specific route registration functions for font-library
 /**
