@@ -40194,15 +40194,24 @@ var wp;
         (record) => !(record.kind === "root" && record.name === "site")
       );
       const siteEntityLabels = siteEntityConfig?.meta?.labels ?? {};
-      const editedSiteEntities = [];
-      for (const property in siteEdits) {
-        editedSiteEntities.push({
+      const {
+        site_logo: siteLogoEdit,
+        site_icon: siteIconEdit,
+        ...otherSiteEdits
+      } = siteEdits ?? {};
+      const orderedSiteProperties = [
+        siteLogoEdit !== void 0 && "site_logo",
+        siteIconEdit !== void 0 && "site_icon",
+        ...Object.keys(otherSiteEdits)
+      ].filter(Boolean);
+      const editedSiteEntities = orderedSiteProperties.map(
+        (property) => ({
           kind: "root",
           name: "site",
           title: siteEntityLabels[property] || property,
           property
-        });
-      }
+        })
+      );
       return [...editedEntitiesWithoutSite, ...editedSiteEntities];
     }, [editedEntities, siteEdits, siteEntityConfig]);
     const [unselectedEntities, _setUnselectedEntities] = (0, import_element93.useState)([]);
