@@ -40896,6 +40896,7 @@ var wp;
       import_components115.Button,
       {
         size: "compact",
+        className: "editor-post-parent__panel-toggle",
         variant: "tertiary",
         "aria-expanded": isOpen,
         "aria-label": (
@@ -47149,6 +47150,7 @@ var wp;
       import_components169.Button,
       {
         size: "compact",
+        className: "editor-post-url__panel-toggle",
         variant: "tertiary",
         "aria-expanded": isOpen,
         "aria-label": (
