@@ -70456,11 +70456,12 @@ ${js}
       area,
       onNavigateToEntityRecord,
       title,
-      canUserEdit
+      canUserEdit,
+      canUserEditBlock
     } = (0, import_data156.useSelect)(
       (select9) => {
         const { getEditedEntityRecord, hasFinishedResolution } = select9(import_core_data88.store);
-        const { getBlockCount, getSettings: getSettings2 } = select9(import_block_editor274.store);
+        const { getBlockCount, getSettings: getSettings2, canEditBlock } = select9(import_block_editor274.store);
         const getEntityArgs = [
           "postType",
           "wp_template_part",
@@ -70484,7 +70485,8 @@ ${js}
           area: _area,
           onNavigateToEntityRecord: getSettings2().onNavigateToEntityRecord,
           title: entityRecord?.title,
-          canUserEdit: !!_canUserEdit
+          canUserEdit: !!_canUserEdit,
+          canUserEditBlock: canEditBlock(clientId)
         };
       },
       [templatePartId, attributes2.area, clientId]
@@ -70564,7 +70566,7 @@ ${js}
           }
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_block_editor274.BlockSettingsMenuControls, { children: ({ selectedClientIds }) => {
-          if (!(selectedClientIds.length === 1 && clientId === selectedClientIds[0])) {
+          if (!canUserEditBlock || !(selectedClientIds.length === 1 && clientId === selectedClientIds[0])) {
             return null;
           }
           return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
