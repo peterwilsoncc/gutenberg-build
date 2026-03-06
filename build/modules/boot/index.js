@@ -1947,7 +1947,10 @@ function Canvas({ canvas }) {
           {
             postType: canvas.postType,
             postId: canvas.postId,
-            settings: { isPreviewMode: canvas.isPreview },
+            settings: {
+              isPreviewMode: canvas.isPreview,
+              styles: canvas.isPreview ? [{ css: "body{min-height:100vh;}" }] : []
+            },
             backButton
           }
         )

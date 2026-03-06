@@ -2605,11 +2605,7 @@ function Editor({
   const finalSettings = (0, import_element4.useMemo)(
     () => ({
       ...editorSettings,
-      ...settings,
-      styles: [
-        ...editorSettings.styles ?? [],
-        ...settings?.isPreviewMode ? [{ css: "body{min-height:100vh;}" }] : []
-      ]
+      ...settings
     }),
     [editorSettings, settings]
   );
