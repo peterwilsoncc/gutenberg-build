@@ -39457,6 +39457,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components137 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
+  var import_i18n126 = __toESM(require_i18n(), 1);
   var DEFAULT_LAYOUT = {
     type: "regular",
     labelPosition: "top"
@@ -39482,10 +39483,27 @@ If there's a particular need for this, please submit a feature request at https:
     } else if (layout?.type === "panel") {
       const summary = layout.summary ?? [];
       const normalizedSummary = Array.isArray(summary) ? summary : [summary];
+      const openAs = layout?.openAs;
+      let normalizedOpenAs;
+      if (typeof openAs === "object" && openAs.type === "modal") {
+        normalizedOpenAs = {
+          type: "modal",
+          applyLabel: openAs.applyLabel?.trim() || (0, import_i18n126.__)("Apply"),
+          cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n126.__)("Cancel")
+        };
+      } else if (openAs === "modal") {
+        normalizedOpenAs = {
+          type: "modal",
+          applyLabel: (0, import_i18n126.__)("Apply"),
+          cancelLabel: (0, import_i18n126.__)("Cancel")
+        };
+      } else {
+        normalizedOpenAs = { type: "dropdown" };
+      }
       normalizedLayout = {
         type: "panel",
         labelPosition: layout?.labelPosition ?? "side",
-        openAs: layout?.openAs ?? "dropdown",
+        openAs: normalizedOpenAs,
         summary: normalizedSummary,
         editVisibility: layout?.editVisibility ?? "on-hover"
       };
@@ -39672,13 +39690,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components140 = __toESM(require_components(), 1);
-  var import_i18n128 = __toESM(require_i18n(), 1);
   var import_element128 = __toESM(require_element(), 1);
   var import_compose25 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components139 = __toESM(require_components(), 1);
-  var import_i18n126 = __toESM(require_i18n(), 1);
+  var import_i18n127 = __toESM(require_i18n(), 1);
   var import_compose24 = __toESM(require_compose(), 1);
   var import_element124 = __toESM(require_element(), 1);
 
@@ -39768,13 +39785,13 @@ If there's a particular need for this, please submit a feature request at https:
       SummaryButton,
       "dataforms-layouts-panel__field-control"
     );
-    const ariaLabel = showError ? (0, import_i18n126.sprintf)(
+    const ariaLabel = showError ? (0, import_i18n127.sprintf)(
       // translators: %s: Field name.
-      (0, import_i18n126._x)("Edit %s (has errors)", "field"),
+      (0, import_i18n127._x)("Edit %s (has errors)", "field"),
       fieldLabel || ""
-    ) : (0, import_i18n126.sprintf)(
+    ) : (0, import_i18n127.sprintf)(
       // translators: %s: Field name.
-      (0, import_i18n126._x)("Edit %s", "field"),
+      (0, import_i18n127._x)("Edit %s", "field"),
       fieldLabel || ""
     );
     const rowRef = (0, import_element124.useRef)(null);
@@ -39863,7 +39880,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_deepmerge2 = __toESM(require_cjs(), 1);
   var import_es63 = __toESM(require_es6(), 1);
   var import_element125 = __toESM(require_element(), 1);
-  var import_i18n127 = __toESM(require_i18n(), 1);
+  var import_i18n128 = __toESM(require_i18n(), 1);
   function isFormValid(formValidity) {
     if (!formValidity) {
       return true;
@@ -39993,7 +40010,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               elements: {
                 type: "invalid",
-                message: (0, import_i18n127.__)("Could not validate elements.")
+                message: (0, import_i18n128.__)("Could not validate elements.")
               }
             },
             [...path, formField.id]
@@ -40012,7 +40029,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               elements: {
                 type: "invalid",
-                message: (0, import_i18n127.__)(
+                message: (0, import_i18n128.__)(
                   "Value must be one of the elements."
                 )
               }
@@ -40038,7 +40055,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (error instanceof Error) {
         errorMessage = error.message;
       } else {
-        errorMessage = String(error) || (0, import_i18n127.__)(
+        errorMessage = String(error) || (0, import_i18n128.__)(
           "Unknown error when running elements validation asynchronously."
         );
       }
@@ -40097,7 +40114,7 @@ If there's a particular need for this, please submit a feature request at https:
           {
             custom: {
               type: "invalid",
-              message: (0, import_i18n127.__)("Validation could not be processed.")
+              message: (0, import_i18n128.__)("Validation could not be processed.")
             }
           },
           [...path, formField.id]
@@ -40112,7 +40129,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (error instanceof Error) {
         errorMessage = error.message;
       } else {
-        errorMessage = String(error) || (0, import_i18n127.__)(
+        errorMessage = String(error) || (0, import_i18n128.__)(
           "Unknown error when running custom validation asynchronously."
         );
       }
@@ -40141,7 +40158,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         pattern: {
           type: "invalid",
-          message: (0, import_i18n127.__)("Value does not match the required pattern.")
+          message: (0, import_i18n128.__)("Value does not match the required pattern.")
         }
       };
     }
@@ -40149,7 +40166,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         min: {
           type: "invalid",
-          message: (0, import_i18n127.__)("Value is below the minimum.")
+          message: (0, import_i18n128.__)("Value is below the minimum.")
         }
       };
     }
@@ -40157,7 +40174,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         max: {
           type: "invalid",
-          message: (0, import_i18n127.__)("Value is above the maximum.")
+          message: (0, import_i18n128.__)("Value is above the maximum.")
         }
       };
     }
@@ -40165,7 +40182,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         minLength: {
           type: "invalid",
-          message: (0, import_i18n127.__)("Value is too short.")
+          message: (0, import_i18n128.__)("Value is too short.")
         }
       };
     }
@@ -40173,7 +40190,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         maxLength: {
           type: "invalid",
-          message: (0, import_i18n127.__)("Value is too long.")
+          message: (0, import_i18n128.__)("Value is too long.")
         }
       };
     }
@@ -40181,7 +40198,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         elements: {
           type: "invalid",
-          message: (0, import_i18n127.__)("Value must be one of the elements.")
+          message: (0, import_i18n128.__)("Value must be one of the elements.")
         }
       };
     }
@@ -40204,7 +40221,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (error instanceof Error) {
           errorMessage = error.message;
         } else {
-          errorMessage = String(error) || (0, import_i18n127.__)("Unknown error when running custom validation.");
+          errorMessage = String(error) || (0, import_i18n128.__)("Unknown error when running custom validation.");
         }
         return {
           custom: {
@@ -40231,14 +40248,14 @@ If there's a particular need for this, please submit a feature request at https:
       );
       fieldValidity.elements = {
         type: "validating",
-        message: (0, import_i18n127.__)("Validating\u2026")
+        message: (0, import_i18n128.__)("Validating\u2026")
       };
     }
     if (customError instanceof Promise) {
       handleCustomValidationAsync(customError, formField, promiseHandler);
       fieldValidity.custom = {
         type: "validating",
-        message: (0, import_i18n127.__)("Validating\u2026")
+        message: (0, import_i18n128.__)("Validating\u2026")
       };
     }
     if (Object.keys(fieldValidity).length > 0) {
@@ -40443,6 +40460,8 @@ If there's a particular need for this, please submit a feature request at https:
     onClose,
     touched
   }) {
+    const { openAs } = field.layout;
+    const { applyLabel, cancelLabel } = openAs;
     const { fields } = (0, import_element128.useContext)(dataform_context_default);
     const [changes, setChanges] = (0, import_element128.useState)({});
     const modalData = (0, import_element128.useMemo)(() => {
@@ -40533,7 +40552,7 @@ If there's a particular need for this, please submit a feature request at https:
                     variant: "tertiary",
                     onClick: onClose,
                     __next40pxDefaultSize: true,
-                    children: (0, import_i18n128.__)("Cancel")
+                    children: cancelLabel
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
@@ -40542,7 +40561,7 @@ If there's a particular need for this, please submit a feature request at https:
                     variant: "primary",
                     onClick: onApply,
                     __next40pxDefaultSize: true,
-                    children: (0, import_i18n128.__)("Apply")
+                    children: applyLabel
                   }
                 )
               ]
@@ -40761,7 +40780,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const layout = field.layout;
-    if (layout.openAs === "modal") {
+    if (layout.openAs.type === "modal") {
       return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
         modal_default2,
         {

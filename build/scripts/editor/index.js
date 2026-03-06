@@ -59120,6 +59120,7 @@ var wp;
   var import_components217 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
+  var import_i18n237 = __toESM(require_i18n(), 1);
   var DEFAULT_LAYOUT = {
     type: "regular",
     labelPosition: "top"
@@ -59145,10 +59146,27 @@ var wp;
     } else if (layout?.type === "panel") {
       const summary = layout.summary ?? [];
       const normalizedSummary = Array.isArray(summary) ? summary : [summary];
+      const openAs = layout?.openAs;
+      let normalizedOpenAs;
+      if (typeof openAs === "object" && openAs.type === "modal") {
+        normalizedOpenAs = {
+          type: "modal",
+          applyLabel: openAs.applyLabel?.trim() || (0, import_i18n237.__)("Apply"),
+          cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n237.__)("Cancel")
+        };
+      } else if (openAs === "modal") {
+        normalizedOpenAs = {
+          type: "modal",
+          applyLabel: (0, import_i18n237.__)("Apply"),
+          cancelLabel: (0, import_i18n237.__)("Cancel")
+        };
+      } else {
+        normalizedOpenAs = { type: "dropdown" };
+      }
       normalizedLayout = {
         type: "panel",
         labelPosition: layout?.labelPosition ?? "side",
-        openAs: layout?.openAs ?? "dropdown",
+        openAs: normalizedOpenAs,
         summary: normalizedSummary,
         editVisibility: layout?.editVisibility ?? "on-hover"
       };
@@ -59335,13 +59353,12 @@ var wp;
   // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components220 = __toESM(require_components(), 1);
-  var import_i18n239 = __toESM(require_i18n(), 1);
   var import_element193 = __toESM(require_element(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components219 = __toESM(require_components(), 1);
-  var import_i18n237 = __toESM(require_i18n(), 1);
+  var import_i18n238 = __toESM(require_i18n(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_element189 = __toESM(require_element(), 1);
 
@@ -59431,13 +59448,13 @@ var wp;
       SummaryButton,
       "dataforms-layouts-panel__field-control"
     );
-    const ariaLabel = showError ? (0, import_i18n237.sprintf)(
+    const ariaLabel = showError ? (0, import_i18n238.sprintf)(
       // translators: %s: Field name.
-      (0, import_i18n237._x)("Edit %s (has errors)", "field"),
+      (0, import_i18n238._x)("Edit %s (has errors)", "field"),
       fieldLabel || ""
-    ) : (0, import_i18n237.sprintf)(
+    ) : (0, import_i18n238.sprintf)(
       // translators: %s: Field name.
-      (0, import_i18n237._x)("Edit %s", "field"),
+      (0, import_i18n238._x)("Edit %s", "field"),
       fieldLabel || ""
     );
     const rowRef = (0, import_element189.useRef)(null);
@@ -59526,7 +59543,7 @@ var wp;
   var import_deepmerge2 = __toESM(require_cjs(), 1);
   var import_es62 = __toESM(require_es6(), 1);
   var import_element190 = __toESM(require_element(), 1);
-  var import_i18n238 = __toESM(require_i18n(), 1);
+  var import_i18n239 = __toESM(require_i18n(), 1);
   function isFormValid(formValidity) {
     if (!formValidity) {
       return true;
@@ -59656,7 +59673,7 @@ var wp;
             {
               elements: {
                 type: "invalid",
-                message: (0, import_i18n238.__)("Could not validate elements.")
+                message: (0, import_i18n239.__)("Could not validate elements.")
               }
             },
             [...path, formField.id]
@@ -59675,7 +59692,7 @@ var wp;
             {
               elements: {
                 type: "invalid",
-                message: (0, import_i18n238.__)(
+                message: (0, import_i18n239.__)(
                   "Value must be one of the elements."
                 )
               }
@@ -59701,7 +59718,7 @@ var wp;
       if (error instanceof Error) {
         errorMessage = error.message;
       } else {
-        errorMessage = String(error) || (0, import_i18n238.__)(
+        errorMessage = String(error) || (0, import_i18n239.__)(
           "Unknown error when running elements validation asynchronously."
         );
       }
@@ -59760,7 +59777,7 @@ var wp;
           {
             custom: {
               type: "invalid",
-              message: (0, import_i18n238.__)("Validation could not be processed.")
+              message: (0, import_i18n239.__)("Validation could not be processed.")
             }
           },
           [...path, formField.id]
@@ -59775,7 +59792,7 @@ var wp;
       if (error instanceof Error) {
         errorMessage = error.message;
       } else {
-        errorMessage = String(error) || (0, import_i18n238.__)(
+        errorMessage = String(error) || (0, import_i18n239.__)(
           "Unknown error when running custom validation asynchronously."
         );
       }
@@ -59804,7 +59821,7 @@ var wp;
       return {
         pattern: {
           type: "invalid",
-          message: (0, import_i18n238.__)("Value does not match the required pattern.")
+          message: (0, import_i18n239.__)("Value does not match the required pattern.")
         }
       };
     }
@@ -59812,7 +59829,7 @@ var wp;
       return {
         min: {
           type: "invalid",
-          message: (0, import_i18n238.__)("Value is below the minimum.")
+          message: (0, import_i18n239.__)("Value is below the minimum.")
         }
       };
     }
@@ -59820,7 +59837,7 @@ var wp;
       return {
         max: {
           type: "invalid",
-          message: (0, import_i18n238.__)("Value is above the maximum.")
+          message: (0, import_i18n239.__)("Value is above the maximum.")
         }
       };
     }
@@ -59828,7 +59845,7 @@ var wp;
       return {
         minLength: {
           type: "invalid",
-          message: (0, import_i18n238.__)("Value is too short.")
+          message: (0, import_i18n239.__)("Value is too short.")
         }
       };
     }
@@ -59836,7 +59853,7 @@ var wp;
       return {
         maxLength: {
           type: "invalid",
-          message: (0, import_i18n238.__)("Value is too long.")
+          message: (0, import_i18n239.__)("Value is too long.")
         }
       };
     }
@@ -59844,7 +59861,7 @@ var wp;
       return {
         elements: {
           type: "invalid",
-          message: (0, import_i18n238.__)("Value must be one of the elements.")
+          message: (0, import_i18n239.__)("Value must be one of the elements.")
         }
       };
     }
@@ -59867,7 +59884,7 @@ var wp;
         if (error instanceof Error) {
           errorMessage = error.message;
         } else {
-          errorMessage = String(error) || (0, import_i18n238.__)("Unknown error when running custom validation.");
+          errorMessage = String(error) || (0, import_i18n239.__)("Unknown error when running custom validation.");
         }
         return {
           custom: {
@@ -59894,14 +59911,14 @@ var wp;
       );
       fieldValidity.elements = {
         type: "validating",
-        message: (0, import_i18n238.__)("Validating\u2026")
+        message: (0, import_i18n239.__)("Validating\u2026")
       };
     }
     if (customError instanceof Promise) {
       handleCustomValidationAsync(customError, formField, promiseHandler);
       fieldValidity.custom = {
         type: "validating",
-        message: (0, import_i18n238.__)("Validating\u2026")
+        message: (0, import_i18n239.__)("Validating\u2026")
       };
     }
     if (Object.keys(fieldValidity).length > 0) {
@@ -60106,6 +60123,8 @@ var wp;
     onClose,
     touched
   }) {
+    const { openAs } = field.layout;
+    const { applyLabel, cancelLabel } = openAs;
     const { fields: fields2 } = (0, import_element193.useContext)(dataform_context_default);
     const [changes, setChanges] = (0, import_element193.useState)({});
     const modalData = (0, import_element193.useMemo)(() => {
@@ -60196,7 +60215,7 @@ var wp;
                     variant: "tertiary",
                     onClick: onClose,
                     __next40pxDefaultSize: true,
-                    children: (0, import_i18n239.__)("Cancel")
+                    children: cancelLabel
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(
@@ -60205,7 +60224,7 @@ var wp;
                     variant: "primary",
                     onClick: onApply,
                     __next40pxDefaultSize: true,
-                    children: (0, import_i18n239.__)("Apply")
+                    children: applyLabel
                   }
                 )
               ]
@@ -60424,7 +60443,7 @@ var wp;
     validity
   }) {
     const layout = field.layout;
-    if (layout.openAs === "modal") {
+    if (layout.openAs.type === "modal") {
       return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
         modal_default2,
         {

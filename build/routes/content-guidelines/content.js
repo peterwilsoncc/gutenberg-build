@@ -15012,6 +15012,7 @@ var import_element39 = __toESM(require_element(), 1);
 var import_components22 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
+var import_i18n18 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
   type: "regular",
   labelPosition: "top"
@@ -15037,10 +15038,27 @@ function normalizeLayout(layout) {
   } else if (layout?.type === "panel") {
     const summary = layout.summary ?? [];
     const normalizedSummary = Array.isArray(summary) ? summary : [summary];
+    const openAs = layout?.openAs;
+    let normalizedOpenAs;
+    if (typeof openAs === "object" && openAs.type === "modal") {
+      normalizedOpenAs = {
+        type: "modal",
+        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n18.__)("Apply"),
+        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n18.__)("Cancel")
+      };
+    } else if (openAs === "modal") {
+      normalizedOpenAs = {
+        type: "modal",
+        applyLabel: (0, import_i18n18.__)("Apply"),
+        cancelLabel: (0, import_i18n18.__)("Cancel")
+      };
+    } else {
+      normalizedOpenAs = { type: "dropdown" };
+    }
     normalizedLayout = {
       type: "panel",
       labelPosition: layout?.labelPosition ?? "side",
-      openAs: layout?.openAs ?? "dropdown",
+      openAs: normalizedOpenAs,
       summary: normalizedSummary,
       editVisibility: layout?.editVisibility ?? "on-hover"
     };
@@ -15227,13 +15245,12 @@ function FormRegularField({
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components25 = __toESM(require_components(), 1);
-var import_i18n20 = __toESM(require_i18n(), 1);
 var import_element44 = __toESM(require_element(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components24 = __toESM(require_components(), 1);
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 var import_compose = __toESM(require_compose(), 1);
 var import_element40 = __toESM(require_element(), 1);
 
@@ -15323,13 +15340,13 @@ function SummaryButton({
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
-  const ariaLabel = showError ? (0, import_i18n18.sprintf)(
+  const ariaLabel = showError ? (0, import_i18n19.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n18._x)("Edit %s (has errors)", "field"),
+    (0, import_i18n19._x)("Edit %s (has errors)", "field"),
     fieldLabel || ""
-  ) : (0, import_i18n18.sprintf)(
+  ) : (0, import_i18n19.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n18._x)("Edit %s", "field"),
+    (0, import_i18n19._x)("Edit %s", "field"),
     fieldLabel || ""
   );
   const rowRef = (0, import_element40.useRef)(null);
@@ -15418,7 +15435,7 @@ function SummaryButton({
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
 var import_element41 = __toESM(require_element(), 1);
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
     return true;
@@ -15548,7 +15565,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n19.__)("Could not validate elements.")
+              message: (0, import_i18n20.__)("Could not validate elements.")
             }
           },
           [...path, formField.id]
@@ -15567,7 +15584,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n19.__)(
+              message: (0, import_i18n20.__)(
                 "Value must be one of the elements."
               )
             }
@@ -15593,7 +15610,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n19.__)(
+      errorMessage = String(error2) || (0, import_i18n20.__)(
         "Unknown error when running elements validation asynchronously."
       );
     }
@@ -15652,7 +15669,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
         {
           custom: {
             type: "invalid",
-            message: (0, import_i18n19.__)("Validation could not be processed.")
+            message: (0, import_i18n20.__)("Validation could not be processed.")
           }
         },
         [...path, formField.id]
@@ -15667,7 +15684,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n19.__)(
+      errorMessage = String(error2) || (0, import_i18n20.__)(
         "Unknown error when running custom validation asynchronously."
       );
     }
@@ -15696,7 +15713,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       pattern: {
         type: "invalid",
-        message: (0, import_i18n19.__)("Value does not match the required pattern.")
+        message: (0, import_i18n20.__)("Value does not match the required pattern.")
       }
     };
   }
@@ -15704,7 +15721,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       min: {
         type: "invalid",
-        message: (0, import_i18n19.__)("Value is below the minimum.")
+        message: (0, import_i18n20.__)("Value is below the minimum.")
       }
     };
   }
@@ -15712,7 +15729,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       max: {
         type: "invalid",
-        message: (0, import_i18n19.__)("Value is above the maximum.")
+        message: (0, import_i18n20.__)("Value is above the maximum.")
       }
     };
   }
@@ -15720,7 +15737,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       minLength: {
         type: "invalid",
-        message: (0, import_i18n19.__)("Value is too short.")
+        message: (0, import_i18n20.__)("Value is too short.")
       }
     };
   }
@@ -15728,7 +15745,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       maxLength: {
         type: "invalid",
-        message: (0, import_i18n19.__)("Value is too long.")
+        message: (0, import_i18n20.__)("Value is too long.")
       }
     };
   }
@@ -15736,7 +15753,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       elements: {
         type: "invalid",
-        message: (0, import_i18n19.__)("Value must be one of the elements.")
+        message: (0, import_i18n20.__)("Value must be one of the elements.")
       }
     };
   }
@@ -15759,7 +15776,7 @@ function validateFormField(item, formField, promiseHandler) {
       if (error2 instanceof Error) {
         errorMessage = error2.message;
       } else {
-        errorMessage = String(error2) || (0, import_i18n19.__)("Unknown error when running custom validation.");
+        errorMessage = String(error2) || (0, import_i18n20.__)("Unknown error when running custom validation.");
       }
       return {
         custom: {
@@ -15786,14 +15803,14 @@ function validateFormField(item, formField, promiseHandler) {
     );
     fieldValidity.elements = {
       type: "validating",
-      message: (0, import_i18n19.__)("Validating\u2026")
+      message: (0, import_i18n20.__)("Validating\u2026")
     };
   }
   if (customError instanceof Promise) {
     handleCustomValidationAsync(customError, formField, promiseHandler);
     fieldValidity.custom = {
       type: "validating",
-      message: (0, import_i18n19.__)("Validating\u2026")
+      message: (0, import_i18n20.__)("Validating\u2026")
     };
   }
   if (Object.keys(fieldValidity).length > 0) {
@@ -15998,6 +16015,8 @@ function ModalContent({
   onClose,
   touched
 }) {
+  const { openAs } = field.layout;
+  const { applyLabel, cancelLabel } = openAs;
   const { fields } = (0, import_element44.useContext)(dataform_context_default);
   const [changes, setChanges] = (0, import_element44.useState)({});
   const modalData = (0, import_element44.useMemo)(() => {
@@ -16088,7 +16107,7 @@ function ModalContent({
                   variant: "tertiary",
                   onClick: onClose,
                   __next40pxDefaultSize: true,
-                  children: (0, import_i18n20.__)("Cancel")
+                  children: cancelLabel
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
@@ -16097,7 +16116,7 @@ function ModalContent({
                   variant: "primary",
                   onClick: onApply,
                   __next40pxDefaultSize: true,
-                  children: (0, import_i18n20.__)("Apply")
+                  children: applyLabel
                 }
               )
             ]
@@ -16316,7 +16335,7 @@ function FormPanelField({
   validity
 }) {
   const layout = field.layout;
-  if (layout.openAs === "modal") {
+  if (layout.openAs.type === "modal") {
     return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
       modal_default,
       {
