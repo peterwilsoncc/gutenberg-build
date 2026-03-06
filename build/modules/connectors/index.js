@@ -144,7 +144,7 @@ function ConnectorItem({
   children
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, { className, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, { alignment: "center", spacing: 4, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, { alignment: "center", spacing: 4, wrap: true, children: [
       icon,
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: 0, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { weight: 600, size: 15, children: name }),

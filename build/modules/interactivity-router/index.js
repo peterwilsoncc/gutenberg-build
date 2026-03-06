@@ -663,7 +663,7 @@ var importScriptModules = (modules) => Promise.all(modules.map((m) => importPrel
 // packages/interactivity-router/build-module/index.mjs
 var {
   getRegionRootFragment,
-  initialVdom,
+  initialVdomPromise,
   toVdom,
   render,
   parseServerData,
@@ -832,14 +832,17 @@ document.querySelectorAll(regionsSelector).forEach((region) => {
   }
 });
 window.document.querySelectorAll("script[type=module][src]").forEach(({ src }) => markScriptModuleAsResolved(src));
-pages.set(
-  getPagePath(window.location.href),
-  Promise.resolve(
-    preparePage(getPagePath(window.location.href), document, {
-      vdom: initialVdom
-    })
-  )
-);
+(async () => {
+  const initialVdomMap = await initialVdomPromise;
+  pages.set(
+    getPagePath(window.location.href),
+    Promise.resolve(
+      preparePage(getPagePath(window.location.href), document, {
+        vdom: initialVdomMap
+      })
+    )
+  );
+})();
 var navigatingTo = "";
 var hasLoadedNavigationTextsData = false;
 var navigationTexts = {

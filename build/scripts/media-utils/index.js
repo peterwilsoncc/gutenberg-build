@@ -3465,7 +3465,7 @@ var wp;
                   className: clsx_default(
                     `dataviews-view-table__col-${column}`,
                     {
-                      "dataviews-view-table__col-first-expand": !hasPrimaryColumn && index === columns.length - 1
+                      "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1
                     }
                   )
                 },
@@ -14012,7 +14012,7 @@ If there's a particular need for this, please submit a feature request at https:
     operator
   }) {
     const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
-    const { id, label, getValue, setValue } = field;
+    const { id, label, description, getValue, setValue } = field;
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
     const onChangeValue = (0, import_element40.useCallback)(
@@ -14040,6 +14040,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
+        help: description,
         children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", children: [
           /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
             import_components30.__experimentalNumberControl,
@@ -14083,14 +14084,11 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
   var { DateCalendar, ValidatedInputControl } = unlock(import_components31.privateApis);
-  var formatDateTime = (date) => {
-    if (!date) {
+  var formatDateTime = (value) => {
+    if (!value) {
       return "";
     }
-    if (typeof date === "string") {
-      return date;
-    }
-    return format(date, "yyyy-MM-dd'T'HH:mm");
+    return (0, import_date3.dateI18n)("Y-m-d\\TH:i", (0, import_date3.getDate)(value));
   };
   function CalendarDateTimeControl({
     data,
@@ -14125,17 +14123,14 @@ If there's a particular need for this, please submit a feature request at https:
       (newDate) => {
         let dateTimeValue;
         if (newDate) {
-          let finalDateTime = newDate;
+          const wpDate = (0, import_date3.dateI18n)("Y-m-d", newDate);
+          let wpTime;
           if (value) {
-            const currentDateTime = parseDateTime(value);
-            if (currentDateTime) {
-              finalDateTime = new Date(newDate);
-              finalDateTime.setHours(currentDateTime.getHours());
-              finalDateTime.setMinutes(
-                currentDateTime.getMinutes()
-              );
-            }
+            wpTime = (0, import_date3.dateI18n)("H:i", (0, import_date3.getDate)(value));
+          } else {
+            wpTime = (0, import_date3.dateI18n)("H:i", newDate);
           }
+          const finalDateTime = (0, import_date3.getDate)(`${wpDate}T${wpTime}`);
           dateTimeValue = finalDateTime.toISOString();
           onChangeCallback(dateTimeValue);
           if (validationTimeoutRef.current) {
@@ -14161,7 +14156,7 @@ If there's a particular need for this, please submit a feature request at https:
     const handleManualDateTimeChange = (0, import_element41.useCallback)(
       (newValue) => {
         if (newValue) {
-          const dateTime = new Date(newValue);
+          const dateTime = (0, import_date3.getDate)(newValue);
           onChangeCallback(dateTime.toISOString());
           const parsedDate = parseDateTime(dateTime.toISOString());
           if (parsedDate) {
@@ -14193,18 +14188,6 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
           /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-            DateCalendar,
-            {
-              style: { width: "100%" },
-              selected: value ? parseDateTime(value) || void 0 : void 0,
-              onSelect: onSelectDate,
-              month: calendarMonth,
-              onMonthChange: setCalendarMonth,
-              timeZone: timezoneString || void 0,
-              weekStartsOn
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
             ValidatedInputControl,
             {
               ref: inputControlRef,
@@ -14214,10 +14197,20 @@ If there's a particular need for this, please submit a feature request at https:
               type: "datetime-local",
               label: (0, import_i18n39.__)("Date time"),
               hideLabelFromVision: true,
-              value: value ? formatDateTime(
-                parseDateTime(value) || void 0
-              ) : "",
+              value: formatDateTime(value),
               onChange: handleManualDateTimeChange
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+            DateCalendar,
+            {
+              style: { width: "100%" },
+              selected: value ? parseDateTime(value) || void 0 : void 0,
+              onSelect: onSelectDate,
+              month: calendarMonth,
+              onMonthChange: setCalendarMonth,
+              timeZone: timezoneString || void 0,
+              weekStartsOn
             }
           )
         ] })
@@ -14458,6 +14451,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       id,
       label,
+      description,
       setValue,
       getValue,
       isValid: isValid2,
@@ -14536,6 +14530,7 @@ If there's a particular need for this, please submit a feature request at https:
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
+            help: description,
             hideLabelFromVision,
             children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
@@ -14615,7 +14610,14 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const { id, label, getValue, setValue, format: fieldFormat } = field;
+    const {
+      id,
+      label,
+      description,
+      getValue,
+      setValue,
+      format: fieldFormat
+    } = field;
     let value;
     const fieldValue = getValue({ item: data });
     if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -14724,6 +14726,7 @@ If there's a particular need for this, please submit a feature request at https:
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
+            help: description,
             hideLabelFromVision,
             children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
