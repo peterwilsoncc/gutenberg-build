@@ -220,28 +220,12 @@ function gutenberg_filter_mod_rewrite_rules( string $rules ): string {
 add_filter( 'mod_rewrite_rules', 'gutenberg_filter_mod_rewrite_rules' );
 
 /**
- * Returns the major Chromium version from the current request's User-Agent.
- *
- * Matches all Chromium-based browsers (Chrome, Edge, Opera, Brave).
- *
- * @return int|null The major Chromium version, or null if not a Chromium browser.
- */
-function gutenberg_get_chromium_major_version(): ?int {
-	if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
-		return null;
-	}
-	if ( preg_match( '/Chrome\/(\d+)/', $_SERVER['HTTP_USER_AGENT'], $matches ) ) {
-		return (int) $matches[1];
-	}
-	return null;
-}
-
-/**
  * Enables cross-origin isolation in the block editor.
  *
  * Required for enabling SharedArrayBuffer for WebAssembly-based
- * media processing in the editor. Uses Document-Isolation-Policy
- * on supported browsers (Chromium 137+).
+ * media processing in the editor.
+ *
+ * @link https://web.dev/coop-coep/
  */
 function gutenberg_set_up_cross_origin_isolation() {
 	// Re-check the filter at action time, since other plugins (loaded after Gutenberg)
@@ -257,14 +241,6 @@ function gutenberg_set_up_cross_origin_isolation() {
 	}
 
 	if ( ! $screen->is_block_editor() && 'site-editor' !== $screen->id && ! ( 'widgets' === $screen->id && wp_use_widgets_block_editor() ) ) {
-		return;
-	}
-
-	// Skip when a third-party page builder overrides the block editor.
-	// DIP isolates the document into its own agent cluster,
-	// which blocks same-origin iframe access that these editors rely on.
-	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	if ( isset( $_GET['action'] ) && 'edit' !== $_GET['action'] ) {
 		return;
 	}
 
@@ -286,44 +262,24 @@ add_action( 'load-post-new.php', 'gutenberg_set_up_cross_origin_isolation' );
 add_action( 'load-site-editor.php', 'gutenberg_set_up_cross_origin_isolation' );
 add_action( 'load-widgets.php', 'gutenberg_set_up_cross_origin_isolation' );
 
-// Remove core's COEP/COOP-based cross-origin isolation in favor of
-// Gutenberg's DIP-based approach, which also skips third-party editors.
-remove_action( 'load-post.php', 'wp_set_up_cross_origin_isolation' );
-remove_action( 'load-post-new.php', 'wp_set_up_cross_origin_isolation' );
-remove_action( 'load-site-editor.php', 'wp_set_up_cross_origin_isolation' );
-remove_action( 'load-widgets.php', 'wp_set_up_cross_origin_isolation' );
-
 /**
- * Sends the Document-Isolation-Policy header for cross-origin isolation.
+ * Sends headers for cross-origin isolation.
  *
  * Uses an output buffer to add crossorigin="anonymous" where needed.
+ *
+ * @link https://web.dev/coop-coep/
+ *
+ * @global bool $is_safari
  */
 function gutenberg_start_cross_origin_isolation_output_buffer(): void {
-	$chromium_version = gutenberg_get_chromium_major_version();
+	global $is_safari;
 
-	/**
-	 * Filters whether to use Document-Isolation-Policy for cross-origin isolation.
-	 *
-	 * Document-Isolation-Policy provides per-document cross-origin isolation
-	 * without affecting other iframes on the page, avoiding breakage of plugins
-	 * whose iframes lose credentials/DOM access.
-	 *
-	 * @since 21.8.0
-	 *
-	 * @param bool $use_dip Whether DIP is supported and should be used.
-	 */
-	$use_dip = apply_filters(
-		'gutenberg_use_document_isolation_policy',
-		null !== $chromium_version && $chromium_version >= 137
-	);
-
-	if ( ! $use_dip ) {
-		return;
-	}
+	$coep = $is_safari ? 'require-corp' : 'credentialless';
 
 	ob_start(
-		function ( string $output ): string {
-			header( 'Document-Isolation-Policy: isolate-and-credentialless' );
+		function ( string $output ) use ( $coep ): string {
+			header( 'Cross-Origin-Opener-Policy: same-origin' );
+			header( "Cross-Origin-Embedder-Policy: $coep" );
 
 			return gutenberg_add_crossorigin_attributes( $output );
 		}

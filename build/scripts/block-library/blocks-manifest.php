@@ -3361,8 +3361,7 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
-			'customCSS' => false,
-			'visibility' => false
+			'customCSS' => false
 		),
 		'editorStyle' => 'wp-block-html-editor'
 	),
@@ -3438,10 +3437,19 @@ return array(
 			)
 		),
 		'selectors' => array(
-			'root' => '.wp-block-icon svg',
-			'css' => '.wp-block-icon',
+			'root' => '.wp-block-icon',
+			'color' => array(
+				'root' => '.wp-block-icon svg'
+			),
+			'border' => array(
+				'root' => '.wp-block-icon svg'
+			),
 			'spacing' => array(
-				'margin' => '.wp-block-icon'
+				'padding' => '.wp-block-icon svg'
+			),
+			'dimensions' => array(
+				'root' => '.wp-block-icon svg',
+				'width' => '.wp-block-icon svg'
 			)
 		),
 		'style' => 'wp-block-icon',
@@ -7547,8 +7555,7 @@ return array(
 			'className' => false,
 			'customClassName' => false,
 			'html' => false,
-			'customCSS' => false,
-			'visibility' => false
+			'customCSS' => false
 		),
 		'editorStyle' => 'wp-block-shortcode-editor'
 	),

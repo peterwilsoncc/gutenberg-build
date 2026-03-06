@@ -59,17 +59,10 @@ var require_data = __commonJS({
   }
 });
 
-// package-external:@wordpress/core-data
-var require_core_data = __commonJS({
-  "package-external:@wordpress/core-data"(exports, module) {
-    module.exports = window.wp.coreData;
-  }
-});
-
-// vendor-external:react
-var require_react = __commonJS({
-  "vendor-external:react"(exports, module) {
-    module.exports = window.React;
+// package-external:@wordpress/api-fetch
+var require_api_fetch = __commonJS({
+  "package-external:@wordpress/api-fetch"(exports, module) {
+    module.exports = window.wp.apiFetch;
   }
 });
 
@@ -77,13 +70,6 @@ var require_react = __commonJS({
 var require_private_apis = __commonJS({
   "package-external:@wordpress/private-apis"(exports, module) {
     module.exports = window.wp.privateApis;
-  }
-});
-
-// package-external:@wordpress/api-fetch
-var require_api_fetch = __commonJS({
-  "package-external:@wordpress/api-fetch"(exports, module) {
-    module.exports = window.wp.apiFetch;
   }
 });
 
@@ -206,19 +192,18 @@ var page_default = Page;
 
 // routes/connectors-home/stage.tsx
 var import_components4 = __toESM(require_components());
-var import_data2 = __toESM(require_data());
-var import_element4 = __toESM(require_element());
+var import_data = __toESM(require_data());
+var import_element3 = __toESM(require_element());
 var import_i18n3 = __toESM(require_i18n());
-var import_core_data2 = __toESM(require_core_data());
 import {
   privateApis as connectorsPrivateApis
 } from "@wordpress/connectors";
 
 // routes/connectors-home/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='2df87bd25d']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='2ca9f0b249']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "2df87bd25d");
-  style.appendChild(document.createTextNode(".connectors-page{box-sizing:border-box;margin:0 auto;max-width:680px;padding:24px;width:100%}.connectors-page .components-item{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;padding:20px}.connectors-page .connector-settings .components-text-control__input{font-family:monospace}.connectors-page>p{color:#949494;text-align:center}@media (max-width:480px){.connectors-page,.connectors-page .components-item{padding:16px}.connectors-page .components-item>.components-v-stack>.components-h-stack:first-child svg{height:32px;width:32px}}"));
+  style.setAttribute("data-wp-hash", "2ca9f0b249");
+  style.appendChild(document.createTextNode(".connectors-page{margin:0 auto;max-width:680px;padding:24px;width:100%}.connectors-page .components-item{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;padding:20px}.connectors-page .connector-settings .components-text-control__input{font-family:monospace}.connectors-page>p{color:#949494;text-align:center}"));
   document.head.appendChild(style);
 }
 
@@ -231,455 +216,20 @@ import {
   __experimentalDefaultConnectorSettings as DefaultConnectorSettings
 } from "@wordpress/connectors";
 
-// node_modules/@base-ui/utils/esm/useRefWithInit.js
-var React2 = __toESM(require_react(), 1);
-var UNINITIALIZED = {};
-function useRefWithInit(init, initArg) {
-  const ref = React2.useRef(UNINITIALIZED);
-  if (ref.current === UNINITIALIZED) {
-    ref.current = init(initArg);
-  }
-  return ref;
-}
-
-// node_modules/@base-ui/react/esm/utils/useRenderElement.js
-var React5 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/esm/useMergedRefs.js
-function useMergedRefs(a, b, c, d) {
-  const forkRef = useRefWithInit(createForkRef).current;
-  if (didChange(forkRef, a, b, c, d)) {
-    update(forkRef, [a, b, c, d]);
-  }
-  return forkRef.callback;
-}
-function useMergedRefsN(refs) {
-  const forkRef = useRefWithInit(createForkRef).current;
-  if (didChangeN(forkRef, refs)) {
-    update(forkRef, refs);
-  }
-  return forkRef.callback;
-}
-function createForkRef() {
-  return {
-    callback: null,
-    cleanup: null,
-    refs: []
-  };
-}
-function didChange(forkRef, a, b, c, d) {
-  return forkRef.refs[0] !== a || forkRef.refs[1] !== b || forkRef.refs[2] !== c || forkRef.refs[3] !== d;
-}
-function didChangeN(forkRef, newRefs) {
-  return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index) => ref !== newRefs[index]);
-}
-function update(forkRef, refs) {
-  forkRef.refs = refs;
-  if (refs.every((ref) => ref == null)) {
-    forkRef.callback = null;
-    return;
-  }
-  forkRef.callback = (instance) => {
-    if (forkRef.cleanup) {
-      forkRef.cleanup();
-      forkRef.cleanup = null;
-    }
-    if (instance != null) {
-      const cleanupCallbacks = Array(refs.length).fill(null);
-      for (let i = 0; i < refs.length; i += 1) {
-        const ref = refs[i];
-        if (ref == null) {
-          continue;
-        }
-        switch (typeof ref) {
-          case "function": {
-            const refCleanup = ref(instance);
-            if (typeof refCleanup === "function") {
-              cleanupCallbacks[i] = refCleanup;
-            }
-            break;
-          }
-          case "object": {
-            ref.current = instance;
-            break;
-          }
-          default:
-        }
-      }
-      forkRef.cleanup = () => {
-        for (let i = 0; i < refs.length; i += 1) {
-          const ref = refs[i];
-          if (ref == null) {
-            continue;
-          }
-          switch (typeof ref) {
-            case "function": {
-              const cleanupCallback = cleanupCallbacks[i];
-              if (typeof cleanupCallback === "function") {
-                cleanupCallback();
-              } else {
-                ref(null);
-              }
-              break;
-            }
-            case "object": {
-              ref.current = null;
-              break;
-            }
-            default:
-          }
-        }
-      };
-    }
-  };
-}
-
-// node_modules/@base-ui/utils/esm/getReactElementRef.js
-var React4 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/esm/reactVersion.js
-var React3 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React3.version, 10);
-function isReactVersionAtLeast(reactVersionToCheck) {
-  return majorVersion >= reactVersionToCheck;
-}
-
-// node_modules/@base-ui/utils/esm/getReactElementRef.js
-function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React4.isValidElement(element)) {
-    return null;
-  }
-  const reactElement = element;
-  const propsWithRef = reactElement.props;
-  return (isReactVersionAtLeast(19) ? propsWithRef?.ref : reactElement.ref) ?? null;
-}
-
-// node_modules/@base-ui/utils/esm/mergeObjects.js
-function mergeObjects(a, b) {
-  if (a && !b) {
-    return a;
-  }
-  if (!a && b) {
-    return b;
-  }
-  if (a || b) {
-    return {
-      ...a,
-      ...b
-    };
-  }
-  return void 0;
-}
-
-// node_modules/@base-ui/react/esm/utils/getStateAttributesProps.js
-function getStateAttributesProps(state, customMapping) {
-  const props = {};
-  for (const key in state) {
-    const value = state[key];
-    if (customMapping?.hasOwnProperty(key)) {
-      const customProps = customMapping[key](value);
-      if (customProps != null) {
-        Object.assign(props, customProps);
-      }
-      continue;
-    }
-    if (value === true) {
-      props[`data-${key.toLowerCase()}`] = "";
-    } else if (value) {
-      props[`data-${key.toLowerCase()}`] = value.toString();
-    }
-  }
-  return props;
-}
-
-// node_modules/@base-ui/react/esm/utils/resolveClassName.js
-function resolveClassName(className, state) {
-  return typeof className === "function" ? className(state) : className;
-}
-
-// node_modules/@base-ui/react/esm/utils/resolveStyle.js
-function resolveStyle(style, state) {
-  return typeof style === "function" ? style(state) : style;
-}
-
-// node_modules/@base-ui/react/esm/merge-props/mergeProps.js
-var EMPTY_PROPS = {};
-function mergeProps(a, b, c, d, e) {
-  let merged = {
-    ...resolvePropsGetter(a, EMPTY_PROPS)
-  };
-  if (b) {
-    merged = mergeOne(merged, b);
-  }
-  if (c) {
-    merged = mergeOne(merged, c);
-  }
-  if (d) {
-    merged = mergeOne(merged, d);
-  }
-  if (e) {
-    merged = mergeOne(merged, e);
-  }
-  return merged;
-}
-function mergePropsN(props) {
-  if (props.length === 0) {
-    return EMPTY_PROPS;
-  }
-  if (props.length === 1) {
-    return resolvePropsGetter(props[0], EMPTY_PROPS);
-  }
-  let merged = {
-    ...resolvePropsGetter(props[0], EMPTY_PROPS)
-  };
-  for (let i = 1; i < props.length; i += 1) {
-    merged = mergeOne(merged, props[i]);
-  }
-  return merged;
-}
-function mergeOne(merged, inputProps) {
-  if (isPropsGetter(inputProps)) {
-    return inputProps(merged);
-  }
-  return mutablyMergeInto(merged, inputProps);
-}
-function mutablyMergeInto(mergedProps, externalProps) {
-  if (!externalProps) {
-    return mergedProps;
-  }
-  for (const propName in externalProps) {
-    const externalPropValue = externalProps[propName];
-    switch (propName) {
-      case "style": {
-        mergedProps[propName] = mergeObjects(mergedProps.style, externalPropValue);
-        break;
-      }
-      case "className": {
-        mergedProps[propName] = mergeClassNames(mergedProps.className, externalPropValue);
-        break;
-      }
-      default: {
-        if (isEventHandler(propName, externalPropValue)) {
-          mergedProps[propName] = mergeEventHandlers(mergedProps[propName], externalPropValue);
-        } else {
-          mergedProps[propName] = externalPropValue;
-        }
-      }
-    }
-  }
-  return mergedProps;
-}
-function isEventHandler(key, value) {
-  const code0 = key.charCodeAt(0);
-  const code1 = key.charCodeAt(1);
-  const code2 = key.charCodeAt(2);
-  return code0 === 111 && code1 === 110 && code2 >= 65 && code2 <= 90 && (typeof value === "function" || typeof value === "undefined");
-}
-function isPropsGetter(inputProps) {
-  return typeof inputProps === "function";
-}
-function resolvePropsGetter(inputProps, previousProps) {
-  if (isPropsGetter(inputProps)) {
-    return inputProps(previousProps);
-  }
-  return inputProps ?? EMPTY_PROPS;
-}
-function mergeEventHandlers(ourHandler, theirHandler) {
-  if (!theirHandler) {
-    return ourHandler;
-  }
-  if (!ourHandler) {
-    return theirHandler;
-  }
-  return (event) => {
-    if (isSyntheticEvent(event)) {
-      const baseUIEvent = event;
-      makeEventPreventable(baseUIEvent);
-      const result2 = theirHandler(baseUIEvent);
-      if (!baseUIEvent.baseUIHandlerPrevented) {
-        ourHandler?.(baseUIEvent);
-      }
-      return result2;
-    }
-    const result = theirHandler(event);
-    ourHandler?.(event);
-    return result;
-  };
-}
-function makeEventPreventable(event) {
-  event.preventBaseUIHandler = () => {
-    event.baseUIHandlerPrevented = true;
-  };
-  return event;
-}
-function mergeClassNames(ourClassName, theirClassName) {
-  if (theirClassName) {
-    if (ourClassName) {
-      return theirClassName + " " + ourClassName;
-    }
-    return theirClassName;
-  }
-  return ourClassName;
-}
-function isSyntheticEvent(event) {
-  return event != null && typeof event === "object" && "nativeEvent" in event;
-}
-
-// node_modules/@base-ui/utils/esm/empty.js
-var EMPTY_ARRAY = Object.freeze([]);
-var EMPTY_OBJECT = Object.freeze({});
-
-// node_modules/@base-ui/react/esm/utils/useRenderElement.js
-var import_react = __toESM(require_react(), 1);
-function useRenderElement(element, componentProps, params = {}) {
-  const renderProp = componentProps.render;
-  const outProps = useRenderElementProps(componentProps, params);
-  if (params.enabled === false) {
-    return null;
-  }
-  const state = params.state ?? EMPTY_OBJECT;
-  return evaluateRenderProp(element, renderProp, outProps, state);
-}
-function useRenderElementProps(componentProps, params = {}) {
-  const {
-    className: classNameProp,
-    style: styleProp,
-    render: renderProp
-  } = componentProps;
-  const {
-    state = EMPTY_OBJECT,
-    ref,
-    props,
-    stateAttributesMapping,
-    enabled = true
-  } = params;
-  const className = enabled ? resolveClassName(classNameProp, state) : void 0;
-  const style = enabled ? resolveStyle(styleProp, state) : void 0;
-  const stateProps = enabled ? getStateAttributesProps(state, stateAttributesMapping) : EMPTY_OBJECT;
-  const outProps = enabled ? mergeObjects(stateProps, Array.isArray(props) ? mergePropsN(props) : props) ?? EMPTY_OBJECT : EMPTY_OBJECT;
-  if (typeof document !== "undefined") {
-    if (!enabled) {
-      useMergedRefs(null, null);
-    } else if (Array.isArray(ref)) {
-      outProps.ref = useMergedRefsN([outProps.ref, getReactElementRef(renderProp), ...ref]);
-    } else {
-      outProps.ref = useMergedRefs(outProps.ref, getReactElementRef(renderProp), ref);
-    }
-  }
-  if (!enabled) {
-    return EMPTY_OBJECT;
-  }
-  if (className !== void 0) {
-    outProps.className = mergeClassNames(outProps.className, className);
-  }
-  if (style !== void 0) {
-    outProps.style = mergeObjects(outProps.style, style);
-  }
-  return outProps;
-}
-var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
-function evaluateRenderProp(element, render, props, state) {
-  if (render) {
-    if (typeof render === "function") {
-      return render(props, state);
-    }
-    const mergedProps = mergeProps(props, render.props);
-    mergedProps.ref = props.ref;
-    let newElement = render;
-    if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React5.Children.toArray(render);
-      newElement = children[0];
-    }
-    if (true) {
-      if (!/* @__PURE__ */ React5.isValidElement(newElement)) {
-        throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
-      }
-    }
-    return /* @__PURE__ */ React5.cloneElement(newElement, mergedProps);
-  }
-  if (element) {
-    if (typeof element === "string") {
-      return renderTag(element, props);
-    }
-  }
-  throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage(8));
-}
-function renderTag(Tag, props) {
-  if (Tag === "button") {
-    return /* @__PURE__ */ (0, import_react.createElement)("button", {
-      type: "button",
-      ...props,
-      key: props.key
-    });
-  }
-  if (Tag === "img") {
-    return /* @__PURE__ */ (0, import_react.createElement)("img", {
-      alt: "",
-      ...props,
-      key: props.key
-    });
-  }
-  return /* @__PURE__ */ React5.createElement(Tag, props);
-}
-
-// node_modules/@base-ui/react/esm/use-render/useRender.js
-function useRender(params) {
-  return useRenderElement(params.defaultTagName ?? "div", params, params);
-}
-
-// packages/ui/build-module/badge/badge.mjs
-var import_element2 = __toESM(require_element(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='244b5c59c0']")) {
-  const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "244b5c59c0");
-  style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._96e6251aad1a6136__badge{border-radius:var(--wpds-border-radius-lg,8px);font-family:var(--wpds-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-font-size-sm,12px);font-weight:var(--wpds-font-weight-regular,400);line-height:var(--wpds-font-line-height-xs,16px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._99f7158cb520f750__is-high-intent{background-color:var(--wpds-color-bg-surface-error,#f6e6e3);color:var(--wpds-color-fg-content-error,#470000)}.c20ebef2365bc8b7__is-medium-intent{background-color:var(--wpds-color-bg-surface-warning,#fde6bd);color:var(--wpds-color-fg-content-warning,#2e1900)}._365e1626c6202e52__is-low-intent{background-color:var(--wpds-color-bg-surface-caution,#fee994);color:var(--wpds-color-fg-content-caution,#281d00)}._33f8198127ddf4ef__is-stable-intent{background-color:var(--wpds-color-bg-surface-success,#c5f7cc);color:var(--wpds-color-fg-content-success,#002900)}._04c1aca8fc449412__is-informational-intent{background-color:var(--wpds-color-bg-surface-info,#deebfa);color:var(--wpds-color-fg-content-info,#001b4f)}._90726e69d495ec19__is-draft-intent{background-color:var(--wpds-color-bg-surface-neutral-weak,#f0f0f0);color:var(--wpds-color-fg-content-neutral,#1e1e1e)}._898f4a544993bd39__is-none-intent{background-color:var(--wpds-color-bg-surface-neutral,#f8f8f8);color:var(--wpds-color-fg-content-neutral-weak,#6d6d6d)}}'));
-  document.head.appendChild(style);
-}
-var style_default = { "badge": "_96e6251aad1a6136__badge", "is-high-intent": "_99f7158cb520f750__is-high-intent", "is-medium-intent": "c20ebef2365bc8b7__is-medium-intent", "is-low-intent": "_365e1626c6202e52__is-low-intent", "is-stable-intent": "_33f8198127ddf4ef__is-stable-intent", "is-informational-intent": "_04c1aca8fc449412__is-informational-intent", "is-draft-intent": "_90726e69d495ec19__is-draft-intent", "is-none-intent": "_898f4a544993bd39__is-none-intent" };
-var Badge = (0, import_element2.forwardRef)(function Badge2({ children, intent = "none", render, className, ...props }, ref) {
-  const element = useRender({
-    render,
-    defaultTagName: "span",
-    ref,
-    props: mergeProps(props, {
-      className: clsx_default(
-        style_default.badge,
-        style_default[`is-${intent}-intent`],
-        className
-      ),
-      children
-    })
-  });
-  return element;
-});
-
 // routes/connectors-home/use-connector-plugin.ts
 var import_api_fetch = __toESM(require_api_fetch());
-var import_core_data = __toESM(require_core_data());
-var import_data = __toESM(require_data());
-var import_element3 = __toESM(require_element());
+var import_element2 = __toESM(require_element());
 var import_i18n = __toESM(require_i18n());
 function useConnectorPlugin({
   pluginSlug,
-  settingName,
-  isInstalled,
-  isActivated
+  settingName
 }) {
-  const [pluginStatus, setPluginStatus] = (0, import_element3.useState)("checking");
-  const [isExpanded, setIsExpanded] = (0, import_element3.useState)(false);
-  const [isBusy, setIsBusy] = (0, import_element3.useState)(false);
-  const [currentApiKey, setCurrentApiKey] = (0, import_element3.useState)("");
-  const [canManagePlugins, setCanManagePlugins] = (0, import_element3.useState)();
-  const canInstallPlugins = (0, import_data.useSelect)(
-    (select) => !!select(import_core_data.store).canUser("create", {
-      kind: "root",
-      name: "plugin"
-    }),
-    []
-  );
-  const canActivatePlugins = canManagePlugins;
+  const [pluginStatus, setPluginStatus] = (0, import_element2.useState)("checking");
+  const [isExpanded, setIsExpanded] = (0, import_element2.useState)(false);
+  const [isBusy, setIsBusy] = (0, import_element2.useState)(false);
+  const [currentApiKey, setCurrentApiKey] = (0, import_element2.useState)("");
   const isConnected = pluginStatus === "active" && currentApiKey !== "" && currentApiKey !== "invalid_key";
-  const fetchApiKey = (0, import_element3.useCallback)(async () => {
+  const fetchApiKey = (0, import_element2.useCallback)(async () => {
     try {
       const settings = await (0, import_api_fetch.default)({
         path: `/wp/v2/settings?_fields=${settingName}`
@@ -689,7 +239,7 @@ function useConnectorPlugin({
     } catch {
     }
   }, [settingName]);
-  (0, import_element3.useEffect)(() => {
+  (0, import_element2.useEffect)(() => {
     const checkPluginStatus = async () => {
       if (!pluginSlug) {
         await fetchApiKey();
@@ -700,7 +250,6 @@ function useConnectorPlugin({
         const plugins = await (0, import_api_fetch.default)({
           path: "/wp/v2/plugins"
         });
-        setCanManagePlugins(true);
         const plugin = plugins.find(
           (p) => p.plugin === `${pluginSlug}/plugin`
         );
@@ -713,19 +262,11 @@ function useConnectorPlugin({
           setPluginStatus("inactive");
         }
       } catch {
-        setCanManagePlugins(false);
-        if (isActivated) {
-          await fetchApiKey();
-          setPluginStatus("active");
-        } else if (isInstalled) {
-          setPluginStatus("inactive");
-        } else {
-          setPluginStatus("not-installed");
-        }
+        setPluginStatus("not-installed");
       }
     };
     checkPluginStatus();
-  }, [pluginSlug, fetchApiKey, isInstalled, isActivated]);
+  }, [pluginSlug, fetchApiKey]);
   const installPlugin = async () => {
     if (!pluginSlug) {
       return;
@@ -766,14 +307,8 @@ function useConnectorPlugin({
   };
   const handleButtonClick = () => {
     if (pluginStatus === "not-installed") {
-      if (canInstallPlugins === false) {
-        return;
-      }
       installPlugin();
     } else if (pluginStatus === "inactive") {
-      if (canActivatePlugins === false) {
-        return;
-      }
       activatePlugin();
     } else {
       setIsExpanded(!isExpanded);
@@ -837,8 +372,6 @@ function useConnectorPlugin({
   };
   return {
     pluginStatus,
-    canInstallPlugins,
-    canActivatePlugins,
     isExpanded,
     setIsExpanded,
     isBusy,
@@ -967,7 +500,7 @@ function getConnectorData() {
   try {
     const parsed = JSON.parse(
       document.getElementById(
-        "wp-script-module-data-options-connectors-wp-admin"
+        "wp-script-module-data-connectors-wp-admin"
       )?.textContent ?? ""
     );
     return parsed?.connectors ?? {};
@@ -995,16 +528,13 @@ var ConnectedBadge = () => /* @__PURE__ */ React.createElement(
   },
   (0, import_i18n2.__)("Connected")
 );
-var UnavailableActionBadge = () => /* @__PURE__ */ React.createElement(Badge, null, (0, import_i18n2.__)("Not available"));
 function ApiKeyConnector({
   label,
   description,
   pluginSlug,
   settingName,
   helpUrl,
-  Logo,
-  isInstalled,
-  isActivated
+  Logo
 }) {
   let helpLabel;
   try {
@@ -1015,8 +545,6 @@ function ApiKeyConnector({
   }
   const {
     pluginStatus,
-    canInstallPlugins,
-    canActivatePlugins,
     isExpanded,
     setIsExpanded,
     isBusy,
@@ -1028,12 +556,8 @@ function ApiKeyConnector({
     removeApiKey
   } = useConnectorPlugin({
     pluginSlug,
-    settingName,
-    isInstalled,
-    isActivated
+    settingName
   });
-  const showUnavailableBadge = pluginStatus === "not-installed" && canInstallPlugins === false || pluginStatus === "inactive" && canActivatePlugins === false;
-  const showActionButton = !showUnavailableBadge;
   return /* @__PURE__ */ React.createElement(
     ConnectorItem,
     {
@@ -1041,7 +565,7 @@ function ApiKeyConnector({
       icon: Logo ? /* @__PURE__ */ React.createElement(Logo, null) : void 0,
       name: label,
       description,
-      actionArea: /* @__PURE__ */ React.createElement(import_components3.__experimentalHStack, { spacing: 3, expanded: false }, isConnected && /* @__PURE__ */ React.createElement(ConnectedBadge, null), showUnavailableBadge && /* @__PURE__ */ React.createElement(UnavailableActionBadge, null), showActionButton && /* @__PURE__ */ React.createElement(
+      actionArea: /* @__PURE__ */ React.createElement(import_components3.__experimentalHStack, { spacing: 3, expanded: false }, isConnected && /* @__PURE__ */ React.createElement(ConnectedBadge, null), /* @__PURE__ */ React.createElement(
         import_components3.Button,
         {
           variant: isExpanded || isConnected ? "tertiary" : "secondary",
@@ -1092,9 +616,7 @@ function registerDefaultConnectors() {
           pluginSlug: data.plugin?.slug,
           settingName: authentication.settingName,
           helpUrl: authentication.credentialsUrl ?? void 0,
-          Logo: CONNECTOR_LOGOS[connectorId],
-          isInstalled: data.plugin?.isInstalled,
-          isActivated: data.plugin?.isActivated
+          Logo: CONNECTOR_LOGOS[connectorId]
         }
       )
     });
@@ -1112,14 +634,8 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
 var { store } = unlock(connectorsPrivateApis);
 registerDefaultConnectors();
 function ConnectorsPage() {
-  const { connectors, canInstallPlugins } = (0, import_data2.useSelect)(
-    (select) => ({
-      connectors: unlock(select(store)).getConnectors(),
-      canInstallPlugins: select(import_core_data2.store).canUser("create", {
-        kind: "root",
-        name: "plugin"
-      })
-    }),
+  const connectors = (0, import_data.useSelect)(
+    (select) => unlock(select(store)).getConnectors(),
     []
   );
   return /* @__PURE__ */ React.createElement(
@@ -1143,7 +659,7 @@ function ConnectorsPage() {
         );
       }
       return null;
-    })), canInstallPlugins && /* @__PURE__ */ React.createElement("p", null, (0, import_element4.createInterpolateElement)(
+    })), /* @__PURE__ */ React.createElement("p", null, (0, import_element3.createInterpolateElement)(
       (0, import_i18n3.__)(
         "Find more connectors in <a>the plugin directory</a>"
       ),

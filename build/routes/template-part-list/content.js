@@ -3258,7 +3258,7 @@ function ViewTable({
                 className: clsx_default(
                   `dataviews-view-table__col-${column}`,
                   {
-                    "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1
+                    "dataviews-view-table__col-first-expand": !hasPrimaryColumn && index === columns.length - 1
                   }
                 )
               },
@@ -13712,7 +13712,7 @@ function RelativeDateControl({
   operator
 }) {
   const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
-  const { id, label, description, getValue, setValue } = field;
+  const { id, label, getValue, setValue } = field;
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
   const onChangeValue = (0, import_element41.useCallback)(
@@ -13740,7 +13740,6 @@ function RelativeDateControl({
       className: clsx_default(className, "dataviews-controls__relative-date"),
       label,
       hideLabelFromVision,
-      help: description,
       children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", children: [
         /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
           import_components30.__experimentalNumberControl,
@@ -13784,11 +13783,14 @@ function parseDateTime(dateTimeString) {
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 var { DateCalendar, ValidatedInputControl } = unlock(import_components31.privateApis);
-var formatDateTime = (value) => {
-  if (!value) {
+var formatDateTime = (date) => {
+  if (!date) {
     return "";
   }
-  return (0, import_date3.dateI18n)("Y-m-d\\TH:i", (0, import_date3.getDate)(value));
+  if (typeof date === "string") {
+    return date;
+  }
+  return format(date, "yyyy-MM-dd'T'HH:mm");
 };
 function CalendarDateTimeControl({
   data,
@@ -13823,14 +13825,17 @@ function CalendarDateTimeControl({
     (newDate) => {
       let dateTimeValue;
       if (newDate) {
-        const wpDate = (0, import_date3.dateI18n)("Y-m-d", newDate);
-        let wpTime;
+        let finalDateTime = newDate;
         if (value) {
-          wpTime = (0, import_date3.dateI18n)("H:i", (0, import_date3.getDate)(value));
-        } else {
-          wpTime = (0, import_date3.dateI18n)("H:i", newDate);
+          const currentDateTime = parseDateTime(value);
+          if (currentDateTime) {
+            finalDateTime = new Date(newDate);
+            finalDateTime.setHours(currentDateTime.getHours());
+            finalDateTime.setMinutes(
+              currentDateTime.getMinutes()
+            );
+          }
         }
-        const finalDateTime = (0, import_date3.getDate)(`${wpDate}T${wpTime}`);
         dateTimeValue = finalDateTime.toISOString();
         onChangeCallback(dateTimeValue);
         if (validationTimeoutRef.current) {
@@ -13856,7 +13861,7 @@ function CalendarDateTimeControl({
   const handleManualDateTimeChange = (0, import_element42.useCallback)(
     (newValue) => {
       if (newValue) {
-        const dateTime = (0, import_date3.getDate)(newValue);
+        const dateTime = new Date(newValue);
         onChangeCallback(dateTime.toISOString());
         const parsedDate = parseDateTime(dateTime.toISOString());
         if (parsedDate) {
@@ -13888,20 +13893,6 @@ function CalendarDateTimeControl({
       hideLabelFromVision,
       children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
         /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-          ValidatedInputControl,
-          {
-            ref: inputControlRef,
-            __next40pxDefaultSize: true,
-            required: !!isValid2?.required,
-            customValidity: getCustomValidity(isValid2, validity),
-            type: "datetime-local",
-            label: (0, import_i18n33.__)("Date time"),
-            hideLabelFromVision: true,
-            value: formatDateTime(value),
-            onChange: handleManualDateTimeChange
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
           DateCalendar,
           {
             style: { width: "100%" },
@@ -13911,6 +13902,22 @@ function CalendarDateTimeControl({
             onMonthChange: setCalendarMonth,
             timeZone: timezoneString || void 0,
             weekStartsOn
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+          ValidatedInputControl,
+          {
+            ref: inputControlRef,
+            __next40pxDefaultSize: true,
+            required: !!isValid2?.required,
+            customValidity: getCustomValidity(isValid2, validity),
+            type: "datetime-local",
+            label: (0, import_i18n33.__)("Date time"),
+            hideLabelFromVision: true,
+            value: value ? formatDateTime(
+              parseDateTime(value) || void 0
+            ) : "",
+            onChange: handleManualDateTimeChange
           }
         )
       ] })
@@ -14151,7 +14158,6 @@ function CalendarDateControl({
   const {
     id,
     label,
-    description,
     setValue,
     getValue,
     isValid: isValid2,
@@ -14230,7 +14236,6 @@ function CalendarDateControl({
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
-          help: description,
           hideLabelFromVision,
           children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
             /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
@@ -14310,14 +14315,7 @@ function CalendarDateRangeControl({
   markWhenOptional,
   validity
 }) {
-  const {
-    id,
-    label,
-    description,
-    getValue,
-    setValue,
-    format: fieldFormat
-  } = field;
+  const { id, label, getValue, setValue, format: fieldFormat } = field;
   let value;
   const fieldValue = getValue({ item: data });
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -14426,7 +14424,6 @@ function CalendarDateRangeControl({
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
-          help: description,
           hideLabelFromVision,
           children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
             /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
