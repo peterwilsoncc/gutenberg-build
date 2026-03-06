@@ -42450,7 +42450,7 @@ If there's a particular need for this, please submit a feature request at https:
       imageUrl && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
         "div",
         {
-          className: clsx_default("page-templates-author-field__avatar", {
+          className: clsx_default("fields-controls__author-avatar", {
             "is-loaded": isImageLoaded
           }),
           children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
@@ -42463,8 +42463,8 @@ If there's a particular need for this, please submit a feature request at https:
           )
         }
       ),
-      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("div", { className: "page-templates-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(icon_default, { icon }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("span", { className: "page-templates-author-field__name", children: text })
+      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("div", { className: "fields-controls__author-icon", children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(icon_default, { icon }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("span", { className: "fields-controls__author-name", children: text })
     ] });
   }
   var templatePartAuthorField = {
@@ -44253,7 +44253,7 @@ If there's a particular need for this, please submit a feature request at https:
       imageUrl && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
         "div",
         {
-          className: clsx_default("page-templates-author-field__avatar", {
+          className: clsx_default("fields-controls__author-avatar", {
             "is-loaded": isImageLoaded
           }),
           children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
@@ -44266,8 +44266,8 @@ If there's a particular need for this, please submit a feature request at https:
           )
         }
       ),
-      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", { className: "page-templates-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components154.Icon, { icon }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("span", { className: "page-templates-author-field__name", children: text })
+      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", { className: "fields-controls__author-icon", children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components154.Icon, { icon }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("span", { className: "fields-controls__author-name", children: text })
     ] });
   }
   var authorField = {
