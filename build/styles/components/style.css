@@ -935,6 +935,10 @@ p + .components-button.is-tertiary {
   background-color: var(--wp-components-color-gray-800, #2f2f2f);
 }
 
+.components-calendar__day--outside {
+  color: var(--wp-components-color-gray-600, #949494);
+}
+
 .components-calendar__day--hidden {
   visibility: hidden;
 }
