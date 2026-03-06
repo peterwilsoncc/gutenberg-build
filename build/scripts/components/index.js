@@ -22818,7 +22818,7 @@ If there's a particular need for this, please submit a feature request at https:
         alternative: "`placement` prop"
       });
     }
-    computedPlacement = computedPlacement || "bottom";
+    computedPlacement = computedPlacement || "top";
     const tooltipStore = useTooltipStore({
       placement: computedPlacement,
       showTimeout: delay2

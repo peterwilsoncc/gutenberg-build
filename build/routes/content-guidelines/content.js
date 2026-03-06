@@ -9228,7 +9228,7 @@ var style_default3 = { "positioner": "_480b748dd3510e64__positioner", "popup": "
 var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
 var Popup = (0, import_element8.forwardRef)(function TooltipPopup3({
   align = "center",
-  side = "bottom",
+  side = "top",
   sideOffset = 4,
   children,
   className,
