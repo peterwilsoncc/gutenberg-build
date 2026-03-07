@@ -36333,7 +36333,6 @@ var wp;
           getRevisions,
           __experimentalGetCurrentGlobalStylesId,
           getEntityRecord,
-          // @ts-expect-error
           isResolving
         } = select6(import_core_data45.store);
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords() || [];

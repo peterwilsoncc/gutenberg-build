@@ -21166,7 +21166,6 @@ var wp;
           getRevisions,
           __experimentalGetCurrentGlobalStylesId,
           getEntityRecord,
-          // @ts-expect-error
           isResolving
         } = select3(import_core_data23.store);
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords() || [];
