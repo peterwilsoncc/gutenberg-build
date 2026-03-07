@@ -9323,34 +9323,22 @@ var wp;
       }
     };
   }
-  async function postSyncUpdate(payload) {
-    const response = await (0, import_api_fetch.default)({
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json"
-      },
+  function postSyncUpdate(payload) {
+    return (0, import_api_fetch.default)({
       method: "POST",
-      parse: false,
-      path: SYNC_API_PATH
+      path: SYNC_API_PATH,
+      data: payload
     });
-    if (!response.ok) {
-      throw new Error(
-        `Sync update failed with status ${response.status}`
-      );
-    }
-    return await response.json();
   }
   function postSyncUpdateNonBlocking(payload) {
     if (payload.rooms.length === 0) {
       return;
     }
     (0, import_api_fetch.default)({
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "application/json" },
-      keepalive: true,
       method: "POST",
-      parse: false,
-      path: SYNC_API_PATH
+      path: SYNC_API_PATH,
+      data: payload,
+      keepalive: true
     }).catch(() => {
     });
   }
