@@ -42334,6 +42334,7 @@ ${js}
 
   // packages/block-library/build-module/navigation/edit/index.mjs
   var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
+  var { isIsolatedEditorKey } = unlock(import_block_editor159.privateApis);
   function NavigationAddPageButton({ clientId }) {
     const { insertBlock } = (0, import_data87.useDispatch)(import_block_editor159.store);
     const { getBlockCount } = (0, import_data87.useSelect)(import_block_editor159.store);
@@ -42525,19 +42526,24 @@ ${js}
     }, [orientation, submenuVisibility, setAttributes]);
     const recursionId = `navigationMenu/${ref}`;
     const recursionDetected = (0, import_block_editor159.useHasRecursion)(recursionId);
-    const { isPreviewMode, onNavigateToEntityRecord, currentTheme } = (0, import_data87.useSelect)(
-      (select9) => {
-        const { getSettings: getSettings2 } = select9(import_block_editor159.store);
-        const settings122 = getSettings2();
-        return {
-          isPreviewMode: settings122.isPreviewMode,
-          onNavigateToEntityRecord: settings122?.onNavigateToEntityRecord,
-          // Needed to construct the template part ID for the overlay preview.
-          currentTheme: select9(import_core_data49.store).getCurrentTheme()?.stylesheet
-        };
-      },
-      []
-    );
+    const {
+      isPreviewMode,
+      onNavigateToEntityRecord,
+      currentTheme,
+      editorDisabledResponsive
+    } = (0, import_data87.useSelect)((select9) => {
+      const { getSettings: getSettings2 } = select9(import_block_editor159.store);
+      const settings122 = getSettings2();
+      return {
+        isPreviewMode: settings122.isPreviewMode,
+        onNavigateToEntityRecord: settings122?.onNavigateToEntityRecord,
+        // Needed to construct the template part ID for the overlay preview.
+        currentTheme: select9(import_core_data49.store).getCurrentTheme()?.stylesheet,
+        // In preview mode or isolated editor, always show navigation expanded (no hamburger)
+        // so users can see and interact with all menu items.
+        editorDisabledResponsive: settings122.isPreviewMode || !!settings122?.[isIsolatedEditorKey]
+      };
+    }, []);
     const hasAlreadyRendered = isPreviewMode ? false : recursionDetected;
     const blockEditingMode = (0, import_block_editor159.useBlockEditingMode)();
     const { records: classicMenus } = (0, import_core_data49.useEntityRecords)("root", "menu", {
@@ -42704,7 +42710,7 @@ ${js}
       ref,
       setAttributes
     ]);
-    const isResponsive = "never" !== overlayMenu;
+    const isResponsive = "never" !== overlayMenu && !editorDisabledResponsive;
     const blockProps = (0, import_block_editor159.useBlockProps)({
       ref: navRef,
       className: clsx_default(

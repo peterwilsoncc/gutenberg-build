@@ -52963,7 +52963,7 @@ var wp;
           // which isn't a requirement in auto resize mode.
           enableResizing || isNavigationPreview ? "min-height:0!important;" : ""}}
 				${paddingStyle ? paddingStyle : ""}
-				${enableResizing ? `.block-editor-iframe__html{background:var(--wp-editor-canvas-background);min-height:100vh;${centerContentCSS}}.block-editor-iframe__body{width:100%;}` : ""}${isNavigationPreview ? `.block-editor-iframe__body{${centerContentCSS}}` : ""}`
+				${enableResizing ? `.block-editor-iframe__html{background:var(--wp-editor-canvas-background);min-height:100vh;${centerContentCSS}}.block-editor-iframe__body{width:100%;}` : ""}${isNavigationPreview ? `.block-editor-iframe__body{${centerContentCSS}padding:var(--wp--style--block-gap,2em);}` : ""}`
           // The CSS for enableResizing centers the body content vertically when resizing is enabled and applies a background
           // color to the iframe HTML element to match the background color of the editor canvas.
           // The CSS for isNavigationPreview centers the body content vertically and horizontally when the navigation is in preview mode.
