@@ -933,6 +933,30 @@ var ClaudeLogo = () => /* @__PURE__ */ React.createElement(
     }
   )
 );
+var DefaultConnectorLogo = () => /* @__PURE__ */ React.createElement(
+  "svg",
+  {
+    width: "40",
+    height: "40",
+    viewBox: "0 0 32 32",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  },
+  /* @__PURE__ */ React.createElement(
+    "path",
+    {
+      d: "M0 4C0 1.79086 1.79086 0 4 0H28C30.2091 0 32 1.79086 32 4V28C32 30.2091 30.2091 32 28 32H4C1.79086 32 0 30.2091 0 28V4Z",
+      fill: "#F0F0F0"
+    }
+  ),
+  /* @__PURE__ */ React.createElement(
+    "path",
+    {
+      d: "M14.5 8V12H17.5V8H19V12H20.5C20.7652 12 21.0196 12.1054 21.2071 12.2929C21.3946 12.4804 21.5 12.7348 21.5 13V17L18.5 21V23C18.5 23.2652 18.3946 23.5196 18.2071 23.7071C18.0196 23.8946 17.7652 24 17.5 24H14.5C14.2348 24 13.9804 23.8946 13.7929 23.7071C13.6054 23.5196 13.5 23.2652 13.5 23V21L10.5 17V13C10.5 12.7348 10.6054 12.4804 10.7929 12.2929C10.9804 12.1054 11.2348 12 11.5 12H13V8H14.5ZM15 20.5V22.5H17V20.5L20 16.5V13.5H12V16.5L15 20.5Z",
+      fill: "#949494"
+    }
+  )
+);
 var GeminiLogo = () => /* @__PURE__ */ React.createElement(
   "svg",
   {
@@ -1027,6 +1051,16 @@ var CONNECTOR_LOGOS = {
   openai: OpenAILogo,
   anthropic: ClaudeLogo
 };
+function getConnectorLogo(connectorId, name, logoUrl) {
+  if (logoUrl) {
+    return /* @__PURE__ */ React.createElement("img", { src: logoUrl, alt: name, width: 40, height: 40 });
+  }
+  const Logo = CONNECTOR_LOGOS[connectorId];
+  if (Logo) {
+    return /* @__PURE__ */ React.createElement(Logo, null);
+  }
+  return /* @__PURE__ */ React.createElement(DefaultConnectorLogo, null);
+}
 var ConnectedBadge = () => /* @__PURE__ */ React.createElement(
   "span",
   {
@@ -1049,7 +1083,7 @@ function ApiKeyConnector({
   pluginSlug,
   settingName,
   helpUrl,
-  Logo,
+  icon,
   isInstalled,
   isActivated,
   keySource: initialKeySource,
@@ -1091,7 +1125,7 @@ function ApiKeyConnector({
     ConnectorItem,
     {
       className: pluginSlug ? `connector-item--${pluginSlug}` : void 0,
-      icon: Logo ? /* @__PURE__ */ React.createElement(Logo, null) : void 0,
+      icon,
       name: label,
       description,
       actionArea: /* @__PURE__ */ React.createElement(import_components2.__experimentalHStack, { spacing: 3, expanded: false }, isConnected && /* @__PURE__ */ React.createElement(ConnectedBadge, null), showUnavailableBadge && /* @__PURE__ */ React.createElement(UnavailableActionBadge, null), showActionButton && /* @__PURE__ */ React.createElement(
@@ -1146,7 +1180,11 @@ function registerDefaultConnectors() {
           pluginSlug: data.plugin?.slug,
           settingName: authentication.settingName,
           helpUrl: authentication.credentialsUrl ?? void 0,
-          Logo: CONNECTOR_LOGOS[connectorId],
+          icon: getConnectorLogo(
+            connectorId,
+            data.name,
+            data.logoUrl
+          ),
           isInstalled: data.plugin?.isInstalled,
           isActivated: data.plugin?.isActivated,
           keySource: authentication.keySource,
