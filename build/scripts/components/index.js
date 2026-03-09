@@ -23113,7 +23113,8 @@ If there's a particular need for this, please submit a feature request at https:
     padding: 0,
     position: "absolute",
     width: "1px",
-    wordWrap: "normal"
+    wordWrap: "normal",
+    wordBreak: "normal"
   };
 
   // node_modules/@emotion/styled/base/dist/emotion-styled-base.browser.esm.js

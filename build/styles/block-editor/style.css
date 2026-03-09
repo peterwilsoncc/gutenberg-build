@@ -3119,6 +3119,7 @@ iframe[name=editor-canvas] {
   position: absolute;
   width: 1px;
   word-wrap: normal !important;
+  word-break: normal !important;
 }
 
 .preset-input-control__wrapper > * {
