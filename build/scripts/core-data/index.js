@@ -1817,9 +1817,13 @@ var wp;
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_sync9 = __toESM(require_sync(), 1);
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
-  function makeBlockAttributesSerializable(attributes) {
+  function makeBlockAttributesSerializable(blockName, attributes) {
     const newAttributes = { ...attributes };
     for (const [key, value] of Object.entries(attributes)) {
+      if (isLocalAttribute(blockName, key)) {
+        delete newAttributes[key];
+        continue;
+      }
       if (value instanceof import_rich_text.RichTextData) {
         newAttributes[key] = value.valueOf();
       }
@@ -1833,7 +1837,7 @@ var wp;
       return {
         ...rest,
         name,
-        attributes: makeBlockAttributesSerializable(attributes),
+        attributes: makeBlockAttributesSerializable(name, attributes),
         innerBlocks: makeBlocksSerializable(innerBlocks)
       };
     });
@@ -1915,10 +1919,7 @@ var wp;
         makeBlocksSerializable(incomingBlocks)
       );
     }
-    const allBlocks = serializableBlocksCache.get(incomingBlocks) ?? [];
-    const blocksToSync = allBlocks.filter(
-      (block) => shouldBlockBeSynced(block)
-    );
+    const blocksToSync = serializableBlocksCache.get(incomingBlocks) ?? [];
     const numOfCommonEntries = Math.min(
       blocksToSync.length ?? 0,
       yblocks.length
@@ -2031,14 +2032,6 @@ var wp;
       knownClientIds.add(clientId);
     }
   }
-  function shouldBlockBeSynced(block) {
-    if ("core/gallery" === block.name) {
-      return !block.innerBlocks.some(
-        (innerBlock) => innerBlock.attributes && innerBlock.attributes.blob
-      );
-    }
-    return true;
-  }
   function updateYBlockAttribute(blockName, attributeName, attributeValue, currentAttributes, cursorPosition) {
     const isRichText = isRichTextAttribute(blockName, attributeName);
     const currentAttribute = currentAttributes.get(attributeName);
@@ -2056,17 +2049,16 @@ var wp;
     if (!cachedBlockAttributeTypes) {
       cachedBlockAttributeTypes = /* @__PURE__ */ new Map();
       for (const blockType of (0, import_blocks.getBlockTypes)()) {
-        const blockAttributeTypeMap = /* @__PURE__ */ new Map();
-        for (const [name, definition] of Object.entries(
-          blockType.attributes ?? {}
-        )) {
-          if (definition.type) {
-            blockAttributeTypeMap.set(name, definition.type);
-          }
-        }
         cachedBlockAttributeTypes.set(
           blockType.name,
-          blockAttributeTypeMap
+          new Map(
+            Object.entries(blockType.attributes ?? {}).map(
+              ([name, definition]) => {
+                const { role, type } = definition;
+                return [name, { role, type }];
+              }
+            )
+          )
         );
       }
     }
@@ -2076,16 +2068,20 @@ var wp;
     const expectedAttributeType = getBlockAttributeType(
       blockName,
       attributeName
-    );
+    )?.type;
     if (expectedAttributeType === "rich-text") {
       return attributeValue instanceof import_sync9.Y.Text;
-    } else if (expectedAttributeType === "string") {
+    }
+    if (expectedAttributeType === "string") {
       return typeof attributeValue === "string";
     }
     return true;
   }
+  function isLocalAttribute(blockName, attributeName) {
+    return "local" === getBlockAttributeType(blockName, attributeName)?.role;
+  }
   function isRichTextAttribute(blockName, attributeName) {
-    return "rich-text" === getBlockAttributeType(blockName, attributeName);
+    return "rich-text" === getBlockAttributeType(blockName, attributeName)?.type;
   }
   var localDoc;
   function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition = null) {
