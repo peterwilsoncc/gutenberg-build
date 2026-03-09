@@ -47662,6 +47662,10 @@ If there's a particular need for this, please submit a feature request at https:
           }
         },
         {
+          id: "post-content-info",
+          layout: { type: "regular", labelPosition: "none" }
+        },
+        {
           id: "status",
           label: (0, import_i18n158.__)("Status"),
           children: [
