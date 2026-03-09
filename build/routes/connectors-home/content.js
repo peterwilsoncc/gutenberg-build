@@ -704,12 +704,15 @@ function useConnectorPlugin({
   pluginSlug,
   settingName,
   isInstalled,
-  isActivated
+  isActivated,
+  keySource = "none",
+  initialIsConnected = false
 }) {
   const [pluginStatus, setPluginStatus] = (0, import_element4.useState)("checking");
   const [isExpanded, setIsExpanded] = (0, import_element4.useState)(false);
   const [isBusy, setIsBusy] = (0, import_element4.useState)(false);
   const [currentApiKey, setCurrentApiKey] = (0, import_element4.useState)("");
+  const [connectedState, setConnectedState] = (0, import_element4.useState)(initialIsConnected);
   const [canManagePlugins, setCanManagePlugins] = (0, import_element4.useState)();
   const canInstallPlugins = (0, import_data.useSelect)(
     (select) => !!select(import_core_data.store).canUser("create", {
@@ -719,14 +722,14 @@ function useConnectorPlugin({
     []
   );
   const canActivatePlugins = canManagePlugins;
-  const isConnected = pluginStatus === "active" && currentApiKey !== "" && currentApiKey !== "invalid_key";
+  const isConnected = pluginStatus === "active" && connectedState;
   const fetchApiKey = (0, import_element4.useCallback)(async () => {
     try {
       const settings = await (0, import_api_fetch.default)({
         path: `/wp/v2/settings?_fields=${settingName}`
       });
       const key = settings[settingName] || "";
-      setCurrentApiKey(key === "invalid_key" ? "" : key);
+      setCurrentApiKey(key);
     } catch {
     }
   }, [settingName]);
@@ -856,6 +859,7 @@ function useConnectorPlugin({
         );
       }
       setCurrentApiKey(result[settingName] || "");
+      setConnectedState(true);
     } catch (error) {
       console.error("Failed to save API key:", error);
       throw error;
@@ -871,6 +875,7 @@ function useConnectorPlugin({
         }
       });
       setCurrentApiKey("");
+      setConnectedState(false);
     } catch (error) {
       console.error("Failed to remove API key:", error);
       throw error;
@@ -885,6 +890,7 @@ function useConnectorPlugin({
     isBusy,
     isConnected,
     currentApiKey,
+    keySource,
     handleButtonClick,
     getButtonLabel,
     saveApiKey,
@@ -1045,7 +1051,9 @@ function ApiKeyConnector({
   helpUrl,
   Logo,
   isInstalled,
-  isActivated
+  isActivated,
+  keySource: initialKeySource,
+  initialIsConnected
 }) {
   let helpLabel;
   try {
@@ -1063,6 +1071,7 @@ function ApiKeyConnector({
     isBusy,
     isConnected,
     currentApiKey,
+    keySource,
     handleButtonClick,
     getButtonLabel,
     saveApiKey,
@@ -1071,8 +1080,11 @@ function ApiKeyConnector({
     pluginSlug,
     settingName,
     isInstalled,
-    isActivated
+    isActivated,
+    keySource: initialKeySource,
+    initialIsConnected
   });
+  const isExternallyConfigured = keySource === "env" || keySource === "constant";
   const showUnavailableBadge = pluginStatus === "not-installed" && canInstallPlugins === false || pluginStatus === "inactive" && canActivatePlugins === false;
   const showActionButton = !showUnavailableBadge;
   return /* @__PURE__ */ React.createElement(
@@ -1099,11 +1111,12 @@ function ApiKeyConnector({
       DefaultConnectorSettings,
       {
         key: isConnected ? "connected" : "setup",
-        initialValue: currentApiKey,
+        initialValue: isExternallyConfigured ? "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" : currentApiKey,
         helpUrl,
         helpLabel,
-        readOnly: isConnected,
-        onRemove: removeApiKey,
+        readOnly: isConnected || isExternallyConfigured,
+        keySource,
+        onRemove: isExternallyConfigured ? void 0 : removeApiKey,
         onSave: async (apiKey) => {
           await saveApiKey(apiKey);
           setIsExpanded(false);
@@ -1135,7 +1148,9 @@ function registerDefaultConnectors() {
           helpUrl: authentication.credentialsUrl ?? void 0,
           Logo: CONNECTOR_LOGOS[connectorId],
           isInstalled: data.plugin?.isInstalled,
-          isActivated: data.plugin?.isActivated
+          isActivated: data.plugin?.isActivated,
+          keySource: authentication.keySource,
+          initialIsConnected: authentication.isConnected
         }
       )
     });
