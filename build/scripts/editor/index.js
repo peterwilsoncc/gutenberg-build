@@ -9291,6 +9291,7 @@ var wp;
     id: "featured_media",
     type: "media",
     label: (0, import_i18n14.__)("Featured Image"),
+    placeholder: (0, import_i18n14.__)("Set featured image"),
     Edit: (props) => /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(MediaEdit, { ...props, isExpanded: true }),
     render: FeaturedImageView,
     setValue: ({ value }) => ({
