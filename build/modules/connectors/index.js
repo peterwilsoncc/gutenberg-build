@@ -111,9 +111,10 @@ function reducer(state = DEFAULT_STATE, action) {
   }
 }
 var selectors = {
-  getConnectors(state) {
-    return Object.values(state.connectors);
-  },
+  getConnectors: (0, import_data.createSelector)(
+    (state) => Object.values(state.connectors),
+    (state) => [state.connectors]
+  ),
   getConnector(state, slug) {
     return state.connectors[slug];
   }
