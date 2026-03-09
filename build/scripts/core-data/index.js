@@ -589,9 +589,6 @@ var wp;
   ];
   function getUserPermissionsFromAllowHeader(allowedMethods) {
     const permissions = {};
-    if (!allowedMethods) {
-      return permissions;
-    }
     const methods = {
       create: "POST",
       read: "GET",
@@ -599,7 +596,7 @@ var wp;
       delete: "DELETE"
     };
     for (const [actionName, methodName] of Object.entries(methods)) {
-      permissions[actionName] = allowedMethods.includes(methodName);
+      permissions[actionName] = allowedMethods ? allowedMethods.includes(methodName) : false;
     }
     return permissions;
   }
