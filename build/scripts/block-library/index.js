@@ -51454,9 +51454,6 @@ ${js}
     description: "Display the excerpt.",
     textdomain: "default",
     attributes: {
-      textAlign: {
-        type: "string"
-      },
       moreText: {
         type: "string",
         role: "content"
@@ -51493,6 +51490,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         textColumns: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
@@ -51533,14 +51531,14 @@ ${js}
   var import_data106 = __toESM(require_data(), 1);
   var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
   var ELLIPSIS = "\u2026";
-  function PostExcerptEditor({
-    attributes: { textAlign, moreText, showMoreOnNewLine, excerptLength },
-    setAttributes,
-    isSelected,
-    context: { postId, postType, queryId }
-  }) {
-    const blockEditingMode = (0, import_block_editor192.useBlockEditingMode)();
-    const showControls = blockEditingMode === "default";
+  function PostExcerptEditor(props) {
+    const {
+      attributes: { moreText, showMoreOnNewLine, excerptLength },
+      setAttributes,
+      isSelected,
+      context: { postId, postType, queryId }
+    } = props;
+    useDeprecatedTextAlign(props);
     const isDescendentOfQueryLoop = Number.isFinite(queryId);
     const userCanEdit = useCanEditEntity("postType", postType, postId);
     const [
@@ -51559,11 +51557,7 @@ ${js}
       [postType]
     );
     const isEditable = userCanEdit && !isDescendentOfQueryLoop && postTypeSupportsExcerpts;
-    const blockProps = (0, import_block_editor192.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+    const blockProps = (0, import_block_editor192.useBlockProps)();
     const wordCountType = (0, import_i18n171._x)("words", "Word count type. Do not translate!");
     const strippedRenderedExcerpt = (0, import_element98.useMemo)(() => {
       if (!renderedExcerpt) {
@@ -51576,16 +51570,7 @@ ${js}
       return document2.body.textContent || document2.body.innerText || "";
     }, [renderedExcerpt]);
     if (!postType || !postId) {
-      return /* @__PURE__ */ (0, import_jsx_runtime369.jsxs)(import_jsx_runtime369.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(import_block_editor192.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
-          import_block_editor192.AlignmentToolbar,
-          {
-            value: textAlign,
-            onChange: (newAlign) => setAttributes({ textAlign: newAlign })
-          }
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("p", { children: (0, import_i18n171.__)("This block will display the excerpt.") }) })
-      ] });
+      return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("p", { children: (0, import_i18n171.__)("This block will display the excerpt.") }) });
     }
     if (isProtected && !userCanEdit) {
       return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(import_block_editor192.Warning, { children: (0, import_i18n171.__)(
@@ -51633,13 +51618,6 @@ ${js}
       }
     ) : /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("p", { className: excerptClassName, children: !isTrimmed ? rawOrRenderedExcerpt || (0, import_i18n171.__)("No excerpt found") : trimmedExcerpt + ELLIPSIS });
     return /* @__PURE__ */ (0, import_jsx_runtime369.jsxs)(import_jsx_runtime369.Fragment, { children: [
-      showControls && /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(import_block_editor192.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
-        import_block_editor192.AlignmentToolbar,
-        {
-          value: textAlign,
-          onChange: (newAlign) => setAttributes({ textAlign: newAlign })
-        }
-      ) }),
       /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(import_block_editor192.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime369.jsxs)(
         import_components110.__experimentalToolsPanel,
         {
@@ -51724,12 +51702,90 @@ ${js}
   };
   var transforms_default26 = transforms25;
 
+  // packages/block-library/build-module/post-excerpt/deprecated.mjs
+  var v133 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      moreText: {
+        type: "string",
+        role: "content"
+      },
+      showMoreOnNewLine: {
+        type: "boolean",
+        default: true
+      },
+      excerptLength: {
+        type: "number",
+        default: 55
+      }
+    },
+    supports: {
+      anchor: true,
+      html: false,
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true,
+          link: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        textColumns: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    save() {
+      return null;
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    }
+  };
+  var deprecated_default36 = [v133];
+
   // packages/block-library/build-module/post-excerpt/index.mjs
   var { name: name75 } = block_default74;
   var settings74 = {
     icon: post_excerpt_default,
     transforms: transforms_default26,
-    edit: PostExcerptEditor
+    edit: PostExcerptEditor,
+    deprecated: deprecated_default36
   };
   var init74 = () => initBlock({ name: name75, metadata: block_default74, settings: settings74 });
 
@@ -52907,7 +52963,7 @@ ${js}
   var variations_default11 = variations11;
 
   // packages/block-library/build-module/post-navigation-link/deprecated.mjs
-  var v133 = {
+  var v134 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -52969,14 +53025,14 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default36 = [v133];
+  var deprecated_default37 = [v134];
 
   // packages/block-library/build-module/post-navigation-link/index.mjs
   var { name: name77 } = block_default76;
   var settings76 = {
     edit: PostNavigationLinkEdit,
     variations: variations_default11,
-    deprecated: deprecated_default36,
+    deprecated: deprecated_default37,
     example: {
       attributes: {
         label: (0, import_i18n177.__)("Next post"),
@@ -53640,7 +53696,7 @@ ${js}
   }
 
   // packages/block-library/build-module/post-terms/deprecated.mjs
-  var v134 = {
+  var v135 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -53716,14 +53772,14 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default37 = [v134];
+  var deprecated_default38 = [v135];
 
   // packages/block-library/build-module/post-terms/index.mjs
   var { name: name79 } = block_default78;
   var settings78 = {
     icon: post_categories_default,
     edit: PostTermsEdit,
-    deprecated: deprecated_default37
+    deprecated: deprecated_default38
   };
   var init78 = () => {
     (0, import_hooks56.addFilter)(
@@ -53969,7 +54025,7 @@ ${js}
   var variations_default12 = variations12;
 
   // packages/block-library/build-module/post-time-to-read/deprecated.mjs
-  var v135 = {
+  var v136 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -54028,7 +54084,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default38 = [v135];
+  var deprecated_default39 = [v136];
 
   // packages/block-library/build-module/post-time-to-read/index.mjs
   var { name: name80 } = block_default79;
@@ -54037,7 +54093,7 @@ ${js}
     edit: edit_default29,
     variations: variations_default12,
     example: {},
-    deprecated: deprecated_default38
+    deprecated: deprecated_default39
   };
   var init79 = () => initBlock({ name: name80, metadata: block_default79, settings: settings79 });
 
@@ -54412,7 +54468,7 @@ ${js}
     },
     save: () => null
   };
-  var v136 = {
+  var v137 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -54462,14 +54518,14 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default39 = [v214, v136];
+  var deprecated_default40 = [v214, v137];
 
   // packages/block-library/build-module/post-title/index.mjs
   var { name: name81 } = block_default80;
   var settings80 = {
     icon: title_default,
     edit: PostTitleEdit,
-    deprecated: deprecated_default39
+    deprecated: deprecated_default40
   };
   var init80 = () => initBlock({ name: name81, metadata: block_default80, settings: settings80 });
 
@@ -55170,7 +55226,7 @@ ${js}
       };
     }
   };
-  var v137 = {
+  var v138 = {
     attributes: {
       ...blockAttributes6
     },
@@ -55215,7 +55271,7 @@ ${js}
       };
     }
   };
-  var deprecated_default40 = [v57, v48, v39, v215, v137, v02];
+  var deprecated_default41 = [v57, v48, v39, v215, v138, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n185 = __toESM(require_i18n(), 1);
@@ -55525,7 +55581,7 @@ ${js}
     transforms: transforms_default28,
     edit: edit_default30,
     save: save40,
-    deprecated: deprecated_default40
+    deprecated: deprecated_default41
   };
   if (window.__experimentalContentOnlyInspectorFields) {
     settings82[fieldsKey16] = [
@@ -57712,7 +57768,7 @@ ${js}
       replacePostTemplateBlock(innerBlocks, newPostTemplateBlock)
     ];
   };
-  var v138 = {
+  var v139 = {
     attributes: {
       queryId: {
         type: "number"
@@ -58064,8 +58120,8 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v49, v310, v216, v138];
-  var deprecated_default41 = deprecated14;
+  var deprecated14 = [v67, v58, v49, v310, v216, v139];
+  var deprecated_default42 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
   var { name: name84 } = block_default83;
@@ -58124,7 +58180,7 @@ ${js}
     },
     save: save41,
     variations: variations_default13,
-    deprecated: deprecated_default41
+    deprecated: deprecated_default42
   };
   var init83 = () => initBlock({ name: name84, metadata: block_default83, settings: settings83 });
 
@@ -58497,7 +58553,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default42 = deprecated15;
+  var deprecated_default43 = deprecated15;
 
   // packages/block-library/build-module/query-pagination/index.mjs
   var { name: name86 } = block_default85;
@@ -58505,7 +58561,7 @@ ${js}
     icon: query_pagination_default,
     edit: QueryPaginationEdit2,
     save: save43,
-    deprecated: deprecated_default42
+    deprecated: deprecated_default43
   };
   var init85 = () => initBlock({ name: name86, metadata: block_default85, settings: settings85 });
 
@@ -59366,7 +59422,7 @@ ${js}
     },
     save: () => null
   };
-  var v139 = {
+  var v140 = {
     attributes: {
       type: {
         type: "string"
@@ -59402,7 +59458,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default43 = [v217, v139];
+  var deprecated_default44 = [v217, v140];
 
   // packages/block-library/build-module/query-title/index.mjs
   var { name: name90 } = block_default89;
@@ -59410,7 +59466,7 @@ ${js}
     icon: title_default,
     edit: QueryTitleEdit,
     variations: variations_default14,
-    deprecated: deprecated_default43
+    deprecated: deprecated_default44
   };
   var init89 = () => initBlock({ name: name90, metadata: block_default89, settings: settings89 });
 
@@ -59790,7 +59846,7 @@ ${js}
       ] });
     }
   };
-  var v140 = {
+  var v141 = {
     attributes: {
       value: {
         type: "string",
@@ -59882,7 +59938,7 @@ ${js}
       );
     }
   };
-  var deprecated_default44 = [v410, v311, v218, v140, v03];
+  var deprecated_default45 = [v410, v311, v218, v141, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n216 = __toESM(require_i18n(), 1);
@@ -59890,7 +59946,7 @@ ${js}
   var import_components142 = __toESM(require_components(), 1);
   var import_data128 = __toESM(require_data(), 1);
   var import_element114 = __toESM(require_element(), 1);
-  var import_deprecated47 = __toESM(require_deprecated(), 1);
+  var import_deprecated48 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
   var isWebPlatform2 = import_element114.Platform.OS === "web";
   var TEMPLATE16 = [["core/paragraph", {}]];
@@ -59902,7 +59958,7 @@ ${js}
         return;
       }
       const [newAttributes, newInnerBlocks] = migrateToQuoteV2(attributes2);
-      (0, import_deprecated47.default)("Value attribute on the quote block", {
+      (0, import_deprecated48.default)("Value attribute on the quote block", {
         since: "6.0",
         version: "6.5",
         alternative: "inner blocks"
@@ -60321,7 +60377,7 @@ ${js}
     transforms: transforms_default29,
     edit: QuoteEdit,
     save: save44,
-    deprecated: deprecated_default44
+    deprecated: deprecated_default45
   };
   var init91 = () => initBlock({ name: name92, metadata: block_default91, settings: settings91 });
 
@@ -60594,7 +60650,7 @@ ${js}
       return attributes2;
     }
   };
-  var v141 = {
+  var v143 = {
     attributes: {
       ref: {
         type: "number"
@@ -60639,12 +60695,12 @@ ${js}
       };
     }
   };
-  var deprecated_default45 = [v219, v141];
+  var deprecated_default46 = [v219, v143];
 
   // packages/block-library/build-module/block/index.mjs
   var { name: name93 } = block_default92;
   var settings92 = {
-    deprecated: deprecated_default45,
+    deprecated: deprecated_default46,
     edit: ReusableBlockEditRecursionWrapper,
     icon: symbol_default,
     __experimentalLabel: ({ ref }) => {
@@ -62083,7 +62139,7 @@ ${js}
   // packages/block-library/build-module/separator/deprecated.mjs
   var import_block_editor236 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime427 = __toESM(require_jsx_runtime(), 1);
-  var v143 = {
+  var v144 = {
     attributes: {
       color: {
         type: "string"
@@ -62118,7 +62174,7 @@ ${js}
       };
     }
   };
-  var deprecated_default46 = [v143];
+  var deprecated_default47 = [v144];
 
   // packages/block-library/build-module/separator/index.mjs
   var { name: name97 } = block_default96;
@@ -62133,7 +62189,7 @@ ${js}
     transforms: transforms_default30,
     edit: SeparatorEdit,
     save: separatorSave,
-    deprecated: deprecated_default46
+    deprecated: deprecated_default47
   };
   var init96 = () => initBlock({ name: name97, metadata: block_default96, settings: settings96 });
 
@@ -63132,7 +63188,7 @@ ${js}
     },
     save: () => null
   };
-  var v144 = {
+  var v145 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -63166,14 +63222,14 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default47 = [v220, v144];
+  var deprecated_default48 = [v220, v145];
 
   // packages/block-library/build-module/site-tagline/index.mjs
   var { name: name100 } = block_default99;
   var settings99 = {
     icon: icon_default4,
     edit: SiteTaglineEdit,
-    deprecated: deprecated_default47
+    deprecated: deprecated_default48
   };
   var init99 = () => initBlock({ name: name100, metadata: block_default99, settings: settings99 });
 
@@ -63469,7 +63525,7 @@ ${js}
     },
     save: () => null
   };
-  var v145 = {
+  var v146 = {
     attributes: {
       level: {
         type: "number",
@@ -63516,7 +63572,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default48 = [v221, v145];
+  var deprecated_default49 = [v221, v146];
 
   // packages/block-library/build-module/site-title/transforms.mjs
   var import_blocks107 = __toESM(require_blocks(), 1);
@@ -63548,7 +63604,7 @@ ${js}
     },
     edit: SiteTitleEdit,
     transforms: transforms_default33,
-    deprecated: deprecated_default48
+    deprecated: deprecated_default49
   };
   var init100 = () => initBlock({ name: name101, metadata: block_default100, settings: settings100 });
 
@@ -64560,7 +64616,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default49 = deprecated17;
+  var deprecated_default50 = deprecated17;
 
   // packages/block-library/build-module/social-links/edit.mjs
   var import_element122 = __toESM(require_element(), 1);
@@ -64954,7 +65010,7 @@ ${js}
     icon: share_default,
     edit: edit_default33,
     save: save46,
-    deprecated: deprecated_default49
+    deprecated: deprecated_default50
   };
   var init102 = () => initBlock({ name: name103, metadata: block_default102, settings: settings102 });
 
@@ -65005,7 +65061,7 @@ ${js}
       }
     }
   ];
-  var deprecated_default50 = deprecated18;
+  var deprecated_default51 = deprecated18;
 
   // packages/block-library/build-module/spacer/edit.mjs
   var import_block_editor247 = __toESM(require_block_editor(), 1);
@@ -65491,7 +65547,7 @@ ${js}
     transforms: transforms_default34,
     edit: edit_default34,
     save: save47,
-    deprecated: deprecated_default50
+    deprecated: deprecated_default51
   };
   var init103 = () => initBlock({ name: name104, metadata: block_default103, settings: settings103 });
 
@@ -66570,7 +66626,7 @@ ${js}
       attribute: "scope"
     }
   };
-  var v146 = {
+  var v147 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -66666,7 +66722,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default51 = [v411, v312, v222, v146];
+  var deprecated_default52 = [v411, v312, v222, v147];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element125 = __toESM(require_element(), 1);
@@ -67812,7 +67868,7 @@ ${js}
     transforms: transforms_default35,
     edit: edit_default35,
     save: save50,
-    deprecated: deprecated_default51
+    deprecated: deprecated_default52
   };
   var init106 = () => initBlock({ name: name107, metadata: block_default106, settings: settings106 });
 
@@ -71088,7 +71144,7 @@ ${js}
   }
 
   // packages/block-library/build-module/term-description/deprecated.mjs
-  var v147 = {
+  var v148 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -71146,7 +71202,7 @@ ${js}
     },
     save: () => null
   };
-  var deprecated_default52 = [v147];
+  var deprecated_default53 = [v148];
 
   // packages/block-library/build-module/term-description/index.mjs
   var { name: name115 } = block_default114;
@@ -71154,7 +71210,7 @@ ${js}
     icon: term_description_default,
     edit: TermDescriptionEdit,
     example: {},
-    deprecated: deprecated_default52
+    deprecated: deprecated_default53
   };
   var init114 = () => initBlock({ name: name115, metadata: block_default114, settings: settings114 });
 
@@ -72434,11 +72490,11 @@ ${js}
   var import_i18n266 = __toESM(require_i18n(), 1);
   var import_components182 = __toESM(require_components(), 1);
   var import_block_editor286 = __toESM(require_block_editor(), 1);
-  var import_deprecated58 = __toESM(require_deprecated(), 1);
+  var import_deprecated59 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime539 = __toESM(require_jsx_runtime(), 1);
   function TextColumnsEdit({ attributes: attributes2, setAttributes }) {
     const { width, content, columns } = attributes2;
-    (0, import_deprecated58.default)("The Text Columns block", {
+    (0, import_deprecated59.default)("The Text Columns block", {
       since: "5.3",
       alternative: "the Columns block"
     });
@@ -72624,7 +72680,7 @@ ${js}
   // packages/block-library/build-module/verse/deprecated.mjs
   var import_block_editor288 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
-  var v148 = {
+  var v149 = {
     attributes: {
       content: {
         type: "string",
@@ -72756,7 +72812,7 @@ ${js}
       );
     }
   };
-  var deprecated_default53 = [v313, v223, v148];
+  var deprecated_default54 = [v313, v223, v149];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n267 = __toESM(require_i18n(), 1);
@@ -72921,7 +72977,7 @@ ${js}
       }
     },
     transforms: transforms_default38,
-    deprecated: deprecated_default53,
+    deprecated: deprecated_default54,
     merge(attributes2, attributesToMerge) {
       return {
         content: attributes2.content + "\n\n" + attributesToMerge.content
@@ -73076,7 +73132,7 @@ ${js}
   // packages/block-library/build-module/video/deprecated.mjs
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default120;
-  var v149 = {
+  var v150 = {
     attributes: blockAttributes7,
     save({ attributes: attributes2 }) {
       const {
@@ -73110,8 +73166,8 @@ ${js}
       ] });
     }
   };
-  var deprecated20 = [v149];
-  var deprecated_default54 = deprecated20;
+  var deprecated20 = [v150];
+  var deprecated_default55 = deprecated20;
 
   // packages/block-library/build-module/video/edit.mjs
   var import_blob19 = __toESM(require_blob(), 1);
@@ -73977,7 +74033,7 @@ ${js}
       }
     },
     transforms: transforms_default39,
-    deprecated: deprecated_default54,
+    deprecated: deprecated_default55,
     edit: edit_default40,
     save: save58
   };

@@ -5842,9 +5842,6 @@ return array(
 		'description' => 'Display the excerpt.',
 		'textdomain' => 'default',
 		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'moreText' => array(
 				'type' => 'string',
 				'role' => 'content'
@@ -5885,6 +5882,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'textColumns' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
