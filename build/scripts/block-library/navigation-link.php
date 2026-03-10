@@ -485,4 +485,4 @@ add_action( 'init', 'gutenberg_register_block_core_navigation_link', 20 );
  * Creates all variations for post types / taxonomies dynamically (= each time when variations are requested).
  * Do not use variation_callback, to also account for unregistering post types/taxonomies later on.
  */
-add_action( 'get_block_type_variations', 'gutenberg_block_core_navigation_link_filter_variations', 10, 2 );
+add_filter( 'get_block_type_variations', 'gutenberg_block_core_navigation_link_filter_variations', 10, 2 );
