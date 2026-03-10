@@ -44019,6 +44019,11 @@ ${js}
         clientNavigation: true
       }
     },
+    selectors: {
+      states: {
+        "@current": ".wp-block-navigation .current-menu-item"
+      }
+    },
     editorStyle: "wp-block-navigation-link-editor",
     style: "wp-block-navigation-link"
   };
