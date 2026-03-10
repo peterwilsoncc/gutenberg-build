@@ -52714,8 +52714,7 @@ var wp;
   var { BlockCanvasCover: BlockCanvasCover2 } = unlock(import_block_editor80.privateApis);
   var { retrySyncConnection } = unlock(import_core_data114.privateApis);
   var INITIAL_DISCONNECTED_DEBOUNCE_MS = 5e3;
-  var noop8 = () => {
-  };
+  var DISCONNECTED_DEBOUNCE_MS = 2e3;
   function SyncConnectionModal() {
     const { connectionState, postType: postType2 } = (0, import_data202.useSelect)((selectFn) => {
       const currentPostType = selectFn(store).getCurrentPostType();
@@ -52753,7 +52752,10 @@ var wp;
           );
         };
         if (hasInitializedRef.current) {
-          showModal();
+          debounceTimerRef.current = setTimeout(
+            showModal,
+            DISCONNECTED_DEBOUNCE_MS
+          );
         } else {
           debounceTimerRef.current = setTimeout(
             showModal,
@@ -52795,7 +52797,8 @@ var wp;
       {
         className: "editor-sync-connection-modal",
         isDismissible: false,
-        onRequestClose: noop8,
+        onRequestClose: () => {
+        },
         shouldCloseOnClickOutside: false,
         shouldCloseOnEsc: false,
         size: "medium",
