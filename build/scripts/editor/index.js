@@ -15940,6 +15940,9 @@ var wp;
           "wp_block",
           "wp_navigation"
         ].includes(postType2),
+        // When in template-locked mode (e.g., "Show Template" in the post editor),
+        // don't treat template parts as contentOnly sections.
+        disableContentOnlyForTemplateParts: renderingMode2 === "template-locked",
         ...deviceType2 ? { [deviceTypeKey]: deviceType2 } : {},
         [isNavigationOverlayContextKey]: isNavigationOverlayContext
       };
@@ -16025,11 +16028,11 @@ var wp;
     const disabledIds = (0, import_data34.useSelect)(
       (select6) => {
         const { getBlockOrder: getBlockOrder2 } = select6(import_block_editor7.store);
-        return templateParts.flatMap(
-          (clientId) => getBlockOrder2(clientId)
+        return templateParts.flatMap((clientId) => getBlockOrder2(clientId)).filter(
+          (clientId) => !contentOnlyIds.includes(clientId)
         );
       },
-      [templateParts]
+      [templateParts, contentOnlyIds]
     );
     const registry = (0, import_data34.useRegistry)();
     (0, import_element29.useEffect)(() => {
@@ -37130,23 +37133,20 @@ var wp;
     return getEntityFields(state.dataviews, ...args);
   }
   var getPostBlocksByName = (0, import_data71.createRegistrySelector)(
-    (select6) => (0, import_data71.createSelector)(
-      (state, blockNames) => {
-        blockNames = Array.isArray(blockNames) ? blockNames : [blockNames];
-        const { getBlocksByName, getBlockParents, getBlockName: getBlockName2 } = select6(import_block_editor35.store);
-        return getBlocksByName(blockNames).filter(
-          (clientId) => getBlockParents(clientId).every((parentClientId) => {
-            const parentBlockName = getBlockName2(parentClientId);
-            return (
-              // Ignore descendents of the query block.
-              parentBlockName !== "core/query" && // Enable only the top-most block.
-              !blockNames.includes(parentBlockName)
-            );
-          })
-        );
-      },
-      () => [select6(import_block_editor35.store).getBlocks()]
-    )
+    (select6) => (state, blockNames) => {
+      blockNames = Array.isArray(blockNames) ? blockNames : [blockNames];
+      const { getBlocksByName, getBlockParents, getBlockName: getBlockName2 } = select6(import_block_editor35.store);
+      return getBlocksByName(blockNames).filter(
+        (clientId) => getBlockParents(clientId).every((parentClientId) => {
+          const parentBlockName = getBlockName2(parentClientId);
+          return (
+            // Ignore descendents of the query block.
+            parentBlockName !== "core/query" && // Enable only the top-most block.
+            !blockNames.includes(parentBlockName)
+          );
+        })
+      );
+    }
   );
   var getDefaultRenderingMode = (0, import_data71.createRegistrySelector)(
     (select6) => (state, postType2) => {
