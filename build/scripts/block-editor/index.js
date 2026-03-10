@@ -25991,7 +25991,6 @@ var wp;
 	<head>
 		<meta charset="utf-8">
 		<base href="${window.location.href}">
-		<script>window.frameElement._load()<\/script>
 		<style>
 			html{
 				height: auto !important;
@@ -26039,9 +26038,6 @@ var wp;
     const [bodyClasses, setBodyClasses] = (0, import_element45.useState)([]);
     const [before, writingFlowRef, after] = useWritingFlow();
     const setRef = (0, import_compose31.useRefEffect)((node) => {
-      node._load = () => {
-        setIframeDocument(node.contentDocument);
-      };
       let iFrameDocument;
       function preventFileDropDefault(event) {
         event.preventDefault();
@@ -26062,6 +26058,7 @@ var wp;
         const { contentDocument } = node;
         const { documentElement } = contentDocument;
         iFrameDocument = contentDocument;
+        setIframeDocument(contentDocument);
         documentElement.classList.add("block-editor-iframe__html");
         contentDocument.dir = ownerDocument.dir;
         for (const compatStyle of getCompatibilityStyles()) {
@@ -26092,7 +26089,7 @@ var wp;
       }
       node.addEventListener("load", onLoad);
       return () => {
-        delete node._load;
+        setIframeDocument(void 0);
         node.removeEventListener("load", onLoad);
         iFrameDocument?.removeEventListener(
           "dragover",
@@ -26117,12 +26114,23 @@ var wp;
       iframeDocument
     });
     const disabledRef = (0, import_compose31.useDisabled)({ isDisabled: !readonly });
-    const bodyRef = (0, import_compose31.useMergeRefs)([
+    const unguardedBodyRef = (0, import_compose31.useMergeRefs)([
       useBubbleEvents(iframeDocument),
       contentRef,
       writingFlowRef,
       disabledRef
     ]);
+    const bodyRef = (0, import_compose31.useRefEffect)(
+      (node) => {
+        if (node.ownerDocument.defaultView) {
+          unguardedBodyRef(node);
+          return () => unguardedBodyRef(null);
+        }
+        return () => {
+        };
+      },
+      [unguardedBodyRef]
+    );
     const src = getIframeSrc(resolvedAssets);
     const shouldRenderFocusCaptureElements = tabIndex >= 0 && !isPreviewMode;
     const iframe = /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(import_jsx_runtime159.Fragment, { children: [
@@ -32651,23 +32659,18 @@ var wp;
     );
   }
   function useTypingObserver() {
-    const { isTyping: isTyping3 } = (0, import_data75.useSelect)((select3) => {
-      const { isTyping: _isTyping } = select3(store);
-      return {
-        isTyping: _isTyping()
-      };
-    }, []);
+    const isTyping3 = (0, import_data75.useSelect)(
+      (select3) => select3(store).isTyping(),
+      []
+    );
     const { startTyping: startTyping2, stopTyping: stopTyping2 } = (0, import_data75.useDispatch)(store);
     const ref1 = useMouseMoveTypingReset();
     const ref2 = (0, import_compose54.useRefEffect)(
       (node) => {
-        const { ownerDocument } = node;
-        const { defaultView } = ownerDocument;
-        const selection2 = defaultView.getSelection();
         if (isTyping3) {
           let stopTypingOnNonTextField2 = function(event) {
             const { target } = event;
-            timerId = defaultView.setTimeout(() => {
+            timerId = node.ownerDocument.defaultView.setTimeout(() => {
               if (!(0, import_dom24.isTextField)(target)) {
                 stopTyping2();
               }
@@ -32678,6 +32681,7 @@ var wp;
               stopTyping2();
             }
           }, stopTypingOnSelectionUncollapse2 = function() {
+            const selection2 = node.ownerDocument.defaultView.getSelection();
             if (!selection2.isCollapsed) {
               stopTyping2();
             }
@@ -32686,12 +32690,12 @@ var wp;
           let timerId;
           node.addEventListener("focus", stopTypingOnNonTextField2);
           node.addEventListener("keydown", stopTypingOnEscapeKey2);
-          ownerDocument.addEventListener(
+          node.ownerDocument.addEventListener(
             "selectionchange",
             stopTypingOnSelectionUncollapse2
           );
           return () => {
-            defaultView.clearTimeout(timerId);
+            node.ownerDocument.defaultView.clearTimeout(timerId);
             node.removeEventListener(
               "focus",
               stopTypingOnNonTextField2
@@ -32700,7 +32704,7 @@ var wp;
               "keydown",
               stopTypingOnEscapeKey2
             );
-            ownerDocument.removeEventListener(
+            node.ownerDocument.removeEventListener(
               "selectionchange",
               stopTypingOnSelectionUncollapse2
             );
