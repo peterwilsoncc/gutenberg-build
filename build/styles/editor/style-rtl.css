@@ -4460,7 +4460,7 @@ div.dataviews-view-list {
 }
 @media not (prefers-reduced-motion) {
   .editor-document-bar .components-button {
-    transition: all 0.1s ease-out;
+    transition: background-color 0.1s ease-out;
   }
 }
 .editor-document-bar .components-button:hover {
