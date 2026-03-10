@@ -31,9 +31,47 @@ var require_i18n = __commonJS({
   }
 });
 
+// package-external:@wordpress/data
+var require_data = __commonJS({
+  "package-external:@wordpress/data"(exports, module) {
+    module.exports = window.wp.data;
+  }
+});
+
+// package-external:@wordpress/blocks
+var require_blocks = __commonJS({
+  "package-external:@wordpress/blocks"(exports, module) {
+    module.exports = window.wp.blocks;
+  }
+});
+
+// package-external:@wordpress/block-library
+var require_block_library = __commonJS({
+  "package-external:@wordpress/block-library"(exports, module) {
+    module.exports = window.wp.blockLibrary;
+  }
+});
+
 // routes/content-guidelines/route.ts
 var import_i18n = __toESM(require_i18n());
+
+// routes/content-guidelines/bootstrap-block-registry.ts
+var import_data = __toESM(require_data());
+var import_blocks = __toESM(require_blocks());
+var import_block_library = __toESM(require_block_library());
+var bootstrapped = false;
+function bootstrapBlockRegistry() {
+  if (bootstrapped) {
+    return;
+  }
+  bootstrapped = true;
+  (0, import_data.dispatch)(import_blocks.store).reapplyBlockTypeFilters();
+  (0, import_block_library.registerCoreBlocks)();
+}
+
+// routes/content-guidelines/route.ts
 var route = {
+  beforeLoad: bootstrapBlockRegistry,
   title: () => (0, import_i18n.__)("Content Guidelines")
 };
 export {
