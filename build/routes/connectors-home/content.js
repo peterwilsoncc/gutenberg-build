@@ -80,13 +80,6 @@ var require_private_apis = __commonJS({
   }
 });
 
-// package-external:@wordpress/api-fetch
-var require_api_fetch = __commonJS({
-  "package-external:@wordpress/api-fetch"(exports, module) {
-    module.exports = window.wp.apiFetch;
-  }
-});
-
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
   var t, f, n = "";
@@ -641,7 +634,6 @@ var Badge = (0, import_element2.forwardRef)(function Badge2({ children, intent =
 });
 
 // routes/connectors-home/use-connector-plugin.ts
-var import_api_fetch = __toESM(require_api_fetch());
 var import_core_data = __toESM(require_core_data());
 var import_data = __toESM(require_data());
 var import_element3 = __toESM(require_element());
@@ -654,81 +646,102 @@ function useConnectorPlugin({
   keySource = "none",
   initialIsConnected = false
 }) {
-  const [pluginStatus, setPluginStatus] = (0, import_element3.useState)("checking");
   const [isExpanded, setIsExpanded] = (0, import_element3.useState)(false);
   const [isBusy, setIsBusy] = (0, import_element3.useState)(false);
-  const [currentApiKey, setCurrentApiKey] = (0, import_element3.useState)("");
   const [connectedState, setConnectedState] = (0, import_element3.useState)(initialIsConnected);
-  const [canManagePlugins, setCanManagePlugins] = (0, import_element3.useState)();
-  const canInstallPlugins = (0, import_data.useSelect)(
-    (select) => !!select(import_core_data.store).canUser("create", {
-      kind: "root",
-      name: "plugin"
-    }),
-    []
-  );
-  const canActivatePlugins = canManagePlugins;
-  const isConnected = pluginStatus === "active" && connectedState;
-  const fetchApiKey = (0, import_element3.useCallback)(async () => {
-    try {
-      const settings = await (0, import_api_fetch.default)({
-        path: `/wp/v2/settings?_fields=${settingName}`
+  const [pluginStatusOverride, setPluginStatusOverride] = (0, import_element3.useState)(null);
+  const {
+    derivedPluginStatus,
+    canManagePlugins,
+    currentApiKey,
+    canInstallPlugins
+  } = (0, import_data.useSelect)(
+    (select) => {
+      const store2 = select(import_core_data.store);
+      const siteSettings = store2.getEntityRecord("root", "site");
+      const apiKey = siteSettings?.[settingName] ?? "";
+      const canCreate = !!store2.canUser("create", {
+        kind: "root",
+        name: "plugin"
       });
-      const key = settings[settingName] || "";
-      setCurrentApiKey(key);
-    } catch {
-    }
-  }, [settingName]);
-  (0, import_element3.useEffect)(() => {
-    const checkPluginStatus = async () => {
       if (!pluginSlug) {
-        await fetchApiKey();
-        setPluginStatus("active");
-        return;
-      }
-      try {
-        const plugins = await (0, import_api_fetch.default)({
-          path: "/wp/v2/plugins"
-        });
-        setCanManagePlugins(true);
-        const plugin = plugins.find(
-          (p) => p.plugin === `${pluginSlug}/plugin`
+        const hasLoaded = store2.hasFinishedResolution(
+          "getEntityRecord",
+          ["root", "site"]
         );
-        if (!plugin) {
-          setPluginStatus("not-installed");
-        } else if (plugin.status === "active") {
-          await fetchApiKey();
-          setPluginStatus("active");
-        } else {
-          setPluginStatus("inactive");
-        }
-      } catch {
-        setCanManagePlugins(false);
-        if (isActivated) {
-          await fetchApiKey();
-          setPluginStatus("active");
-        } else if (isInstalled) {
-          setPluginStatus("inactive");
-        } else {
-          setPluginStatus("not-installed");
-        }
+        return {
+          derivedPluginStatus: hasLoaded ? "active" : "checking",
+          canManagePlugins: void 0,
+          currentApiKey: apiKey,
+          canInstallPlugins: canCreate
+        };
       }
-    };
-    checkPluginStatus();
-  }, [pluginSlug, fetchApiKey, isInstalled, isActivated]);
+      const plugins = store2.getEntityRecords(
+        "root",
+        "plugin"
+      );
+      if (plugins === null) {
+        const hasFinished = store2.hasFinishedResolution(
+          "getEntityRecords",
+          ["root", "plugin"]
+        );
+        if (!hasFinished) {
+          return {
+            derivedPluginStatus: "checking",
+            canManagePlugins: void 0,
+            currentApiKey: apiKey,
+            canInstallPlugins: canCreate
+          };
+        }
+        let status2 = "not-installed";
+        if (isActivated) {
+          status2 = "active";
+        } else if (isInstalled) {
+          status2 = "inactive";
+        }
+        return {
+          derivedPluginStatus: status2,
+          canManagePlugins: false,
+          currentApiKey: apiKey,
+          canInstallPlugins: canCreate
+        };
+      }
+      const plugin = plugins.find(
+        (p) => p.plugin === `${pluginSlug}/plugin`
+      );
+      let status = "not-installed";
+      if (plugin) {
+        status = plugin.status === "active" ? "active" : "inactive";
+      }
+      return {
+        derivedPluginStatus: status,
+        canManagePlugins: true,
+        currentApiKey: apiKey,
+        canInstallPlugins: canCreate
+      };
+    },
+    [pluginSlug, settingName, isInstalled, isActivated]
+  );
+  const pluginStatus = pluginStatusOverride ?? derivedPluginStatus;
+  const canActivatePlugins = canManagePlugins;
+  const isConnected = pluginStatus === "active" && connectedState || // After install/activate, if settings re-fetch reveals an existing key,
+  // update connected state (mirrors what the server would report on page load).
+  pluginStatusOverride === "active" && !!currentApiKey;
+  const { saveEntityRecord, invalidateResolution } = (0, import_data.useDispatch)(import_core_data.store);
   const installPlugin = async () => {
     if (!pluginSlug) {
       return;
     }
     setIsBusy(true);
     try {
-      await (0, import_api_fetch.default)({
-        method: "POST",
-        path: "/wp/v2/plugins",
-        data: { slug: pluginSlug, status: "active" }
-      });
-      setPluginStatus("active");
-      await fetchApiKey();
+      await saveEntityRecord(
+        "root",
+        "plugin",
+        { slug: pluginSlug, status: "active" },
+        { throwOnError: true }
+      );
+      setPluginStatusOverride("active");
+      invalidateResolution("getEntityRecord", ["root", "site"]);
       setIsExpanded(true);
     } catch {
     } finally {
@@ -741,13 +754,14 @@ function useConnectorPlugin({
     }
     setIsBusy(true);
     try {
-      await (0, import_api_fetch.default)({
-        method: "PUT",
-        path: `/wp/v2/plugins/${pluginSlug}/plugin`,
-        data: { status: "active" }
-      });
-      setPluginStatus("active");
-      await fetchApiKey();
+      await saveEntityRecord(
+        "root",
+        "plugin",
+        { plugin: `${pluginSlug}/plugin`, status: "active" },
+        { throwOnError: true }
+      );
+      setPluginStatusOverride("active");
+      invalidateResolution("getEntityRecord", ["root", "site"]);
       setIsExpanded(true);
     } catch {
     } finally {
@@ -791,20 +805,21 @@ function useConnectorPlugin({
     }
   };
   const saveApiKey = async (apiKey) => {
+    const previousApiKey = currentApiKey;
     try {
-      const result = await (0, import_api_fetch.default)({
-        method: "POST",
-        path: `/wp/v2/settings?_fields=${settingName}`,
-        data: {
-          [settingName]: apiKey
-        }
-      });
-      if (apiKey && result[settingName] === currentApiKey) {
+      const updatedRecord = await saveEntityRecord(
+        "root",
+        "site",
+        { [settingName]: apiKey },
+        { throwOnError: true }
+      );
+      const record = updatedRecord;
+      const returnedKey = record?.[settingName];
+      if (apiKey && (returnedKey === previousApiKey || !returnedKey)) {
         throw new Error(
           "It was not possible to connect to the provider using this key."
         );
       }
-      setCurrentApiKey(result[settingName] || "");
       setConnectedState(true);
     } catch (error) {
       console.error("Failed to save API key:", error);
@@ -813,14 +828,12 @@ function useConnectorPlugin({
   };
   const removeApiKey = async () => {
     try {
-      await (0, import_api_fetch.default)({
-        method: "POST",
-        path: `/wp/v2/settings?_fields=${settingName}`,
-        data: {
-          [settingName]: ""
-        }
-      });
-      setCurrentApiKey("");
+      await saveEntityRecord(
+        "root",
+        "site",
+        { [settingName]: "" },
+        { throwOnError: true }
+      );
       setConnectedState(false);
     } catch (error) {
       console.error("Failed to remove API key:", error);
