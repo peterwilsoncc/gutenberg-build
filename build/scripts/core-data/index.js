@@ -610,6 +610,17 @@ var wp;
     "RECEIVE_INTERMEDIATE_RESULTS"
   );
 
+  // packages/core-data/build-module/utils/normalize-query-for-resolution.mjs
+  function normalizeQueryForResolution(query) {
+    if (!query) {
+      return void 0;
+    }
+    const entries = Object.entries(query).filter(
+      ([k, v]) => (k === "context" || k === "_fields") && v !== void 0 && v !== null
+    );
+    return entries.length > 0 ? Object.fromEntries(entries) : void 0;
+  }
+
   // packages/core-data/build-module/queried-data/actions.mjs
   function receiveItems(items2, edits, meta) {
     return {
@@ -3586,6 +3597,7 @@ var wp;
     hasEntityRecords: () => hasEntityRecords,
     hasFetchedAutosaves: () => hasFetchedAutosaves,
     hasRedo: () => hasRedo,
+    hasRevision: () => hasRevision,
     hasUndo: () => hasUndo,
     isAutosavingEntityRecord: () => isAutosavingEntityRecord,
     isDeletingEntityRecord: () => isDeletingEntityRecord,
@@ -4279,6 +4291,33 @@ var wp;
     }
     return getQueriedItems(queriedStateRevisions, query);
   };
+  function hasRevision(state, kind, name, recordKey, revisionKey, query) {
+    const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
+    if (!queriedState) {
+      return false;
+    }
+    const context = query?.context ?? "default";
+    if (!query || !query._fields) {
+      return !!queriedState.itemIsComplete[context]?.[revisionKey];
+    }
+    const item = queriedState.items[context]?.[revisionKey];
+    if (!item) {
+      return false;
+    }
+    const fields = get_normalized_comma_separable_default(query._fields) ?? [];
+    for (let i = 0; i < fields.length; i++) {
+      const path = fields[i].split(".");
+      let value = item;
+      for (let p = 0; p < path.length; p++) {
+        const part = path[p];
+        if (!value || !Object.hasOwn(value, part)) {
+          return false;
+        }
+        value = value[part];
+      }
+    }
+    return true;
+  }
   var getRevision = (0, import_data10.createSelector)(
     (state, kind, name, recordKey, revisionKey, query) => {
       logEntityDeprecation(kind, name, "getRevision");
@@ -5135,7 +5174,7 @@ var wp;
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
-    const key = entityConfig && entityConfig?.revisionKey ? entityConfig.revisionKey : DEFAULT_ENTITY_KEY;
+    const key = entityConfig?.revisionKey ?? DEFAULT_ENTITY_KEY;
     dispatch3({
       type: "RECEIVE_ITEM_REVISIONS",
       key,
@@ -5704,16 +5743,12 @@ var wp;
     const rawQuery = { ...query };
     const key = entityConfig.key || DEFAULT_ENTITY_KEY;
     function getResolutionsArgs(records, recordsQuery) {
-      const queryArgs = Object.fromEntries(
-        Object.entries(recordsQuery).filter(([k, v]) => {
-          return ["context", "_fields"].includes(k) && !!v;
-        })
-      );
+      const normalizedQuery = normalizeQueryForResolution(recordsQuery);
       return records.filter((record) => record?.[key]).map((record) => [
         kind,
         name,
         record[key],
-        Object.keys(queryArgs).length > 0 ? queryArgs : void 0
+        normalizedQuery
       ]);
     }
     try {
@@ -6150,76 +6185,86 @@ var wp;
     if (!entityConfig) {
       return;
     }
-    if (query._fields) {
-      query = {
-        ...query,
-        _fields: [
-          .../* @__PURE__ */ new Set([
-            ...get_normalized_comma_separable_default(query._fields) || [],
-            entityConfig.revisionKey || DEFAULT_ENTITY_KEY
-          ])
-        ].join()
-      };
-    }
-    const path = (0, import_url6.addQueryArgs)(
-      entityConfig.getRevisionsUrl(recordKey),
-      query
+    const rawQuery = { ...query };
+    const lock2 = await dispatch3.__unstableAcquireStoreLock(
+      STORE_NAME,
+      ["entities", "records", kind, name, recordKey, "revisions"],
+      { exclusive: false }
     );
-    let records, response;
-    const meta = {};
-    const isPaginated = entityConfig.supportsPagination && query.per_page !== -1;
     try {
-      response = await (0, import_api_fetch8.default)({ path, parse: !isPaginated });
-    } catch (error) {
-      return;
-    }
-    if (response) {
-      if (isPaginated) {
-        records = Object.values(await response.json());
-        meta.totalItems = parseInt(
-          response.headers.get("X-WP-Total")
-        );
-      } else {
-        records = Object.values(response);
-      }
       if (query._fields) {
-        records = records.map((record) => {
-          query._fields.split(",").forEach((field) => {
-            if (!record.hasOwnProperty(field)) {
-              record[field] = void 0;
-            }
-          });
-          return record;
-        });
+        query = {
+          ...query,
+          _fields: [
+            .../* @__PURE__ */ new Set([
+              ...get_normalized_comma_separable_default(query._fields) || [],
+              entityConfig.revisionKey || DEFAULT_ENTITY_KEY
+            ])
+          ].join()
+        };
       }
-      registry.batch(() => {
-        dispatch3.receiveRevisions(
-          kind,
-          name,
-          recordKey,
-          records,
-          query,
-          false,
-          meta
-        );
-        if (!query?._fields && !query.context) {
+      const path = (0, import_url6.addQueryArgs)(
+        entityConfig.getRevisionsUrl(recordKey),
+        query
+      );
+      let records, response;
+      const meta = {};
+      const isPaginated = entityConfig.supportsPagination && query.per_page !== -1;
+      try {
+        response = await (0, import_api_fetch8.default)({ path, parse: !isPaginated });
+      } catch (error) {
+        return;
+      }
+      if (response) {
+        if (isPaginated) {
+          records = Object.values(await response.json());
+          meta.totalItems = parseInt(
+            response.headers.get("X-WP-Total")
+          );
+        } else {
+          records = Object.values(response);
+        }
+        if (query._fields) {
+          records = records.map((record) => {
+            query._fields.split(",").forEach((field) => {
+              if (!record.hasOwnProperty(field)) {
+                record[field] = void 0;
+              }
+            });
+            return record;
+          });
+        }
+        registry.batch(() => {
+          dispatch3.receiveRevisions(
+            kind,
+            name,
+            recordKey,
+            records,
+            query,
+            false,
+            meta
+          );
           const key = entityConfig.revisionKey || DEFAULT_ENTITY_KEY;
+          const normalizedQuery = normalizeQueryForResolution(rawQuery);
           const resolutionsArgs = records.filter((record) => record[key]).map((record) => [
             kind,
             name,
             recordKey,
-            record[key]
+            record[key],
+            normalizedQuery
           ]);
           dispatch3.finishResolutions(
             "getRevision",
             resolutionsArgs
           );
-        }
-      });
+        });
+      }
+    } finally {
+      dispatch3.__unstableReleaseStoreLock(lock2);
     }
   };
   getRevisions2.shouldInvalidate = (action, kind, name, recordKey) => action.type === "SAVE_ENTITY_RECORD_FINISH" && name === action.name && kind === action.kind && !action.error && recordKey === action.recordId;
-  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ select: select5, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -6238,18 +6283,44 @@ var wp;
         ].join()
       };
     }
-    const path = (0, import_url6.addQueryArgs)(
-      entityConfig.getRevisionsUrl(recordKey, revisionKey),
-      query
+    const lock2 = await dispatch3.__unstableAcquireStoreLock(
+      STORE_NAME,
+      [
+        "entities",
+        "records",
+        kind,
+        name,
+        recordKey,
+        "revisions",
+        revisionKey
+      ],
+      { exclusive: false }
     );
-    let record;
     try {
-      record = await (0, import_api_fetch8.default)({ path });
-    } catch (error) {
-      return;
-    }
-    if (record) {
-      dispatch3.receiveRevisions(kind, name, recordKey, record, query);
+      if (select5.hasRevision(kind, name, recordKey, revisionKey, query)) {
+        return;
+      }
+      const path = (0, import_url6.addQueryArgs)(
+        entityConfig.getRevisionsUrl(recordKey, revisionKey),
+        query
+      );
+      let record;
+      try {
+        record = await (0, import_api_fetch8.default)({ path });
+      } catch (error) {
+        return;
+      }
+      if (record) {
+        dispatch3.receiveRevisions(
+          kind,
+          name,
+          recordKey,
+          record,
+          query
+        );
+      }
+    } finally {
+      dispatch3.__unstableReleaseStoreLock(lock2);
     }
   };
   var getRegisteredPostMeta2 = (postType) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
