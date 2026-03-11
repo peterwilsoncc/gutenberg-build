@@ -2783,7 +2783,8 @@ var wp;
       baseURL: "/wp/v2/font-collections",
       baseURLParams: { context: "view" },
       plural: "fontCollections",
-      key: "slug"
+      key: "slug",
+      supportsPagination: true
     },
     {
       label: (0, import_i18n.__)("Icons"),
