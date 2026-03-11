@@ -671,10 +671,10 @@ import {
 } from "@wordpress/connectors";
 
 // routes/connectors-home/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='59f128e566']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='c50c3c0e77']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "59f128e566");
-  style.appendChild(document.createTextNode(".connectors-page{box-sizing:border-box;margin:0 auto;max-width:680px;padding:24px;width:100%}.connectors-page .components-item{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;padding:20px}.connectors-page .connector-settings .components-text-control__input{font-family:monospace}.connectors-page>p{color:#949494;text-align:center}@media (max-width:480px){.connectors-page{padding:8px}.connectors-page .components-item{padding:12px}.connectors-page .components-item>.components-v-stack>.components-h-stack:first-child svg{height:32px;width:32px}.connectors-page .components-item>.components-v-stack>.components-h-stack:first-child>.components-h-stack:last-child{align-items:flex-end;flex-direction:column}}"));
+  style.setAttribute("data-wp-hash", "c50c3c0e77");
+  style.appendChild(document.createTextNode(".connectors-page{box-sizing:border-box;margin:0 auto;max-width:680px;padding:24px;width:100%}.connectors-page .components-item{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;padding:20px}.connectors-page .connector-settings .components-text-control__input{font-family:monospace}.connectors-page--empty{align-items:center;display:flex;flex-direction:column;flex-grow:1;gap:32px;justify-content:center;text-align:center}.connectors-page>p{color:#949494;text-align:center}@media (max-width:480px){.connectors-page{padding:8px}.connectors-page .components-item{padding:12px}.connectors-page .components-item>.components-v-stack>.components-h-stack:first-child svg{height:32px;width:32px}.connectors-page .components-item>.components-v-stack>.components-h-stack:first-child>.components-h-stack:last-child{align-items:flex-end;flex-direction:column}}"));
   document.head.appendChild(style);
 }
 
@@ -1229,6 +1229,7 @@ function ConnectorsPage() {
     }),
     []
   );
+  const isEmpty = connectors.length === 0;
   return /* @__PURE__ */ React.createElement(
     page_default,
     {
@@ -1237,30 +1238,48 @@ function ConnectorsPage() {
         "All of your API keys and credentials are stored here and shared across plugins. Configure once and use everywhere."
       )
     },
-    /* @__PURE__ */ React.createElement("div", { className: "connectors-page" }, /* @__PURE__ */ React.createElement(import_components3.__experimentalVStack, { spacing: 3 }, connectors.map((connector) => {
-      if (connector.render) {
-        return /* @__PURE__ */ React.createElement(
-          connector.render,
-          {
-            key: connector.slug,
-            slug: connector.slug,
-            label: connector.label,
-            description: connector.description
-          }
-        );
-      }
-      return null;
-    })), canInstallPlugins && /* @__PURE__ */ React.createElement("p", null, (0, import_element5.createInterpolateElement)(
-      (0, import_i18n3.__)(
-        "Find more connectors in <a>the plugin directory</a>"
-      ),
+    /* @__PURE__ */ React.createElement(
+      "div",
       {
-        a: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          /* @__PURE__ */ React.createElement("a", { href: "plugin-install.php" })
-        )
-      }
-    )))
+        className: `connectors-page${isEmpty ? " connectors-page--empty" : ""}`
+      },
+      isEmpty ? /* @__PURE__ */ React.createElement(
+        import_components3.__experimentalVStack,
+        {
+          alignment: "center",
+          spacing: 3,
+          style: { maxWidth: 480 }
+        },
+        /* @__PURE__ */ React.createElement(import_components3.__experimentalVStack, { alignment: "center", spacing: 2 }, /* @__PURE__ */ React.createElement(import_components3.__experimentalHeading, { level: 2, size: 15, weight: 600 }, (0, import_i18n3.__)("No connectors yet")), /* @__PURE__ */ React.createElement(import_components3.__experimentalText, { size: 12 }, (0, import_i18n3.__)(
+          "Connectors appear here when you install plugins that use external services. Each plugin registers the API keys it needs, and you manage them all in one place."
+        ))),
+        /* @__PURE__ */ React.createElement(import_components3.Button, { variant: "secondary", href: "plugin-install.php" }, (0, import_i18n3.__)("Learn more"))
+      ) : /* @__PURE__ */ React.createElement(import_components3.__experimentalVStack, { spacing: 3 }, connectors.map((connector) => {
+        if (connector.render) {
+          return /* @__PURE__ */ React.createElement(
+            connector.render,
+            {
+              key: connector.slug,
+              slug: connector.slug,
+              label: connector.label,
+              description: connector.description
+            }
+          );
+        }
+        return null;
+      })),
+      canInstallPlugins && /* @__PURE__ */ React.createElement("p", null, (0, import_element5.createInterpolateElement)(
+        (0, import_i18n3.__)(
+          "Find more connectors in <a>the plugin directory</a>"
+        ),
+        {
+          a: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            /* @__PURE__ */ React.createElement("a", { href: "plugin-install.php" })
+          )
+        }
+      ))
+    )
   );
 }
 function Stage() {
