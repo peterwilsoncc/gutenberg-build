@@ -3361,7 +3361,8 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
-			'customCSS' => false
+			'customCSS' => false,
+			'visibility' => false
 		),
 		'editorStyle' => 'wp-block-html-editor'
 	),
@@ -3437,19 +3438,10 @@ return array(
 			)
 		),
 		'selectors' => array(
-			'root' => '.wp-block-icon',
-			'color' => array(
-				'root' => '.wp-block-icon svg'
-			),
-			'border' => array(
-				'root' => '.wp-block-icon svg'
-			),
+			'root' => '.wp-block-icon svg',
+			'css' => '.wp-block-icon',
 			'spacing' => array(
-				'padding' => '.wp-block-icon svg'
-			),
-			'dimensions' => array(
-				'root' => '.wp-block-icon svg',
-				'width' => '.wp-block-icon svg'
+				'margin' => '.wp-block-icon'
 			)
 		),
 		'style' => 'wp-block-icon',
@@ -4622,6 +4614,11 @@ return array(
 			'renaming' => false,
 			'interactivity' => array(
 				'clientNavigation' => true
+			)
+		),
+		'selectors' => array(
+			'states' => array(
+				'@current' => '.wp-block-navigation .current-menu-item'
 			)
 		),
 		'editorStyle' => 'wp-block-navigation-link-editor',
@@ -5850,9 +5847,6 @@ return array(
 		'description' => 'Display the excerpt.',
 		'textdomain' => 'default',
 		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'moreText' => array(
 				'type' => 'string',
 				'role' => 'content'
@@ -5893,6 +5887,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'textColumns' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
@@ -7555,7 +7550,8 @@ return array(
 			'className' => false,
 			'customClassName' => false,
 			'html' => false,
-			'customCSS' => false
+			'customCSS' => false,
+			'visibility' => false
 		),
 		'editorStyle' => 'wp-block-shortcode-editor'
 	),
