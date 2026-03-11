@@ -417,6 +417,7 @@ var wp;
   var index_exports = {};
   __export(index_exports, {
     EntityProvider: () => EntityProvider,
+    SelectionDirection: () => SelectionDirection,
     SelectionType: () => SelectionType,
     __experimentalFetchLinkSuggestions: () => fetchLinkSuggestions,
     __experimentalFetchUrlData: () => experimental_fetch_url_data_default,
@@ -1375,7 +1376,8 @@ var wp;
     SelectionType2["WholeBlock"] = "whole-block";
     return SelectionType2;
   })(SelectionType || {});
-  function getSelectionState(selectionStart, selectionEnd, yDoc) {
+  function getSelectionState(selectionStart, selectionEnd, yDoc, options) {
+    const { selectionDirection } = options ?? {};
     const ymap = getRootMap(yDoc, CRDT_RECORD_MAP_KEY);
     const yBlocks = ymap.get("blocks");
     const isSelectionEmpty = Object.keys(selectionStart).length === 0;
@@ -1420,7 +1422,8 @@ var wp;
       return {
         type: "selection-in-one-block",
         cursorStartPosition: cursorStartPosition2,
-        cursorEndPosition: cursorEndPosition2
+        cursorEndPosition: cursorEndPosition2,
+        selectionDirection
       };
     }
     const cursorStartPosition = getCursorPosition(selectionStart, yBlocks);
@@ -1431,7 +1434,8 @@ var wp;
     return {
       type: "selection-in-multiple-blocks",
       cursorStartPosition,
-      cursorEndPosition
+      cursorEndPosition,
+      selectionDirection
     };
   }
   function getCursorPosition(selection, blocks) {
@@ -1529,7 +1533,7 @@ var wp;
         ) && areCursorPositionsEqual(
           selection1.cursorEndPosition,
           selection2.cursorEndPosition
-        );
+        ) && selection1.selectionDirection === selection2.selectionDirection;
       case "selection-in-multiple-blocks":
         return areCursorPositionsEqual(
           selection1.cursorStartPosition,
@@ -1537,7 +1541,7 @@ var wp;
         ) && areCursorPositionsEqual(
           selection1.cursorEndPosition,
           selection2.cursorEndPosition
-        );
+        ) && selection1.selectionDirection === selection2.selectionDirection;
       case "whole-block":
         return import_sync6.Y.compareRelativePositions(
           selection1.blockPosition,
@@ -1555,6 +1559,13 @@ var wp;
     const isAbsoluteOffsetEqual = cursorPosition1.absoluteOffset === cursorPosition2.absoluteOffset;
     return isRelativePositionEqual && isAbsoluteOffsetEqual;
   }
+
+  // packages/core-data/build-module/types.mjs
+  var SelectionDirection = /* @__PURE__ */ ((SelectionDirection2) => {
+    SelectionDirection2["Forward"] = "f";
+    SelectionDirection2["Backward"] = "b";
+    return SelectionDirection2;
+  })(SelectionDirection || {});
 
   // packages/core-data/build-module/awareness/post-editor-awareness.mjs
   var PostEditorAwareness = class extends BaseAwarenessState {
@@ -1584,11 +1595,18 @@ var wp;
       let selectionStart = getSelectionStart();
       let selectionEnd = getSelectionEnd();
       let localCursorTimeout = null;
+      let selectionBeforeDebounce = null;
       (0, import_data5.subscribe)(() => {
         const newSelectionStart = getSelectionStart();
         const newSelectionEnd = getSelectionEnd();
         if (newSelectionStart === selectionStart && newSelectionEnd === selectionEnd) {
           return;
+        }
+        if (!selectionBeforeDebounce) {
+          selectionBeforeDebounce = {
+            start: selectionStart,
+            end: selectionEnd
+          };
         }
         selectionStart = newSelectionStart;
         selectionEnd = newSelectionEnd;
@@ -1602,10 +1620,21 @@ var wp;
           clearTimeout(localCursorTimeout);
         }
         localCursorTimeout = setTimeout(() => {
+          const selectionStateOptions = {};
+          if (selectionBeforeDebounce) {
+            selectionStateOptions.selectionDirection = detectSelectionDirection(
+              selectionBeforeDebounce.start,
+              selectionBeforeDebounce.end,
+              selectionStart,
+              selectionEnd
+            );
+            selectionBeforeDebounce = null;
+          }
           const selectionState = getSelectionState(
             selectionStart,
             selectionEnd,
-            this.doc
+            this.doc,
+            selectionStateOptions
           );
           this.setThrottledLocalStateField(
             "editorState",
@@ -1760,6 +1789,17 @@ var wp;
       };
     }
   };
+  function detectSelectionDirection(prevStart, prevEnd, newStart, newEnd) {
+    const startMoved = !areBlockSelectionsEqual(prevStart, newStart);
+    const endMoved = !areBlockSelectionsEqual(prevEnd, newEnd);
+    if (startMoved && !endMoved) {
+      return SelectionDirection.Backward;
+    }
+    return SelectionDirection.Forward;
+  }
+  function areBlockSelectionsEqual(a, b) {
+    return a.clientId === b.clientId && a.attributeKey === b.attributeKey && a.offset === b.offset;
+  }
 
   // packages/core-data/build-module/utils/crdt.mjs
   var import_es63 = __toESM(require_es6(), 1);
