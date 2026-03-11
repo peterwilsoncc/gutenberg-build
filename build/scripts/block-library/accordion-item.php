@@ -6,12 +6,13 @@
  * @package WordPress
  * @since 6.9.0
  *
- * @param array{ openByDefault: bool } $attributes The block attributes.
- * @param string                        $content   The block content.
+ * @param array $attributes The block attributes.
+ * @param string $content The block content.
+ *
  * @return string Returns the updated markup.
  */
-function gutenberg_block_core_accordion_item_render( array $attributes, string $content ): string {
-	if ( '' === $content ) {
+function gutenberg_block_core_accordion_item_render( $attributes, $content ) {
+	if ( ! $content ) {
 		return $content;
 	}
 
@@ -52,19 +53,6 @@ function gutenberg_block_core_accordion_item_render( array $attributes, string $
 				$content = $p->get_updated_html();
 			}
 		}
-	}
-
-	/*
-	 * If an Accordion Item is collapsed by default, ensure any contained IMG has fetchpriority=low to deprioritize it
-	 * from contending with resources in the critical rendering path. In contrast, remove the loading attribute to
-	 * prevent the image from not being available when the item is expanded.
-	 */
-	if ( ! $attributes['openByDefault'] ) {
-		$processor = new WP_HTML_Tag_Processor( $content );
-		while ( $processor->next_tag( 'IMG' ) ) {
-			$processor->set_attribute( 'fetchpriority', 'low' );
-		}
-		$content = $processor->get_updated_html();
 	}
 
 	return $content;

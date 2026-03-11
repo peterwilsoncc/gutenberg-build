@@ -589,6 +589,9 @@ var wp;
   ];
   function getUserPermissionsFromAllowHeader(allowedMethods) {
     const permissions = {};
+    if (!allowedMethods) {
+      return permissions;
+    }
     const methods = {
       create: "POST",
       read: "GET",
@@ -596,7 +599,7 @@ var wp;
       delete: "DELETE"
     };
     for (const [actionName, methodName] of Object.entries(methods)) {
-      permissions[actionName] = allowedMethods ? allowedMethods.includes(methodName) : false;
+      permissions[actionName] = allowedMethods.includes(methodName);
     }
     return permissions;
   }
@@ -614,7 +617,7 @@ var wp;
   function receiveItems(items2, edits, meta) {
     return {
       type: "RECEIVE_ITEMS",
-      items: items2,
+      items: Array.isArray(items2) ? items2 : [items2],
       persistedEdits: edits,
       meta
     };
@@ -1313,7 +1316,6 @@ var wp;
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
     LOCAL_EDITOR_ORIGIN,
-    LOCAL_UNDO_IGNORED_ORIGIN,
     retrySyncConnection
   } = unlock(import_sync3.privateApis);
   var syncManager;
@@ -1817,13 +1819,9 @@ var wp;
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_sync9 = __toESM(require_sync(), 1);
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
-  function makeBlockAttributesSerializable(blockName, attributes) {
+  function makeBlockAttributesSerializable(attributes) {
     const newAttributes = { ...attributes };
     for (const [key, value] of Object.entries(attributes)) {
-      if (isLocalAttribute(blockName, key)) {
-        delete newAttributes[key];
-        continue;
-      }
       if (value instanceof import_rich_text.RichTextData) {
         newAttributes[key] = value.valueOf();
       }
@@ -1837,7 +1835,7 @@ var wp;
       return {
         ...rest,
         name,
-        attributes: makeBlockAttributesSerializable(name, attributes),
+        attributes: makeBlockAttributesSerializable(attributes),
         innerBlocks: makeBlocksSerializable(innerBlocks)
       };
     });
@@ -1919,7 +1917,10 @@ var wp;
         makeBlocksSerializable(incomingBlocks)
       );
     }
-    const blocksToSync = serializableBlocksCache.get(incomingBlocks) ?? [];
+    const allBlocks = serializableBlocksCache.get(incomingBlocks) ?? [];
+    const blocksToSync = allBlocks.filter(
+      (block) => shouldBlockBeSynced(block)
+    );
     const numOfCommonEntries = Math.min(
       blocksToSync.length ?? 0,
       yblocks.length
@@ -2032,6 +2033,14 @@ var wp;
       knownClientIds.add(clientId);
     }
   }
+  function shouldBlockBeSynced(block) {
+    if ("core/gallery" === block.name) {
+      return !block.innerBlocks.some(
+        (innerBlock) => innerBlock.attributes && innerBlock.attributes.blob
+      );
+    }
+    return true;
+  }
   function updateYBlockAttribute(blockName, attributeName, attributeValue, currentAttributes, cursorPosition) {
     const isRichText = isRichTextAttribute(blockName, attributeName);
     const currentAttribute = currentAttributes.get(attributeName);
@@ -2049,16 +2058,17 @@ var wp;
     if (!cachedBlockAttributeTypes) {
       cachedBlockAttributeTypes = /* @__PURE__ */ new Map();
       for (const blockType of (0, import_blocks.getBlockTypes)()) {
+        const blockAttributeTypeMap = /* @__PURE__ */ new Map();
+        for (const [name, definition] of Object.entries(
+          blockType.attributes ?? {}
+        )) {
+          if (definition.type) {
+            blockAttributeTypeMap.set(name, definition.type);
+          }
+        }
         cachedBlockAttributeTypes.set(
           blockType.name,
-          new Map(
-            Object.entries(blockType.attributes ?? {}).map(
-              ([name, definition]) => {
-                const { role, type } = definition;
-                return [name, { role, type }];
-              }
-            )
-          )
+          blockAttributeTypeMap
         );
       }
     }
@@ -2068,20 +2078,16 @@ var wp;
     const expectedAttributeType = getBlockAttributeType(
       blockName,
       attributeName
-    )?.type;
+    );
     if (expectedAttributeType === "rich-text") {
       return attributeValue instanceof import_sync9.Y.Text;
-    }
-    if (expectedAttributeType === "string") {
+    } else if (expectedAttributeType === "string") {
       return typeof attributeValue === "string";
     }
     return true;
   }
-  function isLocalAttribute(blockName, attributeName) {
-    return "local" === getBlockAttributeType(blockName, attributeName)?.role;
-  }
   function isRichTextAttribute(blockName, attributeName) {
-    return "rich-text" === getBlockAttributeType(blockName, attributeName)?.type;
+    return "rich-text" === getBlockAttributeType(blockName, attributeName);
   }
   var localDoc;
   function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition = null) {
@@ -2961,20 +2967,18 @@ var wp;
       case "RECEIVE_ITEMS": {
         const context = getContextFromAction(action);
         const key = action.key || DEFAULT_ENTITY_KEY;
-        const itemsList = Array.isArray(action.items) ? action.items : [action.items];
         return {
           ...state,
           [context]: {
             ...state[context],
-            ...Object.fromEntries(
-              itemsList.map((item) => [
-                item?.[key],
-                conservativeMapItem(
-                  state?.[context]?.[item?.[key]],
-                  item
-                )
-              ])
-            )
+            ...action.items.reduce((accumulator, value) => {
+              const itemId = value?.[key];
+              accumulator[itemId] = conservativeMapItem(
+                state?.[context]?.[itemId],
+                value
+              );
+              return accumulator;
+            }, {})
           }
         };
       }
@@ -2993,14 +2997,13 @@ var wp;
       case "RECEIVE_ITEMS": {
         const context = getContextFromAction(action);
         const { query, key = DEFAULT_ENTITY_KEY } = action;
-        const itemsList = Array.isArray(action.items) ? action.items : [action.items];
         const queryParts = query ? get_query_parts_default(query) : {};
         const isCompleteQuery = !query || !Array.isArray(queryParts.fields);
         return {
           ...state,
           [context]: {
             ...state[context],
-            ...itemsList.reduce((result, item) => {
+            ...action.items.reduce((result, item) => {
               const itemId = item?.[key];
               result[itemId] = state?.[context]?.[itemId] || isCompleteQuery;
               return result;
@@ -3037,19 +3040,16 @@ var wp;
     // reducer tracks only a single query object.
     on_sub_key_default("stableKey")
   ])((state = {}, action) => {
-    if (action.type !== "RECEIVE_ITEMS") {
+    const { type, page, perPage, key = DEFAULT_ENTITY_KEY } = action;
+    if (type !== "RECEIVE_ITEMS") {
       return state;
     }
-    if (!Array.isArray(action.items)) {
-      return state;
-    }
-    const key = action.key ?? DEFAULT_ENTITY_KEY;
     return {
       itemIds: getMergedItemIds(
         state?.itemIds || [],
         action.items.map((item) => item?.[key]).filter(Boolean),
-        action.page,
-        action.perPage
+        page,
+        perPage
       ),
       meta: action.meta
     };
@@ -3207,8 +3207,7 @@ var wp;
                 return state;
               }
               const nextState = { ...state };
-              const itemsList = Array.isArray(action.items) ? action.items : [action.items];
-              for (const record of itemsList) {
+              for (const record of action.items) {
                 const recordId = record?.[action.key];
                 const edits = nextState[recordId];
                 if (!edits) {
@@ -4552,9 +4551,6 @@ var wp;
   };
 
   // packages/core-data/build-module/actions.mjs
-  function addTitleToAutoDraft(record) {
-    return record.status === "auto-draft" ? { ...record, title: "" } : record;
-  }
   function receiveUserQuery(queryID, users2) {
     return {
       type: "RECEIVE_USER_QUERY",
@@ -4576,7 +4572,9 @@ var wp;
   }
   function receiveEntityRecords(kind, name, records, query = void 0, invalidateCache = false, edits = void 0, meta = void 0) {
     if (kind === "postType") {
-      records = Array.isArray(records) ? records.map(addTitleToAutoDraft) : addTitleToAutoDraft(records);
+      records = (Array.isArray(records) ? records : [records]).map(
+        (record) => record.status === "auto-draft" ? { ...record, title: "" } : record
+      );
     }
     let action;
     if (query) {
@@ -4744,12 +4742,11 @@ var wp;
       const objectType = `${kind}/${name}`;
       const objectId = recordId;
       const isNewUndoLevel = options.undoIgnore ? false : !options.isCached;
-      const origin = options.undoIgnore ? LOCAL_UNDO_IGNORED_ORIGIN : LOCAL_EDITOR_ORIGIN;
       getSyncManager()?.update(
         objectType,
         objectId,
         editsWithMerges,
-        origin,
+        LOCAL_EDITOR_ORIGIN,
         { isNewUndoLevel }
       );
     }
@@ -4986,7 +4983,7 @@ var wp;
               `${kind}/${name}`,
               recordId,
               updatedRecord,
-              LOCAL_UNDO_IGNORED_ORIGIN,
+              LOCAL_EDITOR_ORIGIN,
               { isSave: true }
             );
           }
@@ -5150,7 +5147,7 @@ var wp;
     dispatch3({
       type: "RECEIVE_ITEM_REVISIONS",
       key,
-      items: records,
+      items: Array.isArray(records) ? records : [records],
       recordKey,
       meta,
       query,
@@ -5235,7 +5232,7 @@ var wp;
           dispatch3.receiveEntityRecords(
             kind,
             name,
-            newRecord,
+            [newRecord],
             void 0,
             true,
             void 0,
@@ -6137,11 +6134,9 @@ var wp;
       template.id = id;
       registry.batch(() => {
         dispatch3.receiveDefaultTemplateId(query, id);
-        dispatch3.receiveEntityRecords(
-          "postType",
-          template.type,
+        dispatch3.receiveEntityRecords("postType", template.type, [
           template
-        );
+        ]);
         dispatch3.finishResolution("getEntityRecord", [
           "postType",
           template.type,
@@ -6502,26 +6497,17 @@ var wp;
 
   // packages/core-data/build-module/entity-provider.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-  function EntityProvider({
-    kind,
-    type: name,
-    id,
-    revisionId,
-    children
-  }) {
+  function EntityProvider({ kind, type: name, id, children }) {
     const parent = (0, import_element2.useContext)(EntityContext);
     const childContext = (0, import_element2.useMemo)(
       () => ({
         ...parent,
-        ...kind && {
-          [kind]: {
-            ...parent?.[kind],
-            [name]: id
-          }
-        },
-        ...revisionId !== void 0 && { revisionId }
+        [kind]: {
+          ...parent?.[kind],
+          [name]: id
+        }
       }),
-      [parent, kind, name, id, revisionId]
+      [parent, kind, name, id]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntityContext.Provider, { value: childContext, children });
   }
@@ -7158,33 +7144,8 @@ var wp;
   function useEntityProp(kind, name, prop, _id) {
     const providerId = useEntityId(kind, name);
     const id = _id ?? providerId;
-    const context = (0, import_element7.useContext)(EntityContext);
-    const revisionId = context?.revisionId;
     const { value, fullValue } = (0, import_data15.useSelect)(
       (select5) => {
-        if (revisionId) {
-          const revisions = select5(STORE_NAME).getRevisions(
-            kind,
-            name,
-            id,
-            {
-              per_page: -1,
-              context: "edit"
-            }
-          );
-          const entityConfig = select5(STORE_NAME).getEntityConfig(
-            kind,
-            name
-          );
-          const revKey = entityConfig?.revisionKey || DEFAULT_ENTITY_KEY;
-          const revision = revisions?.find(
-            (r) => r[revKey] === revisionId
-          );
-          return revision ? {
-            value: revision[prop],
-            fullValue: revision[prop]
-          } : {};
-        }
         const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select5(STORE_NAME);
         const record = getEntityRecord3(kind, name, id);
         const editedRecord = getEditedEntityRecord3(kind, name, id);
@@ -7193,25 +7154,21 @@ var wp;
           fullValue: record[prop]
         } : {};
       },
-      [kind, name, id, prop, revisionId]
+      [kind, name, id, prop]
     );
     const { editEntityRecord: editEntityRecord2 } = (0, import_data15.useDispatch)(STORE_NAME);
     const setValue = (0, import_element7.useCallback)(
       (newValue) => {
-        if (revisionId) {
-          return;
-        }
         editEntityRecord2(kind, name, id, {
           [prop]: newValue
         });
       },
-      [editEntityRecord2, kind, name, id, prop, revisionId]
+      [editEntityRecord2, kind, name, id, prop]
     );
     return [value, setValue, fullValue];
   }
 
   // packages/core-data/build-module/hooks/use-post-editor-awareness-state.mjs
-  var import_compose3 = __toESM(require_compose(), 1);
   var import_element8 = __toESM(require_element(), 1);
   var defaultResolvedSelection = {
     textIndex: null,
@@ -7306,82 +7263,6 @@ var wp;
     }, [postId, postType]);
     return lastSave;
   }
-  function useOnCollaboratorJoin(postId, postType, callback) {
-    const { activeCollaborators } = usePostEditorAwarenessState(
-      postId,
-      postType
-    );
-    const prevCollaborators = (0, import_compose3.usePrevious)(activeCollaborators);
-    (0, import_element8.useEffect)(() => {
-      if (!prevCollaborators || prevCollaborators.length === 0) {
-        return;
-      }
-      const prevMap = new Map(
-        prevCollaborators.map((collaborator) => [
-          collaborator.clientId,
-          collaborator
-        ])
-      );
-      const me = activeCollaborators.find(
-        (collaborator) => collaborator.isMe
-      );
-      for (const collaborator of activeCollaborators) {
-        if (!prevMap.has(collaborator.clientId) && !collaborator.isMe) {
-          callback(collaborator, me);
-        }
-      }
-    }, [activeCollaborators, prevCollaborators, callback]);
-  }
-  function useOnCollaboratorLeave(postId, postType, callback) {
-    const { activeCollaborators } = usePostEditorAwarenessState(
-      postId,
-      postType
-    );
-    const prevCollaborators = (0, import_compose3.usePrevious)(activeCollaborators);
-    (0, import_element8.useEffect)(() => {
-      if (!prevCollaborators || prevCollaborators.length === 0) {
-        return;
-      }
-      const newMap = new Map(
-        activeCollaborators.map((collaborator) => [
-          collaborator.clientId,
-          collaborator
-        ])
-      );
-      for (const prevCollab of prevCollaborators) {
-        if (prevCollab.isMe || !prevCollab.isConnected) {
-          continue;
-        }
-        const newCollab = newMap.get(prevCollab.clientId);
-        if (!newCollab?.isConnected) {
-          callback(prevCollab);
-        }
-      }
-    }, [activeCollaborators, prevCollaborators, callback]);
-  }
-  function useOnPostSave(postId, postType, callback) {
-    const { activeCollaborators } = usePostEditorAwarenessState(
-      postId,
-      postType
-    );
-    const lastPostSave = useLastPostSave(postId, postType);
-    const prevPostSave = (0, import_compose3.usePrevious)(lastPostSave);
-    (0, import_element8.useEffect)(() => {
-      if (!lastPostSave) {
-        return;
-      }
-      if (prevPostSave && lastPostSave.savedAt === prevPostSave.savedAt) {
-        return;
-      }
-      const saver = activeCollaborators.find(
-        (collaborator) => collaborator.clientId === lastPostSave.savedByClientId && !collaborator.isMe
-      );
-      if (!saver) {
-        return;
-      }
-      callback(lastPostSave, saver, prevPostSave ?? null);
-    }, [lastPostSave, prevPostSave, activeCollaborators, callback]);
-  }
 
   // packages/core-data/build-module/private-apis.mjs
   var privateApis = {};
@@ -7391,9 +7272,7 @@ var wp;
     retrySyncConnection,
     useActiveCollaborators,
     useResolvedSelection,
-    useOnCollaboratorJoin,
-    useOnCollaboratorLeave,
-    useOnPostSave
+    useLastPostSave
   });
 
   // packages/core-data/build-module/index.mjs
