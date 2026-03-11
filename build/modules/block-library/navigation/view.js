@@ -53,20 +53,14 @@ var { state, actions } = store(
       }
     },
     actions: {
-      openMenuOnHover(event) {
-        if (event?.pointerType === "touch") {
-          return;
-        }
+      openMenuOnHover() {
         const { type, overlayOpenedBy } = getContext();
         if (type === "submenu" && // Only open on hover if the overlay is closed.
         Object.values(overlayOpenedBy || {}).filter(Boolean).length === 0) {
           actions.openMenu("hover");
         }
       },
-      closeMenuOnHover(event) {
-        if (event?.pointerType === "touch") {
-          return;
-        }
+      closeMenuOnHover() {
         const { type, overlayOpenedBy } = getContext();
         if (type === "submenu" && // Only close on hover if the overlay is closed.
         Object.values(overlayOpenedBy || {}).filter(Boolean).length === 0) {
@@ -96,7 +90,6 @@ var { state, actions } = store(
         if (menuOpenedBy.click || menuOpenedBy.focus) {
           actions.closeMenu("click");
           actions.closeMenu("focus");
-          actions.closeMenu("hover");
         } else {
           ctx.previousFocus = ref;
           actions.openMenu("click");

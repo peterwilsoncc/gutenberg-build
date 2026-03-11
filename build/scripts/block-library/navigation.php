@@ -710,12 +710,6 @@ class WP_Navigation_Block_Renderer_Gutenberg {
 				$tags                = new WP_HTML_Tag_Processor( $overlay_blocks_html );
 				$overlay_blocks_html = gutenberg_block_core_navigation_add_directives_to_overlay_close( $tags );
 			}
-			// Images in the overlay are hidden until the menu is opened. Pre-set
-			// fetchpriority="low" so that when wp_filter_content_tags() processes the
-			// parent template part, it sees the attribute already present and calls
-			// wp_get_loading_optimization_attributes() with fetchpriority="low", which both prevents
-			// fetchpriority="high" from being added and stops the LCP counter from being incremented.
-			$overlay_blocks_html = gutenberg_block_core_navigation_set_overlay_image_fetch_priority( $overlay_blocks_html );
 		}
 
 		$has_custom_overlay = ! empty( $overlay_blocks_html );
@@ -1118,25 +1112,6 @@ function gutenberg_block_core_navigation_add_directives_to_overlay_close( $tags 
 }
 
 /**
- * Sets fetchpriority="low" on all IMG tags within the navigation overlay.
- *
- * Images in the overlay are hidden until the menu is opened, so they should
- * not compete with any actual LCP element image on the page.
- *
- * @since 7.0.0
- *
- * @param string $overlay_blocks_html The rendered HTML of the overlay blocks.
- * @return string Modified HTML with fetchpriority="low" on all IMG tags.
- */
-function gutenberg_block_core_navigation_set_overlay_image_fetch_priority( string $overlay_blocks_html ): string {
-	$tags = new WP_HTML_Tag_Processor( $overlay_blocks_html );
-	while ( $tags->next_tag( 'IMG' ) ) {
-		$tags->set_attribute( 'fetchpriority', 'low' );
-	}
-	return $tags->get_updated_html();
-}
-
-/**
  * Add Interactivity API directives to the navigation-submenu and page-list
  * blocks markup using the Tag Processor.
  *
@@ -1171,8 +1146,8 @@ function gutenberg_block_core_navigation_add_directives_to_submenu( $tags, $bloc
 		$open_on_hover       = 'hover' === $computed_visibility;
 
 		if ( $open_on_hover ) {
-			$tags->set_attribute( 'data-wp-on--pointerenter', 'actions.openMenuOnHover' );
-			$tags->set_attribute( 'data-wp-on--pointerleave', 'actions.closeMenuOnHover' );
+			$tags->set_attribute( 'data-wp-on--mouseenter', 'actions.openMenuOnHover' );
+			$tags->set_attribute( 'data-wp-on--mouseleave', 'actions.closeMenuOnHover' );
 		}
 
 		// Add directives to the toggle submenu button.

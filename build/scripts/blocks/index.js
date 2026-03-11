@@ -9512,8 +9512,8 @@ var wp;
   // packages/blocks/build-module/api/raw-handling/shortcode-converter.mjs
   var import_shortcode = __toESM(require_shortcode(), 1);
   var castArray = (maybeArray) => Array.isArray(maybeArray) ? maybeArray : [maybeArray];
-  var beforeLineRegexp = /(\n|<p>|<br\s*\/?>)\s*$/;
-  var afterLineRegexp = /^\s*(\n|<\/p>|<br\s*\/?>)/;
+  var beforeLineRegexp = /(\n|<p>)\s*$/;
+  var afterLineRegexp = /^\s*(\n|<\/p>)/;
   function segmentHTMLToShortcodeBlock(HTML, lastIndex = 0, excludedBlockNames = []) {
     const transformsFrom = getBlockTransforms("from");
     const transformation = findTransform(
