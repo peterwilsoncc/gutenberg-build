@@ -9571,7 +9571,7 @@ var wp;
     data,
     onChangeControl
   }) {
-    const [fieldValue, setFieldValue] = (0, import_element8.useState)(null);
+    const [fieldValue, setFieldValue] = (0, import_element8.useState)("");
     const pageId = data.parent;
     const postId2 = data.id;
     const postTypeSlug = data.type;
@@ -9592,7 +9592,7 @@ var wp;
           orderby: "menu_order",
           order: "asc",
           _fields: "id,title,parent",
-          ...fieldValue !== null && {
+          ...!!fieldValue && {
             // Perform a search by relevance when the field is changed.
             search: fieldValue,
             orderby: "relevance"
@@ -9621,14 +9621,8 @@ var wp;
           ...getOptionsFromTree(treeNode.children || [], level + 1)
         ]);
         const sortedNodes = mappedNodes.sort(([a3], [b3]) => {
-          const priorityA = getItemPriority(
-            a3.rawName,
-            fieldValue ?? ""
-          );
-          const priorityB = getItemPriority(
-            b3.rawName,
-            fieldValue ?? ""
-          );
+          const priorityA = getItemPriority(a3.rawName, fieldValue);
+          const priorityB = getItemPriority(b3.rawName, fieldValue);
           return priorityA >= priorityB ? 1 : -1;
         });
         return sortedNodes.flat();
@@ -42377,7 +42371,7 @@ var wp;
   };
   function PageAttributesParent2() {
     const { editPost: editPost2 } = (0, import_data100.useDispatch)(store);
-    const [fieldValue, setFieldValue] = (0, import_element102.useState)(false);
+    const [fieldValue, setFieldValue] = (0, import_element102.useState)("");
     const {
       isHierarchical,
       parentPostId,
