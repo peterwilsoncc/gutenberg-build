@@ -2710,7 +2710,6 @@ export {
   Editor,
   Preview,
   loadEditorAssets,
-  useEditorAssets,
-  useEditorSettings
+  useEditorAssets
 };
 //# sourceMappingURL=index.js.map

@@ -886,6 +886,7 @@ var wp;
         });
         replaceBlocks(clientIds, newBlock);
         setEditingPattern2(newBlock.clientId, true);
+        closeBlockSettingsMenu();
       }
       createSuccessNotice(
         pattern.wp_pattern_sync_status === PATTERN_SYNC_TYPES.unsynced ? (0, import_i18n6.sprintf)(
@@ -903,7 +904,6 @@ var wp;
         }
       );
       setIsModalOpen(false);
-      closeBlockSettingsMenu();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
@@ -928,7 +928,6 @@ var wp;
           },
           onClose: () => {
             setIsModalOpen(false);
-            closeBlockSettingsMenu();
           }
         }
       )
@@ -944,7 +943,7 @@ var wp;
   var import_url = __toESM(require_url(), 1);
   var import_core_data7 = __toESM(require_core_data(), 1);
   var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-  function PatternsManageButton({ clientId, onClose }) {
+  function PatternsManageButton({ clientId }) {
     const {
       attributes,
       canDetach,
@@ -1013,7 +1012,6 @@ var wp;
                 metadata: attributesWithoutPatternName
               });
             }
-            onClose?.();
           },
           children: isSyncedPattern ? (0, import_i18n7.__)("Disconnect pattern") : (0, import_i18n7.__)("Detach pattern")
         }
@@ -1038,8 +1036,7 @@ var wp;
       selectedClientIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
         patterns_manage_button_default,
         {
-          clientId: selectedClientIds[0],
-          onClose
+          clientId: selectedClientIds[0]
         }
       )
     ] }) });

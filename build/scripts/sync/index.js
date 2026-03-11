@@ -9167,7 +9167,6 @@ var wp;
   var CRDT_STATE_MAP_VERSION_KEY = "version";
   var LOCAL_EDITOR_ORIGIN = "gutenberg";
   var LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
-  var LOCAL_UNDO_IGNORED_ORIGIN = "gutenberg-undo-ignored";
 
   // packages/sync/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
@@ -9323,22 +9322,34 @@ var wp;
       }
     };
   }
-  function postSyncUpdate(payload) {
-    return (0, import_api_fetch.default)({
+  async function postSyncUpdate(payload) {
+    const response = await (0, import_api_fetch.default)({
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json"
+      },
       method: "POST",
-      path: SYNC_API_PATH,
-      data: payload
+      parse: false,
+      path: SYNC_API_PATH
     });
+    if (!response.ok) {
+      throw new Error(
+        `Sync update failed with status ${response.status}`
+      );
+    }
+    return await response.json();
   }
   function postSyncUpdateNonBlocking(payload) {
     if (payload.rooms.length === 0) {
       return;
     }
     (0, import_api_fetch.default)({
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+      keepalive: true,
       method: "POST",
-      path: SYNC_API_PATH,
-      data: payload,
-      keepalive: true
+      parse: false,
+      path: SYNC_API_PATH
     }).catch(() => {
     });
   }
@@ -9357,7 +9368,7 @@ var wp;
       )
     ).map((u) => base64ToUint8Array(u.data));
     return createSyncUpdate(
-      mergeUpdatesV2(mergeable),
+      mergeUpdates(mergeable),
       SyncUpdateType.COMPACTION
     );
   }
@@ -9449,7 +9460,7 @@ var wp;
       }
       case SyncUpdateType.COMPACTION:
       case SyncUpdateType.UPDATE: {
-        applyUpdateV2(doc2, data, POLLING_MANAGER_ORIGIN);
+        applyUpdate(doc2, data, POLLING_MANAGER_ORIGIN);
       }
     }
   }
@@ -9605,14 +9616,14 @@ var wp;
       updateQueue.add(createSyncUpdate(update, SyncUpdateType.UPDATE));
     }
     function unregister() {
-      doc2.off("updateV2", onDocUpdate);
+      doc2.off("update", onDocUpdate);
       awareness.off("change", onAwarenessUpdate);
       updateQueue.clear();
     }
     const roomState = {
       clientId: doc2.clientID,
       createCompactionUpdate: () => createSyncUpdate(
-        encodeStateAsUpdateV2(doc2),
+        encodeStateAsUpdate(doc2),
         SyncUpdateType.COMPACTION
       ),
       endCursor: 0,
@@ -9624,7 +9635,7 @@ var wp;
       unregister,
       updateQueue
     };
-    doc2.on("updateV2", onDocUpdate);
+    doc2.on("update", onDocUpdate);
     awareness.on("change", onAwarenessUpdate);
     roomStates.set(room, roomState);
     if (!areListenersRegistered) {
@@ -11530,7 +11541,6 @@ var wp;
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
     LOCAL_EDITOR_ORIGIN,
-    LOCAL_UNDO_IGNORED_ORIGIN,
     retrySyncConnection: () => pollingManager.retryNow()
   });
 

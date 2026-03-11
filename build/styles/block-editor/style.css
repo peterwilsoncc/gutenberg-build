@@ -3119,7 +3119,6 @@ iframe[name=editor-canvas] {
   position: absolute;
   width: 1px;
   word-wrap: normal !important;
-  word-break: normal !important;
 }
 
 .preset-input-control__wrapper > * {
@@ -3524,15 +3523,14 @@ iframe[name=editor-canvas] {
 }
 
 .block-editor-block-fields__container {
-  padding: 0 16px 16px;
+  padding: 0 16px;
 }
 .block-editor-block-fields__container:first-of-type {
   padding-block-start: 8px;
-  /*
-   * Add border for the entire content controls and remove the similar border
-   * for tools panel.
-   */
-  border-block-start: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+}
+.block-editor-block-fields__container:last-of-type {
+  padding-block-end: 16px;
 }
 
 .block-editor-block-fields__header {
@@ -3546,7 +3544,6 @@ iframe[name=editor-canvas] {
 
 .block-editor-block-fields__header-title {
   flex: 1;
-  /* Override the default margin on a h2 element. */
   margin: 0 !important;
 }
 

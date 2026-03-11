@@ -589,6 +589,9 @@ var wp;
   ];
   function getUserPermissionsFromAllowHeader(allowedMethods) {
     const permissions = {};
+    if (!allowedMethods) {
+      return permissions;
+    }
     const methods = {
       create: "POST",
       read: "GET",
@@ -596,7 +599,7 @@ var wp;
       delete: "DELETE"
     };
     for (const [actionName, methodName] of Object.entries(methods)) {
-      permissions[actionName] = allowedMethods ? allowedMethods.includes(methodName) : false;
+      permissions[actionName] = allowedMethods.includes(methodName);
     }
     return permissions;
   }
@@ -610,22 +613,11 @@ var wp;
     "RECEIVE_INTERMEDIATE_RESULTS"
   );
 
-  // packages/core-data/build-module/utils/normalize-query-for-resolution.mjs
-  function normalizeQueryForResolution(query) {
-    if (!query) {
-      return void 0;
-    }
-    const entries = Object.entries(query).filter(
-      ([k, v]) => (k === "context" || k === "_fields") && v !== void 0 && v !== null
-    );
-    return entries.length > 0 ? Object.fromEntries(entries) : void 0;
-  }
-
   // packages/core-data/build-module/queried-data/actions.mjs
   function receiveItems(items2, edits, meta) {
     return {
       type: "RECEIVE_ITEMS",
-      items: items2,
+      items: Array.isArray(items2) ? items2 : [items2],
       persistedEdits: edits,
       meta
     };
@@ -1324,7 +1316,6 @@ var wp;
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
     LOCAL_EDITOR_ORIGIN,
-    LOCAL_UNDO_IGNORED_ORIGIN,
     retrySyncConnection
   } = unlock(import_sync3.privateApis);
   var syncManager;
@@ -1828,13 +1819,9 @@ var wp;
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_sync9 = __toESM(require_sync(), 1);
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
-  function makeBlockAttributesSerializable(blockName, attributes) {
+  function makeBlockAttributesSerializable(attributes) {
     const newAttributes = { ...attributes };
     for (const [key, value] of Object.entries(attributes)) {
-      if (isLocalAttribute(blockName, key)) {
-        delete newAttributes[key];
-        continue;
-      }
       if (value instanceof import_rich_text.RichTextData) {
         newAttributes[key] = value.valueOf();
       }
@@ -1848,7 +1835,7 @@ var wp;
       return {
         ...rest,
         name,
-        attributes: makeBlockAttributesSerializable(name, attributes),
+        attributes: makeBlockAttributesSerializable(attributes),
         innerBlocks: makeBlocksSerializable(innerBlocks)
       };
     });
@@ -1930,7 +1917,10 @@ var wp;
         makeBlocksSerializable(incomingBlocks)
       );
     }
-    const blocksToSync = serializableBlocksCache.get(incomingBlocks) ?? [];
+    const allBlocks = serializableBlocksCache.get(incomingBlocks) ?? [];
+    const blocksToSync = allBlocks.filter(
+      (block) => shouldBlockBeSynced(block)
+    );
     const numOfCommonEntries = Math.min(
       blocksToSync.length ?? 0,
       yblocks.length
@@ -2043,6 +2033,14 @@ var wp;
       knownClientIds.add(clientId);
     }
   }
+  function shouldBlockBeSynced(block) {
+    if ("core/gallery" === block.name) {
+      return !block.innerBlocks.some(
+        (innerBlock) => innerBlock.attributes && innerBlock.attributes.blob
+      );
+    }
+    return true;
+  }
   function updateYBlockAttribute(blockName, attributeName, attributeValue, currentAttributes, cursorPosition) {
     const isRichText = isRichTextAttribute(blockName, attributeName);
     const currentAttribute = currentAttributes.get(attributeName);
@@ -2060,16 +2058,17 @@ var wp;
     if (!cachedBlockAttributeTypes) {
       cachedBlockAttributeTypes = /* @__PURE__ */ new Map();
       for (const blockType of (0, import_blocks.getBlockTypes)()) {
+        const blockAttributeTypeMap = /* @__PURE__ */ new Map();
+        for (const [name, definition] of Object.entries(
+          blockType.attributes ?? {}
+        )) {
+          if (definition.type) {
+            blockAttributeTypeMap.set(name, definition.type);
+          }
+        }
         cachedBlockAttributeTypes.set(
           blockType.name,
-          new Map(
-            Object.entries(blockType.attributes ?? {}).map(
-              ([name, definition]) => {
-                const { role, type } = definition;
-                return [name, { role, type }];
-              }
-            )
-          )
+          blockAttributeTypeMap
         );
       }
     }
@@ -2079,20 +2078,16 @@ var wp;
     const expectedAttributeType = getBlockAttributeType(
       blockName,
       attributeName
-    )?.type;
+    );
     if (expectedAttributeType === "rich-text") {
       return attributeValue instanceof import_sync9.Y.Text;
-    }
-    if (expectedAttributeType === "string") {
+    } else if (expectedAttributeType === "string") {
       return typeof attributeValue === "string";
     }
     return true;
   }
-  function isLocalAttribute(blockName, attributeName) {
-    return "local" === getBlockAttributeType(blockName, attributeName)?.role;
-  }
   function isRichTextAttribute(blockName, attributeName) {
-    return "rich-text" === getBlockAttributeType(blockName, attributeName)?.type;
+    return "rich-text" === getBlockAttributeType(blockName, attributeName);
   }
   var localDoc;
   function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition = null) {
@@ -2972,20 +2967,18 @@ var wp;
       case "RECEIVE_ITEMS": {
         const context = getContextFromAction(action);
         const key = action.key || DEFAULT_ENTITY_KEY;
-        const itemsList = Array.isArray(action.items) ? action.items : [action.items];
         return {
           ...state,
           [context]: {
             ...state[context],
-            ...Object.fromEntries(
-              itemsList.map((item) => [
-                item?.[key],
-                conservativeMapItem(
-                  state?.[context]?.[item?.[key]],
-                  item
-                )
-              ])
-            )
+            ...action.items.reduce((accumulator, value) => {
+              const itemId = value?.[key];
+              accumulator[itemId] = conservativeMapItem(
+                state?.[context]?.[itemId],
+                value
+              );
+              return accumulator;
+            }, {})
           }
         };
       }
@@ -3004,14 +2997,13 @@ var wp;
       case "RECEIVE_ITEMS": {
         const context = getContextFromAction(action);
         const { query, key = DEFAULT_ENTITY_KEY } = action;
-        const itemsList = Array.isArray(action.items) ? action.items : [action.items];
         const queryParts = query ? get_query_parts_default(query) : {};
         const isCompleteQuery = !query || !Array.isArray(queryParts.fields);
         return {
           ...state,
           [context]: {
             ...state[context],
-            ...itemsList.reduce((result, item) => {
+            ...action.items.reduce((result, item) => {
               const itemId = item?.[key];
               result[itemId] = state?.[context]?.[itemId] || isCompleteQuery;
               return result;
@@ -3048,19 +3040,16 @@ var wp;
     // reducer tracks only a single query object.
     on_sub_key_default("stableKey")
   ])((state = {}, action) => {
-    if (action.type !== "RECEIVE_ITEMS") {
+    const { type, page, perPage, key = DEFAULT_ENTITY_KEY } = action;
+    if (type !== "RECEIVE_ITEMS") {
       return state;
     }
-    if (!Array.isArray(action.items)) {
-      return state;
-    }
-    const key = action.key ?? DEFAULT_ENTITY_KEY;
     return {
       itemIds: getMergedItemIds(
         state?.itemIds || [],
         action.items.map((item) => item?.[key]).filter(Boolean),
-        action.page,
-        action.perPage
+        page,
+        perPage
       ),
       meta: action.meta
     };
@@ -3218,8 +3207,7 @@ var wp;
                 return state;
               }
               const nextState = { ...state };
-              const itemsList = Array.isArray(action.items) ? action.items : [action.items];
-              for (const record of itemsList) {
+              for (const record of action.items) {
                 const recordId = record?.[action.key];
                 const edits = nextState[recordId];
                 if (!edits) {
@@ -3597,7 +3585,6 @@ var wp;
     hasEntityRecords: () => hasEntityRecords,
     hasFetchedAutosaves: () => hasFetchedAutosaves,
     hasRedo: () => hasRedo,
-    hasRevision: () => hasRevision,
     hasUndo: () => hasUndo,
     isAutosavingEntityRecord: () => isAutosavingEntityRecord,
     isDeletingEntityRecord: () => isDeletingEntityRecord,
@@ -4291,33 +4278,6 @@ var wp;
     }
     return getQueriedItems(queriedStateRevisions, query);
   };
-  function hasRevision(state, kind, name, recordKey, revisionKey, query) {
-    const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
-    if (!queriedState) {
-      return false;
-    }
-    const context = query?.context ?? "default";
-    if (!query || !query._fields) {
-      return !!queriedState.itemIsComplete[context]?.[revisionKey];
-    }
-    const item = queriedState.items[context]?.[revisionKey];
-    if (!item) {
-      return false;
-    }
-    const fields = get_normalized_comma_separable_default(query._fields) ?? [];
-    for (let i = 0; i < fields.length; i++) {
-      const path = fields[i].split(".");
-      let value = item;
-      for (let p = 0; p < path.length; p++) {
-        const part = path[p];
-        if (!value || !Object.hasOwn(value, part)) {
-          return false;
-        }
-        value = value[part];
-      }
-    }
-    return true;
-  }
   var getRevision = (0, import_data10.createSelector)(
     (state, kind, name, recordKey, revisionKey, query) => {
       logEntityDeprecation(kind, name, "getRevision");
@@ -4591,9 +4551,6 @@ var wp;
   };
 
   // packages/core-data/build-module/actions.mjs
-  function addTitleToAutoDraft(record) {
-    return record.status === "auto-draft" ? { ...record, title: "" } : record;
-  }
   function receiveUserQuery(queryID, users2) {
     return {
       type: "RECEIVE_USER_QUERY",
@@ -4615,7 +4572,9 @@ var wp;
   }
   function receiveEntityRecords(kind, name, records, query = void 0, invalidateCache = false, edits = void 0, meta = void 0) {
     if (kind === "postType") {
-      records = Array.isArray(records) ? records.map(addTitleToAutoDraft) : addTitleToAutoDraft(records);
+      records = (Array.isArray(records) ? records : [records]).map(
+        (record) => record.status === "auto-draft" ? { ...record, title: "" } : record
+      );
     }
     let action;
     if (query) {
@@ -4783,12 +4742,11 @@ var wp;
       const objectType = `${kind}/${name}`;
       const objectId = recordId;
       const isNewUndoLevel = options.undoIgnore ? false : !options.isCached;
-      const origin = options.undoIgnore ? LOCAL_UNDO_IGNORED_ORIGIN : LOCAL_EDITOR_ORIGIN;
       getSyncManager()?.update(
         objectType,
         objectId,
         editsWithMerges,
-        origin,
+        LOCAL_EDITOR_ORIGIN,
         { isNewUndoLevel }
       );
     }
@@ -4925,16 +4883,27 @@ var wp;
         const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
         const persistedRecord = !isNewRecord ? select5.getRawEntityRecord(kind, name, recordId) : {};
         if (isAutosave) {
-          const merged = { ...persistedRecord, ...record };
-          const data = [
-            "title",
-            "excerpt",
-            "content",
-            "meta"
-          ].reduce(
+          const currentUser2 = select5.getCurrentUser();
+          const currentUserId = currentUser2 ? currentUser2.id : void 0;
+          const autosavePost = await resolveSelect2.getAutosave(
+            persistedRecord.type,
+            persistedRecord.id,
+            currentUserId
+          );
+          let data = {
+            ...persistedRecord,
+            ...autosavePost,
+            ...record
+          };
+          data = Object.keys(data).reduce(
             (acc, key) => {
-              if (key in merged) {
-                acc[key] = merged[key];
+              if ([
+                "title",
+                "excerpt",
+                "content",
+                "meta"
+              ].includes(key)) {
+                acc[key] = data[key];
               }
               return acc;
             },
@@ -4943,7 +4912,7 @@ var wp;
               // It's very important to let the user explicitly save this change,
               // because it can lead to unexpected results. An example would be to
               // have a draft post and change the status to publish.
-              status: merged.status === "auto-draft" ? "draft" : void 0
+              status: data.status === "auto-draft" ? "draft" : void 0
             }
           );
           updatedRecord = await __unstableFetch({
@@ -5014,7 +4983,7 @@ var wp;
               `${kind}/${name}`,
               recordId,
               updatedRecord,
-              LOCAL_UNDO_IGNORED_ORIGIN,
+              LOCAL_EDITOR_ORIGIN,
               { isSave: true }
             );
           }
@@ -5174,11 +5143,11 @@ var wp;
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
-    const key = entityConfig?.revisionKey ?? DEFAULT_ENTITY_KEY;
+    const key = entityConfig && entityConfig?.revisionKey ? entityConfig.revisionKey : DEFAULT_ENTITY_KEY;
     dispatch3({
       type: "RECEIVE_ITEM_REVISIONS",
       key,
-      items: records,
+      items: Array.isArray(records) ? records : [records],
       recordKey,
       meta,
       query,
@@ -5263,7 +5232,7 @@ var wp;
           dispatch3.receiveEntityRecords(
             kind,
             name,
-            newRecord,
+            [newRecord],
             void 0,
             true,
             void 0,
@@ -5743,12 +5712,16 @@ var wp;
     const rawQuery = { ...query };
     const key = entityConfig.key || DEFAULT_ENTITY_KEY;
     function getResolutionsArgs(records, recordsQuery) {
-      const normalizedQuery = normalizeQueryForResolution(recordsQuery);
+      const queryArgs = Object.fromEntries(
+        Object.entries(recordsQuery).filter(([k, v]) => {
+          return ["context", "_fields"].includes(k) && !!v;
+        })
+      );
       return records.filter((record) => record?.[key]).map((record) => [
         kind,
         name,
         record[key],
-        normalizedQuery
+        Object.keys(queryArgs).length > 0 ? queryArgs : void 0
       ]);
     }
     try {
@@ -6161,11 +6134,9 @@ var wp;
       template.id = id;
       registry.batch(() => {
         dispatch3.receiveDefaultTemplateId(query, id);
-        dispatch3.receiveEntityRecords(
-          "postType",
-          template.type,
+        dispatch3.receiveEntityRecords("postType", template.type, [
           template
-        );
+        ]);
         dispatch3.finishResolution("getEntityRecord", [
           "postType",
           template.type,
@@ -6185,86 +6156,76 @@ var wp;
     if (!entityConfig) {
       return;
     }
-    const rawQuery = { ...query };
-    const lock2 = await dispatch3.__unstableAcquireStoreLock(
-      STORE_NAME,
-      ["entities", "records", kind, name, recordKey, "revisions"],
-      { exclusive: false }
+    if (query._fields) {
+      query = {
+        ...query,
+        _fields: [
+          .../* @__PURE__ */ new Set([
+            ...get_normalized_comma_separable_default(query._fields) || [],
+            entityConfig.revisionKey || DEFAULT_ENTITY_KEY
+          ])
+        ].join()
+      };
+    }
+    const path = (0, import_url6.addQueryArgs)(
+      entityConfig.getRevisionsUrl(recordKey),
+      query
     );
+    let records, response;
+    const meta = {};
+    const isPaginated = entityConfig.supportsPagination && query.per_page !== -1;
     try {
+      response = await (0, import_api_fetch8.default)({ path, parse: !isPaginated });
+    } catch (error) {
+      return;
+    }
+    if (response) {
+      if (isPaginated) {
+        records = Object.values(await response.json());
+        meta.totalItems = parseInt(
+          response.headers.get("X-WP-Total")
+        );
+      } else {
+        records = Object.values(response);
+      }
       if (query._fields) {
-        query = {
-          ...query,
-          _fields: [
-            .../* @__PURE__ */ new Set([
-              ...get_normalized_comma_separable_default(query._fields) || [],
-              entityConfig.revisionKey || DEFAULT_ENTITY_KEY
-            ])
-          ].join()
-        };
-      }
-      const path = (0, import_url6.addQueryArgs)(
-        entityConfig.getRevisionsUrl(recordKey),
-        query
-      );
-      let records, response;
-      const meta = {};
-      const isPaginated = entityConfig.supportsPagination && query.per_page !== -1;
-      try {
-        response = await (0, import_api_fetch8.default)({ path, parse: !isPaginated });
-      } catch (error) {
-        return;
-      }
-      if (response) {
-        if (isPaginated) {
-          records = Object.values(await response.json());
-          meta.totalItems = parseInt(
-            response.headers.get("X-WP-Total")
-          );
-        } else {
-          records = Object.values(response);
-        }
-        if (query._fields) {
-          records = records.map((record) => {
-            query._fields.split(",").forEach((field) => {
-              if (!record.hasOwnProperty(field)) {
-                record[field] = void 0;
-              }
-            });
-            return record;
+        records = records.map((record) => {
+          query._fields.split(",").forEach((field) => {
+            if (!record.hasOwnProperty(field)) {
+              record[field] = void 0;
+            }
           });
-        }
-        registry.batch(() => {
-          dispatch3.receiveRevisions(
-            kind,
-            name,
-            recordKey,
-            records,
-            query,
-            false,
-            meta
-          );
+          return record;
+        });
+      }
+      registry.batch(() => {
+        dispatch3.receiveRevisions(
+          kind,
+          name,
+          recordKey,
+          records,
+          query,
+          false,
+          meta
+        );
+        if (!query?._fields && !query.context) {
           const key = entityConfig.revisionKey || DEFAULT_ENTITY_KEY;
-          const normalizedQuery = normalizeQueryForResolution(rawQuery);
           const resolutionsArgs = records.filter((record) => record[key]).map((record) => [
             kind,
             name,
             recordKey,
-            record[key],
-            normalizedQuery
+            record[key]
           ]);
           dispatch3.finishResolutions(
             "getRevision",
             resolutionsArgs
           );
-        });
-      }
-    } finally {
-      dispatch3.__unstableReleaseStoreLock(lock2);
+        }
+      });
     }
   };
   getRevisions2.shouldInvalidate = (action, kind, name, recordKey) => action.type === "SAVE_ENTITY_RECORD_FINISH" && name === action.name && kind === action.kind && !action.error && recordKey === action.recordId;
-  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ select: select5, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -6283,44 +6244,18 @@ var wp;
         ].join()
       };
     }
-    const lock2 = await dispatch3.__unstableAcquireStoreLock(
-      STORE_NAME,
-      [
-        "entities",
-        "records",
-        kind,
-        name,
-        recordKey,
-        "revisions",
-        revisionKey
-      ],
-      { exclusive: false }
+    const path = (0, import_url6.addQueryArgs)(
+      entityConfig.getRevisionsUrl(recordKey, revisionKey),
+      query
     );
+    let record;
     try {
-      if (select5.hasRevision(kind, name, recordKey, revisionKey, query)) {
-        return;
-      }
-      const path = (0, import_url6.addQueryArgs)(
-        entityConfig.getRevisionsUrl(recordKey, revisionKey),
-        query
-      );
-      let record;
-      try {
-        record = await (0, import_api_fetch8.default)({ path });
-      } catch (error) {
-        return;
-      }
-      if (record) {
-        dispatch3.receiveRevisions(
-          kind,
-          name,
-          recordKey,
-          record,
-          query
-        );
-      }
-    } finally {
-      dispatch3.__unstableReleaseStoreLock(lock2);
+      record = await (0, import_api_fetch8.default)({ path });
+    } catch (error) {
+      return;
+    }
+    if (record) {
+      dispatch3.receiveRevisions(kind, name, recordKey, record, query);
     }
   };
   var getRegisteredPostMeta2 = (postType) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
@@ -6562,26 +6497,17 @@ var wp;
 
   // packages/core-data/build-module/entity-provider.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-  function EntityProvider({
-    kind,
-    type: name,
-    id,
-    revisionId,
-    children
-  }) {
+  function EntityProvider({ kind, type: name, id, children }) {
     const parent = (0, import_element2.useContext)(EntityContext);
     const childContext = (0, import_element2.useMemo)(
       () => ({
         ...parent,
-        ...kind && {
-          [kind]: {
-            ...parent?.[kind],
-            [name]: id
-          }
-        },
-        ...revisionId !== void 0 && { revisionId }
+        [kind]: {
+          ...parent?.[kind],
+          [name]: id
+        }
       }),
-      [parent, kind, name, id, revisionId]
+      [parent, kind, name, id]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntityContext.Provider, { value: childContext, children });
   }
@@ -7218,33 +7144,8 @@ var wp;
   function useEntityProp(kind, name, prop, _id) {
     const providerId = useEntityId(kind, name);
     const id = _id ?? providerId;
-    const context = (0, import_element7.useContext)(EntityContext);
-    const revisionId = context?.revisionId;
     const { value, fullValue } = (0, import_data15.useSelect)(
       (select5) => {
-        if (revisionId) {
-          const revisions = select5(STORE_NAME).getRevisions(
-            kind,
-            name,
-            id,
-            {
-              per_page: -1,
-              context: "edit"
-            }
-          );
-          const entityConfig = select5(STORE_NAME).getEntityConfig(
-            kind,
-            name
-          );
-          const revKey = entityConfig?.revisionKey || DEFAULT_ENTITY_KEY;
-          const revision = revisions?.find(
-            (r) => r[revKey] === revisionId
-          );
-          return revision ? {
-            value: revision[prop],
-            fullValue: revision[prop]
-          } : {};
-        }
         const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select5(STORE_NAME);
         const record = getEntityRecord3(kind, name, id);
         const editedRecord = getEditedEntityRecord3(kind, name, id);
@@ -7253,25 +7154,21 @@ var wp;
           fullValue: record[prop]
         } : {};
       },
-      [kind, name, id, prop, revisionId]
+      [kind, name, id, prop]
     );
     const { editEntityRecord: editEntityRecord2 } = (0, import_data15.useDispatch)(STORE_NAME);
     const setValue = (0, import_element7.useCallback)(
       (newValue) => {
-        if (revisionId) {
-          return;
-        }
         editEntityRecord2(kind, name, id, {
           [prop]: newValue
         });
       },
-      [editEntityRecord2, kind, name, id, prop, revisionId]
+      [editEntityRecord2, kind, name, id, prop]
     );
     return [value, setValue, fullValue];
   }
 
   // packages/core-data/build-module/hooks/use-post-editor-awareness-state.mjs
-  var import_compose3 = __toESM(require_compose(), 1);
   var import_element8 = __toESM(require_element(), 1);
   var defaultResolvedSelection = {
     textIndex: null,
@@ -7366,82 +7263,6 @@ var wp;
     }, [postId, postType]);
     return lastSave;
   }
-  function useOnCollaboratorJoin(postId, postType, callback) {
-    const { activeCollaborators } = usePostEditorAwarenessState(
-      postId,
-      postType
-    );
-    const prevCollaborators = (0, import_compose3.usePrevious)(activeCollaborators);
-    (0, import_element8.useEffect)(() => {
-      if (!prevCollaborators || prevCollaborators.length === 0) {
-        return;
-      }
-      const prevMap = new Map(
-        prevCollaborators.map((collaborator) => [
-          collaborator.clientId,
-          collaborator
-        ])
-      );
-      const me = activeCollaborators.find(
-        (collaborator) => collaborator.isMe
-      );
-      for (const collaborator of activeCollaborators) {
-        if (!prevMap.has(collaborator.clientId) && !collaborator.isMe) {
-          callback(collaborator, me);
-        }
-      }
-    }, [activeCollaborators, prevCollaborators, callback]);
-  }
-  function useOnCollaboratorLeave(postId, postType, callback) {
-    const { activeCollaborators } = usePostEditorAwarenessState(
-      postId,
-      postType
-    );
-    const prevCollaborators = (0, import_compose3.usePrevious)(activeCollaborators);
-    (0, import_element8.useEffect)(() => {
-      if (!prevCollaborators || prevCollaborators.length === 0) {
-        return;
-      }
-      const newMap = new Map(
-        activeCollaborators.map((collaborator) => [
-          collaborator.clientId,
-          collaborator
-        ])
-      );
-      for (const prevCollab of prevCollaborators) {
-        if (prevCollab.isMe || !prevCollab.isConnected) {
-          continue;
-        }
-        const newCollab = newMap.get(prevCollab.clientId);
-        if (!newCollab?.isConnected) {
-          callback(prevCollab);
-        }
-      }
-    }, [activeCollaborators, prevCollaborators, callback]);
-  }
-  function useOnPostSave(postId, postType, callback) {
-    const { activeCollaborators } = usePostEditorAwarenessState(
-      postId,
-      postType
-    );
-    const lastPostSave = useLastPostSave(postId, postType);
-    const prevPostSave = (0, import_compose3.usePrevious)(lastPostSave);
-    (0, import_element8.useEffect)(() => {
-      if (!lastPostSave) {
-        return;
-      }
-      if (prevPostSave && lastPostSave.savedAt === prevPostSave.savedAt) {
-        return;
-      }
-      const saver = activeCollaborators.find(
-        (collaborator) => collaborator.clientId === lastPostSave.savedByClientId && !collaborator.isMe
-      );
-      if (!saver) {
-        return;
-      }
-      callback(lastPostSave, saver, prevPostSave ?? null);
-    }, [lastPostSave, prevPostSave, activeCollaborators, callback]);
-  }
 
   // packages/core-data/build-module/private-apis.mjs
   var privateApis = {};
@@ -7451,9 +7272,7 @@ var wp;
     retrySyncConnection,
     useActiveCollaborators,
     useResolvedSelection,
-    useOnCollaboratorJoin,
-    useOnCollaboratorLeave,
-    useOnPostSave
+    useLastPostSave
   });
 
   // packages/core-data/build-module/index.mjs

@@ -268,9 +268,9 @@ var wp;
       options = {
         ...options,
         headers: {
-          "Content-Type": "application/json",
           ...options.headers,
-          "X-HTTP-Method-Override": method
+          "X-HTTP-Method-Override": method,
+          "Content-Type": "application/json"
         },
         method: "POST"
       };
