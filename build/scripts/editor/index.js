@@ -49879,7 +49879,7 @@ var wp;
   var import_i18n251 = __toESM(require_i18n(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
   var import_block_editor84 = __toESM(require_block_editor(), 1);
-  var import_compose65 = __toESM(require_compose(), 1);
+  var import_compose64 = __toESM(require_compose(), 1);
   var import_element211 = __toESM(require_element(), 1);
   var import_html_entities26 = __toESM(require_html_entities(), 1);
   var import_notices31 = __toESM(require_notices(), 1);
@@ -53972,13 +53972,12 @@ var wp;
   }
 
   // packages/editor/build-module/components/collaborators-presence/use-collaborator-notifications.mjs
-  var import_compose60 = __toESM(require_compose(), 1);
   var import_data206 = __toESM(require_data(), 1);
   var import_element169 = __toESM(require_element(), 1);
   var import_i18n223 = __toESM(require_i18n(), 1);
   var import_notices28 = __toESM(require_notices(), 1);
   var import_core_data117 = __toESM(require_core_data(), 1);
-  var { useActiveCollaborators: useActiveCollaborators4, useLastPostSave } = unlock(import_core_data117.privateApis);
+  var { useOnCollaboratorJoin, useOnCollaboratorLeave, useOnPostSave } = unlock(import_core_data117.privateApis);
   var NOTIFICATION_TYPE = {
     COLLAB_POST_UPDATED: "collab-post-updated",
     COLLAB_USER_ENTERED: "collab-user-entered",
@@ -54000,11 +53999,6 @@ var wp;
     return (0, import_i18n223.sprintf)((0, import_i18n223.__)("Draft saved by %s."), name2);
   }
   function useCollaboratorNotifications(postId2, postType2) {
-    const activeCollaborators = useActiveCollaborators4(
-      postId2,
-      postType2
-    );
-    const lastPostSave = useLastPostSave(postId2, postType2);
     const { postStatus, isCollaborationEnabled } = (0, import_data206.useSelect)((select6) => {
       const editorSel = select6(store);
       return {
@@ -54013,106 +54007,86 @@ var wp;
       };
     }, []);
     const { createNotice } = (0, import_data206.useDispatch)(import_notices28.store);
-    const prevCollaborators = (0, import_compose60.usePrevious)(activeCollaborators);
-    const prevPostSave = (0, import_compose60.usePrevious)(lastPostSave);
-    (0, import_element169.useEffect)(() => {
-      if (!isCollaborationEnabled) {
-        return;
-      }
-      if (!prevCollaborators || prevCollaborators.length === 0) {
-        return;
-      }
-      function notify(noticeId, message2) {
-        void createNotice("info", message2, {
-          id: noticeId,
-          type: "snackbar",
-          isDismissible: false
-        });
-      }
-      const prevMap = new Map(
-        prevCollaborators.map((c6) => [c6.clientId, c6])
-      );
-      const newMap = new Map(
-        activeCollaborators.map((c6) => [c6.clientId, c6])
-      );
-      if (NOTIFICATIONS_CONFIG.userEntered) {
-        const me = activeCollaborators.find((c6) => c6.isMe);
-        for (const [clientId, collaborator] of newMap) {
-          if (prevMap.has(clientId) || collaborator.isMe) {
-            continue;
+    const effectivePostId = isCollaborationEnabled ? postId2 : null;
+    const effectivePostType = isCollaborationEnabled ? postType2 : null;
+    useOnCollaboratorJoin(
+      effectivePostId,
+      effectivePostType,
+      (0, import_element169.useCallback)(
+        (collaborator, me) => {
+          if (!NOTIFICATIONS_CONFIG.userEntered) {
+            return;
           }
           if (me && collaborator.collaboratorInfo.enteredAt < me.collaboratorInfo.enteredAt) {
-            continue;
+            return;
           }
-          notify(
-            `${NOTIFICATION_TYPE.COLLAB_USER_ENTERED}-${collaborator.collaboratorInfo.id}`,
+          void createNotice(
+            "info",
             (0, import_i18n223.sprintf)(
               /* translators: %s: collaborator display name */
               (0, import_i18n223.__)("%s has joined the post."),
               collaborator.collaboratorInfo.name
-            )
+            ),
+            {
+              id: `${NOTIFICATION_TYPE.COLLAB_USER_ENTERED}-${collaborator.collaboratorInfo.id}`,
+              type: "snackbar",
+              isDismissible: false
+            }
           );
-        }
-      }
-      if (NOTIFICATIONS_CONFIG.userExited) {
-        for (const [clientId, prevCollab] of prevMap) {
-          if (prevCollab.isMe || !prevCollab.isConnected) {
-            continue;
+        },
+        [createNotice]
+      )
+    );
+    useOnCollaboratorLeave(
+      effectivePostId,
+      effectivePostType,
+      (0, import_element169.useCallback)(
+        (collaborator) => {
+          if (!NOTIFICATIONS_CONFIG.userExited) {
+            return;
           }
-          const newCollab = newMap.get(clientId);
-          if (newCollab?.isConnected) {
-            continue;
-          }
-          notify(
-            `${NOTIFICATION_TYPE.COLLAB_USER_EXITED}-${prevCollab.collaboratorInfo.id}`,
+          void createNotice(
+            "info",
             (0, import_i18n223.sprintf)(
               /* translators: %s: collaborator display name */
               (0, import_i18n223.__)("%s has left the post."),
-              prevCollab.collaboratorInfo.name
-            )
+              collaborator.collaboratorInfo.name
+            ),
+            {
+              id: `${NOTIFICATION_TYPE.COLLAB_USER_EXITED}-${collaborator.collaboratorInfo.id}`,
+              type: "snackbar",
+              isDismissible: false
+            }
           );
-        }
-      }
-    }, [
-      activeCollaborators,
-      prevCollaborators,
-      isCollaborationEnabled,
-      createNotice
-    ]);
-    (0, import_element169.useEffect)(() => {
-      if (!isCollaborationEnabled || !NOTIFICATIONS_CONFIG.postUpdated || !lastPostSave || !postStatus) {
-        return;
-      }
-      if (prevPostSave && lastPostSave.savedAt === prevPostSave.savedAt) {
-        return;
-      }
-      const saver = activeCollaborators.find(
-        (c6) => c6.clientId === lastPostSave.savedByClientId && !c6.isMe
-      );
-      if (!saver) {
-        return;
-      }
-      const effectiveStatus = lastPostSave.postStatus ?? postStatus ?? "draft";
-      const prevStatus = prevPostSave?.postStatus ?? postStatus;
-      const isFirstPublish = !(prevStatus && PUBLISHED_STATUSES.includes(prevStatus)) && PUBLISHED_STATUSES.includes(effectiveStatus);
-      const message2 = getPostUpdatedMessage(
-        saver.collaboratorInfo.name,
-        effectiveStatus,
-        isFirstPublish
-      );
-      void createNotice("info", message2, {
-        id: `${NOTIFICATION_TYPE.COLLAB_POST_UPDATED}-${saver.collaboratorInfo.id}`,
-        type: "snackbar",
-        isDismissible: false
-      });
-    }, [
-      lastPostSave,
-      prevPostSave,
-      activeCollaborators,
-      isCollaborationEnabled,
-      postStatus,
-      createNotice
-    ]);
+        },
+        [createNotice]
+      )
+    );
+    useOnPostSave(
+      effectivePostId,
+      effectivePostType,
+      (0, import_element169.useCallback)(
+        (saveEvent, saver, prevEvent) => {
+          if (!NOTIFICATIONS_CONFIG.postUpdated || !postStatus) {
+            return;
+          }
+          const effectiveStatus = saveEvent.postStatus ?? postStatus ?? "draft";
+          const prevStatus = prevEvent?.postStatus ?? postStatus;
+          const isFirstPublish = !(prevStatus && PUBLISHED_STATUSES.includes(prevStatus)) && PUBLISHED_STATUSES.includes(effectiveStatus);
+          const message2 = getPostUpdatedMessage(
+            saver.collaboratorInfo.name,
+            effectiveStatus,
+            isFirstPublish
+          );
+          void createNotice("info", message2, {
+            id: `${NOTIFICATION_TYPE.COLLAB_POST_UPDATED}-${saver.collaboratorInfo.id}`,
+            type: "snackbar",
+            isDismissible: false
+          });
+        },
+        [createNotice, postStatus]
+      )
+    );
   }
 
   // packages/editor/build-module/components/save-publish-panels/index.mjs
@@ -59760,12 +59734,12 @@ var wp;
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components221 = __toESM(require_components(), 1);
   var import_element198 = __toESM(require_element(), 1);
-  var import_compose62 = __toESM(require_compose(), 1);
+  var import_compose61 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components220 = __toESM(require_components(), 1);
   var import_i18n242 = __toESM(require_i18n(), 1);
-  var import_compose61 = __toESM(require_compose(), 1);
+  var import_compose60 = __toESM(require_compose(), 1);
   var import_element194 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
@@ -59850,7 +59824,7 @@ var wp;
         "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
       }
     );
-    const controlId = (0, import_compose61.useInstanceId)(
+    const controlId = (0, import_compose60.useInstanceId)(
       SummaryButton,
       "dataforms-layouts-panel__field-control"
     );
@@ -60573,9 +60547,9 @@ var wp;
         })
       );
     };
-    const focusOnMountRef = (0, import_compose62.useFocusOnMount)("firstInputElement");
+    const focusOnMountRef = (0, import_compose61.useFocusOnMount)("firstInputElement");
     const contentRef = (0, import_element198.useRef)(null);
-    const mergedRef = (0, import_compose62.useMergeRefs)([focusOnMountRef, contentRef]);
+    const mergedRef = (0, import_compose61.useMergeRefs)([focusOnMountRef, contentRef]);
     useReportValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(
       import_components221.Modal,
@@ -60690,7 +60664,7 @@ var wp;
   var import_components222 = __toESM(require_components(), 1);
   var import_i18n244 = __toESM(require_i18n(), 1);
   var import_element199 = __toESM(require_element(), 1);
-  var import_compose63 = __toESM(require_compose(), 1);
+  var import_compose62 = __toESM(require_compose(), 1);
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
     title,
@@ -60747,7 +60721,7 @@ var wp;
       }),
       [popoverAnchor]
     );
-    const [dialogRef, dialogProps] = (0, import_compose63.__experimentalUseDialog)({
+    const [dialogRef, dialogProps] = (0, import_compose62.__experimentalUseDialog)({
       focusOnMount: "firstInputElement"
     });
     const form2 = (0, import_element199.useMemo)(
@@ -60873,7 +60847,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_components223 = __toESM(require_components(), 1);
-  var import_compose64 = __toESM(require_compose(), 1);
+  var import_compose63 = __toESM(require_compose(), 1);
   var import_element200 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
@@ -60956,7 +60930,7 @@ var wp;
     const { fields: fields2 } = (0, import_element200.useContext)(dataform_context_default);
     const layout = field.layout;
     const cardBodyRef = (0, import_element200.useRef)(null);
-    const instanceId = (0, import_compose64.useInstanceId)(FormCardField);
+    const instanceId = (0, import_compose63.useInstanceId)(FormCardField);
     const bodyId = `dataforms-layouts-card-card-body-${instanceId}`;
     const titleId = `dataforms-layouts-card-card-title-${instanceId}`;
     const form2 = (0, import_element200.useMemo)(
@@ -62349,7 +62323,7 @@ var wp;
       };
     }, []);
     useCollaboratorNotifications(postId2, postType2);
-    const isLargeViewport = (0, import_compose65.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose64.useViewportMatch)("medium");
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n251.__)("Document Overview") : (0, import_i18n251.__)("Block Library");
     const shouldShowMediaEditor = !!isAttachment;
     const shouldShowStylesCanvas = !isAttachment && (showStylebook2 || stylesPath2?.startsWith("/revisions"));
@@ -62786,7 +62760,7 @@ var wp;
 
   // packages/editor/build-module/components/blog-title/index.mjs
   var import_i18n257 = __toESM(require_i18n(), 1);
-  var import_compose66 = __toESM(require_compose(), 1);
+  var import_compose65 = __toESM(require_compose(), 1);
   var import_data224 = __toESM(require_data(), 1);
   var import_core_data126 = __toESM(require_core_data(), 1);
   var import_html_entities27 = __toESM(require_html_entities(), 1);
@@ -62875,7 +62849,7 @@ var wp;
               placeholder: (0, import_i18n257.__)("No title"),
               size: "__unstable-large",
               value: postsPageTitle,
-              onChange: (0, import_compose66.debounce)(setPostsPageTitle, 300),
+              onChange: (0, import_compose65.debounce)(setPostsPageTitle, 300),
               label: (0, import_i18n257.__)("Blog title"),
               help: (0, import_i18n257.__)(
                 "Set the Posts Page title. Appears in search results, and when the page is shared on social media."
@@ -63693,7 +63667,7 @@ var wp;
   var import_data241 = __toESM(require_data(), 1);
   var import_components251 = __toESM(require_components(), 1);
   var import_element228 = __toESM(require_element(), 1);
-  var import_compose69 = __toESM(require_compose(), 1);
+  var import_compose68 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor100 = __toESM(require_block_editor(), 1);
   var import_preferences24 = __toESM(require_preferences(), 1);
@@ -63706,7 +63680,7 @@ var wp;
   // packages/editor/build-module/components/collab-sidebar/comments.mjs
   var import_element226 = __toESM(require_element(), 1);
   var import_components248 = __toESM(require_components(), 1);
-  var import_compose68 = __toESM(require_compose(), 1);
+  var import_compose67 = __toESM(require_compose(), 1);
   var import_i18n271 = __toESM(require_i18n(), 1);
   var import_data239 = __toESM(require_data(), 1);
   var import_dom8 = __toESM(require_dom(), 1);
@@ -63798,7 +63772,7 @@ var wp;
   var import_element224 = __toESM(require_element(), 1);
   var import_components246 = __toESM(require_components(), 1);
   var import_i18n268 = __toESM(require_i18n(), 1);
-  var import_compose67 = __toESM(require_compose(), 1);
+  var import_compose66 = __toESM(require_compose(), 1);
   var import_keycodes17 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime413 = __toESM(require_jsx_runtime(), 1);
   function CommentForm({
@@ -63812,11 +63786,11 @@ var wp;
     const [inputComment, setInputComment] = (0, import_element224.useState)(
       thread?.content?.raw ?? ""
     );
-    const debouncedCommentUpdated = (0, import_compose67.useDebounce)(reflowComments, 100);
+    const debouncedCommentUpdated = (0, import_compose66.useDebounce)(reflowComments, 100);
     const updateComment = (value) => {
       setInputComment(value);
     };
-    const inputId = (0, import_compose67.useInstanceId)(CommentForm, "comment-input");
+    const inputId = (0, import_compose66.useInstanceId)(CommentForm, "comment-input");
     const isDisabled = inputComment === thread?.content?.raw || !sanitizeCommentString(inputComment).length;
     return /* @__PURE__ */ (0, import_jsx_runtime413.jsxs)(
       import_components246.__experimentalVStack,
@@ -64806,7 +64780,7 @@ var wp;
       []
     );
     const relatedBlockElement = useBlockElement3(thread.blockClientId);
-    const debouncedToggleBlockHighlight = (0, import_compose68.useDebounce)(
+    const debouncedToggleBlockHighlight = (0, import_compose67.useDebounce)(
       toggleBlockHighlight,
       50
     );
@@ -65443,7 +65417,7 @@ var wp;
       (0, import_data241.useDispatch)(import_block_editor100.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data241.useDispatch)(store));
-    const isLargeViewport = (0, import_compose69.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose68.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element228.useRef)(null);
     const { clientId, blockCommentId, isClassicBlock } = (0, import_data241.useSelect)(
       (select6) => {
@@ -65602,7 +65576,7 @@ var wp;
   var import_data244 = __toESM(require_data(), 1);
   var import_element229 = __toESM(require_element(), 1);
   var import_preferences27 = __toESM(require_preferences(), 1);
-  var import_compose70 = __toESM(require_compose(), 1);
+  var import_compose69 = __toESM(require_compose(), 1);
   var import_core_data135 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
@@ -65878,10 +65852,10 @@ var wp;
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
       (0, import_data244.useDispatch)(store)
     );
-    const isMobileViewport = (0, import_compose70.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose69.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
-    const previousActiveArea = (0, import_compose70.usePrevious)(activeComplementaryArea);
+    const previousActiveArea = (0, import_compose69.usePrevious)(activeComplementaryArea);
     (0, import_element229.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
         resetStylesNavigation2();
@@ -66083,7 +66057,7 @@ var wp;
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n280 = __toESM(require_i18n(), 1);
-  var import_compose71 = __toESM(require_compose(), 1);
+  var import_compose70 = __toESM(require_compose(), 1);
   var import_data248 = __toESM(require_data(), 1);
   var import_element231 = __toESM(require_element(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
@@ -66226,7 +66200,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(PreferencesModalContents, { extraSections }) });
   }
   function PreferencesModalContents({ extraSections = {} }) {
-    const isLargeViewport = (0, import_compose71.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose70.useViewportMatch)("medium");
     const showBlockBreadcrumbsOption = (0, import_data248.useSelect)(
       (select6) => {
         const { getEditorSettings: getEditorSettings2 } = select6(store);

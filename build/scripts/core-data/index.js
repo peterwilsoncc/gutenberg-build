@@ -7211,6 +7211,7 @@ var wp;
   }
 
   // packages/core-data/build-module/hooks/use-post-editor-awareness-state.mjs
+  var import_compose3 = __toESM(require_compose(), 1);
   var import_element8 = __toESM(require_element(), 1);
   var defaultResolvedSelection = {
     textIndex: null,
@@ -7305,6 +7306,82 @@ var wp;
     }, [postId, postType]);
     return lastSave;
   }
+  function useOnCollaboratorJoin(postId, postType, callback) {
+    const { activeCollaborators } = usePostEditorAwarenessState(
+      postId,
+      postType
+    );
+    const prevCollaborators = (0, import_compose3.usePrevious)(activeCollaborators);
+    (0, import_element8.useEffect)(() => {
+      if (!prevCollaborators || prevCollaborators.length === 0) {
+        return;
+      }
+      const prevMap = new Map(
+        prevCollaborators.map((collaborator) => [
+          collaborator.clientId,
+          collaborator
+        ])
+      );
+      const me = activeCollaborators.find(
+        (collaborator) => collaborator.isMe
+      );
+      for (const collaborator of activeCollaborators) {
+        if (!prevMap.has(collaborator.clientId) && !collaborator.isMe) {
+          callback(collaborator, me);
+        }
+      }
+    }, [activeCollaborators, prevCollaborators, callback]);
+  }
+  function useOnCollaboratorLeave(postId, postType, callback) {
+    const { activeCollaborators } = usePostEditorAwarenessState(
+      postId,
+      postType
+    );
+    const prevCollaborators = (0, import_compose3.usePrevious)(activeCollaborators);
+    (0, import_element8.useEffect)(() => {
+      if (!prevCollaborators || prevCollaborators.length === 0) {
+        return;
+      }
+      const newMap = new Map(
+        activeCollaborators.map((collaborator) => [
+          collaborator.clientId,
+          collaborator
+        ])
+      );
+      for (const prevCollab of prevCollaborators) {
+        if (prevCollab.isMe || !prevCollab.isConnected) {
+          continue;
+        }
+        const newCollab = newMap.get(prevCollab.clientId);
+        if (!newCollab?.isConnected) {
+          callback(prevCollab);
+        }
+      }
+    }, [activeCollaborators, prevCollaborators, callback]);
+  }
+  function useOnPostSave(postId, postType, callback) {
+    const { activeCollaborators } = usePostEditorAwarenessState(
+      postId,
+      postType
+    );
+    const lastPostSave = useLastPostSave(postId, postType);
+    const prevPostSave = (0, import_compose3.usePrevious)(lastPostSave);
+    (0, import_element8.useEffect)(() => {
+      if (!lastPostSave) {
+        return;
+      }
+      if (prevPostSave && lastPostSave.savedAt === prevPostSave.savedAt) {
+        return;
+      }
+      const saver = activeCollaborators.find(
+        (collaborator) => collaborator.clientId === lastPostSave.savedByClientId && !collaborator.isMe
+      );
+      if (!saver) {
+        return;
+      }
+      callback(lastPostSave, saver, prevPostSave ?? null);
+    }, [lastPostSave, prevPostSave, activeCollaborators, callback]);
+  }
 
   // packages/core-data/build-module/private-apis.mjs
   var privateApis = {};
@@ -7314,7 +7391,9 @@ var wp;
     retrySyncConnection,
     useActiveCollaborators,
     useResolvedSelection,
-    useLastPostSave
+    useOnCollaboratorJoin,
+    useOnCollaboratorLeave,
+    useOnPostSave
   });
 
   // packages/core-data/build-module/index.mjs
