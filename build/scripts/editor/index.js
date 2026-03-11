@@ -36943,8 +36943,9 @@ var wp;
   var restoreRevision = (revisionId2) => async ({ select: select6, dispatch: dispatch7, registry }) => {
     const postType2 = select6.getCurrentPostType();
     const postId2 = select6.getCurrentPostId();
-    const revision = registry.select(import_core_data51.store).getRevision("postType", postType2, postId2, revisionId2, {
-      context: "edit"
+    const revision = await registry.resolveSelect(import_core_data51.store).getRevision("postType", postType2, postId2, revisionId2, {
+      context: "edit",
+      _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
     });
     if (!revision) {
       return;
@@ -37199,7 +37200,11 @@ var wp;
         "postType",
         postType2,
         postId2,
-        { per_page: -1, context: "edit" }
+        {
+          per_page: -1,
+          context: "edit",
+          _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
+        }
       );
       if (!revisions) {
         return null;
@@ -37229,7 +37234,11 @@ var wp;
         "postType",
         postType2,
         postId2,
-        { per_page: -1, context: "edit" }
+        {
+          per_page: -1,
+          context: "edit",
+          _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
+        }
       );
       if (!revisions) {
         return null;
@@ -50785,7 +50794,11 @@ var wp;
           return {};
         }
         const entityConfig = getEntityConfig("postType", postType2);
-        const query = { per_page: -1, context: "edit" };
+        const query = {
+          per_page: -1,
+          context: "edit",
+          _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
+        };
         return {
           revisions: getRevisions("postType", postType2, postId2, query),
           isLoading: isResolving("getRevisions", [

@@ -7203,7 +7203,8 @@ var wp;
             id,
             {
               per_page: -1,
-              context: "edit"
+              context: "edit",
+              _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
             }
           );
           const entityConfig = select5(STORE_NAME).getEntityConfig(
