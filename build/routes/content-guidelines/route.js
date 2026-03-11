@@ -72,7 +72,7 @@ function bootstrapBlockRegistry() {
 // routes/content-guidelines/route.ts
 var route = {
   beforeLoad: bootstrapBlockRegistry,
-  title: () => (0, import_i18n.__)("Content Guidelines")
+  title: () => (0, import_i18n.__)("Guidelines")
 };
 export {
   route
