@@ -45205,7 +45205,6 @@ ${js}
     parent: ["core/post-content"],
     textdomain: "default",
     supports: {
-      anchor: true,
       customClassName: false,
       className: false,
       html: false,
