@@ -69076,10 +69076,14 @@ ${js}
       "core/tabs-menu-item-id",
       "core/tabs-menu-item-label"
     ],
-    attributes: {},
+    attributes: {
+      anchor: {
+        type: "string",
+        default: ""
+      }
+    },
     supports: {
       html: false,
-      anchor: true,
       reusable: false,
       lock: false,
       color: {

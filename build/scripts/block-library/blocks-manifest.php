@@ -8646,11 +8646,13 @@ return array(
 			'core/tabs-menu-item-label'
 		),
 		'attributes' => array(
-			
+			'anchor' => array(
+				'type' => 'string',
+				'default' => ''
+			)
 		),
 		'supports' => array(
 			'html' => false,
-			'anchor' => true,
 			'reusable' => false,
 			'lock' => false,
 			'color' => array(
