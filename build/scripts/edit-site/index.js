@@ -48413,7 +48413,8 @@ If there's a particular need for this, please submit a feature request at https:
       showBlockBreadcrumbs: true,
       showListViewByDefault: false,
       enableChoosePatternModal: true,
-      showCollaborationCursor: false
+      showCollaborationCursor: false,
+      showCollaborationNotifications: true
     });
     if (window.__clientSideMediaProcessing) {
       (0, import_data87.dispatch)(import_preferences13.store).setDefaults("core/media", {

@@ -2892,7 +2892,8 @@ var wp;
       showListViewByDefault: false,
       enableChoosePatternModal: true,
       isPublishSidebarEnabled: true,
-      showCollaborationCursor: false
+      showCollaborationCursor: false,
+      showCollaborationNotifications: true
     });
     if (window.__clientSideMediaProcessing) {
       (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core/media", {
