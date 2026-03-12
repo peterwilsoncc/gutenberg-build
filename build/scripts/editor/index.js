@@ -53254,7 +53254,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(BlockCanvasCover2.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
       import_components195.Modal,
       {
-        className: "editor-sync-connection-modal",
+        overlayClassName: "editor-sync-connection-modal",
         isDismissible: false,
         onRequestClose: () => {
         },

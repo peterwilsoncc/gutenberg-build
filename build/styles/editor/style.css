@@ -6799,6 +6799,10 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   margin-right: 8px;
 }
 
+.editor-sync-connection-modal {
+  z-index: 1000001;
+}
+
 .editor-sync-connection-modal p {
   margin: 0;
 }
