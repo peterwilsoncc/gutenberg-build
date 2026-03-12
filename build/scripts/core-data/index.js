@@ -2907,7 +2907,7 @@ var wp;
          * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
          */
         getPersistedCRDTDoc: (record) => {
-          return record?.meta[POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE] || null;
+          return record?.meta?.[POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE] || null;
         }
       };
       return entity2;
@@ -5682,12 +5682,16 @@ var wp;
                 query
               );
             },
-            // Save the current entity record, whether or not it has unsaved
-            // edits. This is used to trigger a persisted CRDT document.
-            saveRecord: () => {
+            // Persist the CRDT document.
+            //
+            // TODO: Currently, persisted CRDT documents are stored in post meta.
+            // This effectively means that only post entities support CRDT
+            // persistence. As we add support for syncing additional entity,
+            // we'll need to revisit where persisted CRDT documents are stored.
+            persistCRDTDoc: () => {
               resolveSelect2.getEditedEntityRecord(kind, name, key).then((editedRecord) => {
-                const { status } = editedRecord;
-                if ("auto-draft" === status) {
+                const { meta, status } = editedRecord;
+                if ("auto-draft" === status || !meta) {
                   return;
                 }
                 dispatch3.saveEntityRecord(
