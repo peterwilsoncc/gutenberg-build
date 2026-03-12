@@ -699,15 +699,18 @@ var wp;
   var queriedItemsCacheByState = /* @__PURE__ */ new WeakMap();
   function getQueriedItemsUncached(state, query) {
     const { stableKey, page, perPage, include, fields, context } = get_query_parts_default(query);
-    let itemIds;
-    if (state.queries?.[context]?.[stableKey]) {
-      itemIds = state.queries[context][stableKey].itemIds;
-    }
+    const itemIds = state.queries?.[context]?.[stableKey]?.itemIds;
     if (!itemIds) {
       return null;
     }
     const startOffset = perPage === -1 ? 0 : (page - 1) * perPage;
     const endOffset = perPage === -1 ? itemIds.length : Math.min(startOffset + perPage, itemIds.length);
+    if (perPage !== -1 && itemIds.length < startOffset + perPage) {
+      const totalItems = state.queries[context][stableKey].meta?.totalItems;
+      if (Number.isFinite(totalItems) && itemIds.length < totalItems) {
+        return null;
+      }
+    }
     const items2 = [];
     for (let i = startOffset; i < endOffset; i++) {
       const itemId = itemIds[i];
