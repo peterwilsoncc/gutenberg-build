@@ -7866,6 +7866,7 @@ var wp;
   var isNavigationOverlayContextKey = /* @__PURE__ */ Symbol(
     "isNavigationOverlayContext"
   );
+  var isNavigationPostEditorKey = /* @__PURE__ */ Symbol("isNavigationPostEditor");
   var mediaUploadOnSuccessKey = /* @__PURE__ */ Symbol("mediaUploadOnSuccess");
 
   // packages/block-editor/build-module/store/reducer.mjs
@@ -75698,6 +75699,7 @@ var wp;
     deviceTypeKey,
     isIsolatedEditorKey,
     isNavigationOverlayContextKey,
+    isNavigationPostEditorKey,
     mediaUploadOnSuccessKey,
     useBlockElement,
     useBlockElementRef,

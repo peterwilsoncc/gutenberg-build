@@ -15979,6 +15979,7 @@ var wp;
     isIsolatedEditorKey,
     deviceTypeKey,
     isNavigationOverlayContextKey,
+    isNavigationPostEditorKey,
     mediaUploadOnSuccessKey
   } = unlock(import_block_editor6.privateApis);
   function useBlockEditorSettings(settings, postType2, postId2, renderingMode2) {
@@ -16187,6 +16188,7 @@ var wp;
           "wp_block",
           "wp_navigation"
         ].includes(postType2),
+        [isNavigationPostEditorKey]: postType2 === "wp_navigation",
         // When in template-locked mode (e.g., "Show Template" in the post editor),
         // don't treat template parts as contentOnly sections.
         disableContentOnlyForTemplateParts: renderingMode2 === "template-locked",

@@ -42339,7 +42339,7 @@ ${js}
 
   // packages/block-library/build-module/navigation/edit/index.mjs
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
-  var { isIsolatedEditorKey } = unlock(import_block_editor159.privateApis);
+  var { isNavigationPostEditorKey } = unlock(import_block_editor159.privateApis);
   function NavigationAddPageButton({ clientId }) {
     const { insertBlock } = (0, import_data87.useDispatch)(import_block_editor159.store);
     const { getBlockCount } = (0, import_data87.useSelect)(import_block_editor159.store);
@@ -42544,9 +42544,10 @@ ${js}
         onNavigateToEntityRecord: settings122?.onNavigateToEntityRecord,
         // Needed to construct the template part ID for the overlay preview.
         currentTheme: select9(import_core_data49.store).getCurrentTheme()?.stylesheet,
-        // In preview mode or isolated editor, always show navigation expanded (no hamburger)
-        // so users can see and interact with all menu items.
-        editorDisabledResponsive: settings122.isPreviewMode || !!settings122?.[isIsolatedEditorKey]
+        // When editing a navigation post directly in an isolated editor,
+        // always show navigation expanded (no hamburger) so users can see
+        // and interact with all menu items.
+        editorDisabledResponsive: !!settings122?.[isNavigationPostEditorKey]
       };
     }, []);
     const hasAlreadyRendered = isPreviewMode ? false : recursionDetected;
