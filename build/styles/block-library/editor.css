@@ -2337,9 +2337,11 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   width: 112px;
 }
 
-.wp-block-tabs-menu .tabs__tab-label--placeholder {
-  opacity: 0.5;
-  font-style: italic;
+.wp-block-tabs-menu > .block-editor-block-list__layout {
+  display: contents;
+}
+.wp-block-tabs-menu .block-editor-block-list__block:has(> .wp-block-tabs-menu-item) {
+  display: contents;
 }
 
 .wp-block-tabs-menu-item.is-selected {
