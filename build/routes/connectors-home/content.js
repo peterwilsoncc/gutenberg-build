@@ -1437,12 +1437,12 @@ function ConnectorsPage() {
       })),
       canInstallPlugins && /* @__PURE__ */ React.createElement("p", null, (0, import_element5.createInterpolateElement)(
         (0, import_i18n4.__)(
-          "Find more connectors in <a>the plugin directory</a>"
+          "If the connector you need is not listed, <a>search the plugin directory</a> to see if a connector is available."
         ),
         {
           a: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content
-            /* @__PURE__ */ React.createElement("a", { href: "plugin-install.php" })
+            /* @__PURE__ */ React.createElement("a", { href: "plugin-install.php?s=connector&tab=search&type=tag" })
           )
         }
       ))
