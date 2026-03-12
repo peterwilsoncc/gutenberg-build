@@ -22812,7 +22812,7 @@ var wp;
 
   // packages/dataviews/build-module/dataviews/index.mjs
   var import_element112 = __toESM(require_element(), 1);
-  var import_compose22 = __toESM(require_compose(), 1);
+  var import_compose21 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataviews-context/index.mjs
   var import_element59 = __toESM(require_element(), 1);
@@ -23944,8 +23944,7 @@ var wp;
   }
   var column_primary_default = ColumnPrimary;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/use-is-horizontal-scroll-end.mjs
-  var import_compose13 = __toESM(require_compose(), 1);
+  // packages/dataviews/build-module/components/dataviews-layouts/table/use-scroll-state.mjs
   var import_element64 = __toESM(require_element(), 1);
   var import_i18n79 = __toESM(require_i18n(), 1);
   var isScrolledToEnd = (element) => {
@@ -23955,40 +23954,37 @@ var wp;
     }
     return element.scrollLeft + element.clientWidth >= element.scrollWidth - 1;
   };
-  function useIsHorizontalScrollEnd({
+  function useScrollState({
     scrollContainerRef,
-    enabled = false
+    enabledHorizontal = false
   }) {
     const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, import_element64.useState)(false);
-    const handleIsHorizontalScrollEnd = (0, import_compose13.useDebounce)(
-      (0, import_element64.useCallback)(() => {
-        const scrollContainer = scrollContainerRef.current;
-        if (scrollContainer) {
-          setIsHorizontalScrollEnd(isScrolledToEnd(scrollContainer));
-        }
-      }, [scrollContainerRef, setIsHorizontalScrollEnd]),
-      200
-    );
+    const [isVerticallyScrolled, setIsVerticallyScrolled] = (0, import_element64.useState)(false);
+    const handleScroll = (0, import_element64.useCallback)(() => {
+      const scrollContainer = scrollContainerRef.current;
+      if (!scrollContainer) {
+        return;
+      }
+      if (enabledHorizontal) {
+        setIsHorizontalScrollEnd(isScrolledToEnd(scrollContainer));
+      }
+      setIsVerticallyScrolled(scrollContainer.scrollTop > 0);
+    }, [scrollContainerRef, enabledHorizontal]);
     (0, import_element64.useEffect)(() => {
-      if (typeof window === "undefined" || !enabled || !scrollContainerRef.current) {
+      if (typeof window === "undefined" || !scrollContainerRef.current) {
         return () => {
         };
       }
-      handleIsHorizontalScrollEnd();
-      scrollContainerRef.current.addEventListener(
-        "scroll",
-        handleIsHorizontalScrollEnd
-      );
-      window.addEventListener("resize", handleIsHorizontalScrollEnd);
+      const scrollContainer = scrollContainerRef.current;
+      handleScroll();
+      scrollContainer.addEventListener("scroll", handleScroll);
+      window.addEventListener("resize", handleScroll);
       return () => {
-        scrollContainerRef.current?.removeEventListener(
-          "scroll",
-          handleIsHorizontalScrollEnd
-        );
-        window.removeEventListener("resize", handleIsHorizontalScrollEnd);
+        scrollContainer.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("resize", handleScroll);
       };
-    }, [scrollContainerRef, enabled]);
-    return isHorizontalScrollEnd;
+    }, [scrollContainerRef, enabledHorizontal, handleScroll]);
+    return { isHorizontalScrollEnd, isVerticallyScrolled };
   }
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/get-data-by-group.mjs
@@ -24322,9 +24318,9 @@ var wp;
       }
     });
     const tableNoticeId = (0, import_element67.useId)();
-    const isHorizontalScrollEnd = useIsHorizontalScrollEnd({
+    const { isHorizontalScrollEnd, isVerticallyScrolled } = useScrollState({
       scrollContainerRef: containerRef,
-      enabled: !!actions?.length
+      enabledHorizontal: !!actions?.length
     });
     const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
     if (nextHeaderMenuToFocus) {
@@ -24434,97 +24430,106 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(PropertiesSection, { showLabel: false })
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("thead", { onContextMenu: handleHeaderContextMenu, children: /* @__PURE__ */ (0, import_jsx_runtime180.jsxs)("tr", { className: "dataviews-view-table__row", children: [
-              hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
-                "th",
-                {
-                  className: "dataviews-view-table__checkbox-column",
-                  scope: "col",
-                  onContextMenu: handleHeaderContextMenu,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
-                    BulkSelectionCheckbox,
+            /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+              "thead",
+              {
+                className: clsx_default({
+                  "dataviews-view-table__thead--stuck": isVerticallyScrolled
+                }),
+                onContextMenu: handleHeaderContextMenu,
+                children: /* @__PURE__ */ (0, import_jsx_runtime180.jsxs)("tr", { className: "dataviews-view-table__row", children: [
+                  hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+                    "th",
                     {
-                      selection,
-                      onChangeSelection,
-                      data,
-                      actions,
-                      getItemId: getItemId2
+                      className: "dataviews-view-table__checkbox-column",
+                      scope: "col",
+                      onContextMenu: handleHeaderContextMenu,
+                      children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+                        BulkSelectionCheckbox,
+                        {
+                          selection,
+                          onChangeSelection,
+                          data,
+                          actions,
+                          getItemId: getItemId2
+                        }
+                      )
+                    }
+                  ),
+                  hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("th", { scope: "col", children: titleField && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+                    column_header_menu_default,
+                    {
+                      ref: headerMenuRef(
+                        titleField.id,
+                        0
+                      ),
+                      fieldId: titleField.id,
+                      view,
+                      fields: fields2,
+                      onChangeView,
+                      onHide,
+                      setOpenedFilter,
+                      canMove: false,
+                      canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
+                      canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
+                    }
+                  ) }),
+                  columns.map((column, index) => {
+                    const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+                    const field = fields2.find(
+                      (f2) => f2.id === column
+                    );
+                    const effectiveAlign = getEffectiveAlign(
+                      align,
+                      field?.type
+                    );
+                    const canInsertOrMove = view.layout?.enableMoving ?? true;
+                    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+                      "th",
+                      {
+                        style: {
+                          width,
+                          maxWidth,
+                          minWidth,
+                          textAlign: effectiveAlign
+                        },
+                        "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
+                        scope: "col",
+                        children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+                          column_header_menu_default,
+                          {
+                            ref: headerMenuRef(column, index),
+                            fieldId: column,
+                            view,
+                            fields: fields2,
+                            onChangeView,
+                            onHide,
+                            setOpenedFilter,
+                            canMove: canInsertOrMove,
+                            canInsertLeft: canInsertOrMove,
+                            canInsertRight: canInsertOrMove
+                          }
+                        )
+                      },
+                      column
+                    );
+                  }),
+                  !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+                    "th",
+                    {
+                      className: clsx_default(
+                        "dataviews-view-table__actions-column",
+                        {
+                          "dataviews-view-table__actions-column--sticky": true,
+                          "dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
+                        }
+                      ),
+                      children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("span", { className: "dataviews-view-table-header", children: (0, import_i18n81.__)("Actions") })
                     }
                   )
-                }
-              ),
-              hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("th", { scope: "col", children: titleField && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
-                column_header_menu_default,
-                {
-                  ref: headerMenuRef(
-                    titleField.id,
-                    0
-                  ),
-                  fieldId: titleField.id,
-                  view,
-                  fields: fields2,
-                  onChangeView,
-                  onHide,
-                  setOpenedFilter,
-                  canMove: false,
-                  canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
-                  canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
-                }
-              ) }),
-              columns.map((column, index) => {
-                const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
-                const field = fields2.find(
-                  (f2) => f2.id === column
-                );
-                const effectiveAlign = getEffectiveAlign(
-                  align,
-                  field?.type
-                );
-                const canInsertOrMove = view.layout?.enableMoving ?? true;
-                return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
-                  "th",
-                  {
-                    style: {
-                      width,
-                      maxWidth,
-                      minWidth,
-                      textAlign: effectiveAlign
-                    },
-                    "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
-                    scope: "col",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
-                      column_header_menu_default,
-                      {
-                        ref: headerMenuRef(column, index),
-                        fieldId: column,
-                        view,
-                        fields: fields2,
-                        onChangeView,
-                        onHide,
-                        setOpenedFilter,
-                        canMove: canInsertOrMove,
-                        canInsertLeft: canInsertOrMove,
-                        canInsertRight: canInsertOrMove
-                      }
-                    )
-                  },
-                  column
-                );
-              }),
-              !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
-                "th",
-                {
-                  className: clsx_default(
-                    "dataviews-view-table__actions-column",
-                    {
-                      "dataviews-view-table__actions-column--sticky": true,
-                      "dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
-                    }
-                  ),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("span", { className: "dataviews-view-table-header", children: (0, import_i18n81.__)("Actions") })
-                }
-              )
-            ] }) }),
+                ] })
+              }
+            ),
             hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(
               ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime180.jsxs)("tbody", { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("tr", { className: "dataviews-view-table__group-header-row", children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
@@ -24603,7 +24608,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_components90 = __toESM(require_components(), 1);
   var import_i18n83 = __toESM(require_i18n(), 1);
-  var import_compose14 = __toESM(require_compose(), 1);
+  var import_compose13 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_element69 = __toESM(require_element(), 1);
 
@@ -24688,7 +24693,7 @@ var wp;
     const { showTitle = true, showMedia = true, showDescription = true } = view;
     const hasBulkAction = useHasAPossibleBulkAction(actions, item);
     const id = getItemId2(item);
-    const instanceId = (0, import_compose14.useInstanceId)(GridItem2);
+    const instanceId = (0, import_compose13.useInstanceId)(GridItem2);
     const isSelected2 = selection.includes(id);
     const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
     const rendersMediaField = showMedia && mediaField?.render;
@@ -25079,7 +25084,7 @@ var wp;
   var grid_default = ViewGrid;
 
   // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
-  var import_compose15 = __toESM(require_compose(), 1);
+  var import_compose14 = __toESM(require_compose(), 1);
   var import_components92 = __toESM(require_components(), 1);
   var import_element70 = __toESM(require_element(), 1);
   var import_i18n85 = __toESM(require_i18n(), 1);
@@ -25410,7 +25415,7 @@ var wp;
       className,
       empty
     } = props;
-    const baseId = (0, import_compose15.useInstanceId)(ViewList, "view-list");
+    const baseId = (0, import_compose14.useInstanceId)(ViewList, "view-list");
     const isDelayedLoading = useDelayedLoading(!!isLoading);
     const selectedItem = data?.findLast(
       (item) => selection.includes(getItemId2(item))
@@ -25448,7 +25453,7 @@ var wp;
     const activeItemIndex = data.findIndex(
       (item) => isActiveCompositeItem(item, activeCompositeId ?? "")
     );
-    const previousActiveItemIndex = (0, import_compose15.usePrevious)(activeItemIndex);
+    const previousActiveItemIndex = (0, import_compose14.usePrevious)(activeItemIndex);
     const isActiveIdInList = activeItemIndex !== -1;
     const selectCompositeItem = (0, import_element70.useCallback)(
       (targetIndex, generateCompositeId) => {
@@ -25664,7 +25669,7 @@ var wp;
   var import_components93 = __toESM(require_components(), 1);
   var import_element72 = __toESM(require_element(), 1);
   var import_data52 = __toESM(require_data(), 1);
-  var import_compose16 = __toESM(require_compose(), 1);
+  var import_compose15 = __toESM(require_compose(), 1);
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   function ActivityItem(props) {
     const {
@@ -25701,7 +25706,7 @@ var wp;
         eligibleActions: _eligibleActions
       };
     }, [actions, item]);
-    const isMobileViewport = (0, import_compose16.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose15.useViewportMatch)("medium", "<");
     const density = view.layout?.density ?? "balanced";
     const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
       mediaField.render,
@@ -25934,7 +25939,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_components97 = __toESM(require_components(), 1);
   var import_i18n89 = __toESM(require_i18n(), 1);
-  var import_compose17 = __toESM(require_compose(), 1);
+  var import_compose16 = __toESM(require_compose(), 1);
   var import_element76 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
@@ -26247,7 +26252,7 @@ var wp;
     showLabel = true,
     children
   }) {
-    const headerId = (0, import_compose17.useInstanceId)(
+    const headerId = (0, import_compose16.useInstanceId)(
       GridGroup,
       "dataviews-view-picker-grid-group__header"
     );
@@ -31021,7 +31026,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
   var import_remove_accents = __toESM(require_remove_accents(), 1);
-  var import_compose18 = __toESM(require_compose(), 1);
+  var import_compose17 = __toESM(require_compose(), 1);
   var import_i18n94 = __toESM(require_i18n(), 1);
   var import_element81 = __toESM(require_element(), 1);
   var import_components101 = __toESM(require_components(), 1);
@@ -31123,7 +31128,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   function ListBox({ view, filter, onChangeView }) {
-    const baseId = (0, import_compose18.useInstanceId)(ListBox, "dataviews-filter-list-box");
+    const baseId = (0, import_compose17.useInstanceId)(ListBox, "dataviews-filter-list-box");
     const [activeCompositeId, setActiveCompositeId] = (0, import_element81.useState)(
       // When there are one or less operators, the first item is set as active
       // (by setting the initial `activeId` to `undefined`).
@@ -31387,7 +31392,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
   var import_es62 = __toESM(require_es6(), 1);
-  var import_compose19 = __toESM(require_compose(), 1);
+  var import_compose18 = __toESM(require_compose(), 1);
   var import_element82 = __toESM(require_element(), 1);
   var import_components102 = __toESM(require_components(), 1);
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
@@ -31426,7 +31431,7 @@ If there's a particular need for this, please submit a feature request at https:
         {}
       );
     }, [view.filters]);
-    const handleChange = (0, import_compose19.useEvent)((updatedData) => {
+    const handleChange = (0, import_compose18.useEvent)((updatedData) => {
       if (!field || !currentFilter) {
         return;
       }
@@ -34364,11 +34369,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n101 = __toESM(require_i18n(), 1);
   var import_element92 = __toESM(require_element(), 1);
   var import_components107 = __toESM(require_components(), 1);
-  var import_compose20 = __toESM(require_compose(), 1);
+  var import_compose19 = __toESM(require_compose(), 1);
   var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
   var DataViewsSearch = (0, import_element92.memo)(function Search({ label }) {
     const { view, onChangeView } = (0, import_element92.useContext)(dataviews_context_default);
-    const [search, setSearch, debouncedSearch] = (0, import_compose20.useDebouncedInput)(
+    const [search, setSearch, debouncedSearch] = (0, import_compose19.useDebouncedInput)(
       view.search
     );
     (0, import_element92.useEffect)(() => {
@@ -34411,7 +34416,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n103 = __toESM(require_i18n(), 1);
   var import_element94 = __toESM(require_element(), 1);
   var import_warning = __toESM(require_warning(), 1);
-  var import_compose21 = __toESM(require_compose(), 1);
+  var import_compose20 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.mjs
   var import_components108 = __toESM(require_components(), 1);
@@ -34657,7 +34662,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function DataviewsViewConfigDropdown() {
     const { view, onReset } = (0, import_element94.useContext)(dataviews_context_default);
-    const popoverId = (0, import_compose21.useInstanceId)(
+    const popoverId = (0, import_compose20.useInstanceId)(
       _DataViewsViewConfig,
       "dataviews-view-config-dropdown"
     );
@@ -37712,7 +37717,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { infiniteScrollHandler } = paginationInfo;
     const containerRef = (0, import_element112.useRef)(null);
     const [containerWidth, setContainerWidth] = (0, import_element112.useState)(0);
-    const resizeObserverRef = (0, import_compose22.useResizeObserver)(
+    const resizeObserverRef = (0, import_compose21.useResizeObserver)(
       (resizeObserverEntries) => {
         setContainerWidth(
           resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -37758,7 +37763,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!view.infiniteScrollEnabled || !containerRef.current) {
         return;
       }
-      const handleScroll = (0, import_compose22.throttle)((event) => {
+      const handleScroll = (0, import_compose21.throttle)((event) => {
         const target = event.target;
         const scrollTop = target.scrollTop;
         const scrollHeight = target.scrollHeight;
@@ -38111,12 +38116,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components131 = __toESM(require_components(), 1);
   var import_element119 = __toESM(require_element(), 1);
-  var import_compose24 = __toESM(require_compose(), 1);
+  var import_compose23 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components130 = __toESM(require_components(), 1);
   var import_i18n117 = __toESM(require_i18n(), 1);
-  var import_compose23 = __toESM(require_compose(), 1);
+  var import_compose22 = __toESM(require_compose(), 1);
   var import_element115 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
@@ -38201,7 +38206,7 @@ If there's a particular need for this, please submit a feature request at https:
         "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
       }
     );
-    const controlId = (0, import_compose23.useInstanceId)(
+    const controlId = (0, import_compose22.useInstanceId)(
       SummaryButton,
       "dataforms-layouts-panel__field-control"
     );
@@ -38924,9 +38929,9 @@ If there's a particular need for this, please submit a feature request at https:
         })
       );
     };
-    const focusOnMountRef = (0, import_compose24.useFocusOnMount)("firstInputElement");
+    const focusOnMountRef = (0, import_compose23.useFocusOnMount)("firstInputElement");
     const contentRef = (0, import_element119.useRef)(null);
-    const mergedRef = (0, import_compose24.useMergeRefs)([focusOnMountRef, contentRef]);
+    const mergedRef = (0, import_compose23.useMergeRefs)([focusOnMountRef, contentRef]);
     useReportValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(
       import_components131.Modal,
@@ -39041,7 +39046,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components132 = __toESM(require_components(), 1);
   var import_i18n119 = __toESM(require_i18n(), 1);
   var import_element120 = __toESM(require_element(), 1);
-  var import_compose25 = __toESM(require_compose(), 1);
+  var import_compose24 = __toESM(require_compose(), 1);
   var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
     title,
@@ -39098,7 +39103,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [popoverAnchor]
     );
-    const [dialogRef, dialogProps] = (0, import_compose25.__experimentalUseDialog)({
+    const [dialogRef, dialogProps] = (0, import_compose24.__experimentalUseDialog)({
       focusOnMount: "firstInputElement"
     });
     const form2 = (0, import_element120.useMemo)(
@@ -39224,7 +39229,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_components133 = __toESM(require_components(), 1);
-  var import_compose26 = __toESM(require_compose(), 1);
+  var import_compose25 = __toESM(require_compose(), 1);
   var import_element121 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
@@ -39307,7 +39312,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { fields: fields2 } = (0, import_element121.useContext)(dataform_context_default);
     const layout = field.layout;
     const cardBodyRef = (0, import_element121.useRef)(null);
-    const instanceId = (0, import_compose26.useInstanceId)(FormCardField);
+    const instanceId = (0, import_compose25.useInstanceId)(FormCardField);
     const bodyId = `dataforms-layouts-card-card-body-${instanceId}`;
     const titleId = `dataforms-layouts-card-card-title-${instanceId}`;
     const form2 = (0, import_element121.useMemo)(
@@ -40863,7 +40868,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element127 = __toESM(require_element(), 1);
   var import_router21 = __toESM(require_router(), 1);
   var import_editor23 = __toESM(require_editor(), 1);
-  var import_compose27 = __toESM(require_compose(), 1);
+  var import_compose26 = __toESM(require_compose(), 1);
   var import_data56 = __toESM(require_data(), 1);
   var import_components136 = __toESM(require_components(), 1);
   var import_url14 = __toESM(require_url(), 1);
@@ -40922,7 +40927,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [isStyleBookOpened, setIsStyleBookOpened] = (0, import_element127.useState)(
       path.includes("preview=stylebook")
     );
-    const isMobileViewport = (0, import_compose27.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose26.useViewportMatch)("medium", "<");
     const [section, onChangeSection] = useSection();
     const settings2 = (0, import_data56.useSelect)(
       (select3) => select3(store).getSettings(),
@@ -43979,7 +43984,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_editor36 = __toESM(require_editor(), 1);
   var import_url22 = __toESM(require_url(), 1);
   var import_data78 = __toESM(require_data(), 1);
-  var import_compose30 = __toESM(require_compose(), 1);
+  var import_compose29 = __toESM(require_compose(), 1);
   var import_components155 = __toESM(require_components(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
 
@@ -43989,7 +43994,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element149 = __toESM(require_element(), 1);
   var import_data76 = __toESM(require_data(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
-  var import_compose29 = __toESM(require_compose(), 1);
+  var import_compose28 = __toESM(require_compose(), 1);
   var import_i18n149 = __toESM(require_i18n(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
   var import_router36 = __toESM(require_router(), 1);
@@ -44001,7 +44006,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components151 = __toESM(require_components(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
-  var import_compose28 = __toESM(require_compose(), 1);
+  var import_compose27 = __toESM(require_compose(), 1);
   var import_dom12 = __toESM(require_dom(), 1);
   var import_url21 = __toESM(require_url(), 1);
 
@@ -44601,7 +44606,7 @@ If there's a particular need for this, please submit a feature request at https:
     return suggestions;
   }
   function SuggestionList({ entityForSuggestions, onSelect }) {
-    const [search, setSearch, debouncedSearch] = (0, import_compose28.useDebouncedInput)();
+    const [search, setSearch, debouncedSearch] = (0, import_compose27.useDebouncedInput)();
     const suggestions = useSearchSuggestions(
       entityForSuggestions,
       debouncedSearch
@@ -44989,7 +44994,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { saveEntityRecord } = (0, import_data76.useDispatch)(import_core_data56.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data76.useDispatch)(import_notices8.store);
     const containerRef = (0, import_element149.useRef)(null);
-    const isMobile = (0, import_compose29.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose28.useViewportMatch)("medium", "<");
     const homeUrl = (0, import_data76.useSelect)((select3) => {
       return select3(import_core_data56.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
@@ -45640,7 +45645,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => activeView === "user" ? [setActiveTemplateAction, editAction, ...postTypeActions] : [setActiveTemplateAction, ...postTypeActions],
       [postTypeActions, setActiveTemplateAction, editAction, activeView]
     );
-    const onChangeView = (0, import_compose30.useEvent)((newView) => {
+    const onChangeView = (0, import_compose29.useEvent)((newView) => {
       updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
@@ -45713,7 +45718,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_router39 = __toESM(require_router(), 1);
   var import_editor37 = __toESM(require_editor(), 1);
   var import_url25 = __toESM(require_url(), 1);
-  var import_compose33 = __toESM(require_compose(), 1);
+  var import_compose32 = __toESM(require_compose(), 1);
 
   // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
   var import_components158 = __toESM(require_components(), 1);
@@ -45721,7 +45726,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element155 = __toESM(require_element(), 1);
   var import_data80 = __toESM(require_data(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
-  var import_compose32 = __toESM(require_compose(), 1);
+  var import_compose31 = __toESM(require_compose(), 1);
   var import_i18n155 = __toESM(require_i18n(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
   var import_router38 = __toESM(require_router(), 1);
@@ -45733,7 +45738,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components156 = __toESM(require_components(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
-  var import_compose31 = __toESM(require_compose(), 1);
+  var import_compose30 = __toESM(require_compose(), 1);
   var import_dom14 = __toESM(require_dom(), 1);
   var import_url24 = __toESM(require_url(), 1);
 
@@ -46408,7 +46413,7 @@ If there's a particular need for this, please submit a feature request at https:
     return suggestions;
   }
   function SuggestionList2({ entityForSuggestions, onSelect }) {
-    const [search, setSearch, debouncedSearch] = (0, import_compose31.useDebouncedInput)();
+    const [search, setSearch, debouncedSearch] = (0, import_compose30.useDebouncedInput)();
     const suggestions = useSearchSuggestions2(
       entityForSuggestions,
       debouncedSearch
@@ -46798,7 +46803,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { saveEntityRecord } = (0, import_data80.useDispatch)(import_core_data61.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data80.useDispatch)(import_notices10.store);
     const containerRef = (0, import_element155.useRef)(null);
-    const isMobile = (0, import_compose32.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose31.useViewportMatch)("medium", "<");
     const homeUrl = (0, import_data80.useSelect)((select3) => {
       return select3(import_core_data61.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
@@ -47118,7 +47123,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => [editAction, ...postTypeActions],
       [postTypeActions, editAction]
     );
-    const onChangeView = (0, import_compose33.useEvent)((newView) => {
+    const onChangeView = (0, import_compose32.useEvent)((newView) => {
       updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
@@ -47497,7 +47502,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_router42 = __toESM(require_router(), 1);
   var import_data84 = __toESM(require_data(), 1);
   var import_editor41 = __toESM(require_editor(), 1);
-  var import_compose34 = __toESM(require_compose(), 1);
+  var import_compose33 = __toESM(require_compose(), 1);
   var import_url27 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/add-new-post/index.mjs
@@ -47881,7 +47886,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     });
-    const onChangeView = (0, import_compose34.useEvent)((newView) => {
+    const onChangeView = (0, import_compose33.useEvent)((newView) => {
       updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
@@ -47972,7 +47977,7 @@ If there's a particular need for this, please submit a feature request at https:
       return processedRecords;
     }, [records, fields2, view?.sort, notesCount]);
     const ids = data?.map((record) => getItemId(record)) ?? [];
-    const prevIds = (0, import_compose34.usePrevious)(ids) ?? [];
+    const prevIds = (0, import_compose33.usePrevious)(ids) ?? [];
     const deletedIds = prevIds.filter((id) => !ids.includes(id));
     const postIdWasDeleted = deletedIds.includes(postId);
     (0, import_element161.useEffect)(() => {

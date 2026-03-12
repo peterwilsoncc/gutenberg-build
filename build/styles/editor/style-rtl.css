@@ -3110,6 +3110,17 @@ div.dataviews-view-list {
   background-color: inherit;
 }
 
+.dataviews-view-table thead.dataviews-view-table__thead--stuck::after {
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background-color: #f0f0f0;
+}
+
 .dataviews-view-table thead tr {
   border: 0;
 }
