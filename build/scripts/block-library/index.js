@@ -17714,7 +17714,7 @@ var wp;
   var import_block_editor67 = __toESM(require_block_editor(), 1);
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_data30 = __toESM(require_data(), 1);
-  var import_blob6 = __toESM(require_blob(), 1);
+  var import_blob7 = __toESM(require_blob(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/cover/edit/inspector-controls.mjs
@@ -18554,6 +18554,7 @@ var wp;
   // packages/block-library/build-module/cover/edit/cover-placeholder.mjs
   var import_block_editor65 = __toESM(require_block_editor(), 1);
   var import_i18n51 = __toESM(require_i18n(), 1);
+  var import_blob6 = __toESM(require_blob(), 1);
   var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
   function CoverPlaceholder({
     disableMediaButtons = false,
@@ -18563,6 +18564,11 @@ var wp;
     style: style2,
     toggleUseFeaturedImage
   }) {
+    const onFilesPreUpload = (files) => {
+      if (files.length === 1) {
+        onSelectMedia({ url: (0, import_blob6.createBlobURL)(files[0]) });
+      }
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
       import_block_editor65.MediaPlaceholder,
       {
@@ -18574,6 +18580,7 @@ var wp;
         allowedTypes: ALLOWED_MEDIA_TYPES2,
         disableMediaButtons,
         onToggleFeaturedImage: toggleUseFeaturedImage,
+        onFilesPreUpload,
         onError,
         style: style2,
         children
@@ -19360,7 +19367,7 @@ var wp;
       ]
     ];
   }
-  var isTemporaryMedia = (id, url) => !id && (0, import_blob6.isBlobURL)(url);
+  var isTemporaryMedia = (id, url) => !id && (0, import_blob7.isBlobURL)(url);
   function CoverEdit({
     attributes: attributes2,
     clientId,
@@ -22267,7 +22274,7 @@ ${url}
   var deprecated_default16 = deprecated6;
 
   // packages/block-library/build-module/file/edit.mjs
-  var import_blob7 = __toESM(require_blob(), 1);
+  var import_blob8 = __toESM(require_blob(), 1);
   var import_components42 = __toESM(require_components(), 1);
   var import_data33 = __toESM(require_data(), 1);
   var import_block_editor80 = __toESM(require_block_editor(), 1);
@@ -22534,7 +22541,7 @@ ${url}
         setTemporaryURL();
         return;
       }
-      if ((0, import_blob7.isBlobURL)(newMedia.url)) {
+      if ((0, import_blob8.isBlobURL)(newMedia.url)) {
         setTemporaryURL(newMedia.url);
         return;
       }
@@ -22652,7 +22659,7 @@ ${url}
           ClipboardToolbarButton,
           {
             text: href,
-            disabled: (0, import_blob7.isBlobURL)(href)
+            disabled: (0, import_blob8.isBlobURL)(href)
           }
         )
       ] }),
@@ -22896,7 +22903,7 @@ ${url}
   }
 
   // packages/block-library/build-module/file/transforms.mjs
-  var import_blob8 = __toESM(require_blob(), 1);
+  var import_blob9 = __toESM(require_blob(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
   var import_data34 = __toESM(require_data(), 1);
   var import_core_data19 = __toESM(require_core_data(), 1);
@@ -22914,23 +22921,23 @@ ${url}
         transform: (files) => {
           const blocks = [];
           files.forEach((file) => {
-            const blobURL = (0, import_blob8.createBlobURL)(file);
+            const blobURL = (0, import_blob9.createBlobURL)(file);
             if (file.type.startsWith("video/")) {
               blocks.push(
                 (0, import_blocks27.createBlock)("core/video", {
-                  blob: (0, import_blob8.createBlobURL)(file)
+                  blob: (0, import_blob9.createBlobURL)(file)
                 })
               );
             } else if (file.type.startsWith("image/")) {
               blocks.push(
                 (0, import_blocks27.createBlock)("core/image", {
-                  blob: (0, import_blob8.createBlobURL)(file)
+                  blob: (0, import_blob9.createBlobURL)(file)
                 })
               );
             } else if (file.type.startsWith("audio/")) {
               blocks.push(
                 (0, import_blocks27.createBlock)("core/audio", {
-                  blob: (0, import_blob8.createBlobURL)(file)
+                  blob: (0, import_blob9.createBlobURL)(file)
                 })
               );
             } else {
@@ -25483,7 +25490,7 @@ ${url}
   var import_data38 = __toESM(require_data(), 1);
   var import_primitives158 = __toESM(require_primitives(), 1);
   var import_blocks30 = __toESM(require_blocks(), 1);
-  var import_blob9 = __toESM(require_blob(), 1);
+  var import_blob10 = __toESM(require_blob(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/gallery/shared-icon.mjs
@@ -25984,7 +25991,7 @@ ${url}
       const imageArray = newFileUploads ? Array.from(selectedImages).map((file) => {
         if (!file.url) {
           return {
-            blob: (0, import_blob9.createBlobURL)(file)
+            blob: (0, import_blob10.createBlobURL)(file)
           };
         }
         return file;
@@ -26000,7 +26007,7 @@ ${url}
       const processedImages = imageArray.filter((file) => file.url || isValidFileType2(file)).map((file) => {
         if (!file.url) {
           return {
-            blob: file.blob || (0, import_blob9.createBlobURL)(file)
+            blob: file.blob || (0, import_blob10.createBlobURL)(file)
           };
         }
         return file;
@@ -26760,7 +26767,7 @@ ${url}
 
   // packages/block-library/build-module/gallery/transforms.mjs
   var import_blocks31 = __toESM(require_blocks(), 1);
-  var import_blob10 = __toESM(require_blob(), 1);
+  var import_blob11 = __toESM(require_blob(), 1);
   var import_hooks28 = __toESM(require_hooks(), 1);
   var parseShortcodeIds = (ids) => {
     if (!ids) {
@@ -26896,7 +26903,7 @@ ${url}
         transform(files) {
           const innerBlocks = files.map(
             (file) => (0, import_blocks31.createBlock)("core/image", {
-              blob: (0, import_blob10.createBlobURL)(file)
+              blob: (0, import_blob11.createBlobURL)(file)
             })
           );
           return (0, import_blocks31.createBlock)("core/gallery", {}, innerBlocks);
@@ -30640,7 +30647,7 @@ ${js}
   var deprecated_default22 = [v82, v73, v64, v54, v44, v35, v210, v120];
 
   // packages/block-library/build-module/image/edit.mjs
-  var import_blob12 = __toESM(require_blob(), 1);
+  var import_blob13 = __toESM(require_blob(), 1);
   var import_blocks38 = __toESM(require_blocks(), 1);
   var import_components57 = __toESM(require_components(), 1);
   var import_data48 = __toESM(require_data(), 1);
@@ -30653,7 +30660,7 @@ ${js}
   var import_upload_media = __toESM(require_upload_media(), 1);
 
   // packages/block-library/build-module/image/image.mjs
-  var import_blob11 = __toESM(require_blob(), 1);
+  var import_blob12 = __toESM(require_blob(), 1);
   var import_components56 = __toESM(require_components(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
   var import_data47 = __toESM(require_data(), 1);
@@ -31108,7 +31115,7 @@ ${js}
         filesList: [externalBlob],
         onFileChange([img2]) {
           onSelectImage(img2);
-          if ((0, import_blob11.isBlobURL)(img2.url)) {
+          if ((0, import_blob12.isBlobURL)(img2.url)) {
             return;
           }
           setExternalBlob();
@@ -31737,7 +31744,7 @@ ${js}
     imageProps.url = image?.sizes?.[size]?.url || image?.media_details?.sizes?.[size]?.source_url || image.url;
     return imageProps;
   };
-  var isExternalImage = (id, url) => url && !id && !(0, import_blob12.isBlobURL)(url);
+  var isExternalImage = (id, url) => url && !id && !(0, import_blob13.isBlobURL)(url);
   function hasSize(image, size) {
     return "url" in (image?.sizes?.[size] ?? {}) || "source_url" in (image?.media_details?.sizes?.[size] ?? {});
   }
@@ -31797,12 +31804,18 @@ ${js}
     const { createErrorNotice } = (0, import_data48.useDispatch)(import_notices8.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
+      setTemporaryURL();
       setAttributes({
         src: void 0,
         id: void 0,
         url: void 0,
         blob: void 0
       });
+    }
+    function onFilesPreUpload(files) {
+      if (files.length === 1) {
+        setTemporaryURL((0, import_blob13.createBlobURL)(files[0]));
+      }
     }
     function onSelectImagesList(images) {
       const win = containerRef.current?.ownerDocument.defaultView;
@@ -31819,7 +31832,7 @@ ${js}
         }
         const imageBlocks = files.filter((file) => isValidFileType(file)).map(
           (file) => (0, import_blocks38.createBlock)("core/image", {
-            blob: (0, import_blob12.createBlobURL)(file)
+            blob: (0, import_blob13.createBlobURL)(file)
           })
         );
         if (getBlockName(rootClientId) === "core/gallery") {
@@ -31851,7 +31864,7 @@ ${js}
         setTemporaryURL();
         return;
       }
-      if ((0, import_blob12.isBlobURL)(media.url)) {
+      if ((0, import_blob13.isBlobURL)(media.url)) {
         setTemporaryURL(media.url);
         return;
       }
@@ -32046,6 +32059,7 @@ ${js}
             icon: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor113.BlockIcon, { icon: image_default }),
             onSelect: onSelectImage,
             onSelectURL,
+            onFilesPreUpload,
             onError: onUploadError,
             placeholder: placeholder2,
             allowedTypes: ALLOWED_MEDIA_TYPES3,
@@ -32301,7 +32315,7 @@ ${js}
   }
 
   // packages/block-library/build-module/image/transforms.mjs
-  var import_blob13 = __toESM(require_blob(), 1);
+  var import_blob14 = __toESM(require_blob(), 1);
   var import_blocks39 = __toESM(require_blocks(), 1);
   function stripFirstImage(attributes2, { shortcode }) {
     const { body } = document.implementation.createHTMLDocument("");
@@ -32386,7 +32400,7 @@ ${js}
               anchor
             }
           );
-          if ((0, import_blob13.isBlobURL)(attributes2.url)) {
+          if ((0, import_blob14.isBlobURL)(attributes2.url)) {
             attributes2.blob = attributes2.url;
             delete attributes2.url;
           }
@@ -32406,7 +32420,7 @@ ${js}
         transform(files) {
           const blocks = files.map((file) => {
             return (0, import_blocks39.createBlock)("core/image", {
-              blob: (0, import_blob13.createBlobURL)(file)
+              blob: (0, import_blob14.createBlobURL)(file)
             });
           });
           return blocks;
@@ -36577,7 +36591,7 @@ ${js}
   var import_element55 = __toESM(require_element(), 1);
   var import_block_editor135 = __toESM(require_block_editor(), 1);
   var import_components66 = __toESM(require_components(), 1);
-  var import_blob15 = __toESM(require_blob(), 1);
+  var import_blob16 = __toESM(require_blob(), 1);
   var import_core_data25 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/media-text/media-container.mjs
@@ -36587,7 +36601,7 @@ ${js}
   var import_compose31 = __toESM(require_compose(), 1);
   var import_data58 = __toESM(require_data(), 1);
   var import_element54 = __toESM(require_element(), 1);
-  var import_blob14 = __toESM(require_blob(), 1);
+  var import_blob15 = __toESM(require_blob(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/media-text/image-fill.mjs
@@ -36647,6 +36661,11 @@ ${js}
     const onUploadError = (message) => {
       createErrorNotice(message, { type: "snackbar" });
     };
+    const onFilesPreUpload = (files) => {
+      if (files.length === 1) {
+        onSelectMedia({ url: (0, import_blob15.createBlobURL)(files[0]) });
+      }
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
       import_block_editor134.MediaPlaceholder,
       {
@@ -36658,6 +36677,7 @@ ${js}
         onSelect: onSelectMedia,
         onToggleFeaturedImage: toggleUseFeaturedImage,
         allowedTypes: ALLOWED_MEDIA_TYPES5,
+        onFilesPreUpload,
         onError: onUploadError,
         disableMediaButtons: mediaUrl
       }
@@ -36686,7 +36706,7 @@ ${js}
       featuredImageAlt,
       refMedia
     } = props;
-    const isTemporaryMedia2 = !mediaId && (0, import_blob14.isBlobURL)(mediaUrl);
+    const isTemporaryMedia2 = !mediaId && (0, import_blob15.isBlobURL)(mediaUrl);
     const { toggleSelection } = (0, import_data58.useDispatch)(import_block_editor134.store);
     if (mediaUrl || featuredImageURL || useFeaturedImage) {
       const onResizeStart = () => {
@@ -36802,8 +36822,8 @@ ${js}
         });
         return;
       }
-      if ((0, import_blob15.isBlobURL)(media.url)) {
-        media.type = (0, import_blob15.getBlobTypeByURL)(media.url);
+      if ((0, import_blob16.isBlobURL)(media.url)) {
+        media.type = (0, import_blob16.getBlobTypeByURL)(media.url);
       }
       let mediaType;
       let src;
@@ -48623,7 +48643,7 @@ ${js}
   };
 
   // packages/block-library/build-module/playlist-track/edit.mjs
-  var import_blob16 = __toESM(require_blob(), 1);
+  var import_blob17 = __toESM(require_blob(), 1);
   var import_element91 = __toESM(require_element(), 1);
   var import_block_editor180 = __toESM(require_block_editor(), 1);
   var import_components104 = __toESM(require_components(), 1);
@@ -48667,7 +48687,7 @@ ${js}
         setTemporaryURL();
         return;
       }
-      if ((0, import_blob16.isBlobURL)(media.url)) {
+      if ((0, import_blob17.isBlobURL)(media.url)) {
         setTemporaryURL(media.url);
         return;
       }
@@ -51904,7 +51924,7 @@ ${js}
   };
 
   // packages/block-library/build-module/post-featured-image/edit.mjs
-  var import_blob17 = __toESM(require_blob(), 1);
+  var import_blob18 = __toESM(require_blob(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
   var import_data107 = __toESM(require_data(), 1);
   var import_components113 = __toESM(require_components(), 1);
@@ -52357,7 +52377,7 @@ ${js}
       if (value?.id) {
         setFeaturedImage(value.id);
       }
-      if (value?.url && (0, import_blob17.isBlobURL)(value.url)) {
+      if (value?.url && (0, import_blob18.isBlobURL)(value.url)) {
         setTemporaryURL(value.url);
       }
     };
@@ -62374,7 +62394,7 @@ ${js}
   };
 
   // packages/block-library/build-module/site-logo/edit.mjs
-  var import_blob18 = __toESM(require_blob(), 1);
+  var import_blob19 = __toESM(require_blob(), 1);
   var import_element120 = __toESM(require_element(), 1);
   var import_i18n227 = __toESM(require_i18n(), 1);
   var import_components149 = __toESM(require_components(), 1);
@@ -62450,7 +62470,7 @@ ${js}
           }
         }
       ),
-      (0, import_blob18.isBlobURL)(logoUrl) && /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_components149.Spinner, {})
+      (0, import_blob19.isBlobURL)(logoUrl) && /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_components149.Spinner, {})
     ] });
     let imgWrapper = img;
     if (isLink) {
@@ -62773,7 +62793,7 @@ ${js}
         allowedTypes: ALLOWED_MEDIA_TYPES9,
         filesList,
         onFileChange([image]) {
-          if ((0, import_blob18.isBlobURL)(image?.url)) {
+          if ((0, import_blob19.isBlobURL)(image?.url)) {
             setTemporaryURL(image.url);
             return;
           }
@@ -73000,7 +73020,7 @@ ${js}
   var deprecated_default55 = deprecated20;
 
   // packages/block-library/build-module/video/edit.mjs
-  var import_blob19 = __toESM(require_blob(), 1);
+  var import_blob20 = __toESM(require_blob(), 1);
   var import_components184 = __toESM(require_components(), 1);
   var import_block_editor293 = __toESM(require_block_editor(), 1);
   var import_element143 = __toESM(require_element(), 1);
@@ -73564,7 +73584,7 @@ ${js}
         setTemporaryURL();
         return;
       }
-      if ((0, import_blob19.isBlobURL)(media.url)) {
+      if ((0, import_blob20.isBlobURL)(media.url)) {
         setTemporaryURL(media.url);
         return;
       }
@@ -73769,7 +73789,7 @@ ${js}
   }
 
   // packages/block-library/build-module/video/transforms.mjs
-  var import_blob20 = __toESM(require_blob(), 1);
+  var import_blob21 = __toESM(require_blob(), 1);
   var import_blocks125 = __toESM(require_blocks(), 1);
   var transforms38 = {
     from: [
@@ -73781,7 +73801,7 @@ ${js}
         transform(files) {
           const file = files[0];
           const block = (0, import_blocks125.createBlock)("core/video", {
-            blob: (0, import_blob20.createBlobURL)(file)
+            blob: (0, import_blob21.createBlobURL)(file)
           });
           return block;
         }
@@ -73839,7 +73859,7 @@ ${js}
             poster: videoElement.getAttribute("poster") || void 0,
             src: videoElement.getAttribute("src") || void 0
           };
-          if ((0, import_blob20.isBlobURL)(attributes2.src)) {
+          if ((0, import_blob21.isBlobURL)(attributes2.src)) {
             attributes2.blob = attributes2.src;
             delete attributes2.src;
           }
