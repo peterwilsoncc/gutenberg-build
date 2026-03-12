@@ -48195,7 +48195,7 @@ var wp;
   // packages/editor/build-module/components/editor-interface/index.mjs
   var import_data217 = __toESM(require_data(), 1);
   var import_i18n249 = __toESM(require_i18n(), 1);
-  var import_preferences23 = __toESM(require_preferences(), 1);
+  var import_preferences24 = __toESM(require_preferences(), 1);
   var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
   var import_element211 = __toESM(require_element(), 1);
@@ -52632,16 +52632,12 @@ var wp;
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_notices28 = __toESM(require_notices(), 1);
   var import_core_data118 = __toESM(require_core_data(), 1);
+  var import_preferences23 = __toESM(require_preferences(), 1);
   var { useOnCollaboratorJoin, useOnCollaboratorLeave, useOnPostSave } = unlock(import_core_data118.privateApis);
   var NOTIFICATION_TYPE = {
     COLLAB_POST_UPDATED: "collab-post-updated",
     COLLAB_USER_ENTERED: "collab-user-entered",
     COLLAB_USER_EXITED: "collab-user-exited"
-  };
-  var NOTIFICATIONS_CONFIG = {
-    userEntered: true,
-    userExited: true,
-    postUpdated: true
   };
   var PUBLISHED_STATUSES = ["publish", "private", "future"];
   function getPostUpdatedMessage(name2, status, isFirstPublish) {
@@ -52654,24 +52650,29 @@ var wp;
     return (0, import_i18n220.sprintf)((0, import_i18n220.__)("Draft saved by %s."), name2);
   }
   function useCollaboratorNotifications(postId2, postType2) {
-    const { postStatus, isCollaborationEnabled } = (0, import_data206.useSelect)((select6) => {
-      const editorSel = select6(store);
-      return {
-        postStatus: editorSel.getCurrentPostAttribute("status"),
-        isCollaborationEnabled: editorSel.isCollaborationEnabledForCurrentPost()
-      };
-    }, []);
+    const { postStatus, isCollaborationEnabled, showNotifications } = (0, import_data206.useSelect)(
+      (select6) => {
+        const editorSel = select6(store);
+        return {
+          postStatus: editorSel.getCurrentPostAttribute("status"),
+          isCollaborationEnabled: editorSel.isCollaborationEnabledForCurrentPost(),
+          showNotifications: select6(import_preferences23.store).get(
+            "core",
+            "showCollaborationNotifications"
+          ) ?? true
+        };
+      },
+      []
+    );
     const { createNotice } = (0, import_data206.useDispatch)(import_notices28.store);
-    const effectivePostId = isCollaborationEnabled ? postId2 : null;
-    const effectivePostType = isCollaborationEnabled ? postType2 : null;
+    const shouldSubscribe = isCollaborationEnabled && showNotifications;
+    const effectivePostId = shouldSubscribe ? postId2 : null;
+    const effectivePostType = shouldSubscribe ? postType2 : null;
     useOnCollaboratorJoin(
       effectivePostId,
       effectivePostType,
       (0, import_element167.useCallback)(
         (collaborator, me) => {
-          if (!NOTIFICATIONS_CONFIG.userEntered) {
-            return;
-          }
           if (me && collaborator.collaboratorInfo.enteredAt < me.collaboratorInfo.enteredAt) {
             return;
           }
@@ -52697,9 +52698,6 @@ var wp;
       effectivePostType,
       (0, import_element167.useCallback)(
         (collaborator) => {
-          if (!NOTIFICATIONS_CONFIG.userExited) {
-            return;
-          }
           void createNotice(
             "info",
             (0, import_i18n220.sprintf)(
@@ -52722,7 +52720,7 @@ var wp;
       effectivePostType,
       (0, import_element167.useCallback)(
         (saveEvent, saver, prevEvent) => {
-          if (!NOTIFICATIONS_CONFIG.postUpdated || !postStatus) {
+          if (!postStatus) {
             return;
           }
           const effectiveStatus = saveEvent.postStatus ?? postStatus ?? "draft";
@@ -62367,7 +62365,7 @@ var wp;
       showStylebook: showStylebook2,
       isRevisionsMode: isRevisionsMode2
     } = (0, import_data217.useSelect)((select6) => {
-      const { get } = select6(import_preferences23.store);
+      const { get } = select6(import_preferences24.store);
       const {
         getEditorSettings: getEditorSettings2,
         getPostTypeLabel: getPostTypeLabel2,
@@ -63429,7 +63427,7 @@ var wp;
   var import_data233 = __toESM(require_data(), 1);
   var import_element221 = __toESM(require_element(), 1);
   var import_block_editor91 = __toESM(require_block_editor(), 1);
-  var import_preferences24 = __toESM(require_preferences(), 1);
+  var import_preferences25 = __toESM(require_preferences(), 1);
   function useAutoSwitchEditorSidebars() {
     const { hasBlockSelection } = (0, import_data233.useSelect)((select6) => {
       return {
@@ -63438,7 +63436,7 @@ var wp;
     }, []);
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data233.useSelect)(store2);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data233.useDispatch)(store2);
-    const { get: getPreference } = (0, import_data233.useSelect)(import_preferences24.store);
+    const { get: getPreference } = (0, import_data233.useSelect)(import_preferences25.store);
     (0, import_element221.useEffect)(() => {
       const activeGeneralSidebar = getActiveComplementaryArea2("core");
       const isEditorSidebarOpened = [
@@ -63615,7 +63613,7 @@ var wp;
   var import_compose68 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
-  var import_preferences25 = __toESM(require_preferences(), 1);
+  var import_preferences26 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/constants.mjs
   var ALL_NOTES_SIDEBAR = "edit-post/collab-history-sidebar";
@@ -65375,7 +65373,7 @@ var wp;
       []
     );
     const { isDistractionFree } = (0, import_data240.useSelect)((select6) => {
-      const { get } = select6(import_preferences25.store);
+      const { get } = select6(import_preferences26.store);
       return {
         isDistractionFree: get("core", "distractionFree")
       };
@@ -65514,7 +65512,7 @@ var wp;
   var import_i18n274 = __toESM(require_i18n(), 1);
   var import_data243 = __toESM(require_data(), 1);
   var import_element228 = __toESM(require_element(), 1);
-  var import_preferences28 = __toESM(require_preferences(), 1);
+  var import_preferences29 = __toESM(require_preferences(), 1);
   var import_compose69 = __toESM(require_compose(), 1);
   var import_core_data135 = __toESM(require_core_data(), 1);
 
@@ -65522,7 +65520,7 @@ var wp;
   var import_components250 = __toESM(require_components(), 1);
   var import_data241 = __toESM(require_data(), 1);
   var import_i18n272 = __toESM(require_i18n(), 1);
-  var import_preferences26 = __toESM(require_preferences(), 1);
+  var import_preferences27 = __toESM(require_preferences(), 1);
   var import_core_data134 = __toESM(require_core_data(), 1);
   var import_jsx_runtime417 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesActionMenu({
@@ -65534,7 +65532,7 @@ var wp;
     const onReset = () => {
       setUser({ styles: {}, settings: {} });
     };
-    const { toggle } = (0, import_data241.useDispatch)(import_preferences26.store);
+    const { toggle } = (0, import_data241.useDispatch)(import_preferences27.store);
     const { canEditCSS } = (0, import_data241.useSelect)((select6) => {
       const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select6(import_core_data134.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
@@ -65632,7 +65630,7 @@ var wp;
   var import_data242 = __toESM(require_data(), 1);
   var import_components251 = __toESM(require_components(), 1);
   var import_i18n273 = __toESM(require_i18n(), 1);
-  var import_preferences27 = __toESM(require_preferences(), 1);
+  var import_preferences28 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide-image.mjs
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
@@ -65652,11 +65650,11 @@ var wp;
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideStyles() {
-    const { toggle } = (0, import_data242.useDispatch)(import_preferences27.store);
+    const { toggle } = (0, import_data242.useDispatch)(import_preferences28.store);
     const { isActive, isStylesOpen } = (0, import_data242.useSelect)((select6) => {
       const sidebar = select6(store2).getActiveComplementaryArea("core");
       return {
-        isActive: !!select6(import_preferences27.store).get(
+        isActive: !!select6(import_preferences28.store).get(
           "core/edit-site",
           "welcomeGuideStyles"
         ),
@@ -65770,7 +65768,7 @@ var wp;
         select6(store)
       );
       const _isVisualEditorMode = "visual" === select6(store).getEditorMode();
-      const _showListViewByDefault = select6(import_preferences28.store).get(
+      const _showListViewByDefault = select6(import_preferences29.store).get(
         "core",
         "showListViewByDefault"
       );
@@ -65996,13 +65994,13 @@ var wp;
   var import_compose70 = __toESM(require_compose(), 1);
   var import_data247 = __toESM(require_data(), 1);
   var import_element230 = __toESM(require_element(), 1);
-  var import_preferences31 = __toESM(require_preferences(), 1);
+  var import_preferences32 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
   var import_data245 = __toESM(require_data(), 1);
-  var import_preferences29 = __toESM(require_preferences(), 1);
+  var import_preferences30 = __toESM(require_preferences(), 1);
   var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
-  var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences29.privateApis);
+  var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences30.privateApis);
   function EnablePublishSidebarOption(props) {
     const isChecked = (0, import_data245.useSelect)((select6) => {
       return select6(store).isPublishSidebarEnabled();
@@ -66020,7 +66018,7 @@ var wp;
 
   // packages/editor/build-module/components/block-visibility/index.mjs
   var import_data246 = __toESM(require_data(), 1);
-  var import_preferences30 = __toESM(require_preferences(), 1);
+  var import_preferences31 = __toESM(require_preferences(), 1);
   var import_blocks39 = __toESM(require_blocks(), 1);
   var import_element229 = __toESM(require_element(), 1);
   var import_components254 = __toESM(require_components(), 1);
@@ -66041,7 +66039,7 @@ var wp;
       return {
         blockTypes: select6(import_blocks39.store).getBlockTypes(),
         allowedBlockTypes: select6(store).getEditorSettings().allowedBlockTypes,
-        hiddenBlockTypes: select6(import_preferences30.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY10
+        hiddenBlockTypes: select6(import_preferences31.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY10
       };
     }, []);
     const allowedBlockTypes = (0, import_element229.useMemo)(() => {
@@ -66124,7 +66122,7 @@ var wp;
     PreferencesModalTabs,
     PreferencesModalSection,
     PreferenceToggleControl
-  } = unlock(import_preferences31.privateApis);
+  } = unlock(import_preferences32.privateApis);
   function EditorPreferencesModal({ extraSections = {} }) {
     const isActive = (0, import_data247.useSelect)((select6) => {
       return select6(store2).isModalActive("editor/preferences");
@@ -66140,7 +66138,7 @@ var wp;
     const showBlockBreadcrumbsOption = (0, import_data247.useSelect)(
       (select6) => {
         const { getEditorSettings: getEditorSettings2 } = select6(store);
-        const { get } = select6(import_preferences31.store);
+        const { get } = select6(import_preferences32.store);
         const isRichEditingEnabled = getEditorSettings2().richEditingEnabled;
         const isDistractionFreeEnabled = get("core", "distractionFree");
         return !isDistractionFreeEnabled && isLargeViewport && isRichEditingEnabled;
@@ -66148,7 +66146,7 @@ var wp;
       [isLargeViewport]
     );
     const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data247.useDispatch)(store);
-    const { set: setPreference } = (0, import_data247.useDispatch)(import_preferences31.store);
+    const { set: setPreference } = (0, import_data247.useDispatch)(import_preferences32.store);
     const sections = (0, import_element230.useMemo)(
       () => [
         {
@@ -66215,6 +66213,19 @@ var wp;
                         "Show your own avatar inside blocks during collaborative editing sessions."
                       ),
                       label: (0, import_i18n277.__)("Show avatar in blocks")
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
+                    PreferenceToggleControl,
+                    {
+                      scope: "core",
+                      featureName: "showCollaborationNotifications",
+                      help: (0, import_i18n277.__)(
+                        "Show notifications when collaborators join, leave, or save the post."
+                      ),
+                      label: (0, import_i18n277.__)(
+                        "Show collaboration notifications"
+                      )
                     }
                   )
                 ]
