@@ -41516,6 +41516,26 @@ ${js}
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+  function isHomepage(url, homeUrl) {
+    if (url === "/") {
+      return true;
+    }
+    if (!url || !homeUrl) {
+      return false;
+    }
+    try {
+      const urlParsed = new URL(url, homeUrl);
+      const homeParsed = new URL(homeUrl);
+      if (urlParsed.hostname !== homeParsed.hostname) {
+        return false;
+      }
+      const urlPath = urlParsed.pathname.replace(/\/$/, "");
+      const homePath = homeParsed.pathname.replace(/\/$/, "");
+      return urlPath === homePath;
+    } catch {
+      return false;
+    }
+  }
   function computeDisplayUrl({ linkUrl, homeUrl } = {}) {
     if (!linkUrl) {
       return { displayUrl: "", isExternal: false };
@@ -41544,6 +41564,7 @@ ${js}
   }
   function computeBadges({
     url,
+    homeUrl,
     type,
     isExternal,
     entityStatus,
@@ -41560,6 +41581,11 @@ ${js}
       } else if (isHashLink(url)) {
         badges.push({
           label: (0, import_i18n136.__)("Internal link"),
+          intent: "default"
+        });
+      } else if (isHomepage(url, homeUrl)) {
+        badges.push({
+          label: (0, import_i18n136.__)("Homepage"),
           intent: "default"
         });
       } else if (type && type !== "custom") {
@@ -41634,6 +41660,7 @@ ${js}
     );
     const badges = computeBadges({
       url,
+      homeUrl,
       type,
       isExternal,
       entityStatus: entityRecord?.status,
