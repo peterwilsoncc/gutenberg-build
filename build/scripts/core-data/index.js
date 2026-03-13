@@ -1677,6 +1677,9 @@ var wp;
       if (!state1 || !state2) {
         return state1 === state2;
       }
+      if (!state1.selection || !state2.selection) {
+        return state1.selection === state2.selection;
+      }
       return areSelectionsStatesEqual(state1.selection, state2.selection);
     }
     /**
