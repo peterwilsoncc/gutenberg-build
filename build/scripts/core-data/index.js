@@ -5003,9 +5003,12 @@ var wp;
             };
             newRecord = Object.keys(newRecord).reduce(
               (acc, key) => {
-                if (["title", "excerpt", "content"].includes(
-                  key
-                )) {
+                if ([
+                  "title",
+                  "excerpt",
+                  "content",
+                  "meta"
+                ].includes(key)) {
                   acc[key] = newRecord[key];
                 } else if (key === "status") {
                   acc[key] = persistedRecord.status === "auto-draft" && newRecord.status === "draft" ? newRecord.status : persistedRecord.status;
