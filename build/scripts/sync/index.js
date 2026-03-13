@@ -10168,9 +10168,9 @@ var wp;
         editRecord: debugWrap(handlers.editRecord),
         getEditedRecord: debugWrap(handlers.getEditedRecord),
         onStatusChange: debugWrap(handlers.onStatusChange),
+        persistCRDTDoc: debugWrap(handlers.persistCRDTDoc),
         refetchRecord: debugWrap(handlers.refetchRecord),
-        restoreUndoMeta: debugWrap(handlers.restoreUndoMeta),
-        saveRecord: debugWrap(handlers.saveRecord)
+        restoreUndoMeta: debugWrap(handlers.restoreUndoMeta)
       };
       const ydoc = createYjsDoc({ objectType });
       const recordMap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
@@ -10345,7 +10345,7 @@ var wp;
         log("applyPersistedCrdtDoc", "no persisted doc", entityId);
         targetDoc.transact(() => {
           applyChangesToCRDTDoc(targetDoc, record);
-          handlers.saveRecord();
+          handlers.persistCRDTDoc();
         }, LOCAL_SYNC_MANAGER_ORIGIN);
         return;
       }
@@ -10369,7 +10369,7 @@ var wp;
       );
       targetDoc.transact(() => {
         applyChangesToCRDTDoc(targetDoc, changes);
-        handlers.saveRecord();
+        handlers.persistCRDTDoc();
       }, LOCAL_SYNC_MANAGER_ORIGIN);
     }
     function updateCRDTDoc(objectType, objectId, changes, origin2, options = {}) {
