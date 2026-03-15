@@ -12200,7 +12200,10 @@ var wp;
       return false;
     }
     const blockEditingMode = getBlockEditingMode(state, rootClientId ?? "");
-    if (blockEditingMode === "disabled" && blockName !== (0, import_blocks6.getDefaultBlockName)()) {
+    const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
+    const sectionClientId = isParentSectionBlock ? rootClientId : getParentSectionBlock(state, rootClientId);
+    const isWithinSection = !!sectionClientId;
+    if (blockEditingMode === "disabled" && (!isWithinSection || blockName !== (0, import_blocks6.getDefaultBlockName)())) {
       return false;
     }
     const parentBlockListSettings = getBlockListSettings(state, rootClientId);
@@ -12208,9 +12211,6 @@ var wp;
       return false;
     }
     const isContentRoleBlock = isContentBlock3(blockName);
-    const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
-    const sectionClientId = isParentSectionBlock ? rootClientId : getParentSectionBlock(state, rootClientId);
-    const isWithinSection = !!sectionClientId;
     if (isWithinSection && !isContentRoleBlock) {
       return false;
     }
