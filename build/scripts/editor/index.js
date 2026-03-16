@@ -39471,13 +39471,23 @@ var wp;
           return state.blockInserterPanel;
         }
         if (getRenderingMode(state) === "template-locked") {
-          const [postContentClientId] = select6(import_block_editor36.store).getBlocksByName(
-            "core/post-content"
-          );
+          const {
+            getBlocksByName,
+            getSelectedBlockClientId: getSelectedBlockClientId2,
+            getBlockParents,
+            getBlockOrder: getBlockOrder2
+          } = select6(import_block_editor36.store);
+          const [postContentClientId] = getBlocksByName("core/post-content");
           if (postContentClientId) {
+            const selectedBlockClientId = getSelectedBlockClientId2();
+            if (selectedBlockClientId && selectedBlockClientId !== postContentClientId && getBlockParents(selectedBlockClientId).includes(
+              postContentClientId
+            )) {
+              return EMPTY_INSERTION_POINT;
+            }
             return {
               rootClientId: postContentClientId,
-              insertionIndex: void 0,
+              insertionIndex: getBlockOrder2(postContentClientId).length,
               filterValue: void 0
             };
           }
@@ -39485,13 +39495,21 @@ var wp;
         return EMPTY_INSERTION_POINT;
       },
       (state) => {
-        const [postContentClientId] = select6(import_block_editor36.store).getBlocksByName(
-          "core/post-content"
-        );
+        const {
+          getBlocksByName,
+          getSelectedBlockClientId: getSelectedBlockClientId2,
+          getBlockParents,
+          getBlockOrder: getBlockOrder2
+        } = select6(import_block_editor36.store);
+        const [postContentClientId] = getBlocksByName("core/post-content");
+        const selectedBlockClientId = getSelectedBlockClientId2();
         return [
           state.blockInserterPanel,
           getRenderingMode(state),
-          postContentClientId
+          postContentClientId,
+          selectedBlockClientId,
+          selectedBlockClientId ? getBlockParents(selectedBlockClientId) : void 0,
+          postContentClientId ? getBlockOrder2(postContentClientId).length : void 0
         ];
       }
     )
@@ -53094,7 +53112,8 @@ var wp;
         showMostUsedBlocks,
         showInserterHelpPanel: true,
         shouldFocusBlock: isMobileViewport,
-        rootClientId: blockSectionRootClientId,
+        rootClientId: blockSectionRootClientId ?? inserter.rootClientId,
+        __experimentalInsertionIndex: inserter.insertionIndex,
         onSelect: inserter.onSelect,
         __experimentalInitialTab: inserter.tab,
         __experimentalInitialCategory: inserter.category,
