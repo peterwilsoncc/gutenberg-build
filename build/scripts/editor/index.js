@@ -16245,7 +16245,7 @@ var wp;
         ...Object.fromEntries(
           Object.entries(settings).filter(
             ([key]) => BLOCK_EDITOR_SETTINGS.includes(key)
-          ).filter(([key]) => key !== "onNavigateToEntityRecord")
+          )
         ),
         [globalStylesDataKey]: globalStylesData,
         [globalStylesLinksDataKey]: globalStylesLinksData,
@@ -16257,7 +16257,6 @@ var wp;
         hasFixedToolbar,
         isDistractionFree,
         keepCaretInsideBlock,
-        onNavigateToEntityRecord: settings.onNavigateToEntityRecord,
         [getMediaSelectKey]: (select6, attachmentId) => {
           return select6(import_core_data29.store).getEntityRecord(
             "postType",
