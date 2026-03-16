@@ -34290,6 +34290,7 @@ If there's a particular need for this, please submit a feature request at https:
       isItemClickable,
       renderItemLink,
       defaultLayouts: defaultLayouts4,
+      containerRef,
       empty = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("p", { children: (0, import_i18n100.__)("No results") })
     } = (0, import_element90.useContext)(dataviews_context_default);
     const isDelayedInitialLoading = useDelayedLoading(!hasInitiallyLoaded, {
@@ -34304,7 +34305,7 @@ If there's a particular need for this, please submit a feature request at https:
     const ViewComponent = VIEW_LAYOUTS.find(
       (v2) => v2.type === view.type && defaultLayouts4[v2.type]
     )?.component;
-    return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
       ViewComponent,
       {
         className,
@@ -34324,7 +34325,7 @@ If there's a particular need for this, please submit a feature request at https:
         view,
         empty
       }
-    );
+    ) });
   }
 
   // packages/dataviews/build-module/components/dataviews-footer/index.mjs
@@ -37766,8 +37767,13 @@ If there's a particular need for this, please submit a feature request at https:
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
+    const {
+      data: displayData,
+      paginationInfo: displayPaginationInfo,
+      hasInitiallyLoaded
+    } = useData(data, isLoading, paginationInfo);
     (0, import_element112.useEffect)(() => {
-      if (!view.infiniteScrollEnabled || !containerRef.current) {
+      if (!hasInitiallyLoaded || !view.infiniteScrollEnabled || !containerRef.current) {
         return;
       }
       const handleScroll = (0, import_compose21.throttle)((event) => {
@@ -37785,7 +37791,11 @@ If there's a particular need for this, please submit a feature request at https:
         container.removeEventListener("scroll", handleScroll);
         handleScroll.cancel();
       };
-    }, [infiniteScrollHandler, view.infiniteScrollEnabled]);
+    }, [
+      hasInitiallyLoaded,
+      infiniteScrollHandler,
+      view.infiniteScrollEnabled
+    ]);
     const defaultLayouts4 = (0, import_element112.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(
@@ -37798,11 +37808,6 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [defaultLayoutsProperty]
     );
-    const {
-      data: displayData,
-      paginationInfo: displayPaginationInfo,
-      hasInitiallyLoaded
-    } = useData(data, isLoading, paginationInfo);
     if (!defaultLayouts4[view.type]) {
       return null;
     }
@@ -37839,7 +37844,7 @@ If there's a particular need for this, please submit a feature request at https:
           hasInfiniteScrollHandler: !!infiniteScrollHandler,
           onReset
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "dataviews-wrapper", ref: containerRef, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
           DefaultUI,
           {
             header,

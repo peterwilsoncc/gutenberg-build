@@ -332,7 +332,6 @@
 .dataviews-wrapper,
 .dataviews-picker-wrapper {
   height: 100%;
-  overflow: auto;
   box-sizing: border-box;
   scroll-padding-bottom: 64px;
   /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
@@ -479,6 +478,15 @@
 .dataviews-bulk-actions-footer__container {
   margin-right: auto;
   min-height: 32px;
+}
+
+.dataviews-layout__container {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: inherit;
 }
 
 .dataviews-filters__button {

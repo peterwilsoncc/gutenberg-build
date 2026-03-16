@@ -1533,7 +1533,6 @@ button.font-library__upload-area {
 .dataviews-wrapper,
 .dataviews-picker-wrapper {
   height: 100%;
-  overflow: auto;
   box-sizing: border-box;
   scroll-padding-bottom: 64px;
   /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
@@ -1680,6 +1679,15 @@ button.font-library__upload-area {
 .dataviews-bulk-actions-footer__container {
   margin-left: auto;
   min-height: 32px;
+}
+
+.dataviews-layout__container {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: inherit;
 }
 
 .dataviews-filters__button {

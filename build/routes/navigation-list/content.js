@@ -13211,6 +13211,7 @@ function DataViewsLayout({ className }) {
     isItemClickable,
     renderItemLink,
     defaultLayouts,
+    containerRef,
     empty = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("p", { children: (0, import_i18n28.__)("No results") })
   } = (0, import_element35.useContext)(dataviews_context_default);
   const isDelayedInitialLoading = useDelayedLoading(!hasInitiallyLoaded, {
@@ -13225,7 +13226,7 @@ function DataViewsLayout({ className }) {
   const ViewComponent = VIEW_LAYOUTS.find(
     (v2) => v2.type === view.type && defaultLayouts[v2.type]
   )?.component;
-  return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
     ViewComponent,
     {
       className,
@@ -13245,7 +13246,7 @@ function DataViewsLayout({ className }) {
       view,
       empty
     }
-  );
+  ) });
 }
 
 // packages/dataviews/build-module/components/dataviews-footer/index.mjs
@@ -16845,8 +16846,13 @@ function DataViews({
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
+  const {
+    data: displayData,
+    paginationInfo: displayPaginationInfo,
+    hasInitiallyLoaded
+  } = useData(data, isLoading, paginationInfo);
   (0, import_element57.useEffect)(() => {
-    if (!view.infiniteScrollEnabled || !containerRef.current) {
+    if (!hasInitiallyLoaded || !view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
     const handleScroll = (0, import_compose11.throttle)((event) => {
@@ -16864,7 +16870,11 @@ function DataViews({
       container.removeEventListener("scroll", handleScroll);
       handleScroll.cancel();
     };
-  }, [infiniteScrollHandler, view.infiniteScrollEnabled]);
+  }, [
+    hasInitiallyLoaded,
+    infiniteScrollHandler,
+    view.infiniteScrollEnabled
+  ]);
   const defaultLayouts = (0, import_element57.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(
@@ -16877,11 +16887,6 @@ function DataViews({
     ),
     [defaultLayoutsProperty]
   );
-  const {
-    data: displayData,
-    paginationInfo: displayPaginationInfo,
-    hasInitiallyLoaded
-  } = useData(data, isLoading, paginationInfo);
   if (!defaultLayouts[view.type]) {
     return null;
   }
@@ -16918,7 +16923,7 @@ function DataViews({
         hasInfiniteScrollHandler: !!infiniteScrollHandler,
         onReset
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { className: "dataviews-wrapper", ref: containerRef, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
         DefaultUI,
         {
           header,
