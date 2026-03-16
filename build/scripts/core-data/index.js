@@ -2351,25 +2351,6 @@ var wp;
 
   // packages/core-data/build-module/utils/crdt.mjs
   var POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE = "_crdt_document";
-  var allowedPostProperties = /* @__PURE__ */ new Set([
-    "author",
-    "blocks",
-    "content",
-    "categories",
-    "comment_status",
-    "date",
-    "excerpt",
-    "featured_media",
-    "format",
-    "meta",
-    "ping_status",
-    "slug",
-    "status",
-    "sticky",
-    "tags",
-    "template",
-    "title"
-  ]);
   var disallowedPostMetaKeys = /* @__PURE__ */ new Set([
     POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE
   ]);
@@ -2388,10 +2369,10 @@ var wp;
       }
     });
   }
-  function applyPostChangesToCRDTDoc(ydoc, changes, _postType) {
+  function applyPostChangesToCRDTDoc(ydoc, changes, syncedProperties) {
     const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
     Object.keys(changes).forEach((key) => {
-      if (!allowedPostProperties.has(key)) {
+      if (!syncedProperties.has(key)) {
         return;
       }
       const newValue = changes[key];
@@ -2478,12 +2459,12 @@ var wp;
   function defaultGetChangesFromCRDTDoc(crdtDoc) {
     return getRootMap(crdtDoc, CRDT_RECORD_MAP_KEY).toJSON();
   }
-  function getPostChangesFromCRDTDoc(ydoc, editedRecord, _postType) {
+  function getPostChangesFromCRDTDoc(ydoc, editedRecord, syncedProperties) {
     const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
     let allowedMetaChanges = {};
     const changes = Object.fromEntries(
       Object.entries(ymap.toJSON()).filter(([key, newValue]) => {
-        if (!allowedPostProperties.has(key)) {
+        if (!syncedProperties.has(key)) {
           return false;
         }
         const currentValue = editedRecord[key];
@@ -2844,14 +2825,35 @@ var wp;
     return newEdits;
   };
   async function loadPostTypeEntities() {
-    const postTypes = await (0, import_api_fetch.default)({
-      path: "/wp/v2/types?context=view"
-    });
+    const postTypesPromise = (0, import_api_fetch.default)({ path: "/wp/v2/types?context=view" });
+    const taxonomiesPromise = window._wpCollaborationEnabled ? (0, import_api_fetch.default)({ path: "/wp/v2/taxonomies?context=view" }) : Promise.resolve({});
+    const [postTypes, taxonomies] = await Promise.all([
+      postTypesPromise,
+      taxonomiesPromise
+    ]);
     return Object.entries(postTypes ?? {}).map(([name, postType]) => {
       const isTemplate = ["wp_template", "wp_template_part"].includes(
         name
       );
       const namespace = postType?.rest_namespace ?? "wp/v2";
+      const syncedProperties = /* @__PURE__ */ new Set([
+        "author",
+        "blocks",
+        "content",
+        "comment_status",
+        "date",
+        "excerpt",
+        "featured_media",
+        "format",
+        "meta",
+        "ping_status",
+        "slug",
+        "status",
+        "sticky",
+        "template",
+        "title",
+        ...postType.taxonomies?.map((taxonomy) => taxonomies?.[taxonomy]?.rest_base)?.filter(Boolean) ?? []
+      ]);
       const entity2 = {
         kind: "postType",
         baseURL: `/${namespace}/${postType.rest_base}`,
@@ -2880,7 +2882,7 @@ var wp;
          * @param {Partial< import('@wordpress/sync').ObjectData >} changes
          * @return {void}
          */
-        applyChangesToCRDTDoc: (crdtDoc, changes) => applyPostChangesToCRDTDoc(crdtDoc, changes, postType),
+        applyChangesToCRDTDoc: (crdtDoc, changes) => applyPostChangesToCRDTDoc(crdtDoc, changes, syncedProperties),
         /**
          * Create the awareness instance for the entity's CRDT document.
          *
@@ -2901,7 +2903,11 @@ var wp;
          * @param {import('@wordpress/sync').ObjectData} editedRecord
          * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
          */
-        getChangesFromCRDTDoc: (crdtDoc, editedRecord) => getPostChangesFromCRDTDoc(crdtDoc, editedRecord, postType),
+        getChangesFromCRDTDoc: (crdtDoc, editedRecord) => getPostChangesFromCRDTDoc(
+          crdtDoc,
+          editedRecord,
+          syncedProperties
+        ),
         /**
          * Extract changes from a CRDT document that can be used to update the
          * local editor state.
