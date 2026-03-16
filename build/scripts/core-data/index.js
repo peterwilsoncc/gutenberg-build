@@ -1323,6 +1323,7 @@ var wp;
 
   // packages/core-data/build-module/sync.mjs
   var {
+    ConnectionErrorCode,
     createSyncManager,
     Delta,
     CRDT_DOC_META_PERSISTENCE_KEY,
@@ -3572,6 +3573,11 @@ var wp;
     switch (action.type) {
       case "SET_COLLABORATION_SUPPORTED":
         return action.supported;
+      case "SET_SYNC_CONNECTION_STATUS":
+        if (ConnectionErrorCode.DOCUMENT_SIZE_LIMIT_EXCEEDED === action.status?.error?.code) {
+          return false;
+        }
+        return state;
     }
     return state;
   }
