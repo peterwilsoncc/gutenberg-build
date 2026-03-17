@@ -52145,6 +52145,24 @@ var wp;
 }
 `;
 
+  // packages/editor/build-module/components/collaborators-overlay/timing-utils.mjs
+  function setDelayedInterval(callback, delayMs) {
+    let timerHandle = null;
+    const runner = () => {
+      try {
+        callback();
+      } catch (error) {
+      }
+      timerHandle = setTimeout(runner, delayMs);
+    };
+    timerHandle = setTimeout(runner, delayMs);
+    return () => {
+      if (timerHandle) {
+        clearTimeout(timerHandle);
+      }
+    };
+  }
+
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
   var import_core_data109 = __toESM(require_core_data(), 1);
   var import_element156 = __toESM(require_element(), 1);
@@ -52533,7 +52551,7 @@ var wp;
     );
     return {
       coords: getCursorPosition(
-        start2.textIndex,
+        start2.richTextOffset,
         blockElement,
         overlayContext.editorDocument,
         overlayContext.overlayRect
@@ -52541,7 +52559,7 @@ var wp;
     };
   }
   function computeTextSelection(selection, start2, end, overlayContext) {
-    if (!start2.localClientId || !end.localClientId || start2.textIndex === null || end.textIndex === null) {
+    if (!start2.localClientId || !end.localClientId || start2.richTextOffset === null || end.richTextOffset === null) {
       return {};
     }
     const isReverse = selection.selectionDirection === import_core_data110.SelectionDirection.Backward;
@@ -52560,7 +52578,7 @@ var wp;
     if (allRects.length > 0) {
       return {
         coords: getCursorPosition(
-          activeEnd.textIndex,
+          activeEnd.richTextOffset,
           activeEndBlock,
           overlayContext.editorDocument,
           overlayContext.overlayRect
@@ -52573,7 +52591,7 @@ var wp;
     );
     return {
       coords: getCursorPosition(
-        start2.textIndex,
+        start2.richTextOffset,
         startBlock,
         overlayContext.editorDocument,
         overlayContext.overlayRect
@@ -52584,14 +52602,14 @@ var wp;
     const blockElement = overlayContext.editorDocument.querySelector(
       `[data-block="${start2.localClientId}"]`
     );
-    if (!blockElement || start2.textIndex === null || end.textIndex === null) {
+    if (!blockElement || start2.richTextOffset === null || end.richTextOffset === null) {
       return { rects: [], blockElement: null };
     }
     return {
       rects: getSelectionRects(
         blockElement,
-        start2.textIndex,
-        end.textIndex,
+        start2.richTextOffset,
+        end.richTextOffset,
         overlayContext.editorDocument,
         overlayContext.overlayRect
       ) ?? [],
@@ -52612,7 +52630,7 @@ var wp;
       docLast = start2;
       [firstBlock, lastBlock] = [lastBlock, firstBlock];
     }
-    if (!firstBlock || !lastBlock || docFirst.textIndex === null || docLast.textIndex === null || !docFirst.localClientId || !docLast.localClientId) {
+    if (!firstBlock || !lastBlock || docFirst.richTextOffset === null || docLast.richTextOffset === null || !docFirst.localClientId || !docLast.localClientId) {
       return {
         rects: [],
         firstBlock: null,
@@ -52623,7 +52641,7 @@ var wp;
     const allRects = [];
     const startRects = getSelectionRects(
       firstBlock,
-      docFirst.textIndex,
+      docFirst.richTextOffset,
       Number.MAX_SAFE_INTEGER,
       overlayContext.editorDocument,
       overlayContext.overlayRect
@@ -52647,7 +52665,7 @@ var wp;
     const endRects = getSelectionRects(
       lastBlock,
       0,
-      docLast.textIndex,
+      docLast.richTextOffset,
       overlayContext.editorDocument,
       overlayContext.overlayRect
     );
@@ -52703,7 +52721,7 @@ var wp;
           type: import_core_data111.SelectionType.None
         };
         let start2 = {
-          textIndex: null,
+          richTextOffset: null,
           localClientId: null
         };
         let end;
@@ -52767,6 +52785,7 @@ var wp;
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   var RERENDER_DELAY_MS = 500;
+  var CURSOR_REDRAW_INTERVAL_MS = 1e4;
   function Overlay({
     blockEditorDocument,
     postId: postId2,
@@ -52800,6 +52819,15 @@ var wp;
         cleanupHighlights();
       };
     }, [rerenderCursorsAfterDelay, rerenderHighlightsAfterDelay]);
+    (0, import_element158.useEffect)(() => {
+      if (cursors.length === 0) {
+        return;
+      }
+      return setDelayedInterval(
+        rerenderCursorsAfterDelay,
+        CURSOR_REDRAW_INTERVAL_MS
+      );
+    }, [cursors.length, rerenderCursorsAfterDelay]);
     const mergedRef = (0, import_compose49.useMergeRefs)([
       setOverlayElement,
       resizeObserverRef
