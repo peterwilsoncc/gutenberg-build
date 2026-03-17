@@ -745,46 +745,41 @@ function useConnectorPlugin({
           canInstallPlugins: canCreate
         };
       }
-      const plugins = store2.getEntityRecords(
+      const pluginId = `${pluginSlug}/plugin`;
+      const plugin = store2.getEntityRecord(
         "root",
-        "plugin"
+        "plugin",
+        pluginId
       );
-      if (plugins === null) {
-        const hasFinished = store2.hasFinishedResolution(
-          "getEntityRecords",
-          ["root", "plugin"]
-        );
-        if (!hasFinished) {
-          return {
-            derivedPluginStatus: "checking",
-            canManagePlugins: void 0,
-            currentApiKey: apiKey,
-            canInstallPlugins: canCreate
-          };
-        }
-        let status2 = "not-installed";
-        if (isActivated) {
-          status2 = "active";
-        } else if (isInstalled) {
-          status2 = "inactive";
-        }
+      const hasFinished = store2.hasFinishedResolution(
+        "getEntityRecord",
+        ["root", "plugin", pluginId]
+      );
+      if (!hasFinished) {
         return {
-          derivedPluginStatus: status2,
-          canManagePlugins: false,
+          derivedPluginStatus: "checking",
+          canManagePlugins: void 0,
           currentApiKey: apiKey,
           canInstallPlugins: canCreate
         };
       }
-      const plugin = plugins.find(
-        (p) => p.plugin === `${pluginSlug}/plugin`
-      );
-      let status = "not-installed";
       if (plugin) {
-        status = plugin.status === "active" ? "active" : "inactive";
+        return {
+          derivedPluginStatus: plugin.status === "active" ? "active" : "inactive",
+          canManagePlugins: true,
+          currentApiKey: apiKey,
+          canInstallPlugins: canCreate
+        };
+      }
+      let status = "not-installed";
+      if (isActivated) {
+        status = "active";
+      } else if (isInstalled) {
+        status = "inactive";
       }
       return {
         derivedPluginStatus: status,
-        canManagePlugins: true,
+        canManagePlugins: false,
         currentApiKey: apiKey,
         canInstallPlugins: canCreate
       };
