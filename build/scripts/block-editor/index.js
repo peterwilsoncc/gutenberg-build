@@ -9331,8 +9331,6 @@ var wp;
         });
         return hasChanges ? { ...state, panels: newPanels } : state;
       }
-      case "RESET_BLOCKS":
-        return { allOpen: false, panels: {} };
     }
     return state;
   }
