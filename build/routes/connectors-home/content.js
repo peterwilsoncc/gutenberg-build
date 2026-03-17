@@ -1280,6 +1280,7 @@ function registerDefaultConnectors() {
     registerConnector(connectorName, {
       label: data.name,
       description: data.description,
+      icon: getConnectorLogo(connectorId, data.logoUrl),
       render: (props) => /* @__PURE__ */ React.createElement(
         ApiKeyConnector,
         {
@@ -1287,7 +1288,6 @@ function registerDefaultConnectors() {
           pluginSlug: data.plugin?.slug,
           settingName: authentication.settingName,
           helpUrl: authentication.credentialsUrl ?? void 0,
-          icon: getConnectorLogo(connectorId, data.logoUrl),
           isInstalled: data.plugin?.isInstalled,
           isActivated: data.plugin?.isActivated,
           keySource: authentication.keySource,
@@ -1579,7 +1579,8 @@ function ConnectorsPage() {
               key: connector.slug,
               slug: connector.slug,
               label: connector.label,
-              description: connector.description
+              description: connector.description,
+              icon: connector.icon
             }
           );
         }
