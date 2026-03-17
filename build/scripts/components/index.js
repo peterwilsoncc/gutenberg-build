@@ -2286,7 +2286,7 @@ var wp;
     return void 0;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/YXGXYGQX.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/YXGXYGQX.js
   var import_react = __toESM(require_react(), 1);
   function setRef(ref, value) {
     if (typeof ref === "function") {
@@ -2628,7 +2628,7 @@ var wp;
     return removeEventListener;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/KPHZR4MB.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/KPHZR4MB.js
   var React = __toESM(require_react(), 1);
   var import_react2 = __toESM(require_react(), 1);
   var _React = { ...React };
@@ -2813,7 +2813,7 @@ var wp;
     mouseMoving = false;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/GWSL6KNJ.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/GWSL6KNJ.js
   var React2 = __toESM(require_react(), 1);
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   function forwardRef2(render) {
@@ -2894,7 +2894,7 @@ var wp;
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/SMPCIMZM.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/SMPCIMZM.js
   var ctx = createStoreContext();
   var useCollectionContext = ctx.useContext;
   var useCollectionScopedContext = ctx.useScopedContext;
@@ -2902,7 +2902,7 @@ var wp;
   var CollectionContextProvider = ctx.ContextProvider;
   var CollectionScopedContextProvider = ctx.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/AVVXDJMZ.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/AVVXDJMZ.js
   var import_react3 = __toESM(require_react(), 1);
   var ctx2 = createStoreContext(
     [CollectionContextProvider],
@@ -2920,7 +2920,7 @@ var wp;
     void 0
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/NF43FNG5.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/NF43FNG5.js
   var ctx3 = createStoreContext(
     [CompositeContextProvider],
     [CompositeScopedContextProvider]
@@ -2931,7 +2931,7 @@ var wp;
   var TabContextProvider = ctx3.ContextProvider;
   var TabScopedContextProvider = ctx3.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
   var NULL_ITEM = { id: null };
   function flipItems(items, activeId, shouldInsertNullItem = false) {
     const index2 = items.findIndex((item2) => item2.id === activeId);
@@ -3001,7 +3001,7 @@ var wp;
     return true;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/Z2O3VLAQ.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/Z2O3VLAQ.js
   var import_react4 = __toESM(require_react(), 1);
   var TagName = "div";
   var useCollectionItem = createHook(
@@ -3037,7 +3037,7 @@ var wp;
     return createElement(TagName, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/SWN3JYXT.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/SWN3JYXT.js
   var import_react5 = __toESM(require_react(), 1);
   var FocusableContext = (0, import_react5.createContext)(true);
 
@@ -3219,7 +3219,7 @@ var wp;
     }
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/U6HHPQDW.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/U6HHPQDW.js
   var import_react6 = __toESM(require_react(), 1);
   var TagName2 = "div";
   var isSafariBrowser = isSafari();
@@ -3521,7 +3521,7 @@ var wp;
     return createElement(TagName2, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/PZ3OL7I2.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/PZ3OL7I2.js
   var import_react7 = __toESM(require_react(), 1);
   var TagName3 = "button";
   function isNativeClick(event) {
@@ -3832,7 +3832,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/Q5W46E73.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/Q5W46E73.js
   var React3 = __toESM(require_react(), 1);
   var import_shim = __toESM(require_shim(), 1);
   var { useSyncExternalStore } = import_shim.default;
@@ -3938,7 +3938,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [memoizedStore, updateStore];
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/WZWDIE3S.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/WZWDIE3S.js
   var import_react8 = __toESM(require_react(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   var TagName4 = "button";
@@ -4233,7 +4233,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/tab/tab.js
+  // packages/components/node_modules/@ariakit/react-core/esm/tab/tab.js
   var import_react9 = __toESM(require_react(), 1);
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var TagName5 = "button";
@@ -4352,7 +4352,7 @@ If there's a particular need for this, please submit a feature request at https:
     return array.slice().reverse();
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/ZMWF7ASR.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/ZMWF7ASR.js
   var import_react10 = __toESM(require_react(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   var TagName6 = "div";
@@ -4626,7 +4626,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName6, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/tab/tab-list.js
+  // packages/components/node_modules/@ariakit/react-core/esm/tab/tab-list.js
   var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
   var TagName7 = "div";
   var useTabList = createHook(
@@ -4665,7 +4665,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName7, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/LVDQFHCH.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/LVDQFHCH.js
   var ctx4 = createStoreContext();
   var useDisclosureContext = ctx4.useContext;
   var useDisclosureScopedContext = ctx4.useScopedContext;
@@ -4673,7 +4673,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DisclosureContextProvider = ctx4.ContextProvider;
   var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/A62MDFCW.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/A62MDFCW.js
   var import_react11 = __toESM(require_react(), 1);
   var ctx5 = createStoreContext(
     [DisclosureContextProvider],
@@ -4687,7 +4687,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DialogHeadingContext = (0, import_react11.createContext)(void 0);
   var DialogDescriptionContext = (0, import_react11.createContext)(void 0);
 
-  // node_modules/@ariakit/react-core/esm/__chunks/6B3RXHKP.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/6B3RXHKP.js
   var import_react12 = __toESM(require_react(), 1);
   var import_react_dom = __toESM(require_react_dom(), 1);
   var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
@@ -4902,7 +4902,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/WLZ6H5FH.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/WLZ6H5FH.js
   function useDisclosureStoreProps(store, update, props) {
     useUpdateEffect(update, [props.store, props.disclosure]);
     useStoreProps(store, props, "open", "setOpen");
@@ -4915,7 +4915,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useDisclosureStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/tab/tab-panel.js
+  // packages/components/node_modules/@ariakit/react-core/esm/tab/tab-panel.js
   var import_react13 = __toESM(require_react(), 1);
   var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   var TagName9 = "div";
@@ -5055,7 +5055,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName9, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/JMU4N4M5.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/JMU4N4M5.js
   var ctx6 = createStoreContext(
     [DialogContextProvider],
     [DialogScopedContextProvider]
@@ -5066,7 +5066,7 @@ If there's a particular need for this, please submit a feature request at https:
   var PopoverContextProvider = ctx6.ContextProvider;
   var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/AEGCXJZV.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/AEGCXJZV.js
   var import_react14 = __toESM(require_react(), 1);
   var ctx7 = createStoreContext(
     [PopoverContextProvider, CompositeContextProvider],
@@ -5227,7 +5227,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/GVAFFF2B.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/GVAFFF2B.js
   function useCollectionStoreProps(store, update, props) {
     useUpdateEffect(update, [props.store]);
     useStoreProps(store, props, "items", "setItems");
@@ -5493,7 +5493,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/IQYAUKXT.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/IQYAUKXT.js
   function useCompositeStoreOptions(props) {
     const id3 = useId(props.id);
     return { id: id3, ...props };
@@ -5516,7 +5516,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useCompositeStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/CVCFNOHX.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/CVCFNOHX.js
   var import_react15 = __toESM(require_react(), 1);
   var ComboboxListRoleContext = (0, import_react15.createContext)(
     void 0
@@ -5685,7 +5685,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/OJYI6SUJ.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/OJYI6SUJ.js
   var import_react16 = __toESM(require_react(), 1);
   function useTabStoreProps(store, update, props) {
     useUpdateEffect(update, [props.composite, props.combobox]);
@@ -5726,7 +5726,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/5WUV565P.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/5WUV565P.js
   function useToolbarStoreProps(store, update, props) {
     return useCompositeStoreProps(store, update, props);
   }
@@ -5735,7 +5735,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useToolbarStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/WZDDDI4V.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/WZDDDI4V.js
   var ctx9 = createStoreContext(
     [CompositeContextProvider],
     [CompositeScopedContextProvider]
@@ -5746,7 +5746,7 @@ If there's a particular need for this, please submit a feature request at https:
   var ToolbarContextProvider = ctx9.ContextProvider;
   var ToolbarScopedContextProvider = ctx9.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/toolbar/toolbar.js
+  // packages/components/node_modules/@ariakit/react-core/esm/toolbar/toolbar.js
   var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   var TagName10 = "div";
   var useToolbar = createHook(
@@ -5789,7 +5789,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName10, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/HSU7H6PW.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/HSU7H6PW.js
   var TagName11 = "button";
   var useToolbarItem = createHook(
     function useToolbarItem2({ store, ...props }) {
@@ -5806,7 +5806,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/P7VC6T3R.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/P7VC6T3R.js
   var TagName12 = "hr";
   var useSeparator = createHook(
     function useSeparator2({ orientation = "horizontal", ...props }) {
@@ -5823,7 +5823,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName12, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/YBRT277Q.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/YBRT277Q.js
   var TagName13 = "hr";
   var useCompositeSeparator = createHook(function useCompositeSeparator2({ store, ...props }) {
     const context = useCompositeContext();
@@ -5843,7 +5843,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName13, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/PTRWAQFT.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/PTRWAQFT.js
   var ctx10 = createStoreContext(
     [PopoverContextProvider],
     [PopoverScopedContextProvider]
@@ -5854,7 +5854,7 @@ If there's a particular need for this, please submit a feature request at https:
   var HovercardContextProvider = ctx10.ContextProvider;
   var HovercardScopedContextProvider = ctx10.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/UZXQ5DX3.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/UZXQ5DX3.js
   var ctx11 = createStoreContext(
     [HovercardContextProvider],
     [HovercardScopedContextProvider]
@@ -5865,7 +5865,7 @@ If there's a particular need for this, please submit a feature request at https:
   var TooltipContextProvider = ctx11.ContextProvider;
   var TooltipScopedContextProvider = ctx11.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/X7QOZUD3.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/X7QOZUD3.js
   function getEventPoint(event) {
     return [event.clientX, event.clientY];
   }
@@ -5945,11 +5945,11 @@ If there's a particular need for this, please submit a feature request at https:
     return polygon;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/AOQQTIBO.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/AOQQTIBO.js
   var import_react17 = __toESM(require_react(), 1);
   var PortalContext = (0, import_react17.createContext)(null);
 
-  // node_modules/@ariakit/react-core/esm/__chunks/2F57YTN4.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/2F57YTN4.js
   var TagName14 = "span";
   var useVisuallyHidden = createHook(
     function useVisuallyHidden2(props) {
@@ -5976,7 +5976,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName14, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/BFOIJXK2.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/BFOIJXK2.js
   var TagName15 = "span";
   var useFocusTrap = createHook(
     function useFocusTrap2(props) {
@@ -6002,7 +6002,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName15, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/VJH3F6TN.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/VJH3F6TN.js
   var import_react18 = __toESM(require_react(), 1);
   var import_react_dom2 = __toESM(require_react_dom(), 1);
   var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
@@ -6233,11 +6233,11 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName16, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/CZ4GFWYL.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/CZ4GFWYL.js
   var import_react19 = __toESM(require_react(), 1);
   var HeadingContext = (0, import_react19.createContext)(0);
 
-  // node_modules/@ariakit/react-core/esm/__chunks/5M6RIVE2.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/5M6RIVE2.js
   var import_react20 = __toESM(require_react(), 1);
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   function HeadingLevel({ level, children }) {
@@ -6249,7 +6249,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(HeadingContext.Provider, { value: nextLevel, children });
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/3HM4TGWW.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/3HM4TGWW.js
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   var TagName17 = "div";
   var useFocusableContainer = createHook(function useFocusableContainer2({ autoFocusOnShow = true, ...props }) {
@@ -6265,7 +6265,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName17, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/6GXEOXGT.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/6GXEOXGT.js
   function prependHiddenDismiss(container, onClick) {
     const document2 = getDocument(container);
     const button = document2.createElement("button");
@@ -6292,7 +6292,7 @@ If there's a particular need for this, please submit a feature request at https:
     return removeHiddenDismiss;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/U3R3WHDK.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/U3R3WHDK.js
   var import_react21 = __toESM(require_react(), 1);
   function usePreviousMouseDownRef(enabled) {
     const previousMouseDownRef = (0, import_react21.useRef)(null);
@@ -6309,7 +6309,7 @@ If there's a particular need for this, please submit a feature request at https:
     return previousMouseDownRef;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/K2ZF5NU7.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/K2ZF5NU7.js
   var cleanups = /* @__PURE__ */ new WeakMap();
   function orchestrate(element, key, setup2) {
     if (!cleanups.has(element)) {
@@ -6397,7 +6397,7 @@ If there's a particular need for this, please submit a feature request at https:
     return orchestrate(element, property, setup2);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/AOUGVQZ3.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/AOUGVQZ3.js
   var ignoreTags = ["SCRIPT", "STYLE"];
   function getSnapshotPropertyName(id3) {
     return `__ariakit-dialog-snapshot-${id3}`;
@@ -6457,7 +6457,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/63XF7ACK.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/63XF7ACK.js
   function isBackdrop(element, ...ids) {
     if (!element) return false;
     const backdrop = element.getAttribute("data-backdrop");
@@ -6468,7 +6468,7 @@ If there's a particular need for this, please submit a feature request at https:
     return ids.some((id3) => backdrop === id3);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/3NDVDEB4.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/3NDVDEB4.js
   function getPropertyName(id3 = "", ancestor = false) {
     return `__ariakit-dialog-${ancestor ? "ancestor" : "outside"}${id3 ? `-${id3}` : ""}`;
   }
@@ -6518,7 +6518,7 @@ If there's a particular need for this, please submit a feature request at https:
     return restoreAccessibilityTree;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/KKITJVHA.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/KKITJVHA.js
   var import_react22 = __toESM(require_react(), 1);
   function isInDocument(target) {
     if (target.tagName === "HTML") return true;
@@ -6627,7 +6627,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/JSI7U3EA.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/JSI7U3EA.js
   var import_react23 = __toESM(require_react(), 1);
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   var NestedDialogsContext = (0, import_react23.createContext)({});
@@ -6660,7 +6660,7 @@ If there's a particular need for this, please submit a feature request at https:
     return { wrapElement, nestedDialogs: dialogs };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/OT5RJDXG.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/OT5RJDXG.js
   var import_react24 = __toESM(require_react(), 1);
   var import_react_dom3 = __toESM(require_react_dom(), 1);
   function useRootDialog({
@@ -6693,7 +6693,7 @@ If there's a particular need for this, please submit a feature request at https:
     return isRootDialog;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/B6W4QFKS.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/B6W4QFKS.js
   var import_react25 = __toESM(require_react(), 1);
   function getPaddingProperty(documentElement) {
     const documentLeft = documentElement.getBoundingClientRect().left;
@@ -6753,7 +6753,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [isRootDialog, contentElement]);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/IGR4SXG2.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/IGR4SXG2.js
   function isFocusTrap(element, ...ids) {
     if (!element) return false;
     const attr = element.getAttribute("data-focus-trap");
@@ -6763,17 +6763,17 @@ If there's a particular need for this, please submit a feature request at https:
     return ids.some((id3) => attr === id3);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/677M2CI3.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/677M2CI3.js
   function supportsInert() {
     return "inert" in HTMLElement.prototype;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/S7U6BLGA.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/S7U6BLGA.js
   function hideElementFromAccessibilityTree(element) {
     return setAttribute(element, "aria-hidden", "true");
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/Z5GCVBAY.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/Z5GCVBAY.js
   function disableTree(element, ignoredElements) {
     if (!("style" in element)) return noop;
     if (supportsInert()) {
@@ -6825,7 +6825,7 @@ If there's a particular need for this, please submit a feature request at https:
     return restoreTreeOutside;
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/JG4VNI52.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/JG4VNI52.js
   var TagName18 = "div";
   var elements = [
     "a",
@@ -6877,7 +6877,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, {})
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/P45QRJLH.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/P45QRJLH.js
   var import_react26 = __toESM(require_react(), 1);
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   function DialogBackdrop({
@@ -6931,7 +6931,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createDisclosureStore(props);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/4NYSH4UO.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/4NYSH4UO.js
   function useDialogStoreProps(store, update, props) {
     return useDisclosureStoreProps(store, update, props);
   }
@@ -6940,7 +6940,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useDialogStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/Z32PU2LQ.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/Z32PU2LQ.js
   var import_react27 = __toESM(require_react(), 1);
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
   var TagName19 = "div";
@@ -8863,7 +8863,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   };
 
-  // node_modules/@ariakit/react-core/esm/__chunks/KW7Z5AIL.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/KW7Z5AIL.js
   var import_react28 = __toESM(require_react(), 1);
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
   var TagName20 = "div";
@@ -9196,7 +9196,7 @@ If there's a particular need for this, please submit a feature request at https:
     usePopoverProviderContext
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/4HTVKX2Y.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/4HTVKX2Y.js
   var import_react29 = __toESM(require_react(), 1);
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   var TagName21 = "div";
@@ -9426,7 +9426,7 @@ If there's a particular need for this, please submit a feature request at https:
     useHovercardProviderContext
   );
 
-  // node_modules/@ariakit/react-core/esm/tooltip/tooltip.js
+  // packages/components/node_modules/@ariakit/react-core/esm/tooltip/tooltip.js
   var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   var TagName22 = "div";
   var useTooltip = createHook(
@@ -9486,7 +9486,7 @@ If there's a particular need for this, please submit a feature request at https:
     useTooltipProviderContext
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/2XVFVSLB.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/2XVFVSLB.js
   var import_react30 = __toESM(require_react(), 1);
   var TagName23 = "a";
   var useHovercardAnchor = createHook(
@@ -9573,7 +9573,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName23, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/tooltip/tooltip-anchor.js
+  // packages/components/node_modules/@ariakit/react-core/esm/tooltip/tooltip-anchor.js
   var import_react31 = __toESM(require_react(), 1);
   var TagName24 = "div";
   var globalStore = createStore({
@@ -9722,7 +9722,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/B6FLPFJM.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/B6FLPFJM.js
   function usePopoverStoreProps(store, update, props) {
     useUpdateEffect(update, [props.popover]);
     useStoreProps(store, props, "placement");
@@ -9757,7 +9757,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/ECBEZ4YM.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/ECBEZ4YM.js
   function useHovercardStoreProps(store, update, props) {
     useStoreProps(store, props, "timeout");
     useStoreProps(store, props, "showTimeout");
@@ -9799,7 +9799,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/FFWYDZCP.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/FFWYDZCP.js
   function useTooltipStoreProps(store, update, props) {
     useStoreProps(store, props, "type");
     useStoreProps(store, props, "skipTimeout");
@@ -9810,7 +9810,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useTooltipStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/2DUOQURA.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/2DUOQURA.js
   var import_react32 = __toESM(require_react(), 1);
   var menubar = createStoreContext(
     [CompositeContextProvider],
@@ -9825,7 +9825,7 @@ If there's a particular need for this, please submit a feature request at https:
     void 0
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/4POTBZ2J.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/4POTBZ2J.js
   var TagName25 = "div";
   var usePopoverAnchor = createHook(
     function usePopoverAnchor2({ store, ...props }) {
@@ -9843,7 +9843,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName25, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/HMKTUWOU.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/HMKTUWOU.js
   var import_react33 = __toESM(require_react(), 1);
   var TagName26 = "button";
   var useButton = createHook(
@@ -9871,7 +9871,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName26, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/NDVACHQI.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/NDVACHQI.js
   var import_react34 = __toESM(require_react(), 1);
   var TagName27 = "button";
   var symbol2 = /* @__PURE__ */ Symbol("disclosure");
@@ -9924,7 +9924,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName27, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/APVORPDK.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/APVORPDK.js
   var TagName28 = "button";
   var useDialogDisclosure = createHook(
     function useDialogDisclosure2({ store, ...props }) {
@@ -9948,7 +9948,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName28, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/RFRKSHIZ.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/RFRKSHIZ.js
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   var TagName29 = "button";
   var usePopoverDisclosure = createHook(function usePopoverDisclosure2({ store, ...props }) {
@@ -9981,7 +9981,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName29, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/37HM5VRA.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/37HM5VRA.js
   var import_react35 = __toESM(require_react(), 1);
   var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   var TagName30 = "span";
@@ -10039,7 +10039,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/QOZ6WMRY.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/QOZ6WMRY.js
   var ctx12 = createStoreContext(
     [CompositeContextProvider],
     [CompositeScopedContextProvider]
@@ -10050,7 +10050,7 @@ If there's a particular need for this, please submit a feature request at https:
   var RadioContextProvider = ctx12.ContextProvider;
   var RadioScopedContextProvider = ctx12.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/5TKKKQCL.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/5TKKKQCL.js
   var import_react36 = __toESM(require_react(), 1);
   var TagName31 = "input";
   function getIsChecked(value, storeValue) {
@@ -10167,7 +10167,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/radio/radio-group.js
+  // packages/components/node_modules/@ariakit/react-core/esm/radio/radio-group.js
   var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   var TagName32 = "div";
   var useRadioGroup = createHook(
@@ -10223,7 +10223,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/EBNR6XRJ.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/EBNR6XRJ.js
   function useRadioStoreProps(store, update, props) {
     store = useCompositeStoreProps(store, update, props);
     useStoreProps(store, props, "value", "setValue");
@@ -10234,7 +10234,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useRadioStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/N5BMKDVD.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/N5BMKDVD.js
   var TagName33 = "span";
   var useSelectArrow = createHook(
     function useSelectArrow2({ store, ...props }) {
@@ -10249,7 +10249,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName33, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/FORDJ4GP.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/FORDJ4GP.js
   var import_react37 = __toESM(require_react(), 1);
   var TagName34 = "div";
   var chars = "";
@@ -10352,7 +10352,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName34, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/select/select.js
+  // packages/components/node_modules/@ariakit/react-core/esm/select/select.js
   var import_react38 = __toESM(require_react(), 1);
   var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   var TagName35 = "button";
@@ -10553,11 +10553,11 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName35, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/7HVFURXT.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/7HVFURXT.js
   var import_react39 = __toESM(require_react(), 1);
   var GroupLabelContext = (0, import_react39.createContext)(void 0);
 
-  // node_modules/@ariakit/react-core/esm/__chunks/Y6I7WX7H.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/Y6I7WX7H.js
   var import_react40 = __toESM(require_react(), 1);
   var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   var TagName36 = "div";
@@ -10582,7 +10582,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName36, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/XXOHUFXO.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/XXOHUFXO.js
   var TagName37 = "div";
   var useCompositeGroup = createHook(
     function useCompositeGroup2({ store, ...props }) {
@@ -10595,7 +10595,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName37, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/NH3GYEZ7.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/NH3GYEZ7.js
   var import_react41 = __toESM(require_react(), 1);
   var TagName38 = "div";
   var useGroupLabel = createHook(
@@ -10619,7 +10619,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName38, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/JUZDESDO.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/JUZDESDO.js
   var TagName39 = "div";
   var useCompositeGroupLabel = createHook(function useCompositeGroupLabel2({ store, ...props }) {
     props = useGroupLabel(props);
@@ -10630,7 +10630,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName39, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/X6LNAU2F.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/X6LNAU2F.js
   var import_react42 = __toESM(require_react(), 1);
   var TagName40 = "div";
   function getMouseDestination(event) {
@@ -10718,7 +10718,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/4M2S6L5P.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/4M2S6L5P.js
   var import_react43 = __toESM(require_react(), 1);
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   var TagName41 = "div";
@@ -10849,11 +10849,11 @@ If there's a particular need for this, please submit a feature request at https:
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/EYKMH5G5.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/EYKMH5G5.js
   var import_react44 = __toESM(require_react(), 1);
   var CheckboxCheckedContext = (0, import_react44.createContext)(false);
 
-  // node_modules/@ariakit/react-core/esm/__chunks/HOITXJDS.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/HOITXJDS.js
   var import_react45 = __toESM(require_react(), 1);
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var TagName42 = "span";
@@ -10905,7 +10905,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName42, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/select/select-item-check.js
+  // packages/components/node_modules/@ariakit/react-core/esm/select/select-item-check.js
   var import_react46 = __toESM(require_react(), 1);
   var TagName43 = "span";
   var useSelectItemCheck = createHook(
@@ -10921,7 +10921,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName43, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/select/select-label.js
+  // packages/components/node_modules/@ariakit/react-core/esm/select/select-label.js
   var TagName44 = "div";
   var useSelectLabel = createHook(
     function useSelectLabel2({ store, ...props }) {
@@ -10961,7 +10961,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/PFBP2CY4.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/PFBP2CY4.js
   var import_react47 = __toESM(require_react(), 1);
   var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   var TagName45 = "div";
@@ -11069,7 +11069,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName45, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/select/select-popover.js
+  // packages/components/node_modules/@ariakit/react-core/esm/select/select-popover.js
   var TagName46 = "div";
   var useSelectPopover = createHook(
     function useSelectPopover2({ store, alwaysVisible, ...props }) {
@@ -11222,7 +11222,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/HVWMDOZM.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/HVWMDOZM.js
   function useSelectStoreOptions(props) {
     const combobox = useComboboxProviderContext();
     props = {
@@ -11250,7 +11250,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useSelectStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/HLPY2PXK.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/HLPY2PXK.js
   var import_react48 = __toESM(require_react(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var TagName47 = "div";
@@ -11309,7 +11309,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/ALZMXNL4.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/ALZMXNL4.js
   function useCheckboxStoreProps(store, update, props) {
     useUpdateEffect(update, [props.store]);
     useStoreProps(store, props, "value", "setValue");
@@ -11320,7 +11320,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useCheckboxStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/ZVXT4QFT.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/ZVXT4QFT.js
   var ctx13 = createStoreContext();
   var useCheckboxContext = ctx13.useContext;
   var useCheckboxScopedContext = ctx13.useScopedContext;
@@ -11328,7 +11328,7 @@ If there's a particular need for this, please submit a feature request at https:
   var CheckboxContextProvider = ctx13.ContextProvider;
   var CheckboxScopedContextProvider = ctx13.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-core/esm/__chunks/I7KWAPMF.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/I7KWAPMF.js
   var import_react49 = __toESM(require_react(), 1);
   var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   var TagName48 = "input";
@@ -11460,7 +11460,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName48, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/Z4X7TRJU.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/Z4X7TRJU.js
   var import_react50 = __toESM(require_react(), 1);
   var menu = createStoreContext(
     [CompositeContextProvider, HovercardContextProvider],
@@ -11475,7 +11475,7 @@ If there's a particular need for this, please submit a feature request at https:
     void 0
   );
 
-  // node_modules/@ariakit/react-core/esm/__chunks/SVHPDYU7.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/SVHPDYU7.js
   var import_react51 = __toESM(require_react(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var TagName49 = "div";
@@ -11604,7 +11604,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName49, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/menu/menu.js
+  // packages/components/node_modules/@ariakit/react-core/esm/menu/menu.js
   var import_react52 = __toESM(require_react(), 1);
   var TagName50 = "div";
   var useMenu = createHook(function useMenu2({
@@ -11748,7 +11748,7 @@ If there's a particular need for this, please submit a feature request at https:
     useMenuProviderContext
   );
 
-  // node_modules/@ariakit/react-core/esm/menu/menu-button.js
+  // packages/components/node_modules/@ariakit/react-core/esm/menu/menu-button.js
   var import_react53 = __toESM(require_react(), 1);
   var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   var TagName51 = "button";
@@ -11913,7 +11913,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName51, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/menu/menu-group.js
+  // packages/components/node_modules/@ariakit/react-core/esm/menu/menu-group.js
   var TagName52 = "div";
   var useMenuGroup = createHook(
     function useMenuGroup2(props) {
@@ -11926,7 +11926,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName52, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/menu/menu-group-label.js
+  // packages/components/node_modules/@ariakit/react-core/esm/menu/menu-group-label.js
   var TagName53 = "div";
   var useMenuGroupLabel = createHook(
     function useMenuGroupLabel2(props) {
@@ -11939,7 +11939,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName53, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/__chunks/MOWGOTGG.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/MOWGOTGG.js
   var TagName54 = "div";
   function menuHasFocus(baseElement, items, currentTarget) {
     var _a;
@@ -12044,7 +12044,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/menu/menu-item-check.js
+  // packages/components/node_modules/@ariakit/react-core/esm/menu/menu-item-check.js
   var import_react54 = __toESM(require_react(), 1);
   var TagName55 = "span";
   var useMenuItemCheck = createHook(
@@ -12060,7 +12060,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName55, htmlProps);
   });
 
-  // node_modules/@ariakit/react-core/esm/menu/menu-item-checkbox.js
+  // packages/components/node_modules/@ariakit/react-core/esm/menu/menu-item-checkbox.js
   var import_react55 = __toESM(require_react(), 1);
   var TagName56 = "div";
   function getPrimitiveValue2(value) {
@@ -12153,14 +12153,14 @@ If there's a particular need for this, please submit a feature request at https:
     })
   );
 
-  // node_modules/@ariakit/react-core/esm/menu/menu-item-radio.js
+  // packages/components/node_modules/@ariakit/react-core/esm/menu/menu-item-radio.js
   var import_react56 = __toESM(require_react(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   var TagName57 = "div";
   function getValue2(prevValue, value, checked) {
     if (checked === void 0) return prevValue;
     if (checked) return value;
-    return prevValue;
+    return prevValue === value ? false : prevValue;
   }
   var useMenuItemRadio = createHook(
     function useMenuItemRadio2({
@@ -12328,7 +12328,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-core/esm/__chunks/62CEUOYM.js
+  // packages/components/node_modules/@ariakit/react-core/esm/__chunks/62CEUOYM.js
   function useMenuStoreProps(store, update, props) {
     useUpdateEffect(update, [props.combobox, props.parent, props.menubar]);
     useStoreProps(store, props, "values", "setValues");
@@ -12359,7 +12359,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useMenuStoreProps(store, update, props);
   }
 
-  // node_modules/@ariakit/react-core/esm/menu/menu-separator.js
+  // packages/components/node_modules/@ariakit/react-core/esm/menu/menu-separator.js
   var TagName58 = "hr";
   var useMenuSeparator = createHook(
     function useMenuSeparator2({ store, ...props }) {
@@ -21834,10 +21834,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React8.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx271) {
+  (function(_jsx269) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx271.JSX || (_jsx271.JSX = {})));
+    })(JSX || (JSX = _jsx269.JSX || (_jsx269.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -22818,7 +22818,7 @@ If there's a particular need for this, please submit a feature request at https:
         alternative: "`placement` prop"
       });
     }
-    computedPlacement = computedPlacement || "bottom";
+    computedPlacement = computedPlacement || "top";
     const tooltipStore = useTooltipStore({
       placement: computedPlacement,
       showTimeout: delay2
@@ -23113,7 +23113,8 @@ If there's a particular need for this, please submit a feature request at https:
     padding: 0,
     position: "absolute",
     width: "1px",
-    wordWrap: "normal"
+    wordWrap: "normal",
+    wordBreak: "normal"
   };
 
   // node_modules/@emotion/styled/base/dist/emotion-styled-base.browser.esm.js
@@ -40082,6 +40083,11 @@ This message will only show in development mode. It won't appear in production. 
       return nextState;
     };
   }
+  var getDaysInMonth2 = (year, month) => (
+    // Take advantage of JavaScript's built-in date wrapping logic, where day 0
+    // of the next month is interpreted as the last day of the preceding month.
+    new Date(year, month + 1, 0).getDate()
+  );
   function setInConfiguredTimezone(date, updates) {
     const values = {
       year: Number((0, import_date2.date)("Y", date)),
@@ -40092,6 +40098,8 @@ This message will only show in development mode. It won't appear in production. 
       seconds: Number((0, import_date2.date)("s", date)),
       ...updates
     };
+    const daysInMonth = getDaysInMonth2(values.year, values.month);
+    values.date = Math.min(values.date, daysInMonth);
     const year = String(values.year).padStart(4, "0");
     const month = String(values.month + 1).padStart(2, "0");
     const day = String(values.date).padStart(2, "0");
@@ -40660,7 +40668,7 @@ This message will only show in development mode. It won't appear in production. 
       value: day,
       step: 1,
       min: 1,
-      max: 31,
+      max: getDaysInMonth2(Number(year), Number(month) - 1),
       required: true,
       spinControls: "none",
       isPressEnterToChange: true,
@@ -51126,95 +51134,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     unlock
   } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/components");
 
-  // packages/components/build-module/avatar/component.mjs
-  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
-  function Avatar({
-    className: className2,
-    src,
-    name,
-    label,
-    badge = false,
-    size: size3 = "default",
-    borderColor: borderColor2,
-    status,
-    statusIndicator,
-    style: style2,
-    ...props
-  }) {
-    const showBadge = badge && !!name;
-    const initials = name ? name.split(/\s+/).slice(0, 2).map((word) => word[0]).join("").toUpperCase() : void 0;
-    const customProperties = {
-      ...style2,
-      ...src ? {
-        "--components-avatar-url": `url(${src})`
-      } : {},
-      ...borderColor2 ? {
-        "--components-avatar-outline-color": borderColor2
-      } : {}
-    };
-    const avatar = /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)("div", {
-      className: clsx_default("components-avatar", className2, {
-        "has-avatar-border-color": !!borderColor2,
-        "has-src": !!src,
-        "has-badge": showBadge,
-        "is-small": size3 === "small",
-        "has-status": !!status,
-        [`is-${status}`]: !!status
-      }),
-      style: customProperties,
-      role: "img",
-      "aria-label": name,
-      ...props,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime317.jsxs)("span", {
-        className: "components-avatar__image",
-        children: [!src && initials, !!status && !!statusIndicator && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("span", {
-          className: "components-avatar__status-indicator",
-          children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(icon_default3, {
-            icon: statusIndicator
-          })
-        })]
-      }), showBadge && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("span", {
-        className: "components-avatar__name",
-        children: label || name
-      })]
-    });
-    if (name && (!showBadge || label)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(tooltip_default, {
-        text: name,
-        children: avatar
-      });
-    }
-    return avatar;
-  }
-  var component_default42 = Avatar;
-
-  // packages/components/build-module/avatar-group/component.mjs
-  var import_element241 = __toESM(require_element(), 1);
-  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
-  function AvatarGroup({
-    className: className2,
-    max: max3 = 3,
-    children,
-    ...props
-  }) {
-    const childArray = import_element241.Children.toArray(children);
-    const visible = childArray.slice(0, max3);
-    const overflowCount = childArray.length - max3;
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)("div", {
-      role: "group",
-      className: clsx_default("components-avatar-group", className2),
-      ...props,
-      children: [visible, overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("span", {
-        className: "components-avatar-group__overflow",
-        "aria-label": `${overflowCount} more`,
-        children: `+${overflowCount}`
-      })]
-    });
-  }
-  var component_default43 = AvatarGroup;
-
   // packages/components/build-module/badge/index.mjs
-  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   function contextBasedIcon(intent = "default") {
     switch (intent) {
       case "info":
@@ -51237,20 +51158,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("span", {
       className: clsx_default("components-badge", className2, {
         [`is-${intent}`]: intent,
         "has-icon": hasIcon
       }),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("span", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)("span", {
         className: "components-badge__flex-wrapper",
-        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(icon_default3, {
+        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(icon_default3, {
           icon,
           size: 16,
           fill: "currentColor",
           className: "components-badge__icon"
-        }), /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("span", {
           className: "components-badge__content",
           children
         })]
@@ -53254,7 +53175,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // node_modules/react-day-picker/node_modules/date-fns/getDaysInMonth.js
-  function getDaysInMonth2(date, options2) {
+  function getDaysInMonth3(date, options2) {
     const _date = toDate2(date, options2?.in);
     const year = _date.getFullYear();
     const monthIndex = _date.getMonth();
@@ -53312,7 +53233,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const midMonth = constructFrom2(options2?.in || date, 0);
     midMonth.setFullYear(year, month, 15);
     midMonth.setHours(0, 0, 0, 0);
-    const daysInMonth = getDaysInMonth2(midMonth);
+    const daysInMonth = getDaysInMonth3(midMonth);
     _date.setMonth(month, Math.min(day, daysInMonth));
     return _date;
   }
@@ -55266,12 +55187,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/calendar/date-calendar/index.mjs
-  var import_element243 = __toESM(require_element(), 1);
+  var import_element242 = __toESM(require_element(), 1);
 
   // packages/components/build-module/calendar/utils/day-cell.mjs
-  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   var PreviewDashStartAndEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -55279,13 +55200,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.7677",
       strokeDashoffset: "3.2",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("path", {
         d: "M29.5,0.5 h-27 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h27 a2,2 0 0 0 2,-2 v-27 a2,2 0 0 0 -2,-2"
       })
     });
   };
   var PreviewDashStart = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -55293,13 +55214,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.84516",
       strokeDashoffset: "1.9226",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("path", {
         d: "M32,0.5 h-29.5 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h30"
       })
     });
   };
   var PreviewDashMiddle = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -55307,12 +55228,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.9 4",
       strokeDashoffset: "2",
       strokeWidth: "1",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime320.jsx)("line", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime318.jsx)("line", {
         x1: "0",
         y1: "0.5",
         x2: "100",
         y2: "0.5"
-      }), /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("line", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("line", {
         x1: "0",
         y1: "31.5",
         x2: "100",
@@ -55321,7 +55242,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
   };
   var PreviewDashEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -55329,7 +55250,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.84516",
       strokeDashoffset: "1.9226",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("path", {
         d: "M0,0.5 h29.5 a2,2 0 0 1 2,2 v27 a2,2 0 0 1 -2,2 h-29.5"
       })
     });
@@ -55351,9 +55272,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } else if (modifiers.preview) {
       PreviewDash = PreviewDashMiddle;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)("td", {
       ...tdProps,
-      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(PreviewDash, {}), children]
+      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(PreviewDash, {}), children]
     });
   }
 
@@ -55362,6 +55283,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     root: "components-calendar",
     day: "components-calendar__day",
     day_button: "components-calendar__day-button",
+    outside: "components-calendar__day--outside",
     caption_label: "components-calendar__caption-label",
     button_next: "components-calendar__button-next",
     button_previous: "components-calendar__button-previous",
@@ -55422,7 +55344,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/calendar/utils/use-localization-props.mjs
   var import_i18n81 = __toESM(require_i18n(), 1);
-  var import_element242 = __toESM(require_element(), 1);
+  var import_element241 = __toESM(require_element(), 1);
   function isLocaleRTL(localeCode) {
     const localeObj = new Intl.Locale(localeCode);
     if ("getTextInfo" in localeObj) {
@@ -55454,7 +55376,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     timeZone,
     mode: mode2
   }) => {
-    return (0, import_element242.useMemo)(() => {
+    return (0, import_element241.useMemo)(() => {
       const monthNameFormatter = new Intl.DateTimeFormat(locale.code, {
         year: "numeric",
         month: "long",
@@ -55550,7 +55472,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/calendar/date-calendar/index.mjs
-  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var DateCalendar = ({
     defaultSelected,
     selected: selectedProp,
@@ -55565,7 +55487,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       timeZone,
       mode: "single"
     });
-    const onChange = (0, import_element243.useCallback)((selected2, triggerDate, modifiers, e3) => {
+    const onChange = (0, import_element242.useCallback)((selected2, triggerDate, modifiers, e3) => {
       onSelect?.(selected2 ?? void 0, triggerDate, modifiers, e3);
     }, [onSelect]);
     const [selected, setSelected] = useControlledValue({
@@ -55573,7 +55495,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       value: selectedProp,
       onChange
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(DayPicker, {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(DayPicker, {
       ...COMMON_PROPS,
       ...localizationProps,
       ...props,
@@ -55585,8 +55507,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/calendar/date-range-calendar/index.mjs
-  var import_element244 = __toESM(require_element(), 1);
-  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
+  var import_element243 = __toESM(require_element(), 1);
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   function usePreviewRange({
     selected,
     hoveredDate,
@@ -55595,7 +55517,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     max: max3,
     disabled
   }) {
-    return (0, import_element244.useMemo)(() => {
+    return (0, import_element243.useMemo)(() => {
       if (!hoveredDate || !selected?.from) {
         return;
       }
@@ -55668,7 +55590,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       timeZone,
       mode: "range"
     });
-    const onChange = (0, import_element244.useCallback)((selected2, triggerDate, modifiers2, e3) => {
+    const onChange = (0, import_element243.useCallback)((selected2, triggerDate, modifiers2, e3) => {
       onSelect?.(selected2 ?? void 0, triggerDate, modifiers2, e3);
     }, [onSelect]);
     const [selected, setSelected] = useControlledValue({
@@ -55676,7 +55598,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       value: selectedProp,
       onChange
     });
-    const [hoveredDate, setHoveredDate] = (0, import_element244.useState)(void 0);
+    const [hoveredDate, setHoveredDate] = (0, import_element243.useState)(void 0);
     const previewRange = usePreviewRange({
       selected,
       hoveredDate,
@@ -55685,14 +55607,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       max: max3,
       disabled
     });
-    const modifiers = (0, import_element244.useMemo)(() => {
+    const modifiers = (0, import_element243.useMemo)(() => {
       return {
         preview: previewRange,
         preview_start: previewRange?.from,
         preview_end: previewRange?.to
       };
     }, [previewRange]);
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(DayPicker, {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(DayPicker, {
       ...COMMON_PROPS,
       ...localizationProps,
       ...props,
@@ -55713,14 +55635,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.mjs
   var import_compose85 = __toESM(require_compose(), 1);
-  var import_element246 = __toESM(require_element(), 1);
+  var import_element245 = __toESM(require_element(), 1);
 
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
   var import_i18n82 = __toESM(require_i18n(), 1);
-  var import_element245 = __toESM(require_element(), 1);
+  var import_element244 = __toESM(require_element(), 1);
 
   // packages/components/build-module/validated-form-controls/validity-indicator.mjs
-  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   function ValidityIndicator({
     type,
     message: message2
@@ -55729,11 +55651,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       valid: published_default,
       invalid: error_default
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("p", {
+    return /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)("p", {
       className: clsx_default("components-validated-control__indicator", `is-${type}`),
-      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(spinner_default, {
+      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(spinner_default, {
         className: "components-validated-control__indicator-spinner"
-      }) : /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(icon_default3, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(icon_default3, {
         className: "components-validated-control__indicator-icon",
         icon: ICON[type],
         size: 16,
@@ -55743,15 +55665,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
-  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   function appendRequiredIndicator(label, required, markWhenOptional) {
     if (required && !markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, {
         children: [label, " ", `(${(0, import_i18n82.__)("Required")})`]
       });
     }
     if (!required && markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, {
         children: [label, " ", `(${(0, import_i18n82.__)("Optional")})`]
       });
     }
@@ -55766,11 +55688,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     getValidityTarget,
     children
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element245.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element245.useState)();
-    const [showMessage, setShowMessage] = (0, import_element245.useState)(false);
-    const [isTouched, setIsTouched] = (0, import_element245.useState)(false);
-    (0, import_element245.useEffect)(() => {
+    const [errorMessage, setErrorMessage] = (0, import_element244.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element244.useState)();
+    const [showMessage, setShowMessage] = (0, import_element244.useState)(false);
+    const [isTouched, setIsTouched] = (0, import_element244.useState)(false);
+    (0, import_element244.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
         setShowMessage(true);
@@ -55779,7 +55701,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, [getValidityTarget]);
-    (0, import_element245.useEffect)(() => {
+    (0, import_element244.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
         event.preventDefault();
@@ -55797,7 +55719,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         radioSibilings.forEach((sibling) => sibling.removeEventListener("invalid", suppressNativePopover));
       };
     }, [getValidityTarget]);
-    (0, import_element245.useEffect)(() => {
+    (0, import_element244.useEffect)(() => {
       const validityTarget = getValidityTarget();
       if (!customValidity?.type) {
         validityTarget?.setCustomValidity("");
@@ -55832,7 +55754,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
     }, [customValidity, getValidityTarget]);
-    (0, import_element245.useEffect)(() => {
+    (0, import_element244.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
       }
@@ -55855,52 +55777,52 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     const message2 = () => {
       if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
+        return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(ValidityIndicator, {
           type: "invalid",
           message: errorMessage
         });
       }
       if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
+        return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(ValidityIndicator, {
           type: statusMessage.type,
           message: statusMessage.message
         });
       }
       return null;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)("div", {
       className,
       ref: forwardedRef,
       onBlur,
-      children: [(0, import_element245.cloneElement)(children, {
+      children: [(0, import_element244.cloneElement)(children, {
         label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
         required
-      }), /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("div", {
         "aria-live": "polite",
         children: showMessage && message2()
       })]
     });
   }
-  var ControlWithError = (0, import_element245.forwardRef)(UnforwardedControlWithError);
+  var ControlWithError = (0, import_element244.forwardRef)(UnforwardedControlWithError);
   ControlWithError.displayName = "ControlWithError";
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.mjs
-  var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedCheckboxControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element246.useRef)(null);
+    const validityTargetRef = (0, import_element245.useRef)(null);
     const mergedRefs = (0, import_compose85.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
         checkbox_control_default,
         {
           ...restProps
@@ -55908,22 +55830,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       )
     });
   };
-  var ValidatedCheckboxControl = (0, import_element246.forwardRef)(UnforwardedValidatedCheckboxControl);
+  var ValidatedCheckboxControl = (0, import_element245.forwardRef)(UnforwardedValidatedCheckboxControl);
   ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
   // packages/components/build-module/validated-form-controls/components/combobox-control.mjs
   var import_compose86 = __toESM(require_compose(), 1);
-  var import_element247 = __toESM(require_element(), 1);
-  var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
+  var import_element246 = __toESM(require_element(), 1);
+  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedComboboxControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element247.useRef)(null);
+    const validityTargetRef = (0, import_element246.useRef)(null);
     const mergedRefs = (0, import_compose86.useMergeRefs)([forwardedRef, validityTargetRef]);
-    (0, import_element247.useEffect)(() => {
+    (0, import_element246.useEffect)(() => {
       const input = validityTargetRef.current?.querySelector('input[role="combobox"]');
       if (input) {
         input.required = required ?? false;
@@ -55931,45 +55853,45 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [required]);
     return (
       // TODO: Bug - Missing value error is not cleared immediately on change, waits for blur.
-      /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ControlWithError, {
+      /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         ref: mergedRefs,
         customValidity,
         getValidityTarget: () => validityTargetRef.current?.querySelector('input[role="combobox"]'),
-        children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(combobox_control_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(combobox_control_default, {
           __next40pxDefaultSize: true,
           ...restProps
         })
       })
     );
   };
-  var ValidatedComboboxControl = (0, import_element247.forwardRef)(UnforwardedValidatedComboboxControl);
+  var ValidatedComboboxControl = (0, import_element246.forwardRef)(UnforwardedValidatedComboboxControl);
   ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 
   // packages/components/build-module/validated-form-controls/components/form-token-field.mjs
-  var import_element248 = __toESM(require_element(), 1);
-  var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
+  var import_element247 = __toESM(require_element(), 1);
+  var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedFormTokenField = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element248.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)("div", {
+    const validityTargetRef = (0, import_element247.useRef)(null);
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime327.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(FormTokenField, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(FormTokenField, {
           __next40pxDefaultSize: true,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime327.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -55984,220 +55906,220 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedFormTokenField = (0, import_element248.forwardRef)(UnforwardedValidatedFormTokenField);
+  var ValidatedFormTokenField = (0, import_element247.forwardRef)(UnforwardedValidatedFormTokenField);
   ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
-  var import_element249 = __toESM(require_element(), 1);
+  var import_element248 = __toESM(require_element(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
-  var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element249.useRef)(null);
+    const validityTargetRef = (0, import_element248.useRef)(null);
     const mergedRefs = (0, import_compose87.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(input_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(input_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedInputControl = (0, import_element249.forwardRef)(UnforwardedValidatedInputControl);
+  var ValidatedInputControl = (0, import_element248.forwardRef)(UnforwardedValidatedInputControl);
   ValidatedInputControl.displayName = "ValidatedInputControl";
 
   // packages/components/build-module/validated-form-controls/components/number-control.mjs
-  var import_element250 = __toESM(require_element(), 1);
+  var import_element249 = __toESM(require_element(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
-  var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedNumberControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element250.useRef)(null);
+    const validityTargetRef = (0, import_element249.useRef)(null);
     const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(number_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(number_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedNumberControl = (0, import_element250.forwardRef)(UnforwardedValidatedNumberControl);
+  var ValidatedNumberControl = (0, import_element249.forwardRef)(UnforwardedValidatedNumberControl);
   ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
   // packages/components/build-module/validated-form-controls/components/radio-control.mjs
   var import_compose89 = __toESM(require_compose(), 1);
-  var import_element251 = __toESM(require_element(), 1);
-  var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
+  var import_element250 = __toESM(require_element(), 1);
+  var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedRadioControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element251.useRef)(null);
+    const validityTargetRef = (0, import_element250.useRef)(null);
     const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="radio"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(radio_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(radio_control_default, {
         ...restProps
       })
     });
   };
-  var ValidatedRadioControl = (0, import_element251.forwardRef)(UnforwardedValidatedRadioControl);
+  var ValidatedRadioControl = (0, import_element250.forwardRef)(UnforwardedValidatedRadioControl);
   ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
   // packages/components/build-module/validated-form-controls/components/select-control.mjs
-  var import_element252 = __toESM(require_element(), 1);
+  var import_element251 = __toESM(require_element(), 1);
   var import_compose90 = __toESM(require_compose(), 1);
-  var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedSelectControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element252.useRef)(null);
+    const validityTargetRef = (0, import_element251.useRef)(null);
     const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(select_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(select_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedSelectControl = (0, import_element252.forwardRef)(UnforwardedValidatedSelectControl);
+  var ValidatedSelectControl = (0, import_element251.forwardRef)(UnforwardedValidatedSelectControl);
   ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
   // packages/components/build-module/validated-form-controls/components/text-control.mjs
   var import_compose91 = __toESM(require_compose(), 1);
-  var import_element253 = __toESM(require_element(), 1);
-  var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
+  var import_element252 = __toESM(require_element(), 1);
+  var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element253.useRef)(null);
+    const validityTargetRef = (0, import_element252.useRef)(null);
     const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(text_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(text_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedTextControl = (0, import_element253.forwardRef)(UnforwardedValidatedTextControl);
+  var ValidatedTextControl = (0, import_element252.forwardRef)(UnforwardedValidatedTextControl);
   ValidatedTextControl.displayName = "ValidatedTextControl";
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
-  var import_element254 = __toESM(require_element(), 1);
+  var import_element253 = __toESM(require_element(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
-  var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element254.useRef)(null);
+    const validityTargetRef = (0, import_element253.useRef)(null);
     const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(textarea_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(textarea_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedTextareaControl = (0, import_element254.forwardRef)(UnforwardedValidatedTextareaControl);
+  var ValidatedTextareaControl = (0, import_element253.forwardRef)(UnforwardedValidatedTextareaControl);
   ValidatedTextareaControl.displayName = "ValidatedTextareaControl";
 
   // packages/components/build-module/validated-form-controls/components/toggle-control.mjs
-  var import_element255 = __toESM(require_element(), 1);
+  var import_element254 = __toESM(require_element(), 1);
   var import_compose93 = __toESM(require_compose(), 1);
-  var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element255.useRef)(null);
+    const validityTargetRef = (0, import_element254.useRef)(null);
     const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(toggle_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(toggle_control_default, {
         ref: mergedRefs,
         required,
         ...restProps
       })
     });
   };
-  var ValidatedToggleControl = (0, import_element255.forwardRef)(UnforwardedValidatedToggleControl);
+  var ValidatedToggleControl = (0, import_element254.forwardRef)(UnforwardedValidatedToggleControl);
   ValidatedToggleControl.displayName = "ValidatedToggleControl";
 
   // packages/components/build-module/validated-form-controls/components/toggle-group-control.mjs
-  var import_element256 = __toESM(require_element(), 1);
-  var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
+  var import_element255 = __toESM(require_element(), 1);
+  var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleGroupControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element256.useRef)(null);
-    const nameAttr = (0, import_element256.useId)();
-    return /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)("div", {
+    const validityTargetRef = (0, import_element255.useRef)(null);
+    const nameAttr = (0, import_element255.useId)();
+    return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(component_default12, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(component_default12, {
           __next40pxDefaultSize: true,
           ref: forwardedRef,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime335.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "radio",
         ref: validityTargetRef,
@@ -56213,15 +56135,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedToggleGroupControl = (0, import_element256.forwardRef)(UnforwardedValidatedToggleGroupControl);
+  var ValidatedToggleGroupControl = (0, import_element255.forwardRef)(UnforwardedValidatedToggleGroupControl);
   ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
 
   // packages/components/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
     __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
-    Avatar: component_default42,
-    AvatarGroup: component_default43,
     ComponentsContext,
     Tabs,
     Theme: theme_default,

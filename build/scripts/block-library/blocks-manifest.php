@@ -3361,7 +3361,8 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
-			'customCSS' => false
+			'customCSS' => false,
+			'visibility' => false
 		),
 		'editorStyle' => 'wp-block-html-editor'
 	),
@@ -3437,19 +3438,10 @@ return array(
 			)
 		),
 		'selectors' => array(
-			'root' => '.wp-block-icon',
-			'color' => array(
-				'root' => '.wp-block-icon svg'
-			),
-			'border' => array(
-				'root' => '.wp-block-icon svg'
-			),
+			'root' => '.wp-block-icon svg',
+			'css' => '.wp-block-icon',
 			'spacing' => array(
-				'padding' => '.wp-block-icon svg'
-			),
-			'dimensions' => array(
-				'root' => '.wp-block-icon svg',
-				'width' => '.wp-block-icon svg'
+				'margin' => '.wp-block-icon'
 			)
 		),
 		'style' => 'wp-block-icon',
@@ -4624,6 +4616,11 @@ return array(
 				'clientNavigation' => true
 			)
 		),
+		'selectors' => array(
+			'states' => array(
+				'@current' => '.wp-block-navigation .current-menu-item'
+			)
+		),
 		'editorStyle' => 'wp-block-navigation-link-editor',
 		'style' => 'wp-block-navigation-link'
 	),
@@ -4788,7 +4785,6 @@ return array(
 		),
 		'textdomain' => 'default',
 		'supports' => array(
-			'anchor' => true,
 			'customClassName' => false,
 			'className' => false,
 			'html' => false,
@@ -5775,9 +5771,6 @@ return array(
 				'type' => 'string',
 				'role' => 'content'
 			),
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'format' => array(
 				'type' => 'string'
 			),
@@ -5814,6 +5807,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
@@ -5850,9 +5844,6 @@ return array(
 		'description' => 'Display the excerpt.',
 		'textdomain' => 'default',
 		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'moreText' => array(
 				'type' => 'string',
 				'role' => 'content'
@@ -5893,6 +5884,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'textColumns' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
@@ -7555,7 +7547,8 @@ return array(
 			'className' => false,
 			'customClassName' => false,
 			'html' => false,
-			'customCSS' => false
+			'customCSS' => false,
+			'visibility' => false
 		),
 		'editorStyle' => 'wp-block-shortcode-editor'
 	),
@@ -8570,10 +8563,7 @@ return array(
 			'core/tabs-menu-item'
 		),
 		'usesContext' => array(
-			'core/tabs-list',
-			'core/tabs-id',
-			'core/tabs-activeTabIndex',
-			'core/tabs-editorActiveTabIndex'
+			'core/tabs-list'
 		),
 		'attributes' => array(
 			
@@ -8638,7 +8628,7 @@ return array(
 		'apiVersion' => 3,
 		'name' => 'core/tabs-menu-item',
 		'title' => 'Tab Menu Item',
-		'description' => 'A single tab button in the tabs menu. Used as a template for styling all tab buttons.',
+		'description' => 'A single tab button in the tabs menu.',
 		'version' => '1.0.0',
 		'category' => 'design',
 		'textdomain' => 'default',
@@ -8646,16 +8636,18 @@ return array(
 			'core/tabs-menu'
 		),
 		'usesContext' => array(
-			'core/tabs-menu-item-index',
-			'core/tabs-menu-item-id',
-			'core/tabs-menu-item-label',
-			'core/tabs-menu-item-clientId',
 			'core/tabs-list',
 			'core/tabs-activeTabIndex',
-			'core/tabs-editorActiveTabIndex'
+			'core/tabs-editorActiveTabIndex',
+			'core/tabs-menu-item-index',
+			'core/tabs-menu-item-id',
+			'core/tabs-menu-item-label'
 		),
 		'attributes' => array(
-			
+			'anchor' => array(
+				'type' => 'string',
+				'default' => ''
+			)
 		),
 		'supports' => array(
 			'html' => false,
@@ -8669,7 +8661,6 @@ return array(
 					'text' => true
 				)
 			),
-			'shadow' => true,
 			'typography' => array(
 				'fontSize' => true,
 				'__experimentalFontFamily' => true,
@@ -8677,9 +8668,6 @@ return array(
 				'__experimentalDefaultControls' => array(
 					'fontSize' => true
 				)
-			),
-			'layout' => array(
-				'allowEditing' => false
 			),
 			'spacing' => array(
 				'padding' => true,
@@ -8692,6 +8680,9 @@ return array(
 				'color' => true,
 				'width' => true,
 				'style' => true
+			),
+			'layout' => array(
+				'allowEditing' => false
 			)
 		),
 		'editorScript' => 'file:./index.js',
