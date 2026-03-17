@@ -17717,8 +17717,11 @@ var wp;
           getBlockBindingsSourceFieldsList,
           getBlockType: getBlockType27
         } = unlock(select3(import_blocks14.store));
-        const _attributeType = getBlockType27(blockName).attributes?.[attribute]?.type;
-        const attributeType = _attributeType === "rich-text" ? "string" : _attributeType;
+        const _attribute = getBlockType27(blockName).attributes?.[attribute];
+        if (_attribute?.enum) {
+          return {};
+        }
+        const attributeType = _attribute?.type === "rich-text" ? "string" : _attribute?.type;
         const sourceFields = {};
         Object.entries(getAllBlockBindingsSources()).forEach(
           ([sourceName, source2]) => {
