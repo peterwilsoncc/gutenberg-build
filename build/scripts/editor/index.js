@@ -5197,7 +5197,7 @@ var wp;
   var import_block_editor34 = __toESM(require_block_editor(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
   var import_url11 = __toESM(require_url(), 1);
-  var import_api_fetch4 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch5 = __toESM(require_api_fetch(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
   var import_html_entities8 = __toESM(require_html_entities(), 1);
   var import_date6 = __toESM(require_date(), 1);
@@ -13080,6 +13080,15 @@ var wp;
   var { sideloadMedia: mediaSideload } = unlock(import_media_utils3.privateApis);
   var media_sideload_default = mediaSideload;
 
+  // packages/editor/build-module/utils/media-finalize/index.mjs
+  var import_api_fetch3 = __toESM(require_api_fetch(), 1);
+  async function mediaFinalize(id) {
+    await (0, import_api_fetch3.default)({
+      path: `/wp/v2/media/${id}/finalize`,
+      method: "POST"
+    });
+  }
+
   // packages/editor/build-module/components/global-styles-provider/index.mjs
   var import_block_editor5 = __toESM(require_block_editor(), 1);
   var import_core_data27 = __toESM(require_core_data(), 1);
@@ -15917,6 +15926,7 @@ var wp;
         mediaUpload: hasUploadPermissions ? mediaUpload : void 0,
         [mediaUploadOnSuccessKey]: hasUploadPermissions ? mediaUploadOnSuccess : void 0,
         mediaSideload: hasUploadPermissions ? media_sideload_default : void 0,
+        mediaFinalize: hasUploadPermissions ? mediaFinalize : void 0,
         __experimentalBlockPatterns: blockPatterns,
         [selectBlockPatternsKey]: (select6) => {
           const { hasFinishedResolution, getBlockPatternsForPostType } = unlock(select6(import_core_data28.store));
@@ -21172,7 +21182,7 @@ var wp;
   var import_i18n85 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/font-library/api.mjs
-  var import_api_fetch3 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   var import_core_data39 = __toESM(require_core_data(), 1);
   var FONT_FAMILIES_URL = "/wp/v2/font-families";
   function invalidateFontFamilyCache(registry) {
@@ -21192,7 +21202,7 @@ var wp;
       method: "POST",
       body: data
     };
-    const response = await (0, import_api_fetch3.default)(config2);
+    const response = await (0, import_api_fetch4.default)(config2);
     invalidateFontFamilyCache(registry);
     return {
       id: response.id,
@@ -21206,7 +21216,7 @@ var wp;
       method: "POST",
       body: data
     };
-    const response = await (0, import_api_fetch3.default)(config2);
+    const response = await (0, import_api_fetch4.default)(config2);
     invalidateFontFamilyCache(registry);
     return {
       id: response.id,
@@ -37229,7 +37239,7 @@ var wp;
         `${templateEntityConfig.baseURL}/${template2.id}`,
         { context: "edit", source: template2.origin }
       );
-      const fileTemplate = await (0, import_api_fetch4.default)({ path: fileTemplatePath });
+      const fileTemplate = await (0, import_api_fetch5.default)({ path: fileTemplatePath });
       if (!fileTemplate) {
         registry.dispatch(import_notices17.store).createErrorNotice(
           (0, import_i18n122.__)(
