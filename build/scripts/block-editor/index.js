@@ -24087,7 +24087,7 @@ var wp;
         onSuccess?.(attachments);
       },
       onBatchSuccess,
-      onError: ({ message: message2 }) => onError(message2),
+      onError: (error) => onError(typeof error === "string" ? error : error?.message ?? ""),
       additionalData,
       allowedTypes
     });

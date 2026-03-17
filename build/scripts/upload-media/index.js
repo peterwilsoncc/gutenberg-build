@@ -1277,7 +1277,8 @@ var wp;
       const updates = !isVipsSupported || !isImage ? {
         additionalData: {
           ...item.additionalData,
-          generate_sub_sizes: true
+          generate_sub_sizes: true,
+          convert_format: true
         }
       } : {};
       dispatch.finishOperation(id, updates);
@@ -1294,7 +1295,7 @@ var wp;
         additionalData: item.additionalData,
         signal: item.abortController?.signal,
         onFileChange: ([attachment]) => {
-          if (!(0, import_blob.isBlobURL)(attachment.url)) {
+          if (attachment && !(0, import_blob.isBlobURL)(attachment.url)) {
             dispatch.finishOperation(id, {
               attachment
             });
