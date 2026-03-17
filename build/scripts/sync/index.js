@@ -9608,7 +9608,8 @@ var wp;
           roomStates.forEach((state) => {
             state.onStatusChange({
               status: "disconnected",
-              retryInMs: pollInterval
+              canManuallyRetry: true,
+              willAutoRetryInMs: pollInterval
             });
           });
         }
@@ -9772,7 +9773,7 @@ var wp;
     }
     /**
      * Emit connection status, passing the full object through so that
-     * additional fields (e.g. `retryInMs`) are preserved for consumers.
+     * additional fields (e.g. `willAutoRetryInMs`) are preserved for consumers.
      *
      * @param connectionStatus The connection status object
      */
@@ -11577,14 +11578,14 @@ var wp;
   // packages/sync/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
+    ConnectionErrorCode,
     createSyncManager,
     Delta: Delta_default,
     CRDT_DOC_META_PERSISTENCE_KEY,
     CRDT_RECORD_MAP_KEY,
     LOCAL_EDITOR_ORIGIN,
     LOCAL_UNDO_IGNORED_ORIGIN,
-    retrySyncConnection: () => pollingManager.retryNow(),
-    ConnectionErrorCode
+    retrySyncConnection: () => pollingManager.retryNow()
   });
 
   // packages/sync/build-module/index.mjs

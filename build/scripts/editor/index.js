@@ -43732,23 +43732,20 @@ var wp;
     [AUTHENTICATION_FAILED]: {
       title: (0, import_i18n161.__)("Unable to connect"),
       description: (0, import_i18n161.__)(
-        "Real-time collaboration couldn't verify your permissions. Check that you have access to edit this post, or contact your site administrator."
-      ),
-      canRetry: false
+        "Real-time collaboration couldn't verify your permissions. Check that you have access to edit this post or contact your site administrator."
+      )
     },
     [CONNECTION_EXPIRED]: {
       title: (0, import_i18n161.__)("Connection expired"),
       description: (0, import_i18n161.__)(
         "Your connection to real-time collaboration has timed out. Editing is paused to prevent conflicts with other editors."
-      ),
-      canRetry: true
+      )
     },
     [CONNECTION_LIMIT_EXCEEDED]: {
       title: (0, import_i18n161.__)("Too many editors connected"),
       description: (0, import_i18n161.__)(
         "Real-time collaboration has reached its connection limit. Try again later or contact your site administrator."
-      ),
-      canRetry: true
+      )
     },
     // DOCUMENT_SIZE_LIMIT_EXCEEDED is not included here because it results in
     // collaboration being disabled entirely.
@@ -43756,12 +43753,11 @@ var wp;
       title: (0, import_i18n161.__)("Connection lost"),
       description: (0, import_i18n161.__)(
         "The connection to real-time collaboration was interrupted. Editing is paused to prevent conflicts with other editors."
-      ),
-      canRetry: true
+      )
     }
   };
   function getSyncErrorMessages(error) {
-    if (ERROR_MESSAGES[error?.code]) {
+    if (error?.code && ERROR_MESSAGES[error?.code]) {
       return ERROR_MESSAGES[error.code];
     }
     return ERROR_MESSAGES[UNKNOWN_ERROR];
@@ -51912,7 +51908,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/sync-connection-modal/index.mjs
+  // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_data202 = __toESM(require_data(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
@@ -51922,145 +51918,81 @@ var wp;
   var import_element164 = __toESM(require_element(), 1);
   var import_i18n217 = __toESM(require_i18n(), 1);
 
-  // packages/editor/build-module/components/sync-connection-modal/use-retry-countdown.mjs
+  // packages/editor/build-module/components/sync-connection-error-modal/use-retry-countdown.mjs
   var import_element163 = __toESM(require_element(), 1);
-  var MIN_RETRYING_DISPLAY_MS = 600;
-  function useRetryCountdown(retryInMs, status) {
-    const [secondsRemaining, setSecondsRemaining] = (0, import_element163.useState)(null);
-    const [isRetrying, setIsRetrying] = (0, import_element163.useState)(false);
-    const retryAtRef = (0, import_element163.useRef)(null);
-    const markRetrying = () => setIsRetrying(true);
+  function useRetryCountdown(connectionStatus) {
+    const [secondsRemaining, setSecondsRemaining] = (0, import_element163.useState)();
     (0, import_element163.useEffect)(() => {
-      if (!isRetrying) {
+      if (!connectionStatus) {
         return;
       }
-      const id = setTimeout(
-        () => setIsRetrying(false),
-        MIN_RETRYING_DISPLAY_MS
-      );
-      return () => clearTimeout(id);
-    }, [isRetrying]);
-    (0, import_element163.useEffect)(() => {
-      if (status === "connected") {
-        setSecondsRemaining(null);
-        retryAtRef.current = null;
+      if ("connected" === connectionStatus.status) {
+        setSecondsRemaining(void 0);
         return;
       }
-      if (status !== "disconnected" || !retryInMs) {
+      if ("disconnected" !== connectionStatus.status || !connectionStatus.willAutoRetryInMs) {
         return;
       }
+      const { willAutoRetryInMs: retryInMs } = connectionStatus;
       const retryAt = Date.now() + retryInMs;
-      retryAtRef.current = retryAt;
       setSecondsRemaining(Math.ceil(retryInMs / 1e3));
       const intervalId = setInterval(() => {
-        const remaining = Math.ceil(
-          (retryAtRef.current - Date.now()) / 1e3
-        );
+        const remaining = Math.ceil((retryAt - Date.now()) / 1e3);
         setSecondsRemaining(Math.max(0, remaining));
         if (remaining <= 0) {
           clearInterval(intervalId);
-          setIsRetrying(true);
         }
       }, 1e3);
       return () => clearInterval(intervalId);
-    }, [retryInMs, status]);
-    const displaySeconds = isRetrying ? 0 : secondsRemaining;
-    return { secondsRemaining: displaySeconds, markRetrying };
+    }, [connectionStatus]);
+    return {
+      onManualRetry: () => setSecondsRemaining(0),
+      secondsRemaining
+    };
   }
 
-  // packages/editor/build-module/components/sync-connection-modal/index.mjs
+  // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
   var { BlockCanvasCover: BlockCanvasCover2 } = unlock(import_block_editor79.privateApis);
   var { retrySyncConnection } = unlock(import_core_data115.privateApis);
   var INITIAL_DISCONNECTED_DEBOUNCE_MS = 5e3;
   var DISCONNECTED_DEBOUNCE_MS = 2e3;
-  function SyncConnectionModal() {
-    const { connectionState, isCollaborationEnabled, postType: postType2 } = (0, import_data202.useSelect)(
-      (selectFn) => {
-        const currentPostType = selectFn(store).getCurrentPostType();
-        return {
-          connectionState: selectFn(import_core_data115.store).getSyncConnectionStatus() || null,
-          isCollaborationEnabled: selectFn(
-            store
-          ).isCollaborationEnabledForCurrentPost(),
-          postType: currentPostType ? selectFn(import_core_data115.store).getPostType(currentPostType) : null
-        };
-      },
-      []
-    );
-    const { secondsRemaining, markRetrying } = useRetryCountdown(
-      connectionState?.retryInMs,
-      connectionState?.status
-    );
+  function DefaultSyncConnectionErrorModal(props) {
+    const {
+      description,
+      manualRetry,
+      postType: postType2,
+      secondsRemainingUntilAutoRetry,
+      title
+    } = props;
     const copyButtonRef = (0, import_compose57.useCopyToClipboard)(() => {
       const blocks = (0, import_data202.select)(import_block_editor79.store).getBlocks();
       return (0, import_blocks33.serialize)(blocks);
     });
-    const [syncConnectionMessage, setSyncConnectionMessage] = (0, import_element164.useState)(null);
-    const debounceTimerRef = (0, import_element164.useRef)(null);
-    const hasInitializedRef = (0, import_element164.useRef)(false);
-    const connectionStatus = connectionState?.status;
-    const connectionErrorCode = connectionState?.error?.code;
-    (0, import_element164.useEffect)(() => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-        debounceTimerRef.current = null;
-      }
-      if (connectionStatus === "connected") {
-        hasInitializedRef.current = true;
-        setSyncConnectionMessage(null);
-      } else if (connectionStatus === "disconnected") {
-        const showModal = () => {
-          hasInitializedRef.current = true;
-          setSyncConnectionMessage(
-            getSyncErrorMessages({ code: connectionErrorCode })
-          );
-        };
-        if (hasInitializedRef.current) {
-          debounceTimerRef.current = setTimeout(
-            showModal,
-            DISCONNECTED_DEBOUNCE_MS
-          );
-        } else {
-          debounceTimerRef.current = setTimeout(
-            showModal,
-            INITIAL_DISCONNECTED_DEBOUNCE_MS
-          );
-        }
-      }
-      return () => {
-        if (debounceTimerRef.current) {
-          clearTimeout(debounceTimerRef.current);
-        }
-      };
-    }, [connectionStatus, connectionErrorCode]);
-    if (!syncConnectionMessage || !isCollaborationEnabled) {
-      return null;
-    }
-    const { title, description, canRetry } = syncConnectionMessage;
-    let retryCountdownText;
-    if (secondsRemaining > 0) {
+    let retryCountdownText = "";
+    let isRetrying = false;
+    if (secondsRemainingUntilAutoRetry && secondsRemainingUntilAutoRetry > 0) {
       retryCountdownText = (0, import_i18n217.sprintf)(
         /* translators: %d: number of seconds until retry */
         (0, import_i18n217._n)(
           "Retrying connection in %d second\u2026",
           "Retrying connection in %d seconds\u2026",
-          secondsRemaining
+          secondsRemainingUntilAutoRetry
         ),
-        secondsRemaining
+        secondsRemainingUntilAutoRetry
       );
-    } else if (secondsRemaining === 0) {
+    } else if (0 === secondsRemainingUntilAutoRetry) {
+      isRetrying = true;
       retryCountdownText = (0, import_i18n217.__)("Retrying\u2026");
     }
     let editPostHref = "edit.php";
     if (postType2?.slug) {
       editPostHref = `edit.php?post_type=${postType2.slug}`;
     }
-    const isRetrying = secondsRemaining === 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(BlockCanvasCover2.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
       import_components194.Modal,
       {
-        overlayClassName: "editor-sync-connection-modal",
+        overlayClassName: "editor-sync-connection-error-modal",
         isDismissible: false,
         onRequestClose: () => {
         },
@@ -52070,7 +52002,7 @@ var wp;
         title,
         children: /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(import_components194.__experimentalVStack, { spacing: 6, children: [
           /* @__PURE__ */ (0, import_jsx_runtime337.jsx)("p", { children: description }),
-          retryCountdownText && /* @__PURE__ */ (0, import_jsx_runtime337.jsx)("p", { className: "editor-sync-connection-modal__retry-countdown", children: retryCountdownText }),
+          retryCountdownText && /* @__PURE__ */ (0, import_jsx_runtime337.jsx)("p", { className: "editor-sync-connection-error-modal__retry-countdown", children: retryCountdownText }),
           /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(import_components194.__experimentalHStack, { justify: "right", children: [
             /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
               import_components194.Button,
@@ -52091,29 +52023,83 @@ var wp;
               {
                 __next40pxDefaultSize: true,
                 ref: copyButtonRef,
-                variant: canRetry ? "secondary" : "primary",
+                variant: manualRetry ? "secondary" : "primary",
                 children: (0, import_i18n217.__)("Copy Post Content")
               }
             ),
-            canRetry && /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
+            manualRetry && /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
               import_components194.Button,
               {
                 __next40pxDefaultSize: true,
+                accessibleWhenDisabled: true,
                 "aria-disabled": isRetrying,
+                disabled: isRetrying,
                 isBusy: isRetrying,
                 variant: "primary",
-                onClick: () => {
-                  if (isRetrying) {
-                    return;
-                  }
-                  markRetrying();
-                  retrySyncConnection();
-                },
+                onClick: manualRetry,
                 children: (0, import_i18n217.__)("Retry")
               }
             )
           ] })
         ] })
+      }
+    );
+  }
+  var FilteredSyncConnectionErrorModal = true ? (0, import_components194.withFilters)("editor.SyncConnectionErrorModal")(
+    DefaultSyncConnectionErrorModal
+  ) : DefaultSyncConnectionErrorModal;
+  function SyncConnectionErrorModal() {
+    const [hasInitialized, setHasInitialized] = (0, import_element164.useState)(false);
+    const [showModal, setShowModal] = (0, import_element164.useState)(false);
+    const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data202.useSelect)(
+      (selectFn) => {
+        const currentPostType = selectFn(store).getCurrentPostType();
+        return {
+          connectionStatus: selectFn(import_core_data115.store).getSyncConnectionStatus() || null,
+          isCollaborationEnabled: selectFn(
+            store
+          ).isCollaborationEnabledForCurrentPost(),
+          postType: currentPostType ? selectFn(import_core_data115.store).getPostType(currentPostType) : null
+        };
+      },
+      []
+    );
+    const { onManualRetry, secondsRemaining } = useRetryCountdown(connectionStatus);
+    const isConnected = "connected" === connectionStatus?.status;
+    (0, import_element164.useEffect)(() => {
+      const timeout = setTimeout(() => {
+        setHasInitialized(true);
+      }, INITIAL_DISCONNECTED_DEBOUNCE_MS);
+      return () => clearTimeout(timeout);
+    }, []);
+    (0, import_element164.useEffect)(() => {
+      if (isConnected) {
+        setShowModal(false);
+        return;
+      }
+      const timeout = setTimeout(() => {
+        setShowModal(true);
+      }, DISCONNECTED_DEBOUNCE_MS);
+      return () => clearTimeout(timeout);
+    }, [isConnected]);
+    if (!isCollaborationEnabled || !hasInitialized || !showModal) {
+      return null;
+    }
+    const error = connectionStatus && "error" in connectionStatus ? connectionStatus?.error : void 0;
+    const manualRetry = connectionStatus && "canManuallyRetry" in connectionStatus && connectionStatus.canManuallyRetry ? () => {
+      onManualRetry();
+      retrySyncConnection();
+    } : void 0;
+    const messages = getSyncErrorMessages(error);
+    return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(BlockCanvasCover2.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
+      FilteredSyncConnectionErrorModal,
+      {
+        description: messages.description,
+        error,
+        manualRetry,
+        postType: postType2,
+        secondsRemainingUntilAutoRetry: secondsRemaining,
+        title: messages.title
       }
     ) });
   }
@@ -52382,7 +52368,7 @@ var wp;
           }
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(SyncConnectionModal, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(SyncConnectionErrorModal, {}),
           /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(resizable_editor_default, { enableResizing, height: "100%", children: /* @__PURE__ */ (0, import_jsx_runtime338.jsxs)(
             BlockCanvas,
             {
