@@ -413,7 +413,7 @@ var wp;
   var abs = Math.abs;
   var min = (a, b) => a < b ? a : b;
   var max = (a, b) => a > b ? a : b;
-  var isNaN = Number.isNaN;
+  var isNaN2 = Number.isNaN;
   var isNegativeZero = (n) => n !== 0 ? n < 0 : 1 / n < 0;
 
   // node_modules/lib0/binary.js
@@ -463,8 +463,8 @@ var wp;
   var MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER;
   var LOWEST_INT32 = 1 << 31;
   var isInteger = Number.isInteger || ((num) => typeof num === "number" && isFinite(num) && floor(num) === num);
-  var isNaN2 = Number.isNaN;
-  var parseInt = Number.parseInt;
+  var isNaN3 = Number.isNaN;
+  var parseInt2 = Number.parseInt;
 
   // node_modules/lib0/string.js
   var fromCharCode = String.fromCharCode;
@@ -9217,6 +9217,9 @@ var wp;
   }
 
   // packages/sync/build-module/providers/index.mjs
+  var import_hooks2 = __toESM(require_hooks(), 1);
+
+  // packages/sync/build-module/providers/http-polling/polling-manager.mjs
   var import_hooks = __toESM(require_hooks(), 1);
 
   // packages/sync/node_modules/y-protocols/sync.js
@@ -9264,6 +9267,7 @@ var wp;
   };
 
   // packages/sync/build-module/providers/http-polling/config.mjs
+  var DEFAULT_CLIENT_LIMIT_PER_ROOM = 3;
   var MAX_ERROR_BACKOFF_IN_MS = 30 * 1e3;
   var MAX_UPDATE_SIZE_IN_BYTES = 1 * 1024 * 1024;
   var POLLING_INTERVAL_IN_MS = 1e3;
@@ -9378,6 +9382,10 @@ var wp;
     }).catch(() => {
     });
   }
+  function intValueOrDefault(value, defaultValue) {
+    const intValue = parseInt(String(value), 10);
+    return isNaN(intValue) ? defaultValue : intValue;
+  }
 
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
   var POLLING_MANAGER_ORIGIN = "polling-manager";
@@ -9487,6 +9495,31 @@ var wp;
       }
     }
   }
+  function checkConnectionLimit(awareness, roomState) {
+    if (!roomState.enforceConnectionLimit) {
+      return false;
+    }
+    roomState.enforceConnectionLimit = false;
+    const maxClientsPerRoom = (0, import_hooks.applyFilters)(
+      "sync.pollingProvider.maxClientsPerRoom",
+      DEFAULT_CLIENT_LIMIT_PER_ROOM,
+      roomState.room
+    );
+    const clientCount = Object.keys(awareness).length;
+    const validatedLimit = intValueOrDefault(
+      maxClientsPerRoom,
+      DEFAULT_CLIENT_LIMIT_PER_ROOM
+    );
+    if (clientCount > validatedLimit) {
+      roomState.log("Connection limit exceeded", {
+        clientCount,
+        maxClientsPerRoom: validatedLimit,
+        room: roomState.room
+      });
+      return true;
+    }
+    return false;
+  }
   var areListenersRegistered = false;
   var hasCollaborators = false;
   var isActiveBrowser = "visible" === document.visibilityState;
@@ -9554,6 +9587,17 @@ var wp;
           }
           const roomState = roomStates.get(room.room);
           roomState.endCursor = room.end_cursor;
+          if (checkConnectionLimit(room.awareness, roomState)) {
+            roomState.onStatusChange({
+              status: "disconnected",
+              error: new ConnectionError(
+                ConnectionErrorCode.CONNECTION_LIMIT_EXCEEDED,
+                "Connection limit exceeded"
+              )
+            });
+            unregisterRoom(room.room);
+            return;
+          }
           roomState.processAwarenessUpdate(room.awareness);
           if (Object.keys(room.awareness).length > 1) {
             hasCollaborators = true;
@@ -9630,6 +9674,7 @@ var wp;
       return;
     }
     const updateQueue = createUpdateQueue([createSyncStep1Update(doc2)]);
+    const enforceConnectionLimit = 0 === roomStates.size;
     function onAwarenessUpdate() {
       roomState.localAwarenessState = awareness.getLocalState() ?? {};
     }
@@ -9669,11 +9714,13 @@ var wp;
         SyncUpdateType.COMPACTION
       ),
       endCursor: 0,
+      enforceConnectionLimit,
       localAwarenessState: awareness.getLocalState() ?? {},
       log,
       onStatusChange,
       processAwarenessUpdate: (state) => processAwarenessUpdate(state, awareness),
       processDocUpdate: (update) => processDocUpdate(update, doc2, onSync),
+      room,
       unregister,
       updateQueue
     };
@@ -9854,7 +9901,7 @@ var wp;
     if (!window._wpCollaborationEnabled) {
       return [];
     }
-    const filteredProviderCreators = (0, import_hooks.applyFilters)(
+    const filteredProviderCreators = (0, import_hooks2.applyFilters)(
       "sync.providers",
       getDefaultProviderCreators()
     );
