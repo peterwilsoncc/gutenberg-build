@@ -364,17 +364,17 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "package-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
-    }
-  });
-
   // package-external:@wordpress/rich-text
   var require_rich_text = __commonJS({
     "package-external:@wordpress/rich-text"(exports, module) {
       module.exports = window.wp.richText;
+    }
+  });
+
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
     }
   });
 
@@ -1295,10 +1295,9 @@ var wp;
     return null;
   }
 
-  // packages/core-data/build-module/utils/crdt-user-selections.mjs
-  var import_data4 = __toESM(require_data(), 1);
-  var import_sync6 = __toESM(require_sync(), 1);
-  var import_block_editor2 = __toESM(require_block_editor(), 1);
+  // packages/core-data/build-module/utils/crdt-utils.mjs
+  var import_sync4 = __toESM(require_sync(), 1);
+  var import_rich_text = __toESM(require_rich_text(), 1);
 
   // packages/core-data/build-module/sync.mjs
   var import_sync3 = __toESM(require_sync(), 1);
@@ -1331,7 +1330,6 @@ var wp;
   }
 
   // packages/core-data/build-module/utils/crdt-utils.mjs
-  var import_sync4 = __toESM(require_sync(), 1);
   function getRootMap(doc, key) {
     return doc.getMap(key);
   }
@@ -1348,6 +1346,53 @@ var wp;
       return null;
     }
     return findBlockByClientIdInBlocks(blockId, blocks);
+  }
+  var MARKER_START = 57344;
+  function pickMarker(text) {
+    const tryCount = 16;
+    for (let code = MARKER_START; code < MARKER_START + tryCount; code++) {
+      const candidate = String.fromCharCode(code);
+      if (!text.includes(candidate)) {
+        return candidate;
+      }
+    }
+    return null;
+  }
+  function htmlIndexToRichTextOffset(html, htmlIndex) {
+    if (!html.includes("<") && !html.includes("&")) {
+      return htmlIndex;
+    }
+    const marker = pickMarker(html);
+    if (!marker) {
+      return htmlIndex;
+    }
+    const withMarker = html.slice(0, htmlIndex) + marker + html.slice(htmlIndex);
+    const value = (0, import_rich_text.create)({ html: withMarker });
+    const markerPos = value.text.indexOf(marker);
+    return markerPos === -1 ? htmlIndex : markerPos;
+  }
+  function richTextOffsetToHtmlIndex(html, richTextOffset) {
+    if (!html.includes("<") && !html.includes("&")) {
+      return richTextOffset;
+    }
+    const marker = pickMarker(html);
+    if (!marker) {
+      return richTextOffset;
+    }
+    const value = (0, import_rich_text.create)({ html });
+    const markerValue = (0, import_rich_text.create)({ text: marker });
+    if (value.formats[richTextOffset]) {
+      markerValue.formats[0] = value.formats[richTextOffset];
+    }
+    const withMarker = (0, import_rich_text.insert)(
+      value,
+      markerValue,
+      richTextOffset,
+      richTextOffset
+    );
+    const htmlWithMarker = (0, import_rich_text.toHTMLString)({ value: withMarker });
+    const markerIndex = htmlWithMarker.indexOf(marker);
+    return markerIndex === -1 ? richTextOffset : markerIndex;
   }
   function findBlockByClientIdInBlocks(blockId, blocks) {
     for (const block of blocks) {
@@ -1369,6 +1414,9 @@ var wp;
   }
 
   // packages/core-data/build-module/utils/crdt-user-selections.mjs
+  var import_data4 = __toESM(require_data(), 1);
+  var import_sync6 = __toESM(require_sync(), 1);
+  var import_block_editor2 = __toESM(require_block_editor(), 1);
   var SelectionType = /* @__PURE__ */ ((SelectionType2) => {
     SelectionType2["None"] = "none";
     SelectionType2["Cursor"] = "cursor";
@@ -1452,7 +1500,7 @@ var wp;
     }
     const relativePosition = import_sync6.Y.createRelativePositionFromTypeIndex(
       currentYText,
-      selection.offset
+      richTextOffsetToHtmlIndex(currentYText.toString(), selection.offset)
     );
     return {
       relativePosition,
@@ -1697,11 +1745,11 @@ var wp;
      * clientIds (e.g. in "Show Template" mode where blocks are cloned).
      *
      * @param selection - The selection state.
-     * @return The text index and block client ID, or nulls if not resolvable.
+     * @return The rich-text offset and block client ID, or nulls if not resolvable.
      */
     convertSelectionStateToAbsolute(selection) {
       if (selection.type === SelectionType.None) {
-        return { textIndex: null, localClientId: null };
+        return { richTextOffset: null, localClientId: null };
       }
       if (selection.type === SelectionType.WholeBlock) {
         const absolutePos = import_sync8.Y.createAbsolutePositionFromRelativePosition(
@@ -1717,7 +1765,7 @@ var wp;
             localClientId2 = path2 ? resolveBlockClientIdByPath(path2) : null;
           }
         }
-        return { textIndex: null, localClientId: localClientId2 };
+        return { richTextOffset: null, localClientId: localClientId2 };
       }
       const cursorPos = "cursorPosition" in selection ? selection.cursorPosition : selection.cursorStartPosition;
       const absolutePosition = import_sync8.Y.createAbsolutePositionFromRelativePosition(
@@ -1725,12 +1773,18 @@ var wp;
         this.doc
       );
       if (!absolutePosition) {
-        return { textIndex: null, localClientId: null };
+        return { richTextOffset: null, localClientId: null };
       }
       const yType = absolutePosition.type.parent?.parent;
       const path = yType instanceof import_sync8.Y.Map ? getBlockPathInYdoc(yType) : null;
       const localClientId = path ? resolveBlockClientIdByPath(path) : null;
-      return { textIndex: absolutePosition.index, localClientId };
+      return {
+        richTextOffset: htmlIndexToRichTextOffset(
+          absolutePosition.type.toString(),
+          absolutePosition.index
+        ),
+        localClientId
+      };
     }
     /**
      * Type guard to check if a struct is a Y.Item (not Y.GC)
@@ -1861,11 +1915,11 @@ var wp;
   // packages/core-data/build-module/utils/crdt-blocks.mjs
   var import_es62 = __toESM(require_es6(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
-  var import_rich_text = __toESM(require_rich_text(), 1);
+  var import_rich_text2 = __toESM(require_rich_text(), 1);
   var import_sync9 = __toESM(require_sync(), 1);
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
   function serializeAttributeValue(value) {
-    if (value instanceof import_rich_text.RichTextData) {
+    if (value instanceof import_rich_text2.RichTextData) {
       return value.valueOf();
     }
     if (Array.isArray(value)) {
@@ -2226,7 +2280,7 @@ var wp;
     const offset = selection.offset ?? 0;
     const relativePosition = import_sync11.Y.createRelativePositionFromTypeIndex(
       changedYText,
-      offset
+      richTextOffsetToHtmlIndex(changedYText.toString(), offset)
     );
     return {
       type: "RelativeSelection",
@@ -2264,7 +2318,10 @@ var wp;
         return {
           clientId,
           attributeKey,
-          offset: absolutePosition.index
+          offset: htmlIndexToRichTextOffset(
+            absolutePosition.type.toString(),
+            absolutePosition.index
+          )
         };
       }
     } else if (ySelection.type === YSelectionType.BlockSelection) {
@@ -6930,14 +6987,14 @@ var wp;
       (resolve) => {
         const hasId = isEntity ? !!resource.id : !!id;
         const { canUser: canUser3 } = resolve(store);
-        const create2 = canUser3(
+        const create3 = canUser3(
           "create",
           isEntity ? { kind: resource.kind, name: resource.name } : resource
         );
         if (!hasId) {
           const read2 = canUser3("read", resource);
-          const isResolving2 = create2.isResolving || read2.isResolving;
-          const hasResolved2 = create2.hasResolved && read2.hasResolved;
+          const isResolving2 = create3.isResolving || read2.isResolving;
+          const hasResolved2 = create3.hasResolved && read2.hasResolved;
           let status2 = Status.Idle;
           if (isResolving2) {
             status2 = Status.Resolving;
@@ -6948,15 +7005,15 @@ var wp;
             status: status2,
             isResolving: isResolving2,
             hasResolved: hasResolved2,
-            canCreate: create2.hasResolved && create2.data,
+            canCreate: create3.hasResolved && create3.data,
             canRead: read2.hasResolved && read2.data
           };
         }
         const read = canUser3("read", resource, id);
         const update = canUser3("update", resource, id);
         const _delete = canUser3("delete", resource, id);
-        const isResolving = read.isResolving || create2.isResolving || update.isResolving || _delete.isResolving;
-        const hasResolved = read.hasResolved && create2.hasResolved && update.hasResolved && _delete.hasResolved;
+        const isResolving = read.isResolving || create3.isResolving || update.isResolving || _delete.isResolving;
+        const hasResolved = read.hasResolved && create3.hasResolved && update.hasResolved && _delete.hasResolved;
         let status = Status.Idle;
         if (isResolving) {
           status = Status.Resolving;
@@ -6968,7 +7025,7 @@ var wp;
           isResolving,
           hasResolved,
           canRead: hasResolved && read.data,
-          canCreate: hasResolved && create2.data,
+          canCreate: hasResolved && create3.data,
           canUpdate: hasResolved && update.data,
           canDelete: hasResolved && _delete.data
         };
@@ -6998,7 +7055,7 @@ var wp;
   }
 
   // packages/core-data/build-module/footnotes/index.mjs
-  var import_rich_text2 = __toESM(require_rich_text(), 1);
+  var import_rich_text3 = __toESM(require_rich_text(), 1);
 
   // packages/core-data/build-module/footnotes/get-rich-text-values-cached.mjs
   var import_block_editor5 = __toESM(require_block_editor(), 1);
@@ -7071,16 +7128,16 @@ var wp;
           attributes[key] = value.map(updateAttributes);
           continue;
         }
-        if (typeof value !== "string" && !(value instanceof import_rich_text2.RichTextData)) {
+        if (typeof value !== "string" && !(value instanceof import_rich_text3.RichTextData)) {
           continue;
         }
-        const richTextValue = typeof value === "string" ? import_rich_text2.RichTextData.fromHTMLString(value) : new import_rich_text2.RichTextData(value);
+        const richTextValue = typeof value === "string" ? import_rich_text3.RichTextData.fromHTMLString(value) : new import_rich_text3.RichTextData(value);
         let hasFootnotes = false;
         richTextValue.replacements.forEach((replacement) => {
           if (replacement.type === "core/footnote") {
             const id = replacement.attributes["data-fn"];
             const index = newOrder.indexOf(id);
-            const countValue = (0, import_rich_text2.create)({
+            const countValue = (0, import_rich_text3.create)({
               html: replacement.innerHTML
             });
             countValue.text = String(index + 1);
@@ -7092,7 +7149,7 @@ var wp;
               { length: countValue.text.length },
               () => countValue.replacements[0]
             );
-            replacement.innerHTML = (0, import_rich_text2.toHTMLString)({
+            replacement.innerHTML = (0, import_rich_text3.toHTMLString)({
               value: countValue
             });
             hasFootnotes = true;
@@ -7282,7 +7339,7 @@ var wp;
   var import_compose3 = __toESM(require_compose(), 1);
   var import_element8 = __toESM(require_element(), 1);
   var defaultResolvedSelection = {
-    textIndex: null,
+    richTextOffset: null,
     localClientId: null
   };
   var defaultState = {
