@@ -144,7 +144,6 @@ var wp;
     OperationType2["Rotate"] = "ROTATE";
     OperationType2["TranscodeImage"] = "TRANSCODE_IMAGE";
     OperationType2["ThumbnailGeneration"] = "THUMBNAIL_GENERATION";
-    OperationType2["Finalize"] = "FINALIZE";
     return OperationType2;
   })(OperationType || {});
 
@@ -877,7 +876,6 @@ var wp;
   __export(private_actions_exports, {
     addItem: () => addItem,
     addSideloadItem: () => addSideloadItem,
-    finalizeItem: () => finalizeItem,
     finishOperation: () => finishOperation,
     generateThumbnails: () => generateThumbnails,
     getTranscodeImageOperation: () => getTranscodeImageOperation,
@@ -1057,10 +1055,6 @@ var wp;
           if (!parentItem) {
             return;
           }
-          if (parentItem.operations && parentItem.operations.length > 0) {
-            dispatch.processItem(parentId);
-            return;
-          }
           if (attachment) {
             parentItem.onSuccess?.([attachment]);
           }
@@ -1070,9 +1064,6 @@ var wp;
             parentItem.onBatchSuccess?.();
           }
         }
-        return;
-      }
-      if (operation === OperationType.Finalize && select2.hasPendingItemsByParentId(id)) {
         return;
       }
       dispatch({
@@ -1111,9 +1102,6 @@ var wp;
           break;
         case OperationType.ThumbnailGeneration:
           dispatch.generateThumbnails(id);
-          break;
-        case OperationType.Finalize:
-          dispatch.finalizeItem(id);
           break;
       }
     };
@@ -1263,8 +1251,7 @@ var wp;
         }
         operations.push(
           OperationType.Upload,
-          OperationType.ThumbnailGeneration,
-          OperationType.Finalize
+          OperationType.ThumbnailGeneration
         );
       } else {
         operations.push(OperationType.Upload);
@@ -1277,8 +1264,7 @@ var wp;
       const updates = !isVipsSupported || !isImage ? {
         additionalData: {
           ...item.additionalData,
-          generate_sub_sizes: true,
-          convert_format: true
+          generate_sub_sizes: true
         }
       } : {};
       dispatch.finishOperation(id, updates);
@@ -1295,7 +1281,7 @@ var wp;
         additionalData: item.additionalData,
         signal: item.abortController?.signal,
         onFileChange: ([attachment]) => {
-          if (attachment && !(0, import_blob.isBlobURL)(attachment.url)) {
+          if (!(0, import_blob.isBlobURL)(attachment.url)) {
             dispatch.finishOperation(id, {
               attachment
             });
@@ -1520,11 +1506,10 @@ var wp;
         }
       }
       if (!item.parentId && attachment.missing_image_sizes && attachment.missing_image_sizes.length > 0) {
-        const settings = select2.getSettings();
-        const allImageSizes = settings.allImageSizes || {};
-        const sizesToGenerate = attachment.missing_image_sizes;
         const file = attachment.filename ? renameFile(item.sourceFile, attachment.filename) : item.sourceFile;
         const batchId = v4_default();
+        const settings = select2.getSettings();
+        const allImageSizes = settings.allImageSizes || {};
         const { imageOutputFormats } = settings;
         const sourceType = item.sourceFile.type;
         const outputMimeType = imageOutputFormats?.[sourceType];
@@ -1536,7 +1521,7 @@ var wp;
             settings
           );
         }
-        for (const name of sizesToGenerate) {
+        for (const name of attachment.missing_image_sizes) {
           const imageSize = allImageSizes[name];
           if (!imageSize) {
             console.warn(
@@ -1612,24 +1597,6 @@ var wp;
               operations: scaledOperations
             });
           }
-        }
-      }
-      dispatch.finishOperation(id, {});
-    };
-  }
-  function finalizeItem(id) {
-    return async ({ select: select2, dispatch }) => {
-      const item = select2.getItem(id);
-      if (!item) {
-        return;
-      }
-      const attachment = item.attachment;
-      const { mediaFinalize } = select2.getSettings();
-      if (attachment?.id && mediaFinalize) {
-        try {
-          await mediaFinalize(attachment.id);
-        } catch (error) {
-          console.warn("Media finalization failed:", error);
         }
       }
       dispatch.finishOperation(id, {});
@@ -1762,6 +1729,13 @@ var wp;
       cachedResult = {
         supported: false,
         reason: "Web Workers are not supported in this browser."
+      };
+      return cachedResult;
+    }
+    if (typeof window !== "undefined" && window.HTMLIFrameElement && !("credentialless" in window.HTMLIFrameElement.prototype)) {
+      cachedResult = {
+        supported: false,
+        reason: "Browser does not support credentialless iframes. Cross-origin isolation would break third-party embeds"
       };
       return cachedResult;
     }

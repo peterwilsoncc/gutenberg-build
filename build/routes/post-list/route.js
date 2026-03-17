@@ -165,27 +165,11 @@ var DEFAULT_VIEW = {
   mediaField: "featured_media",
   descriptionField: "excerpt"
 };
-var DEFAULT_LAYOUTS = {
-  table: {
-    layout: {
-      styles: {
-        author: {
-          align: "start"
-        }
-      }
-    }
-  },
-  grid: {},
-  list: {}
-};
 function getActiveViewOverridesForTab(slug) {
   if (slug === "all") {
-    return {
-      ...DEFAULT_LAYOUTS.table
-    };
+    return {};
   }
   return {
-    ...DEFAULT_LAYOUTS.table,
     filters: [
       {
         field: "status",
@@ -214,7 +198,7 @@ async function ensureView(type, slug, search) {
   });
 }
 function viewToQuery(view, postType) {
-  const result = { _embed: "author,wp:featuredmedia" };
+  const result = {};
   if (void 0 !== view.perPage) {
     result.per_page = view.perPage;
   }

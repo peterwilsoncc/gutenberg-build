@@ -91,12 +91,6 @@ var actions = {
       slug,
       config
     };
-  },
-  unregisterConnector(slug) {
-    return {
-      type: "UNREGISTER_CONNECTOR",
-      slug
-    };
   }
 };
 function reducer(state = DEFAULT_STATE, action) {
@@ -107,31 +101,19 @@ function reducer(state = DEFAULT_STATE, action) {
         connectors: {
           ...state.connectors,
           [action.slug]: {
-            ...state.connectors[action.slug],
             slug: action.slug,
             ...action.config
           }
         }
       };
-    case "UNREGISTER_CONNECTOR": {
-      if (!state.connectors[action.slug]) {
-        return state;
-      }
-      const { [action.slug]: _, ...rest } = state.connectors;
-      return {
-        ...state,
-        connectors: rest
-      };
-    }
     default:
       return state;
   }
 }
 var selectors = {
-  getConnectors: (0, import_data.createSelector)(
-    (state) => Object.values(state.connectors),
-    (state) => [state.connectors]
-  ),
+  getConnectors(state) {
+    return Object.values(state.connectors);
+  },
   getConnector(state, slug) {
     return state.connectors[slug];
   }
@@ -147,9 +129,6 @@ unlock(store).registerPrivateSelectors(selectors);
 function registerConnector(slug, config) {
   unlock((0, import_data2.dispatch)(store)).registerConnector(slug, config);
 }
-function unregisterConnector(slug) {
-  unlock((0, import_data2.dispatch)(store)).unregisterConnector(slug);
-}
 
 // packages/connectors/build-module/connector-item.mjs
 var import_components = __toESM(require_components(), 1);
@@ -164,21 +143,11 @@ function ConnectorItem({
   actionArea,
   children
 }) {
-  const headingId = (0, import_element.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, { className, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: 4, role: "group", "aria-labelledby": headingId, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, { alignment: "center", spacing: 4, wrap: true, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, { className, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: 4, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, { alignment: "center", spacing: 4, children: [
       icon,
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: 0, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-          import_components.__experimentalText,
-          {
-            weight: 600,
-            size: 15,
-            id: headingId,
-            as: "h2",
-            children: name
-          }
-        ),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { weight: 600, size: 15, children: name }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { variant: "muted", size: 12, children: description })
       ] }) }),
       actionArea
@@ -192,8 +161,7 @@ function DefaultConnectorSettings({
   initialValue = "",
   helpUrl,
   helpLabel,
-  readOnly = false,
-  keySource
+  readOnly = false
 }) {
   const [apiKey, setApiKey] = (0, import_element.useState)(initialValue);
   const [isSaving, setIsSaving] = (0, import_element.useState)(false);
@@ -209,18 +177,7 @@ function DefaultConnectorSettings({
       a: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.ExternalLink, { href: helpUrl, children: helpLinkLabel })
     }
   ) : void 0;
-  const isExternallyConfigured = keySource === "env" || keySource === "constant";
   const getHelp = () => {
-    if (isExternallyConfigured) {
-      if (keySource === "env") {
-        return (0, import_i18n.__)(
-          "This API key is configured using an environment variable."
-        );
-      }
-      if (keySource === "constant") {
-        return (0, import_i18n.__)("This API key is configured as a constant.");
-      }
-    }
     if (readOnly) {
       return helpUrl ? (0, import_element.createInterpolateElement)(
         (0, import_i18n.sprintf)(
@@ -236,7 +193,7 @@ function DefaultConnectorSettings({
       ) : (0, import_i18n.__)("Your API key is stored securely.");
     }
     if (saveError) {
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { role: "alert", className: "connector-settings__error", children: saveError });
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: "#cc1818" }, children: saveError });
     }
     return helpLink;
   };
@@ -267,6 +224,7 @@ function DefaultConnectorSettings({
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
           import_components.TextControl,
           {
+            __nextHasNoMarginBottom: true,
             __next40pxDefaultSize: true,
             label: (0, import_i18n.__)("API Key"),
             value: apiKey,
@@ -276,12 +234,12 @@ function DefaultConnectorSettings({
                 setApiKey(value);
               }
             },
-            placeholder: (0, import_i18n.__)("Enter your API key"),
+            placeholder: "YOUR_API_KEY",
             disabled: readOnly || isSaving,
             help: getHelp()
           }
         ),
-        readOnly ? onRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, { variant: "link", isDestructive: true, onClick: onRemove, children: (0, import_i18n.__)("Remove and replace") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalHStack, { justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        readOnly ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, { variant: "link", isDestructive: true, onClick: onRemove, children: (0, import_i18n.__)("Remove and replace") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalHStack, { justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
           import_components.Button,
           {
             __next40pxDefaultSize: true,
@@ -305,7 +263,6 @@ export {
   ConnectorItem as __experimentalConnectorItem,
   DefaultConnectorSettings as __experimentalDefaultConnectorSettings,
   registerConnector as __experimentalRegisterConnector,
-  unregisterConnector as __experimentalUnregisterConnector,
   privateApis
 };
 //# sourceMappingURL=index.js.map

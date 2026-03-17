@@ -3077,10 +3077,6 @@ var getRegionRootFragment = (regions) => {
   return regionRootFragments.get(region);
 };
 var initialVdom = /* @__PURE__ */ new WeakMap();
-var resolveInitialVdom;
-var initialVdomPromise = new Promise((resolve2) => {
-  resolveInitialVdom = resolve2;
-});
 var hydrateRegions = async () => {
   const nodes = document.querySelectorAll(`[data-wp-interactive]`);
   for (const node of nodes) {
@@ -3093,7 +3089,6 @@ var hydrateRegions = async () => {
       D(vdom, fragment);
     }
   }
-  resolveInitialVdom(initialVdom);
 };
 
 // packages/interactivity/build-module/index.mjs
@@ -3106,7 +3101,7 @@ var privateApis = (lock) => {
   if (lock === requiredConsent) {
     return {
       getRegionRootFragment,
-      initialVdomPromise,
+      initialVdom,
       toVdom,
       directive,
       getNamespace,
@@ -3134,7 +3129,7 @@ window.history.replaceState(
   ""
 );
 window.addEventListener("popstate", (event) => {
-  if (event.state !== null && event.state?.wpInteractivityId !== sessionId) {
+  if (event.state?.wpInteractivityId !== sessionId) {
     window.location.reload();
   }
 });

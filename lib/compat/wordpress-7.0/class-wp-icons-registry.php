@@ -7,7 +7,7 @@ if ( ! class_exists( 'WP_Icons_Registry' ) ) {
 		 *
 		 * @var array[]
 		 */
-		protected $registered_icons = array();
+		private $registered_icons = array();
 
 
 		/**
@@ -15,21 +15,14 @@ if ( ! class_exists( 'WP_Icons_Registry' ) ) {
 		 *
 		 * @var WP_Icons_Registry|null
 		 */
-		protected static $instance = null;
+		private static $instance = null;
 
 		/**
 		 * Constructor.
 		 *
-		 * WP_Icons_Registry is a singleton class, so keep this protected.
-		 *
-		 * For WP 7.0, the Icons Registry is closed for third-party icon
-		 * registry, serving only a subset of core icons.
-		 *
-		 * These icons are defined in @wordpress/packages as SVG files and as
-		 * entries in a single manifest file. On init, the registry is loaded
-		 * with those icons listed in the manifest.
+		 * WP_Icons_Registry is a singleton class, so keep this private.
 		 */
-		protected function __construct() {
+		private function __construct() {
 			$icons_directory = __DIR__ . '/../../../packages/icons/src/';
 			$icons_directory = trailingslashit( $icons_directory );
 			$manifest_path   = $icons_directory . 'manifest.php';
@@ -90,7 +83,7 @@ if ( ! class_exists( 'WP_Icons_Registry' ) ) {
 		 * }
 		 * @return bool True if the icon was registered with success and false otherwise.
 		 */
-		protected function register( $icon_name, $icon_properties ) {
+		private function register( $icon_name, $icon_properties ) {
 			if ( ! isset( $icon_name ) || ! is_string( $icon_name ) ) {
 				_doing_it_wrong(
 					__METHOD__,
@@ -177,7 +170,7 @@ if ( ! class_exists( 'WP_Icons_Registry' ) ) {
 		 * @param string $icon_content The icon SVG content to sanitize.
 		 * @return string The sanitized icon SVG content.
 		 */
-		protected function sanitize_icon_content( $icon_content ) {
+		private function sanitize_icon_content( $icon_content ) {
 			$allowed_tags = array(
 				'svg'     => array(
 					'class'       => true,
@@ -212,7 +205,7 @@ if ( ! class_exists( 'WP_Icons_Registry' ) ) {
 		 * @param string $icon_name Icon name including namespace.
 		 * @return string|null The content of the icon, if found.
 		 */
-		protected function get_content( $icon_name ) {
+		private function get_content( $icon_name ) {
 			if ( ! isset( $this->registered_icons[ $icon_name ]['content'] ) ) {
 				$content = file_get_contents(
 					$this->registered_icons[ $icon_name ]['filePath']
