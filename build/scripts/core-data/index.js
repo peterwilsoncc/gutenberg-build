@@ -1864,6 +1864,22 @@ var wp;
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_sync9 = __toESM(require_sync(), 1);
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
+  function serializeAttributeValue(value) {
+    if (value instanceof import_rich_text.RichTextData) {
+      return value.valueOf();
+    }
+    if (Array.isArray(value)) {
+      return value.map(serializeAttributeValue);
+    }
+    if (value && typeof value === "object") {
+      const result = {};
+      for (const [k, v] of Object.entries(value)) {
+        result[k] = serializeAttributeValue(v);
+      }
+      return result;
+    }
+    return value;
+  }
   function makeBlockAttributesSerializable(blockName, attributes) {
     const newAttributes = { ...attributes };
     for (const [key, value] of Object.entries(attributes)) {
@@ -1871,9 +1887,7 @@ var wp;
         delete newAttributes[key];
         continue;
       }
-      if (value instanceof import_rich_text.RichTextData) {
-        newAttributes[key] = value.valueOf();
-      }
+      newAttributes[key] = serializeAttributeValue(value);
     }
     return newAttributes;
   }
