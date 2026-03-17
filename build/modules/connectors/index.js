@@ -144,11 +144,21 @@ function ConnectorItem({
   actionArea,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, { className, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: 4, children: [
+  const headingId = (0, import_element.useId)();
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, { className, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: 4, role: "group", "aria-labelledby": headingId, children: [
     /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, { alignment: "center", spacing: 4, wrap: true, children: [
       icon,
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { spacing: 0, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { weight: 600, size: 15, children: name }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          import_components.__experimentalText,
+          {
+            weight: 600,
+            size: 15,
+            id: headingId,
+            as: "h2",
+            children: name
+          }
+        ),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { variant: "muted", size: 12, children: description })
       ] }) }),
       actionArea
@@ -206,7 +216,7 @@ function DefaultConnectorSettings({
       ) : (0, import_i18n.__)("Your API key is stored securely.");
     }
     if (saveError) {
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: "#cc1818" }, children: saveError });
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { role: "alert", className: "connector-settings__error", children: saveError });
     }
     return helpLink;
   };

@@ -2527,6 +2527,7 @@ var wp;
   // packages/admin-ui/build-module/page/header.mjs
   var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
   function Header({
+    headingLevel = 2,
     breadcrumbs,
     badges,
     title,
@@ -2534,6 +2535,7 @@ var wp;
     actions,
     showSidebarToggle = true
   }) {
+    const HeadingTag = `h${headingLevel}`;
     return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(
       Stack,
       {
@@ -2550,7 +2552,7 @@ var wp;
                   className: "admin-ui-page__sidebar-toggle-slot"
                 }
               ),
-              title && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("h2", { className: "admin-ui-page__header-title", children: title }),
+              title && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(HeadingTag, { className: "admin-ui-page__header-title", children: title }),
               breadcrumbs,
               badges
             ] }),
@@ -2575,6 +2577,7 @@ var wp;
   // packages/admin-ui/build-module/page/index.mjs
   var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
   function Page({
+    headingLevel,
     breadcrumbs,
     badges,
     title,
@@ -2592,6 +2595,7 @@ var wp;
       (title || breadcrumbs || badges) && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
         Header,
         {
+          headingLevel,
           breadcrumbs,
           badges,
           title,
