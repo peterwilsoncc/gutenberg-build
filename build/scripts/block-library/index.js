@@ -50993,9 +50993,6 @@ ${js}
         type: "string",
         role: "content"
       },
-      textAlign: {
-        type: "string"
-      },
       format: {
         type: "string"
       },
@@ -51028,6 +51025,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -51067,18 +51065,16 @@ ${js}
   var import_data105 = __toESM(require_data(), 1);
   var import_blocks84 = __toESM(require_blocks(), 1);
   var import_jsx_runtime367 = __toESM(require_jsx_runtime(), 1);
-  function PostDateEdit({
-    attributes: attributes2,
-    context: { postType: postTypeSlug, queryId },
-    setAttributes,
-    name: name123
-  }) {
-    const { datetime, textAlign, format: format3, isLink } = attributes2;
-    const blockProps = (0, import_block_editor191.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+  function PostDateEdit(props) {
+    const {
+      attributes: attributes2,
+      context: { postType: postTypeSlug, queryId },
+      setAttributes,
+      name: name123
+    } = props;
+    useDeprecatedTextAlign(props);
+    const { datetime, format: format3, isLink } = attributes2;
+    const blockProps = (0, import_block_editor191.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const [popoverAnchor, setPopoverAnchor] = (0, import_element98.useState)(null);
     const popoverProps = (0, import_element98.useMemo)(
@@ -51127,59 +51123,48 @@ ${js}
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime367.jsxs)(import_jsx_runtime367.Fragment, { children: [
-      (blockEditingMode === "default" || !isDescendentOfQueryLoop) && /* @__PURE__ */ (0, import_jsx_runtime367.jsxs)(import_block_editor191.BlockControls, { group: "block", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
-          import_block_editor191.AlignmentControl,
-          {
-            value: textAlign,
-            onChange: (nextAlign) => {
-              setAttributes({ textAlign: nextAlign });
+      (blockEditingMode === "default" || !isDescendentOfQueryLoop) && activeBlockVariationName !== "post-date-modified" && (!isDescendentOfQueryLoop || !activeBlockVariationName) && /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(import_block_editor191.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(import_components109.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
+        import_components109.Dropdown,
+        {
+          popoverProps,
+          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
+            import_block_editor191.__experimentalPublishDateTimePicker,
+            {
+              title: activeBlockVariationName === "post-date" ? (0, import_i18n169.__)("Publish Date") : (0, import_i18n169.__)("Date"),
+              currentDate: datetime,
+              onChange: (newDatetime) => setAttributes({
+                datetime: newDatetime
+              }),
+              is12Hour: is12HourFormat(
+                siteTimeFormat
+              ),
+              onClose,
+              dateOrder: (
+                /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
+                (0, import_i18n169._x)("dmy", "date order")
+              )
             }
-          }
-        ),
-        activeBlockVariationName !== "post-date-modified" && (!isDescendentOfQueryLoop || !activeBlockVariationName) && /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(import_components109.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
-          import_components109.Dropdown,
-          {
-            popoverProps,
-            renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
-              import_block_editor191.__experimentalPublishDateTimePicker,
-              {
-                title: activeBlockVariationName === "post-date" ? (0, import_i18n169.__)("Publish Date") : (0, import_i18n169.__)("Date"),
-                currentDate: datetime,
-                onChange: (newDatetime) => setAttributes({
-                  datetime: newDatetime
-                }),
-                is12Hour: is12HourFormat(
-                  siteTimeFormat
-                ),
-                onClose,
-                dateOrder: (
-                  /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
-                  (0, import_i18n169._x)("dmy", "date order")
-                )
+          ),
+          renderToggle: ({ isOpen, onToggle }) => {
+            const openOnArrowDown = (event) => {
+              if (!isOpen && event.keyCode === import_keycodes8.DOWN) {
+                event.preventDefault();
+                onToggle();
               }
-            ),
-            renderToggle: ({ isOpen, onToggle }) => {
-              const openOnArrowDown = (event) => {
-                if (!isOpen && event.keyCode === import_keycodes8.DOWN) {
-                  event.preventDefault();
-                  onToggle();
-                }
-              };
-              return /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
-                import_components109.ToolbarButton,
-                {
-                  "aria-expanded": isOpen,
-                  icon: pencil_default,
-                  title: (0, import_i18n169.__)("Change Date"),
-                  onClick: onToggle,
-                  onKeyDown: openOnArrowDown
-                }
-              );
-            }
+            };
+            return /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
+              import_components109.ToolbarButton,
+              {
+                "aria-expanded": isOpen,
+                icon: pencil_default,
+                title: (0, import_i18n169.__)("Change Date"),
+                onClick: onToggle,
+                onKeyDown: openOnArrowDown
+              }
+            );
           }
-        ) })
-      ] }),
+        }
+      ) }) }),
       /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(import_block_editor191.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime367.jsxs)(
         import_components109.__experimentalToolsPanel,
         {
@@ -51246,6 +51231,79 @@ ${js}
   }
 
   // packages/block-library/build-module/post-date/deprecated.mjs
+  var v48 = {
+    attributes: {
+      datetime: {
+        type: "string",
+        role: "content"
+      },
+      textAlign: {
+        type: "string"
+      },
+      format: {
+        type: "string"
+      },
+      isLink: {
+        type: "boolean",
+        default: false,
+        role: "content"
+      }
+    },
+    supports: {
+      anchor: true,
+      html: false,
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true,
+          link: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    save() {
+      return null;
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    }
+  };
   var v38 = {
     attributes: {
       datetime: {
@@ -51324,7 +51382,7 @@ ${js}
       },
       ...otherAttributes
     }) {
-      return {
+      return migrate_text_align_default({
         metadata: {
           bindings: {
             datetime: {
@@ -51336,7 +51394,7 @@ ${js}
           ...otherMetadata
         },
         ...otherAttributes
-      };
+      });
     },
     isEligible(attributes2) {
       return attributes2?.metadata?.bindings?.datetime?.source === "core/post-data" && !!attributes2?.metadata?.bindings?.datetime?.args?.key;
@@ -51415,7 +51473,7 @@ ${js}
             "wp-block-post-date__modified-date"
           );
         }
-        return {
+        return migrate_text_align_default({
           ...otherAttributes,
           className,
           metadata: {
@@ -51427,7 +51485,7 @@ ${js}
               }
             }
           }
-        };
+        });
       }
     },
     isEligible(attributes2) {
@@ -51466,12 +51524,14 @@ ${js}
     save() {
       return null;
     },
-    migrate: migrate_font_family_default,
+    migrate(attributes2) {
+      return migrate_text_align_default(migrate_font_family_default(attributes2));
+    },
     isEligible({ style: style2 }) {
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default35 = [v38, v213, v131];
+  var deprecated_default35 = [v48, v38, v213, v131];
 
   // packages/block-library/build-module/post-date/variations.mjs
   var import_i18n170 = __toESM(require_i18n(), 1);
@@ -54973,7 +55033,7 @@ ${js}
       };
     }
   };
-  var v48 = {
+  var v49 = {
     attributes: {
       ...blockAttributes6
     },
@@ -55360,7 +55420,7 @@ ${js}
       };
     }
   };
-  var deprecated_default41 = [v57, v48, v39, v215, v138, v02];
+  var deprecated_default41 = [v57, v49, v39, v215, v138, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n185 = __toESM(require_i18n(), 1);
@@ -58036,7 +58096,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(Tag, { ...innerBlocksProps });
     }
   };
-  var v49 = {
+  var v410 = {
     attributes: {
       queryId: {
         type: "number"
@@ -58209,7 +58269,7 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v49, v310, v216, v139];
+  var deprecated14 = [v67, v58, v410, v310, v216, v139];
   var deprecated_default42 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
@@ -59791,7 +59851,7 @@ ${js}
       innerBlocks
     ];
   };
-  var v410 = {
+  var v411 = {
     attributes: {
       value: {
         type: "string",
@@ -60027,7 +60087,7 @@ ${js}
       );
     }
   };
-  var deprecated_default45 = [v410, v311, v218, v141, v03];
+  var deprecated_default45 = [v411, v311, v218, v141, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n216 = __toESM(require_i18n(), 1);
@@ -66231,7 +66291,7 @@ ${js}
       attribute: "rowspan"
     }
   };
-  var v411 = {
+  var v412 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -66844,7 +66904,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default52 = [v411, v312, v222, v147];
+  var deprecated_default52 = [v412, v312, v222, v147];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element126 = __toESM(require_element(), 1);
