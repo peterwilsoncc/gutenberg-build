@@ -2312,7 +2312,7 @@ body.is-dragging-components-draggable {
     border-radius: 8px;
     margin: auto;
     width: auto;
-    min-width: 350px;
+    min-width: var(--wpds-dimension-surface-width-sm, 320px);
     max-width: calc(100% - 32px);
     max-height: calc(100% - 128px);
   }
@@ -2336,13 +2336,13 @@ body.is-dragging-components-draggable {
     width: 100%;
   }
   .components-modal__frame.has-size-small {
-    max-width: 384px;
+    max-width: var(--wpds-dimension-surface-width-md, 400px);
   }
   .components-modal__frame.has-size-medium {
-    max-width: 512px;
+    max-width: var(--wpds-dimension-surface-width-lg, 560px);
   }
   .components-modal__frame.has-size-large {
-    max-width: 840px;
+    max-width: var(--wpds-dimension-surface-width-2xl, 960px);
   }
 }
 @media (min-width: 960px) {
