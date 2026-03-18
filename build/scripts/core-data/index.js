@@ -658,6 +658,7 @@ var wp;
       stableKey: "",
       page: 1,
       perPage: 10,
+      offset: void 0,
       fields: null,
       include: null,
       context: "default"
@@ -677,6 +678,12 @@ var wp;
           parts.context = value;
           break;
         default:
+          if (key === "offset") {
+            const numericOffset = Number(value);
+            if (Number.isFinite(numericOffset)) {
+              parts.offset = numericOffset;
+            }
+          }
           if (key === "_fields") {
             parts.fields = get_normalized_comma_separable_default(value) ?? [];
             value = parts.fields.join();
@@ -698,7 +705,15 @@ var wp;
   // packages/core-data/build-module/queried-data/selectors.mjs
   var queriedItemsCacheByState = /* @__PURE__ */ new WeakMap();
   function getQueriedItemsUncached(state, query) {
-    const { stableKey, page, perPage, include, fields, context } = get_query_parts_default(query);
+    const {
+      stableKey,
+      page,
+      perPage,
+      offset: queryOffset,
+      include,
+      fields,
+      context
+    } = get_query_parts_default(query);
     const itemIds = state.queries?.[context]?.[stableKey]?.itemIds;
     if (!itemIds) {
       return null;
@@ -707,8 +722,11 @@ var wp;
     const endOffset = perPage === -1 ? itemIds.length : Math.min(startOffset + perPage, itemIds.length);
     if (perPage !== -1 && itemIds.length < startOffset + perPage) {
       const totalItems = state.queries[context][stableKey].meta?.totalItems;
-      if (Number.isFinite(totalItems) && itemIds.length < totalItems) {
-        return null;
+      if (Number.isFinite(totalItems)) {
+        const effectiveTotal = queryOffset !== void 0 ? totalItems - queryOffset : totalItems;
+        if (itemIds.length < effectiveTotal) {
+          return null;
+        }
       }
     }
     const items2 = [];
