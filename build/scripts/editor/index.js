@@ -51882,6 +51882,7 @@ var wp;
   // packages/editor/build-module/components/collaborators-presence/list.mjs
   var import_i18n215 = __toESM(require_i18n(), 1);
   var import_components189 = __toESM(require_components(), 1);
+  var import_a11y7 = __toESM(require_a11y(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/get-avatar-url.mjs
   function getAvatarUrl(avatarUrls) {
@@ -51973,8 +51974,20 @@ var wp;
   function CollaboratorsList({
     activeCollaborators,
     popoverAnchor,
-    setIsPopoverVisible
+    setIsPopoverVisible,
+    cursorRegistry
   }) {
+    const handleCollaboratorClick = (clientId) => {
+      const success = cursorRegistry.scrollToCursor(clientId, {
+        behavior: "smooth",
+        block: "center",
+        highlightDuration: 2e3
+      });
+      if (success) {
+        (0, import_a11y7.speak)((0, import_i18n215.__)("Scrolled to cursor"), "polite");
+        setIsPopoverVisible(false);
+      }
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
       import_components189.Popover,
       {
@@ -52006,7 +52019,10 @@ var wp;
               "button",
               {
                 className: "editor-collaborators-presence__list-item",
-                disabled: true,
+                disabled: isCurrentUser,
+                onClick: () => handleCollaboratorClick(
+                  collaboratorState.clientId
+                ),
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
                     component_default,
@@ -52030,6 +52046,64 @@ var wp;
         ] })
       }
     );
+  }
+
+  // packages/editor/build-module/components/collaborators-overlay/cursor-registry.mjs
+  function highlightCursor(element, duration) {
+    element.classList.add("collaborators-overlay-cursor-highlighted");
+    setTimeout(() => {
+      element.classList.remove("collaborators-overlay-cursor-highlighted");
+    }, duration);
+  }
+  function createCursorRegistry() {
+    const cursorMap = /* @__PURE__ */ new Map();
+    return {
+      /**
+       * Register a cursor element when it's created.
+       *
+       * @param clientId - The clientId of the cursor to register.
+       * @param element  - The cursor element to register.
+       */
+      registerCursor(clientId, element) {
+        cursorMap.set(clientId, element);
+      },
+      /**
+       * Unregister a cursor element when it's removed.
+       *
+       * @param clientId - The clientId of the cursor to unregister.
+       */
+      unregisterCursor(clientId) {
+        cursorMap.delete(clientId);
+      },
+      /**
+       * Scroll to a cursor by clientId.
+       *
+       * @param clientId - The clientId of the cursor to scroll to.
+       * @param options  - The options for the scroll.
+       * @return true if cursor was found and scrolled to, false otherwise.
+       */
+      scrollToCursor(clientId, options) {
+        const cursorElement = cursorMap.get(clientId);
+        if (!cursorElement) {
+          return false;
+        }
+        cursorElement.scrollIntoView({
+          behavior: options?.behavior ?? "smooth",
+          block: options?.block ?? "center",
+          inline: options?.inline ?? "nearest"
+        });
+        if (options?.highlightDuration) {
+          highlightCursor(cursorElement, options.highlightDuration);
+        }
+        return true;
+      },
+      /**
+       * Clear the registry.
+       */
+      removeAll() {
+        cursorMap.clear();
+      }
+    };
   }
 
   // packages/editor/build-module/components/collaborators-overlay/index.mjs
@@ -52930,7 +53004,8 @@ var wp;
   function Overlay({
     blockEditorDocument,
     postId: postId2,
-    postType: postType2
+    postType: postType2,
+    cursorRegistry
   }) {
     const [overlayElement, setOverlayElement] = (0, import_element158.useState)(null);
     const { cursors, rerenderCursorsAfterDelay } = useRenderCursors(
@@ -52973,6 +53048,34 @@ var wp;
       setOverlayElement,
       resizeObserverRef
     ]);
+    const cursorRefsMap = (0, import_element158.useRef)(/* @__PURE__ */ new Map());
+    (0, import_element158.useEffect)(() => {
+      if (!cursorRegistry) {
+        return;
+      }
+      const refs = cursorRefsMap.current;
+      const currentIds = new Set(cursors.map((c6) => c6.clientId));
+      for (const id of refs.keys()) {
+        if (!currentIds.has(id)) {
+          cursorRegistry.unregisterCursor(id);
+          refs.delete(id);
+        }
+      }
+      for (const [id, el] of refs.entries()) {
+        cursorRegistry.registerCursor(id, el);
+      }
+      return () => cursorRegistry.removeAll();
+    }, [cursors, cursorRegistry]);
+    const setCursorRef = (0, import_element158.useCallback)(
+      (clientId) => (el) => {
+        if (el) {
+          cursorRefsMap.current.set(clientId, el);
+        } else {
+          cursorRefsMap.current.delete(clientId);
+        }
+      },
+      []
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime328.jsxs)("div", { className: "collaborators-overlay-full", ref: mergedRef, children: [
       /* @__PURE__ */ (0, import_jsx_runtime328.jsx)("style", { children: AVATAR_IFRAME_STYLES + OVERLAY_IFRAME_STYLES }),
       cursors.map((cursor) => /* @__PURE__ */ (0, import_jsx_runtime328.jsxs)("div", { children: [
@@ -52993,6 +53096,7 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime328.jsxs)(
           "div",
           {
+            ref: setCursorRef(cursor.clientId),
             className: "collaborators-overlay-user",
             style: {
               left: `${cursor.x}px`,
@@ -53047,7 +53151,11 @@ var wp;
   // packages/editor/build-module/components/collaborators-overlay/index.mjs
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   var { BlockCanvasCover } = unlock(import_block_editor72.privateApis);
-  function CollaboratorsOverlay({ postId: postId2, postType: postType2 }) {
+  function CollaboratorsOverlay({
+    postId: postId2,
+    postType: postType2,
+    cursorRegistry
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(BlockCanvasCover.Fill, { children: ({
       containerRef
     }) => /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
@@ -53055,7 +53163,8 @@ var wp;
       {
         blockEditorDocument: containerRef.current?.ownerDocument,
         postId: postId2,
-        postType: postType2
+        postType: postType2,
+        cursorRegistry
       }
     ) });
   }
@@ -53091,6 +53200,7 @@ var wp;
         return 0;
       });
     }, [activeCollaborators]);
+    const [cursorRegistry] = (0, import_element159.useState)(createCursorRegistry);
     const [isPopoverVisible, setIsPopoverVisible] = (0, import_element159.useState)(false);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element159.useState)(
       null
@@ -53151,11 +53261,19 @@ var wp;
           {
             activeCollaborators: collaboratorsForList,
             popoverAnchor,
-            setIsPopoverVisible
+            setIsPopoverVisible,
+            cursorRegistry
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(CollaboratorsOverlay, { postId: postId2, postType: postType2 })
+      /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+        CollaboratorsOverlay,
+        {
+          postId: postId2,
+          postType: postType2,
+          cursorRegistry
+        }
+      )
     ] });
   }
 
