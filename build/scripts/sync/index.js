@@ -9217,10 +9217,10 @@ var wp;
   }
 
   // packages/sync/build-module/providers/index.mjs
-  var import_hooks2 = __toESM(require_hooks(), 1);
+  var import_hooks3 = __toESM(require_hooks(), 1);
 
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
-  var import_hooks = __toESM(require_hooks(), 1);
+  var import_hooks2 = __toESM(require_hooks(), 1);
 
   // packages/sync/node_modules/y-protocols/sync.js
   var messageYjsSyncStep1 = 0;
@@ -9267,11 +9267,20 @@ var wp;
   };
 
   // packages/sync/build-module/providers/http-polling/config.mjs
+  var import_hooks = __toESM(require_hooks(), 1);
   var DEFAULT_CLIENT_LIMIT_PER_ROOM = 3;
   var MAX_ERROR_BACKOFF_IN_MS = 30 * 1e3;
   var MAX_UPDATE_SIZE_IN_BYTES = 1 * 1024 * 1024;
-  var POLLING_INTERVAL_IN_MS = 1e3;
-  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = 250;
+  var POLLING_INTERVAL_IN_MS = (0, import_hooks.applyFilters)(
+    "sync.pollingManager.pollingInterval",
+    1e3
+    // 1 second or 1000 milliseconds
+  );
+  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = (0, import_hooks.applyFilters)(
+    "sync.pollingManager.pollingIntervalWithCollaborators",
+    250
+    // 250 milliseconds
+  );
   var POLLING_INTERVAL_BACKGROUND_TAB_IN_MS = 25 * 1e3;
 
   // packages/sync/build-module/providers/http-polling/types.mjs
@@ -9488,7 +9497,7 @@ var wp;
       return false;
     }
     roomState.enforceConnectionLimit = false;
-    const maxClientsPerRoom = (0, import_hooks.applyFilters)(
+    const maxClientsPerRoom = (0, import_hooks2.applyFilters)(
       "sync.pollingProvider.maxClientsPerRoom",
       DEFAULT_CLIENT_LIMIT_PER_ROOM,
       roomState.room
@@ -9889,7 +9898,7 @@ var wp;
     if (!window._wpCollaborationEnabled) {
       return [];
     }
-    const filteredProviderCreators = (0, import_hooks2.applyFilters)(
+    const filteredProviderCreators = (0, import_hooks3.applyFilters)(
       "sync.providers",
       getDefaultProviderCreators()
     );
