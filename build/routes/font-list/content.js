@@ -810,6 +810,7 @@ var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components
 // packages/admin-ui/build-module/page/header.mjs
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 function Header({
+  headingLevel = 2,
   breadcrumbs,
   badges,
   title,
@@ -817,6 +818,7 @@ function Header({
   actions,
   showSidebarToggle = true
 }) {
+  const HeadingTag = `h${headingLevel}`;
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
     Stack,
     {
@@ -833,7 +835,7 @@ function Header({
                 className: "admin-ui-page__sidebar-toggle-slot"
               }
             ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "admin-ui-page__header-title", children: title }),
+            title && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(HeadingTag, { className: "admin-ui-page__header-title", children: title }),
             breadcrumbs,
             badges
           ] }),
@@ -858,6 +860,7 @@ function Header({
 // packages/admin-ui/build-module/page/index.mjs
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 function Page({
+  headingLevel,
   breadcrumbs,
   badges,
   title,
@@ -873,6 +876,7 @@ function Page({
     (title || breadcrumbs || badges) && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
       Header,
       {
+        headingLevel,
         breadcrumbs,
         badges,
         title,
