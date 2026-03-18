@@ -1772,7 +1772,7 @@ var wp;
       };
       return cachedResult;
     }
-    if (typeof navigator !== "undefined" && "hardwareConcurrency" in navigator && navigator.hardwareConcurrency < 4) {
+    if (typeof navigator !== "undefined" && "hardwareConcurrency" in navigator && navigator.hardwareConcurrency < 2) {
       cachedResult = {
         supported: false,
         reason: "Device has insufficient CPU cores for client-side media processing."
@@ -1789,7 +1789,7 @@ var wp;
           };
           return cachedResult;
         }
-        if (connection.effectiveType === "slow-2g" || connection.effectiveType === "2g" || connection.effectiveType === "3g") {
+        if (connection.effectiveType === "slow-2g" || connection.effectiveType === "2g") {
           cachedResult = {
             supported: false,
             reason: "Network connection is too slow for client-side media processing."
