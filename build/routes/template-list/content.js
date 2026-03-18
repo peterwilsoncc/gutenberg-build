@@ -16995,9 +16995,6 @@ var NavigableRegion = (0, import_element57.forwardRef)(
 NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
-// packages/admin-ui/build-module/page/header.mjs
-var import_components48 = __toESM(require_components(), 1);
-
 // packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
 var import_components47 = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components47.createSlotFill)("SidebarToggle");
@@ -17012,32 +17009,42 @@ function Header({
   actions,
   showSidebarToggle = true
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components48.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components48.__experimentalHStack, { justify: "space-between", spacing: 2, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_components48.__experimentalHStack, { spacing: 2, justify: "left", children: [
-        showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
-          SidebarToggleSlot,
-          {
-            bubblesVirtually: true,
-            className: "admin-ui-page__sidebar-toggle-slot"
-          }
-        ),
-        title && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components48.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
-        breadcrumbs,
-        badges
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
-        import_components48.__experimentalHStack,
-        {
-          style: { width: "auto", flexShrink: 0 },
-          spacing: 2,
-          className: "admin-ui-page__header-actions",
-          children: actions
-        }
-      )
-    ] }),
-    subTitle && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("p", { className: "admin-ui-page__header-subtitle", children: subTitle })
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(
+    Stack,
+    {
+      direction: "column",
+      className: "admin-ui-page__header",
+      render: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("header", {}),
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(Stack, { direction: "row", justify: "space-between", gap: "sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+              SidebarToggleSlot,
+              {
+                bubblesVirtually: true,
+                className: "admin-ui-page__sidebar-toggle-slot"
+              }
+            ),
+            title && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("h2", { className: "admin-ui-page__header-title", children: title }),
+            breadcrumbs,
+            badges
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+            Stack,
+            {
+              direction: "row",
+              gap: "sm",
+              style: { width: "auto", flexShrink: 0 },
+              className: "admin-ui-page__header-actions",
+              align: "center",
+              children: actions
+            }
+          )
+        ] }),
+        subTitle && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("p", { className: "admin-ui-page__header-subtitle", children: subTitle })
+      ]
+    }
+  );
 }
 
 // packages/admin-ui/build-module/page/index.mjs
@@ -17074,7 +17081,7 @@ var page_default2 = Page;
 
 // routes/template-list/stage-activation.tsx
 var import_core_data9 = __toESM(require_core_data());
-var import_components54 = __toESM(require_components());
+var import_components53 = __toESM(require_components());
 var import_data13 = __toESM(require_data());
 var import_element65 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
@@ -17172,7 +17179,7 @@ var previewField = {
 };
 
 // routes/template-list/fields/author.tsx
-var import_components49 = __toESM(require_components());
+var import_components48 = __toESM(require_components());
 var import_i18n45 = __toESM(require_i18n());
 var import_element58 = __toESM(require_element());
 var import_core_data = __toESM(require_core_data());
@@ -17212,7 +17219,7 @@ function useAddedBy(type, id) {
 function AuthorField({ item }) {
   const [isImageLoaded, setIsImageLoaded] = (0, import_element58.useState)(false);
   const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
-  return /* @__PURE__ */ React.createElement(import_components49.__experimentalHStack, { alignment: "left", spacing: 0 }, imageUrl && /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(import_components48.__experimentalHStack, { alignment: "left", spacing: 0 }, imageUrl && /* @__PURE__ */ React.createElement(
     "div",
     {
       className: clsx_default(
@@ -17230,7 +17237,7 @@ function AuthorField({ item }) {
         src: imageUrl
       }
     )
-  ), !imageUrl && /* @__PURE__ */ React.createElement("div", { className: "routes-template-list-author-field__icon" }, /* @__PURE__ */ React.createElement(import_components49.Icon, { icon })), /* @__PURE__ */ React.createElement("span", { className: "routes-template-list-author-field__name" }, text));
+  ), !imageUrl && /* @__PURE__ */ React.createElement("div", { className: "routes-template-list-author-field__icon" }, /* @__PURE__ */ React.createElement(import_components48.Icon, { icon })), /* @__PURE__ */ React.createElement("span", { className: "routes-template-list-author-field__name" }, text));
 }
 var authorField = {
   label: (0, import_i18n45.__)("Author"),
@@ -17273,8 +17280,8 @@ var descriptionField = {
 
 // routes/template-list/fields/active.tsx
 var import_i18n47 = __toESM(require_i18n());
-var import_components50 = __toESM(require_components());
-var { Badge: Badge3 } = unlock2(import_components50.privateApis);
+var import_components49 = __toESM(require_components());
+var { Badge: Badge3 } = unlock2(import_components49.privateApis);
 var activeField = {
   label: (0, import_i18n47.__)("Status"),
   id: "active",
@@ -17462,7 +17469,7 @@ function useSetActiveTemplateAction() {
 }
 
 // routes/template-list/add-new-template/index.tsx
-var import_components53 = __toESM(require_components());
+var import_components52 = __toESM(require_components());
 var import_html_entities4 = __toESM(require_html_entities());
 var import_element64 = __toESM(require_element());
 var import_data12 = __toESM(require_data());
@@ -17476,7 +17483,7 @@ import { useNavigate, useInvalidate } from "@wordpress/route";
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
 var import_element62 = __toESM(require_element());
 var import_i18n51 = __toESM(require_i18n());
-var import_components51 = __toESM(require_components());
+var import_components50 = __toESM(require_components());
 var import_core_data7 = __toESM(require_core_data());
 var import_html_entities3 = __toESM(require_html_entities());
 var import_compose13 = __toESM(require_compose());
@@ -18003,10 +18010,10 @@ function SuggestionListItem({
 }) {
   const baseCssClass = "template-list-custom-template-modal__suggestions_list__list-item";
   return /* @__PURE__ */ React.createElement(
-    import_components51.Composite.Item,
+    import_components50.Composite.Item,
     {
       render: /* @__PURE__ */ React.createElement(
-        import_components51.Button,
+        import_components50.Button,
         {
           __next40pxDefaultSize: true,
           role: "option",
@@ -18020,7 +18027,7 @@ function SuggestionListItem({
       )
     },
     /* @__PURE__ */ React.createElement(
-      import_components51.__experimentalText,
+      import_components50.__experimentalText,
       {
         size: "body",
         lineHeight: 1.53846153846,
@@ -18028,7 +18035,7 @@ function SuggestionListItem({
         className: `${baseCssClass}__title`
       },
       /* @__PURE__ */ React.createElement(
-        import_components51.TextHighlight,
+        import_components50.TextHighlight,
         {
           text: (0, import_html_entities3.decodeEntities)(suggestion.name),
           highlight: search
@@ -18036,7 +18043,7 @@ function SuggestionListItem({
       )
     ),
     suggestion.link && /* @__PURE__ */ React.createElement(
-      import_components51.__experimentalText,
+      import_components50.__experimentalText,
       {
         size: "body",
         lineHeight: 1.53846153846,
@@ -18097,7 +18104,7 @@ function SuggestionList({
     setShowSearchControl(true);
   }
   return /* @__PURE__ */ React.createElement(React.Fragment, null, showSearchControl && /* @__PURE__ */ React.createElement(
-    import_components51.SearchControl,
+    import_components50.SearchControl,
     {
       onChange: setSearch,
       value: search,
@@ -18105,7 +18112,7 @@ function SuggestionList({
       placeholder: labels.search_items
     }
   ), !!suggestions?.length && /* @__PURE__ */ React.createElement(
-    import_components51.Composite,
+    import_components50.Composite,
     {
       orientation: "vertical",
       role: "listbox",
@@ -18123,7 +18130,7 @@ function SuggestionList({
       }
     ))
   ), debouncedSearch && !suggestions?.length && /* @__PURE__ */ React.createElement(
-    import_components51.__experimentalText,
+    import_components50.__experimentalText,
     {
       as: "p",
       className: "template-list-custom-template-modal__no-results"
@@ -18147,26 +18154,26 @@ function AddCustomTemplateModalContent({
     }
   }, [showSearchEntities, containerRef]);
   return /* @__PURE__ */ React.createElement(
-    import_components51.__experimentalVStack,
+    import_components50.__experimentalVStack,
     {
       spacing: 4,
       className: "template-list-custom-template-modal__contents-wrapper",
       alignment: "left"
     },
-    !showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components51.__experimentalText, { as: "p" }, (0, import_i18n51.__)(
+    !showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components50.__experimentalText, { as: "p" }, (0, import_i18n51.__)(
       "Select whether to create a single template for all items or a specific one."
     )), /* @__PURE__ */ React.createElement(
-      import_components51.Flex,
+      import_components50.Flex,
       {
         className: "template-list-custom-template-modal__contents",
         gap: "4",
         align: "initial"
       },
       /* @__PURE__ */ React.createElement(
-        import_components51.FlexItem,
+        import_components50.FlexItem,
         {
           isBlock: true,
-          as: import_components51.Button,
+          as: import_components50.Button,
           onClick: () => {
             const {
               slug,
@@ -18183,7 +18190,7 @@ function AddCustomTemplateModalContent({
           }
         },
         /* @__PURE__ */ React.createElement(
-          import_components51.__experimentalText,
+          import_components50.__experimentalText,
           {
             as: "span",
             weight: 500,
@@ -18192,7 +18199,7 @@ function AddCustomTemplateModalContent({
           entityForSuggestions.labels.all_items
         ),
         /* @__PURE__ */ React.createElement(
-          import_components51.__experimentalText,
+          import_components50.__experimentalText,
           {
             as: "span",
             lineHeight: 1.53846153846
@@ -18202,16 +18209,16 @@ function AddCustomTemplateModalContent({
         )
       ),
       /* @__PURE__ */ React.createElement(
-        import_components51.FlexItem,
+        import_components50.FlexItem,
         {
           isBlock: true,
-          as: import_components51.Button,
+          as: import_components50.Button,
           onClick: () => {
             setShowSearchEntities(true);
           }
         },
         /* @__PURE__ */ React.createElement(
-          import_components51.__experimentalText,
+          import_components50.__experimentalText,
           {
             as: "span",
             weight: 500,
@@ -18220,7 +18227,7 @@ function AddCustomTemplateModalContent({
           entityForSuggestions.labels.singular_name
         ),
         /* @__PURE__ */ React.createElement(
-          import_components51.__experimentalText,
+          import_components50.__experimentalText,
           {
             as: "span",
             lineHeight: 1.53846153846
@@ -18229,8 +18236,8 @@ function AddCustomTemplateModalContent({
           (0, import_i18n51.__)("For a specific item")
         )
       )
-    ), /* @__PURE__ */ React.createElement(import_components51.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
-      import_components51.Button,
+    ), /* @__PURE__ */ React.createElement(import_components50.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
+      import_components50.Button,
       {
         __next40pxDefaultSize: true,
         variant: "tertiary",
@@ -18238,7 +18245,7 @@ function AddCustomTemplateModalContent({
       },
       (0, import_i18n51.__)("Back")
     ))),
-    showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components51.__experimentalText, { as: "p" }, (0, import_i18n51.__)(
+    showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components50.__experimentalText, { as: "p" }, (0, import_i18n51.__)(
       "This template will be used only for the specific item chosen."
     )), /* @__PURE__ */ React.createElement(
       SuggestionList,
@@ -18246,8 +18253,8 @@ function AddCustomTemplateModalContent({
         entityForSuggestions,
         onSelect
       }
-    ), /* @__PURE__ */ React.createElement(import_components51.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
-      import_components51.Button,
+    ), /* @__PURE__ */ React.createElement(import_components50.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
+      import_components50.Button,
       {
         __next40pxDefaultSize: true,
         variant: "tertiary",
@@ -18326,7 +18333,7 @@ function paramCase(input, options) {
 // routes/template-list/add-new-template/add-custom-generic-template-modal-content.tsx
 var import_element63 = __toESM(require_element());
 var import_i18n52 = __toESM(require_i18n());
-var import_components52 = __toESM(require_components());
+var import_components51 = __toESM(require_components());
 function AddCustomGenericTemplateModalContent({
   createTemplate,
   onBack
@@ -18358,8 +18365,8 @@ function AddCustomGenericTemplateModalContent({
       setIsBusy(false);
     }
   }
-  return /* @__PURE__ */ React.createElement("form", { onSubmit: onCreateTemplate }, /* @__PURE__ */ React.createElement(import_components52.__experimentalVStack, { spacing: 6 }, /* @__PURE__ */ React.createElement(
-    import_components52.TextControl,
+  return /* @__PURE__ */ React.createElement("form", { onSubmit: onCreateTemplate }, /* @__PURE__ */ React.createElement(import_components51.__experimentalVStack, { spacing: 6 }, /* @__PURE__ */ React.createElement(
+    import_components51.TextControl,
     {
       __next40pxDefaultSize: true,
       label: (0, import_i18n52.__)("Name"),
@@ -18374,13 +18381,13 @@ function AddCustomGenericTemplateModalContent({
       )
     }
   ), /* @__PURE__ */ React.createElement(
-    import_components52.__experimentalHStack,
+    import_components51.__experimentalHStack,
     {
       className: "template-list-custom-generic-template__modal-actions",
       justify: "right"
     },
     /* @__PURE__ */ React.createElement(
-      import_components52.Button,
+      import_components51.Button,
       {
         __next40pxDefaultSize: true,
         variant: "tertiary",
@@ -18389,7 +18396,7 @@ function AddCustomGenericTemplateModalContent({
       (0, import_i18n52.__)("Back")
     ),
     /* @__PURE__ */ React.createElement(
-      import_components52.Button,
+      import_components51.Button,
       {
         __next40pxDefaultSize: true,
         variant: "primary",
@@ -18445,7 +18452,7 @@ function TemplateListItem({
   children
 }) {
   return /* @__PURE__ */ React.createElement(
-    import_components53.Button,
+    import_components52.Button,
     {
       __next40pxDefaultSize: true,
       className,
@@ -18454,7 +18461,7 @@ function TemplateListItem({
       showTooltip: !!description
     },
     /* @__PURE__ */ React.createElement(
-      import_components53.Flex,
+      import_components52.Flex,
       {
         as: "span",
         align: "center",
@@ -18462,16 +18469,16 @@ function TemplateListItem({
         style: { width: "100%" },
         direction
       },
-      /* @__PURE__ */ React.createElement("div", { className: "template-list-add-new-template__template-icon" }, /* @__PURE__ */ React.createElement(import_components53.Icon, { icon })),
+      /* @__PURE__ */ React.createElement("div", { className: "template-list-add-new-template__template-icon" }, /* @__PURE__ */ React.createElement(import_components52.Icon, { icon })),
       /* @__PURE__ */ React.createElement(
-        import_components53.__experimentalVStack,
+        import_components52.__experimentalVStack,
         {
           className: "template-list-add-new-template__template-name",
           alignment: "center",
           spacing: 0
         },
         /* @__PURE__ */ React.createElement(
-          import_components53.__experimentalText,
+          import_components52.__experimentalText,
           {
             align: "center",
             weight: 500,
@@ -18587,7 +18594,7 @@ function NewTemplateModal({ onClose }) {
     modalTitle = (0, import_i18n53.__)("Create custom template");
   }
   return /* @__PURE__ */ React.createElement(
-    import_components53.Modal,
+    import_components52.Modal,
     {
       title: modalTitle,
       className: clsx_default("template-list-add-new-template__modal", {
@@ -18599,7 +18606,7 @@ function NewTemplateModal({ onClose }) {
       ref: containerRef
     },
     modalContent === modalContentMap.templatesList && /* @__PURE__ */ React.createElement(
-      import_components53.__experimentalGrid,
+      import_components52.__experimentalGrid,
       {
         columns: isMobile ? 2 : 3,
         gap: 4,
@@ -18607,7 +18614,7 @@ function NewTemplateModal({ onClose }) {
         justify: "center",
         className: "template-list-add-new-template__template-list__contents"
       },
-      /* @__PURE__ */ React.createElement(import_components53.Flex, { className: "template-list-add-new-template__template-list__prompt" }, (0, import_i18n53.__)(
+      /* @__PURE__ */ React.createElement(import_components52.Flex, { className: "template-list-add-new-template__template-list__prompt" }, (0, import_i18n53.__)(
         "Select what the new template should apply to:"
       )),
       missingTemplates.map((template) => {
@@ -18637,7 +18644,7 @@ function NewTemplateModal({ onClose }) {
           )
         },
         /* @__PURE__ */ React.createElement(
-          import_components53.__experimentalText,
+          import_components52.__experimentalText,
           {
             lineHeight: 1.53846153846
           },
@@ -18677,7 +18684,7 @@ function NewTemplate() {
     return null;
   }
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
-    import_components53.Button,
+    import_components52.Button,
     {
       variant: "primary",
       onClick: () => setShowModal(true),
@@ -18750,7 +18757,7 @@ if (typeof document !== "undefined" && !document.head.querySelector("style[data-
 
 // routes/template-list/stage-activation.tsx
 var { usePostActions, templateTitleField } = unlock2(import_editor.privateApis);
-var { Tabs } = unlock2(import_components54.privateApis);
+var { Tabs } = unlock2(import_components53.privateApis);
 function getItemId(item) {
   return item.id.toString();
 }
@@ -19000,7 +19007,7 @@ function TemplateListActivation() {
       }
     ),
     selectedRegisteredTemplate && duplicateAction && /* @__PURE__ */ React.createElement(
-      import_components54.Modal,
+      import_components53.Modal,
       {
         title: (0, import_i18n54.__)("Duplicate"),
         onRequestClose: () => setSelectedRegisteredTemplate(null),
@@ -19026,7 +19033,7 @@ import {
   useInvalidate as useInvalidate3
 } from "@wordpress/route";
 var import_core_data11 = __toESM(require_core_data());
-var import_components55 = __toESM(require_components());
+var import_components54 = __toESM(require_components());
 var import_data14 = __toESM(require_data());
 var import_element67 = __toESM(require_element());
 var import_editor2 = __toESM(require_editor());
@@ -19065,7 +19072,7 @@ function useTemplatesLegacy(activeView = "all") {
 
 // routes/template-list/stage-legacy.tsx
 var { usePostActions: usePostActions2, templateTitleField: templateTitleField2 } = unlock2(import_editor2.privateApis);
-var { Tabs: Tabs2 } = unlock2(import_components55.privateApis);
+var { Tabs: Tabs2 } = unlock2(import_components54.privateApis);
 function getItemId2(item) {
   return item.id.toString();
 }
