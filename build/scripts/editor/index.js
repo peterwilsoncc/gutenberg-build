@@ -4657,9 +4657,7 @@ var wp;
       return;
     }
     const content = select6.getEditedPostContent();
-    if (!options.isAutosave) {
-      dispatch7.editPost({ content }, { undoIgnore: true });
-    }
+    dispatch7.editPost({ content }, { undoIgnore: true });
     const previousRecord = select6.getCurrentPost();
     let edits = {
       id: previousRecord.id,
