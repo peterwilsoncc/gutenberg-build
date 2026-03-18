@@ -1944,11 +1944,35 @@ var wp;
   // packages/core-data/build-module/utils/crdt-blocks.mjs
   var import_es62 = __toESM(require_es6(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
-  var import_rich_text2 = __toESM(require_rich_text(), 1);
+  var import_rich_text3 = __toESM(require_rich_text(), 1);
   var import_sync9 = __toESM(require_sync(), 1);
+
+  // packages/core-data/build-module/utils/crdt-text.mjs
+  var import_rich_text2 = __toESM(require_rich_text(), 1);
+  var RICH_TEXT_CACHE_MAX_SIZE = 500;
+  function createRichTextDataCache(maxSize) {
+    const cache3 = /* @__PURE__ */ new Map();
+    return function(value) {
+      const cached = cache3.get(value);
+      if (cached) {
+        return cached;
+      }
+      const result = import_rich_text2.RichTextData.fromHTMLString(value);
+      if (cache3.size >= maxSize) {
+        cache3.delete(cache3.keys().next().value);
+      }
+      cache3.set(value, result);
+      return result;
+    };
+  }
+  var getCachedRichTextData = createRichTextDataCache(
+    RICH_TEXT_CACHE_MAX_SIZE
+  );
+
+  // packages/core-data/build-module/utils/crdt-blocks.mjs
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
   function serializeAttributeValue(value) {
-    if (value instanceof import_rich_text2.RichTextData) {
+    if (value instanceof import_rich_text3.RichTextData) {
       return value.valueOf();
     }
     if (Array.isArray(value)) {
@@ -1983,6 +2007,50 @@ var wp;
         name,
         attributes: makeBlockAttributesSerializable(name, attributes),
         innerBlocks: makeBlocksSerializable(innerBlocks)
+      };
+    });
+  }
+  function deserializeAttributeValue(schema, value) {
+    if (schema?.type === "rich-text" && typeof value === "string") {
+      return getCachedRichTextData(value);
+    }
+    if (Array.isArray(value)) {
+      return value.map(
+        (item) => deserializeAttributeValue(schema, item)
+      );
+    }
+    if (value && typeof value === "object") {
+      const result = {};
+      for (const [key, innerValue] of Object.entries(
+        value
+      )) {
+        result[key] = deserializeAttributeValue(
+          schema?.query?.[key],
+          innerValue
+        );
+      }
+      return result;
+    }
+    return value;
+  }
+  function deserializeBlockAttributes(blocks) {
+    return blocks.map((block) => {
+      const { name, innerBlocks, attributes, ...rest } = block;
+      const newAttributes = { ...attributes };
+      for (const [key, value] of Object.entries(attributes)) {
+        const schema = getBlockAttributeType(name, key);
+        if (schema) {
+          newAttributes[key] = deserializeAttributeValue(
+            schema,
+            value
+          );
+        }
+      }
+      return {
+        ...rest,
+        name,
+        attributes: newAttributes,
+        innerBlocks: deserializeBlockAttributes(innerBlocks ?? [])
       };
     });
   }
@@ -2198,8 +2266,8 @@ var wp;
           new Map(
             Object.entries(blockType.attributes ?? {}).map(
               ([name, definition]) => {
-                const { role, type } = definition;
-                return [name, { role, type }];
+                const { role, type, query } = definition;
+                return [name, { role, type, query }];
               }
             )
           )
@@ -2617,6 +2685,11 @@ var wp;
         }
       })
     );
+    if (changes.blocks) {
+      changes.blocks = deserializeBlockAttributes(
+        changes.blocks
+      );
+    }
     if ("object" === typeof changes.meta) {
       changes.meta = {
         ...editedRecord.meta,
@@ -7146,7 +7219,7 @@ var wp;
   }
 
   // packages/core-data/build-module/footnotes/index.mjs
-  var import_rich_text3 = __toESM(require_rich_text(), 1);
+  var import_rich_text4 = __toESM(require_rich_text(), 1);
 
   // packages/core-data/build-module/footnotes/get-rich-text-values-cached.mjs
   var import_block_editor5 = __toESM(require_block_editor(), 1);
@@ -7219,16 +7292,16 @@ var wp;
           attributes[key] = value.map(updateAttributes);
           continue;
         }
-        if (typeof value !== "string" && !(value instanceof import_rich_text3.RichTextData)) {
+        if (typeof value !== "string" && !(value instanceof import_rich_text4.RichTextData)) {
           continue;
         }
-        const richTextValue = typeof value === "string" ? import_rich_text3.RichTextData.fromHTMLString(value) : new import_rich_text3.RichTextData(value);
+        const richTextValue = typeof value === "string" ? import_rich_text4.RichTextData.fromHTMLString(value) : new import_rich_text4.RichTextData(value);
         let hasFootnotes = false;
         richTextValue.replacements.forEach((replacement) => {
           if (replacement.type === "core/footnote") {
             const id = replacement.attributes["data-fn"];
             const index = newOrder.indexOf(id);
-            const countValue = (0, import_rich_text3.create)({
+            const countValue = (0, import_rich_text4.create)({
               html: replacement.innerHTML
             });
             countValue.text = String(index + 1);
@@ -7240,7 +7313,7 @@ var wp;
               { length: countValue.text.length },
               () => countValue.replacements[0]
             );
-            replacement.innerHTML = (0, import_rich_text3.toHTMLString)({
+            replacement.innerHTML = (0, import_rich_text4.toHTMLString)({
               value: countValue
             });
             hasFootnotes = true;
