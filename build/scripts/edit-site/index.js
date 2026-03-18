@@ -44208,8 +44208,9 @@ If there's a particular need for this, please submit a feature request at https:
       filters: [
         {
           field: "author",
-          operator: "isAny",
-          value: [activeView]
+          operator: "is",
+          value: activeView,
+          isLocked: true
         }
       ]
     };
