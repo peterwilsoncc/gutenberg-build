@@ -45,6 +45,20 @@ var require_preferences = __commonJS({
   }
 });
 
+// package-external:@wordpress/core-data
+var require_core_data = __commonJS({
+  "package-external:@wordpress/core-data"(exports, module) {
+    module.exports = window.wp.coreData;
+  }
+});
+
+// package-external:@wordpress/private-apis
+var require_private_apis = __commonJS({
+  "package-external:@wordpress/private-apis"(exports, module) {
+    module.exports = window.wp.privateApis;
+  }
+});
+
 // package-external:@wordpress/compose
 var require_compose = __commonJS({
   "package-external:@wordpress/compose"(exports, module) {
@@ -160,13 +174,6 @@ var require_i18n = __commonJS({
 var require_primitives = __commonJS({
   "package-external:@wordpress/primitives"(exports, module) {
     module.exports = window.wp.primitives;
-  }
-});
-
-// package-external:@wordpress/private-apis
-var require_private_apis = __commonJS({
-  "package-external:@wordpress/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
   }
 });
 
@@ -736,13 +743,6 @@ var require_warning = __commonJS({
   }
 });
 
-// package-external:@wordpress/core-data
-var require_core_data = __commonJS({
-  "package-external:@wordpress/core-data"(exports, module) {
-    module.exports = window.wp.coreData;
-  }
-});
-
 // package-external:@wordpress/editor
 var require_editor = __commonJS({
   "package-external:@wordpress/editor"(exports, module) {
@@ -992,9 +992,13 @@ function useView(config) {
     [preferenceKey]
   );
   const { set: set2 } = (0, import_data.useDispatch)(import_preferences.store);
-  const baseView = persistedView ?? defaultView;
+  const baseView = persistedView ?? defaultView ?? {};
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
+  const combinedOverrides = (0, import_element.useMemo)(() => {
+    const layoutTypeDefaults = config.defaultLayouts?.[baseView.type] ?? {};
+    return { ...layoutTypeDefaults, ...activeViewOverrides };
+  }, [config.defaultLayouts, baseView.type, activeViewOverrides]);
   const view = (0, import_element.useMemo)(() => {
     return mergeActiveViewOverrides(
       {
@@ -1002,10 +1006,10 @@ function useView(config) {
         page,
         search
       },
-      activeViewOverrides,
+      combinedOverrides,
       defaultView
     );
-  }, [baseView, page, search, activeViewOverrides, defaultView]);
+  }, [baseView, page, search, combinedOverrides, defaultView]);
   const isModified = !!persistedView;
   const updateView = (0, import_element.useCallback)(
     (newView) => {
@@ -1015,7 +1019,7 @@ function useView(config) {
       };
       const preferenceView = stripActiveViewOverrides(
         omit(newView, ["page", "search"]),
-        activeViewOverrides,
+        combinedOverrides,
         defaultView
       );
       if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
@@ -1023,12 +1027,12 @@ function useView(config) {
       }
       const comparableBaseView = stripActiveViewOverrides(
         baseView,
-        activeViewOverrides,
+        combinedOverrides,
         defaultView
       );
       const comparableDefaultView = stripActiveViewOverrides(
         defaultView,
-        activeViewOverrides,
+        combinedOverrides,
         defaultView
       );
       if (!dequal(comparableBaseView, preferenceView)) {
@@ -1045,7 +1049,7 @@ function useView(config) {
       search,
       baseView,
       defaultView,
-      activeViewOverrides,
+      combinedOverrides,
       set2,
       preferenceKey
     ]
@@ -1064,6 +1068,17 @@ function useView(config) {
 // packages/views/build-module/load-view.mjs
 var import_data2 = __toESM(require_data(), 1);
 var import_preferences2 = __toESM(require_preferences(), 1);
+
+// packages/views/build-module/use-view-config.mjs
+var import_data3 = __toESM(require_data(), 1);
+var import_core_data = __toESM(require_core_data(), 1);
+
+// packages/views/build-module/lock-unlock.mjs
+var import_private_apis = __toESM(require_private_apis(), 1);
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/views"
+);
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e2) {
@@ -1823,19 +1838,19 @@ function DataViewsSelectionCheckbox({
 var import_components2 = __toESM(require_components(), 1);
 var import_i18n3 = __toESM(require_i18n(), 1);
 var import_element4 = __toESM(require_element(), 1);
-var import_data3 = __toESM(require_data(), 1);
+var import_data4 = __toESM(require_data(), 1);
 var import_compose = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/lock-unlock.mjs
-var import_private_apis = __toESM(require_private_apis(), 1);
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis2 = __toESM(require_private_apis(), 1);
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/dataviews"
 );
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
 var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-var { Menu, kebabCase } = unlock(import_components2.privateApis);
+var { Menu, kebabCase } = unlock2(import_components2.privateApis);
 function ButtonTrigger({
   action,
   onClick,
@@ -1928,7 +1943,7 @@ function ItemActions({
   actions,
   isCompact
 }) {
-  const registry = (0, import_data3.useRegistry)();
+  const registry = (0, import_data4.useRegistry)();
   const { primaryActions, eligibleActions } = (0, import_element4.useMemo)(() => {
     const _eligibleActions = actions.filter(
       (action) => !action.isEligible || action.isEligible(item)
@@ -2079,7 +2094,7 @@ function PrimaryActions({
 var import_components3 = __toESM(require_components(), 1);
 var import_i18n5 = __toESM(require_i18n(), 1);
 var import_element5 = __toESM(require_element(), 1);
-var import_data4 = __toESM(require_data(), 1);
+var import_data5 = __toESM(require_data(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/utils/get-footer-message.mjs
@@ -2244,7 +2259,7 @@ function ActionButton({
   actionInProgress,
   setActionInProgress
 }) {
-  const registry = (0, import_data4.useRegistry)();
+  const registry = (0, import_data5.useRegistry)();
   const selectedEligibleItems = (0, import_element5.useMemo)(() => {
     return selectedItems.filter((item) => {
       return !action.isEligible || action.isEligible(item);
@@ -2461,7 +2476,7 @@ function getHideableFields(view, fields) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
 var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu2 } = unlock(import_components4.privateApis);
+var { Menu: Menu2 } = unlock2(import_components4.privateApis);
 function WithMenuSeparators({ children }) {
   return import_element6.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_element6.Fragment, { children: [
     i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(Menu2.Separator, {}),
@@ -3601,7 +3616,7 @@ function usePlaceholdersNeeded(data, isInfiniteScroll, gridColumns) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
 var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
-var { Badge } = unlock(import_components8.privateApis);
+var { Badge } = unlock2(import_components8.privateApis);
 function chunk(array, size) {
   const chunks = [];
   for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size) {
@@ -4153,9 +4168,9 @@ var import_compose4 = __toESM(require_compose(), 1);
 var import_components10 = __toESM(require_components(), 1);
 var import_element16 = __toESM(require_element(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
-var import_data5 = __toESM(require_data(), 1);
+var import_data6 = __toESM(require_data(), 1);
 var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu3 } = unlock(import_components10.privateApis);
+var { Menu: Menu3 } = unlock2(import_components10.privateApis);
 function generateItemWrapperCompositeId(idPrefix) {
   return `${idPrefix}-item-wrapper`;
 }
@@ -4170,7 +4185,7 @@ function PrimaryActionGridCell({
   primaryAction,
   item
 }) {
-  const registry = (0, import_data5.useRegistry)();
+  const registry = (0, import_data6.useRegistry)();
   const [isModalOpen, setIsModalOpen] = (0, import_element16.useState)(false);
   const compositeItemId = generatePrimaryActionCompositeId(
     idPrefix,
@@ -4242,7 +4257,7 @@ function ListItem({
   const itemRef = (0, import_element16.useRef)(null);
   const labelId = `${idPrefix}-label`;
   const descriptionId = `${idPrefix}-description`;
-  const registry = (0, import_data5.useRegistry)();
+  const registry = (0, import_data6.useRegistry)();
   const [isHovered, setIsHovered] = (0, import_element16.useState)(false);
   const [activeModalAction, setActiveModalAction] = (0, import_element16.useState)(
     null
@@ -4733,7 +4748,7 @@ function ActivityGroup({
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
 var import_components11 = __toESM(require_components(), 1);
 var import_element18 = __toESM(require_element(), 1);
-var import_data6 = __toESM(require_data(), 1);
+var import_data7 = __toESM(require_data(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
 var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
 function ActivityItem(props) {
@@ -4757,7 +4772,7 @@ function ActivityItem(props) {
     infiniteScrollEnabled
   } = view;
   const itemRef = (0, import_element18.useRef)(null);
-  const registry = (0, import_data6.useRegistry)();
+  const registry = (0, import_data7.useRegistry)();
   const { paginationInfo } = (0, import_element18.useContext)(dataviews_context_default);
   const { primaryActions, eligibleActions } = (0, import_element18.useMemo)(() => {
     const _eligibleActions = actions.filter(
@@ -5009,7 +5024,7 @@ var import_element21 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
 var import_components14 = __toESM(require_components(), 1);
-var import_data7 = __toESM(require_data(), 1);
+var import_data8 = __toESM(require_data(), 1);
 var import_element20 = __toESM(require_element(), 1);
 var import_i18n16 = __toESM(require_i18n(), 1);
 
@@ -5139,7 +5154,7 @@ function useIsMultiselectPicker(actions) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
-var { Badge: Badge2 } = unlock(import_components15.privateApis);
+var { Badge: Badge2 } = unlock2(import_components15.privateApis);
 function GridItem3({
   view,
   multiselect,
@@ -13036,7 +13051,7 @@ var import_components22 = __toESM(require_components(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
 var import_element30 = __toESM(require_element(), 1);
 var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu4 } = unlock(import_components22.privateApis);
+var { Menu: Menu4 } = unlock2(import_components22.privateApis);
 function AddFilterMenu({
   filters,
   view,
@@ -13516,7 +13531,7 @@ var import_element38 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
 var import_compose10 = __toESM(require_compose(), 1);
 var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu5 } = unlock(import_components27.privateApis);
+var { Menu: Menu5 } = unlock2(import_components27.privateApis);
 var DATAVIEWS_CONFIG_POPOVER_PROPS = {
   className: "dataviews-config__popover",
   placement: "bottom-end",
@@ -13858,7 +13873,7 @@ function getCustomValidity(isValid2, validity) {
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
 var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedCheckboxControl } = unlock(import_components28.privateApis);
+var { ValidatedCheckboxControl } = unlock2(import_components28.privateApis);
 function Checkbox({
   field,
   onChange,
@@ -13892,7 +13907,7 @@ function Checkbox({
 var import_components29 = __toESM(require_components(), 1);
 var import_element40 = __toESM(require_element(), 1);
 var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedComboboxControl } = unlock(import_components29.privateApis);
+var { ValidatedComboboxControl } = unlock2(import_components29.privateApis);
 function Combobox3({
   data,
   field,
@@ -14036,7 +14051,7 @@ function parseDateTime(dateTimeString) {
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar, ValidatedInputControl } = unlock(import_components31.privateApis);
+var { DateCalendar, ValidatedInputControl } = unlock2(import_components31.privateApis);
 var formatDateTime = (value) => {
   if (!value) {
     return "";
@@ -14211,7 +14226,7 @@ var import_element43 = __toESM(require_element(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock(import_components32.privateApis);
+var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock2(import_components32.privateApis);
 var DATE_PRESETS = [
   {
     id: "today",
@@ -14827,7 +14842,7 @@ function DateControl({
 var import_components33 = __toESM(require_components(), 1);
 var import_element44 = __toESM(require_element(), 1);
 var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedSelectControl } = unlock(import_components33.privateApis);
+var { ValidatedSelectControl } = unlock2(import_components33.privateApis);
 function Select({
   data,
   field,
@@ -14890,7 +14905,7 @@ var import_components35 = __toESM(require_components(), 1);
 var import_components34 = __toESM(require_components(), 1);
 var import_element45 = __toESM(require_element(), 1);
 var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl2 } = unlock(import_components34.privateApis);
+var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components34.privateApis);
 function ValidatedText({
   data,
   field,
@@ -15024,7 +15039,7 @@ var import_components38 = __toESM(require_components(), 1);
 var import_element46 = __toESM(require_element(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedNumberControl } = unlock(import_components38.privateApis);
+var { ValidatedNumberControl } = unlock2(import_components38.privateApis);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
     return "";
@@ -15170,7 +15185,7 @@ function Number2(props) {
 var import_components39 = __toESM(require_components(), 1);
 var import_element47 = __toESM(require_element(), 1);
 var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedRadioControl } = unlock(import_components39.privateApis);
+var { ValidatedRadioControl } = unlock2(import_components39.privateApis);
 function Radio({
   data,
   field,
@@ -15242,7 +15257,7 @@ function Text({
 var import_components40 = __toESM(require_components(), 1);
 var import_element49 = __toESM(require_element(), 1);
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleControl } = unlock(import_components40.privateApis);
+var { ValidatedToggleControl } = unlock2(import_components40.privateApis);
 function Toggle({
   field,
   onChange,
@@ -15276,7 +15291,7 @@ function Toggle({
 var import_components41 = __toESM(require_components(), 1);
 var import_element50 = __toESM(require_element(), 1);
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedTextareaControl } = unlock(import_components41.privateApis);
+var { ValidatedTextareaControl } = unlock2(import_components41.privateApis);
 function Textarea({
   data,
   field,
@@ -15317,7 +15332,7 @@ function Textarea({
 var import_components42 = __toESM(require_components(), 1);
 var import_element51 = __toESM(require_element(), 1);
 var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleGroupControl } = unlock(import_components42.privateApis);
+var { ValidatedToggleGroupControl } = unlock2(import_components42.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -15372,7 +15387,7 @@ function ToggleGroup({
 var import_components43 = __toESM(require_components(), 1);
 var import_element52 = __toESM(require_element(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedFormTokenField } = unlock(import_components43.privateApis);
+var { ValidatedFormTokenField } = unlock2(import_components43.privateApis);
 function ArrayControl({
   data,
   field,
@@ -15620,7 +15635,7 @@ var import_components44 = __toESM(require_components(), 1);
 var import_element53 = __toESM(require_element(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3 } = unlock(import_components44.privateApis);
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components44.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange
@@ -17511,9 +17526,9 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/template-part-list/stage.tsx
-var import_core_data3 = __toESM(require_core_data());
+var import_core_data4 = __toESM(require_core_data());
 var import_components48 = __toESM(require_components());
-var import_data10 = __toESM(require_data());
+var import_data11 = __toESM(require_data());
 var import_element60 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 
@@ -17578,19 +17593,19 @@ function paramCase(input, options) {
 // packages/fields/build-module/components/create-template-part-modal/index.mjs
 var import_components47 = __toESM(require_components(), 1);
 var import_compose13 = __toESM(require_compose(), 1);
-var import_core_data2 = __toESM(require_core_data(), 1);
-var import_data9 = __toESM(require_data(), 1);
+var import_core_data3 = __toESM(require_core_data(), 1);
+var import_data10 = __toESM(require_data(), 1);
 var import_element59 = __toESM(require_element(), 1);
 var import_i18n43 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 var import_blocks = __toESM(require_blocks(), 1);
 
 // packages/fields/build-module/components/create-template-part-modal/utils.mjs
-var import_data8 = __toESM(require_data(), 1);
-var import_core_data = __toESM(require_core_data(), 1);
+var import_data9 = __toESM(require_data(), 1);
+var import_core_data2 = __toESM(require_core_data(), 1);
 var useExistingTemplateParts = () => {
-  return (0, import_data8.useSelect)(
-    (select2) => select2(import_core_data.store).getEntityRecords(
+  return (0, import_data9.useSelect)(
+    (select2) => select2(import_core_data2.store).getEntityRecords(
       "postType",
       "wp_template_part",
       {
@@ -17630,8 +17645,8 @@ function CreateTemplatePartModal({
   modalTitle,
   ...restProps
 }) {
-  const defaultModalTitle = (0, import_data9.useSelect)(
-    (select2) => select2(import_core_data2.store).getPostType("wp_template_part")?.labels?.add_new_item,
+  const defaultModalTitle = (0, import_data10.useSelect)(
+    (select2) => select2(import_core_data3.store).getPostType("wp_template_part")?.labels?.add_new_item,
     []
   );
   return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
@@ -17667,15 +17682,15 @@ function CreateTemplatePartModalContents({
   onError,
   defaultTitle = ""
 }) {
-  const { createErrorNotice } = (0, import_data9.useDispatch)(import_notices.store);
-  const { saveEntityRecord } = (0, import_data9.useDispatch)(import_core_data2.store);
+  const { createErrorNotice } = (0, import_data10.useDispatch)(import_notices.store);
+  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data3.store);
   const existingTemplateParts = useExistingTemplateParts();
   const [title, setTitle] = (0, import_element59.useState)(defaultTitle);
   const [area, setArea] = (0, import_element59.useState)(defaultArea);
   const [isSubmitting, setIsSubmitting] = (0, import_element59.useState)(false);
   const instanceId = (0, import_compose13.useInstanceId)(CreateTemplatePartModal);
-  const defaultTemplatePartAreas = (0, import_data9.useSelect)(
-    (select2) => select2(import_core_data2.store).getCurrentTheme()?.default_template_part_areas,
+  const defaultTemplatePartAreas = (0, import_data10.useSelect)(
+    (select2) => select2(import_core_data3.store).getCurrentTheme()?.default_template_part_areas,
     []
   );
   async function createTemplatePart() {
@@ -17832,8 +17847,8 @@ function CreateTemplatePartModalContents({
 }
 
 // routes/lock-unlock.ts
-var import_private_apis2 = __toESM(require_private_apis());
-var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis3 = __toESM(require_private_apis());
+var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/routes"
 );
@@ -17951,9 +17966,9 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/template-part-list/stage.tsx
-var { useEntityRecordsWithPermissions } = unlock2(import_core_data3.privateApis);
-var { usePostActions, usePostFields } = unlock2(import_editor.privateApis);
-var { Tabs } = unlock2(import_components48.privateApis);
+var { useEntityRecordsWithPermissions } = unlock3(import_core_data4.privateApis);
+var { usePostActions, usePostFields } = unlock3(import_editor.privateApis);
+var { Tabs } = unlock3(import_components48.privateApis);
 function getItemId(item) {
   return item.id.toString();
 }
@@ -17964,13 +17979,13 @@ function TemplatePartList() {
   });
   const navigate = useNavigate();
   const searchParams = useSearch({ from: "/template-parts/list/$area" });
-  const postTypeObject = (0, import_data10.useSelect)(
-    (select2) => select2(import_core_data3.store).getPostType("wp_template_part"),
+  const postTypeObject = (0, import_data11.useSelect)(
+    (select2) => select2(import_core_data4.store).getPostType("wp_template_part"),
     []
   );
   const labels = postTypeObject?.labels;
-  const canCreateRecord = (0, import_data10.useSelect)(
-    (select2) => select2(import_core_data3.store).canUser("create", {
+  const canCreateRecord = (0, import_data11.useSelect)(
+    (select2) => select2(import_core_data4.store).canUser("create", {
       kind: "postType",
       name: "wp_template_part"
     }),

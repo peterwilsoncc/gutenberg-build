@@ -3743,6 +3743,16 @@ var wp;
     }
     return state;
   }
+  function viewConfigs(state = {}, action) {
+    switch (action.type) {
+      case "RECEIVE_VIEW_CONFIG":
+        return {
+          ...state,
+          [`${action.kind}/${action.name}`]: action.config
+        };
+    }
+    return state;
+  }
   var reducer_default2 = (0, import_data8.combineReducers)({
     users,
     currentTheme,
@@ -3766,7 +3776,8 @@ var wp;
     editorSettings,
     editorAssets,
     syncConnectionStatuses,
-    collaborationSupported
+    collaborationSupported,
+    viewConfigs
   });
 
   // packages/core-data/build-module/selectors.mjs
@@ -3844,6 +3855,7 @@ var wp;
     getRegisteredPostMeta: () => getRegisteredPostMeta,
     getTemplateId: () => getTemplateId,
     getUndoManager: () => getUndoManager,
+    getViewConfig: () => getViewConfig,
     isCollaborationSupported: () => isCollaborationSupported
   });
   var import_data9 = __toESM(require_data(), 1);
@@ -4034,6 +4046,9 @@ var wp;
   }
   function isCollaborationSupported(state) {
     return state.collaborationSupported;
+  }
+  function getViewConfig(state, kind, name) {
+    return state.viewConfigs?.[`${kind}/${name}`];
   }
 
   // packages/core-data/build-module/selectors.mjs
@@ -5436,6 +5451,7 @@ var wp;
     receiveEditorAssets: () => receiveEditorAssets,
     receiveEditorSettings: () => receiveEditorSettings,
     receiveRegisteredPostMeta: () => receiveRegisteredPostMeta,
+    receiveViewConfig: () => receiveViewConfig,
     setCollaborationSupported: () => setCollaborationSupported
   });
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
@@ -5529,6 +5545,14 @@ var wp;
   var setCollaborationSupported = (supported) => ({ dispatch: dispatch3 }) => {
     dispatch3({ type: "SET_COLLABORATION_SUPPORTED", supported });
   };
+  function receiveViewConfig(kind, name, config) {
+    return {
+      type: "RECEIVE_VIEW_CONFIG",
+      kind,
+      name,
+      config
+    };
+  }
 
   // packages/core-data/build-module/resolvers.mjs
   var resolvers_exports = {};
@@ -5562,7 +5586,8 @@ var wp;
     getRevision: () => getRevision2,
     getRevisions: () => getRevisions2,
     getThemeSupports: () => getThemeSupports2,
-    getUserPatternCategories: () => getUserPatternCategories2
+    getUserPatternCategories: () => getUserPatternCategories2,
+    getViewConfig: () => getViewConfig2
   });
   var import_url6 = __toESM(require_url(), 1);
   var import_html_entities2 = __toESM(require_html_entities(), 1);
@@ -6599,6 +6624,12 @@ var wp;
       path: "/wp-block-editor/v1/assets"
     });
     dispatch3.receiveEditorAssets(assets);
+  };
+  var getViewConfig2 = (kind, name) => async ({ dispatch: dispatch3 }) => {
+    const config = await (0, import_api_fetch8.default)({
+      path: (0, import_url6.addQueryArgs)("/wp/v2/view-config", { kind, name })
+    });
+    dispatch3.receiveViewConfig(kind, name, config);
   };
 
   // packages/core-data/build-module/locks/utils.mjs
