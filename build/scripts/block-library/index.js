@@ -63668,7 +63668,11 @@ ${js}
     example: {
       viewportWidth: 350,
       attributes: {
-        textAlign: "center"
+        style: {
+          typography: {
+            textAlign: "center"
+          }
+        }
       }
     },
     edit: SiteTitleEdit,
