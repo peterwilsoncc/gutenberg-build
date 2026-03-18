@@ -261,7 +261,15 @@ function DefaultConnectorSettings({
             help: getHelp()
           }
         ),
-        readOnly ? onRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, { variant: "link", isDestructive: true, onClick: onRemove, children: (0, import_i18n.__)("Remove and replace") }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalHStack, { justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        readOnly ? onRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalHStack, { justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          import_components.Button,
+          {
+            variant: "link",
+            isDestructive: true,
+            onClick: onRemove,
+            children: (0, import_i18n.__)("Remove and replace")
+          }
+        ) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalHStack, { justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
           import_components.Button,
           {
             __next40pxDefaultSize: true,
