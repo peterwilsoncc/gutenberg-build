@@ -61627,12 +61627,12 @@ var wp;
             if (!el.querySelectorAll) {
               return;
             }
-            el.querySelectorAll(
-              "img,source,script,video,link"
-            ).forEach((v2) => {
-              addCrossOriginAttribute(v2);
-            });
-            if (["IMG", "SOURCE", "SCRIPT", "VIDEO", "LINK"].includes(
+            el.querySelectorAll("source,script,video,link").forEach(
+              (v2) => {
+                addCrossOriginAttribute(v2);
+              }
+            );
+            if (["SOURCE", "SCRIPT", "VIDEO", "LINK"].includes(
               el.nodeName
             )) {
               addCrossOriginAttribute(el);
