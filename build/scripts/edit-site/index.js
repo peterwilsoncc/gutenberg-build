@@ -43061,6 +43061,7 @@ If there's a particular need for this, please submit a feature request at https:
           toggleProps: {
             variant: "primary",
             showTooltip: false,
+            size: "compact",
             __next40pxDefaultSize: true
           },
           text: addNewPatternLabel,
@@ -45190,6 +45191,7 @@ If there's a particular need for this, please submit a feature request at https:
           variant: "primary",
           onClick: () => setShowModal(true),
           label: postType2.labels.add_new_item,
+          size: "compact",
           __next40pxDefaultSize: true,
           children: postType2.labels.add_new_item
         }
@@ -46997,6 +46999,7 @@ If there's a particular need for this, please submit a feature request at https:
           variant: "primary",
           onClick: () => setShowModal(true),
           label: postType2.labels.add_new_item,
+          size: "compact",
           __next40pxDefaultSize: true,
           children: postType2.labels.add_new_item
         }
@@ -48063,6 +48066,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               variant: "primary",
               onClick: openModal,
+              size: "compact",
               __next40pxDefaultSize: true,
               children: labels.add_new_item
             }
