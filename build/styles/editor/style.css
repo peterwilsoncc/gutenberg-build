@@ -6706,6 +6706,20 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   outline-offset: -2px;
 }
 
+.editor-revision-fields-diff__value {
+  word-break: break-word;
+}
+
+.editor-revision-fields-diff__added {
+  background-color: color-mix(in srgb, currentColor 5%, #00a32a 15%);
+  text-decoration: none;
+}
+
+.editor-revision-fields-diff__removed {
+  text-decoration: line-through;
+  color: #d63638;
+}
+
 .editor-post-saved-state {
   display: flex;
   align-items: center;
