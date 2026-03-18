@@ -1751,27 +1751,30 @@ var wp;
 
   // packages/compose/build-module/hooks/use-media-query/index.mjs
   var import_element18 = __toESM(require_element(), 1);
-  var matchMediaCache = /* @__PURE__ */ new Map();
-  function getMediaQueryList(query) {
+  var perWindowCache = /* @__PURE__ */ new WeakMap();
+  function getMediaQueryList(view, query) {
     if (!query) {
       return null;
+    }
+    const matchMediaCache = perWindowCache.get(view) ?? /* @__PURE__ */ new Map();
+    if (!perWindowCache.has(view)) {
+      perWindowCache.set(view, matchMediaCache);
     }
     let match = matchMediaCache.get(query);
     if (match) {
       return match;
     }
-    if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
-      match = window.matchMedia(query);
+    if (typeof view?.matchMedia === "function") {
+      match = view.matchMedia(query);
       matchMediaCache.set(query, match);
       return match;
     }
     return null;
   }
-  function useMediaQuery(query) {
+  function useMediaQuery(query, view = window) {
     const source = (0, import_element18.useMemo)(() => {
-      const mediaQueryList = getMediaQueryList(query);
+      const mediaQueryList = getMediaQueryList(view, query);
       return {
-        /** @type {(onStoreChange: () => void) => () => void} */
         subscribe(onStoreChange) {
           if (!mediaQueryList) {
             return () => {
@@ -1789,7 +1792,7 @@ var wp;
           return mediaQueryList?.matches ?? false;
         }
       };
-    }, [query]);
+    }, [view, query]);
     return (0, import_element18.useSyncExternalStore)(
       source.subscribe,
       source.getValue,
@@ -1913,10 +1916,10 @@ var wp;
     null
   );
   ViewportMatchWidthContext.displayName = "ViewportMatchWidthContext";
-  var useViewportMatch = (breakpoint, operator = ">=") => {
+  var useViewportMatch = (breakpoint, operator = ">=", view = window) => {
     const simulatedWidth = (0, import_element21.useContext)(ViewportMatchWidthContext);
     const mediaQuery = !simulatedWidth && `(${CONDITIONS[operator]}: ${BREAKPOINTS[breakpoint]}px)`;
-    const mediaQueryResult = useMediaQuery(mediaQuery || void 0);
+    const mediaQueryResult = useMediaQuery(mediaQuery || void 0, view);
     if (simulatedWidth) {
       return OPERATOR_EVALUATORS[operator](
         BREAKPOINTS[breakpoint],
