@@ -7334,10 +7334,6 @@ If there's a particular need for this, please submit a feature request at https:
     bottom: "top",
     top: "bottom"
   };
-  var oppositeAlignmentMap = {
-    start: "end",
-    end: "start"
-  };
   function clamp(start, value, end) {
     return max(start, min(value, end));
   }
@@ -7356,9 +7352,9 @@ If there's a particular need for this, please submit a feature request at https:
   function getAxisLength(axis) {
     return axis === "y" ? "height" : "width";
   }
-  var yAxisSides = /* @__PURE__ */ new Set(["top", "bottom"]);
   function getSideAxis(placement) {
-    return yAxisSides.has(getSide(placement)) ? "y" : "x";
+    const firstChar = placement[0];
+    return firstChar === "t" || firstChar === "b" ? "y" : "x";
   }
   function getAlignmentAxis(placement) {
     return getOppositeAxis(getSideAxis(placement));
@@ -7381,7 +7377,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [getOppositeAlignmentPlacement(placement), oppositePlacement, getOppositeAlignmentPlacement(oppositePlacement)];
   }
   function getOppositeAlignmentPlacement(placement) {
-    return placement.replace(/start|end/g, (alignment) => oppositeAlignmentMap[alignment]);
+    return placement.includes("start") ? placement.replace("start", "end") : placement.replace("end", "start");
   }
   var lrPlacement = ["left", "right"];
   var rlPlacement = ["right", "left"];
@@ -7412,7 +7408,8 @@ If there's a particular need for this, please submit a feature request at https:
     return list;
   }
   function getOppositePlacement(placement) {
-    return placement.replace(/left|right|bottom|top/g, (side) => oppositeSideMap[side]);
+    const side = getSide(placement);
+    return oppositeSideMap[side] + placement.slice(side.length);
   }
   function expandPaddingObject(padding2) {
     return {
@@ -7506,89 +7503,6 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return coords;
   }
-  var computePosition = async (reference, floating, config) => {
-    const {
-      placement = "bottom",
-      strategy = "absolute",
-      middleware: middleware2 = [],
-      platform: platform2
-    } = config;
-    const validMiddleware = middleware2.filter(Boolean);
-    const rtl2 = await (platform2.isRTL == null ? void 0 : platform2.isRTL(floating));
-    let rects = await platform2.getElementRects({
-      reference,
-      floating,
-      strategy
-    });
-    let {
-      x: x2,
-      y: y3
-    } = computeCoordsFromPlacement(rects, placement, rtl2);
-    let statefulPlacement = placement;
-    let middlewareData = {};
-    let resetCount = 0;
-    for (let i3 = 0; i3 < validMiddleware.length; i3++) {
-      const {
-        name,
-        fn
-      } = validMiddleware[i3];
-      const {
-        x: nextX,
-        y: nextY,
-        data,
-        reset
-      } = await fn({
-        x: x2,
-        y: y3,
-        initialPlacement: placement,
-        placement: statefulPlacement,
-        strategy,
-        middlewareData,
-        rects,
-        platform: platform2,
-        elements: {
-          reference,
-          floating
-        }
-      });
-      x2 = nextX != null ? nextX : x2;
-      y3 = nextY != null ? nextY : y3;
-      middlewareData = {
-        ...middlewareData,
-        [name]: {
-          ...middlewareData[name],
-          ...data
-        }
-      };
-      if (reset && resetCount <= 50) {
-        resetCount++;
-        if (typeof reset === "object") {
-          if (reset.placement) {
-            statefulPlacement = reset.placement;
-          }
-          if (reset.rects) {
-            rects = reset.rects === true ? await platform2.getElementRects({
-              reference,
-              floating,
-              strategy
-            }) : reset.rects;
-          }
-          ({
-            x: x2,
-            y: y3
-          } = computeCoordsFromPlacement(rects, statefulPlacement, rtl2));
-        }
-        i3 = -1;
-      }
-    }
-    return {
-      x: x2,
-      y: y3,
-      placement: statefulPlacement,
-      strategy,
-      middlewareData
-    };
-  };
   async function detectOverflow(state, options2) {
     var _await$platform$isEle;
     if (options2 === void 0) {
@@ -7645,6 +7559,94 @@ If there's a particular need for this, please submit a feature request at https:
       right: (elementClientRect.right - clippingClientRect.right + paddingObject.right) / offsetScale.x
     };
   }
+  var MAX_RESET_COUNT = 50;
+  var computePosition = async (reference, floating, config) => {
+    const {
+      placement = "bottom",
+      strategy = "absolute",
+      middleware: middleware2 = [],
+      platform: platform2
+    } = config;
+    const platformWithDetectOverflow = platform2.detectOverflow ? platform2 : {
+      ...platform2,
+      detectOverflow
+    };
+    const rtl2 = await (platform2.isRTL == null ? void 0 : platform2.isRTL(floating));
+    let rects = await platform2.getElementRects({
+      reference,
+      floating,
+      strategy
+    });
+    let {
+      x: x2,
+      y: y3
+    } = computeCoordsFromPlacement(rects, placement, rtl2);
+    let statefulPlacement = placement;
+    let resetCount = 0;
+    const middlewareData = {};
+    for (let i3 = 0; i3 < middleware2.length; i3++) {
+      const currentMiddleware = middleware2[i3];
+      if (!currentMiddleware) {
+        continue;
+      }
+      const {
+        name,
+        fn
+      } = currentMiddleware;
+      const {
+        x: nextX,
+        y: nextY,
+        data,
+        reset
+      } = await fn({
+        x: x2,
+        y: y3,
+        initialPlacement: placement,
+        placement: statefulPlacement,
+        strategy,
+        middlewareData,
+        rects,
+        platform: platformWithDetectOverflow,
+        elements: {
+          reference,
+          floating
+        }
+      });
+      x2 = nextX != null ? nextX : x2;
+      y3 = nextY != null ? nextY : y3;
+      middlewareData[name] = {
+        ...middlewareData[name],
+        ...data
+      };
+      if (reset && resetCount < MAX_RESET_COUNT) {
+        resetCount++;
+        if (typeof reset === "object") {
+          if (reset.placement) {
+            statefulPlacement = reset.placement;
+          }
+          if (reset.rects) {
+            rects = reset.rects === true ? await platform2.getElementRects({
+              reference,
+              floating,
+              strategy
+            }) : reset.rects;
+          }
+          ({
+            x: x2,
+            y: y3
+          } = computeCoordsFromPlacement(rects, statefulPlacement, rtl2));
+        }
+        i3 = -1;
+      }
+    }
+    return {
+      x: x2,
+      y: y3,
+      placement: statefulPlacement,
+      strategy,
+      middlewareData
+    };
+  };
   var arrow = (options2) => ({
     name: "arrow",
     options: options2,
@@ -7746,7 +7748,7 @@ If there's a particular need for this, please submit a feature request at https:
           fallbackPlacements.push(...getOppositeAxisPlacements(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl2));
         }
         const placements2 = [initialPlacement, ...fallbackPlacements];
-        const overflow = await detectOverflow(state, detectOverflowOptions);
+        const overflow = await platform2.detectOverflow(state, detectOverflowOptions);
         const overflows = [];
         let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
         if (checkMainAxis) {
@@ -7895,7 +7897,8 @@ If there's a particular need for this, please submit a feature request at https:
         const {
           x: x2,
           y: y3,
-          placement
+          placement,
+          platform: platform2
         } = state;
         const {
           mainAxis: checkMainAxis = true,
@@ -7918,7 +7921,7 @@ If there's a particular need for this, please submit a feature request at https:
           x: x2,
           y: y3
         };
-        const overflow = await detectOverflow(state, detectOverflowOptions);
+        const overflow = await platform2.detectOverflow(state, detectOverflowOptions);
         const crossAxis = getSideAxis(getSide(placement));
         const mainAxis = getOppositeAxis(crossAxis);
         let mainAxisCoord = coords[mainAxis];
@@ -8041,7 +8044,7 @@ If there's a particular need for this, please submit a feature request at https:
           },
           ...detectOverflowOptions
         } = evaluate(options2, state);
-        const overflow = await detectOverflow(state, detectOverflowOptions);
+        const overflow = await platform2.detectOverflow(state, detectOverflowOptions);
         const side = getSide(placement);
         const alignment = getAlignment(placement);
         const isYAxis = getSideAxis(placement) === "y";
@@ -8142,7 +8145,6 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return value instanceof ShadowRoot || value instanceof getWindow2(value).ShadowRoot;
   }
-  var invalidOverflowDisplayValues = /* @__PURE__ */ new Set(["inline", "contents"]);
   function isOverflowElement(element) {
     const {
       overflow,
@@ -8150,29 +8152,31 @@ If there's a particular need for this, please submit a feature request at https:
       overflowY,
       display
     } = getComputedStyle2(element);
-    return /auto|scroll|overlay|hidden|clip/.test(overflow + overflowY + overflowX) && !invalidOverflowDisplayValues.has(display);
+    return /auto|scroll|overlay|hidden|clip/.test(overflow + overflowY + overflowX) && display !== "inline" && display !== "contents";
   }
-  var tableElements = /* @__PURE__ */ new Set(["table", "td", "th"]);
   function isTableElement(element) {
-    return tableElements.has(getNodeName(element));
+    return /^(table|td|th)$/.test(getNodeName(element));
   }
-  var topLayerSelectors = [":popover-open", ":modal"];
   function isTopLayer(element) {
-    return topLayerSelectors.some((selector2) => {
-      try {
-        return element.matches(selector2);
-      } catch (_e) {
-        return false;
+    try {
+      if (element.matches(":popover-open")) {
+        return true;
       }
-    });
+    } catch (_e) {
+    }
+    try {
+      return element.matches(":modal");
+    } catch (_e) {
+      return false;
+    }
   }
-  var transformProperties = ["transform", "translate", "scale", "rotate", "perspective"];
-  var willChangeValues = ["transform", "translate", "scale", "rotate", "perspective", "filter"];
-  var containValues = ["paint", "layout", "strict", "content"];
+  var willChangeRe = /transform|translate|scale|rotate|perspective|filter/;
+  var containRe = /paint|layout|strict|content/;
+  var isNotNone = (value) => !!value && value !== "none";
+  var isWebKitValue;
   function isContainingBlock(elementOrCss) {
-    const webkit = isWebKit();
     const css3 = isElement(elementOrCss) ? getComputedStyle2(elementOrCss) : elementOrCss;
-    return transformProperties.some((value) => css3[value] ? css3[value] !== "none" : false) || (css3.containerType ? css3.containerType !== "normal" : false) || !webkit && (css3.backdropFilter ? css3.backdropFilter !== "none" : false) || !webkit && (css3.filter ? css3.filter !== "none" : false) || willChangeValues.some((value) => (css3.willChange || "").includes(value)) || containValues.some((value) => (css3.contain || "").includes(value));
+    return isNotNone(css3.transform) || isNotNone(css3.translate) || isNotNone(css3.scale) || isNotNone(css3.rotate) || isNotNone(css3.perspective) || !isWebKit() && (isNotNone(css3.backdropFilter) || isNotNone(css3.filter)) || willChangeRe.test(css3.willChange || "") || containRe.test(css3.contain || "");
   }
   function getContainingBlock(element) {
     let currentNode = getParentNode(element);
@@ -8187,12 +8191,13 @@ If there's a particular need for this, please submit a feature request at https:
     return null;
   }
   function isWebKit() {
-    if (typeof CSS === "undefined" || !CSS.supports) return false;
-    return CSS.supports("-webkit-backdrop-filter", "none");
+    if (isWebKitValue == null) {
+      isWebKitValue = typeof CSS !== "undefined" && CSS.supports && CSS.supports("-webkit-backdrop-filter", "none");
+    }
+    return isWebKitValue;
   }
-  var lastTraversableNodeNames = /* @__PURE__ */ new Set(["html", "body", "#document"]);
   function isLastTraversableNode(node2) {
-    return lastTraversableNodeNames.has(getNodeName(node2));
+    return /^(html|body|#document)$/.test(getNodeName(node2));
   }
   function getComputedStyle2(element) {
     return getWindow2(element).getComputedStyle(element);
@@ -8246,8 +8251,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (isBody) {
       const frameElement = getFrameElement(win);
       return list.concat(win, win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : [], frameElement && traverseIframes ? getOverflowAncestors(frameElement) : []);
+    } else {
+      return list.concat(scrollableAncestor, getOverflowAncestors(scrollableAncestor, [], traverseIframes));
     }
-    return list.concat(scrollableAncestor, getOverflowAncestors(scrollableAncestor, [], traverseIframes));
   }
   function getFrameElement(win) {
     return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
@@ -8411,7 +8417,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
         scroll = getNodeScroll(offsetParent);
       }
-      if (isHTMLElement(offsetParent)) {
+      if (isOffsetParentAnElement) {
         const offsetRect = getBoundingClientRect(offsetParent);
         scale2 = getScale(offsetParent);
         offsets.x = offsetRect.x + offsetParent.clientLeft;
@@ -8485,7 +8491,6 @@ If there's a particular need for this, please submit a feature request at https:
       y: y3
     };
   }
-  var absoluteOrFixed = /* @__PURE__ */ new Set(["absolute", "fixed"]);
   function getInnerBoundingClientRect(element, strategy) {
     const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
     const top = clientRect.top + element.clientTop;
@@ -8543,7 +8548,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!currentNodeIsContaining && computedStyle.position === "fixed") {
         currentContainingBlockComputedStyle = null;
       }
-      const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === "static" && !!currentContainingBlockComputedStyle && absoluteOrFixed.has(currentContainingBlockComputedStyle.position) || isOverflowElement(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
+      const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === "static" && !!currentContainingBlockComputedStyle && (currentContainingBlockComputedStyle.position === "absolute" || currentContainingBlockComputedStyle.position === "fixed") || isOverflowElement(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
       if (shouldDropCurrentNode) {
         result = result.filter((ancestor) => ancestor !== currentNode);
       } else {
@@ -8563,20 +8568,23 @@ If there's a particular need for this, please submit a feature request at https:
     } = _ref11;
     const elementClippingAncestors = boundary === "clippingAncestors" ? isTopLayer(element) ? [] : getClippingElementAncestors(element, this._c) : [].concat(boundary);
     const clippingAncestors = [...elementClippingAncestors, rootBoundary];
-    const firstClippingAncestor = clippingAncestors[0];
-    const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor) => {
-      const rect = getClientRectFromClippingAncestor(element, clippingAncestor, strategy);
-      accRect.top = max(rect.top, accRect.top);
-      accRect.right = min(rect.right, accRect.right);
-      accRect.bottom = min(rect.bottom, accRect.bottom);
-      accRect.left = max(rect.left, accRect.left);
-      return accRect;
-    }, getClientRectFromClippingAncestor(element, firstClippingAncestor, strategy));
+    const firstRect = getClientRectFromClippingAncestor(element, clippingAncestors[0], strategy);
+    let top = firstRect.top;
+    let right = firstRect.right;
+    let bottom = firstRect.bottom;
+    let left = firstRect.left;
+    for (let i3 = 1; i3 < clippingAncestors.length; i3++) {
+      const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i3], strategy);
+      top = max(rect.top, top);
+      right = min(rect.right, right);
+      bottom = min(rect.bottom, bottom);
+      left = max(rect.left, left);
+    }
     return {
-      width: clippingRect.right - clippingRect.left,
-      height: clippingRect.bottom - clippingRect.top,
-      x: clippingRect.left,
-      y: clippingRect.top
+      width: right - left,
+      height: bottom - top,
+      x: left,
+      y: top
     };
   }
   function getDimensions(element) {
@@ -8785,7 +8793,7 @@ If there's a particular need for this, please submit a feature request at https:
       animationFrame = false
     } = options2;
     const referenceEl = unwrapElement(reference);
-    const ancestors = ancestorScroll || ancestorResize ? [...referenceEl ? getOverflowAncestors(referenceEl) : [], ...getOverflowAncestors(floating)] : [];
+    const ancestors = ancestorScroll || ancestorResize ? [...referenceEl ? getOverflowAncestors(referenceEl) : [], ...floating ? getOverflowAncestors(floating) : []] : [];
     ancestors.forEach((ancestor) => {
       ancestorScroll && ancestor.addEventListener("scroll", update, {
         passive: true
@@ -8798,7 +8806,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (elementResize) {
       resizeObserver = new ResizeObserver((_ref11) => {
         let [firstEntry] = _ref11;
-        if (firstEntry && firstEntry.target === referenceEl && resizeObserver) {
+        if (firstEntry && firstEntry.target === referenceEl && resizeObserver && floating) {
           resizeObserver.unobserve(floating);
           cancelAnimationFrame(reobserveFrame);
           reobserveFrame = requestAnimationFrame(() => {
@@ -8811,7 +8819,9 @@ If there's a particular need for this, please submit a feature request at https:
       if (referenceEl && !animationFrame) {
         resizeObserver.observe(referenceEl);
       }
-      resizeObserver.observe(floating);
+      if (floating) {
+        resizeObserver.observe(floating);
+      }
     }
     let frameId;
     let prevRefRect = animationFrame ? getBoundingClientRect(reference) : null;

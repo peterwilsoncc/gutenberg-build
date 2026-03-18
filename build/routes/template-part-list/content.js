@@ -991,7 +991,7 @@ function useView(config) {
     },
     [preferenceKey]
   );
-  const { set } = (0, import_data.useDispatch)(import_preferences.store);
+  const { set: set2 } = (0, import_data.useDispatch)(import_preferences.store);
   const baseView = persistedView ?? defaultView;
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
@@ -1033,9 +1033,9 @@ function useView(config) {
       );
       if (!dequal(comparableBaseView, preferenceView)) {
         if (dequal(preferenceView, comparableDefaultView)) {
-          set("core/views", preferenceKey, void 0);
+          set2("core/views", preferenceKey, void 0);
         } else {
-          set("core/views", preferenceKey, preferenceView);
+          set2("core/views", preferenceKey, preferenceView);
         }
       }
     },
@@ -1046,13 +1046,13 @@ function useView(config) {
       baseView,
       defaultView,
       activeViewOverrides,
-      set,
+      set2,
       preferenceKey
     ]
   );
   const resetToDefault = (0, import_element.useCallback)(() => {
-    set("core/views", preferenceKey, void 0);
-  }, [preferenceKey, set]);
+    set2("core/views", preferenceKey, void 0);
+  }, [preferenceKey, set2]);
   return {
     view,
     isModified,
@@ -1078,6 +1078,21 @@ function useRefWithInit(init2, initArg) {
     ref.current = init2(initArg);
   }
   return ref;
+}
+
+// node_modules/@base-ui/utils/esm/warn.js
+var set;
+if (true) {
+  set = /* @__PURE__ */ new Set();
+}
+function warn(...messages) {
+  if (true) {
+    const messageKey = messages.join(" ");
+    if (!set.has(messageKey)) {
+      set.add(messageKey);
+      console.warn(`Base UI: ${messageKey}`);
+    }
+  }
 }
 
 // node_modules/@base-ui/react/esm/utils/useRenderElement.js
@@ -1367,6 +1382,12 @@ function isSyntheticEvent(event) {
 var EMPTY_ARRAY = Object.freeze([]);
 var EMPTY_OBJECT = Object.freeze({});
 
+// node_modules/@base-ui/react/esm/utils/constants.js
+var BASE_UI_SWIPE_IGNORE_ATTRIBUTE = "data-base-ui-swipe-ignore";
+var LEGACY_SWIPE_IGNORE_ATTRIBUTE = "data-swipe-ignore";
+var BASE_UI_SWIPE_IGNORE_SELECTOR = `[${BASE_UI_SWIPE_IGNORE_ATTRIBUTE}]`;
+var LEGACY_SWIPE_IGNORE_SELECTOR = `[${LEGACY_SWIPE_IGNORE_ATTRIBUTE}]`;
+
 // node_modules/@base-ui/react/esm/utils/useRenderElement.js
 var import_react = __toESM(require_react(), 1);
 function useRenderElement(element, componentProps, params = {}) {
@@ -1419,6 +1440,9 @@ var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
 function evaluateRenderProp(element, render4, props, state) {
   if (render4) {
     if (typeof render4 === "function") {
+      if (true) {
+        warnIfRenderPropLooksLikeComponent(render4);
+      }
       return render4(props, state);
     }
     const mergedProps = mergeProps(props, render4.props);
@@ -1440,7 +1464,18 @@ function evaluateRenderProp(element, render4, props, state) {
       return renderTag(element, props);
     }
   }
-  throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage(8));
+  throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage_default(8));
+}
+function warnIfRenderPropLooksLikeComponent(renderFn) {
+  const functionName = renderFn.name;
+  if (functionName.length === 0) {
+    return;
+  }
+  const firstCharacterCode = functionName.charCodeAt(0);
+  if (firstCharacterCode < 65 || firstCharacterCode > 90) {
+    return;
+  }
+  warn(`The \`render\` prop received a function named \`${functionName}\` that starts with an uppercase letter.`, "This usually means a React component was passed directly as `render={Component}`.", "Base UI calls `render` as a plain function, which can break the Rules of Hooks during reconciliation.", "If this is an intentional render callback, rename it to start with a lowercase letter.", "Use `render={<Component />}` or `render={(props) => <Component {...props} />}` instead.", "https://base-ui.com/r/invalid-render-prop");
 }
 function renderTag(Tag, props) {
   if (Tag === "button") {
@@ -7213,15 +7248,15 @@ function createStore(initialState, ...stores) {
     destroy = chain(...desyncs, ...teardowns, ...cleanups);
     return maybeDestroy;
   };
-  const sub = (keys, listener, set = listeners) => {
-    set.add(listener);
+  const sub = (keys, listener, set2 = listeners) => {
+    set2.add(listener);
     listenerKeys.set(listener, keys);
     return () => {
       var _a;
       (_a = disposables.get(listener)) == null ? void 0 : _a();
       disposables.delete(listener);
       listenerKeys.delete(listener);
-      set.delete(listener);
+      set2.delete(listener);
     };
   };
   const storeSubscribe = (keys, listener) => sub(keys, listener);
