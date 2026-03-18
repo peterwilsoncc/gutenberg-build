@@ -17,7 +17,7 @@ return array(
 	array(
 		'name'        => 'content-guidelines',
 		'path'        => '/',
-		'page'        => 'content-guidelines',
+		'page'        => 'guidelines',
 		'has_route'   => true,
 		'has_content' => true,
 	),
