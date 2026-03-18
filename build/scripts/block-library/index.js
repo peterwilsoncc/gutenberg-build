@@ -30716,7 +30716,9 @@ ${js}
 
   // packages/block-library/build-module/image/image.mjs
   var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
-  var { DimensionsTool, ResolutionTool: ResolutionTool2 } = unlock(import_block_editor112.privateApis);
+  var { DimensionsTool, ResolutionTool: ResolutionTool2, mediaEditKey } = unlock(
+    import_block_editor112.privateApis
+  );
   var scaleOptions = [
     {
       value: "cover",
@@ -30953,7 +30955,13 @@ ${js}
       },
       [id, isSingleSelected]
     );
-    const { canInsertCover, imageEditing, imageSizes, maxWidth } = (0, import_data47.useSelect)(
+    const {
+      canInsertCover,
+      imageEditing,
+      imageSizes,
+      maxWidth,
+      editMediaEntity
+    } = (0, import_data47.useSelect)(
       (select9) => {
         const { getBlockRootClientId, canInsertBlockType, getSettings: getSettings22 } = select9(import_block_editor112.store);
         const rootClientId = getBlockRootClientId(clientId);
@@ -30962,6 +30970,7 @@ ${js}
           imageEditing: settings122.imageEditing,
           imageSizes: settings122.imageSizes,
           maxWidth: settings122.maxWidth,
+          editMediaEntity: settings122?.[mediaEditKey],
           canInsertCover: canInsertBlockType(
             "core/cover",
             rootClientId
@@ -31103,7 +31112,7 @@ ${js}
         setIsEditingImage(false);
       }
     }, [isSingleSelected]);
-    const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
+    const canEditImage = id && naturalWidth && naturalHeight && imageEditing && !!editMediaEntity;
     const allowCrop = isSingleSelected && canEditImage && !isEditingImage && !isContentOnlyMode;
     function switchToCover() {
       replaceBlocks(
@@ -31261,7 +31270,7 @@ ${js}
       }
     ) });
     const hasDataFormBlockFields = window?.__experimentalContentOnlyInspectorFields;
-    const editMediaButton = window?.__experimentalMediaEditor && id && isSingleSelected && canUserEdit && !isExternalImage(id, url) && !isEditingImage && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_block_editor112.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
+    const editMediaButton = window?.__experimentalMediaEditor && id && isSingleSelected && canUserEdit && !!editMediaEntity && !isExternalImage(id, url) && !isEditingImage && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_block_editor112.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
       import_components56.ToolbarButton,
       {
         onClick: () => {
@@ -62462,6 +62471,7 @@ ${js}
   var import_notices17 = __toESM(require_notices(), 1);
   var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES9 = ["image"];
+  var { mediaEditKey: mediaEditKey2 } = unlock(import_block_editor238.privateApis);
   var SiteLogo = ({
     alt,
     attributes: { align, width, height, isLink, linkTarget, shouldSyncIcon },
@@ -62484,18 +62494,22 @@ ${js}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor238.useBlockEditingMode)();
     const isContentOnlyMode = blockEditingMode === "contentOnly";
-    const { imageEditing, maxWidth, title } = (0, import_data132.useSelect)((select9) => {
-      const settings122 = select9(import_block_editor238.store).getSettings();
-      const siteEntities = select9(import_core_data79.store).getEntityRecord(
-        "root",
-        "__unstableBase"
-      );
-      return {
-        title: siteEntities?.name,
-        imageEditing: settings122.imageEditing,
-        maxWidth: settings122.maxWidth
-      };
-    }, []);
+    const { imageEditing, maxWidth, title, editMediaEntity } = (0, import_data132.useSelect)(
+      (select9) => {
+        const settings122 = select9(import_block_editor238.store).getSettings();
+        const siteEntities = select9(import_core_data79.store).getEntityRecord(
+          "root",
+          "__unstableBase"
+        );
+        return {
+          title: siteEntities?.name,
+          imageEditing: settings122.imageEditing,
+          maxWidth: settings122.maxWidth,
+          editMediaEntity: settings122?.[mediaEditKey2]
+        };
+      },
+      []
+    );
     (0, import_element121.useEffect)(() => {
       if (shouldSyncIcon && logoId !== iconId) {
         setAttributes({ shouldSyncIcon: false });
@@ -62571,7 +62585,7 @@ ${js}
         showRightHandle = true;
       }
     }
-    const canEditImage = logoId && naturalWidth && naturalHeight && imageEditing;
+    const canEditImage = logoId && naturalWidth && naturalHeight && imageEditing && !!editMediaEntity;
     const shouldShowCropAndDimensions = !isContentOnlyMode;
     let imgEdit;
     if (canEditImage && isEditingImage) {
