@@ -22410,10 +22410,11 @@ var wp;
   function useBlockVisibility(options = {}) {
     const {
       blockVisibility: blockVisibility2 = void 0,
-      deviceType = BLOCK_VISIBILITY_VIEWPORTS.desktop.key
+      deviceType = BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
+      view = window
     } = options;
-    const isLargerThanMobile = (0, import_compose15.useViewportMatch)("mobile", ">=");
-    const isLargerThanTablet = (0, import_compose15.useViewportMatch)("medium", ">=");
+    const isLargerThanMobile = (0, import_compose15.useViewportMatch)("mobile", ">=", view);
+    const isLargerThanTablet = (0, import_compose15.useViewportMatch)("medium", ">=", view);
     let currentViewport;
     if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.mobile.key) {
       currentViewport = BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
@@ -22630,12 +22631,20 @@ var wp;
       blockVisibility: blockVisibility2,
       deviceType
     } = (0, import_element32.useContext)(PrivateBlockContext);
+    const defaultViewRef = (0, import_compose16.useRefEffect)((element) => {
+      if (element) {
+        const { ownerDocument } = element;
+        const { defaultView } = ownerDocument;
+        defaultViewRef.current = defaultView;
+      }
+    }, []);
     const blockLabel = (0, import_i18n30.sprintf)((0, import_i18n30.__)("Block: %s"), blockTitle);
     const htmlSuffix = mode2 === "html" && !__unstableIsHtml ? "-visual" : "";
     const ffDragRef = useFirefoxDraggableCompatibility();
     const isHoverEnabled = !isWithinSectionBlock;
     const mergedRefs = (0, import_compose16.useMergeRefs)([
       props.ref,
+      defaultViewRef,
       useFocusFirstElement({ clientId, initialPosition: initialPosition2 }),
       useBlockRefProvider(clientId),
       useFocusHandler(clientId),
@@ -22659,7 +22668,8 @@ var wp;
     } : {};
     const { isBlockCurrentlyHidden } = useBlockVisibility({
       blockVisibility: blockVisibility2,
-      deviceType
+      deviceType,
+      view: defaultViewRef.current
     });
     if (blockApiVersion < 2 && clientId === blockEditContext.clientId) {
       (0, import_warning4.default)(
@@ -23193,9 +23203,17 @@ var wp;
       },
       [clientId, rootClientId]
     );
+    const defaultViewRef = (0, import_compose17.useRefEffect)((element) => {
+      if (element) {
+        const { ownerDocument } = element;
+        const { defaultView } = ownerDocument;
+        defaultViewRef.current = defaultView;
+      }
+    }, []);
     const { isBlockCurrentlyHidden } = useBlockVisibility({
       blockVisibility: selectedProps?.blockVisibility,
-      deviceType: selectedProps?.deviceType
+      deviceType: selectedProps?.deviceType,
+      view: defaultViewRef.current
     });
     const block = (0, import_element33.useMemo)(
       () => ({
@@ -25923,7 +25941,6 @@ var wp;
     return {
       isZoomedOut,
       scaleContainerWidth,
-      containerWidth,
       contentResizeListener,
       containerResizeListener
     };
@@ -25931,7 +25948,6 @@ var wp;
 
   // packages/block-editor/build-module/components/iframe/index.mjs
   var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
-  var ViewportWidthProvider = import_compose31.useViewportMatch.__experimentalWidthProvider;
   function bubbleEvent(event, Constructor, frame) {
     const init = {};
     for (const key in event) {
@@ -26108,7 +26124,6 @@ var wp;
     const {
       contentResizeListener,
       containerResizeListener,
-      containerWidth,
       isZoomedOut,
       scaleContainerWidth
     } = useScaleCanvas({
@@ -26169,7 +26184,7 @@ var wp;
                 ),
                 children: [
                   contentResizeListener,
-                  /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(import_components32.__experimentalStyleProvider, { document: iframeDocument, children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(ViewportWidthProvider, { value: containerWidth, children }) })
+                  /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(import_components32.__experimentalStyleProvider, { document: iframeDocument, children })
                 ]
               }
             ),
