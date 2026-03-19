@@ -91,6 +91,12 @@ var actions = {
       slug,
       config
     };
+  },
+  unregisterConnector(slug) {
+    return {
+      type: "UNREGISTER_CONNECTOR",
+      slug
+    };
   }
 };
 function reducer(state = DEFAULT_STATE, action) {
@@ -101,11 +107,22 @@ function reducer(state = DEFAULT_STATE, action) {
         connectors: {
           ...state.connectors,
           [action.slug]: {
+            ...state.connectors[action.slug],
             slug: action.slug,
             ...action.config
           }
         }
       };
+    case "UNREGISTER_CONNECTOR": {
+      if (!state.connectors[action.slug]) {
+        return state;
+      }
+      const { [action.slug]: _, ...rest } = state.connectors;
+      return {
+        ...state,
+        connectors: rest
+      };
+    }
     default:
       return state;
   }
@@ -129,6 +146,9 @@ unlock(store).registerPrivateSelectors(selectors);
 // packages/connectors/build-module/api.mjs
 function registerConnector(slug, config) {
   unlock((0, import_data2.dispatch)(store)).registerConnector(slug, config);
+}
+function unregisterConnector(slug) {
+  unlock((0, import_data2.dispatch)(store)).unregisterConnector(slug);
 }
 
 // packages/connectors/build-module/connector-item.mjs
@@ -293,6 +313,7 @@ export {
   ConnectorItem as __experimentalConnectorItem,
   DefaultConnectorSettings as __experimentalDefaultConnectorSettings,
   registerConnector as __experimentalRegisterConnector,
+  unregisterConnector as __experimentalUnregisterConnector,
   privateApis
 };
 //# sourceMappingURL=index.js.map
