@@ -1262,7 +1262,7 @@ function ApiKeyConnector({
         {
           ref: actionButtonRef,
           variant: isExpanded || isConnected ? "tertiary" : "secondary",
-          size: isExpanded || isConnected ? void 0 : "compact",
+          size: "compact",
           onClick: handleActionClick,
           disabled: pluginStatus === "checking" || isBusy,
           isBusy
