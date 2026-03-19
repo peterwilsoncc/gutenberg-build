@@ -9227,6 +9227,22 @@ var wp;
     if (action.type === "EDIT_CONTENT_ONLY_SECTION") {
       return action.clientId;
     }
+    if (!state) {
+      return state;
+    }
+    switch (action.type) {
+      case "REMOVE_BLOCKS":
+      case "REPLACE_BLOCKS":
+        if (action.clientIds.includes(state)) {
+          return void 0;
+        }
+        break;
+      case "RESET_BLOCKS":
+        if (!getFlattenedClientIds(action.blocks)[state]) {
+          return void 0;
+        }
+        break;
+    }
     return state;
   }
   function blockEditingModes(state = /* @__PURE__ */ new Map(), action) {
