@@ -96,7 +96,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-        useLayoutEffect2(
+        useLayoutEffect3(
           function() {
             inst.value = value;
             inst.getSnapshot = getSnapshot;
@@ -104,7 +104,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect19(
+        useEffect21(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -130,7 +130,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React9 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState26 = React9.useState, useEffect19 = React9.useEffect, useLayoutEffect2 = React9.useLayoutEffect, useDebugValue = React9.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React9 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState26 = React9.useState, useEffect21 = React9.useEffect, useLayoutEffect3 = React9.useLayoutEffect, useDebugValue = React9.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React9.useSyncExternalStore ? React9.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -759,7 +759,7 @@ var require_notices = __commonJS({
 
 // routes/navigation-list/stage.tsx
 var import_core_data2 = __toESM(require_core_data());
-var import_element59 = __toESM(require_element());
+var import_element60 = __toESM(require_element());
 import { useNavigate as useNavigate3, useSearch } from "@wordpress/route";
 
 // node_modules/clsx/dist/clsx.mjs
@@ -1476,7 +1476,7 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/navigation-list/stage.tsx
-var import_i18n46 = __toESM(require_i18n());
+var import_i18n45 = __toESM(require_i18n());
 
 // node_modules/dequal/dist/index.mjs
 var has = Object.prototype.hasOwnProperty;
@@ -1771,8 +1771,8 @@ var import_data2 = __toESM(require_data(), 1);
 var import_preferences2 = __toESM(require_preferences(), 1);
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element57 = __toESM(require_element(), 1);
-var import_compose11 = __toESM(require_compose(), 1);
+var import_element58 = __toESM(require_element(), 1);
+var import_compose12 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataviews-context/index.mjs
 var import_element4 = __toESM(require_element(), 1);
@@ -1849,10 +1849,10 @@ var DataViewsContext = (0, import_element4.createContext)({
   setIsShowingFilter: () => {
   },
   hasInitiallyLoaded: false,
-  hasInfiniteScrollHandler: false,
   config: {
     perPageSizes: []
-  }
+  },
+  intersectionObserver: null
 });
 DataViewsContext.displayName = "DataViewsContext";
 var dataviews_context_default = DataViewsContext;
@@ -1880,7 +1880,8 @@ function DataViewsSelectionCheckbox({
   ...extraProps
 }) {
   const id = getItemId2(item);
-  const checked = !disabled && selection.includes(id);
+  const isInSelectionArray = selection.includes(id);
+  const checked = !disabled && isInSelectionArray;
   const selectionLabel = titleField?.getValue?.({ item }) || (0, import_i18n2.__)("(no title)");
   return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
     import_components2.CheckboxControl,
@@ -1894,7 +1895,7 @@ function DataViewsSelectionCheckbox({
           return;
         }
         onChangeSelection(
-          selection.includes(id) ? selection.filter((itemId) => id !== itemId) : [...selection, id]
+          isInSelectionArray ? selection.filter((itemId) => id !== itemId) : [...selection, id]
         );
       },
       ...extraProps
@@ -2167,7 +2168,7 @@ var import_compose2 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/utils/get-footer-message.mjs
 var import_i18n4 = __toESM(require_i18n(), 1);
-function getFooterMessage(selectionCount, itemsCount, totalItems) {
+function getFooterMessage(selectionCount, itemsCount, totalItems, onlyTotalCount = false) {
   if (selectionCount > 0) {
     return (0, import_i18n4.sprintf)(
       /* translators: %d: number of items. */
@@ -2175,18 +2176,18 @@ function getFooterMessage(selectionCount, itemsCount, totalItems) {
       selectionCount
     );
   }
-  if (totalItems > itemsCount) {
+  if (onlyTotalCount || totalItems <= itemsCount) {
     return (0, import_i18n4.sprintf)(
-      /* translators: %1$d: number of items. %2$d: total number of items. */
-      (0, import_i18n4._n)("%1$d of %2$d Item", "%1$d of %2$d Items", totalItems),
-      itemsCount,
+      /* translators: %d: number of items. */
+      (0, import_i18n4._n)("%d Item", "%d Items", totalItems),
       totalItems
     );
   }
   return (0, import_i18n4.sprintf)(
-    /* translators: %d: number of items. */
-    (0, import_i18n4._n)("%d Item", "%d Items", itemsCount),
-    itemsCount
+    /* translators: %1$d: number of items. %2$d: total number of items. */
+    (0, import_i18n4._n)("%1$d of %2$d Item", "%1$d of %2$d Items", totalItems),
+    itemsCount,
+    totalItems
   );
 }
 
@@ -2238,7 +2239,8 @@ function BulkSelectionCheckbox({
   onChangeSelection,
   data,
   actions,
-  getItemId: getItemId2
+  getItemId: getItemId2,
+  disableSelectAll = false
 }) {
   const selectableItems = (0, import_element6.useMemo)(() => {
     return data.filter((item) => {
@@ -2250,7 +2252,22 @@ function BulkSelectionCheckbox({
   const selectedItems = data.filter(
     (item) => selection.includes(getItemId2(item)) && selectableItems.includes(item)
   );
+  const hasSelection = selection.length > 0;
   const areAllSelected = selectedItems.length === selectableItems.length;
+  if (disableSelectAll) {
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+      import_components4.CheckboxControl,
+      {
+        className: "dataviews-view-table-selection-checkbox",
+        checked: hasSelection,
+        disabled: !hasSelection,
+        onChange: () => {
+          onChangeSelection([]);
+        },
+        "aria-label": (0, import_i18n5.__)("Deselect all")
+      }
+    );
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
     import_components4.CheckboxControl,
     {
@@ -2345,11 +2362,12 @@ function ActionButton({
     action.id
   );
 }
-function renderFooterContent(data, actions, getItemId2, selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection, paginationInfo) {
+function renderFooterContent(data, actions, getItemId2, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection, paginationInfo) {
   const message2 = getFooterMessage(
     selection.length,
     data.length,
-    paginationInfo.totalItems
+    paginationInfo.totalItems,
+    isInfiniteScroll
   );
   return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
     Stack,
@@ -2366,7 +2384,8 @@ function renderFooterContent(data, actions, getItemId2, selection, actionsToShow
             onChangeSelection,
             data,
             actions,
-            getItemId: getItemId2
+            getItemId: getItemId2,
+            disableSelectAll: isInfiniteScroll
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { className: "dataviews-bulk-actions-footer__item-count", children: message2 }),
@@ -2417,6 +2436,7 @@ function FooterContent({
   onChangeSelection,
   data,
   getItemId: getItemId2,
+  isInfiniteScroll,
   paginationInfo
 }) {
   const [actionInProgress, setActionInProgress] = (0, import_element6.useState)(
@@ -2456,6 +2476,7 @@ function FooterContent({
       data,
       actions,
       getItemId2,
+      isInfiniteScroll,
       selection,
       actionsToShow,
       selectedItems,
@@ -2469,6 +2490,7 @@ function FooterContent({
       data,
       actions,
       getItemId2,
+      isInfiniteScroll,
       selection,
       actionsToShow,
       selectedItems,
@@ -2487,7 +2509,8 @@ function BulkActionsFooter() {
     actions = EMPTY_ARRAY2,
     onChangeSelection,
     getItemId: getItemId2,
-    paginationInfo
+    paginationInfo,
+    view
   } = (0, import_element6.useContext)(dataviews_context_default);
   return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
     FooterContent,
@@ -2497,6 +2520,7 @@ function BulkActionsFooter() {
       data,
       actions,
       getItemId: getItemId2,
+      isInfiniteScroll: !!view.infiniteScrollEnabled,
       paginationInfo
     }
   );
@@ -3570,7 +3594,7 @@ var import_components9 = __toESM(require_components(), 1);
 var import_i18n11 = __toESM(require_i18n(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
-var import_element14 = __toESM(require_element(), 1);
+var import_element16 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
 var import_components8 = __toESM(require_components(), 1);
@@ -3621,8 +3645,46 @@ function useGridColumns() {
   }, [context.containerWidth, view.layout?.previewSize]);
 }
 
-// packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
+// packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
+var import_element14 = __toESM(require_element(), 1);
 var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var GridItems = (0, import_element14.forwardRef)(({ className, previewSize, ...props }, ref) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    "div",
+    {
+      ref,
+      className: clsx_default("dataviews-view-grid-items", className),
+      style: {
+        gridTemplateColumns: previewSize && `repeat(auto-fill, minmax(${previewSize}px, 1fr))`
+      },
+      ...props
+    }
+  );
+});
+
+// packages/dataviews/build-module/components/dataviews-layouts/utils/use-infinite-scroll.mjs
+var import_element15 = __toESM(require_element(), 1);
+function useIntersectionObserver(elementRef, posinset) {
+  const { intersectionObserver } = (0, import_element15.useContext)(dataviews_context_default);
+  (0, import_element15.useEffect)(() => {
+    const element = elementRef.current;
+    if (!element || posinset === void 0 || !intersectionObserver) {
+      return;
+    }
+    intersectionObserver.observe(element);
+    return () => {
+      intersectionObserver.unobserve(element);
+    };
+  }, [elementRef, intersectionObserver, posinset]);
+}
+function usePlaceholdersNeeded(data, isInfiniteScroll, gridColumns) {
+  const hasData = !!data?.length;
+  const firstItemPosition = hasData && isInfiniteScroll ? data[0].position : void 0;
+  return firstItemPosition && gridColumns ? (firstItemPosition - 1) % gridColumns : 0;
+}
+
+// packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
 var { Badge } = unlock(import_components9.privateApis);
 function chunk(array, size) {
   const chunks = [];
@@ -3631,206 +3693,238 @@ function chunk(array, size) {
   }
   return chunks;
 }
-var GridItem = (0, import_element14.forwardRef)(function GridItem2({
-  view,
-  selection,
-  onChangeSelection,
-  onClickItem,
-  isItemClickable,
-  renderItemLink,
-  getItemId: getItemId2,
-  item,
-  actions,
-  mediaField,
-  titleField,
-  descriptionField,
-  regularFields,
-  badgeFields,
-  hasBulkActions,
-  config,
-  ...props
-}, ref) {
-  const { showTitle = true, showMedia = true, showDescription = true } = view;
-  const hasBulkAction = useHasAPossibleBulkAction(actions, item);
-  const id = getItemId2(item);
-  const instanceId = (0, import_compose3.useInstanceId)(GridItem2);
-  const isSelected2 = selection.includes(id);
-  const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
-  const rendersMediaField = showMedia && mediaField?.render;
-  const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-    mediaField.render,
-    {
-      item,
-      field: mediaField,
-      config
-    }
-  ) : mediaPlaceholder;
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(titleField.render, { item, field: titleField }) : null;
-  let mediaA11yProps;
-  let titleA11yProps;
-  if (isItemClickable(item) && onClickItem) {
-    if (renderedTitleField) {
-      mediaA11yProps = {
-        "aria-labelledby": `dataviews-view-grid__title-field-${instanceId}`
-      };
-      titleA11yProps = {
-        id: `dataviews-view-grid__title-field-${instanceId}`
-      };
-    } else {
-      mediaA11yProps = {
-        "aria-label": (0, import_i18n11.__)("Navigate to item")
-      };
-    }
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
-    Stack,
-    {
-      direction: "column",
-      ...props,
-      ref,
-      className: clsx_default(
-        props.className,
-        "dataviews-view-grid__row__gridcell",
-        "dataviews-view-grid__card",
-        {
-          "is-selected": hasBulkAction && isSelected2
-        }
-      ),
-      onClickCapture: (event) => {
-        props.onClickCapture?.(event);
-        if ((0, import_keycodes2.isAppleOS)() ? event.metaKey : event.ctrlKey) {
-          event.stopPropagation();
-          event.preventDefault();
-          if (!hasBulkAction) {
-            return;
-          }
-          onChangeSelection(
-            selection.includes(id) ? selection.filter((itemId) => id !== itemId) : [...selection, id]
-          );
+var GridItem = (0, import_element16.forwardRef)(
+  function GridItem2({
+    view,
+    selection,
+    onChangeSelection,
+    onClickItem,
+    isItemClickable,
+    renderItemLink,
+    getItemId: getItemId2,
+    item,
+    actions,
+    mediaField,
+    titleField,
+    descriptionField,
+    regularFields,
+    badgeFields,
+    hasBulkActions,
+    config,
+    posinset,
+    setsize,
+    ...props
+  }, forwardedRef) {
+    const {
+      showTitle = true,
+      showMedia = true,
+      showDescription = true
+    } = view;
+    const hasBulkAction = useHasAPossibleBulkAction(actions, item);
+    const id = getItemId2(item);
+    const elementRef = (0, import_element16.useRef)(null);
+    const setRefs = (0, import_element16.useCallback)(
+      (node) => {
+        elementRef.current = node;
+        if (typeof forwardedRef === "function") {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
         }
       },
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-          ItemClickWrapper,
+      [forwardedRef]
+    );
+    useIntersectionObserver(elementRef, posinset);
+    const instanceId = (0, import_compose3.useInstanceId)(GridItem2);
+    const isSelected2 = selection.includes(id);
+    const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
+    const rendersMediaField = showMedia && mediaField?.render;
+    const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      mediaField.render,
+      {
+        item,
+        field: mediaField,
+        config
+      }
+    ) : mediaPlaceholder;
+    const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(titleField.render, { item, field: titleField }) : null;
+    let mediaA11yProps;
+    let titleA11yProps;
+    if (isItemClickable(item) && onClickItem) {
+      if (renderedTitleField) {
+        mediaA11yProps = {
+          "aria-labelledby": `dataviews-view-grid__title-field-${instanceId}`
+        };
+        titleA11yProps = {
+          id: `dataviews-view-grid__title-field-${instanceId}`
+        };
+      } else {
+        mediaA11yProps = {
+          "aria-label": (0, import_i18n11.__)("Navigate to item")
+        };
+      }
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+      Stack,
+      {
+        direction: "column",
+        ...props,
+        ref: setRefs,
+        "aria-setsize": setsize,
+        "aria-posinset": posinset,
+        className: clsx_default(
+          props.className,
+          "dataviews-view-grid__row__gridcell",
+          "dataviews-view-grid__card",
           {
-            item,
-            isItemClickable,
-            onClickItem,
-            renderItemLink,
-            className: clsx_default("dataviews-view-grid__media", {
-              "dataviews-view-grid__media--placeholder": !rendersMediaField
-            }),
-            ...mediaA11yProps,
-            children: renderedMediaField
+            "is-selected": hasBulkAction && isSelected2
           }
         ),
-        hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-          DataViewsSelectionCheckbox,
-          {
-            item,
-            selection,
-            onChangeSelection,
-            getItemId: getItemId2,
-            titleField,
-            disabled: !hasBulkAction
+        onClickCapture: (event) => {
+          props.onClickCapture?.(event);
+          if ((0, import_keycodes2.isAppleOS)() ? event.metaKey : event.ctrlKey) {
+            event.stopPropagation();
+            event.preventDefault();
+            if (!hasBulkAction) {
+              return;
+            }
+            onChangeSelection(
+              isSelected2 ? selection.filter(
+                (itemId) => id !== itemId
+              ) : [...selection, id]
+            );
           }
-        ),
-        !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ItemActions, { item, actions, isCompact: true }) }),
-        showTitle && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "dataviews-view-grid__title", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-          ItemClickWrapper,
-          {
-            item,
-            isItemClickable,
-            onClickItem,
-            renderItemLink,
-            className: "dataviews-view-grid__title-field dataviews-title-field",
-            ...titleA11yProps,
-            title: titleField?.getValueFormatted({
-              item,
-              field: titleField
-            }) || void 0,
-            children: renderedTitleField
-          }
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-          showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-            descriptionField.render,
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+            ItemClickWrapper,
             {
               item,
-              field: descriptionField
+              isItemClickable,
+              onClickItem,
+              renderItemLink,
+              className: clsx_default("dataviews-view-grid__media", {
+                "dataviews-view-grid__media--placeholder": !rendersMediaField
+              }),
+              ...mediaA11yProps,
+              children: renderedMediaField
             }
           ),
-          !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-            Stack,
+          hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+            DataViewsSelectionCheckbox,
             {
-              direction: "row",
-              className: "dataviews-view-grid__badge-fields",
-              gap: "sm",
-              wrap: "wrap",
-              align: "top",
-              justify: "flex-start",
-              children: badgeFields.map((field) => {
-                return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                  Badge,
-                  {
-                    className: "dataviews-view-grid__field-value",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                      field.render,
-                      {
-                        item,
-                        field
-                      }
-                    )
-                  },
-                  field.id
-                );
-              })
+              item,
+              selection,
+              onChangeSelection,
+              getItemId: getItemId2,
+              titleField,
+              disabled: !hasBulkAction
             }
           ),
-          !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-            Stack,
+          !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+            ItemActions,
             {
-              direction: "column",
-              className: "dataviews-view-grid__fields",
-              gap: "xs",
-              children: regularFields.map((field) => {
-                return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                  import_components9.Flex,
-                  {
-                    className: "dataviews-view-grid__field",
-                    gap: 1,
-                    justify: "flex-start",
-                    expanded: true,
-                    style: { height: "auto" },
-                    direction: "row",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components9.Tooltip, { text: field.label, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components9.FlexItem, { className: "dataviews-view-grid__field-name", children: field.header }) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                        import_components9.FlexItem,
+              item,
+              actions,
+              isCompact: true
+            }
+          ) }),
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "dataviews-view-grid__title", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+            ItemClickWrapper,
+            {
+              item,
+              isItemClickable,
+              onClickItem,
+              renderItemLink,
+              className: "dataviews-view-grid__title-field dataviews-title-field",
+              ...titleA11yProps,
+              title: titleField?.getValueFormatted({
+                item,
+                field: titleField
+              }) || void 0,
+              children: renderedTitleField
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+            showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+              descriptionField.render,
+              {
+                item,
+                field: descriptionField
+              }
+            ),
+            !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+              Stack,
+              {
+                direction: "row",
+                className: "dataviews-view-grid__badge-fields",
+                gap: "sm",
+                wrap: "wrap",
+                align: "top",
+                justify: "flex-start",
+                children: badgeFields.map((field) => {
+                  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                    Badge,
+                    {
+                      className: "dataviews-view-grid__field-value",
+                      children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                        field.render,
                         {
-                          className: "dataviews-view-grid__field-value",
-                          style: { maxHeight: "none" },
-                          children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                            field.render,
-                            {
-                              item,
-                              field
-                            }
-                          )
+                          item,
+                          field
                         }
                       )
-                    ] })
-                  },
-                  field.id
-                );
-              })
-            }
-          )
-        ] })
-      ]
-    }
-  );
-});
+                    },
+                    field.id
+                  );
+                })
+              }
+            ),
+            !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+              Stack,
+              {
+                direction: "column",
+                className: "dataviews-view-grid__fields",
+                gap: "xs",
+                children: regularFields.map((field) => {
+                  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                    import_components9.Flex,
+                    {
+                      className: "dataviews-view-grid__field",
+                      gap: 1,
+                      justify: "flex-start",
+                      expanded: true,
+                      style: { height: "auto" },
+                      direction: "row",
+                      children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_components9.Tooltip, { text: field.label, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_components9.FlexItem, { className: "dataviews-view-grid__field-name", children: field.header }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                          import_components9.FlexItem,
+                          {
+                            className: "dataviews-view-grid__field-value",
+                            style: { maxHeight: "none" },
+                            children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                              field.render,
+                              {
+                                item,
+                                field
+                              }
+                            )
+                          }
+                        )
+                      ] })
+                    },
+                    field.id
+                  );
+                })
+              }
+            )
+          ] })
+        ]
+      }
+    );
+  }
+);
 function CompositeGrid({
   data,
   isInfiniteScroll,
@@ -3847,7 +3941,7 @@ function CompositeGrid({
   getItemId: getItemId2,
   actions
 }) {
-  const { paginationInfo, resizeObserverRef } = (0, import_element14.useContext)(dataviews_context_default);
+  const { paginationInfo, resizeObserverRef } = (0, import_element16.useContext)(dataviews_context_default);
   const gridColumns = useGridColumns();
   const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
   const titleField = fields.find(
@@ -3874,84 +3968,179 @@ function CompositeGrid({
   );
   const size = "900px";
   const totalRows = Math.ceil(data.length / gridColumns);
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-    import_components9.Composite,
-    {
-      role: isInfiniteScroll ? "feed" : "grid",
-      className: clsx_default("dataviews-view-grid", className, {
-        [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
-          view.layout.density
-        )
-      }),
-      focusWrap: true,
-      "aria-busy": isLoading,
-      "aria-rowcount": isInfiniteScroll ? void 0 : totalRows,
-      ref: resizeObserverRef,
-      inert,
-      children: chunk(data, gridColumns).map((row, i2) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-        import_components9.Composite.Row,
+  const placeholdersNeeded = usePlaceholdersNeeded(
+    data,
+    isInfiniteScroll,
+    gridColumns
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, {
+    // Render infinite scroll layout (no rows, feed semantics)
+    children: [
+      isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+        import_components9.Composite,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-            "div",
+          render: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+            GridItems,
             {
-              role: "row",
-              "aria-rowindex": i2 + 1,
-              "aria-label": (0, import_i18n11.sprintf)(
-                /* translators: %d: The row number in the grid */
-                (0, import_i18n11.__)("Row %d"),
-                i2 + 1
+              className: clsx_default(
+                "dataviews-view-grid-infinite-scroll",
+                className,
+                {
+                  [`has-${view.layout?.density}-density`]: view.layout?.density && [
+                    "compact",
+                    "comfortable"
+                  ].includes(view.layout.density)
+                }
               ),
-              className: "dataviews-view-grid__row",
-              style: {
-                gridTemplateColumns: `repeat( ${gridColumns}, minmax(0, 1fr) )`
-              }
+              previewSize: view.layout?.previewSize,
+              "aria-busy": isLoading,
+              ref: resizeObserverRef
             }
           ),
-          children: row.map((item, indexInRow) => {
-            const index = i2 * gridColumns + indexInRow;
-            return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-              import_components9.Composite.Item,
-              {
-                render: (props) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                  GridItem,
-                  {
-                    ...props,
-                    role: isInfiniteScroll ? "article" : "gridcell",
-                    "aria-setsize": isInfiniteScroll ? paginationInfo.totalItems : void 0,
-                    "aria-posinset": isInfiniteScroll ? index + 1 : void 0,
-                    view,
-                    selection,
-                    onChangeSelection,
-                    onClickItem,
-                    isItemClickable,
-                    renderItemLink,
-                    getItemId: getItemId2,
-                    item,
-                    actions,
-                    mediaField,
-                    titleField,
-                    descriptionField,
-                    regularFields,
-                    badgeFields,
-                    hasBulkActions,
-                    config: {
-                      sizes: size
+          role: "feed",
+          focusWrap: true,
+          inert,
+          children: [
+            Array.from({ length: placeholdersNeeded }).map(
+              (_, index) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                import_components9.Composite.Item,
+                {
+                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                    Stack,
+                    {
+                      ...props,
+                      direction: "column",
+                      role: "article",
+                      className: "dataviews-view-grid__row__gridcell dataviews-view-grid__card dataviews-view-grid__placeholder"
                     }
+                  ),
+                  "aria-hidden": true,
+                  tabIndex: -1
+                },
+                `placeholder-${index}`
+              )
+            ),
+            data.map((item) => {
+              const itemId = getItemId2(item);
+              const stablePosition = item.position;
+              return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                import_components9.Composite.Item,
+                {
+                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                    GridItem,
+                    {
+                      ...props,
+                      id: itemId,
+                      role: "article",
+                      view,
+                      selection,
+                      onChangeSelection,
+                      onClickItem,
+                      isItemClickable,
+                      renderItemLink,
+                      getItemId: getItemId2,
+                      item,
+                      actions,
+                      mediaField,
+                      titleField,
+                      descriptionField,
+                      regularFields,
+                      badgeFields,
+                      hasBulkActions,
+                      posinset: stablePosition,
+                      setsize: paginationInfo.totalItems,
+                      config: {
+                        sizes: size
+                      }
+                    }
+                  )
+                },
+                itemId
+              );
+            })
+          ]
+        }
+      ),
+      // Render standard grid layout (with rows, grid semantics)
+      !isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+        import_components9.Composite,
+        {
+          role: "grid",
+          className: clsx_default("dataviews-view-grid", className, {
+            [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
+              view.layout.density
+            )
+          }),
+          focusWrap: true,
+          "aria-busy": isLoading,
+          "aria-rowcount": totalRows,
+          ref: resizeObserverRef,
+          inert,
+          children: chunk(data, gridColumns).map((row, i2) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+            import_components9.Composite.Row,
+            {
+              render: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                "div",
+                {
+                  role: "row",
+                  "aria-rowindex": i2 + 1,
+                  "aria-label": (0, import_i18n11.sprintf)(
+                    /* translators: %d: The row number in the grid */
+                    (0, import_i18n11.__)("Row %d"),
+                    i2 + 1
+                  ),
+                  className: "dataviews-view-grid__row",
+                  style: {
+                    gridTemplateColumns: `repeat( ${gridColumns}, minmax(0, 1fr) )`
                   }
-                )
-              },
-              getItemId2(item)
-            );
-          })
-        },
-        i2
-      ))
-    }
-  );
+                }
+              ),
+              children: row.map((item) => {
+                const itemId = getItemId2(item);
+                return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                  import_components9.Composite.Item,
+                  {
+                    render: (props) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                      GridItem,
+                      {
+                        ...props,
+                        id: itemId,
+                        role: "gridcell",
+                        view,
+                        selection,
+                        onChangeSelection,
+                        onClickItem,
+                        isItemClickable,
+                        renderItemLink,
+                        getItemId: getItemId2,
+                        item,
+                        actions,
+                        mediaField,
+                        titleField,
+                        descriptionField,
+                        regularFields,
+                        badgeFields,
+                        hasBulkActions,
+                        config: {
+                          sizes: size
+                        }
+                      }
+                    )
+                  },
+                  itemId
+                );
+              })
+            },
+            i2
+          ))
+        }
+      )
+    ]
+  });
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/index.mjs
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 function ViewGrid({
   actions,
   data,
@@ -3973,7 +4162,7 @@ function ViewGrid({
   const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -3999,23 +4188,23 @@ function ViewGrid({
     getItemId: getItemId2,
     actions
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, {
     // Render multiple groups.
     children: [
-      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
-        ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
+        ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
           Stack,
           {
             direction: "column",
             gap: "sm",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n12.sprintf)(
+              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n12.sprintf)(
                 // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                 (0, import_i18n12.__)("%1$s: %2$s"),
                 groupField.label,
                 groupName
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
                 CompositeGrid,
                 {
                   ...gridProps,
@@ -4029,7 +4218,7 @@ function ViewGrid({
         )
       ) }),
       // Render a single grid with all data.
-      !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
         CompositeGrid,
         {
           ...gridProps,
@@ -4037,7 +4226,7 @@ function ViewGrid({
           isInfiniteScroll: !!isInfiniteScroll
         }
       ),
-      isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_components10.Spinner, {}) })
+      isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_components10.Spinner, {}) })
     ]
   });
 }
@@ -4046,10 +4235,10 @@ var grid_default = ViewGrid;
 // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
 var import_compose4 = __toESM(require_compose(), 1);
 var import_components11 = __toESM(require_components(), 1);
-var import_element15 = __toESM(require_element(), 1);
+var import_element17 = __toESM(require_element(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
 var import_data5 = __toESM(require_data(), 1);
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu3 } = unlock(import_components11.privateApis);
 function generateItemWrapperCompositeId(idPrefix) {
   return `${idPrefix}-item-wrapper`;
@@ -4066,17 +4255,17 @@ function PrimaryActionGridCell({
   item
 }) {
   const registry = (0, import_data5.useRegistry)();
-  const [isModalOpen, setIsModalOpen] = (0, import_element15.useState)(false);
+  const [isModalOpen, setIsModalOpen] = (0, import_element17.useState)(false);
   const compositeItemId = generatePrimaryActionCompositeId(
     idPrefix,
     primaryAction.id
   );
   const label = typeof primaryAction.label === "string" ? primaryAction.label : primaryAction.label([item]);
-  return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+  return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
     import_components11.Composite.Item,
     {
       id: compositeItemId,
-      render: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         import_components11.Button,
         {
           disabled: !!primaryAction.disabled,
@@ -4086,7 +4275,7 @@ function PrimaryActionGridCell({
           onClick: () => setIsModalOpen(true)
         }
       ),
-      children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+      children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         ActionModal,
         {
           action: primaryAction,
@@ -4095,11 +4284,11 @@ function PrimaryActionGridCell({
         }
       )
     }
-  ) }, primaryAction.id) : /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+  ) }, primaryAction.id) : /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
     import_components11.Composite.Item,
     {
       id: compositeItemId,
-      render: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         import_components11.Button,
         {
           disabled: !!primaryAction.disabled,
@@ -4134,20 +4323,20 @@ function ListItem({
     showDescription = true,
     infiniteScrollEnabled
   } = view;
-  const itemRef = (0, import_element15.useRef)(null);
+  const itemRef = (0, import_element17.useRef)(null);
   const labelId = `${idPrefix}-label`;
   const descriptionId = `${idPrefix}-description`;
   const registry = (0, import_data5.useRegistry)();
-  const [isHovered, setIsHovered] = (0, import_element15.useState)(false);
-  const [activeModalAction, setActiveModalAction] = (0, import_element15.useState)(
+  const [isHovered, setIsHovered] = (0, import_element17.useState)(false);
+  const [activeModalAction, setActiveModalAction] = (0, import_element17.useState)(
     null
   );
   const handleHover = ({ type }) => {
     const isHover = type === "mouseenter";
     setIsHovered(isHover);
   };
-  const { paginationInfo } = (0, import_element15.useContext)(dataviews_context_default);
-  (0, import_element15.useEffect)(() => {
+  const { paginationInfo } = (0, import_element17.useContext)(dataviews_context_default);
+  (0, import_element17.useEffect)(() => {
     if (isSelected2) {
       itemRef.current?.scrollIntoView({
         behavior: "auto",
@@ -4156,7 +4345,7 @@ function ListItem({
       });
     }
   }, [isSelected2]);
-  const { primaryAction, eligibleActions } = (0, import_element15.useMemo)(() => {
+  const { primaryAction, eligibleActions } = (0, import_element17.useMemo)(() => {
     const _eligibleActions = actions.filter(
       (action) => !action.isEligible || action.isEligible(item)
     );
@@ -4169,7 +4358,7 @@ function ListItem({
     };
   }, [actions, item]);
   const hasOnlyOnePrimaryAction = primaryAction && actions.length === 1;
-  const renderedMediaField = showMedia && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "dataviews-view-list__media-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+  const renderedMediaField = showMedia && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "dataviews-view-list__media-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
     mediaField.render,
     {
       item,
@@ -4177,17 +4366,17 @@ function ListItem({
       config: { sizes: "52px" }
     }
   ) }) : null;
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(titleField.render, { item, field: titleField }) : null;
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(titleField.render, { item, field: titleField }) : null;
   const renderDescription = showDescription && descriptionField?.render;
   const hasOnlyMediaAndTitle = !!renderedMediaField && !renderDescription && !otherFields.length;
-  const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+  const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
     Stack,
     {
       direction: "row",
       gap: "md",
       className: "dataviews-view-list__item-actions",
       children: [
-        primaryAction && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        primaryAction && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
           PrimaryActionGridCell,
           {
             idPrefix,
@@ -4195,18 +4384,18 @@ function ListItem({
             item
           }
         ),
-        !hasOnlyOnePrimaryAction && /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { role: "gridcell", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(Menu3, { placement: "bottom-end", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        !hasOnlyOnePrimaryAction && /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { role: "gridcell", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(Menu3, { placement: "bottom-end", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
               Menu3.TriggerButton,
               {
-                render: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                render: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                   import_components11.Composite.Item,
                   {
                     id: generateDropdownTriggerCompositeId(
                       idPrefix
                     ),
-                    render: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                    render: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                       import_components11.Button,
                       {
                         size: "small",
@@ -4221,7 +4410,7 @@ function ListItem({
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Menu3.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Menu3.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
               ActionsMenuGroup,
               {
                 actions: eligibleActions,
@@ -4231,7 +4420,7 @@ function ListItem({
               }
             ) })
           ] }),
-          !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+          !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
             ActionModal,
             {
               action: activeModalAction,
@@ -4243,13 +4432,13 @@ function ListItem({
       ]
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
     import_components11.Composite.Row,
     {
       ref: itemRef,
       render: (
         /* aria-posinset breaks Composite.Row if passed to it directly. */
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
           "div",
           {
             "aria-posinset": posinset,
@@ -4264,13 +4453,13 @@ function ListItem({
       }),
       onMouseEnter: handleHover,
       onMouseLeave: handleHover,
-      children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
         Stack,
         {
           direction: "row",
           className: "dataviews-view-list__item-wrapper",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
               import_components11.Composite.Item,
               {
                 id: generateItemWrapperCompositeId(idPrefix),
@@ -4281,7 +4470,7 @@ function ListItem({
                 onClick: () => onSelect(item)
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -4291,15 +4480,15 @@ function ListItem({
                 style: { flex: 1, minWidth: 0 },
                 children: [
                   renderedMediaField,
-                  /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+                  /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
                     Stack,
                     {
                       direction: "column",
                       gap: "xs",
                       className: "dataviews-view-list__field-wrapper",
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(Stack, { direction: "row", align: "center", children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(Stack, { direction: "row", align: "center", children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                             "div",
                             {
                               className: "dataviews-title-field dataviews-view-list__title-field",
@@ -4309,24 +4498,24 @@ function ListItem({
                           ),
                           usedActions
                         ] }),
-                        renderDescription && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                        renderDescription && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                           descriptionField.render,
                           {
                             item,
                             field: descriptionField
                           }
                         ) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                           "div",
                           {
                             className: "dataviews-view-list__fields",
                             id: descriptionId,
-                            children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+                            children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
                               "div",
                               {
                                 className: "dataviews-view-list__field",
                                 children: [
-                                  /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                                  /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                                     import_components11.VisuallyHidden,
                                     {
                                       as: "span",
@@ -4334,7 +4523,7 @@ function ListItem({
                                       children: field.label
                                     }
                                   ),
-                                  /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "dataviews-view-list__field-value", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                                  /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "dataviews-view-list__field-value", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                                     field.render,
                                     {
                                       item,
@@ -4387,11 +4576,11 @@ function ViewList(props) {
   );
   const otherFields = (view?.fields ?? []).map((fieldId) => fields.find((f2) => fieldId === f2.id)).filter(isDefined2);
   const onSelect = (item) => onChangeSelection([getItemId2(item)]);
-  const generateCompositeItemIdPrefix = (0, import_element15.useCallback)(
+  const generateCompositeItemIdPrefix = (0, import_element17.useCallback)(
     (item) => `${baseId}-${getItemId2(item)}`,
     [baseId, getItemId2]
   );
-  const isActiveCompositeItem = (0, import_element15.useCallback)(
+  const isActiveCompositeItem = (0, import_element17.useCallback)(
     (item, idToCheck) => {
       return idToCheck.startsWith(
         generateCompositeItemIdPrefix(item)
@@ -4399,9 +4588,9 @@ function ViewList(props) {
     },
     [generateCompositeItemIdPrefix]
   );
-  const [activeCompositeId, setActiveCompositeId] = (0, import_element15.useState)(void 0);
-  const compositeRef = (0, import_element15.useRef)(null);
-  (0, import_element15.useEffect)(() => {
+  const [activeCompositeId, setActiveCompositeId] = (0, import_element17.useState)(void 0);
+  const compositeRef = (0, import_element17.useRef)(null);
+  (0, import_element17.useEffect)(() => {
     if (selectedItem) {
       setActiveCompositeId(
         generateItemWrapperCompositeId(
@@ -4415,7 +4604,7 @@ function ViewList(props) {
   );
   const previousActiveItemIndex = (0, import_compose4.usePrevious)(activeItemIndex);
   const isActiveIdInList = activeItemIndex !== -1;
-  const selectCompositeItem = (0, import_element15.useCallback)(
+  const selectCompositeItem = (0, import_element17.useCallback)(
     (targetIndex, generateCompositeId) => {
       const clampedIndex = Math.min(
         data.length - 1,
@@ -4437,7 +4626,7 @@ function ViewList(props) {
     },
     [data, generateCompositeItemIdPrefix]
   );
-  (0, import_element15.useEffect)(() => {
+  (0, import_element17.useEffect)(() => {
     const wasActiveIdInList = previousActiveItemIndex !== void 0 && previousActiveItemIndex !== -1;
     if (!isActiveIdInList && wasActiveIdInList) {
       selectCompositeItem(
@@ -4446,7 +4635,7 @@ function ViewList(props) {
       );
     }
   }, [isActiveIdInList, selectCompositeItem, previousActiveItemIndex]);
-  const onDropdownTriggerKeyDown = (0, import_element15.useCallback)(
+  const onDropdownTriggerKeyDown = (0, import_element17.useCallback)(
     (event) => {
       if (event.key === "ArrowDown") {
         event.preventDefault();
@@ -4470,7 +4659,7 @@ function ViewList(props) {
   const dataByGroup = hasData && groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -4481,30 +4670,30 @@ function ViewList(props) {
     );
   }
   if (hasData && groupField && dataByGroup) {
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
       import_components11.Composite,
       {
         ref: compositeRef,
         id: `${baseId}`,
-        render: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", {}),
         className: "dataviews-view-list__group",
         role: "grid",
         activeId: activeCompositeId,
         setActiveId: setActiveCompositeId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
           Stack,
           {
             direction: "column",
             gap: "lg",
             className: clsx_default("dataviews-view-list", className),
             children: Array.from(dataByGroup.entries()).map(
-              ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+              ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
                 Stack,
                 {
                   direction: "column",
                   gap: "sm",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n13.sprintf)(
+                    /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n13.sprintf)(
                       // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                       (0, import_i18n13.__)("%1$s: %2$s"),
                       groupField.label,
@@ -4512,7 +4701,7 @@ function ViewList(props) {
                     ) }),
                     groupItems.map((item) => {
                       const id = generateCompositeItemIdPrefix(item);
-                      return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+                      return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                         ListItem,
                         {
                           view,
@@ -4540,13 +4729,13 @@ function ViewList(props) {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
       import_components11.Composite,
       {
         ref: compositeRef,
         id: baseId,
-        render: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", {}),
         className: clsx_default("dataviews-view-list", className, {
           [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
             view.layout.density
@@ -4559,7 +4748,7 @@ function ViewList(props) {
         inert: !isInfiniteScroll && !!isLoading ? "true" : void 0,
         children: data.map((item, index) => {
           const id = generateCompositeItemIdPrefix(item);
-          return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
             ListItem,
             {
               view,
@@ -4580,7 +4769,7 @@ function ViewList(props) {
         })
       }
     ),
-    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_components11.Spinner, {}) })
+    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_components11.Spinner, {}) })
   ] });
 }
 
@@ -4589,8 +4778,8 @@ var import_components13 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
 var import_i18n14 = __toESM(require_i18n(), 1);
-var import_element16 = __toESM(require_element(), 1);
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var import_element18 = __toESM(require_element(), 1);
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
 function ActivityGroup({
   groupName,
   groupData,
@@ -4598,11 +4787,11 @@ function ActivityGroup({
   showLabel = true,
   children
 }) {
-  const groupHeader = showLabel ? (0, import_element16.createInterpolateElement)(
+  const groupHeader = showLabel ? (0, import_element18.createInterpolateElement)(
     // translators: %s: The label of the field e.g. "Status".
     (0, import_i18n14.sprintf)((0, import_i18n14.__)("%s: <groupName />"), groupField.label).trim(),
     {
-      groupName: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+      groupName: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
         groupField.render,
         {
           item: groupData[0],
@@ -4610,14 +4799,14 @@ function ActivityGroup({
         }
       )
     }
-  ) : /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(groupField.render, { item: groupData[0], field: groupField });
-  return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+  ) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(groupField.render, { item: groupData[0], field: groupField });
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
     Stack,
     {
       direction: "column",
       className: "dataviews-view-activity__group",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("h3", { className: "dataviews-view-activity__group-header", children: groupHeader }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h3", { className: "dataviews-view-activity__group-header", children: groupHeader }),
         children
       ]
     },
@@ -4627,10 +4816,10 @@ function ActivityGroup({
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
 var import_components12 = __toESM(require_components(), 1);
-var import_element17 = __toESM(require_element(), 1);
+var import_element19 = __toESM(require_element(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 function ActivityItem(props) {
   const {
     view,
@@ -4651,10 +4840,10 @@ function ActivityItem(props) {
     showDescription = true,
     infiniteScrollEnabled
   } = view;
-  const itemRef = (0, import_element17.useRef)(null);
+  const itemRef = (0, import_element19.useRef)(null);
   const registry = (0, import_data6.useRegistry)();
-  const { paginationInfo } = (0, import_element17.useContext)(dataviews_context_default);
-  const { primaryActions, eligibleActions } = (0, import_element17.useMemo)(() => {
+  const { paginationInfo } = (0, import_element19.useContext)(dataviews_context_default);
+  const { primaryActions, eligibleActions } = (0, import_element19.useMemo)(() => {
     const _eligibleActions = actions.filter(
       (action) => !action.isEligible || action.isEligible(item)
     );
@@ -4668,7 +4857,7 @@ function ActivityItem(props) {
   }, [actions, item]);
   const isMobileViewport = (0, import_compose5.useViewportMatch)("medium", "<");
   const density = view.layout?.density ?? "balanced";
-  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     mediaField.render,
     {
       item,
@@ -4678,15 +4867,15 @@ function ActivityItem(props) {
       }
     }
   ) : null;
-  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "dataviews-view-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "dataviews-view-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     "span",
     {
       className: "dataviews-view-activity__item-bullet",
       "aria-hidden": "true"
     }
   ) });
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(titleField.render, { item, field: titleField }) : null;
-  const verticalGap = (0, import_element17.useMemo)(() => {
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(titleField.render, { item, field: titleField }) : null;
+  const verticalGap = (0, import_element19.useMemo)(() => {
     switch (density) {
       case "comfortable":
         return "md";
@@ -4694,7 +4883,7 @@ function ActivityItem(props) {
         return "sm";
     }
   }, [density]);
-  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     "div",
     {
       ref: itemRef,
@@ -4707,8 +4896,8 @@ function ActivityItem(props) {
         density === "balanced" && "is-balanced",
         density === "comfortable" && "is-comfortable"
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
           Stack,
           {
             direction: "column",
@@ -4718,7 +4907,7 @@ function ActivityItem(props) {
             children: renderedMediaField
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
           Stack,
           {
             direction: "column",
@@ -4726,7 +4915,7 @@ function ActivityItem(props) {
             align: "flex-start",
             className: "dataviews-view-activity__item-content",
             children: [
-              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
                 ItemClickWrapper,
                 {
                   item,
@@ -4737,19 +4926,19 @@ function ActivityItem(props) {
                   children: renderedTitleField
                 }
               ),
-              showDescription && descriptionField && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+              showDescription && descriptionField && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
                 descriptionField.render,
                 {
                   item,
                   field: descriptionField
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "dataviews-view-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "dataviews-view-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
                 "div",
                 {
                   className: "dataviews-view-activity__item-field",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
                       import_components12.VisuallyHidden,
                       {
                         as: "span",
@@ -4757,7 +4946,7 @@ function ActivityItem(props) {
                         children: field.label
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "dataviews-view-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "dataviews-view-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
                       field.render,
                       {
                         item,
@@ -4768,7 +4957,7 @@ function ActivityItem(props) {
                 },
                 field.id
               )) }),
-              !!primaryActions?.length && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+              !!primaryActions?.length && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
                 PrimaryActions,
                 {
                   item,
@@ -4783,7 +4972,7 @@ function ActivityItem(props) {
         (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
         // there if there are any actions at all.
         isMobileViewport && // At the same time, only show the menu if there are actions to show.
-        eligibleActions.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+        eligibleActions.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
           ItemActions,
           {
             item,
@@ -4828,7 +5017,7 @@ function ActivityItems(props) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/index.mjs
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
 function ViewActivity(props) {
   const { empty, data, fields, isLoading, view, className } = props;
   const isDelayedLoading = useDelayedLoading(!!isLoading);
@@ -4837,7 +5026,7 @@ function ViewActivity(props) {
   const dataByGroup = hasData && groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -4853,7 +5042,7 @@ function ViewActivity(props) {
   });
   const groupedEntries = dataByGroup ? Array.from(dataByGroup.entries()) : [];
   if (hasData && groupField && dataByGroup) {
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
       Stack,
       {
         direction: "column",
@@ -4861,14 +5050,14 @@ function ViewActivity(props) {
         className: wrapperClassName,
         inert: isInert ? "true" : void 0,
         children: groupedEntries.map(
-          ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+          ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
             ActivityGroup,
             {
               groupName,
               groupData,
               groupField,
               showLabel: view.groupBy?.showLabel !== false,
-              children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
                 ActivityItems,
                 {
                   ...props,
@@ -4882,17 +5071,17 @@ function ViewActivity(props) {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_jsx_runtime42.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(import_jsx_runtime43.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
       "div",
       {
         className: wrapperClassName,
         role: view.infiniteScrollEnabled ? "feed" : void 0,
         inert: isInert ? "true" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(ActivityItems, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(ActivityItems, { ...props })
       }
     ),
-    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_components13.Spinner, {}) })
+    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_components13.Spinner, {}) })
   ] });
 }
 
@@ -4900,25 +5089,25 @@ function ViewActivity(props) {
 var import_components16 = __toESM(require_components(), 1);
 var import_i18n17 = __toESM(require_i18n(), 1);
 var import_compose6 = __toESM(require_compose(), 1);
-var import_element21 = __toESM(require_element(), 1);
+var import_element22 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
 var import_components15 = __toESM(require_components(), 1);
 var import_data7 = __toESM(require_data(), 1);
-var import_element19 = __toESM(require_element(), 1);
+var import_element21 = __toESM(require_element(), 1);
 var import_i18n16 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/components/dataviews-pagination/index.mjs
 var import_components14 = __toESM(require_components(), 1);
-var import_element18 = __toESM(require_element(), 1);
+var import_element20 = __toESM(require_element(), 1);
 var import_i18n15 = __toESM(require_i18n(), 1);
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
 function DataViewsPagination() {
   const {
     view,
     onChangeView,
     paginationInfo: { totalItems = 0, totalPages }
-  } = (0, import_element18.useContext)(dataviews_context_default);
+  } = (0, import_element20.useContext)(dataviews_context_default);
   if (!totalItems || !totalPages || view.infiniteScrollEnabled) {
     return null;
   }
@@ -4938,7 +5127,7 @@ function DataViewsPagination() {
       };
     }
   );
-  return !!totalItems && totalPages !== 1 && /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(
+  return !!totalItems && totalPages !== 1 && /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(
     Stack,
     {
       direction: "row",
@@ -4947,7 +5136,7 @@ function DataViewsPagination() {
       align: "center",
       gap: "xl",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
           Stack,
           {
             direction: "row",
@@ -4955,7 +5144,7 @@ function DataViewsPagination() {
             align: "center",
             gap: "xs",
             className: "dataviews-pagination__page-select",
-            children: (0, import_element18.createInterpolateElement)(
+            children: (0, import_element20.createInterpolateElement)(
               (0, import_i18n15.sprintf)(
                 // translators: 1: Current page number, 2: Total number of pages.
                 (0, import_i18n15._x)(
@@ -4966,8 +5155,8 @@ function DataViewsPagination() {
                 totalPages
               ),
               {
-                div: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { "aria-hidden": true }),
-                CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+                div: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { "aria-hidden": true }),
+                CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
                   import_components14.SelectControl,
                   {
                     "aria-label": (0, import_i18n15.__)("Current page"),
@@ -4987,8 +5176,8 @@ function DataViewsPagination() {
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
             import_components14.Button,
             {
               onClick: () => onChangeView({
@@ -5004,7 +5193,7 @@ function DataViewsPagination() {
               tooltipPosition: "top"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
             import_components14.Button,
             {
               onClick: () => onChangeView({ ...view, page: currentPage + 1 }),
@@ -5022,32 +5211,15 @@ function DataViewsPagination() {
     }
   );
 }
-var dataviews_pagination_default = (0, import_element18.memo)(DataViewsPagination);
+var dataviews_pagination_default = (0, import_element20.memo)(DataViewsPagination);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
 function useIsMultiselectPicker(actions) {
-  return (0, import_element19.useMemo)(() => {
+  return (0, import_element21.useMemo)(() => {
     return actions?.every((action) => action.supportsBulk);
   }, [actions]);
 }
-
-// packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
-var import_element20 = __toESM(require_element(), 1);
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
-var GridItems = (0, import_element20.forwardRef)(({ className, previewSize, ...props }, ref) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
-    "div",
-    {
-      ref,
-      className: clsx_default("dataviews-view-grid-items", className),
-      style: {
-        gridTemplateColumns: previewSize && `repeat(auto-fill, minmax(${previewSize}px, 1fr))`
-      },
-      ...props
-    }
-  );
-});
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
@@ -5070,7 +5242,12 @@ function GridItem3({
 }) {
   const { showTitle = true, showMedia = true, showDescription = true } = view;
   const id = getItemId2(item);
+  const elementRef = (0, import_element22.useRef)(null);
   const isSelected2 = selection.includes(id);
+  const setElementRef = (element) => {
+    elementRef.current = element;
+  };
+  useIntersectionObserver(elementRef, posinset);
   const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
     mediaField.render,
     {
@@ -5083,6 +5260,7 @@ function GridItem3({
   return /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
     import_components16.Composite.Item,
     {
+      ref: setElementRef,
       "aria-label": titleField ? titleField.getValue({ item }) || (0, import_i18n17.__)("(no title)") : void 0,
       render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Stack, { direction: "column", children, ...props }),
       role: "option",
@@ -5255,7 +5433,7 @@ function ViewPickerGrid({
   className,
   empty
 }) {
-  const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element21.useContext)(dataviews_context_default);
+  const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element22.useContext)(dataviews_context_default);
   const titleField = fields.find(
     (field) => field.id === view?.titleField
   );
@@ -5284,10 +5462,16 @@ function ViewPickerGrid({
   const size = "900px";
   const groupField = view.groupBy?.field ? fields.find((f2) => f2.id === view.groupBy?.field) : null;
   const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
-  const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
+  const isInfiniteScroll = (view.infiniteScrollEnabled && !dataByGroup) ?? false;
   const currentPage = view?.page ?? 1;
   const perPage = view?.perPage ?? 0;
   const setSize = isInfiniteScroll ? paginationInfo?.totalItems : void 0;
+  const gridColumns = useGridColumns();
+  const placeholdersNeeded = usePlaceholdersNeeded(
+    data,
+    isInfiniteScroll,
+    gridColumns
+  );
   return /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(import_jsx_runtime46.Fragment, {
     // Render multiple groups.
     children: [
@@ -5334,7 +5518,7 @@ function ViewPickerGrid({
                     "aria-busy": isLoading,
                     ref: resizeObserverRef,
                     children: groupItems.map((item) => {
-                      const posInSet = (currentPage - 1) * perPage + data.indexOf(item) + 1;
+                      const posInSet = item.position ?? (currentPage - 1) * perPage + data.indexOf(item) + 1;
                       return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
                         GridItem3,
                         {
@@ -5367,7 +5551,7 @@ function ViewPickerGrid({
         }
       ),
       // Render a single grid with all data.
-      hasData && !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+      hasData && !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
         import_components16.Composite,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
@@ -5393,34 +5577,53 @@ function ViewPickerGrid({
           role: "listbox",
           "aria-multiselectable": isMultiselect,
           "aria-label": itemListLabel,
-          children: data.map((item, index) => {
-            let posinset = isInfiniteScroll ? index + 1 : void 0;
-            if (!isInfiniteScroll) {
-              posinset = (currentPage - 1) * perPage + index + 1;
-            }
-            return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
-              GridItem3,
-              {
-                view,
-                multiselect: isMultiselect,
-                selection,
-                onChangeSelection,
-                getItemId: getItemId2,
-                item,
-                mediaField,
-                titleField,
-                descriptionField,
-                regularFields,
-                badgeFields,
-                config: {
-                  sizes: size
+          children: [
+            Array.from({ length: placeholdersNeeded }).map(
+              (_, index) => /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+                import_components16.Composite.Item,
+                {
+                  render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+                    Stack,
+                    {
+                      direction: "column",
+                      children,
+                      ...props
+                    }
+                  ),
+                  role: "option",
+                  "aria-hidden": true,
+                  tabIndex: -1,
+                  className: "dataviews-view-picker-grid__card dataviews-view-picker-grid__placeholder"
                 },
-                posinset,
-                setsize: setSize
-              },
-              getItemId2(item)
-            );
-          })
+                `placeholder-${index}`
+              )
+            ),
+            data.map((item) => {
+              const posinset = item.position;
+              return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+                GridItem3,
+                {
+                  view,
+                  multiselect: isMultiselect,
+                  selection,
+                  onChangeSelection,
+                  getItemId: getItemId2,
+                  item,
+                  mediaField,
+                  titleField,
+                  descriptionField,
+                  regularFields,
+                  badgeFields,
+                  config: {
+                    sizes: size
+                  },
+                  posinset,
+                  setsize: setSize
+                },
+                getItemId2(item)
+              );
+            })
+          ]
         }
       ),
       // Render empty state.
@@ -5443,7 +5646,7 @@ var picker_grid_default = ViewPickerGrid;
 // packages/dataviews/build-module/components/dataviews-layouts/picker-table/index.mjs
 var import_i18n18 = __toESM(require_i18n(), 1);
 var import_components17 = __toESM(require_components(), 1);
-var import_element22 = __toESM(require_element(), 1);
+var import_element23 = __toESM(require_element(), 1);
 var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 function TableColumnField2({
   item,
@@ -5475,9 +5678,14 @@ function TableRow2({
   multiselect,
   posinset
 }) {
-  const { paginationInfo } = (0, import_element22.useContext)(dataviews_context_default);
+  const { paginationInfo } = (0, import_element23.useContext)(dataviews_context_default);
   const isSelected2 = selection.includes(id);
-  const [isHovered, setIsHovered] = (0, import_element22.useState)(false);
+  const [isHovered, setIsHovered] = (0, import_element23.useState)(false);
+  const elementRef = (0, import_element23.useRef)(null);
+  const setElementRef = (element) => {
+    elementRef.current = element;
+  };
+  useIntersectionObserver(elementRef, posinset);
   const {
     showTitle = true,
     showMedia = true,
@@ -5495,6 +5703,7 @@ function TableRow2({
   return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
     import_components17.Composite.Item,
     {
+      ref: setElementRef,
       render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
         "tr",
         {
@@ -5596,17 +5805,20 @@ function ViewPickerTable({
   className,
   empty
 }) {
-  const headerMenuRefs = (0, import_element22.useRef)(/* @__PURE__ */ new Map());
-  const headerMenuToFocusRef = (0, import_element22.useRef)(void 0);
-  const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element22.useState)();
+  const headerMenuRefs = (0, import_element23.useRef)(/* @__PURE__ */ new Map());
+  const headerMenuToFocusRef = (0, import_element23.useRef)(void 0);
+  const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element23.useState)();
   const isMultiselect = useIsMultiselectPicker(actions) ?? false;
-  (0, import_element22.useEffect)(() => {
+  (0, import_element23.useEffect)(() => {
     if (headerMenuToFocusRef.current) {
       headerMenuToFocusRef.current.focus();
       headerMenuToFocusRef.current = void 0;
     }
   });
-  const tableNoticeId = (0, import_element22.useId)();
+  const groupField = view.groupBy?.field ? fields.find((f2) => f2.id === view.groupBy?.field) : null;
+  const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
+  const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
+  const tableNoticeId = (0, import_element23.useId)();
   if (nextHeaderMenuToFocus) {
     headerMenuToFocusRef.current = nextHeaderMenuToFocus;
     setNextHeaderMenuToFocus(void 0);
@@ -5623,8 +5835,6 @@ function ViewPickerTable({
   const descriptionField = fields.find(
     (field) => field.id === view.descriptionField
   );
-  const groupField = view.groupBy?.field ? fields.find((f2) => f2.id === view.groupBy?.field) : null;
-  const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const { showTitle = true, showMedia = true, showDescription = true } = view;
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
   const columns = view.fields ?? [];
@@ -5638,7 +5848,6 @@ function ViewPickerTable({
       headerMenuRefs.current.delete(column);
     }
   };
-  const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(import_jsx_runtime47.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
       "table",
@@ -5670,7 +5879,8 @@ function ViewPickerTable({
                     onChangeSelection,
                     data,
                     actions,
-                    getItemId: getItemId2
+                    getItemId: getItemId2,
+                    disableSelectAll: isInfiniteScroll
                   }
                 ) }),
                 hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("th", { children: titleField && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
@@ -5778,24 +5988,28 @@ function ViewPickerTable({
               render: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("tbody", { role: "presentation" }),
               virtualFocus: true,
               orientation: "vertical",
-              children: hasData && data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
-                TableRow2,
-                {
-                  item,
-                  fields,
-                  id: getItemId2(item) || index.toString(),
-                  view,
-                  titleField,
-                  mediaField,
-                  descriptionField,
-                  selection,
-                  getItemId: getItemId2,
-                  onChangeSelection,
-                  multiselect: isMultiselect,
-                  posinset: index + 1
-                },
-                getItemId2(item)
-              ))
+              children: hasData && data.map((item, index) => {
+                const itemId = getItemId2(item);
+                const posinset = item.position;
+                return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+                  TableRow2,
+                  {
+                    item,
+                    fields,
+                    id: itemId || index.toString(),
+                    view,
+                    titleField,
+                    mediaField,
+                    descriptionField,
+                    selection,
+                    getItemId: getItemId2,
+                    onChangeSelection,
+                    multiselect: isMultiselect,
+                    posinset
+                  },
+                  itemId
+                );
+              })
             }
           )
         ]
@@ -5822,10 +6036,10 @@ var picker_table_default = ViewPickerTable;
 // packages/dataviews/build-module/components/dataviews-layouts/utils/density-picker.mjs
 var import_components18 = __toESM(require_components(), 1);
 var import_i18n19 = __toESM(require_i18n(), 1);
-var import_element23 = __toESM(require_element(), 1);
+var import_element24 = __toESM(require_element(), 1);
 var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 function DensityPicker() {
-  const context = (0, import_element23.useContext)(dataviews_context_default);
+  const context = (0, import_element24.useContext)(dataviews_context_default);
   const view = context.view;
   return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(
     import_components18.__experimentalToggleGroupControl,
@@ -5879,7 +6093,7 @@ function DensityPicker() {
 // packages/dataviews/build-module/components/dataviews-layouts/utils/preview-size-picker.mjs
 var import_components19 = __toESM(require_components(), 1);
 var import_i18n20 = __toESM(require_i18n(), 1);
-var import_element24 = __toESM(require_element(), 1);
+var import_element25 = __toESM(require_element(), 1);
 var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 var imageSizes2 = [
   {
@@ -5911,7 +6125,7 @@ var imageSizes2 = [
   }
 ];
 function PreviewSizePicker() {
-  const context = (0, import_element24.useContext)(dataviews_context_default);
+  const context = (0, import_element25.useContext)(dataviews_context_default);
   const view = context.view;
   const breakValues = imageSizes2.filter((size) => {
     return context.containerWidth >= size.breakpoint;
@@ -6006,12 +6220,12 @@ var VIEW_LAYOUTS = [
 ];
 
 // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
-var import_element32 = __toESM(require_element(), 1);
+var import_element33 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-filters/filter.mjs
 var import_components22 = __toESM(require_components(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
-var import_element29 = __toESM(require_element(), 1);
+var import_element30 = __toESM(require_element(), 1);
 
 // node_modules/@ariakit/core/esm/__chunks/XMCVU3LR.js
 function noop(..._) {
@@ -6662,16 +6876,16 @@ function createHook(useProps) {
 function createStoreContext(providers = [], scopedProviders = []) {
   const context = React7.createContext(void 0);
   const scopedContext = React7.createContext(void 0);
-  const useContext28 = () => React7.useContext(context);
+  const useContext29 = () => React7.useContext(context);
   const useScopedContext = (onlyScoped = false) => {
     const scoped = React7.useContext(scopedContext);
-    const store = useContext28();
+    const store = useContext29();
     if (onlyScoped) return scoped;
     return scoped || store;
   };
   const useProviderContext = () => {
     const scoped = React7.useContext(scopedContext);
-    const store = useContext28();
+    const store = useContext29();
     if (scoped && scoped === store) return;
     return store;
   };
@@ -6690,7 +6904,7 @@ function createStoreContext(providers = [], scopedProviders = []) {
   return {
     context,
     scopedContext,
-    useContext: useContext28,
+    useContext: useContext29,
     useScopedContext,
     useProviderContext,
     ContextProvider,
@@ -9988,7 +10202,7 @@ function ComboboxProvider(props = {}) {
 var import_remove_accents = __toESM(require_remove_accents(), 1);
 var import_compose7 = __toESM(require_compose(), 1);
 var import_i18n22 = __toESM(require_i18n(), 1);
-var import_element26 = __toESM(require_element(), 1);
+var import_element27 = __toESM(require_element(), 1);
 var import_components20 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataviews-filters/utils.mjs
@@ -10007,16 +10221,16 @@ var getCurrentValue = (filterDefinition, currentFilter) => {
 };
 
 // packages/dataviews/build-module/hooks/use-elements.mjs
-var import_element25 = __toESM(require_element(), 1);
+var import_element26 = __toESM(require_element(), 1);
 var EMPTY_ARRAY4 = [];
 function useElements({
   elements,
   getElements
 }) {
   const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY4;
-  const [records, setRecords] = (0, import_element25.useState)(staticElements);
-  const [isLoading, setIsLoading] = (0, import_element25.useState)(false);
-  (0, import_element25.useEffect)(() => {
+  const [records, setRecords] = (0, import_element26.useState)(staticElements);
+  const [isLoading, setIsLoading] = (0, import_element26.useState)(false);
+  (0, import_element26.useEffect)(() => {
     if (!getElements) {
       setRecords(staticElements);
       return;
@@ -10089,7 +10303,7 @@ var SingleSelectionOption = ({ selected }) => {
 };
 function ListBox({ view, filter, onChangeView }) {
   const baseId = (0, import_compose7.useInstanceId)(ListBox, "dataviews-filter-list-box");
-  const [activeCompositeId, setActiveCompositeId] = (0, import_element26.useState)(
+  const [activeCompositeId, setActiveCompositeId] = (0, import_element27.useState)(
     // When there are one or less operators, the first item is set as active
     // (by setting the initial `activeId` to `undefined`).
     // With 2 or more operators, the focus is moved on the operators control
@@ -10212,13 +10426,13 @@ function ListBox({ view, filter, onChangeView }) {
   );
 }
 function ComboboxList22({ view, filter, onChangeView }) {
-  const [searchValue, setSearchValue] = (0, import_element26.useState)("");
-  const deferredSearchValue = (0, import_element26.useDeferredValue)(searchValue);
+  const [searchValue, setSearchValue] = (0, import_element27.useState)("");
+  const deferredSearchValue = (0, import_element27.useDeferredValue)(searchValue);
   const currentFilter = view.filters?.find(
     (_filter) => _filter.field === filter.field
   );
   const currentValue = getCurrentValue(filter, currentFilter);
-  const matches = (0, import_element26.useMemo)(() => {
+  const matches = (0, import_element27.useMemo)(() => {
     const normalizedSearch = normalizeSearchInput(deferredSearchValue);
     return filter.elements.filter(
       (item) => normalizeSearchInput(item.label).includes(normalizedSearch)
@@ -10353,7 +10567,7 @@ function SearchWidget(props) {
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
 var import_es6 = __toESM(require_es6(), 1);
 var import_compose8 = __toESM(require_compose(), 1);
-var import_element27 = __toESM(require_element(), 1);
+var import_element28 = __toESM(require_element(), 1);
 var import_components21 = __toESM(require_components(), 1);
 var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 function InputWidget({
@@ -10366,7 +10580,7 @@ function InputWidget({
     (f2) => f2.field === filter.field
   );
   const currentValue = getCurrentValue(filter, currentFilter);
-  const field = (0, import_element27.useMemo)(() => {
+  const field = (0, import_element28.useMemo)(() => {
     const currentField = fields.find((f2) => f2.id === filter.field);
     if (currentField) {
       return {
@@ -10382,7 +10596,7 @@ function InputWidget({
     }
     return currentField;
   }, [fields, filter.field]);
-  const data = (0, import_element27.useMemo)(() => {
+  const data = (0, import_element28.useMemo)(() => {
     return (view.filters ?? []).reduce(
       (acc, activeFilter) => {
         acc[activeFilter.field] = activeFilter.value;
@@ -12080,7 +12294,7 @@ function subYears(date, amount, options) {
 
 // packages/dataviews/build-module/utils/operators.mjs
 var import_i18n23 = __toESM(require_i18n(), 1);
-var import_element28 = __toESM(require_element(), 1);
+var import_element29 = __toESM(require_element(), 1);
 var import_date = __toESM(require_date(), 1);
 var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 var filterTextWrappers = {
@@ -12104,7 +12318,7 @@ function getRelativeDate(value, unit) {
 var isNoneOperatorDefinition = {
   /* translators: DataViews operator name */
   label: (0, import_i18n23.__)("Is none of"),
-  filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+  filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
     (0, import_i18n23.sprintf)(
       /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
       (0, import_i18n23.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
@@ -12134,7 +12348,7 @@ var OPERATORS = [
     name: OPERATOR_IS_ANY,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Includes"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
         (0, import_i18n23.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
@@ -12167,7 +12381,7 @@ var OPERATORS = [
     name: OPERATOR_IS_ALL,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Includes all"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
         (0, import_i18n23.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
@@ -12194,7 +12408,7 @@ var OPERATORS = [
     name: OPERATOR_BETWEEN,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Between (inc)"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
         (0, import_i18n23.__)(
@@ -12222,7 +12436,7 @@ var OPERATORS = [
     name: OPERATOR_IN_THE_PAST,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("In the past"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
         (0, import_i18n23.__)(
@@ -12250,7 +12464,7 @@ var OPERATORS = [
     name: OPERATOR_OVER,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Over"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
         (0, import_i18n23.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
@@ -12276,7 +12490,7 @@ var OPERATORS = [
     name: OPERATOR_IS,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Is"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
         (0, import_i18n23.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -12294,7 +12508,7 @@ var OPERATORS = [
     name: OPERATOR_IS_NOT,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Is not"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
         (0, import_i18n23.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -12312,7 +12526,7 @@ var OPERATORS = [
     name: OPERATOR_LESS_THAN,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Less than"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
         (0, import_i18n23.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
@@ -12334,7 +12548,7 @@ var OPERATORS = [
     name: OPERATOR_GREATER_THAN,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Greater than"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
         (0, import_i18n23.__)(
@@ -12358,7 +12572,7 @@ var OPERATORS = [
     name: OPERATOR_LESS_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Less than or equal"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
         (0, import_i18n23.__)(
@@ -12382,7 +12596,7 @@ var OPERATORS = [
     name: OPERATOR_GREATER_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Greater than or equal"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
         (0, import_i18n23.__)(
@@ -12406,7 +12620,7 @@ var OPERATORS = [
     name: OPERATOR_BEFORE,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Before"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
         (0, import_i18n23.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
@@ -12429,7 +12643,7 @@ var OPERATORS = [
     name: OPERATOR_AFTER,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("After"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
         (0, import_i18n23.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
@@ -12452,7 +12666,7 @@ var OPERATORS = [
     name: OPERATOR_BEFORE_INC,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Before (inc)"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
         (0, import_i18n23.__)(
@@ -12477,7 +12691,7 @@ var OPERATORS = [
     name: OPERATOR_AFTER_INC,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("After (inc)"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
         (0, import_i18n23.__)(
@@ -12502,7 +12716,7 @@ var OPERATORS = [
     name: OPERATOR_CONTAINS,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Contains"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
         (0, import_i18n23.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
@@ -12524,7 +12738,7 @@ var OPERATORS = [
     name: OPERATOR_NOT_CONTAINS,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Doesn't contain"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
         (0, import_i18n23.__)(
@@ -12548,7 +12762,7 @@ var OPERATORS = [
     name: OPERATOR_STARTS_WITH,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Starts with"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
         (0, import_i18n23.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
@@ -12570,7 +12784,7 @@ var OPERATORS = [
     name: OPERATOR_ON,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("On"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
         (0, import_i18n23.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -12593,7 +12807,7 @@ var OPERATORS = [
     name: OPERATOR_NOT_ON,
     /* translators: DataViews operator name */
     label: (0, import_i18n23.__)("Not on"),
-    filterText: (filter, activeElements) => (0, import_element28.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element29.createInterpolateElement)(
       (0, import_i18n23.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
         (0, import_i18n23.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -12727,13 +12941,13 @@ function Filter({
   fields,
   ...commonProps
 }) {
-  const toggleRef = (0, import_element29.useRef)(null);
+  const toggleRef = (0, import_element30.useRef)(null);
   const { filter, view, onChangeView } = commonProps;
   const filterInView = view.filters?.find(
     (f2) => f2.field === filter.field
   );
   let activeElements = [];
-  const field = (0, import_element29.useMemo)(() => {
+  const field = (0, import_element30.useMemo)(() => {
     const currentField = fields.find((f2) => f2.id === filter.field);
     if (currentField) {
       return {
@@ -12904,7 +13118,7 @@ function Filter({
 // packages/dataviews/build-module/components/dataviews-filters/add-filter.mjs
 var import_components23 = __toESM(require_components(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
-var import_element30 = __toESM(require_element(), 1);
+var import_element31 = __toESM(require_element(), 1);
 var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu4 } = unlock(import_components23.privateApis);
 function AddFilterMenu({
@@ -12969,7 +13183,7 @@ function AddFilter({ filters, view, onChangeView, setOpenedFilter }, ref) {
     }
   );
 }
-var add_filter_default = (0, import_element30.forwardRef)(AddFilter);
+var add_filter_default = (0, import_element31.forwardRef)(AddFilter);
 
 // packages/dataviews/build-module/components/dataviews-filters/reset-filters.mjs
 var import_components24 = __toESM(require_components(), 1);
@@ -13008,9 +13222,9 @@ function ResetFilter({
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/use-filters.mjs
-var import_element31 = __toESM(require_element(), 1);
+var import_element32 = __toESM(require_element(), 1);
 function useFilters(fields, view) {
-  return (0, import_element31.useMemo)(() => {
+  return (0, import_element32.useMemo)(() => {
     const filters = [];
     fields.forEach((field) => {
       if (field.filterBy === false || !field.hasElements && !field.Edit) {
@@ -13061,8 +13275,8 @@ var use_filters_default = useFilters;
 // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
 var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
 function Filters({ className }) {
-  const { fields, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element32.useContext)(dataviews_context_default);
-  const addFilterRef = (0, import_element32.useRef)(null);
+  const { fields, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element33.useContext)(dataviews_context_default);
+  const addFilterRef = (0, import_element33.useRef)(null);
   const filters = use_filters_default(fields, view);
   const addFilter = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
     add_filter_default,
@@ -13120,10 +13334,10 @@ function Filters({ className }) {
     }
   );
 }
-var filters_default = (0, import_element32.memo)(Filters);
+var filters_default = (0, import_element33.memo)(Filters);
 
 // packages/dataviews/build-module/components/dataviews-filters/toggle.mjs
-var import_element33 = __toESM(require_element(), 1);
+var import_element34 = __toESM(require_element(), 1);
 var import_components25 = __toESM(require_components(), 1);
 var import_i18n27 = __toESM(require_i18n(), 1);
 var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
@@ -13135,9 +13349,9 @@ function FiltersToggle() {
     setOpenedFilter,
     isShowingFilter,
     setIsShowingFilter
-  } = (0, import_element33.useContext)(dataviews_context_default);
-  const buttonRef = (0, import_element33.useRef)(null);
-  const onChangeViewWithFilterVisibility = (0, import_element33.useCallback)(
+  } = (0, import_element34.useContext)(dataviews_context_default);
+  const buttonRef = (0, import_element34.useRef)(null);
+  const onChangeViewWithFilterVisibility = (0, import_element34.useCallback)(
     (_view) => {
       onChangeView(_view);
       setIsShowingFilter(true);
@@ -13202,7 +13416,7 @@ function FilterVisibilityToggle({
   filtersCount,
   children
 }) {
-  (0, import_element33.useEffect)(
+  (0, import_element34.useEffect)(
     () => () => {
       buttonRef.current?.focus();
     },
@@ -13216,10 +13430,10 @@ function FilterVisibilityToggle({
 var toggle_default = FiltersToggle;
 
 // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.mjs
-var import_element34 = __toESM(require_element(), 1);
+var import_element35 = __toESM(require_element(), 1);
 var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
 function FiltersToggled(props) {
-  const { isShowingFilter } = (0, import_element34.useContext)(dataviews_context_default);
+  const { isShowingFilter } = (0, import_element35.useContext)(dataviews_context_default);
   if (!isShowingFilter) {
     return null;
   }
@@ -13228,7 +13442,7 @@ function FiltersToggled(props) {
 var filters_toggled_default = FiltersToggled;
 
 // packages/dataviews/build-module/components/dataviews-layout/index.mjs
-var import_element35 = __toESM(require_element(), 1);
+var import_element36 = __toESM(require_element(), 1);
 var import_components26 = __toESM(require_components(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
 var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
@@ -13252,7 +13466,7 @@ function DataViewsLayout({ className }) {
     defaultLayouts,
     containerRef,
     empty = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("p", { children: (0, import_i18n28.__)("No results") })
-  } = (0, import_element35.useContext)(dataviews_context_default);
+  } = (0, import_element36.useContext)(dataviews_context_default);
   const isDelayedInitialLoading = useDelayedLoading(!hasInitiallyLoaded, {
     delay: 200
   });
@@ -13289,7 +13503,7 @@ function DataViewsLayout({ className }) {
 }
 
 // packages/dataviews/build-module/components/dataviews-footer/index.mjs
-var import_element36 = __toESM(require_element(), 1);
+var import_element37 = __toESM(require_element(), 1);
 var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
 var EMPTY_ARRAY5 = [];
 function DataViewsFooter() {
@@ -13299,10 +13513,9 @@ function DataViewsFooter() {
     data,
     actions = EMPTY_ARRAY5,
     isLoading,
-    hasInitiallyLoaded,
-    hasInfiniteScrollHandler
-  } = (0, import_element36.useContext)(dataviews_context_default);
-  const isRefreshing = !!isLoading && hasInitiallyLoaded && !hasInfiniteScrollHandler && !!data?.length;
+    hasInitiallyLoaded
+  } = (0, import_element37.useContext)(dataviews_context_default);
+  const isRefreshing = !!isLoading && hasInitiallyLoaded && !!data?.length;
   const isDelayedRefreshing = useDelayedLoading(!!isRefreshing);
   const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data) && [LAYOUT_TABLE, LAYOUT_GRID].includes(view.type);
   if (!isRefreshing && (!totalItems || !totalPages || totalPages <= 1 && !hasBulkActions)) {
@@ -13335,31 +13548,32 @@ function DataViewsFooter() {
 
 // packages/dataviews/build-module/components/dataviews-search/index.mjs
 var import_i18n29 = __toESM(require_i18n(), 1);
-var import_element37 = __toESM(require_element(), 1);
+var import_element38 = __toESM(require_element(), 1);
 var import_components27 = __toESM(require_components(), 1);
 var import_compose9 = __toESM(require_compose(), 1);
 var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
-var DataViewsSearch = (0, import_element37.memo)(function Search({ label }) {
-  const { view, onChangeView } = (0, import_element37.useContext)(dataviews_context_default);
+var DataViewsSearch = (0, import_element38.memo)(function Search({ label }) {
+  const { view, onChangeView } = (0, import_element38.useContext)(dataviews_context_default);
   const [search, setSearch, debouncedSearch] = (0, import_compose9.useDebouncedInput)(
     view.search
   );
-  (0, import_element37.useEffect)(() => {
+  (0, import_element38.useEffect)(() => {
     if (view.search !== debouncedSearch) {
       setSearch(view.search ?? "");
     }
   }, [view.search, setSearch]);
-  const onChangeViewRef = (0, import_element37.useRef)(onChangeView);
-  const viewRef = (0, import_element37.useRef)(view);
-  (0, import_element37.useEffect)(() => {
+  const onChangeViewRef = (0, import_element38.useRef)(onChangeView);
+  const viewRef = (0, import_element38.useRef)(view);
+  (0, import_element38.useEffect)(() => {
     onChangeViewRef.current = onChangeView;
     viewRef.current = view;
   }, [onChangeView, view]);
-  (0, import_element37.useEffect)(() => {
+  (0, import_element38.useEffect)(() => {
     if (debouncedSearch !== viewRef.current?.search) {
       onChangeViewRef.current({
         ...viewRef.current,
-        page: 1,
+        page: view.page ? 1 : void 0,
+        startPosition: view.startPosition ? 1 : void 0,
         search: debouncedSearch
       });
     }
@@ -13380,45 +13594,13 @@ var DataViewsSearch = (0, import_element37.memo)(function Search({ label }) {
 var dataviews_search_default = DataViewsSearch;
 
 // packages/dataviews/build-module/components/dataviews-view-config/index.mjs
-var import_components29 = __toESM(require_components(), 1);
-var import_i18n31 = __toESM(require_i18n(), 1);
+var import_components28 = __toESM(require_components(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
 var import_element39 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
 var import_compose10 = __toESM(require_compose(), 1);
-
-// packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.mjs
-var import_components28 = __toESM(require_components(), 1);
-var import_i18n30 = __toESM(require_i18n(), 1);
-var import_element38 = __toESM(require_element(), 1);
 var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
-function InfiniteScrollToggle() {
-  const context = (0, import_element38.useContext)(dataviews_context_default);
-  const { view, onChangeView } = context;
-  const infiniteScrollEnabled = view.infiniteScrollEnabled ?? false;
-  if (!context.hasInfiniteScrollHandler) {
-    return null;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
-    import_components28.ToggleControl,
-    {
-      label: (0, import_i18n30.__)("Enable infinite scroll"),
-      help: (0, import_i18n30.__)(
-        "Automatically load more content as you scroll, instead of showing pagination links."
-      ),
-      checked: infiniteScrollEnabled,
-      onChange: (newValue) => {
-        onChangeView({
-          ...view,
-          infiniteScrollEnabled: newValue
-        });
-      }
-    }
-  );
-}
-
-// packages/dataviews/build-module/components/dataviews-view-config/index.mjs
-var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu5 } = unlock(import_components29.privateApis);
+var { Menu: Menu5 } = unlock(import_components28.privateApis);
 var DATAVIEWS_CONFIG_POPOVER_PROPS = {
   className: "dataviews-config__popover",
   placement: "bottom-end",
@@ -13431,28 +13613,28 @@ function ViewTypeMenu() {
     return null;
   }
   const activeView = VIEW_LAYOUTS.find((v2) => view.type === v2.type);
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(Menu5, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(Menu5, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
       Menu5.TriggerButton,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-          import_components29.Button,
+        render: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+          import_components28.Button,
           {
             size: "compact",
             icon: activeView?.icon,
-            label: (0, import_i18n31.__)("Layout")
+            label: (0, import_i18n30.__)("Layout")
           }
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Menu5.Popover, { children: availableLayouts.map((layout) => {
+    /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(Menu5.Popover, { children: availableLayouts.map((layout) => {
       const config = VIEW_LAYOUTS.find(
         (v2) => v2.type === layout
       );
       if (!config) {
         return null;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
         Menu5.RadioItem,
         {
           value: layout,
@@ -13479,7 +13661,7 @@ function ViewTypeMenu() {
             }
             (0, import_warning.default)("Invalid dataview");
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Menu5.ItemLabel, { children: config.label })
+          children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(Menu5.ItemLabel, { children: config.label })
         },
         layout
       );
@@ -13499,11 +13681,11 @@ function SortFieldControl() {
       };
     });
   }, [fields]);
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-    import_components29.SelectControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+    import_components28.SelectControl,
     {
       __next40pxDefaultSize: true,
-      label: (0, import_i18n31.__)("Sort by"),
+      label: (0, import_i18n30.__)("Sort by"),
       value: view.sort?.field,
       options: orderOptions,
       onChange: (value) => {
@@ -13531,13 +13713,13 @@ function SortDirectionControl() {
   if (!value && view.sort?.field) {
     value = "desc";
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-    import_components29.__experimentalToggleGroupControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+    import_components28.__experimentalToggleGroupControl,
     {
       className: "dataviews-view-config__sort-direction",
       __next40pxDefaultSize: true,
       isBlock: true,
-      label: (0, import_i18n31.__)("Order"),
+      label: (0, import_i18n30.__)("Order"),
       value,
       onChange: (newDirection) => {
         if (newDirection === "asc" || newDirection === "desc") {
@@ -13557,8 +13739,8 @@ function SortDirectionControl() {
         (0, import_warning.default)("Invalid direction");
       },
       children: SORTING_DIRECTIONS.map((direction) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-          import_components29.__experimentalToggleGroupControlOptionIcon,
+        return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+          import_components28.__experimentalToggleGroupControlOptionIcon,
           {
             value: direction,
             icon: sortIcons[direction],
@@ -13576,12 +13758,12 @@ function ItemsPerPageControl() {
   if (!config || !config.perPageSizes || config.perPageSizes.length < 2 || config.perPageSizes.length > 6 || infiniteScrollEnabled) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-    import_components29.__experimentalToggleGroupControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+    import_components28.__experimentalToggleGroupControl,
     {
       __next40pxDefaultSize: true,
       isBlock: true,
-      label: (0, import_i18n31.__)("Items per page"),
+      label: (0, import_i18n30.__)("Items per page"),
       value: view.perPage || 10,
       disabled: !view?.sort?.field,
       onChange: (newItemsPerPage) => {
@@ -13593,8 +13775,8 @@ function ItemsPerPageControl() {
         });
       },
       children: config.perPageSizes.map((value) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-          import_components29.__experimentalToggleGroupControlOption,
+        return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+          import_components28.__experimentalToggleGroupControlOption,
           {
             value,
             label: value.toString()
@@ -13611,8 +13793,8 @@ function ResetViewButton() {
     return null;
   }
   const isDisabled = onReset === false;
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-    import_components29.Button,
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+    import_components28.Button,
     {
       variant: "tertiary",
       size: "compact",
@@ -13624,7 +13806,7 @@ function ResetViewButton() {
           onReset();
         }
       },
-      children: (0, import_i18n31.__)("Reset view")
+      children: (0, import_i18n30.__)("Reset view")
     }
   );
 }
@@ -13638,8 +13820,8 @@ function DataviewsViewConfigDropdown() {
     (layout) => layout.type === view.type
   );
   const isModified = typeof onReset === "function";
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-    import_components29.Dropdown,
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+    import_components28.Dropdown,
     {
       expandOnMobile: true,
       popoverProps: {
@@ -13647,13 +13829,13 @@ function DataviewsViewConfigDropdown() {
         id: popoverId
       },
       renderToggle: ({ onToggle, isOpen }) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)("div", { className: "dataviews-view-config__toggle-wrapper", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-            import_components29.Button,
+        return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)("div", { className: "dataviews-view-config__toggle-wrapper", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+            import_components28.Button,
             {
               size: "compact",
               icon: cog_default,
-              label: (0, import_i18n31._x)(
+              label: (0, import_i18n30._x)(
                 "View options",
                 "View is used as a noun"
               ),
@@ -13662,22 +13844,22 @@ function DataviewsViewConfigDropdown() {
               "aria-controls": popoverId
             }
           ),
-          isModified && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { className: "dataviews-view-config__modified-indicator" })
+          isModified && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { className: "dataviews-view-config__modified-indicator" })
         ] });
       },
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-        import_components29.__experimentalDropdownContentWrapper,
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+        import_components28.__experimentalDropdownContentWrapper,
         {
           paddingSize: "medium",
           className: "dataviews-config__popover-content-wrapper",
-          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(
             Stack,
             {
               direction: "column",
               className: "dataviews-view-config",
               gap: "xl",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(
                   Stack,
                   {
                     direction: "row",
@@ -13685,35 +13867,34 @@ function DataviewsViewConfigDropdown() {
                     align: "center",
                     className: "dataviews-view-config__header",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-                        import_components29.__experimentalHeading,
+                      /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+                        import_components28.__experimentalHeading,
                         {
                           level: 2,
                           className: "dataviews-settings-section__title",
-                          children: (0, import_i18n31.__)("Appearance")
+                          children: (0, import_i18n30.__)("Appearance")
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(ResetViewButton, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(ResetViewButton, {})
                     ]
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(
                     Stack,
                     {
                       direction: "row",
                       gap: "sm",
                       className: "dataviews-view-config__sort-controls",
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SortFieldControl, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SortDirectionControl, {})
+                        /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(SortFieldControl, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(SortDirectionControl, {})
                       ]
                     }
                   ),
-                  !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(activeLayout.viewConfigOptions, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(InfiniteScrollToggle, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(ItemsPerPageControl, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(PropertiesSection, {})
+                  !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(activeLayout.viewConfigOptions, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(ItemsPerPageControl, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(PropertiesSection, {})
                 ] })
               ]
             }
@@ -13724,16 +13905,16 @@ function DataviewsViewConfigDropdown() {
   );
 }
 function _DataViewsViewConfig() {
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_jsx_runtime72.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(ViewTypeMenu, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(DataviewsViewConfigDropdown, {})
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(import_jsx_runtime71.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(ViewTypeMenu, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(DataviewsViewConfigDropdown, {})
   ] });
 }
 var DataViewsViewConfig = (0, import_element39.memo)(_DataViewsViewConfig);
 var dataviews_view_config_default = DataViewsViewConfig;
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_components30 = __toESM(require_components(), 1);
+var import_components29 = __toESM(require_components(), 1);
 var import_element40 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
@@ -13760,8 +13941,8 @@ function getCustomValidity(isValid2, validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedCheckboxControl } = unlock(import_components30.privateApis);
+var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedCheckboxControl } = unlock(import_components29.privateApis);
 function Checkbox({
   field,
   onChange,
@@ -13776,7 +13957,7 @@ function Checkbox({
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [data, getValue, onChange, setValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
@@ -13792,10 +13973,10 @@ function Checkbox({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
-var import_components31 = __toESM(require_components(), 1);
+var import_components30 = __toESM(require_components(), 1);
 var import_element41 = __toESM(require_element(), 1);
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedComboboxControl } = unlock(import_components31.privateApis);
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedComboboxControl } = unlock(import_components30.privateApis);
 function Combobox3({
   data,
   field,
@@ -13814,9 +13995,9 @@ function Combobox3({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components31.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_components30.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
     ValidatedComboboxControl,
     {
       required: !!field.isValid?.required,
@@ -13835,28 +14016,28 @@ function Combobox3({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_components33 = __toESM(require_components(), 1);
+var import_components32 = __toESM(require_components(), 1);
 var import_element43 = __toESM(require_element(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 var import_date3 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
-var import_components32 = __toESM(require_components(), 1);
+var import_components31 = __toESM(require_components(), 1);
 var import_element42 = __toESM(require_element(), 1);
-var import_i18n32 = __toESM(require_i18n(), 1);
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
   [OPERATOR_IN_THE_PAST]: [
-    { value: "days", label: (0, import_i18n32.__)("Days") },
-    { value: "weeks", label: (0, import_i18n32.__)("Weeks") },
-    { value: "months", label: (0, import_i18n32.__)("Months") },
-    { value: "years", label: (0, import_i18n32.__)("Years") }
+    { value: "days", label: (0, import_i18n31.__)("Days") },
+    { value: "weeks", label: (0, import_i18n31.__)("Weeks") },
+    { value: "months", label: (0, import_i18n31.__)("Months") },
+    { value: "years", label: (0, import_i18n31.__)("Years") }
   ],
   [OPERATOR_OVER]: [
-    { value: "days", label: (0, import_i18n32.__)("Days ago") },
-    { value: "weeks", label: (0, import_i18n32.__)("Weeks ago") },
-    { value: "months", label: (0, import_i18n32.__)("Months ago") },
-    { value: "years", label: (0, import_i18n32.__)("Years ago") }
+    { value: "days", label: (0, import_i18n31.__)("Days ago") },
+    { value: "weeks", label: (0, import_i18n31.__)("Weeks ago") },
+    { value: "months", label: (0, import_i18n31.__)("Months ago") },
+    { value: "years", label: (0, import_i18n31.__)("Years ago") }
   ]
 };
 function RelativeDateControl({
@@ -13889,17 +14070,17 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, relValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-    import_components32.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+    import_components31.BaseControl,
     {
       id,
       className: clsx_default(className, "dataviews-controls__relative-date"),
       label,
       hideLabelFromVision,
       help: description,
-      children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-          import_components32.__experimentalNumberControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+          import_components31.__experimentalNumberControl,
           {
             __next40pxDefaultSize: true,
             className: "dataviews-controls__relative-date-number",
@@ -13910,12 +14091,12 @@ function RelativeDateControl({
             onChange: onChangeValue
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-          import_components32.SelectControl,
+        /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+          import_components31.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
             __next40pxDefaultSize: true,
-            label: (0, import_i18n32.__)("Unit"),
+            label: (0, import_i18n31.__)("Unit"),
             value: unit,
             options,
             onChange: onChangeUnit,
@@ -13938,8 +14119,8 @@ function parseDateTime(dateTimeString) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar, ValidatedInputControl } = unlock(import_components33.privateApis);
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var { DateCalendar, ValidatedInputControl } = unlock(import_components32.privateApis);
 var formatDateTime = (value) => {
   if (!value) {
     return "";
@@ -14031,19 +14212,19 @@ function CalendarDateTimeControl({
   } = (0, import_date3.getSettings)();
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n33.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n32.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n33.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n32.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-    import_components33.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+    import_components32.BaseControl,
     {
       id,
       label: displayLabel,
       help: description,
       hideLabelFromVision,
-      children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
           ValidatedInputControl,
           {
             ref: inputControlRef,
@@ -14051,13 +14232,13 @@ function CalendarDateTimeControl({
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n33.__)("Date time"),
+            label: (0, import_i18n32.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onChange: handleManualDateTimeChange
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
           DateCalendar,
           {
             style: { width: "100%" },
@@ -14083,7 +14264,7 @@ function DateTime({
   validity
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__datetime",
@@ -14095,7 +14276,7 @@ function DateTime({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
     CalendarDateTimeControl,
     {
       data,
@@ -14109,21 +14290,21 @@ function DateTime({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
-var import_components34 = __toESM(require_components(), 1);
+var import_components33 = __toESM(require_components(), 1);
 var import_element44 = __toESM(require_element(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock(import_components34.privateApis);
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock(import_components33.privateApis);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n34.__)("Today"),
+    label: (0, import_i18n33.__)("Today"),
     getValue: () => (0, import_date4.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n34.__)("Yesterday"),
+    label: (0, import_i18n33.__)("Yesterday"),
     getValue: () => {
       const today = (0, import_date4.getDate)(null);
       return subDays(today, 1);
@@ -14131,7 +14312,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-week",
-    label: (0, import_i18n34.__)("Past week"),
+    label: (0, import_i18n33.__)("Past week"),
     getValue: () => {
       const today = (0, import_date4.getDate)(null);
       return subDays(today, 7);
@@ -14139,7 +14320,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-month",
-    label: (0, import_i18n34.__)("Past month"),
+    label: (0, import_i18n33.__)("Past month"),
     getValue: () => {
       const today = (0, import_date4.getDate)(null);
       return subMonths(today, 1);
@@ -14149,7 +14330,7 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n34.__)("Last 7 days"),
+    label: (0, import_i18n33.__)("Last 7 days"),
     getValue: () => {
       const today = (0, import_date4.getDate)(null);
       return [subDays(today, 7), today];
@@ -14157,7 +14338,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n34.__)("Last 30 days"),
+    label: (0, import_i18n33.__)("Last 30 days"),
     getValue: () => {
       const today = (0, import_date4.getDate)(null);
       return [subDays(today, 30), today];
@@ -14165,7 +14346,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n34.__)("Month to date"),
+    label: (0, import_i18n33.__)("Month to date"),
     getValue: () => {
       const today = (0, import_date4.getDate)(null);
       return [startOfMonth(today), today];
@@ -14173,7 +14354,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-year",
-    label: (0, import_i18n34.__)("Last year"),
+    label: (0, import_i18n33.__)("Last year"),
     getValue: () => {
       const today = (0, import_date4.getDate)(null);
       return [subYears(today, 1), today];
@@ -14181,7 +14362,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n34.__)("Year to date"),
+    label: (0, import_i18n33.__)("Year to date"),
     getValue: () => {
       const today = (0, import_date4.getDate)(null);
       return [startOfYear(today), today];
@@ -14271,9 +14452,9 @@ function ValidatedDateControl({
       setIsTouched(true);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)("div", { onBlur, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)("div", { onBlur, children: [
     children,
-    /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(
       "p",
       {
         className: clsx_default(
@@ -14281,8 +14462,8 @@ function ValidatedDateControl({
           customValidity.type === "invalid" ? "is-invalid" : void 0
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-            import_components34.Icon,
+          /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+            import_components33.Icon,
             {
               className: "components-validated-control__indicator-icon",
               icon: error_default,
@@ -14368,11 +14549,11 @@ function CalendarDateControl({
   } = (0, import_date4.getSettings)();
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n34.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n33.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n34.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n33.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -14380,16 +14561,16 @@ function CalendarDateControl({
       inputRefs: validityTargetRef,
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-        import_components34.BaseControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+        import_components33.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -14399,8 +14580,8 @@ function CalendarDateControl({
                 children: [
                   DATE_PRESETS.map((preset) => {
                     const isSelected2 = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-                      import_components34.Button,
+                    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                      import_components33.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -14412,8 +14593,8 @@ function CalendarDateControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-                    import_components34.Button,
+                  /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                    import_components33.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -14421,26 +14602,26 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId,
                       accessibleWhenDisabled: false,
-                      children: (0, import_i18n34.__)("Custom")
+                      children: (0, import_i18n33.__)("Custom")
                     }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-              import_components34.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+              import_components33.__experimentalInputControl,
               {
                 __next40pxDefaultSize: true,
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n34.__)("Date"),
+                label: (0, import_i18n33.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
                 required: !!field.isValid?.required
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
               DateCalendar2,
               {
                 style: { width: "100%" },
@@ -14564,11 +14745,11 @@ function CalendarDateRangeControl({
   const { timezone } = (0, import_date4.getSettings)();
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n34.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n33.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n34.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n33.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -14576,16 +14757,16 @@ function CalendarDateRangeControl({
       inputRefs: [fromInputRef, toInputRef],
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-        import_components34.BaseControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+        import_components33.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -14595,8 +14776,8 @@ function CalendarDateRangeControl({
                 children: [
                   DATE_RANGE_PRESETS.map((preset) => {
                     const isSelected2 = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-                      import_components34.Button,
+                    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                      import_components33.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -14608,8 +14789,8 @@ function CalendarDateRangeControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-                    import_components34.Button,
+                  /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                    import_components33.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -14617,13 +14798,13 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: false,
                       disabled: !!selectedPresetId,
-                      children: (0, import_i18n34.__)("Custom")
+                      children: (0, import_i18n33.__)("Custom")
                     }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -14631,26 +14812,26 @@ function CalendarDateRangeControl({
                 justify: "space-between",
                 className: "dataviews-controls__date-range-inputs",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-                    import_components34.__experimentalInputControl,
+                  /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                    import_components33.__experimentalInputControl,
                     {
                       __next40pxDefaultSize: true,
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n34.__)("From"),
+                      label: (0, import_i18n33.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
                       required: !!field.isValid?.required
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-                    import_components34.__experimentalInputControl,
+                  /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                    import_components33.__experimentalInputControl,
                     {
                       __next40pxDefaultSize: true,
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n34.__)("To"),
+                      label: (0, import_i18n33.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -14660,7 +14841,7 @@ function CalendarDateRangeControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
               DateRangeCalendar,
               {
                 style: { width: "100%" },
@@ -14688,7 +14869,7 @@ function DateControl({
   validity
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__date",
@@ -14701,7 +14882,7 @@ function DateControl({
     );
   }
   if (operator === OPERATOR_BETWEEN) {
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       CalendarDateRangeControl,
       {
         data,
@@ -14713,7 +14894,7 @@ function DateControl({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
     CalendarDateControl,
     {
       data,
@@ -14727,10 +14908,10 @@ function DateControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
-var import_components35 = __toESM(require_components(), 1);
+var import_components34 = __toESM(require_components(), 1);
 var import_element45 = __toESM(require_element(), 1);
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedSelectControl } = unlock(import_components35.privateApis);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedSelectControl } = unlock(import_components34.privateApis);
 function Select({
   data,
   field,
@@ -14751,9 +14932,9 @@ function Select({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_components35.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_components34.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
@@ -14772,7 +14953,7 @@ function Select({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/adaptive-select.mjs
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 var ELEMENTS_THRESHOLD = 10;
 function AdaptiveSelect(props) {
   const { field } = props;
@@ -14781,19 +14962,19 @@ function AdaptiveSelect(props) {
     getElements: field.getElements
   });
   if (elements.length >= ELEMENTS_THRESHOLD) {
-    return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(Combobox3, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Combobox3, { ...props });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(Select, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Select, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_components37 = __toESM(require_components(), 1);
+var import_components36 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
-var import_components36 = __toESM(require_components(), 1);
+var import_components35 = __toESM(require_components(), 1);
 var import_element46 = __toESM(require_element(), 1);
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl2 } = unlock(import_components36.privateApis);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl2 } = unlock(import_components35.privateApis);
 function ValidatedText({
   data,
   field,
@@ -14816,7 +14997,7 @@ function ValidatedText({
     ),
     [data, setValue, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
     ValidatedInputControl2,
     {
       required: !!isValid2.required,
@@ -14840,8 +15021,36 @@ function ValidatedText({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 function Email({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  markWhenOptional,
+  validity
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+    ValidatedText,
+    {
+      ...{
+        data,
+        field,
+        onChange,
+        hideLabelFromVision,
+        markWhenOptional,
+        validity,
+        type: "email",
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components36.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components36.Icon, { icon: envelope_default }) })
+      }
+    }
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-controls/telephone.mjs
+var import_components37 = __toESM(require_components(), 1);
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+function Telephone({
   data,
   field,
   onChange,
@@ -14859,17 +15068,17 @@ function Email({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components37.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components37.Icon, { icon: envelope_default }) })
+        type: "tel",
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components37.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components37.Icon, { icon: mobile_default }) })
       }
     }
   );
 }
 
-// packages/dataviews/build-module/components/dataform-controls/telephone.mjs
+// packages/dataviews/build-module/components/dataform-controls/url.mjs
 var import_components38 = __toESM(require_components(), 1);
 var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
-function Telephone({
+function Url({
   data,
   field,
   onChange,
@@ -14887,47 +15096,19 @@ function Telephone({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components38.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components38.Icon, { icon: mobile_default }) })
-      }
-    }
-  );
-}
-
-// packages/dataviews/build-module/components/dataform-controls/url.mjs
-var import_components39 = __toESM(require_components(), 1);
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
-function Url({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision,
-  markWhenOptional,
-  validity
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
-    ValidatedText,
-    {
-      ...{
-        data,
-        field,
-        onChange,
-        hideLabelFromVision,
-        markWhenOptional,
-        validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components39.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components39.Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components38.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components38.Icon, { icon: link_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
-var import_components40 = __toESM(require_components(), 1);
+var import_components39 = __toESM(require_components(), 1);
 var import_element47 = __toESM(require_element(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedNumberControl } = unlock(import_components40.privateApis);
+var import_i18n34 = __toESM(require_i18n(), 1);
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedNumberControl } = unlock(import_components39.privateApis);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
     return "";
@@ -14950,15 +15131,15 @@ function BetweenControls({
     (newValue) => onChange([min, toNumberOrEmpty(newValue)]),
     [onChange, min]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
-    import_components40.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+    import_components39.BaseControl,
     {
-      help: (0, import_i18n35.__)("The max. value must be greater than the min. value."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(import_components40.Flex, { direction: "row", gap: 4, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
-          import_components40.__experimentalNumberControl,
+      help: (0, import_i18n34.__)("The max. value must be greater than the min. value."),
+      children: /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(import_components39.Flex, { direction: "row", gap: 4, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+          import_components39.__experimentalNumberControl,
           {
-            label: (0, import_i18n35.__)("Min."),
+            label: (0, import_i18n34.__)("Min."),
             value: min,
             max: max ? Number(max) - step : void 0,
             onChange: onChangeMin,
@@ -14967,10 +15148,10 @@ function BetweenControls({
             step
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
-          import_components40.__experimentalNumberControl,
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+          import_components39.__experimentalNumberControl,
           {
-            label: (0, import_i18n35.__)("Max."),
+            label: (0, import_i18n34.__)("Max."),
             value: max,
             min: min ? Number(min) + step : void 0,
             onChange: onChangeMax,
@@ -15028,7 +15209,7 @@ function ValidatedNumber({
     )) {
       valueBetween = value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
       BetweenControls,
       {
         value: valueBetween,
@@ -15038,7 +15219,7 @@ function ValidatedNumber({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
     ValidatedNumberControl,
     {
       required: !!isValid2.required,
@@ -15058,22 +15239,22 @@ function ValidatedNumber({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/integer.mjs
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 function Integer(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/number.mjs
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 function Number2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
-var import_components41 = __toESM(require_components(), 1);
+var import_components40 = __toESM(require_components(), 1);
 var import_element48 = __toESM(require_element(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedRadioControl } = unlock(import_components41.privateApis);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedRadioControl } = unlock(import_components40.privateApis);
 function Radio({
   data,
   field,
@@ -15093,9 +15274,9 @@ function Radio({
     [data, onChange, setValue]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components41.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components40.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
@@ -15113,7 +15294,7 @@ function Radio({
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
 var import_element49 = __toESM(require_element(), 1);
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 function Text({
   data,
   field,
@@ -15124,7 +15305,7 @@ function Text({
   validity
 }) {
   const { prefix, suffix } = config || {};
-  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
     ValidatedText,
     {
       ...{
@@ -15142,10 +15323,10 @@ function Text({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
-var import_components42 = __toESM(require_components(), 1);
+var import_components41 = __toESM(require_components(), 1);
 var import_element50 = __toESM(require_element(), 1);
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleControl } = unlock(import_components42.privateApis);
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleControl } = unlock(import_components41.privateApis);
 function Toggle({
   field,
   onChange,
@@ -15160,7 +15341,7 @@ function Toggle({
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [onChange, setValue, data, getValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
@@ -15176,10 +15357,10 @@ function Toggle({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-var import_components43 = __toESM(require_components(), 1);
+var import_components42 = __toESM(require_components(), 1);
 var import_element51 = __toESM(require_element(), 1);
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedTextareaControl } = unlock(import_components43.privateApis);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedTextareaControl } = unlock(import_components42.privateApis);
 function Textarea({
   data,
   field,
@@ -15196,7 +15377,7 @@ function Textarea({
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
@@ -15217,10 +15398,10 @@ function Textarea({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
-var import_components44 = __toESM(require_components(), 1);
+var import_components43 = __toESM(require_components(), 1);
 var import_element52 = __toESM(require_element(), 1);
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleGroupControl } = unlock(import_components44.privateApis);
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleGroupControl } = unlock(import_components43.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -15240,13 +15421,13 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components44.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(import_components43.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
@@ -15259,8 +15440,8 @@ function ToggleGroup({
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
-        import_components44.__experimentalToggleGroupControlOption,
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        import_components43.__experimentalToggleGroupControlOption,
         {
           label: el.label,
           value: el.value
@@ -15272,10 +15453,10 @@ function ToggleGroup({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
-var import_components45 = __toESM(require_components(), 1);
+var import_components44 = __toESM(require_components(), 1);
 var import_element53 = __toESM(require_element(), 1);
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedFormTokenField } = unlock(import_components45.privateApis);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedFormTokenField } = unlock(import_components44.privateApis);
 function ArrayControl({
   data,
   field,
@@ -15312,9 +15493,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components45.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components44.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -15352,9 +15533,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("span", { children: item });
       }
     }
   );
@@ -15519,32 +15700,32 @@ var w = function(r3) {
 };
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
-var import_components46 = __toESM(require_components(), 1);
+var import_components45 = __toESM(require_components(), 1);
 var import_element54 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3 } = unlock(import_components46.privateApis);
+var import_i18n35 = __toESM(require_i18n(), 1);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock(import_components45.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-    import_components46.Dropdown,
+  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+    import_components45.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-        import_components46.Button,
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+        import_components45.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n36.__)("Open color picker"),
+          "aria-label": (0, import_i18n35.__)("Open color picker"),
           size: "small",
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_components46.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components45.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_components46.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-        import_components46.ColorPicker,
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components45.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+        import_components45.ColorPicker,
         {
           color: validColor,
           onChange: onColorChange,
@@ -15576,7 +15757,7 @@ function Color({
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
     ValidatedInputControl3,
     {
       required: !!field.isValid?.required,
@@ -15589,7 +15770,7 @@ function Color({
       onChange: handleInputChange,
       hideLabelFromVision,
       type: "text",
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components45.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -15601,10 +15782,10 @@ function Color({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
-var import_components47 = __toESM(require_components(), 1);
+var import_components46 = __toESM(require_components(), 1);
 var import_element55 = __toESM(require_element(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -15617,7 +15798,7 @@ function Password({
   const toggleVisibility = (0, import_element55.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
     ValidatedText,
     {
       ...{
@@ -15628,13 +15809,13 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components47.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
-          import_components47.Button,
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_components46.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+          import_components46.Button,
           {
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible2 ? (0, import_i18n37.__)("Hide password") : (0, import_i18n37.__)("Show password")
+            label: isVisible2 ? (0, import_i18n36.__)("Hide password") : (0, import_i18n36.__)("Show password")
           }
         ) })
       }
@@ -15648,7 +15829,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -15680,7 +15861,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -15756,7 +15937,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -15778,13 +15959,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -15866,7 +16047,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n38.__)("Value must be a valid email address.");
+    return (0, import_i18n37.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -15903,7 +16084,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -15969,7 +16150,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n39.__)("Value must be an integer.");
+    return (0, import_i18n38.__)("Value must be an integer.");
   }
   return null;
 }
@@ -16016,7 +16197,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -16052,7 +16233,7 @@ function isEmpty2(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty2(value) && !Number.isFinite(value)) {
-    return (0, import_i18n40.__)("Value must be a number.");
+    return (0, import_i18n39.__)("Value must be a number.");
   }
   return null;
 }
@@ -16258,7 +16439,7 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -16273,17 +16454,17 @@ function getValueFormatted6({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n41.__)("True");
+    return (0, import_i18n40.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n41.__)("False");
+    return (0, import_i18n40.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n41.__)("Value must be true, false, or undefined");
+    return (0, import_i18n40.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -16335,7 +16516,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -16360,10 +16541,10 @@ function render2({ item, field }) {
 function isValidCustom5(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-    return (0, import_i18n42.__)("Value must be an array.");
+    return (0, import_i18n41.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n42.__)("Every value must be a string.");
+    return (0, import_i18n41.__)("Every value must be a string.");
   }
   return null;
 }
@@ -16461,18 +16642,18 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n43 = __toESM(require_i18n(), 1);
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       "div",
       {
         style: {
@@ -16485,13 +16666,13 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n43.__)("Value must be a valid color.");
+    return (0, import_i18n42.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -16748,28 +16929,345 @@ function normalizeFields(fields) {
 
 // packages/dataviews/build-module/hooks/use-data.mjs
 var import_element56 = __toESM(require_element(), 1);
-function useData(data, isLoading, paginationInfo) {
-  const previousDataRef = (0, import_element56.useRef)(data);
-  const previousPaginationInfoRef = (0, import_element56.useRef)(paginationInfo);
+function useData({
+  view,
+  data: shownData,
+  getItemId: getItemId2,
+  isLoading,
+  paginationInfo,
+  selection
+}) {
+  const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
   const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element56.useState)(
     !isLoading
   );
   (0, import_element56.useEffect)(() => {
     if (!isLoading) {
-      previousDataRef.current = data;
-      previousPaginationInfoRef.current = paginationInfo;
       setHasInitiallyLoaded(true);
     }
-  }, [data, isLoading, paginationInfo]);
+  }, [isLoading]);
+  const previousDataRef = (0, import_element56.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element56.useRef)(paginationInfo);
+  (0, import_element56.useEffect)(() => {
+    if (!isLoading) {
+      previousDataRef.current = shownData;
+      previousPaginationInfoRef.current = paginationInfo;
+    }
+  }, [shownData, isLoading, paginationInfo]);
+  const [visibleEntries, setVisibleEntries] = (0, import_element56.useState)([]);
+  const positionMapRef = (0, import_element56.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element56.useRef)([]);
+  const prevViewParamsRef = (0, import_element56.useRef)({
+    search: void 0,
+    filters: void 0,
+    perPage: void 0
+  });
+  const scrollDirectionRef = (0, import_element56.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element56.useRef)(void 0);
+  const hasInitializedRef = (0, import_element56.useRef)(false);
+  const allLoadedRecords = (0, import_element56.useMemo)(() => {
+    if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
+      if (view.startPosition < prevStartPositionRef.current) {
+        scrollDirectionRef.current = "up";
+      } else if (view.startPosition > prevStartPositionRef.current) {
+        scrollDirectionRef.current = "down";
+      }
+    }
+    prevStartPositionRef.current = view.startPosition;
+    const currentFiltersKey = JSON.stringify(view.filters ?? []);
+    const prevFiltersKey = prevViewParamsRef.current.filters;
+    const shouldReset = !hasInitializedRef.current || !view.infiniteScrollEnabled || view.search !== prevViewParamsRef.current.search || currentFiltersKey !== prevFiltersKey || view.perPage !== prevViewParamsRef.current.perPage;
+    hasInitializedRef.current = true;
+    prevViewParamsRef.current = {
+      search: view.search,
+      filters: currentFiltersKey,
+      perPage: view.perPage
+    };
+    if (shouldReset) {
+      positionMapRef.current.clear();
+      scrollDirectionRef.current = void 0;
+      const startPosition = view.search ? 1 : view.startPosition ?? 1;
+      const records = shownData.map((record, index) => {
+        const position = startPosition + index;
+        positionMapRef.current.set(getItemId2(record), position);
+        return {
+          ...record,
+          position
+        };
+      });
+      allLoadedRecordsRef.current = records;
+      return records;
+    }
+    const prev = allLoadedRecordsRef.current;
+    const shownDataIds = new Set(shownData.map(getItemId2));
+    const scrollDirection = scrollDirectionRef.current;
+    const basePosition = view.search ? 1 : view.startPosition ?? 1;
+    const newRecords = shownData.map((record, index) => {
+      const itemId = getItemId2(record);
+      const position = view.infiniteScrollEnabled ? basePosition + index : void 0;
+      if (position !== void 0) {
+        positionMapRef.current.set(itemId, position);
+      }
+      return {
+        ...record,
+        position
+      };
+    });
+    if (newRecords.length === 0) {
+      return prev;
+    }
+    const prevWithoutDuplicates = prev.filter(
+      (record) => !shownDataIds.has(getItemId2(record))
+    );
+    const allRecords = scrollDirection === "up" ? [...newRecords, ...prevWithoutDuplicates] : [...prevWithoutDuplicates, ...newRecords];
+    allRecords.sort((a2, b2) => {
+      const posA = a2.position;
+      const posB = b2.position;
+      return posA - posB;
+    });
+    let result = allRecords;
+    if (visibleEntries.length > 0) {
+      const visibleMin = Math.min(...visibleEntries);
+      const visibleMax = Math.max(...visibleEntries);
+      const buffer = 20;
+      const recordPositions = allRecords.map(
+        (r3) => r3.position
+      );
+      const minRecordPos = Math.min(...recordPositions);
+      const maxRecordPos = Math.max(...recordPositions);
+      const hasOverlap = !(maxRecordPos < visibleMin - buffer || minRecordPos > visibleMax + buffer);
+      if (hasOverlap) {
+        result = allRecords.filter((record) => {
+          const itemId = getItemId2(record);
+          const isSelected2 = selection?.includes(itemId);
+          if (isSelected2) {
+            return true;
+          }
+          const itemPosition = record.position;
+          if (scrollDirection === "up") {
+            return itemPosition <= visibleMax + buffer;
+          } else if (scrollDirection === "down") {
+            return itemPosition >= visibleMin - buffer;
+          }
+          return itemPosition >= visibleMin - buffer && itemPosition <= visibleMax + buffer;
+        });
+      }
+    }
+    allLoadedRecordsRef.current = result;
+    return result;
+  }, [
+    shownData,
+    view.search,
+    view.filters,
+    view.perPage,
+    view.startPosition,
+    view.infiniteScrollEnabled,
+    visibleEntries,
+    selection,
+    getItemId2
+  ]);
+  if (!isInfiniteScrollEnabled) {
+    const dataToReturn = isLoading && previousDataRef.current?.length ? previousDataRef.current : shownData;
+    return {
+      data: dataToReturn.map((item) => ({
+        ...item,
+        position: void 0
+      })),
+      paginationInfo: isLoading && previousDataRef.current?.length ? previousPaginationInfoRef.current : paginationInfo,
+      hasInitiallyLoaded,
+      setVisibleEntries: void 0
+    };
+  }
   return {
-    data: isLoading && previousDataRef.current?.length ? previousDataRef.current : data,
-    paginationInfo: isLoading && previousDataRef.current?.length ? previousPaginationInfoRef.current : paginationInfo,
-    hasInitiallyLoaded
+    data: allLoadedRecords,
+    paginationInfo,
+    hasInitiallyLoaded,
+    setVisibleEntries
+  };
+}
+
+// packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
+var import_element57 = __toESM(require_element(), 1);
+var import_compose11 = __toESM(require_compose(), 1);
+function captureAnchorElement(container, anchorElementRef, direction) {
+  const containerRect = container.getBoundingClientRect();
+  const centerY = containerRect.top + containerRect.height / 2;
+  const items = Array.from(container.querySelectorAll("[aria-posinset]"));
+  if (items.length === 0) {
+    return false;
+  }
+  const bestAnchor = items.reduce((best, item) => {
+    const itemRect = item.getBoundingClientRect();
+    const itemCenterY = itemRect.top + itemRect.height / 2;
+    const distance = Math.abs(itemCenterY - centerY);
+    const bestRect = best.getBoundingClientRect();
+    const bestCenterY = bestRect.top + bestRect.height / 2;
+    const bestDistance = Math.abs(bestCenterY - centerY);
+    return distance < bestDistance ? item : best;
+  });
+  const posinset = Number(bestAnchor.getAttribute("aria-posinset"));
+  const anchorRect = bestAnchor.getBoundingClientRect();
+  anchorElementRef.current = {
+    posinset,
+    viewportOffset: anchorRect.top - containerRect.top,
+    direction
+  };
+  return true;
+}
+function useInfiniteScroll({
+  view,
+  onChangeView,
+  isLoading,
+  paginationInfo,
+  containerRef,
+  setVisibleEntries
+}) {
+  const anchorElementRef = (0, import_element57.useRef)(null);
+  const viewRef = (0, import_element57.useRef)(view);
+  const isLoadingRef = (0, import_element57.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element57.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element57.useRef)(paginationInfo.totalItems);
+  (0, import_element57.useLayoutEffect)(() => {
+    viewRef.current = view;
+    isLoadingRef.current = isLoading;
+    onChangeViewRef.current = onChangeView;
+    totalItemsRef.current = paginationInfo.totalItems;
+  }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
+  const intersectionObserverCallback = (0, import_element57.useCallback)(
+    (entries) => {
+      if (!setVisibleEntries) {
+        return;
+      }
+      setVisibleEntries((prev) => {
+        const newVisibleEntries = new Set(prev);
+        let hasChanged = false;
+        entries.forEach((entry) => {
+          const posInSet = Number(
+            entry.target?.attributes?.getNamedItem(
+              "aria-posinset"
+            )?.value
+          );
+          if (isNaN(posInSet)) {
+            return;
+          }
+          if (entry.isIntersecting) {
+            if (!newVisibleEntries.has(posInSet)) {
+              newVisibleEntries.add(posInSet);
+              hasChanged = true;
+            }
+          } else if (newVisibleEntries.has(posInSet)) {
+            newVisibleEntries.delete(posInSet);
+            hasChanged = true;
+          }
+        });
+        return hasChanged ? Array.from(newVisibleEntries).sort() : prev;
+      });
+    },
+    [setVisibleEntries]
+  );
+  (0, import_element57.useLayoutEffect)(() => {
+    const container = containerRef.current;
+    const anchor = anchorElementRef.current;
+    if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
+      return;
+    }
+    const anchorElement = container.querySelector(
+      `[aria-posinset="${anchor.posinset}"]`
+    );
+    if (anchorElement) {
+      const containerRect = container.getBoundingClientRect();
+      const anchorRect = anchorElement.getBoundingClientRect();
+      const currentOffset = anchorRect.top - containerRect.top;
+      const scrollAdjustment = currentOffset - anchor.viewportOffset;
+      if (Math.abs(scrollAdjustment) > 1) {
+        container.scrollTop += scrollAdjustment;
+      }
+    }
+    anchorElementRef.current = null;
+  }, [containerRef, isLoading, view.infiniteScrollEnabled]);
+  const intersectionObserverRef = (0, import_element57.useRef)(
+    null
+  );
+  (0, import_element57.useEffect)(() => {
+    if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
+      if (intersectionObserverRef.current) {
+        intersectionObserverRef.current.disconnect();
+        intersectionObserverRef.current = null;
+      }
+      return;
+    }
+    intersectionObserverRef.current = new IntersectionObserver(
+      intersectionObserverCallback,
+      { root: null, rootMargin: "0px", threshold: 0.1 }
+    );
+    return () => {
+      if (intersectionObserverRef.current) {
+        intersectionObserverRef.current.disconnect();
+        intersectionObserverRef.current = null;
+      }
+    };
+  }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
+  (0, import_element57.useEffect)(() => {
+    if (!view.infiniteScrollEnabled || !containerRef.current) {
+      return;
+    }
+    let lastScrollTop = 0;
+    const BOTTOM_THRESHOLD = 600;
+    const TOP_THRESHOLD = 800;
+    const handleScroll = (0, import_compose11.throttle)((event) => {
+      const currentView = viewRef.current;
+      const totalItems = totalItemsRef.current;
+      const target = event.target;
+      const scrollTop = target.scrollTop;
+      const scrollHeight = target.scrollHeight;
+      const clientHeight = target.clientHeight;
+      const scrollDirection = scrollTop > lastScrollTop ? "down" : "up";
+      lastScrollTop = scrollTop;
+      if (isLoadingRef.current) {
+        return;
+      }
+      const currentStartPosition = currentView.startPosition || 1;
+      const batchSize = currentView.perPage || 10;
+      const currentEndPosition = Math.min(
+        currentStartPosition + batchSize,
+        totalItems
+      );
+      if (scrollDirection === "down" && scrollTop + clientHeight >= scrollHeight - BOTTOM_THRESHOLD) {
+        if (currentEndPosition < totalItems) {
+          const newStartPosition = currentEndPosition;
+          captureAnchorElement(target, anchorElementRef, "down");
+          onChangeViewRef.current({
+            ...currentView,
+            startPosition: newStartPosition
+          });
+        }
+      }
+      if (scrollDirection === "up" && scrollTop <= TOP_THRESHOLD) {
+        if (currentStartPosition > 1) {
+          const calculatedStartPosition = currentStartPosition - batchSize;
+          const newStartPosition = calculatedStartPosition < 6 ? 1 : calculatedStartPosition;
+          captureAnchorElement(target, anchorElementRef, "up");
+          onChangeViewRef.current({
+            ...currentView,
+            startPosition: newStartPosition
+          });
+        }
+      }
+    }, 50);
+    const container = containerRef.current;
+    container.addEventListener("scroll", handleScroll);
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      handleScroll.cancel();
+    };
+  }, [containerRef, view.infiniteScrollEnabled]);
+  return {
+    intersectionObserver: intersectionObserverRef.current
   };
 }
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 var defaultGetItemId = (item) => item.id;
 var defaultIsItemClickable = () => true;
 var EMPTY_ARRAY6 = [];
@@ -16781,17 +17279,21 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_jsx_runtime98.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
+  const { view } = (0, import_element58.useContext)(dataviews_context_default);
+  const isInfiniteScroll = view.infiniteScrollEnabled;
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
       Stack,
       {
         direction: "row",
         align: "top",
         justify: "space-between",
-        className: "dataviews__view-actions",
+        className: clsx_default("dataviews__view-actions", {
+          "dataviews__view-actions--infinite-scroll": isInfiniteScroll
+        }),
         gap: "xs",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
             Stack,
             {
               direction: "row",
@@ -16799,21 +17301,21 @@ function DefaultUI({
               gap: "sm",
               className: "dataviews__search",
               children: [
-                search && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(dataviews_search_default, { label: searchLabel }),
-                /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(toggle_default, {})
+                search && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(dataviews_search_default, { label: searchLabel }),
+                /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(toggle_default, {})
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(dataviews_view_config_default, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(dataviews_view_config_default, {}),
             header
           ] })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(DataViewsLayout, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(DataViewsFooter, {})
+    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(DataViewsLayout, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(DataViewsFooter, {})
   ] });
 }
 function DataViews({
@@ -16840,10 +17342,25 @@ function DataViews({
   empty,
   onReset
 }) {
-  const { infiniteScrollHandler } = paginationInfo;
-  const containerRef = (0, import_element57.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element57.useState)(0);
-  const resizeObserverRef = (0, import_compose11.useResizeObserver)(
+  const [selectionState, setSelectionState] = (0, import_element58.useState)([]);
+  const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
+  const selection = isUncontrolled ? selectionState : selectionProperty;
+  const {
+    data: displayData,
+    paginationInfo: displayPaginationInfo,
+    hasInitiallyLoaded,
+    setVisibleEntries
+  } = useData({
+    view,
+    data,
+    getItemId: getItemId2,
+    isLoading,
+    selection,
+    paginationInfo
+  });
+  const containerRef = (0, import_element58.useRef)(null);
+  const [containerWidth, setContainerWidth] = (0, import_element58.useState)(0);
+  const resizeObserverRef = (0, import_compose12.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
         resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -16851,10 +17368,7 @@ function DataViews({
     },
     { box: "border-box" }
   );
-  const [selectionState, setSelectionState] = (0, import_element57.useState)([]);
-  const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
-  const selection = isUncontrolled ? selectionState : selectionProperty;
-  const [openedFilter, setOpenedFilter] = (0, import_element57.useState)(null);
+  const [openedFilter, setOpenedFilter] = (0, import_element58.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -16864,57 +17378,39 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element57.useMemo)(() => normalizeFields(fields), [fields]);
-  const _selection = (0, import_element57.useMemo)(() => {
+  const _fields = (0, import_element58.useMemo)(() => normalizeFields(fields), [fields]);
+  const _selection = (0, import_element58.useMemo)(() => {
+    if (view.infiniteScrollEnabled) {
+      return selection;
+    }
     return selection.filter(
       (id) => data.some((item) => getItemId2(item) === id)
     );
-  }, [selection, data, getItemId2]);
+  }, [selection, data, getItemId2, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element57.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element58.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element57.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element58.useState)(
     hasPrimaryOrLockedFilters
   );
-  (0, import_element57.useEffect)(() => {
+  const { intersectionObserver } = useInfiniteScroll({
+    view,
+    onChangeView,
+    isLoading,
+    paginationInfo,
+    containerRef,
+    setVisibleEntries
+  });
+  (0, import_element58.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const {
-    data: displayData,
-    paginationInfo: displayPaginationInfo,
-    hasInitiallyLoaded
-  } = useData(data, isLoading, paginationInfo);
-  (0, import_element57.useEffect)(() => {
-    if (!hasInitiallyLoaded || !view.infiniteScrollEnabled || !containerRef.current) {
-      return;
-    }
-    const handleScroll = (0, import_compose11.throttle)((event) => {
-      const target = event.target;
-      const scrollTop = target.scrollTop;
-      const scrollHeight = target.scrollHeight;
-      const clientHeight = target.clientHeight;
-      if (scrollTop + clientHeight >= scrollHeight - 100) {
-        infiniteScrollHandler?.();
-      }
-    }, 100);
-    const container = containerRef.current;
-    container.addEventListener("scroll", handleScroll);
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-      handleScroll.cancel();
-    };
-  }, [
-    hasInitiallyLoaded,
-    infiniteScrollHandler,
-    view.infiniteScrollEnabled
-  ]);
-  const defaultLayouts = (0, import_element57.useMemo)(
+  const defaultLayouts = (0, import_element58.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(
         ([layoutType]) => {
@@ -16929,7 +17425,7 @@ function DataViews({
   if (!defaultLayouts[view.type]) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
     dataviews_context_default.Provider,
     {
       value: {
@@ -16959,10 +17455,10 @@ function DataViews({
         config,
         empty,
         hasInitiallyLoaded,
-        hasInfiniteScrollHandler: !!infiniteScrollHandler,
-        onReset
+        onReset,
+        intersectionObserver
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
         DefaultUI,
         {
           header,
@@ -16987,7 +17483,7 @@ DataViewsSubComponents.Footer = DataViewsFooter;
 var dataviews_default = DataViewsSubComponents;
 
 // routes/navigation-list/stage.tsx
-var import_components49 = __toESM(require_components());
+var import_components48 = __toESM(require_components());
 var import_editor = __toESM(require_editor());
 
 // routes/lock-unlock.ts
@@ -17011,13 +17507,13 @@ function getDefaultView() {
 }
 
 // routes/navigation-list/actions/edit-navigation.tsx
-var import_i18n44 = __toESM(require_i18n());
+var import_i18n43 = __toESM(require_i18n());
 import { useNavigate } from "@wordpress/route";
 function useEditNavigationAction() {
   const navigate = useNavigate();
   return {
     id: "edit",
-    label: (0, import_i18n44.__)("Edit"),
+    label: (0, import_i18n43.__)("Edit"),
     isPrimary: true,
     icon: pencil_default,
     callback: (items) => {
@@ -17033,19 +17529,19 @@ function useEditNavigationAction() {
 }
 
 // routes/navigation-list/add-navigation.tsx
-var import_element58 = __toESM(require_element());
-var import_i18n45 = __toESM(require_i18n());
+var import_element59 = __toESM(require_element());
+var import_i18n44 = __toESM(require_i18n());
 var import_core_data = __toESM(require_core_data());
 var import_notices = __toESM(require_notices());
 var import_data8 = __toESM(require_data());
-var import_components48 = __toESM(require_components());
+var import_components47 = __toESM(require_components());
 import { useNavigate as useNavigate2 } from "@wordpress/route";
 var NAVIGATION_POST_TYPE = "wp_navigation";
 var AddNavigationModal = ({
   closeModal
 }) => {
-  const [menuTitle, setMenuTitle] = (0, import_element58.useState)("");
-  const [isBusy, setIsBusy] = (0, import_element58.useState)(false);
+  const [menuTitle, setMenuTitle] = (0, import_element59.useState)("");
+  const [isBusy, setIsBusy] = (0, import_element59.useState)(false);
   const navigate = useNavigate2();
   const { saveEntityRecord } = (0, import_data8.useDispatch)(import_core_data.store);
   const { createSuccessNotice, createErrorNotice } = (0, import_data8.useDispatch)(import_notices.store);
@@ -17069,7 +17565,7 @@ var AddNavigationModal = ({
       );
       if (savedRecord) {
         createSuccessNotice(
-          (0, import_i18n45.__)("Navigation menu created successfully."),
+          (0, import_i18n44.__)("Navigation menu created successfully."),
           {
             type: "snackbar"
           }
@@ -17083,9 +17579,9 @@ var AddNavigationModal = ({
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
       createErrorNotice(
-        (0, import_i18n45.sprintf)(
+        (0, import_i18n44.sprintf)(
           /* translators: %s: error message describing why the navigation menu could not be created. */
-          (0, import_i18n45.__)("Unable to create navigation menu: %s"),
+          (0, import_i18n44.__)("Unable to create navigation menu: %s"),
           errorMessage
         ),
         {
@@ -17097,9 +17593,9 @@ var AddNavigationModal = ({
     closeModal?.();
   };
   return /* @__PURE__ */ React.createElement(
-    import_components48.Modal,
+    import_components47.Modal,
     {
-      title: (0, import_i18n45.__)("Add New Navigation Menu"),
+      title: (0, import_i18n44.__)("Add New Navigation Menu"),
       onRequestClose: () => closeModal?.(),
       focusOnMount: "firstContentElement",
       size: "small"
@@ -17112,27 +17608,27 @@ var AddNavigationModal = ({
           handleConfirmAdd();
         }
       },
-      /* @__PURE__ */ React.createElement(import_components48.__experimentalVStack, { spacing: 4 }, /* @__PURE__ */ React.createElement(
-        import_components48.TextControl,
+      /* @__PURE__ */ React.createElement(import_components47.__experimentalVStack, { spacing: 4 }, /* @__PURE__ */ React.createElement(
+        import_components47.TextControl,
         {
           autoComplete: "off",
           value: menuTitle,
           onChange: setMenuTitle,
-          label: (0, import_i18n45.__)("Name"),
-          placeholder: (0, import_i18n45.__)("Enter menu name"),
+          label: (0, import_i18n44.__)("Name"),
+          placeholder: (0, import_i18n44.__)("Enter menu name"),
           disabled: isBusy
         }
-      ), /* @__PURE__ */ React.createElement(import_components48.__experimentalHStack, { justify: "right", spacing: 2 }, /* @__PURE__ */ React.createElement(
-        import_components48.Button,
+      ), /* @__PURE__ */ React.createElement(import_components47.__experimentalHStack, { justify: "right", spacing: 2 }, /* @__PURE__ */ React.createElement(
+        import_components47.Button,
         {
           variant: "tertiary",
           onClick: closeModal,
           disabled: isBusy,
           accessibleWhenDisabled: true
         },
-        (0, import_i18n45.__)("Cancel")
+        (0, import_i18n44.__)("Cancel")
       ), /* @__PURE__ */ React.createElement(
-        import_components48.Button,
+        import_components47.Button,
         {
           variant: "primary",
           type: "submit",
@@ -17140,7 +17636,7 @@ var AddNavigationModal = ({
           disabled: isBusy || !menuTitle?.trim(),
           accessibleWhenDisabled: true
         },
-        (0, import_i18n45.__)("Create Menu")
+        (0, import_i18n44.__)("Create Menu")
       )))
     )
   );
@@ -17170,10 +17666,10 @@ function getItemId(item) {
 function NavigationList() {
   const navigate = useNavigate3();
   const searchParams = useSearch({ from: "/navigation/list" });
-  const defaultView = (0, import_element59.useMemo)(() => {
+  const defaultView = (0, import_element60.useMemo)(() => {
     return getDefaultView();
   }, []);
-  const handleQueryParamsChange = (0, import_element59.useCallback)(
+  const handleQueryParamsChange = (0, import_element60.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -17205,13 +17701,13 @@ function NavigationList() {
   const fields = usePostFields({
     postType: NAVIGATION_POST_TYPE2
   });
-  const [showAddModal, setShowAddModal] = (0, import_element59.useState)(false);
+  const [showAddModal, setShowAddModal] = (0, import_element60.useState)(false);
   const editAction = useEditNavigationAction();
   const postTypeActions = usePostActions({
     postType: NAVIGATION_POST_TYPE2,
     context: "list"
   });
-  const actions = (0, import_element59.useMemo)(() => {
+  const actions = (0, import_element60.useMemo)(() => {
     return [
       editAction,
       ...postTypeActions?.flatMap((action) => {
@@ -17225,7 +17721,7 @@ function NavigationList() {
     ];
   }, [editAction, postTypeActions]);
   const selection = (searchParams.ids ?? []).map((id) => id.toString()) ?? [];
-  const firstNavigationId = (0, import_element59.useMemo)(() => {
+  const firstNavigationId = (0, import_element60.useMemo)(() => {
     if (navigationMenus && navigationMenus.length > 0) {
       return navigationMenus[0].id.toString();
     }
@@ -17240,17 +17736,17 @@ function NavigationList() {
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
     page_default,
     {
-      title: (0, import_i18n46.__)("Navigation"),
+      title: (0, import_i18n45.__)("Navigation"),
       className: "navigation-page",
       hasPadding: false,
       actions: /* @__PURE__ */ React.createElement(
-        import_components49.Button,
+        import_components48.Button,
         {
           variant: "primary",
           size: "compact",
           onClick: () => setShowAddModal(true)
         },
-        (0, import_i18n46.__)("Add New")
+        (0, import_i18n45.__)("Add New")
       )
     },
     /* @__PURE__ */ React.createElement(
