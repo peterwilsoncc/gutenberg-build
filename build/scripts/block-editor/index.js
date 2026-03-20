@@ -72355,6 +72355,10 @@ var wp;
   var CUSTOM_CSS_INSTANCE_REFERENCE = {};
   var EMPTY_STYLE = {};
   function CustomCSSControl({ blockName, setAttributes, style }) {
+    const blockEditingMode = useBlockEditingMode();
+    if (blockEditingMode !== "default") {
+      return null;
+    }
     const blockType = (0, import_blocks117.getBlockType)(blockName);
     function onChange(newStyle) {
       const css = newStyle?.css?.trim() ? newStyle.css : void 0;
