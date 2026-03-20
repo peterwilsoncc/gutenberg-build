@@ -71258,13 +71258,12 @@ var wp;
     setAttributes,
     name,
     fontSize,
-    style,
-    warning: warning6
+    style
   }) {
     if (!(0, import_blocks111.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
       import_components265.__experimentalToolsPanelItem,
       {
         hasValue: () => fitText,
@@ -71272,40 +71271,37 @@ var wp;
         onDeselect: () => setAttributes({ fitText: void 0 }),
         resetAllFilter: () => ({ fitText: void 0 }),
         panelId: clientId,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
-            import_components265.ToggleControl,
-            {
-              label: (0, import_i18n234.__)("Fit text"),
-              checked: fitText,
-              onChange: () => {
-                const newFitText = !fitText || void 0;
-                const updates = { fitText: newFitText };
-                if (newFitText) {
-                  if (fontSize) {
-                    updates.fontSize = void 0;
-                  }
-                  if (style?.typography?.fontSize) {
-                    updates.style = {
-                      ...style,
-                      typography: {
-                        ...style?.typography,
-                        fontSize: void 0
-                      }
-                    };
-                  }
+        children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+          import_components265.ToggleControl,
+          {
+            label: (0, import_i18n234.__)("Fit text"),
+            checked: fitText,
+            onChange: () => {
+              const newFitText = !fitText || void 0;
+              const updates = { fitText: newFitText };
+              if (newFitText) {
+                if (fontSize) {
+                  updates.fontSize = void 0;
                 }
-                setAttributes(updates);
-              },
-              help: fitText ? (0, import_i18n234.__)("Text will resize to fit its container.") : (0, import_i18n234.__)(
-                "The text will resize to fit its container, resetting other font size settings."
-              )
-            }
-          ),
-          warning6
-        ]
+                if (style?.typography?.fontSize) {
+                  updates.style = {
+                    ...style,
+                    typography: {
+                      ...style?.typography,
+                      fontSize: void 0
+                    }
+                  };
+                }
+              }
+              setAttributes(updates);
+            },
+            help: fitText ? (0, import_i18n234.__)("Text will resize to fit its container.") : (0, import_i18n234.__)(
+              "The text will resize to fit its container, resetting other font size settings."
+            )
+          }
+        )
       }
-    ) });
+    );
   }
   function addSaveProps8(props, blockType, attributes) {
     if (!(0, import_blocks111.hasBlockSupport)(blockType, FIT_TEXT_SUPPORT_KEY)) {
@@ -71337,9 +71333,12 @@ var wp;
   var hasFitTextSupport = (blockNameOrType) => {
     return (0, import_blocks111.hasBlockSupport)(blockNameOrType, FIT_TEXT_SUPPORT_KEY);
   };
-  function WithFitTextFontSize({ fitText, name, clientId, children }) {
+  function FitTextFontSize({ fitText, name, clientId, isSelected }) {
     const { fontSize } = useFitText({ fitText, name, clientId });
-    return children(fontSize);
+    if (isSelected && fontSize && fontSize < MIN_FONT_SIZE_FOR_WARNING) {
+      return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(FitTextSizeWarning, {}) });
+    }
+    return null;
   }
   var addFitTextControl = (0, import_compose102.createHigherOrderComponent)((BlockEdit2) => {
     return function AddFitTextControl(props) {
@@ -71351,27 +71350,7 @@ var wp;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime448.jsxs)(import_jsx_runtime448.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(BlockEdit2, { ...props }),
-        fitText && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
-          WithFitTextFontSize,
-          {
-            fitText,
-            name,
-            clientId,
-            children: (fontSize) => isSelected && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
-              FitTextControl,
-              {
-                clientId,
-                fitText,
-                setAttributes,
-                name,
-                fontSize: attributes.fontSize,
-                style: attributes.style,
-                warning: fontSize < MIN_FONT_SIZE_FOR_WARNING && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(FitTextSizeWarning, {})
-              }
-            )
-          }
-        ),
-        !fitText && isSelected && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
           FitTextControl,
           {
             clientId,
@@ -71380,6 +71359,15 @@ var wp;
             name,
             fontSize: attributes.fontSize,
             style: attributes.style
+          }
+        ) }),
+        fitText && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+          FitTextFontSize,
+          {
+            fitText,
+            name,
+            clientId,
+            isSelected
           }
         )
       ] });
