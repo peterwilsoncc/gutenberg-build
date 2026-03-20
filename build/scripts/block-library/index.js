@@ -23990,23 +23990,38 @@ ${url}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_block_editor86.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-        import_components44.TextControl,
-        {
-          __next40pxDefaultSize: true,
-          autoComplete: "off",
-          label: (0, import_i18n69.__)("Name"),
-          value: name123,
-          onChange: (newVal) => {
-            setAttributes({
-              name: newVal
-            });
-          },
-          help: (0, import_i18n69.__)(
-            'Affects the "name" attribute of the input element, and is used as a name for the form submission results.'
-          )
-        }
-      ) })
+      /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_block_editor86.InspectorControls, { group: "advanced", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+          import_components44.TextControl,
+          {
+            __next40pxDefaultSize: true,
+            autoComplete: "off",
+            label: (0, import_i18n69.__)("Name"),
+            value: name123,
+            onChange: (newVal) => {
+              setAttributes({
+                name: newVal
+              });
+            },
+            help: (0, import_i18n69.__)(
+              'Affects the "name" attribute of the input element, and is used as a name for the form submission results.'
+            )
+          }
+        ),
+        "hidden" === type && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+          import_components44.TextControl,
+          {
+            __next40pxDefaultSize: true,
+            autoComplete: "off",
+            label: (0, import_i18n69.__)("Value"),
+            value,
+            onChange: (newVal) => setAttributes({ value: newVal }),
+            help: (0, import_i18n69.__)(
+              "Sets the stored value for this hidden field."
+            )
+          }
+        )
+      ] })
     ] });
     const content = /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
       import_block_editor86.RichText,
@@ -24021,21 +24036,13 @@ ${url}
       }
     );
     if ("hidden" === type) {
-      return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_jsx_runtime246.Fragment, { children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)("div", { ...blockProps, children: [
         controls,
         /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-          "input",
+          "span",
           {
-            type: "hidden",
-            className: clsx_default(
-              className,
-              "wp-block-form-input__input",
-              colorProps.className,
-              borderProps.className
-            ),
-            "aria-label": (0, import_i18n69.__)("Value"),
-            value,
-            onChange: (event) => setAttributes({ value: event.target.value })
+            className: "wp-block-form-input__label is-input-hidden",
+            "data-message": (0, import_i18n69.__)("Hidden field")
           }
         )
       ] });
@@ -24273,6 +24280,16 @@ ${url}
       isDefault: true,
       scope: ["inserter", "transform"],
       isActive: (blockAttributes8) => blockAttributes8?.type === "number"
+    },
+    {
+      name: "hidden",
+      title: (0, import_i18n70.__)("Hidden Input"),
+      icon: "visibility",
+      description: (0, import_i18n70.__)("A hidden input field."),
+      attributes: { type: "hidden" },
+      isDefault: true,
+      scope: ["inserter", "transform"],
+      isActive: (blockAttributes8) => blockAttributes8?.type === "hidden"
     }
   ];
   var variations_default6 = variations6;
