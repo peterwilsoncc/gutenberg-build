@@ -4194,14 +4194,22 @@ var wp;
         name,
         key
       );
-      return record && Object.keys(record).reduce((accumulator, _key) => {
-        if (isRawAttribute(getEntityConfig(state, kind, name), _key)) {
-          accumulator[_key] = record[_key]?.raw !== void 0 ? record[_key]?.raw : record[_key];
-        } else {
-          accumulator[_key] = record[_key];
-        }
-        return accumulator;
-      }, {});
+      const config = getEntityConfig(state, kind, name);
+      if (!record || !config?.rawAttributes?.length) {
+        return record;
+      }
+      return Object.fromEntries(
+        Object.keys(record).map((_key) => {
+          if (isRawAttribute(config, _key)) {
+            const rawValue = record[_key]?.raw;
+            return [
+              _key,
+              rawValue !== void 0 ? rawValue : record[_key]
+            ];
+          }
+          return [_key, record[_key]];
+        })
+      );
     },
     (state, kind, name, recordId, query) => {
       const context = query?.context ?? "default";
