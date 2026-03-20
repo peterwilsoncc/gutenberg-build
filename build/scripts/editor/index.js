@@ -43635,52 +43635,45 @@ var wp;
         focusOnMount: "firstContentElement",
         size: "small",
         overlayClassName: "editor-post-template__create-template-modal",
-        children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
-          "form",
-          {
-            className: "editor-post-template__create-form",
-            onSubmit: submit,
-            children: /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_components117.__experimentalVStack, { spacing: "3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
-                import_components117.TextControl,
-                {
-                  __next40pxDefaultSize: true,
-                  label: (0, import_i18n148.__)("Name"),
-                  value: title,
-                  onChange: setTitle,
-                  placeholder: DEFAULT_TITLE,
-                  disabled: isBusy,
-                  help: (0, import_i18n148.__)(
-                    // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
-                    'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
-                  )
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_components117.__experimentalHStack, { justify: "right", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
-                  import_components117.Button,
-                  {
-                    __next40pxDefaultSize: true,
-                    variant: "tertiary",
-                    onClick: cancel,
-                    children: (0, import_i18n148.__)("Cancel")
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
-                  import_components117.Button,
-                  {
-                    __next40pxDefaultSize: true,
-                    variant: "primary",
-                    type: "submit",
-                    isBusy,
-                    "aria-disabled": isBusy,
-                    children: (0, import_i18n148.__)("Create")
-                  }
-                )
-              ] })
-            ] })
-          }
-        )
+        children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)("form", { onSubmit: submit, children: /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_components117.__experimentalVStack, { spacing: "3", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+            import_components117.TextControl,
+            {
+              __next40pxDefaultSize: true,
+              label: (0, import_i18n148.__)("Name"),
+              value: title,
+              onChange: setTitle,
+              placeholder: DEFAULT_TITLE,
+              disabled: isBusy,
+              help: (0, import_i18n148.__)(
+                // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
+                'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_components117.__experimentalHStack, { justify: "right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+              import_components117.Button,
+              {
+                __next40pxDefaultSize: true,
+                variant: "tertiary",
+                onClick: cancel,
+                children: (0, import_i18n148.__)("Cancel")
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+              import_components117.Button,
+              {
+                __next40pxDefaultSize: true,
+                variant: "primary",
+                type: "submit",
+                isBusy,
+                "aria-disabled": isBusy,
+                children: (0, import_i18n148.__)("Create")
+              }
+            )
+          ] })
+        ] }) })
       }
     );
   }

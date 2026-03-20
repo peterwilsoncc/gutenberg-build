@@ -6917,12 +6917,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   color: inherit;
 }
 
-@media (min-width: 782px) {
-  .editor-post-template__create-form {
-    width: 320px;
-  }
-}
-
 .editor-post-template__classic-theme-dropdown {
   padding: 8px;
 }
