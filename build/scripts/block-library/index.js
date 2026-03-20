@@ -38435,7 +38435,8 @@ ${js}
     const [currentTitle] = (0, import_core_data27.useEntityProp)(
       "postType",
       "wp_navigation",
-      "title"
+      "title",
+      currentMenuId
     );
     const menuChoices = (0, import_element60.useMemo)(() => {
       return navigationMenus?.map(({ id, title, status }, index) => {
@@ -43013,60 +43014,7 @@ ${js}
     const isHiddenByDefault = "always" === overlayMenu;
     const isManageMenusButtonDisabled = !hasManagePermissions || !hasResolvedNavigationMenus;
     if (hasUnsavedBlocks && !isCreatingNavigationMenu) {
-      return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
-        TagName2,
-        {
-          ...blockProps,
-          "aria-describedby": !isPlaceholder ? accessibleDescriptionId : void 0,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(AccessibleDescription, { id: accessibleDescriptionId, children: (0, import_i18n142.__)("Unsaved Navigation Menu.") }),
-            /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-              menu_inspector_controls_default,
-              {
-                clientId,
-                createNavigationMenuIsSuccess,
-                createNavigationMenuIsError,
-                currentMenuId: ref,
-                isNavigationMenuMissing,
-                isManageMenusButtonDisabled,
-                onCreateNew: createUntitledEmptyNavigationMenu,
-                onSelectClassicMenu,
-                onSelectNavigationMenu,
-                isLoading,
-                blockEditingMode
-              }
-            ),
-            blockEditingMode === "default" && stylingInspectorControls,
-            /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-              ResponsiveWrapper,
-              {
-                id: clientId,
-                onToggle: setResponsiveMenuVisibility,
-                isOpen: isResponsiveMenuOpen,
-                hasIcon,
-                icon: icon4,
-                isResponsive,
-                isHiddenByDefault,
-                overlayBackgroundColor,
-                overlayTextColor,
-                overlay,
-                onNavigateToEntityRecord,
-                children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                  UnsavedInnerBlocks,
-                  {
-                    createNavigationMenu,
-                    blocks: uncontrolledInnerBlocks,
-                    hasSelection: isSelected || isInnerBlockSelected
-                  }
-                )
-              }
-            )
-          ]
-        }
-      );
-    }
-    if (ref && isNavigationMenuMissing) {
-      return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(TagName2, { ...blockProps, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
           menu_inspector_controls_default,
           {
@@ -43083,12 +43031,67 @@ ${js}
             blockEditingMode
           }
         ),
+        blockEditingMode === "default" && stylingInspectorControls,
+        /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
+          TagName2,
+          {
+            ...blockProps,
+            "aria-describedby": !isPlaceholder ? accessibleDescriptionId : void 0,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(AccessibleDescription, { id: accessibleDescriptionId, children: (0, import_i18n142.__)("Unsaved Navigation Menu.") }),
+              /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                ResponsiveWrapper,
+                {
+                  id: clientId,
+                  onToggle: setResponsiveMenuVisibility,
+                  isOpen: isResponsiveMenuOpen,
+                  hasIcon,
+                  icon: icon4,
+                  isResponsive,
+                  isHiddenByDefault,
+                  overlayBackgroundColor,
+                  overlayTextColor,
+                  overlay,
+                  onNavigateToEntityRecord,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                    UnsavedInnerBlocks,
+                    {
+                      createNavigationMenu,
+                      blocks: uncontrolledInnerBlocks,
+                      hasSelection: isSelected || isInnerBlockSelected
+                    }
+                  )
+                }
+              )
+            ]
+          }
+        )
+      ] });
+    }
+    if (ref && isNavigationMenuMissing) {
+      return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+          menu_inspector_controls_default,
+          {
+            clientId,
+            createNavigationMenuIsSuccess,
+            createNavigationMenuIsError,
+            currentMenuId: ref,
+            isNavigationMenuMissing,
+            isManageMenusButtonDisabled,
+            onCreateNew: createUntitledEmptyNavigationMenu,
+            onSelectClassicMenu,
+            onSelectNavigationMenu,
+            isLoading,
+            blockEditingMode
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
           deleted_navigation_warning_default,
           {
             onCreateNew: createUntitledEmptyNavigationMenu
           }
-        )
+        ) })
       ] });
     }
     if (isEntityAvailable && hasAlreadyRendered) {
@@ -43110,7 +43113,7 @@ ${js}
         }
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_core_data49.EntityProvider, { kind: "postType", type: "wp_navigation", id: ref, children: /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_block_editor159.RecursionProvider, { uniqueId: recursionId, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
         menu_inspector_controls_default,
         {
@@ -43128,74 +43131,76 @@ ${js}
         }
       ),
       blockEditingMode === "default" && stylingInspectorControls,
-      blockEditingMode === "contentOnly" && isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(NavigationAddPageButton, { clientId }),
-      blockEditingMode === "default" && isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_block_editor159.InspectorControls, { group: "advanced", children: [
-        hasResolvedCanUserUpdateNavigationMenu && canUserUpdateNavigationMenu && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(NavigationMenuNameControl, {}),
-        hasResolvedCanUserDeleteNavigationMenu && canUserDeleteNavigationMenu && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-          NavigationMenuDeleteControl,
-          {
-            onDelete: () => {
-              replaceInnerBlocks(clientId, []);
-              showNavigationMenuStatusNotice(
-                (0, import_i18n142.__)(
-                  "Navigation Menu successfully deleted."
-                )
-              );
+      /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_core_data49.EntityProvider, { kind: "postType", type: "wp_navigation", id: ref, children: /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_block_editor159.RecursionProvider, { uniqueId: recursionId, children: [
+        blockEditingMode === "contentOnly" && isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(NavigationAddPageButton, { clientId }),
+        blockEditingMode === "default" && isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_block_editor159.InspectorControls, { group: "advanced", children: [
+          hasResolvedCanUserUpdateNavigationMenu && canUserUpdateNavigationMenu && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(NavigationMenuNameControl, {}),
+          hasResolvedCanUserDeleteNavigationMenu && canUserDeleteNavigationMenu && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+            NavigationMenuDeleteControl,
+            {
+              onDelete: () => {
+                replaceInnerBlocks(clientId, []);
+                showNavigationMenuStatusNotice(
+                  (0, import_i18n142.__)(
+                    "Navigation Menu successfully deleted."
+                  )
+                );
+              }
             }
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-          manage_menus_button_default,
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+            manage_menus_button_default,
+            {
+              disabled: isManageMenusButtonDisabled,
+              className: "wp-block-navigation-manage-menus-button"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
+          TagName2,
           {
-            disabled: isManageMenusButtonDisabled,
-            className: "wp-block-navigation-manage-menus-button"
+            ...blockProps,
+            "aria-describedby": !isPlaceholder && !isLoading ? accessibleDescriptionId : void 0,
+            children: [
+              isLoading && !isHiddenByDefault && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("div", { className: "wp-block-navigation__loading-indicator-container", children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_components94.Spinner, { className: "wp-block-navigation__loading-indicator" }) }),
+              (!isLoading || isHiddenByDefault) && /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                  AccessibleMenuDescription,
+                  {
+                    id: accessibleDescriptionId
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                  ResponsiveWrapper,
+                  {
+                    id: clientId,
+                    onToggle: setResponsiveMenuVisibility,
+                    hasIcon,
+                    icon: icon4,
+                    isOpen: isResponsiveMenuOpen,
+                    isResponsive,
+                    isHiddenByDefault,
+                    overlayBackgroundColor,
+                    overlayTextColor,
+                    overlay,
+                    onNavigateToEntityRecord,
+                    children: isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                      NavigationInnerBlocks,
+                      {
+                        clientId,
+                        hasCustomPlaceholder: !!CustomPlaceholder,
+                        templateLock,
+                        orientation
+                      }
+                    )
+                  }
+                )
+              ] })
+            ]
           }
         )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
-        TagName2,
-        {
-          ...blockProps,
-          "aria-describedby": !isPlaceholder && !isLoading ? accessibleDescriptionId : void 0,
-          children: [
-            isLoading && !isHiddenByDefault && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("div", { className: "wp-block-navigation__loading-indicator-container", children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_components94.Spinner, { className: "wp-block-navigation__loading-indicator" }) }),
-            (!isLoading || isHiddenByDefault) && /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                AccessibleMenuDescription,
-                {
-                  id: accessibleDescriptionId
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                ResponsiveWrapper,
-                {
-                  id: clientId,
-                  onToggle: setResponsiveMenuVisibility,
-                  hasIcon,
-                  icon: icon4,
-                  isOpen: isResponsiveMenuOpen,
-                  isResponsive,
-                  isHiddenByDefault,
-                  overlayBackgroundColor,
-                  overlayTextColor,
-                  overlay,
-                  onNavigateToEntityRecord,
-                  children: isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                    NavigationInnerBlocks,
-                    {
-                      clientId,
-                      hasCustomPlaceholder: !!CustomPlaceholder,
-                      templateLock,
-                      orientation
-                    }
-                  )
-                }
-              )
-            ] })
-          ]
-        }
-      )
-    ] }) });
+      ] }) })
+    ] });
   }
   var edit_default20 = (0, import_block_editor159.withColors)(
     { textColor: "color" },
