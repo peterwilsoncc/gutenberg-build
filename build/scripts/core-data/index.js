@@ -3890,6 +3890,7 @@ var wp;
   }
 
   // packages/core-data/build-module/private-selectors.mjs
+  var EMPTY_OBJECT = {};
   function getUndoManager(state) {
     return getSyncManager()?.undoManager ?? state.undoManager;
   }
@@ -3959,10 +3960,16 @@ var wp;
         ).getDefaultTemplateId({
           slug: "front-page"
         });
-        if (!frontPageTemplateId) {
-          return null;
+        if (frontPageTemplateId) {
+          return {
+            postType: "wp_template",
+            postId: frontPageTemplateId
+          };
         }
-        return { postType: "wp_template", postId: frontPageTemplateId };
+        if (frontPageTemplateId === "") {
+          return EMPTY_OBJECT;
+        }
+        return null;
       },
       (state) => [
         // Even though getDefaultTemplateId.shouldInvalidate returns true when root/site changes,
@@ -4052,7 +4059,7 @@ var wp;
   }
 
   // packages/core-data/build-module/selectors.mjs
-  var EMPTY_OBJECT = {};
+  var EMPTY_OBJECT2 = {};
   var isRequestingEmbedPreview = (0, import_data10.createRegistrySelector)(
     (select5) => (state, url) => {
       return select5(STORE_NAME).isResolving("getEmbedPreview", [
@@ -4436,7 +4443,7 @@ var wp;
     return state.currentGlobalStylesId;
   }
   function getThemeSupports(state) {
-    return getCurrentTheme(state)?.theme_supports ?? EMPTY_OBJECT;
+    return getCurrentTheme(state)?.theme_supports ?? EMPTY_OBJECT2;
   }
   function getEmbedPreview(state, url) {
     return state.embedPreviews[url];
@@ -6418,10 +6425,10 @@ var wp;
     });
     await resolveSelect2.getEntitiesConfig("postType");
     const id = window?.__experimentalTemplateActivate ? template?.wp_id || template?.id : template?.id;
-    if (id) {
-      template.id = id;
-      registry.batch(() => {
-        dispatch3.receiveDefaultTemplateId(query, id);
+    registry.batch(() => {
+      dispatch3.receiveDefaultTemplateId(query, id || "");
+      if (id) {
+        template.id = id;
         dispatch3.receiveEntityRecords(
           "postType",
           template.type,
@@ -6432,8 +6439,8 @@ var wp;
           template.type,
           id
         ]);
-      });
-    }
+      }
+    });
   };
   getDefaultTemplateId2.shouldInvalidate = (action) => {
     return action.type === "RECEIVE_ITEMS" && action.kind === "root" && action.name === "site";
@@ -6997,7 +7004,7 @@ var wp;
   }));
 
   // packages/core-data/build-module/hooks/use-entity-record.mjs
-  var EMPTY_OBJECT2 = {};
+  var EMPTY_OBJECT3 = {};
   function useEntityRecord(kind, name, recordId, options = { enabled: true }) {
     const { editEntityRecord: editEntityRecord2, saveEditedEntityRecord: saveEditedEntityRecord2 } = (0, import_data12.useDispatch)(store);
     const mutations = (0, import_element3.useMemo)(
@@ -7014,9 +7021,9 @@ var wp;
       (select5) => {
         if (!options.enabled) {
           return {
-            editedRecord: EMPTY_OBJECT2,
+            editedRecord: EMPTY_OBJECT3,
             hasEdits: false,
-            edits: EMPTY_OBJECT2
+            edits: EMPTY_OBJECT3
           };
         }
         return {
