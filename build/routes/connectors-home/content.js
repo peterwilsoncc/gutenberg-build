@@ -1297,23 +1297,21 @@ function ApiKeyConnector({
 }
 function registerDefaultConnectors() {
   const connectors = getConnectorData();
-  const sanitize = (s) => s.replace(/[^a-z0-9-]/gi, "-");
+  const sanitize = (s) => s.replace(/[^a-z0-9-_]/gi, "-");
   for (const [connectorId, data] of Object.entries(connectors)) {
     const { authentication } = data;
-    if (data.type !== "ai_provider" || authentication.method !== "api_key") {
-      continue;
-    }
-    const connectorName = `${sanitize(data.type)}/${sanitize(
-      connectorId
-    )}`;
-    registerConnector(connectorName, {
+    const connectorName = sanitize(connectorId);
+    const args = {
       name: data.name,
       description: data.description,
       logo: getConnectorLogo(connectorId, data.logoUrl),
       authentication,
-      plugin: data.plugin,
-      render: ApiKeyConnector
-    });
+      plugin: data.plugin
+    };
+    if (data.type === "ai_provider" && authentication.method === "api_key") {
+      args.render = ApiKeyConnector;
+    }
+    registerConnector(connectorName, args);
   }
 }
 
@@ -1564,7 +1562,10 @@ function ConnectorsPage() {
     }),
     []
   );
-  const isEmpty = connectors.length === 0;
+  const renderableConnectors = connectors.filter(
+    (connector) => connector.render
+  );
+  const isEmpty = renderableConnectors.length === 0;
   return /* @__PURE__ */ React.createElement(
     page_default,
     {
