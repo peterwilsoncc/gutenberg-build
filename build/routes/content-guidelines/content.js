@@ -1634,7 +1634,7 @@ var page_default = Page;
 // routes/content-guidelines/stage.tsx
 var import_i18n56 = __toESM(require_i18n());
 var import_element77 = __toESM(require_element());
-var import_components60 = __toESM(require_components());
+var import_components61 = __toESM(require_components());
 
 // routes/content-guidelines/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='06fa57533d']")) {
@@ -19633,7 +19633,7 @@ function isValidGuidelinesImport(data) {
   return !!data && typeof data === "object" && "guideline_categories" in data && typeof data.guideline_categories === "object" && data.guideline_categories !== null;
 }
 async function fetchContentGuidelines() {
-  const { setFromResponse } = (0, import_data7.dispatch)(STORE_NAME);
+  const { setFromResponse } = (0, import_data7.dispatch)(store);
   const response = await (0, import_api_fetch.default)({
     path: "/wp/v2/content-guidelines?context=edit"
   });
@@ -19641,8 +19641,8 @@ async function fetchContentGuidelines() {
   return response;
 }
 async function saveContentGuidelines() {
-  const { setFromResponse } = (0, import_data7.dispatch)(STORE_NAME);
-  const guidelinesStore = (0, import_data7.select)(STORE_NAME);
+  const { setFromResponse } = (0, import_data7.dispatch)(store);
+  const guidelinesStore = (0, import_data7.select)(store);
   const id = guidelinesStore.getId();
   const status = guidelinesStore.getStatus() || "draft";
   const categories = guidelinesStore.getAllGuidelines();
@@ -19684,7 +19684,9 @@ async function saveContentGuidelines() {
   return response;
 }
 async function importContentGuidelines(file) {
-  const { setGuideline, setBlockGuideline } = (0, import_data7.dispatch)(STORE_NAME);
+  const { setGuideline, setBlockGuideline } = (0, import_data7.dispatch)(
+    store
+  );
   const { createSuccessNotice } = (0, import_data7.dispatch)(import_notices.store);
   const parsed = JSON.parse(await file.text());
   if (!isValidGuidelinesImport(parsed)) {
@@ -19694,7 +19696,7 @@ async function importContentGuidelines(file) {
       )
     );
   }
-  const guidelinesStore = (0, import_data7.select)(STORE_NAME);
+  const guidelinesStore = (0, import_data7.select)(store);
   const previousCategories = guidelinesStore.getAllGuidelines();
   const previousBlocks = { ...guidelinesStore.getBlockGuidelines() };
   const { guideline_categories: contentGuidelinesCategories } = parsed;
@@ -19733,7 +19735,7 @@ async function importContentGuidelines(file) {
 }
 function exportContentGuidelines() {
   const { createSuccessNotice } = (0, import_data7.dispatch)(import_notices.store);
-  const guidelinesStore = (0, import_data7.select)(STORE_NAME);
+  const guidelinesStore = (0, import_data7.select)(store);
   const contentGuidelinesCategories = guidelinesStore.getAllGuidelines();
   const blockGuidelines = guidelinesStore.getBlockGuidelines();
   const data = {
@@ -19804,15 +19806,14 @@ function GuidelineAccordionForm({
   headingId,
   descriptionId
 }) {
-  const { setGuideline } = (0, import_data8.useDispatch)(STORE_NAME);
+  const { setGuideline } = (0, import_data8.useDispatch)(store);
   const { createSuccessNotice } = (0, import_data8.useDispatch)(import_notices2.store);
   const [loading, setLoading] = (0, import_element72.useState)(false);
   const [error, setError] = (0, import_element72.useState)(null);
   const [showClearConfirmation, setShowClearConfirmation] = (0, import_element72.useState)(false);
   const { value } = (0, import_data8.useSelect)(
     (select2) => ({
-      // @ts-ignore
-      value: select2(STORE_NAME).getGuideline(slug)
+      value: select2(store).getGuideline(slug)
     }),
     [slug]
   );
@@ -20005,8 +20006,7 @@ function BlockGuidelineModal({
   const [error, setError] = (0, import_element73.useState)(null);
   const [showRemoveConfirmation, setShowRemoveConfirmation] = (0, import_element73.useState)(false);
   const blockGuidelines = (0, import_data9.useSelect)(
-    // @ts-ignore
-    (select2) => select2(STORE_NAME).getBlockGuidelines(),
+    (select2) => select2(store).getBlockGuidelines(),
     []
   );
   const isEditing = !!initialBlock;
@@ -20036,7 +20036,7 @@ function BlockGuidelineModal({
     () => blockOptions.find((block) => block.name === selectedBlock)?.title || "",
     [blockOptions, selectedBlock]
   );
-  const { setBlockGuideline } = (0, import_data9.useDispatch)(STORE_NAME);
+  const { setBlockGuideline } = (0, import_data9.useDispatch)(store);
   const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices3.store);
   const handleSave = (value) => {
     value = value.trim();
@@ -20222,8 +20222,7 @@ function BlockGuidelines() {
   );
   const { createSuccessNotice } = (0, import_data10.useDispatch)(import_notices4.store);
   const blockGuidelines = (0, import_data10.useSelect)(
-    // @ts-ignore
-    (select2) => select2(STORE_NAME).getBlockGuidelines(),
+    (select2) => select2(store).getBlockGuidelines(),
     []
   );
   const blockTypes = (0, import_data10.useSelect)(
@@ -20240,7 +20239,7 @@ function BlockGuidelines() {
     })),
     [blockGuidelines, blockTypes]
   );
-  const { setBlockGuideline } = (0, import_data10.useDispatch)(STORE_NAME);
+  const { setBlockGuideline } = (0, import_data10.useDispatch)(store);
   const handleRowClick = (id) => {
     setSelectedItem(id);
     setIsOpen(true);
@@ -20372,9 +20371,67 @@ function BlockGuidelines() {
 }
 
 // routes/content-guidelines/components/actions-section.tsx
-var import_components58 = __toESM(require_components());
+var import_components59 = __toESM(require_components());
 var import_i18n54 = __toESM(require_i18n());
 var import_element75 = __toESM(require_element());
+
+// routes/content-guidelines/components/action-item.tsx
+var import_components58 = __toESM(require_components());
+function ActionItem({
+  slug,
+  title,
+  description,
+  buttonLabel,
+  ariaLabel,
+  onClick,
+  disabled,
+  isBusy
+}) {
+  const descriptionId = `content-guidelines-action-${slug}-description`;
+  return /* @__PURE__ */ React.createElement("li", { className: "content-guidelines__action-list-item" }, /* @__PURE__ */ React.createElement(
+    import_components58.__experimentalHStack,
+    {
+      justify: "space-between",
+      className: "content-guidelines__action-row"
+    },
+    /* @__PURE__ */ React.createElement(import_components58.__experimentalVStack, { spacing: 1 }, /* @__PURE__ */ React.createElement(
+      import_components58.__experimentalHeading,
+      {
+        level: 3,
+        size: 13,
+        weight: 400,
+        className: "content-guidelines__action-title"
+      },
+      title
+    ), /* @__PURE__ */ React.createElement(
+      import_components58.__experimentalText,
+      {
+        id: descriptionId,
+        size: 13,
+        weight: 400,
+        variant: "muted",
+        className: "content-guidelines__action-description"
+      },
+      description
+    )),
+    /* @__PURE__ */ React.createElement(
+      import_components58.Button,
+      {
+        size: "compact",
+        variant: "secondary",
+        className: "content-guidelines__action-button",
+        "aria-label": ariaLabel,
+        "aria-describedby": descriptionId,
+        onClick,
+        isBusy,
+        disabled
+      },
+      buttonLabel
+    )
+  ));
+}
+
+// routes/content-guidelines/components/actions-section.tsx
 var import_jsx_runtime121 = __toESM(require_jsx_runtime());
 function getErrorMessage(error) {
   if (error instanceof Error) {
@@ -20385,31 +20442,8 @@ function getErrorMessage(error) {
   }
   return (0, import_i18n54.__)("Unknown error.");
 }
-var ACTIONS = [
-  {
-    slug: "import",
-    title: (0, import_i18n54.__)("Import"),
-    description: (0, import_i18n54.__)("Upload a JSON file to import your guidelines."),
-    buttonLabel: (0, import_i18n54.__)("Upload"),
-    ariaLabel: (0, import_i18n54.__)("Import guidelines")
-  },
-  {
-    slug: "export",
-    title: (0, import_i18n54.__)("Export"),
-    description: (0, import_i18n54.__)("Export your guidelines to a JSON file."),
-    buttonLabel: (0, import_i18n54.__)("Download"),
-    ariaLabel: (0, import_i18n54.__)("Export guidelines")
-  },
-  {
-    slug: "revert",
-    title: (0, import_i18n54.__)("Revert"),
-    description: (0, import_i18n54.__)("Use a previous version of your guidelines."),
-    buttonLabel: (0, import_i18n54.__)("View history"),
-    ariaLabel: (0, import_i18n54.__)("View history of guidelines")
-  }
-];
 function ActionsSection() {
-  const { goTo } = (0, import_components58.useNavigator)();
+  const { goTo } = (0, import_components59.useNavigator)();
   const fileInputRef = (0, import_element75.useRef)(null);
   const [isImporting, setIsImporting] = (0, import_element75.useState)(false);
   const [error, setError] = (0, import_element75.useState)(null);
@@ -20461,17 +20495,36 @@ function ActionsSection() {
       );
     }
   }
-  const buttonProps = {
-    import: {
+  const ACTIONS = [
+    {
+      slug: "import",
+      title: (0, import_i18n54.__)("Import"),
+      description: (0, import_i18n54.__)("Upload a JSON file to import your guidelines."),
+      buttonLabel: (0, import_i18n54.__)("Upload"),
+      ariaLabel: (0, import_i18n54.__)("Import guidelines"),
       onClick: handleImportClick,
       isBusy: isImporting,
       disabled: isImporting || !!pendingImport
     },
-    export: { onClick: handleExportClick },
-    revert: { onClick: () => goTo("/revision-history") }
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_components58.__experimentalVStack, { spacing: 4, className: "content-guidelines__actions", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components58.__experimentalHeading, { level: 3, size: 15, weight: 500, children: (0, import_i18n54.__)("Actions") }),
+    {
+      slug: "export",
+      title: (0, import_i18n54.__)("Export"),
+      description: (0, import_i18n54.__)("Export your guidelines to a JSON file."),
+      buttonLabel: (0, import_i18n54.__)("Download"),
+      ariaLabel: (0, import_i18n54.__)("Export guidelines"),
+      onClick: handleExportClick
+    },
+    {
+      slug: "revert",
+      title: (0, import_i18n54.__)("Revert"),
+      description: (0, import_i18n54.__)("Use a previous version of your guidelines."),
+      buttonLabel: (0, import_i18n54.__)("View history"),
+      ariaLabel: (0, import_i18n54.__)("View history of guidelines"),
+      onClick: () => goTo("/revision-history")
+    }
+  ];
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_components59.__experimentalVStack, { spacing: 4, className: "content-guidelines__actions", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components59.__experimentalHeading, { level: 3, size: 15, weight: 500, children: (0, import_i18n54.__)("Actions") }),
     /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
       "input",
       {
@@ -20483,7 +20536,7 @@ function ActionsSection() {
       }
     ),
     error && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-      import_components58.Notice,
+      import_components59.Notice,
       {
         status: "error",
         onRemove: () => setError(null),
@@ -20491,83 +20544,30 @@ function ActionsSection() {
         children: error
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components58.Card, { className: "content-guidelines__actions-card", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("ul", { role: "list", className: "content-guidelines__actions-list", children: ACTIONS.map((action) => {
-      const descriptionId = `content-guidelines-action-${action.slug}-description`;
-      return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-        "li",
-        {
-          className: "content-guidelines__action-list-item",
-          children: /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
-            import_components58.__experimentalHStack,
-            {
-              justify: "space-between",
-              className: "content-guidelines__action-row",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_components58.__experimentalVStack, { spacing: 1, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                    import_components58.__experimentalHeading,
-                    {
-                      level: 3,
-                      size: 13,
-                      weight: 400,
-                      className: "content-guidelines__action-title",
-                      children: action.title
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                    import_components58.__experimentalText,
-                    {
-                      id: descriptionId,
-                      size: 13,
-                      weight: 400,
-                      variant: "muted",
-                      className: "content-guidelines__action-description",
-                      children: action.description
-                    }
-                  )
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                  import_components58.Button,
-                  {
-                    size: "compact",
-                    variant: "secondary",
-                    className: "content-guidelines__action-button",
-                    "aria-label": action.ariaLabel,
-                    "aria-describedby": descriptionId,
-                    ...buttonProps[action.slug] ?? {},
-                    children: action.buttonLabel
-                  }
-                )
-              ]
-            }
-          )
-        },
-        action.slug
-      );
-    }) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components59.Card, { className: "content-guidelines__actions-card", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("ul", { role: "list", className: "content-guidelines__actions-list", children: ACTIONS.map((action) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(ActionItem, { ...action }, action.slug)) }) }),
     pendingImport && /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
-      import_components58.Modal,
+      import_components59.Modal,
       {
         title: (0, import_i18n54.__)("Import guidelines"),
         onRequestClose: () => setPendingImport(null),
         size: "medium",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_components58.__experimentalVStack, { spacing: 4, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components58.__experimentalText, { size: 13, weight: 400, children: (0, import_i18n54.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_components59.__experimentalVStack, { spacing: 4, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components59.__experimentalText, { size: 13, weight: 400, children: (0, import_i18n54.__)(
               "Importing new guidelines will replace your current guidelines."
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components58.__experimentalText, { size: 13, weight: 400, children: (0, import_i18n54.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components59.__experimentalText, { size: 13, weight: 400, children: (0, import_i18n54.__)(
               "This can be undone from revision history."
             ) })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
-            import_components58.__experimentalHStack,
+            import_components59.__experimentalHStack,
             {
               justify: "flex-end",
               className: "content-guidelines__import-modal-actions",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                  import_components58.Button,
+                  import_components59.Button,
                   {
                     variant: "tertiary",
                     onClick: () => setPendingImport(null),
@@ -20575,7 +20575,7 @@ function ActionsSection() {
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                  import_components58.Button,
+                  import_components59.Button,
                   {
                     variant: "primary",
                     onClick: handleModalContinue,
@@ -20593,7 +20593,7 @@ function ActionsSection() {
 }
 
 // routes/content-guidelines/components/revision-history.tsx
-var import_components59 = __toESM(require_components());
+var import_components60 = __toESM(require_components());
 var import_i18n55 = __toESM(require_i18n());
 var import_element76 = __toESM(require_element());
 var import_data11 = __toESM(require_data());
@@ -20622,7 +20622,7 @@ function RevisionHistory() {
   const [refetchKey, setRefetchKey] = (0, import_element76.useState)(0);
   const { createSuccessNotice, createErrorNotice } = (0, import_data11.useDispatch)(import_notices5.store);
   const guidelinesId = (0, import_data11.useSelect)(
-    (select2) => select2(STORE_NAME).getId(),
+    (select2) => select2(store).getId(),
     []
   );
   (0, import_element76.useEffect)(() => {
@@ -20730,14 +20730,14 @@ function RevisionHistory() {
     }
   }
   return /* @__PURE__ */ React.createElement("div", { className: "content-guidelines__revision-history" }, /* @__PURE__ */ React.createElement(
-    import_components59.Navigator.BackButton,
+    import_components60.Navigator.BackButton,
     {
       icon: (0, import_i18n55.isRTL)() ? chevron_right_default : chevron_left_default,
       className: "content-guidelines__revision-history-back"
     },
     (0, import_i18n55.__)("Revision history")
   ), /* @__PURE__ */ React.createElement(
-    import_components59.__experimentalText,
+    import_components60.__experimentalText,
     {
       size: 13,
       weight: 400,
@@ -20759,13 +20759,13 @@ function RevisionHistory() {
       getItemId: (item) => String(item.id)
     }
   ), revisionToRestore && /* @__PURE__ */ React.createElement(
-    import_components59.Modal,
+    import_components60.Modal,
     {
       title: (0, import_i18n55.__)("Restore guidelines"),
       onRequestClose: () => setRevisionToRestore(null),
       size: "medium"
     },
-    /* @__PURE__ */ React.createElement(import_components59.__experimentalVStack, { spacing: 4 }, /* @__PURE__ */ React.createElement(import_components59.__experimentalText, { size: 13, weight: 400 }, (0, import_i18n55.sprintf)(
+    /* @__PURE__ */ React.createElement(import_components60.__experimentalVStack, { spacing: 4 }, /* @__PURE__ */ React.createElement(import_components60.__experimentalText, { size: 13, weight: 400 }, (0, import_i18n55.sprintf)(
       /* translators: %s: formatted revision date */
       (0, import_i18n55.__)(
         "You are about to restore the guidelines from %s."
@@ -20774,17 +20774,17 @@ function RevisionHistory() {
         (0, import_date9.getSettings)().formats.datetimeAbbreviated,
         (0, import_date9.getDate)(revisionToRestore.date)
       )
-    )), /* @__PURE__ */ React.createElement(import_components59.__experimentalText, { size: 13, weight: 400 }, (0, import_i18n55.__)(
+    )), /* @__PURE__ */ React.createElement(import_components60.__experimentalText, { size: 13, weight: 400 }, (0, import_i18n55.__)(
       "You can undo this anytime from revision history."
     ))),
     /* @__PURE__ */ React.createElement(
-      import_components59.__experimentalHStack,
+      import_components60.__experimentalHStack,
       {
         justify: "flex-end",
         className: "content-guidelines__restore-modal-actions"
       },
       /* @__PURE__ */ React.createElement(
-        import_components59.Button,
+        import_components60.Button,
         {
           variant: "tertiary",
           onClick: () => setRevisionToRestore(null)
@@ -20792,7 +20792,7 @@ function RevisionHistory() {
         (0, import_i18n55.__)("Cancel")
       ),
       /* @__PURE__ */ React.createElement(
-        import_components59.Button,
+        import_components60.Button,
         {
           variant: "primary",
           onClick: handleRestore,
@@ -20857,7 +20857,7 @@ function ContentGuidelinesPage() {
         "Set content standards that guide your team, inform plugins, and help AI tools generate content that matches your site's voice and requirements."
       ),
       children: [
-        error && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("div", { className: "content-guidelines__content", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components60.Notice, { status: "error", isDismissible: false, children: [
+        error && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("div", { className: "content-guidelines__content", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components61.Notice, { status: "error", isDismissible: false, children: [
           /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("strong", { children: (0, import_i18n56.sprintf)(
             /* translators: %s: Error message. */
             (0, import_i18n56.__)("Error loading guidelines: %s"),
@@ -20867,8 +20867,8 @@ function ContentGuidelinesPage() {
             "Please try again. If the problem persists, contact support."
           ) })
         ] }) }),
-        loading ? /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("div", { className: "content-guidelines__loading", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components60.Spinner, {}) }) : !error && /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components60.Navigator, { initialPath: "/", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components60.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components60.__experimentalVStack, { className: "content-guidelines__content", children: [
+        loading ? /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("div", { className: "content-guidelines__loading", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components61.Spinner, {}) }) : !error && /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components61.Navigator, { initialPath: "/", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components61.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components61.__experimentalVStack, { className: "content-guidelines__content", children: [
             /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
               "ul",
               {
@@ -20909,7 +20909,7 @@ function ContentGuidelinesPage() {
             ),
             /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(ActionsSection, {})
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components60.Navigator.Screen, { path: "/revision-history", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(RevisionHistory, {}) })
+          /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components61.Navigator.Screen, { path: "/revision-history", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(RevisionHistory, {}) })
         ] })
       ]
     }
