@@ -1144,17 +1144,16 @@ var ConnectedBadge = () => /* @__PURE__ */ React.createElement(
 );
 var UnavailableActionBadge = () => /* @__PURE__ */ React.createElement(Badge, null, (0, import_i18n2.__)("Not available"));
 function ApiKeyConnector({
-  label,
+  name,
   description,
-  pluginSlug,
-  settingName,
-  helpUrl,
-  icon,
-  isInstalled,
-  isActivated,
-  keySource: initialKeySource,
-  initialIsConnected
+  logo,
+  authentication,
+  plugin
 }) {
+  const auth = authentication?.method === "api_key" ? authentication : void 0;
+  const settingName = auth?.settingName ?? "";
+  const helpUrl = auth?.credentialsUrl ?? void 0;
+  const pluginSlug = plugin?.slug;
   let helpLabel;
   try {
     if (helpUrl) {
@@ -1179,11 +1178,11 @@ function ApiKeyConnector({
   } = useConnectorPlugin({
     pluginSlug,
     settingName,
-    connectorName: label,
-    isInstalled,
-    isActivated,
-    keySource: initialKeySource,
-    initialIsConnected
+    connectorName: name,
+    isInstalled: plugin?.isInstalled,
+    isActivated: plugin?.isActivated,
+    keySource: auth?.keySource,
+    initialIsConnected: auth?.isConnected
   });
   const isExternallyConfigured = keySource === "env" || keySource === "constant";
   const showUnavailableBadge = pluginStatus === "not-installed" && canInstallPlugins === false || pluginStatus === "inactive" && canActivatePlugins === false;
@@ -1206,8 +1205,8 @@ function ApiKeyConnector({
     ConnectorItem,
     {
       className: pluginSlug ? `connector-item--${pluginSlug}` : void 0,
-      icon,
-      name: label,
+      logo,
+      name,
       description,
       actionArea: /* @__PURE__ */ React.createElement(import_components2.__experimentalHStack, { spacing: 3, expanded: false }, isConnected && /* @__PURE__ */ React.createElement(ConnectedBadge, null), showUnavailableBadge && /* @__PURE__ */ React.createElement(UnavailableActionBadge, null), showActionButton && /* @__PURE__ */ React.createElement(
         import_components2.Button,
@@ -1260,22 +1259,12 @@ function registerDefaultConnectors() {
       connectorId
     )}`;
     registerConnector(connectorName, {
-      label: data.name,
+      name: data.name,
       description: data.description,
-      icon: getConnectorLogo(connectorId, data.logoUrl),
-      render: (props) => /* @__PURE__ */ React.createElement(
-        ApiKeyConnector,
-        {
-          ...props,
-          pluginSlug: data.plugin?.slug,
-          settingName: authentication.settingName,
-          helpUrl: authentication.credentialsUrl ?? void 0,
-          isInstalled: data.plugin?.isInstalled,
-          isActivated: data.plugin?.isActivated,
-          keySource: authentication.keySource,
-          initialIsConnected: authentication.isConnected
-        }
-      )
+      logo: getConnectorLogo(connectorId, data.logoUrl),
+      authentication,
+      plugin: data.plugin,
+      render: ApiKeyConnector
     });
   }
 }
@@ -1560,9 +1549,11 @@ function ConnectorsPage() {
             {
               key: connector.slug,
               slug: connector.slug,
-              label: connector.label,
+              name: connector.name,
               description: connector.description,
-              icon: connector.icon
+              logo: connector.logo,
+              authentication: connector.authentication,
+              plugin: connector.plugin
             }
           );
         }
