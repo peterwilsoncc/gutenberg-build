@@ -2129,9 +2129,9 @@ var wp;
 
   // packages/ui/build-module/badge/badge.mjs
   var import_element3 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d16010fae9']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='a407d6dd3d']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "d16010fae9");
+    style.setAttribute("data-wp-hash", "a407d6dd3d");
     style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._96e6251aad1a6136__badge{border-radius:var(--wpds-border-radius-lg,8px);font-family:var(--wpds-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-font-size-sm,12px);font-weight:var(--wpds-font-weight-regular,400);line-height:var(--wpds-font-line-height-xs,16px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._99f7158cb520f750__is-high-intent{background-color:var(--wpds-color-bg-surface-error,#f6e6e3);color:var(--wpds-color-fg-content-error,#470000)}.c20ebef2365bc8b7__is-medium-intent{background-color:var(--wpds-color-bg-surface-warning,#fde6bd);color:var(--wpds-color-fg-content-warning,#2e1900)}._365e1626c6202e52__is-low-intent{background-color:var(--wpds-color-bg-surface-caution,#fee994);color:var(--wpds-color-fg-content-caution,#281d00)}._33f8198127ddf4ef__is-stable-intent{background-color:var(--wpds-color-bg-surface-success,#c5f7cc);color:var(--wpds-color-fg-content-success,#002900)}._04c1aca8fc449412__is-informational-intent{background-color:var(--wpds-color-bg-surface-info,#deebfa);color:var(--wpds-color-fg-content-info,#001b4f)}._90726e69d495ec19__is-draft-intent{background-color:var(--wpds-color-bg-surface-neutral-weak,#f0f0f0);color:var(--wpds-color-fg-content-neutral,#1e1e1e)}._898f4a544993bd39__is-none-intent{background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#d8d8d8);color:var(--wpds-color-fg-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}}'));
     document.head.appendChild(style);
   }
@@ -2523,9 +2523,9 @@ var wp;
 
   // packages/ui/build-module/stack/stack.mjs
   var import_element5 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b51ff41489']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "71d20935c2");
+    style.setAttribute("data-wp-hash", "b51ff41489");
     style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
     document.head.appendChild(style);
   }

@@ -1353,9 +1353,9 @@ var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primit
 
 // packages/ui/build-module/stack/stack.mjs
 var import_element2 = __toESM(require_element(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b51ff41489']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "71d20935c2");
+  style.setAttribute("data-wp-hash", "b51ff41489");
   style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
   document.head.appendChild(style);
 }
@@ -17658,9 +17658,9 @@ var AddNavigationModal = ({
 };
 
 // routes/navigation-list/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='4cd54e4f28']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='da39a3ee5e']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "4cd54e4f28");
+  style.setAttribute("data-wp-hash", "da39a3ee5e");
   style.appendChild(document.createTextNode(""));
   document.head.appendChild(style);
 }

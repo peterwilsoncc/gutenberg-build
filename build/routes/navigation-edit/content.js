@@ -628,9 +628,9 @@ var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_
 
 // packages/ui/build-module/stack/stack.mjs
 var import_element2 = __toESM(require_element(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b51ff41489']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "71d20935c2");
+  style.setAttribute("data-wp-hash", "b51ff41489");
   style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
   document.head.appendChild(style);
 }
@@ -764,9 +764,9 @@ var import_components4 = __toESM(require_components());
 import { useEditorAssets } from "@wordpress/lazy-editor";
 
 // routes/navigation-edit/editor/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='023c02af3d']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='ab713497c1']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "023c02af3d");
+  style.setAttribute("data-wp-hash", "ab713497c1");
   style.appendChild(document.createTextNode(".navigation-edit-editor__hidden-blocks{display:none}"));
   document.head.appendChild(style);
 }
