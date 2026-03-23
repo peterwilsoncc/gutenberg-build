@@ -6926,6 +6926,39 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   padding: 8px;
 }
 
+.editor-template-actions-panel__preview .block-editor-block-preview__container {
+  display: flex;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.editor-template-actions-panel__preview .block-editor-block-preview__container::after {
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+  border-radius: 4px;
+}
+@media not (prefers-reduced-motion) {
+  .editor-template-actions-panel__preview .block-editor-block-preview__container::after {
+    transition: outline 0.1s linear;
+  }
+}
+.editor-template-actions-panel__preview[role=button] {
+  cursor: pointer;
+}
+.editor-template-actions-panel__preview[role=button]:hover .block-editor-block-preview__container::after {
+  outline-color: rgba(0, 0, 0, 0.3);
+}
+.editor-template-actions-panel__preview[role=button]:focus-visible .block-editor-block-preview__container::after {
+  outline-color: var(--wp-admin-theme-color);
+  outline-width: var(--wp-admin-border-width-focus);
+  outline-offset: calc(-1 * var(--wp-admin-border-width-focus));
+}
+
+.editor-template-actions-panel__action {
+  flex: 1;
+  justify-content: center;
+}
+
 textarea.editor-post-text-editor {
   border: 1px solid #949494;
   border-radius: 0;
