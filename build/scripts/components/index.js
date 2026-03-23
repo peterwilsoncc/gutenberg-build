@@ -46298,6 +46298,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)("fieldset", {
       id: id3,
+      role: "radiogroup",
       className: clsx_default(className2, "components-radio-control"),
       "aria-describedby": !!help ? generateHelpId(id3) : void 0,
       children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(component_default2, {
