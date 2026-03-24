@@ -1150,8 +1150,6 @@ var wp;
     [PATTERN_TYPES.user]: (0, import_i18n.__)("Pattern"),
     [NAVIGATION_POST_TYPE]: (0, import_i18n.__)("Navigation")
   };
-  var LAYOUT_GRID = "grid";
-  var LAYOUT_TABLE = "table";
   var LAYOUT_LIST = "list";
   var OPERATOR_IS = "is";
   var OPERATOR_IS_ANY = "isAny";
@@ -22891,8 +22889,8 @@ var wp;
     asc: arrow_up_default,
     desc: arrow_down_default
   };
-  var LAYOUT_TABLE2 = "table";
-  var LAYOUT_GRID2 = "grid";
+  var LAYOUT_TABLE = "table";
+  var LAYOUT_GRID = "grid";
   var LAYOUT_LIST2 = "list";
   var LAYOUT_ACTIVITY = "activity";
   var LAYOUT_PICKER_GRID = "pickerGrid";
@@ -22900,7 +22898,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-context/index.mjs
   var DataViewsContext = (0, import_element59.createContext)({
-    view: { type: LAYOUT_TABLE2 },
+    view: { type: LAYOUT_TABLE },
     onChangeView: () => {
     },
     fields: [],
@@ -27253,14 +27251,14 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/index.mjs
   var VIEW_LAYOUTS = [
     {
-      type: LAYOUT_TABLE2,
+      type: LAYOUT_TABLE,
       label: (0, import_i18n93.__)("Table"),
       component: table_default,
       icon: block_table_default,
       viewConfigOptions: DensityPicker
     },
     {
-      type: LAYOUT_GRID2,
+      type: LAYOUT_GRID,
       label: (0, import_i18n93.__)("Grid"),
       component: grid_default,
       icon: category_default,
@@ -34542,7 +34540,7 @@ If there's a particular need for this, please submit a feature request at https:
       onClickItem,
       isItemClickable,
       renderItemLink,
-      defaultLayouts: defaultLayouts3,
+      defaultLayouts: defaultLayouts2,
       containerRef,
       empty = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("p", { children: (0, import_i18n100.__)("No results") })
     } = (0, import_element91.useContext)(dataviews_context_default);
@@ -34556,7 +34554,7 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("div", { className: "dataviews-loading", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components107.Spinner, {}) }) });
     }
     const ViewComponent = VIEW_LAYOUTS.find(
-      (v2) => v2.type === view.type && defaultLayouts3[v2.type]
+      (v2) => v2.type === view.type && defaultLayouts2[v2.type]
     )?.component;
     return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
       ViewComponent,
@@ -34596,7 +34594,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = (0, import_element92.useContext)(dataviews_context_default);
     const isRefreshing = !!isLoading && hasInitiallyLoaded && !!data?.length;
     const isDelayedRefreshing = useDelayedLoading(!!isRefreshing);
-    const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data) && [LAYOUT_TABLE2, LAYOUT_GRID2].includes(view.type);
+    const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data) && [LAYOUT_TABLE, LAYOUT_GRID].includes(view.type);
     if (!isRefreshing && (!totalItems || !totalPages || totalPages <= 1 && !hasBulkActions)) {
       return null;
     }
@@ -34686,8 +34684,8 @@ If there's a particular need for this, please submit a feature request at https:
     offset: 9
   };
   function ViewTypeMenu() {
-    const { view, onChangeView, defaultLayouts: defaultLayouts3 } = (0, import_element94.useContext)(dataviews_context_default);
-    const availableLayouts = Object.keys(defaultLayouts3);
+    const { view, onChangeView, defaultLayouts: defaultLayouts2 } = (0, import_element94.useContext)(dataviews_context_default);
+    const availableLayouts = Object.keys(defaultLayouts2);
     if (availableLayouts.length <= 1) {
       return null;
     }
@@ -34735,7 +34733,7 @@ If there's a particular need for this, please submit a feature request at https:
                   return onChangeView({
                     ...viewWithoutLayout,
                     type: e2.target.value,
-                    ...defaultLayouts3[e2.target.value]
+                    ...defaultLayouts2[e2.target.value]
                   });
               }
               (0, import_warning.default)("Invalid dataview");
@@ -38331,7 +38329,7 @@ If there's a particular need for this, please submit a feature request at https:
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-    const defaultLayouts3 = (0, import_element113.useMemo)(
+    const defaultLayouts2 = (0, import_element113.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(
           ([layoutType]) => {
@@ -38343,7 +38341,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [defaultLayoutsProperty]
     );
-    if (!defaultLayouts3[view.type]) {
+    if (!defaultLayouts2[view.type]) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
@@ -38369,7 +38367,7 @@ If there's a particular need for this, please submit a feature request at https:
           containerWidth,
           containerRef,
           resizeObserverRef,
-          defaultLayouts: defaultLayouts3,
+          defaultLayouts: defaultLayouts2,
           filters,
           isShowingFilter,
           setIsShowingFilter,
@@ -44172,31 +44170,6 @@ If there's a particular need for this, please submit a feature request at https:
   var { usePostActions, patternTitleField } = unlock(import_editor32.privateApis);
   var { useLocation: useLocation29, useHistory: useHistory20 } = unlock(import_router33.privateApis);
   var EMPTY_ARRAY11 = [];
-  var defaultLayouts = {
-    [LAYOUT_TABLE]: {
-      layout: {
-        styles: {
-          author: {
-            width: "1%"
-          }
-        }
-      }
-    },
-    [LAYOUT_GRID]: {
-      layout: {
-        badgeFields: ["sync-status"]
-      }
-    }
-  };
-  var DEFAULT_VIEW = {
-    type: LAYOUT_GRID,
-    perPage: 20,
-    titleField: "title",
-    mediaField: "preview",
-    fields: ["sync-status"],
-    filters: [],
-    ...defaultLayouts[LAYOUT_GRID]
-  };
   function usePagePatternsHeader(type, categoryId) {
     const { patternCategories } = usePatternCategories();
     const templatePartAreas = (0, import_data75.useSelect)(
@@ -44224,11 +44197,16 @@ If there's a particular need for this, please submit a feature request at https:
     const { postType: postType2 = "wp_block", categoryId: categoryIdFromURL } = query;
     const history = useHistory20();
     const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
+    const { default_view: defaultView, default_layouts: defaultLayouts2 } = useViewConfig({
+      kind: "postType",
+      name: postType2
+    });
     const { view, updateView, isModified, resetToDefault } = useView({
       kind: "postType",
       name: postType2,
       slug: "default",
-      defaultView: DEFAULT_VIEW,
+      defaultView,
+      defaultLayouts: defaultLayouts2,
       queryParams: {
         page: query.pageNumber,
         search: query.search
@@ -44340,7 +44318,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             view,
             onChangeView: updateView,
-            defaultLayouts,
+            defaultLayouts: defaultLayouts2 ?? {},
             onReset: isModified ? resetToDefault : false
           },
           categoryId + postType2
@@ -45953,7 +45931,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/page-templates/view-utils.mjs
-  var defaultLayouts2 = {
+  var defaultLayouts = {
     table: {
       showMedia: false
     },
@@ -45964,7 +45942,7 @@ If there's a particular need for this, please submit a feature request at https:
       showMedia: false
     }
   };
-  var DEFAULT_VIEW2 = {
+  var DEFAULT_VIEW = {
     type: "grid",
     perPage: 20,
     sort: {
@@ -45976,7 +45954,7 @@ If there's a particular need for this, please submit a feature request at https:
     mediaField: "preview",
     fields: ["author", "active", "slug", "theme"],
     filters: [],
-    ...defaultLayouts2.grid
+    ...defaultLayouts.grid
   };
   function getActiveViewOverridesForTab(activeView) {
     if (activeView === "user") {
@@ -46009,7 +45987,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { activeView = "active", postId } = query;
     const [selection, setSelection] = (0, import_element152.useState)([postId]);
     const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element152.useState)(false);
-    const defaultView = DEFAULT_VIEW2;
+    const defaultView = DEFAULT_VIEW;
     const activeViewOverrides = (0, import_element152.useMemo)(
       () => getActiveViewOverridesForTab(activeView),
       [activeView]
@@ -46267,7 +46245,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               },
               selection,
-              defaultLayouts: defaultLayouts2,
+              defaultLayouts,
               onReset: isModified ? () => {
                 resetToDefault();
                 history.invalidate();
@@ -47629,7 +47607,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { path, query } = useLocation33();
     const { activeView = "active", postId } = query;
     const [selection, setSelection] = (0, import_element157.useState)([postId]);
-    const defaultView = DEFAULT_VIEW2;
+    const defaultView = DEFAULT_VIEW;
     const activeViewOverrides = (0, import_element157.useMemo)(
       () => getActiveViewOverridesForTab(activeView),
       [activeView]
@@ -47736,7 +47714,7 @@ If there's a particular need for this, please submit a feature request at https:
               history.navigate(`/wp_template/${id}?canvas=edit`);
             },
             selection,
-            defaultLayouts: defaultLayouts2,
+            defaultLayouts,
             onReset: isModified ? () => {
               resetToDefault();
               history.invalidate();
@@ -47756,7 +47734,7 @@ If there's a particular need for this, please submit a feature request at https:
       kind: "postType",
       name: "wp_template",
       slug: "default",
-      defaultView: DEFAULT_VIEW2,
+      defaultView: DEFAULT_VIEW,
       activeViewOverrides: getActiveViewOverridesForTab(activeView)
     });
     return view.type === "list";
@@ -48283,7 +48261,7 @@ If there's a particular need for this, please submit a feature request at https:
     const history = useHistory25();
     const {
       default_view: defaultView,
-      default_layouts: defaultLayouts3,
+      default_layouts: defaultLayouts2,
       view_list: viewList
     } = useViewConfig({
       kind: "postType",
@@ -48298,7 +48276,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: postType2,
       slug: "default",
       defaultView,
-      defaultLayouts: defaultLayouts3,
+      defaultLayouts: defaultLayouts2,
       activeViewOverrides,
       queryParams: {
         page: query.pageNumber,
@@ -48508,7 +48486,7 @@ If there's a particular need for this, please submit a feature request at https:
               },
               getItemId,
               getItemLevel,
-              defaultLayouts: defaultLayouts3 ?? {},
+              defaultLayouts: defaultLayouts2 ?? {},
               onReset: isModified ? () => {
                 resetToDefault();
                 history.invalidate();
@@ -48539,14 +48517,14 @@ If there's a particular need for this, please submit a feature request at https:
       "page"
     );
     const defaultView = config2?.default_view;
-    const defaultLayouts3 = config2?.default_layouts;
+    const defaultLayouts2 = config2?.default_layouts;
     const viewEntry = config2?.view_list?.find((v2) => v2.slug === activeView);
     const view = await loadView({
       kind: "postType",
       name: "page",
       slug: "default",
       defaultView,
-      defaultLayouts: defaultLayouts3,
+      defaultLayouts: defaultLayouts2,
       activeViewOverrides: viewEntry?.view ?? {}
     });
     return view.type === "list";

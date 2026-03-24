@@ -4055,7 +4055,11 @@ var wp;
     return state.collaborationSupported;
   }
   function getViewConfig(state, kind, name) {
-    return state.viewConfigs?.[`${kind}/${name}`];
+    return state.viewConfigs?.[`${kind}/${name}`] ?? {
+      default_view: void 0,
+      default_layouts: void 0,
+      view_list: void 0
+    };
   }
 
   // packages/core-data/build-module/selectors.mjs
