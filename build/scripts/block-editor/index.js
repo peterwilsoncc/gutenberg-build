@@ -1775,7 +1775,7 @@ var wp;
             get: function get(key) {
               return values[keys.indexOf(key)];
             },
-            set: function set2(key, value) {
+            set: function set(key, value) {
               if (keys.indexOf(key) === -1) {
                 keys.push(key);
                 values.push(value);
@@ -8228,12 +8228,17 @@ var wp;
   };
   var withBlockReset = (reducer3) => (state, action) => {
     if (action.type === "RESET_BLOCKS") {
-      const newState = reducer3(void 0, {
-        type: "INSERT_BLOCKS",
-        rootClientId: "",
-        blocks: action.blocks
-      });
       const preservedControlledInnerBlocks = state?.controlledInnerBlocks ?? {};
+      const newState = {
+        ...state,
+        byClientId: new Map(
+          getFlattenedBlocksWithoutAttributes(action.blocks)
+        ),
+        attributes: new Map(getFlattenedBlockAttributes(action.blocks)),
+        order: mapBlockOrder(action.blocks),
+        parents: new Map(mapBlockParents(action.blocks)),
+        controlledInnerBlocks: preservedControlledInnerBlocks
+      };
       if (state?.order) {
         for (const clientId of Object.keys(
           preservedControlledInnerBlocks
@@ -8244,24 +8249,23 @@ var wp;
           if (!newState.byClientId.has(clientId)) {
             continue;
           }
-          newState.controlledInnerBlocks[clientId] = true;
           const oldOrder = state.order.get(clientId);
           if (!oldOrder?.length) {
             continue;
           }
           newState.order.set(clientId, oldOrder);
           const preserveBlock = (blockId, parentId) => {
-            const blockData = state.byClientId.get(blockId);
+            const blockData = state.byClientId?.get(blockId);
             if (!blockData) {
               return;
             }
             newState.byClientId.set(blockId, blockData);
             newState.attributes.set(
               blockId,
-              state.attributes.get(blockId)
+              state.attributes?.get(blockId)
             );
             newState.parents.set(blockId, parentId);
-            const childOrder = state.order.get(blockId) || [];
+            const childOrder = state.order?.get(blockId) || [];
             newState.order.set(blockId, childOrder);
             childOrder.forEach(
               (childId) => preserveBlock(childId, blockId)
@@ -8270,39 +8274,35 @@ var wp;
           oldOrder.forEach((id) => preserveBlock(id, clientId));
         }
       }
+      newState.tree = new Map(state?.tree);
+      updateBlockTreeForBlocks(newState, action.blocks);
       for (const clientId of Object.keys(
-        newState.controlledInnerBlocks
+        preservedControlledInnerBlocks
       )) {
+        if (!preservedControlledInnerBlocks[clientId]) {
+          continue;
+        }
+        if (!newState.byClientId.has(clientId)) {
+          continue;
+        }
         const controlledOrder = newState.order.get(clientId);
         if (!controlledOrder?.length) {
           continue;
         }
         const innerBlocks = controlledOrder.map(
-          (id) => state.tree.get(id)
+          (id) => newState.tree.get(id)
         );
         const existingEntry = newState.tree.get(clientId);
         if (existingEntry) {
           existingEntry.innerBlocks = innerBlocks;
         }
         newState.tree.set("controlled||" + clientId, { innerBlocks });
-        const preserveTreeEntry = (blockId) => {
-          const treeEntry = state.tree.get(blockId);
-          if (!treeEntry) {
-            return;
-          }
-          newState.tree.set(blockId, treeEntry);
-          const childOrder = newState.order.get(blockId) || [];
-          childOrder.forEach(preserveTreeEntry);
-        };
-        controlledOrder.forEach(preserveTreeEntry);
       }
-      const preservedBlockEditingModes = state?.blockEditingModes ?? /* @__PURE__ */ new Map();
-      for (const [clientId, mode2] of preservedBlockEditingModes) {
-        if (!newState.tree.has(clientId)) {
-          continue;
-        }
-        newState.blockEditingModes.set(clientId, mode2);
-      }
+      newState.tree.set("", {
+        innerBlocks: action.blocks.map(
+          (subBlock) => newState.tree.get(subBlock.clientId)
+        )
+      });
       return newState;
     }
     return reducer3(state, action);
@@ -8771,24 +8771,6 @@ var wp;
         };
       }
       return state;
-    },
-    blockEditingModes(state = /* @__PURE__ */ new Map(), action) {
-      switch (action.type) {
-        case "SET_BLOCK_EDITING_MODE":
-          if (state.get(action.clientId) === action.mode) {
-            return state;
-          }
-          return new Map(state).set(action.clientId, action.mode);
-        case "UNSET_BLOCK_EDITING_MODE": {
-          if (!state.has(action.clientId)) {
-            return state;
-          }
-          const newState = new Map(state);
-          newState.delete(action.clientId);
-          return newState;
-        }
-      }
-      return state;
     }
   });
   function isBlockInterfaceHidden(state = false, action) {
@@ -9250,21 +9232,26 @@ var wp;
     if (action.type === "EDIT_CONTENT_ONLY_SECTION") {
       return action.clientId;
     }
-    if (!state) {
-      return state;
-    }
+    return state;
+  }
+  function blockEditingModes(state = /* @__PURE__ */ new Map(), action) {
     switch (action.type) {
-      case "REMOVE_BLOCKS":
-      case "REPLACE_BLOCKS":
-        if (action.clientIds.includes(state)) {
-          return void 0;
+      case "SET_BLOCK_EDITING_MODE":
+        if (state.get(action.clientId) === action.mode) {
+          return state;
         }
-        break;
-      case "RESET_BLOCKS":
-        if (!getFlattenedClientIds(action.blocks)[state]) {
-          return void 0;
+        return new Map(state).set(action.clientId, action.mode);
+      case "UNSET_BLOCK_EDITING_MODE": {
+        if (!state.has(action.clientId)) {
+          return state;
         }
-        break;
+        const newState = new Map(state);
+        newState.delete(action.clientId);
+        return newState;
+      }
+      case "RESET_BLOCKS": {
+        return state.has("") ? (/* @__PURE__ */ new Map()).set("", state.get("")) : state;
+      }
     }
     return state;
   }
@@ -9403,6 +9390,7 @@ var wp;
     editedContentOnlySection,
     blockVisibility,
     viewportModalClientIds,
+    blockEditingModes,
     styleOverrides,
     removalPromptData,
     blockRemovalRules,
@@ -9468,7 +9456,7 @@ var wp;
     const derivedBlockEditingModes = /* @__PURE__ */ new Map();
     const sectionRootClientId = state.settings?.[sectionRootClientIdKey];
     const sectionClientIds = state.blocks.order.get(sectionRootClientId);
-    const hasDisabledBlocks = Array.from(state.blocks.blockEditingModes).some(
+    const hasDisabledBlocks = Array.from(state.blockEditingModes).some(
       ([, mode2]) => mode2 === "disabled"
     );
     const templatePartClientIds = [];
@@ -9511,15 +9499,15 @@ var wp;
           return;
         }
       }
-      if (state.blocks.blockEditingModes.has(clientId)) {
+      if (state.blockEditingModes.has(clientId)) {
         return;
       }
       if (hasDisabledBlocks) {
         let ancestorBlockEditingMode;
         let parent = state.blocks.parents.get(clientId);
         while (parent !== void 0) {
-          if (state.blocks.blockEditingModes.has(parent)) {
-            ancestorBlockEditingMode = state.blocks.blockEditingModes.get(parent);
+          if (state.blockEditingModes.has(parent)) {
+            ancestorBlockEditingMode = state.blockEditingModes.get(parent);
           }
           if (ancestorBlockEditingMode) {
             break;
@@ -10934,7 +10922,7 @@ var wp;
     () => (0, import_data3.createSelector)(getEnabledClientIdsTreeUnmemoized, (state) => [
       state.blocks.order,
       state.derivedBlockEditingModes,
-      state.blocks.blockEditingModes
+      state.blockEditingModes
     ])
   );
   var getEnabledBlockParents = (0, import_data3.createSelector)(
@@ -10945,7 +10933,7 @@ var wp;
     },
     (state) => [
       state.blocks.parents,
-      state.blocks.blockEditingModes,
+      state.blockEditingModes,
       state.settings.templateLock,
       state.blockListSettings
     ]
@@ -13045,8 +13033,8 @@ var wp;
     if (state.derivedBlockEditingModes?.has(clientId)) {
       return state.derivedBlockEditingModes.get(clientId);
     }
-    if (state.blocks.blockEditingModes.has(clientId)) {
-      return state.blocks.blockEditingModes.get(clientId);
+    if (state.blockEditingModes.has(clientId)) {
+      return state.blockEditingModes.get(clientId);
     }
     return "default";
   }
@@ -22010,20 +21998,20 @@ var wp;
   var import_compose14 = __toESM(require_compose(), 1);
   var nodesByDocument = /* @__PURE__ */ new Map();
   function add(doc, node) {
-    let set2 = nodesByDocument.get(doc);
-    if (!set2) {
-      set2 = /* @__PURE__ */ new Set();
-      nodesByDocument.set(doc, set2);
+    let set = nodesByDocument.get(doc);
+    if (!set) {
+      set = /* @__PURE__ */ new Set();
+      nodesByDocument.set(doc, set);
       doc.addEventListener("pointerdown", down);
     }
-    set2.add(node);
+    set.add(node);
   }
   function remove3(doc, node) {
-    const set2 = nodesByDocument.get(doc);
-    if (set2) {
-      set2.delete(node);
+    const set = nodesByDocument.get(doc);
+    if (set) {
+      set.delete(node);
       restore(node);
-      if (set2.size === 0) {
+      if (set.size === 0) {
         nodesByDocument.delete(doc);
         doc.removeEventListener("pointerdown", down);
       }
@@ -22151,9 +22139,9 @@ var wp;
 
   // packages/block-editor/build-module/components/block-visibility/modal.mjs
   var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='e252bf6889']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='4334c7deb6']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "e252bf6889");
+    style.setAttribute("data-wp-hash", "4334c7deb6");
     style.appendChild(document.createTextNode(".block-editor-block-visibility-modal{z-index:1000001}.block-editor-block-visibility-modal__options{border:0;list-style:none;margin:24px 0;padding:0}.block-editor-block-visibility-modal__options-item{align-items:center;display:flex;gap:24px;justify-content:space-between;margin:0 0 16px}.block-editor-block-visibility-modal__options-item:last-child{margin:0}.block-editor-block-visibility-modal__options-item--everywhere{align-items:start;flex-direction:column}.block-editor-block-visibility-modal__options-checkbox--everywhere{font-weight:600}.block-editor-block-visibility-modal__options-icon--checked{fill:#ddd}.block-editor-block-visibility-modal__sub-options{padding-inline-start:12px;width:100%}.block-editor-block-visibility-modal__description{color:#757575;font-size:12px}.block-editor-block-visibility-info{align-items:center;display:flex;justify-content:start;margin:0 16px 16px;padding-bottom:4px;padding-top:4px}"));
     document.head.appendChild(style);
   }
@@ -61639,12 +61627,12 @@ var wp;
             if (!el.querySelectorAll) {
               return;
             }
-            el.querySelectorAll("source,script,video,link").forEach(
-              (v2) => {
-                addCrossOriginAttribute(v2);
-              }
-            );
-            if (["SOURCE", "SCRIPT", "VIDEO", "LINK"].includes(
+            el.querySelectorAll(
+              "img,source,script,video,link"
+            ).forEach((v2) => {
+              addCrossOriginAttribute(v2);
+            });
+            if (["IMG", "SOURCE", "SCRIPT", "VIDEO", "LINK"].includes(
               el.nodeName
             )) {
               addCrossOriginAttribute(el);
@@ -62393,21 +62381,6 @@ var wp;
     return ref;
   }
 
-  // node_modules/@base-ui/utils/esm/warn.js
-  var set;
-  if (true) {
-    set = /* @__PURE__ */ new Set();
-  }
-  function warn(...messages2) {
-    if (true) {
-      const messageKey = messages2.join(" ");
-      if (!set.has(messageKey)) {
-        set.add(messageKey);
-        console.warn(`Base UI: ${messageKey}`);
-      }
-    }
-  }
-
   // node_modules/@base-ui/react/esm/utils/useRenderElement.js
   var React7 = __toESM(require_react(), 1);
 
@@ -62695,12 +62668,6 @@ var wp;
   var EMPTY_ARRAY15 = Object.freeze([]);
   var EMPTY_OBJECT3 = Object.freeze({});
 
-  // node_modules/@base-ui/react/esm/utils/constants.js
-  var BASE_UI_SWIPE_IGNORE_ATTRIBUTE = "data-base-ui-swipe-ignore";
-  var LEGACY_SWIPE_IGNORE_ATTRIBUTE = "data-swipe-ignore";
-  var BASE_UI_SWIPE_IGNORE_SELECTOR = `[${BASE_UI_SWIPE_IGNORE_ATTRIBUTE}]`;
-  var LEGACY_SWIPE_IGNORE_SELECTOR = `[${LEGACY_SWIPE_IGNORE_ATTRIBUTE}]`;
-
   // node_modules/@base-ui/react/esm/utils/useRenderElement.js
   var import_react6 = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
@@ -62753,9 +62720,6 @@ var wp;
   function evaluateRenderProp(element, render4, props, state) {
     if (render4) {
       if (typeof render4 === "function") {
-        if (true) {
-          warnIfRenderPropLooksLikeComponent(render4);
-        }
         return render4(props, state);
       }
       const mergedProps = mergeProps(props, render4.props);
@@ -62777,18 +62741,7 @@ var wp;
         return renderTag(element, props);
       }
     }
-    throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage_default(8));
-  }
-  function warnIfRenderPropLooksLikeComponent(renderFn) {
-    const functionName = renderFn.name;
-    if (functionName.length === 0) {
-      return;
-    }
-    const firstCharacterCode = functionName.charCodeAt(0);
-    if (firstCharacterCode < 65 || firstCharacterCode > 90) {
-      return;
-    }
-    warn(`The \`render\` prop received a function named \`${functionName}\` that starts with an uppercase letter.`, "This usually means a React component was passed directly as `render={Component}`.", "Base UI calls `render` as a plain function, which can break the Rules of Hooks during reconciliation.", "If this is an intentional render callback, rename it to start with a lowercase letter.", "Use `render={<Component />}` or `render={(props) => <Component {...props} />}` instead.", "https://base-ui.com/r/invalid-render-prop");
+    throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage(8));
   }
   function renderTag(Tag, props) {
     if (Tag === "button") {
@@ -62815,9 +62768,9 @@ var wp;
 
   // packages/ui/build-module/badge/badge.mjs
   var import_element225 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='a407d6dd3d']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d16010fae9']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "a407d6dd3d");
+    style.setAttribute("data-wp-hash", "d16010fae9");
     style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._96e6251aad1a6136__badge{border-radius:var(--wpds-border-radius-lg,8px);font-family:var(--wpds-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-font-size-sm,12px);font-weight:var(--wpds-font-weight-regular,400);line-height:var(--wpds-font-line-height-xs,16px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._99f7158cb520f750__is-high-intent{background-color:var(--wpds-color-bg-surface-error,#f6e6e3);color:var(--wpds-color-fg-content-error,#470000)}.c20ebef2365bc8b7__is-medium-intent{background-color:var(--wpds-color-bg-surface-warning,#fde6bd);color:var(--wpds-color-fg-content-warning,#2e1900)}._365e1626c6202e52__is-low-intent{background-color:var(--wpds-color-bg-surface-caution,#fee994);color:var(--wpds-color-fg-content-caution,#281d00)}._33f8198127ddf4ef__is-stable-intent{background-color:var(--wpds-color-bg-surface-success,#c5f7cc);color:var(--wpds-color-fg-content-success,#002900)}._04c1aca8fc449412__is-informational-intent{background-color:var(--wpds-color-bg-surface-info,#deebfa);color:var(--wpds-color-fg-content-info,#001b4f)}._90726e69d495ec19__is-draft-intent{background-color:var(--wpds-color-bg-surface-neutral-weak,#f0f0f0);color:var(--wpds-color-fg-content-neutral,#1e1e1e)}._898f4a544993bd39__is-none-intent{background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#d8d8d8);color:var(--wpds-color-fg-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}}'));
     document.head.appendChild(style);
   }
@@ -62841,9 +62794,9 @@ var wp;
 
   // packages/ui/build-module/stack/stack.mjs
   var import_element226 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b51ff41489']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "b51ff41489");
+    style.setAttribute("data-wp-hash", "71d20935c2");
     style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
     document.head.appendChild(style);
   }
@@ -71270,12 +71223,13 @@ var wp;
     setAttributes,
     name,
     fontSize,
-    style
+    style,
+    warning: warning6
   }) {
     if (!(0, import_blocks111.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsxs)(
       import_components265.__experimentalToolsPanelItem,
       {
         hasValue: () => fitText,
@@ -71283,37 +71237,40 @@ var wp;
         onDeselect: () => setAttributes({ fitText: void 0 }),
         resetAllFilter: () => ({ fitText: void 0 }),
         panelId: clientId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
-          import_components265.ToggleControl,
-          {
-            label: (0, import_i18n234.__)("Fit text"),
-            checked: fitText,
-            onChange: () => {
-              const newFitText = !fitText || void 0;
-              const updates = { fitText: newFitText };
-              if (newFitText) {
-                if (fontSize) {
-                  updates.fontSize = void 0;
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+            import_components265.ToggleControl,
+            {
+              label: (0, import_i18n234.__)("Fit text"),
+              checked: fitText,
+              onChange: () => {
+                const newFitText = !fitText || void 0;
+                const updates = { fitText: newFitText };
+                if (newFitText) {
+                  if (fontSize) {
+                    updates.fontSize = void 0;
+                  }
+                  if (style?.typography?.fontSize) {
+                    updates.style = {
+                      ...style,
+                      typography: {
+                        ...style?.typography,
+                        fontSize: void 0
+                      }
+                    };
+                  }
                 }
-                if (style?.typography?.fontSize) {
-                  updates.style = {
-                    ...style,
-                    typography: {
-                      ...style?.typography,
-                      fontSize: void 0
-                    }
-                  };
-                }
-              }
-              setAttributes(updates);
-            },
-            help: fitText ? (0, import_i18n234.__)("Text will resize to fit its container.") : (0, import_i18n234.__)(
-              "The text will resize to fit its container, resetting other font size settings."
-            )
-          }
-        )
+                setAttributes(updates);
+              },
+              help: fitText ? (0, import_i18n234.__)("Text will resize to fit its container.") : (0, import_i18n234.__)(
+                "The text will resize to fit its container, resetting other font size settings."
+              )
+            }
+          ),
+          warning6
+        ]
       }
-    );
+    ) });
   }
   function addSaveProps8(props, blockType, attributes) {
     if (!(0, import_blocks111.hasBlockSupport)(blockType, FIT_TEXT_SUPPORT_KEY)) {
@@ -71345,12 +71302,9 @@ var wp;
   var hasFitTextSupport = (blockNameOrType) => {
     return (0, import_blocks111.hasBlockSupport)(blockNameOrType, FIT_TEXT_SUPPORT_KEY);
   };
-  function FitTextFontSize({ fitText, name, clientId, isSelected }) {
+  function WithFitTextFontSize({ fitText, name, clientId, children }) {
     const { fontSize } = useFitText({ fitText, name, clientId });
-    if (isSelected && fontSize && fontSize < MIN_FONT_SIZE_FOR_WARNING) {
-      return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(FitTextSizeWarning, {}) });
-    }
-    return null;
+    return children(fontSize);
   }
   var addFitTextControl = (0, import_compose102.createHigherOrderComponent)((BlockEdit2) => {
     return function AddFitTextControl(props) {
@@ -71362,7 +71316,27 @@ var wp;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime448.jsxs)(import_jsx_runtime448.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(BlockEdit2, { ...props }),
-        /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+        fitText && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+          WithFitTextFontSize,
+          {
+            fitText,
+            name,
+            clientId,
+            children: (fontSize) => isSelected && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+              FitTextControl,
+              {
+                clientId,
+                fitText,
+                setAttributes,
+                name,
+                fontSize: attributes.fontSize,
+                style: attributes.style,
+                warning: fontSize < MIN_FONT_SIZE_FOR_WARNING && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(FitTextSizeWarning, {})
+              }
+            )
+          }
+        ),
+        !fitText && isSelected && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
           FitTextControl,
           {
             clientId,
@@ -71371,15 +71345,6 @@ var wp;
             name,
             fontSize: attributes.fontSize,
             style: attributes.style
-          }
-        ) }),
-        fitText && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
-          FitTextFontSize,
-          {
-            fitText,
-            name,
-            clientId,
-            isSelected
           }
         )
       ] });
@@ -72355,10 +72320,6 @@ var wp;
   var CUSTOM_CSS_INSTANCE_REFERENCE = {};
   var EMPTY_STYLE = {};
   function CustomCSSControl({ blockName, setAttributes, style }) {
-    const blockEditingMode = useBlockEditingMode();
-    if (blockEditingMode !== "default") {
-      return null;
-    }
     const blockType = (0, import_blocks117.getBlockType)(blockName);
     function onChange(newStyle) {
       const css = newStyle?.css?.trim() ? newStyle.css : void 0;

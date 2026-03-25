@@ -131,7 +131,6 @@ return array(
 		'id' => '@wordpress/vips/worker',
 		'path' => 'vips/worker',
 		'asset' => 'vips/worker.min.asset.php',
-		'min_only' => true,
 	),
 	array(
 		'id' => '@wordpress/workflow',

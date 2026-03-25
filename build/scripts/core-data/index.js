@@ -536,6 +536,11 @@ var wp;
   }
   var with_weak_map_cache_default = withWeakMapCache;
 
+  // packages/core-data/build-module/utils/is-raw-attribute.mjs
+  function isRawAttribute(entity2, attribute) {
+    return (entity2.rawAttributes || []).includes(attribute);
+  }
+
   // packages/core-data/build-module/utils/set-nested-value.mjs
   function setNestedValue(object, path, value) {
     if (!object || typeof object !== "object") {
@@ -1939,35 +1944,11 @@ var wp;
   // packages/core-data/build-module/utils/crdt-blocks.mjs
   var import_es62 = __toESM(require_es6(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
-  var import_rich_text3 = __toESM(require_rich_text(), 1);
-  var import_sync9 = __toESM(require_sync(), 1);
-
-  // packages/core-data/build-module/utils/crdt-text.mjs
   var import_rich_text2 = __toESM(require_rich_text(), 1);
-  var RICH_TEXT_CACHE_MAX_SIZE = 500;
-  function createRichTextDataCache(maxSize) {
-    const cache3 = /* @__PURE__ */ new Map();
-    return function(value) {
-      const cached = cache3.get(value);
-      if (cached) {
-        return cached;
-      }
-      const result = import_rich_text2.RichTextData.fromHTMLString(value);
-      if (cache3.size >= maxSize) {
-        cache3.delete(cache3.keys().next().value);
-      }
-      cache3.set(value, result);
-      return result;
-    };
-  }
-  var getCachedRichTextData = createRichTextDataCache(
-    RICH_TEXT_CACHE_MAX_SIZE
-  );
-
-  // packages/core-data/build-module/utils/crdt-blocks.mjs
+  var import_sync9 = __toESM(require_sync(), 1);
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
   function serializeAttributeValue(value) {
-    if (value instanceof import_rich_text3.RichTextData) {
+    if (value instanceof import_rich_text2.RichTextData) {
       return value.valueOf();
     }
     if (Array.isArray(value)) {
@@ -2002,50 +1983,6 @@ var wp;
         name,
         attributes: makeBlockAttributesSerializable(name, attributes),
         innerBlocks: makeBlocksSerializable(innerBlocks)
-      };
-    });
-  }
-  function deserializeAttributeValue(schema, value) {
-    if (schema?.type === "rich-text" && typeof value === "string") {
-      return getCachedRichTextData(value);
-    }
-    if (Array.isArray(value)) {
-      return value.map(
-        (item) => deserializeAttributeValue(schema, item)
-      );
-    }
-    if (value && typeof value === "object") {
-      const result = {};
-      for (const [key, innerValue] of Object.entries(
-        value
-      )) {
-        result[key] = deserializeAttributeValue(
-          schema?.query?.[key],
-          innerValue
-        );
-      }
-      return result;
-    }
-    return value;
-  }
-  function deserializeBlockAttributes(blocks) {
-    return blocks.map((block) => {
-      const { name, innerBlocks, attributes, ...rest } = block;
-      const newAttributes = { ...attributes };
-      for (const [key, value] of Object.entries(attributes)) {
-        const schema = getBlockAttributeType(name, key);
-        if (schema) {
-          newAttributes[key] = deserializeAttributeValue(
-            schema,
-            value
-          );
-        }
-      }
-      return {
-        ...rest,
-        name,
-        attributes: newAttributes,
-        innerBlocks: deserializeBlockAttributes(innerBlocks ?? [])
       };
     });
   }
@@ -2261,8 +2198,8 @@ var wp;
           new Map(
             Object.entries(blockType.attributes ?? {}).map(
               ([name, definition]) => {
-                const { role, type, query } = definition;
-                return [name, { role, type, query }];
+                const { role, type } = definition;
+                return [name, { role, type }];
               }
             )
           )
@@ -2680,11 +2617,6 @@ var wp;
         }
       })
     );
-    if (changes.blocks) {
-      changes.blocks = deserializeBlockAttributes(
-        changes.blocks
-      );
-    }
     if ("object" === typeof changes.meta) {
       changes.meta = {
         ...editedRecord.meta,
@@ -3738,16 +3670,6 @@ var wp;
     }
     return state;
   }
-  function viewConfigs(state = {}, action) {
-    switch (action.type) {
-      case "RECEIVE_VIEW_CONFIG":
-        return {
-          ...state,
-          [`${action.kind}/${action.name}`]: action.config
-        };
-    }
-    return state;
-  }
   var reducer_default2 = (0, import_data8.combineReducers)({
     users,
     currentTheme,
@@ -3771,8 +3693,7 @@ var wp;
     editorSettings,
     editorAssets,
     syncConnectionStatuses,
-    collaborationSupported,
-    viewConfigs
+    collaborationSupported
   });
 
   // packages/core-data/build-module/selectors.mjs
@@ -3850,7 +3771,6 @@ var wp;
     getRegisteredPostMeta: () => getRegisteredPostMeta,
     getTemplateId: () => getTemplateId,
     getUndoManager: () => getUndoManager,
-    getViewConfig: () => getViewConfig,
     isCollaborationSupported: () => isCollaborationSupported
   });
   var import_data9 = __toESM(require_data(), 1);
@@ -3885,7 +3805,6 @@ var wp;
   }
 
   // packages/core-data/build-module/private-selectors.mjs
-  var EMPTY_OBJECT = {};
   function getUndoManager(state) {
     return getSyncManager()?.undoManager ?? state.undoManager;
   }
@@ -3955,16 +3874,10 @@ var wp;
         ).getDefaultTemplateId({
           slug: "front-page"
         });
-        if (frontPageTemplateId) {
-          return {
-            postType: "wp_template",
-            postId: frontPageTemplateId
-          };
+        if (!frontPageTemplateId) {
+          return null;
         }
-        if (frontPageTemplateId === "") {
-          return EMPTY_OBJECT;
-        }
-        return null;
+        return { postType: "wp_template", postId: frontPageTemplateId };
       },
       (state) => [
         // Even though getDefaultTemplateId.shouldInvalidate returns true when root/site changes,
@@ -4049,16 +3962,9 @@ var wp;
   function isCollaborationSupported(state) {
     return state.collaborationSupported;
   }
-  function getViewConfig(state, kind, name) {
-    return state.viewConfigs?.[`${kind}/${name}`] ?? {
-      default_view: void 0,
-      default_layouts: void 0,
-      view_list: void 0
-    };
-  }
 
   // packages/core-data/build-module/selectors.mjs
-  var EMPTY_OBJECT2 = {};
+  var EMPTY_OBJECT = {};
   var isRequestingEmbedPreview = (0, import_data10.createRegistrySelector)(
     (select5) => (state, url) => {
       return select5(STORE_NAME).isResolving("getEmbedPreview", [
@@ -4200,22 +4106,14 @@ var wp;
         name,
         key
       );
-      const config = getEntityConfig(state, kind, name);
-      if (!record || !config?.rawAttributes?.length) {
-        return record;
-      }
-      return Object.fromEntries(
-        Object.keys(record).map((_key) => {
-          if (config.rawAttributes.includes(_key)) {
-            const rawValue = record[_key]?.raw;
-            return [
-              _key,
-              rawValue !== void 0 ? rawValue : record[_key]
-            ];
-          }
-          return [_key, record[_key]];
-        })
-      );
+      return record && Object.keys(record).reduce((accumulator, _key) => {
+        if (isRawAttribute(getEntityConfig(state, kind, name), _key)) {
+          accumulator[_key] = record[_key]?.raw !== void 0 ? record[_key]?.raw : record[_key];
+        } else {
+          accumulator[_key] = record[_key];
+        }
+        return accumulator;
+      }, {});
     },
     (state, kind, name, recordId, query) => {
       const context = query?.context ?? "default";
@@ -4442,7 +4340,7 @@ var wp;
     return state.currentGlobalStylesId;
   }
   function getThemeSupports(state) {
-    return getCurrentTheme(state)?.theme_supports ?? EMPTY_OBJECT2;
+    return getCurrentTheme(state)?.theme_supports ?? EMPTY_OBJECT;
   }
   function getEmbedPreview(state, url) {
     return state.embedPreviews[url];
@@ -5465,7 +5363,6 @@ var wp;
     receiveEditorAssets: () => receiveEditorAssets,
     receiveEditorSettings: () => receiveEditorSettings,
     receiveRegisteredPostMeta: () => receiveRegisteredPostMeta,
-    receiveViewConfig: () => receiveViewConfig,
     setCollaborationSupported: () => setCollaborationSupported
   });
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
@@ -5559,14 +5456,6 @@ var wp;
   var setCollaborationSupported = (supported) => ({ dispatch: dispatch3 }) => {
     dispatch3({ type: "SET_COLLABORATION_SUPPORTED", supported });
   };
-  function receiveViewConfig(kind, name, config) {
-    return {
-      type: "RECEIVE_VIEW_CONFIG",
-      kind,
-      name,
-      config
-    };
-  }
 
   // packages/core-data/build-module/resolvers.mjs
   var resolvers_exports = {};
@@ -5600,8 +5489,7 @@ var wp;
     getRevision: () => getRevision2,
     getRevisions: () => getRevisions2,
     getThemeSupports: () => getThemeSupports2,
-    getUserPatternCategories: () => getUserPatternCategories2,
-    getViewConfig: () => getViewConfig2
+    getUserPatternCategories: () => getUserPatternCategories2
   });
   var import_url6 = __toESM(require_url(), 1);
   var import_html_entities2 = __toESM(require_html_entities(), 1);
@@ -6424,10 +6312,10 @@ var wp;
     });
     await resolveSelect2.getEntitiesConfig("postType");
     const id = window?.__experimentalTemplateActivate ? template?.wp_id || template?.id : template?.id;
-    registry.batch(() => {
-      dispatch3.receiveDefaultTemplateId(query, id || "");
-      if (id) {
-        template.id = id;
+    if (id) {
+      template.id = id;
+      registry.batch(() => {
+        dispatch3.receiveDefaultTemplateId(query, id);
         dispatch3.receiveEntityRecords(
           "postType",
           template.type,
@@ -6438,8 +6326,8 @@ var wp;
           template.type,
           id
         ]);
-      }
-    });
+      });
+    }
   };
   getDefaultTemplateId2.shouldInvalidate = (action) => {
     return action.type === "RECEIVE_ITEMS" && action.kind === "root" && action.name === "site";
@@ -6638,12 +6526,6 @@ var wp;
       path: "/wp-block-editor/v1/assets"
     });
     dispatch3.receiveEditorAssets(assets);
-  };
-  var getViewConfig2 = (kind, name) => async ({ dispatch: dispatch3 }) => {
-    const config = await (0, import_api_fetch8.default)({
-      path: (0, import_url6.addQueryArgs)("/wp/v2/view-config", { kind, name })
-    });
-    dispatch3.receiveViewConfig(kind, name, config);
   };
 
   // packages/core-data/build-module/locks/utils.mjs
@@ -7003,7 +6885,7 @@ var wp;
   }));
 
   // packages/core-data/build-module/hooks/use-entity-record.mjs
-  var EMPTY_OBJECT3 = {};
+  var EMPTY_OBJECT2 = {};
   function useEntityRecord(kind, name, recordId, options = { enabled: true }) {
     const { editEntityRecord: editEntityRecord2, saveEditedEntityRecord: saveEditedEntityRecord2 } = (0, import_data12.useDispatch)(store);
     const mutations = (0, import_element3.useMemo)(
@@ -7020,9 +6902,9 @@ var wp;
       (select5) => {
         if (!options.enabled) {
           return {
-            editedRecord: EMPTY_OBJECT3,
+            editedRecord: EMPTY_OBJECT2,
             hasEdits: false,
-            edits: EMPTY_OBJECT3
+            edits: EMPTY_OBJECT2
           };
         }
         return {
@@ -7264,7 +7146,7 @@ var wp;
   }
 
   // packages/core-data/build-module/footnotes/index.mjs
-  var import_rich_text4 = __toESM(require_rich_text(), 1);
+  var import_rich_text3 = __toESM(require_rich_text(), 1);
 
   // packages/core-data/build-module/footnotes/get-rich-text-values-cached.mjs
   var import_block_editor5 = __toESM(require_block_editor(), 1);
@@ -7337,16 +7219,16 @@ var wp;
           attributes[key] = value.map(updateAttributes);
           continue;
         }
-        if (typeof value !== "string" && !(value instanceof import_rich_text4.RichTextData)) {
+        if (typeof value !== "string" && !(value instanceof import_rich_text3.RichTextData)) {
           continue;
         }
-        const richTextValue = typeof value === "string" ? import_rich_text4.RichTextData.fromHTMLString(value) : new import_rich_text4.RichTextData(value);
+        const richTextValue = typeof value === "string" ? import_rich_text3.RichTextData.fromHTMLString(value) : new import_rich_text3.RichTextData(value);
         let hasFootnotes = false;
         richTextValue.replacements.forEach((replacement) => {
           if (replacement.type === "core/footnote") {
             const id = replacement.attributes["data-fn"];
             const index = newOrder.indexOf(id);
-            const countValue = (0, import_rich_text4.create)({
+            const countValue = (0, import_rich_text3.create)({
               html: replacement.innerHTML
             });
             countValue.text = String(index + 1);
@@ -7358,7 +7240,7 @@ var wp;
               { length: countValue.text.length },
               () => countValue.replacements[0]
             );
-            replacement.innerHTML = (0, import_rich_text4.toHTMLString)({
+            replacement.innerHTML = (0, import_rich_text3.toHTMLString)({
               value: countValue
             });
             hasFootnotes = true;

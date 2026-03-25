@@ -153,21 +153,6 @@ function useRefWithInit(init, initArg) {
   return ref;
 }
 
-// node_modules/@base-ui/utils/esm/warn.js
-var set;
-if (true) {
-  set = /* @__PURE__ */ new Set();
-}
-function warn(...messages) {
-  if (true) {
-    const messageKey = messages.join(" ");
-    if (!set.has(messageKey)) {
-      set.add(messageKey);
-      console.warn(`Base UI: ${messageKey}`);
-    }
-  }
-}
-
 // node_modules/@base-ui/react/esm/utils/useRenderElement.js
 var React5 = __toESM(require_react(), 1);
 
@@ -455,12 +440,6 @@ function isSyntheticEvent(event) {
 var EMPTY_ARRAY = Object.freeze([]);
 var EMPTY_OBJECT = Object.freeze({});
 
-// node_modules/@base-ui/react/esm/utils/constants.js
-var BASE_UI_SWIPE_IGNORE_ATTRIBUTE = "data-base-ui-swipe-ignore";
-var LEGACY_SWIPE_IGNORE_ATTRIBUTE = "data-swipe-ignore";
-var BASE_UI_SWIPE_IGNORE_SELECTOR = `[${BASE_UI_SWIPE_IGNORE_ATTRIBUTE}]`;
-var LEGACY_SWIPE_IGNORE_SELECTOR = `[${LEGACY_SWIPE_IGNORE_ATTRIBUTE}]`;
-
 // node_modules/@base-ui/react/esm/utils/useRenderElement.js
 var import_react = __toESM(require_react(), 1);
 function useRenderElement(element, componentProps, params = {}) {
@@ -513,9 +492,6 @@ var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
 function evaluateRenderProp(element, render, props, state) {
   if (render) {
     if (typeof render === "function") {
-      if (true) {
-        warnIfRenderPropLooksLikeComponent(render);
-      }
       return render(props, state);
     }
     const mergedProps = mergeProps(props, render.props);
@@ -537,18 +513,7 @@ function evaluateRenderProp(element, render, props, state) {
       return renderTag(element, props);
     }
   }
-  throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage_default(8));
-}
-function warnIfRenderPropLooksLikeComponent(renderFn) {
-  const functionName = renderFn.name;
-  if (functionName.length === 0) {
-    return;
-  }
-  const firstCharacterCode = functionName.charCodeAt(0);
-  if (firstCharacterCode < 65 || firstCharacterCode > 90) {
-    return;
-  }
-  warn(`The \`render\` prop received a function named \`${functionName}\` that starts with an uppercase letter.`, "This usually means a React component was passed directly as `render={Component}`.", "Base UI calls `render` as a plain function, which can break the Rules of Hooks during reconciliation.", "If this is an intentional render callback, rename it to start with a lowercase letter.", "Use `render={<Component />}` or `render={(props) => <Component {...props} />}` instead.", "https://base-ui.com/r/invalid-render-prop");
+  throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage(8));
 }
 function renderTag(Tag, props) {
   if (Tag === "button") {
@@ -580,9 +545,9 @@ var seen_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitive
 
 // packages/ui/build-module/stack/stack.mjs
 var import_element2 = __toESM(require_element(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b51ff41489']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "b51ff41489");
+  style.setAttribute("data-wp-hash", "71d20935c2");
   style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
   document.head.appendChild(style);
 }
@@ -713,9 +678,9 @@ var import_element3 = __toESM(require_element());
 import { useEditorSettings } from "@wordpress/lazy-editor";
 
 // routes/styles/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='486e4a323c']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7be460f5dc']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "486e4a323c");
+  style.setAttribute("data-wp-hash", "7be460f5dc");
   style.appendChild(document.createTextNode(".routes-styles__page .global-styles-ui-screen-root{box-shadow:none}.routes-styles__page .global-styles-ui-screen-root>div>hr{display:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider .components-tools-panel{border-top:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider{overflow-y:auto;padding-left:0;padding-right:0}"));
   document.head.appendChild(style);
 }
