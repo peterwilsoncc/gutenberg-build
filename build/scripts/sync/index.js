@@ -9217,10 +9217,10 @@ var wp;
   }
 
   // packages/sync/build-module/providers/index.mjs
-  var import_hooks2 = __toESM(require_hooks(), 1);
+  var import_hooks3 = __toESM(require_hooks(), 1);
 
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
-  var import_hooks = __toESM(require_hooks(), 1);
+  var import_hooks2 = __toESM(require_hooks(), 1);
 
   // packages/sync/node_modules/y-protocols/sync.js
   var messageYjsSyncStep1 = 0;
@@ -9267,11 +9267,20 @@ var wp;
   };
 
   // packages/sync/build-module/providers/http-polling/config.mjs
+  var import_hooks = __toESM(require_hooks(), 1);
   var DEFAULT_CLIENT_LIMIT_PER_ROOM = 3;
   var MAX_ERROR_BACKOFF_IN_MS = 30 * 1e3;
   var MAX_UPDATE_SIZE_IN_BYTES = 1 * 1024 * 1024;
-  var POLLING_INTERVAL_IN_MS = 1e3;
-  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = 250;
+  var POLLING_INTERVAL_IN_MS = (0, import_hooks.applyFilters)(
+    "sync.pollingManager.pollingInterval",
+    4e3
+    // 4 seconds
+  );
+  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = (0, import_hooks.applyFilters)(
+    "sync.pollingManager.pollingIntervalWithCollaborators",
+    1e3
+    // 1 second
+  );
   var POLLING_INTERVAL_BACKGROUND_TAB_IN_MS = 25 * 1e3;
 
   // packages/sync/build-module/providers/http-polling/types.mjs
@@ -9484,11 +9493,11 @@ var wp;
     }
   }
   function checkConnectionLimit(awareness, roomState) {
-    if (!roomState.enforceConnectionLimit) {
+    if (!roomState.isPrimaryRoom || hasCheckedConnectionLimit) {
       return false;
     }
-    roomState.enforceConnectionLimit = false;
-    const maxClientsPerRoom = (0, import_hooks.applyFilters)(
+    hasCheckedConnectionLimit = true;
+    const maxClientsPerRoom = (0, import_hooks2.applyFilters)(
       "sync.pollingProvider.maxClientsPerRoom",
       DEFAULT_CLIENT_LIMIT_PER_ROOM,
       roomState.room
@@ -9509,6 +9518,7 @@ var wp;
     return false;
   }
   var areListenersRegistered = false;
+  var hasCheckedConnectionLimit = false;
   var hasCollaborators = false;
   var isActiveBrowser = "visible" === document.visibilityState;
   var isPolling = false;
@@ -9569,6 +9579,7 @@ var wp;
         roomStates.forEach((state) => {
           state.onStatusChange({ status: "connected" });
         });
+        hasCollaborators = false;
         rooms.forEach((room) => {
           if (!roomStates.has(room.room)) {
             return;
@@ -9587,7 +9598,7 @@ var wp;
             return;
           }
           roomState.processAwarenessUpdate(room.awareness);
-          if (Object.keys(room.awareness).length > 1) {
+          if (roomState.isPrimaryRoom && Object.keys(room.awareness).length > 1) {
             hasCollaborators = true;
             roomState.updateQueue.resume();
           }
@@ -9662,7 +9673,7 @@ var wp;
       return;
     }
     const updateQueue = createUpdateQueue([createSyncStep1Update(doc2)]);
-    const enforceConnectionLimit = 0 === roomStates.size;
+    const isPrimaryRoom = 0 === roomStates.size;
     function onAwarenessUpdate() {
       roomState.localAwarenessState = awareness.getLocalState() ?? {};
     }
@@ -9702,7 +9713,7 @@ var wp;
         SyncUpdateType.COMPACTION
       ),
       endCursor: 0,
-      enforceConnectionLimit,
+      isPrimaryRoom,
       localAwarenessState: awareness.getLocalState() ?? {},
       log,
       onStatusChange,
@@ -9749,6 +9760,7 @@ var wp;
         handleVisibilityChange
       );
       areListenersRegistered = false;
+      hasCheckedConnectionLimit = false;
     }
   }
   function retryNow() {
@@ -9889,7 +9901,7 @@ var wp;
     if (!window._wpCollaborationEnabled) {
       return [];
     }
-    const filteredProviderCreators = (0, import_hooks2.applyFilters)(
+    const filteredProviderCreators = (0, import_hooks3.applyFilters)(
       "sync.providers",
       getDefaultProviderCreators()
     );
