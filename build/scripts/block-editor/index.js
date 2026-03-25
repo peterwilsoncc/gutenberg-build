@@ -8296,6 +8296,13 @@ var wp;
         };
         controlledOrder.forEach(preserveTreeEntry);
       }
+      const preservedBlockEditingModes = state?.blockEditingModes ?? /* @__PURE__ */ new Map();
+      for (const [clientId, mode2] of preservedBlockEditingModes) {
+        if (!newState.tree.has(clientId)) {
+          continue;
+        }
+        newState.blockEditingModes.set(clientId, mode2);
+      }
       return newState;
     }
     return reducer3(state, action);
@@ -8762,6 +8769,24 @@ var wp;
           ...state,
           [clientId]: hasControlledInnerBlocks
         };
+      }
+      return state;
+    },
+    blockEditingModes(state = /* @__PURE__ */ new Map(), action) {
+      switch (action.type) {
+        case "SET_BLOCK_EDITING_MODE":
+          if (state.get(action.clientId) === action.mode) {
+            return state;
+          }
+          return new Map(state).set(action.clientId, action.mode);
+        case "UNSET_BLOCK_EDITING_MODE": {
+          if (!state.has(action.clientId)) {
+            return state;
+          }
+          const newState = new Map(state);
+          newState.delete(action.clientId);
+          return newState;
+        }
       }
       return state;
     }
@@ -9243,27 +9268,6 @@ var wp;
     }
     return state;
   }
-  function blockEditingModes(state = /* @__PURE__ */ new Map(), action) {
-    switch (action.type) {
-      case "SET_BLOCK_EDITING_MODE":
-        if (state.get(action.clientId) === action.mode) {
-          return state;
-        }
-        return new Map(state).set(action.clientId, action.mode);
-      case "UNSET_BLOCK_EDITING_MODE": {
-        if (!state.has(action.clientId)) {
-          return state;
-        }
-        const newState = new Map(state);
-        newState.delete(action.clientId);
-        return newState;
-      }
-      case "RESET_BLOCKS": {
-        return state.has("") ? (/* @__PURE__ */ new Map()).set("", state.get("")) : state;
-      }
-    }
-    return state;
-  }
   function styleOverrides(state = /* @__PURE__ */ new Map(), action) {
     switch (action.type) {
       case "SET_STYLE_OVERRIDE":
@@ -9399,7 +9403,6 @@ var wp;
     editedContentOnlySection,
     blockVisibility,
     viewportModalClientIds,
-    blockEditingModes,
     styleOverrides,
     removalPromptData,
     blockRemovalRules,
@@ -9465,7 +9468,7 @@ var wp;
     const derivedBlockEditingModes = /* @__PURE__ */ new Map();
     const sectionRootClientId = state.settings?.[sectionRootClientIdKey];
     const sectionClientIds = state.blocks.order.get(sectionRootClientId);
-    const hasDisabledBlocks = Array.from(state.blockEditingModes).some(
+    const hasDisabledBlocks = Array.from(state.blocks.blockEditingModes).some(
       ([, mode2]) => mode2 === "disabled"
     );
     const templatePartClientIds = [];
@@ -9508,15 +9511,15 @@ var wp;
           return;
         }
       }
-      if (state.blockEditingModes.has(clientId)) {
+      if (state.blocks.blockEditingModes.has(clientId)) {
         return;
       }
       if (hasDisabledBlocks) {
         let ancestorBlockEditingMode;
         let parent = state.blocks.parents.get(clientId);
         while (parent !== void 0) {
-          if (state.blockEditingModes.has(parent)) {
-            ancestorBlockEditingMode = state.blockEditingModes.get(parent);
+          if (state.blocks.blockEditingModes.has(parent)) {
+            ancestorBlockEditingMode = state.blocks.blockEditingModes.get(parent);
           }
           if (ancestorBlockEditingMode) {
             break;
@@ -10931,7 +10934,7 @@ var wp;
     () => (0, import_data3.createSelector)(getEnabledClientIdsTreeUnmemoized, (state) => [
       state.blocks.order,
       state.derivedBlockEditingModes,
-      state.blockEditingModes
+      state.blocks.blockEditingModes
     ])
   );
   var getEnabledBlockParents = (0, import_data3.createSelector)(
@@ -10942,7 +10945,7 @@ var wp;
     },
     (state) => [
       state.blocks.parents,
-      state.blockEditingModes,
+      state.blocks.blockEditingModes,
       state.settings.templateLock,
       state.blockListSettings
     ]
@@ -13042,8 +13045,8 @@ var wp;
     if (state.derivedBlockEditingModes?.has(clientId)) {
       return state.derivedBlockEditingModes.get(clientId);
     }
-    if (state.blockEditingModes.has(clientId)) {
-      return state.blockEditingModes.get(clientId);
+    if (state.blocks.blockEditingModes.has(clientId)) {
+      return state.blocks.blockEditingModes.get(clientId);
     }
     return "default";
   }
