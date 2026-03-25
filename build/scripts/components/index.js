@@ -55663,6 +55663,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/validity-indicator.mjs
   var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   function ValidityIndicator({
+    id: id3,
     type,
     message: message2
   }) {
@@ -55671,6 +55672,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       invalid: error_default
     };
     return /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)("p", {
+      id: id3,
       className: clsx_default("components-validated-control__indicator", `is-${type}`),
       children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(spinner_default, {
         className: "components-validated-control__indicator-spinner"
@@ -55794,21 +55796,44 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       }
     };
-    const message2 = () => {
+    const messageId = (0, import_element245.useId)();
+    const message2 = (() => {
       if (errorMessage) {
         return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(ValidityIndicator, {
+          id: messageId,
           type: "invalid",
           message: errorMessage
         });
       }
       if (statusMessage?.type) {
         return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(ValidityIndicator, {
+          id: messageId,
           type: statusMessage.type,
           message: statusMessage.message
         });
       }
       return null;
-    };
+    })();
+    const visibleMessage = showMessage ? message2 : null;
+    (0, import_element245.useEffect)(() => {
+      const target = getValidityTarget();
+      if (!target) {
+        return;
+      }
+      function setDescribedBy(el, shouldAdd) {
+        const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id3) => id3 && id3 !== messageId);
+        if (shouldAdd) {
+          ids.push(messageId);
+        }
+        if (ids.length) {
+          el.setAttribute("aria-describedby", ids.join(" "));
+        } else {
+          el.removeAttribute("aria-describedby");
+        }
+      }
+      setDescribedBy(target, !!visibleMessage);
+      return () => setDescribedBy(target, false);
+    }, [visibleMessage, messageId, getValidityTarget]);
     return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)("div", {
       className,
       ref: forwardedRef,
@@ -55818,7 +55843,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         required
       }), /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("div", {
         "aria-live": "polite",
-        children: showMessage && message2()
+        children: visibleMessage
       })]
     });
   }
