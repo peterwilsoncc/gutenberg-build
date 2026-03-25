@@ -1665,15 +1665,6 @@ button.font-library__upload-area {
   border-radius: 2px;
 }
 
-/**
- * When DataViews are placed within cards, apply a consistent top padding.
- */
-.components-card__body:has(> .dataviews-wrapper),
-.components-card__body:has(> .dataviews-picker-wrapper) {
-  padding: 8px 0 0;
-  overflow: hidden;
-}
-
 .dataviews__view-actions--infinite-scroll {
   position: sticky;
   top: 0;
@@ -3987,15 +3978,16 @@ div.dataviews-view-list {
   align-items: center;
 }
 
-.dataforms-layouts-card__field-header-label {
-  font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-weight: 499;
-  font-size: 15px;
-  line-height: 20px;
-}
-
 .dataforms-layouts-card__field {
   width: 100%;
+}
+
+.dataforms-layouts-card__field-header-content {
+  min-height: 24px;
+}
+
+.dataforms-layouts-card__field-header-content-description {
+  display: contents;
 }
 
 .dataforms-layouts-card__field-description {
