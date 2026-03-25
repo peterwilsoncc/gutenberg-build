@@ -536,11 +536,6 @@ var wp;
   }
   var with_weak_map_cache_default = withWeakMapCache;
 
-  // packages/core-data/build-module/utils/is-raw-attribute.mjs
-  function isRawAttribute(entity2, attribute) {
-    return (entity2.rawAttributes || []).includes(attribute);
-  }
-
   // packages/core-data/build-module/utils/set-nested-value.mjs
   function setNestedValue(object, path, value) {
     if (!object || typeof object !== "object") {
@@ -4211,7 +4206,7 @@ var wp;
       }
       return Object.fromEntries(
         Object.keys(record).map((_key) => {
-          if (isRawAttribute(config, _key)) {
+          if (config.rawAttributes.includes(_key)) {
             const rawValue = record[_key]?.raw;
             return [
               _key,
