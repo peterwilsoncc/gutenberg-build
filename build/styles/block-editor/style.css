@@ -1622,10 +1622,7 @@ iframe[name=editor-canvas] {
 }
 
 .block-editor-fit-text-size-warning {
-  margin: 8px 0 0 0;
-}
-.block-editor-fit-text-size-warning .components-notice__content {
-  margin-right: 0;
+  grid-column: span 2;
 }
 
 .components-font-appearance-control [role=option] {
