@@ -38946,9 +38946,23 @@ var wp;
   var restoreRevision = (revisionId2) => async ({ select: select6, dispatch: dispatch7, registry }) => {
     const postType2 = select6.getCurrentPostType();
     const postId2 = select6.getCurrentPostId();
+    const entityConfig = registry.select(import_core_data51.store).getEntityConfig("postType", postType2);
+    const revisionKey = entityConfig?.revisionKey || "id";
     const revision = await registry.resolveSelect(import_core_data51.store).getRevision("postType", postType2, postId2, revisionId2, {
       context: "edit",
-      _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
+      _fields: [
+        .../* @__PURE__ */ new Set([
+          "id",
+          "date",
+          "modified",
+          "author",
+          "meta",
+          "title.raw",
+          "excerpt.raw",
+          "content.raw",
+          revisionKey
+        ])
+      ].join()
     });
     if (!revision) {
       return;
@@ -38973,7 +38987,12 @@ var wp;
       (0, import_i18n122.sprintf)(
         /* translators: %s: Date and time of the revision. */
         (0, import_i18n122.__)("Restored to revision from %s."),
-        (0, import_date6.dateI18n)((0, import_date6.getSettings)().formats.datetime, revision.date)
+        (0, import_date6.dateI18n)(
+          (0, import_date6.getSettings)().formats.datetime,
+          // Template revisions use the template REST API format, which
+          // exposes 'modified' instead of 'date'.
+          revisionKey === "wp_id" ? revision.modified : revision.date
+        )
       ),
       {
         type: "snackbar",
@@ -39232,6 +39251,11 @@ var wp;
         return void 0;
       }
       const { type: postType2, id: postId2 } = getCurrentPost(state);
+      const entityConfig = select6(import_core_data52.store).getEntityConfig(
+        "postType",
+        postType2
+      );
+      const revisionKey = entityConfig?.revisionKey || "id";
       const revisions = select6(import_core_data52.store).getRevisions(
         "postType",
         postType2,
@@ -39239,18 +39263,25 @@ var wp;
         {
           per_page: -1,
           context: "edit",
-          _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
+          _fields: [
+            .../* @__PURE__ */ new Set([
+              "id",
+              "date",
+              "modified",
+              "author",
+              "meta",
+              "title.raw",
+              "excerpt.raw",
+              "content.raw",
+              revisionKey
+            ])
+          ].join()
         }
       );
       if (!revisions) {
         return null;
       }
-      const entityConfig = select6(import_core_data52.store).getEntityConfig(
-        "postType",
-        postType2
-      );
-      const revKey = entityConfig?.revisionKey || "id";
-      return revisions.find((r4) => r4[revKey] === revisionId2) ?? null;
+      return revisions.find((r4) => r4[revisionKey] === revisionId2) ?? null;
     }
   );
   function getSelectedNote(state) {
@@ -39266,6 +39297,11 @@ var wp;
         return void 0;
       }
       const { type: postType2, id: postId2 } = getCurrentPost(state);
+      const entityConfig = select6(import_core_data52.store).getEntityConfig(
+        "postType",
+        postType2
+      );
+      const revisionKey = entityConfig?.revisionKey || "id";
       const revisions = select6(import_core_data52.store).getRevisions(
         "postType",
         postType2,
@@ -39273,22 +39309,30 @@ var wp;
         {
           per_page: -1,
           context: "edit",
-          _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
+          _fields: [
+            .../* @__PURE__ */ new Set([
+              "id",
+              "date",
+              "modified",
+              "author",
+              "meta",
+              "title.raw",
+              "excerpt.raw",
+              "content.raw",
+              revisionKey
+            ])
+          ].join()
         }
       );
       if (!revisions) {
         return null;
       }
+      const revisionDateField = revisionKey === "wp_id" ? "modified" : "date";
       const sortedRevisions = [...revisions].sort(
-        (a3, b3) => new Date(a3.date) - new Date(b3.date)
+        (a3, b3) => new Date(a3[revisionDateField]) - new Date(b3[revisionDateField])
       );
-      const entityConfig = select6(import_core_data52.store).getEntityConfig(
-        "postType",
-        postType2
-      );
-      const revKey = entityConfig?.revisionKey || "id";
       const currentIndex = sortedRevisions.findIndex(
-        (r4) => r4[revKey] === currentRevisionId
+        (r4) => r4[revisionKey] === currentRevisionId
       );
       if (currentIndex > 0) {
         return sortedRevisions[currentIndex - 1];
@@ -53082,10 +53126,23 @@ var wp;
           return {};
         }
         const entityConfig = getEntityConfig("postType", postType2);
+        const _revisionKey = entityConfig?.revisionKey || "id";
         const query = {
           per_page: -1,
           context: "edit",
-          _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
+          _fields: [
+            .../* @__PURE__ */ new Set([
+              "id",
+              "date",
+              "modified",
+              "author",
+              "meta",
+              "title.raw",
+              "excerpt.raw",
+              "content.raw",
+              _revisionKey
+            ])
+          ].join()
         };
         return {
           revisions: getRevisions("postType", postType2, postId2, query),
@@ -53098,15 +53155,18 @@ var wp;
           currentRevisionId: unlock(
             select6(store)
           ).getCurrentRevisionId(),
-          revisionKey: entityConfig?.revisionKey || "id"
+          revisionKey: _revisionKey
         };
       },
       []
     );
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data195.useDispatch)(store));
+    const revisionDateField = revisionKey === "wp_id" ? "modified" : "date";
     const sortedRevisions = (0, import_element163.useMemo)(() => {
-      return revisions?.slice().sort((a3, b3) => new Date(a3.date) - new Date(b3.date)) ?? [];
-    }, [revisions]);
+      return revisions?.slice().sort(
+        (a3, b3) => new Date(a3[revisionDateField]) - new Date(b3[revisionDateField])
+      ) ?? [];
+    }, [revisions, revisionDateField]);
     const selectedIndex = sortedRevisions.findIndex(
       (r4) => r4[revisionKey] === currentRevisionId
     );
@@ -53122,7 +53182,10 @@ var wp;
       if (!revision) {
         return index2;
       }
-      return (0, import_date9.dateI18n)(dateSettings.formats.datetime, revision.date);
+      return (0, import_date9.dateI18n)(
+        dateSettings.formats.datetime,
+        revision[revisionDateField]
+      );
     };
     if (isLoading) {
       return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(import_components191.Spinner, {});
