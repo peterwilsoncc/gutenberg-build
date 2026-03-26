@@ -63235,7 +63235,8 @@ ${js}
         type: "string"
       },
       level: {
-        type: "number"
+        type: "number",
+        default: 0
       },
       levelOptions: {
         type: "array",
