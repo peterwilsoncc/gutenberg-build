@@ -25,7 +25,7 @@ return array(
 	array(
 		'handle' => 'wp-commands',
 		'path' => 'commands/style',
-		'dependencies' => array('wp-components', 'wp-preferences'),
+		'dependencies' => array('wp-components'),
 	),
 	array(
 		'handle' => 'wp-components',
