@@ -3576,6 +3576,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   var import_element2 = __toESM(require_element(), 1);
   var MAX_RECENTLY_SAVED = 30;
   var MAX_RECENTLY_DISPLAYED = 5;
+  var EMPTY_ARRAY = [];
   var EMPTY_SET = /* @__PURE__ */ new Set();
   function recordUsage(name) {
     const current = (0, import_data4.select)(import_preferences.store).get(
@@ -3608,7 +3609,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
       staticCommands,
       contextualLoaders,
       staticLoaders,
-      recentlyUsedNames
+      recentlyUsedNames = EMPTY_ARRAY
     } = (0, import_data4.useSelect)((select) => {
       const { getCommands: getCommands2, getCommandLoaders: getCommandLoaders2 } = select(store);
       return {
@@ -3619,7 +3620,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
         recentlyUsedNames: select(import_preferences.store).get(
           "core/commands",
           "recentlyUsed"
-        ) ?? []
+        )
       };
     }, []);
     const [resolvedMap, setResolvedMap] = (0, import_element2.useState)(() => /* @__PURE__ */ new Map());
