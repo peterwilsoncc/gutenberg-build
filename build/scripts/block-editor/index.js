@@ -8119,27 +8119,6 @@ var wp;
         );
         break;
       }
-      case "SAVE_REUSABLE_BLOCK_SUCCESS": {
-        const updatedBlockUids = [];
-        newState.attributes.forEach((attributes, clientId) => {
-          if (newState.byClientId.get(clientId).name === "core/block" && attributes.ref === action.updatedId) {
-            updatedBlockUids.push(clientId);
-          }
-        });
-        newState.tree = new Map(newState.tree);
-        updatedBlockUids.forEach((clientId) => {
-          newState.tree.set(clientId, {
-            ...newState.byClientId.get(clientId),
-            attributes: newState.attributes.get(clientId),
-            innerBlocks: newState.tree.get(clientId).innerBlocks
-          });
-        });
-        updateParentInnerBlocksInTree(
-          newState,
-          updatedBlockUids,
-          false
-        );
-      }
     }
     return newState;
   };
@@ -8354,26 +8333,6 @@ var wp;
     }
     return stateAfterInsert;
   };
-  var withSaveReusableBlock = (reducer3) => (state, action) => {
-    if (state && action.type === "SAVE_REUSABLE_BLOCK_SUCCESS") {
-      const { id, updatedId } = action;
-      if (id === updatedId) {
-        return state;
-      }
-      state = { ...state };
-      state.attributes = new Map(state.attributes);
-      state.attributes.forEach((attributes, clientId) => {
-        const { name } = state.byClientId.get(clientId);
-        if (name === "core/block" && attributes.ref === id) {
-          state.attributes.set(clientId, {
-            ...attributes,
-            ref: updatedId
-          });
-        }
-      });
-    }
-    return reducer3(state, action);
-  };
   var withResetControlledBlocks = (reducer3) => (state, action) => {
     if (action.type === "SET_HAS_CONTROLLED_INNER_BLOCKS") {
       const innerBlockOrder = state.order.get(action.clientId);
@@ -8391,8 +8350,6 @@ var wp;
   };
   var blocks = (0, import_compose.pipe)(
     import_data2.combineReducers,
-    withSaveReusableBlock,
-    // Needs to be before withBlockCache.
     withBlockTree,
     // Needs to be before withInnerBlocksRemoveCascade.
     withInnerBlocksRemoveCascade,
@@ -14350,11 +14307,15 @@ var wp;
       stripExperimentalSettings: true
     });
   }
-  function __unstableSaveReusableBlock(id, updatedId) {
+  function __unstableSaveReusableBlock() {
+    (0, import_deprecated4.default)(
+      'wp.data.dispatch( "core/block-editor" ).__unstableSaveReusableBlock',
+      {
+        since: "7.1"
+      }
+    );
     return {
-      type: "SAVE_REUSABLE_BLOCK_SUCCESS",
-      id,
-      updatedId
+      type: "DO_NOTHING"
     };
   }
   function __unstableMarkLastChangeAsPersistent() {
