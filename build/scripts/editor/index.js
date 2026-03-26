@@ -69360,13 +69360,16 @@ var wp;
   }
   function PreferencesModalContents({ extraSections = {} }) {
     const isLargeViewport = (0, import_compose69.useViewportMatch)("medium");
-    const showBlockBreadcrumbsOption = (0, import_data253.useSelect)(
+    const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data253.useSelect)(
       (select6) => {
-        const { getEditorSettings: getEditorSettings2 } = select6(store);
+        const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = select6(store);
         const { get } = select6(import_preferences34.store);
         const isRichEditingEnabled = getEditorSettings2().richEditingEnabled;
         const isDistractionFreeEnabled = get("core", "distractionFree");
-        return !isDistractionFreeEnabled && isLargeViewport && isRichEditingEnabled;
+        return {
+          showBlockBreadcrumbsOption: !isDistractionFreeEnabled && isLargeViewport && isRichEditingEnabled,
+          showCollaborationOptions: isCollaborationEnabledForCurrentPost2()
+        };
       },
       [isLargeViewport]
     );
@@ -69429,30 +69432,34 @@ var wp;
                       label: (0, import_i18n288.__)("Show starter patterns")
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
-                    PreferenceToggleControl,
-                    {
-                      scope: "core",
-                      featureName: "showCollaborationCursor",
-                      help: (0, import_i18n288.__)(
-                        "Show your own avatar inside blocks during collaborative editing sessions."
-                      ),
-                      label: (0, import_i18n288.__)("Show avatar in blocks")
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
-                    PreferenceToggleControl,
-                    {
-                      scope: "core",
-                      featureName: "showCollaborationNotifications",
-                      help: (0, import_i18n288.__)(
-                        "Show notifications when collaborators join, leave, or save the post."
-                      ),
-                      label: (0, import_i18n288.__)(
-                        "Show collaboration notifications"
-                      )
-                    }
-                  )
+                  showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime442.jsxs)(import_jsx_runtime442.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
+                      PreferenceToggleControl,
+                      {
+                        scope: "core",
+                        featureName: "showCollaborationCursor",
+                        help: (0, import_i18n288.__)(
+                          "Show your own avatar inside blocks during collaborative editing sessions."
+                        ),
+                        label: (0, import_i18n288.__)(
+                          "Show avatar in blocks"
+                        )
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
+                      PreferenceToggleControl,
+                      {
+                        scope: "core",
+                        featureName: "showCollaborationNotifications",
+                        help: (0, import_i18n288.__)(
+                          "Show notifications when collaborators join, leave, or save the post."
+                        ),
+                        label: (0, import_i18n288.__)(
+                          "Show collaboration notifications"
+                        )
+                      }
+                    )
+                  ] })
                 ]
               }
             ),
@@ -69709,6 +69716,7 @@ var wp;
       ].filter(Boolean),
       [
         showBlockBreadcrumbsOption,
+        showCollaborationOptions,
         extraSections,
         setIsInserterOpened2,
         setIsListViewOpened2,
