@@ -3307,7 +3307,7 @@ body.lockscroll {
   color: #fff;
   padding: 12px 20px;
   width: 100%;
-  max-width: 600px;
+  max-width: var(--wpds-dimension-surface-width-lg, 560px);
   box-sizing: border-box;
   cursor: pointer;
   pointer-events: auto;
