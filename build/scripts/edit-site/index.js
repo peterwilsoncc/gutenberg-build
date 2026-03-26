@@ -1015,7 +1015,7 @@ var wp;
   var import_block_library4 = __toESM(require_block_library(), 1);
   var import_data90 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
-  var import_element176 = __toESM(require_element(), 1);
+  var import_element177 = __toESM(require_element(), 1);
   var import_editor47 = __toESM(require_editor(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
@@ -1653,7 +1653,7 @@ var wp;
   // packages/edit-site/build-module/components/app/index.mjs
   var import_data89 = __toESM(require_data(), 1);
   var import_router44 = __toESM(require_router(), 1);
-  var import_element175 = __toESM(require_element(), 1);
+  var import_element176 = __toESM(require_element(), 1);
   var import_core_data70 = __toESM(require_core_data(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
@@ -8716,7 +8716,7 @@ var wp;
 
   // packages/edit-site/build-module/components/site-editor-routes/index.mjs
   var import_data88 = __toESM(require_data(), 1);
-  var import_element174 = __toESM(require_element(), 1);
+  var import_element175 = __toESM(require_element(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-main/index.mjs
   var import_components73 = __toESM(require_components(), 1);
@@ -44195,659 +44195,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
   var import_components142 = __toESM(require_components(), 1);
   var import_editor28 = __toESM(require_editor(), 1);
+  var import_element151 = __toESM(require_element(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
   var import_router29 = __toESM(require_router(), 1);
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/category-item.mjs
-  var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
-  function CategoryItem({
-    count,
-    icon,
-    id,
-    isActive,
-    label,
-    type
-  }) {
-    if (!count) {
-      return;
-    }
-    const queryArgs = [`postType=${type}`];
-    if (id) {
-      queryArgs.push(`categoryId=${id}`);
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
-      SidebarNavigationItem,
-      {
-        icon,
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("span", { children: count }),
-        "aria-current": isActive ? "true" : void 0,
-        to: `/pattern?${queryArgs.join("&")}`,
-        children: label
-      }
-    );
-  }
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.mjs
-  var import_element149 = __toESM(require_element(), 1);
-  var import_i18n133 = __toESM(require_i18n(), 1);
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-default-pattern-categories.mjs
-  var import_core_data42 = __toESM(require_core_data(), 1);
-  var import_data63 = __toESM(require_data(), 1);
-  function useDefaultPatternCategories() {
-    const blockPatternCategories = (0, import_data63.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = unlock(select3(store));
-      const settings2 = getSettings7();
-      return settings2.__experimentalAdditionalBlockPatternCategories ?? settings2.__experimentalBlockPatternCategories;
-    });
-    const restBlockPatternCategories = (0, import_data63.useSelect)(
-      (select3) => select3(import_core_data42.store).getBlockPatternCategories()
-    );
-    return [
-      ...blockPatternCategories || [],
-      ...restBlockPatternCategories || []
-    ];
-  }
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
-  var import_core_data43 = __toESM(require_core_data(), 1);
-  var import_data64 = __toESM(require_data(), 1);
-  var import_element147 = __toESM(require_element(), 1);
-
-  // packages/edit-site/build-module/components/page-patterns/utils.mjs
-  var filterOutDuplicatesByName = (currentItem, index, items) => index === items.findIndex((item) => currentItem.name === item.name);
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
-  function useThemePatterns() {
-    const blockPatterns = (0, import_data64.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = unlock(select3(store));
-      return getSettings7().__experimentalAdditionalBlockPatterns ?? getSettings7().__experimentalBlockPatterns;
-    });
-    const restBlockPatterns = (0, import_data64.useSelect)(
-      (select3) => select3(import_core_data43.store).getBlockPatterns()
-    );
-    const patterns = (0, import_element147.useMemo)(
-      () => [...blockPatterns || [], ...restBlockPatterns || []].filter(
-        (pattern) => !EXCLUDED_PATTERN_SOURCES.includes(pattern.source)
-      ).filter(filterOutDuplicatesByName).filter((pattern) => pattern.inserter !== false),
-      [blockPatterns, restBlockPatterns]
-    );
-    return patterns;
-  }
-
-  // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
-  var import_blocks11 = __toESM(require_blocks(), 1);
-  var import_data65 = __toESM(require_data(), 1);
-  var import_core_data44 = __toESM(require_core_data(), 1);
-  var import_element148 = __toESM(require_element(), 1);
-
-  // packages/edit-site/build-module/components/page-patterns/search-items.mjs
-  var import_block_editor23 = __toESM(require_block_editor(), 1);
-  var { extractWords, getNormalizedSearchTerms, normalizeString: normalizeString2 } = unlock(
-    import_block_editor23.privateApis
-  );
-  var defaultGetName = (item) => {
-    if (item.type === PATTERN_TYPES.user) {
-      return item.slug;
-    }
-    if (item.type === TEMPLATE_PART_POST_TYPE) {
-      return "";
-    }
-    return item.name || "";
-  };
-  var defaultGetTitle = (item) => {
-    if (typeof item.title === "string") {
-      return item.title;
-    }
-    if (item.title && item.title.rendered) {
-      return item.title.rendered;
-    }
-    if (item.title && item.title.raw) {
-      return item.title.raw;
-    }
-    return "";
-  };
-  var defaultGetDescription = (item) => {
-    if (item.type === PATTERN_TYPES.user) {
-      return item.excerpt.raw;
-    }
-    return item.description || "";
-  };
-  var defaultGetKeywords = (item) => item.keywords || [];
-  var defaultHasCategory = () => false;
-  var removeMatchingTerms = (unmatchedTerms, unprocessedTerms) => {
-    return unmatchedTerms.filter(
-      (term) => !getNormalizedSearchTerms(unprocessedTerms).some(
-        (unprocessedTerm) => unprocessedTerm.includes(term)
-      )
-    );
-  };
-  var searchItems = (items = [], searchInput = "", config2 = {}) => {
-    const normalizedSearchTerms = getNormalizedSearchTerms(searchInput);
-    const onlyFilterByCategory = config2.categoryId !== PATTERN_DEFAULT_CATEGORY && !normalizedSearchTerms.length;
-    const searchRankConfig = { ...config2, onlyFilterByCategory };
-    const threshold = onlyFilterByCategory ? 0 : 1;
-    const rankedItems = items.map((item) => {
-      return [
-        item,
-        getItemSearchRank(item, searchInput, searchRankConfig)
-      ];
-    }).filter(([, rank]) => rank > threshold);
-    if (normalizedSearchTerms.length === 0) {
-      return rankedItems.map(([item]) => item);
-    }
-    rankedItems.sort(([, rank1], [, rank2]) => rank2 - rank1);
-    return rankedItems.map(([item]) => item);
-  };
-  function getItemSearchRank(item, searchTerm, config2) {
-    const {
-      categoryId,
-      getName = defaultGetName,
-      getTitle = defaultGetTitle,
-      getDescription = defaultGetDescription,
-      getKeywords = defaultGetKeywords,
-      hasCategory = defaultHasCategory,
-      onlyFilterByCategory
-    } = config2;
-    let rank = categoryId === PATTERN_DEFAULT_CATEGORY || categoryId === TEMPLATE_PART_ALL_AREAS_CATEGORY || categoryId === PATTERN_USER_CATEGORY && item.type === PATTERN_TYPES.user || hasCategory(item, categoryId) ? 1 : 0;
-    if (!rank || onlyFilterByCategory) {
-      return rank;
-    }
-    const name2 = getName(item);
-    const title = getTitle(item);
-    const description = getDescription(item);
-    const keywords = getKeywords(item);
-    const normalizedSearchInput = normalizeString2(searchTerm);
-    const normalizedTitle = normalizeString2(title);
-    if (normalizedSearchInput === normalizedTitle) {
-      rank += 30;
-    } else if (normalizedTitle.startsWith(normalizedSearchInput)) {
-      rank += 20;
-    } else {
-      const terms = [name2, title, description, ...keywords].join(" ");
-      const normalizedSearchTerms = extractWords(normalizedSearchInput);
-      const unmatchedTerms = removeMatchingTerms(
-        normalizedSearchTerms,
-        terms
-      );
-      if (unmatchedTerms.length === 0) {
-        rank += 10;
-      }
-    }
-    return rank;
-  }
-
-  // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
-  var EMPTY_PATTERN_LIST = [];
-  var selectTemplateParts = (0, import_data65.createSelector)(
-    (select3, categoryId, search = "") => {
-      const {
-        getEntityRecords,
-        getCurrentTheme,
-        isResolving: isResolvingSelector
-      } = select3(import_core_data44.store);
-      const query = { per_page: -1 };
-      const templateParts = getEntityRecords("postType", TEMPLATE_PART_POST_TYPE, query) ?? EMPTY_PATTERN_LIST;
-      const knownAreas = getCurrentTheme()?.default_template_part_areas || [];
-      const templatePartAreas = knownAreas.map((area) => area.area);
-      const templatePartHasCategory = (item, category) => {
-        if (category !== TEMPLATE_PART_AREA_DEFAULT_CATEGORY) {
-          return item.area === category;
-        }
-        return item.area === category || !templatePartAreas.includes(item.area);
-      };
-      const isResolving = isResolvingSelector("getEntityRecords", [
-        "postType",
-        TEMPLATE_PART_POST_TYPE,
-        query
-      ]);
-      const patterns = searchItems(templateParts, search, {
-        categoryId,
-        hasCategory: templatePartHasCategory
-      });
-      return { patterns, isResolving };
-    },
-    (select3) => [
-      select3(import_core_data44.store).getEntityRecords(
-        "postType",
-        TEMPLATE_PART_POST_TYPE,
-        {
-          per_page: -1
-        }
-      ),
-      select3(import_core_data44.store).isResolving("getEntityRecords", [
-        "postType",
-        TEMPLATE_PART_POST_TYPE,
-        { per_page: -1 }
-      ]),
-      select3(import_core_data44.store).getCurrentTheme()?.default_template_part_areas
-    ]
-  );
-  var selectThemePatterns = (0, import_data65.createSelector)(
-    (select3) => {
-      const { getSettings: getSettings7 } = unlock(select3(store));
-      const { isResolving: isResolvingSelector } = select3(import_core_data44.store);
-      const settings2 = getSettings7();
-      const blockPatterns = settings2.__experimentalAdditionalBlockPatterns ?? settings2.__experimentalBlockPatterns;
-      const restBlockPatterns = select3(import_core_data44.store).getBlockPatterns();
-      const patterns = [
-        ...blockPatterns || [],
-        ...restBlockPatterns || []
-      ].filter(
-        (pattern) => !EXCLUDED_PATTERN_SOURCES.includes(pattern.source)
-      ).filter(filterOutDuplicatesByName).filter((pattern) => pattern.inserter !== false).map((pattern) => ({
-        ...pattern,
-        keywords: pattern.keywords || [],
-        type: PATTERN_TYPES.theme,
-        blocks: (0, import_blocks11.parse)(pattern.content, {
-          __unstableSkipMigrationLogs: true
-        })
-      }));
-      return {
-        patterns,
-        isResolving: isResolvingSelector("getBlockPatterns")
-      };
-    },
-    (select3) => [
-      select3(import_core_data44.store).getBlockPatterns(),
-      select3(import_core_data44.store).isResolving("getBlockPatterns"),
-      unlock(select3(store)).getSettings()
-    ]
-  );
-  var selectPatterns = (0, import_data65.createSelector)(
-    (select3, categoryId, syncStatus, search = "") => {
-      const {
-        patterns: themePatterns,
-        isResolving: isResolvingThemePatterns
-      } = selectThemePatterns(select3);
-      const {
-        patterns: userPatterns,
-        isResolving: isResolvingUserPatterns,
-        categories: userPatternCategories
-      } = selectUserPatterns(select3);
-      let patterns = [
-        ...themePatterns || [],
-        ...userPatterns || []
-      ];
-      if (syncStatus) {
-        patterns = patterns.filter((pattern) => {
-          return pattern.type === PATTERN_TYPES.user ? (pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full) === syncStatus : syncStatus === PATTERN_SYNC_TYPES.unsynced;
-        });
-      }
-      if (categoryId) {
-        patterns = searchItems(patterns, search, {
-          categoryId,
-          hasCategory: (item, currentCategory) => {
-            if (item.type === PATTERN_TYPES.user) {
-              return item.wp_pattern_category?.some(
-                (catId) => userPatternCategories.find(
-                  (cat) => cat.id === catId
-                )?.slug === currentCategory
-              );
-            }
-            return item.categories?.includes(currentCategory);
-          }
-        });
-      } else {
-        patterns = searchItems(patterns, search, {
-          hasCategory: (item) => {
-            if (item.type === PATTERN_TYPES.user) {
-              return userPatternCategories?.length && (!item.wp_pattern_category?.length || !item.wp_pattern_category?.some(
-                (catId) => userPatternCategories.find(
-                  (cat) => cat.id === catId
-                )
-              ));
-            }
-            return !item.hasOwnProperty("categories");
-          }
-        });
-      }
-      return {
-        patterns,
-        isResolving: isResolvingThemePatterns || isResolvingUserPatterns
-      };
-    },
-    (select3) => [
-      selectThemePatterns(select3),
-      selectUserPatterns(select3)
-    ]
-  );
-  var selectUserPatterns = (0, import_data65.createSelector)(
-    (select3, syncStatus, search = "") => {
-      const {
-        getEntityRecords,
-        isResolving: isResolvingSelector,
-        getUserPatternCategories
-      } = select3(import_core_data44.store);
-      const query = { per_page: -1 };
-      const patternPosts = getEntityRecords(
-        "postType",
-        PATTERN_TYPES.user,
-        query
-      );
-      const userPatternCategories = getUserPatternCategories();
-      const categories = /* @__PURE__ */ new Map();
-      userPatternCategories.forEach(
-        (userCategory) => categories.set(userCategory.id, userCategory)
-      );
-      let patterns = patternPosts ?? EMPTY_PATTERN_LIST;
-      const isResolving = isResolvingSelector("getEntityRecords", [
-        "postType",
-        PATTERN_TYPES.user,
-        query
-      ]);
-      if (syncStatus) {
-        patterns = patterns.filter(
-          (pattern) => pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full === syncStatus
-        );
-      }
-      patterns = searchItems(patterns, search, {
-        // We exit user pattern retrieval early if we aren't in the
-        // catch-all category for user created patterns, so it has
-        // to be in the category.
-        hasCategory: () => true
-      });
-      return {
-        patterns,
-        isResolving,
-        categories: userPatternCategories
-      };
-    },
-    (select3) => [
-      select3(import_core_data44.store).getEntityRecords("postType", PATTERN_TYPES.user, {
-        per_page: -1
-      }),
-      select3(import_core_data44.store).isResolving("getEntityRecords", [
-        "postType",
-        PATTERN_TYPES.user,
-        { per_page: -1 }
-      ]),
-      select3(import_core_data44.store).getUserPatternCategories()
-    ]
-  );
-  function useAugmentPatternsWithPermissions(patterns) {
-    const idsAndTypes = (0, import_element148.useMemo)(
-      () => patterns?.filter((record) => record.type !== PATTERN_TYPES.theme).map((record) => [record.type, record.id]) ?? [],
-      [patterns]
-    );
-    const permissions = (0, import_data65.useSelect)(
-      (select3) => {
-        const { getEntityRecordPermissions } = unlock(
-          select3(import_core_data44.store)
-        );
-        return idsAndTypes.reduce((acc, [type, id]) => {
-          acc[id] = getEntityRecordPermissions("postType", type, id);
-          return acc;
-        }, {});
-      },
-      [idsAndTypes]
-    );
-    return (0, import_element148.useMemo)(
-      () => patterns?.map((record) => ({
-        ...record,
-        permissions: permissions?.[record.id] ?? {}
-      })) ?? [],
-      [patterns, permissions]
-    );
-  }
-  var usePatterns = (postType2, categoryId, { search = "", syncStatus } = {}) => {
-    return (0, import_data65.useSelect)(
-      (select3) => {
-        if (postType2 === TEMPLATE_PART_POST_TYPE) {
-          return selectTemplateParts(select3, categoryId, search);
-        } else if (postType2 === PATTERN_TYPES.user && !!categoryId) {
-          const appliedCategory = categoryId === "uncategorized" ? "" : categoryId;
-          return selectPatterns(
-            select3,
-            appliedCategory,
-            syncStatus,
-            search
-          );
-        } else if (postType2 === PATTERN_TYPES.user) {
-          return selectUserPatterns(select3, syncStatus, search);
-        }
-        return {
-          patterns: EMPTY_PATTERN_LIST,
-          isResolving: false
-        };
-      },
-      [categoryId, postType2, search, syncStatus]
-    );
-  };
-  var use_patterns_default = usePatterns;
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.mjs
-  function usePatternCategories() {
-    const defaultCategories = useDefaultPatternCategories();
-    defaultCategories.push({
-      name: TEMPLATE_PART_AREA_DEFAULT_CATEGORY,
-      label: (0, import_i18n133.__)("Uncategorized")
-    });
-    const themePatterns = useThemePatterns();
-    const { patterns: userPatterns, categories: userPatternCategories } = use_patterns_default(PATTERN_TYPES.user);
-    const patternCategories = (0, import_element149.useMemo)(() => {
-      const categoryMap = {};
-      const categoriesWithCounts = [];
-      defaultCategories.forEach((category) => {
-        if (!categoryMap[category.name]) {
-          categoryMap[category.name] = { ...category, count: 0 };
-        }
-      });
-      userPatternCategories.forEach((category) => {
-        if (!categoryMap[category.name]) {
-          categoryMap[category.name] = { ...category, count: 0 };
-        }
-      });
-      themePatterns.forEach((pattern) => {
-        pattern.categories?.forEach((category) => {
-          if (categoryMap[category]) {
-            categoryMap[category].count += 1;
-          }
-        });
-        if (!pattern.categories?.length) {
-          categoryMap.uncategorized.count += 1;
-        }
-      });
-      userPatterns.forEach((pattern) => {
-        pattern.wp_pattern_category?.forEach((catId) => {
-          const category = userPatternCategories.find(
-            (cat) => cat.id === catId
-          )?.name;
-          if (categoryMap[category]) {
-            categoryMap[category].count += 1;
-          }
-        });
-        if (!pattern.wp_pattern_category?.length || !pattern.wp_pattern_category?.some(
-          (catId) => userPatternCategories.find((cat) => cat.id === catId)
-        )) {
-          categoryMap.uncategorized.count += 1;
-        }
-      });
-      [...defaultCategories, ...userPatternCategories].forEach(
-        (category) => {
-          if (categoryMap[category.name].count && !categoriesWithCounts.find(
-            (cat) => cat.name === category.name
-          )) {
-            categoriesWithCounts.push(categoryMap[category.name]);
-          }
-        }
-      );
-      const sortedCategories = categoriesWithCounts.sort(
-        (a2, b2) => a2.label.localeCompare(b2.label)
-      );
-      sortedCategories.unshift({
-        name: PATTERN_USER_CATEGORY,
-        label: (0, import_i18n133.__)("My patterns"),
-        count: userPatterns.length
-      });
-      sortedCategories.unshift({
-        name: PATTERN_DEFAULT_CATEGORY,
-        label: (0, import_i18n133.__)("All patterns"),
-        description: (0, import_i18n133.__)("A list of all patterns from all sources."),
-        count: themePatterns.length + userPatterns.length
-      });
-      return sortedCategories;
-    }, [
-      defaultCategories,
-      themePatterns,
-      userPatternCategories,
-      userPatterns
-    ]);
-    return { patternCategories, hasPatterns: !!patternCategories.length };
-  }
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.mjs
-  var import_core_data45 = __toESM(require_core_data(), 1);
-  var import_data66 = __toESM(require_data(), 1);
-  var import_block_library3 = __toESM(require_block_library(), 1);
-  var { NAVIGATION_OVERLAY_TEMPLATE_PART_AREA } = unlock(
-    import_block_library3.privateApis
-  );
-  var useTemplatePartsGroupedByArea = (items) => {
-    const allItems = items || [];
-    const templatePartAreas = (0, import_data66.useSelect)(
-      (select3) => select3(import_core_data45.store).getCurrentTheme()?.default_template_part_areas || [],
-      []
-    );
-    const knownAreas = {
-      header: {},
-      footer: {},
-      sidebar: {},
-      uncategorized: {},
-      [NAVIGATION_OVERLAY_TEMPLATE_PART_AREA]: {}
-    };
-    templatePartAreas.forEach(
-      (templatePartArea) => knownAreas[templatePartArea.area] = {
-        ...templatePartArea,
-        templateParts: []
-      }
-    );
-    const groupedByArea = allItems.reduce((accumulator, item) => {
-      const key = accumulator[item.area] ? item.area : TEMPLATE_PART_AREA_DEFAULT_CATEGORY;
-      accumulator[key]?.templateParts?.push(item);
-      return accumulator;
-    }, knownAreas);
-    return groupedByArea;
-  };
-  function useTemplatePartAreas() {
-    const { records: templateParts, isResolving: isLoading } = (0, import_core_data45.useEntityRecords)(
-      "postType",
-      TEMPLATE_PART_POST_TYPE,
-      { per_page: -1 }
-    );
-    return {
-      hasTemplateParts: templateParts ? !!templateParts.length : false,
-      isLoading,
-      templatePartAreas: useTemplatePartsGroupedByArea(templateParts)
-    };
-  }
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
-  var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation26 } = unlock(import_router29.privateApis);
-  function CategoriesGroup({
-    templatePartAreas,
-    patternCategories,
-    currentCategory,
-    currentType
-  }) {
-    const [allPatterns, ...otherPatterns] = patternCategories;
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(import_components142.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-        CategoryItem,
-        {
-          count: Object.values(templatePartAreas).map(({ templateParts }) => templateParts?.length || 0).reduce((acc, val) => acc + val, 0),
-          icon: (0, import_editor28.getTemplatePartIcon)(),
-          label: (0, import_i18n134.__)("All template parts"),
-          id: TEMPLATE_PART_ALL_AREAS_CATEGORY,
-          type: TEMPLATE_PART_POST_TYPE,
-          isActive: currentCategory === TEMPLATE_PART_ALL_AREAS_CATEGORY && currentType === TEMPLATE_PART_POST_TYPE
-        },
-        "all"
-      ),
-      Object.entries(templatePartAreas).map(
-        ([area, { label, templateParts, icon }]) => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-          CategoryItem,
-          {
-            count: templateParts?.length,
-            icon: (0, import_editor28.getTemplatePartIcon)(icon),
-            label,
-            id: area,
-            type: TEMPLATE_PART_POST_TYPE,
-            isActive: currentCategory === area && currentType === TEMPLATE_PART_POST_TYPE
-          },
-          area
-        )
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", { className: "edit-site-sidebar-navigation-screen-patterns__divider" }),
-      allPatterns && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-        CategoryItem,
-        {
-          count: allPatterns.count,
-          label: allPatterns.label,
-          icon: file_default,
-          id: allPatterns.name,
-          type: PATTERN_TYPES.user,
-          isActive: currentCategory === `${allPatterns.name}` && currentType === PATTERN_TYPES.user
-        },
-        allPatterns.name
-      ),
-      otherPatterns.map((category) => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-        CategoryItem,
-        {
-          count: category.count,
-          label: category.label,
-          icon: file_default,
-          id: category.name,
-          type: PATTERN_TYPES.user,
-          isActive: currentCategory === `${category.name}` && currentType === PATTERN_TYPES.user
-        },
-        category.name
-      ))
-    ] });
-  }
-  function SidebarNavigationScreenPatterns({ backPath }) {
-    const {
-      query: { postType: postType2 = "wp_block", categoryId }
-    } = useLocation26();
-    const currentCategory = categoryId || (postType2 === PATTERN_TYPES.user ? PATTERN_DEFAULT_CATEGORY : TEMPLATE_PART_ALL_AREAS_CATEGORY);
-    const { templatePartAreas, hasTemplateParts, isLoading } = useTemplatePartAreas();
-    const { patternCategories, hasPatterns } = usePatternCategories();
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-      SidebarNavigationScreen,
-      {
-        title: (0, import_i18n134.__)("Patterns"),
-        description: (0, import_i18n134.__)(
-          "Manage what patterns are available when editing the site."
-        ),
-        isRoot: !backPath,
-        backPath,
-        content: /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(import_jsx_runtime283.Fragment, { children: [
-          isLoading && (0, import_i18n134.__)("Loading items\u2026"),
-          !isLoading && /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(import_jsx_runtime283.Fragment, { children: [
-            !hasTemplateParts && !hasPatterns && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components142.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components142.__experimentalItem, { children: (0, import_i18n134.__)("No items found") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-              CategoriesGroup,
-              {
-                templatePartAreas,
-                patternCategories,
-                currentCategory,
-                currentType: postType2
-              }
-            )
-          ] })
-        ] })
-      }
-    );
-  }
-
-  // packages/edit-site/build-module/components/page-patterns/index.mjs
-  var import_i18n141 = __toESM(require_i18n(), 1);
-  var import_element157 = __toESM(require_element(), 1);
-  var import_block_editor26 = __toESM(require_block_editor(), 1);
-  var import_core_data52 = __toESM(require_core_data(), 1);
-  var import_editor32 = __toESM(require_editor(), 1);
-  var import_router33 = __toESM(require_router(), 1);
 
   // node_modules/dequal/dist/index.mjs
   var has = Object.prototype.hasOwnProperty;
@@ -44926,8 +44276,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/use-view.mjs
-  var import_element150 = __toESM(require_element(), 1);
-  var import_data67 = __toESM(require_data(), 1);
+  var import_element147 = __toESM(require_element(), 1);
+  var import_data63 = __toESM(require_data(), 1);
   var import_preferences11 = __toESM(require_preferences(), 1);
 
   // packages/views/build-module/preference-keys.mjs
@@ -45058,7 +44408,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChangeQueryParams
     } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
-    const persistedView = (0, import_data67.useSelect)(
+    const persistedView = (0, import_data63.useSelect)(
       (select3) => {
         return select3(import_preferences11.store).get(
           "core/views",
@@ -45067,15 +44417,15 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [preferenceKey]
     );
-    const { set: set3 } = (0, import_data67.useDispatch)(import_preferences11.store);
+    const { set: set3 } = (0, import_data63.useDispatch)(import_preferences11.store);
     const baseView = persistedView ?? defaultView ?? {};
     const page = Number(queryParams?.page ?? baseView.page ?? 1);
     const search = queryParams?.search ?? baseView.search ?? "";
-    const combinedOverrides = (0, import_element150.useMemo)(() => {
+    const combinedOverrides = (0, import_element147.useMemo)(() => {
       const layoutTypeDefaults = config2.defaultLayouts?.[baseView.type] ?? {};
       return { ...layoutTypeDefaults, ...activeViewOverrides };
     }, [config2.defaultLayouts, baseView.type, activeViewOverrides]);
-    const view = (0, import_element150.useMemo)(() => {
+    const view = (0, import_element147.useMemo)(() => {
       return mergeActiveViewOverrides(
         {
           ...baseView,
@@ -45087,7 +44437,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }, [baseView, page, search, combinedOverrides, defaultView]);
     const isModified = !!persistedView;
-    const updateView = (0, import_element150.useCallback)(
+    const updateView = (0, import_element147.useCallback)(
       (newView) => {
         const urlParams = {
           page: newView?.page,
@@ -45130,7 +44480,7 @@ If there's a particular need for this, please submit a feature request at https:
         preferenceKey
       ]
     );
-    const resetToDefault = (0, import_element150.useCallback)(() => {
+    const resetToDefault = (0, import_element147.useCallback)(() => {
       set3("core/views", preferenceKey, void 0);
     }, [preferenceKey, set3]);
     return {
@@ -45142,12 +44492,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/load-view.mjs
-  var import_data68 = __toESM(require_data(), 1);
+  var import_data64 = __toESM(require_data(), 1);
   var import_preferences12 = __toESM(require_preferences(), 1);
   async function loadView(config2) {
     const { kind, name: name2, slug, defaultView, activeViewOverrides, queryParams } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
-    const persistedView = (0, import_data68.select)(import_preferences12.store).get(
+    const persistedView = (0, import_data64.select)(import_preferences12.store).get(
       "core/views",
       preferenceKey
     );
@@ -45168,8 +44518,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/use-view-config.mjs
-  var import_data69 = __toESM(require_data(), 1);
-  var import_core_data46 = __toESM(require_core_data(), 1);
+  var import_data65 = __toESM(require_data(), 1);
+  var import_core_data42 = __toESM(require_core_data(), 1);
 
   // packages/views/build-module/lock-unlock.mjs
   var import_private_apis5 = __toESM(require_private_apis(), 1);
@@ -45183,22 +44533,677 @@ If there's a particular need for this, please submit a feature request at https:
     kind,
     name: name2
   }) {
-    return (0, import_data69.useSelect)(
+    return (0, import_data65.useSelect)(
       (select3) => {
-        return unlock5(select3(import_core_data46.store)).getViewConfig(kind, name2);
+        return unlock5(select3(import_core_data42.store)).getViewConfig(kind, name2);
       },
       [kind, name2]
     );
   }
 
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/category-item.mjs
+  var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
+  function CategoryItem({
+    count,
+    icon,
+    id,
+    isActive,
+    label,
+    type
+  }) {
+    if (!count) {
+      return;
+    }
+    const queryArgs = [`postType=${type}`];
+    if (id) {
+      queryArgs.push(`categoryId=${id}`);
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+      SidebarNavigationItem,
+      {
+        icon,
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("span", { children: count }),
+        "aria-current": isActive ? "true" : void 0,
+        to: `/pattern?${queryArgs.join("&")}`,
+        children: label
+      }
+    );
+  }
+
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.mjs
+  var import_element150 = __toESM(require_element(), 1);
+  var import_i18n133 = __toESM(require_i18n(), 1);
+
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-default-pattern-categories.mjs
+  var import_core_data43 = __toESM(require_core_data(), 1);
+  var import_data66 = __toESM(require_data(), 1);
+  function useDefaultPatternCategories() {
+    const blockPatternCategories = (0, import_data66.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
+      const settings2 = getSettings7();
+      return settings2.__experimentalAdditionalBlockPatternCategories ?? settings2.__experimentalBlockPatternCategories;
+    });
+    const restBlockPatternCategories = (0, import_data66.useSelect)(
+      (select3) => select3(import_core_data43.store).getBlockPatternCategories()
+    );
+    return [
+      ...blockPatternCategories || [],
+      ...restBlockPatternCategories || []
+    ];
+  }
+
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
+  var import_core_data44 = __toESM(require_core_data(), 1);
+  var import_data67 = __toESM(require_data(), 1);
+  var import_element148 = __toESM(require_element(), 1);
+
+  // packages/edit-site/build-module/components/page-patterns/utils.mjs
+  var filterOutDuplicatesByName = (currentItem, index, items) => index === items.findIndex((item) => currentItem.name === item.name);
+
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
+  function useThemePatterns() {
+    const blockPatterns = (0, import_data67.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
+      return getSettings7().__experimentalAdditionalBlockPatterns ?? getSettings7().__experimentalBlockPatterns;
+    });
+    const restBlockPatterns = (0, import_data67.useSelect)(
+      (select3) => select3(import_core_data44.store).getBlockPatterns()
+    );
+    const patterns = (0, import_element148.useMemo)(
+      () => [...blockPatterns || [], ...restBlockPatterns || []].filter(
+        (pattern) => !EXCLUDED_PATTERN_SOURCES.includes(pattern.source)
+      ).filter(filterOutDuplicatesByName).filter((pattern) => pattern.inserter !== false),
+      [blockPatterns, restBlockPatterns]
+    );
+    return patterns;
+  }
+
+  // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
+  var import_blocks11 = __toESM(require_blocks(), 1);
+  var import_data68 = __toESM(require_data(), 1);
+  var import_core_data45 = __toESM(require_core_data(), 1);
+  var import_element149 = __toESM(require_element(), 1);
+
+  // packages/edit-site/build-module/components/page-patterns/search-items.mjs
+  var import_block_editor23 = __toESM(require_block_editor(), 1);
+  var { extractWords, getNormalizedSearchTerms, normalizeString: normalizeString2 } = unlock(
+    import_block_editor23.privateApis
+  );
+  var defaultGetName = (item) => {
+    if (item.type === PATTERN_TYPES.user) {
+      return item.slug;
+    }
+    if (item.type === TEMPLATE_PART_POST_TYPE) {
+      return "";
+    }
+    return item.name || "";
+  };
+  var defaultGetTitle = (item) => {
+    if (typeof item.title === "string") {
+      return item.title;
+    }
+    if (item.title && item.title.rendered) {
+      return item.title.rendered;
+    }
+    if (item.title && item.title.raw) {
+      return item.title.raw;
+    }
+    return "";
+  };
+  var defaultGetDescription = (item) => {
+    if (item.type === PATTERN_TYPES.user) {
+      return item.excerpt.raw;
+    }
+    return item.description || "";
+  };
+  var defaultGetKeywords = (item) => item.keywords || [];
+  var defaultHasCategory = () => false;
+  var removeMatchingTerms = (unmatchedTerms, unprocessedTerms) => {
+    return unmatchedTerms.filter(
+      (term) => !getNormalizedSearchTerms(unprocessedTerms).some(
+        (unprocessedTerm) => unprocessedTerm.includes(term)
+      )
+    );
+  };
+  var searchItems = (items = [], searchInput = "", config2 = {}) => {
+    const normalizedSearchTerms = getNormalizedSearchTerms(searchInput);
+    const onlyFilterByCategory = config2.categoryId !== PATTERN_DEFAULT_CATEGORY && !normalizedSearchTerms.length;
+    const searchRankConfig = { ...config2, onlyFilterByCategory };
+    const threshold = onlyFilterByCategory ? 0 : 1;
+    const rankedItems = items.map((item) => {
+      return [
+        item,
+        getItemSearchRank(item, searchInput, searchRankConfig)
+      ];
+    }).filter(([, rank]) => rank > threshold);
+    if (normalizedSearchTerms.length === 0) {
+      return rankedItems.map(([item]) => item);
+    }
+    rankedItems.sort(([, rank1], [, rank2]) => rank2 - rank1);
+    return rankedItems.map(([item]) => item);
+  };
+  function getItemSearchRank(item, searchTerm, config2) {
+    const {
+      categoryId,
+      getName = defaultGetName,
+      getTitle = defaultGetTitle,
+      getDescription = defaultGetDescription,
+      getKeywords = defaultGetKeywords,
+      hasCategory = defaultHasCategory,
+      onlyFilterByCategory
+    } = config2;
+    let rank = categoryId === PATTERN_DEFAULT_CATEGORY || categoryId === TEMPLATE_PART_ALL_AREAS_CATEGORY || categoryId === PATTERN_USER_CATEGORY && item.type === PATTERN_TYPES.user || hasCategory(item, categoryId) ? 1 : 0;
+    if (!rank || onlyFilterByCategory) {
+      return rank;
+    }
+    const name2 = getName(item);
+    const title = getTitle(item);
+    const description = getDescription(item);
+    const keywords = getKeywords(item);
+    const normalizedSearchInput = normalizeString2(searchTerm);
+    const normalizedTitle = normalizeString2(title);
+    if (normalizedSearchInput === normalizedTitle) {
+      rank += 30;
+    } else if (normalizedTitle.startsWith(normalizedSearchInput)) {
+      rank += 20;
+    } else {
+      const terms = [name2, title, description, ...keywords].join(" ");
+      const normalizedSearchTerms = extractWords(normalizedSearchInput);
+      const unmatchedTerms = removeMatchingTerms(
+        normalizedSearchTerms,
+        terms
+      );
+      if (unmatchedTerms.length === 0) {
+        rank += 10;
+      }
+    }
+    return rank;
+  }
+
+  // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
+  var EMPTY_PATTERN_LIST = [];
+  var selectTemplateParts = (0, import_data68.createSelector)(
+    (select3, categoryId, search = "") => {
+      const {
+        getEntityRecords,
+        getCurrentTheme,
+        isResolving: isResolvingSelector
+      } = select3(import_core_data45.store);
+      const query = { per_page: -1 };
+      const templateParts = getEntityRecords("postType", TEMPLATE_PART_POST_TYPE, query) ?? EMPTY_PATTERN_LIST;
+      const knownAreas = getCurrentTheme()?.default_template_part_areas || [];
+      const templatePartAreas = knownAreas.map((area) => area.area);
+      const templatePartHasCategory = (item, category) => {
+        if (category !== TEMPLATE_PART_AREA_DEFAULT_CATEGORY) {
+          return item.area === category;
+        }
+        return item.area === category || !templatePartAreas.includes(item.area);
+      };
+      const isResolving = isResolvingSelector("getEntityRecords", [
+        "postType",
+        TEMPLATE_PART_POST_TYPE,
+        query
+      ]);
+      const patterns = searchItems(templateParts, search, {
+        categoryId,
+        hasCategory: templatePartHasCategory
+      });
+      return { patterns, isResolving };
+    },
+    (select3) => [
+      select3(import_core_data45.store).getEntityRecords(
+        "postType",
+        TEMPLATE_PART_POST_TYPE,
+        {
+          per_page: -1
+        }
+      ),
+      select3(import_core_data45.store).isResolving("getEntityRecords", [
+        "postType",
+        TEMPLATE_PART_POST_TYPE,
+        { per_page: -1 }
+      ]),
+      select3(import_core_data45.store).getCurrentTheme()?.default_template_part_areas
+    ]
+  );
+  var selectThemePatterns = (0, import_data68.createSelector)(
+    (select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
+      const { isResolving: isResolvingSelector } = select3(import_core_data45.store);
+      const settings2 = getSettings7();
+      const blockPatterns = settings2.__experimentalAdditionalBlockPatterns ?? settings2.__experimentalBlockPatterns;
+      const restBlockPatterns = select3(import_core_data45.store).getBlockPatterns();
+      const patterns = [
+        ...blockPatterns || [],
+        ...restBlockPatterns || []
+      ].filter(
+        (pattern) => !EXCLUDED_PATTERN_SOURCES.includes(pattern.source)
+      ).filter(filterOutDuplicatesByName).filter((pattern) => pattern.inserter !== false).map((pattern) => ({
+        ...pattern,
+        keywords: pattern.keywords || [],
+        type: PATTERN_TYPES.theme,
+        blocks: (0, import_blocks11.parse)(pattern.content, {
+          __unstableSkipMigrationLogs: true
+        })
+      }));
+      return {
+        patterns,
+        isResolving: isResolvingSelector("getBlockPatterns")
+      };
+    },
+    (select3) => [
+      select3(import_core_data45.store).getBlockPatterns(),
+      select3(import_core_data45.store).isResolving("getBlockPatterns"),
+      unlock(select3(store)).getSettings()
+    ]
+  );
+  var selectPatterns = (0, import_data68.createSelector)(
+    (select3, categoryId, syncStatus, search = "") => {
+      const {
+        patterns: themePatterns,
+        isResolving: isResolvingThemePatterns
+      } = selectThemePatterns(select3);
+      const {
+        patterns: userPatterns,
+        isResolving: isResolvingUserPatterns,
+        categories: userPatternCategories
+      } = selectUserPatterns(select3);
+      let patterns = [
+        ...themePatterns || [],
+        ...userPatterns || []
+      ];
+      if (syncStatus) {
+        patterns = patterns.filter((pattern) => {
+          return pattern.type === PATTERN_TYPES.user ? (pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full) === syncStatus : syncStatus === PATTERN_SYNC_TYPES.unsynced;
+        });
+      }
+      if (categoryId) {
+        patterns = searchItems(patterns, search, {
+          categoryId,
+          hasCategory: (item, currentCategory) => {
+            if (item.type === PATTERN_TYPES.user) {
+              return item.wp_pattern_category?.some(
+                (catId) => userPatternCategories.find(
+                  (cat) => cat.id === catId
+                )?.slug === currentCategory
+              );
+            }
+            return item.categories?.includes(currentCategory);
+          }
+        });
+      } else {
+        patterns = searchItems(patterns, search, {
+          hasCategory: (item) => {
+            if (item.type === PATTERN_TYPES.user) {
+              return userPatternCategories?.length && (!item.wp_pattern_category?.length || !item.wp_pattern_category?.some(
+                (catId) => userPatternCategories.find(
+                  (cat) => cat.id === catId
+                )
+              ));
+            }
+            return !item.hasOwnProperty("categories");
+          }
+        });
+      }
+      return {
+        patterns,
+        isResolving: isResolvingThemePatterns || isResolvingUserPatterns
+      };
+    },
+    (select3) => [
+      selectThemePatterns(select3),
+      selectUserPatterns(select3)
+    ]
+  );
+  var selectUserPatterns = (0, import_data68.createSelector)(
+    (select3, syncStatus, search = "") => {
+      const {
+        getEntityRecords,
+        isResolving: isResolvingSelector,
+        getUserPatternCategories
+      } = select3(import_core_data45.store);
+      const query = { per_page: -1 };
+      const patternPosts = getEntityRecords(
+        "postType",
+        PATTERN_TYPES.user,
+        query
+      );
+      const userPatternCategories = getUserPatternCategories();
+      const categories = /* @__PURE__ */ new Map();
+      userPatternCategories.forEach(
+        (userCategory) => categories.set(userCategory.id, userCategory)
+      );
+      let patterns = patternPosts ?? EMPTY_PATTERN_LIST;
+      const isResolving = isResolvingSelector("getEntityRecords", [
+        "postType",
+        PATTERN_TYPES.user,
+        query
+      ]);
+      if (syncStatus) {
+        patterns = patterns.filter(
+          (pattern) => pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full === syncStatus
+        );
+      }
+      patterns = searchItems(patterns, search, {
+        // We exit user pattern retrieval early if we aren't in the
+        // catch-all category for user created patterns, so it has
+        // to be in the category.
+        hasCategory: () => true
+      });
+      return {
+        patterns,
+        isResolving,
+        categories: userPatternCategories
+      };
+    },
+    (select3) => [
+      select3(import_core_data45.store).getEntityRecords("postType", PATTERN_TYPES.user, {
+        per_page: -1
+      }),
+      select3(import_core_data45.store).isResolving("getEntityRecords", [
+        "postType",
+        PATTERN_TYPES.user,
+        { per_page: -1 }
+      ]),
+      select3(import_core_data45.store).getUserPatternCategories()
+    ]
+  );
+  function useAugmentPatternsWithPermissions(patterns) {
+    const idsAndTypes = (0, import_element149.useMemo)(
+      () => patterns?.filter((record) => record.type !== PATTERN_TYPES.theme).map((record) => [record.type, record.id]) ?? [],
+      [patterns]
+    );
+    const permissions = (0, import_data68.useSelect)(
+      (select3) => {
+        const { getEntityRecordPermissions } = unlock(
+          select3(import_core_data45.store)
+        );
+        return idsAndTypes.reduce((acc, [type, id]) => {
+          acc[id] = getEntityRecordPermissions("postType", type, id);
+          return acc;
+        }, {});
+      },
+      [idsAndTypes]
+    );
+    return (0, import_element149.useMemo)(
+      () => patterns?.map((record) => ({
+        ...record,
+        permissions: permissions?.[record.id] ?? {}
+      })) ?? [],
+      [patterns, permissions]
+    );
+  }
+  var usePatterns = (postType2, categoryId, { search = "", syncStatus } = {}) => {
+    return (0, import_data68.useSelect)(
+      (select3) => {
+        if (postType2 === TEMPLATE_PART_POST_TYPE) {
+          return selectTemplateParts(select3, categoryId, search);
+        } else if (postType2 === PATTERN_TYPES.user && !!categoryId) {
+          const appliedCategory = categoryId === "uncategorized" ? "" : categoryId;
+          return selectPatterns(
+            select3,
+            appliedCategory,
+            syncStatus,
+            search
+          );
+        } else if (postType2 === PATTERN_TYPES.user) {
+          return selectUserPatterns(select3, syncStatus, search);
+        }
+        return {
+          patterns: EMPTY_PATTERN_LIST,
+          isResolving: false
+        };
+      },
+      [categoryId, postType2, search, syncStatus]
+    );
+  };
+  var use_patterns_default = usePatterns;
+
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.mjs
+  function usePatternCategories() {
+    const defaultCategories = useDefaultPatternCategories();
+    defaultCategories.push({
+      name: TEMPLATE_PART_AREA_DEFAULT_CATEGORY,
+      label: (0, import_i18n133.__)("Uncategorized")
+    });
+    const themePatterns = useThemePatterns();
+    const { patterns: userPatterns, categories: userPatternCategories } = use_patterns_default(PATTERN_TYPES.user);
+    const patternCategories = (0, import_element150.useMemo)(() => {
+      const categoryMap = {};
+      const categoriesWithCounts = [];
+      defaultCategories.forEach((category) => {
+        if (!categoryMap[category.name]) {
+          categoryMap[category.name] = { ...category, count: 0 };
+        }
+      });
+      userPatternCategories.forEach((category) => {
+        if (!categoryMap[category.name]) {
+          categoryMap[category.name] = { ...category, count: 0 };
+        }
+      });
+      themePatterns.forEach((pattern) => {
+        pattern.categories?.forEach((category) => {
+          if (categoryMap[category]) {
+            categoryMap[category].count += 1;
+          }
+        });
+        if (!pattern.categories?.length) {
+          categoryMap.uncategorized.count += 1;
+        }
+      });
+      userPatterns.forEach((pattern) => {
+        pattern.wp_pattern_category?.forEach((catId) => {
+          const category = userPatternCategories.find(
+            (cat) => cat.id === catId
+          )?.name;
+          if (categoryMap[category]) {
+            categoryMap[category].count += 1;
+          }
+        });
+        if (!pattern.wp_pattern_category?.length || !pattern.wp_pattern_category?.some(
+          (catId) => userPatternCategories.find((cat) => cat.id === catId)
+        )) {
+          categoryMap.uncategorized.count += 1;
+        }
+      });
+      [...defaultCategories, ...userPatternCategories].forEach(
+        (category) => {
+          if (categoryMap[category.name].count && !categoriesWithCounts.find(
+            (cat) => cat.name === category.name
+          )) {
+            categoriesWithCounts.push(categoryMap[category.name]);
+          }
+        }
+      );
+      const sortedCategories = categoriesWithCounts.sort(
+        (a2, b2) => a2.label.localeCompare(b2.label)
+      );
+      sortedCategories.unshift({
+        name: PATTERN_USER_CATEGORY,
+        label: (0, import_i18n133.__)("My patterns"),
+        count: userPatterns.length
+      });
+      sortedCategories.unshift({
+        name: PATTERN_DEFAULT_CATEGORY,
+        label: (0, import_i18n133.__)("All patterns"),
+        description: (0, import_i18n133.__)("A list of all patterns from all sources."),
+        count: themePatterns.length + userPatterns.length
+      });
+      return sortedCategories;
+    }, [
+      defaultCategories,
+      themePatterns,
+      userPatternCategories,
+      userPatterns
+    ]);
+    return { patternCategories, hasPatterns: !!patternCategories.length };
+  }
+
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.mjs
+  var import_core_data46 = __toESM(require_core_data(), 1);
+  var import_data69 = __toESM(require_data(), 1);
+  var import_block_library3 = __toESM(require_block_library(), 1);
+  var { NAVIGATION_OVERLAY_TEMPLATE_PART_AREA } = unlock(
+    import_block_library3.privateApis
+  );
+  var useTemplatePartsGroupedByArea = (items) => {
+    const allItems = items || [];
+    const templatePartAreas = (0, import_data69.useSelect)(
+      (select3) => select3(import_core_data46.store).getCurrentTheme()?.default_template_part_areas || [],
+      []
+    );
+    const knownAreas = {
+      header: {},
+      footer: {},
+      sidebar: {},
+      uncategorized: {},
+      [NAVIGATION_OVERLAY_TEMPLATE_PART_AREA]: {}
+    };
+    templatePartAreas.forEach(
+      (templatePartArea) => knownAreas[templatePartArea.area] = {
+        ...templatePartArea,
+        templateParts: []
+      }
+    );
+    const groupedByArea = allItems.reduce((accumulator, item) => {
+      const key = accumulator[item.area] ? item.area : TEMPLATE_PART_AREA_DEFAULT_CATEGORY;
+      accumulator[key]?.templateParts?.push(item);
+      return accumulator;
+    }, knownAreas);
+    return groupedByArea;
+  };
+  function useTemplatePartAreas() {
+    const { records: templateParts, isResolving: isLoading } = (0, import_core_data46.useEntityRecords)(
+      "postType",
+      TEMPLATE_PART_POST_TYPE,
+      { per_page: -1 }
+    );
+    return {
+      hasTemplateParts: templateParts ? !!templateParts.length : false,
+      isLoading,
+      templatePartAreas: useTemplatePartsGroupedByArea(templateParts)
+    };
+  }
+
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
+  var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
+  var { useLocation: useLocation26 } = unlock(import_router29.privateApis);
+  function CategoriesGroup({
+    templatePartViews,
+    patternViews,
+    templatePartCounts,
+    patternCounts,
+    currentCategory,
+    currentType
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(import_components142.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: [
+      templatePartViews?.map((view) => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+        CategoryItem,
+        {
+          count: templatePartCounts[view.slug],
+          icon: (0, import_editor28.getTemplatePartIcon)(
+            view.slug === TEMPLATE_PART_ALL_AREAS_CATEGORY ? void 0 : view.slug
+          ),
+          label: view.title,
+          id: view.slug,
+          type: TEMPLATE_PART_POST_TYPE,
+          isActive: currentCategory === view.slug && currentType === TEMPLATE_PART_POST_TYPE
+        },
+        view.slug
+      )),
+      /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", { className: "edit-site-sidebar-navigation-screen-patterns__divider" }),
+      patternViews?.map((view) => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+        CategoryItem,
+        {
+          count: patternCounts[view.slug],
+          label: view.title,
+          icon: file_default,
+          id: view.slug,
+          type: PATTERN_TYPES.user,
+          isActive: currentCategory === `${view.slug}` && currentType === PATTERN_TYPES.user
+        },
+        view.slug
+      ))
+    ] });
+  }
+  function SidebarNavigationScreenPatterns({ backPath }) {
+    const {
+      query: { postType: postType2 = "wp_block", categoryId }
+    } = useLocation26();
+    const currentCategory = categoryId || (postType2 === PATTERN_TYPES.user ? PATTERN_DEFAULT_CATEGORY : TEMPLATE_PART_ALL_AREAS_CATEGORY);
+    const { view_list: templatePartViews } = useViewConfig({
+      kind: "postType",
+      name: TEMPLATE_PART_POST_TYPE
+    });
+    const { view_list: patternViews } = useViewConfig({
+      kind: "postType",
+      name: PATTERN_TYPES.user
+    });
+    const { templatePartAreas, isLoading, hasTemplateParts } = useTemplatePartAreas();
+    const templatePartCounts = (0, import_element151.useMemo)(() => {
+      const counts = { [TEMPLATE_PART_ALL_AREAS_CATEGORY]: 0 };
+      Object.entries(templatePartAreas).forEach(
+        ([area, { templateParts }]) => {
+          const count = templateParts?.length || 0;
+          counts[area] = count;
+          counts[TEMPLATE_PART_ALL_AREAS_CATEGORY] += count;
+        }
+      );
+      return counts;
+    }, [templatePartAreas]);
+    const { patternCategories } = usePatternCategories();
+    const patternCounts = (0, import_element151.useMemo)(() => {
+      const counts = {};
+      patternCategories.forEach((cat) => {
+        counts[cat.name] = cat.count;
+      });
+      return counts;
+    }, [patternCategories]);
+    const hasPatterns = patternCounts[PATTERN_DEFAULT_CATEGORY] > 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+      SidebarNavigationScreen,
+      {
+        title: (0, import_i18n134.__)("Patterns"),
+        description: (0, import_i18n134.__)(
+          "Manage what patterns are available when editing the site."
+        ),
+        isRoot: !backPath,
+        backPath,
+        content: /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(import_jsx_runtime283.Fragment, { children: [
+          isLoading && (0, import_i18n134.__)("Loading items\u2026"),
+          !isLoading && /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(import_jsx_runtime283.Fragment, { children: [
+            !hasTemplateParts && !hasPatterns && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components142.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components142.__experimentalItem, { children: (0, import_i18n134.__)("No items found") }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+              CategoriesGroup,
+              {
+                templatePartViews,
+                patternViews,
+                templatePartCounts,
+                patternCounts,
+                currentCategory,
+                currentType: postType2
+              }
+            )
+          ] })
+        ] })
+      }
+    );
+  }
+
   // packages/edit-site/build-module/components/page-patterns/index.mjs
+  var import_i18n141 = __toESM(require_i18n(), 1);
+  var import_element158 = __toESM(require_element(), 1);
+  var import_block_editor26 = __toESM(require_block_editor(), 1);
+  var import_core_data52 = __toESM(require_core_data(), 1);
+  var import_editor32 = __toESM(require_editor(), 1);
+  var import_router33 = __toESM(require_router(), 1);
   var import_data75 = __toESM(require_data(), 1);
   var import_url17 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/page-patterns/use-pattern-settings.mjs
   var import_core_data47 = __toESM(require_core_data(), 1);
   var import_data70 = __toESM(require_data(), 1);
-  var import_element151 = __toESM(require_element(), 1);
+  var import_element152 = __toESM(require_element(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
   var import_editor29 = __toESM(require_editor(), 1);
   var { useGlobalStyles: useGlobalStyles3 } = unlock(import_editor29.privateApis);
@@ -45215,19 +45220,19 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(import_core_data47.store).getBlockPatterns(),
       []
     );
-    const blockPatterns = (0, import_element151.useMemo)(
+    const blockPatterns = (0, import_element152.useMemo)(
       () => [
         ...settingsBlockPatterns || [],
         ...restBlockPatterns || []
       ].filter(filterOutDuplicatesByName),
       [settingsBlockPatterns, restBlockPatterns]
     );
-    const [globalStyles, globalSettings] = (0, import_element151.useMemo)(() => {
+    const [globalStyles, globalSettings] = (0, import_element152.useMemo)(() => {
       return generateGlobalStyles(mergedConfig, [], {
         disableRootPadding: false
       });
     }, [mergedConfig]);
-    const settings2 = (0, import_element151.useMemo)(() => {
+    const settings2 = (0, import_element152.useMemo)(() => {
       const {
         __experimentalAdditionalBlockPatterns,
         styles,
@@ -45258,7 +45263,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-pattern/index.mjs
   var import_components143 = __toESM(require_components(), 1);
-  var import_element152 = __toESM(require_element(), 1);
+  var import_element153 = __toESM(require_element(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
   var import_data71 = __toESM(require_data(), 1);
   var import_router30 = __toESM(require_router(), 1);
@@ -45275,11 +45280,11 @@ If there's a particular need for this, please submit a feature request at https:
   function AddNewPattern() {
     const history = useHistory17();
     const location = useLocation27();
-    const [showPatternModal, setShowPatternModal] = (0, import_element152.useState)(false);
-    const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element152.useState)(false);
+    const [showPatternModal, setShowPatternModal] = (0, import_element153.useState)(false);
+    const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element153.useState)(false);
     const { createPatternFromFile } = unlock((0, import_data71.useDispatch)(import_patterns2.store));
     const { createSuccessNotice, createErrorNotice } = (0, import_data71.useDispatch)(import_notices6.store);
-    const patternUploadInputRef = (0, import_element152.useRef)();
+    const patternUploadInputRef = (0, import_element153.useRef)();
     const {
       isBlockBasedTheme,
       addNewPatternLabel,
@@ -45442,13 +45447,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/rename-category-menu-item.mjs
   var import_components144 = __toESM(require_components(), 1);
-  var import_element153 = __toESM(require_element(), 1);
+  var import_element154 = __toESM(require_element(), 1);
   var import_i18n136 = __toESM(require_i18n(), 1);
   var import_patterns3 = __toESM(require_patterns(), 1);
   var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   var { RenamePatternCategoryModal } = unlock(import_patterns3.privateApis);
   function RenameCategoryMenuItem({ category, onClose }) {
-    const [isModalOpen, setIsModalOpen] = (0, import_element153.useState)(false);
+    const [isModalOpen, setIsModalOpen] = (0, import_element154.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(import_jsx_runtime285.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components144.MenuItem, { onClick: () => setIsModalOpen(true), children: (0, import_i18n136.__)("Rename") }),
       isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
@@ -45487,7 +45492,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components145 = __toESM(require_components(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
   var import_data72 = __toESM(require_data(), 1);
-  var import_element154 = __toESM(require_element(), 1);
+  var import_element155 = __toESM(require_element(), 1);
   var import_html_entities9 = __toESM(require_html_entities(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
@@ -45495,7 +45500,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   var { useHistory: useHistory18 } = unlock(import_router31.privateApis);
   function DeleteCategoryMenuItem({ category, onClose }) {
-    const [isModalOpen, setIsModalOpen] = (0, import_element154.useState)(false);
+    const [isModalOpen, setIsModalOpen] = (0, import_element155.useState)(false);
     const history = useHistory18();
     const { createSuccessNotice, createErrorNotice } = (0, import_data72.useDispatch)(import_notices7.store);
     const { deleteEntityRecord, invalidateResolution } = (0, import_data72.useDispatch)(import_core_data49.store);
@@ -45609,7 +45614,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/dataviews-actions/index.mjs
   var import_i18n139 = __toESM(require_i18n(), 1);
-  var import_element155 = __toESM(require_element(), 1);
+  var import_element156 = __toESM(require_element(), 1);
   var import_router32 = __toESM(require_router(), 1);
   var import_data73 = __toESM(require_data(), 1);
   var import_core_data50 = __toESM(require_core_data(), 1);
@@ -45621,7 +45626,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { getEntityRecord } = (0, import_data73.useSelect)(import_core_data50.store);
     const { editEntityRecord, saveEditedEntityRecord } = (0, import_data73.useDispatch)(import_core_data50.store);
-    return (0, import_element155.useMemo)(
+    return (0, import_element156.useMemo)(
       () => ({
         id: "set-active-template",
         label(items) {
@@ -45666,7 +45671,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useEditPostAction = () => {
     const history = useHistory19();
-    return (0, import_element155.useMemo)(
+    return (0, import_element156.useMemo)(
       () => ({
         id: "edit-post",
         label: (0, import_i18n139.__)("Edit"),
@@ -45688,7 +45693,7 @@ If there's a particular need for this, please submit a feature request at https:
   var useQuickEditPostAction = () => {
     const history = useHistory19();
     const { path, query } = useLocation28();
-    return (0, import_element155.useMemo)(
+    return (0, import_element156.useMemo)(
       () => ({
         id: "quick-edit",
         label: (0, import_i18n139.__)("Quick Edit"),
@@ -45718,7 +45723,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/fields.mjs
   var import_components147 = __toESM(require_components(), 1);
   var import_i18n140 = __toESM(require_i18n(), 1);
-  var import_element156 = __toESM(require_element(), 1);
+  var import_element157 = __toESM(require_element(), 1);
   var import_block_editor25 = __toESM(require_block_editor(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_editor31 = __toESM(require_editor(), 1);
@@ -45791,11 +45796,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   var { useStyle: useStyle4 } = unlock(import_editor31.privateApis);
   function PreviewField({ item }) {
-    const descriptionId = (0, import_element156.useId)();
+    const descriptionId = (0, import_element157.useId)();
     const description = item.description || item?.excerpt?.raw;
     const isTemplatePart2 = item.type === TEMPLATE_PART_POST_TYPE;
     const backgroundColor = useStyle4("color.background");
-    const blocks = (0, import_element156.useMemo)(() => {
+    const blocks = (0, import_element157.useMemo)(() => {
       return item.blocks ?? (0, import_blocks12.parse)(item.content.raw, {
         __unstableSkipMigrationLogs: true
       });
@@ -45863,7 +45868,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableSorting: false
   };
   function AuthorField({ item }) {
-    const [isImageLoaded, setIsImageLoaded] = (0, import_element156.useState)(false);
+    const [isImageLoaded, setIsImageLoaded] = (0, import_element157.useState)(false);
     const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(import_components147.__experimentalHStack, { alignment: "left", spacing: 0, children: [
       imageUrl && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
@@ -45963,7 +45968,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { records } = (0, import_core_data52.useEntityRecords)("postType", TEMPLATE_PART_POST_TYPE, {
       per_page: -1
     });
-    const authors = (0, import_element157.useMemo)(() => {
+    const authors = (0, import_element158.useMemo)(() => {
       if (!records) {
         return EMPTY_ARRAY11;
       }
@@ -45976,7 +45981,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: author
       }));
     }, [records]);
-    const fields2 = (0, import_element157.useMemo)(() => {
+    const fields2 = (0, import_element158.useMemo)(() => {
       const _fields = [previewField, patternTitleField];
       if (postType2 === PATTERN_TYPES.user) {
         _fields.push(patternStatusField);
@@ -45988,7 +45993,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return _fields;
     }, [postType2, authors]);
-    const { data, paginationInfo } = (0, import_element157.useMemo)(() => {
+    const { data, paginationInfo } = (0, import_element158.useMemo)(() => {
       const viewWithoutFilters = { ...view };
       delete viewWithoutFilters.search;
       if (postType2 !== TEMPLATE_PART_POST_TYPE) {
@@ -46006,7 +46011,7 @@ If there's a particular need for this, please submit a feature request at https:
       context: "list"
     });
     const editAction = useEditPostAction();
-    const actions = (0, import_element157.useMemo)(() => {
+    const actions = (0, import_element158.useMemo)(() => {
       if (postType2 === TEMPLATE_PART_POST_TYPE) {
         return [editAction, ...templatePartActions].filter(Boolean);
       }
@@ -46117,7 +46122,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
   var import_core_data53 = __toESM(require_core_data(), 1);
-  var import_element158 = __toESM(require_element(), 1);
+  var import_element159 = __toESM(require_element(), 1);
   var import_components148 = __toESM(require_components(), 1);
   var import_i18n142 = __toESM(require_i18n(), 1);
   var import_router34 = __toESM(require_router(), 1);
@@ -46147,7 +46152,7 @@ If there's a particular need for this, please submit a feature request at https:
       // entity configs.
       per_page: -1
     });
-    const firstItemPerAuthorText = (0, import_element158.useMemo)(() => {
+    const firstItemPerAuthorText = (0, import_element159.useMemo)(() => {
       const firstItemPerAuthor = records?.reduce((acc, template) => {
         const author = template.author_text;
         if (author && !acc[author]) {
@@ -46265,7 +46270,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-templates/index.mjs
   var import_i18n149 = __toESM(require_i18n(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
-  var import_element164 = __toESM(require_element(), 1);
+  var import_element165 = __toESM(require_element(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
   var import_router37 = __toESM(require_router(), 1);
   var import_editor36 = __toESM(require_editor(), 1);
@@ -46278,7 +46283,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_components152 = __toESM(require_components(), 1);
   var import_html_entities12 = __toESM(require_html_entities(), 1);
-  var import_element162 = __toESM(require_element(), 1);
+  var import_element163 = __toESM(require_element(), 1);
   var import_data78 = __toESM(require_data(), 1);
   var import_core_data57 = __toESM(require_core_data(), 1);
   var import_compose28 = __toESM(require_compose(), 1);
@@ -46288,7 +46293,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_dom14 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
-  var import_element160 = __toESM(require_element(), 1);
+  var import_element161 = __toESM(require_element(), 1);
   var import_i18n145 = __toESM(require_i18n(), 1);
   var import_components150 = __toESM(require_components(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
@@ -46301,7 +46306,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data77 = __toESM(require_data(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
-  var import_element159 = __toESM(require_element(), 1);
+  var import_element160 = __toESM(require_element(), 1);
   var import_i18n144 = __toESM(require_i18n(), 1);
   var import_url20 = __toESM(require_url(), 1);
   var EMPTY_OBJECT2 = {};
@@ -46344,7 +46349,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(import_core_data55.store).getPostTypes({ per_page: -1 }),
       []
     );
-    return (0, import_element159.useMemo)(() => {
+    return (0, import_element160.useMemo)(() => {
       const excludedPostTypes = ["attachment"];
       return postTypes?.filter(
         ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -46361,7 +46366,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(import_core_data55.store).getTaxonomies({ per_page: -1 }),
       []
     );
-    return (0, import_element159.useMemo)(() => {
+    return (0, import_element160.useMemo)(() => {
       return taxonomies?.filter(
         ({ visibility }) => visibility?.publicly_queryable
       );
@@ -46369,12 +46374,12 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function usePostTypeArchiveMenuItems() {
     const publicPostTypes = usePublicPostTypes();
-    const postTypesWithArchives = (0, import_element159.useMemo)(
+    const postTypesWithArchives = (0, import_element160.useMemo)(
       () => publicPostTypes?.filter((postType2) => postType2.has_archive),
       [publicPostTypes]
     );
     const existingTemplates = useExistingTemplates();
-    const postTypeLabels = (0, import_element159.useMemo)(
+    const postTypeLabels = (0, import_element160.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const singularName = labels.singular_name.toLowerCase();
         accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -46382,14 +46387,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element159.useCallback)(
+    const needsUniqueIdentifier = (0, import_element160.useCallback)(
       ({ labels, slug }) => {
         const singularName = labels.singular_name.toLowerCase();
         return postTypeLabels[singularName] > 1 && singularName !== slug;
       },
       [postTypeLabels]
     );
-    return (0, import_element159.useMemo)(
+    return (0, import_element160.useMemo)(
       () => postTypesWithArchives?.filter(
         (postType2) => !(existingTemplates || []).some(
           (existingTemplate) => existingTemplate.slug === "archive-" + postType2.slug
@@ -46433,7 +46438,7 @@ If there's a particular need for this, please submit a feature request at https:
   var usePostTypeMenuItems = (onClickMenuItem) => {
     const publicPostTypes = usePublicPostTypes();
     const defaultTemplateTypes = useDefaultTemplateTypes();
-    const templateLabels = (0, import_element159.useMemo)(
+    const templateLabels = (0, import_element160.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -46441,14 +46446,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element159.useCallback)(
+    const needsUniqueIdentifier = (0, import_element160.useCallback)(
       ({ labels, slug }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         return templateLabels[templateName] > 1 && templateName !== slug;
       },
       [templateLabels]
     );
-    const templatePrefixes = (0, import_element159.useMemo)(
+    const templatePrefixes = (0, import_element160.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (slug !== "page") {
@@ -46545,7 +46550,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const postTypesMenuItems = (0, import_element159.useMemo)(
+    const postTypesMenuItems = (0, import_element160.useMemo)(
       () => menuItems.reduce(
         (accumulator, postType2) => {
           const { slug } = postType2;
@@ -46566,7 +46571,7 @@ If there's a particular need for this, please submit a feature request at https:
     const publicTaxonomies = usePublicTaxonomies();
     const existingTemplates = useExistingTemplates();
     const defaultTemplateTypes = useDefaultTemplateTypes();
-    const templatePrefixes = (0, import_element159.useMemo)(
+    const templatePrefixes = (0, import_element160.useMemo)(
       () => publicTaxonomies?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (!["category", "post_tag"].includes(slug)) {
@@ -46678,7 +46683,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const taxonomiesMenuItems = (0, import_element159.useMemo)(
+    const taxonomiesMenuItems = (0, import_element160.useMemo)(
       () => menuItems.reduce(
         (accumulator, taxonomy) => {
           const { slug } = taxonomy;
@@ -46786,7 +46791,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [templatePrefixes, entityName, additionalQueryParameters]
     );
-    const entitiesInfo = (0, import_element159.useMemo)(() => {
+    const entitiesInfo = (0, import_element160.useMemo)(() => {
       return Object.keys(templatePrefixes || {}).reduce(
         (accumulator, slug) => {
           accumulator[slug] = {
@@ -46858,7 +46863,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useSearchSuggestions(entityForSuggestions, search) {
     const { config: config2 } = entityForSuggestions;
-    const query = (0, import_element160.useMemo)(
+    const query = (0, import_element161.useMemo)(
       () => ({
         order: "asc",
         context: "view",
@@ -46873,8 +46878,8 @@ If there's a particular need for this, please submit a feature request at https:
       entityForSuggestions.slug,
       query
     );
-    const [suggestions, setSuggestions] = (0, import_element160.useState)(EMPTY_ARRAY13);
-    (0, import_element160.useEffect)(() => {
+    const [suggestions, setSuggestions] = (0, import_element161.useState)(EMPTY_ARRAY13);
+    (0, import_element161.useEffect)(() => {
       if (!searchHasResolved) {
         return;
       }
@@ -46899,7 +46904,7 @@ If there's a particular need for this, please submit a feature request at https:
       debouncedSearch
     );
     const { labels } = entityForSuggestions;
-    const [showSearchControl, setShowSearchControl] = (0, import_element160.useState)(false);
+    const [showSearchControl, setShowSearchControl] = (0, import_element161.useState)(false);
     if (!showSearchControl && suggestions?.length > 9) {
       setShowSearchControl(true);
     }
@@ -46948,8 +46953,8 @@ If there's a particular need for this, please submit a feature request at https:
     onBack,
     containerRef
   }) {
-    const [showSearchEntities, setShowSearchEntities] = (0, import_element160.useState)();
-    (0, import_element160.useEffect)(() => {
+    const [showSearchEntities, setShowSearchEntities] = (0, import_element161.useState)();
+    (0, import_element161.useEffect)(() => {
       if (containerRef.current) {
         const [firstFocusable] = import_dom13.focus.focusable.find(
           containerRef.current
@@ -47093,16 +47098,16 @@ If there's a particular need for this, please submit a feature request at https:
   var add_custom_template_modal_content_default = AddCustomTemplateModalContent;
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-generic-template-modal-content.mjs
-  var import_element161 = __toESM(require_element(), 1);
+  var import_element162 = __toESM(require_element(), 1);
   var import_i18n146 = __toESM(require_i18n(), 1);
   var import_components151 = __toESM(require_components(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent({ createTemplate, onBack }) {
-    const [title, setTitle] = (0, import_element161.useState)("");
+    const [title, setTitle] = (0, import_element162.useState)("");
     const defaultTitle = (0, import_i18n146.__)("Custom Template");
-    const [isBusy, setIsBusy] = (0, import_element161.useState)(false);
-    const inputRef = (0, import_element161.useRef)();
-    (0, import_element161.useEffect)(() => {
+    const [isBusy, setIsBusy] = (0, import_element162.useState)(false);
+    const inputRef = (0, import_element162.useRef)();
+    (0, import_element162.useEffect)(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -47268,11 +47273,11 @@ If there's a particular need for this, please submit a feature request at https:
     customGenericTemplate: 3
   };
   function NewTemplateModal({ onClose }) {
-    const [modalContent, setModalContent] = (0, import_element162.useState)(
+    const [modalContent, setModalContent] = (0, import_element163.useState)(
       modalContentMap.templatesList
     );
-    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element162.useState)({});
-    const [isSubmitting, setIsSubmitting] = (0, import_element162.useState)(false);
+    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element163.useState)({});
+    const [isSubmitting, setIsSubmitting] = (0, import_element163.useState)(false);
     const missingTemplates = useMissingTemplates(
       setEntityForSuggestions,
       () => setModalContent(modalContentMap.customTemplate)
@@ -47280,7 +47285,7 @@ If there's a particular need for this, please submit a feature request at https:
     const history = useHistory21();
     const { saveEntityRecord } = (0, import_data78.useDispatch)(import_core_data57.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data78.useDispatch)(import_notices8.store);
-    const containerRef = (0, import_element162.useRef)(null);
+    const containerRef = (0, import_element163.useRef)(null);
     const isMobile = (0, import_compose28.useViewportMatch)("medium", "<");
     const homeUrl = (0, import_data78.useSelect)((select3) => {
       return select3(import_core_data57.store).getEntityRecord("root", "__unstableBase")?.home;
@@ -47293,7 +47298,7 @@ If there's a particular need for this, please submit a feature request at https:
         homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
       )
     };
-    (0, import_element162.useEffect)(() => {
+    (0, import_element163.useEffect)(() => {
       if (containerRef.current && modalContent === modalContentMap.templatesList) {
         const [firstFocusable] = import_dom14.focus.focusable.find(
           containerRef.current
@@ -47444,7 +47449,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function NewTemplate() {
-    const [showModal, setShowModal] = (0, import_element162.useState)(false);
+    const [showModal, setShowModal] = (0, import_element163.useState)(false);
     const { postType: postType2 } = (0, import_data78.useSelect)((select3) => {
       const { getPostType: getPostType2 } = select3(import_core_data57.store);
       return {
@@ -47510,12 +47515,12 @@ If there's a particular need for this, please submit a feature request at https:
     ];
     return missingTemplates;
   }
-  var add_new_template_default = (0, import_element162.memo)(NewTemplate);
+  var add_new_template_default = (0, import_element163.memo)(NewTemplate);
 
   // packages/edit-site/build-module/components/page-templates/fields.mjs
   var import_components153 = __toESM(require_components(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
-  var import_element163 = __toESM(require_element(), 1);
+  var import_element164 = __toESM(require_element(), 1);
   var import_html_entities13 = __toESM(require_html_entities(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
@@ -47546,7 +47551,7 @@ If there's a particular need for this, please submit a feature request at https:
   function PreviewField2({ item }) {
     const settings2 = usePatternSettings();
     const backgroundColor = useStyle5("color.background") ?? "white";
-    const blocks = (0, import_element163.useMemo)(() => {
+    const blocks = (0, import_element164.useMemo)(() => {
       return (0, import_blocks13.parse)(item.content.raw);
     }, [item.content.raw]);
     const isEmpty3 = !blocks?.length;
@@ -47584,7 +47589,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableGlobalSearch: true
   };
   function AuthorField2({ item }) {
-    const [isImageLoaded, setIsImageLoaded] = (0, import_element163.useState)(false);
+    const [isImageLoaded, setIsImageLoaded] = (0, import_element164.useState)(false);
     const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
     return /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(import_components153.__experimentalHStack, { alignment: "left", spacing: 0, children: [
       imageUrl && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
@@ -47629,7 +47634,7 @@ If there's a particular need for this, please submit a feature request at https:
     const activeTheme = (0, import_data79.useSelect)(
       (select3) => select3(import_core_data58.store).getCurrentTheme()
     );
-    return (0, import_element163.useMemo)(
+    return (0, import_element164.useMemo)(
       () => ({
         label: (0, import_i18n148.__)("Compatible Theme"),
         id: "theme",
@@ -47712,10 +47717,10 @@ If there's a particular need for this, please submit a feature request at https:
   function PageTemplates() {
     const { path, query } = useLocation32();
     const { activeView = "active", postId } = query;
-    const [selection, setSelection] = (0, import_element164.useState)([postId]);
-    const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element164.useState)(false);
+    const [selection, setSelection] = (0, import_element165.useState)([postId]);
+    const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element165.useState)(false);
     const defaultView = DEFAULT_VIEW;
-    const activeViewOverrides = (0, import_element164.useMemo)(
+    const activeViewOverrides = (0, import_element165.useMemo)(
       () => getActiveViewOverridesForTab(activeView),
       [activeView]
     );
@@ -47757,7 +47762,7 @@ If there's a particular need for this, please submit a feature request at https:
       // for entity configs.
       per_page: -1
     });
-    const activeTemplates = (0, import_element164.useMemo)(() => {
+    const activeTemplates = (0, import_element165.useMemo)(() => {
       const _active = [...staticRecords];
       if (activeTemplatesOption) {
         for (const activeSlug in activeTemplatesOption) {
@@ -47787,7 +47792,7 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       isLoadingData = isLoadingStaticData;
     }
-    const records = (0, import_element164.useMemo)(() => {
+    const records = (0, import_element165.useMemo)(() => {
       function isCustom(record) {
         return record.is_custom ?? // For user templates it's custom if the is_wp_suggestion meta
         // field is not set and the slug is not found in the default
@@ -47839,7 +47844,7 @@ If there's a particular need for this, please submit a feature request at https:
       [records]
     );
     const history = useHistory22();
-    const onChangeSelection = (0, import_element164.useCallback)(
+    const onChangeSelection = (0, import_element165.useCallback)(
       (items) => {
         setSelection(items);
         if (view?.type === "list") {
@@ -47857,7 +47862,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const dateField = postTypeFields.find((field) => field.id === "date");
     const themeField = useThemeField();
-    const fields2 = (0, import_element164.useMemo)(() => {
+    const fields2 = (0, import_element165.useMemo)(() => {
       const _fields = [
         previewField2,
         templateTitleField,
@@ -47884,11 +47889,11 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return _fields;
     }, [users, activeView, themeField, dateField]);
-    const { data, paginationInfo } = (0, import_element164.useMemo)(() => {
+    const { data, paginationInfo } = (0, import_element165.useMemo)(() => {
       return filterSortAndPaginate(records, view, fields2);
     }, [records, view, fields2]);
     const { createSuccessNotice } = (0, import_data80.useDispatch)(import_notices9.store);
-    const onActionPerformed = (0, import_element164.useCallback)(
+    const onActionPerformed = (0, import_element165.useCallback)(
       (actionId, items) => {
         switch (actionId) {
           case "duplicate-post":
@@ -47930,7 +47935,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const editAction = useEditPostAction();
     const setActiveTemplateAction = useSetActiveTemplateAction();
-    const actions = (0, import_element164.useMemo)(
+    const actions = (0, import_element165.useMemo)(
       () => activeView === "user" ? [setActiveTemplateAction, editAction, ...postTypeActions] : [setActiveTemplateAction, ...postTypeActions],
       [postTypeActions, setActiveTemplateAction, editAction, activeView]
     );
@@ -48002,7 +48007,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
   var import_i18n154 = __toESM(require_i18n(), 1);
-  var import_element169 = __toESM(require_element(), 1);
+  var import_element170 = __toESM(require_element(), 1);
   var import_core_data63 = __toESM(require_core_data(), 1);
   var import_router39 = __toESM(require_router(), 1);
   var import_editor37 = __toESM(require_editor(), 1);
@@ -48012,7 +48017,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
   var import_components157 = __toESM(require_components(), 1);
   var import_html_entities17 = __toESM(require_html_entities(), 1);
-  var import_element168 = __toESM(require_element(), 1);
+  var import_element169 = __toESM(require_element(), 1);
   var import_data82 = __toESM(require_data(), 1);
   var import_core_data62 = __toESM(require_core_data(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
@@ -48022,7 +48027,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_dom16 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
-  var import_element166 = __toESM(require_element(), 1);
+  var import_element167 = __toESM(require_element(), 1);
   var import_i18n151 = __toESM(require_i18n(), 1);
   var import_components155 = __toESM(require_components(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
@@ -48035,7 +48040,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data81 = __toESM(require_data(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
-  var import_element165 = __toESM(require_element(), 1);
+  var import_element166 = __toESM(require_element(), 1);
   var import_i18n150 = __toESM(require_i18n(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var EMPTY_OBJECT3 = {};
@@ -48078,7 +48083,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(import_core_data60.store).getPostTypes({ per_page: -1 }),
       []
     );
-    return (0, import_element165.useMemo)(() => {
+    return (0, import_element166.useMemo)(() => {
       const excludedPostTypes = ["attachment"];
       return postTypes?.filter(
         ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -48095,7 +48100,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(import_core_data60.store).getTaxonomies({ per_page: -1 }),
       []
     );
-    return (0, import_element165.useMemo)(() => {
+    return (0, import_element166.useMemo)(() => {
       return taxonomies?.filter(
         ({ visibility }) => visibility?.publicly_queryable
       );
@@ -48103,12 +48108,12 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function usePostTypeArchiveMenuItems2() {
     const publicPostTypes = usePublicPostTypes2();
-    const postTypesWithArchives = (0, import_element165.useMemo)(
+    const postTypesWithArchives = (0, import_element166.useMemo)(
       () => publicPostTypes?.filter((postType2) => postType2.has_archive),
       [publicPostTypes]
     );
     const existingTemplates = useExistingTemplates2();
-    const postTypeLabels = (0, import_element165.useMemo)(
+    const postTypeLabels = (0, import_element166.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const singularName = labels.singular_name.toLowerCase();
         accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -48116,14 +48121,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element165.useCallback)(
+    const needsUniqueIdentifier = (0, import_element166.useCallback)(
       ({ labels, slug }) => {
         const singularName = labels.singular_name.toLowerCase();
         return postTypeLabels[singularName] > 1 && singularName !== slug;
       },
       [postTypeLabels]
     );
-    return (0, import_element165.useMemo)(
+    return (0, import_element166.useMemo)(
       () => postTypesWithArchives?.filter(
         (postType2) => !(existingTemplates || []).some(
           (existingTemplate) => existingTemplate.slug === "archive-" + postType2.slug
@@ -48168,7 +48173,7 @@ If there's a particular need for this, please submit a feature request at https:
     const publicPostTypes = usePublicPostTypes2();
     const existingTemplates = useExistingTemplates2();
     const defaultTemplateTypes = useDefaultTemplateTypes2();
-    const templateLabels = (0, import_element165.useMemo)(
+    const templateLabels = (0, import_element166.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -48176,14 +48181,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element165.useCallback)(
+    const needsUniqueIdentifier = (0, import_element166.useCallback)(
       ({ labels, slug }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         return templateLabels[templateName] > 1 && templateName !== slug;
       },
       [templateLabels]
     );
-    const templatePrefixes = (0, import_element165.useMemo)(
+    const templatePrefixes = (0, import_element166.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (slug !== "page") {
@@ -48285,7 +48290,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const postTypesMenuItems = (0, import_element165.useMemo)(
+    const postTypesMenuItems = (0, import_element166.useMemo)(
       () => menuItems.reduce(
         (accumulator, postType2) => {
           const { slug } = postType2;
@@ -48306,7 +48311,7 @@ If there's a particular need for this, please submit a feature request at https:
     const publicTaxonomies = usePublicTaxonomies2();
     const existingTemplates = useExistingTemplates2();
     const defaultTemplateTypes = useDefaultTemplateTypes2();
-    const templatePrefixes = (0, import_element165.useMemo)(
+    const templatePrefixes = (0, import_element166.useMemo)(
       () => publicTaxonomies?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (!["category", "post_tag"].includes(slug)) {
@@ -48418,7 +48423,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const taxonomiesMenuItems = (0, import_element165.useMemo)(
+    const taxonomiesMenuItems = (0, import_element166.useMemo)(
       () => menuItems.reduce(
         (accumulator, taxonomy) => {
           const { slug } = taxonomy;
@@ -48504,7 +48509,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var useExistingTemplateSlugs = (templatePrefixes) => {
     const existingTemplates = useExistingTemplates2();
-    const existingSlugs = (0, import_element165.useMemo)(() => {
+    const existingSlugs = (0, import_element166.useMemo)(() => {
       return Object.entries(templatePrefixes || {}).reduce(
         (accumulator, [slug, prefix2]) => {
           const slugsWithTemplates = (existingTemplates || []).reduce(
@@ -48591,7 +48596,7 @@ If there's a particular need for this, please submit a feature request at https:
         additionalQueryParameters
       ]
     );
-    const entitiesInfo = (0, import_element165.useMemo)(() => {
+    const entitiesInfo = (0, import_element166.useMemo)(() => {
       return Object.keys(templatePrefixes || {}).reduce(
         (accumulator, slug) => {
           const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(
@@ -48667,7 +48672,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useSearchSuggestions2(entityForSuggestions, search) {
     const { config: config2 } = entityForSuggestions;
-    const query = (0, import_element166.useMemo)(
+    const query = (0, import_element167.useMemo)(
       () => ({
         order: "asc",
         context: "view",
@@ -48682,8 +48687,8 @@ If there's a particular need for this, please submit a feature request at https:
       entityForSuggestions.slug,
       query
     );
-    const [suggestions, setSuggestions] = (0, import_element166.useState)(EMPTY_ARRAY14);
-    (0, import_element166.useEffect)(() => {
+    const [suggestions, setSuggestions] = (0, import_element167.useState)(EMPTY_ARRAY14);
+    (0, import_element167.useEffect)(() => {
       if (!searchHasResolved) {
         return;
       }
@@ -48708,7 +48713,7 @@ If there's a particular need for this, please submit a feature request at https:
       debouncedSearch
     );
     const { labels } = entityForSuggestions;
-    const [showSearchControl, setShowSearchControl] = (0, import_element166.useState)(false);
+    const [showSearchControl, setShowSearchControl] = (0, import_element167.useState)(false);
     if (!showSearchControl && suggestions?.length > 9) {
       setShowSearchControl(true);
     }
@@ -48757,10 +48762,10 @@ If there's a particular need for this, please submit a feature request at https:
     onBack,
     containerRef
   }) {
-    const [showSearchEntities, setShowSearchEntities] = (0, import_element166.useState)(
+    const [showSearchEntities, setShowSearchEntities] = (0, import_element167.useState)(
       entityForSuggestions.hasGeneralTemplate
     );
-    (0, import_element166.useEffect)(() => {
+    (0, import_element167.useEffect)(() => {
       if (containerRef.current) {
         const [firstFocusable] = import_dom15.focus.focusable.find(
           containerRef.current
@@ -48904,16 +48909,16 @@ If there's a particular need for this, please submit a feature request at https:
   var add_custom_template_modal_content_default2 = AddCustomTemplateModalContent2;
 
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-generic-template-modal-content.mjs
-  var import_element167 = __toESM(require_element(), 1);
+  var import_element168 = __toESM(require_element(), 1);
   var import_i18n152 = __toESM(require_i18n(), 1);
   var import_components156 = __toESM(require_components(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent2({ createTemplate, onBack }) {
-    const [title, setTitle] = (0, import_element167.useState)("");
+    const [title, setTitle] = (0, import_element168.useState)("");
     const defaultTitle = (0, import_i18n152.__)("Custom Template");
-    const [isBusy, setIsBusy] = (0, import_element167.useState)(false);
-    const inputRef = (0, import_element167.useRef)();
-    (0, import_element167.useEffect)(() => {
+    const [isBusy, setIsBusy] = (0, import_element168.useState)(false);
+    const inputRef = (0, import_element168.useRef)();
+    (0, import_element168.useEffect)(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -49079,11 +49084,11 @@ If there's a particular need for this, please submit a feature request at https:
     customGenericTemplate: 3
   };
   function NewTemplateModal2({ onClose }) {
-    const [modalContent, setModalContent] = (0, import_element168.useState)(
+    const [modalContent, setModalContent] = (0, import_element169.useState)(
       modalContentMap2.templatesList
     );
-    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element168.useState)({});
-    const [isSubmitting, setIsSubmitting] = (0, import_element168.useState)(false);
+    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element169.useState)({});
+    const [isSubmitting, setIsSubmitting] = (0, import_element169.useState)(false);
     const missingTemplates = useMissingTemplates2(
       setEntityForSuggestions,
       () => setModalContent(modalContentMap2.customTemplate)
@@ -49091,7 +49096,7 @@ If there's a particular need for this, please submit a feature request at https:
     const history = useHistory23();
     const { saveEntityRecord } = (0, import_data82.useDispatch)(import_core_data62.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data82.useDispatch)(import_notices10.store);
-    const containerRef = (0, import_element168.useRef)(null);
+    const containerRef = (0, import_element169.useRef)(null);
     const isMobile = (0, import_compose31.useViewportMatch)("medium", "<");
     const homeUrl = (0, import_data82.useSelect)((select3) => {
       return select3(import_core_data62.store).getEntityRecord("root", "__unstableBase")?.home;
@@ -49104,7 +49109,7 @@ If there's a particular need for this, please submit a feature request at https:
         homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
       )
     };
-    (0, import_element168.useEffect)(() => {
+    (0, import_element169.useEffect)(() => {
       if (containerRef.current && modalContent === modalContentMap2.templatesList) {
         const [firstFocusable] = import_dom16.focus.focusable.find(
           containerRef.current
@@ -49253,7 +49258,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function NewTemplate2() {
-    const [showModal, setShowModal] = (0, import_element168.useState)(false);
+    const [showModal, setShowModal] = (0, import_element169.useState)(false);
     const { postType: postType2 } = (0, import_data82.useSelect)((select3) => {
       const { getPostType: getPostType2 } = select3(import_core_data62.store);
       return {
@@ -49323,7 +49328,7 @@ If there's a particular need for this, please submit a feature request at https:
     ];
     return missingTemplates;
   }
-  var add_new_template_legacy_default = (0, import_element168.memo)(NewTemplate2);
+  var add_new_template_legacy_default = (0, import_element169.memo)(NewTemplate2);
 
   // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
@@ -49333,7 +49338,7 @@ If there's a particular need for this, please submit a feature request at https:
   function PageTemplates2() {
     const { path, query } = useLocation33();
     const { activeView = "all", postId } = query;
-    const [selection, setSelection] = (0, import_element169.useState)([postId]);
+    const [selection, setSelection] = (0, import_element170.useState)([postId]);
     const {
       default_view: defaultView,
       default_layouts: defaultLayouts2,
@@ -49342,7 +49347,7 @@ If there's a particular need for this, please submit a feature request at https:
       kind: "postType",
       name: TEMPLATE_POST_TYPE
     });
-    const activeViewOverrides = (0, import_element169.useMemo)(
+    const activeViewOverrides = (0, import_element170.useMemo)(
       () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
       [viewList, activeView]
     );
@@ -49371,7 +49376,7 @@ If there's a particular need for this, please submit a feature request at https:
       per_page: -1
     });
     const history = useHistory24();
-    const onChangeSelection = (0, import_element169.useCallback)(
+    const onChangeSelection = (0, import_element170.useCallback)(
       (items) => {
         setSelection(items);
         if (view?.type === "list") {
@@ -49384,7 +49389,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [history, path, view?.type]
     );
-    const authors = (0, import_element169.useMemo)(() => {
+    const authors = (0, import_element170.useMemo)(() => {
       if (!records) {
         return [];
       }
@@ -49397,7 +49402,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: author
       }));
     }, [records]);
-    const fields2 = (0, import_element169.useMemo)(
+    const fields2 = (0, import_element170.useMemo)(
       () => [
         previewField2,
         templateTitleField2,
@@ -49409,7 +49414,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [authors]
     );
-    const { data, paginationInfo } = (0, import_element169.useMemo)(() => {
+    const { data, paginationInfo } = (0, import_element170.useMemo)(() => {
       return filterSortAndPaginate(records, view, fields2);
     }, [records, view, fields2]);
     const postTypeActions = usePostActions3({
@@ -49417,7 +49422,7 @@ If there's a particular need for this, please submit a feature request at https:
       context: "list"
     });
     const editAction = useEditPostAction();
-    const actions = (0, import_element169.useMemo)(
+    const actions = (0, import_element170.useMemo)(
       () => [editAction, ...postTypeActions],
       [postTypeActions, editAction]
     );
@@ -49637,7 +49642,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/post-list/index.mjs
   var import_components162 = __toESM(require_components(), 1);
   var import_core_data68 = __toESM(require_core_data(), 1);
-  var import_element173 = __toESM(require_element(), 1);
+  var import_element174 = __toESM(require_element(), 1);
   var import_router42 = __toESM(require_router(), 1);
   var import_data86 = __toESM(require_data(), 1);
   var import_editor41 = __toESM(require_editor(), 1);
@@ -49648,7 +49653,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components160 = __toESM(require_components(), 1);
   var import_i18n155 = __toESM(require_i18n(), 1);
   var import_data84 = __toESM(require_data(), 1);
-  var import_element170 = __toESM(require_element(), 1);
+  var import_element171 = __toESM(require_element(), 1);
   var import_core_data65 = __toESM(require_core_data(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
   var import_html_entities18 = __toESM(require_html_entities(), 1);
@@ -49659,8 +49664,8 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(import_core_data65.store).getPostType(postType2)?.labels,
       [postType2]
     );
-    const [isCreatingPost, setIsCreatingPost] = (0, import_element170.useState)(false);
-    const [title, setTitle] = (0, import_element170.useState)("");
+    const [isCreatingPost, setIsCreatingPost] = (0, import_element171.useState)(false);
+    const [title, setTitle] = (0, import_element171.useState)("");
     const { saveEntityRecord } = (0, import_data84.useDispatch)(import_core_data65.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data84.useDispatch)(import_notices11.store);
     const { resolveSelect: resolveSelect4 } = (0, import_data84.useRegistry)();
@@ -49755,7 +49760,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/use-notes-count.mjs
-  var import_element171 = __toESM(require_element(), 1);
+  var import_element172 = __toESM(require_element(), 1);
   var import_core_data66 = __toESM(require_core_data(), 1);
   function useNotesCount(postIds) {
     const { records: notes, isResolving } = (0, import_core_data66.useEntityRecords)(
@@ -49772,7 +49777,7 @@ If there's a particular need for this, please submit a feature request at https:
         enabled: postIds?.length > 0
       }
     );
-    const notesCount = (0, import_element171.useMemo)(() => {
+    const notesCount = (0, import_element172.useMemo)(() => {
       if (!notes || notes.length === 0) {
         return {};
       }
@@ -49791,14 +49796,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data85 = __toESM(require_data(), 1);
   var import_core_data67 = __toESM(require_core_data(), 1);
   var import_components161 = __toESM(require_components(), 1);
-  var import_element172 = __toESM(require_element(), 1);
+  var import_element173 = __toESM(require_element(), 1);
   var import_editor40 = __toESM(require_editor(), 1);
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   var { usePostFields: usePostFields2, PostCardPanel } = unlock(import_editor40.privateApis);
   var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
   function QuickEditModal({ postType: postType2, postId, closeModal }) {
     const isBulk = postId.length > 1;
-    const [localEdits, setLocalEdits] = (0, import_element172.useState)({});
+    const [localEdits, setLocalEdits] = (0, import_element173.useState)({});
     const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data85.useSelect)(
       (select3) => {
         const {
@@ -49831,7 +49836,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { editEntityRecord, saveEditedEntityRecord } = (0, import_data85.useDispatch)(import_core_data67.store);
     const _fields = usePostFields2({ postType: postType2 });
-    const fields2 = (0, import_element172.useMemo)(
+    const fields2 = (0, import_element173.useMemo)(
       () => _fields?.map((field) => {
         if (field.id === "status") {
           return {
@@ -49851,7 +49856,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [_fields, canSwitchTemplate]
     );
-    const form2 = (0, import_element172.useMemo)(() => {
+    const form2 = (0, import_element173.useMemo)(() => {
       const allFields = [
         {
           id: "featured_media",
@@ -49914,7 +49919,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setLocalEdits((prev) => ({ ...prev, ...edits }));
     };
-    (0, import_element172.useEffect)(() => {
+    (0, import_element173.useEffect)(() => {
       setLocalEdits({});
     }, [postId]);
     const onSave = async () => {
@@ -50008,7 +50013,7 @@ If there's a particular need for this, please submit a feature request at https:
       kind: "postType",
       name: postType2
     });
-    const activeViewOverrides = (0, import_element173.useMemo)(
+    const activeViewOverrides = (0, import_element174.useMemo)(
       () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
       [viewList, activeView]
     );
@@ -50039,8 +50044,8 @@ If there's a particular need for this, please submit a feature request at https:
         history.invalidate();
       }
     });
-    const [selection, setSelection] = (0, import_element173.useState)(postId?.split(",") ?? []);
-    const onChangeSelection = (0, import_element173.useCallback)(
+    const [selection, setSelection] = (0, import_element174.useState)(postId?.split(",") ?? []);
+    const onChangeSelection = (0, import_element174.useCallback)(
       (items) => {
         setSelection(items);
         history.navigate(
@@ -50051,14 +50056,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [path, history]
     );
-    (0, import_element173.useEffect)(() => {
+    (0, import_element174.useEffect)(() => {
       const newSelection = postId?.split(",") ?? [];
       setSelection(newSelection);
     }, [postId]);
     const fields2 = usePostFields3({
       postType: postType2
     });
-    const queryArgs = (0, import_element173.useMemo)(() => {
+    const queryArgs = (0, import_element174.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "status" && filter.operator === OPERATOR_IS_ANY) {
@@ -50101,12 +50106,12 @@ If there's a particular need for this, please submit a feature request at https:
       totalPages,
       hasResolved
     } = useEntityRecordsWithPermissions4("postType", postType2, queryArgs);
-    const postIds = (0, import_element173.useMemo)(
+    const postIds = (0, import_element174.useMemo)(
       () => records?.map((record) => record.id) ?? [],
       [records]
     );
     const { notesCount, isLoading: isLoadingNotesCount } = useNotesCount(postIds);
-    const data = (0, import_element173.useMemo)(() => {
+    const data = (0, import_element174.useMemo)(() => {
       let processedRecords = records;
       if (view?.sort?.field === "author") {
         processedRecords = filterSortAndPaginate(
@@ -50127,7 +50132,7 @@ If there's a particular need for this, please submit a feature request at https:
     const prevIds = (0, import_compose33.usePrevious)(ids) ?? [];
     const deletedIds = prevIds.filter((id) => !ids.includes(id));
     const postIdWasDeleted = deletedIds.includes(postId);
-    (0, import_element173.useEffect)(() => {
+    (0, import_element174.useEffect)(() => {
       if (postIdWasDeleted) {
         history.navigate(
           (0, import_url27.addQueryArgs)(path, {
@@ -50136,7 +50141,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     }, [history, postIdWasDeleted, path]);
-    const paginationInfo = (0, import_element173.useMemo)(
+    const paginationInfo = (0, import_element174.useMemo)(
       () => ({
         totalItems,
         totalPages
@@ -50162,14 +50167,14 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const editAction = useEditPostAction();
     const quickEditAction = useQuickEditPostAction();
-    const actions = (0, import_element173.useMemo)(() => {
+    const actions = (0, import_element174.useMemo)(() => {
       if (view.type === LAYOUT_LIST) {
         const editActionPrimary = { ...editAction, isPrimary: true };
         return [editActionPrimary, ...postTypeActions];
       }
       return [editAction, quickEditAction, ...postTypeActions];
     }, [view.type, editAction, quickEditAction, postTypeActions]);
-    const [showAddPostModal, setShowAddPostModal] = (0, import_element173.useState)(false);
+    const [showAddPostModal, setShowAddPostModal] = (0, import_element174.useState)(false);
     const openModal = () => setShowAddPostModal(true);
     const closeModal = () => setShowAddPostModal(false);
     const handleNewPage = ({ type, id }) => {
@@ -50439,7 +50444,7 @@ If there's a particular need for this, please submit a feature request at https:
   function useRegisterSiteEditorRoutes() {
     const registry = (0, import_data88.useRegistry)();
     const { registerRoute: registerRoute2 } = unlock((0, import_data88.useDispatch)(store));
-    (0, import_element174.useEffect)(() => {
+    (0, import_element175.useEffect)(() => {
       registry.batch(() => {
         routes2.forEach(registerRoute2);
       });
@@ -50464,7 +50469,7 @@ If there's a particular need for this, please submit a feature request at https:
         editorSettings: select3(store).getSettings()
       };
     }, []);
-    const beforeNavigate = (0, import_element175.useCallback)(({ path, query }) => {
+    const beforeNavigate = (0, import_element176.useCallback)(({ path, query }) => {
       if (!isPreviewingTheme()) {
         return { path, query };
       }
@@ -50476,7 +50481,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, []);
-    const matchResolverArgsValue = (0, import_element175.useMemo)(
+    const matchResolverArgsValue = (0, import_element176.useMemo)(
       () => ({
         siteData: { currentTheme, editorSettings }
       }),
@@ -50535,7 +50540,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { registerCoreBlockBindingsSources } = unlock(import_editor47.privateApis);
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
-    const root = (0, import_element176.createRoot)(target);
+    const root = (0, import_element177.createRoot)(target);
     (0, import_data90.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
     const coreBlocks = (0, import_block_library4.__experimentalGetCoreBlocks)().filter(
       ({ name: name2 }) => name2 !== "core/freeform"
@@ -50582,7 +50587,7 @@ If there's a particular need for this, please submit a feature request at https:
     window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
     window.addEventListener("drop", (e2) => e2.preventDefault(), false);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(import_element176.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(import_element177.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(App, {}) })
     );
     return root;
   }
