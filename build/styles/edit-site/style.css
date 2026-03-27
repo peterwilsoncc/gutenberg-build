@@ -5242,18 +5242,6 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   margin-right: -16px;
 }
 
-.edit-site-sidebar-dataviews-dataview-item {
-  border-radius: 2px;
-}
-.edit-site-sidebar-dataviews-dataview-item:hover, .edit-site-sidebar-dataviews-dataview-item:focus, .edit-site-sidebar-dataviews-dataview-item[aria-current] {
-  color: #e0e0e0;
-}
-.edit-site-sidebar-dataviews-dataview-item.is-selected {
-  background: #2f2f2f;
-  font-weight: 499;
-  color: #fff;
-}
-
 .edit-site-site-hub {
   display: flex;
   align-items: center;
