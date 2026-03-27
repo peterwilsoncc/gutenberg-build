@@ -764,7 +764,7 @@ var import_html_entities = __toESM(require_html_entities());
 // routes/navigation-edit/editor/index.tsx
 var import_element4 = __toESM(require_element());
 var import_block_editor3 = __toESM(require_block_editor());
-var import_blocks2 = __toESM(require_blocks());
+var import_blocks3 = __toESM(require_blocks());
 var import_components4 = __toESM(require_components());
 import { useEditorAssets } from "@wordpress/lazy-editor";
 
@@ -779,7 +779,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 // routes/navigation-edit/editor/content.tsx
 var import_block_editor2 = __toESM(require_block_editor());
 var import_data2 = __toESM(require_data());
-var import_blocks = __toESM(require_blocks());
+var import_blocks2 = __toESM(require_blocks());
 var import_element3 = __toESM(require_element());
 var import_core_data = __toESM(require_core_data());
 
@@ -795,6 +795,7 @@ var import_components3 = __toESM(require_components());
 var import_data = __toESM(require_data());
 var import_i18n2 = __toESM(require_i18n());
 var import_block_editor = __toESM(require_block_editor());
+var import_blocks = __toESM(require_blocks());
 var POPOVER_PROPS = {
   className: "block-editor-block-settings-menu__popover",
   placement: "bottom-start"
@@ -804,18 +805,44 @@ function LeafMoreMenu({
   ...props
 }) {
   const { clientId } = block;
-  const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data.useDispatch)(import_block_editor.store);
+  const {
+    moveBlocksDown,
+    moveBlocksUp,
+    removeBlocks,
+    duplicateBlocks,
+    insertBeforeBlock,
+    insertAfterBlock
+  } = (0, import_data.useDispatch)(import_block_editor.store);
   const removeLabel = (0, import_i18n2.sprintf)(
     /* translators: %s: block name */
     (0, import_i18n2.__)("Remove %s"),
     (0, import_block_editor.BlockTitle)({ clientId, maximumLength: 25 })
   );
-  const rootClientId = (0, import_data.useSelect)(
+  const { rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, import_data.useSelect)(
     (select) => {
-      const { getBlockRootClientId } = select(import_block_editor.store);
-      return getBlockRootClientId(clientId);
+      const {
+        getBlockRootClientId,
+        canInsertBlockType,
+        getDirectInsertBlock,
+        getBlockIndex,
+        getBlockCount
+      } = select(import_block_editor.store);
+      const { getDefaultBlockName } = select(import_blocks.store);
+      const _rootClientId = getBlockRootClientId(clientId);
+      const canInsertDefaultBlock = canInsertBlockType(
+        getDefaultBlockName(),
+        _rootClientId
+      );
+      const directInsertBlock = _rootClientId ? getDirectInsertBlock(_rootClientId) : null;
+      return {
+        rootClientId: _rootClientId,
+        canDuplicate: !!block && (0, import_blocks.hasBlockSupport)(block.name, "multiple", true) && canInsertBlockType(block.name, _rootClientId),
+        canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && !!block && canInsertBlockType(block.name, _rootClientId),
+        isFirst: getBlockIndex(clientId) === 0,
+        isLast: getBlockIndex(clientId) === getBlockCount(_rootClientId) - 1
+      };
     },
-    [clientId]
+    [clientId, block]
   );
   return /* @__PURE__ */ React.createElement(
     import_components3.DropdownMenu,
@@ -831,6 +858,8 @@ function LeafMoreMenu({
       import_components3.MenuItem,
       {
         icon: chevron_up_default,
+        disabled: isFirst,
+        accessibleWhenDisabled: true,
         onClick: () => {
           moveBlocksUp([clientId], rootClientId);
           onClose();
@@ -841,13 +870,42 @@ function LeafMoreMenu({
       import_components3.MenuItem,
       {
         icon: chevron_down_default,
+        disabled: isLast,
+        accessibleWhenDisabled: true,
         onClick: () => {
           moveBlocksDown([clientId], rootClientId);
           onClose();
         }
       },
       (0, import_i18n2.__)("Move down")
-    )), /* @__PURE__ */ React.createElement(import_components3.MenuGroup, null, /* @__PURE__ */ React.createElement(
+    ), canDuplicate && /* @__PURE__ */ React.createElement(
+      import_components3.MenuItem,
+      {
+        onClick: () => {
+          duplicateBlocks([clientId]);
+          onClose();
+        }
+      },
+      (0, import_i18n2.__)("Duplicate")
+    ), canInsertBlock && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
+      import_components3.MenuItem,
+      {
+        onClick: () => {
+          insertBeforeBlock(clientId);
+          onClose();
+        }
+      },
+      (0, import_i18n2.__)("Add before")
+    ), /* @__PURE__ */ React.createElement(
+      import_components3.MenuItem,
+      {
+        onClick: () => {
+          insertAfterBlock(clientId);
+          onClose();
+        }
+      },
+      (0, import_i18n2.__)("Add after")
+    ))), /* @__PURE__ */ React.createElement(import_components3.MenuGroup, null, /* @__PURE__ */ React.createElement(
       import_components3.MenuItem,
       {
         onClick: () => {
@@ -911,7 +969,7 @@ function NavigationMenuContent({
         __unstableMarkNextChangeAsNotPersistent();
         replaceBlock(
           block.clientId,
-          (0, import_blocks.createBlock)("core/navigation-link", block.attributes)
+          (0, import_blocks2.createBlock)("core/navigation-link", block.attributes)
         );
       }
     },
@@ -938,7 +996,7 @@ function NavigationMenuEditor({ id }) {
     if (!assetsReady || !id) {
       return [];
     }
-    return [(0, import_blocks2.createBlock)("core/navigation", { ref: id })];
+    return [(0, import_blocks3.createBlock)("core/navigation", { ref: id })];
   }, [assetsReady, id]);
   if (!assetsReady || !blocks.length) {
     return /* @__PURE__ */ React.createElement(
