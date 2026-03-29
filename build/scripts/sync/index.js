@@ -9612,7 +9612,9 @@ var wp;
           roomState.processAwarenessUpdate(room.awareness);
           if (roomState.isPrimaryRoom && Object.keys(room.awareness).length > 1) {
             hasCollaborators = true;
-            roomState.updateQueue.resume();
+            roomStates.forEach((state) => {
+              state.updateQueue.resume();
+            });
           }
           const responseUpdates = room.updates.map((update) => roomState.processDocUpdate(update)).filter(
             (update) => Boolean(update)
