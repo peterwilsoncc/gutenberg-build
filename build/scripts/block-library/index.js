@@ -23990,38 +23990,23 @@ ${url}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_block_editor86.InspectorControls, { group: "advanced", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-          import_components44.TextControl,
-          {
-            __next40pxDefaultSize: true,
-            autoComplete: "off",
-            label: (0, import_i18n69.__)("Name"),
-            value: name123,
-            onChange: (newVal) => {
-              setAttributes({
-                name: newVal
-              });
-            },
-            help: (0, import_i18n69.__)(
-              'Affects the "name" attribute of the input element, and is used as a name for the form submission results.'
-            )
-          }
-        ),
-        "hidden" === type && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-          import_components44.TextControl,
-          {
-            __next40pxDefaultSize: true,
-            autoComplete: "off",
-            label: (0, import_i18n69.__)("Value"),
-            value,
-            onChange: (newVal) => setAttributes({ value: newVal }),
-            help: (0, import_i18n69.__)(
-              "Sets the stored value for this hidden field."
-            )
-          }
-        )
-      ] })
+      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_block_editor86.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+        import_components44.TextControl,
+        {
+          __next40pxDefaultSize: true,
+          autoComplete: "off",
+          label: (0, import_i18n69.__)("Name"),
+          value: name123,
+          onChange: (newVal) => {
+            setAttributes({
+              name: newVal
+            });
+          },
+          help: (0, import_i18n69.__)(
+            'Affects the "name" attribute of the input element, and is used as a name for the form submission results.'
+          )
+        }
+      ) })
     ] });
     const content = /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
       import_block_editor86.RichText,
@@ -24036,13 +24021,21 @@ ${url}
       }
     );
     if ("hidden" === type) {
-      return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)("div", { ...blockProps, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_jsx_runtime246.Fragment, { children: [
         controls,
         /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-          "span",
+          "input",
           {
-            className: "wp-block-form-input__label is-input-hidden",
-            "data-message": (0, import_i18n69.__)("Hidden field")
+            type: "hidden",
+            className: clsx_default(
+              className,
+              "wp-block-form-input__input",
+              colorProps.className,
+              borderProps.className
+            ),
+            "aria-label": (0, import_i18n69.__)("Value"),
+            value,
+            onChange: (event) => setAttributes({ value: event.target.value })
           }
         )
       ] });
@@ -24280,16 +24273,6 @@ ${url}
       isDefault: true,
       scope: ["inserter", "transform"],
       isActive: (blockAttributes8) => blockAttributes8?.type === "number"
-    },
-    {
-      name: "hidden",
-      title: (0, import_i18n70.__)("Hidden Input"),
-      icon: "visibility",
-      description: (0, import_i18n70.__)("A hidden input field."),
-      attributes: { type: "hidden" },
-      isDefault: true,
-      scope: ["inserter", "transform"],
-      isActive: (blockAttributes8) => blockAttributes8?.type === "hidden"
     }
   ];
   var variations_default6 = variations6;
@@ -30705,7 +30688,7 @@ ${js}
                   url: mediaUrl,
                   filename,
                   className: "block-library-utils__media-control__inspector-media-replace-title",
-                  label: mediaUrl ? (0, import_url9.getFilename)(filename) || emptyLabel : emptyLabel
+                  label: mediaUrl ? (0, import_url9.getFilename)(filename) : emptyLabel
                 }
               ),
               renderToggle: (props) => /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(import_components55.Button, { ...props, __next40pxDefaultSize: true, children: isUploading ? /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(import_components55.Spinner, {}) : props.children }),
@@ -30733,9 +30716,7 @@ ${js}
 
   // packages/block-library/build-module/image/image.mjs
   var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
-  var { DimensionsTool, ResolutionTool: ResolutionTool2, mediaEditKey } = unlock(
-    import_block_editor112.privateApis
-  );
+  var { DimensionsTool, ResolutionTool: ResolutionTool2 } = unlock(import_block_editor112.privateApis);
   var scaleOptions = [
     {
       value: "cover",
@@ -30972,13 +30953,7 @@ ${js}
       },
       [id, isSingleSelected]
     );
-    const {
-      canInsertCover,
-      imageEditing,
-      imageSizes,
-      maxWidth,
-      editMediaEntity
-    } = (0, import_data47.useSelect)(
+    const { canInsertCover, imageEditing, imageSizes, maxWidth } = (0, import_data47.useSelect)(
       (select9) => {
         const { getBlockRootClientId, canInsertBlockType, getSettings: getSettings22 } = select9(import_block_editor112.store);
         const rootClientId = getBlockRootClientId(clientId);
@@ -30987,7 +30962,6 @@ ${js}
           imageEditing: settings122.imageEditing,
           imageSizes: settings122.imageSizes,
           maxWidth: settings122.maxWidth,
-          editMediaEntity: settings122?.[mediaEditKey],
           canInsertCover: canInsertBlockType(
             "core/cover",
             rootClientId
@@ -31129,7 +31103,7 @@ ${js}
         setIsEditingImage(false);
       }
     }, [isSingleSelected]);
-    const canEditImage = id && naturalWidth && naturalHeight && imageEditing && !!editMediaEntity;
+    const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
     const allowCrop = isSingleSelected && canEditImage && !isEditingImage && !isContentOnlyMode;
     function switchToCover() {
       replaceBlocks(
@@ -31287,7 +31261,7 @@ ${js}
       }
     ) });
     const hasDataFormBlockFields = window?.__experimentalContentOnlyInspectorFields;
-    const editMediaButton = window?.__experimentalMediaEditor && id && isSingleSelected && canUserEdit && !!editMediaEntity && !isExternalImage(id, url) && !isEditingImage && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_block_editor112.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
+    const editMediaButton = window?.__experimentalMediaEditor && id && isSingleSelected && canUserEdit && !isExternalImage(id, url) && !isEditingImage && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_block_editor112.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
       import_components56.ToolbarButton,
       {
         onClick: () => {
@@ -34916,7 +34890,6 @@ ${js}
     },
     supports: {
       anchor: true,
-      html: false,
       className: false,
       splitting: true,
       __experimentalBorder: {
@@ -38453,8 +38426,7 @@ ${js}
     const [currentTitle] = (0, import_core_data27.useEntityProp)(
       "postType",
       "wp_navigation",
-      "title",
-      currentMenuId
+      "title"
     );
     const menuChoices = (0, import_element60.useMemo)(() => {
       return navigationMenus?.map(({ id, title, status }, index) => {
@@ -43032,62 +43004,60 @@ ${js}
     const isHiddenByDefault = "always" === overlayMenu;
     const isManageMenusButtonDisabled = !hasManagePermissions || !hasResolvedNavigationMenus;
     if (hasUnsavedBlocks && !isCreatingNavigationMenu) {
-      return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-          menu_inspector_controls_default,
-          {
-            clientId,
-            createNavigationMenuIsSuccess,
-            createNavigationMenuIsError,
-            currentMenuId: ref,
-            isNavigationMenuMissing,
-            isManageMenusButtonDisabled,
-            onCreateNew: createUntitledEmptyNavigationMenu,
-            onSelectClassicMenu,
-            onSelectNavigationMenu,
-            isLoading,
-            blockEditingMode
-          }
-        ),
-        blockEditingMode === "default" && stylingInspectorControls,
-        /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
-          TagName2,
-          {
-            ...blockProps,
-            "aria-describedby": !isPlaceholder ? accessibleDescriptionId : void 0,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(AccessibleDescription, { id: accessibleDescriptionId, children: (0, import_i18n142.__)("Unsaved Navigation Menu.") }),
-              /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                ResponsiveWrapper,
-                {
-                  id: clientId,
-                  onToggle: setResponsiveMenuVisibility,
-                  isOpen: isResponsiveMenuOpen,
-                  hasIcon,
-                  icon: icon4,
-                  isResponsive,
-                  isHiddenByDefault,
-                  overlayBackgroundColor,
-                  overlayTextColor,
-                  overlay,
-                  onNavigateToEntityRecord,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                    UnsavedInnerBlocks,
-                    {
-                      createNavigationMenu,
-                      blocks: uncontrolledInnerBlocks,
-                      hasSelection: isSelected || isInnerBlockSelected
-                    }
-                  )
-                }
-              )
-            ]
-          }
-        )
-      ] });
+      return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
+        TagName2,
+        {
+          ...blockProps,
+          "aria-describedby": !isPlaceholder ? accessibleDescriptionId : void 0,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(AccessibleDescription, { id: accessibleDescriptionId, children: (0, import_i18n142.__)("Unsaved Navigation Menu.") }),
+            /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+              menu_inspector_controls_default,
+              {
+                clientId,
+                createNavigationMenuIsSuccess,
+                createNavigationMenuIsError,
+                currentMenuId: ref,
+                isNavigationMenuMissing,
+                isManageMenusButtonDisabled,
+                onCreateNew: createUntitledEmptyNavigationMenu,
+                onSelectClassicMenu,
+                onSelectNavigationMenu,
+                isLoading,
+                blockEditingMode
+              }
+            ),
+            blockEditingMode === "default" && stylingInspectorControls,
+            /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+              ResponsiveWrapper,
+              {
+                id: clientId,
+                onToggle: setResponsiveMenuVisibility,
+                isOpen: isResponsiveMenuOpen,
+                hasIcon,
+                icon: icon4,
+                isResponsive,
+                isHiddenByDefault,
+                overlayBackgroundColor,
+                overlayTextColor,
+                overlay,
+                onNavigateToEntityRecord,
+                children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                  UnsavedInnerBlocks,
+                  {
+                    createNavigationMenu,
+                    blocks: uncontrolledInnerBlocks,
+                    hasSelection: isSelected || isInnerBlockSelected
+                  }
+                )
+              }
+            )
+          ]
+        }
+      );
     }
     if (ref && isNavigationMenuMissing) {
-      return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(TagName2, { ...blockProps, children: [
         /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
           menu_inspector_controls_default,
           {
@@ -43104,12 +43074,12 @@ ${js}
             blockEditingMode
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
           deleted_navigation_warning_default,
           {
             onCreateNew: createUntitledEmptyNavigationMenu
           }
-        ) })
+        )
       ] });
     }
     if (isEntityAvailable && hasAlreadyRendered) {
@@ -43131,7 +43101,7 @@ ${js}
         }
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_core_data49.EntityProvider, { kind: "postType", type: "wp_navigation", id: ref, children: /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_block_editor159.RecursionProvider, { uniqueId: recursionId, children: [
       /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
         menu_inspector_controls_default,
         {
@@ -43149,76 +43119,74 @@ ${js}
         }
       ),
       blockEditingMode === "default" && stylingInspectorControls,
-      /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_core_data49.EntityProvider, { kind: "postType", type: "wp_navigation", id: ref, children: /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_block_editor159.RecursionProvider, { uniqueId: recursionId, children: [
-        blockEditingMode === "contentOnly" && isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(NavigationAddPageButton, { clientId }),
-        blockEditingMode === "default" && isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_block_editor159.InspectorControls, { group: "advanced", children: [
-          hasResolvedCanUserUpdateNavigationMenu && canUserUpdateNavigationMenu && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(NavigationMenuNameControl, {}),
-          hasResolvedCanUserDeleteNavigationMenu && canUserDeleteNavigationMenu && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-            NavigationMenuDeleteControl,
-            {
-              onDelete: () => {
-                replaceInnerBlocks(clientId, []);
-                showNavigationMenuStatusNotice(
-                  (0, import_i18n142.__)(
-                    "Navigation Menu successfully deleted."
-                  )
-                );
-              }
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-            manage_menus_button_default,
-            {
-              disabled: isManageMenusButtonDisabled,
-              className: "wp-block-navigation-manage-menus-button"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
-          TagName2,
+      blockEditingMode === "contentOnly" && isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(NavigationAddPageButton, { clientId }),
+      blockEditingMode === "default" && isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_block_editor159.InspectorControls, { group: "advanced", children: [
+        hasResolvedCanUserUpdateNavigationMenu && canUserUpdateNavigationMenu && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(NavigationMenuNameControl, {}),
+        hasResolvedCanUserDeleteNavigationMenu && canUserDeleteNavigationMenu && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+          NavigationMenuDeleteControl,
           {
-            ...blockProps,
-            "aria-describedby": !isPlaceholder && !isLoading ? accessibleDescriptionId : void 0,
-            children: [
-              isLoading && !isHiddenByDefault && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("div", { className: "wp-block-navigation__loading-indicator-container", children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_components94.Spinner, { className: "wp-block-navigation__loading-indicator" }) }),
-              (!isLoading || isHiddenByDefault) && /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                  AccessibleMenuDescription,
-                  {
-                    id: accessibleDescriptionId
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                  ResponsiveWrapper,
-                  {
-                    id: clientId,
-                    onToggle: setResponsiveMenuVisibility,
-                    hasIcon,
-                    icon: icon4,
-                    isOpen: isResponsiveMenuOpen,
-                    isResponsive,
-                    isHiddenByDefault,
-                    overlayBackgroundColor,
-                    overlayTextColor,
-                    overlay,
-                    onNavigateToEntityRecord,
-                    children: isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-                      NavigationInnerBlocks,
-                      {
-                        clientId,
-                        hasCustomPlaceholder: !!CustomPlaceholder,
-                        templateLock,
-                        orientation
-                      }
-                    )
-                  }
+            onDelete: () => {
+              replaceInnerBlocks(clientId, []);
+              showNavigationMenuStatusNotice(
+                (0, import_i18n142.__)(
+                  "Navigation Menu successfully deleted."
                 )
-              ] })
-            ]
+              );
+            }
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+          manage_menus_button_default,
+          {
+            disabled: isManageMenusButtonDisabled,
+            className: "wp-block-navigation-manage-menus-button"
           }
         )
-      ] }) })
-    ] });
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
+        TagName2,
+        {
+          ...blockProps,
+          "aria-describedby": !isPlaceholder && !isLoading ? accessibleDescriptionId : void 0,
+          children: [
+            isLoading && !isHiddenByDefault && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("div", { className: "wp-block-navigation__loading-indicator-container", children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_components94.Spinner, { className: "wp-block-navigation__loading-indicator" }) }),
+            (!isLoading || isHiddenByDefault) && /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_jsx_runtime333.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                AccessibleMenuDescription,
+                {
+                  id: accessibleDescriptionId
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                ResponsiveWrapper,
+                {
+                  id: clientId,
+                  onToggle: setResponsiveMenuVisibility,
+                  hasIcon,
+                  icon: icon4,
+                  isOpen: isResponsiveMenuOpen,
+                  isResponsive,
+                  isHiddenByDefault,
+                  overlayBackgroundColor,
+                  overlayTextColor,
+                  overlay,
+                  onNavigateToEntityRecord,
+                  children: isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+                    NavigationInnerBlocks,
+                    {
+                      clientId,
+                      hasCustomPlaceholder: !!CustomPlaceholder,
+                      templateLock,
+                      orientation
+                    }
+                  )
+                }
+              )
+            ] })
+          ]
+        }
+      )
+    ] }) });
   }
   var edit_default20 = (0, import_block_editor159.withColors)(
     { textColor: "color" },
@@ -62494,7 +62462,6 @@ ${js}
   var import_notices17 = __toESM(require_notices(), 1);
   var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES9 = ["image"];
-  var { mediaEditKey: mediaEditKey2 } = unlock(import_block_editor238.privateApis);
   var SiteLogo = ({
     alt,
     attributes: { align, width, height, isLink, linkTarget, shouldSyncIcon },
@@ -62517,22 +62484,18 @@ ${js}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor238.useBlockEditingMode)();
     const isContentOnlyMode = blockEditingMode === "contentOnly";
-    const { imageEditing, maxWidth, title, editMediaEntity } = (0, import_data132.useSelect)(
-      (select9) => {
-        const settings122 = select9(import_block_editor238.store).getSettings();
-        const siteEntities = select9(import_core_data79.store).getEntityRecord(
-          "root",
-          "__unstableBase"
-        );
-        return {
-          title: siteEntities?.name,
-          imageEditing: settings122.imageEditing,
-          maxWidth: settings122.maxWidth,
-          editMediaEntity: settings122?.[mediaEditKey2]
-        };
-      },
-      []
-    );
+    const { imageEditing, maxWidth, title } = (0, import_data132.useSelect)((select9) => {
+      const settings122 = select9(import_block_editor238.store).getSettings();
+      const siteEntities = select9(import_core_data79.store).getEntityRecord(
+        "root",
+        "__unstableBase"
+      );
+      return {
+        title: siteEntities?.name,
+        imageEditing: settings122.imageEditing,
+        maxWidth: settings122.maxWidth
+      };
+    }, []);
     (0, import_element121.useEffect)(() => {
       if (shouldSyncIcon && logoId !== iconId) {
         setAttributes({ shouldSyncIcon: false });
@@ -62608,7 +62571,7 @@ ${js}
         showRightHandle = true;
       }
     }
-    const canEditImage = logoId && naturalWidth && naturalHeight && imageEditing && !!editMediaEntity;
+    const canEditImage = logoId && naturalWidth && naturalHeight && imageEditing;
     const shouldShowCropAndDimensions = !isContentOnlyMode;
     let imgEdit;
     if (canEditImage && isEditingImage) {
@@ -63236,8 +63199,7 @@ ${js}
         type: "string"
       },
       level: {
-        type: "number",
-        default: 0
+        type: "number"
       },
       levelOptions: {
         type: "array",
