@@ -543,6 +543,9 @@ p + .components-button.is-tertiary {
 .components-button.is-pressed:focus {
   outline: 2px solid transparent;
 }
+.components-button:focus:active {
+  outline: none;
+}
 .components-button svg {
   fill: currentColor;
   outline: none;
