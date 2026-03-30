@@ -34916,6 +34916,7 @@ ${js}
     },
     supports: {
       anchor: true,
+      html: false,
       className: false,
       splitting: true,
       __experimentalBorder: {
