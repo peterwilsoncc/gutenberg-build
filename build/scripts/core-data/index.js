@@ -653,7 +653,7 @@ var wp;
       stableKey: "",
       page: 1,
       perPage: 10,
-      offset: void 0,
+      offset: null,
       fields: null,
       include: null,
       context: "default"
@@ -669,16 +669,17 @@ var wp;
         case "per_page":
           parts.perPage = Number(value);
           break;
+        case "offset": {
+          const numericOffset = Number(value);
+          if (Number.isFinite(numericOffset)) {
+            parts.offset = numericOffset;
+          }
+          break;
+        }
         case "context":
           parts.context = value;
           break;
         default:
-          if (key === "offset") {
-            const numericOffset = Number(value);
-            if (Number.isFinite(numericOffset)) {
-              parts.offset = numericOffset;
-            }
-          }
           if (key === "_fields") {
             parts.fields = get_normalized_comma_separable_default(value) ?? [];
             value = parts.fields.join();
@@ -713,15 +714,12 @@ var wp;
     if (!itemIds) {
       return null;
     }
-    const startOffset = perPage === -1 ? 0 : (page - 1) * perPage;
+    const startOffset = perPage === -1 ? 0 : queryOffset ?? (page - 1) * perPage;
     const endOffset = perPage === -1 ? itemIds.length : Math.min(startOffset + perPage, itemIds.length);
     if (perPage !== -1 && itemIds.length < startOffset + perPage) {
       const totalItems = state.queries[context][stableKey].meta?.totalItems;
-      if (Number.isFinite(totalItems)) {
-        const effectiveTotal = queryOffset !== void 0 ? totalItems - queryOffset : totalItems;
-        if (itemIds.length < effectiveTotal) {
-          return null;
-        }
+      if (Number.isFinite(totalItems) && itemIds.length < totalItems) {
+        return null;
       }
     }
     const items2 = [];
@@ -3149,20 +3147,23 @@ var wp;
     const queryParts = get_query_parts_default(query);
     return queryParts.context;
   }
-  function getMergedItemIds(itemIds, nextItemIds, page, perPage) {
-    const receivedAllIds = page === 1 && perPage === -1;
-    if (receivedAllIds) {
+  function getMergedItemIds(itemIds = [], nextItemIds, { page = 1, offset, perPage = 10 } = {}) {
+    if (perPage === -1) {
       return nextItemIds;
     }
-    const nextItemIdsStartIndex = (page - 1) * perPage;
+    const nextItemIdsStartIndex = offset ?? (page - 1) * perPage;
     const size = Math.max(
-      itemIds?.length ?? 0,
+      itemIds.length,
       nextItemIdsStartIndex + nextItemIds.length
     );
     const mergedItemIds = new Array(size);
     for (let i = 0; i < size; i++) {
       const isInNextItemsRange = i >= nextItemIdsStartIndex && i < nextItemIdsStartIndex + perPage;
-      mergedItemIds[i] = isInNextItemsRange ? nextItemIds[i - nextItemIdsStartIndex] : itemIds?.[i];
+      if (isInNextItemsRange) {
+        mergedItemIds[i] = nextItemIds[i - nextItemIdsStartIndex];
+      } else {
+        mergedItemIds[i] = itemIds[i];
+      }
     }
     return mergedItemIds;
   }
@@ -3268,10 +3269,13 @@ var wp;
     const key = action.key ?? DEFAULT_ENTITY_KEY;
     return {
       itemIds: getMergedItemIds(
-        state?.itemIds || [],
+        state.itemIds,
         action.items.map((item) => item?.[key]).filter(Boolean),
-        action.page,
-        action.perPage
+        {
+          page: action.page,
+          offset: action.offset,
+          perPage: action.perPage
+        }
       ),
       meta: action.meta
     };
