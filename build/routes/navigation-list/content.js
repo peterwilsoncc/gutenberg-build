@@ -14148,8 +14148,10 @@ function CalendarDateTimeControl({
   onChange,
   hideLabelFromVision,
   markWhenOptional,
-  validity
+  validity,
+  config
 }) {
+  const { compact } = config || {};
   const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
@@ -14253,7 +14255,7 @@ function CalendarDateTimeControl({
             onChange: handleManualDateTimeChange
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+        !compact && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
           DateCalendar,
           {
             style: { width: "100%" },
@@ -14276,7 +14278,8 @@ function DateTime({
   hideLabelFromVision,
   markWhenOptional,
   operator,
-  validity
+  validity,
+  config
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
     return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
@@ -14299,7 +14302,8 @@ function DateTime({
       onChange,
       hideLabelFromVision,
       markWhenOptional,
-      validity
+      validity,
+      config
     }
   );
 }

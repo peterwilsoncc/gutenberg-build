@@ -7265,6 +7265,11 @@ textarea.editor-post-text-editor::placeholder {
   font-size: 13px;
 }
 
+.fields-controls__password {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 16px;
+}
+
 .editor-site-discussion-dropdown__content .components-popover__content {
   min-width: 320px;
   padding: 16px;

@@ -10361,6 +10361,10 @@ var wp;
     getValue: ({ item }) => item.date,
     setValue: ({ value }) => ({ date: value }),
     isVisible: (item) => item.status === "future",
+    Edit: {
+      control: "datetime",
+      compact: true
+    },
     enableHiding: false,
     enableSorting: false,
     filterBy: false
@@ -69653,8 +69657,10 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     hideLabelFromVision,
     markWhenOptional,
-    validity
+    validity,
+    config: config2
   }) {
+    const { compact } = config2 || {};
     const { id, label, description, setValue, getValue: getValue2, isValid: isValid2 } = field;
     const fieldValue = getValue2({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
@@ -69758,7 +69764,7 @@ If there's a particular need for this, please submit a feature request at https:
               onChange: handleManualDateTimeChange
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
+          !compact && /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
             DateCalendar,
             {
               style: { width: "100%" },
@@ -69781,7 +69787,8 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     markWhenOptional,
     operator,
-    validity
+    validity,
+    config: config2
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
       return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
@@ -69804,7 +69811,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange,
         hideLabelFromVision,
         markWhenOptional,
-        validity
+        validity,
+        config: config2
       }
     );
   }
@@ -75873,6 +75881,7 @@ If there's a particular need for this, please submit a feature request at https:
             id: "status",
             layout: { type: "regular", labelPosition: "none" }
           },
+          "scheduled_date",
           "password"
         ]
       },

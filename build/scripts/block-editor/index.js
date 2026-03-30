@@ -67023,8 +67023,10 @@ var wp;
     onChange,
     hideLabelFromVision,
     markWhenOptional,
-    validity
+    validity,
+    config: config2
   }) {
+    const { compact } = config2 || {};
     const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
@@ -67128,7 +67130,7 @@ var wp;
               onChange: handleManualDateTimeChange
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
+          !compact && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
             DateCalendar,
             {
               style: { width: "100%" },
@@ -67151,7 +67153,8 @@ var wp;
     hideLabelFromVision,
     markWhenOptional,
     operator,
-    validity
+    validity,
+    config: config2
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
       return /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
@@ -67174,7 +67177,8 @@ var wp;
         onChange,
         hideLabelFromVision,
         markWhenOptional,
-        validity
+        validity,
+        config: config2
       }
     );
   }
