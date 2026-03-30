@@ -30705,7 +30705,7 @@ ${js}
                   url: mediaUrl,
                   filename,
                   className: "block-library-utils__media-control__inspector-media-replace-title",
-                  label: mediaUrl ? (0, import_url9.getFilename)(filename) : emptyLabel
+                  label: mediaUrl ? (0, import_url9.getFilename)(filename) || emptyLabel : emptyLabel
                 }
               ),
               renderToggle: (props) => /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(import_components55.Button, { ...props, __next40pxDefaultSize: true, children: isUploading ? /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(import_components55.Spinner, {}) : props.children }),
