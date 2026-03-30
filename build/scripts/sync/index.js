@@ -9640,7 +9640,12 @@ var wp;
             continue;
           }
           const state = roomStates.get(room.room);
-          state.updateQueue.restore(room.updates);
+          if (room.updates.length > 0 && state.endCursor > 0) {
+            state.updateQueue.clear();
+            state.updateQueue.add(state.createCompactionUpdate());
+          } else if (room.updates.length > 0) {
+            state.updateQueue.restore(room.updates);
+          }
           state.log(
             "Error posting sync update, will retry with backoff",
             {
