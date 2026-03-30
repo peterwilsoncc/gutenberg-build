@@ -38039,6 +38039,7 @@ This message will only show in development mode. It won't appear in production. 
       onChange,
       onFocus,
       onBlur,
+      "aria-describedby": ariaDescribedBy,
       ...restProps
     } = props;
     const [hasFocus2, setHasFocus] = (0, import_element115.useState)(false);
@@ -38081,7 +38082,7 @@ This message will only show in development mode. It won't appear in production. 
         // - the list of suggestions are rendered in the DOM (`isExpanded`)
         hasFocus2 && selectedSuggestionIndex !== -1 && isExpanded ? `components-form-token-suggestions-${instanceId}-${selectedSuggestionIndex}` : void 0
       ),
-      "aria-describedby": `components-form-token-suggestions-howto-${instanceId}`
+      "aria-describedby": [`components-form-token-suggestions-howto-${instanceId}`, ariaDescribedBy].filter(Boolean).join(" ")
     });
   }
   var TokenInput = (0, import_element115.forwardRef)(UnForwardedTokenInput);
@@ -38466,7 +38467,11 @@ This message will only show in development mode. It won't appear in production. 
                 onClick,
                 isExpanded,
                 selectedSuggestionIndex: getIndexOfMatchingSuggestion(selectedSuggestion, matchingSuggestions),
-                onChange: onInputChange
+                onChange: onInputChange,
+                "aria-describedby": help ? (
+                  // TODO: Refactor `TokenInput` to not use hardcoded IDs.
+                  `components-form-token-input-${instanceId}__help`
+                ) : void 0
               })
             }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(spinner_default, {}), allowReset && Boolean(value) && !isExpanded && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(button_default, {
               size: "small",
