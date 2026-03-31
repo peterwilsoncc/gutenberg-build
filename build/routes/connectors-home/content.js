@@ -702,10 +702,10 @@ var import_element4 = __toESM(require_element());
 var import_i18n = __toESM(require_i18n());
 import { speak } from "@wordpress/a11y";
 function useConnectorPlugin({
-  pluginSlug,
-  pluginFile: pluginFileFromServer,
+  file: pluginFileFromServer,
   settingName,
   connectorName,
+  isInstalled,
   isActivated,
   keySource = "none",
   initialIsConnected = false
@@ -714,6 +714,8 @@ function useConnectorPlugin({
   const [isBusy, setIsBusy] = (0, import_element4.useState)(false);
   const [connectedState, setConnectedState] = (0, import_element4.useState)(initialIsConnected);
   const [pluginStatusOverride, setPluginStatusOverride] = (0, import_element4.useState)(null);
+  const pluginBasename = pluginFileFromServer?.replace(/\.php$/, "");
+  const pluginSlug = pluginBasename?.includes("/") ? pluginBasename.split("/")[0] : pluginBasename;
   const {
     derivedPluginStatus,
     canManagePlugins,
@@ -728,7 +730,7 @@ function useConnectorPlugin({
         kind: "root",
         name: "plugin"
       });
-      if (!pluginSlug) {
+      if (!pluginFileFromServer) {
         const hasLoaded = store2.hasFinishedResolution(
           "getEntityRecord",
           ["root", "site"]
@@ -740,15 +742,14 @@ function useConnectorPlugin({
           canInstallPlugins: canCreate
         };
       }
-      const pluginId = pluginFileFromServer ?? `${pluginSlug}/plugin`;
       const plugin = store2.getEntityRecord(
         "root",
         "plugin",
-        pluginId
+        pluginBasename
       );
       const hasFinished = store2.hasFinishedResolution(
         "getEntityRecord",
-        ["root", "plugin", pluginId]
+        ["root", "plugin", pluginBasename]
       );
       if (!hasFinished) {
         return {
@@ -769,7 +770,7 @@ function useConnectorPlugin({
       let status = "not-installed";
       if (isActivated) {
         status = "active";
-      } else if (pluginFileFromServer) {
+      } else if (isInstalled) {
         status = "inactive";
       }
       return {
@@ -779,7 +780,7 @@ function useConnectorPlugin({
         canInstallPlugins: canCreate
       };
     },
-    [pluginSlug, pluginFileFromServer, settingName, isActivated]
+    [pluginBasename, settingName, isInstalled, isActivated]
   );
   const pluginStatus = pluginStatusOverride ?? derivedPluginStatus;
   const canActivatePlugins = canManagePlugins;
@@ -823,7 +824,7 @@ function useConnectorPlugin({
     }
   };
   const activatePlugin = async () => {
-    if (!pluginSlug) {
+    if (!pluginFileFromServer) {
       return;
     }
     setIsBusy(true);
@@ -832,7 +833,7 @@ function useConnectorPlugin({
         "root",
         "plugin",
         {
-          plugin: pluginFileFromServer ?? `${pluginSlug}/plugin`,
+          plugin: pluginBasename,
           status: "active"
         },
         { throwOnError: true }
@@ -1186,7 +1187,8 @@ function ApiKeyConnector({
   const auth = authentication?.method === "api_key" ? authentication : void 0;
   const settingName = auth?.settingName ?? "";
   const helpUrl = auth?.credentialsUrl ?? void 0;
-  const pluginSlug = plugin?.slug;
+  const pluginFile = plugin?.file?.replace(/\.php$/, "");
+  const pluginSlug = pluginFile?.includes("/") ? pluginFile.split("/")[0] : pluginFile;
   let helpLabel;
   try {
     if (helpUrl) {
@@ -1209,10 +1211,10 @@ function ApiKeyConnector({
     saveApiKey,
     removeApiKey
   } = useConnectorPlugin({
-    pluginSlug,
-    pluginFile: plugin?.pluginFile,
+    file: plugin?.file,
     settingName,
     connectorName: name,
+    isInstalled: plugin?.isInstalled,
     isActivated: plugin?.isActivated,
     keySource: auth?.keySource,
     initialIsConnected: auth?.isConnected
