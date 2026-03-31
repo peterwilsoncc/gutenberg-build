@@ -24528,6 +24528,9 @@ var wp;
   }
 
   // packages/edit-site/build-module/components/site-editor-routes/utils.mjs
+  function isThemeDataLoaded(siteData) {
+    return siteData.currentTheme !== void 0 && siteData.currentTheme !== null;
+  }
   function isClassicThemeWithStyleBookSupport(siteData) {
     const isBlockTheme = siteData.currentTheme?.is_block_theme;
     const supportsEditorStyles = siteData.currentTheme?.theme_supports["editor-styles"];
@@ -24542,16 +24545,20 @@ var wp;
     path: "/",
     areas: {
       sidebar({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(SidebarNavigationScreenMain, {}) : /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
+        return siteData.currentTheme.is_block_theme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(SidebarNavigationScreenMain, {}) : /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       preview({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
         return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(EditSiteEditor, { isHomeRoute: true }) : void 0;
       },
       mobile({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(SidebarNavigationScreenMain, {}) : /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(import_jsx_runtime181.Fragment, {});
+        }
+        return siteData.currentTheme.is_block_theme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(SidebarNavigationScreenMain, {}) : /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(SidebarNavigationScreenUnsupported, {});
       }
     }
   };
@@ -44154,16 +44161,20 @@ If there's a particular need for this, please submit a feature request at https:
     path: "/navigation",
     areas: {
       sidebar({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(SidebarNavigationScreenNavigationMenus, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(SidebarNavigationScreenNavigationMenus, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       preview({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
         return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(EditSiteEditor, {}) : void 0;
       },
       mobile({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(MobileNavigationView, {}) : /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_jsx_runtime280.Fragment, {});
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(MobileNavigationView, {}) : /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(SidebarNavigationScreenUnsupported, {});
       }
     }
   };
@@ -44182,16 +44193,22 @@ If there's a particular need for this, please submit a feature request at https:
     path: "/wp_navigation/:postId",
     areas: {
       sidebar({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SidebarNavigationScreenNavigationMenu, { backPath: "/navigation" }) : /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SidebarNavigationScreenNavigationMenu, { backPath: "/navigation" }) : /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       preview({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       mobile({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(MobileNavigationItemView, {}) : /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_jsx_runtime281.Fragment, {});
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(MobileNavigationItemView, {}) : /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SidebarNavigationScreenUnsupported, {});
       }
     }
   };
@@ -49536,8 +49553,10 @@ If there's a particular need for this, please submit a feature request at https:
     path: "/template",
     areas: {
       sidebar({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       content({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
@@ -49555,8 +49574,10 @@ If there's a particular need for this, please submit a feature request at https:
         return isListView2 ? /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(EditSiteEditor, {}) : void 0;
       },
       mobile({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        if (!isBlockTheme) {
+        if (!isThemeDataLoaded(siteData)) {
+          return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(import_jsx_runtime306.Fragment, {});
+        }
+        if (!siteData.currentTheme.is_block_theme) {
           return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(SidebarNavigationScreenUnsupported, {});
         }
         const isTemplateActivateEnabled = typeof window !== "undefined" && window.__experimentalTemplateActivate;
@@ -49575,16 +49596,22 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   var areas = {
     sidebar({ siteData }) {
-      const isBlockTheme = siteData.currentTheme?.is_block_theme;
-      return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(SidebarNavigationScreenUnsupported, {});
+      if (!isThemeDataLoaded(siteData)) {
+        return null;
+      }
+      return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(SidebarNavigationScreenUnsupported, {});
     },
     mobile({ siteData }) {
-      const isBlockTheme = siteData.currentTheme?.is_block_theme;
-      return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(SidebarNavigationScreenUnsupported, {});
+      if (!isThemeDataLoaded(siteData)) {
+        return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(import_jsx_runtime307.Fragment, {});
+      }
+      return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(SidebarNavigationScreenUnsupported, {});
     },
     preview({ siteData }) {
-      const isBlockTheme = siteData.currentTheme?.is_block_theme;
-      return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(SidebarNavigationScreenUnsupported, {});
+      if (!isThemeDataLoaded(siteData)) {
+        return null;
+      }
+      return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(SidebarNavigationScreenUnsupported, {});
     }
   };
   var templateItemRoute = {
@@ -50245,8 +50272,10 @@ If there's a particular need for this, please submit a feature request at https:
     path: "/page",
     areas: {
       sidebar({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
           SidebarNavigationScreen,
           {
             title: (0, import_i18n157.__)("Pages"),
@@ -50268,8 +50297,10 @@ If there's a particular need for this, please submit a feature request at https:
         return isList ? /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(EditSiteEditor, {}) : void 0;
       },
       mobile({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(MobilePagesView, {}) : /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(import_jsx_runtime311.Fragment, {});
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(MobilePagesView, {}) : /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(SidebarNavigationScreenUnsupported, {});
       }
     },
     widths: {
@@ -50288,8 +50319,10 @@ If there's a particular need for this, please submit a feature request at https:
     path: "/page/:postId",
     areas: {
       sidebar({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
           SidebarNavigationScreen,
           {
             title: (0, import_i18n158.__)("Pages"),
@@ -50299,12 +50332,16 @@ If there's a particular need for this, please submit a feature request at https:
         ) : /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       mobile({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(import_jsx_runtime312.Fragment, {});
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       preview({ siteData }) {
-        const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(SidebarNavigationScreenUnsupported, {});
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(SidebarNavigationScreenUnsupported, {});
       }
     }
   };
@@ -50339,6 +50376,9 @@ If there's a particular need for this, please submit a feature request at https:
     path: "/stylebook",
     areas: {
       sidebar({ siteData }) {
+        if (!isThemeDataLoaded(siteData)) {
+          return null;
+        }
         return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
           SidebarNavigationScreen,
           {
