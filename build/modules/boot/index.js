@@ -800,7 +800,7 @@ function Page({
   const classes = clsx_default("admin-ui-page", className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
   return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges) && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+    (title || breadcrumbs || badges || actions) && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       Header,
       {
         headingLevel,
