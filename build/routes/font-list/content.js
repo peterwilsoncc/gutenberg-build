@@ -985,6 +985,7 @@ var VALID_SETTINGS = [
   "background.backgroundRepeat",
   "background.backgroundSize",
   "background.backgroundPosition",
+  "background.gradient",
   "border.color",
   "border.radius",
   "border.radiusSizes",

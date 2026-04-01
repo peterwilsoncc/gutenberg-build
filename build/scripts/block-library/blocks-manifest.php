@@ -3132,8 +3132,10 @@ return array(
 			'background' => array(
 				'backgroundImage' => true,
 				'backgroundSize' => true,
+				'gradient' => true,
 				'__experimentalDefaultControls' => array(
-					'backgroundImage' => true
+					'backgroundImage' => true,
+					'gradient' => true
 				)
 			),
 			'color' => array(

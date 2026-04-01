@@ -7020,7 +7020,7 @@ var wp;
   var import_element219 = __toESM(require_element(), 1);
   var import_data175 = __toESM(require_data(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
-  var import_hooks13 = __toESM(require_hooks(), 1);
+  var import_hooks14 = __toESM(require_hooks(), 1);
 
   // packages/block-editor/build-module/components/block-edit/context.mjs
   var import_element = __toESM(require_element(), 1);
@@ -54669,7 +54669,7 @@ var wp;
   var import_blocks90 = __toESM(require_blocks(), 1);
   var import_components212 = __toESM(require_components(), 1);
   var import_element208 = __toESM(require_element(), 1);
-  var import_hooks11 = __toESM(require_hooks(), 1);
+  var import_hooks12 = __toESM(require_hooks(), 1);
   var import_data162 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/global-styles/index.mjs
@@ -54737,7 +54737,7 @@ var wp;
         link: updatedSettings.color?.link && supportedStyles.includes("linkColor"),
         caption: updatedSettings.color?.caption && supportedStyles.includes("captionColor")
       };
-      if (!supportedStyles.includes("background")) {
+      if (!supportedStyles.includes("background") && !supportedStyles.includes("backgroundGradient")) {
         updatedSettings.color.gradients = [];
         updatedSettings.color.customGradient = false;
       }
@@ -54819,11 +54819,15 @@ var wp;
           };
         }
       });
-      ["backgroundImage", "backgroundSize"].forEach((key) => {
-        if (!supportedStyles.includes(key)) {
+      [
+        ["backgroundImage", "backgroundImage"],
+        ["backgroundSize", "backgroundSize"],
+        ["backgroundGradient", "gradient"]
+      ].forEach(([styleKey, settingKey]) => {
+        if (!supportedStyles.includes(styleKey)) {
           updatedSettings.background = {
             ...updatedSettings.background,
-            [key]: false
+            [settingKey]: false
           };
         }
       });
@@ -57439,7 +57443,8 @@ var wp;
     indicators,
     tabs,
     colorGradientControlSettings,
-    panelId
+    panelId,
+    className = "block-editor-tools-panel-color-gradient-settings__item"
   }) {
     const currentTab = tabs.find((tab) => tab.userValue !== void 0);
     const { key: firstTabKey, ...firstTab } = tabs[0] ?? {};
@@ -57447,7 +57452,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
       import_components205.__experimentalToolsPanelItem,
       {
-        className: "block-editor-tools-panel-color-gradient-settings__item",
+        className,
         hasValue,
         label,
         onDeselect: resetValue,
@@ -57556,6 +57561,8 @@ var wp;
     const areCustomGradientsEnabled = settings2?.color?.customGradient;
     const hasSolidColors = colors2.length > 0 || areCustomSolidsEnabled;
     const hasGradientColors = gradients.length > 0 || areCustomGradientsEnabled;
+    const hasBackgroundGradientSupport = !!settings2?.background?.gradient;
+    const showGradientColors = hasGradientColors && !hasBackgroundGradientSupport;
     const decodeValue = (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue);
     const encodeColorValue = (colorValue) => {
       const allColors = colors2.flatMap(
@@ -57580,14 +57587,16 @@ var wp;
     const userBackgroundColor = decodeValue(value?.color?.background);
     const gradient = decodeValue(inheritedValue?.color?.gradient);
     const userGradient = decodeValue(value?.color?.gradient);
-    const hasBackground = () => !!userBackgroundColor || !!userGradient;
+    const hasBackground = () => !!userBackgroundColor || !hasBackgroundGradientSupport && !!userGradient;
     const setBackgroundColor = (newColor) => {
       const newValue = setImmutably(
         value,
         ["color", "background"],
         encodeColorValue(newColor)
       );
-      newValue.color.gradient = void 0;
+      if (!hasBackgroundGradientSupport) {
+        newValue.color.gradient = void 0;
+      }
       onChange(newValue);
     };
     const setGradient = (newGradient) => {
@@ -57605,7 +57614,9 @@ var wp;
         ["color", "background"],
         void 0
       );
-      newValue.color.gradient = void 0;
+      if (!hasBackgroundGradientSupport) {
+        newValue.color.gradient = void 0;
+      }
       onChange(newValue);
     };
     const showLinkPanel = useHasLinkPanel(settings2);
@@ -57770,7 +57781,9 @@ var wp;
         hasValue: hasBackground,
         resetValue: resetBackground,
         isShownByDefault: defaultControls.background,
-        indicators: [gradient ?? backgroundColor],
+        indicators: [
+          (showGradientColors ? gradient : void 0) ?? backgroundColor
+        ],
         tabs: [
           hasSolidColors && {
             key: "background",
@@ -57779,7 +57792,7 @@ var wp;
             setValue: setBackgroundColor,
             userValue: userBackgroundColor
           },
-          hasGradientColors && {
+          showGradientColors && {
             key: "gradient",
             label: (0, import_i18n190.__)("Gradient"),
             inheritedValue: gradient,
@@ -58844,14 +58857,22 @@ var wp;
   // packages/block-editor/build-module/components/global-styles/background-panel.mjs
   var import_jsx_runtime371 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_CONTROLS8 = {
-    backgroundImage: true
+    backgroundImage: true,
+    gradient: true
   };
+  function useHasBackgroundControl(settings2, feature) {
+    return import_element207.Platform.OS === "web" && settings2?.background?.[feature];
+  }
   function useHasBackgroundPanel(settings2) {
-    return import_element207.Platform.OS === "web" && settings2?.background?.backgroundImage;
+    const { backgroundImage, gradient } = settings2?.background || {};
+    return import_element207.Platform.OS === "web" && (backgroundImage || gradient);
   }
   function hasBackgroundImageValue(style) {
     return !!style?.background?.backgroundImage?.id || // Supports url() string values in theme.json.
     "string" === typeof style?.background?.backgroundImage || !!style?.background?.backgroundImage?.url;
+  }
+  function hasBackgroundGradientValue(style) {
+    return "string" === typeof style?.background?.gradient && style?.background?.gradient !== "";
   }
   function BackgroundToolsPanel({
     resetAllFilter,
@@ -58872,8 +58893,12 @@ var wp;
         label: headerLabel,
         resetAll,
         panelId,
+        hasInnerWrapper: true,
+        className: "background-block-support-panel",
+        __experimentalFirstVisibleItemClass: "first",
+        __experimentalLastVisibleItemClass: "last",
         dropdownMenuProps,
-        children
+        children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)("div", { className: "background-block-support-panel__inner-wrapper", children })
       }
     );
   }
@@ -58888,15 +58913,76 @@ var wp;
     defaultValues = {},
     headerLabel = (0, import_i18n195.__)("Background")
   }) {
-    const showBackgroundImageControl = useHasBackgroundPanel(settings2);
-    const resetBackground = () => onChange(setImmutably(value, ["background"], {}));
-    const resetAllFilter = (0, import_element207.useCallback)((previousValue) => {
-      return {
-        ...previousValue,
-        background: {}
-      };
-    }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+    const gradients = useGradientsPerOrigin(settings2);
+    const areCustomGradientsEnabled = settings2?.color?.customGradient;
+    const hasGradientColors = gradients.length > 0 || areCustomGradientsEnabled;
+    const hasBackgroundGradientControl = useHasBackgroundControl(
+      settings2,
+      "gradient"
+    );
+    const showBackgroundGradientControl = hasGradientColors && hasBackgroundGradientControl;
+    const showBackgroundImageControl = useHasBackgroundControl(
+      settings2,
+      "backgroundImage"
+    );
+    const resetAllFilter = (0, import_element207.useCallback)(
+      (previousValue) => {
+        return {
+          ...previousValue,
+          background: {},
+          color: hasBackgroundGradientControl ? {
+            ...previousValue?.color,
+            gradient: void 0
+          } : previousValue?.color
+        };
+      },
+      [hasBackgroundGradientControl]
+    );
+    if (!showBackgroundGradientControl && !showBackgroundImageControl) {
+      return null;
+    }
+    const decodeValue = (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue);
+    const encodeGradientValue = (gradientValue) => {
+      const allGradients = gradients.flatMap(
+        ({ gradients: originGradients }) => originGradients
+      );
+      const gradientObject = allGradients.find(
+        ({ gradient }) => gradient === gradientValue
+      );
+      return gradientObject ? "var:preset|gradient|" + gradientObject.slug : gradientValue;
+    };
+    const resetBackground = () => onChange(
+      setImmutably(
+        value,
+        ["background", "backgroundImage"],
+        void 0
+      )
+    );
+    const resetGradient = () => {
+      let newValue = setImmutably(
+        value,
+        ["background", "gradient"],
+        void 0
+      );
+      newValue = setImmutably(newValue, ["color", "gradient"], void 0);
+      onChange(newValue);
+    };
+    const currentGradient = decodeValue(
+      value?.background?.gradient ?? value?.color?.gradient
+    );
+    const inheritedGradient = decodeValue(
+      inheritedValue?.background?.gradient ?? inheritedValue?.color?.gradient
+    );
+    const setGradient = (newGradient) => {
+      let newValue = setImmutably(
+        value,
+        ["background", "gradient"],
+        encodeGradientValue(newGradient)
+      );
+      newValue = setImmutably(newValue, ["color", "gradient"], void 0);
+      onChange(newValue);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(
       Wrapper,
       {
         resetAllFilter,
@@ -58904,27 +58990,56 @@ var wp;
         onChange,
         panelId,
         headerLabel,
-        children: showBackgroundImageControl && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
-          import_components210.__experimentalToolsPanelItem,
-          {
-            hasValue: () => !!value?.background,
-            label: (0, import_i18n195.__)("Image"),
-            onDeselect: resetBackground,
-            isShownByDefault: defaultControls.backgroundImage,
-            panelId,
-            children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
-              BackgroundImagePanel,
-              {
-                value,
-                onChange,
-                settings: settings2,
-                inheritedValue,
-                defaultControls,
-                defaultValues
-              }
-            )
-          }
-        )
+        children: [
+          showBackgroundImageControl && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+            import_components210.__experimentalToolsPanelItem,
+            {
+              className: "block-editor-background-panel__item",
+              hasValue: () => hasBackgroundImageValue(value),
+              label: (0, import_i18n195.__)("Image"),
+              onDeselect: resetBackground,
+              isShownByDefault: defaultControls.backgroundImage,
+              panelId,
+              children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+                BackgroundImagePanel,
+                {
+                  value,
+                  onChange,
+                  settings: settings2,
+                  inheritedValue,
+                  defaultControls,
+                  defaultValues
+                }
+              )
+            }
+          ),
+          showBackgroundGradientControl && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+            ColorPanelDropdown,
+            {
+              className: "block-editor-background-panel__item",
+              label: (0, import_i18n195.__)("Gradient"),
+              hasValue: () => hasBackgroundGradientValue(value),
+              resetValue: resetGradient,
+              isShownByDefault: defaultControls.gradient,
+              indicators: [currentGradient],
+              tabs: [
+                {
+                  key: "gradient",
+                  label: (0, import_i18n195.__)("Gradient"),
+                  inheritedValue: currentGradient ?? inheritedGradient,
+                  setValue: setGradient,
+                  userValue: currentGradient,
+                  isGradient: true
+                }
+              ],
+              colorGradientControlSettings: {
+                gradients,
+                disableCustomGradients: !areCustomGradientsEnabled
+              },
+              panelId
+            }
+          )
+        ]
       }
     );
   }
@@ -59230,14 +59345,14 @@ var wp;
       return hasBorderSupport2(name, "color");
     }
   };
-  (0, import_hooks11.addFilter)(
+  (0, import_hooks12.addFilter)(
     "blocks.registerBlockType",
     "core/border/addAttributes",
     addAttributes
   );
 
   // packages/block-editor/build-module/hooks/color.mjs
-  var import_hooks12 = __toESM(require_hooks(), 1);
+  var import_hooks13 = __toESM(require_hooks(), 1);
   var import_blocks93 = __toESM(require_blocks(), 1);
   var import_element211 = __toESM(require_element(), 1);
   var import_data165 = __toESM(require_data(), 1);
@@ -59259,7 +59374,7 @@ var wp;
       return true;
     }
     if (feature === "any") {
-      return !!support?.backgroundImage || !!support?.backgroundSize || !!support?.backgroundRepeat;
+      return !!support?.backgroundImage || !!support?.backgroundSize || !!support?.backgroundRepeat || !!support?.gradient;
     }
     return !!support?.[feature];
   }
@@ -59295,18 +59410,32 @@ var wp;
     };
   }
   function getBackgroundImageClasses(style) {
-    return hasBackgroundImageValue(style) ? "has-background" : "";
+    return hasBackgroundImageValue(style) || hasBackgroundGradientValue(style) ? "has-background" : "";
   }
-  function BackgroundInspectorControl({ children }) {
-    const resetAllFilter = (0, import_element209.useCallback)((attributes) => {
-      return {
-        ...attributes,
-        style: {
-          ...attributes.style,
-          background: void 0
-        }
-      };
-    }, []);
+  function BackgroundInspectorControl({
+    children,
+    backgroundGradientSupported = false
+  }) {
+    const resetAllFilter = (0, import_element209.useCallback)(
+      (attributes) => {
+        const updatedClassName = attributes.className?.includes(
+          "has-background"
+        ) ? attributes.className.split(" ").filter((c6) => c6 !== "has-background").join(" ") || void 0 : attributes.className;
+        return {
+          ...attributes,
+          className: updatedClassName,
+          style: cleanEmptyObject({
+            ...attributes.style,
+            background: void 0,
+            color: backgroundGradientSupported ? {
+              ...attributes.style?.color,
+              gradient: void 0
+            } : attributes.style?.color
+          })
+        };
+      },
+      [backgroundGradientSupported]
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(inspector_controls_default, { group: "background", resetAllFilter, children });
   }
   function BackgroundImagePanel3({
@@ -59315,12 +59444,14 @@ var wp;
     setAttributes,
     settings: settings2
   }) {
-    const { style, inheritedValue } = (0, import_data163.useSelect)(
+    const { style, className, inheritedValue } = (0, import_data163.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3, getSettings: getSettings7 } = select3(store);
         const _settings = getSettings7();
+        const blockAttributes = getBlockAttributes3(clientId);
         return {
-          style: getBlockAttributes3(clientId)?.style,
+          style: blockAttributes?.style,
+          className: blockAttributes?.className,
           /*
            * To ensure we pass down the right inherited values:
            * @TODO 1. Pass inherited value down to all block style controls,
@@ -59333,14 +59464,50 @@ var wp;
       },
       [clientId, name]
     );
-    if (!useHasBackgroundPanel(settings2) || !hasBackgroundSupport(name, "backgroundImage")) {
+    const backgroundGradientSupported = hasBackgroundSupport(
+      name,
+      "gradient"
+    );
+    const as = (0, import_element209.useCallback)(
+      ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
+        BackgroundInspectorControl,
+        {
+          backgroundGradientSupported,
+          children
+        }
+      ),
+      [backgroundGradientSupported]
+    );
+    if (!useHasBackgroundPanel(settings2) || !hasBackgroundSupport(name)) {
       return null;
     }
     const onChange = (newStyle) => {
-      setAttributes({
-        style: cleanEmptyObject(newStyle)
-      });
+      const isMigrating = backgroundGradientSupported && !!style?.color?.gradient;
+      const newAttributes = {
+        style: cleanEmptyObject(
+          backgroundGradientSupported ? {
+            ...newStyle,
+            color: {
+              ...newStyle?.color,
+              gradient: void 0
+            }
+          } : newStyle
+        )
+      };
+      if (isMigrating && !!newStyle?.background?.gradient) {
+        newAttributes.className = clsx_default(className, "has-background");
+      } else if (!newStyle?.background?.gradient && className?.includes("has-background")) {
+        newAttributes.className = className.split(" ").filter((c6) => c6 !== "has-background").join(" ") || void 0;
+      }
+      setAttributes(newAttributes);
     };
+    const styleValue = backgroundGradientSupported && !style?.background?.gradient && style?.color?.gradient ? {
+      ...style,
+      background: {
+        ...style?.background,
+        gradient: style?.color?.gradient
+      }
+    } : style;
     const updatedSettings = {
       ...settings2,
       background: {
@@ -59350,19 +59517,19 @@ var wp;
     };
     const defaultControls = (0, import_blocks91.getBlockSupport)(name, [
       BACKGROUND_SUPPORT_KEY,
-      "defaultControls"
+      "__experimentalDefaultControls"
     ]);
     return /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
       BackgroundImagePanel2,
       {
         inheritedValue,
-        as: BackgroundInspectorControl,
+        as,
         panelId: clientId,
         defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES2,
         settings: updatedSettings,
         onChange,
         defaultControls,
-        value: style
+        value: styleValue
       }
     );
   }
@@ -59764,12 +59931,12 @@ var wp;
       results
     );
   }
-  (0, import_hooks12.addFilter)(
+  (0, import_hooks13.addFilter)(
     "blocks.registerBlockType",
     "core/color/addAttribute",
     addAttributes2
   );
-  (0, import_hooks12.addFilter)(
+  (0, import_hooks13.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/color/addTransforms",
     addTransforms
@@ -59848,7 +60015,8 @@ var wp;
           inspector_controls_default.Slot,
           {
             group: "background",
-            label: (0, import_i18n198.__)("Background image")
+            label: (0, import_i18n198.__)("Background image"),
+            className: "background-block-support-panel__inner-wrapper"
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(inspector_controls_default.Slot, { group: "filter" }),
@@ -60271,7 +60439,8 @@ var wp;
         inspector_controls_default.Slot,
         {
           group: "background",
-          label: (0, import_i18n200.__)("Background image")
+          label: (0, import_i18n200.__)("Background image"),
+          className: "background-block-support-panel__inner-wrapper"
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(
@@ -61099,6 +61268,7 @@ var wp;
     const [
       backgroundImage,
       backgroundSize,
+      gradient,
       customFontFamilies,
       defaultFontFamilies,
       themeFontFamilies,
@@ -61161,6 +61331,7 @@ var wp;
     ] = useSettings(
       "background.backgroundImage",
       "background.backgroundSize",
+      "background.gradient",
       "typography.fontFamilies.custom",
       "typography.fontFamilies.default",
       "typography.fontFamilies.theme",
@@ -61225,7 +61396,8 @@ var wp;
       return {
         background: {
           backgroundImage,
-          backgroundSize
+          backgroundSize,
+          gradient
         },
         color: {
           palette: {
@@ -61313,6 +61485,7 @@ var wp;
     }, [
       backgroundImage,
       backgroundSize,
+      gradient,
       customFontFamilies,
       defaultFontFamilies,
       themeFontFamilies,
@@ -61420,7 +61593,7 @@ var wp;
       },
       "withBlockEditHooks"
     );
-    (0, import_hooks13.addFilter)("editor.BlockEdit", "core/editor/hooks", withBlockEditHooks);
+    (0, import_hooks14.addFilter)("editor.BlockEdit", "core/editor/hooks", withBlockEditHooks);
   }
   function BlockProps({
     index,
@@ -61508,7 +61681,7 @@ var wp;
       },
       "withBlockListBlockHooks"
     );
-    (0, import_hooks13.addFilter)(
+    (0, import_hooks14.addFilter)(
       "editor.BlockListBlock",
       "core/editor/hooks",
       withBlockListBlockHooks
@@ -61534,13 +61707,13 @@ var wp;
         return addSaveProps11(accu, name, neededAttributes);
       }, props);
     }
-    (0, import_hooks13.addFilter)(
+    (0, import_hooks14.addFilter)(
       "blocks.getSaveContent.extraProps",
       "core/editor/hooks",
       extraPropsFromHooks,
       0
     );
-    (0, import_hooks13.addFilter)(
+    (0, import_hooks14.addFilter)(
       "blocks.getSaveContent.extraProps",
       "core/editor/hooks",
       (props) => {
@@ -61554,7 +61727,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/compat.mjs
   var import_blocks97 = __toESM(require_blocks(), 1);
-  var import_hooks15 = __toESM(require_hooks(), 1);
+  var import_hooks16 = __toESM(require_hooks(), 1);
   function migrateLightBlockWrapper(settings2) {
     const { apiVersion = 1 } = settings2;
     if (apiVersion < 2 && (0, import_blocks97.hasBlockSupport)(settings2, "lightBlockWrapper", false)) {
@@ -61562,7 +61735,7 @@ var wp;
     }
     return settings2;
   }
-  (0, import_hooks15.addFilter)(
+  (0, import_hooks16.addFilter)(
     "blocks.registerBlockType",
     "core/compat/migrateLightBlockWrapper",
     migrateLightBlockWrapper
@@ -61623,7 +61796,7 @@ var wp;
   var startObservingBody2;
 
   // packages/block-editor/build-module/hooks/align.mjs
-  var import_hooks16 = __toESM(require_hooks(), 1);
+  var import_hooks17 = __toESM(require_hooks(), 1);
   var import_blocks98 = __toESM(require_blocks(), 1);
   var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
   var ALL_ALIGNMENTS = ["left", "center", "right", "wide", "full"];
@@ -61732,14 +61905,14 @@ var wp;
     }
     return props;
   }
-  (0, import_hooks16.addFilter)(
+  (0, import_hooks17.addFilter)(
     "blocks.registerBlockType",
     "core/editor/align/addAttribute",
     addAttribute
   );
 
   // packages/block-editor/build-module/hooks/lock.mjs
-  var import_hooks17 = __toESM(require_hooks(), 1);
+  var import_hooks18 = __toESM(require_hooks(), 1);
   function addAttribute2(settings2) {
     if ("type" in (settings2.attributes?.lock ?? {})) {
       return settings2;
@@ -61752,10 +61925,10 @@ var wp;
     };
     return settings2;
   }
-  (0, import_hooks17.addFilter)("blocks.registerBlockType", "core/lock/addAttribute", addAttribute2);
+  (0, import_hooks18.addFilter)("blocks.registerBlockType", "core/lock/addAttribute", addAttribute2);
 
   // packages/block-editor/build-module/hooks/allowed-blocks.mjs
-  var import_hooks18 = __toESM(require_hooks(), 1);
+  var import_hooks19 = __toESM(require_hooks(), 1);
   var import_blocks101 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
@@ -62172,7 +62345,7 @@ var wp;
     }
     return settings2;
   }
-  (0, import_hooks18.addFilter)(
+  (0, import_hooks19.addFilter)(
     "blocks.registerBlockType",
     "core/allowedBlocks/attribute",
     addAttribute3
@@ -62219,14 +62392,14 @@ var wp;
       }
     };
   }
-  (0, import_hooks18.addFilter)(
+  (0, import_hooks19.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/allowedBlocks/addTransforms",
     addTransforms2
   );
 
   // packages/block-editor/build-module/hooks/anchor.mjs
-  var import_hooks19 = __toESM(require_hooks(), 1);
+  var import_hooks20 = __toESM(require_hooks(), 1);
   var import_components228 = __toESM(require_components(), 1);
   var import_i18n206 = __toESM(require_i18n(), 1);
   var import_blocks102 = __toESM(require_blocks(), 1);
@@ -62303,10 +62476,10 @@ var wp;
     }
     return extraProps;
   }
-  (0, import_hooks19.addFilter)("blocks.registerBlockType", "core/anchor/attribute", addAttribute4);
+  (0, import_hooks20.addFilter)("blocks.registerBlockType", "core/anchor/attribute", addAttribute4);
 
   // packages/block-editor/build-module/hooks/aria-label.mjs
-  var import_hooks20 = __toESM(require_hooks(), 1);
+  var import_hooks21 = __toESM(require_hooks(), 1);
   var import_blocks103 = __toESM(require_blocks(), 1);
   function addAttribute5(settings2) {
     if (settings2?.attributes?.ariaLabel?.type) {
@@ -62335,7 +62508,7 @@ var wp;
       return (0, import_blocks103.hasBlockSupport)(name, "ariaLabel");
     }
   };
-  (0, import_hooks20.addFilter)(
+  (0, import_hooks21.addFilter)(
     "blocks.registerBlockType",
     "core/ariaLabel/attribute",
     addAttribute5
@@ -72320,7 +72493,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/custom-class-name.mjs
-  var import_hooks21 = __toESM(require_hooks(), 1);
+  var import_hooks22 = __toESM(require_hooks(), 1);
   var import_components259 = __toESM(require_components(), 1);
   var import_i18n231 = __toESM(require_i18n(), 1);
   var import_blocks105 = __toESM(require_blocks(), 1);
@@ -72398,19 +72571,19 @@ var wp;
     }
     return result;
   }
-  (0, import_hooks21.addFilter)(
+  (0, import_hooks22.addFilter)(
     "blocks.registerBlockType",
     "core/editor/custom-class-name/attribute",
     addAttribute6
   );
-  (0, import_hooks21.addFilter)(
+  (0, import_hooks22.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/customClassName/addTransforms",
     addTransforms3
   );
 
   // packages/block-editor/build-module/hooks/generated-class-name.mjs
-  var import_hooks22 = __toESM(require_hooks(), 1);
+  var import_hooks23 = __toESM(require_hooks(), 1);
   var import_blocks106 = __toESM(require_blocks(), 1);
   function addGeneratedClassName(extraProps, blockType) {
     if ((0, import_blocks106.hasBlockSupport)(blockType, "className", true)) {
@@ -72427,7 +72600,7 @@ var wp;
     }
     return extraProps;
   }
-  (0, import_hooks22.addFilter)(
+  (0, import_hooks23.addFilter)(
     "blocks.getSaveContent.extraProps",
     "core/generated-class-name/save-props",
     addGeneratedClassName
@@ -72435,7 +72608,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/style.mjs
   var import_element279 = __toESM(require_element(), 1);
-  var import_hooks26 = __toESM(require_hooks(), 1);
+  var import_hooks27 = __toESM(require_hooks(), 1);
   var import_blocks114 = __toESM(require_blocks(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_style_engine4 = __toESM(require_style_engine(), 1);
@@ -72451,7 +72624,7 @@ var wp;
   var LINE_HEIGHT_SUPPORT_KEY2 = "typography.lineHeight";
 
   // packages/block-editor/build-module/hooks/font-family.mjs
-  var import_hooks23 = __toESM(require_hooks(), 1);
+  var import_hooks24 = __toESM(require_hooks(), 1);
   var import_blocks108 = __toESM(require_blocks(), 1);
   var import_token_list2 = __toESM(require_token_list(), 1);
   var import_components261 = __toESM(require_components(), 1);
@@ -72501,14 +72674,14 @@ var wp;
       return (0, import_blocks108.hasBlockSupport)(name, FONT_FAMILY_SUPPORT_KEY2);
     }
   };
-  (0, import_hooks23.addFilter)(
+  (0, import_hooks24.addFilter)(
     "blocks.registerBlockType",
     "core/fontFamily/addAttribute",
     addAttributes3
   );
 
   // packages/block-editor/build-module/hooks/font-size.mjs
-  var import_hooks24 = __toESM(require_hooks(), 1);
+  var import_hooks25 = __toESM(require_hooks(), 1);
   var import_blocks109 = __toESM(require_blocks(), 1);
   var import_token_list3 = __toESM(require_token_list(), 1);
   var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
@@ -72612,12 +72785,12 @@ var wp;
       results
     );
   }
-  (0, import_hooks24.addFilter)(
+  (0, import_hooks25.addFilter)(
     "blocks.registerBlockType",
     "core/font/addAttribute",
     addAttributes4
   );
-  (0, import_hooks24.addFilter)(
+  (0, import_hooks25.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/font-size/addTransforms",
     addTransforms4
@@ -72743,7 +72916,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/fit-text.mjs
-  var import_hooks25 = __toESM(require_hooks(), 1);
+  var import_hooks26 = __toESM(require_hooks(), 1);
   var import_blocks111 = __toESM(require_blocks(), 1);
   var import_element275 = __toESM(require_element(), 1);
   var import_data182 = __toESM(require_data(), 1);
@@ -73036,7 +73209,7 @@ var wp;
     }
     return {};
   }
-  (0, import_hooks25.addFilter)(
+  (0, import_hooks26.addFilter)(
     "blocks.registerBlockType",
     "core/fit-text/addAttribute",
     addAttributes5
@@ -73084,7 +73257,7 @@ var wp;
       ] });
     };
   }, "addFitTextControl");
-  (0, import_hooks25.addFilter)(
+  (0, import_hooks26.addFilter)(
     "editor.BlockEdit",
     "core/fit-text/add-fit-text-control",
     addFitTextControl
@@ -73719,14 +73892,14 @@ var wp;
       skipSerializationPathsEdit
     );
   }
-  (0, import_hooks26.addFilter)(
+  (0, import_hooks27.addFilter)(
     "blocks.registerBlockType",
     "core/style/addAttribute",
     addAttribute7
   );
 
   // packages/block-editor/build-module/hooks/settings.mjs
-  var import_hooks27 = __toESM(require_hooks(), 1);
+  var import_hooks28 = __toESM(require_hooks(), 1);
   var import_blocks115 = __toESM(require_blocks(), 1);
   var hasSettingsSupport = (blockType) => (0, import_blocks115.hasBlockSupport)(blockType, "__experimentalSettings", false);
   function addAttribute8(settings2) {
@@ -73743,7 +73916,7 @@ var wp;
     }
     return settings2;
   }
-  (0, import_hooks27.addFilter)(
+  (0, import_hooks28.addFilter)(
     "blocks.registerBlockType",
     "core/settings/addAttribute",
     addAttribute8
@@ -73752,7 +73925,7 @@ var wp;
   // packages/block-editor/build-module/hooks/duotone.mjs
   var import_blocks116 = __toESM(require_blocks(), 1);
   var import_compose103 = __toESM(require_compose(), 1);
-  var import_hooks28 = __toESM(require_hooks(), 1);
+  var import_hooks29 = __toESM(require_hooks(), 1);
   var import_element280 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/duotone/utils.mjs
@@ -74038,7 +74211,7 @@ var wp;
       className: shouldRender ? filterClass : ""
     };
   }
-  (0, import_hooks28.addFilter)(
+  (0, import_hooks29.addFilter)(
     "blocks.registerBlockType",
     "core/editor/duotone/add-attributes",
     addDuotoneAttributes
@@ -74152,7 +74325,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/layout.mjs
   var import_compose105 = __toESM(require_compose(), 1);
-  var import_hooks29 = __toESM(require_hooks(), 1);
+  var import_hooks30 = __toESM(require_hooks(), 1);
   var import_blocks118 = __toESM(require_blocks(), 1);
   var import_data186 = __toESM(require_data(), 1);
   var import_components266 = __toESM(require_components(), 1);
@@ -74476,12 +74649,12 @@ var wp;
     },
     "withLayoutStyles"
   );
-  (0, import_hooks29.addFilter)(
+  (0, import_hooks30.addFilter)(
     "blocks.registerBlockType",
     "core/layout/addAttribute",
     addAttribute9
   );
-  (0, import_hooks29.addFilter)(
+  (0, import_hooks30.addFilter)(
     "editor.BlockListBlock",
     "core/editor/layout/with-layout-styles",
     withLayoutStyles
@@ -75779,7 +75952,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/metadata.mjs
-  var import_hooks30 = __toESM(require_hooks(), 1);
+  var import_hooks31 = __toESM(require_hooks(), 1);
   var import_blocks119 = __toESM(require_blocks(), 1);
   var META_ATTRIBUTE_NAME = "metadata";
   function addMetaAttribute(blockTypeSettings) {
@@ -75832,12 +76005,12 @@ var wp;
     }
     return result;
   }
-  (0, import_hooks30.addFilter)(
+  (0, import_hooks31.addFilter)(
     "blocks.registerBlockType",
     "core/metadata/addMetaAttribute",
     addMetaAttribute
   );
-  (0, import_hooks30.addFilter)(
+  (0, import_hooks31.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/metadata/addTransforms",
     addTransforms5
@@ -76201,7 +76374,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/block-renaming.mjs
-  var import_hooks31 = __toESM(require_hooks(), 1);
+  var import_hooks32 = __toESM(require_hooks(), 1);
   var import_blocks123 = __toESM(require_blocks(), 1);
   function addLabelCallback(settings2) {
     if (settings2.__experimentalLabel) {
@@ -76223,7 +76396,7 @@ var wp;
     }
     return settings2;
   }
-  (0, import_hooks31.addFilter)(
+  (0, import_hooks32.addFilter)(
     "blocks.registerBlockType",
     "core/metadata/addLabelCallback",
     addLabelCallback
@@ -76231,7 +76404,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/grid-visualizer.mjs
   var import_compose111 = __toESM(require_compose(), 1);
-  var import_hooks32 = __toESM(require_hooks(), 1);
+  var import_hooks33 = __toESM(require_hooks(), 1);
   var import_data195 = __toESM(require_data(), 1);
   var import_jsx_runtime472 = __toESM(require_jsx_runtime(), 1);
   function GridLayoutSync(props) {
@@ -76303,7 +76476,7 @@ var wp;
     },
     "addGridVisualizerToBlockEdit"
   );
-  (0, import_hooks32.addFilter)(
+  (0, import_hooks33.addFilter)(
     "editor.BlockEdit",
     "core/editor/grid-visualizer",
     addGridVisualizerToBlockEdit
