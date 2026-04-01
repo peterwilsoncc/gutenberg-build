@@ -1286,6 +1286,9 @@ function registerDefaultConnectors() {
   const connectors = getConnectorData();
   const sanitize = (s) => s.replace(/[^a-z0-9-_]/gi, "-");
   for (const [connectorId, data] of Object.entries(connectors)) {
+    if (connectorId === "akismet" && !data.plugin?.isInstalled) {
+      continue;
+    }
     const { authentication } = data;
     const connectorName = sanitize(connectorId);
     const args = {
