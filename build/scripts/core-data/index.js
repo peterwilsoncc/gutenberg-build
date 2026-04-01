@@ -4057,7 +4057,8 @@ var wp;
     return state.viewConfigs?.[`${kind}/${name}`] ?? {
       default_view: void 0,
       default_layouts: void 0,
-      view_list: void 0
+      view_list: void 0,
+      form: void 0
     };
   }
 

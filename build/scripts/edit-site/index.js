@@ -49817,7 +49817,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   var { usePostFields: usePostFields2, PostCardPanel } = unlock(import_editor40.privateApis);
   var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
-  function QuickEditModal({ postType: postType2, postId, closeModal }) {
+  function QuickEditModal({
+    postType: postType2,
+    postId,
+    closeModal,
+    quickEditForm
+  }) {
     const isBulk = postId.length > 1;
     const [localEdits, setLocalEdits] = (0, import_element175.useState)({});
     const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data85.useSelect)(
@@ -49873,58 +49878,21 @@ If there's a particular need for this, please submit a feature request at https:
       [_fields, canSwitchTemplate]
     );
     const form2 = (0, import_element175.useMemo)(() => {
-      const allFields = [
-        {
-          id: "featured_media",
-          layout: {
-            type: "regular",
-            labelPosition: "none"
-          }
-        },
-        {
-          id: "post-content-info",
-          layout: { type: "regular", labelPosition: "none" }
-        },
-        {
-          id: "status",
-          label: (0, import_i18n156.__)("Status"),
-          children: [
-            {
-              id: "status",
-              layout: { type: "regular", labelPosition: "none" }
-            },
-            "scheduled_date",
-            "password"
-          ]
-        },
-        "author",
-        "date",
-        "slug",
-        "parent",
-        {
-          id: "discussion",
-          label: (0, import_i18n156.__)("Discussion"),
-          children: [
-            {
-              id: "comment_status",
-              layout: { type: "regular", labelPosition: "none" }
-            },
-            "ping_status"
-          ]
-        },
-        "template"
-      ];
+      if (!quickEditForm) {
+        return { layout: { type: "panel" }, fields: [] };
+      }
+      if (!isBulk) {
+        return quickEditForm;
+      }
       return {
-        layout: {
-          type: "panel"
-        },
-        fields: isBulk ? allFields.filter(
+        ...quickEditForm,
+        fields: (quickEditForm.fields ?? []).filter(
           (field) => fieldsWithBulkEditSupport.includes(
             typeof field === "string" ? field : field.id
           )
-        ) : allFields
+        )
       };
-    }, [isBulk]);
+    }, [isBulk, quickEditForm]);
     const onChange = (edits) => {
       const currentData = { ...record, ...localEdits };
       if (edits.status && edits.status !== "future" && currentData?.status === "future" && new Date(currentData.date) > /* @__PURE__ */ new Date()) {
@@ -50024,7 +49992,8 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       default_view: defaultView,
       default_layouts: defaultLayouts2,
-      view_list: viewList
+      view_list: viewList,
+      form: quickEditForm
     } = useViewConfig({
       kind: "postType",
       name: postType2
@@ -50261,7 +50230,8 @@ If there's a particular need for this, please submit a feature request at https:
             {
               postType: postType2,
               postId: selection,
-              closeModal: closeQuickEditModal
+              closeModal: closeQuickEditModal,
+              quickEditForm
             }
           )
         ]
