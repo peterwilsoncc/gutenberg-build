@@ -2035,7 +2035,7 @@ var wp;
       const { name, innerBlocks, attributes, ...rest } = block;
       const newAttributes = { ...attributes };
       for (const [key, value] of Object.entries(attributes)) {
-        const schema = getBlockAttributeType(name, key);
+        const schema = getBlockAttributeSchema(name, key);
         if (schema) {
           newAttributes[key] = deserializeAttributeValue(
             schema,
@@ -2084,11 +2084,44 @@ var wp;
     );
   }
   function createNewYAttributeValue(blockName, attributeName, attributeValue) {
-    const isRichText = isRichTextAttribute(blockName, attributeName);
-    if (isRichText) {
-      return new import_sync9.Y.Text(attributeValue?.toString() ?? "");
+    const schema = getBlockAttributeSchema(blockName, attributeName);
+    return createYValueFromSchema(schema, attributeValue);
+  }
+  function createYValueFromSchema(schema, value) {
+    if (!schema) {
+      return value;
     }
-    return attributeValue;
+    if (schema.type === "rich-text") {
+      return new import_sync9.Y.Text(value?.toString() ?? "");
+    }
+    if (schema.type === "array" && schema.query && Array.isArray(value)) {
+      const query = schema.query;
+      const yArray = new import_sync9.Y.Array();
+      yArray.insert(
+        0,
+        value.map((item) => createYMapFromQuery(query, item))
+      );
+      return yArray;
+    }
+    if (schema.type === "object" && schema.query && isRecord(value)) {
+      return createYMapFromQuery(schema.query, value);
+    }
+    return value;
+  }
+  function isRecord(value) {
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+  function createYMapFromQuery(query, obj) {
+    if (!isRecord(obj)) {
+      return new import_sync9.Y.Map();
+    }
+    const entries = Object.entries(obj).map(
+      ([key, val]) => {
+        const subSchema = query[key];
+        return [key, createYValueFromSchema(subSchema, val)];
+      }
+    );
+    return new import_sync9.Y.Map(entries);
   }
   function createNewYBlock(block) {
     return createYMap(
@@ -2173,7 +2206,8 @@ var wp;
                   attributeName,
                   currentAttribute
                 );
-                const isAttributeChanged = !isExpectedType || !(0, import_es62.default)(
+                const isYType = currentAttribute instanceof import_sync9.Y.AbstractType;
+                const isAttributeChanged = !isExpectedType || isYType || !(0, import_es62.default)(
                   currentAttribute,
                   attributeValue
                 );
@@ -2241,24 +2275,82 @@ var wp;
       knownClientIds.add(clientId);
     }
   }
-  function updateYBlockAttribute(blockName, attributeName, attributeValue, currentAttributes, cursorPosition) {
-    const isRichText = isRichTextAttribute(blockName, attributeName);
-    const currentAttribute = currentAttributes.get(attributeName);
-    if (isRichText && "string" === typeof attributeValue && currentAttributes.has(attributeName) && currentAttribute instanceof import_sync9.Y.Text) {
-      mergeRichTextUpdate(currentAttribute, attributeValue, cursorPosition);
+  function mergeYArray(yArray, newValue, schema, cursorPosition) {
+    if (!schema.query) {
+      return;
+    }
+    const query = schema.query;
+    if (yArray.length === newValue.length) {
+      for (let i = 0; i < newValue.length; i++) {
+        const currentElement = yArray.get(i);
+        const newElement = newValue[i];
+        if (currentElement instanceof import_sync9.Y.Map && isRecord(newElement)) {
+          mergeYMapValues(
+            currentElement,
+            newElement,
+            query,
+            cursorPosition
+          );
+        } else {
+          yArray.delete(0, yArray.length);
+          yArray.insert(
+            0,
+            newValue.map(
+              (item) => createYMapFromQuery(query, item)
+            )
+          );
+          return;
+        }
+      }
     } else {
-      currentAttributes.set(
-        attributeName,
-        createNewYAttributeValue(blockName, attributeName, attributeValue)
+      yArray.delete(0, yArray.length);
+      yArray.insert(
+        0,
+        newValue.map((item) => createYMapFromQuery(query, item))
       );
     }
   }
-  var cachedBlockAttributeTypes;
-  function getBlockAttributeType(blockName, attributeName) {
-    if (!cachedBlockAttributeTypes) {
-      cachedBlockAttributeTypes = /* @__PURE__ */ new Map();
+  function mergeYValue(schema, newVal, yMap, key, cursorPosition) {
+    const currentVal = yMap.get(key);
+    if (schema?.type === "rich-text" && typeof newVal === "string" && currentVal instanceof import_sync9.Y.Text) {
+      mergeRichTextUpdate(currentVal, newVal, cursorPosition);
+    } else if (schema?.type === "array" && schema.query && Array.isArray(newVal) && currentVal instanceof import_sync9.Y.Array) {
+      mergeYArray(currentVal, newVal, schema, cursorPosition);
+    } else if (schema?.type === "object" && schema.query && isRecord(newVal) && currentVal instanceof import_sync9.Y.Map) {
+      mergeYMapValues(currentVal, newVal, schema.query, cursorPosition);
+    } else {
+      const newYValue = createYValueFromSchema(schema, newVal);
+      if (newYValue !== newVal || !(0, import_es62.default)(currentVal, newVal)) {
+        yMap.set(key, newYValue);
+      }
+    }
+  }
+  function mergeYMapValues(yMap, newObj, query, cursorPosition) {
+    for (const [key, newVal] of Object.entries(newObj)) {
+      mergeYValue(query[key], newVal, yMap, key, cursorPosition);
+    }
+    for (const key of yMap.keys()) {
+      if (!Object.hasOwn(newObj, key)) {
+        yMap.delete(key);
+      }
+    }
+  }
+  function updateYBlockAttribute(blockName, attributeName, attributeValue, currentAttributes, cursorPosition) {
+    const schema = getBlockAttributeSchema(blockName, attributeName);
+    mergeYValue(
+      schema,
+      attributeValue,
+      currentAttributes,
+      attributeName,
+      cursorPosition
+    );
+  }
+  var cachedBlockAttributeSchemas;
+  function getBlockAttributeSchema(blockName, attributeName) {
+    if (!cachedBlockAttributeSchemas) {
+      cachedBlockAttributeSchemas = /* @__PURE__ */ new Map();
       for (const blockType of (0, import_blocks.getBlockTypes)()) {
-        cachedBlockAttributeTypes.set(
+        cachedBlockAttributeSchemas.set(
           blockType.name,
           new Map(
             Object.entries(blockType.attributes ?? {}).map(
@@ -2271,26 +2363,26 @@ var wp;
         );
       }
     }
-    return cachedBlockAttributeTypes.get(blockName)?.get(attributeName);
+    return cachedBlockAttributeSchemas.get(blockName)?.get(attributeName);
   }
   function isExpectedAttributeType(blockName, attributeName, attributeValue) {
-    const expectedAttributeType = getBlockAttributeType(
-      blockName,
-      attributeName
-    )?.type;
-    if (expectedAttributeType === "rich-text") {
+    const schema = getBlockAttributeSchema(blockName, attributeName);
+    if (schema?.type === "rich-text") {
       return attributeValue instanceof import_sync9.Y.Text;
     }
-    if (expectedAttributeType === "string") {
+    if (schema?.type === "string") {
       return typeof attributeValue === "string";
+    }
+    if (schema?.type === "array" && schema.query) {
+      return attributeValue instanceof import_sync9.Y.Array;
+    }
+    if (schema?.type === "object" && schema.query) {
+      return attributeValue instanceof import_sync9.Y.Map;
     }
     return true;
   }
   function isLocalAttribute(blockName, attributeName) {
-    return "local" === getBlockAttributeType(blockName, attributeName)?.role;
-  }
-  function isRichTextAttribute(blockName, attributeName) {
-    return "rich-text" === getBlockAttributeType(blockName, attributeName)?.type;
+    return "local" === getBlockAttributeSchema(blockName, attributeName)?.role;
   }
   var localDoc;
   function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition = null) {
