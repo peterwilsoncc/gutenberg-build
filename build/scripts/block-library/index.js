@@ -66042,14 +66042,12 @@ ${js}
   // packages/block-library/build-module/tab/save.mjs
   var import_block_editor253 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
-  function save48({ attributes: attributes2 }) {
-    const { anchor } = attributes2;
-    const tabPanelId = anchor;
+  function save48() {
     const blockProps = import_block_editor253.useBlockProps.save({
       role: "tabpanel"
     });
     const innerBlocksProps = import_block_editor253.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("section", { ...innerBlocksProps, id: tabPanelId });
+    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("section", { ...innerBlocksProps });
   }
 
   // packages/block-library/build-module/tab/block.json
@@ -68785,12 +68783,10 @@ ${js}
   // packages/block-library/build-module/tabs/save.mjs
   var import_block_editor263 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
-  function save52({ attributes: attributes2 }) {
-    const { anchor } = attributes2;
-    const tabsId = anchor;
+  function save52() {
     const blockProps = import_block_editor263.useBlockProps.save();
     const innerBlocksProps = import_block_editor263.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)("div", { ...innerBlocksProps, id: tabsId });
+    return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)("div", { ...innerBlocksProps });
   }
 
   // packages/block-library/build-module/tabs/block.json
