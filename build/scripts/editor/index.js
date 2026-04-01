@@ -10496,7 +10496,7 @@ var wp;
       } else {
         excerpt = (0, import_html_entities4.decodeEntities)(item.excerpt?.raw || "");
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components12.__experimentalText, { align: "left", numberOfLines: 4, truncate: true, children: excerpt });
+      return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components12.__experimentalText, { align: "left", numberOfLines: 3, truncate: true, children: excerpt });
     },
     Edit: {
       control: "textarea",
