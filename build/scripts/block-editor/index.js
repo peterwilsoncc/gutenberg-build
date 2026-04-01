@@ -25266,7 +25266,7 @@ var wp;
     try {
       plainText = clipboardData.getData("text/plain");
       html = clipboardData.getData("text/html");
-    } catch (error2) {
+    } catch {
       return;
     }
     html = removeWindowsFragments(html);
@@ -25599,7 +25599,7 @@ var wp;
       (accumulator, styleSheet) => {
         try {
           styleSheet.cssRules;
-        } catch (e2) {
+        } catch {
           return accumulator;
         }
         const { ownerNode, cssRules } = styleSheet;
@@ -29337,7 +29337,7 @@ var wp;
                 results = await category.fetch({
                   per_page: 1
                 });
-              } catch (e2) {
+              } catch {
               }
               return [category.name, !!results.length];
             })
@@ -31795,7 +31795,7 @@ var wp;
         result,
         JSON.parse(event.dataTransfer.getData("wp-blocks"))
       );
-    } catch (err) {
+    } catch {
       return result;
     }
     return result;
@@ -35069,7 +35069,7 @@ var wp;
         return false;
       }
       return true;
-    } catch (err) {
+    } catch {
       return false;
     }
   }
@@ -35128,7 +35128,7 @@ var wp;
             return;
           }
           html = await window.navigator.clipboard.readText();
-        } catch (error2) {
+        } catch {
           createErrorNotice(
             (0, import_i18n74.__)(
               "Unable to paste styles. Please allow browser clipboard permissions before continuing."
@@ -49490,7 +49490,7 @@ var wp;
             if (suggestion?.url) {
               onSelect(suggestion);
             }
-          } catch (e2) {
+          } catch {
           }
           return;
         }

@@ -10235,7 +10235,7 @@ var wp;
       applyUpdateV2(ydoc, yupdate);
       ydoc.clientID = pseudoRandomID();
       return ydoc;
-    } catch (e) {
+    } catch {
       return null;
     }
   }

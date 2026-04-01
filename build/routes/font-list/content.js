@@ -4418,7 +4418,7 @@ function FontCollection({ slug }) {
           })
         );
       }
-    } catch (error) {
+    } catch {
       setNotice({
         type: "error",
         message: (0, import_i18n16.__)(
@@ -14878,7 +14878,7 @@ function UploadFonts() {
       const buffer = await readFileAsArrayBuffer(file);
       await font2.fromDataBuffer(buffer, "font");
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

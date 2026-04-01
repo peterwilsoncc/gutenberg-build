@@ -18377,7 +18377,7 @@ var wp;
           break;
       }
       return url.toString();
-    } catch (error) {
+    } catch {
       return src;
     }
   }
@@ -19340,7 +19340,7 @@ var wp;
         crossOrigin: imgCrossOrigin
       });
       return color.hex;
-    } catch (error) {
+    } catch {
       return DEFAULT_BACKGROUND_COLOR;
     }
   });
@@ -22466,7 +22466,7 @@ ${url}
     let ax;
     try {
       ax = new window.ActiveXObject(type);
-    } catch (e2) {
+    } catch {
       ax = void 0;
     }
     return ax;
@@ -40889,7 +40889,7 @@ ${js}
       try {
         const base = baseUrl || (typeof window !== "undefined" ? window.location.origin : "https://wordpress.org");
         return new URL(url, base);
-      } catch (error) {
+      } catch {
         return null;
       }
     };
@@ -41173,7 +41173,7 @@ ${js}
           );
           onPageCreated(pageLink);
         }
-      } catch (error) {
+      } catch {
         createErrorNotice(
           (0, import_i18n133.__)("Failed to create page. Please try again."),
           {
@@ -41589,7 +41589,7 @@ ${js}
       } else {
         isExternal = true;
       }
-    } catch (e2) {
+    } catch {
       isExternal = true;
     }
     return { displayUrl, isExternal };
@@ -45657,7 +45657,7 @@ ${js}
       if (!hasRecursionError && selectedPattern?.blocks) {
         try {
           parsePatternDependencies2(selectedPattern);
-        } catch (error) {
+        } catch {
           setHasRecursionError(true);
           return;
         }

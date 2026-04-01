@@ -23925,7 +23925,7 @@ var wp;
         let error2 = {};
         try {
           error2 = await errorResponse.json();
-        } catch (e2) {
+        } catch {
         }
         const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n66.__)("An error occurred while creating the site export.");
         createErrorNotice(errorMessage, { type: "snackbar" });

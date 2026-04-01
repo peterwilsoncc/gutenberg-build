@@ -47641,7 +47641,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     function isFrameAccessible() {
       try {
         return !!ref.current?.contentDocument?.body;
-      } catch (e3) {
+      } catch {
         return false;
       }
     }
@@ -47706,7 +47706,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         if ("string" === typeof data) {
           try {
             data = JSON.parse(data);
-          } catch (e3) {
+          } catch {
           }
         }
         if ("resize" !== data.action) {

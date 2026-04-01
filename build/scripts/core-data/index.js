@@ -6184,7 +6184,7 @@ var wp;
         );
         dispatch3.__unstableReleaseStoreLock(lock2);
       });
-    } catch (e) {
+    } catch {
       dispatch3.__unstableReleaseStoreLock(lock2);
     }
   };
@@ -6208,7 +6208,7 @@ var wp;
         path: (0, import_url6.addQueryArgs)("/oembed/1.0/proxy", { url })
       });
       dispatch3.receiveEmbedPreview(url, embedProxyResponse);
-    } catch (error) {
+    } catch {
       dispatch3.receiveEmbedPreview(url, false);
     }
   };
@@ -6255,7 +6255,7 @@ var wp;
         method: "OPTIONS",
         parse: false
       });
-    } catch (error) {
+    } catch {
       return;
     }
     const permissions = getUserPermissionsFromAllowHeader(
@@ -6484,7 +6484,7 @@ var wp;
       const isPaginated = entityConfig.supportsPagination && query.per_page !== -1;
       try {
         response = await (0, import_api_fetch8.default)({ path, parse: !isPaginated });
-      } catch (error) {
+      } catch {
         return;
       }
       if (response) {
@@ -6579,7 +6579,7 @@ var wp;
       let record;
       try {
         record = await (0, import_api_fetch8.default)({ path });
-      } catch (error) {
+      } catch {
         return;
       }
       if (record) {
@@ -6606,7 +6606,7 @@ var wp;
         path: `${restNamespace}/${restBase}/?context=edit`,
         method: "OPTIONS"
       });
-    } catch (error) {
+    } catch {
       return;
     }
     if (options) {

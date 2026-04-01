@@ -16058,7 +16058,7 @@ var wp;
     try {
       const [generatedStyles] = generateGlobalStyles(previewConfig, []);
       return generatedStyles.map((style) => style.css).join("\n");
-    } catch (error2) {
+    } catch {
       return "";
     }
   }
@@ -26712,7 +26712,7 @@ var wp;
             })
           );
         }
-      } catch (error2) {
+      } catch {
         setNotice({
           type: "error",
           message: (0, import_i18n97.__)(
@@ -37172,7 +37172,7 @@ var wp;
         const buffer = await readFileAsArrayBuffer(file);
         await font2.fromDataBuffer(buffer, "font");
         return true;
-      } catch (error2) {
+      } catch {
         return false;
       }
     }
@@ -44904,7 +44904,7 @@ var wp;
   function getContent() {
     try {
       return (0, import_data95.select)(store).getEditedPostContent();
-    } catch (error2) {
+    } catch {
     }
   }
   function CopyButton({ text, children, variant = "secondary" }) {
@@ -51309,7 +51309,7 @@ var wp;
       try {
         plainText = clipboardData.getData("text/plain");
         html = clipboardData.getData("text/html");
-      } catch (error2) {
+      } catch {
         return;
       }
       const content = (0, import_blocks27.pasteHandler)({
@@ -54381,7 +54381,7 @@ var wp;
     const runner = () => {
       try {
         callback();
-      } catch (error2) {
+      } catch {
       }
       timerHandle = setTimeout(runner, delayMs);
     };
@@ -54576,7 +54576,7 @@ var wp;
     const cursorRange = editorDocument.createRange();
     try {
       cursorRange.setStart(node, offset3);
-    } catch (error2) {
+    } catch {
       return null;
     }
     cursorRange.collapse(true);
