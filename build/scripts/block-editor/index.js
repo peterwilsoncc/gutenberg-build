@@ -34488,7 +34488,6 @@ var wp;
       const instanceId = (0, import_compose62.useInstanceId)(BlockMoverButton);
       const normalizedClientIds = Array.isArray(clientIds) ? clientIds : [clientIds];
       const blocksCount = normalizedClientIds.length;
-      const { disabled: disabled2 } = props;
       const {
         blockType,
         isDisabled,
@@ -34519,7 +34518,7 @@ var wp;
           const { orientation: blockListOrientation } = getBlockListSettings2(blockRootClientId) || {};
           return {
             blockType: block ? (0, import_blocks49.getBlockType)(block.name) : null,
-            isDisabled: disabled2 || (direction === "up" ? isFirstBlock : isLastBlock),
+            isDisabled: direction === "up" ? isFirstBlock : isLastBlock,
             rootClientId: blockRootClientId,
             firstIndex: firstBlockIndex,
             isFirst: isFirstBlock,
@@ -34581,12 +34580,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-mover/index.mjs
   var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
-  function BlockMover({
-    clientIds,
-    hideDragHandle,
-    isBlockMoverUpButtonDisabled,
-    isBlockMoverDownButtonDisabled
-  }) {
+  function BlockMover({ clientIds, hideDragHandle }) {
     const {
       canMove,
       rootClientId,
@@ -34649,7 +34643,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_components78.ToolbarItem, { children: (itemProps) => /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
               BlockMoverUpButton,
               {
-                disabled: isBlockMoverUpButtonDisabled,
                 clientIds,
                 ...itemProps
               }
@@ -34657,7 +34650,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_components78.ToolbarItem, { children: (itemProps) => /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
               BlockMoverDownButton,
               {
-                disabled: isBlockMoverDownButtonDisabled,
                 clientIds,
                 ...itemProps
               }
