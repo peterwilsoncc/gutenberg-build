@@ -34189,6 +34189,7 @@ var wp;
   var import_data85 = __toESM(require_data(), 1);
   var import_element100 = __toESM(require_element(), 1);
   var import_i18n71 = __toESM(require_i18n(), 1);
+  var import_keycodes10 = __toESM(require_keycodes(), 1);
 
   // packages/block-editor/build-module/components/block-mover/mover-description.mjs
   var import_i18n70 = __toESM(require_i18n(), 1);
@@ -34556,7 +34557,8 @@ var wp;
             ...props,
             onClick: isDisabled ? null : onClick,
             disabled: isDisabled,
-            accessibleWhenDisabled: true
+            accessibleWhenDisabled: true,
+            shortcut: direction === "up" ? import_keycodes10.displayShortcut.secondary("t") : import_keycodes10.displayShortcut.secondary("y")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(import_components77.VisuallyHidden, { id: descriptionId, children: getBlockMoverDescription(
@@ -35343,7 +35345,7 @@ var wp;
   var import_i18n77 = __toESM(require_i18n(), 1);
   var import_blocks56 = __toESM(require_blocks(), 1);
   var import_data94 = __toESM(require_data(), 1);
-  var import_keycodes10 = __toESM(require_keycodes(), 1);
+  var import_keycodes11 = __toESM(require_keycodes(), 1);
 
   // packages/block-editor/build-module/components/convert-to-group-buttons/use-convert-to-group-button-props.mjs
   var import_blocks54 = __toESM(require_blocks(), 1);
@@ -35513,7 +35515,7 @@ var wp;
       isGroupable2 && /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
         import_components88.MenuItem,
         {
-          shortcut: selectedBlockClientIds.length > 1 ? import_keycodes10.displayShortcut.primary("g") : void 0,
+          shortcut: selectedBlockClientIds.length > 1 ? import_keycodes11.displayShortcut.primary("g") : void 0,
           onClick: () => {
             onConvertToGroup();
             onClose();
@@ -36580,7 +36582,7 @@ var wp;
   var import_deprecated12 = __toESM(require_deprecated(), 1);
   var import_dom28 = __toESM(require_dom(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes11 = __toESM(require_keycodes(), 1);
+  var import_keycodes12 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
   function hasOnlyToolbarItem(elements) {
     const dataProp = "toolbarItem";
@@ -36692,7 +36694,7 @@ var wp;
       if (focusEditorOnEscape) {
         const handleKeyDown = (event) => {
           const lastFocus2 = getLastFocus2();
-          if (event.keyCode === import_keycodes11.ESCAPE && lastFocus2?.current) {
+          if (event.keyCode === import_keycodes12.ESCAPE && lastFocus2?.current) {
             event.preventDefault();
             lastFocus2.current.focus();
           }
@@ -41114,7 +41116,7 @@ var wp;
   // packages/block-editor/build-module/components/color-style-selector/index.mjs
   var import_components119 = __toESM(require_components(), 1);
   var import_i18n102 = __toESM(require_i18n(), 1);
-  var import_keycodes12 = __toESM(require_keycodes(), 1);
+  var import_keycodes13 = __toESM(require_keycodes(), 1);
   var import_deprecated13 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
   var ColorSelectorSVGIcon = () => /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(import_components119.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", children: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(import_components119.Path, { d: "M7.434 5l3.18 9.16H8.538l-.692-2.184H4.628l-.705 2.184H2L5.18 5h2.254zm-1.13 1.904h-.115l-1.148 3.593H7.44L6.304 6.904zM14.348 7.006c1.853 0 2.9.876 2.9 2.374v4.78h-1.79v-.914h-.114c-.362.64-1.123 1.022-2.031 1.022-1.346 0-2.292-.826-2.292-2.108 0-1.27.972-2.006 2.71-2.107l1.696-.102V9.38c0-.584-.42-.914-1.18-.914-.667 0-1.112.228-1.264.647h-1.701c.12-1.295 1.307-2.107 3.066-2.107zm1.079 4.1l-1.416.09c-.793.056-1.18.342-1.18.844 0 .52.45.837 1.091.837.857 0 1.505-.545 1.505-1.256v-.515z" }) });
@@ -41130,7 +41132,7 @@ var wp;
   };
   var renderToggleComponent = ({ TextColor, BackgroundColor }) => function ToggleComponent({ onToggle, isOpen }) {
     const openOnArrowDown = (event) => {
-      if (!isOpen && event.keyCode === import_keycodes12.DOWN) {
+      if (!isOpen && event.keyCode === import_keycodes13.DOWN) {
         event.preventDefault();
         onToggle();
       }
@@ -41294,7 +41296,7 @@ var wp;
   var import_element136 = __toESM(require_element(), 1);
   var import_data127 = __toESM(require_data(), 1);
   var import_i18n106 = __toESM(require_i18n(), 1);
-  var import_keycodes14 = __toESM(require_keycodes(), 1);
+  var import_keycodes15 = __toESM(require_keycodes(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_a11y14 = __toESM(require_a11y(), 1);
@@ -41373,7 +41375,7 @@ var wp;
   // packages/block-editor/build-module/components/list-view/block-select-button.mjs
   var import_components121 = __toESM(require_components(), 1);
   var import_element134 = __toESM(require_element(), 1);
-  var import_keycodes13 = __toESM(require_keycodes(), 1);
+  var import_keycodes14 = __toESM(require_keycodes(), 1);
   var import_data126 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/list-view/expander.mjs
@@ -41519,7 +41521,7 @@ var wp;
       onDragStart?.(event);
     };
     function onKeyDown(event) {
-      if (event.keyCode === import_keycodes13.ENTER || event.keyCode === import_keycodes13.SPACE) {
+      if (event.keyCode === import_keycodes14.ENTER || event.keyCode === import_keycodes14.SPACE) {
         onClick(event);
       }
     }
@@ -41887,7 +41889,7 @@ var wp;
       if (event.target.closest("[role=dialog]")) {
         return;
       }
-      const isDeleteKey = [import_keycodes14.BACKSPACE, import_keycodes14.DELETE].includes(event.keyCode);
+      const isDeleteKey = [import_keycodes15.BACKSPACE, import_keycodes15.DELETE].includes(event.keyCode);
       if (isMatch("core/block-editor/unselect", event) && selectedClientIds.length > 0) {
         event.stopPropagation();
         event.preventDefault();
@@ -42681,7 +42683,7 @@ var wp;
   var import_i18n108 = __toESM(require_i18n(), 1);
   var import_data129 = __toESM(require_data(), 1);
   var import_element139 = __toESM(require_element(), 1);
-  var import_keycodes15 = __toESM(require_keycodes(), 1);
+  var import_keycodes16 = __toESM(require_keycodes(), 1);
   var import_blocks79 = __toESM(require_blocks(), 1);
   function useBlockSelection() {
     const { clearSelectedBlock: clearSelectedBlock2, multiSelect: multiSelect2, selectBlock: selectBlock2 } = (0, import_data129.useDispatch)(store);
@@ -42696,13 +42698,13 @@ var wp;
     const { getBlockType: getBlockType27 } = (0, import_data129.useSelect)(import_blocks79.store);
     const updateBlockSelection = (0, import_element139.useCallback)(
       async (event, clientId, destinationClientId, focusPosition) => {
-        if (!event?.shiftKey && event?.keyCode !== import_keycodes15.ESCAPE) {
+        if (!event?.shiftKey && event?.keyCode !== import_keycodes16.ESCAPE) {
           selectBlock2(clientId, focusPosition);
           return;
         }
         event.preventDefault();
-        const isOnlyDeselection = event.type === "keydown" && event.keyCode === import_keycodes15.ESCAPE;
-        const isKeyPress = event.type === "keydown" && (event.keyCode === import_keycodes15.UP || event.keyCode === import_keycodes15.DOWN || event.keyCode === import_keycodes15.HOME || event.keyCode === import_keycodes15.END);
+        const isOnlyDeselection = event.type === "keydown" && event.keyCode === import_keycodes16.ESCAPE;
+        const isKeyPress = event.type === "keydown" && (event.keyCode === import_keycodes16.UP || event.keyCode === import_keycodes16.DOWN || event.keyCode === import_keycodes16.HOME || event.keyCode === import_keycodes16.END);
         if (!isKeyPress && !hasSelectedBlock2() && !hasMultiSelection2()) {
           selectBlock2(clientId, null);
           return;
@@ -42739,7 +42741,7 @@ var wp;
           await multiSelect2(start2, end, null);
         }
         const updatedSelectedBlocks = getSelectedBlockClientIds2();
-        if ((event.keyCode === import_keycodes15.HOME || event.keyCode === import_keycodes15.END) && updatedSelectedBlocks.length > 1) {
+        if ((event.keyCode === import_keycodes16.HOME || event.keyCode === import_keycodes16.END) && updatedSelectedBlocks.length > 1) {
           return;
         }
         const selectionDiff = selectedBlocks.filter(
@@ -45553,7 +45555,7 @@ var wp;
   // packages/block-editor/build-module/components/duotone-control/index.mjs
   var import_components144 = __toESM(require_components(), 1);
   var import_i18n126 = __toESM(require_i18n(), 1);
-  var import_keycodes16 = __toESM(require_keycodes(), 1);
+  var import_keycodes17 = __toESM(require_keycodes(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
   function DuotoneControl({
@@ -45585,7 +45587,7 @@ var wp;
         },
         renderToggle: ({ isOpen, onToggle }) => {
           const openOnArrowDown = (event) => {
-            if (!isOpen && event.keyCode === import_keycodes16.DOWN) {
+            if (!isOpen && event.keyCode === import_keycodes17.DOWN) {
               event.preventDefault();
               onToggle();
             }
@@ -48966,7 +48968,7 @@ var wp;
   var import_element171 = __toESM(require_element(), 1);
   var import_compose85 = __toESM(require_compose(), 1);
   var import_dom36 = __toESM(require_dom(), 1);
-  var import_keycodes17 = __toESM(require_keycodes(), 1);
+  var import_keycodes18 = __toESM(require_keycodes(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_data146 = __toESM(require_data(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
@@ -50154,7 +50156,7 @@ var wp;
     };
     const handleSubmitWithEnter = (event) => {
       const { keyCode } = event;
-      if (keyCode === import_keycodes17.ENTER && !currentInputIsEmpty) {
+      if (keyCode === import_keycodes18.ENTER && !currentInputIsEmpty) {
         event.preventDefault();
         handleSubmit();
       }
@@ -50518,7 +50520,7 @@ var wp;
   var import_a11y18 = __toESM(require_a11y(), 1);
   var import_components172 = __toESM(require_components(), 1);
   var import_data147 = __toESM(require_data(), 1);
-  var import_keycodes18 = __toESM(require_keycodes(), 1);
+  var import_keycodes19 = __toESM(require_keycodes(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
   var import_dom37 = __toESM(require_dom(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
@@ -50643,7 +50645,7 @@ var wp;
       });
     };
     const openOnArrowDown = (event) => {
-      if (event.keyCode === import_keycodes18.DOWN) {
+      if (event.keyCode === import_keycodes19.DOWN) {
         event.preventDefault();
         event.target.click();
       }
@@ -50869,7 +50871,7 @@ var wp;
   // packages/block-editor/build-module/components/url-input/index.mjs
   var import_i18n160 = __toESM(require_i18n(), 1);
   var import_element173 = __toESM(require_element(), 1);
-  var import_keycodes19 = __toESM(require_keycodes(), 1);
+  var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_components175 = __toESM(require_components(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
   var import_data148 = __toESM(require_data(), 1);
@@ -51032,7 +51034,7 @@ var wp;
         switch (event.keyCode) {
           // When UP is pressed, if the caret is at the start of the text, move it to the 0
           // position.
-          case import_keycodes19.UP: {
+          case import_keycodes20.UP: {
             if (0 !== event.target.selectionStart) {
               event.preventDefault();
               event.target.setSelectionRange(0, 0);
@@ -51041,7 +51043,7 @@ var wp;
           }
           // When DOWN is pressed, if the caret is not at the end of the text, move it to the
           // last position.
-          case import_keycodes19.DOWN: {
+          case import_keycodes20.DOWN: {
             if (this.props.value.length !== event.target.selectionStart) {
               event.preventDefault();
               event.target.setSelectionRange(
@@ -51052,7 +51054,7 @@ var wp;
             break;
           }
           // Submitting while loading should trigger onSubmit.
-          case import_keycodes19.ENTER: {
+          case import_keycodes20.ENTER: {
             if (this.props.onSubmit) {
               event.preventDefault();
               this.props.onSubmit(null, event);
@@ -51064,7 +51066,7 @@ var wp;
       }
       const suggestion = this.state.suggestions[this.state.selectedSuggestion];
       switch (event.keyCode) {
-        case import_keycodes19.UP: {
+        case import_keycodes20.UP: {
           event.preventDefault();
           const previousIndex = !selectedSuggestion ? suggestions.length - 1 : selectedSuggestion - 1;
           this.setState({
@@ -51072,7 +51074,7 @@ var wp;
           });
           break;
         }
-        case import_keycodes19.DOWN: {
+        case import_keycodes20.DOWN: {
           event.preventDefault();
           const nextIndex = selectedSuggestion === null || selectedSuggestion === suggestions.length - 1 ? 0 : selectedSuggestion + 1;
           this.setState({
@@ -51080,14 +51082,14 @@ var wp;
           });
           break;
         }
-        case import_keycodes19.TAB: {
+        case import_keycodes20.TAB: {
           if (this.state.selectedSuggestion !== null) {
             this.selectLink(suggestion);
             this.props.speak((0, import_i18n160.__)("Link selected."));
           }
           break;
         }
-        case import_keycodes19.ENTER: {
+        case import_keycodes20.ENTER: {
           event.preventDefault();
           if (this.state.selectedSuggestion !== null) {
             this.selectLink(suggestion);
@@ -52250,10 +52252,10 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/remove-browser-shortcuts.mjs
-  var import_keycodes20 = __toESM(require_keycodes(), 1);
+  var import_keycodes21 = __toESM(require_keycodes(), 1);
   var remove_browser_shortcuts_default = () => (node) => {
     function onKeydown(event) {
-      if (import_keycodes20.isKeyboardEvent.primary(event, "z") || import_keycodes20.isKeyboardEvent.primary(event, "y") || import_keycodes20.isKeyboardEvent.primaryShift(event, "z")) {
+      if (import_keycodes21.isKeyboardEvent.primary(event, "z") || import_keycodes21.isKeyboardEvent.primary(event, "y") || import_keycodes21.isKeyboardEvent.primaryShift(event, "z")) {
         event.preventDefault();
       }
     }
@@ -52292,14 +52294,14 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/undo-automatic-change.mjs
-  var import_keycodes21 = __toESM(require_keycodes(), 1);
+  var import_keycodes22 = __toESM(require_keycodes(), 1);
   var undo_automatic_change_default = (props) => (element) => {
     function onKeyDown(event) {
       const { keyCode } = event;
       if (event.defaultPrevented) {
         return;
       }
-      if (keyCode !== import_keycodes21.BACKSPACE && keyCode !== import_keycodes21.ESCAPE) {
+      if (keyCode !== import_keycodes22.BACKSPACE && keyCode !== import_keycodes22.ESCAPE) {
         return;
       }
       const { registry } = props.current;
@@ -52441,7 +52443,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/delete.mjs
-  var import_keycodes22 = __toESM(require_keycodes(), 1);
+  var import_keycodes23 = __toESM(require_keycodes(), 1);
   var import_rich_text9 = __toESM(require_rich_text(), 1);
   var delete_default = (props) => (element) => {
     function onKeyDown(event) {
@@ -52450,9 +52452,9 @@ var wp;
         return;
       }
       const { value, onMerge, onRemove } = props.current;
-      if (keyCode === import_keycodes22.DELETE || keyCode === import_keycodes22.BACKSPACE) {
+      if (keyCode === import_keycodes23.DELETE || keyCode === import_keycodes23.BACKSPACE) {
         const { start: start2, end, text } = value;
-        const isReverse = keyCode === import_keycodes22.BACKSPACE;
+        const isReverse = keyCode === import_keycodes23.BACKSPACE;
         const hasActiveFormats = value.activeFormats && !!value.activeFormats.length;
         if (!(0, import_rich_text9.isCollapsed)(value) || hasActiveFormats || isReverse && start2 !== 0 || !isReverse && end !== text.length) {
           return;
@@ -52472,11 +52474,11 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/enter.mjs
-  var import_keycodes23 = __toESM(require_keycodes(), 1);
+  var import_keycodes24 = __toESM(require_keycodes(), 1);
   var import_rich_text10 = __toESM(require_rich_text(), 1);
   var enter_default = (props) => (element) => {
     function onKeyDownDeprecated(event) {
-      if (event.keyCode !== import_keycodes23.ENTER) {
+      if (event.keyCode !== import_keycodes24.ENTER) {
         return;
       }
       const { onReplace, onSplit } = props.current;
@@ -52491,7 +52493,7 @@ var wp;
       if (event.target !== element) {
         return;
       }
-      if (event.keyCode !== import_keycodes23.ENTER) {
+      if (event.keyCode !== import_keycodes24.ENTER) {
         return;
       }
       const {
@@ -52693,7 +52695,7 @@ var wp;
   var import_element181 = __toESM(require_element(), 1);
   var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_data151 = __toESM(require_data(), 1);
-  var import_keycodes24 = __toESM(require_keycodes(), 1);
+  var import_keycodes25 = __toESM(require_keycodes(), 1);
   var import_rich_text12 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
   function RichTextMultiline({
@@ -52743,7 +52745,7 @@ var wp;
           },
           isSelected: void 0,
           onKeyDown: (event) => {
-            if (event.keyCode !== import_keycodes24.ENTER) {
+            if (event.keyCode !== import_keycodes25.ENTER) {
               return;
             }
             event.preventDefault();
@@ -52842,7 +52844,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/rich-text/shortcut.mjs
-  var import_keycodes25 = __toESM(require_keycodes(), 1);
+  var import_keycodes26 = __toESM(require_keycodes(), 1);
   var import_element183 = __toESM(require_element(), 1);
   function RichTextShortcut({ character, type, onUse }) {
     const keyboardShortcuts = (0, import_element183.useContext)(keyboardShortcutContext);
@@ -52850,7 +52852,7 @@ var wp;
     onUseRef.current = onUse;
     (0, import_element183.useEffect)(() => {
       function callback(event) {
-        if (import_keycodes25.isKeyboardEvent[type](event, character)) {
+        if (import_keycodes26.isKeyboardEvent[type](event, character)) {
           onUseRef.current();
           event.preventDefault();
         }
@@ -52865,7 +52867,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/toolbar-button.mjs
   var import_components181 = __toESM(require_components(), 1);
-  var import_keycodes26 = __toESM(require_keycodes(), 1);
+  var import_keycodes27 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
   function RichTextToolbarButton({
     name,
@@ -52879,7 +52881,7 @@ var wp;
       fillName += `.${name}`;
     }
     if (shortcutType && shortcutCharacter) {
-      shortcut = import_keycodes26.displayShortcut[shortcutType](shortcutCharacter);
+      shortcut = import_keycodes27.displayShortcut[shortcutType](shortcutCharacter);
     }
     return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_components181.Fill, { name: fillName, children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_components181.ToolbarButton, { ...props, shortcut }) });
   }
@@ -60784,10 +60786,10 @@ var wp;
   var import_compose91 = __toESM(require_compose(), 1);
   var import_dom40 = __toESM(require_dom(), 1);
   var import_data173 = __toESM(require_data(), 1);
-  var import_keycodes27 = __toESM(require_keycodes(), 1);
+  var import_keycodes28 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
   var isIE = window.navigator.userAgent.indexOf("Trident") !== -1;
-  var arrowKeyCodes = /* @__PURE__ */ new Set([import_keycodes27.UP, import_keycodes27.DOWN, import_keycodes27.LEFT, import_keycodes27.RIGHT]);
+  var arrowKeyCodes = /* @__PURE__ */ new Set([import_keycodes28.UP, import_keycodes28.DOWN, import_keycodes28.LEFT, import_keycodes28.RIGHT]);
   var initialTriggerPercentage = 0.75;
   function useTypewriter() {
     const hasSelectedBlock2 = (0, import_data173.useSelect)(
