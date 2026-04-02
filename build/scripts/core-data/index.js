@@ -421,9 +421,9 @@ var wp;
     SelectionType: () => SelectionType,
     __experimentalFetchLinkSuggestions: () => fetchLinkSuggestions,
     __experimentalFetchUrlData: () => experimental_fetch_url_data_default,
-    __experimentalUseEntityRecord: () => __experimentalUseEntityRecord,
-    __experimentalUseEntityRecords: () => __experimentalUseEntityRecords,
-    __experimentalUseResourcePermissions: () => __experimentalUseResourcePermissions,
+    __experimentalUseEntityRecord: () => useDeprecatedEntityRecord,
+    __experimentalUseEntityRecords: () => useDeprecatedEntityRecords,
+    __experimentalUseResourcePermissions: () => useDeprecatedResourcePermissions,
     fetchBlockPatterns: () => fetchBlockPatterns,
     privateApis: () => privateApis,
     store: () => store,
@@ -7181,7 +7181,7 @@ var wp;
       ...mutations
     };
   }
-  function __experimentalUseEntityRecord(kind, name, recordId, options) {
+  function useDeprecatedEntityRecord(kind, name, recordId, options) {
     (0, import_deprecated4.default)(`wp.data.__experimentalUseEntityRecord`, {
       alternative: "wp.data.useEntityRecord",
       since: "6.1"
@@ -7239,7 +7239,7 @@ var wp;
       ...rest
     };
   }
-  function __experimentalUseEntityRecords(kind, name, queryArgs, options) {
+  function useDeprecatedEntityRecords(kind, name, queryArgs, options) {
     (0, import_deprecated5.default)(`wp.data.__experimentalUseEntityRecords`, {
       alternative: "wp.data.useEntityRecords",
       since: "6.1"
@@ -7359,7 +7359,7 @@ var wp;
     );
   }
   var use_resource_permissions_default = useResourcePermissions;
-  function __experimentalUseResourcePermissions(resource, id) {
+  function useDeprecatedResourcePermissions(resource, id) {
     (0, import_deprecated6.default)(`wp.data.__experimentalUseResourcePermissions`, {
       alternative: "wp.data.useResourcePermissions",
       since: "6.1"

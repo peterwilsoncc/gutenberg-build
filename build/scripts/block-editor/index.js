@@ -6956,7 +6956,7 @@ var wp;
     __unstableEditorStyles: () => editor_styles_default,
     __unstableIframe: () => iframe_default,
     __unstableInserterMenuExtension: () => inserter_menu_extension_default,
-    __unstableRichTextInputEvent: () => __unstableRichTextInputEvent,
+    __unstableRichTextInputEvent: () => RichTextInputEvent,
     __unstableUseBlockSelectionClearer: () => useBlockSelectionClearer,
     __unstableUseClipboardHandler: () => __unstableUseClipboardHandler,
     __unstableUseMouseMoveTypingReset: () => useMouseMoveTypingReset,
@@ -18344,7 +18344,9 @@ var wp;
   var import_i18n24 = __toESM(require_i18n(), 1);
   var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
   var warning = /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(warning_default, { className: "block-editor-block-list__block-crash-warning", children: (0, import_i18n24.__)("This block has encountered an error and cannot be previewed.") });
-  var block_crash_warning_default = () => warning;
+  function BlockCrashWarning() {
+    return warning;
+  }
 
   // packages/block-editor/build-module/components/block-list/block-crash-boundary.mjs
   var import_element25 = __toESM(require_element(), 1);
@@ -22831,7 +22833,7 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
           block_crash_boundary_default,
           {
-            fallback: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Block, { className: "has-warning", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(block_crash_warning_default, {}) }),
+            fallback: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Block, { className: "has-warning", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(BlockCrashWarning, {}) }),
             children: block
           }
         )
@@ -52888,7 +52890,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/input-event.mjs
   var import_element184 = __toESM(require_element(), 1);
-  function __unstableRichTextInputEvent({ inputType, onInput }) {
+  function RichTextInputEvent({ inputType, onInput }) {
     const callbacks = (0, import_element184.useContext)(inputEventContext);
     const onInputRef = (0, import_element184.useRef)();
     onInputRef.current = onInput;

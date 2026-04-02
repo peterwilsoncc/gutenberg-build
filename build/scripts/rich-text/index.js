@@ -109,7 +109,7 @@ var wp;
     __experimentalRichText: () => __experimentalRichText,
     __unstableCreateElement: () => createElement,
     __unstableToDom: () => toDom,
-    __unstableUseRichText: () => __unstableUseRichText,
+    __unstableUseRichText: () => useDeprecatedRichText,
     applyFormat: () => applyFormat,
     concat: () => concat,
     create: () => create,
@@ -2734,7 +2734,7 @@ var wp;
     });
     return { ...result, formatTypes: formatTypes2 };
   }
-  function __unstableUseRichText(props) {
+  function useDeprecatedRichText(props) {
     (0, import_deprecated.default)("`__unstableUseRichText` hook", {
       since: "7.0"
     });
