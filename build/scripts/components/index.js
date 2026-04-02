@@ -55364,8 +55364,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element242 = __toESM(require_element(), 1);
   function isLocaleRTL(localeCode) {
     const localeObj = new Intl.Locale(localeCode);
-    if ("getTextInfo" in localeObj) {
-      return localeObj.getTextInfo().direction === "rtl";
+    const direction = localeObj.getTextInfo?.().direction;
+    if (direction) {
+      return direction === "rtl";
     }
     return [
       "ar",
