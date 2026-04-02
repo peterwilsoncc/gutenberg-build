@@ -790,6 +790,27 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/rich-text
+  var require_rich_text = __commonJS({
+    "package-external:@wordpress/rich-text"(exports, module) {
+      module.exports = window.wp.richText;
+    }
+  });
+
+  // package-external:@wordpress/a11y
+  var require_a11y = __commonJS({
+    "package-external:@wordpress/a11y"(exports, module) {
+      module.exports = window.wp.a11y;
+    }
+  });
+
+  // package-external:@wordpress/keycodes
+  var require_keycodes = __commonJS({
+    "package-external:@wordpress/keycodes"(exports, module) {
+      module.exports = window.wp.keycodes;
+    }
+  });
+
   // node_modules/remove-accents/index.js
   var require_remove_accents = __commonJS({
     "node_modules/remove-accents/index.js"(exports, module) {
@@ -1269,27 +1290,6 @@ var wp;
       module.exports = removeAccents5;
       module.exports.has = hasAccents;
       module.exports.remove = removeAccents5;
-    }
-  });
-
-  // package-external:@wordpress/rich-text
-  var require_rich_text = __commonJS({
-    "package-external:@wordpress/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
-    }
-  });
-
-  // package-external:@wordpress/a11y
-  var require_a11y = __commonJS({
-    "package-external:@wordpress/a11y"(exports, module) {
-      module.exports = window.wp.a11y;
-    }
-  });
-
-  // package-external:@wordpress/keycodes
-  var require_keycodes = __commonJS({
-    "package-external:@wordpress/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
     }
   });
 
@@ -27743,7 +27743,6 @@ This message will only show in development mode. It won't appear in production. 
   var angle_picker_control_default = AnglePickerControl;
 
   // packages/components/build-module/autocomplete/index.mjs
-  var import_remove_accents3 = __toESM(require_remove_accents(), 1);
   var import_element52 = __toESM(require_element(), 1);
   var import_compose18 = __toESM(require_compose(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
@@ -29071,6 +29070,51 @@ This message will only show in development mode. It won't appear in production. 
     }, [handler, ref]);
   }
 
+  // packages/components/build-module/autocomplete/get-autocomplete-match.mjs
+  var import_remove_accents3 = __toESM(require_remove_accents(), 1);
+  function getAutocompleteMatch(textContent, completers, filteredOptionsLength, isBackspacing, getTextAfterSelection) {
+    if (!textContent) {
+      return null;
+    }
+    let completer = null;
+    let triggerIndex = -1;
+    for (const currentCompleter of completers) {
+      const currentIndex = textContent.lastIndexOf(currentCompleter.triggerPrefix);
+      if (currentIndex > triggerIndex) {
+        completer = currentCompleter;
+        triggerIndex = currentIndex;
+      }
+    }
+    if (!completer) {
+      return null;
+    }
+    const {
+      allowContext,
+      triggerPrefix
+    } = completer;
+    const textWithoutTrigger = textContent.slice(triggerIndex + triggerPrefix.length);
+    if (textWithoutTrigger.length > 50) {
+      return null;
+    }
+    const mismatch = filteredOptionsLength === 0;
+    const wordsFromTrigger = textWithoutTrigger.split(/\s/);
+    const hasOneTriggerWord = wordsFromTrigger.length === 1;
+    const matchingWhileBackspacing = isBackspacing && wordsFromTrigger.length <= 3;
+    if (mismatch && !(matchingWhileBackspacing || hasOneTriggerWord)) {
+      return null;
+    }
+    if (allowContext && !allowContext(textContent.slice(0, triggerIndex), getTextAfterSelection())) {
+      return null;
+    }
+    if (/^\s/.test(textWithoutTrigger) || /\s\s+$/.test(textWithoutTrigger)) {
+      return null;
+    }
+    return {
+      completer,
+      filterValue: (0, import_remove_accents3.default)(textWithoutTrigger)
+    };
+  }
+
   // packages/components/build-module/utils/get-node-text.mjs
   var getNodeText = (node2) => {
     if (node2 === null) {
@@ -29213,69 +29257,23 @@ This message will only show in development mode. It won't appear in production. 
       return "";
     }, [record]);
     (0, import_element52.useEffect)(() => {
-      if (!textContent) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
+      function getTextAfterSelection() {
+        return textContent ? (0, import_rich_text2.getTextContent)((0, import_rich_text2.slice)(record, void 0, (0, import_rich_text2.getTextContent)(record).length)) : "";
       }
-      const completer = completers.reduce((lastTrigger, currentCompleter) => {
-        const triggerIndex2 = textContent.lastIndexOf(currentCompleter.triggerPrefix);
-        const lastTriggerIndex = lastTrigger !== null ? textContent.lastIndexOf(lastTrigger.triggerPrefix) : -1;
-        return triggerIndex2 > lastTriggerIndex ? currentCompleter : lastTrigger;
-      }, null);
-      if (!completer) {
+      const match4 = getAutocompleteMatch(textContent, completers, filteredOptions.length, backspacingRef.current, getTextAfterSelection);
+      if (!match4) {
         if (autocompleter) {
           reset();
         }
         return;
       }
       const {
-        allowContext,
-        triggerPrefix
-      } = completer;
-      const triggerIndex = textContent.lastIndexOf(triggerPrefix);
-      const textWithoutTrigger = textContent.slice(triggerIndex + triggerPrefix.length);
-      const tooDistantFromTrigger = textWithoutTrigger.length > 50;
-      if (tooDistantFromTrigger) {
-        return;
-      }
-      const mismatch = filteredOptions.length === 0;
-      const wordsFromTrigger = textWithoutTrigger.split(/\s/);
-      const hasOneTriggerWord = wordsFromTrigger.length === 1;
-      const matchingWhileBackspacing = backspacingRef.current && wordsFromTrigger.length <= 3;
-      if (mismatch && !(matchingWhileBackspacing || hasOneTriggerWord)) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
-      }
-      const textAfterSelection = (0, import_rich_text2.getTextContent)((0, import_rich_text2.slice)(record, void 0, (0, import_rich_text2.getTextContent)(record).length));
-      if (allowContext && !allowContext(textContent.slice(0, triggerIndex), textAfterSelection)) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
-      }
-      if (/^\s/.test(textWithoutTrigger) || /\s\s+$/.test(textWithoutTrigger)) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
-      }
-      if (!/[\u0000-\uFFFF]*$/.test(textWithoutTrigger)) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
-      }
-      const safeTrigger = escapeRegExp(completer.triggerPrefix);
-      const text = (0, import_remove_accents3.default)(textContent);
-      const match4 = text.slice(text.lastIndexOf(completer.triggerPrefix)).match(new RegExp(`${safeTrigger}([\0-\uFFFF]*)$`));
-      const query = match4 && match4[1];
+        completer,
+        filterValue: query
+      } = match4;
       setAutocompleter(completer);
       setAutocompleterUI(() => completer !== autocompleter ? getAutoCompleterUI(completer) : AutocompleterUI);
-      setFilterValue(query === null ? "" : query);
+      setFilterValue(query);
     }, [textContent]);
     const {
       key: selectedKey = ""
