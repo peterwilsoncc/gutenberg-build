@@ -700,7 +700,8 @@ var wp;
 
   // packages/core-data/build-module/queried-data/selectors.mjs
   var queriedItemsCacheByState = /* @__PURE__ */ new WeakMap();
-  function getQueriedItemsUncached(state, query) {
+  function getQueriedItemsUncached(state, query, options = {}) {
+    const { supportsPagination = true } = options;
     const {
       stableKey,
       page,
@@ -714,9 +715,10 @@ var wp;
     if (!itemIds) {
       return null;
     }
-    const startOffset = perPage === -1 ? 0 : queryOffset ?? (page - 1) * perPage;
-    const endOffset = perPage === -1 ? itemIds.length : Math.min(startOffset + perPage, itemIds.length);
-    if (perPage !== -1 && itemIds.length < startOffset + perPage) {
+    const isPaginated = supportsPagination && perPage !== -1;
+    const startOffset = isPaginated ? queryOffset ?? (page - 1) * perPage : 0;
+    const endOffset = isPaginated ? Math.min(startOffset + perPage, itemIds.length) : itemIds.length;
+    if (isPaginated && itemIds.length < startOffset + perPage) {
       const totalItems = state.queries[context][stableKey].meta?.totalItems;
       if (Number.isFinite(totalItems) && itemIds.length < totalItems) {
         return null;
@@ -756,21 +758,23 @@ var wp;
     }
     return items2;
   }
-  var getQueriedItems = (0, import_data.createSelector)((state, query = {}) => {
-    let queriedItemsCache = queriedItemsCacheByState.get(state);
-    if (queriedItemsCache) {
-      const queriedItems = queriedItemsCache.get(query);
-      if (queriedItems !== void 0) {
-        return queriedItems;
+  var getQueriedItems = (0, import_data.createSelector)(
+    (state, query = {}, options = {}) => {
+      let queriedItemsCache = queriedItemsCacheByState.get(state);
+      if (queriedItemsCache) {
+        const queriedItems = queriedItemsCache.get(query);
+        if (queriedItems !== void 0) {
+          return queriedItems;
+        }
+      } else {
+        queriedItemsCache = new import_equivalent_key_map.default();
+        queriedItemsCacheByState.set(state, queriedItemsCache);
       }
-    } else {
-      queriedItemsCache = new import_equivalent_key_map.default();
-      queriedItemsCacheByState.set(state, queriedItemsCache);
+      const items2 = getQueriedItemsUncached(state, query, options);
+      queriedItemsCache.set(query, items2);
+      return items2;
     }
-    const items2 = getQueriedItemsUncached(state, query);
-    queriedItemsCache.set(query, items2);
-    return items2;
-  });
+  );
   function getQueriedTotalItems(state, query = {}) {
     const { stableKey, context } = get_query_parts_default(query);
     return state.queries?.[context]?.[stableKey]?.meta?.totalItems ?? null;
@@ -2770,7 +2774,8 @@ var wp;
       },
       // The entity doesn't support selecting multiple records.
       // The property is maintained for backward compatibility.
-      plural: "__unstableBases"
+      plural: "__unstableBases",
+      supportsPagination: false
     },
     {
       label: (0, import_i18n.__)("Post Type"),
@@ -2779,7 +2784,8 @@ var wp;
       key: "slug",
       baseURL: "/wp/v2/types",
       baseURLParams: { context: "edit" },
-      plural: "postTypes"
+      plural: "postTypes",
+      supportsPagination: false
     },
     {
       name: "media",
@@ -2798,7 +2804,8 @@ var wp;
       baseURL: "/wp/v2/taxonomies",
       baseURLParams: { context: "edit" },
       plural: "taxonomies",
-      label: (0, import_i18n.__)("Taxonomy")
+      label: (0, import_i18n.__)("Taxonomy"),
+      supportsPagination: false
     },
     {
       name: "sidebar",
@@ -2807,7 +2814,8 @@ var wp;
       baseURLParams: { context: "edit" },
       plural: "sidebars",
       transientEdits: { blocks: true },
-      label: (0, import_i18n.__)("Widget areas")
+      label: (0, import_i18n.__)("Widget areas"),
+      supportsPagination: false
     },
     {
       name: "widget",
@@ -2816,7 +2824,8 @@ var wp;
       baseURLParams: { context: "edit" },
       plural: "widgets",
       transientEdits: { blocks: true },
-      label: (0, import_i18n.__)("Widgets")
+      label: (0, import_i18n.__)("Widgets"),
+      supportsPagination: false
     },
     {
       name: "widgetType",
@@ -2824,7 +2833,8 @@ var wp;
       baseURL: "/wp/v2/widget-types",
       baseURLParams: { context: "edit" },
       plural: "widgetTypes",
-      label: (0, import_i18n.__)("Widget types")
+      label: (0, import_i18n.__)("Widget types"),
+      supportsPagination: false
     },
     {
       label: (0, import_i18n.__)("User"),
@@ -2871,7 +2881,8 @@ var wp;
       baseURLParams: { context: "edit" },
       plural: "menuLocations",
       label: (0, import_i18n.__)("Menu Location"),
-      key: "name"
+      key: "name",
+      supportsPagination: false
     },
     {
       label: (0, import_i18n.__)("Global Styles"),
@@ -2892,7 +2903,8 @@ var wp;
       baseURL: "/wp/v2/themes",
       baseURLParams: { context: "edit" },
       plural: "themes",
-      key: "stylesheet"
+      key: "stylesheet",
+      supportsPagination: false
     },
     {
       label: (0, import_i18n.__)("Plugins"),
@@ -2901,7 +2913,8 @@ var wp;
       baseURL: "/wp/v2/plugins",
       baseURLParams: { context: "edit" },
       plural: "plugins",
-      key: "plugin"
+      key: "plugin",
+      supportsPagination: false
     },
     {
       label: (0, import_i18n.__)("Status"),
@@ -2910,14 +2923,16 @@ var wp;
       baseURL: "/wp/v2/statuses",
       baseURLParams: { context: "edit" },
       plural: "statuses",
-      key: "slug"
+      key: "slug",
+      supportsPagination: false
     },
     {
       label: (0, import_i18n.__)("Registered Templates"),
       name: "registeredTemplate",
       kind: "root",
       baseURL: "/wp/v2/registered-templates",
-      key: "id"
+      key: "id",
+      supportsPagination: false
     },
     {
       label: (0, import_i18n.__)("Font Collections"),
@@ -2936,7 +2951,8 @@ var wp;
       baseURL: "/wp/v2/icons",
       baseURLParams: { context: "view" },
       plural: "icons",
-      key: "name"
+      key: "name",
+      supportsPagination: false
     }
   ].map((entity2) => {
     const syncEnabledRootEntities = /* @__PURE__ */ new Set(["comment"]);
@@ -3116,6 +3132,7 @@ var wp;
       kind: "root",
       key: false,
       baseURL: "/wp/v2/settings",
+      supportsPagination: false,
       meta: {}
     };
     const site = await (0, import_api_fetch.default)({
@@ -4241,7 +4258,9 @@ var wp;
     if (!queriedState) {
       return null;
     }
-    return getQueriedItems(queriedState, query);
+    return getQueriedItems(queriedState, query, {
+      supportsPagination: !!getEntityConfig(state, kind, name)?.supportsPagination
+    });
   });
   var getEntityRecordsTotalItems = (state, kind, name, query) => {
     logEntityDeprecation(kind, name, "getEntityRecordsTotalItems");
@@ -4257,7 +4276,7 @@ var wp;
     if (!queriedState) {
       return null;
     }
-    if (query?.per_page === -1) {
+    if (!getEntityConfig(state, kind, name)?.supportsPagination || query?.per_page === -1) {
       return 1;
     }
     const totalItems = getQueriedTotalItems(queriedState, query);

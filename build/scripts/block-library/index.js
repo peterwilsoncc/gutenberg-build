@@ -29350,9 +29350,7 @@ ${js}
         const { getEntityRecord, getEntityRecords } = select9(import_core_data22.store);
         return {
           selectedIcon: icon4 ? getEntityRecord("root", "icon", icon4) : null,
-          allIcons: isInserterOpen ? getEntityRecords("root", "icon", {
-            per_page: -1
-          }) : void 0
+          allIcons: isInserterOpen ? getEntityRecords("root", "icon") : void 0
         };
       },
       [isInserterOpen, icon4]
