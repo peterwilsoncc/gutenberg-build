@@ -29078,11 +29078,19 @@ This message will only show in development mode. It won't appear in production. 
     }
     let completer = null;
     let triggerIndex = -1;
+    let matchedEndIndex = -1;
+    let matchedPrefixLength = 0;
     for (const currentCompleter of completers) {
       const currentIndex = textContent.lastIndexOf(currentCompleter.triggerPrefix);
-      if (currentIndex > triggerIndex) {
+      if (currentIndex < 0) {
+        continue;
+      }
+      const currentEndIndex = currentIndex + currentCompleter.triggerPrefix.length;
+      if (currentEndIndex > matchedEndIndex || currentEndIndex === matchedEndIndex && currentCompleter.triggerPrefix.length > matchedPrefixLength) {
         completer = currentCompleter;
         triggerIndex = currentIndex;
+        matchedEndIndex = currentEndIndex;
+        matchedPrefixLength = currentCompleter.triggerPrefix.length;
       }
     }
     if (!completer) {
