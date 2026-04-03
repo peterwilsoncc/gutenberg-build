@@ -4743,6 +4743,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   margin-top: 8px;
 }
 
+.editor-autocompleters__link {
+  white-space: nowrap;
+  gap: 8px;
+}
+
 .editor-autocompleters__user .editor-autocompleters__no-avatar::before {
   /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- dashicons don't need a generic family keyword. */
   font: normal 20px/1 dashicons;
