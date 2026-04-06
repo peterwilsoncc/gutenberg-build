@@ -55732,17 +55732,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   function appendRequiredIndicator(label, required, markWhenOptional) {
+    let suffix;
     if (required && !markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, {
-        children: [label, " ", `(${(0, import_i18n82.__)("Required")})`]
-      });
+      suffix = `(${(0, import_i18n82.__)("Required")})`;
+    } else if (!required && markWhenOptional) {
+      suffix = `(${(0, import_i18n82.__)("Optional")})`;
     }
-    if (!required && markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, {
-        children: [label, " ", `(${(0, import_i18n82.__)("Optional")})`]
-      });
+    if (!suffix) {
+      return label;
     }
-    return label;
+    if (typeof label === "string") {
+      return `${label} ${suffix}`;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, {
+      children: [label, " ", suffix]
+    });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
   var className = "components-validated-control";
