@@ -12177,7 +12177,7 @@ var wp;
     if (isWithinSection && getBlockName(state, sectionClientId) === "core/block") {
       return false;
     }
-    if (isWithinSection && (isParentSectionBlock || blockEditingMode === "contentOnly") && !isContainerInsertableToInContentOnlyMode(
+    if (isWithinSection && (isParentSectionBlock || blockEditingMode === "contentOnly" || blockEditingMode === "disabled") && !isContainerInsertableToInContentOnlyMode(
       state,
       blockName,
       rootClientId
