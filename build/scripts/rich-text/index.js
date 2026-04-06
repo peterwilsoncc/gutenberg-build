@@ -2808,6 +2808,9 @@ var wp;
       return;
     }
     const selector = tagName + (className ? "." + className : "");
+    if (!selector) {
+      return;
+    }
     if (!(element instanceof window.HTMLElement)) {
       return;
     }
@@ -2848,16 +2851,10 @@ var wp;
     if (!range || !range.startContainer) {
       return;
     }
-    const formatElement = getFormatElement(
-      range,
-      editableContentElement,
-      tagName,
-      className
-    );
-    if (formatElement) {
-      return formatElement;
+    if (!tagName && !className) {
+      return createVirtualAnchorElement(range, editableContentElement);
     }
-    return createVirtualAnchorElement(range, editableContentElement);
+    return getFormatElement(range, editableContentElement, tagName, className) ?? createVirtualAnchorElement(range, editableContentElement);
   }
   var DEFAULT_SETTINGS = {
     tagName: "",
