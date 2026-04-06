@@ -53593,12 +53593,14 @@ var wp;
   var import_element165 = __toESM(require_element(), 1);
   function useRetryCountdown(connectionStatus) {
     const [secondsRemaining, setSecondsRemaining] = (0, import_element165.useState)();
+    const hasRetriedRef = (0, import_element165.useRef)(false);
     (0, import_element165.useEffect)(() => {
       if (!connectionStatus) {
         return;
       }
       if ("connected" === connectionStatus.status) {
         setSecondsRemaining(void 0);
+        hasRetriedRef.current = false;
         return;
       }
       if ("disconnected" !== connectionStatus.status || !connectionStatus.willAutoRetryInMs) {
@@ -53606,18 +53608,39 @@ var wp;
       }
       const { willAutoRetryInMs: retryInMs } = connectionStatus;
       const retryAt = Date.now() + retryInMs;
-      setSecondsRemaining(Math.ceil(retryInMs / 1e3));
-      const intervalId = setInterval(() => {
-        const remaining = Math.ceil((retryAt - Date.now()) / 1e3);
-        setSecondsRemaining(Math.max(0, remaining));
-        if (remaining <= 0) {
-          clearInterval(intervalId);
+      const hasRetried = hasRetriedRef.current;
+      hasRetriedRef.current = true;
+      if (hasRetried) {
+        setSecondsRemaining(0);
+      }
+      let countdownIntervalId = null;
+      const startCountdown = () => {
+        setSecondsRemaining(Math.ceil((retryAt - Date.now()) / 1e3));
+        countdownIntervalId = setInterval(() => {
+          const remaining = Math.ceil((retryAt - Date.now()) / 1e3);
+          setSecondsRemaining(Math.max(0, remaining));
+          if (remaining <= 0 && countdownIntervalId) {
+            clearInterval(countdownIntervalId);
+          }
+        }, 1e3);
+      };
+      const retryingDelayId = hasRetried ? setTimeout(startCountdown, 500) : null;
+      if (!retryingDelayId) {
+        startCountdown();
+      }
+      return () => {
+        if (retryingDelayId) {
+          clearTimeout(retryingDelayId);
         }
-      }, 1e3);
-      return () => clearInterval(intervalId);
+        if (countdownIntervalId) {
+          clearInterval(countdownIntervalId);
+        }
+      };
     }, [connectionStatus]);
     return {
-      onManualRetry: () => setSecondsRemaining(0),
+      onManualRetry: () => {
+        setSecondsRemaining(0);
+      },
       secondsRemaining
     };
   }
@@ -53627,7 +53650,6 @@ var wp;
   var { BlockCanvasCover: BlockCanvasCover2 } = unlock(import_block_editor79.privateApis);
   var { retrySyncConnection } = unlock(import_core_data115.privateApis);
   var INITIAL_DISCONNECTED_DEBOUNCE_MS = 2e4;
-  var DISCONNECTED_DEBOUNCE_MS = 8e3;
   function DefaultSyncConnectionErrorModal(props) {
     const {
       description,
@@ -53736,7 +53758,6 @@ var wp;
       []
     );
     const { onManualRetry, secondsRemaining } = useRetryCountdown(connectionStatus);
-    const isConnected = "connected" === connectionStatus?.status;
     (0, import_element166.useEffect)(() => {
       const timeout = setTimeout(() => {
         setHasInitialized(true);
@@ -53744,23 +53765,22 @@ var wp;
       return () => clearTimeout(timeout);
     }, []);
     (0, import_element166.useEffect)(() => {
-      if (isConnected) {
+      if ("connected" === connectionStatus?.status) {
         setShowModal(false);
         return;
       }
-      const timeout = setTimeout(() => {
+      if (connectionStatus?.status === "disconnected" && connectionStatus.backgroundRetriesFailed) {
         setShowModal(true);
-      }, DISCONNECTED_DEBOUNCE_MS);
-      return () => clearTimeout(timeout);
-    }, [isConnected]);
+      }
+    }, [connectionStatus]);
     if (!isCollaborationEnabled || !hasInitialized || !showModal) {
       return null;
     }
     const error = connectionStatus && "error" in connectionStatus ? connectionStatus?.error : void 0;
-    const manualRetry = connectionStatus && "canManuallyRetry" in connectionStatus && connectionStatus.canManuallyRetry ? () => {
+    const manualRetry = () => {
       onManualRetry();
       retrySyncConnection();
-    } : void 0;
+    };
     const messages = getSyncErrorMessages(error);
     return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(BlockCanvasCover2.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
       FilteredSyncConnectionErrorModal,
