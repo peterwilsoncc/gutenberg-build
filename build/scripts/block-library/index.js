@@ -61451,10 +61451,6 @@ ${js}
       query: {
         type: "object",
         default: {}
-      },
-      isSearchFieldHidden: {
-        type: "boolean",
-        default: false
       }
     },
     supports: {
@@ -61543,7 +61539,6 @@ ${js}
       buttonText,
       buttonPosition,
       buttonUseIcon,
-      isSearchFieldHidden,
       style: style2
     } = attributes2;
     const wasJustInsertedIntoNavigationBlock = (0, import_data131.useSelect)(
@@ -61598,27 +61593,13 @@ ${js}
     const isButtonPositionOutside = "button-outside" === buttonPosition;
     const hasNoButton = "no-button" === buttonPosition;
     const hasOnlyButton = "button-only" === buttonPosition;
+    const isSearchFieldHidden = hasOnlyButton && !isSelected;
     const searchFieldRef = (0, import_element118.useRef)();
     const buttonRef = (0, import_element118.useRef)();
     const units = (0, import_components146.__experimentalUseCustomUnits)({
       availableUnits: ["%", "px"],
       defaultValues: { "%": PC_WIDTH_DEFAULT, px: PX_WIDTH_DEFAULT }
     });
-    (0, import_element118.useEffect)(() => {
-      if (hasOnlyButton && !isSelected) {
-        setAttributes({
-          isSearchFieldHidden: true
-        });
-      }
-    }, [hasOnlyButton, isSelected, setAttributes]);
-    (0, import_element118.useEffect)(() => {
-      if (!hasOnlyButton || !isSelected) {
-        return;
-      }
-      setAttributes({
-        isSearchFieldHidden: false
-      });
-    }, [hasOnlyButton, isSelected, setAttributes, width]);
     const getBlockClassNames = () => {
       return clsx_default(
         className,
@@ -61628,7 +61609,7 @@ ${js}
         hasOnlyButton ? "wp-block-search__button-only" : void 0,
         !buttonUseIcon && !hasNoButton ? "wp-block-search__text-button" : void 0,
         buttonUseIcon && !hasNoButton ? "wp-block-search__icon-button" : void 0,
-        hasOnlyButton && isSearchFieldHidden ? "wp-block-search__searchfield-hidden" : void 0
+        isSearchFieldHidden ? "wp-block-search__searchfield-hidden" : void 0
       );
     };
     const buttonPositionControls = [
@@ -61709,13 +61690,6 @@ ${js}
           borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
         } : borderProps.style
       };
-      const handleButtonClick = () => {
-        if (hasOnlyButton) {
-          setAttributes({
-            isSearchFieldHidden: !isSearchFieldHidden
-          });
-        }
-      };
       return /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(import_jsx_runtime423.Fragment, { children: [
         buttonUseIcon && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
           "button",
@@ -61724,7 +61698,6 @@ ${js}
             className: buttonClasses,
             style: buttonStyles,
             "aria-label": buttonText ? (0, import_dom10.__unstableStripHTML)(buttonText) : (0, import_i18n222.__)("Search"),
-            onClick: handleButtonClick,
             ref: buttonRef,
             children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(icon_default, { icon: search_default })
           }
@@ -61739,8 +61712,7 @@ ${js}
             placeholder: (0, import_i18n222.__)("Add button text\u2026"),
             withoutInteractiveFormatting: true,
             value: buttonText,
-            onChange: (html) => setAttributes({ buttonText: html }),
-            onClick: handleButtonClick
+            onChange: (html) => setAttributes({ buttonText: html })
           }
         )
       ] });
@@ -61756,8 +61728,7 @@ ${js}
             widthUnit: void 0,
             showLabel: true,
             buttonUseIcon: false,
-            buttonPosition: "button-outside",
-            isSearchFieldHidden: false
+            buttonPosition: "button-outside"
           });
         },
         dropdownMenuProps,
@@ -61792,8 +61763,7 @@ ${js}
               label: (0, import_i18n222.__)("Button position"),
               onDeselect: () => {
                 setAttributes({
-                  buttonPosition: "button-outside",
-                  isSearchFieldHidden: false
+                  buttonPosition: "button-outside"
                 });
               },
               isShownByDefault: true,
@@ -61805,8 +61775,7 @@ ${js}
                   label: (0, import_i18n222.__)("Button position"),
                   onChange: (value) => {
                     setAttributes({
-                      buttonPosition: value,
-                      isSearchFieldHidden: value === "button-only"
+                      buttonPosition: value
                     });
                   },
                   options: buttonPositionControls
