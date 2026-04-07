@@ -18303,12 +18303,14 @@ var wp;
     }
     return matchingVariation;
   }
-  function getIframeSrc(html) {
-    if (!html) {
+  function getBackgroundEmbedHtml(html) {
+    const srcMatch = html?.match(/src=["']([^"']+)["']/);
+    if (!srcMatch) {
       return null;
     }
-    const srcMatch = html.match(/src=["']([^"']+)["']/);
-    return srcMatch ? srcMatch[1] : null;
+    const iframeSrc = srcMatch[1];
+    const backgroundSrc = getBackgroundVideoSrc(iframeSrc);
+    return html.replace(iframeSrc, backgroundSrc);
   }
   function detectProviderFromSrc(src) {
     if (!src) {
@@ -19581,15 +19583,11 @@ var wp;
       },
       [url, backgroundType]
     );
-    const embedSrc = (0, import_element24.useMemo)(() => {
+    const embedHtml = (0, import_element24.useMemo)(() => {
       if (backgroundType !== EMBED_VIDEO_BACKGROUND_TYPE || !embedPreview?.html) {
         return null;
       }
-      const iframeSrc = getIframeSrc(embedPreview.html);
-      if (!iframeSrc) {
-        return null;
-      }
-      return getBackgroundVideoSrc(iframeSrc);
+      return getBackgroundEmbedHtml(embedPreview.html);
     }, [embedPreview, backgroundType]);
     const isUploadingMedia = isTemporaryMedia(id, url);
     const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
@@ -19833,24 +19831,25 @@ var wp;
                 style: mediaStyle
               }
             ),
-            isEmbedVideoBackground && embedSrc && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+            isEmbedVideoBackground && embedHtml && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
               "div",
               {
                 ref: mediaElement,
                 className: "wp-block-cover__video-background wp-block-cover__embed-background",
                 style: mediaStyle,
                 children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                  "iframe",
+                  import_components34.SandBox,
                   {
-                    src: embedSrc,
+                    html: embedHtml,
                     title: "Background video",
-                    frameBorder: "0",
-                    allow: "autoplay; fullscreen"
+                    styles: [
+                      "iframe{position:fixed;top:0;left:0;width:100%;height:100%;}"
+                    ]
                   }
                 )
               }
             ),
-            isEmbedVideoBackground && !embedSrc && isFetchingEmbed && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_components34.Spinner, {}),
+            isEmbedVideoBackground && !embedHtml && isFetchingEmbed && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_components34.Spinner, {}),
             showOverlay && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
               "span",
               {
