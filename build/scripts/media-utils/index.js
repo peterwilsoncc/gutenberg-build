@@ -18955,7 +18955,11 @@ If there's a particular need for this, please submit a feature request at https:
       () => ({
         [LAYOUT_PICKER_GRID2]: {
           fields: [],
-          showTitle: false
+          showTitle: false,
+          layout: {
+            previewSize: 170,
+            density: "compact"
+          }
         },
         [LAYOUT_PICKER_TABLE2]: {
           fields: [
