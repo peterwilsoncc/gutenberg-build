@@ -5277,6 +5277,7 @@ var wp;
                 ),
                 {
                   div: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { "aria-hidden": true }),
+                  // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
                   CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
                     import_components13.SelectControl,
                     {

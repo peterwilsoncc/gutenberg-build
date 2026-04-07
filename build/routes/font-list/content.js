@@ -4688,6 +4688,7 @@ function FontCollection({ slug }) {
                   ),
                   {
                     div: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { "aria-hidden": true }),
+                    // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
                     CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                       import_components27.SelectControl,
                       {
