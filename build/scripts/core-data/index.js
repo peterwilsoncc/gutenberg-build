@@ -7051,9 +7051,6 @@ var wp;
     return memoized;
   }
 
-  // packages/core-data/build-module/hooks/memoize.mjs
-  var memoize_default = memize;
-
   // packages/core-data/build-module/hooks/constants.mjs
   var Status = /* @__PURE__ */ ((Status2) => {
     Status2["Idle"] = "IDLE";
@@ -7077,7 +7074,7 @@ var wp;
       return mapQuerySelect(resolve, registry);
     }, deps);
   }
-  var enrichSelectors = memoize_default(((selectors) => {
+  var enrichSelectors = memize(((selectors) => {
     const resolvers = {};
     for (const selectorName in selectors) {
       if (META_SELECTORS.includes(selectorName)) {
