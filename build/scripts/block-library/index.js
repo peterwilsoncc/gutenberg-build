@@ -19159,6 +19159,10 @@ var wp;
     );
     const { getSettings: getSettings2 } = (0, import_data30.useSelect)(import_block_editor67.store);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data30.useDispatch)(import_block_editor67.store);
+    const propsRef = (0, import_element24.useRef)({ attributes: attributes2, overlayColor });
+    (0, import_element24.useLayoutEffect)(() => {
+      propsRef.current = { attributes: attributes2, overlayColor };
+    });
     const { media } = (0, import_data30.useSelect)(
       (select9) => {
         return {
@@ -19181,21 +19185,22 @@ var wp;
           return;
         }
         const averageBackgroundColor = await getMediaColor(mediaUrl);
-        let newOverlayColor = overlayColor.color;
-        if (!isUserOverlayColor) {
+        const { attributes: currentAttrs, overlayColor: currentOverlay } = propsRef.current;
+        let newOverlayColor = currentOverlay.color;
+        if (!currentAttrs.isUserOverlayColor) {
           newOverlayColor = averageBackgroundColor;
           __unstableMarkNextChangeAsNotPersistent();
           setOverlayColor(newOverlayColor);
         }
         const newIsDark = compositeIsDark(
-          dimRatio,
+          currentAttrs.dimRatio,
           newOverlayColor,
           averageBackgroundColor
         );
         __unstableMarkNextChangeAsNotPersistent();
         setAttributes({
           isDark: newIsDark,
-          isUserOverlayColor: isUserOverlayColor || false
+          isUserOverlayColor: currentAttrs.isUserOverlayColor || false
         });
       })();
     }, [mediaUrl]);
@@ -19214,13 +19219,14 @@ var wp;
       const averageBackgroundColor = await getMediaColor(
         isImage ? newMedia?.url : void 0
       );
-      let newOverlayColor = overlayColor.color;
-      if (!isUserOverlayColor) {
+      const { attributes: currentAttrs, overlayColor: currentOverlay } = propsRef.current;
+      let newOverlayColor = currentOverlay.color;
+      if (!currentAttrs.isUserOverlayColor) {
         newOverlayColor = averageBackgroundColor;
         setOverlayColor(newOverlayColor);
         __unstableMarkNextChangeAsNotPersistent();
       }
-      const newDimRatio = originalUrl === void 0 && dimRatio === 100 ? 50 : dimRatio;
+      const newDimRatio = currentAttrs.url === void 0 && currentAttrs.dimRatio === 100 ? 50 : currentAttrs.dimRatio;
       const newIsDark = compositeIsDark(
         newDimRatio,
         newOverlayColor,
@@ -19244,7 +19250,7 @@ var wp;
         useFeaturedImage: void 0,
         dimRatio: newDimRatio,
         isDark: newIsDark,
-        isUserOverlayColor: isUserOverlayColor || false
+        isUserOverlayColor: currentAttrs.isUserOverlayColor || false
       });
     };
     const onClearMedia = () => {
@@ -19272,8 +19278,9 @@ var wp;
     };
     const onSetOverlayColor = async (newOverlayColor) => {
       const averageBackgroundColor = await getMediaColor(url);
+      const { attributes: currentAttrs } = propsRef.current;
       const newIsDark = compositeIsDark(
-        dimRatio,
+        currentAttrs.dimRatio,
         newOverlayColor,
         averageBackgroundColor
       );
@@ -19286,9 +19293,10 @@ var wp;
     };
     const onUpdateDimRatio = async (newDimRatio) => {
       const averageBackgroundColor = await getMediaColor(url);
+      const { overlayColor: currentOverlay } = propsRef.current;
       const newIsDark = compositeIsDark(
         newDimRatio,
-        overlayColor.color,
+        currentOverlay.color,
         averageBackgroundColor
       );
       setAttributes({
@@ -19397,8 +19405,9 @@ var wp;
     const toggleUseFeaturedImage = async () => {
       const newUseFeaturedImage = !useFeaturedImage;
       const averageBackgroundColor = newUseFeaturedImage ? await getMediaColor(mediaUrl) : DEFAULT_BACKGROUND_COLOR;
-      const newOverlayColor = !isUserOverlayColor ? averageBackgroundColor : overlayColor.color;
-      if (!isUserOverlayColor) {
+      const { attributes: currentAttrs, overlayColor: currentOverlay } = propsRef.current;
+      const newOverlayColor = !currentAttrs.isUserOverlayColor ? averageBackgroundColor : currentOverlay.color;
+      if (!currentAttrs.isUserOverlayColor) {
         if (newUseFeaturedImage) {
           setOverlayColor(newOverlayColor);
         } else {
@@ -19406,7 +19415,7 @@ var wp;
         }
         __unstableMarkNextChangeAsNotPersistent();
       }
-      const newDimRatio = dimRatio === 100 ? 50 : dimRatio;
+      const newDimRatio = currentAttrs.dimRatio === 100 ? 50 : currentAttrs.dimRatio;
       const newIsDark = compositeIsDark(
         newDimRatio,
         newOverlayColor,
