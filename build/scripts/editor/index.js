@@ -10569,8 +10569,15 @@ var wp;
   var import_element12 = __toESM(require_element(), 1);
   var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
   var AVERAGE_READING_RATE = 189;
-  function PostContentInfoView({ item }) {
-    const content = typeof item.content === "string" ? item.content : item.content?.raw || "";
+  function PostContentInfoView({
+    item
+  }) {
+    let content = "";
+    if (typeof item.content === "string") {
+      content = item.content;
+    } else if (typeof item.content === "function") {
+      content = item.content(item);
+    }
     const wordCountType = (0, import_i18n37._x)(
       "words",
       "Word count type. Do not translate!"
