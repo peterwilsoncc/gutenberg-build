@@ -7961,7 +7961,7 @@ var wp;
     for (const clientId of updatedClientIds) {
       let current = updateChildrenOfUpdatedClientIds ? clientId : state.parents.get(clientId);
       do {
-        if (state.controlledInnerBlocks[current]) {
+        if (state.controlledInnerBlocks.has(current)) {
           controlledParents.add(current);
           break;
         } else {
@@ -8205,18 +8205,13 @@ var wp;
         rootClientId: "",
         blocks: action.blocks
       });
-      const preservedControlledInnerBlocks = state?.controlledInnerBlocks ?? {};
+      const preservedControlledInnerBlocks = state?.controlledInnerBlocks ?? /* @__PURE__ */ new Set();
       if (state?.order) {
-        for (const clientId of Object.keys(
-          preservedControlledInnerBlocks
-        )) {
-          if (!preservedControlledInnerBlocks[clientId]) {
-            continue;
-          }
+        for (const clientId of preservedControlledInnerBlocks) {
           if (!newState.byClientId.has(clientId)) {
             continue;
           }
-          newState.controlledInnerBlocks[clientId] = true;
+          newState.controlledInnerBlocks.add(clientId);
           const oldOrder = state.order.get(clientId);
           if (!oldOrder?.length) {
             continue;
@@ -8242,9 +8237,7 @@ var wp;
           oldOrder.forEach((id) => preserveBlock(id, clientId));
         }
       }
-      for (const clientId of Object.keys(
-        newState.controlledInnerBlocks
-      )) {
+      for (const clientId of newState.controlledInnerBlocks) {
         const controlledOrder = newState.order.get(clientId);
         if (!controlledOrder?.length) {
           continue;
@@ -8284,12 +8277,12 @@ var wp;
       return reducer3(state, action);
     }
     const nestedControllers = {};
-    if (Object.keys(state.controlledInnerBlocks).length) {
+    if (state.controlledInnerBlocks.size) {
       const stack = [...action.blocks];
       while (stack.length) {
         const { innerBlocks, ...block } = stack.shift();
         stack.push(...innerBlocks);
-        if (!!state.controlledInnerBlocks[block.clientId]) {
+        if (state.controlledInnerBlocks.has(block.clientId)) {
           nestedControllers[block.clientId] = true;
         }
       }
@@ -8713,12 +8706,20 @@ var wp;
       }
       return state;
     },
-    controlledInnerBlocks(state = {}, { type, clientId, hasControlledInnerBlocks }) {
+    controlledInnerBlocks(state = /* @__PURE__ */ new Set(), { type, clientId, hasControlledInnerBlocks }) {
       if (type === "SET_HAS_CONTROLLED_INNER_BLOCKS") {
-        return {
-          ...state,
-          [clientId]: hasControlledInnerBlocks
-        };
+        if (hasControlledInnerBlocks) {
+          if (state.has(clientId)) {
+            return state;
+          }
+          return new Set(state).add(clientId);
+        }
+        if (!state.has(clientId)) {
+          return state;
+        }
+        const newState = new Set(state);
+        newState.delete(clientId);
+        return newState;
       }
       return state;
     },
@@ -9375,7 +9376,7 @@ var wp;
         ...rootBlock
       };
     }
-    if (!state.blocks.controlledInnerBlocks[clientId]) {
+    if (!state.blocks.controlledInnerBlocks.has(clientId)) {
       return state.blocks.tree.get(clientId);
     }
     const controlledTree = state.blocks.tree.get(`controlled||${clientId}`);
@@ -9423,7 +9424,7 @@ var wp;
     );
     const templatePartClientIds = [];
     const syncedPatternClientIds = [];
-    Object.keys(state.blocks.controlledInnerBlocks).forEach((clientId) => {
+    state.blocks.controlledInnerBlocks.forEach((clientId) => {
       const block = state.blocks.byClientId?.get(clientId);
       if (block?.name === "core/template-part") {
         templatePartClientIds.push(clientId);
@@ -12883,7 +12884,7 @@ var wp;
     return state.highlightedBlock === clientId;
   }
   function areInnerBlocksControlled(state, clientId) {
-    return !!state.blocks.controlledInnerBlocks[clientId];
+    return state.blocks.controlledInnerBlocks.has(clientId);
   }
   var __experimentalGetActiveBlockIdByBlockNames = (0, import_data4.createSelector)(
     (state, validBlockNames) => {
