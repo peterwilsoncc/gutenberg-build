@@ -33442,6 +33442,10 @@ If there's a particular need for this, please submit a feature request at https:
           ...currentField,
           // Deactivate validation for filters.
           isValid: {},
+          // Filter controls are always enabled.
+          isDisabled: () => false,
+          // Filter controls are always visible.
+          isVisible: () => true,
           // Configure getValue/setValue as if Item was a plain object.
           getValue: ({ item }) => item[currentField.id],
           setValue: ({ value }) => ({
@@ -36807,6 +36811,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { getValue, setValue, label, description, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const onChangeControl = (0, import_element110.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
@@ -36822,7 +36827,8 @@ If there's a particular need for this, please submit a feature request at https:
         label,
         help: description,
         checked: getValue({ item: data }),
-        onChange: onChangeControl
+        onChange: onChangeControl,
+        disabled: disabled2
       }
     );
   }
@@ -36905,6 +36911,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
     const { id, label, description, getValue, setValue } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
     const onChangeValue = (0, import_element112.useCallback)(
@@ -36943,7 +36950,8 @@ If there's a particular need for this, please submit a feature request at https:
               min: 1,
               step: 1,
               value: relValue,
-              onChange: onChangeValue
+              onChange: onChangeValue,
+              disabled: disabled2
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
@@ -36955,7 +36963,8 @@ If there's a particular need for this, please submit a feature request at https:
               value: unit,
               options,
               onChange: onChangeUnit,
-              hideLabelFromVision: true
+              hideLabelFromVision: true,
+              disabled: disabled2
             }
           )
         ] })
@@ -36993,6 +37002,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { compact } = config2 || {};
     const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element113.useState)(() => {
@@ -37092,7 +37102,8 @@ If there's a particular need for this, please submit a feature request at https:
               label: (0, import_i18n104.__)("Date time"),
               hideLabelFromVision: true,
               value: formatDateTime(value),
-              onChange: handleManualDateTimeChange
+              onChange: handleManualDateTimeChange,
+              disabled: disabled2
             }
           ),
           !compact && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
@@ -37104,7 +37115,8 @@ If there's a particular need for this, please submit a feature request at https:
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
               timeZone: timezoneString || void 0,
-              weekStartsOn
+              weekStartsOn,
+              disabled: disabled2
             }
           )
         ] })
@@ -37353,6 +37365,7 @@ If there's a particular need for this, please submit a feature request at https:
       isValid: isValid2,
       format: fieldFormat
     } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const [selectedPresetId, setSelectedPresetId] = (0, import_element114.useState)(
       null
     );
@@ -37446,6 +37459,8 @@ If there's a particular need for this, please submit a feature request at https:
                           variant: "tertiary",
                           isPressed: isSelected2,
                           size: "small",
+                          disabled: disabled2,
+                          accessibleWhenDisabled: true,
                           onClick: () => handlePresetClick(preset),
                           children: preset.label
                         },
@@ -37459,8 +37474,8 @@ If there's a particular need for this, please submit a feature request at https:
                         variant: "tertiary",
                         isPressed: !selectedPresetId,
                         size: "small",
-                        disabled: !!selectedPresetId,
-                        accessibleWhenDisabled: false,
+                        disabled: !!selectedPresetId || disabled2,
+                        accessibleWhenDisabled: true,
                         children: (0, import_i18n105.__)("Custom")
                       }
                     )
@@ -37477,7 +37492,8 @@ If there's a particular need for this, please submit a feature request at https:
                   hideLabelFromVision: true,
                   value,
                   onChange: handleManualDateChange,
-                  required: !!field.isValid?.required
+                  required: !!field.isValid?.required,
+                  disabled: disabled2
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
@@ -37489,7 +37505,8 @@ If there's a particular need for this, please submit a feature request at https:
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
                   timeZone: timezoneString || void 0,
-                  weekStartsOn
+                  weekStartsOn,
+                  disabled: disabled2
                 }
               )
             ] })
@@ -37514,6 +37531,7 @@ If there's a particular need for this, please submit a feature request at https:
       setValue,
       format: fieldFormat
     } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     let value;
     const fieldValue = getValue({ item: data });
     if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -37642,6 +37660,8 @@ If there's a particular need for this, please submit a feature request at https:
                           variant: "tertiary",
                           isPressed: isSelected2,
                           size: "small",
+                          disabled: disabled2,
+                          accessibleWhenDisabled: true,
                           onClick: () => handlePresetClick(preset),
                           children: preset.label
                         },
@@ -37655,8 +37675,8 @@ If there's a particular need for this, please submit a feature request at https:
                         variant: "tertiary",
                         isPressed: !selectedPresetId,
                         size: "small",
-                        accessibleWhenDisabled: false,
-                        disabled: !!selectedPresetId,
+                        accessibleWhenDisabled: true,
+                        disabled: !!selectedPresetId || disabled2,
                         children: (0, import_i18n105.__)("Custom")
                       }
                     )
@@ -37681,7 +37701,8 @@ If there's a particular need for this, please submit a feature request at https:
                         hideLabelFromVision: true,
                         value: value?.[0],
                         onChange: (newValue) => handleManualDateChange("from", newValue),
-                        required: !!field.isValid?.required
+                        required: !!field.isValid?.required,
+                        disabled: disabled2
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
@@ -37694,7 +37715,8 @@ If there's a particular need for this, please submit a feature request at https:
                         hideLabelFromVision: true,
                         value: value?.[1],
                         onChange: (newValue) => handleManualDateChange("to", newValue),
-                        required: !!field.isValid?.required
+                        required: !!field.isValid?.required,
+                        disabled: disabled2
                       }
                     )
                   ]
@@ -37709,7 +37731,8 @@ If there's a particular need for this, please submit a feature request at https:
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
                   timeZone: timezone.string || void 0,
-                  weekStartsOn
+                  weekStartsOn,
+                  disabled: disabled2
                 }
               )
             ] })
@@ -37780,6 +37803,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const isMultiple = type === "array";
     const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
     const onChangeControl = (0, import_element115.useCallback)(
@@ -37806,7 +37830,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         __next40pxDefaultSize: true,
         hideLabelFromVision,
-        multiple: isMultiple
+        multiple: isMultiple,
+        disabled: disabled2
       }
     );
   }
@@ -37847,6 +37872,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
+    const disabled2 = field.isDisabled({ item: data, field });
     const onChangeControl = (0, import_element116.useCallback)(
       (newValue) => onChange(
         setValue({
@@ -37871,6 +37897,7 @@ If there's a particular need for this, please submit a feature request at https:
         type,
         prefix: prefix2,
         suffix,
+        disabled: disabled2,
         pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
         maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
@@ -38036,6 +38063,7 @@ If there's a particular need for this, please submit a feature request at https:
     const step = Math.pow(10, Math.abs(decimals) * -1);
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
+    const disabled2 = field.isDisabled({ item: data, field });
     const onChangeControl = (0, import_element117.useCallback)(
       (newValue) => {
         onChange(
@@ -38092,7 +38120,8 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         step,
         min: isValid2.min ? isValid2.min.constraint : void 0,
-        max: isValid2.max ? isValid2.max.constraint : void 0
+        max: isValid2.max ? isValid2.max.constraint : void 0,
+        disabled: disabled2
       }
     );
   }
@@ -38123,6 +38152,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const { elements: elements2, isLoading } = useElements({
       elements: field.elements,
       getElements: field.getElements
@@ -38146,7 +38176,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         options: elements2,
         selected: value,
-        hideLabelFromVision
+        hideLabelFromVision,
+        disabled: disabled2
       }
     );
   }
@@ -38195,6 +38226,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const onChangeControl = (0, import_element120.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
@@ -38210,7 +38242,8 @@ If there's a particular need for this, please submit a feature request at https:
         label,
         help: description,
         checked: getValue({ item: data }),
-        onChange: onChangeControl
+        onChange: onChangeControl,
+        disabled: disabled2
       }
     );
   }
@@ -38230,6 +38263,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { rows = 4 } = config2 || {};
+    const disabled2 = field.isDisabled({ item: data, field });
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data });
     const onChangeControl = (0, import_element121.useCallback)(
@@ -38248,6 +38282,7 @@ If there's a particular need for this, please submit a feature request at https:
         help: description,
         onChange: onChangeControl,
         rows,
+        disabled: disabled2,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
         maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
         __next40pxDefaultSize: true,
@@ -38270,6 +38305,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { getValue, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const value = getValue({ item: data });
     const onChangeControl = (0, import_element122.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -38303,7 +38339,8 @@ If there's a particular need for this, please submit a feature request at https:
           import_components124.__experimentalToggleGroupControlOption,
           {
             label: el.label,
-            value: el.value
+            value: el.value,
+            disabled: disabled2
           },
           el.value
         ))
@@ -38326,6 +38363,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
+    const disabled2 = field.isDisabled({ item: data, field });
     const { elements: elements2, isLoading } = useElements({
       elements: field.elements,
       getElements: field.getElements
@@ -38365,6 +38403,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         placeholder,
         suggestions: elements2?.map((element) => element.value),
+        disabled: disabled2,
         __experimentalValidateInput: (token) => {
           if (field.isValid?.elements && elements2) {
             return elements2.some(
@@ -38408,7 +38447,8 @@ If there's a particular need for this, please submit a feature request at https:
   var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components126.privateApis);
   var ColorPickerDropdown = ({
     color,
-    onColorChange
+    onColorChange,
+    disabled: disabled2
   }) => {
     const validColor = color && w(color).isValid() ? color : "#ffffff";
     return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
@@ -38422,6 +38462,8 @@ If there's a particular need for this, please submit a feature request at https:
             onClick: onToggle,
             "aria-label": (0, import_i18n107.__)("Open color picker"),
             size: "small",
+            disabled: disabled2,
+            accessibleWhenDisabled: true,
             icon: () => /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components126.ColorIndicator, { colorValue: validColor })
           }
         ),
@@ -38445,6 +38487,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const value = field.getValue({ item: data }) || "";
     const handleColorChange = (0, import_element124.useCallback)(
       (newColor) => {
@@ -38471,11 +38514,13 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: handleInputChange,
         hideLabelFromVision,
         type: "text",
+        disabled: disabled2,
         prefix: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components126.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
           ColorPickerDropdown,
           {
             color: value,
-            onColorChange: handleColorChange
+            onColorChange: handleColorChange,
+            disabled: disabled2
           }
         ) })
       }
@@ -38496,6 +38541,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const [isVisible2, setIsVisible] = (0, import_element125.useState)(false);
+    const disabled2 = field.isDisabled({ item: data, field });
     const toggleVisibility = (0, import_element125.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
@@ -38516,7 +38562,9 @@ If there's a particular need for this, please submit a feature request at https:
               icon: isVisible2 ? unseen_default : seen_default,
               onClick: toggleVisibility,
               size: "small",
-              label: isVisible2 ? (0, import_i18n108.__)("Hide password") : (0, import_i18n108.__)("Show password")
+              label: isVisible2 ? (0, import_i18n108.__)("Hide password") : (0, import_i18n108.__)("Show password"),
+              disabled: disabled2,
+              accessibleWhenDisabled: true
             }
           ) })
         }
@@ -39606,6 +39654,7 @@ If there's a particular need for this, please submit a feature request at https:
         getElements: field.getElements,
         hasElements: hasElements(field),
         isVisible: field.isVisible,
+        isDisabled: typeof field.isDisabled === "function" ? field.isDisabled : () => !!field.isDisabled,
         enableHiding: field.enableHiding ?? true,
         readOnly: field.readOnly ?? false,
         // The type provides defaults for the following props
