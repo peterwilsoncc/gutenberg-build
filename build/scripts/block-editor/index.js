@@ -12308,9 +12308,9 @@ var wp;
         if (defaultBlocks.length > 1) {
           return true;
         }
-      } else {
         return false;
       }
+      return false;
     }
     return rootBlockEditingMode !== "disabled";
   }
@@ -14381,10 +14381,6 @@ var wp;
       return;
     }
     const rootClientId = select3.getBlockRootClientId(clientId);
-    const isLocked = select3.getTemplateLock(rootClientId);
-    if (isLocked) {
-      return;
-    }
     const blockIndex = select3.getBlockIndex(clientId);
     const directInsertBlock = rootClientId ? select3.getDirectInsertBlock(rootClientId) : null;
     if (!directInsertBlock) {
@@ -14410,10 +14406,6 @@ var wp;
       return;
     }
     const rootClientId = select3.getBlockRootClientId(clientId);
-    const isLocked = select3.getTemplateLock(rootClientId);
-    if (isLocked) {
-      return;
-    }
     const blockIndex = select3.getBlockIndex(clientId);
     const directInsertBlock = rootClientId ? select3.getDirectInsertBlock(rootClientId) : null;
     if (!directInsertBlock) {
