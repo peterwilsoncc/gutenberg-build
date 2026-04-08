@@ -34374,8 +34374,8 @@ This message will only show in development mode. It won't appear in production. 
   var import_element90 = __toESM(require_element(), 1);
 
   // packages/components/build-module/box-control/utils.mjs
-  var import_i18n27 = __toESM(require_i18n(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
+  var import_i18n27 = __toESM(require_i18n(), 1);
   var CUSTOM_VALUE_SETTINGS = {
     px: {
       max: 300,
@@ -34524,13 +34524,6 @@ This message will only show in development mode. It won't appear in production. 
       // unless filtered.
       (value) => !!value && /\d/.test(value)
     ).length > 0;
-  }
-  function getInitialSide(isLinked, splitOnAxis) {
-    let initialSide = "all";
-    if (!isLinked) {
-      initialSide = splitOnAxis ? "vertical" : "top";
-    }
-    return initialSide;
   }
   function normalizeSides(sides3) {
     const filteredSides = [];
@@ -35098,7 +35091,6 @@ This message will only show in development mode. It won't appear in production. 
     const hasOneSide = sides3?.length === 1;
     const [isDirty, setIsDirty] = (0, import_element91.useState)(hasInitialValue);
     const [isLinked, setIsLinked] = (0, import_element91.useState)(!hasInitialValue || !isValueMixed(inputValues) || hasOneSide);
-    const [side, setSide] = (0, import_element91.useState)(getInitialSide(isLinked, splitOnAxis));
     const [selectedUnits, setSelectedUnits] = (0, import_element91.useState)({
       top: parseQuantityAndUnitFromRawValue(valuesProp?.top)[1],
       right: parseQuantityAndUnitFromRawValue(valuesProp?.right)[1],
@@ -35109,12 +35101,6 @@ This message will only show in development mode. It won't appear in production. 
     const headingId = `${id3}-heading`;
     const toggleLinked = () => {
       setIsLinked(!isLinked);
-      setSide(getInitialSide(!isLinked, splitOnAxis));
-    };
-    const handleOnFocus = (_event, {
-      side: nextSide
-    }) => {
-      setSide(nextSide);
     };
     const handleOnChange = (nextValues) => {
       onChange(nextValues);
@@ -35132,7 +35118,6 @@ This message will only show in development mode. It won't appear in production. 
       onMouseOut,
       ...inputProps,
       onChange: handleOnChange,
-      onFocus: handleOnFocus,
       isLinked,
       units,
       selectedUnits,
