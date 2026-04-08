@@ -427,7 +427,7 @@
   display: block;
   font-family: inherit;
   overflow-wrap: break-word;
-  white-space: pre-wrap;
+  white-space: break-spaces;
   direction: ltr;
   text-align: initial;
 }

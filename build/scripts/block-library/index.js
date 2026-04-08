@@ -11534,7 +11534,8 @@ var wp;
         "aria-label": (0, import_i18n22.__)("Code"),
         preserveWhiteSpace: true,
         __unstablePastePlainText: true,
-        __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks14.createBlock)((0, import_blocks14.getDefaultBlockName)()))
+        __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks14.createBlock)((0, import_blocks14.getDefaultBlockName)())),
+        style: { whiteSpace: "break-spaces" }
       }
     ) });
   }
