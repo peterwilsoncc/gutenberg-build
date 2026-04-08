@@ -96,7 +96,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState84({
+          cachedValue = useState83({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -134,7 +134,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React41 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState84 = React41.useState, useEffect79 = React41.useEffect, useLayoutEffect24 = React41.useLayoutEffect, useDebugValue = React41.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React41 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState83 = React41.useState, useEffect79 = React41.useEffect, useLayoutEffect24 = React41.useLayoutEffect, useDebugValue = React41.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React41.useSyncExternalStore ? React41.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -790,6 +790,27 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/rich-text
+  var require_rich_text = __commonJS({
+    "package-external:@wordpress/rich-text"(exports, module) {
+      module.exports = window.wp.richText;
+    }
+  });
+
+  // package-external:@wordpress/a11y
+  var require_a11y = __commonJS({
+    "package-external:@wordpress/a11y"(exports, module) {
+      module.exports = window.wp.a11y;
+    }
+  });
+
+  // package-external:@wordpress/keycodes
+  var require_keycodes = __commonJS({
+    "package-external:@wordpress/keycodes"(exports, module) {
+      module.exports = window.wp.keycodes;
+    }
+  });
+
   // node_modules/remove-accents/index.js
   var require_remove_accents = __commonJS({
     "node_modules/remove-accents/index.js"(exports, module) {
@@ -1269,27 +1290,6 @@ var wp;
       module.exports = removeAccents5;
       module.exports.has = hasAccents;
       module.exports.remove = removeAccents5;
-    }
-  });
-
-  // package-external:@wordpress/rich-text
-  var require_rich_text = __commonJS({
-    "package-external:@wordpress/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
-    }
-  });
-
-  // package-external:@wordpress/a11y
-  var require_a11y = __commonJS({
-    "package-external:@wordpress/a11y"(exports, module) {
-      module.exports = window.wp.a11y;
-    }
-  });
-
-  // package-external:@wordpress/keycodes
-  var require_keycodes = __commonJS({
-    "package-external:@wordpress/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
     }
   });
 
@@ -3631,8 +3631,8 @@ var wp;
     invariant(internals, "Invalid store");
     return internals[key];
   }
-  function createStore(initialState, ...stores) {
-    let state = initialState;
+  function createStore(initialState2, ...stores) {
+    let state = initialState2;
     let prevStateBatch = state;
     let lastUpdate = /* @__PURE__ */ Symbol();
     let destroy = noop;
@@ -3789,14 +3789,14 @@ var wp;
   }
   function mergeStore(...stores) {
     var _a;
-    const initialState = {};
+    const initialState2 = {};
     for (const store2 of stores) {
       const nextState = (_a = store2 == null ? void 0 : store2.getState) == null ? void 0 : _a.call(store2);
       if (nextState) {
-        Object.assign(initialState, nextState);
+        Object.assign(initialState2, nextState);
       }
     }
-    const store = createStore(initialState, ...stores);
+    const store = createStore(initialState2, ...stores);
     return Object.assign({}, ...stores, store);
   }
   function throwOnConflictingProps(props, store) {
@@ -4860,7 +4860,7 @@ If there's a particular need for this, please submit a feature request at https:
       false
     );
     const animated = defaultValue(props.animated, syncState == null ? void 0 : syncState.animated, false);
-    const initialState = {
+    const initialState2 = {
       open,
       animated,
       animating: !!animated && open,
@@ -4868,7 +4868,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentElement: defaultValue(syncState == null ? void 0 : syncState.contentElement, null),
       disclosureElement: defaultValue(syncState == null ? void 0 : syncState.disclosureElement, null)
     };
-    const disclosure = createStore(initialState, store);
+    const disclosure = createStore(initialState2, store);
     setup(
       disclosure,
       () => sync(disclosure, ["animated", "animating"], (state) => {
@@ -5109,16 +5109,16 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const itemsMap = new Map(items.map((item2) => [item2.id, item2]));
-    const initialState = {
+    const initialState2 = {
       items,
       renderedItems: defaultValue(syncState == null ? void 0 : syncState.renderedItems, [])
     };
     const syncPrivateStore = getPrivateStore(props.store);
     const privateStore = createStore(
-      { items, renderedItems: initialState.renderedItems },
+      { items, renderedItems: initialState2.renderedItems },
       syncPrivateStore
     );
-    const collection = createStore(initialState, props.store);
+    const collection = createStore(initialState2, props.store);
     const sortItems = (renderedItems) => {
       const sortedItems = sortBasedOnDOMPosition(renderedItems, (i3) => i3.element);
       privateStore.setState("renderedItems", sortedItems);
@@ -5339,7 +5339,7 @@ If there's a particular need for this, please submit a feature request at https:
       syncState == null ? void 0 : syncState.activeId,
       props.defaultActiveId
     );
-    const initialState = {
+    const initialState2 = {
       ...collection.getState(),
       id: defaultValue(
         props.id,
@@ -5369,7 +5369,7 @@ If there's a particular need for this, please submit a feature request at https:
       focusWrap: defaultValue(props.focusWrap, syncState == null ? void 0 : syncState.focusWrap, false),
       focusShift: defaultValue(props.focusShift, syncState == null ? void 0 : syncState.focusShift, false)
     };
-    const composite = createStore(initialState, collection, props.store);
+    const composite = createStore(initialState2, collection, props.store);
     setup(
       composite,
       () => sync(composite, ["renderedItems", "activeId"], (state) => {
@@ -5579,7 +5579,7 @@ If there's a particular need for this, please submit a feature request at https:
       focusLoop: defaultValue(props.focusLoop, syncState == null ? void 0 : syncState.focusLoop, true)
     });
     const panels = createCollectionStore();
-    const initialState = {
+    const initialState2 = {
       ...composite.getState(),
       selectedId: defaultValue(
         props.selectedId,
@@ -5592,7 +5592,7 @@ If there's a particular need for this, please submit a feature request at https:
         true
       )
     };
-    const tab = createStore(initialState, composite, store);
+    const tab = createStore(initialState2, composite, store);
     setup(
       tab,
       () => sync(tab, ["moves"], () => {
@@ -9712,7 +9712,7 @@ If there's a particular need for this, please submit a feature request at https:
       syncState == null ? void 0 : syncState.placement,
       "bottom"
     );
-    const initialState = {
+    const initialState2 = {
       ...dialog.getState(),
       placement,
       currentPlacement: placement,
@@ -9721,7 +9721,7 @@ If there's a particular need for this, please submit a feature request at https:
       arrowElement: defaultValue(syncState == null ? void 0 : syncState.arrowElement, null),
       rendered: /* @__PURE__ */ Symbol("rendered")
     };
-    const popover = createStore(initialState, dialog, store);
+    const popover = createStore(initialState2, dialog, store);
     return {
       ...dialog,
       ...popover,
@@ -9752,14 +9752,14 @@ If there's a particular need for this, please submit a feature request at https:
       )
     });
     const timeout = defaultValue(props.timeout, syncState == null ? void 0 : syncState.timeout, 500);
-    const initialState = {
+    const initialState2 = {
       ...popover.getState(),
       timeout,
       showTimeout: defaultValue(props.showTimeout, syncState == null ? void 0 : syncState.showTimeout),
       hideTimeout: defaultValue(props.hideTimeout, syncState == null ? void 0 : syncState.hideTimeout),
       autoFocusOnShow: defaultValue(syncState == null ? void 0 : syncState.autoFocusOnShow, false)
     };
-    const hovercard = createStore(initialState, popover, props.store);
+    const hovercard = createStore(initialState2, popover, props.store);
     return {
       ...popover,
       ...hovercard,
@@ -9797,12 +9797,12 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       hideTimeout: defaultValue(props.hideTimeout, syncState == null ? void 0 : syncState.hideTimeout, 0)
     });
-    const initialState = {
+    const initialState2 = {
       ...hovercard.getState(),
       type: defaultValue(props.type, syncState == null ? void 0 : syncState.type, "description"),
       skipTimeout: defaultValue(props.skipTimeout, syncState == null ? void 0 : syncState.skipTimeout, 300)
     };
-    const tooltip = createStore(initialState, hovercard, props.store);
+    const tooltip = createStore(initialState2, hovercard, props.store);
     return {
       ...hovercard,
       ...tooltip
@@ -10216,7 +10216,7 @@ If there's a particular need for this, please submit a feature request at https:
       ...props,
       focusLoop: defaultValue(props.focusLoop, syncState == null ? void 0 : syncState.focusLoop, true)
     });
-    const initialState = {
+    const initialState2 = {
       ...composite.getState(),
       value: defaultValue(
         props.value,
@@ -10225,7 +10225,7 @@ If there's a particular need for this, please submit a feature request at https:
         null
       )
     };
-    const radio = createStore(initialState, composite, props.store);
+    const radio = createStore(initialState2, composite, props.store);
     return {
       ...composite,
       ...radio,
@@ -11154,7 +11154,7 @@ If there's a particular need for this, please submit a feature request at https:
       )
     });
     const initialValue2 = new String("");
-    const initialState = {
+    const initialState2 = {
       ...composite.getState(),
       ...popover.getState(),
       value: defaultValue(
@@ -11172,7 +11172,7 @@ If there's a particular need for this, please submit a feature request at https:
       selectElement: defaultValue(syncState.selectElement, null),
       listElement: defaultValue(syncState.listElement, null)
     };
-    const select = createStore(initialState, composite, popover, store);
+    const select = createStore(initialState2, composite, popover, store);
     setup(
       select,
       () => sync(select, ["value", "items"], (state) => {
@@ -11189,7 +11189,7 @@ If there's a particular need for this, please submit a feature request at https:
       select,
       () => sync(select, ["mounted"], (state) => {
         if (state.mounted) return;
-        select.setState("activeId", initialState.activeId);
+        select.setState("activeId", initialState2.activeId);
       })
     );
     setup(
@@ -11304,7 +11304,7 @@ If there's a particular need for this, please submit a feature request at https:
     var _a;
     throwOnConflictingProps(props, props.store);
     const syncState = (_a = props.store) == null ? void 0 : _a.getState();
-    const initialState = {
+    const initialState2 = {
       value: defaultValue(
         props.value,
         syncState == null ? void 0 : syncState.value,
@@ -11312,7 +11312,7 @@ If there's a particular need for this, please submit a feature request at https:
         false
       )
     };
-    const checkbox = createStore(initialState, props.store);
+    const checkbox = createStore(initialState2, props.store);
     return {
       ...checkbox,
       setValue: (value) => checkbox.setState("value", value)
@@ -12280,7 +12280,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       hideTimeout: defaultValue(props.hideTimeout, syncState.hideTimeout, 0)
     });
-    const initialState = {
+    const initialState2 = {
       ...composite.getState(),
       ...hovercard.getState(),
       initialFocus: defaultValue(syncState.initialFocus, "container"),
@@ -12291,7 +12291,7 @@ If there's a particular need for this, please submit a feature request at https:
         {}
       )
     };
-    const menu2 = createStore(initialState, composite, hovercard, store);
+    const menu2 = createStore(initialState2, composite, hovercard, store);
     setup(
       menu2,
       () => sync(menu2, ["mounted"], (state) => {
@@ -26274,13 +26274,13 @@ This message will only show in development mode. It won't appear in production. 
   var RESET = "RESET";
 
   // packages/components/build-module/input-control/reducer/reducer.mjs
-  function mergeInitialState(initialState = initialInputControlState) {
+  function mergeInitialState(initialState2 = initialInputControlState) {
     const {
       value
-    } = initialState;
+    } = initialState2;
     return {
       ...initialInputControlState,
-      ...initialState,
+      ...initialState2,
       initialValue: value
     };
   }
@@ -26346,8 +26346,8 @@ This message will only show in development mode. It won't appear in production. 
       return composedStateReducers(nextState, action);
     };
   }
-  function useInputControlStateReducer(stateReducer = initialStateReducer, initialState = initialInputControlState, onChangeHandler) {
-    const [state, dispatch] = (0, import_element29.useReducer)(inputControlStateReducer(stateReducer), mergeInitialState(initialState));
+  function useInputControlStateReducer(stateReducer = initialStateReducer, initialState2 = initialInputControlState, onChangeHandler) {
+    const [state, dispatch] = (0, import_element29.useReducer)(inputControlStateReducer(stateReducer), mergeInitialState(initialState2));
     const createChangeEvent = (type) => (nextValue, event) => {
       dispatch({
         type,
@@ -26389,13 +26389,13 @@ This message will only show in development mode. It won't appear in production. 
     const pressEnter = createKeyEvent(PRESS_ENTER);
     const currentStateRef = (0, import_element29.useRef)(state);
     const refPropsRef = (0, import_element29.useRef)({
-      value: initialState.value,
+      value: initialState2.value,
       onChangeHandler
     });
     (0, import_element29.useLayoutEffect)(() => {
       currentStateRef.current = state;
       refPropsRef.current = {
-        value: initialState.value,
+        value: initialState2.value,
         onChangeHandler
       };
     });
@@ -26407,15 +26407,15 @@ This message will only show in development mode. It won't appear in production. 
       }
     }, [state.value, state.isDirty]);
     (0, import_element29.useLayoutEffect)(() => {
-      if (initialState.value !== currentStateRef.current.value && !currentStateRef.current.isDirty) {
+      if (initialState2.value !== currentStateRef.current.value && !currentStateRef.current.isDirty) {
         dispatch({
           type: CONTROL,
           payload: {
-            value: initialState.value ?? ""
+            value: initialState2.value ?? ""
           }
         });
       }
-    }, [initialState.value]);
+    }, [initialState2.value]);
     return {
       change,
       commit,
@@ -27743,7 +27743,6 @@ This message will only show in development mode. It won't appear in production. 
   var angle_picker_control_default = AnglePickerControl;
 
   // packages/components/build-module/autocomplete/index.mjs
-  var import_remove_accents3 = __toESM(require_remove_accents(), 1);
   var import_element52 = __toESM(require_element(), 1);
   var import_compose18 = __toESM(require_compose(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
@@ -29071,6 +29070,59 @@ This message will only show in development mode. It won't appear in production. 
     }, [handler, ref]);
   }
 
+  // packages/components/build-module/autocomplete/get-autocomplete-match.mjs
+  var import_remove_accents3 = __toESM(require_remove_accents(), 1);
+  function getAutocompleteMatch(textContent, completers, filteredOptionsLength, isBackspacing, getTextAfterSelection) {
+    if (!textContent) {
+      return null;
+    }
+    let completer = null;
+    let triggerIndex = -1;
+    let matchedEndIndex = -1;
+    let matchedPrefixLength = 0;
+    for (const currentCompleter of completers) {
+      const currentIndex = textContent.lastIndexOf(currentCompleter.triggerPrefix);
+      if (currentIndex < 0) {
+        continue;
+      }
+      const currentEndIndex = currentIndex + currentCompleter.triggerPrefix.length;
+      if (currentEndIndex > matchedEndIndex || currentEndIndex === matchedEndIndex && currentCompleter.triggerPrefix.length > matchedPrefixLength) {
+        completer = currentCompleter;
+        triggerIndex = currentIndex;
+        matchedEndIndex = currentEndIndex;
+        matchedPrefixLength = currentCompleter.triggerPrefix.length;
+      }
+    }
+    if (!completer) {
+      return null;
+    }
+    const {
+      allowContext,
+      triggerPrefix
+    } = completer;
+    const textWithoutTrigger = textContent.slice(triggerIndex + triggerPrefix.length);
+    if (textWithoutTrigger.length > 50) {
+      return null;
+    }
+    const mismatch = filteredOptionsLength === 0;
+    const wordsFromTrigger = textWithoutTrigger.split(/\s/);
+    const hasOneTriggerWord = wordsFromTrigger.length === 1;
+    const matchingWhileBackspacing = isBackspacing && wordsFromTrigger.length <= 3;
+    if (mismatch && !(matchingWhileBackspacing || hasOneTriggerWord)) {
+      return null;
+    }
+    if (allowContext && !allowContext(textContent.slice(0, triggerIndex), getTextAfterSelection())) {
+      return null;
+    }
+    if (/^\s/.test(textWithoutTrigger) || /\s\s+$/.test(textWithoutTrigger)) {
+      return null;
+    }
+    return {
+      completer,
+      filterValue: (0, import_remove_accents3.default)(textWithoutTrigger)
+    };
+  }
+
   // packages/components/build-module/utils/get-node-text.mjs
   var getNodeText = (node2) => {
     if (node2 === null) {
@@ -29099,6 +29151,44 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_FILTERED_OPTIONS = [];
   var AUTOCOMPLETE_HOOK_REFERENCE = {};
+  function getCompletionObject(completion) {
+    if (completion !== null && typeof completion === "object" && "action" in completion && completion.action !== void 0 && "value" in completion && completion.value !== void 0) {
+      return completion;
+    }
+    return {
+      action: "insert-at-caret",
+      value: completion
+    };
+  }
+  var initialState = {
+    selectedIndex: 0,
+    filteredOptions: EMPTY_FILTERED_OPTIONS,
+    filterValue: "",
+    autocompleter: null
+  };
+  function autocompleteReducer(state, action) {
+    switch (action.type) {
+      case "RESET":
+        return initialState;
+      case "SELECT":
+        return {
+          ...state,
+          selectedIndex: action.index
+        };
+      case "OPTIONS":
+        return {
+          ...state,
+          filteredOptions: action.options,
+          selectedIndex: action.options.length === state.filteredOptions.length ? state.selectedIndex : 0
+        };
+      case "MATCH":
+        return {
+          ...state,
+          autocompleter: action.completer,
+          filterValue: action.query
+        };
+    }
+  }
   function useAutocomplete({
     record,
     onChange,
@@ -29107,11 +29197,14 @@ This message will only show in development mode. It won't appear in production. 
     contentRef
   }) {
     const instanceId = (0, import_compose18.useInstanceId)(AUTOCOMPLETE_HOOK_REFERENCE);
-    const [selectedIndex, setSelectedIndex] = (0, import_element52.useState)(0);
-    const [filteredOptions, setFilteredOptions] = (0, import_element52.useState)(EMPTY_FILTERED_OPTIONS);
-    const [filterValue, setFilterValue] = (0, import_element52.useState)("");
-    const [autocompleter, setAutocompleter] = (0, import_element52.useState)(null);
-    const [AutocompleterUI, setAutocompleterUI] = (0, import_element52.useState)(null);
+    const [state, dispatch] = (0, import_element52.useReducer)(autocompleteReducer, initialState);
+    const {
+      selectedIndex,
+      filteredOptions,
+      filterValue,
+      autocompleter
+    } = state;
+    const AutocompleterUI = (0, import_element52.useMemo)(() => autocompleter ? getAutoCompleterUI(autocompleter) : null, [autocompleter]);
     const backspacingRef = (0, import_element52.useRef)(false);
     function insertCompletion(replacement) {
       if (autocompleter === null) {
@@ -29132,14 +29225,7 @@ This message will only show in development mode. It won't appear in production. 
         return;
       }
       if (getOptionCompletion) {
-        const completion = getOptionCompletion(option.value, filterValue);
-        const isCompletionObject = (obj) => {
-          return obj !== null && typeof obj === "object" && "action" in obj && obj.action !== void 0 && "value" in obj && obj.value !== void 0;
-        };
-        const completionObject = isCompletionObject(completion) ? completion : {
-          action: "insert-at-caret",
-          value: completion
-        };
+        const completionObject = getCompletionObject(getOptionCompletion(option.value, filterValue));
         if ("replace" === completionObject.action) {
           onReplace([completionObject.value]);
           return;
@@ -29147,19 +29233,16 @@ This message will only show in development mode. It won't appear in production. 
           insertCompletion(completionObject.value);
         }
       }
-      reset();
+      dispatch({
+        type: "RESET"
+      });
       contentRef.current?.focus();
     }
-    function reset() {
-      setSelectedIndex(0);
-      setFilteredOptions(EMPTY_FILTERED_OPTIONS);
-      setFilterValue("");
-      setAutocompleter(null);
-      setAutocompleterUI(null);
-    }
     function onChangeOptions(options2) {
-      setSelectedIndex(options2.length === filteredOptions.length ? selectedIndex : 0);
-      setFilteredOptions(options2);
+      dispatch({
+        type: "OPTIONS",
+        options: options2
+      });
     }
     function handleKeyDown(event) {
       backspacingRef.current = event.key === "Backspace";
@@ -29173,25 +29256,23 @@ This message will only show in development mode. It won't appear in production. 
         return;
       }
       switch (event.key) {
-        case "ArrowUp": {
-          const newIndex = (selectedIndex === 0 ? filteredOptions.length : selectedIndex) - 1;
-          setSelectedIndex(newIndex);
-          if ((0, import_keycodes.isAppleOS)()) {
-            (0, import_a11y2.speak)(get_node_text_default(filteredOptions[newIndex].label), "assertive");
-          }
-          break;
-        }
+        case "ArrowUp":
         case "ArrowDown": {
-          const newIndex = (selectedIndex + 1) % filteredOptions.length;
-          setSelectedIndex(newIndex);
+          const offset3 = event.key === "ArrowUp" ? -1 : 1;
+          const newIndex = (selectedIndex + offset3 + filteredOptions.length) % filteredOptions.length;
+          dispatch({
+            type: "SELECT",
+            index: newIndex
+          });
           if ((0, import_keycodes.isAppleOS)()) {
             (0, import_a11y2.speak)(get_node_text_default(filteredOptions[newIndex].label), "assertive");
           }
           break;
         }
         case "Escape":
-          setAutocompleter(null);
-          setAutocompleterUI(null);
+          dispatch({
+            type: "RESET"
+          });
           event.preventDefault();
           break;
         case "Enter":
@@ -29199,7 +29280,9 @@ This message will only show in development mode. It won't appear in production. 
           break;
         case "ArrowLeft":
         case "ArrowRight":
-          reset();
+          dispatch({
+            type: "RESET"
+          });
           return;
         default:
           return;
@@ -29213,69 +29296,27 @@ This message will only show in development mode. It won't appear in production. 
       return "";
     }, [record]);
     (0, import_element52.useEffect)(() => {
-      if (!textContent) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
+      function getTextAfterSelection() {
+        return textContent ? (0, import_rich_text2.getTextContent)((0, import_rich_text2.slice)(record, void 0, (0, import_rich_text2.getTextContent)(record).length)) : "";
       }
-      const completer = completers.reduce((lastTrigger, currentCompleter) => {
-        const triggerIndex2 = textContent.lastIndexOf(currentCompleter.triggerPrefix);
-        const lastTriggerIndex = lastTrigger !== null ? textContent.lastIndexOf(lastTrigger.triggerPrefix) : -1;
-        return triggerIndex2 > lastTriggerIndex ? currentCompleter : lastTrigger;
-      }, null);
-      if (!completer) {
+      const match4 = getAutocompleteMatch(textContent, completers, filteredOptions.length, backspacingRef.current, getTextAfterSelection);
+      if (!match4) {
         if (autocompleter) {
-          reset();
+          dispatch({
+            type: "RESET"
+          });
         }
         return;
       }
       const {
-        allowContext,
-        triggerPrefix
-      } = completer;
-      const triggerIndex = textContent.lastIndexOf(triggerPrefix);
-      const textWithoutTrigger = textContent.slice(triggerIndex + triggerPrefix.length);
-      const tooDistantFromTrigger = textWithoutTrigger.length > 50;
-      if (tooDistantFromTrigger) {
-        return;
-      }
-      const mismatch = filteredOptions.length === 0;
-      const wordsFromTrigger = textWithoutTrigger.split(/\s/);
-      const hasOneTriggerWord = wordsFromTrigger.length === 1;
-      const matchingWhileBackspacing = backspacingRef.current && wordsFromTrigger.length <= 3;
-      if (mismatch && !(matchingWhileBackspacing || hasOneTriggerWord)) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
-      }
-      const textAfterSelection = (0, import_rich_text2.getTextContent)((0, import_rich_text2.slice)(record, void 0, (0, import_rich_text2.getTextContent)(record).length));
-      if (allowContext && !allowContext(textContent.slice(0, triggerIndex), textAfterSelection)) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
-      }
-      if (/^\s/.test(textWithoutTrigger) || /\s\s+$/.test(textWithoutTrigger)) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
-      }
-      if (!/[\u0000-\uFFFF]*$/.test(textWithoutTrigger)) {
-        if (autocompleter) {
-          reset();
-        }
-        return;
-      }
-      const safeTrigger = escapeRegExp(completer.triggerPrefix);
-      const text = (0, import_remove_accents3.default)(textContent);
-      const match4 = text.slice(text.lastIndexOf(completer.triggerPrefix)).match(new RegExp(`${safeTrigger}([\0-\uFFFF]*)$`));
-      const query = match4 && match4[1];
-      setAutocompleter(completer);
-      setAutocompleterUI(() => completer !== autocompleter ? getAutoCompleterUI(completer) : AutocompleterUI);
-      setFilterValue(query === null ? "" : query);
+        completer,
+        filterValue: query
+      } = match4;
+      dispatch({
+        type: "MATCH",
+        completer,
+        query
+      });
     }, [textContent]);
     const {
       key: selectedKey = ""
@@ -29302,17 +29343,25 @@ This message will only show in development mode. It won't appear in production. 
         onSelect: select,
         value: record,
         contentRef,
-        reset
+        reset: () => dispatch({
+          type: "RESET"
+        })
       })
     };
   }
+  function recordValuesMatch(a3, b3) {
+    return a3.text === b3.text && a3.start === b3.start && a3.end === b3.end;
+  }
   function useLastDifferentValue(value) {
-    const history = (0, import_element52.useRef)(/* @__PURE__ */ new Set());
-    history.current.add(value);
-    if (history.current.size > 2) {
-      history.current.delete(Array.from(history.current)[0]);
+    const history = (0, import_element52.useRef)([]);
+    const lastEntry = history.current[history.current.length - 1];
+    if (!lastEntry || !recordValuesMatch(value, lastEntry)) {
+      history.current.push(value);
     }
-    return Array.from(history.current)[0];
+    if (history.current.length > 2) {
+      history.current.shift();
+    }
+    return history.current[0];
   }
   function useAutocompleteProps(options2) {
     const ref = (0, import_element52.useRef)(null);
@@ -34325,8 +34374,8 @@ This message will only show in development mode. It won't appear in production. 
   var import_element90 = __toESM(require_element(), 1);
 
   // packages/components/build-module/box-control/utils.mjs
-  var import_i18n27 = __toESM(require_i18n(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
+  var import_i18n27 = __toESM(require_i18n(), 1);
   var CUSTOM_VALUE_SETTINGS = {
     px: {
       max: 300,
@@ -34475,13 +34524,6 @@ This message will only show in development mode. It won't appear in production. 
       // unless filtered.
       (value) => !!value && /\d/.test(value)
     ).length > 0;
-  }
-  function getInitialSide(isLinked, splitOnAxis) {
-    let initialSide = "all";
-    if (!isLinked) {
-      initialSide = splitOnAxis ? "vertical" : "top";
-    }
-    return initialSide;
   }
   function normalizeSides(sides3) {
     const filteredSides = [];
@@ -35049,7 +35091,6 @@ This message will only show in development mode. It won't appear in production. 
     const hasOneSide = sides3?.length === 1;
     const [isDirty, setIsDirty] = (0, import_element91.useState)(hasInitialValue);
     const [isLinked, setIsLinked] = (0, import_element91.useState)(!hasInitialValue || !isValueMixed(inputValues) || hasOneSide);
-    const [side, setSide] = (0, import_element91.useState)(getInitialSide(isLinked, splitOnAxis));
     const [selectedUnits, setSelectedUnits] = (0, import_element91.useState)({
       top: parseQuantityAndUnitFromRawValue(valuesProp?.top)[1],
       right: parseQuantityAndUnitFromRawValue(valuesProp?.right)[1],
@@ -35060,12 +35101,6 @@ This message will only show in development mode. It won't appear in production. 
     const headingId = `${id3}-heading`;
     const toggleLinked = () => {
       setIsLinked(!isLinked);
-      setSide(getInitialSide(!isLinked, splitOnAxis));
-    };
-    const handleOnFocus = (_event, {
-      side: nextSide
-    }) => {
-      setSide(nextSide);
     };
     const handleOnChange = (nextValues) => {
       onChange(nextValues);
@@ -35083,7 +35118,6 @@ This message will only show in development mode. It won't appear in production. 
       onMouseOut,
       ...inputProps,
       onChange: handleOnChange,
-      onFocus: handleOnFocus,
       isLinked,
       units,
       selectedUnits,
@@ -47641,7 +47675,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     function isFrameAccessible() {
       try {
         return !!ref.current?.contentDocument?.body;
-      } catch (e3) {
+      } catch {
         return false;
       }
     }
@@ -47706,7 +47740,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         if ("string" === typeof data) {
           try {
             data = JSON.parse(data);
-          } catch (e3) {
+          } catch {
           }
         }
         if ("resize" !== data.action) {
@@ -55366,8 +55400,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element242 = __toESM(require_element(), 1);
   function isLocaleRTL(localeCode) {
     const localeObj = new Intl.Locale(localeCode);
-    if ("getTextInfo" in localeObj) {
-      return localeObj.getTextInfo().direction === "rtl";
+    const direction = localeObj.getTextInfo?.().direction;
+    if (direction) {
+      return direction === "rtl";
     }
     return [
       "ar",
@@ -55688,17 +55723,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   function appendRequiredIndicator(label, required, markWhenOptional) {
+    let suffix;
     if (required && !markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, {
-        children: [label, " ", `(${(0, import_i18n82.__)("Required")})`]
-      });
+      suffix = `(${(0, import_i18n82.__)("Required")})`;
+    } else if (!required && markWhenOptional) {
+      suffix = `(${(0, import_i18n82.__)("Optional")})`;
     }
-    if (!required && markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, {
-        children: [label, " ", `(${(0, import_i18n82.__)("Optional")})`]
-      });
+    if (!suffix) {
+      return label;
     }
-    return label;
+    if (typeof label === "string") {
+      return `${label} ${suffix}`;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, {
+      children: [label, " ", suffix]
+    });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
   var className = "components-validated-control";

@@ -7403,10 +7403,6 @@ return array(
 				'default' => array(
 					
 				)
-			),
-			'isSearchFieldHidden' => array(
-				'type' => 'boolean',
-				'default' => false
 			)
 		),
 		'supports' => array(

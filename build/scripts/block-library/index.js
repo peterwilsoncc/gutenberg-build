@@ -11534,7 +11534,8 @@ var wp;
         "aria-label": (0, import_i18n22.__)("Code"),
         preserveWhiteSpace: true,
         __unstablePastePlainText: true,
-        __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks14.createBlock)((0, import_blocks14.getDefaultBlockName)()))
+        __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks14.createBlock)((0, import_blocks14.getDefaultBlockName)())),
+        style: { whiteSpace: "break-spaces" }
       }
     ) });
   }
@@ -18303,12 +18304,14 @@ var wp;
     }
     return matchingVariation;
   }
-  function getIframeSrc(html) {
-    if (!html) {
+  function getBackgroundEmbedHtml(html) {
+    const srcMatch = html?.match(/src=["']([^"']+)["']/);
+    if (!srcMatch) {
       return null;
     }
-    const srcMatch = html.match(/src=["']([^"']+)["']/);
-    return srcMatch ? srcMatch[1] : null;
+    const iframeSrc = srcMatch[1];
+    const backgroundSrc = getBackgroundVideoSrc(iframeSrc);
+    return html.replace(iframeSrc, backgroundSrc);
   }
   function detectProviderFromSrc(src) {
     if (!src) {
@@ -18377,7 +18380,7 @@ var wp;
           break;
       }
       return url.toString();
-    } catch (error) {
+    } catch {
       return src;
     }
   }
@@ -19340,7 +19343,7 @@ var wp;
         crossOrigin: imgCrossOrigin
       });
       return color.hex;
-    } catch (error) {
+    } catch {
       return DEFAULT_BACKGROUND_COLOR;
     }
   });
@@ -19412,6 +19415,10 @@ var wp;
     );
     const { getSettings: getSettings2 } = (0, import_data30.useSelect)(import_block_editor67.store);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data30.useDispatch)(import_block_editor67.store);
+    const propsRef = (0, import_element24.useRef)({ attributes: attributes2, overlayColor });
+    (0, import_element24.useLayoutEffect)(() => {
+      propsRef.current = { attributes: attributes2, overlayColor };
+    });
     const { media } = (0, import_data30.useSelect)(
       (select9) => {
         return {
@@ -19434,21 +19441,22 @@ var wp;
           return;
         }
         const averageBackgroundColor = await getMediaColor(mediaUrl);
-        let newOverlayColor = overlayColor.color;
-        if (!isUserOverlayColor) {
+        const { attributes: currentAttrs, overlayColor: currentOverlay } = propsRef.current;
+        let newOverlayColor = currentOverlay.color;
+        if (!currentAttrs.isUserOverlayColor) {
           newOverlayColor = averageBackgroundColor;
           __unstableMarkNextChangeAsNotPersistent();
           setOverlayColor(newOverlayColor);
         }
         const newIsDark = compositeIsDark(
-          dimRatio,
+          currentAttrs.dimRatio,
           newOverlayColor,
           averageBackgroundColor
         );
         __unstableMarkNextChangeAsNotPersistent();
         setAttributes({
           isDark: newIsDark,
-          isUserOverlayColor: isUserOverlayColor || false
+          isUserOverlayColor: currentAttrs.isUserOverlayColor || false
         });
       })();
     }, [mediaUrl]);
@@ -19467,13 +19475,14 @@ var wp;
       const averageBackgroundColor = await getMediaColor(
         isImage ? newMedia?.url : void 0
       );
-      let newOverlayColor = overlayColor.color;
-      if (!isUserOverlayColor) {
+      const { attributes: currentAttrs, overlayColor: currentOverlay } = propsRef.current;
+      let newOverlayColor = currentOverlay.color;
+      if (!currentAttrs.isUserOverlayColor) {
         newOverlayColor = averageBackgroundColor;
         setOverlayColor(newOverlayColor);
         __unstableMarkNextChangeAsNotPersistent();
       }
-      const newDimRatio = originalUrl === void 0 && dimRatio === 100 ? 50 : dimRatio;
+      const newDimRatio = currentAttrs.url === void 0 && currentAttrs.dimRatio === 100 ? 50 : currentAttrs.dimRatio;
       const newIsDark = compositeIsDark(
         newDimRatio,
         newOverlayColor,
@@ -19497,7 +19506,7 @@ var wp;
         useFeaturedImage: void 0,
         dimRatio: newDimRatio,
         isDark: newIsDark,
-        isUserOverlayColor: isUserOverlayColor || false
+        isUserOverlayColor: currentAttrs.isUserOverlayColor || false
       });
     };
     const onClearMedia = () => {
@@ -19525,8 +19534,9 @@ var wp;
     };
     const onSetOverlayColor = async (newOverlayColor) => {
       const averageBackgroundColor = await getMediaColor(url);
+      const { attributes: currentAttrs } = propsRef.current;
       const newIsDark = compositeIsDark(
-        dimRatio,
+        currentAttrs.dimRatio,
         newOverlayColor,
         averageBackgroundColor
       );
@@ -19539,9 +19549,10 @@ var wp;
     };
     const onUpdateDimRatio = async (newDimRatio) => {
       const averageBackgroundColor = await getMediaColor(url);
+      const { overlayColor: currentOverlay } = propsRef.current;
       const newIsDark = compositeIsDark(
         newDimRatio,
-        overlayColor.color,
+        currentOverlay.color,
         averageBackgroundColor
       );
       setAttributes({
@@ -19581,15 +19592,11 @@ var wp;
       },
       [url, backgroundType]
     );
-    const embedSrc = (0, import_element24.useMemo)(() => {
+    const embedHtml = (0, import_element24.useMemo)(() => {
       if (backgroundType !== EMBED_VIDEO_BACKGROUND_TYPE || !embedPreview?.html) {
         return null;
       }
-      const iframeSrc = getIframeSrc(embedPreview.html);
-      if (!iframeSrc) {
-        return null;
-      }
-      return getBackgroundVideoSrc(iframeSrc);
+      return getBackgroundEmbedHtml(embedPreview.html);
     }, [embedPreview, backgroundType]);
     const isUploadingMedia = isTemporaryMedia(id, url);
     const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
@@ -19654,8 +19661,9 @@ var wp;
     const toggleUseFeaturedImage = async () => {
       const newUseFeaturedImage = !useFeaturedImage;
       const averageBackgroundColor = newUseFeaturedImage ? await getMediaColor(mediaUrl) : DEFAULT_BACKGROUND_COLOR;
-      const newOverlayColor = !isUserOverlayColor ? averageBackgroundColor : overlayColor.color;
-      if (!isUserOverlayColor) {
+      const { attributes: currentAttrs, overlayColor: currentOverlay } = propsRef.current;
+      const newOverlayColor = !currentAttrs.isUserOverlayColor ? averageBackgroundColor : currentOverlay.color;
+      if (!currentAttrs.isUserOverlayColor) {
         if (newUseFeaturedImage) {
           setOverlayColor(newOverlayColor);
         } else {
@@ -19663,7 +19671,7 @@ var wp;
         }
         __unstableMarkNextChangeAsNotPersistent();
       }
-      const newDimRatio = dimRatio === 100 ? 50 : dimRatio;
+      const newDimRatio = currentAttrs.dimRatio === 100 ? 50 : currentAttrs.dimRatio;
       const newIsDark = compositeIsDark(
         newDimRatio,
         newOverlayColor,
@@ -19833,24 +19841,25 @@ var wp;
                 style: mediaStyle
               }
             ),
-            isEmbedVideoBackground && embedSrc && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+            isEmbedVideoBackground && embedHtml && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
               "div",
               {
                 ref: mediaElement,
                 className: "wp-block-cover__video-background wp-block-cover__embed-background",
                 style: mediaStyle,
                 children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                  "iframe",
+                  import_components34.SandBox,
                   {
-                    src: embedSrc,
+                    html: embedHtml,
                     title: "Background video",
-                    frameBorder: "0",
-                    allow: "autoplay; fullscreen"
+                    styles: [
+                      "iframe{position:fixed;top:0;left:0;width:100%;height:100%;}"
+                    ]
                   }
                 )
               }
             ),
-            isEmbedVideoBackground && !embedSrc && isFetchingEmbed && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_components34.Spinner, {}),
+            isEmbedVideoBackground && !embedHtml && isFetchingEmbed && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_components34.Spinner, {}),
             showOverlay && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
               "span",
               {
@@ -22466,7 +22475,7 @@ ${url}
     let ax;
     try {
       ax = new window.ActiveXObject(type);
-    } catch (e2) {
+    } catch {
       ax = void 0;
     }
     return ax;
@@ -29350,9 +29359,7 @@ ${js}
         const { getEntityRecord, getEntityRecords } = select9(import_core_data22.store);
         return {
           selectedIcon: icon4 ? getEntityRecord("root", "icon", icon4) : null,
-          allIcons: isInserterOpen ? getEntityRecords("root", "icon", {
-            per_page: -1
-          }) : void 0
+          allIcons: isInserterOpen ? getEntityRecords("root", "icon") : void 0
         };
       },
       [isInserterOpen, icon4]
@@ -40889,7 +40896,7 @@ ${js}
       try {
         const base = baseUrl || (typeof window !== "undefined" ? window.location.origin : "https://wordpress.org");
         return new URL(url, base);
-      } catch (error) {
+      } catch {
         return null;
       }
     };
@@ -41173,7 +41180,7 @@ ${js}
           );
           onPageCreated(pageLink);
         }
-      } catch (error) {
+      } catch {
         createErrorNotice(
           (0, import_i18n133.__)("Failed to create page. Please try again."),
           {
@@ -41589,7 +41596,7 @@ ${js}
       } else {
         isExternal = true;
       }
-    } catch (e2) {
+    } catch {
       isExternal = true;
     }
     return { displayUrl, isExternal };
@@ -45657,7 +45664,7 @@ ${js}
       if (!hasRecursionError && selectedPattern?.blocks) {
         try {
           parsePatternDependencies2(selectedPattern);
-        } catch (error) {
+        } catch {
           setHasRecursionError(true);
           return;
         }
@@ -61453,10 +61460,6 @@ ${js}
       query: {
         type: "object",
         default: {}
-      },
-      isSearchFieldHidden: {
-        type: "boolean",
-        default: false
       }
     },
     supports: {
@@ -61545,7 +61548,6 @@ ${js}
       buttonText,
       buttonPosition,
       buttonUseIcon,
-      isSearchFieldHidden,
       style: style2
     } = attributes2;
     const wasJustInsertedIntoNavigationBlock = (0, import_data131.useSelect)(
@@ -61600,27 +61602,13 @@ ${js}
     const isButtonPositionOutside = "button-outside" === buttonPosition;
     const hasNoButton = "no-button" === buttonPosition;
     const hasOnlyButton = "button-only" === buttonPosition;
+    const isSearchFieldHidden = hasOnlyButton && !isSelected;
     const searchFieldRef = (0, import_element118.useRef)();
     const buttonRef = (0, import_element118.useRef)();
     const units = (0, import_components146.__experimentalUseCustomUnits)({
       availableUnits: ["%", "px"],
       defaultValues: { "%": PC_WIDTH_DEFAULT, px: PX_WIDTH_DEFAULT }
     });
-    (0, import_element118.useEffect)(() => {
-      if (hasOnlyButton && !isSelected) {
-        setAttributes({
-          isSearchFieldHidden: true
-        });
-      }
-    }, [hasOnlyButton, isSelected, setAttributes]);
-    (0, import_element118.useEffect)(() => {
-      if (!hasOnlyButton || !isSelected) {
-        return;
-      }
-      setAttributes({
-        isSearchFieldHidden: false
-      });
-    }, [hasOnlyButton, isSelected, setAttributes, width]);
     const getBlockClassNames = () => {
       return clsx_default(
         className,
@@ -61630,7 +61618,7 @@ ${js}
         hasOnlyButton ? "wp-block-search__button-only" : void 0,
         !buttonUseIcon && !hasNoButton ? "wp-block-search__text-button" : void 0,
         buttonUseIcon && !hasNoButton ? "wp-block-search__icon-button" : void 0,
-        hasOnlyButton && isSearchFieldHidden ? "wp-block-search__searchfield-hidden" : void 0
+        isSearchFieldHidden ? "wp-block-search__searchfield-hidden" : void 0
       );
     };
     const buttonPositionControls = [
@@ -61711,13 +61699,6 @@ ${js}
           borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
         } : borderProps.style
       };
-      const handleButtonClick = () => {
-        if (hasOnlyButton) {
-          setAttributes({
-            isSearchFieldHidden: !isSearchFieldHidden
-          });
-        }
-      };
       return /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(import_jsx_runtime423.Fragment, { children: [
         buttonUseIcon && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
           "button",
@@ -61726,7 +61707,6 @@ ${js}
             className: buttonClasses,
             style: buttonStyles,
             "aria-label": buttonText ? (0, import_dom10.__unstableStripHTML)(buttonText) : (0, import_i18n222.__)("Search"),
-            onClick: handleButtonClick,
             ref: buttonRef,
             children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(icon_default, { icon: search_default })
           }
@@ -61741,8 +61721,7 @@ ${js}
             placeholder: (0, import_i18n222.__)("Add button text\u2026"),
             withoutInteractiveFormatting: true,
             value: buttonText,
-            onChange: (html) => setAttributes({ buttonText: html }),
-            onClick: handleButtonClick
+            onChange: (html) => setAttributes({ buttonText: html })
           }
         )
       ] });
@@ -61758,8 +61737,7 @@ ${js}
             widthUnit: void 0,
             showLabel: true,
             buttonUseIcon: false,
-            buttonPosition: "button-outside",
-            isSearchFieldHidden: false
+            buttonPosition: "button-outside"
           });
         },
         dropdownMenuProps,
@@ -61794,8 +61772,7 @@ ${js}
               label: (0, import_i18n222.__)("Button position"),
               onDeselect: () => {
                 setAttributes({
-                  buttonPosition: "button-outside",
-                  isSearchFieldHidden: false
+                  buttonPosition: "button-outside"
                 });
               },
               isShownByDefault: true,
@@ -61807,8 +61784,7 @@ ${js}
                   label: (0, import_i18n222.__)("Button position"),
                   onChange: (value) => {
                     setAttributes({
-                      buttonPosition: value,
-                      isSearchFieldHidden: value === "button-only"
+                      buttonPosition: value
                     });
                   },
                   options: buttonPositionControls

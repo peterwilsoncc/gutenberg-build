@@ -3587,10 +3587,10 @@ var wp;
     document.head.appendChild(style);
   }
   var resets_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d641b7e3ed']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='16af8ff13f']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "d641b7e3ed");
-    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{color:var(--wpds-color-fg-content-neutral,#1e1e1e);margin:0}}"));
+    style.setAttribute("data-wp-hash", "16af8ff13f");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{margin:0}}"));
     document.head.appendChild(style);
   }
   var style_default2 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed", "title": "_3c83b3f0225d6364__title" };
@@ -3607,10 +3607,10 @@ var wp;
 
   // packages/ui/build-module/card/header.mjs
   var import_element6 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d641b7e3ed']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='16af8ff13f']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "d641b7e3ed");
-    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{color:var(--wpds-color-fg-content-neutral,#1e1e1e);margin:0}}"));
+    style.setAttribute("data-wp-hash", "16af8ff13f");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{margin:0}}"));
     document.head.appendChild(style);
   }
   var style_default3 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed", "title": "_3c83b3f0225d6364__title" };
@@ -3628,10 +3628,10 @@ var wp;
 
   // packages/ui/build-module/card/content.mjs
   var import_element7 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d641b7e3ed']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='16af8ff13f']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "d641b7e3ed");
-    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{color:var(--wpds-color-fg-content-neutral,#1e1e1e);margin:0}}"));
+    style.setAttribute("data-wp-hash", "16af8ff13f");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{margin:0}}"));
     document.head.appendChild(style);
   }
   var style_default4 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed", "title": "_3c83b3f0225d6364__title" };
@@ -3649,10 +3649,10 @@ var wp;
 
   // packages/ui/build-module/card/full-bleed.mjs
   var import_element8 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d641b7e3ed']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='16af8ff13f']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "d641b7e3ed");
-    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{color:var(--wpds-color-fg-content-neutral,#1e1e1e);margin:0}}"));
+    style.setAttribute("data-wp-hash", "16af8ff13f");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{margin:0}}"));
     document.head.appendChild(style);
   }
   var style_default5 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed", "title": "_3c83b3f0225d6364__title" };
@@ -3676,20 +3676,33 @@ var wp;
 
   // packages/ui/build-module/text/text.mjs
   var import_element9 = __toESM(require_element(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='8bc43893d6']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='516f9accb4']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "8bc43893d6");
-    style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._14437cfb77831647__heading-2xl{font-size:var(--wpds-font-size-2xl,32px);line-height:var(--wpds-font-line-height-2xl,40px)}._14437cfb77831647__heading-2xl,._3c78b7fa9b4072dd__heading-xl{font-family:var(--wpds-font-family-heading,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-font-weight-medium,499)}._3c78b7fa9b4072dd__heading-xl{font-size:var(--wpds-font-size-xl,20px);line-height:var(--wpds-font-line-height-md,24px)}.aa58f227716bcde2__heading-lg{font-size:var(--wpds-font-size-lg,15px)}.aa58f227716bcde2__heading-lg,.fc4da56d8dfe52c4__heading-md{font-family:var(--wpds-font-family-heading,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-font-weight-medium,499);line-height:var(--wpds-font-line-height-sm,20px)}.fc4da56d8dfe52c4__heading-md{font-size:var(--wpds-font-size-md,13px)}.a9b78c7c82e8dff7__heading-sm{font-family:var(--wpds-font-family-heading,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-font-size-xs,11px);font-weight:var(--wpds-font-weight-medium,499);line-height:var(--wpds-font-line-height-xs,16px);text-transform:uppercase}._305ff559e52180d5__body-xl{font-size:var(--wpds-font-size-xl,20px);line-height:var(--wpds-font-line-height-xl,32px)}._305ff559e52180d5__body-xl,.ca1aa3fc2029e958__body-lg{font-family:var(--wpds-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-font-weight-regular,400)}.ca1aa3fc2029e958__body-lg{font-size:var(--wpds-font-size-lg,15px);line-height:var(--wpds-font-line-height-md,24px)}._131101940be12424__body-md{font-size:var(--wpds-font-size-md,13px);line-height:var(--wpds-font-line-height-sm,20px)}._0e8d87a42c1f75fa__body-sm,._131101940be12424__body-md{font-family:var(--wpds-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-font-weight-regular,400)}._0e8d87a42c1f75fa__body-sm{font-size:var(--wpds-font-size-sm,12px);line-height:var(--wpds-font-line-height-xs,16px)}}'));
+    style.setAttribute("data-wp-hash", "516f9accb4");
+    style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._83ed8a8da5dd50ea__text{margin:0}._14437cfb77831647__heading-2xl{--_gcd-heading-font-size:var(--wpds-font-size-2xl,32px);font-size:var(--wpds-font-size-2xl,32px);line-height:var(--wpds-font-line-height-2xl,40px)}._14437cfb77831647__heading-2xl,._3c78b7fa9b4072dd__heading-xl{font-family:var(--wpds-font-family-heading,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-font-weight-medium,499)}._3c78b7fa9b4072dd__heading-xl{--_gcd-heading-font-size:var(--wpds-font-size-xl,20px);font-size:var(--wpds-font-size-xl,20px);line-height:var(--wpds-font-line-height-md,24px)}.aa58f227716bcde2__heading-lg{--_gcd-heading-font-size:var(--wpds-font-size-lg,15px);font-size:var(--wpds-font-size-lg,15px)}.aa58f227716bcde2__heading-lg,.fc4da56d8dfe52c4__heading-md{font-family:var(--wpds-font-family-heading,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-font-weight-medium,499);line-height:var(--wpds-font-line-height-sm,20px)}.fc4da56d8dfe52c4__heading-md{--_gcd-heading-font-size:var(--wpds-font-size-md,13px);font-size:var(--wpds-font-size-md,13px)}.a9b78c7c82e8dff7__heading-sm{--_gcd-heading-font-size:var(--wpds-font-size-xs,11px);font-family:var(--wpds-font-family-heading,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-font-size-xs,11px);font-weight:var(--wpds-font-weight-medium,499);line-height:var(--wpds-font-line-height-xs,16px);text-transform:uppercase}._305ff559e52180d5__body-xl{--_gcd-p-font-size:var(--wpds-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-font-line-height-xl,32px);font-size:var(--wpds-font-size-xl,20px);line-height:var(--wpds-font-line-height-xl,32px)}._305ff559e52180d5__body-xl,.ca1aa3fc2029e958__body-lg{font-family:var(--wpds-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-font-weight-regular,400)}.ca1aa3fc2029e958__body-lg{--_gcd-p-font-size:var(--wpds-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-font-line-height-md,24px);font-size:var(--wpds-font-size-lg,15px);line-height:var(--wpds-font-line-height-md,24px)}._131101940be12424__body-md{--_gcd-p-font-size:var(--wpds-font-size-md,13px);--_gcd-p-line-height:var(--wpds-font-line-height-sm,20px);font-size:var(--wpds-font-size-md,13px);line-height:var(--wpds-font-line-height-sm,20px)}._0e8d87a42c1f75fa__body-sm,._131101940be12424__body-md{font-family:var(--wpds-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-font-weight-regular,400)}._0e8d87a42c1f75fa__body-sm{--_gcd-p-font-size:var(--wpds-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-font-line-height-xs,16px);font-size:var(--wpds-font-size-sm,12px);line-height:var(--wpds-font-line-height-xs,16px)}}'));
     document.head.appendChild(style);
   }
-  var style_default6 = { "heading-2xl": "_14437cfb77831647__heading-2xl", "heading-xl": "_3c78b7fa9b4072dd__heading-xl", "heading-lg": "aa58f227716bcde2__heading-lg", "heading-md": "fc4da56d8dfe52c4__heading-md", "heading-sm": "a9b78c7c82e8dff7__heading-sm", "body-xl": "_305ff559e52180d5__body-xl", "body-lg": "ca1aa3fc2029e958__body-lg", "body-md": "_131101940be12424__body-md", "body-sm": "_0e8d87a42c1f75fa__body-sm" };
+  var style_default6 = { "text": "_83ed8a8da5dd50ea__text", "heading-2xl": "_14437cfb77831647__heading-2xl", "heading-xl": "_3c78b7fa9b4072dd__heading-xl", "heading-lg": "aa58f227716bcde2__heading-lg", "heading-md": "fc4da56d8dfe52c4__heading-md", "heading-sm": "a9b78c7c82e8dff7__heading-sm", "body-xl": "_305ff559e52180d5__body-xl", "body-lg": "ca1aa3fc2029e958__body-lg", "body-md": "_131101940be12424__body-md", "body-sm": "_0e8d87a42c1f75fa__body-sm" };
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='3bd1d35622']")) {
+    const style = document.createElement("style");
+    style.setAttribute("data-wp-hash", "3bd1d35622");
+    style.appendChild(document.createTextNode("._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,#0000);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 #0000);color:var(--_gcd-input-color,var(--wpds-color-fg-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,#0000);border-color:var(--_gcd-input-border-color-disabled,#0000);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-fg-interactive-neutral-disabled,#8a8a8a))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-fg-interactive-neutral-disabled,#8a8a8a))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid #0000)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-fg-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-font-weight-medium,499));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid #0000);transition:var(--_gcd-a-transition,none)}"));
+    document.head.appendChild(style);
+  }
+  var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
   var Text = (0, import_element9.forwardRef)(function Text2({ variant = "body-md", render: render4, className, ...props }, ref) {
     const element = useRender({
       render: render4,
       defaultTagName: "span",
       ref,
       props: mergeProps(props, {
-        className: clsx_default(style_default6[variant], className)
+        className: clsx_default(
+          style_default6.text,
+          variant.startsWith("heading-") && global_css_defense_default.heading,
+          variant.startsWith("body-") && global_css_defense_default.p,
+          style_default6[variant],
+          className
+        )
       })
     });
     return element;
@@ -3697,10 +3710,10 @@ var wp;
 
   // packages/ui/build-module/card/title.mjs
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d641b7e3ed']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='16af8ff13f']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "d641b7e3ed");
-    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{color:var(--wpds-color-fg-content-neutral,#1e1e1e);margin:0}}"));
+    style.setAttribute("data-wp-hash", "16af8ff13f");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e0e0e0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._3c83b3f0225d6364__title{margin:0}}"));
     document.head.appendChild(style);
   }
   var style_default7 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed", "title": "_3c83b3f0225d6364__title" };
@@ -4157,10 +4170,10 @@ var wp;
     document.head.appendChild(style);
   }
   var style_default8 = { "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='4acd2b57a1']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='2a5ab8f3a7']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "4acd2b57a1");
-    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-utilities{._08e8a2e44959f892__outset-ring--focus,._970d04df7376df67__outset-ring--focus-within-except-active,.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible,.cd83dfc2126a0846__outset-ring--focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active,.ecadb9e080e2dfa5__outset-ring--focus-parent-visible{@media not (prefers-reduced-motion){transition:outline .1s ease-out}outline-color:#0000;outline-offset:1px;outline-style:solid;outline-width:0}._08e8a2e44959f892__outset-ring--focus:focus,._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active),:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{outline-color:var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}"));
+    style.setAttribute("data-wp-hash", "2a5ab8f3a7");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-utilities{._08e8a2e44959f892__outset-ring--focus,._970d04df7376df67__outset-ring--focus-within-except-active,.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible,.cd83dfc2126a0846__outset-ring--focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active,.ecadb9e080e2dfa5__outset-ring--focus-parent-visible{@media not (prefers-reduced-motion){--_gcd-a-transition:outline 0.1s ease-out;transition:outline .1s ease-out}outline:0 solid #0000;outline-offset:1px}._08e8a2e44959f892__outset-ring--focus:focus,._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active),:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9))}}"));
     document.head.appendChild(style);
   }
   var focus_default = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible" };
@@ -11484,7 +11497,7 @@ var wp;
 
   // packages/global-styles-ui/build-module/hooks.mjs
   k([a11y_default]);
-  function useStyle2(path, blockName, readFrom = "merged", shouldDecodeEncode = true) {
+  function useStyle2(path, blockName, readFrom = "merged", shouldDecodeEncode = true, state) {
     const { user, base, merged, onChange } = (0, import_element35.useContext)(GlobalStylesContext);
     let sourceValue = merged;
     if (readFrom === "base") {
@@ -11492,21 +11505,42 @@ var wp;
     } else if (readFrom === "user") {
       sourceValue = user;
     }
-    const styleValue = (0, import_element35.useMemo)(
-      () => getStyle(sourceValue, path, blockName, shouldDecodeEncode),
-      [sourceValue, path, blockName, shouldDecodeEncode]
-    );
+    const styleValue = (0, import_element35.useMemo)(() => {
+      const rawValue = getStyle(
+        sourceValue,
+        path,
+        blockName,
+        shouldDecodeEncode
+      );
+      if (state) {
+        return rawValue?.[state] ?? {};
+      }
+      return rawValue;
+    }, [sourceValue, path, blockName, shouldDecodeEncode, state]);
     const setStyleValue = (0, import_element35.useCallback)(
       (newValue) => {
+        let valueToSet = newValue;
+        if (state) {
+          const fullCurrentValue = getStyle(
+            user,
+            path,
+            blockName,
+            false
+          );
+          valueToSet = {
+            ...fullCurrentValue,
+            [state]: newValue
+          };
+        }
         const newGlobalStyles = setStyle(
           user,
           path,
-          newValue,
+          valueToSet,
           blockName
         );
         onChange(newGlobalStyles);
       },
-      [user, onChange, path, blockName]
+      [user, onChange, path, blockName, state]
     );
     return [styleValue, setStyleValue];
   }
@@ -23925,7 +23959,7 @@ var wp;
         let error2 = {};
         try {
           error2 = await errorResponse.json();
-        } catch (e2) {
+        } catch {
         }
         const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n66.__)("An error occurred while creating the site export.");
         createErrorNotice(errorMessage, { type: "snackbar" });
@@ -27997,6 +28031,7 @@ var wp;
                 ),
                 {
                   div: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("div", { "aria-hidden": true }),
+                  // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
                   CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
                     import_components95.SelectControl,
                     {
@@ -33428,6 +33463,10 @@ If there's a particular need for this, please submit a feature request at https:
           ...currentField,
           // Deactivate validation for filters.
           isValid: {},
+          // Filter controls are always enabled.
+          isDisabled: () => false,
+          // Filter controls are always visible.
+          isVisible: () => true,
           // Configure getValue/setValue as if Item was a plain object.
           getValue: ({ item }) => item[currentField.id],
           setValue: ({ value }) => ({
@@ -36793,6 +36832,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { getValue, setValue, label, description, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const onChangeControl = (0, import_element110.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
@@ -36808,7 +36848,8 @@ If there's a particular need for this, please submit a feature request at https:
         label,
         help: description,
         checked: getValue({ item: data }),
-        onChange: onChangeControl
+        onChange: onChangeControl,
+        disabled: disabled2
       }
     );
   }
@@ -36891,6 +36932,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
     const { id, label, description, getValue, setValue } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
     const onChangeValue = (0, import_element112.useCallback)(
@@ -36929,7 +36971,8 @@ If there's a particular need for this, please submit a feature request at https:
               min: 1,
               step: 1,
               value: relValue,
-              onChange: onChangeValue
+              onChange: onChangeValue,
+              disabled: disabled2
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
@@ -36941,7 +36984,8 @@ If there's a particular need for this, please submit a feature request at https:
               value: unit,
               options,
               onChange: onChangeUnit,
-              hideLabelFromVision: true
+              hideLabelFromVision: true,
+              disabled: disabled2
             }
           )
         ] })
@@ -36979,6 +37023,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { compact } = config2 || {};
     const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element113.useState)(() => {
@@ -37078,7 +37123,8 @@ If there's a particular need for this, please submit a feature request at https:
               label: (0, import_i18n104.__)("Date time"),
               hideLabelFromVision: true,
               value: formatDateTime(value),
-              onChange: handleManualDateTimeChange
+              onChange: handleManualDateTimeChange,
+              disabled: disabled2
             }
           ),
           !compact && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
@@ -37090,7 +37136,8 @@ If there's a particular need for this, please submit a feature request at https:
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
               timeZone: timezoneString || void 0,
-              weekStartsOn
+              weekStartsOn,
+              disabled: disabled2
             }
           )
         ] })
@@ -37339,6 +37386,7 @@ If there's a particular need for this, please submit a feature request at https:
       isValid: isValid2,
       format: fieldFormat
     } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const [selectedPresetId, setSelectedPresetId] = (0, import_element114.useState)(
       null
     );
@@ -37432,6 +37480,8 @@ If there's a particular need for this, please submit a feature request at https:
                           variant: "tertiary",
                           isPressed: isSelected2,
                           size: "small",
+                          disabled: disabled2,
+                          accessibleWhenDisabled: true,
                           onClick: () => handlePresetClick(preset),
                           children: preset.label
                         },
@@ -37445,8 +37495,8 @@ If there's a particular need for this, please submit a feature request at https:
                         variant: "tertiary",
                         isPressed: !selectedPresetId,
                         size: "small",
-                        disabled: !!selectedPresetId,
-                        accessibleWhenDisabled: false,
+                        disabled: !!selectedPresetId || disabled2,
+                        accessibleWhenDisabled: true,
                         children: (0, import_i18n105.__)("Custom")
                       }
                     )
@@ -37463,7 +37513,8 @@ If there's a particular need for this, please submit a feature request at https:
                   hideLabelFromVision: true,
                   value,
                   onChange: handleManualDateChange,
-                  required: !!field.isValid?.required
+                  required: !!field.isValid?.required,
+                  disabled: disabled2
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
@@ -37475,7 +37526,8 @@ If there's a particular need for this, please submit a feature request at https:
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
                   timeZone: timezoneString || void 0,
-                  weekStartsOn
+                  weekStartsOn,
+                  disabled: disabled2
                 }
               )
             ] })
@@ -37500,6 +37552,7 @@ If there's a particular need for this, please submit a feature request at https:
       setValue,
       format: fieldFormat
     } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     let value;
     const fieldValue = getValue({ item: data });
     if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -37628,6 +37681,8 @@ If there's a particular need for this, please submit a feature request at https:
                           variant: "tertiary",
                           isPressed: isSelected2,
                           size: "small",
+                          disabled: disabled2,
+                          accessibleWhenDisabled: true,
                           onClick: () => handlePresetClick(preset),
                           children: preset.label
                         },
@@ -37641,8 +37696,8 @@ If there's a particular need for this, please submit a feature request at https:
                         variant: "tertiary",
                         isPressed: !selectedPresetId,
                         size: "small",
-                        accessibleWhenDisabled: false,
-                        disabled: !!selectedPresetId,
+                        accessibleWhenDisabled: true,
+                        disabled: !!selectedPresetId || disabled2,
                         children: (0, import_i18n105.__)("Custom")
                       }
                     )
@@ -37667,7 +37722,8 @@ If there's a particular need for this, please submit a feature request at https:
                         hideLabelFromVision: true,
                         value: value?.[0],
                         onChange: (newValue) => handleManualDateChange("from", newValue),
-                        required: !!field.isValid?.required
+                        required: !!field.isValid?.required,
+                        disabled: disabled2
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
@@ -37680,7 +37736,8 @@ If there's a particular need for this, please submit a feature request at https:
                         hideLabelFromVision: true,
                         value: value?.[1],
                         onChange: (newValue) => handleManualDateChange("to", newValue),
-                        required: !!field.isValid?.required
+                        required: !!field.isValid?.required,
+                        disabled: disabled2
                       }
                     )
                   ]
@@ -37695,7 +37752,8 @@ If there's a particular need for this, please submit a feature request at https:
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
                   timeZone: timezone.string || void 0,
-                  weekStartsOn
+                  weekStartsOn,
+                  disabled: disabled2
                 }
               )
             ] })
@@ -37766,6 +37824,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const isMultiple = type === "array";
     const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
     const onChangeControl = (0, import_element115.useCallback)(
@@ -37792,7 +37851,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         __next40pxDefaultSize: true,
         hideLabelFromVision,
-        multiple: isMultiple
+        multiple: isMultiple,
+        disabled: disabled2
       }
     );
   }
@@ -37833,6 +37893,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
+    const disabled2 = field.isDisabled({ item: data, field });
     const onChangeControl = (0, import_element116.useCallback)(
       (newValue) => onChange(
         setValue({
@@ -37857,6 +37918,7 @@ If there's a particular need for this, please submit a feature request at https:
         type,
         prefix: prefix2,
         suffix,
+        disabled: disabled2,
         pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
         maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
@@ -38022,6 +38084,7 @@ If there's a particular need for this, please submit a feature request at https:
     const step = Math.pow(10, Math.abs(decimals) * -1);
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
+    const disabled2 = field.isDisabled({ item: data, field });
     const onChangeControl = (0, import_element117.useCallback)(
       (newValue) => {
         onChange(
@@ -38078,7 +38141,8 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         step,
         min: isValid2.min ? isValid2.min.constraint : void 0,
-        max: isValid2.max ? isValid2.max.constraint : void 0
+        max: isValid2.max ? isValid2.max.constraint : void 0,
+        disabled: disabled2
       }
     );
   }
@@ -38109,6 +38173,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const { elements: elements2, isLoading } = useElements({
       elements: field.elements,
       getElements: field.getElements
@@ -38132,7 +38197,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         options: elements2,
         selected: value,
-        hideLabelFromVision
+        hideLabelFromVision,
+        disabled: disabled2
       }
     );
   }
@@ -38181,6 +38247,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const onChangeControl = (0, import_element120.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
@@ -38196,7 +38263,8 @@ If there's a particular need for this, please submit a feature request at https:
         label,
         help: description,
         checked: getValue({ item: data }),
-        onChange: onChangeControl
+        onChange: onChangeControl,
+        disabled: disabled2
       }
     );
   }
@@ -38216,6 +38284,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { rows = 4 } = config2 || {};
+    const disabled2 = field.isDisabled({ item: data, field });
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data });
     const onChangeControl = (0, import_element121.useCallback)(
@@ -38234,6 +38303,7 @@ If there's a particular need for this, please submit a feature request at https:
         help: description,
         onChange: onChangeControl,
         rows,
+        disabled: disabled2,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
         maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
         __next40pxDefaultSize: true,
@@ -38256,6 +38326,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { getValue, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const value = getValue({ item: data });
     const onChangeControl = (0, import_element122.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -38289,7 +38360,8 @@ If there's a particular need for this, please submit a feature request at https:
           import_components124.__experimentalToggleGroupControlOption,
           {
             label: el.label,
-            value: el.value
+            value: el.value,
+            disabled: disabled2
           },
           el.value
         ))
@@ -38312,6 +38384,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
+    const disabled2 = field.isDisabled({ item: data, field });
     const { elements: elements2, isLoading } = useElements({
       elements: field.elements,
       getElements: field.getElements
@@ -38351,6 +38424,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         placeholder,
         suggestions: elements2?.map((element) => element.value),
+        disabled: disabled2,
         __experimentalValidateInput: (token) => {
           if (field.isValid?.elements && elements2) {
             return elements2.some(
@@ -38394,7 +38468,8 @@ If there's a particular need for this, please submit a feature request at https:
   var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components126.privateApis);
   var ColorPickerDropdown = ({
     color,
-    onColorChange
+    onColorChange,
+    disabled: disabled2
   }) => {
     const validColor = color && w(color).isValid() ? color : "#ffffff";
     return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
@@ -38408,6 +38483,8 @@ If there's a particular need for this, please submit a feature request at https:
             onClick: onToggle,
             "aria-label": (0, import_i18n107.__)("Open color picker"),
             size: "small",
+            disabled: disabled2,
+            accessibleWhenDisabled: true,
             icon: () => /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components126.ColorIndicator, { colorValue: validColor })
           }
         ),
@@ -38431,6 +38508,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
+    const disabled2 = field.isDisabled({ item: data, field });
     const value = field.getValue({ item: data }) || "";
     const handleColorChange = (0, import_element124.useCallback)(
       (newColor) => {
@@ -38457,11 +38535,13 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: handleInputChange,
         hideLabelFromVision,
         type: "text",
+        disabled: disabled2,
         prefix: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components126.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
           ColorPickerDropdown,
           {
             color: value,
-            onColorChange: handleColorChange
+            onColorChange: handleColorChange,
+            disabled: disabled2
           }
         ) })
       }
@@ -38482,6 +38562,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const [isVisible2, setIsVisible] = (0, import_element125.useState)(false);
+    const disabled2 = field.isDisabled({ item: data, field });
     const toggleVisibility = (0, import_element125.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
@@ -38502,7 +38583,9 @@ If there's a particular need for this, please submit a feature request at https:
               icon: isVisible2 ? unseen_default : seen_default,
               onClick: toggleVisibility,
               size: "small",
-              label: isVisible2 ? (0, import_i18n108.__)("Hide password") : (0, import_i18n108.__)("Show password")
+              label: isVisible2 ? (0, import_i18n108.__)("Hide password") : (0, import_i18n108.__)("Show password"),
+              disabled: disabled2,
+              accessibleWhenDisabled: true
             }
           ) })
         }
@@ -39592,6 +39675,7 @@ If there's a particular need for this, please submit a feature request at https:
         getElements: field.getElements,
         hasElements: hasElements(field),
         isVisible: field.isVisible,
+        isDisabled: typeof field.isDisabled === "function" ? field.isDisabled : () => !!field.isDisabled,
         enableHiding: field.enableHiding ?? true,
         readOnly: field.readOnly ?? false,
         // The type provides defaults for the following props

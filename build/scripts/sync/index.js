@@ -9269,7 +9269,22 @@ var wp;
   // packages/sync/build-module/providers/http-polling/config.mjs
   var import_hooks = __toESM(require_hooks(), 1);
   var DEFAULT_CLIENT_LIMIT_PER_ROOM = 3;
-  var MAX_ERROR_BACKOFF_IN_MS = 30 * 1e3;
+  var ERROR_RETRY_DELAYS_SOLO_MS = [
+    2e3,
+    4e3,
+    8e3,
+    12e3
+    // Solo: 26s total retry time solo before dialog
+  ];
+  var ERROR_RETRY_DELAYS_WITH_COLLABORATORS_MS = [
+    1e3,
+    2e3,
+    4e3,
+    8e3
+    // With collaborators: 15s total retry time before dialog
+  ];
+  var DISCONNECT_DIALOG_RETRY_MS = 3e4;
+  var MANUAL_RETRY_INTERVAL_MS = 15e3;
   var MAX_UPDATE_SIZE_IN_BYTES = 1 * 1024 * 1024;
   var POLLING_INTERVAL_IN_MS = (0, import_hooks.applyFilters)(
     "sync.pollingManager.pollingInterval",
@@ -9518,7 +9533,9 @@ var wp;
     return false;
   }
   var areListenersRegistered = false;
+  var consecutiveFailures = 0;
   var hasCheckedConnectionLimit = false;
+  var isManualRetry = false;
   var hasCollaborators = false;
   var isActiveBrowser = "visible" === document.visibilityState;
   var isPolling = false;
@@ -9576,6 +9593,8 @@ var wp;
       };
       try {
         const { rooms } = await postSyncUpdate(payload);
+        consecutiveFailures = 0;
+        isManualRetry = false;
         roomStates.forEach((state) => {
           state.onStatusChange({ status: "connected" });
         });
@@ -9604,9 +9623,23 @@ var wp;
               state.updateQueue.resume();
             });
           }
-          const responseUpdates = room.updates.map((update) => roomState.processDocUpdate(update)).filter(
-            (update) => Boolean(update)
-          );
+          const responseUpdates = [];
+          for (const update of room.updates) {
+            try {
+              const response = roomState.processDocUpdate(update);
+              if (response) {
+                responseUpdates.push(response);
+              }
+            } catch (error) {
+              roomState.log(
+                "Failed to apply sync update",
+                { error, update },
+                "error",
+                true
+                // force
+              );
+            }
+          }
           roomState.updateQueue.addBulk(responseUpdates);
           if (room.should_compact) {
             roomState.log("Server requested compaction update");
@@ -9631,10 +9664,17 @@ var wp;
           pollInterval = POLLING_INTERVAL_BACKGROUND_TAB_IN_MS;
         }
       } catch (error) {
-        pollInterval = Math.min(
-          pollInterval * 2,
-          MAX_ERROR_BACKOFF_IN_MS
-        );
+        consecutiveFailures++;
+        const retrySchedule = hasCollaborators ? ERROR_RETRY_DELAYS_WITH_COLLABORATORS_MS : ERROR_RETRY_DELAYS_SOLO_MS;
+        if (consecutiveFailures <= retrySchedule.length) {
+          pollInterval = retrySchedule[consecutiveFailures - 1];
+        } else {
+          pollInterval = DISCONNECT_DIALOG_RETRY_MS;
+        }
+        if (isManualRetry) {
+          pollInterval = MANUAL_RETRY_INTERVAL_MS;
+          isManualRetry = false;
+        }
         for (const room of payload.rooms) {
           if (!roomStates.has(room.room)) {
             continue;
@@ -9648,17 +9688,20 @@ var wp;
           }
           state.log(
             "Error posting sync update, will retry with backoff",
-            {
-              error,
-              nextPoll: pollInterval
-            }
+            { error, nextPoll: pollInterval },
+            "error",
+            true
+            // force
           );
         }
         if (!isUnloadPending) {
+          const backgroundRetriesFailed = consecutiveFailures > retrySchedule.length;
           roomStates.forEach((state) => {
             state.onStatusChange({
               status: "disconnected",
               canManuallyRetry: true,
+              consecutiveFailures,
+              backgroundRetriesFailed,
               willAutoRetryInMs: pollInterval
             });
           });
@@ -9768,10 +9811,11 @@ var wp;
       );
       areListenersRegistered = false;
       hasCheckedConnectionLimit = false;
+      consecutiveFailures = 0;
     }
   }
   function retryNow() {
-    pollInterval = POLLING_INTERVAL_IN_MS * 2;
+    isManualRetry = true;
     if (pollingTimeoutId) {
       clearTimeout(pollingTimeoutId);
       pollingTimeoutId = null;
@@ -9847,16 +9891,20 @@ var wp;
     /**
      * Log debug messages if debugging is enabled.
      *
-     * @param message The debug message
-     * @param debug   Additional debug information
+     * @param message    The debug message
+     * @param debug      Additional debug information
+     * @param errorLevel The console method to use for logging
+     * @param force      Whether to force logging regardless of debug setting
      */
-    log = (message, debug = {}) => {
-      if (this.options.debug) {
-        console.log(`[${this.constructor.name}]: ${message}`, {
-          room: this.options.room,
-          ...debug
-        });
+    log = (message, debug = {}, errorLevel = "log", force = false) => {
+      if (!this.options.debug && !force) {
+        return;
       }
+      const logFn = console[errorLevel] || console.log;
+      logFn(`[${this.constructor.name}]: ${message}`, {
+        room: this.options.room,
+        ...debug
+      });
     };
     /**
      * Handle synchronization events from the polling manager.
@@ -10235,7 +10283,7 @@ var wp;
       applyUpdateV2(ydoc, yupdate);
       ydoc.clientID = pseudoRandomID();
       return ydoc;
-    } catch (e) {
+    } catch {
       return null;
     }
   }
@@ -10267,6 +10315,10 @@ var wp;
       }
       if (entityStates.has(entityId)) {
         log("loadEntity", "already loaded", entityId);
+        return;
+      }
+      if (false === syncConfig.shouldSync?.(objectType, objectId)) {
+        log("loadEntity", "shouldSync false, skipping", entityId);
         return;
       }
       log("loadEntity", "loading", entityId);
@@ -10361,6 +10413,10 @@ var wp;
       }
       if (collectionStates.has(objectType)) {
         log("loadCollection", "already loaded", entityId);
+        return;
+      }
+      if (false === syncConfig.shouldSync?.(objectType, null)) {
+        log("loadCollection", "shouldSync false, skipping", entityId);
         return;
       }
       log("loadCollection", "loading", entityId);

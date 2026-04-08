@@ -1149,6 +1149,7 @@ button.font-library__upload-area {
   background: #fff;
   padding: 12px;
   border-top: 1px solid #ddd;
+  box-sizing: border-box;
 }
 
 .global-styles-ui-variations_item {
@@ -3534,7 +3535,7 @@ div.dataviews-view-list {
 
 .dataviews-view-activity {
   margin: 0 0 auto;
-  padding: 8px 24px;
+  padding: 0 24px;
 }
 
 .dataviews-view-activity .dataviews-view-activity__group-header {
@@ -3631,7 +3632,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-compact .dataviews-view-activity__item-type {
-  width: 8px;
+  width: 12px;
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-compact .dataviews-view-activity__item-type::before {
@@ -4744,6 +4745,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   color: #949494;
   word-break: break-all;
   margin-top: 8px;
+}
+
+.editor-autocompleters__link {
+  white-space: nowrap;
+  gap: 8px;
 }
 
 .editor-autocompleters__user .editor-autocompleters__no-avatar::before {
