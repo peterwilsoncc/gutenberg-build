@@ -1911,7 +1911,7 @@ var wp;
           unlock(store.store).registerPrivateSelectors(
             unlock(parent).privateSelectorsOf(name)
           );
-        } catch {
+        } catch (e) {
         }
       }
       return store;
@@ -1997,14 +1997,14 @@ var wp;
       privateActionsOf: (name) => {
         try {
           return unlock(stores[name].store).privateActions;
-        } catch {
+        } catch (e) {
           return {};
         }
       },
       privateSelectorsOf: (name) => {
         try {
           return unlock(stores[name].store).privateSelectors;
-        } catch {
+        } catch (e) {
           return {};
         }
       }
@@ -2069,7 +2069,7 @@ var wp;
     storage2 = window.localStorage;
     storage2.setItem("__wpDataTestLocalStorage", "");
     storage2.removeItem("__wpDataTestLocalStorage");
-  } catch {
+  } catch (error) {
     storage2 = object_default;
   }
   var default_default = storage2;
@@ -2094,7 +2094,7 @@ var wp;
         } else {
           try {
             data = JSON.parse(persisted);
-          } catch {
+          } catch (error) {
             data = {};
           }
         }

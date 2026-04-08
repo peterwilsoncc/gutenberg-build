@@ -5168,7 +5168,6 @@ function DataViewsPagination() {
               ),
               {
                 div: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("div", { "aria-hidden": true }),
-                // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
                 CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
                   import_components13.SelectControl,
                   {
@@ -10600,10 +10599,6 @@ function InputWidget({
         ...currentField,
         // Deactivate validation for filters.
         isValid: {},
-        // Filter controls are always enabled.
-        isDisabled: () => false,
-        // Filter controls are always visible.
-        isVisible: () => true,
         // Configure getValue/setValue as if Item was a plain object.
         getValue: ({ item }) => item[currentField.id],
         setValue: ({ value }) => ({
@@ -13969,7 +13964,6 @@ function Checkbox({
   validity
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const onChangeControl = (0, import_element39.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
@@ -13985,8 +13979,7 @@ function Checkbox({
       label,
       help: description,
       checked: getValue({ item: data }),
-      onChange: onChangeControl,
-      disabled
+      onChange: onChangeControl
     }
   );
 }
@@ -14069,7 +14062,6 @@ function RelativeDateControl({
 }) {
   const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
   const { id, label, description, getValue, setValue } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
   const onChangeValue = (0, import_element41.useCallback)(
@@ -14108,8 +14100,7 @@ function RelativeDateControl({
             min: 1,
             step: 1,
             value: relValue,
-            onChange: onChangeValue,
-            disabled
+            onChange: onChangeValue
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
@@ -14121,8 +14112,7 @@ function RelativeDateControl({
             value: unit,
             options,
             onChange: onChangeUnit,
-            hideLabelFromVision: true,
-            disabled
+            hideLabelFromVision: true
           }
         )
       ] })
@@ -14160,7 +14150,6 @@ function CalendarDateTimeControl({
 }) {
   const { compact } = config || {};
   const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const [calendarMonth, setCalendarMonth] = (0, import_element42.useState)(() => {
@@ -14260,8 +14249,7 @@ function CalendarDateTimeControl({
             label: (0, import_i18n32.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
-            onChange: handleManualDateTimeChange,
-            disabled
+            onChange: handleManualDateTimeChange
           }
         ),
         !compact && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
@@ -14273,8 +14261,7 @@ function CalendarDateTimeControl({
             month: calendarMonth,
             onMonthChange: setCalendarMonth,
             timeZone: timezoneString || void 0,
-            weekStartsOn,
-            disabled
+            weekStartsOn
           }
         )
       ] })
@@ -14523,7 +14510,6 @@ function CalendarDateControl({
     isValid: isValid2,
     format: fieldFormat
   } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const [selectedPresetId, setSelectedPresetId] = (0, import_element43.useState)(
     null
   );
@@ -14617,8 +14603,6 @@ function CalendarDateControl({
                         variant: "tertiary",
                         isPressed: isSelected2,
                         size: "small",
-                        disabled,
-                        accessibleWhenDisabled: true,
                         onClick: () => handlePresetClick(preset),
                         children: preset.label
                       },
@@ -14632,8 +14616,8 @@ function CalendarDateControl({
                       variant: "tertiary",
                       isPressed: !selectedPresetId,
                       size: "small",
-                      disabled: !!selectedPresetId || disabled,
-                      accessibleWhenDisabled: true,
+                      disabled: !!selectedPresetId,
+                      accessibleWhenDisabled: false,
                       children: (0, import_i18n33.__)("Custom")
                     }
                   )
@@ -14650,8 +14634,7 @@ function CalendarDateControl({
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
-                required: !!field.isValid?.required,
-                disabled
+                required: !!field.isValid?.required
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
@@ -14663,8 +14646,7 @@ function CalendarDateControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 timeZone: timezoneString || void 0,
-                weekStartsOn,
-                disabled
+                weekStartsOn
               }
             )
           ] })
@@ -14689,7 +14671,6 @@ function CalendarDateRangeControl({
     setValue,
     format: fieldFormat
   } = field;
-  const disabled = field.isDisabled({ item: data, field });
   let value;
   const fieldValue = getValue({ item: data });
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -14818,8 +14799,6 @@ function CalendarDateRangeControl({
                         variant: "tertiary",
                         isPressed: isSelected2,
                         size: "small",
-                        disabled,
-                        accessibleWhenDisabled: true,
                         onClick: () => handlePresetClick(preset),
                         children: preset.label
                       },
@@ -14833,8 +14812,8 @@ function CalendarDateRangeControl({
                       variant: "tertiary",
                       isPressed: !selectedPresetId,
                       size: "small",
-                      accessibleWhenDisabled: true,
-                      disabled: !!selectedPresetId || disabled,
+                      accessibleWhenDisabled: false,
+                      disabled: !!selectedPresetId,
                       children: (0, import_i18n33.__)("Custom")
                     }
                   )
@@ -14859,8 +14838,7 @@ function CalendarDateRangeControl({
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
-                      required: !!field.isValid?.required,
-                      disabled
+                      required: !!field.isValid?.required
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
@@ -14873,8 +14851,7 @@ function CalendarDateRangeControl({
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
-                      required: !!field.isValid?.required,
-                      disabled
+                      required: !!field.isValid?.required
                     }
                   )
                 ]
@@ -14889,8 +14866,7 @@ function CalendarDateRangeControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 timeZone: timezone.string || void 0,
-                weekStartsOn,
-                disabled
+                weekStartsOn
               }
             )
           ] })
@@ -14961,7 +14937,6 @@ function Select({
   validity
 }) {
   const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
   const onChangeControl = (0, import_element44.useCallback)(
@@ -14988,8 +14963,7 @@ function Select({
       onChange: onChangeControl,
       __next40pxDefaultSize: true,
       hideLabelFromVision,
-      multiple: isMultiple,
-      disabled
+      multiple: isMultiple
     }
   );
 }
@@ -15030,7 +15004,6 @@ function ValidatedText({
 }) {
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
-  const disabled = field.isDisabled({ item: data, field });
   const onChangeControl = (0, import_element45.useCallback)(
     (newValue) => onChange(
       setValue({
@@ -15055,7 +15028,6 @@ function ValidatedText({
       type,
       prefix,
       suffix,
-      disabled,
       pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
       minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
       maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
@@ -15221,7 +15193,6 @@ function ValidatedNumber({
   const step = Math.pow(10, Math.abs(decimals) * -1);
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
-  const disabled = field.isDisabled({ item: data, field });
   const onChangeControl = (0, import_element46.useCallback)(
     (newValue) => {
       onChange(
@@ -15278,8 +15249,7 @@ function ValidatedNumber({
       hideLabelFromVision,
       step,
       min: isValid2.min ? isValid2.min.constraint : void 0,
-      max: isValid2.max ? isValid2.max.constraint : void 0,
-      disabled
+      max: isValid2.max ? isValid2.max.constraint : void 0
     }
   );
 }
@@ -15310,7 +15280,6 @@ function Radio({
   validity
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const { elements, isLoading } = useElements({
     elements: field.elements,
     getElements: field.getElements
@@ -15334,8 +15303,7 @@ function Radio({
       onChange: onChangeControl,
       options: elements,
       selected: value,
-      hideLabelFromVision,
-      disabled
+      hideLabelFromVision
     }
   );
 }
@@ -15384,7 +15352,6 @@ function Toggle({
   validity
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const onChangeControl = (0, import_element49.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
@@ -15400,8 +15367,7 @@ function Toggle({
       label,
       help: description,
       checked: getValue({ item: data }),
-      onChange: onChangeControl,
-      disabled
+      onChange: onChangeControl
     }
   );
 }
@@ -15421,7 +15387,6 @@ function Textarea({
   validity
 }) {
   const { rows = 4 } = config || {};
-  const disabled = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
   const onChangeControl = (0, import_element50.useCallback)(
@@ -15440,7 +15405,6 @@ function Textarea({
       help: description,
       onChange: onChangeControl,
       rows,
-      disabled,
       minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
       maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
       __next40pxDefaultSize: true,
@@ -15463,7 +15427,6 @@ function ToggleGroup({
   validity
 }) {
   const { getValue, setValue, isValid: isValid2 } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
   const onChangeControl = (0, import_element51.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -15497,8 +15460,7 @@ function ToggleGroup({
         import_components42.__experimentalToggleGroupControlOption,
         {
           label: el.label,
-          value: el.value,
-          disabled
+          value: el.value
         },
         el.value
       ))
@@ -15521,7 +15483,6 @@ function ArrayControl({
 }) {
   const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
-  const disabled = field.isDisabled({ item: data, field });
   const { elements, isLoading } = useElements({
     elements: field.elements,
     getElements: field.getElements
@@ -15561,7 +15522,6 @@ function ArrayControl({
       onChange: onChangeControl,
       placeholder,
       suggestions: elements?.map((element) => element.value),
-      disabled,
       __experimentalValidateInput: (token) => {
         if (field.isValid?.elements && elements) {
           return elements.some(
@@ -15763,8 +15723,7 @@ var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components44.privateApis);
 var ColorPickerDropdown = ({
   color,
-  onColorChange,
-  disabled
+  onColorChange
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
   return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
@@ -15778,8 +15737,6 @@ var ColorPickerDropdown = ({
           onClick: onToggle,
           "aria-label": (0, import_i18n35.__)("Open color picker"),
           size: "small",
-          disabled,
-          accessibleWhenDisabled: true,
           icon: () => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components44.ColorIndicator, { colorValue: validColor })
         }
       ),
@@ -15803,7 +15760,6 @@ function Color({
   validity
 }) {
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
-  const disabled = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
   const handleColorChange = (0, import_element53.useCallback)(
     (newColor) => {
@@ -15830,13 +15786,11 @@ function Color({
       onChange: handleInputChange,
       hideLabelFromVision,
       type: "text",
-      disabled,
       prefix: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components44.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
         ColorPickerDropdown,
         {
           color: value,
-          onColorChange: handleColorChange,
-          disabled
+          onColorChange: handleColorChange
         }
       ) })
     }
@@ -15857,7 +15811,6 @@ function Password({
   validity
 }) {
   const [isVisible2, setIsVisible] = (0, import_element54.useState)(false);
-  const disabled = field.isDisabled({ item: data, field });
   const toggleVisibility = (0, import_element54.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
@@ -15878,9 +15831,7 @@ function Password({
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible2 ? (0, import_i18n36.__)("Hide password") : (0, import_i18n36.__)("Show password"),
-            disabled,
-            accessibleWhenDisabled: true
+            label: isVisible2 ? (0, import_i18n36.__)("Hide password") : (0, import_i18n36.__)("Show password")
           }
         ) })
       }
@@ -16970,7 +16921,6 @@ function normalizeFields(fields) {
       getElements: field.getElements,
       hasElements: hasElements(field),
       isVisible: field.isVisible,
-      isDisabled: typeof field.isDisabled === "function" ? field.isDisabled : () => !!field.isDisabled,
       enableHiding: field.enableHiding ?? true,
       readOnly: field.readOnly ?? false,
       // The type provides defaults for the following props

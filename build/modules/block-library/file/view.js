@@ -24,7 +24,7 @@ var createActiveXObject = (type) => {
   let ax;
   try {
     ax = new window.ActiveXObject(type);
-  } catch {
+  } catch (e) {
     ax = void 0;
   }
   return ax;

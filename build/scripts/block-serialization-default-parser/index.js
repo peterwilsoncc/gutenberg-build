@@ -148,7 +148,7 @@ var wp;
   function parseJSON(input) {
     try {
       return JSON.parse(input);
-    } catch {
+    } catch (e) {
       return null;
     }
   }

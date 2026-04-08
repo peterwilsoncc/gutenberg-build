@@ -2330,7 +2330,7 @@ div.dataviews-view-list {
 
 .dataviews-view-activity {
   margin: 0 0 auto;
-  padding: 0 24px;
+  padding: 8px 24px;
 }
 
 .dataviews-view-activity .dataviews-view-activity__group-header {
@@ -2427,7 +2427,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-compact .dataviews-view-activity__item-type {
-  width: 12px;
+  width: 8px;
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-compact .dataviews-view-activity__item-type::before {
@@ -3881,7 +3881,6 @@ button.font-library__upload-area {
   background: #fff;
   padding: 12px;
   border-top: 1px solid #ddd;
-  box-sizing: border-box;
 }
 
 .global-styles-ui-variations_item {
