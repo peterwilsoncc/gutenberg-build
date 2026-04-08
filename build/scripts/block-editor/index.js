@@ -38626,10 +38626,9 @@ var wp;
   function OverrideStyles({ override }) {
     usePrivateStyleOverride(override);
   }
-  function __unstableBlockStyleVariationOverridesWithConfig({ config: config2 }) {
-    const { getBlockStyles: getBlockStyles2, overrides } = (0, import_data109.useSelect)(
+  function BlockStyleVariationOverridesWithConfig({ config: config2 }) {
+    const { overrides } = (0, import_data109.useSelect)(
       (select3) => ({
-        getBlockStyles: select3(import_blocks66.store).getBlockStyles,
         overrides: unlock(select3(store)).getStyleOverrides()
       }),
       []
@@ -38705,7 +38704,7 @@ var wp;
         }
       }
       return newOverrides;
-    }, [config2, overrides, getBlockStyles2, getBlockName2]);
+    }, [config2, overrides, getBlockName2]);
     if (!overridesWithConfig || !overridesWithConfig.length) {
       return null;
     }
@@ -77688,7 +77687,7 @@ var wp;
     PrivatePublishDateTimePicker,
     useSpacingSizes,
     useBlockDisplayTitle,
-    __unstableBlockStyleVariationOverridesWithConfig,
+    BlockStyleVariationOverridesWithConfig,
     setBackgroundStyleDefaults: setBackgroundStyleDefaults2,
     sectionRootClientIdKey,
     CommentIconSlotFill: block_comment_icon_slot_default,

@@ -43487,7 +43487,7 @@ var wp;
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   var {
     ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider3,
-    __unstableBlockStyleVariationOverridesWithConfig
+    BlockStyleVariationOverridesWithConfig
   } = unlock(import_block_editor39.privateApis);
   function isObjectEmpty2(object) {
     return !object || Object.keys(object).length === 0;
@@ -43559,7 +43559,7 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(import_block_editor39.BlockList, { renderAppender: false }),
                 /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(import_block_editor39.__unstableEditorStyles, { styles: editorStyles }),
                 /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
-                  __unstableBlockStyleVariationOverridesWithConfig,
+                  BlockStyleVariationOverridesWithConfig,
                   {
                     config: mergedConfig
                   }
