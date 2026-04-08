@@ -9061,7 +9061,7 @@ var wp;
     }
     return state;
   }
-  var blockListSettings = (state = {}, action) => {
+  var blockListSettings = (state = /* @__PURE__ */ new Map(), action) => {
     switch (action.type) {
       case "REPLACE_BLOCKS": {
         const replacementIds = /* @__PURE__ */ new Set();
@@ -9071,40 +9071,38 @@ var wp;
           replacementIds.add(block.clientId);
           stack.push(...block.innerBlocks);
         }
-        return Object.fromEntries(
-          Object.entries(state).filter(
-            ([id]) => !action.clientIds.includes(id) || replacementIds.has(id)
-          )
-        );
+        const newState = new Map(state);
+        for (const clientId of action.clientIds) {
+          if (!replacementIds.has(clientId)) {
+            newState.delete(clientId);
+          }
+        }
+        return newState;
       }
       case "REMOVE_BLOCKS": {
-        return Object.fromEntries(
-          Object.entries(state).filter(
-            ([id]) => !action.clientIds.includes(id)
-          )
-        );
+        const newState = new Map(state);
+        for (const clientId of action.clientIds) {
+          newState.delete(clientId);
+        }
+        return newState;
       }
       case "UPDATE_BLOCK_LIST_SETTINGS": {
-        const updates = typeof action.clientId === "string" ? { [action.clientId]: action.settings } : action.clientId;
-        for (const clientId in updates) {
-          if (!updates[clientId]) {
-            if (!state[clientId]) {
-              delete updates[clientId];
-            }
-          } else if ((0, import_es6.default)(state[clientId], updates[clientId])) {
-            delete updates[clientId];
-          }
-        }
-        if (Object.keys(updates).length === 0) {
+        const updates = typeof action.clientId === "string" ? [[action.clientId, action.settings]] : Object.entries(action.clientId);
+        const relevantUpdates = updates.filter(
+          ([clientId, nextSettings]) => !nextSettings ? state.has(clientId) : !(0, import_es6.default)(state.get(clientId), nextSettings)
+        );
+        if (!relevantUpdates.length) {
           return state;
         }
-        const merged = { ...state, ...updates };
-        for (const clientId in updates) {
-          if (!updates[clientId]) {
-            delete merged[clientId];
+        const newState = new Map(state);
+        for (const [clientId, nextSettings] of relevantUpdates) {
+          if (!nextSettings) {
+            newState.delete(clientId);
+          } else {
+            newState.set(clientId, nextSettings);
           }
         }
-        return merged;
+        return newState;
       }
     }
     return state;
@@ -9433,10 +9431,10 @@ var wp;
         syncedPatternClientIds.push(clientId);
       }
     });
-    const contentOnlyTemplateLockedClientIds = Object.keys(
+    const contentOnlyTemplateLockedClientIds = Array.from(
       state.blockListSettings
-    ).filter(
-      (clientId) => state.blockListSettings[clientId]?.templateLock === "contentOnly"
+    ).flatMap(
+      ([clientId, listSettings]) => listSettings?.templateLock === "contentOnly" ? [clientId] : []
     );
     const isIsolatedEditor = state.settings?.[isIsolatedEditorKey];
     const disableContentOnlyForUnsyncedPatterns = state.settings?.disableContentOnlyForUnsyncedPatterns;
@@ -9683,8 +9681,8 @@ var wp;
           const removedClientIds = [];
           const updates = typeof action.clientId === "string" ? { [action.clientId]: action.settings } : action.clientId;
           for (const clientId in updates) {
-            const isNewContentOnlyBlock = state.blockListSettings[clientId]?.templateLock !== "contentOnly" && nextState.blockListSettings[clientId]?.templateLock === "contentOnly";
-            const wasContentOnlyBlock = state.blockListSettings[clientId]?.templateLock === "contentOnly" && nextState.blockListSettings[clientId]?.templateLock !== "contentOnly";
+            const isNewContentOnlyBlock = state.blockListSettings.get(clientId)?.templateLock !== "contentOnly" && nextState.blockListSettings.get(clientId)?.templateLock === "contentOnly";
+            const wasContentOnlyBlock = state.blockListSettings.get(clientId)?.templateLock === "contentOnly" && nextState.blockListSettings.get(clientId)?.templateLock !== "contentOnly";
             if (isNewContentOnlyBlock) {
               addedBlocks.push(
                 nextState.blocks.tree.get(clientId)
@@ -11416,7 +11414,7 @@ var wp;
   };
   var getInsertBlockTypeDependants = () => (state, rootClientId) => {
     return [
-      state.blockListSettings[rootClientId],
+      state.blockListSettings.get(rootClientId),
       state.blocks.byClientId.get(rootClientId),
       state.blocks.order.get(rootClientId || ""),
       state.settings.allowedBlockTypes,
@@ -12685,7 +12683,7 @@ var wp;
     if (!rootClientId) {
       return;
     }
-    const { defaultBlock, directInsert } = state.blockListSettings[rootClientId] ?? {};
+    const { defaultBlock, directInsert } = state.blockListSettings.get(rootClientId) ?? {};
     if (!defaultBlock || !directInsert) {
       return;
     }
@@ -12820,7 +12818,7 @@ var wp;
     )
   );
   function getBlockListSettings(state, clientId) {
-    return state.blockListSettings[clientId];
+    return state.blockListSettings.get(clientId);
   }
   function getSettings(state) {
     return state.settings;
@@ -12830,15 +12828,14 @@ var wp;
   }
   var __experimentalGetBlockListSettingsForBlocks = (0, import_data4.createSelector)(
     (state, clientIds = []) => {
-      return clientIds.reduce((blockListSettingsForBlocks, clientId) => {
-        if (!state.blockListSettings[clientId]) {
-          return blockListSettingsForBlocks;
+      const blockListSettingsForBlocks = {};
+      for (const clientId of clientIds) {
+        const settings2 = getBlockListSettings(state, clientId);
+        if (settings2) {
+          blockListSettingsForBlocks[clientId] = settings2;
         }
-        return {
-          ...blockListSettingsForBlocks,
-          [clientId]: state.blockListSettings[clientId]
-        };
-      }, {});
+      }
+      return blockListSettingsForBlocks;
     },
     (state) => [state.blockListSettings]
   );
