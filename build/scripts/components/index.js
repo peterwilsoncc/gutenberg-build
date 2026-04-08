@@ -28966,92 +28966,88 @@ This message will only show in development mode. It won't appear in production. 
       }, option.key))
     });
   }
-  function getAutoCompleterUI(autocompleter) {
+  function AutocompleterUI({
+    autocompleter,
+    filterValue,
+    instanceId,
+    listBoxId,
+    className: className2,
+    selectedIndex,
+    onChangeOptions,
+    onSelect,
+    reset,
+    contentRef
+  }) {
     const useItems = autocompleter.useItems ?? getDefaultUseItems(autocompleter);
-    function AutocompleterUI({
-      filterValue,
-      instanceId,
-      listBoxId,
-      className: className2,
-      selectedIndex,
-      onChangeOptions,
-      onSelect,
-      onReset,
-      reset,
-      contentRef
-    }) {
-      const [items] = useItems(filterValue);
-      const popoverAnchor = (0, import_rich_text.useAnchor)({
-        editableContentElement: contentRef.current
-      });
-      const [needsA11yCompat, setNeedsA11yCompat] = (0, import_element51.useState)(false);
-      const popoverRef = (0, import_element51.useRef)(null);
-      const popoverRefs = (0, import_compose17.useMergeRefs)([popoverRef, (0, import_compose17.useRefEffect)((node2) => {
-        if (!contentRef.current) {
-          return;
-        }
-        setNeedsA11yCompat(node2.ownerDocument !== contentRef.current.ownerDocument);
-      }, [contentRef])]);
-      useOnClickOutside(popoverRef, reset);
-      const debouncedSpeak = (0, import_compose17.useDebounce)(import_a11y.speak, 500);
-      function announce(options2) {
-        if (!debouncedSpeak) {
-          return;
-        }
-        if (!!options2.length) {
-          if (filterValue) {
-            debouncedSpeak((0, import_i18n8.sprintf)(
-              /* translators: %d: number of results. */
-              (0, import_i18n8._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", options2.length),
-              options2.length
-            ), "assertive");
-          } else {
-            debouncedSpeak((0, import_i18n8.sprintf)(
-              /* translators: %d: number of results. */
-              (0, import_i18n8._n)("Initial %d result loaded. Type to filter all available results. Use up and down arrow keys to navigate.", "Initial %d results loaded. Type to filter all available results. Use up and down arrow keys to navigate.", options2.length),
-              options2.length
-            ), "assertive");
-          }
+    const [items] = useItems(filterValue);
+    const popoverAnchor = (0, import_rich_text.useAnchor)({
+      editableContentElement: contentRef.current
+    });
+    const [needsA11yCompat, setNeedsA11yCompat] = (0, import_element51.useState)(false);
+    const popoverRef = (0, import_element51.useRef)(null);
+    const popoverRefs = (0, import_compose17.useMergeRefs)([popoverRef, (0, import_compose17.useRefEffect)((node2) => {
+      if (!contentRef.current) {
+        return;
+      }
+      setNeedsA11yCompat(node2.ownerDocument !== contentRef.current.ownerDocument);
+    }, [contentRef])]);
+    useOnClickOutside(popoverRef, reset);
+    const debouncedSpeak = (0, import_compose17.useDebounce)(import_a11y.speak, 500);
+    function announce(options2) {
+      if (!debouncedSpeak) {
+        return;
+      }
+      if (!!options2.length) {
+        if (filterValue) {
+          debouncedSpeak((0, import_i18n8.sprintf)(
+            /* translators: %d: number of results. */
+            (0, import_i18n8._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", options2.length),
+            options2.length
+          ), "assertive");
         } else {
-          debouncedSpeak((0, import_i18n8.__)("No results."), "assertive");
+          debouncedSpeak((0, import_i18n8.sprintf)(
+            /* translators: %d: number of results. */
+            (0, import_i18n8._n)("Initial %d result loaded. Type to filter all available results. Use up and down arrow keys to navigate.", "Initial %d results loaded. Type to filter all available results. Use up and down arrow keys to navigate.", options2.length),
+            options2.length
+          ), "assertive");
         }
+      } else {
+        debouncedSpeak((0, import_i18n8.__)("No results."), "assertive");
       }
-      (0, import_element51.useLayoutEffect)(() => {
-        onChangeOptions(items);
-        announce(items);
-      }, [items]);
-      if (items.length === 0) {
-        return null;
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_jsx_runtime110.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime110.jsx)(popover_default, {
-          offset: 8,
-          focusOnMount: false,
-          onClose: onReset,
-          placement: "top-start",
-          className: "components-autocomplete__popover",
-          anchor: popoverAnchor,
-          ref: popoverRefs,
-          children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(ListBox, {
-            items,
-            onSelect,
-            selectedIndex,
-            instanceId,
-            listBoxId,
-            className: className2
-          })
-        }), contentRef.current && needsA11yCompat && (0, import_react_dom6.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime110.jsx)(ListBox, {
+    }
+    (0, import_element51.useLayoutEffect)(() => {
+      onChangeOptions(items);
+      announce(items);
+    }, [items]);
+    if (items.length === 0) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_jsx_runtime110.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime110.jsx)(popover_default, {
+        offset: 8,
+        focusOnMount: false,
+        placement: "top-start",
+        className: "components-autocomplete__popover",
+        anchor: popoverAnchor,
+        ref: popoverRefs,
+        children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(ListBox, {
           items,
           onSelect,
           selectedIndex,
           instanceId,
           listBoxId,
-          className: className2,
-          Component: component_default2
-        }), contentRef.current.ownerDocument.body)]
-      });
-    }
-    return AutocompleterUI;
+          className: className2
+        })
+      }), contentRef.current && needsA11yCompat && (0, import_react_dom6.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime110.jsx)(ListBox, {
+        items,
+        onSelect,
+        selectedIndex,
+        instanceId,
+        listBoxId,
+        className: className2,
+        Component: component_default2
+      }), contentRef.current.ownerDocument.body)]
+    });
   }
   function useOnClickOutside(ref, handler) {
     (0, import_element51.useEffect)(() => {
@@ -29204,7 +29200,6 @@ This message will only show in development mode. It won't appear in production. 
       filterValue,
       autocompleter
     } = state;
-    const AutocompleterUI = (0, import_element52.useMemo)(() => autocompleter ? getAutoCompleterUI(autocompleter) : null, [autocompleter]);
     const backspacingRef = (0, import_element52.useRef)(false);
     function insertCompletion(replacement) {
       if (autocompleter === null) {
@@ -29328,12 +29323,13 @@ This message will only show in development mode. It won't appear in production. 
     const listBoxId = isExpanded ? `components-autocomplete-listbox-${instanceId}` : void 0;
     const activeId = isExpanded ? `components-autocomplete-item-${instanceId}-${selectedKey}` : null;
     const hasSelection = record.start !== void 0;
-    const showPopover = !!textContent && hasSelection && !!AutocompleterUI;
+    const showPopover = !!textContent && hasSelection && !!autocompleter;
     return {
       listBoxId,
       activeId,
       onKeyDown: withIgnoreIMEEvents(handleKeyDown),
       popover: showPopover && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(AutocompleterUI, {
+        autocompleter,
         className: className2,
         filterValue,
         instanceId,
@@ -29341,12 +29337,11 @@ This message will only show in development mode. It won't appear in production. 
         selectedIndex,
         onChangeOptions,
         onSelect: select,
-        value: record,
         contentRef,
         reset: () => dispatch({
           type: "RESET"
         })
-      })
+      }, autocompleter.name + autocompleter.triggerPrefix)
     };
   }
   function recordValuesMatch(a3, b3) {
