@@ -43079,7 +43079,14 @@ If there's a particular need for this, please submit a feature request at https:
                   setTargetItemId
                 }
               ),
-              field.description && /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(import_components134.__experimentalText, { variant: "muted", children: field.description })
+              field.description && /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(
+                import_components134.__experimentalText,
+                {
+                  variant: "muted",
+                  className: "fields__media-edit-description",
+                  children: field.description
+                }
+              )
             ] });
           }
         }
@@ -43185,6 +43192,22 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   var fields = [
     {
+      id: "title",
+      type: "text",
+      label: (0, import_i18n122.__)("Site Title"),
+      description: (0, import_i18n122.__)(
+        "Displays in your site's layout via the Site Title block."
+      )
+    },
+    {
+      id: "description",
+      type: "text",
+      label: (0, import_i18n122.__)("Site Tagline"),
+      description: (0, import_i18n122.__)(
+        "In a few words, explain what this site is about. Displays in your site's layout via the Site Tagline block."
+      )
+    },
+    {
       id: "site_logo",
       type: "media",
       label: (0, import_i18n122.__)("Site Logo"),
@@ -43216,7 +43239,7 @@ If there's a particular need for this, please submit a feature request at https:
       type: "regular",
       labelPosition: "top"
     },
-    fields: ["site_logo", "site_icon"]
+    fields: ["title", "description", "site_logo", "site_icon"]
   };
   function SidebarIdentity() {
     const data = (0, import_data55.useSelect)(

@@ -3025,6 +3025,11 @@ fieldset.fields__media-edit .components-base-control__label {
   color: #1e1e1e;
 }
 
+fieldset.fields__media-edit .fields__media-edit-description {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 fieldset.fields__media-edit {
   /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
   container-type: inline-size;

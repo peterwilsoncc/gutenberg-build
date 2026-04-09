@@ -9357,7 +9357,14 @@ var wp;
                   setTargetItemId
                 }
               ),
-              field.description && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components5.__experimentalText, { variant: "muted", children: field.description })
+              field.description && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+                import_components5.__experimentalText,
+                {
+                  variant: "muted",
+                  className: "fields__media-edit-description",
+                  children: field.description
+                }
+              )
             ] });
           }
         }
