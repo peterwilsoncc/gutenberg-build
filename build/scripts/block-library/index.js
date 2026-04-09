@@ -41365,13 +41365,24 @@ ${js}
         url,
         opensInNewTab,
         title: label && (0, import_dom6.__unstableStripHTML)(label),
+        entityTitle: entityRecord?.title?.rendered || entityRecord?.name,
         kind,
         type,
         id,
         image,
         badges
       }),
-      [label, opensInNewTab, url, kind, type, id, image, badges]
+      [
+        label,
+        opensInNewTab,
+        url,
+        kind,
+        type,
+        id,
+        image,
+        badges,
+        entityRecord
+      ]
     );
     const handlePageCreated = (pageLink) => {
       props.onChange(pageLink);

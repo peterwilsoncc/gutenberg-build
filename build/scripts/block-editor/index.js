@@ -49604,7 +49604,9 @@ var wp;
     const hasRichData = richData && Object.keys(richData).length;
     const displayURL = value && (0, import_url5.filterURLForDisplay)((0, import_url5.safeDecodeURI)(value.url), 24) || "";
     const isEmptyURL = !value?.url?.length;
-    const displayTitle = !isEmptyURL && (0, import_dom35.__unstableStripHTML)(richData?.title || value?.title || displayURL);
+    const displayTitle = !isEmptyURL && (0, import_dom35.__unstableStripHTML)(
+      value?.entityTitle || richData?.title || value?.title || displayURL
+    );
     let icon;
     if (richData?.icon) {
       icon = /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("img", { src: richData?.icon, alt: "" });
