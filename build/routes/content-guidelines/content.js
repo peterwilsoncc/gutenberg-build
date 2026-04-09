@@ -3405,10 +3405,10 @@ var import_element92 = __toESM(require_element());
 var import_components60 = __toESM(require_components());
 
 // routes/content-guidelines/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='2765bc6a3f']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='9015ee49ae']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "2765bc6a3f");
-  style.appendChild(document.createTextNode('.content-guidelines__content{border-radius:8px;margin-top:0;padding:24px}.content-guidelines__list{display:flex;flex-direction:column;gap:16px;list-style:none;margin:0;padding:0}.content-guidelines__list-item{margin:0 auto;width:min(680px,100%)}.content-guidelines__loading{align-items:center;display:flex;justify-content:center;margin-top:16px}.content-guidelines__actions{margin:16px auto 0;width:min(680px,100%)}.content-guidelines__actions-card{overflow:hidden;padding:0}.content-guidelines__actions-list{list-style:none;margin:0;padding:0}.content-guidelines__action-list-item{margin-bottom:0;position:relative}.content-guidelines__action-list-item:not(:first-child):before{background-color:#f0f0f0;content:"";height:1px;left:24px;position:absolute;right:24px;top:0}.content-guidelines__action-row{align-items:center;box-sizing:border-box;padding:16px 24px;width:100%}.content-guidelines__actions-card .content-guidelines__action-button{font-size:13px;font-weight:400;justify-content:center;min-width:100px}.content-guidelines__action-title{color:#1e1e1e}.content-guidelines__action-description{color:#757575}.content-guidelines__revision-history{display:flex;flex-direction:column;gap:16px;padding:24px}.content-guidelines__revision-history .dataviews-filters__container,.content-guidelines__revision-history .dataviews__view-actions{padding-left:8px;padding-right:8px}.content-guidelines__revision-history .dataviews-view-table td:first-child{padding-left:8px}.content-guidelines__revision-history .dataviews-view-table td{padding:16px 8px}.content-guidelines__revision-history .dataviews-view-table thead th:has(.dataviews-view-table-header-button):first-child{padding-left:0}.content-guidelines__revision-history .dataviews-view-table .dataviews-view-table__cell-content-wrapper{max-width:100%}.content-guidelines__revision-history-back{align-self:flex-start;color:#1e1e1e;font-weight:500;margin-left:-8px}.content-guidelines__error-description{margin:8px 0 0}.content-guidelines__revision-description{padding-left:8px}.content-guidelines__import-modal-actions,.content-guidelines__restore-modal-actions{margin-top:24px}'));
+  style.setAttribute("data-wp-hash", "9015ee49ae");
+  style.appendChild(document.createTextNode(".content-guidelines__content{border-radius:8px;margin-top:0;padding:24px}.content-guidelines__list{display:flex;flex-direction:column;gap:16px;list-style:none;margin:0;padding:0}.content-guidelines__list-item{margin:0 auto;width:min(680px,100%)}.content-guidelines__loading{align-items:center;display:flex;justify-content:center;margin-top:16px}.content-guidelines__revision-history{display:flex;flex-direction:column;gap:16px;padding:24px}.content-guidelines__revision-history .dataviews-filters__container,.content-guidelines__revision-history .dataviews__view-actions{padding-left:8px;padding-right:8px}.content-guidelines__revision-history .dataviews-view-table td:first-child{padding-left:8px}.content-guidelines__revision-history .dataviews-view-table td{padding:16px 8px}.content-guidelines__revision-history .dataviews-view-table thead th:has(.dataviews-view-table-header-button):first-child{padding-left:0}.content-guidelines__revision-history .dataviews-view-table .dataviews-view-table__cell-content-wrapper{max-width:100%}.content-guidelines__revision-history-back{align-self:flex-start;color:#1e1e1e;font-weight:500;margin-left:-8px}.content-guidelines__error-description{margin:8px 0 0}.content-guidelines__revision-description{padding-left:8px}.content-guidelines__restore-modal-actions{margin-top:24px}"));
   document.head.appendChild(style);
 }
 
@@ -21472,7 +21472,15 @@ async function saveContentGuidelines() {
   const id = guidelinesStore.getId();
   const status = guidelinesStore.getStatus() || "draft";
   const categories = guidelinesStore.getAllGuidelines();
-  const blockGuidelines = guidelinesStore.getBlockGuidelines();
+  const response = await saveGuidelinesBypassingStore(
+    id,
+    status,
+    categories
+  );
+  setFromResponse(response);
+  return response;
+}
+async function saveGuidelinesBypassingStore(id, status, categories) {
   const data = {
     id,
     status,
@@ -21490,7 +21498,7 @@ async function saveContentGuidelines() {
         guidelines: categories.additional
       },
       blocks: Object.fromEntries(
-        Object.entries(blockGuidelines).map(
+        Object.entries(categories.blocks).map(
           ([blockName, guidelines]) => [
             blockName,
             { guidelines }
@@ -21506,13 +21514,11 @@ async function saveContentGuidelines() {
     method,
     data
   });
-  setFromResponse(response);
   return response;
 }
 async function importContentGuidelines(file) {
-  const { setGuideline, setBlockGuideline } = (0, import_data7.dispatch)(
-    store
-  );
+  const { setFromResponse } = (0, import_data7.dispatch)(store);
+  const guidelinesStore = (0, import_data7.select)(store);
   const { createSuccessNotice } = (0, import_data7.dispatch)(import_notices.store);
   const parsed = JSON.parse(await file.text());
   if (!isValidGuidelinesImport(parsed)) {
@@ -21522,42 +21528,43 @@ async function importContentGuidelines(file) {
       )
     );
   }
-  const guidelinesStore = (0, import_data7.select)(store);
-  const previousCategories = guidelinesStore.getAllGuidelines();
-  const previousBlocks = { ...guidelinesStore.getBlockGuidelines() };
-  const { guideline_categories: contentGuidelinesCategories } = parsed;
-  FLAT_CATEGORIES.forEach((guidelineCategory) => {
-    const guidelines = contentGuidelinesCategories[guidelineCategory]?.guidelines;
-    if (typeof guidelines === "string") {
-      setGuideline(guidelineCategory, guidelines);
-    }
+  const existingGuidelines = guidelinesStore.getAllGuidelines();
+  const newGuidelines = {
+    /**
+     * Set empty string to all the simple guidelines so that if the category is not present
+     * in the parsed data, the category gets removed.
+     */
+    ...Object.fromEntries(
+      FLAT_CATEGORIES.map((category) => [category, ""])
+    ),
+    /**
+     * Set empty string to all the existing block guidelines so that if the block is not present
+     * in the parsed data, the block gets removed.
+     */
+    blocks: Object.fromEntries(
+      Object.keys(existingGuidelines.blocks).map((block) => [
+        block,
+        ""
+      ])
+    )
+  };
+  for (const cat of FLAT_CATEGORIES) {
+    const guidelines = parsed.guideline_categories[cat]?.guidelines || "";
+    newGuidelines[cat] = guidelines;
+  }
+  const parsedBlocks = parsed.guideline_categories?.blocks ?? {};
+  for (const [key, value] of Object.entries(parsedBlocks)) {
+    newGuidelines.blocks[key] = value?.guidelines || "";
+  }
+  const response = await saveGuidelinesBypassingStore(
+    guidelinesStore.getId(),
+    guidelinesStore.getStatus() || "draft",
+    newGuidelines
+  );
+  setFromResponse(response);
+  createSuccessNotice((0, import_i18n50.__)("Guidelines imported."), {
+    type: "snackbar"
   });
-  const blocksData = contentGuidelinesCategories.blocks;
-  if (blocksData && typeof blocksData === "object") {
-    Object.entries(blocksData).forEach(([blockName, blockData]) => {
-      if (blockData && typeof blockData.guidelines === "string") {
-        setBlockGuideline(blockName, blockData.guidelines);
-      }
-    });
-  }
-  try {
-    await saveContentGuidelines();
-    createSuccessNotice((0, import_i18n50.__)("Guidelines imported."), {
-      type: "snackbar"
-    });
-  } catch (error2) {
-    FLAT_CATEGORIES.forEach((cat) => {
-      setGuideline(cat, previousCategories[cat] ?? "");
-    });
-    const currentBlocks = guidelinesStore.getBlockGuidelines();
-    Object.keys(currentBlocks).forEach(
-      (blockName) => setBlockGuideline(blockName, "")
-    );
-    Object.entries(previousBlocks).forEach(
-      ([blockName, value]) => setBlockGuideline(blockName, value)
-    );
-    throw error2;
-  }
 }
 function exportContentGuidelines() {
   const { createSuccessNotice } = (0, import_data7.dispatch)(import_notices.store);
@@ -21584,8 +21591,14 @@ function exportContentGuidelines() {
       )
     }
   };
+  const now = /* @__PURE__ */ new Date();
+  const exportDate = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, "0"),
+    String(now.getDate()).padStart(2, "0")
+  ].join("-");
   (0, import_blob.downloadBlob)(
-    "guidelines.json",
+    `guidelines-${exportDate}.json`,
     JSON.stringify(data, null, 2),
     "application/json"
   );
@@ -21737,7 +21750,6 @@ function GuidelineAccordionForm({
               {
                 variant: "primary",
                 type: "submit",
-                className: "save-button",
                 disabled: loading || !draft,
                 accessibleWhenDisabled: true,
                 isBusy: loading,
@@ -22196,13 +22208,22 @@ function BlockGuidelines() {
   ] });
 }
 
-// routes/content-guidelines/components/actions-section.tsx
+// routes/content-guidelines/components/guideline-actions-section.tsx
 var import_components58 = __toESM(require_components());
 var import_i18n54 = __toESM(require_i18n());
 var import_element90 = __toESM(require_element());
 
+// routes/content-guidelines/components/guideline-actions-section.scss
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b7a567ab2f']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "b7a567ab2f");
+  style.appendChild(document.createTextNode('.content-guidelines__actions{margin:16px auto 0;width:min(680px,100%)}.content-guidelines__actions-card{overflow:hidden;padding:0}.content-guidelines__actions-list{list-style:none;margin:0;padding:0}.content-guidelines__action-list-item{margin-bottom:0;position:relative}.content-guidelines__action-list-item:not(:first-child):before{background-color:#f0f0f0;content:"";height:1px;left:24px;position:absolute;right:24px;top:0}.content-guidelines__action-row{align-items:center;box-sizing:border-box;padding:16px 24px;width:100%}.content-guidelines__actions-card .content-guidelines__action-button{font-size:13px;font-weight:400;justify-content:center;min-width:100px}.content-guidelines__action-title{color:#1e1e1e}.content-guidelines__action-description{color:#757575}'));
+  document.head.appendChild(style);
+}
+
 // routes/content-guidelines/components/action-item.tsx
 var import_components57 = __toESM(require_components());
+var import_jsx_runtime130 = __toESM(require_jsx_runtime());
 function ActionItem({
   slug,
   title,
@@ -22214,61 +22235,60 @@ function ActionItem({
   isBusy
 }) {
   const descriptionId = `content-guidelines-action-${slug}-description`;
-  return /* @__PURE__ */ React.createElement("li", { className: "content-guidelines__action-list-item" }, /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
     import_components57.__experimentalHStack,
     {
       justify: "space-between",
-      className: "content-guidelines__action-row"
-    },
-    /* @__PURE__ */ React.createElement(import_components57.__experimentalVStack, { spacing: 1 }, /* @__PURE__ */ React.createElement(
-      import_components57.__experimentalHeading,
-      {
-        level: 3,
-        size: 13,
-        weight: 400,
-        className: "content-guidelines__action-title"
-      },
-      title
-    ), /* @__PURE__ */ React.createElement(
-      import_components57.__experimentalText,
-      {
-        id: descriptionId,
-        size: 13,
-        weight: 400,
-        variant: "muted",
-        className: "content-guidelines__action-description"
-      },
-      description
-    )),
-    /* @__PURE__ */ React.createElement(
-      import_components57.Button,
-      {
-        size: "compact",
-        variant: "secondary",
-        className: "content-guidelines__action-button",
-        "aria-label": ariaLabel,
-        "aria-describedby": descriptionId,
-        onClick,
-        isBusy,
-        disabled: disabled2
-      },
-      buttonLabel
-    )
-  ));
+      className: "content-guidelines__action-row",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_components57.__experimentalVStack, { spacing: 1, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+            import_components57.__experimentalHeading,
+            {
+              level: 3,
+              size: 13,
+              weight: 400,
+              className: "content-guidelines__action-title",
+              children: title
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+            import_components57.__experimentalText,
+            {
+              id: descriptionId,
+              size: 13,
+              weight: 400,
+              variant: "muted",
+              className: "content-guidelines__action-description",
+              children: description
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+          import_components57.Button,
+          {
+            size: "compact",
+            variant: "secondary",
+            className: "content-guidelines__action-button",
+            "aria-label": ariaLabel,
+            "aria-describedby": descriptionId,
+            onClick,
+            isBusy,
+            disabled: disabled2,
+            children: buttonLabel
+          }
+        )
+      ]
+    }
+  );
 }
 
-// routes/content-guidelines/components/actions-section.tsx
-var import_jsx_runtime130 = __toESM(require_jsx_runtime());
-function getErrorMessage(error2) {
-  if (error2 instanceof Error) {
-    return error2.message;
-  }
-  if (typeof error2 === "object" && error2 !== null && "message" in error2) {
-    return String(error2.message);
-  }
-  return (0, import_i18n54.__)("Unknown error.");
+// routes/content-guidelines/components/guideline-actions-section.tsx
+var import_jsx_runtime131 = __toESM(require_jsx_runtime());
+function getErrorMessage(err) {
+  return err instanceof Error ? err.message : (0, import_i18n54.__)("Unknown error");
 }
-function ActionsSection() {
+function GuidelineActionsSection() {
   const { goTo } = (0, import_components58.useNavigator)();
   const fileInputRef = (0, import_element90.useRef)(null);
   const [isImporting, setIsImporting] = (0, import_element90.useState)(false);
@@ -22295,12 +22315,12 @@ function ActionsSection() {
     try {
       await importContentGuidelines(file);
       setError(null);
-    } catch (importError) {
+    } catch (err) {
       setError(
         (0, import_i18n54.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n54.__)("We ran into a problem importing your guidelines. %s"),
-          getErrorMessage(importError)
+          (0, import_i18n54.__)("We ran into a problem importing your guidelines: %s"),
+          getErrorMessage(err)
         )
       );
     } finally {
@@ -22311,12 +22331,12 @@ function ActionsSection() {
     try {
       exportContentGuidelines();
       setError(null);
-    } catch (exportError) {
+    } catch (err) {
       setError(
         (0, import_i18n54.sprintf)(
           /* translators: %s: Error message. */
           (0, import_i18n54.__)("We ran into a problem exporting your guidelines: %s"),
-          getErrorMessage(exportError)
+          getErrorMessage(err)
         )
       );
     }
@@ -22349,9 +22369,9 @@ function ActionsSection() {
       onClick: () => goTo("/revision-history")
     }
   ];
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_components58.__experimentalVStack, { spacing: 4, className: "content-guidelines__actions", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components58.__experimentalHeading, { level: 3, size: 15, weight: 500, children: (0, import_i18n54.__)("Actions") }),
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_components58.__experimentalVStack, { spacing: 4, className: "content-guidelines__actions", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components58.__experimentalHeading, { level: 3, size: 15, weight: 500, children: (0, import_i18n54.__)("Actions") }),
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
       "input",
       {
         type: "file",
@@ -22361,7 +22381,7 @@ function ActionsSection() {
         style: { display: "none" }
       }
     ),
-    error2 && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+    error2 && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
       import_components58.Notice,
       {
         status: "error",
@@ -22370,49 +22390,27 @@ function ActionsSection() {
         children: error2
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components58.Card, { className: "content-guidelines__actions-card", children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("ul", { role: "list", className: "content-guidelines__actions-list", children: ACTIONS.map((action) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(ActionItem, { ...action }, action.slug)) }) }),
-    pendingImport && /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
-      import_components58.Modal,
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components58.Card, { className: "content-guidelines__actions-card", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("ul", { role: "list", className: "content-guidelines__actions-list", children: ACTIONS.map((action) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      "li",
       {
+        className: "content-guidelines__action-list-item",
+        children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(ActionItem, { ...action })
+      },
+      action.slug
+    )) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      import_components58.__experimentalConfirmDialog,
+      {
+        isOpen: !!pendingImport,
+        __experimentalHideHeader: false,
         title: (0, import_i18n54.__)("Import guidelines"),
-        onRequestClose: () => setPendingImport(null),
-        size: "medium",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_components58.__experimentalVStack, { spacing: 4, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components58.__experimentalText, { size: 13, weight: 400, children: (0, import_i18n54.__)(
-              "Importing new guidelines will replace your current guidelines."
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components58.__experimentalText, { size: 13, weight: 400, children: (0, import_i18n54.__)(
-              "This can be undone from revision history."
-            ) })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
-            import_components58.__experimentalHStack,
-            {
-              justify: "flex-end",
-              className: "content-guidelines__import-modal-actions",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
-                  import_components58.Button,
-                  {
-                    variant: "tertiary",
-                    onClick: () => setPendingImport(null),
-                    children: (0, import_i18n54.__)("Cancel")
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
-                  import_components58.Button,
-                  {
-                    variant: "primary",
-                    onClick: handleModalContinue,
-                    __next40pxDefaultSize: true,
-                    children: (0, import_i18n54.__)("Continue")
-                  }
-                )
-              ]
-            }
-          )
-        ]
+        confirmButtonText: (0, import_i18n54.__)("Continue"),
+        onConfirm: handleModalContinue,
+        onCancel: () => setPendingImport(null),
+        size: "small",
+        children: (0, import_i18n54.__)(
+          "Importing new guidelines will replace your current guidelines. This can be undone from revision history."
+        )
       }
     )
   ] });
@@ -22633,7 +22631,7 @@ function RevisionHistory() {
 }
 
 // routes/content-guidelines/stage.tsx
-var import_jsx_runtime131 = __toESM(require_jsx_runtime());
+var import_jsx_runtime132 = __toESM(require_jsx_runtime());
 var GUIDELINE_ITEMS = [
   {
     title: (0, import_i18n56.__)("Site"),
@@ -22675,7 +22673,7 @@ function ContentGuidelinesPage() {
   (0, import_element92.useEffect)(() => {
     fetchContentGuidelines().then(() => setError(null)).catch((e2) => setError(e2.message)).finally(() => setLoading(false));
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
     page_default,
     {
       title: (0, import_i18n56.__)("Guidelines"),
@@ -22683,19 +22681,19 @@ function ContentGuidelinesPage() {
         "Set content standards that guide your team, inform plugins, and help AI tools generate content that matches your site's voice and requirements."
       ),
       children: [
-        error2 && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "content-guidelines__content", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_components60.Notice, { status: "error", isDismissible: false, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("strong", { children: (0, import_i18n56.sprintf)(
+        error2 && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: "content-guidelines__content", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_components60.Notice, { status: "error", isDismissible: false, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("strong", { children: (0, import_i18n56.sprintf)(
             /* translators: %s: Error message. */
             (0, import_i18n56.__)("Error loading guidelines: %s"),
             error2
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("p", { className: "content-guidelines__error-description", children: (0, import_i18n56.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("p", { className: "content-guidelines__error-description", children: (0, import_i18n56.__)(
             "Please try again. If the problem persists, contact support."
           ) })
         ] }) }),
-        loading ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "content-guidelines__loading", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components60.Spinner, {}) }) : !error2 && /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_components60.Navigator, { initialPath: "/", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components60.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_components60.__experimentalVStack, { className: "content-guidelines__content", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+        loading ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: "content-guidelines__loading", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components60.Spinner, {}) }) : !error2 && /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_components60.Navigator, { initialPath: "/", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components60.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_components60.__experimentalVStack, { className: "content-guidelines__content", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
               "ul",
               {
                 role: "list",
@@ -22704,11 +22702,11 @@ function ContentGuidelinesPage() {
                   const contentId = `content-guidelines-${item.slug}`;
                   const headingId = `content-guidelines-${item.slug}-heading`;
                   const descriptionId = `content-guidelines-${item.slug}-description`;
-                  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                     "li",
                     {
                       className: "content-guidelines__list-item",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "content-guidelines__accordion-item", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: "content-guidelines__accordion-item", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                         GuidelineAccordion,
                         {
                           title: item.title,
@@ -22716,7 +22714,7 @@ function ContentGuidelinesPage() {
                           contentId,
                           headingId,
                           descriptionId,
-                          children: item.slug === "blocks" ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(BlockGuidelines, {}) : /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                          children: item.slug === "blocks" ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(BlockGuidelines, {}) : /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                             GuidelineAccordionForm,
                             {
                               slug: item.slug,
@@ -22733,9 +22731,9 @@ function ContentGuidelinesPage() {
                 })
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(ActionsSection, {})
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(GuidelineActionsSection, {})
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components60.Navigator.Screen, { path: "/revision-history", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(RevisionHistory, {}) })
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components60.Navigator.Screen, { path: "/revision-history", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(RevisionHistory, {}) })
         ] })
       ]
     }
