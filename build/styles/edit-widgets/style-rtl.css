@@ -118,7 +118,7 @@
 }
 
 .admin-ui-page__header {
-  padding: var(--wpds-dimension-padding-md, 12px) var(--wpds-dimension-padding-2xl, 24px);
+  padding: var(--wpds-dimension-padding-lg, 16px) var(--wpds-dimension-padding-2xl, 24px);
   border-bottom: var(--wpds-border-width-xs, 1px) solid var(--wpds-color-stroke-surface-neutral-weak, #e0e0e0);
   background: var(--wpds-color-bg-surface-neutral-strong, #ffffff);
   position: sticky;
