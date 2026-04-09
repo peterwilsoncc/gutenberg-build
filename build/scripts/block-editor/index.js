@@ -16067,7 +16067,7 @@ var wp;
   // packages/block-editor/build-module/components/spacing-sizes-control/utils.mjs
   var import_i18n11 = __toESM(require_i18n(), 1);
   var RANGE_CONTROL_MAX_SIZE = 8;
-  var ALL_SIDES = ["top", "right", "bottom", "left"];
+  var ALL_SIDES = ["top", "bottom", "left", "right"];
   var DEFAULT_VALUES = {
     top: void 0,
     right: void 0,
