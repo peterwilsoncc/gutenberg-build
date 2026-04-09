@@ -24855,7 +24855,29 @@ var wp;
           const isSingularSelection = startClientId === endClientId;
           if (isSingularSelection) {
             if (!isMultiSelecting3()) {
-              selectBlock2(startClientId);
+              const richTextElement = !selection2.isCollapsed && (getRichTextElement(startNode) || getRichTextElement(endNode));
+              if (richTextElement && ownerDocument.activeElement !== richTextElement) {
+                const range2 = selection2.getRangeAt(0);
+                const richTextData = (0, import_rich_text4.create)({
+                  element: richTextElement,
+                  range: range2,
+                  __unstableIsEditableTree: true
+                });
+                selectionChange2({
+                  start: {
+                    clientId: startClientId,
+                    attributeKey: richTextElement.dataset.wpBlockAttributeKey,
+                    offset: richTextData.start ?? 0
+                  },
+                  end: {
+                    clientId: startClientId,
+                    attributeKey: richTextElement.dataset.wpBlockAttributeKey,
+                    offset: richTextData.end
+                  }
+                });
+              } else {
+                selectBlock2(startClientId);
+              }
             } else {
               multiSelect2(startClientId, startClientId);
             }
