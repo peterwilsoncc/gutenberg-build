@@ -3063,7 +3063,7 @@ var wp;
       case "SET_SHOW_REVISION_DIFF":
         return action.showDiff;
       case "SET_CURRENT_REVISION_ID":
-        return true;
+        return !action.revisionId ? true : state;
     }
     return state;
   }
