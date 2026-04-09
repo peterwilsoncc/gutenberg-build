@@ -60893,9 +60893,6 @@ var wp;
     const id = getItemId(item);
     const elementRef = (0, import_element207.useRef)(null);
     const isSelected2 = selection.includes(id);
-    const setElementRef = (element) => {
-      elementRef.current = element;
-    };
     useIntersectionObserver(elementRef, posinset);
     const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
       mediaField.render,
@@ -60909,7 +60906,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(
       import_components215.Composite.Item,
       {
-        ref: setElementRef,
+        ref: elementRef,
         "aria-label": titleField2 ? titleField2.getValue({ item }) || (0, import_i18n249.__)("(no title)") : void 0,
         render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(Stack, { direction: "column", children, ...props }),
         role: "option",
@@ -61331,9 +61328,6 @@ var wp;
     const isSelected2 = selection.includes(id);
     const [isHovered, setIsHovered] = (0, import_element208.useState)(false);
     const elementRef = (0, import_element208.useRef)(null);
-    const setElementRef = (element) => {
-      elementRef.current = element;
-    };
     useIntersectionObserver(elementRef, posinset);
     const {
       showTitle = true,
@@ -61352,7 +61346,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(
       import_components216.Composite.Item,
       {
-        ref: setElementRef,
+        ref: elementRef,
         render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
           "tr",
           {
@@ -76006,8 +76000,6 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/sidebar/post-summary.mjs
   var import_components265 = __toESM(require_components(), 1);
   var import_data234 = __toESM(require_data(), 1);
-  var import_i18n293 = __toESM(require_i18n(), 1);
-  var import_url23 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/sidebar/dataform-post-summary.mjs
   var import_i18n286 = __toESM(require_i18n(), 1);
@@ -76601,17 +76593,6 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/sidebar/post-summary.mjs
   var import_jsx_runtime471 = __toESM(require_jsx_runtime(), 1);
   var PANEL_NAME5 = "post-status";
-  function OpenRevisionsClassicScreen({ revisionId: revisionId2 }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
-      import_components265.ExternalLink,
-      {
-        href: (0, import_url23.addQueryArgs)("revision.php", {
-          revision: revisionId2
-        }),
-        children: (0, import_i18n293.__)("Open classic revisions screen")
-      }
-    );
-  }
   function PostSummary({ onActionPerformed }) {
     const postType2 = (0, import_data234.useSelect)(
       (select7) => select7(store).getCurrentPostType(),
@@ -76683,12 +76664,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/sidebar/post-revision-summary.mjs
   var import_data238 = __toESM(require_data(), 1);
   var import_components268 = __toESM(require_components(), 1);
+  var import_i18n296 = __toESM(require_i18n(), 1);
+  var import_url23 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/revision-author-panel/index.mjs
   var import_data235 = __toESM(require_data(), 1);
   var import_core_data129 = __toESM(require_core_data(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
-  var import_i18n294 = __toESM(require_i18n(), 1);
+  var import_i18n293 = __toESM(require_i18n(), 1);
   var import_jsx_runtime472 = __toESM(require_jsx_runtime(), 1);
   function RevisionAuthorPanel() {
     const authorName = (0, import_data235.useSelect)((select7) => {
@@ -76703,13 +76686,13 @@ If there's a particular need for this, please submit a feature request at https:
     if (!authorName) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(post_panel_row_default, { label: (0, import_i18n294.__)("Author"), children: (0, import_html_entities30.decodeEntities)(authorName) });
+    return /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(post_panel_row_default, { label: (0, import_i18n293.__)("Author"), children: (0, import_html_entities30.decodeEntities)(authorName) });
   }
 
   // packages/editor/build-module/components/revision-created-panel/index.mjs
   var import_components266 = __toESM(require_components(), 1);
   var import_data236 = __toESM(require_data(), 1);
-  var import_i18n295 = __toESM(require_i18n(), 1);
+  var import_i18n294 = __toESM(require_i18n(), 1);
   var import_date20 = __toESM(require_date(), 1);
   var import_jsx_runtime473 = __toESM(require_jsx_runtime(), 1);
   function RevisionCreatedPanel() {
@@ -76720,9 +76703,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (!date) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime473.jsx)("div", { className: "editor-post-last-edited-panel", children: /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(import_components266.__experimentalText, { children: (0, import_i18n295.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime473.jsx)("div", { className: "editor-post-last-edited-panel", children: /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(import_components266.__experimentalText, { children: (0, import_i18n294.sprintf)(
       // translators: %s: Human-readable time difference, e.g. "2 days ago".
-      (0, import_i18n295.__)("Created %s."),
+      (0, import_i18n294.__)("Created %s."),
       (0, import_date20.humanTimeDiff)(date)
     ) }) });
   }
@@ -76731,7 +76714,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_word2 = __toESM(require_word(), 1);
   var import_data237 = __toESM(require_data(), 1);
   var import_element271 = __toESM(require_element(), 1);
-  var import_i18n296 = __toESM(require_i18n(), 1);
+  var import_i18n295 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/revision-diff-panel/index.mjs
   var import_components267 = __toESM(require_components(), 1);
@@ -76814,7 +76797,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
       RevisionDiffPanel,
       {
-        title: (0, import_i18n296.__)("Meta"),
+        title: (0, import_i18n295.__)("Meta"),
         entries,
         initialOpen: false
       }
@@ -76843,7 +76826,15 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(PostContentInformationUI, { postContent }),
           /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(RevisionCreatedPanel, {})
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(OpenRevisionsClassicScreen, { revisionId: revisionId2 }),
+        /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(
+          import_components268.ExternalLink,
+          {
+            href: (0, import_url23.addQueryArgs)("revision.php", {
+              revision: revisionId2
+            }),
+            children: (0, import_i18n296.__)("Open classic revisions screen")
+          }
+        ),
         /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(RevisionAuthorPanel, {})
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(RevisionFieldsDiffPanel, {})
@@ -77457,29 +77448,24 @@ If there's a particular need for this, please submit a feature request at https:
   var { Badge: Badge6 } = unlock(import_components275.privateApis);
   var DAY_IN_MILLISECONDS2 = 864e5;
   var EMPTY_ARRAY14 = [];
-  var REVISIONS_QUERY = {
-    per_page: 3,
-    orderby: "date",
-    order: "desc",
-    context: "embed",
-    _fields: "id,date,author"
-  };
   var defaultLayouts = { activity: {} };
+  var noop10 = () => {
+  };
+  var paginationInfo = {};
   var view = {
     type: "activity",
     titleField: "date",
     fields: ["author"],
-    layout: {
-      density: "compact"
-    }
+    layout: { density: "compact" }
   };
   var fields2 = [
     {
       id: "date",
       label: (0, import_i18n303.__)("Date"),
-      render: ({ item }) => {
+      render: ({ item, field }) => {
         const dateNowInMs = (0, import_date21.getDate)(null).getTime();
-        const date = (0, import_date21.getDate)(item.date ?? null);
+        const _value = field.getValue({ item });
+        const date = (0, import_date21.getDate)(_value ?? null);
         const displayDate = dateNowInMs - date.getTime() > DAY_IN_MILLISECONDS2 ? (0, import_date21.dateI18n)(
           (0, import_date21.getSettings)().formats.datetimeAbbreviated,
           date
@@ -77488,7 +77474,7 @@ If there's a particular need for this, please submit a feature request at https:
           "time",
           {
             className: "editor-post-revisions-panel__revision-date",
-            dateTime: item.date,
+            dateTime: _value,
             children: displayDate
           }
         );
@@ -77498,35 +77484,42 @@ If there's a particular need for this, please submit a feature request at https:
     },
     author_default
   ];
-  var noop10 = () => {
-  };
-  var paginationInfo = {};
   function PostRevisionsPanelContent() {
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data247.useDispatch)(store));
-    const { revisionsCount, revisions, isLoading, lastRevisionId } = (0, import_data247.useSelect)(
-      (select7) => {
-        const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select7(store);
-        const {
-          getCurrentPostRevisionsCount: getCurrentPostRevisionsCount2,
-          getCurrentPostLastRevisionId: getCurrentPostLastRevisionId2
-        } = select7(store);
-        const { getRevisions, isResolving } = select7(import_core_data134.store);
-        const query = [
-          "postType",
-          getCurrentPostType2(),
-          getCurrentPostId2(),
-          REVISIONS_QUERY
-        ];
-        const _revisions = getRevisions(...query);
-        return {
-          revisionsCount: getCurrentPostRevisionsCount2(),
-          lastRevisionId: getCurrentPostLastRevisionId2(),
-          revisions: _revisions,
-          isLoading: isResolving("getRevisions", query)
-        };
-      },
-      []
-    );
+    const {
+      revisionsCount,
+      revisions,
+      revisionKey,
+      isLoading,
+      lastRevisionId
+    } = (0, import_data247.useSelect)((select7) => {
+      const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select7(store);
+      const { getCurrentPostRevisionsCount: getCurrentPostRevisionsCount2, getCurrentPostLastRevisionId: getCurrentPostLastRevisionId2 } = select7(store);
+      const { getRevisions, getEntityConfig, isResolving } = select7(import_core_data134.store);
+      const _postType = getCurrentPostType2();
+      const entityConfig = getEntityConfig("postType", _postType);
+      const _revisionKey = entityConfig?.revisionKey || "id";
+      const revisionsQuery = {
+        per_page: 3,
+        orderby: "date",
+        order: "desc",
+        _fields: `${_revisionKey},date,author`
+      };
+      const query = [
+        "postType",
+        _postType,
+        getCurrentPostId2(),
+        revisionsQuery
+      ];
+      const _revisions = getRevisions(...query);
+      return {
+        revisionsCount: getCurrentPostRevisionsCount2(),
+        lastRevisionId: getCurrentPostLastRevisionId2(),
+        revisions: _revisions,
+        revisionKey: _revisionKey,
+        isLoading: isResolving("getRevisions", query)
+      };
+    }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
       import_components275.PanelBody,
       {
@@ -77546,10 +77539,10 @@ If there's a particular need for this, please submit a feature request at https:
               isLoading,
               paginationInfo,
               defaultLayouts,
-              getItemId: (item) => item.id,
+              getItemId: (item) => item[revisionKey],
               isItemClickable: () => true,
               onClickItem: (item) => {
-                setCurrentRevisionId2(item.id);
+                setCurrentRevisionId2(item[revisionKey]);
               },
               children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(dataviews_default.Layout, {})
             }
@@ -77684,7 +77677,13 @@ If there's a particular need for this, please submit a feature request at https:
         /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(PostSummary, { onActionPerformed }),
         /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(plugin_document_setting_panel_default.Slot, {}),
         /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(TemplateContentPanel, {}),
-        window?.__experimentalDataFormInspector && ["post", "page"].includes(postType2) && /* @__PURE__ */ (0, import_jsx_runtime486.jsxs)(import_jsx_runtime486.Fragment, { children: [
+        window?.__experimentalDataFormInspector && [
+          "post",
+          "page",
+          "wp_template",
+          "wp_template_part",
+          "wp_block"
+        ].includes(postType2) && /* @__PURE__ */ (0, import_jsx_runtime486.jsxs)(import_jsx_runtime486.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(TemplateActionsPanel, {}),
           /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(PostRevisionsPanel, {})
         ] }),

@@ -28120,9 +28120,6 @@ var wp;
     const id = getItemId2(item);
     const elementRef = (0, import_element92.useRef)(null);
     const isSelected2 = selection.includes(id);
-    const setElementRef = (element) => {
-      elementRef.current = element;
-    };
     useIntersectionObserver(elementRef, posinset);
     const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
       mediaField.render,
@@ -28136,7 +28133,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(
       import_components97.Composite.Item,
       {
-        ref: setElementRef,
+        ref: elementRef,
         "aria-label": titleField ? titleField.getValue({ item }) || (0, import_i18n89.__)("(no title)") : void 0,
         render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(Stack, { direction: "column", children, ...props }),
         role: "option",
@@ -28558,9 +28555,6 @@ var wp;
     const isSelected2 = selection.includes(id);
     const [isHovered, setIsHovered] = (0, import_element93.useState)(false);
     const elementRef = (0, import_element93.useRef)(null);
-    const setElementRef = (element) => {
-      elementRef.current = element;
-    };
     useIntersectionObserver(elementRef, posinset);
     const {
       showTitle = true,
@@ -28579,7 +28573,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(
       import_components98.Composite.Item,
       {
-        ref: setElementRef,
+        ref: elementRef,
         render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
           "tr",
           {

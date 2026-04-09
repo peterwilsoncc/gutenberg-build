@@ -6971,9 +6971,6 @@ function GridItem3({
   const id = getItemId(item);
   const elementRef = (0, import_element38.useRef)(null);
   const isSelected2 = selection.includes(id);
-  const setElementRef = (element) => {
-    elementRef.current = element;
-  };
   useIntersectionObserver(elementRef, posinset);
   const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
     mediaField.render,
@@ -6987,7 +6984,7 @@ function GridItem3({
   return /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(
     import_components17.Composite.Item,
     {
-      ref: setElementRef,
+      ref: elementRef,
       "aria-label": titleField ? titleField.getValue({ item }) || (0, import_i18n18.__)("(no title)") : void 0,
       render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Stack, { direction: "column", children, ...props }),
       role: "option",
@@ -7409,9 +7406,6 @@ function TableRow2({
   const isSelected2 = selection.includes(id);
   const [isHovered, setIsHovered] = (0, import_element39.useState)(false);
   const elementRef = (0, import_element39.useRef)(null);
-  const setElementRef = (element) => {
-    elementRef.current = element;
-  };
   useIntersectionObserver(elementRef, posinset);
   const {
     showTitle = true,
@@ -7430,7 +7424,7 @@ function TableRow2({
   return /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(
     import_components18.Composite.Item,
     {
-      ref: setElementRef,
+      ref: elementRef,
       render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
         "tr",
         {
