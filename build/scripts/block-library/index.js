@@ -31023,6 +31023,7 @@ ${js}
     const isContentOnlyMode = blockEditingMode === "contentOnly";
     const showDimensionsControls = allowResize && hasNonContentControls;
     const isResizable = allowResize && hasNonContentControls && !isWideAligned && isLargeViewport;
+    const isUploading = !!temporaryURL || isSideloading;
     const imageSizeOptions = imageSizes.filter(
       ({ slug }) => image?.media_details?.sizes?.[slug]?.source_url
     ).map(({ name: name123, slug }) => ({ value: slug, label: name123 }));
@@ -31392,7 +31393,7 @@ ${js}
                     onSelectURL,
                     onError: onUploadError,
                     onReset: () => onSelectImage(void 0),
-                    isUploading: !!temporaryURL || isSideloading,
+                    isUploading,
                     emptyLabel: (0, import_i18n93.__)("Add image")
                   }
                 )
@@ -31571,7 +31572,7 @@ ${js}
           }
         }
       ),
-      (temporaryURL || isSideloading) && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_components56.Spinner, {})
+      isUploading && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_components56.Spinner, {})
     ] });
     if (canEditImage && isEditingImage) {
       img = /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(ImageWrapper, { href, children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
@@ -31593,7 +31594,7 @@ ${js}
       img = /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(ImageWrapper, { href, children: img });
     }
     let resizableBox;
-    if (isResizable && isSingleSelected && !isEditingImage && !SIZED_LAYOUTS.includes(parentLayoutType)) {
+    if (isResizable && isSingleSelected && !isEditingImage && !isUploading && !SIZED_LAYOUTS.includes(parentLayoutType)) {
       const numericRatio = aspectRatio && evalAspectRatio(aspectRatio);
       const customRatio = pixelSize.width / pixelSize.height;
       const naturalRatio = naturalWidth / naturalHeight;
