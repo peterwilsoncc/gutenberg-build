@@ -1271,7 +1271,7 @@ var wp;
 
   // packages/media-utils/build-module/utils/validate-mime-type.mjs
   function validateMimeType(file, allowedTypes) {
-    if (!allowedTypes) {
+    if (!allowedTypes || allowedTypes.includes("*")) {
       return;
     }
     const isAllowedType = allowedTypes.some((allowedType) => {
