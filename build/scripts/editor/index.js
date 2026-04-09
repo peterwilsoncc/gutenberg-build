@@ -58903,7 +58903,6 @@ var wp;
           // table row. This allows us to add a click handler to the row
           // itself (to toggle row selection) without erroneously
           // intercepting click events from ItemActions.
-          /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
           /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
             "td",
             {
@@ -61395,16 +61394,22 @@ var wp;
               ) })
             }
           ),
-          hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("td", { role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-            column_primary_default,
+          hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+            "td",
             {
-              item,
-              titleField: showTitle ? titleField2 : void 0,
-              mediaField: showMedia ? mediaField : void 0,
-              descriptionField: showDescription ? descriptionField2 : void 0,
-              isItemClickable: () => false
+              role: "presentation",
+              children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+                column_primary_default,
+                {
+                  item,
+                  titleField: showTitle ? titleField2 : void 0,
+                  mediaField: showMedia ? mediaField : void 0,
+                  descriptionField: showDescription ? descriptionField2 : void 0,
+                  isItemClickable: () => false
+                }
+              )
             }
-          ) }),
+          ),
           columns.map((column) => {
             const { width, maxWidth, minWidth, align } = view2.layout?.styles?.[column] ?? {};
             return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
