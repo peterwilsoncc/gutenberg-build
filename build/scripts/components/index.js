@@ -46316,6 +46316,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onChange,
       onClick,
       hideLabelFromVision,
+      disabled,
       options: options2 = [],
       id: preferredId,
       ...additionalProps
@@ -46329,6 +46330,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       id: id3,
       role: "radiogroup",
       className: clsx_default(className2, "components-radio-control"),
+      disabled,
       "aria-describedby": !!help ? generateHelpId(id3) : void 0,
       children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(component_default2, {
         as: "legend",
