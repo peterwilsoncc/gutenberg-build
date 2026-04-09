@@ -75247,6 +75247,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
   var import_components282 = __toESM(require_components(), 1);
+  var import_dom41 = __toESM(require_dom(), 1);
   var import_jsx_runtime473 = __toESM(require_jsx_runtime(), 1);
   var { Badge: Badge6 } = unlock(import_components282.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
@@ -75271,7 +75272,7 @@ var wp;
                 {
                   numberOfLines: 1,
                   className: "link-preview-button__title",
-                  children: title
+                  children: (0, import_dom41.__unstableStripHTML)(title)
                 }
               ),
               url && /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
