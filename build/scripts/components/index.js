@@ -39242,7 +39242,7 @@ This message will only show in development mode. It won't appear in production. 
       children: computedRenderSelectedValue(currentValue)
     });
   };
-  function _CustomSelect(props) {
+  function CustomSelect(props) {
     const {
       children,
       hideLabelFromVision = false,
@@ -39303,7 +39303,7 @@ This message will only show in development mode. It won't appear in production. 
       })
     );
   }
-  var custom_select_default = _CustomSelect;
+  var custom_select_default = CustomSelect;
 
   // packages/components/build-module/custom-select-control-v2/item.mjs
   var import_element125 = __toESM(require_element(), 1);
