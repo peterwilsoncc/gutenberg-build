@@ -70299,7 +70299,8 @@ If there's a particular need for this, please submit a feature request at https:
                   onMonthChange: setCalendarMonth,
                   timeZone: timezoneString || void 0,
                   weekStartsOn,
-                  disabled: disabled2
+                  disabled: disabled2,
+                  disableNavigation: disabled2
                 }
               )
             ] })

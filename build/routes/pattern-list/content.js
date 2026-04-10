@@ -14564,7 +14564,8 @@ function CalendarDateControl({
                 onMonthChange: setCalendarMonth,
                 timeZone: timezoneString || void 0,
                 weekStartsOn,
-                disabled
+                disabled,
+                disableNavigation: disabled
               }
             )
           ] })

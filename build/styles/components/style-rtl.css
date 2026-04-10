@@ -749,7 +749,7 @@ p + .components-button.is-tertiary {
   border: 1px solid transparent;
 }
 .components-calendar__day--selected:not(.components-calendar__range-middle) .components-calendar__day-button:disabled::before {
-  background-color: var(--wp-components-color-gray-600, #949494);
+  background-color: var(--wp-components-color-gray-400, #ccc);
 }
 .components-calendar__day--selected:not(.components-calendar__range-middle) .components-calendar__day-button:hover:not(:disabled)::before {
   background-color: var(--wp-components-color-gray-800, #2f2f2f);
