@@ -44755,11 +44755,14 @@ var wp;
     const step = unitConfig?.step ?? customValueSettings[computedUnit]?.steps ?? 0.1;
     const max = unitConfig?.max ?? customValueSettings[computedUnit]?.max ?? 10;
     const handleCustomValueChange = (newValue) => {
-      const isNumeric = !isNaN(parseFloat(newValue));
-      const newCustomValue = isNumeric ? newValue : void 0;
-      if (newCustomValue !== void 0) {
-        onChange(newCustomValue);
+      if (newValue === void 0 || newValue === "") {
+        onChange(void 0);
+        return;
       }
+      if (isNaN(parseFloat(newValue))) {
+        return;
+      }
+      onChange(newValue);
     };
     const handleCustomValueSliderChange = (next) => {
       onChange([next, computedUnit].join(""));
