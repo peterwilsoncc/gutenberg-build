@@ -3710,13 +3710,16 @@ var wp;
 
   // packages/ui/build-module/card/title.mjs
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", {});
   var Title = (0, import_element10.forwardRef)(
-    function CardTitle({ render: render4, children, ...props }, ref) {
+    function CardTitle({ render: render4 = DEFAULT_TAG, children, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
         Text,
         {
+          ref,
           variant: "heading-lg",
-          render: render4 ?? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { ref, ...props }),
+          render: render4,
+          ...props,
           children
         }
       );

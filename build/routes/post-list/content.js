@@ -3209,13 +3209,16 @@ var Text = (0, import_element8.forwardRef)(function Text2({ variant = "body-md",
 
 // packages/ui/build-module/card/title.mjs
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", {});
 var Title = (0, import_element9.forwardRef)(
-  function CardTitle({ render: render4, children, ...props }, ref) {
+  function CardTitle({ render: render4 = DEFAULT_TAG, children, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
       Text,
       {
+        ref,
         variant: "heading-lg",
-        render: render4 ?? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { ref, ...props }),
+        render: render4,
+        ...props,
         children
       }
     );
