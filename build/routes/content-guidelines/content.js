@@ -79,7 +79,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe2, getSnapshot) {
-        didWarnOld18Alpha || void 0 === React26.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React25.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot();
@@ -127,8 +127,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React26 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState41 = React26.useState, useEffect36 = React26.useEffect, useLayoutEffect5 = React26.useLayoutEffect, useDebugValue = React26.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React26.useSyncExternalStore ? React26.useSyncExternalStore : shim;
+      var React25 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState41 = React25.useState, useEffect36 = React25.useEffect, useLayoutEffect5 = React25.useLayoutEffect, useDebugValue = React25.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React25.useSyncExternalStore ? React25.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -910,7 +910,7 @@ NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
 // node_modules/@base-ui/utils/esm/useControlled.js
-var React2 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 function useControlled({
   controlled,
   default: defaultProp,
@@ -919,25 +919,25 @@ function useControlled({
 }) {
   const {
     current: isControlled
-  } = React2.useRef(controlled !== void 0);
-  const [valueState, setValue] = React2.useState(defaultProp);
+  } = React.useRef(controlled !== void 0);
+  const [valueState, setValue] = React.useState(defaultProp);
   const value = isControlled ? controlled : valueState;
   if (true) {
-    React2.useEffect(() => {
+    React.useEffect(() => {
       if (isControlled !== (controlled !== void 0)) {
         console.error([`Base UI: A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
       }
     }, [state, name, controlled]);
     const {
       current: defaultValue2
-    } = React2.useRef(defaultProp);
-    React2.useEffect(() => {
+    } = React.useRef(defaultProp);
+    React.useEffect(() => {
       if (!isControlled && JSON.stringify(defaultValue2) !== JSON.stringify(defaultProp)) {
         console.error([`Base UI: A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
       }
     }, [JSON.stringify(defaultProp)]);
   }
-  const setValueIfUncontrolled = React2.useCallback((newValue) => {
+  const setValueIfUncontrolled = React.useCallback((newValue) => {
     if (!isControlled) {
       setValue(newValue);
     }
@@ -946,13 +946,13 @@ function useControlled({
 }
 
 // node_modules/@base-ui/utils/esm/useStableCallback.js
-var React4 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/useRefWithInit.js
-var React3 = __toESM(require_react(), 1);
+var React2 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init2, initArg) {
-  const ref = React3.useRef(UNINITIALIZED);
+  const ref = React2.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init2(initArg);
   }
@@ -960,11 +960,11 @@ function useRefWithInit(init2, initArg) {
 }
 
 // node_modules/@base-ui/utils/esm/useStableCallback.js
-var useInsertionEffect = React4[`useInsertionEffect${Math.random().toFixed(1)}`.slice(0, -3)];
+var useInsertionEffect = React3[`useInsertionEffect${Math.random().toFixed(1)}`.slice(0, -3)];
 var useSafeInsertionEffect = (
   // React 17 doesn't have useInsertionEffect.
   useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
-  useInsertionEffect !== React4.useLayoutEffect ? useInsertionEffect : (fn) => fn()
+  useInsertionEffect !== React3.useLayoutEffect ? useInsertionEffect : (fn) => fn()
 );
 function useStableCallback(callback) {
   const stable = useRefWithInit(createStableCallback).current;
@@ -993,10 +993,10 @@ function assertNotCalled() {
 }
 
 // node_modules/@base-ui/utils/esm/useIsoLayoutEffect.js
-var React5 = __toESM(require_react(), 1);
+var React4 = __toESM(require_react(), 1);
 var noop = () => {
 };
-var useIsoLayoutEffect = typeof document !== "undefined" ? React5.useLayoutEffect : noop;
+var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
 
 // node_modules/@base-ui/utils/esm/warn.js
 var set;
@@ -1014,7 +1014,7 @@ function warn(...messages) {
 }
 
 // node_modules/@base-ui/react/esm/utils/useRenderElement.js
-var React8 = __toESM(require_react(), 1);
+var React7 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/useMergedRefs.js
 function useMergedRefs(a2, b2, c2, d2) {
@@ -1106,18 +1106,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
-var React7 = __toESM(require_react(), 1);
+var React6 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/reactVersion.js
-var React6 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React6.version, 10);
+var React5 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React5.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React7.isValidElement(element)) {
+  if (!/* @__PURE__ */ React6.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -1367,15 +1367,15 @@ function evaluateRenderProp(element, render4, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render4;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React8.Children.toArray(render4);
+      const children = React7.Children.toArray(render4);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React8.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React7.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React8.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React7.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -1410,7 +1410,7 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React8.createElement(Tag, props);
+  return /* @__PURE__ */ React7.createElement(Tag, props);
 }
 
 // node_modules/@base-ui/react/esm/utils/reason-parts.js
@@ -1511,20 +1511,20 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
 }
 
 // node_modules/@base-ui/utils/esm/useId.js
-var React10 = __toESM(require_react(), 1);
+var React9 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/safeReact.js
-var React9 = __toESM(require_react(), 1);
+var React8 = __toESM(require_react(), 1);
 var SafeReact = {
-  ...React9
+  ...React8
 };
 
 // node_modules/@base-ui/utils/esm/useId.js
 var globalId = 0;
 function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React10.useState(idOverride);
+  const [defaultId, setDefaultId] = React9.useState(idOverride);
   const id = idOverride || defaultId;
-  React10.useEffect(() => {
+  React9.useEffect(() => {
     if (defaultId == null) {
       globalId += 1;
       setDefaultId(`${prefix}-${globalId}`);
@@ -1547,16 +1547,16 @@ function useBaseUiId(idOverride) {
 }
 
 // node_modules/@base-ui/react/esm/collapsible/root/useCollapsibleRoot.js
-var React13 = __toESM(require_react(), 1);
+var React12 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/esm/utils/useAnimationsFinished.js
 var ReactDOM = __toESM(require_react_dom(), 1);
 
 // node_modules/@base-ui/utils/esm/useOnMount.js
-var React11 = __toESM(require_react(), 1);
+var React10 = __toESM(require_react(), 1);
 var EMPTY = [];
 function useOnMount(fn) {
-  React11.useEffect(fn, EMPTY);
+  React10.useEffect(fn, EMPTY);
 }
 
 // node_modules/@base-ui/utils/esm/useAnimationFrame.js
@@ -1742,10 +1742,10 @@ function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false
 }
 
 // node_modules/@base-ui/react/esm/utils/useTransitionStatus.js
-var React12 = __toESM(require_react(), 1);
+var React11 = __toESM(require_react(), 1);
 function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
-  const [transitionStatus, setTransitionStatus] = React12.useState(open && enableIdleState ? "idle" : void 0);
-  const [mounted, setMounted] = React12.useState(open);
+  const [transitionStatus, setTransitionStatus] = React11.useState(open && enableIdleState ? "idle" : void 0);
+  const [mounted, setMounted] = React11.useState(open);
   if (open && !mounted) {
     setMounted(true);
     setTransitionStatus("starting");
@@ -1792,7 +1792,7 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
       AnimationFrame.cancel(frame);
     };
   }, [enableIdleState, open, mounted, setTransitionStatus, transitionStatus]);
-  return React12.useMemo(() => ({
+  return React11.useMemo(() => ({
     mounted,
     setMounted,
     transitionStatus
@@ -1819,23 +1819,23 @@ function useCollapsibleRoot(parameters) {
     setMounted,
     transitionStatus
   } = useTransitionStatus(open, true, true);
-  const [visible, setVisible] = React13.useState(open);
+  const [visible, setVisible] = React12.useState(open);
   const [{
     height,
     width
-  }, setDimensions] = React13.useState({
+  }, setDimensions] = React12.useState({
     height: void 0,
     width: void 0
   });
   const defaultPanelId = useBaseUiId();
-  const [panelIdState, setPanelIdState] = React13.useState();
+  const [panelIdState, setPanelIdState] = React12.useState();
   const panelId = panelIdState ?? defaultPanelId;
-  const [hiddenUntilFound, setHiddenUntilFound] = React13.useState(false);
-  const [keepMounted, setKeepMounted] = React13.useState(false);
-  const abortControllerRef = React13.useRef(null);
-  const animationTypeRef = React13.useRef(null);
-  const transitionDimensionRef = React13.useRef(null);
-  const panelRef = React13.useRef(null);
+  const [hiddenUntilFound, setHiddenUntilFound] = React12.useState(false);
+  const [keepMounted, setKeepMounted] = React12.useState(false);
+  const abortControllerRef = React12.useRef(null);
+  const animationTypeRef = React12.useRef(null);
+  const transitionDimensionRef = React12.useRef(null);
+  const panelRef = React12.useRef(null);
   const runOnceAnimationsFinish = useAnimationsFinished(panelRef, false);
   const handleTrigger = useStableCallback((event) => {
     const nextOpen = !open;
@@ -1873,7 +1873,7 @@ function useCollapsibleRoot(parameters) {
       setMounted(false);
     }
   }, [isControlled, keepMounted, open, openParam, setMounted]);
-  return React13.useMemo(() => ({
+  return React12.useMemo(() => ({
     abortControllerRef,
     animationTypeRef,
     disabled: disabled2,
@@ -1899,11 +1899,11 @@ function useCollapsibleRoot(parameters) {
 }
 
 // node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRootContext.js
-var React14 = __toESM(require_react(), 1);
-var CollapsibleRootContext = /* @__PURE__ */ React14.createContext(void 0);
+var React13 = __toESM(require_react(), 1);
+var CollapsibleRootContext = /* @__PURE__ */ React13.createContext(void 0);
 if (true) CollapsibleRootContext.displayName = "CollapsibleRootContext";
 function useCollapsibleRootContext() {
-  const context = React14.useContext(CollapsibleRootContext);
+  const context = React13.useContext(CollapsibleRootContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: CollapsibleRootContext is missing. Collapsible parts must be placed within <Collapsible.Root>." : formatErrorMessage_default(15));
   }
@@ -1952,7 +1952,7 @@ var collapsibleOpenStateMapping = {
 };
 
 // node_modules/@base-ui/react/esm/use-button/useButton.js
-var React17 = __toESM(require_react(), 1);
+var React16 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
 function hasWindow() {
@@ -1985,11 +1985,11 @@ function error(...messages) {
 }
 
 // node_modules/@base-ui/react/esm/composite/root/CompositeRootContext.js
-var React15 = __toESM(require_react(), 1);
-var CompositeRootContext = /* @__PURE__ */ React15.createContext(void 0);
+var React14 = __toESM(require_react(), 1);
+var CompositeRootContext = /* @__PURE__ */ React14.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
 function useCompositeRootContext(optional = false) {
-  const context = React15.useContext(CompositeRootContext);
+  const context = React14.useContext(CompositeRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
   }
@@ -1997,7 +1997,7 @@ function useCompositeRootContext(optional = false) {
 }
 
 // node_modules/@base-ui/react/esm/utils/useFocusableWhenDisabled.js
-var React16 = __toESM(require_react(), 1);
+var React15 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
     focusableWhenDisabled,
@@ -2008,7 +2008,7 @@ function useFocusableWhenDisabled(parameters) {
   } = parameters;
   const isFocusableComposite = composite && focusableWhenDisabled !== false;
   const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-  const props = React16.useMemo(() => {
+  const props = React15.useMemo(() => {
     const additionalProps = {
       // allow Tabbing away from focusableWhenDisabled elements
       onKeyDown(event) {
@@ -2045,7 +2045,7 @@ function useButton(parameters = {}) {
     native: isNativeButton = true,
     composite: compositeProp
   } = parameters;
-  const elementRef = React17.useRef(null);
+  const elementRef = React16.useRef(null);
   const compositeRootContext = useCompositeRootContext(true);
   const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
   const {
@@ -2058,7 +2058,7 @@ function useButton(parameters = {}) {
     isNativeButton
   });
   if (true) {
-    React17.useEffect(() => {
+    React16.useEffect(() => {
       if (!elementRef.current) {
         return;
       }
@@ -2076,7 +2076,7 @@ function useButton(parameters = {}) {
       }
     }, [isNativeButton]);
   }
-  const updateDisabled = React17.useCallback(() => {
+  const updateDisabled = React16.useCallback(() => {
     const element = elementRef.current;
     if (!isButtonElement(element)) {
       return;
@@ -2086,7 +2086,7 @@ function useButton(parameters = {}) {
     }
   }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
   useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-  const getButtonProps = React17.useCallback((externalProps = {}) => {
+  const getButtonProps = React16.useCallback((externalProps = {}) => {
     const {
       onClick: externalOnClick,
       onMouseDown: externalOnMouseDown,
@@ -2196,7 +2196,7 @@ function isValidLinkElement(elem) {
 }
 
 // node_modules/@base-ui/react/esm/collapsible/panel/useCollapsiblePanel.js
-var React18 = __toESM(require_react(), 1);
+var React17 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/esm/accordion/root/AccordionRootDataAttributes.js
 var AccordionRootDataAttributes = /* @__PURE__ */ (function(AccordionRootDataAttributes2) {
@@ -2228,12 +2228,12 @@ function useCollapsiblePanel(parameters) {
     visible,
     width
   } = parameters;
-  const isBeforeMatchRef = React18.useRef(false);
-  const latestAnimationNameRef = React18.useRef(null);
-  const shouldCancelInitialOpenAnimationRef = React18.useRef(open);
-  const shouldCancelInitialOpenTransitionRef = React18.useRef(open);
+  const isBeforeMatchRef = React17.useRef(false);
+  const latestAnimationNameRef = React17.useRef(null);
+  const shouldCancelInitialOpenAnimationRef = React17.useRef(open);
+  const shouldCancelInitialOpenTransitionRef = React17.useRef(open);
   const endingStyleFrame = useAnimationFrame();
-  const hidden = React18.useMemo(() => {
+  const hidden = React17.useMemo(() => {
     if (animationTypeRef.current === "css-animation") {
       return !visible;
     }
@@ -2457,7 +2457,7 @@ function useCollapsiblePanel(parameters) {
       }
     }
   }, [hiddenUntilFound, hidden, animationTypeRef, panelRef]);
-  React18.useEffect(function registerBeforeMatchListener() {
+  React17.useEffect(function registerBeforeMatchListener() {
     const panel = panelRef.current;
     if (!panel) {
       return void 0;
@@ -2472,7 +2472,7 @@ function useCollapsiblePanel(parameters) {
       panel.removeEventListener("beforematch", handleBeforeMatch);
     };
   }, [onOpenChange, panelRef, setOpen]);
-  return React18.useMemo(() => ({
+  return React17.useMemo(() => ({
     props: {
       hidden,
       id: idParam,
@@ -2482,7 +2482,7 @@ function useCollapsiblePanel(parameters) {
 }
 
 // node_modules/@base-ui/react/esm/utils/useOpenChangeComplete.js
-var React19 = __toESM(require_react(), 1);
+var React18 = __toESM(require_react(), 1);
 function useOpenChangeComplete(parameters) {
   const {
     enabled = true,
@@ -2492,7 +2492,7 @@ function useOpenChangeComplete(parameters) {
   } = parameters;
   const onComplete = useStableCallback(onCompleteParam);
   const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
-  React19.useEffect(() => {
+  React18.useEffect(() => {
     if (!enabled) {
       return void 0;
     }
@@ -2513,7 +2513,7 @@ __export(index_parts_exports, {
 });
 
 // node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRoot.js
-var React20 = __toESM(require_react(), 1);
+var React19 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/esm/collapsible/root/stateAttributesMapping.js
 var collapsibleStateAttributesMapping = {
@@ -2523,7 +2523,7 @@ var collapsibleStateAttributesMapping = {
 
 // node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRoot.js
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var CollapsibleRoot = /* @__PURE__ */ React20.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
+var CollapsibleRoot = /* @__PURE__ */ React19.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -2540,12 +2540,12 @@ var CollapsibleRoot = /* @__PURE__ */ React20.forwardRef(function CollapsibleRoo
     onOpenChange,
     disabled: disabled2
   });
-  const state = React20.useMemo(() => ({
+  const state = React19.useMemo(() => ({
     open: collapsible.open,
     disabled: collapsible.disabled,
     transitionStatus: collapsible.transitionStatus
   }), [collapsible.open, collapsible.disabled, collapsible.transitionStatus]);
-  const contextValue = React20.useMemo(() => ({
+  const contextValue = React19.useMemo(() => ({
     ...collapsible,
     onOpenChange,
     state
@@ -2564,12 +2564,12 @@ var CollapsibleRoot = /* @__PURE__ */ React20.forwardRef(function CollapsibleRoo
 if (true) CollapsibleRoot.displayName = "CollapsibleRoot";
 
 // node_modules/@base-ui/react/esm/collapsible/trigger/CollapsibleTrigger.js
-var React21 = __toESM(require_react(), 1);
+var React20 = __toESM(require_react(), 1);
 var stateAttributesMapping = {
   ...triggerOpenStateMapping,
   ...transitionStatusMapping
 };
-var CollapsibleTrigger = /* @__PURE__ */ React21.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
+var CollapsibleTrigger = /* @__PURE__ */ React20.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
   const {
     panelId,
     open,
@@ -2593,7 +2593,7 @@ var CollapsibleTrigger = /* @__PURE__ */ React21.forwardRef(function Collapsible
     focusableWhenDisabled: true,
     native: nativeButton
   });
-  const props = React21.useMemo(() => ({
+  const props = React20.useMemo(() => ({
     "aria-controls": open ? panelId : void 0,
     "aria-expanded": open,
     onClick: handleTrigger
@@ -2609,7 +2609,7 @@ var CollapsibleTrigger = /* @__PURE__ */ React21.forwardRef(function Collapsible
 if (true) CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
 // node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanel.js
-var React22 = __toESM(require_react(), 1);
+var React21 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanelCssVars.js
 var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2) {
@@ -2619,7 +2619,7 @@ var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2
 })({});
 
 // node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanel.js
-var CollapsiblePanel = /* @__PURE__ */ React22.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
+var CollapsiblePanel = /* @__PURE__ */ React21.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
   const {
     className,
     hiddenUntilFound: hiddenUntilFoundProp,
@@ -2711,7 +2711,7 @@ var CollapsiblePanel = /* @__PURE__ */ React22.forwardRef(function CollapsiblePa
       });
     }
   });
-  const panelState = React22.useMemo(() => ({
+  const panelState = React21.useMemo(() => ({
     ...state,
     transitionStatus
   }), [state, transitionStatus]);
@@ -3405,10 +3405,10 @@ var import_element92 = __toESM(require_element());
 var import_components60 = __toESM(require_components());
 
 // routes/content-guidelines/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='9015ee49ae']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='32870223a3']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "9015ee49ae");
-  style.appendChild(document.createTextNode(".content-guidelines__content{border-radius:8px;margin-top:0;padding:24px}.content-guidelines__list{display:flex;flex-direction:column;gap:16px;list-style:none;margin:0;padding:0}.content-guidelines__list-item{margin:0 auto;width:min(680px,100%)}.content-guidelines__loading{align-items:center;display:flex;justify-content:center;margin-top:16px}.content-guidelines__revision-history{display:flex;flex-direction:column;gap:16px;padding:24px}.content-guidelines__revision-history .dataviews-filters__container,.content-guidelines__revision-history .dataviews__view-actions{padding-left:8px;padding-right:8px}.content-guidelines__revision-history .dataviews-view-table td:first-child{padding-left:8px}.content-guidelines__revision-history .dataviews-view-table td{padding:16px 8px}.content-guidelines__revision-history .dataviews-view-table thead th:has(.dataviews-view-table-header-button):first-child{padding-left:0}.content-guidelines__revision-history .dataviews-view-table .dataviews-view-table__cell-content-wrapper{max-width:100%}.content-guidelines__revision-history-back{align-self:flex-start;color:#1e1e1e;font-weight:500;margin-left:-8px}.content-guidelines__error-description{margin:8px 0 0}.content-guidelines__revision-description{padding-left:8px}.content-guidelines__restore-modal-actions{margin-top:24px}"));
+  style.setAttribute("data-wp-hash", "32870223a3");
+  style.appendChild(document.createTextNode(".content-guidelines__content{border-radius:8px;margin-top:0;padding:24px}.content-guidelines__list{display:flex;flex-direction:column;gap:16px;list-style:none;margin:0;padding:0}.content-guidelines__list-item{margin:0 auto;width:min(680px,100%)}.content-guidelines__loading{align-items:center;display:flex;justify-content:center;margin-top:16px}.content-guidelines__revision-history{display:flex;flex-direction:column;gap:16px;padding:24px}.content-guidelines__revision-history .dataviews-wrapper{margin-left:-24px;margin-right:-24px}.content-guidelines__revision-history-back{align-self:flex-start;color:#1e1e1e;font-weight:500;margin-left:-16px}.content-guidelines__error-description{margin:8px 0 0}.content-guidelines__revision-description{padding-left:8px}.content-guidelines__restore-modal-actions{margin-top:24px}"));
   document.head.appendChild(style);
 }
 
@@ -8364,9 +8364,9 @@ function addGlobalEventListener(type, listener, options, scope = window) {
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/KPHZR4MB.js
-var React23 = __toESM(require_react(), 1);
+var React22 = __toESM(require_react(), 1);
 var import_react11 = __toESM(require_react(), 1);
-var _React = { ...React23 };
+var _React = { ...React22 };
 var useReactId = _React.useId;
 var useReactDeferredValue = _React.useDeferredValue;
 var useReactInsertionEffect = _React.useInsertionEffect;
@@ -8558,10 +8558,10 @@ function resetMouseMoving() {
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/GWSL6KNJ.js
-var React24 = __toESM(require_react(), 1);
+var React23 = __toESM(require_react(), 1);
 var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
 function forwardRef25(render4) {
-  const Role = React24.forwardRef(
+  const Role = React23.forwardRef(
     // @ts-ignore Incompatible with React 19 types. Ignore for now.
     (props, ref) => render4({ ...props, ref })
   );
@@ -8569,19 +8569,19 @@ function forwardRef25(render4) {
   return Role;
 }
 function memo22(Component, propsAreEqual) {
-  return React24.memo(Component, propsAreEqual);
+  return React23.memo(Component, propsAreEqual);
 }
 function createElement3(Type, props) {
   const { wrapElement, render: render4, ...rest } = props;
   const mergedRef = useMergeRefs(props.ref, getRefProperty(render4));
   let element;
-  if (React24.isValidElement(render4)) {
+  if (React23.isValidElement(render4)) {
     const renderProps = {
       // @ts-ignore Incompatible with React 19 types. Ignore for now.
       ...render4.props,
       ref: mergedRef
     };
-    element = React24.cloneElement(render4, mergeProps2(rest, renderProps));
+    element = React23.cloneElement(render4, mergeProps2(rest, renderProps));
   } else if (render4) {
     element = render4(rest);
   } else {
@@ -8600,17 +8600,17 @@ function createHook(useProps) {
   return useRole;
 }
 function createStoreContext(providers = [], scopedProviders = []) {
-  const context = React24.createContext(void 0);
-  const scopedContext = React24.createContext(void 0);
-  const useContext210 = () => React24.useContext(context);
+  const context = React23.createContext(void 0);
+  const scopedContext = React23.createContext(void 0);
+  const useContext210 = () => React23.useContext(context);
   const useScopedContext = (onlyScoped = false) => {
-    const scoped = React24.useContext(scopedContext);
+    const scoped = React23.useContext(scopedContext);
     const store2 = useContext210();
     if (onlyScoped) return scoped;
     return scoped || store2;
   };
   const useProviderContext = () => {
-    const scoped = React24.useContext(scopedContext);
+    const scoped = React23.useContext(scopedContext);
     const store2 = useContext210();
     if (scoped && scoped === store2) return;
     return store2;
@@ -9421,13 +9421,13 @@ If there's a particular need for this, please submit a feature request at https:
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/Q5W46E73.js
-var React25 = __toESM(require_react(), 1);
+var React24 = __toESM(require_react(), 1);
 var import_shim = __toESM(require_shim(), 1);
 var { useSyncExternalStore } = import_shim.default;
 var noopSubscribe = () => () => {
 };
 function useStoreState(store2, keyOrSelector = identity) {
-  const storeSubscribe = React25.useCallback(
+  const storeSubscribe = React24.useCallback(
     (callback) => {
       if (!store2) return noopSubscribe();
       return subscribe(store2, null, callback);
@@ -9447,10 +9447,10 @@ function useStoreState(store2, keyOrSelector = identity) {
   return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
 }
 function useStoreStateObject(store2, object) {
-  const objRef = React25.useRef(
+  const objRef = React24.useRef(
     {}
   );
-  const storeSubscribe = React25.useCallback(
+  const storeSubscribe = React24.useCallback(
     (callback) => {
       if (!store2) return noopSubscribe();
       return subscribe(store2, null, callback);
@@ -9510,13 +9510,13 @@ function useStoreProps(store2, props, key, setKey) {
   });
 }
 function useStore(createStore2, props) {
-  const [store2, setStore] = React25.useState(() => createStore2(props));
+  const [store2, setStore] = React24.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store2), [store2]);
-  const useState210 = React25.useCallback(
+  const useState210 = React24.useCallback(
     (keyOrSelector) => useStoreState(store2, keyOrSelector),
     [store2]
   );
-  const memoizedStore = React25.useMemo(
+  const memoizedStore = React24.useMemo(
     () => ({ ...store2, useState: useState210 }),
     [store2, useState210]
   );
@@ -22341,6 +22341,14 @@ function GuidelineActionsSection() {
       );
     }
   }
+  function navigateToRevisionHistory() {
+    if (window?.location?.href) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("view", "revision-history");
+      window.history.replaceState({}, "", url.toString());
+    }
+    goTo("/revision-history");
+  }
   const ACTIONS = [
     {
       slug: "import",
@@ -22366,7 +22374,7 @@ function GuidelineActionsSection() {
       description: (0, import_i18n54.__)("Use a previous version of your guidelines."),
       buttonLabel: (0, import_i18n54.__)("View history"),
       ariaLabel: (0, import_i18n54.__)("View history of guidelines"),
-      onClick: () => goTo("/revision-history")
+      onClick: navigateToRevisionHistory
     }
   ];
   return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_components58.__experimentalVStack, { spacing: 4, className: "content-guidelines__actions", children: [
@@ -22423,16 +22431,14 @@ var import_element91 = __toESM(require_element());
 var import_data11 = __toESM(require_data());
 var import_date9 = __toESM(require_date());
 var import_notices5 = __toESM(require_notices());
+var import_jsx_runtime132 = __toESM(require_jsx_runtime());
 var DEFAULT_VIEW = {
   type: "table",
   fields: ["date", "author"],
   page: 1,
   perPage: 10,
   layout: {
-    enableMoving: false,
-    styles: {
-      author: { align: "end" }
-    }
+    enableMoving: false
   }
 };
 function RevisionHistory() {
@@ -22443,35 +22449,35 @@ function RevisionHistory() {
   const [isLoading, setIsLoading] = (0, import_element91.useState)(false);
   const [revisionToRestore, setRevisionToRestore] = (0, import_element91.useState)(null);
   const [isRestoring, setIsRestoring] = (0, import_element91.useState)(false);
-  const [refetchKey, setRefetchKey] = (0, import_element91.useState)(0);
   const { createSuccessNotice, createErrorNotice } = (0, import_data11.useDispatch)(import_notices5.store);
   const guidelinesId = (0, import_data11.useSelect)(
     (select2) => select2(store).getId(),
     []
   );
-  (0, import_element91.useEffect)(() => {
+  const loadRevisions = (0, import_element91.useCallback)(async () => {
     if (!guidelinesId) {
       return;
     }
-    async function loadRevisions() {
-      setIsLoading(true);
-      try {
-        const result = await fetchContentGuidelinesRevisions({
-          guidelinesId,
-          perPage: 100
-        });
-        setRevisions(result.revisions);
-      } catch {
-        createErrorNotice(
-          (0, import_i18n55.__)("Could not load revision history. Please try again."),
-          { type: "snackbar" }
-        );
-      } finally {
-        setIsLoading(false);
-      }
+    setIsLoading(true);
+    try {
+      const result = await fetchContentGuidelinesRevisions({
+        guidelinesId,
+        page: 1,
+        perPage: 100
+      });
+      setRevisions(result.revisions);
+    } catch {
+      createErrorNotice(
+        (0, import_i18n55.__)("Could not load revision history. Please try again."),
+        { type: "snackbar" }
+      );
+    } finally {
+      setIsLoading(false);
     }
+  }, [guidelinesId, createErrorNotice]);
+  (0, import_element91.useEffect)(() => {
     loadRevisions();
-  }, [guidelinesId, refetchKey, createErrorNotice]);
+  }, [loadRevisions]);
   const authorElements = (0, import_element91.useMemo)(() => {
     return [
       ...new Set(
@@ -22488,10 +22494,10 @@ function RevisionHistory() {
         type: "date",
         label: (0, import_i18n55.__)("Date"),
         getValue: ({ item }) => item.date,
-        render: ({ item }) => /* @__PURE__ */ React.createElement("time", { dateTime: item.date }, (0, import_date9.dateI18n)(
+        render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("time", { dateTime: item.date, children: (0, import_date9.dateI18n)(
           (0, import_date9.getSettings)().formats.datetimeAbbreviated,
           (0, import_date9.getDate)(item.date)
-        )),
+        ) }),
         enableSorting: false,
         enableHiding: false,
         filterBy: {
@@ -22502,7 +22508,7 @@ function RevisionHistory() {
         id: "author",
         label: (0, import_i18n55.__)("User"),
         getValue: ({ item }) => item._embedded?.author?.[0]?.name ?? (0, import_i18n55.__)("Unknown"),
-        render: ({ item }) => /* @__PURE__ */ React.createElement("span", null, item._embedded?.author?.[0]?.name ?? (0, import_i18n55.__)("Unknown")),
+        render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { children: item._embedded?.author?.[0]?.name ?? (0, import_i18n55.__)("Unknown") }),
         enableSorting: false,
         enableHiding: false,
         enableGlobalSearch: true,
@@ -22514,10 +22520,6 @@ function RevisionHistory() {
     ],
     [authorElements]
   );
-  const { data: displayedRevisions, paginationInfo } = (0, import_element91.useMemo)(
-    () => filterSortAndPaginate(revisions, view, fields2),
-    [revisions, view, fields2]
-  );
   const actions2 = (0, import_element91.useMemo)(
     () => [
       {
@@ -22527,6 +22529,10 @@ function RevisionHistory() {
       }
     ],
     [setRevisionToRestore]
+  );
+  const { data: displayedRevisions, paginationInfo: paginationToShow } = (0, import_element91.useMemo)(
+    () => filterSortAndPaginate(revisions, view, fields2),
+    [revisions, view, fields2]
   );
   async function handleRestore() {
     if (!guidelinesId || !revisionToRestore) {
@@ -22540,7 +22546,7 @@ function RevisionHistory() {
       );
       await fetchContentGuidelines();
       setRevisionToRestore(null);
-      setRefetchKey((k) => k + 1);
+      await loadRevisions();
       createSuccessNotice((0, import_i18n55.__)("Revision restored."), {
         type: "snackbar"
       });
@@ -22553,85 +22559,97 @@ function RevisionHistory() {
       setIsRestoring(false);
     }
   }
-  return /* @__PURE__ */ React.createElement("div", { className: "content-guidelines__revision-history" }, /* @__PURE__ */ React.createElement(
-    import_components59.Navigator.BackButton,
-    {
-      icon: (0, import_i18n55.isRTL)() ? chevron_right_default : chevron_left_default,
-      className: "content-guidelines__revision-history-back"
-    },
-    (0, import_i18n55.__)("Revision history")
-  ), /* @__PURE__ */ React.createElement(
-    import_components59.__experimentalText,
-    {
-      size: 13,
-      weight: 400,
-      variant: "muted",
-      className: "content-guidelines__revision-description"
-    },
-    (0, import_i18n55.__)("Use a previous version of your guidelines.")
-  ), /* @__PURE__ */ React.createElement(
-    dataviews_default,
-    {
-      data: displayedRevisions,
-      fields: fields2,
-      view,
-      onChangeView: setView,
-      actions: actions2,
-      isLoading,
-      paginationInfo,
-      defaultLayouts: { table: {} },
-      getItemId: (item) => String(item.id)
+  const navigateToGuidelines = () => {
+    if (window?.location?.href) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("view");
+      window.history.replaceState({}, "", url.toString());
     }
-  ), revisionToRestore && /* @__PURE__ */ React.createElement(
-    import_components59.Modal,
-    {
-      title: (0, import_i18n55.__)("Restore guidelines"),
-      onRequestClose: () => setRevisionToRestore(null),
-      size: "medium"
-    },
-    /* @__PURE__ */ React.createElement(import_components59.__experimentalVStack, { spacing: 4 }, /* @__PURE__ */ React.createElement(import_components59.__experimentalText, { size: 13, weight: 400 }, (0, import_i18n55.sprintf)(
-      /* translators: %s: formatted revision date */
-      (0, import_i18n55.__)(
-        "You are about to restore the guidelines from %s."
-      ),
-      (0, import_date9.dateI18n)(
-        (0, import_date9.getSettings)().formats.datetimeAbbreviated,
-        (0, import_date9.getDate)(revisionToRestore.date)
-      )
-    )), /* @__PURE__ */ React.createElement(import_components59.__experimentalText, { size: 13, weight: 400 }, (0, import_i18n55.__)(
-      "You can undo this anytime from revision history."
-    ))),
-    /* @__PURE__ */ React.createElement(
-      import_components59.__experimentalHStack,
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)("div", { className: "content-guidelines__revision-history", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+      import_components59.Navigator.BackButton,
       {
-        justify: "flex-end",
-        className: "content-guidelines__restore-modal-actions"
-      },
-      /* @__PURE__ */ React.createElement(
-        import_components59.Button,
-        {
-          variant: "tertiary",
-          onClick: () => setRevisionToRestore(null)
-        },
-        (0, import_i18n55.__)("Cancel")
-      ),
-      /* @__PURE__ */ React.createElement(
-        import_components59.Button,
-        {
-          variant: "primary",
-          onClick: handleRestore,
-          isBusy: isRestoring,
-          disabled: isRestoring,
-          __next40pxDefaultSize: true
-        },
-        (0, import_i18n55.__)("Restore")
-      )
+        icon: (0, import_i18n55.isRTL)() ? chevron_right_default : chevron_left_default,
+        className: "content-guidelines__revision-history-back",
+        onClick: navigateToGuidelines,
+        children: (0, import_i18n55.__)("Revision history")
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components59.__experimentalText, { size: 13, weight: 400, variant: "muted", children: (0, import_i18n55.__)("Use a previous version of your guidelines.") }),
+    /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+      dataviews_default,
+      {
+        data: displayedRevisions,
+        fields: fields2,
+        view,
+        onChangeView: setView,
+        actions: actions2,
+        isLoading,
+        paginationInfo: paginationToShow,
+        defaultLayouts: { table: {} },
+        getItemId: (item) => String(item.id),
+        empty: isLoading && displayedRevisions.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components59.Spinner, {}) : (0, import_i18n55.__)("No revisions found.")
+      }
+    ),
+    revisionToRestore && /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
+      import_components59.Modal,
+      {
+        title: (0, import_i18n55.__)("Restore guidelines"),
+        onRequestClose: () => setRevisionToRestore(null),
+        size: "medium",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_components59.__experimentalVStack, { spacing: 4, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components59.__experimentalText, { size: 13, weight: 400, children: (0, import_i18n55.sprintf)(
+              /* translators: %s: formatted revision date */
+              (0, import_i18n55.__)(
+                "You are about to restore the guidelines from %s."
+              ),
+              (0, import_date9.dateI18n)(
+                (0, import_date9.getSettings)().formats.datetimeAbbreviated,
+                (0, import_date9.getDate)(revisionToRestore.date)
+              )
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components59.__experimentalText, { size: 13, weight: 400, children: (0, import_i18n55.__)(
+              "You can undo this anytime from revision history."
+            ) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
+            import_components59.__experimentalHStack,
+            {
+              justify: "flex-end",
+              className: "content-guidelines__restore-modal-actions",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+                  import_components59.Button,
+                  {
+                    variant: "tertiary",
+                    onClick: () => setRevisionToRestore(null),
+                    children: (0, import_i18n55.__)("Cancel")
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+                  import_components59.Button,
+                  {
+                    variant: "primary",
+                    onClick: handleRestore,
+                    isBusy: isRestoring,
+                    disabled: isRestoring,
+                    __next40pxDefaultSize: true,
+                    children: (0, import_i18n55.__)("Restore")
+                  }
+                )
+              ]
+            }
+          )
+        ]
+      }
     )
-  ));
+  ] });
 }
 
 // routes/content-guidelines/stage.tsx
-var import_jsx_runtime132 = __toESM(require_jsx_runtime());
+var import_jsx_runtime133 = __toESM(require_jsx_runtime());
 var GUIDELINE_ITEMS = [
   {
     title: (0, import_i18n56.__)("Site"),
@@ -22663,17 +22681,28 @@ var GUIDELINE_ITEMS = [
   },
   {
     title: (0, import_i18n56.__)("Additional"),
-    description: (0, import_i18n56.__)("Add additional guidelines for your team."),
+    description: (0, import_i18n56.__)("Add additional guidelines."),
     slug: "additional"
   }
 ];
+var KNOWN_VIEWS = ["revision-history"];
+function getInitialNavigatorPath() {
+  if (window?.location?.href) {
+    const url = new URL(window.location.href);
+    const view = url.searchParams.get("view") ?? "";
+    if (KNOWN_VIEWS.includes(view)) {
+      return `/${view}`;
+    }
+  }
+  return "/";
+}
 function ContentGuidelinesPage() {
   const [loading, setLoading] = (0, import_element92.useState)(true);
   const [error2, setError] = (0, import_element92.useState)(null);
   (0, import_element92.useEffect)(() => {
     fetchContentGuidelines().then(() => setError(null)).catch((e2) => setError(e2.message)).finally(() => setLoading(false));
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
     page_default,
     {
       title: (0, import_i18n56.__)("Guidelines"),
@@ -22681,19 +22710,19 @@ function ContentGuidelinesPage() {
         "Set content standards that guide your team, inform plugins, and help AI tools generate content that matches your site's voice and requirements."
       ),
       children: [
-        error2 && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: "content-guidelines__content", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_components60.Notice, { status: "error", isDismissible: false, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("strong", { children: (0, import_i18n56.sprintf)(
+        error2 && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { className: "content-guidelines__content", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(import_components60.Notice, { status: "error", isDismissible: false, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("strong", { children: (0, import_i18n56.sprintf)(
             /* translators: %s: Error message. */
             (0, import_i18n56.__)("Error loading guidelines: %s"),
             error2
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("p", { className: "content-guidelines__error-description", children: (0, import_i18n56.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("p", { className: "content-guidelines__error-description", children: (0, import_i18n56.__)(
             "Please try again. If the problem persists, contact support."
           ) })
         ] }) }),
-        loading ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: "content-guidelines__loading", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components60.Spinner, {}) }) : !error2 && /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_components60.Navigator, { initialPath: "/", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components60.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_components60.__experimentalVStack, { className: "content-guidelines__content", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+        loading ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { className: "content-guidelines__loading", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components60.Spinner, {}) }) : !error2 && /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(import_components60.Navigator, { initialPath: getInitialNavigatorPath(), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components60.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(import_components60.__experimentalVStack, { className: "content-guidelines__content", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               "ul",
               {
                 role: "list",
@@ -22702,11 +22731,11 @@ function ContentGuidelinesPage() {
                   const contentId = `content-guidelines-${item.slug}`;
                   const headingId = `content-guidelines-${item.slug}-heading`;
                   const descriptionId = `content-guidelines-${item.slug}-description`;
-                  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
                     "li",
                     {
                       className: "content-guidelines__list-item",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: "content-guidelines__accordion-item", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { className: "content-guidelines__accordion-item", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
                         GuidelineAccordion,
                         {
                           title: item.title,
@@ -22714,7 +22743,7 @@ function ContentGuidelinesPage() {
                           contentId,
                           headingId,
                           descriptionId,
-                          children: item.slug === "blocks" ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(BlockGuidelines, {}) : /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+                          children: item.slug === "blocks" ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(BlockGuidelines, {}) : /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
                             GuidelineAccordionForm,
                             {
                               slug: item.slug,
@@ -22731,9 +22760,9 @@ function ContentGuidelinesPage() {
                 })
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(GuidelineActionsSection, {})
+            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(GuidelineActionsSection, {})
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components60.Navigator.Screen, { path: "/revision-history", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(RevisionHistory, {}) })
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components60.Navigator.Screen, { path: "/revision-history", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(RevisionHistory, {}) })
         ] })
       ]
     }
