@@ -1765,8 +1765,38 @@ body.is-dragging-components-draggable {
   border-width: 0;
   transform: translateX(16px);
 }
-.components-form-toggle.is-disabled, .components-disabled .components-form-toggle {
-  opacity: 0.3;
+.components-form-toggle.is-disabled .components-form-toggle__track, .components-disabled .components-form-toggle .components-form-toggle__track {
+  background-color: var(--wp-components-color-gray-100, #f0f0f0);
+  border-color: var(--wp-components-color-gray-300, #ddd);
+}
+@media (forced-colors: active) {
+  .components-form-toggle.is-disabled .components-form-toggle__track, .components-disabled .components-form-toggle .components-form-toggle__track {
+    border-color: GrayText;
+  }
+}
+.components-form-toggle.is-disabled .components-form-toggle__thumb, .components-disabled .components-form-toggle .components-form-toggle__thumb {
+  background-color: var(--wp-components-color-gray-400, #ccc);
+  box-shadow: none;
+}
+@media (forced-colors: active) {
+  .components-form-toggle.is-disabled .components-form-toggle__thumb, .components-disabled .components-form-toggle .components-form-toggle__thumb {
+    border-color: GrayText;
+  }
+}
+.components-form-toggle.is-disabled.is-checked .components-form-toggle__track, .components-disabled .components-form-toggle.is-checked .components-form-toggle__track {
+  background-color: var(--wp-components-color-gray-400, #ccc);
+  border-color: var(--wp-components-color-gray-400, #ccc);
+}
+@media (forced-colors: active) {
+  .components-form-toggle.is-disabled.is-checked .components-form-toggle__track, .components-disabled .components-form-toggle.is-checked .components-form-toggle__track {
+    border-color: GrayText;
+  }
+  .components-form-toggle.is-disabled.is-checked .components-form-toggle__track::after, .components-disabled .components-form-toggle.is-checked .components-form-toggle__track::after {
+    border-top-color: GrayText;
+  }
+}
+.components-form-toggle.is-disabled.is-checked .components-form-toggle__thumb, .components-disabled .components-form-toggle.is-checked .components-form-toggle__thumb {
+  background-color: #fff;
 }
 
 .components-form-toggle input.components-form-toggle__input[type=checkbox] {
