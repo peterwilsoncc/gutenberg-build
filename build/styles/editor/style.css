@@ -128,10 +128,10 @@
 }
 
 .admin-ui-page__header-title {
-  font-family: var(--wpds-font-family-heading, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
-  font-size: var(--wpds-font-size-lg, 15px);
-  font-weight: var(--wpds-font-weight-medium, 499);
-  line-height: var(--wpds-font-line-height-lg, 28px);
+  font-family: var(--wpds-typography-font-family-heading, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
+  font-size: var(--wpds-typography-font-size-lg, 15px);
+  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  line-height: var(--wpds-typography-line-height-lg, 28px);
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -145,8 +145,8 @@
 .admin-ui-page__header-subtitle {
   padding-block-end: var(--wpds-dimension-padding-xs, 4px);
   color: var(--wpds-color-fg-content-neutral-weak, #707070);
-  font-size: var(--wpds-font-size-md, 13px);
-  line-height: var(--wpds-font-line-height-md, 24px);
+  font-size: var(--wpds-typography-font-size-md, 13px);
+  line-height: var(--wpds-typography-line-height-md, 24px);
   margin: 0;
 }
 
@@ -172,7 +172,7 @@
 
 .show-icon-labels .admin-ui-page__header-actions .components-button.has-icon::after {
   content: attr(aria-label);
-  font-size: var(--wpds-font-size-sm, 12px);
+  font-size: var(--wpds-typography-font-size-sm, 12px);
 }
 
 /**
@@ -221,10 +221,10 @@
  * These variables do not appear to be used anywhere else.
  */
 .admin-ui-breadcrumbs__list {
-  font-family: var(--wpds-font-family-heading, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
-  font-size: var(--wpds-font-size-lg, 15px);
-  font-weight: var(--wpds-font-weight-medium, 499);
-  line-height: var(--wpds-font-line-height-lg, 28px);
+  font-family: var(--wpds-typography-font-family-heading, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
+  font-size: var(--wpds-typography-font-size-lg, 15px);
+  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  line-height: var(--wpds-typography-line-height-lg, 28px);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -3828,7 +3828,7 @@ div.dataviews-view-list {
 
 .dataforms-layouts-panel__field-trigger.is-disabled .dataforms-layouts-panel__field-control {
   color: #757575;
-  font-weight: var(--wpds-font-weight-regular, 400);
+  font-weight: var(--wpds-typography-font-weight-regular, 400);
 }
 
 .dataforms-layouts-panel__field-trigger--edit-always .dataforms-layouts-panel__field-trigger-icon {
@@ -3901,12 +3901,12 @@ div.dataviews-view-list {
   flex-grow: 1;
   min-width: 0;
   min-height: 24px;
-  line-height: var(--wpds-font-line-height-md, 24px);
+  line-height: var(--wpds-typography-line-height-md, 24px);
   display: flex;
   align-items: center;
   overflow: hidden;
   word-break: break-word;
-  font-weight: var(--wpds-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-medium, 499);
 }
 
 .dataforms-layouts-panel__field-control > * {
