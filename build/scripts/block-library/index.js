@@ -61524,7 +61524,7 @@ ${js}
     editorStyle: "wp-block-search-editor",
     style: "wp-block-search",
     selectors: {
-      color: ".wp-block-search .wp-block-search__button",
+      color: ".wp-block-search .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input",
       border: ".wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper"
     }
   };
@@ -61671,10 +61671,12 @@ ${js}
     const renderTextField = () => {
       const textFieldClasses = clsx_default(
         "wp-block-search__input",
+        hasNoButton ? colorProps.className : void 0,
         isButtonPositionInside ? void 0 : borderProps.className,
         typographyProps.className
       );
       const textFieldStyles = {
+        ...hasNoButton ? colorProps.style : {},
         ...isButtonPositionInside ? {
           borderRadius: borderProps.style?.borderRadius,
           borderTopLeftRadius: borderProps.style?.borderTopLeftRadius,

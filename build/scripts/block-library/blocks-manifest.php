@@ -7455,7 +7455,7 @@ return array(
 		'editorStyle' => 'wp-block-search-editor',
 		'style' => 'wp-block-search',
 		'selectors' => array(
-			'color' => '.wp-block-search .wp-block-search__button',
+			'color' => '.wp-block-search .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input',
 			'border' => '.wp-block-search.wp-block-search__button-outside .wp-block-search__input, .wp-block-search.wp-block-search__button-outside .wp-block-search__button, .wp-block-search.wp-block-search__no-button .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__input, .wp-block-search.wp-block-search__button-only .wp-block-search__button, .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper'
 		)
 	),
