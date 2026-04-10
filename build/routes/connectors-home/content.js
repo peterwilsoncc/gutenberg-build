@@ -708,12 +708,12 @@ var page_default = Page;
 
 // routes/connectors-home/stage.tsx
 var import_components4 = __toESM(require_components());
-var import_data3 = __toESM(require_data());
+var import_data4 = __toESM(require_data());
 var import_element7 = __toESM(require_element());
 var import_i18n4 = __toESM(require_i18n());
 var import_core_data3 = __toESM(require_core_data());
 import {
-  privateApis as connectorsPrivateApis
+  privateApis as connectorsPrivateApis2
 } from "@wordpress/connectors";
 
 // routes/connectors-home/style.scss
@@ -727,7 +727,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 // routes/connectors-home/ai-plugin-callout.tsx
 var import_components3 = __toESM(require_components());
 var import_core_data2 = __toESM(require_core_data());
-var import_data2 = __toESM(require_data());
+var import_data3 = __toESM(require_data());
 var import_element6 = __toESM(require_element());
 var import_i18n3 = __toESM(require_i18n());
 var import_url = __toESM(require_url());
@@ -736,12 +736,21 @@ import { speak as speak2 } from "@wordpress/a11y";
 // routes/connectors-home/default-connectors.tsx
 var import_components2 = __toESM(require_components());
 var import_element5 = __toESM(require_element());
+var import_data2 = __toESM(require_data());
 var import_i18n2 = __toESM(require_i18n());
 import {
   __experimentalRegisterConnector as registerConnector,
   __experimentalConnectorItem as ConnectorItem,
-  __experimentalDefaultConnectorSettings as DefaultConnectorSettings
+  __experimentalDefaultConnectorSettings as DefaultConnectorSettings,
+  privateApis as connectorsPrivateApis
 } from "@wordpress/connectors";
+
+// routes/lock-unlock.ts
+var import_private_apis = __toESM(require_private_apis());
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/routes"
+);
 
 // routes/connectors-home/use-connector-plugin.ts
 var import_core_data = __toESM(require_core_data());
@@ -770,8 +779,8 @@ function useConnectorPlugin({
     currentApiKey,
     canInstallPlugins
   } = (0, import_data.useSelect)(
-    (select) => {
-      const store2 = select(import_core_data.store);
+    (select2) => {
+      const store2 = select2(import_core_data.store);
       const siteSettings = store2.getEntityRecord("root", "site");
       const apiKey = siteSettings?.[settingName] ?? "";
       const canCreate = !!store2.canUser("create", {
@@ -1181,6 +1190,7 @@ var GeminiLogo = () => /* @__PURE__ */ React.createElement(
 );
 
 // routes/connectors-home/default-connectors.tsx
+var { store: connectorsStore } = unlock(connectorsPrivateApis);
 function getConnectorData() {
   try {
     const parsed = JSON.parse(
@@ -1347,7 +1357,10 @@ function registerDefaultConnectors() {
       authentication,
       plugin: data.plugin
     };
-    if (authentication.method === "api_key") {
+    const existing = unlock((0, import_data2.select)(connectorsStore)).getConnector(
+      connectorName
+    );
+    if (authentication.method === "api_key" && !existing?.render) {
       args.render = ApiKeyConnector;
     }
     registerConnector(connectorName, args);
@@ -1428,8 +1441,8 @@ function AiPluginCallout() {
     canInstallPlugins,
     canManagePlugins,
     hasConnectedProvider
-  } = (0, import_data2.useSelect)((select) => {
-    const store2 = select(import_core_data2.store);
+  } = (0, import_data3.useSelect)((select2) => {
+    const store2 = select2(import_core_data2.store);
     const canCreate = !!store2.canUser("create", {
       kind: "root",
       name: "plugin"
@@ -1471,7 +1484,7 @@ function AiPluginCallout() {
       hasConnectedProvider: hasConnected
     };
   }, []);
-  const { saveEntityRecord } = (0, import_data2.useDispatch)(import_core_data2.store);
+  const { saveEntityRecord } = (0, import_data3.useDispatch)(import_core_data2.store);
   const installPlugin = async () => {
     setIsBusy(true);
     try {
@@ -1582,21 +1595,14 @@ function AiPluginCallout() {
   )), /* @__PURE__ */ React.createElement(WpLogoDecoration, null));
 }
 
-// routes/lock-unlock.ts
-var import_private_apis = __toESM(require_private_apis());
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/routes"
-);
-
 // routes/connectors-home/stage.tsx
-var { store } = unlock(connectorsPrivateApis);
+var { store } = unlock(connectorsPrivateApis2);
 registerDefaultConnectors();
 function ConnectorsPage() {
-  const { connectors, canInstallPlugins } = (0, import_data3.useSelect)(
-    (select) => ({
-      connectors: unlock(select(store)).getConnectors(),
-      canInstallPlugins: select(import_core_data3.store).canUser("create", {
+  const { connectors, canInstallPlugins } = (0, import_data4.useSelect)(
+    (select2) => ({
+      connectors: unlock(select2(store)).getConnectors(),
+      canInstallPlugins: select2(import_core_data3.store).canUser("create", {
         kind: "root",
         name: "plugin"
       })
