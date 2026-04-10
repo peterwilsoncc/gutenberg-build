@@ -265,7 +265,7 @@
   font-weight: 499;
   margin: 0;
   border: 0;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   appearance: none;
   background: none;
 }
@@ -594,7 +594,7 @@ p + .components-button.is-tertiary {
   background: none;
   padding: 0;
   margin: 0;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   justify-content: center;
   align-items: center;
   display: flex;
@@ -652,7 +652,7 @@ p + .components-button.is-tertiary {
   background: none;
   padding: 0;
   margin: 0;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -938,7 +938,7 @@ p + .components-button.is-tertiary {
   line-height: var(--checkbox-input-size);
 }
 .components-checkbox-control:not(:has(:disabled)) .components-checkbox-control__label {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .components-checkbox-control__input[type=checkbox] {
@@ -1051,7 +1051,7 @@ p + .components-button.is-tertiary {
   border-color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
 }
 .components-checkbox-control__input[type=checkbox]:not(:disabled) {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 .components-checkbox-control__input[type=checkbox]:checked::before {
   content: none;
@@ -1072,7 +1072,7 @@ svg.components-checkbox-control__checked,
 svg.components-checkbox-control__indeterminate {
   --checkmark-size: var(--checkbox-input-size);
   fill: #fff;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   position: absolute;
   right: 50%;
   top: 50%;
@@ -1172,7 +1172,7 @@ svg.components-checkbox-control__indeterminate {
   }
 }
 .components-circular-option-picker__option {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 .components-circular-option-picker__option:hover {
   box-shadow: inset 0 0 0 14px !important;
@@ -1338,7 +1338,7 @@ input.components-combobox-control__input[type=text]:focus {
   height: 64px;
   width: 100%;
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   outline: 1px solid transparent;
   border-radius: 4px 4px 0 0;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
@@ -1594,7 +1594,7 @@ body.is-dragging-components-draggable {
   width: 100%;
   padding: 6px;
   outline: none;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   white-space: nowrap;
   font-weight: 400;
 }
@@ -1813,7 +1813,7 @@ body.is-dragging-components-draggable {
   content: "";
 }
 .components-form-toggle input.components-form-toggle__input[type=checkbox]:not(:disabled, [aria-disabled=true]) {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .components-form-token-field__input-container {
@@ -2016,7 +2016,7 @@ body.is-dragging-components-draggable {
   background: color-mix(in srgb, var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) 4%, transparent);
 }
 .components-form-token-field__suggestion:not(.is-empty) {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 @media (min-width: 600px) {
@@ -3117,7 +3117,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   appearance: none;
 }
 .components-radio-control__input[type=radio]:not(:disabled) {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 .components-radio-control__input[type=radio]:focus {
   box-shadow: 0 0 0 var(--wp-admin-border-width-focus) #fff, 0 0 0 calc(2 * var(--wp-admin-border-width-focus)) var(--wp-admin-theme-color);
@@ -3147,7 +3147,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   grid-row: 1;
 }
 .components-radio-control:not(:disabled) .components-radio-control__label {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 .components-radio-control__label {
   line-height: 24px;
@@ -3370,7 +3370,7 @@ body.lockscroll {
   width: 100%;
   max-width: var(--wpds-dimension-surface-width-lg, 560px);
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   pointer-events: auto;
 }
 @media (min-width: 600px) {
@@ -3395,7 +3395,7 @@ body.lockscroll {
 }
 .components-snackbar .components-snackbar__dismiss-button {
   margin-right: 24px;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .components-snackbar__action.components-button,
@@ -3451,7 +3451,7 @@ body.lockscroll {
   background: transparent;
   border: none;
   box-shadow: none;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   padding: 3px 16px;
   margin-right: 0;
   font-weight: 400;
@@ -3688,7 +3688,7 @@ body.lockscroll {
   line-height: 16px;
 }
 .components-toggle-control__label:not(.is-disabled) {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .components-toggle-control__help {
