@@ -31116,6 +31116,7 @@ ${js}
       if (!mediaUpload) {
         return;
       }
+      let notified = false;
       mediaUpload({
         filesList: [externalBlob],
         onFileChange([img2]) {
@@ -31123,10 +31124,13 @@ ${js}
           if ((0, import_blob12.isBlobURL)(img2.url)) {
             return;
           }
-          setExternalBlob();
-          createSuccessNotice((0, import_i18n93.__)("Image uploaded."), {
-            type: "snackbar"
-          });
+          if (!notified) {
+            notified = true;
+            setExternalBlob();
+            createSuccessNotice((0, import_i18n93.__)("Image uploaded."), {
+              type: "snackbar"
+            });
+          }
         },
         allowedTypes: ALLOWED_MEDIA_TYPES3,
         onError(message) {
