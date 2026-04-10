@@ -2275,39 +2275,67 @@ var wp;
       knownClientIds.add(clientId);
     }
   }
+  function areArrayElementsEqual(newElement, yElement) {
+    if (yElement instanceof import_sync9.Y.Map && isRecord(newElement)) {
+      return (0, import_es62.default)(newElement, yElement.toJSON());
+    }
+    return (0, import_es62.default)(newElement, yElement);
+  }
   function mergeYArray(yArray, newValue, schema, cursorPosition) {
     if (!schema.query) {
       return;
     }
     const query = schema.query;
-    if (yArray.length === newValue.length) {
-      for (let i = 0; i < newValue.length; i++) {
-        const currentElement = yArray.get(i);
-        const newElement = newValue[i];
-        if (currentElement instanceof import_sync9.Y.Map && isRecord(newElement)) {
-          mergeYMapValues(
-            currentElement,
-            newElement,
-            query,
-            cursorPosition
-          );
-        } else {
-          yArray.delete(0, yArray.length);
-          yArray.insert(
-            0,
-            newValue.map(
-              (item) => createYMapFromQuery(query, item)
-            )
-          );
-          return;
-        }
+    const numOfCommonEntries = Math.min(newValue.length, yArray.length);
+    let left = 0;
+    let right = 0;
+    for (; left < numOfCommonEntries && areArrayElementsEqual(newValue[left], yArray.get(left)); left++) {
+    }
+    for (; right < numOfCommonEntries - left && areArrayElementsEqual(
+      newValue[newValue.length - right - 1],
+      yArray.get(yArray.length - right - 1)
+    ); right++) {
+    }
+    const numOfUpdatesNeeded = numOfCommonEntries - left - right;
+    for (let i = 0; i < numOfUpdatesNeeded; i++) {
+      const currentElement = yArray.get(left + i);
+      const newElement = newValue[left + i];
+      if (currentElement instanceof import_sync9.Y.Map && isRecord(newElement)) {
+        mergeYMapValues(
+          currentElement,
+          newElement,
+          query,
+          cursorPosition
+        );
+      } else {
+        yArray.delete(0, yArray.length);
+        yArray.insert(
+          0,
+          newValue.map((item) => createYMapFromQuery(query, item))
+        );
+        return;
       }
-    } else {
-      yArray.delete(0, yArray.length);
-      yArray.insert(
-        0,
-        newValue.map((item) => createYMapFromQuery(query, item))
+    }
+    const numOfDeletionsNeeded = Math.max(0, yArray.length - newValue.length);
+    if (numOfDeletionsNeeded > 0) {
+      yArray.delete(left + numOfUpdatesNeeded, numOfDeletionsNeeded);
+    }
+    const numOfInsertionsNeeded = Math.max(
+      0,
+      newValue.length - yArray.length
+    );
+    if (numOfInsertionsNeeded > 0) {
+      const insertAt = left + numOfUpdatesNeeded;
+      const itemsToInsert = new Array(
+        numOfInsertionsNeeded
       );
+      for (let i = 0; i < numOfInsertionsNeeded; i++) {
+        itemsToInsert[i] = createYMapFromQuery(
+          query,
+          newValue[insertAt + i]
+        );
+      }
+      yArray.insert(insertAt, itemsToInsert);
     }
   }
   function mergeYValue(schema, newVal, yMap, key, cursorPosition) {
