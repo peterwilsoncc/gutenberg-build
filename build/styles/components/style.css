@@ -936,6 +936,8 @@ p + .components-button.is-tertiary {
 
 .components-checkbox-control__label {
   line-height: var(--checkbox-input-size);
+}
+.components-checkbox-control:not(:has(:disabled)) .components-checkbox-control__label {
   cursor: pointer;
 }
 
@@ -1023,7 +1025,6 @@ p + .components-button.is-tertiary {
   background: #fff;
   color: #1e1e1e;
   clear: none;
-  cursor: pointer;
   display: inline-block;
   line-height: 0;
   margin: 0 4px 0 0;
@@ -1045,9 +1046,12 @@ p + .components-button.is-tertiary {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-.components-checkbox-control__input[type=checkbox]:checked, .components-checkbox-control__input[type=checkbox]:indeterminate {
+.components-checkbox-control__input[type=checkbox]:not(:disabled):is(:checked, :indeterminate) {
   background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
   border-color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+}
+.components-checkbox-control__input[type=checkbox]:not(:disabled) {
+  cursor: pointer;
 }
 .components-checkbox-control__input[type=checkbox]:checked::before {
   content: none;
@@ -1084,6 +1088,11 @@ svg.components-checkbox-control__indeterminate {
   svg.components-checkbox-control__indeterminate {
     --checkmark-size: calc(var(--checkbox-input-size) + 4px);
   }
+}
+
+.components-checkbox-control:has(:disabled) svg.components-checkbox-control__checked,
+.components-checkbox-control:has(:disabled) svg.components-checkbox-control__indeterminate {
+  fill: var(--wp-components-color-gray-400, #ccc);
 }
 
 .components-checkbox-control__help {
@@ -3108,7 +3117,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   opacity: 1;
 }
 .components-radio-control__input[type=radio]:disabled:checked::before {
-  border-color: var(--wp-components-color-gray-300, #ddd);
+  border-color: var(--wp-components-color-gray-400, #ccc);
   opacity: 1;
 }
 
