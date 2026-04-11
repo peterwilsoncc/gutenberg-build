@@ -7657,7 +7657,7 @@ var wp;
             (r) => r[revKey] === revisionId
           );
           return revision ? {
-            value: revision[prop],
+            value: revision[prop]?.raw ?? revision[prop],
             fullValue: revision[prop]
           } : {};
         }
