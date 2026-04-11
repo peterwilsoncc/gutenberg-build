@@ -80,6 +80,13 @@ var require_core_data = __commonJS({
   }
 });
 
+// package-external:@wordpress/notices
+var require_notices = __commonJS({
+  "package-external:@wordpress/notices"(exports, module) {
+    module.exports = window.wp.notices;
+  }
+});
+
 // package-external:@wordpress/url
 var require_url = __commonJS({
   "package-external:@wordpress/url"(exports, module) {
@@ -730,8 +737,8 @@ var import_core_data2 = __toESM(require_core_data());
 var import_data3 = __toESM(require_data());
 var import_element6 = __toESM(require_element());
 var import_i18n3 = __toESM(require_i18n());
+var import_notices2 = __toESM(require_notices());
 var import_url = __toESM(require_url());
-import { speak as speak2 } from "@wordpress/a11y";
 
 // routes/connectors-home/default-connectors.tsx
 var import_components2 = __toESM(require_components());
@@ -757,7 +764,7 @@ var import_core_data = __toESM(require_core_data());
 var import_data = __toESM(require_data());
 var import_element4 = __toESM(require_element());
 var import_i18n = __toESM(require_i18n());
-import { speak } from "@wordpress/a11y";
+var import_notices = __toESM(require_notices());
 function useConnectorPlugin({
   file: pluginFileFromServer,
   settingName,
@@ -845,6 +852,7 @@ function useConnectorPlugin({
   // update connected state (mirrors what the server would report on page load).
   pluginStatusOverride === "active" && !!currentApiKey;
   const { saveEntityRecord, invalidateResolution } = (0, import_data.useDispatch)(import_core_data.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
   const installPlugin = async () => {
     if (!pluginSlug) {
       return;
@@ -860,21 +868,28 @@ function useConnectorPlugin({
       setPluginStatusOverride("active");
       invalidateResolution("getEntityRecord", ["root", "site"]);
       setIsExpanded(true);
-      speak(
+      createSuccessNotice(
         (0, import_i18n.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
           (0, import_i18n.__)("Plugin for %s installed and activated successfully."),
           connectorName
-        )
+        ),
+        {
+          id: "connector-plugin-install-success",
+          type: "snackbar"
+        }
       );
     } catch {
-      speak(
+      createErrorNotice(
         (0, import_i18n.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
           (0, import_i18n.__)("Failed to install plugin for %s."),
           connectorName
         ),
-        "assertive"
+        {
+          id: "connector-plugin-install-error",
+          type: "snackbar"
+        }
       );
     } finally {
       setIsBusy(false);
@@ -898,21 +913,28 @@ function useConnectorPlugin({
       setPluginStatusOverride("active");
       invalidateResolution("getEntityRecord", ["root", "site"]);
       setIsExpanded(true);
-      speak(
+      createSuccessNotice(
         (0, import_i18n.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
           (0, import_i18n.__)("Plugin for %s activated successfully."),
           connectorName
-        )
+        ),
+        {
+          id: "connector-plugin-activate-success",
+          type: "snackbar"
+        }
       );
     } catch {
-      speak(
+      createErrorNotice(
         (0, import_i18n.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
           (0, import_i18n.__)("Failed to activate plugin for %s."),
           connectorName
         ),
-        "assertive"
+        {
+          id: "connector-plugin-activate-error",
+          type: "snackbar"
+        }
       );
     } finally {
       setIsBusy(false);
@@ -971,12 +993,16 @@ function useConnectorPlugin({
         );
       }
       setConnectedState(true);
-      speak(
+      createSuccessNotice(
         (0, import_i18n.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
           (0, import_i18n.__)("%s connected successfully."),
           connectorName
-        )
+        ),
+        {
+          id: "connector-connect-success",
+          type: "snackbar"
+        }
       );
     } catch (error) {
       console.error("Failed to save API key:", error);
@@ -992,22 +1018,29 @@ function useConnectorPlugin({
         { throwOnError: true }
       );
       setConnectedState(false);
-      speak(
+      createSuccessNotice(
         (0, import_i18n.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
           (0, import_i18n.__)("%s disconnected."),
           connectorName
-        )
+        ),
+        {
+          id: "connector-disconnect-success",
+          type: "snackbar"
+        }
       );
     } catch (error) {
       console.error("Failed to remove API key:", error);
-      speak(
+      createErrorNotice(
         (0, import_i18n.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
           (0, import_i18n.__)("Failed to disconnect %s."),
           connectorName
         ),
-        "assertive"
+        {
+          id: "connector-disconnect-error",
+          type: "snackbar"
+        }
       );
       throw error;
     }
@@ -1485,6 +1518,7 @@ function AiPluginCallout() {
     };
   }, []);
   const { saveEntityRecord } = (0, import_data3.useDispatch)(import_core_data2.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data3.useDispatch)(import_notices2.store);
   const installPlugin = async () => {
     setIsBusy(true);
     try {
@@ -1495,9 +1529,18 @@ function AiPluginCallout() {
         { throwOnError: true }
       );
       setJustActivated(true);
-      speak2((0, import_i18n3.__)("AI plugin installed and activated successfully."));
+      createSuccessNotice(
+        (0, import_i18n3.__)("AI plugin installed and activated successfully."),
+        {
+          id: "ai-plugin-install-success",
+          type: "snackbar"
+        }
+      );
     } catch {
-      speak2((0, import_i18n3.__)("Failed to install the AI plugin."), "assertive");
+      createErrorNotice((0, import_i18n3.__)("Failed to install the AI plugin."), {
+        id: "ai-plugin-install-error",
+        type: "snackbar"
+      });
     } finally {
       setIsBusy(false);
     }
@@ -1512,9 +1555,15 @@ function AiPluginCallout() {
         { throwOnError: true }
       );
       setJustActivated(true);
-      speak2((0, import_i18n3.__)("AI plugin activated successfully."));
+      createSuccessNotice((0, import_i18n3.__)("AI plugin activated successfully."), {
+        id: "ai-plugin-activate-success",
+        type: "snackbar"
+      });
     } catch {
-      speak2((0, import_i18n3.__)("Failed to activate the AI plugin."), "assertive");
+      createErrorNotice((0, import_i18n3.__)("Failed to activate the AI plugin."), {
+        id: "ai-plugin-activate-error",
+        type: "snackbar"
+      });
     } finally {
       setIsBusy(false);
     }
