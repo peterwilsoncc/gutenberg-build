@@ -42486,7 +42486,7 @@ If there's a particular need for this, please submit a feature request at https:
           PatternsActions,
           {
             categoryId,
-            postType: postType2
+            type: postType2
           }
         ),
         children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
