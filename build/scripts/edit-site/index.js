@@ -40682,7 +40682,6 @@ If there's a particular need for this, please submit a feature request at https:
             {
               className: "dataforms-layouts-panel__field-trigger-icon",
               label: ariaLabel,
-              showTooltip: false,
               icon: pencil_default,
               size: "small",
               "aria-expanded": ariaExpanded,
