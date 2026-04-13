@@ -1697,11 +1697,15 @@ function useView(config) {
     [preferenceKey]
   );
   const { set: set2 } = (0, import_data.useDispatch)(import_preferences.store);
-  const baseView = persistedView ?? defaultView ?? {};
+  const baseView = (0, import_element3.useMemo)(
+    () => persistedView ?? defaultView ?? {},
+    [persistedView, defaultView]
+  );
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
   const combinedOverrides = (0, import_element3.useMemo)(() => {
-    const layoutTypeDefaults = config.defaultLayouts?.[baseView.type] ?? {};
+    const rawDefaults = config.defaultLayouts?.[baseView.type];
+    const layoutTypeDefaults = !rawDefaults || rawDefaults === true ? {} : rawDefaults;
     return { ...layoutTypeDefaults, ...activeViewOverrides };
   }, [config.defaultLayouts, baseView.type, activeViewOverrides]);
   const view = (0, import_element3.useMemo)(() => {
@@ -17340,6 +17344,7 @@ var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 var defaultGetItemId = (item) => item.id;
 var defaultIsItemClickable = () => true;
 var EMPTY_ARRAY6 = [];
+var DEFAULT_LAYOUTS = { table: {}, grid: {}, list: {} };
 var dataViewsLayouts = VIEW_LAYOUTS.filter(
   (viewLayout) => !viewLayout.isPicker
 );
@@ -17399,7 +17404,7 @@ function DataViews({
   getItemLevel,
   isLoading = false,
   paginationInfo,
-  defaultLayouts: defaultLayoutsProperty,
+  defaultLayouts: defaultLayoutsProperty = DEFAULT_LAYOUTS,
   selection: selectionProperty,
   onChangeSelection,
   onClickItem,
@@ -17481,13 +17486,14 @@ function DataViews({
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
   const defaultLayouts = (0, import_element58.useMemo)(
     () => Object.fromEntries(
-      Object.entries(defaultLayoutsProperty).filter(
-        ([layoutType]) => {
-          return dataViewsLayouts.some(
-            (viewLayout) => viewLayout.type === layoutType
-          );
-        }
-      )
+      Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
+        return dataViewsLayouts.some(
+          (viewLayout) => viewLayout.type === layoutType
+        );
+      }).map(([key, value]) => [
+        key,
+        value === true ? {} : value
+      ])
     ),
     [defaultLayoutsProperty]
   );
@@ -17832,7 +17838,7 @@ function NavigationList() {
           totalPages
         },
         defaultLayouts: {
-          list: {}
+          list: true
         },
         getItemId,
         selection,

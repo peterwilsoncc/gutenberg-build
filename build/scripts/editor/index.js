@@ -72819,6 +72819,7 @@ If there's a particular need for this, please submit a feature request at https:
   var defaultGetItemId = (item) => item.id;
   var defaultIsItemClickable = () => true;
   var EMPTY_ARRAY13 = [];
+  var DEFAULT_LAYOUTS = { table: {}, grid: {}, list: {} };
   var dataViewsLayouts = VIEW_LAYOUTS.filter(
     (viewLayout) => !viewLayout.isPicker
   );
@@ -72878,7 +72879,7 @@ If there's a particular need for this, please submit a feature request at https:
     getItemLevel,
     isLoading = false,
     paginationInfo: paginationInfo2,
-    defaultLayouts: defaultLayoutsProperty,
+    defaultLayouts: defaultLayoutsProperty = DEFAULT_LAYOUTS,
     selection: selectionProperty,
     onChangeSelection,
     onClickItem,
@@ -72960,13 +72961,14 @@ If there's a particular need for this, please submit a feature request at https:
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
     const defaultLayouts2 = (0, import_element243.useMemo)(
       () => Object.fromEntries(
-        Object.entries(defaultLayoutsProperty).filter(
-          ([layoutType]) => {
-            return dataViewsLayouts.some(
-              (viewLayout) => viewLayout.type === layoutType
-            );
-          }
-        )
+        Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
+          return dataViewsLayouts.some(
+            (viewLayout) => viewLayout.type === layoutType
+          );
+        }).map(([key, value]) => [
+          key,
+          value === true ? {} : value
+        ])
       ),
       [defaultLayoutsProperty]
     );
@@ -77458,7 +77460,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { Badge: Badge6 } = unlock(import_components275.privateApis);
   var DAY_IN_MILLISECONDS2 = 864e5;
   var EMPTY_ARRAY14 = [];
-  var defaultLayouts = { activity: {} };
+  var defaultLayouts = { activity: true };
   var noop10 = () => {
   };
   var paginationInfo = {};

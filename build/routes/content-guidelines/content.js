@@ -19046,6 +19046,7 @@ var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 var defaultGetItemId = (item) => item.id;
 var defaultIsItemClickable = () => true;
 var EMPTY_ARRAY6 = [];
+var DEFAULT_LAYOUTS = { table: {}, grid: {}, list: {} };
 var dataViewsLayouts = VIEW_LAYOUTS.filter(
   (viewLayout) => !viewLayout.isPicker
 );
@@ -19105,7 +19106,7 @@ function DataViews({
   getItemLevel,
   isLoading = false,
   paginationInfo,
-  defaultLayouts: defaultLayoutsProperty,
+  defaultLayouts: defaultLayoutsProperty = DEFAULT_LAYOUTS,
   selection: selectionProperty,
   onChangeSelection,
   onClickItem,
@@ -19187,13 +19188,14 @@ function DataViews({
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
   const defaultLayouts = (0, import_element74.useMemo)(
     () => Object.fromEntries(
-      Object.entries(defaultLayoutsProperty).filter(
-        ([layoutType]) => {
-          return dataViewsLayouts.some(
-            (viewLayout) => viewLayout.type === layoutType
-          );
-        }
-      )
+      Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
+        return dataViewsLayouts.some(
+          (viewLayout) => viewLayout.type === layoutType
+        );
+      }).map(([key, value]) => [
+        key,
+        value === true ? {} : value
+      ])
     ),
     [defaultLayoutsProperty]
   );
@@ -22163,7 +22165,7 @@ function BlockGuidelines() {
           handleRowClick(id);
         },
         defaultLayouts: {
-          list: {}
+          list: true
         },
         children: /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(import_components56.__experimentalVStack, { spacing: 4, children: [
           shouldShowDataViewControls && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(dataviews_default.Search, { label: (0, import_i18n53.__)("Search blocks") }),
@@ -22582,7 +22584,7 @@ function RevisionHistory() {
         actions: actions2,
         isLoading,
         paginationInfo: paginationToShow,
-        defaultLayouts: { table: {} },
+        defaultLayouts: { table: true },
         getItemId: (item) => String(item.id),
         empty: isLoading && displayedRevisions.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components59.Spinner, {}) : (0, import_i18n55.__)("No revisions found.")
       }

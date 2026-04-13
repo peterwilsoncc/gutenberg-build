@@ -40037,6 +40037,7 @@ If there's a particular need for this, please submit a feature request at https:
   var defaultGetItemId = (item) => item.id;
   var defaultIsItemClickable = () => true;
   var EMPTY_ARRAY9 = [];
+  var DEFAULT_LAYOUTS = { table: {}, grid: {}, list: {} };
   var dataViewsLayouts = VIEW_LAYOUTS.filter(
     (viewLayout) => !viewLayout.isPicker
   );
@@ -40096,7 +40097,7 @@ If there's a particular need for this, please submit a feature request at https:
     getItemLevel: getItemLevel2,
     isLoading = false,
     paginationInfo,
-    defaultLayouts: defaultLayoutsProperty,
+    defaultLayouts: defaultLayoutsProperty = DEFAULT_LAYOUTS,
     selection: selectionProperty,
     onChangeSelection,
     onClickItem,
@@ -40178,13 +40179,14 @@ If there's a particular need for this, please submit a feature request at https:
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
     const defaultLayouts2 = (0, import_element128.useMemo)(
       () => Object.fromEntries(
-        Object.entries(defaultLayoutsProperty).filter(
-          ([layoutType]) => {
-            return dataViewsLayouts.some(
-              (viewLayout) => viewLayout.type === layoutType
-            );
-          }
-        )
+        Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
+          return dataViewsLayouts.some(
+            (viewLayout) => viewLayout.type === layoutType
+          );
+        }).map(([key, value]) => [
+          key,
+          value === true ? {} : value
+        ])
       ),
       [defaultLayoutsProperty]
     );
@@ -44570,11 +44572,15 @@ If there's a particular need for this, please submit a feature request at https:
       [preferenceKey]
     );
     const { set: set3 } = (0, import_data63.useDispatch)(import_preferences11.store);
-    const baseView = persistedView ?? defaultView ?? {};
+    const baseView = (0, import_element149.useMemo)(
+      () => persistedView ?? defaultView ?? {},
+      [persistedView, defaultView]
+    );
     const page = Number(queryParams?.page ?? baseView.page ?? 1);
     const search = queryParams?.search ?? baseView.search ?? "";
     const combinedOverrides = (0, import_element149.useMemo)(() => {
-      const layoutTypeDefaults = config2.defaultLayouts?.[baseView.type] ?? {};
+      const rawDefaults = config2.defaultLayouts?.[baseView.type];
+      const layoutTypeDefaults = !rawDefaults || rawDefaults === true ? {} : rawDefaults;
       return { ...layoutTypeDefaults, ...activeViewOverrides };
     }, [config2.defaultLayouts, baseView.type, activeViewOverrides]);
     const view = (0, import_element149.useMemo)(() => {
@@ -44656,7 +44662,8 @@ If there's a particular need for this, please submit a feature request at https:
     const baseView = persistedView ?? defaultView;
     const page = queryParams?.page ?? 1;
     const search = queryParams?.search ?? "";
-    const layoutTypeDefaults = config2.defaultLayouts?.[baseView?.type] ?? {};
+    const rawDefaults = config2.defaultLayouts?.[baseView?.type];
+    const layoutTypeDefaults = !rawDefaults || rawDefaults === true ? {} : rawDefaults;
     const combinedOverrides = { ...layoutTypeDefaults, ...activeViewOverrides };
     return mergeActiveViewOverrides(
       {
@@ -46207,7 +46214,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             view,
             onChangeView: updateView,
-            defaultLayouts: defaultLayouts2 ?? {},
+            defaultLayouts: defaultLayouts2,
             onReset: isModified ? resetToDefault : false
           },
           categoryId + postType2
@@ -49648,7 +49655,7 @@ If there's a particular need for this, please submit a feature request at https:
               history.navigate(`/wp_template/${id}?canvas=edit`);
             },
             selection,
-            defaultLayouts: defaultLayouts2 ?? {},
+            defaultLayouts: defaultLayouts2,
             onReset: isModified ? () => {
               resetToDefault();
               history.invalidate();
@@ -50319,7 +50326,7 @@ If there's a particular need for this, please submit a feature request at https:
               },
               getItemId,
               getItemLevel,
-              defaultLayouts: defaultLayouts2 ?? {},
+              defaultLayouts: defaultLayouts2,
               onReset: isModified ? () => {
                 resetToDefault();
                 history.invalidate();

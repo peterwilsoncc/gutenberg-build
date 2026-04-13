@@ -154,7 +154,8 @@ async function loadView(config) {
   const baseView = persistedView ?? defaultView;
   const page = queryParams?.page ?? 1;
   const search = queryParams?.search ?? "";
-  const layoutTypeDefaults = config.defaultLayouts?.[baseView?.type] ?? {};
+  const rawDefaults = config.defaultLayouts?.[baseView?.type];
+  const layoutTypeDefaults = !rawDefaults || rawDefaults === true ? {} : rawDefaults;
   const combinedOverrides = { ...layoutTypeDefaults, ...activeViewOverrides };
   return mergeActiveViewOverrides(
     {

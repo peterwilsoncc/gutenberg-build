@@ -147,7 +147,8 @@ async function loadView(config) {
   const baseView = persistedView ?? defaultView;
   const page = queryParams?.page ?? 1;
   const search = queryParams?.search ?? "";
-  const layoutTypeDefaults = config.defaultLayouts?.[baseView?.type] ?? {};
+  const rawDefaults = config.defaultLayouts?.[baseView?.type];
+  const layoutTypeDefaults = !rawDefaults || rawDefaults === true ? {} : rawDefaults;
   const combinedOverrides = { ...layoutTypeDefaults, ...activeViewOverrides };
   return mergeActiveViewOverrides(
     {
@@ -185,27 +186,23 @@ var DEFAULT_VIEW = {
   mediaField: "featured_media",
   descriptionField: "excerpt"
 };
-var DEFAULT_LAYOUTS = {
-  table: {
-    layout: {
-      styles: {
-        author: {
-          align: "start"
-        }
+var DEFAULT_TABLE_LAYOUT = {
+  layout: {
+    styles: {
+      author: {
+        align: "start"
       }
     }
-  },
-  grid: {},
-  list: {}
+  }
 };
 function getActiveViewOverridesForTab(slug) {
   if (slug === "all") {
     return {
-      ...DEFAULT_LAYOUTS.table
+      ...DEFAULT_TABLE_LAYOUT
     };
   }
   return {
-    ...DEFAULT_LAYOUTS.table,
+    ...DEFAULT_TABLE_LAYOUT,
     filters: [
       {
         field: "status",

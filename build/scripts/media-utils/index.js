@@ -17564,6 +17564,10 @@ If there's a particular need for this, please submit a feature request at https:
   );
   var defaultGetItemId = (item) => item.id;
   var EMPTY_ARRAY5 = [];
+  var DEFAULT_PICKER_LAYOUTS = {
+    pickerGrid: true,
+    pickerTable: true
+  };
   function DefaultUI({
     search = true,
     searchLabel = void 0
@@ -17615,7 +17619,7 @@ If there's a particular need for this, please submit a feature request at https:
     getItemId = defaultGetItemId,
     isLoading = false,
     paginationInfo,
-    defaultLayouts: defaultLayoutsProperty,
+    defaultLayouts: defaultLayoutsProperty = DEFAULT_PICKER_LAYOUTS,
     selection,
     onChangeSelection,
     children,
@@ -17673,13 +17677,14 @@ If there's a particular need for this, please submit a feature request at https:
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
     const defaultLayouts = (0, import_element56.useMemo)(
       () => Object.fromEntries(
-        Object.entries(defaultLayoutsProperty).filter(
-          ([layoutType]) => {
-            return dataViewsPickerLayouts.some(
-              (viewLayout) => viewLayout.type === layoutType
-            );
-          }
-        )
+        Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
+          return dataViewsPickerLayouts.some(
+            (viewLayout) => viewLayout.type === layoutType
+          );
+        }).map(([key, value]) => [
+          key,
+          value === true ? {} : value
+        ])
       ),
       [defaultLayoutsProperty]
     );
