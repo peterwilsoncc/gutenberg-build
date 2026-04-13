@@ -3290,13 +3290,14 @@ var wp;
       return nextItemIds;
     }
     const nextItemIdsStartIndex = offset ?? (page - 1) * perPage;
+    const nextItemIdsRange = Math.max(perPage, nextItemIds.length);
     const size = Math.max(
       itemIds.length,
       nextItemIdsStartIndex + nextItemIds.length
     );
     const mergedItemIds = new Array(size);
     for (let i = 0; i < size; i++) {
-      const isInNextItemsRange = i >= nextItemIdsStartIndex && i < nextItemIdsStartIndex + perPage;
+      const isInNextItemsRange = i >= nextItemIdsStartIndex && i < nextItemIdsStartIndex + nextItemIdsRange;
       if (isInNextItemsRange) {
         mergedItemIds[i] = nextItemIds[i - nextItemIdsStartIndex];
       } else {
