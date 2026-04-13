@@ -1830,7 +1830,7 @@ var VALID_ELEMENT_STATES = {
     { value: ":visited", label: (0, import_i18n.__)("Visited") },
     { value: ":hover", label: (0, import_i18n.__)("Hover") },
     { value: ":focus", label: (0, import_i18n.__)("Focus") },
-    { value: ":focus-visible", label: (0, import_i18n.__)("Focus Visible") },
+    { value: ":focus-visible", label: (0, import_i18n.__)("Focus-visible") },
     { value: ":active", label: (0, import_i18n.__)("Active") }
   ],
   button: [
@@ -1839,7 +1839,7 @@ var VALID_ELEMENT_STATES = {
     { value: ":visited", label: (0, import_i18n.__)("Visited") },
     { value: ":hover", label: (0, import_i18n.__)("Hover") },
     { value: ":focus", label: (0, import_i18n.__)("Focus") },
-    { value: ":focus-visible", label: (0, import_i18n.__)("Focus Visible") },
+    { value: ":focus-visible", label: (0, import_i18n.__)("Focus-visible") },
     { value: ":active", label: (0, import_i18n.__)("Active") }
   ]
 };
@@ -1847,7 +1847,7 @@ var VALID_BLOCK_STATES = {
   "core/button": [
     { value: ":hover", label: (0, import_i18n.__)("Hover") },
     { value: ":focus", label: (0, import_i18n.__)("Focus") },
-    { value: ":focus-visible", label: (0, import_i18n.__)("Focus Visible") },
+    { value: ":focus-visible", label: (0, import_i18n.__)("Focus-visible") },
     { value: ":active", label: (0, import_i18n.__)("Active") }
   ]
 };

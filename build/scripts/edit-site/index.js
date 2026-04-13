@@ -11389,7 +11389,7 @@ var wp;
       { value: ":visited", label: (0, import_i18n12.__)("Visited") },
       { value: ":hover", label: (0, import_i18n12.__)("Hover") },
       { value: ":focus", label: (0, import_i18n12.__)("Focus") },
-      { value: ":focus-visible", label: (0, import_i18n12.__)("Focus Visible") },
+      { value: ":focus-visible", label: (0, import_i18n12.__)("Focus-visible") },
       { value: ":active", label: (0, import_i18n12.__)("Active") }
     ],
     button: [
@@ -11398,7 +11398,7 @@ var wp;
       { value: ":visited", label: (0, import_i18n12.__)("Visited") },
       { value: ":hover", label: (0, import_i18n12.__)("Hover") },
       { value: ":focus", label: (0, import_i18n12.__)("Focus") },
-      { value: ":focus-visible", label: (0, import_i18n12.__)("Focus Visible") },
+      { value: ":focus-visible", label: (0, import_i18n12.__)("Focus-visible") },
       { value: ":active", label: (0, import_i18n12.__)("Active") }
     ]
   };
@@ -11406,7 +11406,7 @@ var wp;
     "core/button": [
       { value: ":hover", label: (0, import_i18n12.__)("Hover") },
       { value: ":focus", label: (0, import_i18n12.__)("Focus") },
-      { value: ":focus-visible", label: (0, import_i18n12.__)("Focus Visible") },
+      { value: ":focus-visible", label: (0, import_i18n12.__)("Focus-visible") },
       { value: ":active", label: (0, import_i18n12.__)("Active") }
     ]
   };
