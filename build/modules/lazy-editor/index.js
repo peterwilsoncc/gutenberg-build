@@ -2179,7 +2179,7 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
     },
     {
       assets: svgs,
-      __unstableType: "svg",
+      __unstableType: "svgs",
       isGlobalStyles: true
     }
   ];

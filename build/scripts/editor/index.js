@@ -16036,7 +16036,7 @@ var wp;
       },
       {
         assets: svgs,
-        __unstableType: "svg",
+        __unstableType: "svgs",
         isGlobalStyles: true
       }
     ];
