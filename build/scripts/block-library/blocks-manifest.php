@@ -8051,7 +8051,8 @@ return array(
 		),
 		'usesContext' => array(
 			'core/tabs-activeTabIndex',
-			'core/tabs-editorActiveTabIndex'
+			'core/tabs-editorActiveTabIndex',
+			'core/tabs-id'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -8645,12 +8646,6 @@ return array(
 			'core/tabs-menu-item-index',
 			'core/tabs-menu-item-id',
 			'core/tabs-menu-item-label'
-		),
-		'attributes' => array(
-			'anchor' => array(
-				'type' => 'string',
-				'default' => ''
-			)
 		),
 		'supports' => array(
 			'html' => false,

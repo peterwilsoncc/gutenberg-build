@@ -65725,13 +65725,13 @@ ${js}
   var import_jsx_runtime489 = __toESM(require_jsx_runtime(), 1);
   function AddTabToolbarControl({ tabsClientId }) {
     const { insertBlock } = (0, import_data138.useDispatch)(import_block_editor249.store);
-    const { tabPanelClientId, tabsMenuClientId, tabCount, existingAnchors } = (0, import_data138.useSelect)(
+    const { tabPanelClientId, tabsMenuClientId, tabCount } = (0, import_data138.useSelect)(
       (select9) => {
         if (!tabsClientId) {
           return {
             tabPanelClientId: null,
             tabsMenuClientId: null,
-            existingAnchors: []
+            tabCount: 0
           };
         }
         const { getBlocks } = select9(import_block_editor249.store);
@@ -65745,8 +65745,7 @@ ${js}
         return {
           tabPanelClientId: tabPanel?.clientId || null,
           tabsMenuClientId: tabsMenu?.clientId || null,
-          tabCount: tabPanel?.innerBlocks?.length || 0,
-          existingAnchors: (tabPanel?.innerBlocks || []).map((block) => block.attributes.anchor).filter(Boolean)
+          tabCount: tabPanel?.innerBlocks?.length || 0
         };
       },
       [tabsClientId]
@@ -65755,21 +65754,13 @@ ${js}
       if (!tabPanelClientId) {
         return;
       }
-      const existingAnchorSet = new Set(existingAnchors);
-      let tabNumber = tabCount + 1;
-      while (existingAnchorSet.has(`tab-${tabNumber}`)) {
-        tabNumber++;
-      }
       const newTabBlock = (0, import_blocks111.createBlock)("core/tab", {
-        anchor: `tab-${tabNumber}`,
         /* translators: %d: tab number */
-        label: (0, import_i18n236.sprintf)((0, import_i18n236.__)("Tab %d"), tabNumber)
+        label: (0, import_i18n236.sprintf)((0, import_i18n236.__)("Tab %d"), tabCount + 1)
       });
       insertBlock(newTabBlock, void 0, tabPanelClientId);
       if (tabsMenuClientId) {
-        const newMenuItemBlock = (0, import_blocks111.createBlock)("core/tabs-menu-item", {
-          anchor: `tab-${tabNumber}-button`
-        });
+        const newMenuItemBlock = (0, import_blocks111.createBlock)("core/tabs-menu-item", {});
         insertBlock(newMenuItemBlock, void 0, tabsMenuClientId);
       }
     };
@@ -65824,10 +65815,7 @@ ${js}
         const tabs = tabPanel?.innerBlocks || [];
         const menuItems = tabsMenu?.innerBlocks || [];
         const activeTab = tabs[activeIndex];
-        const expectedMenuAnchor = activeTab?.attributes?.anchor ? `${activeTab.attributes.anchor}-button` : null;
-        const activeMenuItem = expectedMenuAnchor ? menuItems.find(
-          (m2) => m2.attributes?.anchor === expectedMenuAnchor
-        ) : menuItems[activeIndex];
+        const activeMenuItem = menuItems[activeIndex];
         return {
           activeTabClientId: activeTab?.clientId || null,
           activeMenuItemClientId: activeMenuItem?.clientId || null,
@@ -66068,7 +66056,8 @@ ${js}
     parent: ["core/tab-panel"],
     usesContext: [
       "core/tabs-activeTabIndex",
-      "core/tabs-editorActiveTabIndex"
+      "core/tabs-editorActiveTabIndex",
+      "core/tabs-id"
     ],
     supports: {
       anchor: true,
@@ -68607,6 +68596,7 @@ ${js}
 
   // packages/block-library/build-module/tabs/edit.mjs
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
+  var EMPTY_ARRAY6 = [];
   var TABS_TEMPLATE = [
     [
       "core/tabs-menu",
@@ -68616,8 +68606,8 @@ ${js}
         }
       },
       [
-        ["core/tabs-menu-item", { anchor: "tab-1-button" }],
-        ["core/tabs-menu-item", { anchor: "tab-2-button" }]
+        ["core/tabs-menu-item", {}],
+        ["core/tabs-menu-item", {}]
       ]
     ],
     [
@@ -68631,7 +68621,6 @@ ${js}
         [
           "core/tab",
           {
-            anchor: "tab-1",
             label: "Tab 1"
           },
           [["core/paragraph"]]
@@ -68639,7 +68628,6 @@ ${js}
         [
           "core/tab",
           {
-            anchor: "tab-2",
             label: "Tab 2"
           },
           [["core/paragraph"]]
@@ -68659,8 +68647,8 @@ ${js}
         setAttributes({ editorActiveTabIndex: activeTabIndex });
       }
     }, []);
-    const { removeBlock } = (0, import_data145.useDispatch)(import_block_editor262.store);
-    const { tabs, menuItems } = (0, import_data145.useSelect)(
+    const { removeBlock, replaceInnerBlocks } = (0, import_data145.useDispatch)(import_block_editor262.store);
+    const { tabs, tabPanelClientId, menuItems } = (0, import_data145.useSelect)(
       (select9) => {
         const { getBlocks } = select9(import_block_editor262.store);
         const innerBlocks = getBlocks(clientId);
@@ -68671,13 +68659,9 @@ ${js}
           (block) => block.name === "core/tabs-menu"
         );
         return {
-          tabs: tabPanel ? tabPanel.innerBlocks.filter(
-            (block) => block.name === "core/tab"
-          ) : [],
-          menuItems: tabsMenu ? getBlocks(tabsMenu.clientId).filter((b2) => b2.name === "core/tabs-menu-item").map((b2) => ({
-            clientId: b2.clientId,
-            anchor: b2.attributes.anchor ?? ""
-          })) : []
+          tabs: tabPanel?.innerBlocks ?? EMPTY_ARRAY6,
+          tabPanelClientId: tabPanel?.clientId ?? null,
+          menuItems: tabsMenu?.innerBlocks ?? EMPTY_ARRAY6
         };
       },
       [clientId]
@@ -68685,8 +68669,7 @@ ${js}
     const prevSyncStateRef = (0, import_element129.useRef)(null);
     (0, import_element129.useEffect)(() => {
       const currentTabs = tabs.map((tab) => ({
-        clientId: tab.clientId,
-        anchor: tab.attributes.anchor ?? ""
+        clientId: tab.clientId
       }));
       if (prevSyncStateRef.current === null) {
         prevSyncStateRef.current = {
@@ -68698,10 +68681,25 @@ ${js}
       const { tabs: prevTabs, menuItems: prevMenuItems } = prevSyncStateRef.current;
       const tabsRemoved = currentTabs.length < prevTabs.length;
       const menuItemsRemoved = menuItems.length < prevMenuItems.length;
+      const menuItemsReordered = !tabsRemoved && !menuItemsRemoved && menuItems.length === prevMenuItems.length && menuItems.some(
+        (m2, i2) => m2.clientId !== prevMenuItems[i2]?.clientId
+      );
       prevSyncStateRef.current = {
         tabs: currentTabs,
         menuItems: [...menuItems]
       };
+      if (menuItemsReordered && tabPanelClientId) {
+        const reorderedTabs = menuItems.map((menuItem) => {
+          const oldIndex = prevMenuItems.findIndex(
+            (pm) => pm.clientId === menuItem.clientId
+          );
+          return oldIndex !== -1 ? tabs[oldIndex] : null;
+        }).filter(Boolean);
+        if (reorderedTabs.length === tabs.length) {
+          replaceInnerBlocks(tabPanelClientId, reorderedTabs, false);
+        }
+        return;
+      }
       if (!tabsRemoved && !menuItemsRemoved || tabsRemoved && menuItemsRemoved) {
         return;
       }
@@ -68710,37 +68708,27 @@ ${js}
         menuItems.map((m2) => m2.clientId)
       );
       if (tabsRemoved) {
-        prevTabs.forEach((prevTab) => {
-          if (currentTabIds.has(prevTab.clientId)) {
-            return;
-          }
-          const expectedMenuAnchor = prevTab.anchor ? `${prevTab.anchor}-button` : null;
-          const menuItemToRemove = expectedMenuAnchor ? menuItems.find((m2) => m2.anchor === expectedMenuAnchor) : null;
-          if (menuItemToRemove) {
-            removeBlock(menuItemToRemove.clientId, false);
-            prevSyncStateRef.current.menuItems = prevSyncStateRef.current.menuItems.filter(
-              (m2) => m2.clientId !== menuItemToRemove.clientId
-            );
-          }
-        });
-      } else {
-        prevMenuItems.forEach((prevItem) => {
-          if (currentMenuItemIds.has(prevItem.clientId)) {
-            return;
-          }
-          const expectedTabAnchor = prevItem.anchor?.replace(/-button$/, "") ?? "";
-          const tabToRemove = tabs.find(
-            (tab) => (tab.attributes.anchor ?? "") === expectedTabAnchor
+        const removedIndex = prevTabs.findIndex(
+          (t3) => !currentTabIds.has(t3.clientId)
+        );
+        if (removedIndex >= 0 && menuItems[removedIndex]) {
+          removeBlock(menuItems[removedIndex].clientId, false);
+          prevSyncStateRef.current.menuItems = prevSyncStateRef.current.menuItems.filter(
+            (_, i2) => i2 !== removedIndex
           );
-          if (tabToRemove) {
-            removeBlock(tabToRemove.clientId, false);
-            prevSyncStateRef.current.tabs = prevSyncStateRef.current.tabs.filter(
-              (t3) => t3.clientId !== tabToRemove.clientId
-            );
-          }
-        });
+        }
+      } else {
+        const removedIndex = prevMenuItems.findIndex(
+          (m2) => !currentMenuItemIds.has(m2.clientId)
+        );
+        if (removedIndex >= 0 && tabs[removedIndex]) {
+          removeBlock(tabs[removedIndex].clientId, false);
+          prevSyncStateRef.current.tabs = prevSyncStateRef.current.tabs.filter(
+            (_, i2) => i2 !== removedIndex
+          );
+        }
       }
-    }, [tabs, menuItems, removeBlock]);
+    }, [tabs, tabPanelClientId, menuItems, removeBlock, replaceInnerBlocks]);
     const contextValue = (0, import_element129.useMemo)(() => {
       const tabList = tabs.map((tab, index) => ({
         id: tab.attributes.anchor || `tab-${index}`,
@@ -69062,14 +69050,13 @@ ${js}
 
   // packages/block-library/build-module/tabs-menu-item/edit.mjs
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY6 = [];
+  var EMPTY_ARRAY7 = [];
   function Edit23({
-    attributes: attributes2,
     context,
     clientId,
     __unstableLayoutClassNames: layoutClassNames
   }) {
-    const tabsList = context["core/tabs-list"] || EMPTY_ARRAY6;
+    const tabsList = context["core/tabs-list"] || EMPTY_ARRAY7;
     const activeTabIndex = context["core/tabs-activeTabIndex"] ?? 0;
     const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
     const effectiveActiveIndex = (0, import_element130.useMemo)(() => {
@@ -69103,8 +69090,7 @@ ${js}
       },
       [clientId, tabsList]
     );
-    const tabAnchor = attributes2.anchor?.replace(/-button$/, "") ?? "";
-    const tab = tabAnchor && tabsList.find((t3) => t3.id === tabAnchor) || tabsList[menuItemIndex] || {};
+    const tab = tabsList[menuItemIndex] || {};
     const tabListIndex = tab.index ?? menuItemIndex;
     const tabId = tab.id || `tab-${menuItemIndex}`;
     const tabClientId = tab.clientId || "";
@@ -69201,12 +69187,6 @@ ${js}
       "core/tabs-menu-item-id",
       "core/tabs-menu-item-label"
     ],
-    attributes: {
-      anchor: {
-        type: "string",
-        default: ""
-      }
-    },
     supports: {
       html: false,
       reusable: false,
@@ -71689,7 +71669,7 @@ ${js}
   var import_compose61 = __toESM(require_compose(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime529 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY7 = [];
+  var EMPTY_ARRAY8 = [];
   var BASE_QUERY3 = {
     order: "asc",
     _fields: "id,name",
@@ -71702,13 +71682,13 @@ ${js}
     ...props
   }) {
     const [search, setSearch] = (0, import_element139.useState)("");
-    const [value, setValue] = (0, import_element139.useState)(EMPTY_ARRAY7);
-    const [suggestions, setSuggestions] = (0, import_element139.useState)(EMPTY_ARRAY7);
+    const [value, setValue] = (0, import_element139.useState)(EMPTY_ARRAY8);
+    const [suggestions, setSuggestions] = (0, import_element139.useState)(EMPTY_ARRAY8);
     const debouncedSearch = (0, import_compose61.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data162.useSelect)(
       (select9) => {
         if (!search) {
-          return { searchResults: EMPTY_ARRAY7, searchHasResolved: true };
+          return { searchResults: EMPTY_ARRAY8, searchHasResolved: true };
         }
         const { getEntityRecords, hasFinishedResolution } = select9(import_core_data95.store);
         const selectorArgs = [
@@ -71735,7 +71715,7 @@ ${js}
     const currentTerms = (0, import_data162.useSelect)(
       (select9) => {
         if (!include?.length) {
-          return EMPTY_ARRAY7;
+          return EMPTY_ARRAY8;
         }
         const { getEntityRecords } = select9(import_core_data95.store);
         return getEntityRecords("taxonomy", taxonomy, {
@@ -71748,7 +71728,7 @@ ${js}
     );
     (0, import_element139.useEffect)(() => {
       if (!include?.length) {
-        setValue(EMPTY_ARRAY7);
+        setValue(EMPTY_ARRAY8);
       }
       if (!currentTerms?.length) {
         return;
@@ -71767,7 +71747,7 @@ ${js}
     }, [include, currentTerms]);
     const entitiesInfo = (0, import_element139.useMemo)(() => {
       if (!searchResults?.length) {
-        return { names: EMPTY_ARRAY7, mapByName: {} };
+        return { names: EMPTY_ARRAY8, mapByName: {} };
       }
       const names = [];
       const mapByName = {};
@@ -71795,7 +71775,7 @@ ${js}
           return accumulator;
         }, /* @__PURE__ */ new Set())
       );
-      setSuggestions(EMPTY_ARRAY7);
+      setSuggestions(EMPTY_ARRAY8);
       onChange(ids);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
