@@ -46986,10 +46986,9 @@ ${js}
           return;
         }
         const defaultBlockName = (0, import_blocks73.getDefaultBlockName)();
-        if (!canInsertBlockType(
-          defaultBlockName,
-          getBlockRootClientId(wrapperClientId)
-        )) {
+        const wrapperBlockName = getBlockName(wrapperClientId);
+        const grandparentClientId = getBlockRootClientId(wrapperClientId);
+        if (!canInsertBlockType(defaultBlockName, grandparentClientId) || !canInsertBlockType(wrapperBlockName, grandparentClientId)) {
           return;
         }
         event.preventDefault();
@@ -47008,7 +47007,7 @@ ${js}
           insertBlock(
             (0, import_blocks73.createBlock)(defaultBlockName),
             blockIndex + 1,
-            getBlockRootClientId(wrapperClientId),
+            grandparentClientId,
             true
           );
         });
