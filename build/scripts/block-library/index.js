@@ -19459,7 +19459,13 @@ var wp;
           isUserOverlayColor: currentAttrs.isUserOverlayColor || false
         });
       })();
-    }, [mediaUrl]);
+    }, [
+      mediaUrl,
+      __unstableMarkNextChangeAsNotPersistent,
+      setAttributes,
+      setOverlayColor,
+      useFeaturedImage
+    ]);
     const url = useFeaturedImage ? mediaUrl : (
       // Ensure the url is not malformed due to sanitization through `wp_kses`.
       originalUrl?.replaceAll("&amp;", "&")
@@ -19850,6 +19856,7 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
                   import_components34.SandBox,
                   {
+                    allowSameOrigin: true,
                     html: embedHtml,
                     title: "Background video",
                     styles: [
@@ -21237,6 +21244,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
         import_components40.SandBox,
         {
+          allowSameOrigin: true,
           html,
           scripts,
           title: iframeTitle,
