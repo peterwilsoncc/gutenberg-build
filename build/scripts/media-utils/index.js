@@ -1882,20 +1882,21 @@ var wp;
   // node_modules/@base-ui/react/esm/merge-props/mergeProps.js
   var EMPTY_PROPS = {};
   function mergeProps(a2, b2, c2, d2, e2) {
-    let merged = {
-      ...resolvePropsGetter(a2, EMPTY_PROPS)
-    };
+    if (!c2 && !d2 && !e2 && !a2) {
+      return createInitialMergedProps(b2);
+    }
+    let merged = createInitialMergedProps(a2);
     if (b2) {
-      merged = mergeOne(merged, b2);
+      merged = mergeInto(merged, b2);
     }
     if (c2) {
-      merged = mergeOne(merged, c2);
+      merged = mergeInto(merged, c2);
     }
     if (d2) {
-      merged = mergeOne(merged, d2);
+      merged = mergeInto(merged, d2);
     }
     if (e2) {
-      merged = mergeOne(merged, e2);
+      merged = mergeInto(merged, e2);
     }
     return merged;
   }
@@ -1904,21 +1905,39 @@ var wp;
       return EMPTY_PROPS;
     }
     if (props.length === 1) {
-      return resolvePropsGetter(props[0], EMPTY_PROPS);
+      return createInitialMergedProps(props[0]);
     }
-    let merged = {
-      ...resolvePropsGetter(props[0], EMPTY_PROPS)
-    };
+    let merged = createInitialMergedProps(props[0]);
     for (let i2 = 1; i2 < props.length; i2 += 1) {
-      merged = mergeOne(merged, props[i2]);
+      merged = mergeInto(merged, props[i2]);
     }
     return merged;
   }
-  function mergeOne(merged, inputProps) {
+  function createInitialMergedProps(inputProps) {
     if (isPropsGetter(inputProps)) {
-      return inputProps(merged);
+      return {
+        ...resolvePropsGetter(inputProps, EMPTY_PROPS)
+      };
+    }
+    return copyInitialProps(inputProps);
+  }
+  function mergeInto(merged, inputProps) {
+    if (isPropsGetter(inputProps)) {
+      return resolvePropsGetter(inputProps, merged);
     }
     return mutablyMergeInto(merged, inputProps);
+  }
+  function copyInitialProps(inputProps) {
+    const copiedProps = {
+      ...inputProps
+    };
+    for (const propName in copiedProps) {
+      const propValue = copiedProps[propName];
+      if (isEventHandler(propName, propValue)) {
+        copiedProps[propName] = wrapEventHandler(propValue);
+      }
+    }
+    return copiedProps;
   }
   function mutablyMergeInto(mergedProps, externalProps) {
     if (!externalProps) {
@@ -1966,7 +1985,7 @@ var wp;
       return ourHandler;
     }
     if (!ourHandler) {
-      return theirHandler;
+      return wrapEventHandler(theirHandler);
     }
     return (event) => {
       if (isSyntheticEvent(event)) {
@@ -1981,6 +2000,17 @@ var wp;
       const result = theirHandler(event);
       ourHandler?.(event);
       return result;
+    };
+  }
+  function wrapEventHandler(handler) {
+    if (!handler) {
+      return handler;
+    }
+    return (event) => {
+      if (isSyntheticEvent(event)) {
+        makeEventPreventable(event);
+      }
+      return handler(event);
     };
   }
   function makeEventPreventable(event) {
@@ -2039,7 +2069,8 @@ var wp;
     const className = enabled ? resolveClassName(classNameProp, state) : void 0;
     const style = enabled ? resolveStyle(styleProp, state) : void 0;
     const stateProps = enabled ? getStateAttributesProps(state, stateAttributesMapping) : EMPTY_OBJECT;
-    const outProps = enabled ? mergeObjects(stateProps, Array.isArray(props) ? mergePropsN(props) : props) ?? EMPTY_OBJECT : EMPTY_OBJECT;
+    const resolvedProps = enabled && props ? resolveRenderFunctionProps(props) : void 0;
+    const outProps = enabled ? mergeObjects(stateProps, resolvedProps) ?? {} : EMPTY_OBJECT;
     if (typeof document !== "undefined") {
       if (!enabled) {
         useMergedRefs(null, null);
@@ -2060,7 +2091,15 @@ var wp;
     }
     return outProps;
   }
+  function resolveRenderFunctionProps(props) {
+    if (Array.isArray(props)) {
+      return mergePropsN(props);
+    }
+    return mergeProps(void 0, props);
+  }
   var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+  var COMPONENT_IDENTIFIER_PATTERN = /^[A-Z][A-Za-z0-9$]*$/;
+  var LOWERCASE_CHARACTER_PATTERN = /[a-z]/;
   function evaluateRenderProp(element, render4, props, state) {
     if (render4) {
       if (typeof render4 === "function") {
@@ -2095,8 +2134,10 @@ var wp;
     if (functionName.length === 0) {
       return;
     }
-    const firstCharacterCode = functionName.charCodeAt(0);
-    if (firstCharacterCode < 65 || firstCharacterCode > 90) {
+    if (!COMPONENT_IDENTIFIER_PATTERN.test(functionName)) {
+      return;
+    }
+    if (!LOWERCASE_CHARACTER_PATTERN.test(functionName)) {
       return;
     }
     warn(`The \`render\` prop received a function named \`${functionName}\` that starts with an uppercase letter.`, "This usually means a React component was passed directly as `render={Component}`.", "Base UI calls `render` as a plain function, which can break the Rules of Hooks during reconciliation.", "If this is an intentional render callback, rename it to start with a lowercase letter.", "Use `render={<Component />}` or `render={(props) => <Component {...props} />}` instead.", "https://base-ui.com/r/invalid-render-prop");

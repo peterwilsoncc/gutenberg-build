@@ -62482,6 +62482,23 @@ var wp;
 
   // node_modules/@base-ui/utils/esm/useControlled.js
   var React4 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/utils/esm/error.js
+  var set;
+  if (true) {
+    set = /* @__PURE__ */ new Set();
+  }
+  function error(...messages2) {
+    if (true) {
+      const messageKey = messages2.join(" ");
+      if (!set.has(messageKey)) {
+        set.add(messageKey);
+        console.error(`Base UI: ${messageKey}`);
+      }
+    }
+  }
+
+  // node_modules/@base-ui/utils/esm/useControlled.js
   function useControlled({
     controlled,
     default: defaultProp,
@@ -62496,17 +62513,17 @@ var wp;
     if (true) {
       React4.useEffect(() => {
         if (isControlled !== (controlled !== void 0)) {
-          console.error([`Base UI: A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
+          error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
         }
       }, [state, name, controlled]);
       const {
         current: defaultValue
       } = React4.useRef(defaultProp);
       React4.useEffect(() => {
-        if (!isControlled && JSON.stringify(defaultValue) !== JSON.stringify(defaultProp)) {
-          console.error([`Base UI: A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
+        if (!isControlled && serializeToDevModeString(defaultValue) !== serializeToDevModeString(defaultProp)) {
+          error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
         }
-      }, [JSON.stringify(defaultProp)]);
+      }, [defaultProp]);
     }
     const setValueIfUncontrolled = React4.useCallback((newValue) => {
       if (!isControlled) {
@@ -62514,6 +62531,32 @@ var wp;
       }
     }, []);
     return [value, setValueIfUncontrolled];
+  }
+  function serializeToDevModeString(input) {
+    let nextId2 = 0;
+    const seen = /* @__PURE__ */ new WeakMap();
+    try {
+      const result = JSON.stringify(input, function replacer(key, value) {
+        if (key === "_owner" && this != null && typeof this === "object" && "$$typeof" in this) {
+          return void 0;
+        }
+        if (typeof value === "bigint") {
+          return `__bigint__:${value}`;
+        }
+        if (value !== null && typeof value === "object") {
+          const id = seen.get(value);
+          if (id !== void 0) {
+            return `__object__:${id}`;
+          }
+          seen.set(value, nextId2);
+          nextId2 += 1;
+        }
+        return value;
+      });
+      return result ?? `__top__:${typeof input}`;
+    } catch {
+      return "__unserializable__";
+    }
   }
 
   // node_modules/@base-ui/utils/esm/useStableCallback.js
@@ -62570,15 +62613,15 @@ var wp;
   var useIsoLayoutEffect = typeof document !== "undefined" ? React7.useLayoutEffect : noop20;
 
   // node_modules/@base-ui/utils/esm/warn.js
-  var set;
+  var set2;
   if (true) {
-    set = /* @__PURE__ */ new Set();
+    set2 = /* @__PURE__ */ new Set();
   }
   function warn(...messages2) {
     if (true) {
       const messageKey = messages2.join(" ");
-      if (!set.has(messageKey)) {
-        set.add(messageKey);
+      if (!set2.has(messageKey)) {
+        set2.add(messageKey);
         console.warn(`Base UI: ${messageKey}`);
       }
     }
@@ -62747,20 +62790,21 @@ var wp;
   // node_modules/@base-ui/react/esm/merge-props/mergeProps.js
   var EMPTY_PROPS = {};
   function mergeProps(a2, b2, c6, d2, e2) {
-    let merged = {
-      ...resolvePropsGetter(a2, EMPTY_PROPS)
-    };
+    if (!c6 && !d2 && !e2 && !a2) {
+      return createInitialMergedProps(b2);
+    }
+    let merged = createInitialMergedProps(a2);
     if (b2) {
-      merged = mergeOne(merged, b2);
+      merged = mergeInto(merged, b2);
     }
     if (c6) {
-      merged = mergeOne(merged, c6);
+      merged = mergeInto(merged, c6);
     }
     if (d2) {
-      merged = mergeOne(merged, d2);
+      merged = mergeInto(merged, d2);
     }
     if (e2) {
-      merged = mergeOne(merged, e2);
+      merged = mergeInto(merged, e2);
     }
     return merged;
   }
@@ -62769,21 +62813,39 @@ var wp;
       return EMPTY_PROPS;
     }
     if (props.length === 1) {
-      return resolvePropsGetter(props[0], EMPTY_PROPS);
+      return createInitialMergedProps(props[0]);
     }
-    let merged = {
-      ...resolvePropsGetter(props[0], EMPTY_PROPS)
-    };
+    let merged = createInitialMergedProps(props[0]);
     for (let i2 = 1; i2 < props.length; i2 += 1) {
-      merged = mergeOne(merged, props[i2]);
+      merged = mergeInto(merged, props[i2]);
     }
     return merged;
   }
-  function mergeOne(merged, inputProps) {
+  function createInitialMergedProps(inputProps) {
     if (isPropsGetter(inputProps)) {
-      return inputProps(merged);
+      return {
+        ...resolvePropsGetter(inputProps, EMPTY_PROPS)
+      };
+    }
+    return copyInitialProps(inputProps);
+  }
+  function mergeInto(merged, inputProps) {
+    if (isPropsGetter(inputProps)) {
+      return resolvePropsGetter(inputProps, merged);
     }
     return mutablyMergeInto(merged, inputProps);
+  }
+  function copyInitialProps(inputProps) {
+    const copiedProps = {
+      ...inputProps
+    };
+    for (const propName in copiedProps) {
+      const propValue = copiedProps[propName];
+      if (isEventHandler(propName, propValue)) {
+        copiedProps[propName] = wrapEventHandler(propValue);
+      }
+    }
+    return copiedProps;
   }
   function mutablyMergeInto(mergedProps, externalProps) {
     if (!externalProps) {
@@ -62831,7 +62893,7 @@ var wp;
       return ourHandler;
     }
     if (!ourHandler) {
-      return theirHandler;
+      return wrapEventHandler(theirHandler);
     }
     return (event) => {
       if (isSyntheticEvent(event)) {
@@ -62846,6 +62908,17 @@ var wp;
       const result = theirHandler(event);
       ourHandler?.(event);
       return result;
+    };
+  }
+  function wrapEventHandler(handler) {
+    if (!handler) {
+      return handler;
+    }
+    return (event) => {
+      if (isSyntheticEvent(event)) {
+        makeEventPreventable(event);
+      }
+      return handler(event);
     };
   }
   function makeEventPreventable(event) {
@@ -62904,7 +62977,8 @@ var wp;
     const className = enabled ? resolveClassName(classNameProp, state) : void 0;
     const style = enabled ? resolveStyle(styleProp, state) : void 0;
     const stateProps = enabled ? getStateAttributesProps(state, stateAttributesMapping2) : EMPTY_OBJECT3;
-    const outProps = enabled ? mergeObjects(stateProps, Array.isArray(props) ? mergePropsN(props) : props) ?? EMPTY_OBJECT3 : EMPTY_OBJECT3;
+    const resolvedProps = enabled && props ? resolveRenderFunctionProps(props) : void 0;
+    const outProps = enabled ? mergeObjects(stateProps, resolvedProps) ?? {} : EMPTY_OBJECT3;
     if (typeof document !== "undefined") {
       if (!enabled) {
         useMergedRefs(null, null);
@@ -62925,7 +62999,15 @@ var wp;
     }
     return outProps;
   }
+  function resolveRenderFunctionProps(props) {
+    if (Array.isArray(props)) {
+      return mergePropsN(props);
+    }
+    return mergeProps(void 0, props);
+  }
   var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+  var COMPONENT_IDENTIFIER_PATTERN = /^[A-Z][A-Za-z0-9$]*$/;
+  var LOWERCASE_CHARACTER_PATTERN = /[a-z]/;
   function evaluateRenderProp(element, render4, props, state) {
     if (render4) {
       if (typeof render4 === "function") {
@@ -62960,8 +63042,10 @@ var wp;
     if (functionName.length === 0) {
       return;
     }
-    const firstCharacterCode = functionName.charCodeAt(0);
-    if (firstCharacterCode < 65 || firstCharacterCode > 90) {
+    if (!COMPONENT_IDENTIFIER_PATTERN.test(functionName)) {
+      return;
+    }
+    if (!LOWERCASE_CHARACTER_PATTERN.test(functionName)) {
       return;
     }
     warn(`The \`render\` prop received a function named \`${functionName}\` that starts with an uppercase letter.`, "This usually means a React component was passed directly as `render={Component}`.", "Base UI calls `render` as a plain function, which can break the Rules of Hooks during reconciliation.", "If this is an intentional render callback, rename it to start with a lowercase letter.", "Use `render={<Component />}` or `render={(props) => <Component {...props} />}` instead.", "https://base-ui.com/r/invalid-render-prop");
@@ -62992,6 +63076,7 @@ var wp;
     clearPress: () => clearPress,
     closePress: () => closePress,
     closeWatcher: () => closeWatcher,
+    dayPress: () => dayPress,
     decrementPress: () => decrementPress,
     disabled: () => disabled,
     drag: () => drag,
@@ -63008,6 +63093,7 @@ var wp;
     keyboard: () => keyboard,
     linkPress: () => linkPress,
     listNavigation: () => listNavigation,
+    monthChange: () => monthChange,
     none: () => none,
     outsidePress: () => outsidePress,
     pointer: () => pointer,
@@ -63018,6 +63104,7 @@ var wp;
     triggerFocus: () => triggerFocus,
     triggerHover: () => triggerHover,
     triggerPress: () => triggerPress,
+    valuePropChange: () => valuePropChange,
     wheel: () => wheel,
     windowResize: () => windowResize
   });
@@ -63054,6 +63141,9 @@ var wp;
   var imperativeAction = "imperative-action";
   var swipe = "swipe";
   var windowResize = "window-resize";
+  var dayPress = "day-press";
+  var monthChange = "month-change";
+  var valuePropChange = "value-prop-change";
 
   // node_modules/@base-ui/react/esm/utils/createBaseUIEventDetails.js
   function createChangeEventDetails(reason, event, trigger, customProperties) {
@@ -63255,60 +63345,58 @@ var wp;
     const frame = useAnimationFrame();
     return useStableCallback((fnToExecute, signal = null) => {
       frame.cancel();
-      function done() {
-        ReactDOM.flushSync(fnToExecute);
-      }
       const element = resolveRef(elementOrRef);
       if (element == null) {
         return;
       }
       const resolvedElement = element;
+      const done = () => {
+        ReactDOM.flushSync(fnToExecute);
+      };
       if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
         fnToExecute();
-      } else {
-        let execWaitForStartingStyleRemoved = function() {
-          const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
-          if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-            frame.request(exec);
+        return;
+      }
+      function exec() {
+        Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+          if (!signal?.aborted) {
+            done();
+          }
+        }).catch(() => {
+          if (treatAbortedAsFinished) {
+            if (!signal?.aborted) {
+              done();
+            }
             return;
           }
-          const attributeObserver = new MutationObserver(() => {
-            if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-              attributeObserver.disconnect();
-              exec();
-            }
-          });
-          attributeObserver.observe(resolvedElement, {
-            attributes: true,
-            attributeFilter: [startingStyleAttribute]
-          });
-          signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
-            once: true
-          });
-        }, exec = function() {
-          Promise.all(resolvedElement.getAnimations().map((anim) => anim.finished)).then(() => {
-            if (signal?.aborted) {
-              return;
-            }
-            done();
-          }).catch(() => {
-            const currentAnimations = resolvedElement.getAnimations();
-            if (treatAbortedAsFinished) {
-              if (signal?.aborted) {
-                return;
-              }
-              done();
-            } else if (currentAnimations.length > 0 && currentAnimations.some((anim) => anim.pending || anim.playState !== "finished")) {
-              exec();
-            }
-          });
-        };
-        if (waitForStartingStyleRemoved) {
-          execWaitForStartingStyleRemoved();
+          const currentAnimations = resolvedElement.getAnimations();
+          if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+            exec();
+          }
+        });
+      }
+      if (waitForStartingStyleRemoved) {
+        const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
+        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+          frame.request(exec);
           return;
         }
-        frame.request(exec);
+        const attributeObserver = new MutationObserver(() => {
+          if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+            attributeObserver.disconnect();
+            exec();
+          }
+        });
+        attributeObserver.observe(resolvedElement, {
+          attributes: true,
+          attributeFilter: [startingStyleAttribute]
+        });
+        signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
+          once: true
+        });
+        return;
       }
+      frame.request(exec);
     });
   }
 
@@ -63362,12 +63450,12 @@ var wp;
       return () => {
         AnimationFrame.cancel(frame);
       };
-    }, [enableIdleState, open, mounted, setTransitionStatus, transitionStatus]);
-    return React14.useMemo(() => ({
+    }, [enableIdleState, open, mounted, transitionStatus]);
+    return {
       mounted,
       setMounted,
       transitionStatus
-    }), [mounted, transitionStatus]);
+    };
   }
 
   // node_modules/@base-ui/react/esm/collapsible/root/useCollapsibleRoot.js
@@ -63440,10 +63528,10 @@ var wp;
       }
     });
     useIsoLayoutEffect(() => {
-      if (isControlled && animationTypeRef.current === "none" && !keepMounted && !open) {
+      if (isControlled && animationTypeRef.current === "none" && !open) {
         setMounted(false);
       }
-    }, [isControlled, keepMounted, open, openParam, setMounted]);
+    }, [isControlled, open, openParam, setMounted]);
     return React15.useMemo(() => ({
       abortControllerRef,
       animationTypeRef,
@@ -63538,21 +63626,6 @@ var wp;
       return false;
     }
     return value instanceof HTMLElement || value instanceof getWindow(value).HTMLElement;
-  }
-
-  // node_modules/@base-ui/utils/esm/error.js
-  var set2;
-  if (true) {
-    set2 = /* @__PURE__ */ new Set();
-  }
-  function error(...messages2) {
-    if (true) {
-      const messageKey = messages2.join(" ");
-      if (!set2.has(messageKey)) {
-        set2.add(messageKey);
-        console.error(`Base UI: ${messageKey}`);
-      }
-    }
   }
 
   // node_modules/@base-ui/react/esm/composite/root/CompositeRootContext.js
@@ -63768,6 +63841,14 @@ var wp;
 
   // node_modules/@base-ui/react/esm/collapsible/panel/useCollapsiblePanel.js
   var React20 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/utils/esm/addEventListener.js
+  function addEventListener(target, type, listener2, options) {
+    target.addEventListener(type, listener2, options);
+    return () => {
+      target.removeEventListener(type, listener2, options);
+    };
+  }
 
   // node_modules/@base-ui/react/esm/accordion/root/AccordionRootDataAttributes.js
   var AccordionRootDataAttributes = /* @__PURE__ */ (function(AccordionRootDataAttributes2) {
@@ -64038,10 +64119,7 @@ var wp;
         setOpen(true);
         onOpenChange(true, createChangeEventDetails(reason_parts_exports.none, event));
       }
-      panel.addEventListener("beforematch", handleBeforeMatch);
-      return () => {
-        panel.removeEventListener("beforematch", handleBeforeMatch);
-      };
+      return addEventListener(panel, "beforematch", handleBeforeMatch);
     }, [onOpenChange, panelRef, setOpen]);
     return React20.useMemo(() => ({
       props: {
@@ -64102,6 +64180,7 @@ var wp;
       disabled: disabled2 = false,
       onOpenChange: onOpenChangeProp,
       open,
+      style,
       ...elementProps
     } = componentProps;
     const onOpenChange = useStableCallback(onOpenChangeProp);
@@ -64154,6 +64233,7 @@ var wp;
       id,
       render: render4,
       nativeButton = true,
+      style,
       ...elementProps
     } = componentProps;
     const {
@@ -64197,6 +64277,7 @@ var wp;
       keepMounted: keepMountedProp,
       render: render4,
       id: idProp,
+      style,
       ...elementProps
     } = componentProps;
     if (true) {
@@ -64297,7 +64378,7 @@ var wp;
       }, elementProps],
       stateAttributesMapping: collapsibleStateAttributesMapping
     });
-    const shouldRender = keepMounted || hiddenUntilFound || !keepMounted && mounted;
+    const shouldRender = keepMounted || hiddenUntilFound || mounted;
     if (!shouldRender) {
       return null;
     }
