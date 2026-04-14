@@ -2344,7 +2344,7 @@ var wp;
         isEnabledAndEditorReady: enabled && select3(import_editor17.store).__unstableIsEditorReady(),
         isCollaborationEnabled: select3(import_editor17.store).isCollaborationEnabledForCurrentPost(),
         hasMetaBoxes: enabled ? select3(store).hasMetaBoxes() : false,
-        allMetaBoxes: enabled ? select3(store).getAllMetaBoxes() : [],
+        allMetaBoxes: enabled ? select3(store).getAllMetaBoxes() : void 0,
         rtcCompatibleIds: select3(store).getRtcCompatibleMetaBoxIds()
       }),
       [enabled]
@@ -2355,7 +2355,7 @@ var wp;
       if (isEnabledAndEditorReady) {
         initializeMetaBoxes2();
         if (isCollaborationEnabled) {
-          const hasIncompatibleMetaBoxes = allMetaBoxes.some(
+          const hasIncompatibleMetaBoxes = allMetaBoxes?.some(
             (metaBox) => !rtcCompatibleIds.includes(metaBox.id)
           );
           if (hasIncompatibleMetaBoxes) {
