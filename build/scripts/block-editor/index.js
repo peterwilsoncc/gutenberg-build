@@ -73946,6 +73946,59 @@ var wp;
     }
   ];
   var STYLE_BLOCK_PROPS_REFERENCE = {};
+  function getElementCSSRules(blockElementStyles, blockName, baseSelector) {
+    if (!blockElementStyles) {
+      return;
+    }
+    const rules = [];
+    elementTypes.forEach(({ elementType, pseudo, elements }) => {
+      const skipSerialization = shouldSkipSerialization(
+        blockName,
+        COLOR_SUPPORT_KEY2,
+        elementType
+      );
+      if (skipSerialization) {
+        return;
+      }
+      const elementStyles = blockElementStyles?.[elementType];
+      if (elementStyles) {
+        const selector3 = scopeSelector(
+          baseSelector,
+          import_blocks114.__EXPERIMENTAL_ELEMENTS[elementType]
+        );
+        rules.push((0, import_style_engine4.compileCSS)(elementStyles, { selector: selector3 }));
+        if (pseudo) {
+          pseudo.forEach((pseudoSelector) => {
+            if (elementStyles[pseudoSelector]) {
+              rules.push(
+                (0, import_style_engine4.compileCSS)(elementStyles[pseudoSelector], {
+                  selector: scopeSelector(
+                    baseSelector,
+                    `${import_blocks114.__EXPERIMENTAL_ELEMENTS[elementType]}${pseudoSelector}`
+                  )
+                })
+              );
+            }
+          });
+        }
+      }
+      if (elements) {
+        elements.forEach((element) => {
+          if (blockElementStyles[element]) {
+            rules.push(
+              (0, import_style_engine4.compileCSS)(blockElementStyles[element], {
+                selector: scopeSelector(
+                  baseSelector,
+                  import_blocks114.__EXPERIMENTAL_ELEMENTS[element]
+                )
+              })
+            );
+          }
+        });
+      }
+    });
+    return rules.length > 0 ? rules.join("") : void 0;
+  }
   function useBlockProps13({ name, style }) {
     const blockElementsContainerIdentifier = (0, import_compose102.useInstanceId)(
       STYLE_BLOCK_PROPS_REFERENCE,
@@ -73953,61 +74006,10 @@ var wp;
     );
     const baseElementSelector = `.${blockElementsContainerIdentifier}`;
     const blockElementStyles = style?.elements;
-    const styles = (0, import_element281.useMemo)(() => {
-      if (!blockElementStyles) {
-        return;
-      }
-      const elementCSSRules = [];
-      elementTypes.forEach(({ elementType, pseudo, elements }) => {
-        const skipSerialization = shouldSkipSerialization(
-          name,
-          COLOR_SUPPORT_KEY2,
-          elementType
-        );
-        if (skipSerialization) {
-          return;
-        }
-        const elementStyles = blockElementStyles?.[elementType];
-        if (elementStyles) {
-          const selector3 = scopeSelector(
-            baseElementSelector,
-            import_blocks114.__EXPERIMENTAL_ELEMENTS[elementType]
-          );
-          elementCSSRules.push(
-            (0, import_style_engine4.compileCSS)(elementStyles, { selector: selector3 })
-          );
-          if (pseudo) {
-            pseudo.forEach((pseudoSelector) => {
-              if (elementStyles[pseudoSelector]) {
-                elementCSSRules.push(
-                  (0, import_style_engine4.compileCSS)(elementStyles[pseudoSelector], {
-                    selector: scopeSelector(
-                      baseElementSelector,
-                      `${import_blocks114.__EXPERIMENTAL_ELEMENTS[elementType]}${pseudoSelector}`
-                    )
-                  })
-                );
-              }
-            });
-          }
-        }
-        if (elements) {
-          elements.forEach((element) => {
-            if (blockElementStyles[element]) {
-              elementCSSRules.push(
-                (0, import_style_engine4.compileCSS)(blockElementStyles[element], {
-                  selector: scopeSelector(
-                    baseElementSelector,
-                    import_blocks114.__EXPERIMENTAL_ELEMENTS[element]
-                  )
-                })
-              );
-            }
-          });
-        }
-      });
-      return elementCSSRules.length > 0 ? elementCSSRules.join("") : void 0;
-    }, [baseElementSelector, blockElementStyles, name]);
+    const styles = (0, import_element281.useMemo)(
+      () => getElementCSSRules(blockElementStyles, name, baseElementSelector),
+      [baseElementSelector, blockElementStyles, name]
+    );
     useStyleOverride({ css: styles });
     return addSaveProps9(
       { className: blockElementsContainerIdentifier },
