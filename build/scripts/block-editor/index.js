@@ -38551,7 +38551,9 @@ var wp;
           "color.__experimentalDuotone",
           false
         );
-        duotoneSelector = duotoneSupport && rootSelector && scopeSelector2(rootSelector, duotoneSupport);
+        if (typeof duotoneSupport === "string" && rootSelector) {
+          duotoneSelector = scopeSelector2(rootSelector, duotoneSupport);
+        }
       }
       const hasLayoutSupport2 = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
       const fallbackGapValue = (

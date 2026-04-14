@@ -15901,7 +15901,9 @@ var wp;
           "color.__experimentalDuotone",
           false
         );
-        duotoneSelector = duotoneSupport && rootSelector && scopeSelector(rootSelector, duotoneSupport);
+        if (typeof duotoneSupport === "string" && rootSelector) {
+          duotoneSelector = scopeSelector(rootSelector, duotoneSupport);
+        }
       }
       const hasLayoutSupport = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
       const fallbackGapValue = (
@@ -42775,7 +42777,7 @@ var wp;
       blocks: (0, import_blocks22.getBlockFromExample)(blockType.name, {
         ...blockType.example,
         attributes: {
-          ...blockType.example.attributes,
+          ...blockType.example?.attributes,
           style: void 0
         }
       })
