@@ -69010,8 +69010,7 @@ ${js}
       }
     },
     editorScript: "file:./index.js",
-    editorStyle: "file:./editor.css",
-    style: "file:./style-index.css"
+    editorStyle: "file:./editor.css"
   };
 
   // packages/block-library/build-module/tabs-menu/index.mjs

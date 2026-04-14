@@ -8623,8 +8623,7 @@ return array(
 			)
 		),
 		'editorScript' => 'file:./index.js',
-		'editorStyle' => 'file:./editor.css',
-		'style' => 'file:./style-index.css'
+		'editorStyle' => 'file:./editor.css'
 	),
 	'tabs-menu-item' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',

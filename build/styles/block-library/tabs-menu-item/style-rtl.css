@@ -7,6 +7,7 @@
   cursor: pointer;
   flex-basis: inherit !important;
   flex-grow: inherit !important;
+  position: relative;
   border: none;
   background: none;
   appearance: none;
@@ -21,10 +22,12 @@
   text-transform: inherit;
   text-align: inherit;
 }
-.wp-block-tabs-menu-item:focus-visible {
-  outline-offset: 2px;
-}
-.wp-block-tabs-menu-item[aria-selected=true], .wp-block-tabs-menu-item.is-active {
-  background-color: #000;
-  color: #fff;
+.wp-block-tabs-menu-item[aria-selected=true]::before, .wp-block-tabs-menu-item.is-active::before {
+  content: "";
+  position: absolute;
+  border-bottom: 2px solid currentColor;
+  pointer-events: none;
+  right: 0;
+  width: 100%;
+  bottom: 0;
 }
