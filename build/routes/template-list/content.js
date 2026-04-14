@@ -1121,7 +1121,7 @@ function clsx() {
 var clsx_default = clsx;
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element57 = __toESM(require_element(), 1);
+var import_element58 = __toESM(require_element(), 1);
 var import_compose12 = __toESM(require_compose(), 1);
 
 // node_modules/@base-ui/utils/esm/useRefWithInit.js
@@ -14080,7 +14080,7 @@ function Combobox3({
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components31 = __toESM(require_components(), 1);
-var import_element42 = __toESM(require_element(), 1);
+var import_element43 = __toESM(require_element(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_date3 = __toESM(require_date(), 1);
 
@@ -14174,6 +14174,30 @@ function RelativeDateControl({
   );
 }
 
+// packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
+var import_element42 = __toESM(require_element(), 1);
+function useDisabledDateMatchers(isValid2, parseDateFn) {
+  const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
+  const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
+  const disabledMatchers = (0, import_element42.useMemo)(() => {
+    const matchers = [];
+    if (minConstraint) {
+      const minDate = parseDateFn(minConstraint);
+      if (minDate) {
+        matchers.push({ before: minDate });
+      }
+    }
+    if (maxConstraint) {
+      const maxDate = parseDateFn(maxConstraint);
+      if (maxDate) {
+        matchers.push({ after: maxDate });
+      }
+    }
+    return matchers.length > 0 ? matchers : void 0;
+  }, [minConstraint, maxConstraint, parseDateFn]);
+  return { minConstraint, maxConstraint, disabledMatchers };
+}
+
 // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
 var import_date2 = __toESM(require_date(), 1);
 function parseDateTime(dateTimeString) {
@@ -14207,25 +14231,26 @@ function CalendarDateTimeControl({
   const disabled = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element42.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element43.useState)(() => {
     const parsedDate = parseDateTime(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  const inputControlRef = (0, import_element42.useRef)(null);
-  const validationTimeoutRef = (0, import_element42.useRef)(void 0);
-  const previousFocusRef = (0, import_element42.useRef)(null);
-  const onChangeCallback = (0, import_element42.useCallback)(
+  const inputControlRef = (0, import_element43.useRef)(null);
+  const validationTimeoutRef = (0, import_element43.useRef)(void 0);
+  const previousFocusRef = (0, import_element43.useRef)(null);
+  const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
+  const onChangeCallback = (0, import_element43.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  (0, import_element42.useEffect)(() => {
+  (0, import_element43.useEffect)(() => {
     return () => {
       if (validationTimeoutRef.current) {
         clearTimeout(validationTimeoutRef.current);
       }
     };
   }, []);
-  const onSelectDate = (0, import_element42.useCallback)(
+  const onSelectDate = (0, import_element43.useCallback)(
     (newDate) => {
       let dateTimeValue;
       if (newDate) {
@@ -14259,7 +14284,7 @@ function CalendarDateTimeControl({
     },
     [onChangeCallback, value]
   );
-  const handleManualDateTimeChange = (0, import_element42.useCallback)(
+  const handleManualDateTimeChange = (0, import_element43.useCallback)(
     (newValue) => {
       if (newValue) {
         const dateTime = (0, import_date3.getDate)(newValue);
@@ -14305,7 +14330,9 @@ function CalendarDateTimeControl({
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onChange: handleManualDateTimeChange,
-            disabled
+            disabled,
+            min: minConstraint ? formatDateTime(minConstraint) : void 0,
+            max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
         ),
         !compact && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
@@ -14318,7 +14345,7 @@ function CalendarDateTimeControl({
             onMonthChange: setCalendarMonth,
             timeZone: timezoneString || void 0,
             weekStartsOn,
-            disabled
+            disabled: disabled || disabledMatchers
           }
         )
       ] })
@@ -14364,7 +14391,7 @@ function DateTime({
 
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components32 = __toESM(require_components(), 1);
-var import_element43 = __toESM(require_element(), 1);
+var import_element44 = __toESM(require_element(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
@@ -14464,8 +14491,8 @@ function ValidatedDateControl({
   children
 }) {
   const { isValid: isValid2 } = field;
-  const [customValidity, setCustomValidity] = (0, import_element43.useState)(void 0);
-  const validateRefs = (0, import_element43.useCallback)(() => {
+  const [customValidity, setCustomValidity] = (0, import_element44.useState)(void 0);
+  const validateRefs = (0, import_element44.useCallback)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     for (const ref of refs) {
       const input = ref.current;
@@ -14479,7 +14506,7 @@ function ValidatedDateControl({
     }
     setCustomValidity(void 0);
   }, [inputRefs]);
-  (0, import_element43.useEffect)(() => {
+  (0, import_element44.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const result = validity ? getCustomValidity(isValid2, validity) : void 0;
     for (const ref of refs) {
@@ -14491,7 +14518,7 @@ function ValidatedDateControl({
       }
     }
   }, [inputRefs, isValid2, validity]);
-  (0, import_element43.useEffect)(() => {
+  (0, import_element44.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const handleInvalid = (event) => {
       event.preventDefault();
@@ -14506,7 +14533,7 @@ function ValidatedDateControl({
       }
     };
   }, [inputRefs, setIsTouched]);
-  (0, import_element43.useEffect)(() => {
+  (0, import_element44.useEffect)(() => {
     if (!isTouched) {
       return;
     }
@@ -14568,23 +14595,24 @@ function CalendarDateControl({
     format: fieldFormat
   } = field;
   const disabled = field.isDisabled({ item: data, field });
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element43.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element44.useState)(
     null
   );
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element43.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element44.useState)(() => {
     const parsedDate = parseDate(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  const [isTouched, setIsTouched] = (0, import_element43.useState)(false);
-  const validityTargetRef = (0, import_element43.useRef)(null);
-  const onChangeCallback = (0, import_element43.useCallback)(
+  const [isTouched, setIsTouched] = (0, import_element44.useState)(false);
+  const validityTargetRef = (0, import_element44.useRef)(null);
+  const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
+  const onChangeCallback = (0, import_element44.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  const onSelectDate = (0, import_element43.useCallback)(
+  const onSelectDate = (0, import_element44.useCallback)(
     (newDate) => {
       const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
       onChangeCallback(dateValue);
@@ -14593,7 +14621,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handlePresetClick = (0, import_element43.useCallback)(
+  const handlePresetClick = (0, import_element44.useCallback)(
     (preset) => {
       const presetDate = preset.getValue();
       const dateValue = formatDate(presetDate);
@@ -14604,7 +14632,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handleManualDateChange = (0, import_element43.useCallback)(
+  const handleManualDateChange = (0, import_element44.useCallback)(
     (newValue) => {
       onChangeCallback(newValue);
       if (newValue) {
@@ -14695,7 +14723,9 @@ function CalendarDateControl({
                 value,
                 onChange: handleManualDateChange,
                 required: !!field.isValid?.required,
-                disabled
+                disabled,
+                min: minConstraint,
+                max: maxConstraint
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
@@ -14708,7 +14738,7 @@ function CalendarDateControl({
                 onMonthChange: setCalendarMonth,
                 timeZone: timezoneString || void 0,
                 weekStartsOn,
-                disabled,
+                disabled: disabled || disabledMatchers,
                 disableNavigation: disabled
               }
             )
@@ -14732,6 +14762,7 @@ function CalendarDateRangeControl({
     description,
     getValue,
     setValue,
+    isValid: isValid2,
     format: fieldFormat
   } = field;
   const disabled = field.isDisabled({ item: data, field });
@@ -14741,7 +14772,8 @@ function CalendarDateRangeControl({
     value = fieldValue;
   }
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
-  const onChangeCallback = (0, import_element43.useCallback)(
+  const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
+  const onChangeCallback = (0, import_element44.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -14752,10 +14784,10 @@ function CalendarDateRangeControl({
     },
     [data, onChange, setValue]
   );
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element43.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element44.useState)(
     null
   );
-  const selectedRange = (0, import_element43.useMemo)(() => {
+  const selectedRange = (0, import_element44.useMemo)(() => {
     if (!value) {
       return { from: void 0, to: void 0 };
     }
@@ -14765,13 +14797,13 @@ function CalendarDateRangeControl({
       to: parseDate(to) || void 0
     };
   }, [value]);
-  const [calendarMonth, setCalendarMonth] = (0, import_element43.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element44.useState)(() => {
     return selectedRange.from || /* @__PURE__ */ new Date();
   });
-  const [isTouched, setIsTouched] = (0, import_element43.useState)(false);
-  const fromInputRef = (0, import_element43.useRef)(null);
-  const toInputRef = (0, import_element43.useRef)(null);
-  const updateDateRange = (0, import_element43.useCallback)(
+  const [isTouched, setIsTouched] = (0, import_element44.useState)(false);
+  const fromInputRef = (0, import_element44.useRef)(null);
+  const toInputRef = (0, import_element44.useRef)(null);
+  const updateDateRange = (0, import_element44.useCallback)(
     (fromDate, toDate2) => {
       if (fromDate && toDate2) {
         onChangeCallback([
@@ -14784,7 +14816,7 @@ function CalendarDateRangeControl({
     },
     [onChangeCallback]
   );
-  const onSelectCalendarRange = (0, import_element43.useCallback)(
+  const onSelectCalendarRange = (0, import_element44.useCallback)(
     (newRange) => {
       updateDateRange(newRange?.from, newRange?.to);
       setSelectedPresetId(null);
@@ -14792,7 +14824,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handlePresetClick = (0, import_element43.useCallback)(
+  const handlePresetClick = (0, import_element44.useCallback)(
     (preset) => {
       const [startDate, endDate] = preset.getValue();
       setCalendarMonth(startDate);
@@ -14802,7 +14834,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handleManualDateChange = (0, import_element43.useCallback)(
+  const handleManualDateChange = (0, import_element44.useCallback)(
     (fromOrTo, newValue) => {
       const [currentFrom, currentTo] = value || [
         void 0,
@@ -14905,7 +14937,9 @@ function CalendarDateRangeControl({
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
                       required: !!field.isValid?.required,
-                      disabled
+                      disabled,
+                      min: minConstraint,
+                      max: maxConstraint
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
@@ -14919,7 +14953,9 @@ function CalendarDateRangeControl({
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
                       required: !!field.isValid?.required,
-                      disabled
+                      disabled,
+                      min: minConstraint,
+                      max: maxConstraint
                     }
                   )
                 ]
@@ -14935,7 +14971,7 @@ function CalendarDateRangeControl({
                 onMonthChange: setCalendarMonth,
                 timeZone: timezone.string || void 0,
                 weekStartsOn,
-                disabled
+                disabled: disabled || disabledMatchers
               }
             )
           ] })
@@ -14994,7 +15030,7 @@ function DateControl({
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
 var import_components33 = __toESM(require_components(), 1);
-var import_element44 = __toESM(require_element(), 1);
+var import_element45 = __toESM(require_element(), 1);
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedSelectControl } = unlock2(import_components33.privateApis);
 function Select({
@@ -15009,7 +15045,7 @@ function Select({
   const disabled = field.isDisabled({ item: data, field });
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-  const onChangeControl = (0, import_element44.useCallback)(
+  const onChangeControl = (0, import_element45.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -15059,7 +15095,7 @@ var import_components35 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
 var import_components34 = __toESM(require_components(), 1);
-var import_element45 = __toESM(require_element(), 1);
+var import_element46 = __toESM(require_element(), 1);
 var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components34.privateApis);
 function ValidatedText({
@@ -15076,7 +15112,7 @@ function ValidatedText({
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const disabled = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element45.useCallback)(
+  const onChangeControl = (0, import_element46.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -15194,7 +15230,7 @@ function Url({
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components38 = __toESM(require_components(), 1);
-var import_element46 = __toESM(require_element(), 1);
+var import_element47 = __toESM(require_element(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedNumberControl } = unlock2(import_components38.privateApis);
@@ -15212,11 +15248,11 @@ function BetweenControls({
   step
 }) {
   const [min = "", max = ""] = value;
-  const onChangeMin = (0, import_element46.useCallback)(
+  const onChangeMin = (0, import_element47.useCallback)(
     (newValue) => onChange([toNumberOrEmpty(newValue), max]),
     [onChange, max]
   );
-  const onChangeMax = (0, import_element46.useCallback)(
+  const onChangeMax = (0, import_element47.useCallback)(
     (newValue) => onChange([min, toNumberOrEmpty(newValue)]),
     [onChange, min]
   );
@@ -15267,7 +15303,7 @@ function ValidatedNumber({
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
   const disabled = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element46.useCallback)(
+  const onChangeControl = (0, import_element47.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -15281,7 +15317,7 @@ function ValidatedNumber({
     },
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element46.useCallback)(
+  const onChangeBetweenControls = (0, import_element47.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -15343,7 +15379,7 @@ function Number2(props) {
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
 var import_components39 = __toESM(require_components(), 1);
-var import_element47 = __toESM(require_element(), 1);
+var import_element48 = __toESM(require_element(), 1);
 var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedRadioControl } = unlock2(import_components39.privateApis);
 function Radio({
@@ -15361,7 +15397,7 @@ function Radio({
     getElements: field.getElements
   });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element47.useCallback)(
+  const onChangeControl = (0, import_element48.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -15386,7 +15422,7 @@ function Radio({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
-var import_element48 = __toESM(require_element(), 1);
+var import_element49 = __toESM(require_element(), 1);
 var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 function Text({
   data,
@@ -15408,8 +15444,8 @@ function Text({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        prefix: prefix ? (0, import_element48.createElement)(prefix) : void 0,
-        suffix: suffix ? (0, import_element48.createElement)(suffix) : void 0
+        prefix: prefix ? (0, import_element49.createElement)(prefix) : void 0,
+        suffix: suffix ? (0, import_element49.createElement)(suffix) : void 0
       }
     }
   );
@@ -15417,7 +15453,7 @@ function Text({
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
 var import_components40 = __toESM(require_components(), 1);
-var import_element49 = __toESM(require_element(), 1);
+var import_element50 = __toESM(require_element(), 1);
 var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedToggleControl } = unlock2(import_components40.privateApis);
 function Toggle({
@@ -15430,7 +15466,7 @@ function Toggle({
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const disabled = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element49.useCallback)(() => {
+  const onChangeControl = (0, import_element50.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
@@ -15453,7 +15489,7 @@ function Toggle({
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
 var import_components41 = __toESM(require_components(), 1);
-var import_element50 = __toESM(require_element(), 1);
+var import_element51 = __toESM(require_element(), 1);
 var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedTextareaControl } = unlock2(import_components41.privateApis);
 function Textarea({
@@ -15469,7 +15505,7 @@ function Textarea({
   const disabled = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
-  const onChangeControl = (0, import_element50.useCallback)(
+  const onChangeControl = (0, import_element51.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -15496,7 +15532,7 @@ function Textarea({
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
 var import_components42 = __toESM(require_components(), 1);
-var import_element51 = __toESM(require_element(), 1);
+var import_element52 = __toESM(require_element(), 1);
 var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedToggleGroupControl } = unlock2(import_components42.privateApis);
 function ToggleGroup({
@@ -15510,7 +15546,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element51.useCallback)(
+  const onChangeControl = (0, import_element52.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -15553,7 +15589,7 @@ function ToggleGroup({
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
 var import_components43 = __toESM(require_components(), 1);
-var import_element52 = __toESM(require_element(), 1);
+var import_element53 = __toESM(require_element(), 1);
 var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedFormTokenField } = unlock2(import_components43.privateApis);
 function ArrayControl({
@@ -15571,7 +15607,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element52.useMemo)(
+  const arrayValueAsElements = (0, import_element53.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -15580,7 +15616,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element52.useCallback)(
+  const onChangeControl = (0, import_element53.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -15802,7 +15838,7 @@ var w = function(r3) {
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components44 = __toESM(require_components(), 1);
-var import_element53 = __toESM(require_element(), 1);
+var import_element54 = __toESM(require_element(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components44.privateApis);
@@ -15850,13 +15886,13 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element53.useCallback)(
+  const handleColorChange = (0, import_element54.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element53.useCallback)(
+  const handleInputChange = (0, import_element54.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
@@ -15890,7 +15926,7 @@ function Color({
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components45 = __toESM(require_components(), 1);
-var import_element54 = __toESM(require_element(), 1);
+var import_element55 = __toESM(require_element(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 function Password({
@@ -15901,9 +15937,9 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible2, setIsVisible] = (0, import_element54.useState)(false);
+  const [isVisible2, setIsVisible] = (0, import_element55.useState)(false);
   const disabled = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element54.useCallback)(() => {
+  const toggleVisibility = (0, import_element55.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
   return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
@@ -16423,10 +16459,45 @@ var text_default = {
 };
 
 // packages/dataviews/build-module/field-types/datetime.mjs
+var import_date7 = __toESM(require_date(), 1);
+
+// packages/dataviews/build-module/field-types/utils/is-valid-date-boundary.mjs
 var import_date6 = __toESM(require_date(), 1);
+function parseDateLike(value) {
+  if (!value) {
+    return null;
+  }
+  if (!isValid(new Date(value))) {
+    return null;
+  }
+  const parsed = (0, import_date6.getDate)(value);
+  return parsed && isValid(parsed) ? parsed : null;
+}
+function validateDateLikeBoundary(item, field, boundary) {
+  const constraint = field.isValid[boundary]?.constraint;
+  if (typeof constraint !== "string") {
+    return false;
+  }
+  const value = field.getValue({ item });
+  const boundaryValue = Array.isArray(value) ? value[boundary === "min" ? 0 : value.length - 1] : value;
+  if (boundaryValue === void 0 || boundaryValue === null || boundaryValue === "") {
+    return true;
+  }
+  const parsedConstraint = parseDateLike(constraint);
+  const parsedValue = parseDateLike(String(boundaryValue));
+  return !!parsedConstraint && !!parsedValue && (boundary === "min" ? parsedValue.getTime() >= parsedConstraint.getTime() : parsedValue.getTime() <= parsedConstraint.getTime());
+}
+function isValidMinDate(item, field) {
+  return validateDateLikeBoundary(item, field, "min");
+}
+function isValidMaxDate(item, field) {
+  return validateDateLikeBoundary(item, field, "max");
+}
+
+// packages/dataviews/build-module/field-types/datetime.mjs
 var format4 = {
-  datetime: (0, import_date6.getSettings)().formats.datetime,
-  weekStartsOn: (0, import_date6.getSettings)().l10n.startOfWeek
+  datetime: (0, import_date7.getSettings)().formats.datetime,
+  weekStartsOn: (0, import_date7.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted4({
   item,
@@ -16442,7 +16513,7 @@ function getValueFormatted4({
   } else {
     formatDatetime = field.format;
   }
-  return (0, import_date6.dateI18n)(formatDatetime.datetime, (0, import_date6.getDate)(value));
+  return (0, import_date7.dateI18n)(formatDatetime.datetime, (0, import_date7.getDate)(value));
 }
 var sort = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -16480,15 +16551,17 @@ var datetime_default = {
   getValueFormatted: getValueFormatted4,
   validate: {
     required: isValidRequired,
-    elements: isValidElements
+    elements: isValidElements,
+    min: isValidMinDate,
+    max: isValidMaxDate
   }
 };
 
 // packages/dataviews/build-module/field-types/date.mjs
-var import_date7 = __toESM(require_date(), 1);
+var import_date8 = __toESM(require_date(), 1);
 var format5 = {
-  date: (0, import_date7.getSettings)().formats.date,
-  weekStartsOn: (0, import_date7.getSettings)().l10n.startOfWeek
+  date: (0, import_date8.getSettings)().formats.date,
+  weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted5({
   item,
@@ -16504,7 +16577,7 @@ function getValueFormatted5({
   } else {
     formatDate2 = field.format;
   }
-  return (0, import_date7.dateI18n)(formatDate2.date, (0, import_date7.getDate)(value));
+  return (0, import_date8.dateI18n)(formatDate2.date, (0, import_date8.getDate)(value));
 }
 var sort2 = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -16544,7 +16617,9 @@ var date_default = {
   getValueFormatted: getValueFormatted5,
   validate: {
     required: isValidRequired,
-    elements: isValidElements
+    elements: isValidElements,
+    min: isValidMinDate,
+    max: isValidMaxDate
   }
 };
 
@@ -16888,58 +16963,63 @@ var no_type_default = {
 };
 
 // packages/dataviews/build-module/field-types/utils/get-is-valid.mjs
+function supportsNumericRangeConstraint(type) {
+  return type === "integer" || type === "number";
+}
+function supportsDateRangeConstraint(type) {
+  return type === "date" || type === "datetime";
+}
+function normalizeRangeRule(value, fieldType, key) {
+  const validator = fieldType.validate[key];
+  if (validator && (typeof value === "number" && supportsNumericRangeConstraint(fieldType.type) || typeof value === "string" && supportsDateRangeConstraint(fieldType.type))) {
+    return { constraint: value, validate: validator };
+  }
+  return void 0;
+}
 function getIsValid(field, fieldType) {
+  const rules = field.isValid;
   let required;
-  if (field.isValid?.required === true && fieldType.validate.required !== void 0) {
+  if (rules?.required === true && fieldType.validate.required !== void 0) {
     required = {
       constraint: true,
       validate: fieldType.validate.required
     };
   }
   let elements;
-  if ((field.isValid?.elements === true || // elements is enabled unless the field opts-out
-  field.isValid?.elements === void 0 && (!!field.elements || !!field.getElements)) && fieldType.validate.elements !== void 0) {
+  if ((rules?.elements === true || // elements is enabled unless the field opts-out
+  rules?.elements === void 0 && (!!field.elements || !!field.getElements)) && fieldType.validate.elements !== void 0) {
     elements = {
       constraint: true,
       validate: fieldType.validate.elements
     };
   }
-  let min;
-  if (typeof field.isValid?.min === "number" && fieldType.validate.min !== void 0) {
-    min = {
-      constraint: field.isValid.min,
-      validate: fieldType.validate.min
-    };
-  }
-  let max;
-  if (typeof field.isValid?.max === "number" && fieldType.validate.max !== void 0) {
-    max = {
-      constraint: field.isValid.max,
-      validate: fieldType.validate.max
-    };
-  }
+  const min = normalizeRangeRule(rules?.min, fieldType, "min");
+  const max = normalizeRangeRule(rules?.max, fieldType, "max");
+  const minLengthValue = rules?.minLength;
   let minLength;
-  if (typeof field.isValid?.minLength === "number" && fieldType.validate.minLength !== void 0) {
+  if (typeof minLengthValue === "number" && fieldType.validate.minLength !== void 0) {
     minLength = {
-      constraint: field.isValid.minLength,
+      constraint: minLengthValue,
       validate: fieldType.validate.minLength
     };
   }
+  const maxLengthValue = rules?.maxLength;
   let maxLength;
-  if (typeof field.isValid?.maxLength === "number" && fieldType.validate.maxLength !== void 0) {
+  if (typeof maxLengthValue === "number" && fieldType.validate.maxLength !== void 0) {
     maxLength = {
-      constraint: field.isValid.maxLength,
+      constraint: maxLengthValue,
       validate: fieldType.validate.maxLength
     };
   }
+  const patternValue = rules?.pattern;
   let pattern;
-  if (field.isValid?.pattern !== void 0 && fieldType.validate.pattern !== void 0) {
+  if (patternValue !== void 0 && fieldType.validate.pattern !== void 0) {
     pattern = {
-      constraint: field.isValid?.pattern,
+      constraint: patternValue,
       validate: fieldType.validate.pattern
     };
   }
-  const custom = field.isValid?.custom ?? fieldType.validate.custom;
+  const custom = rules?.custom ?? fieldType.validate.custom;
   return {
     required,
     elements,
@@ -17039,7 +17119,7 @@ function normalizeFields(fields) {
 }
 
 // packages/dataviews/build-module/hooks/use-data.mjs
-var import_element55 = __toESM(require_element(), 1);
+var import_element56 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -17049,34 +17129,34 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element55.useState)(
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element56.useState)(
     !isLoading
   );
-  (0, import_element55.useEffect)(() => {
+  (0, import_element56.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element55.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element55.useRef)(paginationInfo);
-  (0, import_element55.useEffect)(() => {
+  const previousDataRef = (0, import_element56.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element56.useRef)(paginationInfo);
+  (0, import_element56.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element55.useState)([]);
-  const positionMapRef = (0, import_element55.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element55.useRef)([]);
-  const prevViewParamsRef = (0, import_element55.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element56.useState)([]);
+  const positionMapRef = (0, import_element56.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element56.useRef)([]);
+  const prevViewParamsRef = (0, import_element56.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element55.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element55.useRef)(void 0);
-  const hasInitializedRef = (0, import_element55.useRef)(false);
-  const allLoadedRecords = (0, import_element55.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element56.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element56.useRef)(void 0);
+  const hasInitializedRef = (0, import_element56.useRef)(false);
+  const allLoadedRecords = (0, import_element56.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -17198,7 +17278,7 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element56 = __toESM(require_element(), 1);
+var import_element57 = __toESM(require_element(), 1);
 var import_compose11 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
@@ -17233,18 +17313,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element56.useRef)(null);
-  const viewRef = (0, import_element56.useRef)(view);
-  const isLoadingRef = (0, import_element56.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element56.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element56.useRef)(paginationInfo.totalItems);
-  (0, import_element56.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element57.useRef)(null);
+  const viewRef = (0, import_element57.useRef)(view);
+  const isLoadingRef = (0, import_element57.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element57.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element57.useRef)(paginationInfo.totalItems);
+  (0, import_element57.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element56.useCallback)(
+  const intersectionObserverCallback = (0, import_element57.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -17276,7 +17356,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element56.useLayoutEffect)(() => {
+  (0, import_element57.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -17296,10 +17376,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element56.useRef)(
+  const intersectionObserverRef = (0, import_element57.useRef)(
     null
   );
-  (0, import_element56.useEffect)(() => {
+  (0, import_element57.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -17318,7 +17398,7 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element56.useEffect)(() => {
+  (0, import_element57.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
@@ -17391,7 +17471,7 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element57.useContext)(dataviews_context_default);
+  const { view } = (0, import_element58.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
   return /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(import_jsx_runtime109.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(
@@ -17454,7 +17534,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element57.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element58.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -17470,8 +17550,8 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element57.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element57.useState)(0);
+  const containerRef = (0, import_element58.useRef)(null);
+  const [containerWidth, setContainerWidth] = (0, import_element58.useState)(0);
   const resizeObserverRef = (0, import_compose12.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
@@ -17480,7 +17560,7 @@ function DataViews({
     },
     { box: "border-box" }
   );
-  const [openedFilter, setOpenedFilter] = (0, import_element57.useState)(null);
+  const [openedFilter, setOpenedFilter] = (0, import_element58.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -17490,8 +17570,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element57.useMemo)(() => normalizeFields(fields), [fields]);
-  const _selection = (0, import_element57.useMemo)(() => {
+  const _fields = (0, import_element58.useMemo)(() => normalizeFields(fields), [fields]);
+  const _selection = (0, import_element58.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -17500,13 +17580,13 @@ function DataViews({
     );
   }, [selection, data, getItemId3, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element57.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element58.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element57.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element58.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -17517,12 +17597,12 @@ function DataViews({
     containerRef,
     setVisibleEntries
   });
-  (0, import_element57.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element57.useMemo)(
+  const defaultLayouts = (0, import_element58.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -17692,9 +17772,9 @@ function filterSortAndPaginate(data, view, fields) {
 }
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element58 = __toESM(require_element(), 1);
+var import_element59 = __toESM(require_element(), 1);
 var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element58.forwardRef)(
+var NavigableRegion = (0, import_element59.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       Tag,
@@ -17807,7 +17887,7 @@ var page_default2 = Page;
 var import_core_data10 = __toESM(require_core_data());
 var import_components52 = __toESM(require_components());
 var import_data14 = __toESM(require_data());
-var import_element66 = __toESM(require_element());
+var import_element67 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 var import_i18n53 = __toESM(require_i18n());
 
@@ -17905,7 +17985,7 @@ var previewField = {
 // routes/template-list/fields/author.tsx
 var import_components47 = __toESM(require_components());
 var import_i18n44 = __toESM(require_i18n());
-var import_element59 = __toESM(require_element());
+var import_element60 = __toESM(require_element());
 var import_core_data2 = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
 function useAddedBy(type, id) {
@@ -17920,7 +18000,7 @@ function useAddedBy(type, id) {
     },
     [type, id]
   );
-  return (0, import_element59.useMemo)(() => {
+  return (0, import_element60.useMemo)(() => {
     if (authorText) {
       return {
         text: authorText,
@@ -17941,7 +18021,7 @@ function useAddedBy(type, id) {
   }, [author, authorText]);
 }
 function AuthorField({ item }) {
-  const [isImageLoaded, setIsImageLoaded] = (0, import_element59.useState)(false);
+  const [isImageLoaded, setIsImageLoaded] = (0, import_element60.useState)(false);
   const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
   return /* @__PURE__ */ React.createElement(import_components47.__experimentalHStack, { alignment: "left", spacing: 0 }, imageUrl && /* @__PURE__ */ React.createElement(
     "div",
@@ -18050,7 +18130,7 @@ var slugField = {
 };
 
 // routes/template-list/use-templates.ts
-var import_element60 = __toESM(require_element());
+var import_element61 = __toESM(require_element());
 var import_data10 = __toESM(require_data());
 var import_core_data5 = __toESM(require_core_data());
 var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions3 } = unlock3(import_core_data5.privateApis);
@@ -18070,7 +18150,7 @@ function useTemplates(activeView = "active") {
   const { records: staticRecords, isResolving: isLoadingStaticData } = useEntityRecordsWithPermissions3("root", "registeredTemplate", {
     per_page: -1
   });
-  const activeTemplates = (0, import_element60.useMemo)(() => {
+  const activeTemplates = (0, import_element61.useMemo)(() => {
     const _active = [...staticRecords];
     if (activeTemplatesOption) {
       for (const activeSlug in activeTemplatesOption) {
@@ -18092,7 +18172,7 @@ function useTemplates(activeView = "active") {
     }
     return _active;
   }, [userRecords, staticRecords, activeTemplatesOption, activeTheme]);
-  const records = (0, import_element60.useMemo)(() => {
+  const records = (0, import_element61.useMemo)(() => {
     function isCustom(record) {
       return record.is_custom ?? // For user templates it's custom if the is_wp_suggestion meta
       // field is not set and the slug is not found in the default
@@ -18136,7 +18216,7 @@ function useTemplates(activeView = "active") {
 
 // routes/template-list/actions/set-active-template.tsx
 var import_i18n48 = __toESM(require_i18n());
-var import_element61 = __toESM(require_element());
+var import_element62 = __toESM(require_element());
 var import_data11 = __toESM(require_data());
 var import_core_data6 = __toESM(require_core_data());
 function useSetActiveTemplateAction() {
@@ -18145,7 +18225,7 @@ function useSetActiveTemplateAction() {
   );
   const { getEntityRecord } = (0, import_data11.useSelect)(import_core_data6.store);
   const { editEntityRecord, saveEditedEntityRecord } = (0, import_data11.useDispatch)(import_core_data6.store);
-  return (0, import_element61.useMemo)(
+  return (0, import_element62.useMemo)(
     () => ({
       id: "set-active-template",
       label(items) {
@@ -18195,7 +18275,7 @@ function useSetActiveTemplateAction() {
 // routes/template-list/add-new-template/index.tsx
 var import_components51 = __toESM(require_components());
 var import_html_entities4 = __toESM(require_html_entities());
-var import_element65 = __toESM(require_element());
+var import_element66 = __toESM(require_element());
 var import_data13 = __toESM(require_data());
 var import_core_data9 = __toESM(require_core_data());
 var import_compose14 = __toESM(require_compose());
@@ -18205,7 +18285,7 @@ var import_dom11 = __toESM(require_dom());
 import { useNavigate, useInvalidate } from "@wordpress/route";
 
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
-var import_element63 = __toESM(require_element());
+var import_element64 = __toESM(require_element());
 var import_i18n50 = __toESM(require_i18n());
 var import_components49 = __toESM(require_components());
 var import_core_data8 = __toESM(require_core_data());
@@ -18218,7 +18298,7 @@ var import_url4 = __toESM(require_url());
 var import_data12 = __toESM(require_data());
 var import_core_data7 = __toESM(require_core_data());
 var import_html_entities2 = __toESM(require_html_entities());
-var import_element62 = __toESM(require_element());
+var import_element63 = __toESM(require_element());
 var import_i18n49 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
 var TEMPLATE_POST_TYPE = "wp_template";
@@ -18262,7 +18342,7 @@ var usePublicPostTypes = () => {
     (select2) => select2(import_core_data7.store).getPostTypes({ per_page: -1 }),
     []
   );
-  return (0, import_element62.useMemo)(() => {
+  return (0, import_element63.useMemo)(() => {
     const excludedPostTypes = ["attachment"];
     return postTypes?.filter(
       ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -18279,7 +18359,7 @@ var usePublicTaxonomies = () => {
     (select2) => select2(import_core_data7.store).getTaxonomies({ per_page: -1 }),
     []
   );
-  return (0, import_element62.useMemo)(() => {
+  return (0, import_element63.useMemo)(() => {
     return taxonomies?.filter(
       ({ visibility }) => visibility?.publicly_queryable
     );
@@ -18287,14 +18367,14 @@ var usePublicTaxonomies = () => {
 };
 function usePostTypeArchiveMenuItems() {
   const publicPostTypes = usePublicPostTypes();
-  const postTypesWithArchives = (0, import_element62.useMemo)(
+  const postTypesWithArchives = (0, import_element63.useMemo)(
     () => publicPostTypes?.filter(
       (postType) => postType.has_archive
     ),
     [publicPostTypes]
   );
   const existingTemplates = useExistingTemplates();
-  const postTypeLabels = (0, import_element62.useMemo)(
+  const postTypeLabels = (0, import_element63.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const singularName = labels.singular_name.toLowerCase();
       accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -18302,14 +18382,14 @@ function usePostTypeArchiveMenuItems() {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element62.useCallback)(
+  const needsUniqueIdentifier = (0, import_element63.useCallback)(
     ({ labels, slug }) => {
       const singularName = labels.singular_name.toLowerCase();
       return postTypeLabels[singularName] > 1 && singularName !== slug;
     },
     [postTypeLabels]
   );
-  return (0, import_element62.useMemo)(
+  return (0, import_element63.useMemo)(
     () => postTypesWithArchives?.filter(
       (postType) => !(existingTemplates || []).some(
         (existingTemplate) => existingTemplate.slug === "archive-" + postType.slug
@@ -18353,7 +18433,7 @@ function usePostTypeArchiveMenuItems() {
 var usePostTypeMenuItems = (onClickMenuItem) => {
   const publicPostTypes = usePublicPostTypes();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templateLabels = (0, import_element62.useMemo)(
+  const templateLabels = (0, import_element63.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -18361,14 +18441,14 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element62.useCallback)(
+  const needsUniqueIdentifier = (0, import_element63.useCallback)(
     ({ labels, slug }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       return templateLabels[templateName] > 1 && templateName !== slug;
     },
     [templateLabels]
   );
-  const templatePrefixes = (0, import_element62.useMemo)(
+  const templatePrefixes = (0, import_element63.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (slug !== "page") {
@@ -18465,7 +18545,7 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const postTypesMenuItems = (0, import_element62.useMemo)(
+  const postTypesMenuItems = (0, import_element63.useMemo)(
     () => menuItems.reduce(
       (accumulator, postType) => {
         const { slug } = postType;
@@ -18486,7 +18566,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
   const publicTaxonomies = usePublicTaxonomies();
   const existingTemplates = useExistingTemplates();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templatePrefixes = (0, import_element62.useMemo)(
+  const templatePrefixes = (0, import_element63.useMemo)(
     () => publicTaxonomies?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (!["category", "post_tag"].includes(slug)) {
@@ -18598,7 +18678,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const taxonomiesMenuItems = (0, import_element62.useMemo)(
+  const taxonomiesMenuItems = (0, import_element63.useMemo)(
     () => menuItems.reduce(
       (accumulator, taxonomy) => {
         const { slug } = taxonomy;
@@ -18710,7 +18790,7 @@ var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters =
     },
     [templatePrefixes, entityName, additionalQueryParameters]
   );
-  const entitiesInfo = (0, import_element62.useMemo)(() => {
+  const entitiesInfo = (0, import_element63.useMemo)(() => {
     return Object.keys(templatePrefixes || {}).reduce(
       (accumulator, slug) => {
         accumulator[slug] = {
@@ -18779,7 +18859,7 @@ function SuggestionListItem({
 }
 function useSearchSuggestions(entityForSuggestions, search) {
   const { config } = entityForSuggestions;
-  const query = (0, import_element63.useMemo)(
+  const query = (0, import_element64.useMemo)(
     () => ({
       order: "asc",
       context: "view",
@@ -18794,8 +18874,8 @@ function useSearchSuggestions(entityForSuggestions, search) {
     entityForSuggestions.slug,
     query
   );
-  const [suggestions, setSuggestions] = (0, import_element63.useState)(EMPTY_ARRAY8);
-  (0, import_element63.useEffect)(() => {
+  const [suggestions, setSuggestions] = (0, import_element64.useState)(EMPTY_ARRAY8);
+  (0, import_element64.useEffect)(() => {
     if (!searchHasResolved) {
       return;
     }
@@ -18823,7 +18903,7 @@ function SuggestionList({
     debouncedSearch
   );
   const { labels } = entityForSuggestions;
-  const [showSearchControl, setShowSearchControl] = (0, import_element63.useState)(false);
+  const [showSearchControl, setShowSearchControl] = (0, import_element64.useState)(false);
   if (!showSearchControl && suggestions?.length > 9) {
     setShowSearchControl(true);
   }
@@ -18868,8 +18948,8 @@ function AddCustomTemplateModalContent({
   onBack,
   containerRef
 }) {
-  const [showSearchEntities, setShowSearchEntities] = (0, import_element63.useState)(false);
-  (0, import_element63.useEffect)(() => {
+  const [showSearchEntities, setShowSearchEntities] = (0, import_element64.useState)(false);
+  (0, import_element64.useEffect)(() => {
     if (containerRef.current) {
       const [firstFocusable] = import_dom10.focus.focusable.find(
         containerRef.current
@@ -19055,18 +19135,18 @@ function paramCase(input, options) {
 }
 
 // routes/template-list/add-new-template/add-custom-generic-template-modal-content.tsx
-var import_element64 = __toESM(require_element());
+var import_element65 = __toESM(require_element());
 var import_i18n51 = __toESM(require_i18n());
 var import_components50 = __toESM(require_components());
 function AddCustomGenericTemplateModalContent({
   createTemplate,
   onBack
 }) {
-  const [title, setTitle] = (0, import_element64.useState)("");
+  const [title, setTitle] = (0, import_element65.useState)("");
   const defaultTitle = (0, import_i18n51.__)("Custom Template");
-  const [isBusy, setIsBusy] = (0, import_element64.useState)(false);
-  const inputRef = (0, import_element64.useRef)(null);
-  (0, import_element64.useEffect)(() => {
+  const [isBusy, setIsBusy] = (0, import_element65.useState)(false);
+  const inputRef = (0, import_element65.useRef)(null);
+  (0, import_element65.useEffect)(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -19221,9 +19301,9 @@ var modalContentMap = {
   customGenericTemplate: 3
 };
 function NewTemplateModal({ onClose }) {
-  const [modalContent, setModalContent] = (0, import_element65.useState)(modalContentMap.templatesList);
-  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element65.useState)();
-  const [isSubmitting, setIsSubmitting] = (0, import_element65.useState)(false);
+  const [modalContent, setModalContent] = (0, import_element66.useState)(modalContentMap.templatesList);
+  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element66.useState)();
+  const [isSubmitting, setIsSubmitting] = (0, import_element66.useState)(false);
   const missingTemplates = useMissingTemplates(
     setEntityForSuggestions,
     () => setModalContent(modalContentMap.customTemplate)
@@ -19232,7 +19312,7 @@ function NewTemplateModal({ onClose }) {
   const invalidate = useInvalidate();
   const { saveEntityRecord } = (0, import_data13.useDispatch)(import_core_data9.store);
   const { createErrorNotice, createSuccessNotice } = (0, import_data13.useDispatch)(import_notices.store);
-  const containerRef = (0, import_element65.useRef)(null);
+  const containerRef = (0, import_element66.useRef)(null);
   const isMobile = (0, import_compose14.useViewportMatch)("medium", "<");
   const homeUrl = (0, import_data13.useSelect)((select2) => {
     return select2(import_core_data9.store).getEntityRecord("root", "__unstableBase")?.home;
@@ -19245,7 +19325,7 @@ function NewTemplateModal({ onClose }) {
       homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
     )
   };
-  (0, import_element65.useEffect)(() => {
+  (0, import_element66.useEffect)(() => {
     if (containerRef.current && modalContent === modalContentMap.templatesList) {
       const [firstFocusable] = import_dom11.focus.focusable.find(
         containerRef.current
@@ -19397,7 +19477,7 @@ function NewTemplateModal({ onClose }) {
   );
 }
 function NewTemplate() {
-  const [showModal, setShowModal] = (0, import_element65.useState)(false);
+  const [showModal, setShowModal] = (0, import_element66.useState)(false);
   const { postType } = (0, import_data13.useSelect)((select2) => {
     const { getPostType } = select2(import_core_data9.store);
     return {
@@ -19461,7 +19541,7 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
   ];
   return missingTemplates;
 }
-var add_new_template_default = (0, import_element65.memo)(NewTemplate);
+var add_new_template_default = (0, import_element66.memo)(NewTemplate);
 
 // routes/template-list/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='513136df98']")) {
@@ -19496,13 +19576,13 @@ function TemplateListActivation() {
     (select2) => select2(import_core_data10.store).getPostType("wp_template"),
     []
   );
-  const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element66.useState)(null);
+  const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element67.useState)(null);
   const defaultView = DEFAULT_VIEW;
-  const activeViewOverrides = (0, import_element66.useMemo)(
+  const activeViewOverrides = (0, import_element67.useMemo)(
     () => getActiveViewOverridesForTab(activeView),
     [activeView]
   );
-  const handleQueryParamsChange = (0, import_element66.useCallback)(
+  const handleQueryParamsChange = (0, import_element67.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -19551,7 +19631,7 @@ function TemplateListActivation() {
     },
     [records]
   );
-  const fields = (0, import_element66.useMemo)(() => {
+  const fields = (0, import_element67.useMemo)(() => {
     const elements = [];
     for (const author in users) {
       elements.push({
@@ -19571,10 +19651,10 @@ function TemplateListActivation() {
       }
     ];
   }, [users]);
-  const { data: posts, paginationInfo } = (0, import_element66.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element67.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const cleanupDeletedPostIdsFromUrl = (0, import_element66.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element67.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
         (item) => item.id.toString()
@@ -19596,7 +19676,7 @@ function TemplateListActivation() {
     },
     [invalidate, searchParams, navigate]
   );
-  const onActionPerformed = (0, import_element66.useCallback)(
+  const onActionPerformed = (0, import_element67.useCallback)(
     (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
         cleanupDeletedPostIdsFromUrl(items);
@@ -19615,7 +19695,7 @@ function TemplateListActivation() {
     context: "list",
     onActionPerformed
   });
-  const actions = (0, import_element66.useMemo)(() => {
+  const actions = (0, import_element67.useMemo)(() => {
     return [
       setActiveTemplateAction,
       ...postTypeActions?.flatMap((action) => {
@@ -19626,7 +19706,7 @@ function TemplateListActivation() {
       })
     ];
   }, [setActiveTemplateAction, postTypeActions]);
-  const tabs = (0, import_element66.useMemo)(() => {
+  const tabs = (0, import_element67.useMemo)(() => {
     const baseTabs = [
       {
         slug: "active",
@@ -19651,7 +19731,7 @@ function TemplateListActivation() {
     const authorTabs = Array.from(authorMap.values());
     return [...baseTabs, ...authorTabs];
   }, [staticRecords]);
-  const handleTabChange = (0, import_element66.useCallback)(
+  const handleTabChange = (0, import_element67.useCallback)(
     (viewSlug) => {
       navigate({
         to: `/templates/list/${viewSlug}`
@@ -19759,12 +19839,12 @@ import {
 var import_core_data12 = __toESM(require_core_data());
 var import_components53 = __toESM(require_components());
 var import_data15 = __toESM(require_data());
-var import_element68 = __toESM(require_element());
+var import_element69 = __toESM(require_element());
 var import_editor2 = __toESM(require_editor());
 var import_i18n54 = __toESM(require_i18n());
 
 // routes/template-list/use-templates-legacy.ts
-var import_element67 = __toESM(require_element());
+var import_element68 = __toESM(require_element());
 var import_core_data11 = __toESM(require_core_data());
 var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions4 } = unlock3(import_core_data11.privateApis);
 function useTemplatesLegacy(activeView = "all") {
@@ -19775,7 +19855,7 @@ function useTemplatesLegacy(activeView = "all") {
       per_page: -1
     }
   );
-  const filteredRecords = (0, import_element67.useMemo)(() => {
+  const filteredRecords = (0, import_element68.useMemo)(() => {
     if (!records) {
       return [];
     }
@@ -19812,11 +19892,11 @@ function TemplateListLegacy() {
     []
   );
   const defaultView = DEFAULT_VIEW_LEGACY;
-  const activeViewOverrides = (0, import_element68.useMemo)(
+  const activeViewOverrides = (0, import_element69.useMemo)(
     () => getActiveViewOverridesForTabLegacy(activeView),
     [activeView]
   );
-  const handleQueryParamsChange = (0, import_element68.useCallback)(
+  const handleQueryParamsChange = (0, import_element69.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -19865,7 +19945,7 @@ function TemplateListLegacy() {
     },
     [records]
   );
-  const fields = (0, import_element68.useMemo)(() => {
+  const fields = (0, import_element69.useMemo)(() => {
     const elements = [];
     for (const author in users) {
       elements.push({
@@ -19883,10 +19963,10 @@ function TemplateListLegacy() {
       }
     ];
   }, [users]);
-  const { data: posts, paginationInfo } = (0, import_element68.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element69.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const cleanupDeletedPostIdsFromUrl = (0, import_element68.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element69.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
         (item) => item.id.toString()
@@ -19908,7 +19988,7 @@ function TemplateListLegacy() {
     },
     [invalidate, searchParams, navigate]
   );
-  const onActionPerformed = (0, import_element68.useCallback)(
+  const onActionPerformed = (0, import_element69.useCallback)(
     (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
         cleanupDeletedPostIdsFromUrl(items);
@@ -19926,7 +20006,7 @@ function TemplateListLegacy() {
     context: "list",
     onActionPerformed
   });
-  const actions = (0, import_element68.useMemo)(() => {
+  const actions = (0, import_element69.useMemo)(() => {
     return postTypeActions?.flatMap((action) => {
       if (action.id === "view-post-revisions") {
         return [];
@@ -19934,7 +20014,7 @@ function TemplateListLegacy() {
       return [action];
     });
   }, [postTypeActions]);
-  const tabs = (0, import_element68.useMemo)(() => {
+  const tabs = (0, import_element69.useMemo)(() => {
     const baseTabs = [
       {
         slug: "all",
@@ -19954,7 +20034,7 @@ function TemplateListLegacy() {
     const authorTabs = Array.from(authorMap.values());
     return [...baseTabs, ...authorTabs];
   }, [allRecords]);
-  const handleTabChange = (0, import_element68.useCallback)(
+  const handleTabChange = (0, import_element69.useCallback)(
     (viewSlug) => {
       navigate({
         to: `/templates/list/${viewSlug}`
