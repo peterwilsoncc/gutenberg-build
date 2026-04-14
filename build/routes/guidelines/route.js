@@ -52,10 +52,10 @@ var require_block_library = __commonJS({
   }
 });
 
-// routes/content-guidelines/route.ts
+// routes/guidelines/route.ts
 var import_i18n = __toESM(require_i18n());
 
-// routes/content-guidelines/bootstrap-block-registry.ts
+// routes/guidelines/bootstrap-block-registry.ts
 var import_data = __toESM(require_data());
 var import_blocks = __toESM(require_blocks());
 var import_block_library = __toESM(require_block_library());
@@ -69,7 +69,7 @@ function bootstrapBlockRegistry() {
   (0, import_block_library.registerCoreBlocks)();
 }
 
-// routes/content-guidelines/route.ts
+// routes/guidelines/route.ts
 var route = {
   beforeLoad: bootstrapBlockRegistry,
   title: () => (0, import_i18n.__)("Guidelines")

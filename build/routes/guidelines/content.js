@@ -3475,33 +3475,33 @@ function Page({
 Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
-// routes/content-guidelines/stage.tsx
+// routes/guidelines/stage.tsx
 var import_i18n56 = __toESM(require_i18n());
 var import_element92 = __toESM(require_element());
 var import_components60 = __toESM(require_components());
 
-// routes/content-guidelines/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='32870223a3']")) {
+// routes/guidelines/style.scss
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='15b2061f96']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "32870223a3");
-  style.appendChild(document.createTextNode(".content-guidelines__content{border-radius:8px;margin-top:0;padding:24px}.content-guidelines__list{display:flex;flex-direction:column;gap:16px;list-style:none;margin:0;padding:0}.content-guidelines__list-item{margin:0 auto;width:min(680px,100%)}.content-guidelines__loading{align-items:center;display:flex;justify-content:center;margin-top:16px}.content-guidelines__revision-history{display:flex;flex-direction:column;gap:16px;padding:24px}.content-guidelines__revision-history .dataviews-wrapper{margin-left:-24px;margin-right:-24px}.content-guidelines__revision-history-back{align-self:flex-start;color:#1e1e1e;font-weight:500;margin-left:-16px}.content-guidelines__error-description{margin:8px 0 0}.content-guidelines__revision-description{padding-left:8px}.content-guidelines__restore-modal-actions{margin-top:24px}"));
+  style.setAttribute("data-wp-hash", "15b2061f96");
+  style.appendChild(document.createTextNode(".guidelines__content{border-radius:8px;margin-top:0;padding:24px}.guidelines__list{display:flex;flex-direction:column;gap:16px;list-style:none;margin:0;padding:0}.guidelines__list-item{margin:0 auto;width:min(680px,100%)}.guidelines__loading{align-items:center;display:flex;justify-content:center;margin-top:16px}.guidelines__revision-history{display:flex;flex-direction:column;gap:16px;padding:24px}.guidelines__revision-history .dataviews-wrapper{margin-left:-24px;margin-right:-24px}.guidelines__revision-history-back{align-self:flex-start;color:#1e1e1e;font-weight:500;margin-left:-16px}.guidelines__error-description{margin:8px 0 0}.guidelines__revision-description{padding-left:8px}.guidelines__restore-modal-actions{margin-top:24px}"));
   document.head.appendChild(style);
 }
 
-// routes/content-guidelines/components/guideline-accordion.tsx
+// routes/guidelines/components/guideline-accordion.tsx
 var import_components2 = __toESM(require_components());
 var import_i18n = __toESM(require_i18n());
 var import_element19 = __toESM(require_element());
 
-// routes/content-guidelines/components/guideline-accordion.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='db9a7907b0']")) {
+// routes/guidelines/components/guideline-accordion.scss
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b78bad87f0']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "db9a7907b0");
-  style.appendChild(document.createTextNode(".content-guidelines__accordion{padding:16px 24px}.content-guidelines__accordion-trigger{background:none;border:none;cursor:pointer;display:block;height:auto;margin:0;padding:0;text-align:left;width:100%}.content-guidelines__accordion-trigger:focus{box-shadow:none!important}.content-guidelines__accordion-trigger:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color,#3858e9)!important}.content-guidelines__accordion-chevron-up{transform:rotate(180deg);transition:transform .3s ease-in-out}.content-guidelines__accordion-chevron-down{transform:rotate(0deg);transition:transform .3s ease-in-out}.content-guidelines__accordion-header{color:#1e1e1e;padding-top:4px}.content-guidelines__accordion-description{color:#757575;padding-bottom:4px}.content-guidelines__accordion-form{margin-top:24px}"));
+  style.setAttribute("data-wp-hash", "b78bad87f0");
+  style.appendChild(document.createTextNode(".guidelines__accordion{padding:16px 24px}.guidelines__accordion-trigger{background:none;border:none;cursor:pointer;display:block;height:auto;margin:0;padding:0;text-align:left;width:100%}.guidelines__accordion-trigger:focus{box-shadow:none!important}.guidelines__accordion-trigger:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color,#3858e9)!important}.guidelines__accordion-chevron-up{transform:rotate(180deg);transition:transform .3s ease-in-out}.guidelines__accordion-chevron-down{transform:rotate(0deg);transition:transform .3s ease-in-out}.guidelines__accordion-header{color:#1e1e1e;padding-top:4px}.guidelines__accordion-description{color:#757575;padding-bottom:4px}.guidelines__accordion-form{margin-top:24px}"));
   document.head.appendChild(style);
 }
 
-// routes/content-guidelines/components/guideline-accordion.tsx
+// routes/guidelines/components/guideline-accordion.tsx
 function GuidelineAccordion({
   title,
   description,
@@ -3511,10 +3511,10 @@ function GuidelineAccordion({
   descriptionId
 }) {
   const [isOpen, setIsOpen] = (0, import_element19.useState)(false);
-  return /* @__PURE__ */ React.createElement(import_components2.Card, { className: "content-guidelines__accordion" }, /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(import_components2.Card, { className: "guidelines__accordion" }, /* @__PURE__ */ React.createElement(
     import_components2.Button,
     {
-      className: "content-guidelines__accordion-trigger",
+      className: "guidelines__accordion-trigger",
       onClick: () => setIsOpen(!isOpen),
       "aria-expanded": isOpen,
       "aria-controls": contentId,
@@ -3533,7 +3533,7 @@ function GuidelineAccordion({
       import_components2.__experimentalHeading,
       {
         id: headingId,
-        className: "content-guidelines__accordion-header",
+        className: "guidelines__accordion-header",
         level: 2,
         size: 15,
         weight: 400
@@ -3543,7 +3543,7 @@ function GuidelineAccordion({
       import_components2.__experimentalText,
       {
         id: descriptionId,
-        className: "content-guidelines__accordion-description",
+        className: "guidelines__accordion-description",
         size: 13,
         weight: 400,
         variant: "muted"
@@ -3553,13 +3553,13 @@ function GuidelineAccordion({
       import_components2.Icon,
       {
         icon: chevron_down_default,
-        className: isOpen ? "content-guidelines__accordion-chevron-up" : "content-guidelines__accordion-chevron-down"
+        className: isOpen ? "guidelines__accordion-chevron-up" : "guidelines__accordion-chevron-down"
       }
     ))
   ), /* @__PURE__ */ React.createElement("div", { hidden: !isOpen }, children));
 }
 
-// routes/content-guidelines/components/guideline-accordion-form.tsx
+// routes/guidelines/components/guideline-accordion-form.tsx
 var import_components54 = __toESM(require_components());
 
 // packages/dataviews/build-module/dataviews/index.mjs
@@ -21381,15 +21381,15 @@ function filterSortAndPaginate(data, view, fields2) {
   };
 }
 
-// routes/content-guidelines/components/guideline-accordion-form.tsx
+// routes/guidelines/components/guideline-accordion-form.tsx
 var import_i18n51 = __toESM(require_i18n());
 var import_element87 = __toESM(require_element());
 var import_data8 = __toESM(require_data());
 var import_notices2 = __toESM(require_notices());
 
-// routes/content-guidelines/store.ts
+// routes/guidelines/store.ts
 var import_data6 = __toESM(require_data());
-var STORE_NAME = "core/content-guidelines";
+var STORE_NAME = "core/guidelines";
 var DEFAULT_STATE = {
   id: null,
   status: null,
@@ -21515,7 +21515,7 @@ var store = (0, import_data6.createReduxStore)(STORE_NAME, {
 });
 (0, import_data6.register)(store);
 
-// routes/content-guidelines/api.ts
+// routes/guidelines/api.ts
 var import_api_fetch = __toESM(require_api_fetch());
 var import_blob = __toESM(require_blob());
 var import_data7 = __toESM(require_data());
@@ -21525,15 +21525,15 @@ var FLAT_CATEGORIES = ["site", "copy", "images", "additional"];
 function isValidGuidelinesImport(data) {
   return !!data && typeof data === "object" && "guideline_categories" in data && typeof data.guideline_categories === "object" && data.guideline_categories !== null;
 }
-async function fetchContentGuidelines() {
+async function fetchGuidelines() {
   const { setFromResponse } = (0, import_data7.dispatch)(store);
   const response = await (0, import_api_fetch.default)({
-    path: "/wp/v2/content-guidelines?context=edit"
+    path: "/wp/v2/guidelines?context=edit"
   });
   setFromResponse(response);
   return response;
 }
-async function saveContentGuidelines() {
+async function saveGuidelines() {
   const { setFromResponse } = (0, import_data7.dispatch)(store);
   const guidelinesStore = (0, import_data7.select)(store);
   const id = guidelinesStore.getId();
@@ -21574,7 +21574,7 @@ async function saveGuidelinesBypassingStore(id, status, categories) {
       )
     }
   };
-  const path = id ? `/wp/v2/content-guidelines/${id}` : "/wp/v2/content-guidelines";
+  const path = id ? `/wp/v2/guidelines/${id}` : "/wp/v2/guidelines";
   const method = id ? "PUT" : "POST";
   const response = await (0, import_api_fetch.default)({
     path,
@@ -21583,7 +21583,7 @@ async function saveGuidelinesBypassingStore(id, status, categories) {
   });
   return response;
 }
-async function importContentGuidelines(file) {
+async function importGuidelines(file) {
   const { setFromResponse } = (0, import_data7.dispatch)(store);
   const guidelinesStore = (0, import_data7.select)(store);
   const { createSuccessNotice } = (0, import_data7.dispatch)(import_notices.store);
@@ -21633,10 +21633,10 @@ async function importContentGuidelines(file) {
     type: "snackbar"
   });
 }
-function exportContentGuidelines() {
+function exportGuidelines() {
   const { createSuccessNotice } = (0, import_data7.dispatch)(import_notices.store);
   const guidelinesStore = (0, import_data7.select)(store);
-  const contentGuidelinesCategories = guidelinesStore.getAllGuidelines();
+  const guidelinesCategories = guidelinesStore.getAllGuidelines();
   const blockGuidelines = guidelinesStore.getBlockGuidelines();
   const data = {
     guideline_categories: {
@@ -21644,7 +21644,7 @@ function exportContentGuidelines() {
         FLAT_CATEGORIES.map((guidelineCategory) => [
           guidelineCategory,
           {
-            guidelines: contentGuidelinesCategories[guidelineCategory] ?? ""
+            guidelines: guidelinesCategories[guidelineCategory] ?? ""
           }
         ])
       ),
@@ -21673,7 +21673,7 @@ function exportContentGuidelines() {
     type: "snackbar"
   });
 }
-async function fetchContentGuidelinesRevisions({
+async function fetchGuidelinesRevisions({
   guidelinesId,
   page = 1,
   perPage = 10,
@@ -21686,7 +21686,7 @@ async function fetchContentGuidelinesRevisions({
     ...search ? { search } : {}
   });
   const response = await (0, import_api_fetch.default)({
-    path: `/wp/v2/content-guidelines/${guidelinesId}/revisions?${params}`,
+    path: `/wp/v2/guidelines/${guidelinesId}/revisions?${params}`,
     parse: false
   });
   const revisions = await response.json();
@@ -21697,14 +21697,14 @@ async function fetchContentGuidelinesRevisions({
   );
   return { revisions, total, totalPages };
 }
-async function restoreContentGuidelinesRevision(guidelinesId, revisionId) {
+async function restoreGuidelinesRevision(guidelinesId, revisionId) {
   return await (0, import_api_fetch.default)({
-    path: `/wp/v2/content-guidelines/${guidelinesId}/revisions/${revisionId}/restore`,
+    path: `/wp/v2/guidelines/${guidelinesId}/revisions/${revisionId}/restore`,
     method: "POST"
   });
 }
 
-// routes/content-guidelines/components/guideline-accordion-form.tsx
+// routes/guidelines/components/guideline-accordion-form.tsx
 function GuidelineAccordionForm({
   slug,
   contentId,
@@ -21751,7 +21751,7 @@ function GuidelineAccordionForm({
     event.preventDefault();
     setGuideline(slug, draft);
     setLoading(true);
-    saveContentGuidelines().then(() => {
+    saveGuidelines().then(() => {
       setError(null);
       createSuccessNotice((0, import_i18n51.__)("Guidelines saved."), {
         type: "snackbar"
@@ -21771,7 +21771,7 @@ function GuidelineAccordionForm({
     const oldValue = draft;
     setGuideline(slug, "");
     setLoading(true);
-    saveContentGuidelines().then(() => {
+    saveGuidelines().then(() => {
       setError(null);
       createSuccessNotice((0, import_i18n51.__)("Guidelines cleared."), {
         type: "snackbar"
@@ -21797,7 +21797,7 @@ function GuidelineAccordionForm({
       "aria-labelledby": headingId,
       "aria-describedby": descriptionId,
       onSubmit: handleSave,
-      className: "content-guidelines__accordion-form"
+      className: "guidelines__accordion-form"
     },
     /* @__PURE__ */ React.createElement(import_components54.__experimentalVStack, { spacing: 4 }, /* @__PURE__ */ React.createElement(
       DataForm,
@@ -21856,7 +21856,7 @@ function GuidelineAccordionForm({
   );
 }
 
-// routes/content-guidelines/components/block-guidelines.tsx
+// routes/guidelines/components/block-guidelines.tsx
 var import_components56 = __toESM(require_components());
 var import_i18n53 = __toESM(require_i18n());
 var import_element89 = __toESM(require_element());
@@ -21864,7 +21864,7 @@ var import_data10 = __toESM(require_data());
 var import_blocks2 = __toESM(require_blocks());
 var import_notices4 = __toESM(require_notices());
 
-// routes/content-guidelines/components/block-guideline-modal.tsx
+// routes/guidelines/components/block-guideline-modal.tsx
 var import_components55 = __toESM(require_components());
 var import_i18n52 = __toESM(require_i18n());
 var import_element88 = __toESM(require_element());
@@ -21879,7 +21879,7 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
   "@wordpress/routes"
 );
 
-// routes/content-guidelines/components/block-guideline-modal.scss
+// routes/guidelines/components/block-guideline-modal.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7c0ecac6c9']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "7c0ecac6c9");
@@ -21887,7 +21887,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 
-// routes/content-guidelines/components/block-guideline-modal.tsx
+// routes/guidelines/components/block-guideline-modal.tsx
 var { isContentBlock } = unlock2(import_blocks.privateApis);
 function BlockGuidelineModal({
   closeModal,
@@ -21940,7 +21940,7 @@ function BlockGuidelineModal({
     setIsSaving(true);
     const oldValue = blockGuidelines[selectedBlock];
     setBlockGuideline(selectedBlock, value);
-    saveContentGuidelines().then(() => {
+    saveGuidelines().then(() => {
       setError(null);
       createSuccessNotice(
         value ? (0, import_i18n52.__)("Guidelines saved.") : (0, import_i18n52.__)("Guidelines removed."),
@@ -22056,7 +22056,7 @@ function BlockGuidelineModal({
   );
 }
 
-// routes/content-guidelines/components/block-guidelines.scss
+// routes/guidelines/components/block-guidelines.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='ac1d1fe86c']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "ac1d1fe86c");
@@ -22064,7 +22064,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 
-// routes/content-guidelines/components/block-guidelines.tsx
+// routes/guidelines/components/block-guidelines.tsx
 var PER_PAGE = 5;
 var initialView = {
   type: "list",
@@ -22156,7 +22156,7 @@ function BlockGuidelines() {
     const oldValue = blockGuidelines[itemToDelete.id];
     setBlockGuideline(itemToDelete.id, "");
     setBusy(true);
-    saveContentGuidelines().then(() => {
+    saveGuidelines().then(() => {
       setError(null);
       createSuccessNotice((0, import_i18n53.__)("Guidelines removed."), {
         type: "snackbar"
@@ -22244,20 +22244,20 @@ function BlockGuidelines() {
   ));
 }
 
-// routes/content-guidelines/components/guideline-actions-section.tsx
+// routes/guidelines/components/guideline-actions-section.tsx
 var import_components58 = __toESM(require_components());
 var import_i18n54 = __toESM(require_i18n());
 var import_element90 = __toESM(require_element());
 
-// routes/content-guidelines/components/guideline-actions-section.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b7a567ab2f']")) {
+// routes/guidelines/components/guideline-actions-section.scss
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='9e2a8265d8']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "b7a567ab2f");
-  style.appendChild(document.createTextNode('.content-guidelines__actions{margin:16px auto 0;width:min(680px,100%)}.content-guidelines__actions-card{overflow:hidden;padding:0}.content-guidelines__actions-list{list-style:none;margin:0;padding:0}.content-guidelines__action-list-item{margin-bottom:0;position:relative}.content-guidelines__action-list-item:not(:first-child):before{background-color:#f0f0f0;content:"";height:1px;left:24px;position:absolute;right:24px;top:0}.content-guidelines__action-row{align-items:center;box-sizing:border-box;padding:16px 24px;width:100%}.content-guidelines__actions-card .content-guidelines__action-button{font-size:13px;font-weight:400;justify-content:center;min-width:100px}.content-guidelines__action-title{color:#1e1e1e}.content-guidelines__action-description{color:#757575}'));
+  style.setAttribute("data-wp-hash", "9e2a8265d8");
+  style.appendChild(document.createTextNode('.guidelines__actions{margin:16px auto 0;width:min(680px,100%)}.guidelines__actions-card{overflow:hidden;padding:0}.guidelines__actions-list{list-style:none;margin:0;padding:0}.guidelines__action-list-item{margin-bottom:0;position:relative}.guidelines__action-list-item:not(:first-child):before{background-color:#f0f0f0;content:"";height:1px;left:24px;position:absolute;right:24px;top:0}.guidelines__action-row{align-items:center;box-sizing:border-box;padding:16px 24px;width:100%}.guidelines__actions-card .guidelines__action-button{font-size:13px;font-weight:400;justify-content:center;min-width:100px}.guidelines__action-title{color:#1e1e1e}.guidelines__action-description{color:#757575}'));
   document.head.appendChild(style);
 }
 
-// routes/content-guidelines/components/action-item.tsx
+// routes/guidelines/components/action-item.tsx
 var import_components57 = __toESM(require_components());
 function ActionItem({
   slug,
@@ -22269,51 +22269,43 @@ function ActionItem({
   disabled: disabled2,
   isBusy
 }) {
-  const descriptionId = `content-guidelines-action-${slug}-description`;
-  return /* @__PURE__ */ React.createElement(
-    import_components57.__experimentalHStack,
+  const descriptionId = `guidelines-action-${slug}-description`;
+  return /* @__PURE__ */ React.createElement(import_components57.__experimentalHStack, { justify: "space-between", className: "guidelines__action-row" }, /* @__PURE__ */ React.createElement(import_components57.__experimentalVStack, { spacing: 1 }, /* @__PURE__ */ React.createElement(
+    import_components57.__experimentalHeading,
     {
-      justify: "space-between",
-      className: "content-guidelines__action-row"
+      level: 3,
+      size: 13,
+      weight: 400,
+      className: "guidelines__action-title"
     },
-    /* @__PURE__ */ React.createElement(import_components57.__experimentalVStack, { spacing: 1 }, /* @__PURE__ */ React.createElement(
-      import_components57.__experimentalHeading,
-      {
-        level: 3,
-        size: 13,
-        weight: 400,
-        className: "content-guidelines__action-title"
-      },
-      title
-    ), /* @__PURE__ */ React.createElement(
-      import_components57.__experimentalText,
-      {
-        id: descriptionId,
-        size: 13,
-        weight: 400,
-        variant: "muted",
-        className: "content-guidelines__action-description"
-      },
-      description
-    )),
-    /* @__PURE__ */ React.createElement(
-      import_components57.Button,
-      {
-        size: "compact",
-        variant: "secondary",
-        className: "content-guidelines__action-button",
-        "aria-label": ariaLabel,
-        "aria-describedby": descriptionId,
-        onClick,
-        isBusy,
-        disabled: disabled2
-      },
-      buttonLabel
-    )
-  );
+    title
+  ), /* @__PURE__ */ React.createElement(
+    import_components57.__experimentalText,
+    {
+      id: descriptionId,
+      size: 13,
+      weight: 400,
+      variant: "muted",
+      className: "guidelines__action-description"
+    },
+    description
+  )), /* @__PURE__ */ React.createElement(
+    import_components57.Button,
+    {
+      size: "compact",
+      variant: "secondary",
+      className: "guidelines__action-button",
+      "aria-label": ariaLabel,
+      "aria-describedby": descriptionId,
+      onClick,
+      isBusy,
+      disabled: disabled2
+    },
+    buttonLabel
+  ));
 }
 
-// routes/content-guidelines/components/guideline-actions-section.tsx
+// routes/guidelines/components/guideline-actions-section.tsx
 function getErrorMessage(err) {
   return err instanceof Error ? err.message : (0, import_i18n54.__)("Unknown error");
 }
@@ -22342,7 +22334,7 @@ function GuidelineActionsSection() {
     setPendingImport(null);
     setIsImporting(true);
     try {
-      await importContentGuidelines(file);
+      await importGuidelines(file);
       setError(null);
     } catch (err) {
       setError(
@@ -22358,7 +22350,7 @@ function GuidelineActionsSection() {
   }
   async function handleExportClick() {
     try {
-      exportContentGuidelines();
+      exportGuidelines();
       setError(null);
     } catch (err) {
       setError(
@@ -22406,7 +22398,7 @@ function GuidelineActionsSection() {
       onClick: navigateToRevisionHistory
     }
   ];
-  return /* @__PURE__ */ React.createElement(import_components58.__experimentalVStack, { spacing: 4, className: "content-guidelines__actions" }, /* @__PURE__ */ React.createElement(import_components58.__experimentalHeading, { level: 3, size: 15, weight: 500 }, (0, import_i18n54.__)("Actions")), /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(import_components58.__experimentalVStack, { spacing: 4, className: "guidelines__actions" }, /* @__PURE__ */ React.createElement(import_components58.__experimentalHeading, { level: 3, size: 15, weight: 500 }, (0, import_i18n54.__)("Actions")), /* @__PURE__ */ React.createElement(
     "input",
     {
       type: "file",
@@ -22423,11 +22415,11 @@ function GuidelineActionsSection() {
       isDismissible: true
     },
     error2
-  ), /* @__PURE__ */ React.createElement(import_components58.Card, { className: "content-guidelines__actions-card" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "content-guidelines__actions-list" }, ACTIONS.map((action) => /* @__PURE__ */ React.createElement(
+  ), /* @__PURE__ */ React.createElement(import_components58.Card, { className: "guidelines__actions-card" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "guidelines__actions-list" }, ACTIONS.map((action) => /* @__PURE__ */ React.createElement(
     "li",
     {
       key: action.slug,
-      className: "content-guidelines__action-list-item"
+      className: "guidelines__action-list-item"
     },
     /* @__PURE__ */ React.createElement(ActionItem, { ...action })
   )))), /* @__PURE__ */ React.createElement(
@@ -22447,7 +22439,7 @@ function GuidelineActionsSection() {
   ));
 }
 
-// routes/content-guidelines/components/revision-history.tsx
+// routes/guidelines/components/revision-history.tsx
 var import_components59 = __toESM(require_components());
 var import_i18n55 = __toESM(require_i18n());
 var import_element91 = __toESM(require_element());
@@ -22465,9 +22457,7 @@ var DEFAULT_VIEW = {
 };
 function RevisionHistory() {
   const [view, setView] = (0, import_element91.useState)(DEFAULT_VIEW);
-  const [revisions, setRevisions] = (0, import_element91.useState)(
-    []
-  );
+  const [revisions, setRevisions] = (0, import_element91.useState)([]);
   const [isLoading, setIsLoading] = (0, import_element91.useState)(false);
   const [revisionToRestore, setRevisionToRestore] = (0, import_element91.useState)(null);
   const [isRestoring, setIsRestoring] = (0, import_element91.useState)(false);
@@ -22482,7 +22472,7 @@ function RevisionHistory() {
     }
     setIsLoading(true);
     try {
-      const result = await fetchContentGuidelinesRevisions({
+      const result = await fetchGuidelinesRevisions({
         guidelinesId,
         page: 1,
         perPage: 100
@@ -22562,11 +22552,11 @@ function RevisionHistory() {
     }
     setIsRestoring(true);
     try {
-      await restoreContentGuidelinesRevision(
+      await restoreGuidelinesRevision(
         guidelinesId,
         revisionToRestore.id
       );
-      await fetchContentGuidelines();
+      await fetchGuidelines();
       setRevisionToRestore(null);
       await loadRevisions();
       createSuccessNotice((0, import_i18n55.__)("Revision restored."), {
@@ -22588,11 +22578,11 @@ function RevisionHistory() {
       window.history.replaceState({}, "", url.toString());
     }
   };
-  return /* @__PURE__ */ React.createElement("div", { className: "content-guidelines__revision-history" }, /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement("div", { className: "guidelines__revision-history" }, /* @__PURE__ */ React.createElement(
     import_components59.Navigator.BackButton,
     {
       icon: (0, import_i18n55.isRTL)() ? chevron_right_default : chevron_left_default,
-      className: "content-guidelines__revision-history-back",
+      className: "guidelines__revision-history-back",
       onClick: navigateToGuidelines
     },
     (0, import_i18n55.__)("Revision history")
@@ -22633,7 +22623,7 @@ function RevisionHistory() {
       import_components59.__experimentalHStack,
       {
         justify: "flex-end",
-        className: "content-guidelines__restore-modal-actions"
+        className: "guidelines__restore-modal-actions"
       },
       /* @__PURE__ */ React.createElement(
         import_components59.Button,
@@ -22658,7 +22648,7 @@ function RevisionHistory() {
   ));
 }
 
-// routes/content-guidelines/stage.tsx
+// routes/guidelines/stage.tsx
 var GUIDELINE_ITEMS = [
   {
     title: (0, import_i18n56.__)("Site"),
@@ -22705,11 +22695,11 @@ function getInitialNavigatorPath() {
   }
   return "/";
 }
-function ContentGuidelinesPage() {
+function GuidelinesPage() {
   const [loading, setLoading] = (0, import_element92.useState)(true);
   const [error2, setError] = (0, import_element92.useState)(null);
   (0, import_element92.useEffect)(() => {
-    fetchContentGuidelines().then(() => setError(null)).catch((e2) => setError(e2.message)).finally(() => setLoading(false));
+    fetchGuidelines().then(() => setError(null)).catch((e2) => setError(e2.message)).finally(() => setLoading(false));
   }, []);
   return /* @__PURE__ */ React.createElement(
     page_default,
@@ -22719,54 +22709,47 @@ function ContentGuidelinesPage() {
         "Set content standards that guide your team, inform plugins, and help AI tools generate content that matches your site's voice and requirements."
       )
     },
-    error2 && /* @__PURE__ */ React.createElement("div", { className: "content-guidelines__content" }, /* @__PURE__ */ React.createElement(import_components60.Notice, { status: "error", isDismissible: false }, /* @__PURE__ */ React.createElement("strong", null, (0, import_i18n56.sprintf)(
+    error2 && /* @__PURE__ */ React.createElement("div", { className: "guidelines__content" }, /* @__PURE__ */ React.createElement(import_components60.Notice, { status: "error", isDismissible: false }, /* @__PURE__ */ React.createElement("strong", null, (0, import_i18n56.sprintf)(
       /* translators: %s: Error message. */
       (0, import_i18n56.__)("Error loading guidelines: %s"),
       error2
-    )), /* @__PURE__ */ React.createElement("p", { className: "content-guidelines__error-description" }, (0, import_i18n56.__)(
+    )), /* @__PURE__ */ React.createElement("p", { className: "guidelines__error-description" }, (0, import_i18n56.__)(
       "Please try again. If the problem persists, contact support."
     )))),
-    loading ? /* @__PURE__ */ React.createElement("div", { className: "content-guidelines__loading" }, /* @__PURE__ */ React.createElement(import_components60.Spinner, null)) : !error2 && /* @__PURE__ */ React.createElement(import_components60.Navigator, { initialPath: getInitialNavigatorPath() }, /* @__PURE__ */ React.createElement(import_components60.Navigator.Screen, { path: "/" }, /* @__PURE__ */ React.createElement(import_components60.__experimentalVStack, { className: "content-guidelines__content" }, /* @__PURE__ */ React.createElement(
-      "ul",
-      {
-        role: "list",
-        className: "content-guidelines__list"
-      },
-      GUIDELINE_ITEMS.map((item) => {
-        const contentId = `content-guidelines-${item.slug}`;
-        const headingId = `content-guidelines-${item.slug}-heading`;
-        const descriptionId = `content-guidelines-${item.slug}-description`;
-        return /* @__PURE__ */ React.createElement(
-          "li",
+    loading ? /* @__PURE__ */ React.createElement("div", { className: "guidelines__loading" }, /* @__PURE__ */ React.createElement(import_components60.Spinner, null)) : !error2 && /* @__PURE__ */ React.createElement(import_components60.Navigator, { initialPath: getInitialNavigatorPath() }, /* @__PURE__ */ React.createElement(import_components60.Navigator.Screen, { path: "/" }, /* @__PURE__ */ React.createElement(import_components60.__experimentalVStack, { className: "guidelines__content" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "guidelines__list" }, GUIDELINE_ITEMS.map((item) => {
+      const contentId = `guidelines-${item.slug}`;
+      const headingId = `guidelines-${item.slug}-heading`;
+      const descriptionId = `guidelines-${item.slug}-description`;
+      return /* @__PURE__ */ React.createElement(
+        "li",
+        {
+          key: item.slug,
+          className: "guidelines__list-item"
+        },
+        /* @__PURE__ */ React.createElement("div", { className: "guidelines__accordion-item" }, /* @__PURE__ */ React.createElement(
+          GuidelineAccordion,
           {
-            key: item.slug,
-            className: "content-guidelines__list-item"
+            title: item.title,
+            description: item.description,
+            contentId,
+            headingId,
+            descriptionId
           },
-          /* @__PURE__ */ React.createElement("div", { className: "content-guidelines__accordion-item" }, /* @__PURE__ */ React.createElement(
-            GuidelineAccordion,
+          item.slug === "blocks" ? /* @__PURE__ */ React.createElement(BlockGuidelines, null) : /* @__PURE__ */ React.createElement(
+            GuidelineAccordionForm,
             {
-              title: item.title,
-              description: item.description,
+              slug: item.slug,
               contentId,
               headingId,
               descriptionId
-            },
-            item.slug === "blocks" ? /* @__PURE__ */ React.createElement(BlockGuidelines, null) : /* @__PURE__ */ React.createElement(
-              GuidelineAccordionForm,
-              {
-                slug: item.slug,
-                contentId,
-                headingId,
-                descriptionId
-              }
-            )
-          ))
-        );
-      })
-    ), /* @__PURE__ */ React.createElement(GuidelineActionsSection, null))), /* @__PURE__ */ React.createElement(import_components60.Navigator.Screen, { path: "/revision-history" }, /* @__PURE__ */ React.createElement(RevisionHistory, null)))
+            }
+          )
+        ))
+      );
+    })), /* @__PURE__ */ React.createElement(GuidelineActionsSection, null))), /* @__PURE__ */ React.createElement(import_components60.Navigator.Screen, { path: "/revision-history" }, /* @__PURE__ */ React.createElement(RevisionHistory, null)))
   );
 }
-var stage = ContentGuidelinesPage;
+var stage = GuidelinesPage;
 export {
   stage
 };

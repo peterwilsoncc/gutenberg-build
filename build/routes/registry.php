@@ -15,13 +15,6 @@ return array(
 		'has_content' => true,
 	),
 	array(
-		'name'        => 'content-guidelines',
-		'path'        => '/',
-		'page'        => 'guidelines',
-		'has_route'   => true,
-		'has_content' => true,
-	),
-	array(
 		'name'        => 'font-list',
 		'path'        => '/font-list',
 		'page'        => 'font-library',
@@ -34,6 +27,13 @@ return array(
 		'page'        => 'font-library',
 		'has_route'   => true,
 		'has_content' => false,
+	),
+	array(
+		'name'        => 'guidelines',
+		'path'        => '/',
+		'page'        => 'guidelines',
+		'has_route'   => true,
+		'has_content' => true,
 	),
 	array(
 		'name'        => 'home',
