@@ -12440,14 +12440,14 @@ var wp;
     const { blockType, defaultVariation, variations: variations18 } = (0, import_data19.useSelect)(
       (select9) => {
         const {
-          getBlockVariations: getBlockVariations3,
+          getBlockVariations: getBlockVariations4,
           getBlockType: getBlockType5,
           getDefaultBlockVariation
         } = select9(import_blocks18.store);
         return {
           blockType: getBlockType5(name123),
           defaultVariation: getDefaultBlockVariation(name123, "block"),
-          variations: getBlockVariations3(name123, "block")
+          variations: getBlockVariations4(name123, "block")
         };
       },
       [name123]
@@ -56081,13 +56081,13 @@ ${js}
   function useScopedBlockVariations(attributes2) {
     const { activeVariationName, blockVariations } = (0, import_data114.useSelect)(
       (select9) => {
-        const { getActiveBlockVariation, getBlockVariations: getBlockVariations3 } = select9(import_blocks95.store);
+        const { getActiveBlockVariation, getBlockVariations: getBlockVariations4 } = select9(import_blocks95.store);
         return {
           activeVariationName: getActiveBlockVariation(
             "core/query",
             attributes2
           )?.name,
-          blockVariations: getBlockVariations3("core/query", "block")
+          blockVariations: getBlockVariations4("core/query", "block")
         };
       },
       [attributes2]
@@ -62252,10 +62252,18 @@ ${js}
       {
         type: "input",
         regExp: /^-{3,}$/,
-        transform: () => [
-          (0, import_blocks103.createBlock)("core/separator"),
-          (0, import_blocks103.createBlock)((0, import_blocks103.getDefaultBlockName)())
-        ]
+        transform: () => {
+          const defaultVariation = (0, import_blocks103.getBlockVariations)(
+            "core/separator"
+          )?.find((variation) => variation.isDefault);
+          return [
+            (0, import_blocks103.createBlock)(
+              "core/separator",
+              defaultVariation?.attributes ?? {}
+            ),
+            (0, import_blocks103.createBlock)((0, import_blocks103.getDefaultBlockName)())
+          ];
+        }
       },
       {
         type: "raw",
@@ -72062,7 +72070,7 @@ ${js}
         const {
           getActiveBlockVariation,
           getBlockType: getBlockType5,
-          getBlockVariations: getBlockVariations3
+          getBlockVariations: getBlockVariations4
         } = select9(import_blocks120.store);
         return {
           blockType: getBlockType5(name123),
@@ -72070,7 +72078,7 @@ ${js}
             name123,
             attributes2
           ),
-          scopeVariations: getBlockVariations3(name123, "block")
+          scopeVariations: getBlockVariations4(name123, "block")
         };
       },
       [name123, attributes2]
