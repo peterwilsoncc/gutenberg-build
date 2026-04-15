@@ -30966,13 +30966,22 @@ ${js}
     }, [imageElement]);
     const setRefs = (0, import_compose22.useMergeRefs)([setImageElement, setResizeObserved]);
     const { allowResize = true } = context;
-    const { image, canUserEdit } = (0, import_data47.useSelect)(
+    const { image, canUserEdit, attachmentResolutionError } = (0, import_data47.useSelect)(
       (select9) => {
         const imageRecord = id && isSingleSelected ? select9(import_core_data23.store).getEntityRecord(
           "postType",
           "attachment",
           id,
           { context: "view" }
+        ) : null;
+        const resolutionError = id && isSingleSelected ? select9(import_core_data23.store).getResolutionError(
+          "getEntityRecord",
+          [
+            "postType",
+            "attachment",
+            id,
+            { context: "view" }
+          ]
         ) : null;
         let canEdit = false;
         if (imageRecord && window?.__experimentalMediaEditor) {
@@ -30984,11 +30993,20 @@ ${js}
         }
         return {
           image: imageRecord,
-          canUserEdit: canEdit
+          canUserEdit: canEdit,
+          attachmentResolutionError: resolutionError
         };
       },
       [id, isSingleSelected]
     );
+    (0, import_element44.useEffect)(() => {
+      if (!id || !isSingleSelected) {
+        return;
+      }
+      if (attachmentResolutionError?.status === 404) {
+        setAttributes({ id: void 0 });
+      }
+    }, [id, isSingleSelected, attachmentResolutionError, setAttributes]);
     const {
       canInsertCover,
       imageEditing,
