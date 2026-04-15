@@ -836,7 +836,7 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   min-height: 0;
 }
 .block-editor-media-placeholder.is-appender:hover {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   box-shadow: 0 0 0 1px var(--wp-admin-theme-color);
 }
 
