@@ -30999,14 +30999,6 @@ ${js}
       },
       [id, isSingleSelected]
     );
-    (0, import_element44.useEffect)(() => {
-      if (!id || !isSingleSelected) {
-        return;
-      }
-      if (attachmentResolutionError?.status === 404) {
-        setAttributes({ id: void 0 });
-      }
-    }, [id, isSingleSelected, attachmentResolutionError, setAttributes]);
     const {
       canInsertCover,
       imageEditing,
@@ -31033,7 +31025,11 @@ ${js}
     );
     const { getBlock, getSettings: getSettings2 } = (0, import_data47.useSelect)(import_block_editor112.store);
     const onNavigateToEntityRecord = getSettings2().onNavigateToEntityRecord;
-    const { replaceBlocks, toggleSelection } = (0, import_data47.useDispatch)(import_block_editor112.store);
+    const {
+      replaceBlocks,
+      toggleSelection,
+      __unstableMarkNextChangeAsNotPersistent
+    } = (0, import_data47.useDispatch)(import_block_editor112.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data47.useDispatch)(import_notices7.store);
     const { editEntityRecord } = (0, import_data47.useDispatch)(import_core_data23.store);
     const isLargeViewport = (0, import_compose22.useViewportMatch)("medium");
@@ -31053,6 +31049,21 @@ ${js}
     const imageSizeOptions = imageSizes.filter(
       ({ slug }) => image?.media_details?.sizes?.[slug]?.source_url
     ).map(({ name: name123, slug }) => ({ value: slug, label: name123 }));
+    (0, import_element44.useEffect)(() => {
+      if (!id || !isSingleSelected) {
+        return;
+      }
+      if (attachmentResolutionError?.status === 404) {
+        __unstableMarkNextChangeAsNotPersistent();
+        setAttributes({ id: void 0 });
+      }
+    }, [
+      id,
+      isSingleSelected,
+      attachmentResolutionError,
+      setAttributes,
+      __unstableMarkNextChangeAsNotPersistent
+    ]);
     (0, import_element44.useEffect)(() => {
       if (!isExternalImage(id, url) || !isSingleSelected || !getSettings2().mediaUpload) {
         setExternalBlob();
