@@ -495,23 +495,6 @@ var wp;
   };
   var forward_resolver_default = forwardResolver;
 
-  // packages/core-data/build-module/utils/on-sub-key.mjs
-  var onSubKey = (actionProperty) => (reducer) => (state = {}, action) => {
-    const key = action[actionProperty];
-    if (key === void 0) {
-      return state;
-    }
-    const nextKeyState = reducer(state[key], action);
-    if (nextKeyState === state[key]) {
-      return state;
-    }
-    return {
-      ...state,
-      [key]: nextKeyState
-    };
-  };
-  var on_sub_key_default = onSubKey;
-
   // packages/core-data/build-module/utils/replace-action.mjs
   var replaceAction = (replacer) => (reducer) => (state, action) => {
     return reducer(state, replacer(action));
@@ -3384,7 +3367,7 @@ var wp;
     // Limit to matching action type so we don't attempt to replace action on
     // an unhandled action.
     if_matching_action_default((action) => "query" in action),
-    // Inject query parts into action for use both in `onSubKey` and reducer.
+    // Inject query parts into action for use both in `keyedReducer` and reducer.
     replace_action_default((action) => {
       if (action.query) {
         return {
@@ -3394,10 +3377,10 @@ var wp;
       }
       return action;
     }),
-    on_sub_key_default("context"),
+    (0, import_data7.keyedReducer)("context"),
     // Queries shape is shared, but keyed by query `stableKey` part. Original
     // reducer tracks only a single query object.
-    on_sub_key_default("stableKey")
+    (0, import_data7.keyedReducer)("stableKey")
   ])((state = {}, action) => {
     if (action.type !== "RECEIVE_ITEMS") {
       return state;
