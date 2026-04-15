@@ -9888,7 +9888,7 @@ var wp;
     } else if (node.nodeName === "A") {
       const anchor = node;
       if (anchor.target && anchor.target.toLowerCase() === "_blank") {
-        anchor.rel = "noreferrer noopener";
+        anchor.rel = "noopener";
       } else {
         anchor.removeAttribute("target");
         anchor.removeAttribute("rel");

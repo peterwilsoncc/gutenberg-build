@@ -3391,7 +3391,7 @@ var wp;
                     "https://wordpress.org/documentation/article/block-based-widgets-editor/"
                   ),
                   target: "_blank",
-                  rel: "noopener noreferrer",
+                  rel: "noopener",
                   children: [
                     (0, import_i18n15.__)("Help"),
                     /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components18.VisuallyHidden, {

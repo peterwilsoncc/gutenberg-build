@@ -872,7 +872,7 @@ var wp;
                     "https://wordpress.org/documentation/article/block-based-widgets-editor/"
                   ),
                   target: "_blank",
-                  rel: "noopener noreferrer",
+                  rel: "noopener",
                   children: [
                     (0, import_i18n6.__)("Help"),
                     /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_components5.VisuallyHidden, {

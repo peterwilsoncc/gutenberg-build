@@ -13159,7 +13159,7 @@ var wp;
   var import_html_entities7 = __toESM(require_html_entities(), 1);
   var import_core_data25 = __toESM(require_core_data(), 1);
   var getExternalLink = (url, text) => `<a ${getExternalLinkAttributes(url)}>${text}</a>`;
-  var getExternalLinkAttributes = (url) => `href="${url}" target="_blank" rel="noreferrer noopener"`;
+  var getExternalLinkAttributes = (url) => `href="${url}" target="_blank" rel="noopener"`;
   var getOpenverseLicense = (license, licenseVersion) => {
     let licenseName = license.trim();
     if (license !== "pdm") {
@@ -53517,7 +53517,7 @@ var wp;
                   "https://wordpress.org/documentation/article/wordpress-block-editor/"
                 ),
                 target: "_blank",
-                rel: "noopener noreferrer",
+                rel: "noopener",
                 children: [
                   (0, import_i18n212.__)("Help"),
                   /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(import_components185.VisuallyHidden, {
@@ -57452,7 +57452,7 @@ var wp;
             {
               href: mediaUrl,
               target: "_blank",
-              rel: "noopener noreferrer",
+              rel: "noopener",
               className: "media-editor-preview__download-link",
               children: (0, import_i18n232.__)("View file")
             }

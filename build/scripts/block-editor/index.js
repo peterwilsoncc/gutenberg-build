@@ -53517,7 +53517,7 @@ var wp;
   var LINK_DESTINATION_CUSTOM = "custom";
   var LINK_DESTINATION_MEDIA = "media";
   var LINK_DESTINATION_ATTACHMENT = "attachment";
-  var NEW_TAB_REL = ["noreferrer", "noopener"];
+  var NEW_TAB_REL = ["noopener"];
   var ImageURLInputUI = ({
     linkDestination,
     onChangeUrl,
@@ -72407,7 +72407,7 @@ var wp;
   var import_i18n229 = __toESM(require_i18n(), 1);
   var import_url14 = __toESM(require_url(), 1);
   var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
-  var NEW_TAB_REL2 = "noreferrer noopener";
+  var NEW_TAB_REL2 = "noopener";
   var NEW_TAB_TARGET = "_blank";
   var NOFOLLOW_REL = "nofollow";
   function getUpdatedLinkAttributes({

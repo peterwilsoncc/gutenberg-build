@@ -9493,7 +9493,7 @@ var wp;
   var import_data11 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/button/constants.mjs
-  var NEW_TAB_REL = "noreferrer noopener";
+  var NEW_TAB_REL = "noopener";
   var NEW_TAB_TARGET = "_blank";
   var NOFOLLOW_REL = "nofollow";
 
@@ -25561,7 +25561,7 @@ ${url}
   var LINK_DESTINATION_MEDIA2 = "media";
   var LINK_DESTINATION_ATTACHMENT2 = "attachment";
   var LINK_DESTINATION_CUSTOM = "custom";
-  var NEW_TAB_REL2 = ["noreferrer", "noopener"];
+  var NEW_TAB_REL2 = ["noopener"];
   var ALLOWED_MEDIA_TYPES3 = ["image"];
   var SIZED_LAYOUTS = ["flex", "grid"];
   var DEFAULT_MEDIA_SIZE_SLUG3 = "full";
@@ -33707,7 +33707,7 @@ ${js}
                   {
                     className: "wp-block-latest-posts__read-more",
                     href: post.link,
-                    rel: "noopener noreferrer",
+                    rel: "noopener",
                     onClick: showRedirectionPreventedNotice
                   }
                 )
@@ -62746,13 +62746,13 @@ ${js}
       ),
       {
         a: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
+          // eslint-disable-next-line jsx-a11y/anchor-has-content, react/jsx-no-target-blank
           /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
             "a",
             {
               href: siteIconSettingsUrl,
               target: "_blank",
-              rel: "noopener noreferrer"
+              rel: "noopener"
             }
           )
         )

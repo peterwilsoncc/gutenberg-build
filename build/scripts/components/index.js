@@ -41452,7 +41452,7 @@ This message will only show in development mode. It won't appear in production. 
       rel = "",
       ...additionalProps
     } = props;
-    const optimizedRel = [...new Set([...rel.split(" "), "external", "noreferrer", "noopener"].filter(Boolean))].join(" ");
+    const optimizedRel = [...new Set([...rel.split(" "), "external", "noopener"].filter(Boolean))].join(" ");
     const classes = clsx_default("components-external-link", className2);
     const isInternalAnchor = !!href?.startsWith("#");
     const onClickHandler = (event) => {
