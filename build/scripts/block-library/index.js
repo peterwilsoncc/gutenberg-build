@@ -46956,19 +46956,13 @@ ${js}
   var import_blocks73 = __toESM(require_blocks(), 1);
   function useOnEnter(props) {
     const { batch } = (0, import_data96.useRegistry)();
-    const {
-      moveBlocksToPosition,
-      replaceInnerBlocks,
-      duplicateBlocks,
-      insertBlock
-    } = (0, import_data96.useDispatch)(import_block_editor174.store);
+    const { moveBlocksToPosition, replaceBlocks, selectionChange } = (0, import_data96.useDispatch)(import_block_editor174.store);
     const {
       getBlockRootClientId,
       getBlockIndex,
       getBlockOrder,
       getBlockName,
       getBlock,
-      getNextBlockClientId,
       canInsertBlockType
     } = (0, import_data96.useSelect)(import_block_editor174.store);
     const propsRef = (0, import_element88.useRef)(props);
@@ -47022,23 +47016,18 @@ ${js}
         }
         event.preventDefault();
         const wrapperBlock = getBlock(wrapperClientId);
+        const head = (0, import_blocks73.cloneBlock)({
+          ...wrapperBlock,
+          innerBlocks: wrapperBlock.innerBlocks.slice(0, position)
+        });
+        const middle = (0, import_blocks73.createBlock)(defaultBlockName);
+        const tail = (0, import_blocks73.cloneBlock)({
+          ...wrapperBlock,
+          innerBlocks: wrapperBlock.innerBlocks.slice(position + 1)
+        });
         batch(() => {
-          duplicateBlocks([wrapperClientId]);
-          const blockIndex = getBlockIndex(wrapperClientId);
-          replaceInnerBlocks(
-            wrapperClientId,
-            wrapperBlock.innerBlocks.slice(0, position)
-          );
-          replaceInnerBlocks(
-            getNextBlockClientId(wrapperClientId),
-            wrapperBlock.innerBlocks.slice(position + 1)
-          );
-          insertBlock(
-            (0, import_blocks73.createBlock)(defaultBlockName),
-            blockIndex + 1,
-            grandparentClientId,
-            true
-          );
+          replaceBlocks(wrapperClientId, [head, middle, tail]);
+          selectionChange(middle.clientId);
         });
       }
       element.addEventListener("keydown", onKeyDown);
