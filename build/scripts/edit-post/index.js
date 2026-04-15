@@ -865,7 +865,10 @@ var wp;
         (box) => box.id === metabox.id
       );
       if (existing !== -1) {
-        mergedMetaboxes[existing] = metabox;
+        mergedMetaboxes[existing] = {
+          ...mergedMetaboxes[existing],
+          ...metabox
+        };
       } else {
         mergedMetaboxes.push(metabox);
       }
@@ -896,18 +899,10 @@ var wp;
     }
     return state;
   }
-  function rtcCompatibleMetaBoxIds(state = [], action) {
-    switch (action.type) {
-      case "SET_RTC_COMPATIBLE_META_BOX_IDS":
-        return action.ids;
-    }
-    return state;
-  }
   var metaBoxes = (0, import_data4.combineReducers)({
     isSaving: isSavingMetaBoxes,
     locations: metaBoxLocations,
-    initialized: metaBoxesInitialized,
-    rtcCompatibleIds: rtcCompatibleMetaBoxIds
+    initialized: metaBoxesInitialized
   });
   var reducer_default = (0, import_data4.combineReducers)({
     metaBoxes
@@ -934,7 +929,6 @@ var wp;
     setIsEditingTemplate: () => setIsEditingTemplate,
     setIsInserterOpened: () => setIsInserterOpened,
     setIsListViewOpened: () => setIsListViewOpened,
-    setRtcCompatibleMetaBoxIds: () => setRtcCompatibleMetaBoxIds,
     showBlockTypes: () => showBlockTypes,
     switchEditorMode: () => switchEditorMode,
     toggleDistractionFree: () => toggleDistractionFree,
@@ -1057,12 +1051,6 @@ var wp;
     return {
       type: "SET_META_BOXES_PER_LOCATIONS",
       metaBoxesPerLocation
-    };
-  }
-  function setRtcCompatibleMetaBoxIds(ids) {
-    return {
-      type: "SET_RTC_COMPATIBLE_META_BOX_IDS",
-      ids
     };
   }
   var requestMetaBoxUpdates = () => async ({ registry, select: select3, dispatch: dispatch2 }) => {
@@ -1232,7 +1220,6 @@ var wp;
     getMetaBoxesPerLocation: () => getMetaBoxesPerLocation,
     getPreference: () => getPreference,
     getPreferences: () => getPreferences,
-    getRtcCompatibleMetaBoxIds: () => getRtcCompatibleMetaBoxIds,
     hasMetaBoxes: () => hasMetaBoxes,
     isEditingTemplate: () => isEditingTemplate,
     isEditorPanelEnabled: () => isEditorPanelEnabled,
@@ -1430,9 +1417,6 @@ var wp;
     },
     (state) => [state.metaBoxes.locations]
   );
-  function getRtcCompatibleMetaBoxIds(state) {
-    return state.metaBoxes.rtcCompatibleIds;
-  }
   function hasMetaBoxes(state) {
     return getActiveMetaBoxLocations(state).length > 0;
   }
@@ -2336,16 +2320,12 @@ var wp;
     const {
       isEnabledAndEditorReady,
       isCollaborationEnabled,
-      hasMetaBoxes: hasMetaBoxes2,
-      allMetaBoxes,
-      rtcCompatibleIds
+      hasIncompatibleMetaBoxes
     } = (0, import_data24.useSelect)(
       (select3) => ({
         isEnabledAndEditorReady: enabled && select3(import_editor17.store).__unstableIsEditorReady(),
         isCollaborationEnabled: select3(import_editor17.store).isCollaborationEnabledForCurrentPost(),
-        hasMetaBoxes: enabled ? select3(store).hasMetaBoxes() : false,
-        allMetaBoxes: enabled ? select3(store).getAllMetaBoxes() : void 0,
-        rtcCompatibleIds: select3(store).getRtcCompatibleMetaBoxIds()
+        hasIncompatibleMetaBoxes: enabled ? select3(store).getAllMetaBoxes().some((metaBox) => !metaBox.__rtc_compatible) : false
       }),
       [enabled]
     );
@@ -2354,13 +2334,8 @@ var wp;
     (0, import_element11.useEffect)(() => {
       if (isEnabledAndEditorReady) {
         initializeMetaBoxes2();
-        if (isCollaborationEnabled) {
-          const hasIncompatibleMetaBoxes = allMetaBoxes?.some(
-            (metaBox) => !rtcCompatibleIds.includes(metaBox.id)
-          );
-          if (hasIncompatibleMetaBoxes) {
-            setCollaborationSupported(false);
-          }
+        if (isCollaborationEnabled && hasIncompatibleMetaBoxes) {
+          setCollaborationSupported(false);
         }
       }
     }, [
@@ -2368,9 +2343,7 @@ var wp;
       initializeMetaBoxes2,
       isCollaborationEnabled,
       setCollaborationSupported,
-      hasMetaBoxes2,
-      allMetaBoxes,
-      rtcCompatibleIds
+      hasIncompatibleMetaBoxes
     ]);
   };
 
