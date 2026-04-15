@@ -353,7 +353,7 @@
   touch-action: none;
 }
 .edit-post-meta-boxes-main__presenter > button[aria-expanded] {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   width: 100%;
   display: flex;
   justify-content: space-between;
