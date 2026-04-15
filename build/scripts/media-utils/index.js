@@ -758,6 +758,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/preferences
+  var require_preferences = __commonJS({
+    "package-external:@wordpress/preferences"(exports, module) {
+      module.exports = window.wp.preferences;
+    }
+  });
+
   // package-external:@wordpress/url
   var require_url = __commonJS({
     "package-external:@wordpress/url"(exports, module) {
@@ -1537,10 +1544,10 @@ var wp;
   var clsx_default = clsx;
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_element66 = __toESM(require_element(), 1);
+  var import_element67 = __toESM(require_element(), 1);
   var import_i18n66 = __toESM(require_i18n(), 1);
-  var import_core_data5 = __toESM(require_core_data(), 1);
-  var import_data10 = __toESM(require_data(), 1);
+  var import_core_data6 = __toESM(require_core_data(), 1);
+  var import_data13 = __toESM(require_data(), 1);
   var import_components54 = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/arrow-down.mjs
@@ -13786,7 +13793,7 @@ If there's a particular need for this, please submit a feature request at https:
       onClickItem,
       isItemClickable: isItemClickable2,
       renderItemLink,
-      defaultLayouts,
+      defaultLayouts: defaultLayouts2,
       containerRef,
       empty = /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("p", { children: (0, import_i18n34.__)("No results") })
     } = (0, import_element35.useContext)(dataviews_context_default);
@@ -13800,7 +13807,7 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("div", { className: "dataviews-loading", children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(import_components25.Spinner, {}) }) });
     }
     const ViewComponent = VIEW_LAYOUTS.find(
-      (v2) => v2.type === view.type && defaultLayouts[v2.type]
+      (v2) => v2.type === view.type && defaultLayouts2[v2.type]
     )?.component;
     return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
       ViewComponent,
@@ -13886,8 +13893,8 @@ If there's a particular need for this, please submit a feature request at https:
     offset: 9
   };
   function ViewTypeMenu() {
-    const { view, onChangeView, defaultLayouts } = (0, import_element37.useContext)(dataviews_context_default);
-    const availableLayouts = Object.keys(defaultLayouts);
+    const { view, onChangeView, defaultLayouts: defaultLayouts2 } = (0, import_element37.useContext)(dataviews_context_default);
+    const availableLayouts = Object.keys(defaultLayouts2);
     if (availableLayouts.length <= 1) {
       return null;
     }
@@ -13935,7 +13942,7 @@ If there's a particular need for this, please submit a feature request at https:
                   return onChangeView({
                     ...viewWithoutLayout,
                     type: e2.target.value,
-                    ...defaultLayouts[e2.target.value]
+                    ...defaultLayouts2[e2.target.value]
                   });
               }
               (0, import_warning.default)("Invalid dataview");
@@ -17746,7 +17753,8 @@ If there's a particular need for this, please submit a feature request at https:
     children,
     config = { perPageSizes: [10, 20, 50, 100] },
     itemListLabel,
-    empty
+    empty,
+    onReset
   }) {
     const { data: displayData, setVisibleEntries } = useData({
       view,
@@ -17796,7 +17804,7 @@ If there's a particular need for this, please submit a feature request at https:
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-    const defaultLayouts = (0, import_element57.useMemo)(
+    const defaultLayouts2 = (0, import_element57.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
           return dataViewsPickerLayouts.some(
@@ -17809,7 +17817,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [defaultLayoutsProperty]
     );
-    if (!defaultLayouts[view.type]) {
+    if (!defaultLayouts2[view.type]) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
@@ -17832,13 +17840,14 @@ If there's a particular need for this, please submit a feature request at https:
           containerWidth,
           containerRef,
           resizeObserverRef,
-          defaultLayouts,
+          defaultLayouts: defaultLayouts2,
           filters,
           isShowingFilter,
           setIsShowingFilter,
           config,
           itemListLabel,
           empty,
+          onReset,
           hasInitiallyLoaded: true,
           intersectionObserver
         },
@@ -17857,6 +17866,317 @@ If there's a particular need for this, please submit a feature request at https:
   DataViewsPickerSubComponents.Search = dataviews_search_default;
   DataViewsPickerSubComponents.ViewConfig = DataviewsViewConfigDropdown;
   var dataviews_picker_default = DataViewsPickerSubComponents;
+
+  // node_modules/dequal/dist/index.mjs
+  var has = Object.prototype.hasOwnProperty;
+  function find(iter, tar, key) {
+    for (key of iter.keys()) {
+      if (dequal(key, tar)) return key;
+    }
+  }
+  function dequal(foo, bar) {
+    var ctor, len, tmp;
+    if (foo === bar) return true;
+    if (foo && bar && (ctor = foo.constructor) === bar.constructor) {
+      if (ctor === Date) return foo.getTime() === bar.getTime();
+      if (ctor === RegExp) return foo.toString() === bar.toString();
+      if (ctor === Array) {
+        if ((len = foo.length) === bar.length) {
+          while (len-- && dequal(foo[len], bar[len])) ;
+        }
+        return len === -1;
+      }
+      if (ctor === Set) {
+        if (foo.size !== bar.size) {
+          return false;
+        }
+        for (len of foo) {
+          tmp = len;
+          if (tmp && typeof tmp === "object") {
+            tmp = find(bar, tmp);
+            if (!tmp) return false;
+          }
+          if (!bar.has(tmp)) return false;
+        }
+        return true;
+      }
+      if (ctor === Map) {
+        if (foo.size !== bar.size) {
+          return false;
+        }
+        for (len of foo) {
+          tmp = len[0];
+          if (tmp && typeof tmp === "object") {
+            tmp = find(bar, tmp);
+            if (!tmp) return false;
+          }
+          if (!dequal(len[1], bar.get(tmp))) {
+            return false;
+          }
+        }
+        return true;
+      }
+      if (ctor === ArrayBuffer) {
+        foo = new Uint8Array(foo);
+        bar = new Uint8Array(bar);
+      } else if (ctor === DataView) {
+        if ((len = foo.byteLength) === bar.byteLength) {
+          while (len-- && foo.getInt8(len) === bar.getInt8(len)) ;
+        }
+        return len === -1;
+      }
+      if (ArrayBuffer.isView(foo)) {
+        if ((len = foo.byteLength) === bar.byteLength) {
+          while (len-- && foo[len] === bar[len]) ;
+        }
+        return len === -1;
+      }
+      if (!ctor || typeof foo === "object") {
+        len = 0;
+        for (ctor in foo) {
+          if (has.call(foo, ctor) && ++len && !has.call(bar, ctor)) return false;
+          if (!(ctor in bar) || !dequal(foo[ctor], bar[ctor])) return false;
+        }
+        return Object.keys(bar).length === len;
+      }
+    }
+    return foo !== foo && bar !== bar;
+  }
+
+  // packages/views/build-module/use-view.mjs
+  var import_element58 = __toESM(require_element(), 1);
+  var import_data6 = __toESM(require_data(), 1);
+  var import_preferences = __toESM(require_preferences(), 1);
+
+  // packages/views/build-module/preference-keys.mjs
+  function generatePreferenceKey(kind, name, slug) {
+    return `dataviews-${kind}-${name}-${slug}`;
+  }
+
+  // packages/views/build-module/filter-utils.mjs
+  var SCALAR_VALUES = [
+    "titleField",
+    "mediaField",
+    "descriptionField",
+    "showTitle",
+    "showMedia",
+    "showDescription",
+    "showLevels",
+    "infiniteScrollEnabled"
+  ];
+  function mergeActiveViewOverrides(view, activeViewOverrides, defaultView2) {
+    if (!activeViewOverrides) {
+      return view;
+    }
+    let result = view;
+    for (const key of SCALAR_VALUES) {
+      if (key in activeViewOverrides) {
+        result = { ...result, [key]: activeViewOverrides[key] };
+      }
+    }
+    if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
+      const activeFields = new Set(
+        activeViewOverrides.filters.map((f2) => f2.field)
+      );
+      const preserved = (view.filters ?? []).filter(
+        (f2) => !activeFields.has(f2.field)
+      );
+      result = {
+        ...result,
+        filters: [...preserved, ...activeViewOverrides.filters]
+      };
+    }
+    if (activeViewOverrides.sort) {
+      const isDefaultSort = defaultView2 && view.sort?.field === defaultView2.sort?.field && view.sort?.direction === defaultView2.sort?.direction;
+      if (isDefaultSort) {
+        result = {
+          ...result,
+          sort: activeViewOverrides.sort
+        };
+      }
+    }
+    if (activeViewOverrides.layout) {
+      result = {
+        ...result,
+        layout: {
+          ...result.layout,
+          ...activeViewOverrides.layout
+        }
+      };
+    }
+    if (activeViewOverrides.groupBy) {
+      result = {
+        ...result,
+        groupBy: activeViewOverrides.groupBy
+      };
+    }
+    return result;
+  }
+  function stripActiveViewOverrides(view, activeViewOverrides, defaultView2) {
+    if (!activeViewOverrides) {
+      return view;
+    }
+    let result = view;
+    for (const key of SCALAR_VALUES) {
+      if (key in activeViewOverrides) {
+        const { [key]: _, ...rest } = result;
+        result = rest;
+      }
+    }
+    if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
+      const activeFields = new Set(
+        activeViewOverrides.filters.map((f2) => f2.field)
+      );
+      result = {
+        ...result,
+        filters: (view.filters ?? []).filter(
+          (f2) => !activeFields.has(f2.field)
+        )
+      };
+    }
+    if (activeViewOverrides.sort && view.sort?.field === activeViewOverrides.sort.field && view.sort?.direction === activeViewOverrides.sort.direction) {
+      result = {
+        ...result,
+        sort: defaultView2?.sort
+      };
+    }
+    if (activeViewOverrides.layout && "layout" in result && result.layout) {
+      const layout = { ...result.layout };
+      for (const key of Object.keys(activeViewOverrides.layout)) {
+        delete layout[key];
+      }
+      result = {
+        ...result,
+        layout: Object.keys(layout).length > 0 ? layout : void 0
+      };
+    }
+    if (activeViewOverrides.groupBy && "groupBy" in result) {
+      const { groupBy: _, ...rest } = result;
+      result = rest;
+    }
+    return result;
+  }
+
+  // packages/views/build-module/use-view.mjs
+  function omit3(obj, keys) {
+    const result = { ...obj };
+    for (const key of keys) {
+      delete result[key];
+    }
+    return result;
+  }
+  function useView(config) {
+    const {
+      kind,
+      name,
+      slug,
+      defaultView: defaultView2,
+      activeViewOverrides,
+      queryParams,
+      onChangeQueryParams
+    } = config;
+    const preferenceKey = generatePreferenceKey(kind, name, slug);
+    const persistedView = (0, import_data6.useSelect)(
+      (select2) => {
+        return select2(import_preferences.store).get(
+          "core/views",
+          preferenceKey
+        );
+      },
+      [preferenceKey]
+    );
+    const { set: set2 } = (0, import_data6.useDispatch)(import_preferences.store);
+    const baseView = (0, import_element58.useMemo)(
+      () => persistedView ?? defaultView2 ?? {},
+      [persistedView, defaultView2]
+    );
+    const page = Number(queryParams?.page ?? baseView.page ?? 1);
+    const search = queryParams?.search ?? baseView.search ?? "";
+    const combinedOverrides = (0, import_element58.useMemo)(() => {
+      const rawDefaults = config.defaultLayouts?.[baseView.type];
+      const layoutTypeDefaults = !rawDefaults || rawDefaults === true ? {} : rawDefaults;
+      return { ...layoutTypeDefaults, ...activeViewOverrides };
+    }, [config.defaultLayouts, baseView.type, activeViewOverrides]);
+    const view = (0, import_element58.useMemo)(() => {
+      return mergeActiveViewOverrides(
+        {
+          ...baseView,
+          page,
+          search
+        },
+        combinedOverrides,
+        defaultView2
+      );
+    }, [baseView, page, search, combinedOverrides, defaultView2]);
+    const isModified = !!persistedView;
+    const updateView = (0, import_element58.useCallback)(
+      (newView) => {
+        const urlParams = {
+          page: newView?.page,
+          search: newView?.search
+        };
+        const preferenceView = stripActiveViewOverrides(
+          omit3(newView, ["page", "search"]),
+          combinedOverrides,
+          defaultView2
+        );
+        if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
+          onChangeQueryParams(urlParams);
+        }
+        const comparableBaseView = stripActiveViewOverrides(
+          baseView,
+          combinedOverrides,
+          defaultView2
+        );
+        const comparableDefaultView = stripActiveViewOverrides(
+          defaultView2,
+          combinedOverrides,
+          defaultView2
+        );
+        if (!dequal(comparableBaseView, preferenceView)) {
+          if (dequal(preferenceView, comparableDefaultView)) {
+            set2("core/views", preferenceKey, void 0);
+          } else {
+            set2("core/views", preferenceKey, preferenceView);
+          }
+        }
+      },
+      [
+        onChangeQueryParams,
+        page,
+        search,
+        baseView,
+        defaultView2,
+        combinedOverrides,
+        set2,
+        preferenceKey
+      ]
+    );
+    const resetToDefault = (0, import_element58.useCallback)(() => {
+      set2("core/views", preferenceKey, void 0);
+    }, [preferenceKey, set2]);
+    return {
+      view,
+      isModified,
+      updateView,
+      resetToDefault
+    };
+  }
+
+  // packages/views/build-module/load-view.mjs
+  var import_data7 = __toESM(require_data(), 1);
+  var import_preferences2 = __toESM(require_preferences(), 1);
+
+  // packages/views/build-module/use-view-config.mjs
+  var import_data8 = __toESM(require_data(), 1);
+  var import_core_data = __toESM(require_core_data(), 1);
+
+  // packages/views/build-module/lock-unlock.mjs
+  var import_private_apis2 = __toESM(require_private_apis(), 1);
+  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/views"
+  );
 
   // packages/media-fields/build-module/alt_text/index.mjs
   var import_i18n49 = __toESM(require_i18n(), 1);
@@ -17888,7 +18208,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n52 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/attached_to/view.mjs
-  var import_element58 = __toESM(require_element(), 1);
+  var import_element59 = __toESM(require_element(), 1);
   var import_i18n50 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/utils/get-rendered-content.mjs
@@ -17910,11 +18230,11 @@ If there's a particular need for this, please submit a feature request at https:
   function MediaAttachedToView({
     item
   }) {
-    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element58.useState)(null);
+    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element59.useState)(null);
     const parentId = item.post;
     const embeddedPostId = item._embedded?.["wp:attached-to"]?.[0]?.id;
     const embeddedPostTitle = item._embedded?.["wp:attached-to"]?.[0]?.title;
-    (0, import_element58.useEffect)(() => {
+    (0, import_element59.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
           getRenderedContent(embeddedPostTitle) || embeddedPostId?.toString() || ""
@@ -17928,12 +18248,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/attached_to/edit.mjs
-  var import_core_data = __toESM(require_core_data(), 1);
+  var import_core_data2 = __toESM(require_core_data(), 1);
   var import_components47 = __toESM(require_components(), 1);
   var import_i18n51 = __toESM(require_i18n(), 1);
-  var import_element59 = __toESM(require_element(), 1);
+  var import_element60 = __toESM(require_element(), 1);
   var import_compose13 = __toESM(require_compose(), 1);
-  var import_data6 = __toESM(require_data(), 1);
+  var import_data9 = __toESM(require_data(), 1);
   var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToEdit({
     data,
@@ -17947,16 +18267,16 @@ If there's a particular need for this, please submit a feature request at https:
         value: data.post.toString()
       }
     ] : [];
-    const [options, setOptions] = (0, import_element59.useState)(defaultPost);
-    const [searchResults, setSearchResults] = (0, import_element59.useState)(
+    const [options, setOptions] = (0, import_element60.useState)(defaultPost);
+    const [searchResults, setSearchResults] = (0, import_element60.useState)(
       []
     );
-    const [isLoading, setIsLoading] = (0, import_element59.useState)(false);
-    const [value, setValue] = (0, import_element59.useState)(
+    const [isLoading, setIsLoading] = (0, import_element60.useState)(false);
+    const [value, setValue] = (0, import_element60.useState)(
       data?.post?.toString() ?? null
     );
-    const postTypes = (0, import_data6.useSelect)(
-      (select) => select(import_core_data.store).getPostTypes(),
+    const postTypes = (0, import_data9.useSelect)(
+      (select2) => select2(import_core_data2.store).getPostTypes(),
       []
     );
     const handleDetach = () => {
@@ -17968,7 +18288,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const onValueChange = async (filterValue) => {
       setIsLoading(true);
-      const results = await (0, import_core_data.__experimentalFetchLinkSuggestions)(
+      const results = await (0, import_core_data2.__experimentalFetchLinkSuggestions)(
         filterValue,
         /*
          * @TODO `fetchLinkSuggestions()` should accept `perPage` as an option argument.
@@ -18019,7 +18339,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     };
-    const help = !!data.post ? (0, import_element59.createInterpolateElement)(
+    const help = !!data.post ? (0, import_element60.createInterpolateElement)(
       (0, import_i18n51.__)(
         "Search for a post or page to attach this media to or <button>detach current</button>."
       ),
@@ -18069,12 +18389,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/author/index.mjs
   var import_i18n54 = __toESM(require_i18n(), 1);
-  var import_data7 = __toESM(require_data(), 1);
-  var import_core_data2 = __toESM(require_core_data(), 1);
+  var import_data10 = __toESM(require_data(), 1);
+  var import_core_data3 = __toESM(require_core_data(), 1);
 
   // packages/media-fields/build-module/author/view.mjs
   var import_i18n53 = __toESM(require_i18n(), 1);
-  var import_element60 = __toESM(require_element(), 1);
+  var import_element61 = __toESM(require_element(), 1);
   var import_components48 = __toESM(require_components(), 1);
   var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
   function AuthorView({
@@ -18083,11 +18403,11 @@ If there's a particular need for this, please submit a feature request at https:
     const author = item?._embedded?.author?.[0];
     const text = author?.name;
     const imageUrl = author?.avatar_urls?.[48];
-    const [loadingState, setLoadingState] = (0, import_element60.useState)("loading");
-    (0, import_element60.useEffect)(() => {
+    const [loadingState, setLoadingState] = (0, import_element61.useState)("loading");
+    (0, import_element61.useEffect)(() => {
       setLoadingState("loading");
     }, [imageUrl]);
-    const imgRef = (0, import_element60.useCallback)((img) => {
+    const imgRef = (0, import_element61.useCallback)((img) => {
       if (img?.complete) {
         setLoadingState("instant");
       }
@@ -18127,7 +18447,7 @@ If there's a particular need for this, please submit a feature request at https:
     id: "author",
     type: "integer",
     getElements: async () => {
-      const authors = await (0, import_data7.resolveSelect)(import_core_data2.store).getEntityRecords(
+      const authors = await (0, import_data10.resolveSelect)(import_core_data3.store).getEntityRecords(
         "root",
         "user",
         {
@@ -18263,14 +18583,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/filename/view.mjs
   var import_components51 = __toESM(require_components(), 1);
-  var import_element61 = __toESM(require_element(), 1);
+  var import_element62 = __toESM(require_element(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
   var TRUNCATE_LENGTH = 15;
   function FileNameView({
     item
   }) {
-    const fileName = (0, import_element61.useMemo)(
+    const fileName = (0, import_element62.useMemo)(
       () => item?.source_url ? (0, import_url3.getFilename)(item.source_url) : null,
       [item?.source_url]
     );
@@ -18384,10 +18704,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n63 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
-  var import_data8 = __toESM(require_data(), 1);
-  var import_core_data3 = __toESM(require_core_data(), 1);
+  var import_data11 = __toESM(require_data(), 1);
+  var import_core_data4 = __toESM(require_core_data(), 1);
   var import_components52 = __toESM(require_components(), 1);
-  var import_element62 = __toESM(require_element(), 1);
+  var import_element63 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/utils/get-media-type-from-mime-type.mjs
@@ -18482,9 +18802,9 @@ If there's a particular need for this, please submit a feature request at https:
     onError
   }) {
     const imageUrl = getBestImageUrl(item, configSizes);
-    const imgRef = (0, import_element62.useRef)(null);
-    const [loadingState, setLoadingState] = (0, import_element62.useState)("loading");
-    (0, import_element62.useLayoutEffect)(() => {
+    const imgRef = (0, import_element63.useRef)(null);
+    const [loadingState, setLoadingState] = (0, import_element63.useState)("loading");
+    (0, import_element63.useLayoutEffect)(() => {
       if (imgRef.current?.complete) {
         setLoadingState("instant");
       } else {
@@ -18522,13 +18842,13 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     config
   }) {
-    const [imageError, setImageError] = (0, import_element62.useState)(false);
-    const _featuredMedia = (0, import_data8.useSelect)(
-      (select) => {
+    const [imageError, setImageError] = (0, import_element63.useState)(false);
+    const _featuredMedia = (0, import_data11.useSelect)(
+      (select2) => {
         if (!item.featured_media) {
           return;
         }
-        return select(import_core_data3.store).getEntityRecord(
+        return select2(import_core_data4.store).getEntityRecord(
           "postType",
           "attachment",
           item.featured_media
@@ -18585,14 +18905,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_notices = __toESM(require_notices(), 1);
 
   // packages/media-utils/build-module/lock-unlock.mjs
-  var import_private_apis2 = __toESM(require_private_apis(), 1);
-  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis3 = __toESM(require_private_apis(), 1);
+  var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/media-utils"
   );
 
   // packages/media-utils/build-module/components/media-upload-modal/upload-status-popover.mjs
-  var import_element63 = __toESM(require_element(), 1);
+  var import_element64 = __toESM(require_element(), 1);
   var import_i18n65 = __toESM(require_i18n(), 1);
   var import_components53 = __toESM(require_components(), 1);
   var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
@@ -18601,10 +18921,10 @@ If there's a particular need for this, please submit a feature request at https:
     onDismissError,
     onOpenChange
   }) {
-    const [isOpen, setIsOpen] = (0, import_element63.useState)(false);
-    const [prevHadErrors, setPrevHadErrors] = (0, import_element63.useState)(false);
-    const triggerRef = (0, import_element63.useRef)(null);
-    const updateIsOpen = (0, import_element63.useCallback)(
+    const [isOpen, setIsOpen] = (0, import_element64.useState)(false);
+    const [prevHadErrors, setPrevHadErrors] = (0, import_element64.useState)(false);
+    const triggerRef = (0, import_element64.useRef)(null);
+    const updateIsOpen = (0, import_element64.useCallback)(
       (open) => {
         setIsOpen(open);
         onOpenChange?.(open);
@@ -18619,7 +18939,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const hasErrors = errorFiles.length > 0;
     const isUploading = activeFiles.length > 0;
-    (0, import_element63.useEffect)(() => {
+    (0, import_element64.useEffect)(() => {
       if (hasErrors && !prevHadErrors) {
         updateIsOpen(true);
       }
@@ -18719,44 +19039,44 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-invalidate-attachment-resolutions.mjs
-  var import_element64 = __toESM(require_element(), 1);
-  var import_core_data4 = __toESM(require_core_data(), 1);
-  var import_data9 = __toESM(require_data(), 1);
+  var import_element65 = __toESM(require_element(), 1);
+  var import_core_data5 = __toESM(require_core_data(), 1);
+  var import_data12 = __toESM(require_data(), 1);
   function useInvalidateAttachmentResolutions() {
-    const registry = (0, import_data9.useRegistry)();
-    return (0, import_element64.useCallback)(() => {
-      const resolvers = registry.select(import_core_data4.store).getCachedResolvers();
+    const registry = (0, import_data12.useRegistry)();
+    return (0, import_element65.useCallback)(() => {
+      const resolvers = registry.select(import_core_data5.store).getCachedResolvers();
       const entityRecordResolutions = resolvers.getEntityRecords;
       entityRecordResolutions?.forEach((_value, args) => {
         if (args[0] === "postType" && args[1] === "attachment") {
-          registry.dispatch(import_core_data4.store).invalidateResolution("getEntityRecords", args);
+          registry.dispatch(import_core_data5.store).invalidateResolution("getEntityRecords", args);
         }
       });
     }, [registry]);
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-upload-status.mjs
-  var import_element65 = __toESM(require_element(), 1);
+  var import_element66 = __toESM(require_element(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
   var idCounter = 0;
   var batchIdCounter = 0;
   function useUploadStatus({
     onBatchComplete
   } = {}) {
-    const [uploadingFiles, setUploadingFiles] = (0, import_element65.useState)(
+    const [uploadingFiles, setUploadingFiles] = (0, import_element66.useState)(
       []
     );
-    const clearCompleted = (0, import_element65.useCallback)(() => {
+    const clearCompleted = (0, import_element66.useCallback)(() => {
       setUploadingFiles(
         (prev) => prev.filter((item) => item.status !== "uploaded")
       );
     }, []);
-    const dismissError = (0, import_element65.useCallback)((fileId) => {
+    const dismissError = (0, import_element66.useCallback)((fileId) => {
       setUploadingFiles(
         (prev) => prev.filter((item) => item.id !== fileId)
       );
     }, []);
-    const registerBatch = (0, import_element65.useCallback)(
+    const registerBatch = (0, import_element66.useCallback)(
       (files) => {
         const batchId = String(++batchIdCounter);
         const batchSize = files.length;
@@ -18835,11 +19155,46 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
   var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
-  var { useEntityRecordsWithPermissions } = unlock2(import_core_data5.privateApis);
+  var { useEntityRecordsWithPermissions } = unlock3(import_core_data6.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
   var NOTICES_CONTEXT = "media-modal";
   var NOTICE_ID_UPLOAD_PROGRESS = "media-modal-upload-progress";
+  var defaultView = {
+    type: LAYOUT_PICKER_GRID2,
+    fields: [],
+    showTitle: false,
+    titleField: "title",
+    mediaField: "media_thumbnail",
+    search: "",
+    page: 1,
+    perPage: 50,
+    filters: [],
+    layout: {
+      previewSize: 170,
+      density: "compact"
+    }
+  };
+  var defaultLayouts = {
+    [LAYOUT_PICKER_GRID2]: {
+      fields: [],
+      showTitle: false,
+      layout: {
+        previewSize: 170,
+        density: "compact"
+      }
+    },
+    [LAYOUT_PICKER_TABLE2]: {
+      fields: [
+        "filename",
+        "filesize",
+        "media_dimensions",
+        "author",
+        "date"
+      ],
+      showTitle: true
+    }
+  };
   function MediaUploadModal({
     allowedTypes,
     multiple = false,
@@ -18854,30 +19209,21 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = (0, import_i18n66.__)("Search media")
   }) {
-    const [selection, setSelection] = (0, import_element66.useState)(() => {
+    const [selection, setSelection] = (0, import_element67.useState)(() => {
       if (!value) {
         return [];
       }
       return Array.isArray(value) ? value.map(String) : [String(value)];
     });
-    const { createSuccessNotice, removeAllNotices } = (0, import_data10.useDispatch)(import_notices.store);
+    const { createSuccessNotice, removeAllNotices } = (0, import_data13.useDispatch)(import_notices.store);
     const invalidateAttachmentResolutions = useInvalidateAttachmentResolutions();
-    const [view, setView] = (0, import_element66.useState)(() => ({
-      type: LAYOUT_PICKER_GRID2,
-      fields: [],
-      showTitle: false,
-      titleField: "title",
-      mediaField: "media_thumbnail",
-      search: "",
-      page: 1,
-      perPage: 50,
-      filters: [],
-      layout: {
-        previewSize: 170,
-        density: "compact"
-      }
-    }));
-    const queryArgs = (0, import_element66.useMemo)(() => {
+    const { view, updateView, isModified, resetToDefault } = useView({
+      kind: "postType",
+      name: "attachment",
+      slug: "media-modal",
+      defaultView
+    });
+    const queryArgs = (0, import_element67.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "media_type") {
@@ -18915,7 +19261,7 @@ If there's a particular need for this, please submit a feature request at https:
         ...filters
       };
     }, [view, allowedTypes]);
-    const handleBatchComplete = (0, import_element66.useCallback)(
+    const handleBatchComplete = (0, import_element67.useCallback)(
       (attachments) => {
         const uploadedIds = attachments.map((attachment) => String(attachment.id)).filter(Boolean);
         if (multiple) {
@@ -18940,8 +19286,8 @@ If there's a particular need for this, please submit a feature request at https:
       clearCompleted,
       allComplete
     } = useUploadStatus({ onBatchComplete: handleBatchComplete });
-    const isPopoverOpenRef = (0, import_element66.useRef)(false);
-    const handlePopoverOpenChange = (0, import_element66.useCallback)(
+    const isPopoverOpenRef = (0, import_element67.useRef)(false);
+    const handlePopoverOpenChange = (0, import_element67.useCallback)(
       (open) => {
         isPopoverOpenRef.current = open;
         if (!open) {
@@ -18956,7 +19302,7 @@ If there's a particular need for this, please submit a feature request at https:
       totalItems,
       totalPages
     } = useEntityRecordsWithPermissions("postType", "attachment", queryArgs);
-    const fields = (0, import_element66.useMemo)(
+    const fields = (0, import_element67.useMemo)(
       () => [
         // Media field definitions from @wordpress/media-fields
         // Cast is safe because RestAttachment has the same properties as Attachment
@@ -18988,7 +19334,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       []
     );
-    const actions = (0, import_element66.useMemo)(
+    const actions = (0, import_element67.useMemo)(
       () => [
         {
           id: "select",
@@ -19003,8 +19349,8 @@ If there's a particular need for this, please submit a feature request at https:
               include: selection,
               per_page: -1
             };
-            const selectedPosts = await (0, import_data10.resolveSelect)(
-              import_core_data5.store
+            const selectedPosts = await (0, import_data13.resolveSelect)(
+              import_core_data6.store
             ).getEntityRecords(
               "postType",
               "attachment",
@@ -19019,13 +19365,13 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [multiple, onSelect, selection, removeAllNotices]
     );
-    const handleModalClose = (0, import_element66.useCallback)(() => {
+    const handleModalClose = (0, import_element67.useCallback)(() => {
       removeAllNotices("snackbar", NOTICES_CONTEXT);
       onClose?.();
     }, [removeAllNotices, onClose]);
     const handleUpload = onUpload || uploadMedia;
-    const prevAllCompleteRef = (0, import_element66.useRef)(false);
-    (0, import_element66.useEffect)(() => {
+    const prevAllCompleteRef = (0, import_element67.useRef)(false);
+    (0, import_element67.useEffect)(() => {
       if (allComplete && !prevAllCompleteRef.current) {
         const completeCount = uploadingFiles.filter(
           (file) => file.status === "uploaded"
@@ -19054,7 +19400,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       prevAllCompleteRef.current = allComplete;
     }, [allComplete, uploadingFiles, createSuccessNotice, clearCompleted]);
-    const handleFileSelect = (0, import_element66.useCallback)(
+    const handleFileSelect = (0, import_element67.useCallback)(
       (event) => {
         const files = event.target.files;
         if (files && files.length > 0) {
@@ -19070,37 +19416,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [allowedTypes, handleUpload, registerBatch]
     );
-    const paginationInfo = (0, import_element66.useMemo)(
+    const paginationInfo = (0, import_element67.useMemo)(
       () => ({
         totalItems,
         totalPages
       }),
       [totalItems, totalPages]
     );
-    const defaultLayouts = (0, import_element66.useMemo)(
-      () => ({
-        [LAYOUT_PICKER_GRID2]: {
-          fields: [],
-          showTitle: false,
-          layout: {
-            previewSize: 170,
-            density: "compact"
-          }
-        },
-        [LAYOUT_PICKER_TABLE2]: {
-          fields: [
-            "filename",
-            "filesize",
-            "media_dimensions",
-            "author",
-            "date"
-          ],
-          showTitle: true
-        }
-      }),
-      []
-    );
-    const acceptTypes = (0, import_element66.useMemo)(() => {
+    const acceptTypes = (0, import_element67.useMemo)(() => {
       if (allowedTypes?.includes("*")) {
         return void 0;
       }
@@ -19170,7 +19493,7 @@ If there's a particular need for this, please submit a feature request at https:
               data: mediaRecords || [],
               fields,
               view,
-              onChangeView: setView,
+              onChangeView: updateView,
               actions,
               selection,
               onChangeSelection: setSelection,
@@ -19179,6 +19502,7 @@ If there's a particular need for this, please submit a feature request at https:
               defaultLayouts,
               getItemId: (item) => String(item.id),
               itemListLabel: (0, import_i18n66.__)("Media items"),
+              onReset: isModified ? resetToDefault : false,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(
                   Stack,
@@ -19233,7 +19557,7 @@ If there's a particular need for this, please submit a feature request at https:
               ]
             }
           ),
-          (0, import_element66.createPortal)(
+          (0, import_element67.createPortal)(
             /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
               import_notices.SnackbarNotices,
               {
@@ -19250,7 +19574,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-utils/build-module/private-apis.mjs
   var privateApis12 = {};
-  lock2(privateApis12, {
+  lock3(privateApis12, {
     sideloadMedia,
     MediaUploadModal
   });
