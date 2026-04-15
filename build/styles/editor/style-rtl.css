@@ -1652,7 +1652,7 @@ button.font-library__upload-area {
 }
 
 .dataviews-title-field--clickable {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   color: #2f2f2f;
 }
 
@@ -1758,7 +1758,7 @@ button.font-library__upload-area {
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip {
   border-radius: 16px;
   border: 1px solid transparent;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   padding: 4px 12px;
   min-height: 32px;
   background: #f0f0f0;
@@ -1814,7 +1814,7 @@ button.font-library__upload-area {
   align-items: center;
   justify-content: center;
   background: transparent;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip-remove svg {
@@ -2722,7 +2722,7 @@ button.font-library__upload-area {
 }
 
 .dataviews-view-grid__media--clickable {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .dataviews-view-grid__group-header {
@@ -2868,7 +2868,7 @@ div.dataviews-view-list {
   border: none;
   background: none;
   padding: 0;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .dataviews-view-list .dataviews-view-list__item:focus-visible {
@@ -3482,7 +3482,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-grid__media--clickable {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .dataviews-view-picker-grid-group__header {
@@ -3515,7 +3515,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-table .dataviews-view-table__row {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .dataviews-view-picker-table .dataviews-view-table__row.is-selected {
@@ -3566,7 +3566,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-activity .dataviews-view-activity__item-content .dataviews-view-activity__item-title--clickable {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .dataviews-view-activity .dataviews-view-activity__item-content .dataviews-view-activity__item-title--clickable:focus-visible {
@@ -3787,7 +3787,7 @@ div.dataviews-view-list {
   display: flex;
   width: 100%;
   min-height: 24px;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   align-items: flex-start;
   border-radius: 2px;
   isolation: isolate;
