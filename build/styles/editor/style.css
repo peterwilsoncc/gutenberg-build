@@ -4174,7 +4174,7 @@ div.dataviews-view-list {
 }
 
 input[type=radio]:not(:checked) ~ .fields-create-template-part-modal__area-radio-label::before {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 input[type=radio]:focus-visible ~ .fields-create-template-part-modal__area-radio-label::before {
@@ -4302,7 +4302,7 @@ fieldset.fields__media-edit .fields__media-edit-picker-button {
   border-radius: 2px;
   padding: 4px 8px;
   min-height: 40px;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   min-width: 0;
 }
 
