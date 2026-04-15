@@ -161,20 +161,6 @@
   padding: var(--wpds-dimension-padding-lg, 16px) var(--wpds-dimension-padding-2xl, 24px);
 }
 
-.show-icon-labels .admin-ui-page__header-actions .components-button.has-icon {
-  width: auto;
-  padding: 0 var(--wpds-dimension-padding-xs, 4px);
-}
-
-.show-icon-labels .admin-ui-page__header-actions .components-button.has-icon svg {
-  display: none;
-}
-
-.show-icon-labels .admin-ui-page__header-actions .components-button.has-icon::after {
-  content: attr(aria-label);
-  font-size: var(--wpds-typography-font-size-sm, 12px);
-}
-
 /**
  * SCSS Variables.
  *
@@ -4460,6 +4446,18 @@ button.font-library__upload-area {
     padding-left: 24px;
   }
 }
+.show-icon-labels .edit-site-patterns__button.has-icon {
+  width: auto;
+  padding: 0 var(--wpds-dimension-padding-xs, 4px);
+}
+.show-icon-labels .edit-site-patterns__button.has-icon svg {
+  display: none;
+}
+.show-icon-labels .edit-site-patterns__button.has-icon::after {
+  content: attr(aria-label);
+  font-size: var(--wpds-typography-font-size-sm, 12px);
+}
+
 .page-templates-preview-field {
   display: flex;
   justify-content: center;
@@ -5578,6 +5576,18 @@ body:has(.edit-site-resizable-frame__inner.is-resizing) {
 }
 .edit-site-styles .edit-site-sidebar-button {
   color: #1e1e1e;
+}
+
+.show-icon-labels .edit-site-styles__header-actions .components-button.has-icon {
+  width: auto;
+  padding: 0 var(--wpds-dimension-padding-xs, 4px);
+}
+.show-icon-labels .edit-site-styles__header-actions .components-button.has-icon svg {
+  display: none;
+}
+.show-icon-labels .edit-site-styles__header-actions .components-button.has-icon::after {
+  content: attr(aria-label);
+  font-size: var(--wpds-typography-font-size-sm, 12px);
 }
 
 /* stylelint-disable -- Disable reason: View Transitions not supported properly by stylelint. */

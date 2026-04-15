@@ -43469,7 +43469,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChangeSection
   }) => {
     const history = useHistory12();
-    return /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(import_components135.__experimentalHStack, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(import_components135.__experimentalHStack, { className: "edit-site-styles__header-actions", children: [
       /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
         import_components135.Button,
         {
