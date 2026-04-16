@@ -1244,7 +1244,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState130({
+          cachedValue = useState131({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -1282,7 +1282,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React28 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState130 = React28.useState, useEffect90 = React28.useEffect, useLayoutEffect11 = React28.useLayoutEffect, useDebugValue = React28.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React28 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState131 = React28.useState, useEffect90 = React28.useEffect, useLayoutEffect11 = React28.useLayoutEffect, useDebugValue = React28.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React28.useSyncExternalStore ? React28.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -53089,7 +53089,7 @@ var wp;
   // packages/editor/build-module/components/editor/index.mjs
   var import_data260 = __toESM(require_data(), 1);
   var import_core_data139 = __toESM(require_core_data(), 1);
-  var import_components287 = __toESM(require_components(), 1);
+  var import_components288 = __toESM(require_components(), 1);
   var import_i18n317 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/editor-interface/index.mjs
@@ -54131,6 +54131,10 @@ var wp;
   }
   function noop8() {
   }
+  var THREAD_ALIGN_OFFSET = -16;
+  var THREAD_GAP = 16;
+  var OVERLAP_MARGIN = 20;
+  var BOARD_BOTTOM_PADDING = 32;
   var AVATAR_BORDER_COLORS = [
     "#C36EFF",
     // Purple
@@ -54168,6 +54172,72 @@ var wp;
     }
     const isTrimmed = trimmedExcerpt !== rawText;
     return isTrimmed ? trimmedExcerpt + "\u2026" : trimmedExcerpt;
+  }
+  function calculateAllOffsets({
+    threads,
+    selectedNoteId,
+    blockRects,
+    heights
+  }) {
+    const offsets = {};
+    const anchorIndex = Math.max(
+      0,
+      threads.findIndex((thread) => thread.id === selectedNoteId)
+    );
+    const anchorThread = threads[anchorIndex];
+    if (!anchorThread || !blockRects[anchorThread.id]) {
+      return { offsets, minHeight: 0 };
+    }
+    const anchorRect = blockRects[anchorThread.id];
+    const anchorTop = anchorRect.top || 0;
+    const anchorHeight = heights[anchorThread.id] || 0;
+    offsets[anchorThread.id] = THREAD_ALIGN_OFFSET;
+    let prevAdjustedTop = anchorTop + THREAD_ALIGN_OFFSET;
+    let prevHeight = anchorHeight;
+    for (let i3 = anchorIndex + 1; i3 < threads.length; i3++) {
+      const thread = threads[i3];
+      const threadRect = blockRects[thread.id];
+      if (!threadRect) {
+        continue;
+      }
+      const threadTop = threadRect.top || 0;
+      const threadHeight = heights[thread.id] || 0;
+      let offset3 = THREAD_ALIGN_OFFSET;
+      const prevBottom = prevAdjustedTop + prevHeight;
+      if (threadTop < prevBottom + THREAD_GAP) {
+        offset3 = prevBottom - threadTop + OVERLAP_MARGIN;
+      }
+      offsets[thread.id] = offset3;
+      prevAdjustedTop = threadTop + offset3;
+      prevHeight = threadHeight;
+    }
+    let belowAdjustedTop = anchorTop + THREAD_ALIGN_OFFSET;
+    for (let i3 = anchorIndex - 1; i3 >= 0; i3--) {
+      const thread = threads[i3];
+      const threadRect = blockRects[thread.id];
+      if (!threadRect) {
+        continue;
+      }
+      const threadTop = threadRect.top || 0;
+      const threadHeight = heights[thread.id] || 0;
+      let offset3 = THREAD_ALIGN_OFFSET;
+      const threadBottom = threadTop + threadHeight;
+      if (threadBottom > belowAdjustedTop) {
+        offset3 = belowAdjustedTop - threadTop - threadHeight - OVERLAP_MARGIN;
+      }
+      offsets[thread.id] = offset3;
+      belowAdjustedTop = threadTop + offset3;
+    }
+    let editorMinHeight = 0;
+    const lastThread = threads[threads.length - 1];
+    const lastBlockRect = blockRects[lastThread.id];
+    if (lastBlockRect) {
+      const lastThreadTop = lastBlockRect.top || 0;
+      const lastThreadHeight = heights[lastThread.id] || 0;
+      const lastThreadOffset = offsets[lastThread.id] || 0;
+      editorMinHeight = lastThreadTop + lastThreadHeight + lastThreadOffset + BOARD_BOTTOM_PADDING;
+    }
+    return { offsets, minHeight: editorMinHeight };
   }
   function focusCommentThread(commentId, container, additionalSelector) {
     if (!container) {
@@ -78032,7 +78102,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n313 = __toESM(require_i18n(), 1);
   var import_data256 = __toESM(require_data(), 1);
-  var import_components283 = __toESM(require_components(), 1);
+  var import_components284 = __toESM(require_components(), 1);
   var import_element284 = __toESM(require_element(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
@@ -78046,7 +78116,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/comments.mjs
   var import_element282 = __toESM(require_element(), 1);
-  var import_components280 = __toESM(require_components(), 1);
+  var import_components281 = __toESM(require_components(), 1);
   var import_compose78 = __toESM(require_compose(), 1);
   var import_i18n310 = __toESM(require_i18n(), 1);
   var import_data254 = __toESM(require_data(), 1);
@@ -78701,26 +78771,60 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, [enabled, registry]);
   }
+  function useFloatingBoard({ threads, selectedNoteId, isFloating }) {
+    const [heights, setHeights] = (0, import_element281.useState)({});
+    const [boardOffsets, setBoardOffsets] = (0, import_element281.useState)({});
+    const [blockRefs, setBlockRefs] = (0, import_element281.useState)({});
+    const { setCanvasMinHeight: setCanvasMinHeight2 } = unlock((0, import_data252.useDispatch)(store));
+    const registerThread = (0, import_element281.useCallback)((id, el) => {
+      setBlockRefs((prev) => ({ ...prev, [id]: el }));
+    }, []);
+    const reportHeight = (0, import_element281.useCallback)((id, newHeight) => {
+      setHeights((prev) => {
+        if (prev[id] !== newHeight) {
+          return { ...prev, [id]: newHeight };
+        }
+        return prev;
+      });
+    }, []);
+    (0, import_element281.useEffect)(() => {
+      if (!isFloating) {
+        return;
+      }
+      const blockRects = Object.fromEntries(
+        Object.entries(blockRefs).flatMap(
+          ([id, el]) => el ? [[id, el.getBoundingClientRect()]] : []
+        )
+      );
+      const { offsets: newOffsets, minHeight } = calculateAllOffsets({
+        threads,
+        selectedNoteId,
+        blockRects,
+        heights
+      });
+      if (Object.keys(newOffsets).length > 0) {
+        setBoardOffsets(newOffsets);
+      }
+      setCanvasMinHeight2(minHeight);
+    }, [
+      heights,
+      blockRefs,
+      isFloating,
+      threads,
+      selectedNoteId,
+      setCanvasMinHeight2
+    ]);
+    return { boardOffsets, registerThread, reportHeight };
+  }
   function useFloatingThread({
     thread,
     calculatedOffset,
-    setHeights,
+    reportHeight,
     selectedThread,
-    setBlockRef,
+    registerThread,
     commentLastUpdated
   }) {
     const blockElement = useBlockElement(thread.blockClientId);
-    const updateHeight = (0, import_element281.useCallback)(
-      (id, newHeight) => {
-        setHeights((prev) => {
-          if (prev[id] !== newHeight) {
-            return { ...prev, [id]: newHeight };
-          }
-          return prev;
-        });
-      },
-      [setHeights]
-    );
     const { y: y3, refs } = useFloating({
       placement: "right-start",
       middleware: [
@@ -78737,17 +78841,17 @@ If there's a particular need for this, please submit a feature request at https:
     }, [blockElement, refs, commentLastUpdated]);
     (0, import_element281.useEffect)(() => {
       if (refs.floating?.current) {
-        setBlockRef(thread.id, blockElement);
+        registerThread(thread.id, blockElement);
       }
-    }, [blockElement, thread.id, refs.floating, setBlockRef]);
+    }, [blockElement, thread.id, refs.floating, registerThread]);
     (0, import_element281.useEffect)(() => {
       if (refs.floating?.current) {
         const newHeight = refs.floating.current.scrollHeight;
-        updateHeight(thread.id, newHeight);
+        reportHeight(thread.id, newHeight);
       }
     }, [
       thread.id,
-      updateHeight,
+      reportHeight,
       refs.floating,
       selectedThread,
       commentLastUpdated
@@ -78758,20 +78862,41 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
+  // packages/editor/build-module/components/collab-sidebar/floating-container.mjs
+  var import_components279 = __toESM(require_components(), 1);
+  var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
+  function FloatingContainer({
+    floating,
+    className,
+    style,
+    children,
+    ...props
+  }) {
+    const isFloating = !!floating;
+    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+      import_components279.__experimentalVStack,
+      {
+        className: clsx_default(className, { "is-floating": isFloating }),
+        ref: isFloating ? floating.refs.setFloating : void 0,
+        style: isFloating ? { top: floating.y, ...style } : style,
+        ...props,
+        children
+      }
+    );
+  }
+
   // packages/editor/build-module/components/collab-sidebar/add-comment.mjs
   var import_i18n309 = __toESM(require_i18n(), 1);
   var import_data253 = __toESM(require_data(), 1);
-  var import_components279 = __toESM(require_components(), 1);
+  var import_components280 = __toESM(require_components(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement: useBlockElement2 } = unlock(import_block_editor99.privateApis);
   function AddComment({
     onSubmit,
     commentSidebarRef,
     reflowComments = noop8,
-    isFloating = false,
-    y: y3,
-    refs
+    floating
   }) {
     const { clientId } = (0, import_data253.useSelect)((select7) => {
       const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor99.store);
@@ -78794,24 +78919,16 @@ If there's a particular need for this, please submit a feature request at https:
     if (selectedNote2 !== "new" || !clientId) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime490.jsxs)(
-      import_components279.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(
+      FloatingContainer,
       {
-        className: clsx_default(
-          "editor-collab-sidebar-panel__thread is-selected",
-          {
-            "is-floating": isFloating
-          }
-        ),
+        floating,
+        className: "editor-collab-sidebar-panel__thread is-selected",
         spacing: "3",
         tabIndex: 0,
         "aria-label": (0, import_i18n309.__)("New note"),
         role: "treeitem",
-        ref: isFloating ? refs.setFloating : void 0,
-        style: isFloating ? (
-          // Delay showing the floating note box until a Y position is known to prevent blink.
-          { top: y3, opacity: !y3 ? 0 : void 0 }
-        ) : void 0,
+        style: floating ? { opacity: !floating.y ? 0 : void 0 } : void 0,
         onBlur: (event) => {
           if (!document.hasFocus()) {
             return;
@@ -78823,8 +78940,8 @@ If there's a particular need for this, please submit a feature request at https:
           selectNote2(void 0);
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_components279.__experimentalHStack, { alignment: "left", spacing: "3", children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(comment_author_info_default, {}) }),
-          /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components280.__experimentalHStack, { alignment: "left", spacing: "3", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(comment_author_info_default, {}) }),
+          /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
             comment_form_default,
             {
               onSubmit: async (inputComment) => {
@@ -78844,9 +78961,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/comments.mjs
-  var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement: useBlockElement3 } = unlock(import_block_editor100.privateApis);
-  var { Menu: Menu11 } = unlock(import_components280.privateApis);
+  var { Menu: Menu11 } = unlock(import_components281.privateApis);
   function Comments({
     threads: noteThreads,
     onEditComment,
@@ -78857,12 +78974,7 @@ If there's a particular need for this, please submit a feature request at https:
     isFloating = false,
     commentLastUpdated
   }) {
-    const [heights, setHeights] = (0, import_element282.useState)({});
-    const [boardOffsets, setBoardOffsets] = (0, import_element282.useState)({});
-    const [blockRefs, setBlockRefs] = (0, import_element282.useState)({});
-    const { setCanvasMinHeight: setCanvasMinHeight2, selectNote: selectNote2 } = unlock(
-      (0, import_data254.useDispatch)(store)
-    );
+    const { selectNote: selectNote2 } = unlock((0, import_data254.useDispatch)(store));
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data254.useDispatch)(import_block_editor100.store)
     );
@@ -78955,96 +79067,11 @@ If there's a particular need for this, please submit a feature request at https:
         selectNote2(selectedNote2);
       }
     }, [noteFocused, selectedNote2, selectNote2, commentSidebarRef]);
-    (0, import_element282.useEffect)(() => {
-      const calculateAllOffsets = () => {
-        const offsets = {};
-        if (!isFloating) {
-          return { offsets, minHeight: 0 };
-        }
-        const selectedThreadIndex = threads.findIndex(
-          (t4) => t4.id === selectedNote2
-        );
-        const breakIndex = selectedThreadIndex === -1 ? 0 : selectedThreadIndex;
-        const selectedThreadData = threads[breakIndex];
-        if (!selectedThreadData || !blockRefs[selectedThreadData.id]) {
-          return { offsets, minHeight: 0 };
-        }
-        let blockElement = blockRefs[selectedThreadData.id];
-        let blockRect = blockElement?.getBoundingClientRect();
-        const selectedThreadTop = blockRect?.top || 0;
-        const selectedThreadHeight = heights[selectedThreadData.id] || 0;
-        offsets[selectedThreadData.id] = -16;
-        let previousThreadData = {
-          threadTop: selectedThreadTop - 16,
-          threadHeight: selectedThreadHeight
-        };
-        for (let i3 = breakIndex + 1; i3 < threads.length; i3++) {
-          const thread = threads[i3];
-          if (!blockRefs[thread.id]) {
-            continue;
-          }
-          blockElement = blockRefs[thread.id];
-          blockRect = blockElement?.getBoundingClientRect();
-          const threadTop = blockRect?.top || 0;
-          const threadHeight = heights[thread.id] || 0;
-          let additionalOffset = -16;
-          const previousBottom = previousThreadData.threadTop + previousThreadData.threadHeight;
-          if (threadTop < previousBottom + 16) {
-            additionalOffset = previousBottom - threadTop + 20;
-          }
-          offsets[thread.id] = additionalOffset;
-          previousThreadData = {
-            threadTop: threadTop + additionalOffset,
-            threadHeight
-          };
-        }
-        let nextThreadData = {
-          threadTop: selectedThreadTop - 16
-        };
-        for (let i3 = selectedThreadIndex - 1; i3 >= 0; i3--) {
-          const thread = threads[i3];
-          if (!blockRefs[thread.id]) {
-            continue;
-          }
-          blockElement = blockRefs[thread.id];
-          blockRect = blockElement?.getBoundingClientRect();
-          const threadTop = blockRect?.top || 0;
-          const threadHeight = heights[thread.id] || 0;
-          let additionalOffset = -16;
-          const threadBottom = threadTop + threadHeight;
-          if (threadBottom > nextThreadData.threadTop) {
-            additionalOffset = nextThreadData.threadTop - threadTop - threadHeight - 20;
-          }
-          offsets[thread.id] = additionalOffset;
-          nextThreadData = {
-            threadTop: threadTop + additionalOffset
-          };
-        }
-        let editorMinHeight = 0;
-        const lastThread = threads[threads.length - 1];
-        if (blockRefs[lastThread.id]) {
-          const lastBlockElement = blockRefs[lastThread.id];
-          const lastBlockRect = lastBlockElement?.getBoundingClientRect();
-          const lastThreadTop = lastBlockRect?.top || 0;
-          const lastThreadHeight = heights[lastThread.id] || 0;
-          const lastThreadOffset = offsets[lastThread.id] || 0;
-          editorMinHeight = lastThreadTop + lastThreadHeight + lastThreadOffset + 32;
-        }
-        return { offsets, minHeight: editorMinHeight };
-      };
-      const { offsets: newOffsets, minHeight } = calculateAllOffsets();
-      if (Object.keys(newOffsets).length > 0) {
-        setBoardOffsets(newOffsets);
-      }
-      setCanvasMinHeight2(minHeight);
-    }, [
-      heights,
-      blockRefs,
-      isFloating,
+    const { boardOffsets, registerThread, reportHeight } = useFloatingBoard({
       threads,
-      selectedNote2,
-      setCanvasMinHeight2
-    ]);
+      selectedNoteId: selectedNote2,
+      isFloating
+    });
     const handleThreadNavigation = (event, thread, isSelected2) => {
       if (event.defaultPrevented) {
         return;
@@ -79077,12 +79104,9 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     };
-    const setBlockRef = (0, import_element282.useCallback)((id, blockRef) => {
-      setBlockRefs((prev) => ({ ...prev, [id]: blockRef }));
-    }, []);
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads && !isFloating) {
-      return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
@@ -79090,15 +79114,15 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_jsx_runtime491.Fragment, { children: [
-      !isFloating && selectedNote2 === "new" && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(import_jsx_runtime492.Fragment, { children: [
+      !isFloating && selectedNote2 === "new" && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
           commentSidebarRef
         }
       ),
-      threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+      threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
         Thread,
         {
           thread,
@@ -79108,11 +79132,12 @@ If there's a particular need for this, please submit a feature request at https:
           isSelected: selectedNote2 === thread.id,
           commentSidebarRef,
           reflowComments,
-          isFloating,
-          calculatedOffset: boardOffsets[thread.id] ?? 0,
-          setHeights,
-          setBlockRef,
-          commentLastUpdated,
+          floating: isFloating ? {
+            calculatedOffset: boardOffsets[thread.id] ?? 0,
+            reportHeight,
+            registerThread,
+            commentLastUpdated
+          } : void 0,
           onKeyDown: (event) => handleThreadNavigation(
             event,
             thread,
@@ -79131,13 +79156,10 @@ If there's a particular need for this, please submit a feature request at https:
     isSelected: isSelected2,
     commentSidebarRef,
     reflowComments,
-    isFloating,
-    calculatedOffset,
-    setHeights,
-    setBlockRef,
-    commentLastUpdated,
+    floating,
     onKeyDown
   }) {
+    const isFloating = !!floating;
     const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data254.useDispatch)(import_block_editor100.store)
     );
@@ -79153,11 +79175,11 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { y: y3, refs } = useFloatingThread({
       thread,
-      calculatedOffset,
-      setHeights,
-      setBlockRef,
+      calculatedOffset: floating?.calculatedOffset ?? 0,
+      reportHeight: floating?.reportHeight,
+      registerThread: floating?.registerThread,
       selectedThread: selectedNote2,
-      commentLastUpdated
+      commentLastUpdated: floating?.commentLastUpdated
     });
     const isKeyboardTabbingRef = (0, import_element282.useRef)(false);
     const onMouseEnter = () => {
@@ -79218,24 +79240,22 @@ If there's a particular need for this, please submit a feature request at https:
       commentExcerpt
     );
     if (isFloating && thread.id === "new") {
-      return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
           commentSidebarRef,
           reflowComments,
-          isFloating,
-          y: y3,
-          refs
+          floating: { y: y3, refs }
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(
-      import_components280.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(
+      FloatingContainer,
       {
+        floating: isFloating ? { y: y3, refs } : void 0,
         className: clsx_default("editor-collab-sidebar-panel__thread", {
-          "is-selected": isSelected2,
-          "is-floating": isFloating
+          "is-selected": isSelected2
         }),
         id: `comment-thread-${thread.id}`,
         spacing: "3",
@@ -79260,11 +79280,9 @@ If there's a particular need for this, please submit a feature request at https:
         role: "treeitem",
         "aria-label": ariaLabel,
         "aria-expanded": isSelected2,
-        ref: isFloating ? refs.setFloating : void 0,
-        style: isFloating ? { top: y3 } : void 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
-            import_components280.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+            import_components281.Button,
             {
               className: "editor-collab-sidebar-panel__skip-to-comment",
               variant: "secondary",
@@ -79279,8 +79297,8 @@ If there's a particular need for this, please submit a feature request at https:
               children: (0, import_i18n310.__)("Add new reply")
             }
           ),
-          !thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components280.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n310.__)("Original block deleted.") }),
-          /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+          !thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components281.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n310.__)("Original block deleted.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
             CommentBoard,
             {
               thread,
@@ -79303,7 +79321,7 @@ If there's a particular need for this, please submit a feature request at https:
               reflowComments
             }
           ),
-          isSelected2 && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+          isSelected2 && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
             CommentBoard,
             {
               thread: reply,
@@ -79315,8 +79333,8 @@ If there's a particular need for this, please submit a feature request at https:
             },
             reply.id
           )),
-          !isSelected2 && restReplies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components280.__experimentalHStack, { className: "editor-collab-sidebar-panel__more-reply-separator", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
-            import_components280.Button,
+          !isSelected2 && restReplies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components281.__experimentalHStack, { className: "editor-collab-sidebar-panel__more-reply-separator", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+            import_components281.Button,
             {
               size: "compact",
               variant: "tertiary",
@@ -79339,7 +79357,7 @@ If there's a particular need for this, please submit a feature request at https:
               )
             }
           ) }),
-          !isSelected2 && lastReply && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+          !isSelected2 && lastReply && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
             CommentBoard,
             {
               thread: lastReply,
@@ -79350,9 +79368,9 @@ If there's a particular need for this, please submit a feature request at https:
               reflowComments
             }
           ),
-          isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_components280.__experimentalVStack, { spacing: "2", role: "treeitem", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components280.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(comment_author_info_default, {}) }),
-            /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components280.__experimentalVStack, { spacing: "2", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+          isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(import_components281.__experimentalVStack, { spacing: "2", role: "treeitem", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components281.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(comment_author_info_default, {}) }),
+            /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components281.__experimentalVStack, { spacing: "2", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
               comment_form_default,
               {
                 onSubmit: (inputComment) => {
@@ -79389,8 +79407,8 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ) })
           ] }),
-          !!thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
-            import_components280.Button,
+          !!thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+            import_components281.Button,
             {
               className: "editor-collab-sidebar-panel__skip-to-block",
               variant: "secondary",
@@ -79463,14 +79481,14 @@ If there's a particular need for this, please submit a feature request at https:
         "Are you sure you want to delete this note? This will also delete all of this note's replies."
       ) : (0, import_i18n310.__)("Are you sure you want to delete this reply?")
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(
-      import_components280.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(
+      import_components281.__experimentalVStack,
       {
         spacing: "2",
         role: thread.parent !== 0 ? "treeitem" : void 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_components280.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(import_components281.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
               comment_author_info_default,
               {
                 avatar: thread?.author_avatar_urls?.[48],
@@ -79479,16 +79497,16 @@ If there's a particular need for this, please submit a feature request at https:
                 userId: thread?.author
               }
             ),
-            isExpanded && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
-              import_components280.FlexItem,
+            isExpanded && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+              import_components281.FlexItem,
               {
                 className: "editor-collab-sidebar-panel__comment-status",
                 onClick: (event) => {
                   event.stopPropagation();
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_components280.__experimentalHStack, { spacing: "0", children: [
-                  canResolve && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
-                    import_components280.Button,
+                children: /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(import_components281.__experimentalHStack, { spacing: "0", children: [
+                  canResolve && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+                    import_components281.Button,
                     {
                       label: (0, import_i18n310._x)(
                         "Resolve",
@@ -79506,12 +79524,12 @@ If there's a particular need for this, please submit a feature request at https:
                       }
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(Menu11, { placement: "bottom-end", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(Menu11, { placement: "bottom-end", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
                       Menu11.TriggerButton,
                       {
-                        render: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
-                          import_components280.Button,
+                        render: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+                          import_components281.Button,
                           {
                             ref: actionButtonRef,
                             size: "small",
@@ -79523,15 +79541,15 @@ If there's a particular need for this, please submit a feature request at https:
                         )
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
                       Menu11.Popover,
                       {
                         modal: false,
-                        children: moreActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+                        children: moreActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
                           Menu11.Item,
                           {
                             onClick: () => action.onClick(),
-                            children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(Menu11.ItemLabel, { children: action.title })
+                            children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(Menu11.ItemLabel, { children: action.title })
                           },
                           action.id
                         ))
@@ -79542,7 +79560,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             )
           ] }),
-          "edit" === actionState ? /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+          "edit" === actionState ? /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
             comment_form_default,
             {
               onSubmit: (value) => {
@@ -79564,7 +79582,7 @@ If there's a particular need for this, please submit a feature request at https:
               ),
               reflowComments
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
             import_element282.RawHTML,
             {
               className: clsx_default(
@@ -79588,8 +79606,8 @@ If there's a particular need for this, please submit a feature request at https:
               })() : thread?.content?.rendered
             }
           ),
-          "delete" === actionState && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
-            import_components280.__experimentalConfirmDialog,
+          "delete" === actionState && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+            import_components281.__experimentalConfirmDialog,
             {
               isOpen: showConfirmDialog,
               onConfirm: handleConfirmDelete,
@@ -79604,13 +79622,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/editor/build-module/components/collab-sidebar/comment-menu-item.mjs
-  var import_components281 = __toESM(require_components(), 1);
+  var import_components282 = __toESM(require_components(), 1);
   var import_i18n311 = __toESM(require_i18n(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
   var import_data255 = __toESM(require_data(), 1);
   var import_blocks36 = __toESM(require_blocks(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
   var { CommentIconSlotFill } = unlock(import_block_editor101.privateApis);
   var AddCommentMenuItem = ({ clientId, onClick, isDistractionFree }) => {
     const block = (0, import_data255.useSelect)(
@@ -79635,8 +79653,8 @@ If there's a particular need for this, please submit a feature request at https:
     } else if (block?.name === "core/freeform") {
       infoText = (0, import_i18n311.__)("Convert to blocks to add notes.");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
-      import_components281.MenuItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+      import_components282.MenuItem,
       {
         onClick,
         "aria-haspopup": "dialog",
@@ -79648,7 +79666,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   var AddCommentMenuItemFill = ({ onClick, isDistractionFree }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(CommentIconSlotFill.Fill, { children: ({ clientId, onClose }) => /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(CommentIconSlotFill.Fill, { children: ({ clientId, onClose }) => /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
       AddCommentMenuItem,
       {
         clientId,
@@ -79663,11 +79681,11 @@ If there's a particular need for this, please submit a feature request at https:
   var comment_menu_item_default = AddCommentMenuItemFill;
 
   // packages/editor/build-module/components/collab-sidebar/comment-indicator-toolbar.mjs
-  var import_components282 = __toESM(require_components(), 1);
+  var import_components283 = __toESM(require_components(), 1);
   var import_i18n312 = __toESM(require_i18n(), 1);
   var import_element283 = __toESM(require_element(), 1);
   var import_block_editor102 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
   var { CommentIconToolbarSlotFill } = unlock(import_block_editor102.privateApis);
   var CommentAvatarIndicator = ({ onClick, thread }) => {
     const threadParticipants = (0, import_element283.useMemo)(() => {
@@ -79707,15 +79725,15 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_i18n312.__)("+%s"),
       overflowCount
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(CommentIconToolbarSlotFill.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
-      import_components282.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(CommentIconToolbarSlotFill.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+      import_components283.ToolbarButton,
       {
         className: "comment-avatar-indicator",
         label: (0, import_i18n312.__)("View notes"),
         onClick: () => onClick(),
         showTooltip: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime493.jsxs)(import_components282.__experimentalHStack, { spacing: "1", children: [
-          visibleParticipants.map((participant) => /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_components283.__experimentalHStack, { spacing: "1", children: [
+          visibleParticipants.map((participant) => /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
             "img",
             {
               src: participant.avatar,
@@ -79729,7 +79747,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             participant.id
           )),
-          overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_components282.__experimentalText, { weight: 500, children: overflowText })
+          overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components283.__experimentalText, { weight: 500, children: overflowText })
         ] })
       }
     ) });
@@ -79737,7 +79755,7 @@ If there's a particular need for this, please submit a feature request at https:
   var comment_indicator_toolbar_default = CommentAvatarIndicator;
 
   // packages/editor/build-module/components/collab-sidebar/index.mjs
-  var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
   function NotesSidebarContent({
     styles,
     comments,
@@ -79747,8 +79765,8 @@ If there's a particular need for this, please submit a feature request at https:
     isFloating = false
   }) {
     const { onCreate, onEdit, onDelete } = useBlockCommentsActions(reflowComments);
-    return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
-      import_components283.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
+      import_components284.__experimentalVStack,
       {
         className: "editor-collab-sidebar-panel",
         style: styles,
@@ -79761,7 +79779,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         },
         "aria-label": isFloating ? (0, import_i18n313.__)("Unresolved notes") : (0, import_i18n313.__)("All notes"),
-        children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
           Comments,
           {
             threads: comments,
@@ -79862,27 +79880,27 @@ If there's a particular need for this, please submit a feature request at https:
       selectNote2(targetNote ? targetNote.id : "new", { focus: true });
     }
     if (isDistractionFree) {
-      return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(comment_menu_item_default, { isDistractionFree: true });
+      return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(comment_menu_item_default, { isDistractionFree: true });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_jsx_runtime494.Fragment, { children: [
-      !!currentThread && /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime495.jsxs)(import_jsx_runtime495.Fragment, { children: [
+      !!currentThread && /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
         comment_indicator_toolbar_default,
         {
           thread: currentThread,
           onClick: openTheSidebar
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(comment_menu_item_default, { onClick: openTheSidebar }),
-      showAllNotesSidebar && /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(comment_menu_item_default, { onClick: openTheSidebar }),
+      showAllNotesSidebar && /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
         PluginSidebar,
         {
           identifier: ALL_NOTES_SIDEBAR,
           name: ALL_NOTES_SIDEBAR,
           title: (0, import_i18n313.__)("All notes"),
-          header: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)("h2", { className: "interface-complementary-area-header__title", children: (0, import_i18n313.__)("All notes") }),
+          header: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)("h2", { className: "interface-complementary-area-header__title", children: (0, import_i18n313.__)("All notes") }),
           icon: comment_default,
           closeLabel: (0, import_i18n313.__)("Close Notes"),
-          children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
             NotesSidebarContent,
             {
               comments: resultComments,
@@ -79891,7 +79909,7 @@ If there's a particular need for this, please submit a feature request at https:
           )
         }
       ),
-      isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+      isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
         PluginSidebar,
         {
           isPinnable: false,
@@ -79900,7 +79918,7 @@ If there's a particular need for this, please submit a feature request at https:
           className: "editor-collab-sidebar",
           headerClassName: "editor-collab-sidebar__header",
           backgroundColor,
-          children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
             NotesSidebarContent,
             {
               comments: unresolvedSortedThreads,
@@ -79934,11 +79952,11 @@ If there's a particular need for this, please submit a feature request at https:
     if (editorMode === "text" || revisionsMode) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(NotesSidebar, { postId: postId2 }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(NotesSidebar, { postId: postId2 }) });
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
-  var import_components286 = __toESM(require_components(), 1);
+  var import_components287 = __toESM(require_components(), 1);
   var import_i18n316 = __toESM(require_i18n(), 1);
   var import_data259 = __toESM(require_data(), 1);
   var import_element285 = __toESM(require_element(), 1);
@@ -79947,12 +79965,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data138 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
-  var import_components284 = __toESM(require_components(), 1);
+  var import_components285 = __toESM(require_components(), 1);
   var import_data257 = __toESM(require_data(), 1);
   var import_i18n314 = __toESM(require_i18n(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
   var import_core_data137 = __toESM(require_core_data(), 1);
-  var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesActionMenu({
     hideWelcomeGuide = false,
     onChangePath
@@ -79974,17 +79992,17 @@ If there's a particular need for this, please submit a feature request at https:
     const loadCustomCSS = () => {
       onChangePath("/css");
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
-      import_components284.DropdownMenu,
+    return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
+      import_components285.DropdownMenu,
       {
         icon: more_vertical_default,
         label: (0, import_i18n314.__)("More"),
         toggleProps: { size: "compact" },
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime495.jsxs)(import_jsx_runtime495.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime495.jsxs)(import_components284.MenuGroup, { children: [
-            canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(import_components284.MenuItem, { onClick: loadCustomCSS, children: (0, import_i18n314.__)("Additional CSS") }),
-            !hideWelcomeGuide && /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
-              import_components284.MenuItem,
+        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)(import_jsx_runtime496.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)(import_components285.MenuGroup, { children: [
+            canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(import_components285.MenuItem, { onClick: loadCustomCSS, children: (0, import_i18n314.__)("Additional CSS") }),
+            !hideWelcomeGuide && /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
+              import_components285.MenuItem,
               {
                 onClick: () => {
                   toggle(
@@ -79997,8 +80015,8 @@ If there's a particular need for this, please submit a feature request at https:
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(import_components284.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
-            import_components284.MenuItem,
+          /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(import_components285.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
+            import_components285.MenuItem,
             {
               onClick: () => {
                 onReset();
@@ -80014,7 +80032,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/default-sidebar.mjs
-  var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   function DefaultSidebar({
     className,
     identifier,
@@ -80027,8 +80045,8 @@ If there's a particular need for this, please submit a feature request at https:
     panelClassName,
     isActiveByDefault
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)(import_jsx_runtime496.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(import_jsx_runtime497.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
         complementary_area_default,
         {
           className,
@@ -80044,7 +80062,7 @@ If there's a particular need for this, please submit a feature request at https:
           children
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
         ComplementaryAreaMoreMenuItem,
         {
           scope: "core",
@@ -80058,27 +80076,27 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_data258 = __toESM(require_data(), 1);
-  var import_components285 = __toESM(require_components(), 1);
+  var import_components286 = __toESM(require_components(), 1);
   var import_i18n315 = __toESM(require_i18n(), 1);
   var import_preferences32 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide-image.mjs
-  var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideImage({ nonAnimatedSrc, animatedSrc }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)("picture", { className: "editor-welcome-guide__image", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)("picture", { className: "editor-welcome-guide__image", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
         "source",
         {
           srcSet: nonAnimatedSrc,
           media: "(prefers-reduced-motion: reduce)"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime497.jsx)("img", { src: animatedSrc, width: "312", height: "240", alt: "" })
+      /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("img", { src: animatedSrc, width: "312", height: "240", alt: "" })
     ] });
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
-  var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideStyles() {
     const { toggle } = (0, import_data258.useDispatch)(import_preferences32.store);
     const { isActive, isStylesOpen } = (0, import_data258.useSelect)((select7) => {
@@ -80095,8 +80113,8 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const welcomeLabel = (0, import_i18n315.__)("Welcome to Styles");
-    return /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-      import_components285.Guide,
+    return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+      import_components286.Guide,
       {
         className: "editor-welcome-guide guide-styles",
         contentLabel: welcomeLabel,
@@ -80104,67 +80122,67 @@ If there's a particular need for this, please submit a feature request at https:
         onFinish: () => toggle("core/edit-site", "welcomeGuideStyles"),
         pages: [
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-to-styles.svg?1",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-to-styles.gif?1"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)(import_jsx_runtime498.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("h1", { className: "editor-welcome-guide__heading", children: welcomeLabel }),
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n315.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(import_jsx_runtime499.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("h1", { className: "editor-welcome-guide__heading", children: welcomeLabel }),
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n315.__)(
                 "Tweak your site, or give it a whole new look! Get creative \u2014 how about a new color palette for your buttons, or choosing a new font? Take a look at what you can do here."
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/set-the-design.svg?1",
                 animatedSrc: "https://s.w.org/images/block-editor/set-the-design.gif?1"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)(import_jsx_runtime498.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n315.__)("Set the design") }),
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n315.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(import_jsx_runtime499.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n315.__)("Set the design") }),
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n315.__)(
                 "You can customize your site as much as you like with different colors, typography, and layouts. Or if you prefer, just leave it up to your theme to handle!"
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/personalize-blocks.svg?1",
                 animatedSrc: "https://s.w.org/images/block-editor/personalize-blocks.gif?1"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)(import_jsx_runtime498.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n315.__)("Personalize blocks") }),
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n315.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(import_jsx_runtime499.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n315.__)("Personalize blocks") }),
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n315.__)(
                 "You can adjust your blocks to ensure a cohesive experience across your site \u2014 add your unique colors to a branded Button block, or adjust the Heading block to your preferred size."
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-documentation.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-documentation.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)(import_jsx_runtime498.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n315.__)("Learn more") }),
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)("p", { className: "editor-welcome-guide__text", children: [
+            content: /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(import_jsx_runtime499.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n315.__)("Learn more") }),
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)("p", { className: "editor-welcome-guide__text", children: [
                 (0, import_i18n315.__)(
                   "New to block themes and styling your site?"
                 ),
                 " ",
-                /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-                  import_components285.ExternalLink,
+                /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+                  import_components286.ExternalLink,
                   {
                     href: (0, import_i18n315.__)(
                       "https://wordpress.org/documentation/article/styles-overview/"
@@ -80183,7 +80201,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
-  var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesSidebar() {
     const {
       shouldResetNavigation,
@@ -80246,8 +80264,8 @@ If there's a particular need for this, please submit a feature request at https:
       setIsListViewOpened2(showStylebook2 && showListViewByDefault);
       setShowStylebook2(!showStylebook2);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(import_jsx_runtime499.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_jsx_runtime500.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
         DefaultSidebar,
         {
           className: "editor-global-styles-sidebar",
@@ -80256,22 +80274,22 @@ If there's a particular need for this, please submit a feature request at https:
           icon: styles_default,
           closeLabel: (0, import_i18n316.__)("Close Styles"),
           panelClassName: "editor-global-styles-sidebar__panel",
-          header: /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(
-            import_components286.Flex,
+          header: /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
+            import_components287.Flex,
             {
               className: "editor-global-styles-sidebar__header",
               gap: 1,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_components286.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("h2", { className: "editor-global-styles-sidebar__header-title", children: (0, import_i18n316.__)("Styles") }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(
-                  import_components286.Flex,
+                /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_components287.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)("h2", { className: "editor-global-styles-sidebar__header-title", children: (0, import_i18n316.__)("Styles") }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
+                  import_components287.Flex,
                   {
                     justify: "flex-end",
                     gap: 1,
                     className: "editor-global-styles-sidebar__header-actions",
                     children: [
-                      !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_components286.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
-                        import_components286.Button,
+                      !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_components287.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+                        import_components287.Button,
                         {
                           icon: seen_default,
                           label: (0, import_i18n316.__)("Style Book"),
@@ -80282,8 +80300,8 @@ If there's a particular need for this, please submit a feature request at https:
                           size: "compact"
                         }
                       ) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_components286.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
-                        import_components286.Button,
+                      /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_components287.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+                        import_components287.Button,
                         {
                           label: (0, import_i18n316.__)("Revisions"),
                           icon: backup_default,
@@ -80294,7 +80312,7 @@ If there's a particular need for this, please submit a feature request at https:
                           size: "compact"
                         }
                       ) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+                      /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                         GlobalStylesActionMenu,
                         {
                           onChangePath: setStylesPath2
@@ -80306,7 +80324,7 @@ If there's a particular need for this, please submit a feature request at https:
               ]
             }
           ),
-          children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
             GlobalStylesUIWrapper,
             {
               path: stylesPath2,
@@ -80316,12 +80334,12 @@ If there's a particular need for this, please submit a feature request at https:
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(WelcomeGuideStyles, {})
+      /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(WelcomeGuideStyles, {})
     ] });
   }
 
   // packages/editor/build-module/components/editor/index.mjs
-  var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
   function Editor({
     postType: postType2,
     postId: postId2,
@@ -80383,9 +80401,9 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [postType2, postId2, templateId2]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_jsx_runtime500.Fragment, { children: [
-      hasLoadedPost && !post2 && /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
-        import_components287.Notice,
+    return /* @__PURE__ */ (0, import_jsx_runtime501.jsxs)(import_jsx_runtime501.Fragment, { children: [
+      hasLoadedPost && !post2 && /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
+        import_components288.Notice,
         {
           status: !!error2 ? "error" : "warning",
           isDismissible: false,
@@ -80394,7 +80412,7 @@ If there's a particular need for this, please submit a feature request at https:
           ) : error2
         }
       ),
-      !!post2 && /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
+      !!post2 && /* @__PURE__ */ (0, import_jsx_runtime501.jsxs)(
         ExperimentalEditorProvider,
         {
           post: post2,
@@ -80403,18 +80421,18 @@ If there's a particular need for this, please submit a feature request at https:
           initialEdits,
           useSubRegistry: false,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(EditorInterface, { ...props, children: extraContent }),
+            /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(EditorInterface, { ...props, children: extraContent }),
             children,
-            /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
               sidebar_default2,
               {
                 onActionPerformed,
                 extraPanels: extraSidebarPanels
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(NotesSidebarContainer, {}),
-            isBlockTheme && /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(GlobalStylesRenderer, {}),
-            showGlobalStyles && /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(GlobalStylesSidebar, {})
+            /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(NotesSidebarContainer, {}),
+            isBlockTheme && /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(GlobalStylesRenderer, {}),
+            showGlobalStyles && /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(GlobalStylesSidebar, {})
           ]
         }
       )
@@ -80432,14 +80450,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
   var import_data261 = __toESM(require_data(), 1);
   var import_preferences34 = __toESM(require_preferences(), 1);
-  var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
   var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences34.privateApis);
   function EnablePublishSidebarOption(props) {
     const isChecked = (0, import_data261.useSelect)((select7) => {
       return select7(store).isPublishSidebarEnabled();
     }, []);
     const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data261.useDispatch)(store);
-    return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(
       PreferenceBaseOption2,
       {
         isChecked,
@@ -80454,10 +80472,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_preferences35 = __toESM(require_preferences(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
   var import_element286 = __toESM(require_element(), 1);
-  var import_components288 = __toESM(require_components(), 1);
+  var import_components289 = __toESM(require_components(), 1);
   var import_i18n318 = __toESM(require_i18n(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
   var { BlockManager } = unlock(import_block_editor104.privateApis);
   var EMPTY_ARRAY15 = [];
   function BlockVisibility() {
@@ -80515,8 +80533,8 @@ If there's a particular need for this, please submit a feature request at https:
         showBlockTypes2(blockTypesToShow.map(({ name: name2 }) => name2));
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime502.jsxs)("div", { className: "editor-block-visibility", children: [
-      !!numberOfHiddenBlocks && /* @__PURE__ */ (0, import_jsx_runtime502.jsxs)("div", { className: "editor-block-visibility__disabled-blocks-count", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)("div", { className: "editor-block-visibility", children: [
+      !!numberOfHiddenBlocks && /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)("div", { className: "editor-block-visibility__disabled-blocks-count", children: [
         (0, import_i18n318.sprintf)(
           /* translators: %d: number of blocks. */
           (0, import_i18n318._n)(
@@ -80526,8 +80544,8 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           numberOfHiddenBlocks
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(
-          import_components288.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+          import_components289.Button,
           {
             __next40pxDefaultSize: true,
             variant: "link",
@@ -80536,7 +80554,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
         BlockManager,
         {
           blockTypes: filteredBlockTypes,
@@ -80549,7 +80567,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
-  var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
   var {
     PreferencesModal,
     PreferencesModalTabs,
@@ -80564,7 +80582,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isActive) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(PreferencesModalContents, { extraSections }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(PreferencesModalContents, { extraSections }) });
   }
   function PreferencesModalContents({ extraSections = {} }) {
     const isLargeViewport = (0, import_compose81.useViewportMatch)("medium");
@@ -80588,13 +80606,13 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "general",
           tabLabel: (0, import_i18n319.__)("General"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_jsx_runtime503.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(import_jsx_runtime504.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n319.__)("Interface"),
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -80605,7 +80623,7 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n319.__)("Always open List View")
                     }
                   ),
-                  showBlockBreadcrumbsOption && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  showBlockBreadcrumbsOption && /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -80616,7 +80634,7 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n319.__)("Show block breadcrumbs")
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -80629,7 +80647,7 @@ If there's a particular need for this, please submit a feature request at https:
                       )
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -80640,8 +80658,8 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n319.__)("Show starter patterns")
                     }
                   ),
-                  showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_jsx_runtime503.Fragment, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(import_jsx_runtime504.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                       PreferenceToggleControl,
                       {
                         scope: "core",
@@ -80654,7 +80672,7 @@ If there's a particular need for this, please submit a feature request at https:
                         )
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                       PreferenceToggleControl,
                       {
                         scope: "core",
@@ -80671,7 +80689,7 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n319.__)("Document settings"),
@@ -80679,11 +80697,11 @@ If there's a particular need for this, please submit a feature request at https:
                   "Select what settings are shown in the document panel."
                 ),
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(enable_plugin_document_setting_panel_default.Slot, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(enable_plugin_document_setting_panel_default.Slot, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     post_taxonomies_default,
                     {
-                      taxonomyWrapper: (content, taxonomy) => /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                      taxonomyWrapper: (content, taxonomy) => /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                         EnablePanelOption,
                         {
                           label: taxonomy.labels.menu_name,
@@ -80692,25 +80710,25 @@ If there's a particular need for this, please submit a feature request at https:
                       )
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(check_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(check_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     EnablePanelOption,
                     {
                       label: (0, import_i18n319.__)("Featured image"),
                       panelName: "featured-image"
                     }
                   ) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(check_default3, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(check_default3, { children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     EnablePanelOption,
                     {
                       label: (0, import_i18n319.__)("Excerpt"),
                       panelName: "post-excerpt"
                     }
                   ) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     post_type_support_check_default,
                     {
                       supportKeys: ["comments", "trackbacks"],
-                      children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                         EnablePanelOption,
                         {
                           label: (0, import_i18n319.__)("Discussion"),
@@ -80719,7 +80737,7 @@ If there's a particular need for this, please submit a feature request at https:
                       )
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                     EnablePanelOption,
                     {
                       label: (0, import_i18n319.__)("Page attributes"),
@@ -80729,11 +80747,11 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n319.__)("Publishing"),
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   EnablePublishSidebarOption,
                   {
                     help: (0, import_i18n319.__)(
@@ -80752,7 +80770,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "appearance",
           tabLabel: (0, import_i18n319.__)("Appearance"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(
             PreferencesModalSection,
             {
               title: (0, import_i18n319.__)("Appearance"),
@@ -80760,7 +80778,7 @@ If there's a particular need for this, please submit a feature request at https:
                 "Customize the editor interface to suit your needs."
               ),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -80776,7 +80794,7 @@ If there's a particular need for this, please submit a feature request at https:
                     label: (0, import_i18n319.__)("Top toolbar")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -80796,7 +80814,7 @@ If there's a particular need for this, please submit a feature request at https:
                     label: (0, import_i18n319.__)("Distraction free")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -80815,15 +80833,15 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "accessibility",
           tabLabel: (0, import_i18n319.__)("Accessibility"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_jsx_runtime503.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(import_jsx_runtime504.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n319.__)("Navigation"),
                 description: (0, import_i18n319.__)(
                   "Optimize the editing experience for enhanced control."
                 ),
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -80838,11 +80856,11 @@ If there's a particular need for this, please submit a feature request at https:
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n319.__)("Interface"),
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -80860,8 +80878,8 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "blocks",
           tabLabel: (0, import_i18n319.__)("Blocks"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_jsx_runtime503.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(PreferencesModalSection, { title: (0, import_i18n319.__)("Inserter"), children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(import_jsx_runtime504.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(PreferencesModalSection, { title: (0, import_i18n319.__)("Inserter"), children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               PreferenceToggleControl,
               {
                 scope: "core",
@@ -80872,14 +80890,14 @@ If there's a particular need for this, please submit a feature request at https:
                 label: (0, import_i18n319.__)("Show most used blocks")
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n319.__)("Manage block visibility"),
                 description: (0, import_i18n319.__)(
                   "Disable blocks that you don't want to appear in the inserter. They can always be toggled back on later."
                 ),
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(BlockVisibility, {})
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(BlockVisibility, {})
               }
             )
           ] })
@@ -80887,7 +80905,7 @@ If there's a particular need for this, please submit a feature request at https:
         window.__clientSideMediaProcessing && {
           name: "media",
           tabLabel: (0, import_i18n319.__)("Media"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_jsx_runtime503.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_jsx_runtime504.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(
             PreferencesModalSection,
             {
               title: (0, import_i18n319.__)("General"),
@@ -80895,7 +80913,7 @@ If there's a particular need for this, please submit a feature request at https:
                 "Customize options related to the media upload flow."
               ),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core/media",
@@ -80906,7 +80924,7 @@ If there's a particular need for this, please submit a feature request at https:
                     label: (0, import_i18n319.__)("Pre-upload compression")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core/media",
@@ -80932,7 +80950,7 @@ If there's a particular need for this, please submit a feature request at https:
         isLargeViewport
       ]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(PreferencesModalTabs, { sections });
+    return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(PreferencesModalTabs, { sections });
   }
 
   // packages/editor/build-module/bindings/api.mjs
