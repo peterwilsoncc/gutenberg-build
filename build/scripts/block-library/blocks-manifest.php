@@ -8037,7 +8037,6 @@ return array(
 		'name' => 'core/tab',
 		'title' => 'Tab',
 		'description' => 'Content for a tab in a tabbed interface.',
-		'version' => '1.0.0',
 		'category' => 'design',
 		'textdomain' => 'default',
 		'attributes' => array(
@@ -8096,7 +8095,6 @@ return array(
 		'name' => 'core/tab-panel',
 		'title' => 'Tab Panel',
 		'description' => 'Container for tab panel content in a tabbed interface.',
-		'version' => '1.0.0',
 		'category' => 'design',
 		'textdomain' => 'default',
 		'parent' => array(
@@ -8484,7 +8482,6 @@ return array(
 		'name' => 'core/tabs',
 		'title' => 'Tabs',
 		'description' => 'Display content in a tabbed interface to help users navigate detailed content with ease.',
-		'version' => '1.0.0',
 		'category' => 'design',
 		'textdomain' => 'default',
 		'allowedBlocks' => array(
@@ -8559,7 +8556,6 @@ return array(
 		'name' => 'core/tabs-menu',
 		'title' => 'Tabs Menu',
 		'description' => 'Display the tab buttons for a tabbed interface.',
-		'version' => '1.0.0',
 		'category' => 'design',
 		'textdomain' => 'default',
 		'parent' => array(
@@ -8635,7 +8631,6 @@ return array(
 		'name' => 'core/tabs-menu-item',
 		'title' => 'Tab Menu Item',
 		'description' => 'A single tab button in the tabs menu.',
-		'version' => '1.0.0',
 		'category' => 'design',
 		'textdomain' => 'default',
 		'parent' => array(
