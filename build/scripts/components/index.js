@@ -108,7 +108,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect79(
+          useEffect80(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -134,7 +134,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React41 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState83 = React41.useState, useEffect79 = React41.useEffect, useLayoutEffect24 = React41.useLayoutEffect, useDebugValue = React41.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React41 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState83 = React41.useState, useEffect80 = React41.useEffect, useLayoutEffect24 = React41.useLayoutEffect, useDebugValue = React41.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React41.useSyncExternalStore ? React41.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2824,8 +2824,8 @@ var wp;
     Role3.displayName = render.displayName || render.name;
     return Role3;
   }
-  function memo2(Component9, propsAreEqual) {
-    return React2.memo(Component9, propsAreEqual);
+  function memo2(Component8, propsAreEqual) {
+    return React2.memo(Component8, propsAreEqual);
   }
   function createElement(Type, props) {
     const { wrapElement, render, ...rest } = props;
@@ -6922,8 +6922,8 @@ If there's a particular need for this, please submit a feature request at https:
     if ((0, import_react26.isValidElement)(backdrop)) {
       return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Role, { ...props, render: backdrop });
     }
-    const Component9 = typeof backdrop !== "boolean" ? backdrop : "div";
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Role, { ...props, render: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Component9, {}) });
+    const Component8 = typeof backdrop !== "boolean" ? backdrop : "div";
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Role, { ...props, render: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Component8, {}) });
   }
 
   // node_modules/@ariakit/core/esm/__chunks/KMAUV3TY.js
@@ -7299,7 +7299,7 @@ If there's a particular need for this, please submit a feature request at https:
     props = usePortal({ portal, ...props, portalRef, preserveTabOrder });
     return props;
   });
-  function createDialogComponent(Component9, useProviderContext = useDialogProviderContext) {
+  function createDialogComponent(Component8, useProviderContext = useDialogProviderContext) {
     return forwardRef2(function DialogComponent(props) {
       const context = useProviderContext();
       const store = props.store || context;
@@ -7308,7 +7308,7 @@ If there's a particular need for this, please submit a feature request at https:
         (state) => !props.unmountOnHide || (state == null ? void 0 : state.mounted) || !!props.open
       );
       if (!mounted) return null;
-      return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Component9, { ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Component8, { ...props });
     });
   }
   var Dialog = createDialogComponent(
@@ -19010,7 +19010,7 @@ If there's a particular need for this, please submit a feature request at https:
   var LazyContext = (0, import_react65.createContext)({ strict: false });
 
   // packages/components/node_modules/framer-motion/dist/es/motion/utils/use-visual-element.mjs
-  function useVisualElement(Component9, visualState, props, createVisualElement, ProjectionNodeConstructor) {
+  function useVisualElement(Component8, visualState, props, createVisualElement, ProjectionNodeConstructor) {
     var _a, _b;
     const { visualElement: parent } = (0, import_react66.useContext)(MotionContext);
     const lazyContext = (0, import_react66.useContext)(LazyContext);
@@ -19019,7 +19019,7 @@ If there's a particular need for this, please submit a feature request at https:
     const visualElementRef = (0, import_react66.useRef)(null);
     createVisualElement = createVisualElement || lazyContext.renderer;
     if (!visualElementRef.current && createVisualElement) {
-      visualElementRef.current = createVisualElement(Component9, {
+      visualElementRef.current = createVisualElement(Component8, {
         visualState,
         parent,
         props,
@@ -19199,7 +19199,7 @@ If there's a particular need for this, please submit a feature request at https:
   var motionComponentSymbol = /* @__PURE__ */ Symbol.for("motionComponentSymbol");
 
   // packages/components/node_modules/framer-motion/dist/es/motion/index.mjs
-  function createRendererMotionComponent({ preloadedFeatures, createVisualElement, useRender, useVisualState, Component: Component9 }) {
+  function createRendererMotionComponent({ preloadedFeatures, createVisualElement, useRender, useVisualState, Component: Component8 }) {
     preloadedFeatures && loadFeatures(preloadedFeatures);
     function MotionComponent(props, externalRef) {
       let MeasureLayout2;
@@ -19215,12 +19215,12 @@ If there's a particular need for this, please submit a feature request at https:
         useStrictMode(configAndProps, preloadedFeatures);
         const layoutProjection = getProjectionFunctionality(configAndProps);
         MeasureLayout2 = layoutProjection.MeasureLayout;
-        context.visualElement = useVisualElement(Component9, visualState, configAndProps, createVisualElement, layoutProjection.ProjectionNode);
+        context.visualElement = useVisualElement(Component8, visualState, configAndProps, createVisualElement, layoutProjection.ProjectionNode);
       }
-      return (0, import_jsx_runtime40.jsxs)(MotionContext.Provider, { value: context, children: [MeasureLayout2 && context.visualElement ? (0, import_jsx_runtime40.jsx)(MeasureLayout2, { visualElement: context.visualElement, ...configAndProps }) : null, useRender(Component9, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, context.visualElement)] });
+      return (0, import_jsx_runtime40.jsxs)(MotionContext.Provider, { value: context, children: [MeasureLayout2 && context.visualElement ? (0, import_jsx_runtime40.jsx)(MeasureLayout2, { visualElement: context.visualElement, ...configAndProps }) : null, useRender(Component8, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, context.visualElement)] });
     }
     const ForwardRefMotionComponent = (0, import_react69.forwardRef)(MotionComponent);
-    ForwardRefMotionComponent[motionComponentSymbol] = Component9;
+    ForwardRefMotionComponent[motionComponentSymbol] = Component8;
     return ForwardRefMotionComponent;
   }
   function useLayoutId({ layoutId }) {
@@ -19275,26 +19275,26 @@ If there's a particular need for this, please submit a feature request at https:
   ];
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/utils/is-svg-component.mjs
-  function isSVGComponent(Component9) {
+  function isSVGComponent(Component8) {
     if (
       /**
        * If it's not a string, it's a custom React component. Currently we only support
        * HTML custom React components.
        */
-      typeof Component9 !== "string" || /**
+      typeof Component8 !== "string" || /**
        * If it contains a dash, the element is a custom HTML webcomponent.
        */
-      Component9.includes("-")
+      Component8.includes("-")
     ) {
       return false;
     } else if (
       /**
        * If it's in our list of lowercase SVG tags, it's an SVG component
        */
-      lowercaseSVGElements.indexOf(Component9) > -1 || /**
+      lowercaseSVGElements.indexOf(Component8) > -1 || /**
        * If it contains a capital letter, it's an SVG component
        */
-      /[A-Z]/u.test(Component9)
+      /[A-Z]/u.test(Component8)
     ) {
       return true;
     }
@@ -19756,10 +19756,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/render/svg/use-props.mjs
   var import_react73 = __toESM(require_react(), 1);
-  function useSVGProps(props, visualState, _isStatic, Component9) {
+  function useSVGProps(props, visualState, _isStatic, Component8) {
     const visualProps = (0, import_react73.useMemo)(() => {
       const state = createSvgRenderState();
-      buildSVGAttrs(state, visualState, isSVGTag(Component9), props.transformTemplate);
+      buildSVGAttrs(state, visualState, isSVGTag(Component8), props.transformTemplate);
       return {
         ...state.attrs,
         style: { ...state.style }
@@ -19775,14 +19775,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/use-render.mjs
   function createUseRender(forwardMotionProps = false) {
-    const useRender = (Component9, props, ref, { latestValues }, isStatic) => {
-      const useVisualProps = isSVGComponent(Component9) ? useSVGProps : useHTMLProps;
-      const visualProps = useVisualProps(props, latestValues, isStatic, Component9);
-      const filteredProps = filterProps(props, typeof Component9 === "string", forwardMotionProps);
-      const elementProps = Component9 !== import_react74.Fragment ? { ...filteredProps, ...visualProps, ref } : {};
+    const useRender = (Component8, props, ref, { latestValues }, isStatic) => {
+      const useVisualProps = isSVGComponent(Component8) ? useSVGProps : useHTMLProps;
+      const visualProps = useVisualProps(props, latestValues, isStatic, Component8);
+      const filteredProps = filterProps(props, typeof Component8 === "string", forwardMotionProps);
+      const elementProps = Component8 !== import_react74.Fragment ? { ...filteredProps, ...visualProps, ref } : {};
       const { children } = props;
       const renderedChildren = (0, import_react74.useMemo)(() => isMotionValue(children) ? children.get() : children, [children]);
-      return (0, import_react74.createElement)(Component9, {
+      return (0, import_react74.createElement)(Component8, {
         ...elementProps,
         children: renderedChildren
       });
@@ -19792,14 +19792,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/render/components/create-factory.mjs
   function createMotionComponentFactory(preloadedFeatures, createVisualElement) {
-    return function createMotionComponent2(Component9, { forwardMotionProps } = { forwardMotionProps: false }) {
-      const baseConfig = isSVGComponent(Component9) ? svgMotionConfig : htmlMotionConfig;
+    return function createMotionComponent2(Component8, { forwardMotionProps } = { forwardMotionProps: false }) {
+      const baseConfig = isSVGComponent(Component8) ? svgMotionConfig : htmlMotionConfig;
       const config = {
         ...baseConfig,
         preloadedFeatures,
         useRender: createUseRender(forwardMotionProps),
         createVisualElement,
-        Component: Component9
+        Component: Component8
       };
       return createRendererMotionComponent(config);
     };
@@ -20315,9 +20315,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/create-visual-element.mjs
-  var createDomVisualElement = (Component9, options2) => {
-    return isSVGComponent(Component9) ? new SVGVisualElement(options2) : new HTMLVisualElement(options2, {
-      allowProjection: Component9 !== import_react75.Fragment
+  var createDomVisualElement = (Component8, options2) => {
+    return isSVGComponent(Component8) ? new SVGVisualElement(options2) : new HTMLVisualElement(options2, {
+      allowProjection: Component8 !== import_react75.Fragment
     });
   };
 
@@ -23012,16 +23012,16 @@ If there's a particular need for this, please submit a feature request at https:
   var getStyledClassNameFromKey = memize(getStyledClassName);
 
   // packages/components/build-module/context/context-connect.mjs
-  function contextConnect(Component9, namespace) {
-    return _contextConnect(Component9, namespace, {
+  function contextConnect(Component8, namespace) {
+    return _contextConnect(Component8, namespace, {
       forwardsRef: true
     });
   }
-  function contextConnectWithoutRef(Component9, namespace) {
-    return _contextConnect(Component9, namespace);
+  function contextConnectWithoutRef(Component8, namespace) {
+    return _contextConnect(Component8, namespace);
   }
-  function _contextConnect(Component9, namespace, options2) {
-    const WrappedComponent = options2?.forwardsRef ? (0, import_element16.forwardRef)(Component9) : Component9;
+  function _contextConnect(Component8, namespace, options2) {
+    const WrappedComponent = options2?.forwardsRef ? (0, import_element16.forwardRef)(Component8) : Component8;
     if (typeof namespace === "undefined") {
       true ? (0, import_warning2.default)("contextConnect: Please provide a namespace") : void 0;
     }
@@ -23038,28 +23038,28 @@ If there's a particular need for this, please submit a feature request at https:
       selector: `.${getStyledClassNameFromKey(namespace)}`
     });
   }
-  function getConnectNamespace(Component9) {
-    if (!Component9) {
+  function getConnectNamespace(Component8) {
+    if (!Component8) {
       return [];
     }
     let namespaces = [];
-    if (Component9[CONNECT_STATIC_NAMESPACE]) {
-      namespaces = Component9[CONNECT_STATIC_NAMESPACE];
+    if (Component8[CONNECT_STATIC_NAMESPACE]) {
+      namespaces = Component8[CONNECT_STATIC_NAMESPACE];
     }
-    if (Component9.type && Component9.type[CONNECT_STATIC_NAMESPACE]) {
-      namespaces = Component9.type[CONNECT_STATIC_NAMESPACE];
+    if (Component8.type && Component8.type[CONNECT_STATIC_NAMESPACE]) {
+      namespaces = Component8.type[CONNECT_STATIC_NAMESPACE];
     }
     return namespaces;
   }
-  function hasConnectNamespace(Component9, match4) {
-    if (!Component9) {
+  function hasConnectNamespace(Component8, match4) {
+    if (!Component8) {
       return false;
     }
     if (typeof match4 === "string") {
-      return getConnectNamespace(Component9).includes(match4);
+      return getConnectNamespace(Component8).includes(match4);
     }
     if (Array.isArray(match4)) {
-      return match4.some((result) => getConnectNamespace(Component9).includes(result));
+      return match4.some((result) => getConnectNamespace(Component8).includes(result));
     }
     return false;
   }
@@ -28943,9 +28943,9 @@ This message will only show in development mode. It won't appear in production. 
     instanceId,
     listBoxId,
     className: className2,
-    Component: Component9 = "div"
+    Component: Component8 = "div"
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(Component9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(Component8, {
       id: listBoxId,
       role: "listbox",
       className: "components-autocomplete__results",
@@ -36105,7 +36105,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/palette-edit/index.mjs
   var import_element114 = __toESM(require_element(), 1);
   var import_i18n35 = __toESM(require_i18n(), 1);
-  var import_compose43 = __toESM(require_compose(), 1);
+  var import_compose44 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/item-group/item/hook.mjs
   var import_element106 = __toESM(require_element(), 1);
@@ -37228,6 +37228,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigable-container/container.mjs
   var import_element111 = __toESM(require_element(), 1);
+  var import_compose43 = __toESM(require_compose(), 1);
   var import_dom29 = __toESM(require_dom(), 1);
   var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
   var noop10 = () => {
@@ -37242,47 +37243,27 @@ This message will only show in development mode. It won't appear in production. 
     }
     return nextValue;
   }
-  var NavigableContainer = class extends import_element111.Component {
-    constructor(args) {
-      super(args);
-      this.onKeyDown = this.onKeyDown.bind(this);
-      this.bindContainer = this.bindContainer.bind(this);
-      this.getFocusableContext = this.getFocusableContext.bind(this);
-      this.getFocusableIndex = this.getFocusableIndex.bind(this);
-    }
-    componentDidMount() {
-      if (!this.container) {
-        return;
-      }
-      this.container.addEventListener("keydown", this.onKeyDown);
-    }
-    componentWillUnmount() {
-      if (!this.container) {
-        return;
-      }
-      this.container.removeEventListener("keydown", this.onKeyDown);
-    }
-    bindContainer(ref) {
-      const {
-        forwardedRef
-      } = this.props;
-      this.container = ref;
-      if (typeof forwardedRef === "function") {
-        forwardedRef(ref);
-      } else if (forwardedRef && "current" in forwardedRef) {
-        forwardedRef.current = ref;
-      }
-    }
-    getFocusableContext(target) {
-      if (!this.container) {
+  function UnforwardedNavigableContainer({
+    children,
+    stopNavigationEvents,
+    eventToOffset,
+    onNavigate = noop10,
+    onKeyDown,
+    cycle = true,
+    onlyBrowserTabstops,
+    ...restProps
+  }, ref) {
+    const containerRef = (0, import_element111.useRef)(null);
+    const getFocusableIndex = (0, import_element111.useCallback)((focusables, target) => {
+      return focusables.indexOf(target);
+    }, []);
+    const getFocusableContext = (0, import_element111.useCallback)((target) => {
+      if (!containerRef.current) {
         return null;
       }
-      const {
-        onlyBrowserTabstops
-      } = this.props;
       const finder = onlyBrowserTabstops ? import_dom29.focus.tabbable : import_dom29.focus.focusable;
-      const focusables = finder.find(this.container);
-      const index2 = this.getFocusableIndex(focusables, target);
+      const focusables = finder.find(containerRef.current);
+      const index2 = getFocusableIndex(focusables, target);
       if (index2 > -1 && target) {
         return {
           index: index2,
@@ -37291,83 +37272,64 @@ This message will only show in development mode. It won't appear in production. 
         };
       }
       return null;
-    }
-    getFocusableIndex(focusables, target) {
-      return focusables.indexOf(target);
-    }
-    onKeyDown(event) {
-      if (this.props.onKeyDown) {
-        this.props.onKeyDown(event);
+    }, [onlyBrowserTabstops, getFocusableIndex]);
+    (0, import_element111.useEffect)(() => {
+      const container = containerRef.current;
+      if (!container) {
+        return;
       }
-      const {
-        getFocusableContext
-      } = this;
-      const {
-        cycle = true,
-        eventToOffset,
-        onNavigate = noop10,
-        stopNavigationEvents
-      } = this.props;
-      const offset3 = eventToOffset(event);
-      if (offset3 !== void 0 && stopNavigationEvents) {
-        event.stopImmediatePropagation();
-        const targetRole = event.target?.getAttribute("role");
-        const targetHasMenuItemRole = !!targetRole && MENU_ITEM_ROLES.includes(targetRole);
-        if (targetHasMenuItemRole) {
-          event.preventDefault();
+      function handleKeyDown(event) {
+        if (onKeyDown) {
+          onKeyDown(event);
+        }
+        const offset3 = eventToOffset(event);
+        if (offset3 !== void 0 && stopNavigationEvents) {
+          event.stopImmediatePropagation();
+          const targetRole = event.target?.getAttribute("role");
+          const targetHasMenuItemRole = !!targetRole && MENU_ITEM_ROLES.includes(targetRole);
+          if (targetHasMenuItemRole) {
+            event.preventDefault();
+          }
+        }
+        if (!offset3) {
+          return;
+        }
+        const activeElement = event.target?.ownerDocument?.activeElement;
+        if (!activeElement) {
+          return;
+        }
+        const context = getFocusableContext(activeElement);
+        if (!context) {
+          return;
+        }
+        const {
+          index: index2,
+          focusables
+        } = context;
+        const nextIndex = cycle ? cycleValue(index2, focusables.length, offset3) : index2 + offset3;
+        if (nextIndex >= 0 && nextIndex < focusables.length) {
+          focusables[nextIndex].focus();
+          onNavigate(nextIndex, focusables[nextIndex]);
+          if (event.code === "Tab") {
+            event.preventDefault();
+          }
         }
       }
-      if (!offset3) {
-        return;
-      }
-      const activeElement = event.target?.ownerDocument?.activeElement;
-      if (!activeElement) {
-        return;
-      }
-      const context = getFocusableContext(activeElement);
-      if (!context) {
-        return;
-      }
-      const {
-        index: index2,
-        focusables
-      } = context;
-      const nextIndex = cycle ? cycleValue(index2, focusables.length, offset3) : index2 + offset3;
-      if (nextIndex >= 0 && nextIndex < focusables.length) {
-        focusables[nextIndex].focus();
-        onNavigate(nextIndex, focusables[nextIndex]);
-        if (event.code === "Tab") {
-          event.preventDefault();
-        }
-      }
-    }
-    render() {
-      const {
-        children,
-        stopNavigationEvents,
-        eventToOffset,
-        onNavigate,
-        onKeyDown,
-        cycle,
-        onlyBrowserTabstops,
-        forwardedRef,
-        ...restProps
-      } = this.props;
-      return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("div", {
-        ref: this.bindContainer,
-        ...restProps,
-        children
-      });
-    }
-  };
-  var forwardedNavigableContainer = (props, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(NavigableContainer, {
-      ...props,
-      forwardedRef: ref
+      container.addEventListener("keydown", handleKeyDown);
+      return () => {
+        container.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [onKeyDown, eventToOffset, stopNavigationEvents, cycle, onNavigate, getFocusableContext]);
+    const mergedRef = (0, import_compose43.useMergeRefs)([containerRef, ref]);
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("div", {
+      ref: mergedRef,
+      ...restProps,
+      children
     });
-  };
-  forwardedNavigableContainer.displayName = "NavigableContainer";
-  var container_default = (0, import_element111.forwardRef)(forwardedNavigableContainer);
+  }
+  var NavigableContainer = (0, import_element111.forwardRef)(UnforwardedNavigableContainer);
+  NavigableContainer.displayName = "NavigableContainer";
+  var container_default = NavigableContainer;
 
   // packages/components/build-module/navigable-container/menu.mjs
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
@@ -37838,7 +37800,7 @@ This message will only show in development mode. It won't appear in production. 
     (0, import_element114.useEffect)(() => {
       elementsReferenceRef.current = elements2;
     }, [elements2]);
-    const debounceOnChange = (0, import_compose43.useDebounce)((updatedElements) => onChange(deduplicateElementSlugs(updatedElements)), 100);
+    const debounceOnChange = (0, import_compose44.useDebounce)((updatedElements) => onChange(deduplicateElementSlugs(updatedElements)), 100);
     return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(component_default18, {
       spacing: 3,
       children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(component_default36, {
@@ -37893,7 +37855,7 @@ This message will only show in development mode. It won't appear in production. 
     const isAdding = isEditing && !!editingElement && elements2[editingElement] && !elements2[editingElement].slug;
     const elementsLength = elements2.length;
     const hasElements = elementsLength > 0;
-    const debounceOnChange = (0, import_compose43.useDebounce)(onChange, 100);
+    const debounceOnChange = (0, import_compose44.useDebounce)(onChange, 100);
     const onSelectPaletteItem = (0, import_element114.useCallback)((value, newEditingElementIndex) => {
       const selectedElement = newEditingElementIndex === void 0 ? void 0 : elements2[newEditingElementIndex];
       const key = isGradient ? "gradient" : "color";
@@ -38036,7 +37998,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/combobox-control/index.mjs
   var import_i18n37 = __toESM(require_i18n(), 1);
   var import_element118 = __toESM(require_element(), 1);
-  var import_compose46 = __toESM(require_compose(), 1);
+  var import_compose47 = __toESM(require_compose(), 1);
   var import_a11y5 = __toESM(require_a11y(), 1);
 
   // packages/components/build-module/combobox-control/styles.mjs
@@ -38114,7 +38076,7 @@ This message will only show in development mode. It won't appear in production. 
   var token_input_default = TokenInput;
 
   // packages/components/build-module/form-token-field/suggestions-list.mjs
-  var import_compose44 = __toESM(require_compose(), 1);
+  var import_compose45 = __toESM(require_compose(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
   var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
   var handleMouseDown = (e3) => {
@@ -38131,7 +38093,7 @@ This message will only show in development mode. It won't appear in production. 
     instanceId,
     __experimentalRenderItem
   }) {
-    const listRef = (0, import_compose44.useRefEffect)((listNode) => {
+    const listRef = (0, import_compose45.useRefEffect)((listNode) => {
       if (selectedIndex > -1 && scrollIntoView && listNode.children[selectedIndex]) {
         listNode.children[selectedIndex].scrollIntoView({
           behavior: "instant",
@@ -38213,13 +38175,13 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/higher-order/with-focus-outside/index.mjs
   var import_element116 = __toESM(require_element(), 1);
-  var import_compose45 = __toESM(require_compose(), 1);
+  var import_compose46 = __toESM(require_compose(), 1);
   var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
-  var with_focus_outside_default = (0, import_compose45.createHigherOrderComponent)((WrappedComponent) => function WithFocusOutside(props) {
+  var with_focus_outside_default = (0, import_compose46.createHigherOrderComponent)((WrappedComponent) => function WithFocusOutside(props) {
     const [handleFocusOutside, setHandleFocusOutside] = (0, import_element116.useState)(void 0);
     const bindFocusOutsideHandler = (0, import_element116.useCallback)((node2) => setHandleFocusOutside(() => node2?.handleFocusOutside ? node2.handleFocusOutside.bind(node2) : void 0), []);
     return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)("div", {
-      ...(0, import_compose45.__experimentalUseFocusOutside)(handleFocusOutside),
+      ...(0, import_compose46.__experimentalUseFocusOutside)(handleFocusOutside),
       children: /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(WrappedComponent, {
         ref: bindFocusOutsideHandler,
         ...props
@@ -38337,7 +38299,7 @@ This message will only show in development mode. It won't appear in production. 
     });
     const currentOption = options2.find((option) => option.value === value);
     const currentLabel = currentOption?.label ?? "";
-    const instanceId = (0, import_compose46.useInstanceId)(ComboboxControl, "combobox-control");
+    const instanceId = (0, import_compose47.useInstanceId)(ComboboxControl, "combobox-control");
     const [selectedSuggestion, setSelectedSuggestion] = (0, import_element118.useState)(currentOption || null);
     const [isExpanded, setIsExpanded] = (0, import_element118.useState)(false);
     const [inputHasFocus, setInputHasFocus] = (0, import_element118.useState)(false);
@@ -38526,7 +38488,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/composite/legacy/index.mjs
   var import_element119 = __toESM(require_element(), 1);
-  var import_compose47 = __toESM(require_compose(), 1);
+  var import_compose48 = __toESM(require_compose(), 1);
   var import_deprecated14 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
   function mapLegacyStatePropsToComponentProps(legacyProps) {
@@ -38555,7 +38517,7 @@ This message will only show in development mode. It won't appear in production. 
   };
   function proxyComposite(ProxiedComponent, propMap = {}) {
     const displayName = ProxiedComponent.displayName ?? "";
-    const Component9 = (legacyProps) => {
+    const Component8 = (legacyProps) => {
       (0, import_deprecated14.default)(`wp.components.${displayName}`, {
         since: "6.7",
         alternative: LEGACY_TO_NEW_DISPLAY_NAME.hasOwnProperty(displayName) ? LEGACY_TO_NEW_DISPLAY_NAME[displayName] : void 0
@@ -38567,7 +38529,7 @@ This message will only show in development mode. It won't appear in production. 
       let props = rest;
       props = {
         ...props,
-        id: (0, import_compose47.useInstanceId)(store, props.baseId, props.id)
+        id: (0, import_compose48.useInstanceId)(store, props.baseId, props.id)
       };
       Object.entries(propMap).forEach(([from2, to]) => {
         if (props.hasOwnProperty(from2)) {
@@ -38583,15 +38545,15 @@ This message will only show in development mode. It won't appear in production. 
         store
       });
     };
-    Component9.displayName = displayName;
-    return Component9;
+    Component8.displayName = displayName;
+    return Component8;
   }
   var UnproxiedCompositeGroup = (0, import_element119.forwardRef)(({
     role,
     ...props
   }, ref) => {
-    const Component9 = role === "row" ? Composite22.Row : Composite22.Group;
-    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Component9, {
+    const Component8 = role === "row" ? Composite22.Row : Composite22.Group;
+    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Component8, {
       ref,
       role,
       ...props
@@ -38626,7 +38588,7 @@ This message will only show in development mode. It won't appear in production. 
       unstable_virtual: virtualFocus
     } = legacyStateOptions;
     return {
-      baseId: (0, import_compose47.useInstanceId)(Composite4, "composite", baseId),
+      baseId: (0, import_compose48.useInstanceId)(Composite4, "composite", baseId),
       store: useCompositeStore({
         defaultActiveId,
         rtl: rtl2,
@@ -38645,7 +38607,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/modal/index.mjs
   var import_element122 = __toESM(require_element(), 1);
-  var import_compose49 = __toESM(require_compose(), 1);
+  var import_compose50 = __toESM(require_compose(), 1);
   var import_i18n38 = __toESM(require_i18n(), 1);
   var import_dom30 = __toESM(require_dom(), 1);
 
@@ -38681,7 +38643,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/modal/use-modal-exit-animation.mjs
-  var import_compose48 = __toESM(require_compose(), 1);
+  var import_compose49 = __toESM(require_compose(), 1);
   var import_element120 = __toESM(require_element(), 1);
   var import_warning6 = __toESM(require_warning(), 1);
   var FRAME_ANIMATION_DURATION = config_values_default.transitionDuration;
@@ -38690,7 +38652,7 @@ This message will only show in development mode. It won't appear in production. 
   function useModalExitAnimation() {
     const frameRef = (0, import_element120.useRef)(null);
     const [isAnimatingOut, setIsAnimatingOut] = (0, import_element120.useState)(false);
-    const isReducedMotion = (0, import_compose48.useReducedMotion)();
+    const isReducedMotion = (0, import_compose49.useReducedMotion)();
     const closeModal = (0, import_element120.useCallback)(() => new Promise((closeModalResolve) => {
       const frameEl = frameRef.current;
       if (isReducedMotion) {
@@ -38776,11 +38738,11 @@ This message will only show in development mode. It won't appear in production. 
       __experimentalHideHeader = false
     } = props;
     const ref = (0, import_element122.useRef)(null);
-    const instanceId = (0, import_compose49.useInstanceId)(Modal);
+    const instanceId = (0, import_compose50.useInstanceId)(Modal);
     const headingId = title ? `components-modal-header-${instanceId}` : aria.labelledby;
-    const focusOnMountRef = (0, import_compose49.useFocusOnMount)(focusOnMount === "firstContentElement" ? "firstElement" : focusOnMount);
-    const constrainedTabbingRef = (0, import_compose49.useConstrainedTabbing)();
-    const focusReturnRef = (0, import_compose49.useFocusReturn)();
+    const focusOnMountRef = (0, import_compose50.useFocusOnMount)(focusOnMount === "firstContentElement" ? "firstElement" : focusOnMount);
+    const constrainedTabbingRef = (0, import_compose50.useConstrainedTabbing)();
+    const focusReturnRef = (0, import_compose50.useFocusReturn)();
     const contentRef = (0, import_element122.useRef)(null);
     const childrenContainerRef = (0, import_element122.useRef)(null);
     const [hasScrolledContent, setHasScrolledContent] = (0, import_element122.useState)(false);
@@ -38900,7 +38862,7 @@ This message will only show in development mode. It won't appear in production. 
     const modal = (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
-        ref: (0, import_compose49.useMergeRefs)([ref, forwardedRef]),
+        ref: (0, import_compose50.useMergeRefs)([ref, forwardedRef]),
         className: clsx_default("components-modal__screen-overlay", overlayClassname, overlayClassnameProp),
         onKeyDown: withIgnoreIMEEvents(handleEscapeKeyDown),
         ...shouldCloseOnClickOutside ? overlayPressHandlers : {},
@@ -38912,7 +38874,7 @@ This message will only show in development mode. It won't appear in production. 
               ...frameStyle,
               ...style2
             },
-            ref: (0, import_compose49.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, focusOnMount !== "firstContentElement" ? focusOnMountRef : null]),
+            ref: (0, import_compose50.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, focusOnMount !== "firstContentElement" ? focusOnMountRef : null]),
             role,
             "aria-label": contentLabel,
             "aria-labelledby": contentLabel ? void 0 : headingId,
@@ -38955,7 +38917,7 @@ This message will only show in development mode. It won't appear in production. 
                   })]
                 })]
               }), /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
-                ref: (0, import_compose49.useMergeRefs)([childrenContainerRef, focusOnMount === "firstContentElement" ? focusOnMountRef : null]),
+                ref: (0, import_compose50.useMergeRefs)([childrenContainerRef, focusOnMount === "firstContentElement" ? focusOnMountRef : null]),
                 className: "components-modal__children-container",
                 children
               })]
@@ -39068,7 +39030,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default37 = ConfirmDialog;
 
   // packages/components/build-module/custom-select-control/index.mjs
-  var import_compose50 = __toESM(require_compose(), 1);
+  var import_compose51 = __toESM(require_compose(), 1);
   var import_i18n41 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/custom-select-control-v2/custom-select.mjs
@@ -39372,7 +39334,7 @@ This message will only show in development mode. It won't appear in production. 
       size: size3,
       __shouldNotWarnDeprecated36pxSize
     });
-    const descriptionId = (0, import_compose50.useInstanceId)(CustomSelectControl, "custom-select-control__description");
+    const descriptionId = (0, import_compose51.useInstanceId)(CustomSelectControl, "custom-select-control__description");
     const store = useSelectStore({
       async setValue(nextValue) {
         const nextOption = options2.find((item2) => item2.key === nextValue);
@@ -40945,7 +40907,7 @@ This message will only show in development mode. It won't appear in production. 
   DisclosureContent22.displayName = "DisclosureContent";
 
   // packages/components/build-module/draggable/index.mjs
-  var import_compose51 = __toESM(require_compose(), 1);
+  var import_compose52 = __toESM(require_compose(), 1);
   var import_element133 = __toESM(require_element(), 1);
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   var dragImageClass = "components-draggable__invisible-drag-image";
@@ -41039,7 +41001,7 @@ This message will only show in development mode. It won't appear in production. 
           onDragOver(e3);
         }
       }
-      const throttledDragOver = (0, import_compose51.throttle)(over, 16);
+      const throttledDragOver = (0, import_compose52.throttle)(over, 16);
       ownerDocument.addEventListener("dragover", throttledDragOver);
       ownerDocument.body.classList.add(bodyClass);
       if (onDragStart) {
@@ -41079,7 +41041,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n46 = __toESM(require_i18n(), 1);
   var import_element134 = __toESM(require_element(), 1);
   var import_dom31 = __toESM(require_dom(), 1);
-  var import_compose52 = __toESM(require_compose(), 1);
+  var import_compose53 = __toESM(require_compose(), 1);
   var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   function DropZoneComponent({
     className: className2,
@@ -41094,7 +41056,7 @@ This message will only show in development mode. It won't appear in production. 
     const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element134.useState)();
     const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element134.useState)();
     const [isActive, setIsActive] = (0, import_element134.useState)();
-    const ref = (0, import_compose52.__experimentalUseDropZone)({
+    const ref = (0, import_compose53.__experimentalUseDropZone)({
       onDrop(event) {
         if (!event.dataTransfer) {
           return;
@@ -41184,7 +41146,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/duotone-picker/color-list-picker/index.mjs
   var import_element135 = __toESM(require_element(), 1);
   var import_i18n47 = __toESM(require_i18n(), 1);
-  var import_compose53 = __toESM(require_compose(), 1);
+  var import_compose54 = __toESM(require_compose(), 1);
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   function ColorOption({
     label,
@@ -41195,7 +41157,7 @@ This message will only show in development mode. It won't appear in production. 
     onChange
   }) {
     const [isOpen, setIsOpen] = (0, import_element135.useState)(false);
-    const idRoot = (0, import_compose53.useInstanceId)(ColorOption, "color-list-picker-option");
+    const idRoot = (0, import_compose54.useInstanceId)(ColorOption, "color-list-picker-option");
     const labelId = `${idRoot}__label`;
     const contentId = `${idRoot}__content`;
     return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(import_jsx_runtime202.Fragment, {
@@ -41498,7 +41460,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/focal-point-picker/index.mjs
   var import_i18n51 = __toESM(require_i18n(), 1);
   var import_element138 = __toESM(require_element(), 1);
-  var import_compose54 = __toESM(require_compose(), 1);
+  var import_compose55 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/focal-point-picker/controls.mjs
   var import_i18n50 = __toESM(require_i18n(), 1);
@@ -41834,7 +41796,7 @@ This message will only show in development mode. It won't appear in production. 
       startDrag,
       endDrag,
       isDragging: isDragging2
-    } = (0, import_compose54.__experimentalUseDragging)({
+    } = (0, import_compose55.__experimentalUseDragging)({
       onDragStart: (event) => {
         dragAreaRef.current?.focus();
         const value = getValueWithinDragArea(event);
@@ -41890,7 +41852,7 @@ This message will only show in development mode. It won't appear in production. 
       defaultView?.addEventListener("resize", updateBounds);
       return () => defaultView?.removeEventListener("resize", updateBounds);
     }, []);
-    (0, import_compose54.useIsomorphicLayoutEffect)(() => void refUpdateBounds.current(), []);
+    (0, import_compose55.useIsomorphicLayoutEffect)(() => void refUpdateBounds.current(), []);
     const getValueWithinDragArea = ({
       clientX,
       clientY,
@@ -42007,14 +41969,14 @@ This message will only show in development mode. It won't appear in production. 
   var focal_point_picker_default = FocalPointPicker;
 
   // packages/components/build-module/focusable-iframe/index.mjs
-  var import_compose55 = __toESM(require_compose(), 1);
+  var import_compose56 = __toESM(require_compose(), 1);
   var import_deprecated16 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   function FocusableIframe({
     iframeRef,
     ...props
   }) {
-    const ref = (0, import_compose55.useMergeRefs)([iframeRef, (0, import_compose55.useFocusableIframe)()]);
+    const ref = (0, import_compose56.useMergeRefs)([iframeRef, (0, import_compose56.useFocusableIframe)()]);
     (0, import_deprecated16.default)("wp.components.FocusableIframe", {
       since: "5.9",
       alternative: "wp.compose.useFocusableIframe"
@@ -42028,7 +41990,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/font-size-picker/index.mjs
   var import_i18n55 = __toESM(require_i18n(), 1);
   var import_element140 = __toESM(require_element(), 1);
-  var import_compose56 = __toESM(require_compose(), 1);
+  var import_compose57 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/font-size-picker/styles.mjs
   function _EMOTION_STRINGIFIED_CSS_ERROR__33() {
@@ -42250,7 +42212,7 @@ This message will only show in development mode. It won't appear in production. 
       withSlider = false,
       withReset = true
     } = props;
-    const labelId = (0, import_compose56.useInstanceId)(UnforwardedFontSizePicker, "font-size-picker-label");
+    const labelId = (0, import_compose57.useInstanceId)(UnforwardedFontSizePicker, "font-size-picker-label");
     const units = useCustomUnits({
       availableUnits: unitsProp
     });
@@ -42506,12 +42468,12 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/form-token-field/index.mjs
   var import_element143 = __toESM(require_element(), 1);
   var import_i18n57 = __toESM(require_i18n(), 1);
-  var import_compose58 = __toESM(require_compose(), 1);
+  var import_compose59 = __toESM(require_compose(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
 
   // packages/components/build-module/form-token-field/token.mjs
-  var import_compose57 = __toESM(require_compose(), 1);
+  var import_compose58 = __toESM(require_compose(), 1);
   var import_i18n56 = __toESM(require_i18n(), 1);
   var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
   var noop15 = () => {
@@ -42530,7 +42492,7 @@ This message will only show in development mode. It won't appear in production. 
     termPosition,
     termsCount
   }) {
-    const instanceId = (0, import_compose57.useInstanceId)(Token);
+    const instanceId = (0, import_compose58.useInstanceId)(Token);
     const tokenClasses = clsx_default("components-form-token-field__token", {
       "is-error": "error" === status,
       "is-success": "success" === status,
@@ -42631,18 +42593,18 @@ This message will only show in development mode. It won't appear in production. 
       size: void 0,
       __next40pxDefaultSize
     });
-    const instanceId = (0, import_compose58.useInstanceId)(FormTokenField);
+    const instanceId = (0, import_compose59.useInstanceId)(FormTokenField);
     const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element143.useState)("");
     const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element143.useState)(0);
     const [isActive, setIsActive] = (0, import_element143.useState)(false);
     const [isExpanded, setIsExpanded] = (0, import_element143.useState)(false);
     const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element143.useState)(-1);
     const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element143.useState)(false);
-    const prevSuggestions = (0, import_compose58.usePrevious)(suggestions);
-    const prevValue = (0, import_compose58.usePrevious)(value);
+    const prevSuggestions = (0, import_compose59.usePrevious)(suggestions);
+    const prevValue = (0, import_compose59.usePrevious)(value);
     const input = (0, import_element143.useRef)(null);
     const tokensAndInput = (0, import_element143.useRef)(null);
-    const debouncedSpeak = (0, import_compose58.useDebounce)(import_a11y6.speak, 500);
+    const debouncedSpeak = (0, import_compose59.useDebounce)(import_a11y6.speak, 500);
     (0, import_element143.useEffect)(() => {
       if (isActive && !hasFocus2()) {
         focus4();
@@ -43297,7 +43259,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/keyboard-shortcuts/index.mjs
   var import_element147 = __toESM(require_element(), 1);
-  var import_compose59 = __toESM(require_compose(), 1);
+  var import_compose60 = __toESM(require_compose(), 1);
   var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
   function KeyboardShortcut({
     target,
@@ -43306,7 +43268,7 @@ This message will only show in development mode. It won't appear in production. 
     bindGlobal,
     eventName
   }) {
-    (0, import_compose59.useKeyboardShortcut)(shortcut, callback, {
+    (0, import_compose60.useKeyboardShortcut)(shortcut, callback, {
       bindGlobal,
       target,
       eventName
@@ -43341,7 +43303,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/menu-group/index.mjs
   var import_element148 = __toESM(require_element(), 1);
-  var import_compose60 = __toESM(require_compose(), 1);
+  var import_compose61 = __toESM(require_compose(), 1);
   var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
   function MenuGroup3(props) {
     const {
@@ -43350,7 +43312,7 @@ This message will only show in development mode. It won't appear in production. 
       label,
       hideSeparator
     } = props;
-    const instanceId = (0, import_compose60.useInstanceId)(MenuGroup3);
+    const instanceId = (0, import_compose61.useInstanceId)(MenuGroup3);
     if (!import_element148.Children.count(children)) {
       return null;
     }
@@ -44085,19 +44047,19 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n65 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/higher-order/with-spoken-messages/index.mjs
-  var import_compose61 = __toESM(require_compose(), 1);
+  var import_compose62 = __toESM(require_compose(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
-  var with_spoken_messages_default = (0, import_compose61.createHigherOrderComponent)((Component9) => function WithSpokenMessages(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(Component9, {
+  var with_spoken_messages_default = (0, import_compose62.createHigherOrderComponent)((Component8) => function WithSpokenMessages(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(Component8, {
       ...props,
       speak: import_a11y7.speak,
-      debouncedSpeak: (0, import_compose61.useDebounce)(import_a11y7.speak, 500)
+      debouncedSpeak: (0, import_compose62.useDebounce)(import_a11y7.speak, 500)
     });
   }, "withSpokenMessages");
 
   // packages/components/build-module/search-control/index.mjs
-  var import_compose62 = __toESM(require_compose(), 1);
+  var import_compose63 = __toESM(require_compose(), 1);
   var import_i18n64 = __toESM(require_i18n(), 1);
   var import_element161 = __toESM(require_element(), 1);
   var import_deprecated21 = __toESM(require_deprecated(), 1);
@@ -44181,13 +44143,13 @@ This message will only show in development mode. It won't appear in production. 
       ...filteredRestProps
     } = restProps;
     const searchRef = (0, import_element161.useRef)(null);
-    const instanceId = (0, import_compose62.useInstanceId)(SearchControl, "components-search-control");
+    const instanceId = (0, import_compose63.useInstanceId)(SearchControl, "components-search-control");
     return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(StyledInputControl, {
       __next40pxDefaultSize: true,
       id: instanceId,
       hideLabelFromVision,
       label,
-      ref: (0, import_compose62.useMergeRefs)([searchRef, forwardedRef]),
+      ref: (0, import_compose63.useMergeRefs)([searchRef, forwardedRef]),
       type: "search",
       size: size3,
       className: clsx_default("components-search-control", className2),
@@ -45111,13 +45073,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/navigator/navigator-screen/component.mjs
   var import_dom32 = __toESM(require_dom(), 1);
   var import_element168 = __toESM(require_element(), 1);
-  var import_compose64 = __toESM(require_compose(), 1);
+  var import_compose65 = __toESM(require_compose(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_warning8 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.mjs
   var import_element167 = __toESM(require_element(), 1);
-  var import_compose63 = __toESM(require_compose(), 1);
+  var import_compose64 = __toESM(require_compose(), 1);
   var import_i18n68 = __toESM(require_i18n(), 1);
   var ANIMATION_TIMEOUT_MARGIN = 1.2;
   var isEnterAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_IN" && animationName === ANIMATION_END_NAMES[animationDirection].in;
@@ -45129,7 +45091,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onAnimationEnd
   }) {
     const isRTL23 = (0, import_i18n68.isRTL)();
-    const prefersReducedMotion2 = (0, import_compose63.useReducedMotion)();
+    const prefersReducedMotion2 = (0, import_compose64.useReducedMotion)();
     const [animationStatus, setAnimationStatus] = (0, import_element167.useState)("INITIAL");
     const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
     const becameUnselected = animationStatus !== "ANIMATING_OUT" && animationStatus !== "OUT" && !isMatch;
@@ -45264,7 +45226,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       locationRef.current.hasRestoredFocus = true;
       elementToFocus.focus();
     }, [skipAnimationAndFocusRestoration, isMatch, isBack, focusTargetSelector, skipFocus]);
-    const mergedWrapperRef = (0, import_compose64.useMergeRefs)([forwardedRef, wrapperRef]);
+    const mergedWrapperRef = (0, import_compose65.useMergeRefs)([forwardedRef, wrapperRef]);
     return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(component_default, {
       ref: mergedWrapperRef,
       className: classes,
@@ -45685,7 +45647,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var panel_default = Panel;
 
   // packages/components/build-module/panel/body.mjs
-  var import_compose65 = __toESM(require_compose(), 1);
+  var import_compose66 = __toESM(require_compose(), 1);
   var import_element174 = __toESM(require_element(), 1);
   var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
   var noop22 = () => {
@@ -45707,7 +45669,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       fallback: false
     });
     const nodeRef = (0, import_element174.useRef)(null);
-    const scrollBehavior = (0, import_compose65.useReducedMotion)() ? "auto" : "smooth";
+    const scrollBehavior = (0, import_compose66.useReducedMotion)() ? "auto" : "smooth";
     const handleOnToggle = (event) => {
       event.preventDefault();
       const next2 = !isOpened;
@@ -45730,7 +45692,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     return /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)("div", {
       className: classes,
-      ref: (0, import_compose65.useMergeRefs)([nodeRef, ref]),
+      ref: (0, import_compose66.useMergeRefs)([nodeRef, ref]),
       children: [/* @__PURE__ */ (0, import_jsx_runtime250.jsx)(PanelBodyTitle, {
         icon,
         isOpened: Boolean(isOpened),
@@ -45795,7 +45757,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var row_default = PanelRow;
 
   // packages/components/build-module/placeholder/index.mjs
-  var import_compose66 = __toESM(require_compose(), 1);
+  var import_compose67 = __toESM(require_compose(), 1);
   var import_primitives34 = __toESM(require_primitives(), 1);
   var import_element176 = __toESM(require_element(), 1);
   var import_a11y9 = __toESM(require_a11y(), 1);
@@ -45826,7 +45788,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = props;
     const [resizeListener, {
       width
-    }] = (0, import_compose66.useResizeObserver)();
+    }] = (0, import_compose67.useResizeObserver)();
     let modifierClassNames;
     if (typeof width === "number") {
       modifierClassNames = {
@@ -46296,7 +46258,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var radio_group_default = RadioGroup22;
 
   // packages/components/build-module/radio-control/index.mjs
-  var import_compose67 = __toESM(require_compose(), 1);
+  var import_compose68 = __toESM(require_compose(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
   function generateOptionDescriptionId(radioGroupId, index2) {
     return `${radioGroupId}-${index2}-option-description`;
@@ -46321,7 +46283,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       id: preferredId,
       ...additionalProps
     } = props;
-    const id3 = (0, import_compose67.useInstanceId)(RadioControl, "inspector-radio-control", preferredId);
+    const id3 = (0, import_compose68.useInstanceId)(RadioControl, "inspector-radio-control", preferredId);
     const onChangeValue = (event) => onChange(event.target.value);
     if (!options2?.length) {
       return null;
@@ -47228,7 +47190,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/resizable-box/resize-tooltip/utils.mjs
   var import_element183 = __toESM(require_element(), 1);
-  var import_compose68 = __toESM(require_compose(), 1);
+  var import_compose69 = __toESM(require_compose(), 1);
   var noop23 = () => {
   };
   var POSITIONS = {
@@ -47242,7 +47204,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     position: position2 = POSITIONS.bottom,
     showPx = false
   }) {
-    const [resizeListener, sizes] = (0, import_compose68.useResizeObserver)();
+    const [resizeListener, sizes] = (0, import_compose69.useResizeObserver)();
     const isAxisControlled = !!axis;
     const [moveX, setMoveX] = (0, import_element183.useState)(false);
     const [moveY, setMoveY] = (0, import_element183.useState)(false);
@@ -47589,7 +47551,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/sandbox/index.mjs
   var import_element188 = __toESM(require_element(), 1);
-  var import_compose69 = __toESM(require_compose(), 1);
+  var import_compose70 = __toESM(require_compose(), 1);
   var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
   var observeAndResizeJS = function() {
     const {
@@ -47757,7 +47719,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("iframe", {
-      ref: (0, import_compose69.useMergeRefs)([ref, (0, import_compose69.useFocusableIframe)()]),
+      ref: (0, import_compose70.useMergeRefs)([ref, (0, import_compose70.useFocusableIframe)()]),
       title,
       tabIndex,
       className: "components-sandbox",
@@ -47873,7 +47835,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       trySandBox(true);
     }, [html, type]);
     return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("iframe", {
-      ref: (0, import_compose69.useMergeRefs)([ref, (0, import_compose69.useFocusableIframe)()]),
+      ref: (0, import_compose70.useMergeRefs)([ref, (0, import_compose70.useFocusableIframe)()]),
       title,
       tabIndex,
       className: "components-sandbox",
@@ -48021,7 +47983,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var snackbar_default = Snackbar;
 
   // packages/components/build-module/snackbar/list.mjs
-  var import_compose70 = __toESM(require_compose(), 1);
+  var import_compose71 = __toESM(require_compose(), 1);
   var import_element190 = __toESM(require_element(), 1);
   var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
   var SNACKBAR_VARIANTS = {
@@ -48062,7 +48024,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onRemove
   }) {
     const listRef = (0, import_element190.useRef)(null);
-    const isReducedMotion = (0, import_compose70.useReducedMotion)();
+    const isReducedMotion = (0, import_compose71.useReducedMotion)();
     className2 = clsx_default("components-snackbar-list", className2);
     const removeNotice = (notice) => () => onRemove?.(notice.id);
     return /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("div", {
@@ -48103,7 +48065,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tab-panel/index.mjs
   var import_element191 = __toESM(require_element(), 1);
-  var import_compose71 = __toESM(require_compose(), 1);
+  var import_compose72 = __toESM(require_compose(), 1);
   var import_i18n76 = __toESM(require_i18n(), 1);
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   var extractTabName = (id3) => {
@@ -48122,7 +48084,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     activeClass = "is-active",
     onSelect
   }, ref) => {
-    const instanceId = (0, import_compose71.useInstanceId)(TabPanel22, "tab-panel");
+    const instanceId = (0, import_compose72.useInstanceId)(TabPanel22, "tab-panel");
     const prependInstanceId = (0, import_element191.useCallback)((tabName) => {
       if (typeof tabName === "undefined") {
         return;
@@ -48156,7 +48118,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const selectedTab = tabs.find(({
       name
     }) => name === selectedTabName);
-    const previousSelectedTabName = (0, import_compose71.usePrevious)(selectedTabName);
+    const previousSelectedTabName = (0, import_compose72.usePrevious)(selectedTabName);
     (0, import_element191.useEffect)(() => {
       if (previousSelectedTabName !== selectedTabName && selectedTabName === initialTabName && !!selectedTabName) {
         onSelect?.(selectedTabName);
@@ -48225,7 +48187,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var tab_panel_default = TabPanel22;
 
   // packages/components/build-module/text-control/index.mjs
-  var import_compose72 = __toESM(require_compose(), 1);
+  var import_compose73 = __toESM(require_compose(), 1);
   var import_element192 = __toESM(require_element(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTextControl(props, ref) {
@@ -48243,7 +48205,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       type = "text",
       ...additionalProps
     } = props;
-    const id3 = (0, import_compose72.useInstanceId)(TextControl, "inspector-text-control", idProp);
+    const id3 = (0, import_compose73.useInstanceId)(TextControl, "inspector-text-control", idProp);
     const onChangeValue = (event) => onChange(event.target.value);
     maybeWarnDeprecated36pxSize({
       componentName: "TextControl",
@@ -48275,7 +48237,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var text_control_default = TextControl;
 
   // packages/components/build-module/textarea-control/index.mjs
-  var import_compose73 = __toESM(require_compose(), 1);
+  var import_compose74 = __toESM(require_compose(), 1);
   var import_element193 = __toESM(require_element(), 1);
 
   // packages/components/build-module/textarea-control/styles/textarea-control-styles.mjs
@@ -48303,7 +48265,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       className: className2,
       ...additionalProps
     } = props;
-    const instanceId = (0, import_compose73.useInstanceId)(TextareaControl);
+    const instanceId = (0, import_compose74.useInstanceId)(TextareaControl);
     const id3 = `inspector-textarea-control-${instanceId}`;
     const onChangeValue = (event) => onChange(event.target.value);
     const classes = clsx_default("components-textarea-control", className2);
@@ -48370,7 +48332,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toggle-control/index.mjs
   var import_element195 = __toESM(require_element(), 1);
-  var import_compose74 = __toESM(require_compose(), 1);
+  var import_compose75 = __toESM(require_compose(), 1);
   var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToggleControl({
     label,
@@ -48386,7 +48348,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     function onChangeToggle(event) {
       onChange(event.target.checked);
     }
-    const instanceId = (0, import_compose74.useInstanceId)(ToggleControl);
+    const instanceId = (0, import_compose75.useInstanceId)(ToggleControl);
     const id3 = `inspector-toggle-control-${instanceId}`;
     let describedBy, helpLabel;
     if (help) {
@@ -48458,12 +48420,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarItem({
     children,
-    as: Component9,
+    as: Component8,
     ...props
   }, ref) {
     const accessibleToolbarStore = (0, import_element197.useContext)(toolbar_context_default);
     const isRenderProp = typeof children === "function";
-    if (!isRenderProp && !Component9) {
+    if (!isRenderProp && !Component8) {
       true ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
       return null;
     }
@@ -48473,8 +48435,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       "data-toolbar-item": true
     };
     if (!accessibleToolbarStore) {
-      if (Component9) {
-        return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(Component9, {
+      if (Component8) {
+        return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(Component8, {
           ...allProps,
           children
         });
@@ -48484,7 +48446,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       return children(allProps);
     }
-    const render = isRenderProp ? children : Component9 && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(Component9, {
+    const render = isRenderProp ? children : Component8 && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(Component8, {
       children
     });
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(ToolbarItem, {
@@ -49380,7 +49342,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var component_default39 = ToolsPanel2;
 
   // packages/components/build-module/tools-panel/tools-panel-item/hook.mjs
-  var import_compose75 = __toESM(require_compose(), 1);
+  var import_compose76 = __toESM(require_compose(), 1);
   var import_element207 = __toESM(require_element(), 1);
   var noop26 = () => {
   };
@@ -49413,7 +49375,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = useToolsPanelContext();
     const hasValueCallback = (0, import_element207.useCallback)(hasValue, [panelId]);
     const resetAllFilterCallback = (0, import_element207.useCallback)(resetAllFilter, [panelId]);
-    const previousPanelId = (0, import_compose75.usePrevious)(currentPanelId);
+    const previousPanelId = (0, import_compose76.usePrevious)(currentPanelId);
     const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
     (0, import_element207.useLayoutEffect)(() => {
       if (hasMatchingPanel && previousPanelId !== null) {
@@ -49442,7 +49404,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [registerResetAllFilter, deregisterResetAllFilter, resetAllFilterCallback, hasMatchingPanel]);
     const menuGroup = isShownByDefault ? "default" : "optional";
     const isMenuItemChecked = menuItems?.[menuGroup]?.[label];
-    const wasMenuItemChecked = (0, import_compose75.usePrevious)(isMenuItemChecked);
+    const wasMenuItemChecked = (0, import_compose76.usePrevious)(isMenuItemChecked);
     const isRegistered = menuItems?.[menuGroup]?.[label] !== void 0;
     const isValueSet = hasValue();
     (0, import_element207.useEffect)(() => {
@@ -49573,7 +49535,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   var RovingTabIndexItem = (0, import_element211.forwardRef)(function UnforwardedRovingTabIndexItem({
     children,
-    as: Component9,
+    as: Component8,
     ...props
   }, forwardedRef) {
     const localRef = (0, import_element211.useRef)(null);
@@ -49600,10 +49562,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (typeof children === "function") {
       return children(allProps);
     }
-    if (!Component9) {
+    if (!Component8) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(Component9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(Component8, {
       ...allProps,
       children
     });
@@ -49909,7 +49871,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/navigate-regions/index.mjs
   var import_element217 = __toESM(require_element(), 1);
-  var import_compose76 = __toESM(require_compose(), 1);
+  var import_compose77 = __toESM(require_compose(), 1);
   var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   var defaultShortcuts = {
@@ -49951,7 +49913,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       nextRegion.focus();
       setIsFocusingRegions(true);
     }
-    const clickRef = (0, import_compose76.useRefEffect)((element) => {
+    const clickRef = (0, import_compose77.useRefEffect)((element) => {
       function onClick() {
         setIsFocusingRegions(false);
       }
@@ -49961,7 +49923,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [setIsFocusingRegions]);
     return {
-      ref: (0, import_compose76.useMergeRefs)([ref, clickRef]),
+      ref: (0, import_compose77.useMergeRefs)([ref, clickRef]),
       className: isFocusingRegions ? "is-focusing-regions" : "",
       onKeyDown(event) {
         if (shortcuts.previous.some(({
@@ -49982,23 +49944,23 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     };
   }
-  var navigate_regions_default = (0, import_compose76.createHigherOrderComponent)((Component9) => function NavigateRegions({
+  var navigate_regions_default = (0, import_compose77.createHigherOrderComponent)((Component8) => function NavigateRegions({
     shortcuts,
     ...props
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
       ...useNavigateRegions(shortcuts),
-      children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Component9, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Component8, {
         ...props
       })
     });
   }, "navigateRegions");
 
   // packages/components/build-module/higher-order/with-constrained-tabbing/index.mjs
-  var import_compose77 = __toESM(require_compose(), 1);
+  var import_compose78 = __toESM(require_compose(), 1);
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
-  var withConstrainedTabbing = (0, import_compose77.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
-    const ref = (0, import_compose77.useConstrainedTabbing)();
+  var withConstrainedTabbing = (0, import_compose78.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
+    const ref = (0, import_compose78.useConstrainedTabbing)();
     return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)("div", {
       ref,
       tabIndex: -1,
@@ -50012,9 +49974,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-fallback-styles/index.mjs
   var import_es63 = __toESM(require_es6(), 1);
   var import_element218 = __toESM(require_element(), 1);
-  var import_compose78 = __toESM(require_compose(), 1);
+  var import_compose79 = __toESM(require_compose(), 1);
   var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
-  var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose78.createHigherOrderComponent)((WrappedComponent) => {
+  var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose79.createHigherOrderComponent)((WrappedComponent) => {
     return class WithFallbackStyles extends import_element218.Component {
       constructor(props) {
         super(props);
@@ -50068,11 +50030,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-filters/index.mjs
   var import_element219 = __toESM(require_element(), 1);
   var import_hooks11 = __toESM(require_hooks(), 1);
-  var import_compose79 = __toESM(require_compose(), 1);
+  var import_compose80 = __toESM(require_compose(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_FRAME_PERIOD = 16;
   function withFilters(hookName) {
-    return (0, import_compose79.createHigherOrderComponent)((OriginalComponent) => {
+    return (0, import_compose80.createHigherOrderComponent)((OriginalComponent) => {
       const namespace = "core/with-filters/" + hookName;
       let FilteredComponent;
       function ensureFilteredComponent() {
@@ -50106,7 +50068,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
       FilteredComponentRenderer.instances = [];
-      const throttledForceUpdate = (0, import_compose79.debounce)(() => {
+      const throttledForceUpdate = (0, import_compose80.debounce)(() => {
         FilteredComponent = (0, import_hooks11.applyFilters)(hookName, OriginalComponent);
         FilteredComponentRenderer.instances.forEach((instance) => {
           instance.forceUpdate();
@@ -50123,20 +50085,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
   var import_element220 = __toESM(require_element(), 1);
-  var import_compose80 = __toESM(require_compose(), 1);
+  var import_compose81 = __toESM(require_compose(), 1);
   var import_deprecated27 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element220.Component || typeof object === "function";
   }
-  var with_focus_return_default = (0, import_compose80.createHigherOrderComponent)(
+  var with_focus_return_default = (0, import_compose81.createHigherOrderComponent)(
     // @ts-expect-error TODO: Reconcile with intended `createHigherOrderComponent` types
     (options2) => {
       const HoC = ({
         onFocusReturn
       } = {}) => (WrappedComponent) => {
         const WithFocusReturn = (props) => {
-          const ref = (0, import_compose80.useFocusReturn)(onFocusReturn);
+          const ref = (0, import_compose81.useFocusReturn)(onFocusReturn);
           return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("div", {
             ref,
             children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(WrappedComponent, {
@@ -50166,10 +50128,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-notices/index.mjs
   var import_element221 = __toESM(require_element(), 1);
-  var import_compose81 = __toESM(require_compose(), 1);
+  var import_compose82 = __toESM(require_compose(), 1);
   var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
-  var with_notices_default = (0, import_compose81.createHigherOrderComponent)((OriginalComponent) => {
-    function Component9(props, ref) {
+  var with_notices_default = (0, import_compose82.createHigherOrderComponent)((OriginalComponent) => {
+    function Component8(props, ref) {
       const [noticeList, setNoticeList] = (0, import_element221.useState)([]);
       const noticeOperations = (0, import_element221.useMemo)(() => {
         const createNotice = (notice) => {
@@ -50218,9 +50180,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = OriginalComponent;
     if (typeof render === "function") {
       isForwardRef = true;
-      return (0, import_element221.forwardRef)(Component9);
+      return (0, import_element221.forwardRef)(Component8);
     }
-    return Component9;
+    return Component8;
   }, "withNotices");
 
   // packages/components/build-module/menu/index.mjs
@@ -50940,7 +50902,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var theme_default = Theme;
 
   // packages/components/build-module/tabs/index.mjs
-  var import_compose84 = __toESM(require_compose(), 1);
+  var import_compose85 = __toESM(require_compose(), 1);
   var import_element241 = __toESM(require_element(), 1);
   var import_i18n80 = __toESM(require_i18n(), 1);
 
@@ -51032,16 +50994,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tabs/tablist.mjs
   var import_warning13 = __toESM(require_warning(), 1);
   var import_element239 = __toESM(require_element(), 1);
-  var import_compose83 = __toESM(require_compose(), 1);
+  var import_compose84 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/tabs/use-track-overflow.mjs
   var import_element238 = __toESM(require_element(), 1);
-  var import_compose82 = __toESM(require_compose(), 1);
+  var import_compose83 = __toESM(require_compose(), 1);
   function useTrackOverflow(parent, children) {
     const [first, setFirst] = (0, import_element238.useState)(false);
     const [last, setLast] = (0, import_element238.useState)(false);
     const [observer, setObserver] = (0, import_element238.useState)();
-    const callback = (0, import_compose82.useEvent)((entries) => {
+    const callback = (0, import_compose83.useEvent)((entries) => {
       for (const entry of entries) {
         if (entry.target === children.first) {
           setFirst(!entry.isIntersecting);
@@ -51134,7 +51096,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const selectOnMove = useStoreState(store, "selectOnMove");
     const items = useStoreState(store, "items");
     const [parent, setParent] = (0, import_element239.useState)();
-    const refs = (0, import_compose83.useMergeRefs)([ref, setParent]);
+    const refs = (0, import_compose84.useMergeRefs)([ref, setParent]);
     const selectedItem = store?.item(selectedId);
     const renderedItems = useStoreState(store, "renderedItems");
     const selectedItemIndex = renderedItems && selectedItem ? renderedItems.indexOf(selectedItem) : -1;
@@ -51230,7 +51192,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     defaultActiveTabId,
     onActiveTabIdChange
   }) {
-    const instanceId = (0, import_compose84.useInstanceId)(Tabs2, "tabs");
+    const instanceId = (0, import_compose85.useInstanceId)(Tabs2, "tabs");
     const store = useTabStore({
       selectOnMove,
       orientation,
@@ -55809,7 +55771,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.mjs
-  var import_compose85 = __toESM(require_compose(), 1);
+  var import_compose86 = __toESM(require_compose(), 1);
   var import_element246 = __toESM(require_element(), 1);
 
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
@@ -56019,7 +55981,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element246.useRef)(null);
-    const mergedRefs = (0, import_compose85.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose86.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -56038,7 +56000,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
   // packages/components/build-module/validated-form-controls/components/combobox-control.mjs
-  var import_compose86 = __toESM(require_compose(), 1);
+  var import_compose87 = __toESM(require_compose(), 1);
   var import_element247 = __toESM(require_element(), 1);
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedComboboxControl = ({
@@ -56048,7 +56010,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element247.useRef)(null);
-    const mergedRefs = (0, import_compose86.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose87.useMergeRefs)([forwardedRef, validityTargetRef]);
     (0, import_element247.useEffect)(() => {
       const input = validityTargetRef.current?.querySelector('input[role="combobox"]');
       if (input) {
@@ -56115,7 +56077,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
   var import_element249 = __toESM(require_element(), 1);
-  var import_compose87 = __toESM(require_compose(), 1);
+  var import_compose88 = __toESM(require_compose(), 1);
   var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
@@ -56124,7 +56086,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element249.useRef)(null);
-    const mergedRefs = (0, import_compose87.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -56142,7 +56104,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/number-control.mjs
   var import_element250 = __toESM(require_element(), 1);
-  var import_compose88 = __toESM(require_compose(), 1);
+  var import_compose89 = __toESM(require_compose(), 1);
   var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedNumberControl = ({
     required,
@@ -56151,7 +56113,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element250.useRef)(null);
-    const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -56168,7 +56130,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
   // packages/components/build-module/validated-form-controls/components/radio-control.mjs
-  var import_compose89 = __toESM(require_compose(), 1);
+  var import_compose90 = __toESM(require_compose(), 1);
   var import_element251 = __toESM(require_element(), 1);
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedRadioControl = ({
@@ -56178,7 +56140,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element251.useRef)(null);
-    const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -56195,7 +56157,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/select-control.mjs
   var import_element252 = __toESM(require_element(), 1);
-  var import_compose90 = __toESM(require_compose(), 1);
+  var import_compose91 = __toESM(require_compose(), 1);
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedSelectControl = ({
     required,
@@ -56204,7 +56166,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element252.useRef)(null);
-    const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -56221,7 +56183,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
   // packages/components/build-module/validated-form-controls/components/text-control.mjs
-  var import_compose91 = __toESM(require_compose(), 1);
+  var import_compose92 = __toESM(require_compose(), 1);
   var import_element253 = __toESM(require_element(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextControl = ({
@@ -56231,7 +56193,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element253.useRef)(null);
-    const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -56249,7 +56211,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element254 = __toESM(require_element(), 1);
-  var import_compose92 = __toESM(require_compose(), 1);
+  var import_compose93 = __toESM(require_compose(), 1);
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
@@ -56258,7 +56220,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element254.useRef)(null);
-    const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -56275,7 +56237,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/toggle-control.mjs
   var import_element255 = __toESM(require_element(), 1);
-  var import_compose93 = __toESM(require_compose(), 1);
+  var import_compose94 = __toESM(require_compose(), 1);
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleControl = ({
     required,
@@ -56284,7 +56246,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element255.useRef)(null);
-    const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {
       required,
       markWhenOptional,
