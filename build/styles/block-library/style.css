@@ -2167,6 +2167,10 @@ h6.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]) {
     transform: translate(calc((-100vw + var(--wp--lightbox-scrollbar-width)) / 2 + var(--wp--lightbox-initial-left-position)), calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale));
   }
 }
+:where(.wp-block-latest-comments) {
+  padding-left: 0;
+}
+
 ol.wp-block-latest-comments {
   margin-left: 0;
   box-sizing: border-box;
@@ -2183,10 +2187,6 @@ ol.wp-block-latest-comments {
 .has-dates :where(.wp-block-latest-comments:not([style*=line-height])),
 .has-excerpts :where(.wp-block-latest-comments:not([style*=line-height])) {
   line-height: 1.5;
-}
-
-.wp-block-latest-comments .wp-block-latest-comments {
-  padding-left: 0;
 }
 
 .wp-block-latest-comments__comment {
