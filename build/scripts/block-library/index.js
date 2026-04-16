@@ -66115,7 +66115,8 @@ ${js}
           __experimentalFontFamily: true
         }
       },
-      renaming: true
+      renaming: true,
+      visibility: false
     },
     providesContext: {
       "core/tab-label": "label"
@@ -66196,6 +66197,7 @@ ${js}
       anchor: false,
       html: false,
       reusable: false,
+      visibility: false,
       lock: false,
       dimensions: {
         aspectRatio: false,
@@ -68631,11 +68633,7 @@ ${js}
   var TABS_TEMPLATE = [
     [
       "core/tabs-menu",
-      {
-        lock: {
-          remove: true
-        }
-      },
+      {},
       [
         ["core/tabs-menu-item", {}],
         ["core/tabs-menu-item", {}]
@@ -68643,11 +68641,7 @@ ${js}
     ],
     [
       "core/tab-panel",
-      {
-        lock: {
-          remove: true
-        }
-      },
+      {},
       [
         [
           "core/tab",
@@ -68780,7 +68774,7 @@ ${js}
     const innerBlockProps = (0, import_block_editor262.useInnerBlocksProps)(blockProps, {
       __experimentalCaptureToolbars: true,
       template: TABS_TEMPLATE,
-      templateLock: false,
+      templateLock: "all",
       renderAppender: false
     });
     return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_block_editor262.BlockContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)("div", { ...innerBlockProps, children: [
@@ -68954,6 +68948,7 @@ ${js}
     const innerBlocksProps = (0, import_block_editor264.useInnerBlocksProps)(blockProps, {
       allowedBlocks: ["core/tabs-menu-item"],
       orientation: "horizontal",
+      templateLock: false,
       renderAppender: false
     });
     return /* @__PURE__ */ (0, import_jsx_runtime505.jsxs)(import_jsx_runtime505.Fragment, { children: [
@@ -68993,6 +68988,7 @@ ${js}
     supports: {
       html: false,
       reusable: false,
+      visibility: false,
       lock: false,
       dimensions: {
         aspectRatio: false,
@@ -69216,6 +69212,7 @@ ${js}
     supports: {
       html: false,
       reusable: false,
+      visibility: false,
       lock: false,
       color: {
         background: true,

@@ -8080,7 +8080,8 @@ return array(
 					'__experimentalFontFamily' => true
 				)
 			),
-			'renaming' => true
+			'renaming' => true,
+			'visibility' => false
 		),
 		'providesContext' => array(
 			'core/tab-label' => 'label'
@@ -8111,6 +8112,7 @@ return array(
 			'anchor' => false,
 			'html' => false,
 			'reusable' => false,
+			'visibility' => false,
 			'lock' => false,
 			'dimensions' => array(
 				'aspectRatio' => false,
@@ -8575,6 +8577,7 @@ return array(
 		'supports' => array(
 			'html' => false,
 			'reusable' => false,
+			'visibility' => false,
 			'lock' => false,
 			'dimensions' => array(
 				'aspectRatio' => false,
@@ -8649,6 +8652,7 @@ return array(
 		'supports' => array(
 			'html' => false,
 			'reusable' => false,
+			'visibility' => false,
 			'lock' => false,
 			'color' => array(
 				'background' => true,
