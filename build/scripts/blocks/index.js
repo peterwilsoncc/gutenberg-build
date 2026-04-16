@@ -5413,7 +5413,13 @@ var wp;
     return (0, import_data.select)(store).getBlockVariations(blockName, scope);
   };
   var registerBlockVariation = (blockName, variation) => {
-    if (typeof variation.name !== "string") {
+    if (Array.isArray(variation)) {
+      for (const v2 of variation) {
+        if (typeof v2.name !== "string") {
+          (0, import_warning.default)("Variation names must be unique strings.");
+        }
+      }
+    } else if (typeof variation.name !== "string") {
       (0, import_warning.default)("Variation names must be unique strings.");
     }
     (0, import_data.dispatch)(store).addBlockVariations(blockName, variation);
