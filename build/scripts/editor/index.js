@@ -54129,8 +54129,6 @@ var wp;
   function sanitizeCommentString(str) {
     return str.trim();
   }
-  function noop8() {
-  }
   var THREAD_ALIGN_OFFSET = -16;
   var THREAD_GAP = 16;
   var OVERLAP_MARGIN = 20;
@@ -62106,7 +62104,7 @@ var wp;
   var import_element215 = __toESM(require_element(), 1);
 
   // node_modules/@ariakit/core/esm/__chunks/XMCVU3LR.js
-  function noop9(..._) {
+  function noop8(..._) {
   }
   function applyState(argument, currentValue) {
     if (isUpdater(argument)) {
@@ -63375,7 +63373,7 @@ var wp;
     let state = initialState;
     let prevStateBatch = state;
     let lastUpdate = /* @__PURE__ */ Symbol();
-    let destroy = noop9;
+    let destroy = noop8;
     const instances = /* @__PURE__ */ new Set();
     const updatedKeys = /* @__PURE__ */ new Set();
     const setups = /* @__PURE__ */ new Set();
@@ -65261,7 +65259,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
         if (!firstItemAutoSelected) return;
         if (!hasCompletionString(storeValue, inlineActiveValue)) return;
-        let cleanup = noop9;
+        let cleanup = noop8;
         queueMicrotask(() => {
           const element = ref.current;
           if (!element) return;
@@ -77766,7 +77764,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DAY_IN_MILLISECONDS2 = 864e5;
   var EMPTY_ARRAY14 = [];
   var defaultLayouts = { activity: true };
-  var noop10 = () => {
+  var noop9 = () => {
   };
   var paginationInfo = {};
   var view = {
@@ -77850,7 +77848,7 @@ If there's a particular need for this, please submit a feature request at https:
             dataviews_default,
             {
               view,
-              onChangeView: noop10,
+              onChangeView: noop9,
               fields: fields2,
               data: revisions || EMPTY_ARRAY14,
               isLoading,
@@ -78217,16 +78215,11 @@ If there's a particular need for this, please submit a feature request at https:
     onCancel,
     thread,
     submitButtonText,
-    labelText,
-    reflowComments = noop8
+    labelText
   }) {
     const [inputComment, setInputComment] = (0, import_element280.useState)(
       thread?.content?.raw ?? ""
     );
-    const debouncedCommentUpdated = (0, import_compose77.useDebounce)(reflowComments, 100);
-    const updateComment = (value) => {
-      setInputComment(value);
-    };
     const inputId = (0, import_compose77.useInstanceId)(CommentForm, "comment-input");
     const isDisabled = inputComment === thread?.content?.raw || !sanitizeCommentString(inputComment).length;
     return /* @__PURE__ */ (0, import_jsx_runtime489.jsxs)(
@@ -78247,10 +78240,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               id: inputId,
               value: inputComment ?? "",
-              onChange: (comment) => {
-                updateComment(comment.target.value);
-                debouncedCommentUpdated();
-              },
+              onChange: (comment) => setInputComment(comment.target.value),
               rows: 1,
               maxRows: 20,
               onKeyDown: (event) => {
@@ -78509,12 +78499,85 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_notices34 = __toESM(require_notices(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
+
+  // packages/editor/build-module/components/collab-sidebar/board-store.mjs
+  function createBoardStore() {
+    const listeners = /* @__PURE__ */ new Set();
+    const blockRefs = /* @__PURE__ */ new Map();
+    const floatingRefs = /* @__PURE__ */ new Map();
+    const idByElement = /* @__PURE__ */ new WeakMap();
+    const heights = {};
+    let snapshot = {};
+    function emit() {
+      snapshot = { ...heights };
+      for (const listener of listeners) {
+        listener();
+      }
+    }
+    const observer = new window.ResizeObserver((entries) => {
+      let changed = false;
+      for (const entry of entries) {
+        const id = idByElement.get(entry.target);
+        const newHeight = entry.borderBoxSize[0].blockSize;
+        if (heights[id] !== newHeight) {
+          heights[id] = newHeight;
+          changed = true;
+        }
+      }
+      if (changed) {
+        emit();
+      }
+    });
+    return {
+      subscribe(listener) {
+        listeners.add(listener);
+        return () => {
+          listeners.delete(listener);
+          if (listeners.size === 0) {
+            observer.disconnect();
+          }
+        };
+      },
+      getSnapshot() {
+        return snapshot;
+      },
+      registerThread(id, blockEl, floatingEl) {
+        blockRefs.set(id, blockEl);
+        const prev = floatingRefs.get(id);
+        if (prev && prev !== floatingEl) {
+          observer.unobserve(prev);
+          idByElement.delete(prev);
+        }
+        if (floatingEl) {
+          floatingRefs.set(id, floatingEl);
+          idByElement.set(floatingEl, id);
+          observer.observe(floatingEl);
+        }
+        emit();
+      },
+      unregisterThread(id) {
+        blockRefs.delete(id);
+        const prev = floatingRefs.get(id);
+        if (prev) {
+          observer.unobserve(prev);
+          idByElement.delete(prev);
+          floatingRefs.delete(id);
+        }
+        delete heights[id];
+      },
+      getBlockRects() {
+        return Object.fromEntries(
+          Array.from(blockRefs).flatMap(
+            ([id, el]) => el ? [[id, el.getBoundingClientRect()]] : []
+          )
+        );
+      }
+    };
+  }
+
+  // packages/editor/build-module/components/collab-sidebar/hooks.mjs
   var { useBlockElement, cleanEmptyObject: cleanEmptyObject4 } = unlock(import_block_editor98.privateApis);
   function useBlockComments(postId2) {
-    const [commentLastUpdated, reflowComments] = (0, import_element281.useReducer)(
-      () => Date.now(),
-      0
-    );
     const queryArgs = {
       post: postId2,
       type: "note",
@@ -78602,12 +78665,10 @@ If there's a particular need for this, please submit a feature request at https:
     }, [clientIds, threads, getBlockAttributes2]);
     return {
       resultComments,
-      unresolvedSortedThreads,
-      reflowComments,
-      commentLastUpdated
+      unresolvedSortedThreads
     };
   }
-  function useBlockCommentsActions(reflowComments = noop8) {
+  function useBlockCommentsActions() {
     const { createNotice } = (0, import_data252.useDispatch)(import_notices34.store);
     const { saveEntityRecord, deleteEntityRecord } = (0, import_data252.useDispatch)(import_core_data136.store);
     const { getCurrentPostId: getCurrentPostId2 } = (0, import_data252.useSelect)(store);
@@ -78652,10 +78713,8 @@ If there's a particular need for this, please submit a feature request at https:
             isDismissible: true
           }
         );
-        setTimeout(reflowComments, 300);
         return savedRecord;
       } catch (error2) {
-        reflowComments();
         onError(error2);
       }
     };
@@ -78711,9 +78770,7 @@ If there's a particular need for this, please submit a feature request at https:
             isDismissible: true
           }
         );
-        reflowComments();
       } catch (error2) {
-        reflowComments();
         onError(error2);
       }
     };
@@ -78742,9 +78799,7 @@ If there's a particular need for this, please submit a feature request at https:
           type: "snackbar",
           isDismissible: true
         });
-        reflowComments();
       } catch (error2) {
-        reflowComments();
         onError(error2);
       }
     };
@@ -78772,57 +78827,44 @@ If there's a particular need for this, please submit a feature request at https:
     }, [enabled, registry]);
   }
   function useFloatingBoard({ threads, selectedNoteId, isFloating }) {
-    const [heights, setHeights] = (0, import_element281.useState)({});
     const [boardOffsets, setBoardOffsets] = (0, import_element281.useState)({});
-    const [blockRefs, setBlockRefs] = (0, import_element281.useState)({});
+    const [store3] = (0, import_element281.useState)(createBoardStore);
     const { setCanvasMinHeight: setCanvasMinHeight2 } = unlock((0, import_data252.useDispatch)(store));
-    const registerThread = (0, import_element281.useCallback)((id, el) => {
-      setBlockRefs((prev) => ({ ...prev, [id]: el }));
-    }, []);
-    const reportHeight = (0, import_element281.useCallback)((id, newHeight) => {
-      setHeights((prev) => {
-        if (prev[id] !== newHeight) {
-          return { ...prev, [id]: newHeight };
-        }
-        return prev;
-      });
-    }, []);
+    const heights = (0, import_element281.useSyncExternalStore)(store3.subscribe, store3.getSnapshot);
     (0, import_element281.useEffect)(() => {
       if (!isFloating) {
         return;
       }
-      const blockRects = Object.fromEntries(
-        Object.entries(blockRefs).flatMap(
-          ([id, el]) => el ? [[id, el.getBoundingClientRect()]] : []
-        )
-      );
-      const { offsets: newOffsets, minHeight } = calculateAllOffsets({
-        threads,
-        selectedNoteId,
-        blockRects,
-        heights
+      const rafId = window.requestAnimationFrame(() => {
+        const { offsets, minHeight } = calculateAllOffsets({
+          threads,
+          selectedNoteId,
+          blockRects: store3.getBlockRects(),
+          heights
+        });
+        setBoardOffsets(offsets);
+        setCanvasMinHeight2(minHeight);
       });
-      if (Object.keys(newOffsets).length > 0) {
-        setBoardOffsets(newOffsets);
-      }
-      setCanvasMinHeight2(minHeight);
+      return () => window.cancelAnimationFrame(rafId);
     }, [
       heights,
-      blockRefs,
       isFloating,
-      threads,
       selectedNoteId,
-      setCanvasMinHeight2
+      setCanvasMinHeight2,
+      store3,
+      threads
     ]);
-    return { boardOffsets, registerThread, reportHeight };
+    return {
+      boardOffsets,
+      registerThread: store3.registerThread,
+      unregisterThread: store3.unregisterThread
+    };
   }
   function useFloatingThread({
     thread,
     calculatedOffset,
-    reportHeight,
-    selectedThread,
     registerThread,
-    commentLastUpdated
+    unregisterThread
   }) {
     const blockElement = useBlockElement(thread.blockClientId);
     const { y: y3, refs } = useFloating({
@@ -78838,23 +78880,19 @@ If there's a particular need for this, please submit a feature request at https:
       if (blockElement) {
         refs.setReference(blockElement);
       }
-    }, [blockElement, refs, commentLastUpdated]);
+    }, [blockElement, refs]);
     (0, import_element281.useEffect)(() => {
-      if (refs.floating?.current) {
-        registerThread(thread.id, blockElement);
+      const floatingEl = refs.floating?.current;
+      if (floatingEl && registerThread) {
+        registerThread(thread.id, blockElement, floatingEl);
       }
-    }, [blockElement, thread.id, refs.floating, registerThread]);
-    (0, import_element281.useEffect)(() => {
-      if (refs.floating?.current) {
-        const newHeight = refs.floating.current.scrollHeight;
-        reportHeight(thread.id, newHeight);
-      }
+      return () => unregisterThread?.(thread.id);
     }, [
+      blockElement,
       thread.id,
-      reportHeight,
       refs.floating,
-      selectedThread,
-      commentLastUpdated
+      registerThread,
+      unregisterThread
     ]);
     return {
       y: y3,
@@ -78892,12 +78930,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor99 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement: useBlockElement2 } = unlock(import_block_editor99.privateApis);
-  function AddComment({
-    onSubmit,
-    commentSidebarRef,
-    reflowComments = noop8,
-    floating
-  }) {
+  function AddComment({ onSubmit, commentSidebarRef, floating }) {
     const { clientId } = (0, import_data253.useSelect)((select7) => {
       const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor99.store);
       return {
@@ -78950,7 +78983,6 @@ If there's a particular need for this, please submit a feature request at https:
                 focusCommentThread(id, commentSidebarRef.current);
               },
               onCancel: unselectThread,
-              reflowComments,
               submitButtonText: (0, import_i18n309.__)("Add note"),
               labelText: (0, import_i18n309.__)("New note")
             }
@@ -78970,9 +79002,7 @@ If there's a particular need for this, please submit a feature request at https:
     onAddReply,
     onCommentDelete,
     commentSidebarRef,
-    reflowComments,
-    isFloating = false,
-    commentLastUpdated
+    isFloating = false
   }) {
     const { selectNote: selectNote2 } = unlock((0, import_data254.useDispatch)(store));
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
@@ -79067,11 +79097,13 @@ If there's a particular need for this, please submit a feature request at https:
         selectNote2(selectedNote2);
       }
     }, [noteFocused, selectedNote2, selectNote2, commentSidebarRef]);
-    const { boardOffsets, registerThread, reportHeight } = useFloatingBoard({
-      threads,
-      selectedNoteId: selectedNote2,
-      isFloating
-    });
+    const { boardOffsets, registerThread, unregisterThread } = useFloatingBoard(
+      {
+        threads,
+        selectedNoteId: selectedNote2,
+        isFloating
+      }
+    );
     const handleThreadNavigation = (event, thread, isSelected2) => {
       if (event.defaultPrevented) {
         return;
@@ -79131,12 +79163,10 @@ If there's a particular need for this, please submit a feature request at https:
           onEditComment,
           isSelected: selectedNote2 === thread.id,
           commentSidebarRef,
-          reflowComments,
           floating: isFloating ? {
             calculatedOffset: boardOffsets[thread.id] ?? 0,
-            reportHeight,
             registerThread,
-            commentLastUpdated
+            unregisterThread
           } : void 0,
           onKeyDown: (event) => handleThreadNavigation(
             event,
@@ -79155,7 +79185,6 @@ If there's a particular need for this, please submit a feature request at https:
     onCommentDelete,
     isSelected: isSelected2,
     commentSidebarRef,
-    reflowComments,
     floating,
     onKeyDown
   }) {
@@ -79164,10 +79193,6 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data254.useDispatch)(import_block_editor100.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data254.useDispatch)(store));
-    const selectedNote2 = (0, import_data254.useSelect)(
-      (select7) => unlock(select7(store)).getSelectedNote(),
-      []
-    );
     const relatedBlockElement = useBlockElement3(thread.blockClientId);
     const debouncedToggleBlockHighlight = (0, import_compose78.useDebounce)(
       toggleBlockHighlight,
@@ -79176,10 +79201,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { y: y3, refs } = useFloatingThread({
       thread,
       calculatedOffset: floating?.calculatedOffset ?? 0,
-      reportHeight: floating?.reportHeight,
       registerThread: floating?.registerThread,
-      selectedThread: selectedNote2,
-      commentLastUpdated: floating?.commentLastUpdated
+      unregisterThread: floating?.unregisterThread
     });
     const isKeyboardTabbingRef = (0, import_element282.useRef)(false);
     const onMouseEnter = () => {
@@ -79245,7 +79268,6 @@ If there's a particular need for this, please submit a feature request at https:
         {
           onSubmit: onAddReply,
           commentSidebarRef,
-          reflowComments,
           floating: { y: y3, refs }
         }
       );
@@ -79317,8 +79339,7 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 }
               },
-              onDelete: onCommentDelete,
-              reflowComments
+              onDelete: onCommentDelete
             }
           ),
           isSelected2 && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
@@ -79328,8 +79349,7 @@ If there's a particular need for this, please submit a feature request at https:
               parent: thread,
               isExpanded: isSelected2,
               onEdit: onEditComment,
-              onDelete: onCommentDelete,
-              reflowComments
+              onDelete: onCommentDelete
             },
             reply.id
           )),
@@ -79364,8 +79384,7 @@ If there's a particular need for this, please submit a feature request at https:
               parent: thread,
               isExpanded: isSelected2,
               onEdit: onEditComment,
-              onDelete: onCommentDelete,
-              reflowComments
+              onDelete: onCommentDelete
             }
           ),
           isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(import_components281.__experimentalVStack, { spacing: "2", role: "treeitem", children: [
@@ -79402,8 +79421,7 @@ If there's a particular need for this, please submit a feature request at https:
                   (0, import_i18n310.__)("Reply to note %1$s by %2$s"),
                   thread.id,
                   thread.author_name
-                ),
-                reflowComments
+                )
               }
             ) })
           ] }),
@@ -79424,14 +79442,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var CommentBoard = ({
-    thread,
-    parent,
-    isExpanded,
-    onEdit,
-    onDelete,
-    reflowComments
-  }) => {
+  var CommentBoard = ({ thread, parent, isExpanded, onEdit, onDelete }) => {
     const [actionState, setActionState] = (0, import_element282.useState)(false);
     const [showConfirmDialog, setShowConfirmDialog] = (0, import_element282.useState)(false);
     const actionButtonRef = (0, import_element282.useRef)(null);
@@ -79579,8 +79590,7 @@ If there's a particular need for this, please submit a feature request at https:
                 (0, import_i18n310.__)("Edit note %1$s by %2$s"),
                 thread.id,
                 thread.author_name
-              ),
-              reflowComments
+              )
             }
           ) : /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
             import_element282.RawHTML,
@@ -79760,11 +79770,9 @@ If there's a particular need for this, please submit a feature request at https:
     styles,
     comments,
     commentSidebarRef,
-    reflowComments,
-    commentLastUpdated,
     isFloating = false
   }) {
-    const { onCreate, onEdit, onDelete } = useBlockCommentsActions(reflowComments);
+    const { onCreate, onEdit, onDelete } = useBlockCommentsActions();
     return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
       import_components284.__experimentalVStack,
       {
@@ -79787,8 +79795,6 @@ If there's a particular need for this, please submit a feature request at https:
             onAddReply: onCreate,
             onCommentDelete: onDelete,
             commentSidebarRef,
-            reflowComments,
-            commentLastUpdated,
             isFloating
           }
         )
@@ -79830,12 +79836,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select7) => unlock(select7(store)).getSelectedNote(),
       []
     );
-    const {
-      resultComments,
-      unresolvedSortedThreads,
-      reflowComments,
-      commentLastUpdated
-    } = useBlockComments(postId2);
+    const { resultComments, unresolvedSortedThreads } = useBlockComments(postId2);
     const showFloatingSidebar = isLargeViewport;
     const showAllNotesSidebar = resultComments.length > 0 || !showFloatingSidebar;
     useEnableFloatingSidebar(
@@ -79923,8 +79924,6 @@ If there's a particular need for this, please submit a feature request at https:
             {
               comments: unresolvedSortedThreads,
               commentSidebarRef,
-              reflowComments,
-              commentLastUpdated,
               styles: {
                 backgroundColor
               },
