@@ -3699,7 +3699,7 @@ button.font-library__upload-area {
 
 .global-styles-ui-screen-revisions__revision-item {
   position: relative;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   display: flex;
   flex-direction: column;
 }
@@ -3876,7 +3876,7 @@ button.font-library__upload-area {
 
 .global-styles-ui-variations_item {
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .global-styles-ui-variations_item .global-styles-ui-variations_item-preview {
@@ -3919,13 +3919,17 @@ button.font-library__upload-area {
   align-items: center;
   justify-content: center;
   line-height: 1;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .global-styles-ui-preview__wrapper {
   max-width: 100%;
   display: block;
   width: 100%;
+}
+
+.global-styles-ui-preview__wrapper.is-hoverable {
+  cursor: var(--wpds-cursor-control, pointer);
 }
 
 .global-styles-ui-typography-preview {

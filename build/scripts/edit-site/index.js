@@ -12021,7 +12021,9 @@ var wp;
       isReady && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
         "div",
         {
-          className: "global-styles-ui-preview__wrapper",
+          className: clsx_default("global-styles-ui-preview__wrapper", {
+            "is-hoverable": withHoverView
+          }),
           style: {
             height: normalizedHeight * ratio
           },
@@ -12034,8 +12036,7 @@ var wp;
               style: {
                 height: normalizedHeight * ratio,
                 width: "100%",
-                background: gradientValue ?? backgroundColor,
-                cursor: withHoverView ? "pointer" : void 0
+                background: gradientValue ?? backgroundColor
               },
               initial: "start",
               animate: (isHovered || isFocused) && !disableMotion && label ? "hover" : "start",
