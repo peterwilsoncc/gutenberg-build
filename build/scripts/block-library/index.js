@@ -53405,7 +53405,11 @@ ${js}
     attributes: { layout },
     __unstableLayoutClassNames
   }) {
-    const { type: layoutType, columnCount = 3 } = layout || {};
+    const {
+      type: layoutType,
+      columnCount = 3,
+      minimumColumnWidth
+    } = layout || {};
     const [activeBlockContextId, setActiveBlockContextId] = (0, import_element101.useState)();
     const { posts, blocks } = (0, import_data109.useSelect)(
       (select9) => {
@@ -53539,8 +53543,10 @@ ${js}
     );
     const blockProps = (0, import_block_editor198.useBlockProps)({
       className: clsx_default(__unstableLayoutClassNames, {
-        [`columns-${columnCount}`]: layoutType === "grid" && columnCount
+        [`columns-${columnCount}`]: layoutType === "grid" && columnCount,
         // Ensure column count is flagged via classname for backwards compatibility.
+        "has-native-responsive-grid": layoutType === "grid" && columnCount && minimumColumnWidth
+        // Flag native responsive grid when minimum column width is provided.
       })
     });
     if (!posts) {
