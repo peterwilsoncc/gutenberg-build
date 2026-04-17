@@ -27582,7 +27582,8 @@ ${url}
         }
       },
       dimensions: {
-        minHeight: true
+        minHeight: true,
+        minWidth: true
       },
       __experimentalBorder: {
         color: true,
@@ -55593,10 +55594,7 @@ ${js}
         }
       },
       dimensions: {
-        minHeight: true,
-        __experimentalDefaultControls: {
-          minHeight: false
-        }
+        minHeight: true
       },
       spacing: {
         margin: true,

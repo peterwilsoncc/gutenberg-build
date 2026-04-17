@@ -13578,6 +13578,7 @@ var wp;
     "dimensions.aspectRatio",
     "dimensions.height",
     "dimensions.minHeight",
+    "dimensions.minWidth",
     "dimensions.width",
     "dimensions.dimensionSizes",
     "layout.contentSize",
@@ -39145,6 +39146,7 @@ var wp;
     blockGap: true,
     height: true,
     minHeight: true,
+    minWidth: true,
     width: true,
     childLayout: false
   };

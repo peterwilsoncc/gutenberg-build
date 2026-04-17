@@ -54834,14 +54834,16 @@ var wp;
           };
         }
       });
-      ["aspectRatio", "height", "minHeight", "width"].forEach((key) => {
-        if (!supportedStyles.includes(key)) {
-          updatedSettings.dimensions = {
-            ...updatedSettings.dimensions,
-            [key]: false
-          };
+      ["aspectRatio", "height", "minHeight", "minWidth", "width"].forEach(
+        (key) => {
+          if (!supportedStyles.includes(key)) {
+            updatedSettings.dimensions = {
+              ...updatedSettings.dimensions,
+              [key]: false
+            };
+          }
         }
-      });
+      );
       ["radius", "color", "style", "width"].forEach((key) => {
         if (!supportedStyles.includes(
           "border" + key.charAt(0).toUpperCase() + key.slice(1)
@@ -56262,46 +56264,39 @@ var wp;
   var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
   var AXIAL_SIDES = ["horizontal", "vertical"];
   function useHasDimensionsPanel(settings2) {
-    const hasContentSize = useHasContentSize(settings2);
-    const hasWideSize = useHasWideSize(settings2);
-    const hasPadding = useHasPadding(settings2);
-    const hasMargin = useHasMargin(settings2);
-    const hasGap = useHasGap(settings2);
-    const hasHeight = useHasHeight(settings2);
-    const hasMinHeight = useHasMinHeight(settings2);
-    const hasWidth = useHasWidth(settings2);
-    const hasAspectRatio = useHasAspectRatio(settings2);
-    const hasChildLayout = useHasChildLayout(settings2);
-    return import_element200.Platform.OS === "web" && (hasContentSize || hasWideSize || hasPadding || hasMargin || hasGap || hasHeight || hasMinHeight || hasWidth || hasAspectRatio || hasChildLayout);
+    return import_element200.Platform.OS === "web" && (hasContentSize(settings2) || hasWideSize(settings2) || hasPadding(settings2) || hasMargin(settings2) || hasGap(settings2) || hasHeight(settings2) || hasMinHeight(settings2) || hasMinWidth(settings2) || hasWidth(settings2) || hasAspectRatio(settings2) || hasChildLayout(settings2));
   }
-  function useHasContentSize(settings2) {
+  function hasContentSize(settings2) {
     return settings2?.layout?.contentSize;
   }
-  function useHasWideSize(settings2) {
+  function hasWideSize(settings2) {
     return settings2?.layout?.wideSize;
   }
-  function useHasPadding(settings2) {
+  function hasPadding(settings2) {
     return settings2?.spacing?.padding;
   }
-  function useHasMargin(settings2) {
+  function hasMargin(settings2) {
     return settings2?.spacing?.margin;
   }
-  function useHasGap(settings2) {
+  function hasGap(settings2) {
     return settings2?.spacing?.blockGap;
   }
-  function useHasHeight(settings2) {
+  function hasHeight(settings2) {
     return settings2?.dimensions?.height;
   }
-  function useHasMinHeight(settings2) {
+  function hasMinHeight(settings2) {
     return settings2?.dimensions?.minHeight;
   }
-  function useHasWidth(settings2) {
+  function hasMinWidth(settings2) {
+    return settings2?.dimensions?.minWidth;
+  }
+  function hasWidth(settings2) {
     return settings2?.dimensions?.width;
   }
-  function useHasAspectRatio(settings2) {
+  function hasAspectRatio(settings2) {
     return settings2?.dimensions?.aspectRatio;
   }
-  function useHasChildLayout(settings2) {
+  function hasChildLayout(settings2) {
     const {
       type: parentLayoutType = "default",
       default: { type: defaultParentLayoutType = "default" } = {},
@@ -56310,7 +56305,7 @@ var wp;
     const support = (defaultParentLayoutType === "flex" || parentLayoutType === "flex" || defaultParentLayoutType === "grid" || parentLayoutType === "grid") && allowSizingOnChildren;
     return !!settings2?.layout && support;
   }
-  function useHasSpacingPresets(settings2) {
+  function hasSpacingPresets(settings2) {
     const { defaultSpacingSizes, spacingSizes } = settings2?.spacing || {};
     return defaultSpacingSizes !== false && spacingSizes?.default?.length > 0 || spacingSizes?.theme?.length > 0 || spacingSizes?.custom?.length > 0;
   }
@@ -56387,6 +56382,7 @@ var wp;
     blockGap: true,
     height: true,
     minHeight: true,
+    minWidth: true,
     width: true,
     aspectRatio: true,
     childLayout: true
@@ -56423,7 +56419,7 @@ var wp;
         rawValue
       );
     };
-    const showSpacingPresetsControl = useHasSpacingPresets(settings2);
+    const showSpacingPresetsControl = hasSpacingPresets(settings2);
     const units2 = (0, import_components202.__experimentalUseCustomUnits)({
       availableUnits: settings2?.spacing?.units || [
         "%",
@@ -56435,155 +56431,6 @@ var wp;
     });
     const minimumMargin = -Infinity;
     const [minMarginValue, setMinMarginValue] = (0, import_element200.useState)(minimumMargin);
-    const showContentSizeControl = useHasContentSize(settings2) && includeLayoutControls;
-    const contentSizeValue = decodeValue(inheritedValue?.layout?.contentSize);
-    const setContentSizeValue = (newValue) => {
-      onChange(
-        setImmutably(
-          value,
-          ["layout", "contentSize"],
-          newValue || void 0
-        )
-      );
-    };
-    const hasUserSetContentSizeValue = () => !!value?.layout?.contentSize;
-    const resetContentSizeValue = () => setContentSizeValue(void 0);
-    const showWideSizeControl = useHasWideSize(settings2) && includeLayoutControls;
-    const wideSizeValue = decodeValue(inheritedValue?.layout?.wideSize);
-    const setWideSizeValue = (newValue) => {
-      onChange(
-        setImmutably(
-          value,
-          ["layout", "wideSize"],
-          newValue || void 0
-        )
-      );
-    };
-    const hasUserSetWideSizeValue = () => !!value?.layout?.wideSize;
-    const resetWideSizeValue = () => setWideSizeValue(void 0);
-    const showPaddingControl = useHasPadding(settings2);
-    const rawPadding = decodeValue(inheritedValue?.spacing?.padding);
-    const paddingValues = splitStyleValue(rawPadding);
-    const paddingSides = Array.isArray(settings2?.spacing?.padding) ? settings2?.spacing?.padding : settings2?.spacing?.padding?.sides;
-    const isAxialPadding = paddingSides && paddingSides.some((side) => AXIAL_SIDES.includes(side));
-    const setPaddingValues = (newPaddingValues) => {
-      const padding = filterValuesBySides(newPaddingValues, paddingSides);
-      onChange(setImmutably(value, ["spacing", "padding"], padding));
-    };
-    const hasPaddingValue = () => !!value?.spacing?.padding && Object.keys(value?.spacing?.padding).length;
-    const resetPaddingValue = () => setPaddingValues(void 0);
-    const onMouseOverPadding = () => onVisualize("padding");
-    const showMarginControl = useHasMargin(settings2);
-    const rawMargin = decodeValue(inheritedValue?.spacing?.margin);
-    const marginValues = splitStyleValue(rawMargin);
-    const marginSides = Array.isArray(settings2?.spacing?.margin) ? settings2?.spacing?.margin : settings2?.spacing?.margin?.sides;
-    const isAxialMargin = marginSides && marginSides.some((side) => AXIAL_SIDES.includes(side));
-    const setMarginValues = (newMarginValues) => {
-      const margin = filterValuesBySides(newMarginValues, marginSides);
-      onChange(setImmutably(value, ["spacing", "margin"], margin));
-    };
-    const hasMarginValue = () => !!value?.spacing?.margin && Object.keys(value?.spacing?.margin).length;
-    const resetMarginValue = () => setMarginValues(void 0);
-    const onMouseOverMargin = () => onVisualize("margin");
-    const showGapControl = useHasGap(settings2);
-    const gapSides = Array.isArray(settings2?.spacing?.blockGap) ? settings2?.spacing?.blockGap : settings2?.spacing?.blockGap?.sides;
-    const isAxialGap = gapSides && gapSides.some((side) => AXIAL_SIDES.includes(side));
-    const gapValue = decodeValue(inheritedValue?.spacing?.blockGap);
-    const gapValues = splitGapValue(gapValue, isAxialGap);
-    const setGapValue = (newGapValue) => {
-      onChange(
-        setImmutably(value, ["spacing", "blockGap"], newGapValue)
-      );
-    };
-    const setGapValues = (nextBoxGapValue) => {
-      if (!nextBoxGapValue) {
-        setGapValue(null);
-      }
-      if (!isAxialGap && nextBoxGapValue?.hasOwnProperty("top")) {
-        setGapValue(nextBoxGapValue.top);
-      } else {
-        setGapValue({
-          top: nextBoxGapValue?.top,
-          left: nextBoxGapValue?.left
-        });
-      }
-    };
-    const resetGapValue = () => setGapValue(void 0);
-    const hasGapValue = () => !!value?.spacing?.blockGap;
-    const showMinHeightControl = useHasMinHeight(settings2);
-    const minHeightValue = decodeValue(inheritedValue?.dimensions?.minHeight);
-    const setMinHeightValue = (newValue) => {
-      const tempValue = setImmutably(
-        value,
-        ["dimensions", "minHeight"],
-        newValue
-      );
-      onChange(
-        setImmutably(
-          tempValue,
-          ["dimensions", "aspectRatio"],
-          void 0
-        )
-      );
-    };
-    const resetMinHeightValue = () => {
-      setMinHeightValue(void 0);
-    };
-    const hasMinHeightValue = () => !!value?.dimensions?.minHeight;
-    const showHeightControl = useHasHeight(settings2);
-    const heightValue = decodeValue(inheritedValue?.dimensions?.height);
-    const setHeightValue = (newValue) => {
-      const tempValue = setImmutably(
-        value,
-        ["dimensions", "height"],
-        newValue
-      );
-      onChange(
-        setImmutably(
-          tempValue,
-          ["dimensions", "aspectRatio"],
-          void 0
-        )
-      );
-    };
-    const resetHeightValue = () => {
-      setHeightValue(void 0);
-    };
-    const hasHeightValue = () => !!value?.dimensions?.height;
-    const showWidthControl = useHasWidth(settings2);
-    const widthValue = decodeValue(inheritedValue?.dimensions?.width);
-    const setWidthValue = (newValue) => {
-      onChange(setImmutably(value, ["dimensions", "width"], newValue));
-    };
-    const resetWidthValue = () => {
-      setWidthValue(void 0);
-    };
-    const hasWidthValue = () => !!value?.dimensions?.width;
-    const showAspectRatioControl = useHasAspectRatio(settings2);
-    const aspectRatioValue = decodeValue(
-      inheritedValue?.dimensions?.aspectRatio
-    );
-    const setAspectRatioValue = (newValue) => {
-      const tempValue = setImmutably(
-        value,
-        ["dimensions", "aspectRatio"],
-        newValue
-      );
-      onChange(
-        setImmutably(tempValue, ["dimensions", "minHeight"], void 0)
-      );
-    };
-    const hasAspectRatioValue = () => !!value?.dimensions?.aspectRatio;
-    const showChildLayoutControl = useHasChildLayout(settings2);
-    const childLayout = inheritedValue?.layout;
-    const setChildLayout = (newChildLayout) => {
-      onChange({
-        ...value,
-        layout: {
-          ...newChildLayout
-        }
-      });
-    };
     const resetAllFilter = (0, import_element200.useCallback)((previousValue) => {
       return {
         ...previousValue,
@@ -56608,11 +56455,172 @@ var wp;
           ...previousValue?.dimensions,
           height: void 0,
           minHeight: void 0,
+          minWidth: void 0,
           aspectRatio: void 0,
           width: void 0
         }
       };
     }, []);
+    const showContentSizeControl = hasContentSize(settings2) && includeLayoutControls;
+    const contentSizeValue = decodeValue(inheritedValue?.layout?.contentSize);
+    const setContentSizeValue = (newValue) => {
+      onChange(
+        setImmutably(
+          value,
+          ["layout", "contentSize"],
+          newValue || void 0
+        )
+      );
+    };
+    const hasUserSetContentSizeValue = () => !!value?.layout?.contentSize;
+    const resetContentSizeValue = () => setContentSizeValue(void 0);
+    const showWideSizeControl = hasWideSize(settings2) && includeLayoutControls;
+    const wideSizeValue = decodeValue(inheritedValue?.layout?.wideSize);
+    const setWideSizeValue = (newValue) => {
+      onChange(
+        setImmutably(
+          value,
+          ["layout", "wideSize"],
+          newValue || void 0
+        )
+      );
+    };
+    const hasUserSetWideSizeValue = () => !!value?.layout?.wideSize;
+    const resetWideSizeValue = () => setWideSizeValue(void 0);
+    const showPaddingControl = hasPadding(settings2);
+    const rawPadding = decodeValue(inheritedValue?.spacing?.padding);
+    const paddingValues = splitStyleValue(rawPadding);
+    const paddingSides = Array.isArray(settings2?.spacing?.padding) ? settings2?.spacing?.padding : settings2?.spacing?.padding?.sides;
+    const isAxialPadding = paddingSides && paddingSides.some((side) => AXIAL_SIDES.includes(side));
+    const setPaddingValues = (newPaddingValues) => {
+      const padding = filterValuesBySides(newPaddingValues, paddingSides);
+      onChange(setImmutably(value, ["spacing", "padding"], padding));
+    };
+    const hasPaddingValue = () => !!value?.spacing?.padding && Object.keys(value?.spacing?.padding).length;
+    const resetPaddingValue = () => setPaddingValues(void 0);
+    const onMouseOverPadding = () => onVisualize("padding");
+    const showMarginControl = hasMargin(settings2);
+    const rawMargin = decodeValue(inheritedValue?.spacing?.margin);
+    const marginValues = splitStyleValue(rawMargin);
+    const marginSides = Array.isArray(settings2?.spacing?.margin) ? settings2?.spacing?.margin : settings2?.spacing?.margin?.sides;
+    const isAxialMargin = marginSides && marginSides.some((side) => AXIAL_SIDES.includes(side));
+    const setMarginValues = (newMarginValues) => {
+      const margin = filterValuesBySides(newMarginValues, marginSides);
+      onChange(setImmutably(value, ["spacing", "margin"], margin));
+    };
+    const hasMarginValue = () => !!value?.spacing?.margin && Object.keys(value?.spacing?.margin).length;
+    const resetMarginValue = () => setMarginValues(void 0);
+    const onMouseOverMargin = () => onVisualize("margin");
+    const showGapControl = hasGap(settings2);
+    const gapSides = Array.isArray(settings2?.spacing?.blockGap) ? settings2?.spacing?.blockGap : settings2?.spacing?.blockGap?.sides;
+    const isAxialGap = gapSides && gapSides.some((side) => AXIAL_SIDES.includes(side));
+    const gapValue = decodeValue(inheritedValue?.spacing?.blockGap);
+    const gapValues = splitGapValue(gapValue, isAxialGap);
+    const setGapValue = (newGapValue) => {
+      onChange(
+        setImmutably(value, ["spacing", "blockGap"], newGapValue)
+      );
+    };
+    const setGapValues = (nextBoxGapValue) => {
+      if (!nextBoxGapValue) {
+        setGapValue(null);
+      }
+      if (!isAxialGap && nextBoxGapValue?.hasOwnProperty("top")) {
+        setGapValue(nextBoxGapValue.top);
+      } else {
+        setGapValue({
+          top: nextBoxGapValue?.top,
+          left: nextBoxGapValue?.left
+        });
+      }
+    };
+    const resetGapValue = () => setGapValue(void 0);
+    const hasGapValue = () => !!value?.spacing?.blockGap;
+    const showMinHeightControl = hasMinHeight(settings2);
+    const minHeightValue = decodeValue(inheritedValue?.dimensions?.minHeight);
+    const setMinHeightValue = (newValue) => {
+      const tempValue = setImmutably(
+        value,
+        ["dimensions", "minHeight"],
+        newValue
+      );
+      onChange(
+        setImmutably(
+          tempValue,
+          ["dimensions", "aspectRatio"],
+          void 0
+        )
+      );
+    };
+    const resetMinHeightValue = () => {
+      setMinHeightValue(void 0);
+    };
+    const hasMinHeightValue = () => !!value?.dimensions?.minHeight;
+    const showHeightControl = hasHeight(settings2);
+    const heightValue = decodeValue(inheritedValue?.dimensions?.height);
+    const setHeightValue = (newValue) => {
+      const tempValue = setImmutably(
+        value,
+        ["dimensions", "height"],
+        newValue
+      );
+      onChange(
+        setImmutably(
+          tempValue,
+          ["dimensions", "aspectRatio"],
+          void 0
+        )
+      );
+    };
+    const resetHeightValue = () => {
+      setHeightValue(void 0);
+    };
+    const hasHeightValue = () => !!value?.dimensions?.height;
+    const showMinWidthControl = hasMinWidth(settings2);
+    const minWidthValue = decodeValue(inheritedValue?.dimensions?.minWidth);
+    const setMinWidthValue = (newValue) => {
+      onChange(
+        setImmutably(value, ["dimensions", "minWidth"], newValue)
+      );
+    };
+    const resetMinWidthValue = () => {
+      setMinWidthValue(void 0);
+    };
+    const hasMinWidthValue = () => !!value?.dimensions?.minWidth;
+    const showWidthControl = hasWidth(settings2);
+    const widthValue = decodeValue(inheritedValue?.dimensions?.width);
+    const setWidthValue = (newValue) => {
+      onChange(setImmutably(value, ["dimensions", "width"], newValue));
+    };
+    const resetWidthValue = () => {
+      setWidthValue(void 0);
+    };
+    const hasWidthValue = () => !!value?.dimensions?.width;
+    const showAspectRatioControl = hasAspectRatio(settings2);
+    const aspectRatioValue = decodeValue(
+      inheritedValue?.dimensions?.aspectRatio
+    );
+    const setAspectRatioValue = (newValue) => {
+      const tempValue = setImmutably(
+        value,
+        ["dimensions", "aspectRatio"],
+        newValue
+      );
+      onChange(
+        setImmutably(tempValue, ["dimensions", "minHeight"], void 0)
+      );
+    };
+    const hasAspectRatioValue = () => !!value?.dimensions?.aspectRatio;
+    const showChildLayoutControl = hasChildLayout(settings2);
+    const childLayout = inheritedValue?.layout;
+    const setChildLayout = (newChildLayout) => {
+      onChange({
+        ...value,
+        layout: {
+          ...newChildLayout
+        }
+      });
+    };
     const onMouseLeaveControls = () => onVisualize(false);
     return /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(
       Wrapper,
@@ -56848,6 +56856,25 @@ var wp;
                   label: (0, import_i18n187.__)("Minimum height"),
                   value: minHeightValue,
                   onChange: setMinHeightValue,
+                  dimensionSizes: dimensions?.dimensionSizes
+                }
+              )
+            }
+          ),
+          showMinWidthControl && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+            import_components202.__experimentalToolsPanelItem,
+            {
+              hasValue: hasMinWidthValue,
+              label: (0, import_i18n187.__)("Minimum width"),
+              onDeselect: resetMinWidthValue,
+              isShownByDefault: defaultControls.minWidth ?? DEFAULT_CONTROLS4.minWidth,
+              panelId,
+              children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+                DimensionControl,
+                {
+                  label: (0, import_i18n187.__)("Minimum width"),
+                  value: minWidthValue,
+                  onChange: setMinWidthValue,
                   dimensionSizes: dimensions?.dimensionSizes
                 }
               )
@@ -61332,6 +61359,7 @@ var wp;
       aspectRatio,
       height,
       minHeight,
+      minWidth,
       width,
       dimensionSizes,
       layout,
@@ -61395,6 +61423,7 @@ var wp;
       "dimensions.aspectRatio",
       "dimensions.height",
       "dimensions.minHeight",
+      "dimensions.minWidth",
       "dimensions.width",
       "dimensions.dimensionSizes",
       "layout",
@@ -61508,6 +61537,7 @@ var wp;
           aspectRatio,
           height,
           minHeight,
+          minWidth,
           width,
           dimensionSizes
         },
@@ -61549,6 +61579,7 @@ var wp;
       aspectRatio,
       height,
       minHeight,
+      minWidth,
       width,
       dimensionSizes,
       layout,
@@ -73862,6 +73893,10 @@ var wp;
       "__experimentalDefaultControls"
     ]);
     const defaultControls = {
+      // In the block inspector, minHeight and minWidth should not
+      // be shown by default unless the block explicitly opts in.
+      minHeight: false,
+      minWidth: false,
       ...defaultDimensionsControls,
       ...defaultSpacingControls
     };
@@ -73905,7 +73940,7 @@ var wp;
       return true;
     }
     if (feature === "any") {
-      return !!(support?.aspectRatio || !!support?.height || !!support?.minHeight || !!support?.width);
+      return !!(support?.aspectRatio || !!support?.height || !!support?.minHeight || !!support?.width || !!support?.minWidth);
     }
     return !!support?.[feature];
   }
