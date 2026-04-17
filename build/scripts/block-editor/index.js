@@ -74502,6 +74502,7 @@ var wp;
   var import_compose104 = __toESM(require_compose(), 1);
   var import_blocks117 = __toESM(require_blocks(), 1);
   var import_i18n235 = __toESM(require_i18n(), 1);
+  var import_notices12 = __toESM(require_notices(), 1);
   var import_jsx_runtime463 = __toESM(require_jsx_runtime(), 1);
   var CUSTOM_CSS_INSTANCE_REFERENCE = {};
   var EMPTY_STYLE = {};
@@ -74534,6 +74535,7 @@ var wp;
       }
     ) });
   }
+  var CUSTOM_CSS_WARNING_NOTICE_ID = "custom-css-edit-warning";
   function CustomCSSEdit({ clientId, name, setAttributes }) {
     const { style, canEditCSS } = (0, import_data185.useSelect)(
       (select3) => {
@@ -74560,6 +74562,25 @@ var wp;
   function useBlockProps15({ style }) {
     const customCSS = style?.css;
     const isValidCSS = typeof customCSS === "string" && customCSS.trim().length > 0 && validateCSS(customCSS);
+    const canEditCSS = (0, import_data185.useSelect)(
+      (select3) => select3(store).getSettings().canEditCSS,
+      []
+    );
+    const { createWarningNotice } = (0, import_data185.useDispatch)(import_notices12.store);
+    const hasCustomCSS = !!customCSS?.trim();
+    (0, import_element284.useEffect)(() => {
+      if (!canEditCSS && hasCustomCSS) {
+        createWarningNotice(
+          (0, import_i18n235.__)(
+            "This post contains blocks with custom CSS. You do not have permission to edit CSS. If you save this post, the custom CSS will be removed."
+          ),
+          {
+            id: CUSTOM_CSS_WARNING_NOTICE_ID,
+            isDismissible: true
+          }
+        );
+      }
+    }, [canEditCSS, hasCustomCSS, createWarningNotice]);
     const customCSSIdentifier = (0, import_compose104.useInstanceId)(
       CUSTOM_CSS_INSTANCE_REFERENCE,
       "wp-custom-css"
