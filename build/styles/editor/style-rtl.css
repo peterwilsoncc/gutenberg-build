@@ -1178,14 +1178,6 @@ button.font-library__upload-area {
   outline-color: var(--wp-admin-theme-color);
 }
 
-.global-styles-ui-preview {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  cursor: var(--wpds-cursor-control, pointer);
-}
-
 .global-styles-ui-preview__wrapper {
   max-width: 100%;
   display: block;
