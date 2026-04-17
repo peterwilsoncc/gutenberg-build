@@ -31834,9 +31834,7 @@ ${js}
         __unstableMarkNextChangeAsNotPersistent();
         setAttributes({
           width: void 0,
-          height: void 0,
-          aspectRatio: void 0,
-          scale: void 0
+          height: void 0
         });
       }
     }, [__unstableMarkNextChangeAsNotPersistent, align, setAttributes]);
