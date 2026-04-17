@@ -5395,7 +5395,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .document-outline__button {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   background: none;
   border: none;
   display: flex;
@@ -6714,7 +6714,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   min-height: 4px;
   border: none;
   padding: 0;
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
   transition: opacity 0.1s ease;
 }
 .revision-diff-markers .revision-diff-marker.is-added {
@@ -6940,7 +6940,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   }
 }
 .editor-template-actions-panel__preview[role=button] {
-  cursor: pointer;
+  cursor: var(--wpds-cursor-control, pointer);
 }
 .editor-template-actions-panel__preview[role=button]:hover .block-editor-block-preview__container::after {
   outline-color: rgba(0, 0, 0, 0.3);
