@@ -22442,7 +22442,7 @@ var wp;
   var DEFAULT_VISIBILITY_STATE = {
     currentBlockVisibility: void 0,
     hasParentHiddenEverywhere: false,
-    selectedDeviceType: BLOCK_VISIBILITY_VIEWPORTS.desktop.value
+    selectedDeviceType: BLOCK_VISIBILITY_VIEWPORTS.desktop.key
   };
   function ViewportVisibilityInfo({ clientId }) {
     const {
@@ -22461,7 +22461,7 @@ var wp;
         } = unlock(select3(store));
         return {
           currentBlockVisibility: getBlockAttributes3(clientId)?.metadata?.blockVisibility,
-          selectedDeviceType: getSettings7()?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value,
+          selectedDeviceType: getSettings7()?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
           hasParentHiddenEverywhere: isBlockParentHiddenEverywhere2(clientId)
         };
       },
@@ -76158,7 +76158,7 @@ var wp;
           isVisible: true,
           parentBlockVisibility: parentAttributes?.metadata?.blockVisibility,
           blockBlockVisibility: blockAttributes?.metadata?.blockVisibility,
-          deviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value,
+          deviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
           // Check if the selected child block is itself a grid.
           isChildBlockAGrid: blockAttributes?.layout?.type === "grid"
         };
@@ -76709,7 +76709,7 @@ var wp;
         );
         const attributes = getBlockAttributes3(clientId);
         const settings2 = getSettings7();
-        const currentDeviceType = settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value;
+        const currentDeviceType = settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
         return {
           isVisible: true,
           blockVisibility: attributes?.metadata?.blockVisibility,
