@@ -8676,9 +8676,6 @@ return array(
 				'color' => true,
 				'width' => true,
 				'style' => true
-			),
-			'layout' => array(
-				'allowEditing' => false
 			)
 		),
 		'editorScript' => 'file:./index.js',

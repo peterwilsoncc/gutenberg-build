@@ -65932,19 +65932,6 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/tab/slug-from-label.mjs
-  var import_url21 = __toESM(require_url(), 1);
-  function slugFromLabel(label, tabIndex) {
-    const htmlDocument = new window.DOMParser().parseFromString(
-      label,
-      "text/html"
-    );
-    if (htmlDocument.body?.textContent) {
-      return (0, import_url21.cleanForSlug)(htmlDocument.body.textContent);
-    }
-    return `tab-panel-${tabIndex}`;
-  }
-
   // packages/block-library/build-module/tab/edit.mjs
   var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE17 = [
@@ -65956,16 +65943,9 @@ ${js}
     ]
   ];
   var { cancelAnimationFrame: cancelAnimationFrame2 } = window;
-  function Edit19({
-    attributes: attributes2,
-    clientId,
-    context,
-    isSelected,
-    __unstableLayoutClassNames: layoutClassNames
-  }) {
+  function Edit19({ clientId, context, isSelected }) {
     const focusRef = (0, import_element125.useRef)();
-    const { anchor, label } = attributes2;
-    const activeTabIndex = context["core/tabs-activeTabIndex"] ?? 0;
+    const activeTabIndex = context["core/tabs-activeTabIndex"];
     const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
     const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
     (0, import_element125.useEffect)(() => {
@@ -66026,18 +66006,9 @@ ${js}
       }
       return false;
     }, [isSelected, hasInnerBlocksSelected, isActiveTab]);
-    const tabPanelId = (0, import_element125.useMemo)(
-      () => anchor || slugFromLabel(label, blockIndex),
-      [anchor, label, blockIndex]
-    );
-    const tabLabelId = (0, import_element125.useMemo)(() => `${tabPanelId}--tab`, [tabPanelId]);
     const blockProps = (0, import_block_editor252.useBlockProps)({
       hidden: !isSelectedTab,
-      "aria-labelledby": tabLabelId,
-      id: tabPanelId,
-      role: "tabpanel",
-      tabIndex: isSelectedTab ? 0 : -1,
-      className: clsx_default("wp-block-tab__editor-content", layoutClassNames)
+      tabIndex: isSelectedTab ? 0 : -1
     });
     const innerBlocksProps = (0, import_block_editor252.useInnerBlocksProps)(blockProps, {
       template: TEMPLATE17
@@ -66156,10 +66127,7 @@ ${js}
       // Appender handled by individual tab blocks
     });
     const tabsClientId = (0, import_data142.useSelect)(
-      (select9) => {
-        const { getBlockRootClientId } = select9(import_block_editor254.store);
-        return getBlockRootClientId(clientId);
-      },
+      (select9) => select9(import_block_editor254.store).getBlockRootClientId(clientId),
       [clientId]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_jsx_runtime494.Fragment, { children: [
@@ -68240,7 +68208,7 @@ ${js}
   var import_data143 = __toESM(require_data(), 1);
   var import_dom11 = __toESM(require_dom(), 1);
   var import_element127 = __toESM(require_element(), 1);
-  var import_url22 = __toESM(require_url(), 1);
+  var import_url21 = __toESM(require_url(), 1);
   var import_block_editor259 = __toESM(require_block_editor(), 1);
   function getLatestHeadings(select9, clientId) {
     const {
@@ -68273,7 +68241,7 @@ ${js}
     let headingPage = 1;
     let headingPageLink = null;
     if (typeof permalink === "string") {
-      headingPageLink = isPaginated ? (0, import_url22.addQueryArgs)(permalink, { page: headingPage }) : permalink;
+      headingPageLink = isPaginated ? (0, import_url21.addQueryArgs)(permalink, { page: headingPage }) : permalink;
     }
     for (const blockClientId of allBlockClientIds) {
       const blockName = getBlockName(blockClientId);
@@ -68283,8 +68251,8 @@ ${js}
           break;
         }
         if (typeof permalink === "string") {
-          headingPageLink = (0, import_url22.addQueryArgs)(
-            (0, import_url22.removeQueryArgs)(permalink, ["page"]),
+          headingPageLink = (0, import_url21.addQueryArgs)(
+            (0, import_url21.removeQueryArgs)(permalink, ["page"]),
             { page: headingPage }
           );
         }
@@ -68826,12 +68794,7 @@ ${js}
       ]
     ]
   ];
-  function Edit21({
-    clientId,
-    attributes: attributes2,
-    setAttributes,
-    __unstableLayoutClassNames: layoutClassNames
-  }) {
+  function Edit21({ clientId, attributes: attributes2, setAttributes }) {
     const { anchor, activeTabIndex, editorActiveTabIndex } = attributes2;
     (0, import_element130.useEffect)(() => {
       if (editorActiveTabIndex === void 0) {
@@ -68872,9 +68835,7 @@ ${js}
         "core/tabs-editorActiveTabIndex": editorActiveTabIndex
       };
     }, [tabs, anchor, activeTabIndex, editorActiveTabIndex]);
-    const blockProps = (0, import_block_editor263.useBlockProps)({
-      className: layoutClassNames
-    });
+    const blockProps = (0, import_block_editor263.useBlockProps)();
     const innerBlockProps = (0, import_block_editor263.useInnerBlocksProps)(blockProps, {
       __experimentalCaptureToolbars: true,
       template: TABS_TEMPLATE,
@@ -69037,17 +68998,12 @@ ${js}
   var import_block_editor265 = __toESM(require_block_editor(), 1);
   var import_data147 = __toESM(require_data(), 1);
   var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
-  function Edit22({ clientId, __unstableLayoutClassNames: layoutClassNames }) {
-    const { tabsClientId } = (0, import_data147.useSelect)(
-      (select9) => ({
-        tabsClientId: select9(import_block_editor265.store).getBlockRootClientId(clientId)
-      }),
+  function Edit22({ clientId }) {
+    const tabsClientId = (0, import_data147.useSelect)(
+      (select9) => select9(import_block_editor265.store).getBlockRootClientId(clientId),
       [clientId]
     );
-    const blockProps = (0, import_block_editor265.useBlockProps)({
-      className: clsx_default(layoutClassNames),
-      role: "tablist"
-    });
+    const blockProps = (0, import_block_editor265.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor265.useInnerBlocksProps)(blockProps, {
       allowedBlocks: ["core/tabs-menu-item"],
       orientation: "horizontal",
@@ -69179,13 +69135,9 @@ ${js}
   // packages/block-library/build-module/tabs-menu-item/edit.mjs
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY7 = [];
-  function Edit23({
-    context,
-    clientId,
-    __unstableLayoutClassNames: layoutClassNames
-  }) {
+  function Edit23({ context, clientId }) {
     const tabsList = context["core/tabs-list"] || EMPTY_ARRAY7;
-    const activeTabIndex = context["core/tabs-activeTabIndex"] ?? 0;
+    const activeTabIndex = context["core/tabs-activeTabIndex"];
     const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
     const effectiveActiveIndex = (0, import_element131.useMemo)(() => {
       return editorActiveTabIndex ?? activeTabIndex;
@@ -69220,7 +69172,6 @@ ${js}
     );
     const tab = tabsList[menuItemIndex] || {};
     const tabListIndex = tab.index ?? menuItemIndex;
-    const tabId = tab.id || `tab-${menuItemIndex}`;
     const tabClientId = tab.clientId || "";
     const label = tab.label || "";
     const isActive = tabListIndex === effectiveActiveIndex;
@@ -69253,14 +69204,10 @@ ${js}
       [tabClientId, updateBlockAttributes]
     );
     const blockProps = (0, import_block_editor268.useBlockProps)({
-      className: clsx_default(layoutClassNames, {
+      className: clsx_default({
         "is-active": isActive,
         "is-selected": isSelected
       }),
-      "aria-controls": tabId,
-      "aria-selected": isActive,
-      id: `${tabId}--tab`,
-      role: "tab",
       tabIndex: -1,
       onClick: handleTabClick
     });
@@ -69342,9 +69289,6 @@ ${js}
         color: true,
         width: true,
         style: true
-      },
-      layout: {
-        allowEditing: false
       }
     },
     editorScript: "file:./index.js",
@@ -73261,7 +73205,7 @@ ${js}
   var import_i18n270 = __toESM(require_i18n(), 1);
   var import_data168 = __toESM(require_data(), 1);
   var import_notices22 = __toESM(require_notices(), 1);
-  var import_url24 = __toESM(require_url(), 1);
+  var import_url23 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/video/edit-common-settings.mjs
   var import_i18n268 = __toESM(require_i18n(), 1);
@@ -73444,7 +73388,7 @@ ${js}
   var import_block_editor293 = __toESM(require_block_editor(), 1);
   var import_data167 = __toESM(require_data(), 1);
   var import_element144 = __toESM(require_element(), 1);
-  var import_url23 = __toESM(require_url(), 1);
+  var import_url22 = __toESM(require_url(), 1);
   var import_jsx_runtime546 = __toESM(require_jsx_runtime(), 1);
   var { Badge: Badge2 } = unlock(import_components183.privateApis);
   var ALLOWED_TYPES = ["text/vtt"];
@@ -73514,7 +73458,7 @@ ${js}
       ...track
     });
     const { src, label, srcLang, kind, default: isDefaultTrack } = trackState;
-    const fileName = src.startsWith("blob:") ? "" : (0, import_url23.getFilename)(src) || "";
+    const fileName = src.startsWith("blob:") ? "" : (0, import_url22.getFilename)(src) || "";
     return /* @__PURE__ */ (0, import_jsx_runtime546.jsxs)(
       import_components183.__experimentalVStack,
       {
@@ -73833,7 +73777,7 @@ ${js}
     }
     function onSelectURL(newSrc) {
       if (newSrc !== src) {
-        const url = (0, import_url24.prependHTTPS)(newSrc);
+        const url = (0, import_url23.prependHTTPS)(newSrc);
         const embedBlock = createUpgradedEmbedBlock({
           attributes: { url }
         });

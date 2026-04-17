@@ -4915,9 +4915,6 @@ ul.wp-block-rss.is-grid li {
 .wp-block-tabs {
   box-sizing: border-box;
 }
-.wp-block-tabs .wp-block-tabs__title {
-  display: none;
-}
 
 .wp-block-tabs-menu-item {
   box-sizing: border-box;
