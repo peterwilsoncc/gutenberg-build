@@ -121,7 +121,7 @@
 .admin-ui-page__header {
   padding: var(--wpds-dimension-padding-lg, 16px) var(--wpds-dimension-padding-2xl, 24px);
   border-bottom: var(--wpds-border-width-xs, 1px) solid var(--wpds-color-stroke-surface-neutral-weak, #e4e4e4);
-  background: var(--wpds-color-bg-surface-neutral-strong, #ffffff);
+  background: var(--wpds-color-bg-surface-neutral-strong, #fff);
   position: sticky;
   top: 0;
   z-index: 1;
