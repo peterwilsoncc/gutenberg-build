@@ -13508,10 +13508,11 @@ var wp;
 
   // packages/editor/build-module/utils/media-finalize/index.mjs
   var import_api_fetch3 = __toESM(require_api_fetch(), 1);
-  async function mediaFinalize(id) {
+  async function mediaFinalize(id, subSizes = []) {
     await (0, import_api_fetch3.default)({
       path: `/wp/v2/media/${id}/finalize`,
-      method: "POST"
+      method: "POST",
+      data: { sub_sizes: subSizes }
     });
   }
 

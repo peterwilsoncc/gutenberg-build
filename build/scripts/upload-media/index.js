@@ -126,6 +126,7 @@ var wp;
     Type2["CacheBlobUrl"] = "CACHE_BLOB_URL";
     Type2["RevokeBlobUrls"] = "REVOKE_BLOB_URLS";
     Type2["UpdateProgress"] = "UPDATE_PROGRESS";
+    Type2["AccumulateSubSize"] = "ACCUMULATE_SUB_SIZE";
     Type2["UpdateSettings"] = "UPDATE_SETTINGS";
     return Type2;
   })(Type || {});
@@ -319,6 +320,19 @@ var wp;
             } : item
           )
         };
+      case Type.AccumulateSubSize:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              subSizes: [
+                ...item.subSizes || [],
+                action.subSize
+              ]
+            } : item
+          )
+        };
       case Type.UpdateSettings: {
         return {
           ...state,
@@ -372,13 +386,11 @@ var wp;
     getFailedItems: () => getFailedItems,
     getItem: () => getItem,
     getItemProgress: () => getItemProgress,
-    getPausedUploadForPost: () => getPausedUploadForPost,
     getPendingImageProcessing: () => getPendingImageProcessing,
     getPendingUploads: () => getPendingUploads,
     hasPendingItemsByParentId: () => hasPendingItemsByParentId,
     isBatchUploaded: () => isBatchUploaded,
-    isPaused: () => isPaused,
-    isUploadingToPost: () => isUploadingToPost
+    isPaused: () => isPaused
   });
   function getAllItems(state) {
     return state.queue;
@@ -391,16 +403,6 @@ var wp;
       (item) => batchId === item.batchId
     );
     return batchItems.length === 0;
-  }
-  function isUploadingToPost(state, postOrAttachmentId) {
-    return state.queue.some(
-      (item) => item.currentOperation === OperationType.Upload && item.additionalData.post === postOrAttachmentId
-    );
-  }
-  function getPausedUploadForPost(state, postOrAttachmentId) {
-    return state.queue.find(
-      (item) => item.status === ItemStatus.Paused && item.additionalData.post === postOrAttachmentId
-    );
   }
   function isPaused(state) {
     return state.queueStatus === "paused";
@@ -628,54 +630,6 @@ var wp;
       originalHeight
     );
     return resultFile;
-  }
-  async function vipsBatchResizeImage(id, file, outputType, configs, smartCrop = false) {
-    const { vipsBatchResizeImage: batchResize } = await loadVipsModule();
-    const resizes = configs.map((c) => ({
-      resize: { ...c.resize },
-      quality: c.quality
-    }));
-    const results = await batchResize(
-      id,
-      await file.arrayBuffer(),
-      file.type,
-      outputType,
-      resizes,
-      smartCrop
-    );
-    const ext = outputType.split("/")[1];
-    const sourceBasename = getFileBasename(file.name);
-    return results.map((result, i) => {
-      const config = configs[i];
-      const { width, height, originalWidth, originalHeight } = result;
-      const wasResized = originalWidth > width || originalHeight > height;
-      let fileName = `${sourceBasename}.${ext}`;
-      if (wasResized) {
-        if (config.scaledSuffix) {
-          fileName = `${sourceBasename}-scaled.${ext}`;
-        } else {
-          fileName = `${sourceBasename}-${width}x${height}.${ext}`;
-        }
-      }
-      return {
-        name: config.name,
-        file: new ImageFile(
-          new File(
-            [
-              new Blob([result.buffer], {
-                type: outputType
-              })
-            ],
-            fileName,
-            { type: outputType }
-          ),
-          width,
-          height,
-          originalWidth,
-          originalHeight
-        )
-      };
-    });
   }
   async function vipsRotateImage(id, file, orientation, signal) {
     if (signal?.aborted) {
@@ -935,7 +889,6 @@ var wp;
     processItem: () => processItem,
     removeItem: () => removeItem,
     resizeCropItem: () => resizeCropItem,
-    resumeItemByPostId: () => resumeItemByPostId,
     resumeQueue: () => resumeQueue,
     revokeBlobUrls: () => revokeBlobUrls,
     rotateItem: () => rotateItem,
@@ -956,12 +909,6 @@ var wp;
 
   // packages/upload-media/build-module/store/private-actions.mjs
   var DEFAULT_OUTPUT_QUALITY = 0.82;
-  function shouldPauseForSideload(item, operation, select2) {
-    if (operation !== OperationType.Upload || !item.parentId || !item.additionalData.post) {
-      return false;
-    }
-    return select2.isUploadingToPost(item.additionalData.post);
-  }
   function addItem({
     file: fileOrBlob,
     batchId,
@@ -1065,13 +1012,6 @@ var wp;
       } = item;
       const operation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
       const operationArgs = Array.isArray(item.operations?.[0]) ? item.operations[0][1] : void 0;
-      if (shouldPauseForSideload(item, operation, select2)) {
-        dispatch({
-          type: Type.PauseItem,
-          id
-        });
-        return;
-      }
       if (operation === OperationType.Upload) {
         const settings = select2.getSettings();
         const activeCount = select2.getActiveUploadCount();
@@ -1187,18 +1127,6 @@ var wp;
         type: Type.PauseItem,
         id
       });
-    };
-  }
-  function resumeItemByPostId(postOrAttachmentId) {
-    return async ({ select: select2, dispatch }) => {
-      const item = select2.getPausedUploadForPost(postOrAttachmentId);
-      if (item) {
-        dispatch({
-          type: Type.ResumeItem,
-          id: item.id
-        });
-        dispatch.processItem(item.id);
-      }
     };
   }
   function removeItem(id) {
@@ -1377,13 +1305,18 @@ var wp;
         attachmentId: post,
         additionalData,
         signal: item.abortController?.signal,
-        onFileChange: ([attachment]) => {
-          dispatch.finishOperation(id, { attachment });
-          dispatch.resumeItemByPostId(post);
+        onSuccess: (subSize) => {
+          if (item.parentId) {
+            dispatch({
+              type: Type.AccumulateSubSize,
+              id: item.parentId,
+              subSize
+            });
+          }
+          dispatch.finishOperation(id, {});
         },
         onError: (error) => {
           dispatch.cancelItem(id, error);
-          dispatch.resumeItemByPostId(post);
         }
       });
     };
@@ -1584,9 +1517,6 @@ var wp;
             settings
           );
         }
-        const thumbnailOutputType = thumbnailTranscodeOperation ? `image/${thumbnailTranscodeOperation[1].outputFormat}` : sourceType;
-        const quality = thumbnailTranscodeOperation ? thumbnailTranscodeOperation[1].outputQuality ?? DEFAULT_OUTPUT_QUALITY : DEFAULT_OUTPUT_QUALITY;
-        const batchConfigs = [];
         for (const name of sizesToGenerate) {
           const imageSize = allImageSizes[name];
           if (!imageSize) {
@@ -1595,98 +1525,34 @@ var wp;
             );
             continue;
           }
-          batchConfigs.push({
-            name,
-            resize: imageSize,
-            quality
+          const thumbnailOperations = [
+            [OperationType.ResizeCrop, { resize: imageSize }]
+          ];
+          if (thumbnailTranscodeOperation) {
+            thumbnailOperations.push(thumbnailTranscodeOperation);
+          }
+          thumbnailOperations.push(OperationType.Upload);
+          dispatch.addSideloadItem({
+            file,
+            batchId,
+            parentId: item.id,
+            additionalData: {
+              // Sideloading does not use the parent post ID but the
+              // attachment ID as the image sizes need to be added to it.
+              post: attachment.id,
+              image_size: name,
+              convert_format: false
+            },
+            operations: thumbnailOperations
           });
         }
         const { bigImageSizeThreshold } = settings;
-        let needsScaling = false;
         if (bigImageSizeThreshold && attachment.id) {
           const bitmap = await createImageBitmap(item.sourceFile);
-          needsScaling = bitmap.width > bigImageSizeThreshold || bitmap.height > bigImageSizeThreshold;
+          const needsScaling = bitmap.width > bigImageSizeThreshold || bitmap.height > bigImageSizeThreshold;
           bitmap.close();
           if (needsScaling) {
-            batchConfigs.push({
-              name: "scaled",
-              resize: {
-                width: bigImageSizeThreshold,
-                height: bigImageSizeThreshold
-              },
-              quality,
-              scaledSuffix: true
-            });
-          }
-        }
-        let batchResults = null;
-        if (batchConfigs.length > 0) {
-          try {
-            batchResults = await vipsBatchResizeImage(
-              item.id,
-              file,
-              thumbnailOutputType,
-              batchConfigs,
-              false
-            );
-          } catch {
-            console.warn(
-              "Batch resize failed, falling back to per-thumbnail processing"
-            );
-          }
-        }
-        if (batchResults) {
-          for (const result of batchResults) {
-            dispatch.addSideloadItem({
-              file: result.file,
-              onChange: ([updatedAttachment]) => {
-                if ((0, import_blob.isBlobURL)(updatedAttachment.url)) {
-                  return;
-                }
-                item.onChange?.([updatedAttachment]);
-              },
-              batchId,
-              parentId: item.id,
-              additionalData: {
-                post: attachment.id,
-                image_size: result.name,
-                convert_format: false
-              },
-              operations: [OperationType.Upload]
-            });
-          }
-        } else {
-          for (const name of sizesToGenerate) {
-            const imageSize = allImageSizes[name];
-            if (!imageSize) {
-              continue;
-            }
-            const thumbnailOperations = [
-              [OperationType.ResizeCrop, { resize: imageSize }]
-            ];
-            if (thumbnailTranscodeOperation) {
-              thumbnailOperations.push(thumbnailTranscodeOperation);
-            }
-            thumbnailOperations.push(OperationType.Upload);
-            dispatch.addSideloadItem({
-              file,
-              onChange: ([updatedAttachment]) => {
-                if ((0, import_blob.isBlobURL)(updatedAttachment.url)) {
-                  return;
-                }
-                item.onChange?.([updatedAttachment]);
-              },
-              batchId,
-              parentId: item.id,
-              additionalData: {
-                post: attachment.id,
-                image_size: name,
-                convert_format: false
-              },
-              operations: thumbnailOperations
-            });
-          }
-          if (needsScaling && bigImageSizeThreshold && attachment.id) {
+            const sourceForScaled = attachment.filename ? renameFile(item.sourceFile, attachment.filename) : item.sourceFile;
             const scaledOperations = [
               [
                 OperationType.ResizeCrop,
@@ -1704,13 +1570,7 @@ var wp;
             }
             scaledOperations.push(OperationType.Upload);
             dispatch.addSideloadItem({
-              file,
-              onChange: ([updatedAttachment]) => {
-                if ((0, import_blob.isBlobURL)(updatedAttachment.url)) {
-                  return;
-                }
-                item.onChange?.([updatedAttachment]);
-              },
+              file: sourceForScaled,
               batchId,
               parentId: item.id,
               additionalData: {
@@ -1736,7 +1596,7 @@ var wp;
       const { mediaFinalize } = select2.getSettings();
       if (attachment?.id && mediaFinalize) {
         try {
-          await mediaFinalize(attachment.id);
+          await mediaFinalize(attachment.id, item.subSizes || []);
         } catch (error) {
           console.warn("Media finalization failed:", error);
         }

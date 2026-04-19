@@ -1476,14 +1476,12 @@ var wp;
         value
       );
     }
-    return transformAttachment(
-      await (0, import_api_fetch2.default)({
-        path: `/wp/v2/media/${attachmentId}/sideload`,
-        body: data,
-        method: "POST",
-        signal
-      })
-    );
+    return (0, import_api_fetch2.default)({
+      path: `/wp/v2/media/${attachmentId}/sideload`,
+      body: data,
+      method: "POST",
+      signal
+    });
   }
 
   // packages/media-utils/build-module/utils/sideload-media.mjs
@@ -1494,17 +1492,17 @@ var wp;
     attachmentId,
     additionalData = {},
     signal,
-    onFileChange,
+    onSuccess,
     onError = noop
   }) {
     try {
-      const attachment = await sideloadToServer(
+      const subSizeData = await sideloadToServer(
         file,
         attachmentId,
         additionalData,
         signal
       );
-      onFileChange?.([attachment]);
+      onSuccess?.(subSizeData);
     } catch (error) {
       let message2;
       if (error instanceof Error) {
