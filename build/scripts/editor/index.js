@@ -78608,75 +78608,65 @@ If there's a particular need for this, please submit a feature request at https:
         clientIds: getClientIdsWithDescendants2()
       };
     }, []);
-    const { resultComments, unresolvedSortedThreads } = (0, import_element281.useMemo)(() => {
+    const { notes, unresolvedNotes } = (0, import_element281.useMemo)(() => {
       if (!threads || threads.length === 0) {
-        return { resultComments: [], unresolvedSortedThreads: [] };
+        return { notes: [], unresolvedNotes: [] };
       }
-      const blocksWithComments = clientIds.reduce((results, clientId) => {
-        const commentId = getBlockAttributes2(clientId)?.metadata?.noteId;
-        if (commentId) {
-          results[clientId] = commentId;
+      const blocksWithComments = {};
+      const clientIdByNoteId = /* @__PURE__ */ new Map();
+      for (const clientId of clientIds) {
+        const noteId = getBlockAttributes2(clientId)?.metadata?.noteId;
+        if (noteId) {
+          const key = String(noteId);
+          blocksWithComments[clientId] = key;
+          clientIdByNoteId.set(key, clientId);
         }
-        return results;
-      }, {});
-      const compare = {};
-      const result = [];
-      const commentIdToBlockClientId = Object.keys(
-        blocksWithComments
-      ).reduce((mapping, clientId) => {
-        mapping[blocksWithComments[clientId]] = clientId;
-        return mapping;
-      }, {});
-      threads.forEach((item) => {
-        const itemBlock = commentIdToBlockClientId[item.id];
-        compare[item.id] = {
+      }
+      const threadsById = /* @__PURE__ */ new Map();
+      const rootThreads = [];
+      for (const item of threads) {
+        const thread = {
           ...item,
           reply: [],
-          blockClientId: item.parent === 0 ? itemBlock : null
+          blockClientId: item.parent === 0 ? clientIdByNoteId.get(String(item.id)) ?? null : null
         };
-      });
-      threads.forEach((item) => {
+        threadsById.set(item.id, thread);
         if (item.parent === 0) {
-          result.push(compare[item.id]);
-        } else if (compare[item.parent]) {
-          compare[item.parent].reply.push(compare[item.id]);
+          rootThreads.push(thread);
         }
-      });
-      if (0 === result?.length) {
-        return { resultComments: [], unresolvedSortedThreads: [] };
       }
-      const updatedResult = result.map((item) => ({
-        ...item,
-        reply: [...item.reply].reverse()
-      }));
-      const threadIdMap = new Map(
-        updatedResult.map((thread) => [String(thread.id), thread])
+      for (const item of threads) {
+        if (item.parent !== 0) {
+          threadsById.get(item.parent)?.reply.unshift(threadsById.get(item.id));
+        }
+      }
+      if (rootThreads.length === 0) {
+        return { notes: [], unresolvedNotes: [] };
+      }
+      const unresolved = [];
+      const resolved = [];
+      for (const noteId of Object.values(blocksWithComments)) {
+        const thread = threadsById.get(Number(noteId)) ?? threadsById.get(noteId);
+        if (!thread) {
+          continue;
+        }
+        if (thread.status === "hold") {
+          unresolved.push(thread);
+        } else if (thread.status === "approved") {
+          resolved.push(thread);
+        }
+      }
+      const orphans = rootThreads.filter(
+        (thread) => !thread.blockClientId
       );
-      const mappedIds = new Set(
-        Object.values(blocksWithComments).map((id) => String(id))
-      );
-      const unresolvedSortedComments = Object.values(blocksWithComments).map((commentId) => threadIdMap.get(String(commentId))).filter(
-        (thread) => thread !== void 0 && thread.status === "hold"
-      );
-      const resolvedSortedComments = Object.values(blocksWithComments).map((commentId) => threadIdMap.get(String(commentId))).filter(
-        (thread) => thread !== void 0 && thread.status === "approved"
-      );
-      const orphanedComments = updatedResult.filter(
-        (thread) => !mappedIds.has(String(thread.id))
-      );
-      const allSortedComments = [
-        ...unresolvedSortedComments,
-        ...resolvedSortedComments,
-        ...orphanedComments
-      ];
       return {
-        resultComments: allSortedComments,
-        unresolvedSortedThreads: unresolvedSortedComments
+        notes: [...unresolved, ...resolved, ...orphans],
+        unresolvedNotes: unresolved
       };
     }, [clientIds, threads, getBlockAttributes2]);
     return {
-      resultComments,
-      unresolvedSortedThreads
+      notes,
+      unresolvedNotes
     };
   }
   function useBlockCommentsActions() {
@@ -79847,11 +79837,11 @@ If there's a particular need for this, please submit a feature request at https:
       (select7) => unlock(select7(store)).getSelectedNote(),
       []
     );
-    const { resultComments, unresolvedSortedThreads } = useBlockComments(postId2);
+    const { notes, unresolvedNotes } = useBlockComments(postId2);
     const showFloatingSidebar = isLargeViewport;
-    const showAllNotesSidebar = resultComments.length > 0 || !showFloatingSidebar;
+    const showAllNotesSidebar = notes.length > 0 || !showFloatingSidebar;
     useEnableFloatingSidebar(
-      showFloatingSidebar && (unresolvedSortedThreads.length > 0 || selectedNote2 !== void 0)
+      showFloatingSidebar && (unresolvedNotes.length > 0 || selectedNote2 !== void 0)
     );
     (0, import_keyboard_shortcuts12.useShortcut)(
       "core/editor/new-note",
@@ -79867,12 +79857,12 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
-    const currentThread = blockCommentId ? resultComments.find((thread) => thread.id === blockCommentId) : null;
+    const currentThread = blockCommentId ? notes.find((thread) => thread.id === blockCommentId) : null;
     async function openTheSidebar(selectedClientId) {
       const prevArea = await getActiveComplementaryArea2("core");
       const activeNotesArea = SIDEBARS.find((name2) => name2 === prevArea);
       const targetClientId = selectedClientId && selectedClientId !== clientId ? selectedClientId : clientId;
-      const targetNote = resultComments.find(
+      const targetNote = notes.find(
         (note) => note.blockClientId === targetClientId
       );
       if (targetNote?.status === "approved") {
@@ -79915,7 +79905,7 @@ If there's a particular need for this, please submit a feature request at https:
           children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
             NotesSidebarContent,
             {
-              comments: resultComments,
+              comments: notes,
               commentSidebarRef
             }
           )
@@ -79933,7 +79923,7 @@ If there's a particular need for this, please submit a feature request at https:
           children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
             NotesSidebarContent,
             {
-              comments: unresolvedSortedThreads,
+              comments: unresolvedNotes,
               commentSidebarRef,
               styles: {
                 backgroundColor
