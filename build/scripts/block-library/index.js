@@ -52620,11 +52620,8 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                   import_components113.ToggleControl,
                   {
-                    label: postType?.labels.singular_name ? (0, import_i18n174.sprintf)(
-                      // translators: %s: Name of the post type e.g: "post".
-                      (0, import_i18n174.__)("Link to %s"),
-                      postType.labels.singular_name
-                    ) : (0, import_i18n174.__)("Link to post"),
+                    __nextHasNoMarginBottom: true,
+                    label: (0, import_i18n174.__)("Make image a link"),
                     onChange: () => setAttributes({ isLink: !isLink }),
                     checked: isLink
                   }
