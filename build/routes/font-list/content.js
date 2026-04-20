@@ -15625,7 +15625,7 @@ function FontLibraryPage() {
       }))
     );
   }
-  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n47.__)("Fonts") }, /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(page_default, { headingLevel: 1, title: (0, import_i18n47.__)("Fonts") }, /* @__PURE__ */ React.createElement(
     Tabs3,
     {
       selectedTabId: activeTab,
