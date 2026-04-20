@@ -23984,6 +23984,8 @@ var wp;
   };
   var hasLoggedFallback = false;
   var isClientSideMediaEnabledCache = null;
+  var isHeicCanvasEnabledCache = null;
+  var HEIC_MIME_TYPES = ["image/heic", "image/heif"];
   function shouldEnableClientSideMediaProcessing() {
     if (isClientSideMediaEnabledCache !== null) {
       return isClientSideMediaEnabledCache;
@@ -24010,6 +24012,25 @@ var wp;
     isClientSideMediaEnabledCache = true;
     return true;
   }
+  function shouldEnableHeicCanvasProcessing() {
+    if (isHeicCanvasEnabledCache !== null) {
+      return isHeicCanvasEnabledCache;
+    }
+    if (shouldEnableClientSideMediaProcessing()) {
+      isHeicCanvasEnabledCache = false;
+      return false;
+    }
+    if (!window.__heicUploadSupport) {
+      isHeicCanvasEnabledCache = false;
+      return false;
+    }
+    if (typeof import_upload_media.isHeicCanvasSupported !== "function" || !(0, import_upload_media.isHeicCanvasSupported)()) {
+      isHeicCanvasEnabledCache = false;
+      return false;
+    }
+    isHeicCanvasEnabledCache = true;
+    return true;
+  }
   function mediaUpload(registry, settings2, {
     allowedTypes,
     additionalData = {},
@@ -24032,6 +24053,58 @@ var wp;
       allowedTypes
     });
   }
+  function heicMediaUpload(registry, settings2, {
+    allowedTypes,
+    additionalData = {},
+    filesList,
+    onError = noop6,
+    onFileChange,
+    onSuccess,
+    onBatchSuccess
+  }) {
+    const files = Array.from(filesList);
+    const heicFiles = files.filter(
+      (file) => HEIC_MIME_TYPES.includes(file.type)
+    );
+    const otherFiles = files.filter(
+      (file) => !HEIC_MIME_TYPES.includes(file.type)
+    );
+    const hasBothPaths = heicFiles.length > 0 && otherFiles.length > 0 && settings2?.mediaUpload;
+    let pathsRemaining = hasBothPaths ? 2 : 1;
+    const coordinatedBatchSuccess = hasBothPaths ? () => {
+      pathsRemaining--;
+      if (pathsRemaining <= 0) {
+        onBatchSuccess?.();
+      }
+    } : onBatchSuccess;
+    if (heicFiles.length > 0) {
+      void registry.dispatch(import_upload_media.store).addItems({
+        files: heicFiles,
+        onChange: onFileChange,
+        onSuccess: (attachments) => {
+          settings2?.[mediaUploadOnSuccessKey]?.(attachments);
+          onSuccess?.(attachments);
+        },
+        onBatchSuccess: coordinatedBatchSuccess,
+        onError: (error2) => onError(
+          typeof error2 === "string" ? error2 : error2?.message ?? ""
+        ),
+        additionalData,
+        allowedTypes
+      });
+    }
+    if (otherFiles.length > 0 && settings2?.mediaUpload) {
+      settings2.mediaUpload({
+        allowedTypes,
+        additionalData,
+        filesList: otherFiles,
+        onError,
+        onFileChange,
+        onSuccess,
+        onBatchSuccess: coordinatedBatchSuccess
+      });
+    }
+  }
   function BlockSyncEffect(props) {
     useBlockSync(props);
     return null;
@@ -24045,14 +24118,13 @@ var wp;
       } = props;
       const mediaUploadSettings = use_media_upload_settings_default(_settings);
       const isClientSideMediaEnabled = shouldEnableClientSideMediaProcessing();
+      const isHeicCanvasEnabled = shouldEnableHeicCanvasProcessing();
+      const useUploadMediaPipeline = isClientSideMediaEnabled || isHeicCanvasEnabled;
       const isMediaUploadIntercepted = !!_settings?.mediaUpload?.__isMediaUploadInterceptor;
       const settings2 = (0, import_element40.useMemo)(() => {
-        if (isClientSideMediaEnabled && _settings?.mediaUpload && !isMediaUploadIntercepted) {
-          const interceptor = mediaUpload.bind(
-            null,
-            registry,
-            _settings
-          );
+        if (useUploadMediaPipeline && _settings?.mediaUpload && !isMediaUploadIntercepted) {
+          const uploadFn = isClientSideMediaEnabled ? mediaUpload : heicMediaUpload;
+          const interceptor = uploadFn.bind(null, registry, _settings);
           interceptor.__isMediaUploadInterceptor = true;
           return {
             ..._settings,
@@ -24063,6 +24135,7 @@ var wp;
       }, [
         _settings,
         registry,
+        useUploadMediaPipeline,
         isClientSideMediaEnabled,
         isMediaUploadIntercepted
       ]);
@@ -24112,7 +24185,7 @@ var wp;
         ),
         children
       ] });
-      if (isClientSideMediaEnabled && !isMediaUploadIntercepted) {
+      if (useUploadMediaPipeline && !isMediaUploadIntercepted) {
         return /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
           import_upload_media.MediaUploadProvider,
           {

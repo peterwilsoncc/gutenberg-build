@@ -22213,7 +22213,7 @@ var wp;
   var import_upload_media = __toESM(require_upload_media(), 1);
   var LOCK_NAME = "upload-in-progress";
   function useUploadSaveLock() {
-    const isClientSideMediaProcessingEnabled = window.__clientSideMediaProcessing;
+    const isClientSideMediaProcessingEnabled = window.__clientSideMediaProcessing || window.__heicUploadSupport;
     const isUploading = (0, import_data45.useSelect)(
       (select7) => {
         if (!isClientSideMediaProcessingEnabled) {
