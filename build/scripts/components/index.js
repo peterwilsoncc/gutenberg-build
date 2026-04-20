@@ -29068,7 +29068,13 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/autocomplete/get-autocomplete-match.mjs
   var import_remove_accents3 = __toESM(require_remove_accents(), 1);
-  function getAutocompleteMatch(textContent, completers, filteredOptionsLength, isBackspacing, getTextAfterSelection) {
+  function getAutocompleteMatch(textContent, completers, options2) {
+    const {
+      matchCount,
+      isBackspacing,
+      getTextAfterSelection,
+      lastCompletion
+    } = options2;
     if (!textContent) {
       return null;
     }
@@ -29100,7 +29106,7 @@ This message will only show in development mode. It won't appear in production. 
     if (textWithoutTrigger.length > 50) {
       return null;
     }
-    const mismatch = filteredOptionsLength === 0;
+    const mismatch = matchCount === 0;
     const wordsFromTrigger = textWithoutTrigger.split(/\s/);
     const hasOneTriggerWord = wordsFromTrigger.length === 1;
     const matchingWhileBackspacing = isBackspacing && wordsFromTrigger.length <= 3;
@@ -29111,6 +29117,9 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     if (/^\s/.test(textWithoutTrigger) || /\s\s+$/.test(textWithoutTrigger)) {
+      return null;
+    }
+    if (lastCompletion && lastCompletion.name === completer.name && textWithoutTrigger.trimEnd() === lastCompletion.value) {
       return null;
     }
     return {
@@ -29201,9 +29210,11 @@ This message will only show in development mode. It won't appear in production. 
       autocompleter
     } = state;
     const backspacingRef = (0, import_element52.useRef)(false);
+    const prevRecordTextRef = (0, import_element52.useRef)("");
+    const lastCompletionRef = (0, import_element52.useRef)(null);
     function insertCompletion(replacement) {
       if (autocompleter === null) {
-        return;
+        return "";
       }
       const end = record.start;
       const start = end - autocompleter.triggerPrefix.length - filterValue.length;
@@ -29211,21 +29222,37 @@ This message will only show in development mode. It won't appear in production. 
         html: (0, import_element52.renderToString)(replacement)
       });
       onChange((0, import_rich_text2.insert)(record, toInsert, start, end));
+      return (0, import_rich_text2.getTextContent)(toInsert);
     }
     function select(option) {
-      const {
-        getOptionCompletion
-      } = autocompleter || {};
-      if (option.isDisabled) {
+      if (option.isDisabled || !autocompleter) {
         return;
       }
-      if (getOptionCompletion) {
-        const completionObject = getCompletionObject(getOptionCompletion(option.value, filterValue));
-        if ("replace" === completionObject.action) {
-          onReplace([completionObject.value]);
-          return;
-        } else if ("insert-at-caret" === completionObject.action) {
-          insertCompletion(completionObject.value);
+      const {
+        getOptionCompletion
+      } = autocompleter;
+      if (!getOptionCompletion) {
+        dispatch({
+          type: "RESET"
+        });
+        contentRef.current?.focus();
+        return;
+      }
+      const completionObject = getCompletionObject(getOptionCompletion(option.value, filterValue));
+      if ("replace" === completionObject.action) {
+        onReplace([completionObject.value]);
+        return;
+      }
+      if ("insert-at-caret" === completionObject.action) {
+        const completionText = insertCompletion(completionObject.value);
+        if (completionText.startsWith(autocompleter.triggerPrefix)) {
+          const afterPrefix = completionText.slice(autocompleter.triggerPrefix.length);
+          if (afterPrefix) {
+            lastCompletionRef.current = {
+              name: autocompleter.name,
+              value: afterPrefix
+            };
+          }
         }
       }
       dispatch({
@@ -29291,10 +29318,17 @@ This message will only show in development mode. It won't appear in production. 
       return "";
     }, [record]);
     (0, import_element52.useEffect)(() => {
+      const isTextChange = record.text !== prevRecordTextRef.current;
+      prevRecordTextRef.current = record.text;
       function getTextAfterSelection() {
         return textContent ? (0, import_rich_text2.getTextContent)((0, import_rich_text2.slice)(record, void 0, (0, import_rich_text2.getTextContent)(record).length)) : "";
       }
-      const match4 = getAutocompleteMatch(textContent, completers, filteredOptions.length, backspacingRef.current, getTextAfterSelection);
+      const match4 = getAutocompleteMatch(textContent, completers, {
+        matchCount: filteredOptions.length,
+        isBackspacing: backspacingRef.current,
+        getTextAfterSelection,
+        lastCompletion: lastCompletionRef.current
+      });
       if (!match4) {
         if (autocompleter) {
           dispatch({
@@ -29307,6 +29341,12 @@ This message will only show in development mode. It won't appear in production. 
         completer,
         filterValue: query
       } = match4;
+      if (!autocompleter && !isTextChange) {
+        return;
+      }
+      if (lastCompletionRef.current && lastCompletionRef.current.name === completer.name) {
+        lastCompletionRef.current = null;
+      }
       dispatch({
         type: "MATCH",
         completer,
