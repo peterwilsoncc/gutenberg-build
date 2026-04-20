@@ -20,22 +20,6 @@ class Gutenberg_REST_Attachments_Controller extends WP_REST_Attachments_Controll
 	public function register_routes(): void {
 		parent::register_routes();
 
-		// Override the parent's sideload route so that 'scaled' is included
-		// in the image_size enum. Without the override, core's handler
-		// validates first and rejects 'scaled' before ours is tried.
-		$valid_image_sizes = array_keys( wp_get_registered_image_subsizes() );
-
-		// Special case to set 'original_image' in attachment metadata.
-		$valid_image_sizes[] = 'original';
-		// HEIC/HEIF companion original preserved alongside the JPEG derivative.
-		// Stored under its own meta key so it never collides with 'original'
-		// (which the scaled-sideload flow also writes to).
-		$valid_image_sizes[] = 'original-heic';
-		// Client-side big image threshold: sideload the scaled version.
-		$valid_image_sizes[] = 'scaled';
-		// Used for PDF thumbnails.
-		$valid_image_sizes[] = 'full';
-
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)/sideload',
@@ -50,10 +34,47 @@ class Gutenberg_REST_Attachments_Controller extends WP_REST_Attachments_Controll
 							'type'        => 'integer',
 						),
 						'image_size'         => array(
-							'description' => __( 'Image size.', 'gutenberg' ),
-							'type'        => 'string',
-							'enum'        => $valid_image_sizes,
-							'required'    => true,
+							'description'       => __( 'Image size. Can be a single size name or an array of size names to register the same file under multiple sizes.', 'gutenberg' ),
+							'type'              => array( 'string', 'array' ),
+							'items'             => array(
+								'type' => 'string',
+							),
+							'required'          => true,
+							// A custom callback is used instead of the default `rest_validate_request_arg`
+							// because WordPress's `rest_is_array()` treats scalar strings as single-element
+							// lists (via wp_parse_list), so a oneOf with both a string and array schema
+							// matches a plain string twice and validation fails with "matches more than one
+							// of the expected formats". The callback validates the enum per-item using the
+							// current list of registered sizes, which reflects any sizes added after the
+							// route was registered (e.g. via add_image_size() in tests).
+							'validate_callback' => static function ( $value, $request, $param ) {
+								$valid_sizes   = array_keys( wp_get_registered_image_subsizes() );
+								$valid_sizes[] = 'original';
+								$valid_sizes[] = 'original-heic';
+								$valid_sizes[] = 'scaled';
+								$valid_sizes[] = 'full';
+
+								$items = is_string( $value ) ? array( $value ) : ( is_array( $value ) ? $value : null );
+								if ( null === $items ) {
+									return new WP_Error(
+										'rest_invalid_type',
+										/* translators: %s: Parameter name. */
+										sprintf( __( '%s must be a string or an array of strings.', 'gutenberg' ), $param )
+									);
+								}
+
+								foreach ( $items as $item ) {
+									if ( ! is_string( $item ) || ! in_array( $item, $valid_sizes, true ) ) {
+										return new WP_Error(
+											'rest_not_in_enum',
+											/* translators: %s: Parameter name. */
+											sprintf( __( '%s contains an invalid image size.', 'gutenberg' ), $param )
+										);
+									}
+								}
+
+								return true;
+							},
 						),
 						'generate_sub_sizes' => array(
 							'description' => __( 'Whether to generate image sub sizes from the sideloaded file.', 'gutenberg' ),
@@ -89,8 +110,17 @@ class Gutenberg_REST_Attachments_Controller extends WP_REST_Attachments_Controll
 								'type'       => 'object',
 								'properties' => array(
 									'image_size'     => array(
-										'type'     => 'string',
-										'required' => true,
+										// Uses a multi-type schema instead of `oneOf` because WordPress's
+										// `rest_is_array()` treats scalar strings as single-element lists,
+										// so both a `{type: string}` and `{type: array}` oneOf schema would
+										// match a plain string and trigger a "matches more than one"
+										// validation error.
+										'description' => __( 'Size name, or an array of size names when a single file is registered under multiple sizes with matching dimensions.', 'gutenberg' ),
+										'type'        => array( 'string', 'array' ),
+										'items'       => array(
+											'type' => 'string',
+										),
+										'required'    => true,
 									),
 									'width'          => array(
 										'type'    => 'integer',
@@ -353,6 +383,24 @@ class Gutenberg_REST_Attachments_Controller extends WP_REST_Attachments_Controll
 		foreach ( $sub_sizes as $sub_size ) {
 			$image_size = $sub_size['image_size'];
 
+			// When multiple size names share identical dimensions the client
+			// sends a single sub-size entry with an array of names. Register the
+			// same file under each name. Arrays only contain regular sizes.
+			if ( is_array( $image_size ) ) {
+				$metadata['sizes'] = $metadata['sizes'] ?? array();
+
+				foreach ( $image_size as $name ) {
+					$metadata['sizes'][ $name ] = array(
+						'width'     => $sub_size['width'] ?? 0,
+						'height'    => $sub_size['height'] ?? 0,
+						'file'      => $sub_size['file'] ?? '',
+						'mime-type' => $sub_size['mime_type'] ?? '',
+						'filesize'  => $sub_size['filesize'] ?? 0,
+					);
+				}
+				continue;
+			}
+
 			if ( 'original' === $image_size ) {
 				$metadata['original_image'] = $sub_size['file'];
 			} elseif ( 'original-heic' === $image_size ) {
@@ -561,11 +609,23 @@ class Gutenberg_REST_Attachments_Controller extends WP_REST_Attachments_Controll
 
 		// Build sub-size data to return to the client.
 		// The client accumulates these and sends them all to the finalize endpoint.
+		// `image_size` may be a single string or an array of names that share the
+		// same dimensions and therefore reuse a single sideloaded file. Arrays
+		// only carry regular sub-sizes; the special keys below ('original',
+		// 'scaled', 'original-heic') are always scalar strings.
 		$sub_size_data = array(
 			'image_size' => $image_size,
 		);
 
-		if ( 'original' === $image_size ) {
+		if ( is_array( $image_size ) ) {
+			$size = wp_getimagesize( $path );
+
+			$sub_size_data['width']     = $size ? $size[0] : 0;
+			$sub_size_data['height']    = $size ? $size[1] : 0;
+			$sub_size_data['file']      = wp_basename( $path );
+			$sub_size_data['mime_type'] = $type;
+			$sub_size_data['filesize']  = wp_filesize( $path );
+		} elseif ( 'original' === $image_size ) {
 			$sub_size_data['file'] = wp_basename( $path );
 		} elseif ( 'original-heic' === $image_size ) {
 			// HEIC companion original. finalize_item() writes the filename to
