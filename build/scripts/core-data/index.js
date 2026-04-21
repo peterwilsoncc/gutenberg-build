@@ -2753,13 +2753,19 @@ var wp;
             return haveValuesChanged(currentValue, newValue);
           }
           case "meta": {
+            const currentMeta = currentValue ?? {};
             allowedMetaChanges = Object.fromEntries(
               Object.entries(newValue ?? {}).filter(
-                ([metaKey]) => !disallowedPostMetaKeys.has(metaKey)
+                ([metaKey]) => {
+                  if (disallowedPostMetaKeys.has(metaKey)) {
+                    return false;
+                  }
+                  return metaKey in currentMeta;
+                }
               )
             );
             const mergedValue = {
-              ...currentValue,
+              ...currentMeta,
               ...allowedMetaChanges
             };
             return haveValuesChanged(currentValue, mergedValue);
