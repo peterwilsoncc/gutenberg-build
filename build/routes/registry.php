@@ -113,6 +113,13 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'taxonomies',
+		'path'        => '/',
+		'page'        => 'taxonomies',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'template',
 		'path'        => '/templates',
 		'page'        => 'site-editor-v2',
