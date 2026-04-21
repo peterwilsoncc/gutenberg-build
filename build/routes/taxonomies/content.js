@@ -2826,8 +2826,8 @@ var Text = (0, import_element2.forwardRef)(function Text2({ variant = "body-md",
     props: mergeProps(props, {
       className: clsx_default(
         style_default.text,
-        variant.startsWith("heading-") && global_css_defense_default.heading,
-        variant.startsWith("body-") && global_css_defense_default.p,
+        global_css_defense_default.heading,
+        global_css_defense_default.p,
         style_default[variant],
         className
       )
