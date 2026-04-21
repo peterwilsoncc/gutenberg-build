@@ -900,6 +900,7 @@ function Header({
   headingLevel = 2,
   breadcrumbs,
   badges,
+  visual,
   title,
   subTitle,
   actions,
@@ -920,6 +921,14 @@ function Header({
               {
                 bubblesVirtually: true,
                 className: "admin-ui-page__sidebar-toggle-slot"
+              }
+            ),
+            visual && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+              "div",
+              {
+                className: "admin-ui-page__header-visual",
+                "aria-hidden": "true",
+                children: visual
               }
             ),
             title && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(HeadingTag, { className: "admin-ui-page__header-title", children: title }),
@@ -950,6 +959,7 @@ function Page({
   headingLevel,
   breadcrumbs,
   badges,
+  visual,
   title,
   subTitle,
   children,
@@ -962,12 +972,13 @@ function Page({
   const classes = clsx_default("admin-ui-page", className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
   return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions) && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
       Header,
       {
         headingLevel,
         breadcrumbs,
         badges,
+        visual,
         title,
         subTitle,
         actions,
