@@ -5017,6 +5017,12 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
     display: flex;
   }
 }
+.media-editor-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .editor-autocompleters__link {
   white-space: nowrap;
   gap: 8px;
