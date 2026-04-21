@@ -702,6 +702,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/upload-media
+  var require_upload_media = __commonJS({
+    "package-external:@wordpress/upload-media"(exports, module) {
+      module.exports = window.wp.uploadMedia;
+    }
+  });
+
   // package-external:@wordpress/style-engine
   var require_style_engine = __commonJS({
     "package-external:@wordpress/style-engine"(exports, module) {
@@ -1298,13 +1305,6 @@ var wp;
       } else {
         module.exports = require_use_sync_external_store_shim_development();
       }
-    }
-  });
-
-  // package-external:@wordpress/upload-media
-  var require_upload_media = __commonJS({
-    "package-external:@wordpress/upload-media"(exports, module) {
-      module.exports = window.wp.uploadMedia;
     }
   });
 
@@ -13374,6 +13374,7 @@ var wp;
   var import_data29 = __toESM(require_data(), 1);
   var import_core_data26 = __toESM(require_core_data(), 1);
   var import_media_utils2 = __toESM(require_media_utils(), 1);
+  var import_upload_media = __toESM(require_upload_media(), 1);
   var noop2 = () => {
   };
   function mediaUpload({
@@ -13395,41 +13396,26 @@ var wp;
       unlockPostSaving: unlockPostSaving2
     } = (0, import_data29.dispatch)(store);
     const wpAllowedMimeTypes = getEditorSettings2().allowedMimeTypes;
+    const isClientSideMediaActive = window.__clientSideMediaProcessing && (0, import_upload_media.isClientSideMediaSupported)();
     const lockKey = `image-upload-${v4_default()}`;
-    let imageIsUploading = false;
     maxUploadFileSize = maxUploadFileSize || getEditorSettings2().maxUploadFileSize;
     const currentPost = getCurrentPost2();
     const currentPostId = typeof currentPost?.id === "number" ? currentPost.id : currentPost?.wp_id;
-    const setSaveLock = () => {
-      if (window.__clientSideMediaProcessing) {
-        return;
-      }
-      lockPostSaving2(lockKey);
-      lockPostAutosaving2(lockKey);
-      imageIsUploading = true;
-    };
-    const postData = currentPostId ? { post: currentPostId } : {};
     const clearSaveLock = () => {
-      if (window.__clientSideMediaProcessing) {
-        return;
-      }
       unlockPostSaving2(lockKey);
       unlockPostAutosaving2(lockKey);
-      imageIsUploading = false;
     };
+    if (!isClientSideMediaActive) {
+      lockPostSaving2(lockKey);
+      lockPostAutosaving2(lockKey);
+    }
+    const postData = currentPostId ? { post: currentPostId } : {};
     (0, import_media_utils2.uploadMedia)({
       allowedTypes,
       filesList,
-      onFileChange: (file) => {
-        if (!window.__clientSideMediaProcessing) {
-          if (!imageIsUploading) {
-            setSaveLock();
-          } else {
-            clearSaveLock();
-          }
-        }
-        onFileChange?.(file);
-        const entityFiles = file.filter((_file) => _file?.id);
+      onFileChange: (files) => {
+        onFileChange?.(files);
+        const entityFiles = files.filter((_file) => _file?.id);
         if (entityFiles?.length) {
           const invalidateCache = true;
           receiveEntityRecords(
@@ -13440,6 +13426,9 @@ var wp;
             invalidateCache
           );
         }
+        if (!isClientSideMediaActive && entityFiles.length === files.length) {
+          clearSaveLock();
+        }
       },
       onSuccess,
       additionalData: {
@@ -13448,7 +13437,7 @@ var wp;
       },
       maxUploadFileSize,
       onError: ({ message: message2 }) => {
-        if (!window.__clientSideMediaProcessing) {
+        if (!isClientSideMediaActive) {
           clearSaveLock();
         }
         onError(message2);
@@ -21115,18 +21104,12 @@ var wp;
   // packages/editor/build-module/components/provider/use-upload-save-lock.mjs
   var import_data45 = __toESM(require_data(), 1);
   var import_element56 = __toESM(require_element(), 1);
-  var import_upload_media = __toESM(require_upload_media(), 1);
+  var import_upload_media2 = __toESM(require_upload_media(), 1);
   var LOCK_NAME = "upload-in-progress";
   function useUploadSaveLock() {
-    const isClientSideMediaProcessingEnabled = window.__clientSideMediaProcessing || window.__heicUploadSupport;
     const isUploading = (0, import_data45.useSelect)(
-      (select7) => {
-        if (!isClientSideMediaProcessingEnabled) {
-          return false;
-        }
-        return select7(import_upload_media.store).isUploading();
-      },
-      [isClientSideMediaProcessingEnabled]
+      (select7) => select7(import_upload_media2.store).isUploading(),
+      []
     );
     const {
       lockPostSaving: lockPostSaving2,
@@ -21135,9 +21118,6 @@ var wp;
       unlockPostAutosaving: unlockPostAutosaving2
     } = (0, import_data45.useDispatch)(store);
     (0, import_element56.useEffect)(() => {
-      if (!isClientSideMediaProcessingEnabled) {
-        return;
-      }
       if (isUploading) {
         lockPostSaving2(LOCK_NAME);
         lockPostAutosaving2(LOCK_NAME);
@@ -21150,7 +21130,6 @@ var wp;
         unlockPostAutosaving2(LOCK_NAME);
       };
     }, [
-      isClientSideMediaProcessingEnabled,
       isUploading,
       lockPostSaving2,
       unlockPostSaving2,
@@ -47440,7 +47419,8 @@ var wp;
       hasNonPostEntityChanges: hasNonPostEntityChanges2,
       postStatusHasChanged,
       postStatus,
-      postType: postType2
+      postType: postType2,
+      isPostSavingLocked: isPostSavingLocked2
     } = (0, import_data133.useSelect)((select7) => {
       const {
         isCurrentPostPublished: isCurrentPostPublished2,
@@ -47462,6 +47442,7 @@ var wp;
         postType: getCurrentPostType2(),
         isAutosaving: isAutosavingPost2(),
         hasNonPostEntityChanges: select7(store).hasNonPostEntityChanges(),
+        isPostSavingLocked: select7(store).isPostSavingLocked(),
         postStatusHasChanged: !!getPostEdits2()?.status,
         postStatus: getEditedPostAttribute2("status")
       };
@@ -47477,7 +47458,7 @@ var wp;
       }
       return isSmallerThanMediumViewport ? (0, import_i18n174.__)("Publish") : (0, import_i18n174.__)("Submit for Review");
     }
-    if (hasNonPostEntityChanges2 || isPublished || postStatusHasChanged && !["future", "publish"].includes(postStatus) || !postStatusHasChanged && postStatus === "future") {
+    if (hasNonPostEntityChanges2 && !isPostSavingLocked2 || isPublished || postStatusHasChanged && !["future", "publish"].includes(postStatus) || !postStatusHasChanged && postStatus === "future") {
       return (0, import_i18n174.__)("Save");
     }
     if (isBeingScheduled) {
@@ -47547,8 +47528,8 @@ var wp;
         postStatus,
         postStatusHasChanged
       } = this.props;
-      const isButtonDisabled = (isSaving || !isSaveable || isPostSavingLocked2 || !isPublishable && !forceIsDirty) && (!hasNonPostEntityChanges2 || isSavingNonPostEntityChanges2);
-      const isToggleDisabled = (isPublished || isSaving || !isSaveable || !isPublishable && !forceIsDirty) && (!hasNonPostEntityChanges2 || isSavingNonPostEntityChanges2);
+      const isButtonDisabled = isPostSavingLocked2 || (isSaving || !isSaveable || !isPublishable && !forceIsDirty) && (!hasNonPostEntityChanges2 || isSavingNonPostEntityChanges2);
+      const isToggleDisabled = isPostSavingLocked2 || (isPublished || isSaving || !isSaveable || !isPublishable && !forceIsDirty) && (!hasNonPostEntityChanges2 || isSavingNonPostEntityChanges2);
       let publishStatus = "publish";
       if (postStatusHasChanged) {
         publishStatus = postStatus;
@@ -49883,6 +49864,7 @@ var wp;
       isPublished,
       isSaveable,
       isSaving,
+      isSavingLocked,
       isScheduled,
       hasPublishAction,
       showIconLabels,
@@ -49898,6 +49880,7 @@ var wp;
           isEditedPostDirty: isEditedPostDirty2,
           isSavingPost: isSavingPost2,
           isEditedPostSaveable: isEditedPostSaveable2,
+          isPostSavingLocked: isPostSavingLocked2,
           getCurrentPost: getCurrentPost2,
           isAutosavingPost: isAutosavingPost2,
           getEditedPostAttribute: getEditedPostAttribute2,
@@ -49911,6 +49894,7 @@ var wp;
           isPublished: isCurrentPostPublished2(),
           isSaving: isSavingPost2(),
           isSaveable: isEditedPostSaveable2(),
+          isSavingLocked: isPostSavingLocked2(),
           isScheduled: isCurrentPostScheduled2(),
           hasPublishAction: getCurrentPost2()?._links?.["wp:action-publish"] ?? false,
           showIconLabels: get("core", "showIconLabels"),
@@ -49948,7 +49932,7 @@ var wp;
     const shortLabel = (0, import_i18n190.__)("Save");
     const isSaved = forceSavedMessage || !isNew && !isDirty;
     const isSavedState = isSaving || isSaved;
-    const isDisabled = isSaving || isSaved || !isSaveable;
+    const isDisabled = isSaving || isSaved || !isSaveable || isSavingLocked;
     let text;
     if (isSaving) {
       text = isAutosaving ? (0, import_i18n190.__)("Autosaving") : (0, import_i18n190.__)("Saving");
