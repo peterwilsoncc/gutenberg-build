@@ -4787,6 +4787,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .editor-collab-sidebar-panel {
+  position: relative;
   padding: 16px 16px 24px;
   height: 100%;
   overflow: hidden;
@@ -4815,6 +4816,8 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   right: 16px;
   position: absolute;
   margin-top: 16px;
+  transform: translateY(var(--canvas-scroll, 0));
+  will-change: transform;
 }
 
 .editor-collab-sidebar-panel__user-name {
