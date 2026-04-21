@@ -1425,7 +1425,7 @@ var wp;
           type: "image/jpeg",
           quality
         });
-        return new File([jpegBlob], `${baseName}.jpeg`, {
+        return new File([jpegBlob], `${baseName}.jpg`, {
           type: "image/jpeg"
         });
       } finally {
@@ -1456,7 +1456,7 @@ var wp;
               type: "image/jpeg",
               quality
             });
-            return new File([jpegBlob], `${baseName}.jpeg`, {
+            return new File([jpegBlob], `${baseName}.jpg`, {
               type: "image/jpeg"
             });
           } finally {
@@ -1501,7 +1501,7 @@ var wp;
             type: "image/jpeg",
             quality
           });
-          return new File([jpegBlob], `${baseName}.jpeg`, {
+          return new File([jpegBlob], `${baseName}.jpg`, {
             type: "image/jpeg"
           });
         }
