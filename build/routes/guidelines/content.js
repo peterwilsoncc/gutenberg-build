@@ -3502,10 +3502,10 @@ var import_i18n = __toESM(require_i18n());
 var import_element19 = __toESM(require_element());
 
 // routes/guidelines/components/guideline-accordion.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b78bad87f0']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='0de3dafc3a']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "b78bad87f0");
-  style.appendChild(document.createTextNode(".guidelines__accordion{padding:16px 24px}.guidelines__accordion-trigger{background:none;border:none;cursor:pointer;display:block;height:auto;margin:0;padding:0;text-align:left;width:100%}.guidelines__accordion-trigger:focus{box-shadow:none!important}.guidelines__accordion-trigger:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color,#3858e9)!important}.guidelines__accordion-chevron-up{transform:rotate(180deg);transition:transform .3s ease-in-out}.guidelines__accordion-chevron-down{transform:rotate(0deg);transition:transform .3s ease-in-out}.guidelines__accordion-header{color:#1e1e1e;padding-top:4px}.guidelines__accordion-description{color:#757575;padding-bottom:4px}.guidelines__accordion-form{margin-top:24px}"));
+  style.setAttribute("data-wp-hash", "0de3dafc3a");
+  style.appendChild(document.createTextNode(".guidelines__accordion{padding:16px 24px}.guidelines__accordion-trigger{background:none;border:none;cursor:var(--wpds-cursor-control,pointer);display:block;height:auto;margin:0;padding:0;text-align:left;width:100%}.guidelines__accordion-trigger:focus{box-shadow:none!important}.guidelines__accordion-trigger:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color,#3858e9)!important}.guidelines__accordion-chevron-up{transform:rotate(180deg);transition:transform .3s ease-in-out}.guidelines__accordion-chevron-down{transform:rotate(0deg);transition:transform .3s ease-in-out}.guidelines__accordion-header{color:#1e1e1e;padding-top:4px}.guidelines__accordion-description{color:#757575;padding-bottom:4px}.guidelines__accordion-form{margin-top:24px}"));
   document.head.appendChild(style);
 }
 
