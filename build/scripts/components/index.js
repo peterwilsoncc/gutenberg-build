@@ -23289,6 +23289,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(component_default, {
       ref: forwardedRef,
       ...contextProps,
+      "data-visually-hidden": "",
       style: {
         ...visuallyHidden,
         ...styleProp || {}

@@ -21417,7 +21417,7 @@ var wp;
     if (!viewport) {
       return false;
     }
-    if (element.classList.contains("components-visually-hidden")) {
+    if (element.hasAttribute("data-visually-hidden")) {
       return false;
     }
     const bounds = element.getBoundingClientRect();
