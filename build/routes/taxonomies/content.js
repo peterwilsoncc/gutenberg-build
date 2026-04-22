@@ -21585,12 +21585,19 @@ function AddTaxonomyModal({
       size: "small"
     },
     /* @__PURE__ */ React.createElement(
-      "form",
+      Stack,
       {
-        onSubmit: (event) => {
-          event.preventDefault();
-          onSubmit();
-        }
+        direction: "column",
+        gap: "md",
+        render: /* @__PURE__ */ React.createElement(
+          "form",
+          {
+            onSubmit: (event) => {
+              event.preventDefault();
+              onSubmit();
+            }
+          }
+        )
       },
       /* @__PURE__ */ React.createElement(
         DataForm,
