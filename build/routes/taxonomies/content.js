@@ -21252,20 +21252,22 @@ function DataForm({
 }
 
 // routes/taxonomies/stage.tsx
-var import_core_data5 = __toESM(require_core_data());
+var import_core_data6 = __toESM(require_core_data());
 var import_element91 = __toESM(require_element());
 var import_i18n53 = __toESM(require_i18n());
 
 // routes/taxonomies/add-taxonomy.tsx
 var import_components54 = __toESM(require_components());
-var import_core_data2 = __toESM(require_core_data());
-var import_data7 = __toESM(require_data());
+var import_core_data3 = __toESM(require_core_data());
+var import_data8 = __toESM(require_data());
 var import_element89 = __toESM(require_element());
 var import_i18n50 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 
 // routes/taxonomies/fields.tsx
 var import_components53 = __toESM(require_components());
+var import_core_data2 = __toESM(require_core_data());
+var import_data7 = __toESM(require_data());
 var import_element88 = __toESM(require_element());
 var import_i18n49 = __toESM(require_i18n());
 
@@ -21285,12 +21287,12 @@ function parseConfig(raw) {
   }
 }
 function toFormData(row) {
-  const parsed = parseConfig(row.content?.raw);
+  const parsed = parseConfig(row.content.raw);
   return {
     id: row.id,
     slug: row.slug,
     status: row.status,
-    title: { raw: row.title.raw ?? "" },
+    title: { raw: row.title.raw },
     config: {
       labels: {
         singular_name: parsed.labels?.singular_name ?? ""
@@ -21328,26 +21330,6 @@ function usePublicPostTypes() {
       return a2.name.localeCompare(b2.name);
     });
   }, [postTypes]);
-}
-function useTakenTaxonomySlugs(excludeSlug) {
-  const registered = (0, import_data6.useSelect)(
-    (select) => select(import_core_data.store).getTaxonomies(),
-    []
-  );
-  const { records: drafts } = (0, import_core_data.useEntityRecords)(
-    "postType",
-    "wp_user_taxonomy",
-    { per_page: 100, status: "draft", context: "edit" }
-  );
-  return (0, import_element87.useMemo)(() => {
-    const set3 = /* @__PURE__ */ new Set();
-    (registered ?? []).forEach((t2) => set3.add(t2.slug));
-    (drafts ?? []).forEach((r3) => set3.add(r3.slug));
-    if (excludeSlug) {
-      set3.delete(excludeSlug);
-    }
-    return set3;
-  }, [registered, drafts, excludeSlug]);
 }
 
 // routes/taxonomies/fields.tsx
@@ -21428,12 +21410,15 @@ var statusField = {
   enableSorting: false
 };
 function useSlugField(originalSlug, currentValue) {
-  const takenSlugs = useTakenTaxonomySlugs(originalSlug);
+  const registeredTaxonomies = (0, import_data7.useSelect)(
+    (select) => select(import_core_data2.store).getTaxonomies(),
+    []
+  );
   const showRenameWarning = originalSlug !== void 0 && currentValue !== originalSlug;
   return (0, import_element88.useMemo)(
     () => ({
       id: "slug",
-      label: (0, import_i18n49.__)("Slug"),
+      label: (0, import_i18n49.__)("Taxonomy key"),
       type: "text",
       enableGlobalSearch: true,
       description: /* @__PURE__ */ React.createElement(Stack, { direction: "column", gap: "sm" }, showRenameWarning && /* @__PURE__ */ React.createElement(import_components53.Notice, { status: "warning", isDismissible: false }, (0, import_i18n49.__)(
@@ -21444,12 +21429,32 @@ function useSlugField(originalSlug, currentValue) {
       isValid: {
         required: true,
         pattern: "^[a-z0-9_-]{1,32}$",
-        custom: (value) => takenSlugs.has(value.slug) ? (0, import_i18n49.__)("This taxonomy key is already in use.") : null
+        custom: async (value) => {
+          const slug = value.slug;
+          if (originalSlug !== void 0 && slug === originalSlug) {
+            return null;
+          }
+          const slugTaken = (registeredTaxonomies ?? []).some(
+            (t2) => t2.slug === slug
+          );
+          if (slugTaken) {
+            return (0, import_i18n49.__)("This taxonomy key is already in use.");
+          }
+          const drafts = await (0, import_data7.resolveSelect)(
+            import_core_data2.store
+          ).getEntityRecords("postType", "wp_user_taxonomy", {
+            slug,
+            status: "draft",
+            _fields: "id,name",
+            per_page: 1
+          });
+          return !!drafts?.length ? (0, import_i18n49.__)("This taxonomy key is already in use.") : null;
+        }
       },
       filterBy: false,
       enableSorting: false
     }),
-    [takenSlugs, showRenameWarning]
+    [registeredTaxonomies, originalSlug, showRenameWarning]
   );
 }
 function useObjectTypeField() {
@@ -21538,8 +21543,8 @@ function AddTaxonomyModal({
   });
   const [isSaving, setIsSaving] = (0, import_element89.useState)(false);
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, defaultForm);
-  const { saveEntityRecord } = (0, import_data7.useDispatch)(import_core_data2.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data7.useDispatch)(import_notices.store);
+  const { saveEntityRecord } = (0, import_data8.useDispatch)(import_core_data3.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data8.useDispatch)(import_notices.store);
   async function onSubmit() {
     if (isSaving || !isValid2) {
       return;
@@ -21629,8 +21634,8 @@ function AddTaxonomyModal({
 }
 function AddTaxonomy() {
   const [isOpen, setIsOpen] = (0, import_element89.useState)(false);
-  const addNewLabel = (0, import_data7.useSelect)(
-    (select) => select(import_core_data2.store).getPostType("wp_user_taxonomy")?.labels?.add_new_item ?? (0, import_i18n50.__)("Add taxonomy"),
+  const addNewLabel = (0, import_data8.useSelect)(
+    (select) => select(import_core_data3.store).getPostType("wp_user_taxonomy")?.labels?.add_new_item ?? (0, import_i18n50.__)("Add taxonomy"),
     []
   );
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
@@ -21653,8 +21658,8 @@ function AddTaxonomy() {
 
 // routes/taxonomies/actions/edit.tsx
 var import_components55 = __toESM(require_components());
-var import_core_data3 = __toESM(require_core_data());
-var import_data8 = __toESM(require_data());
+var import_core_data4 = __toESM(require_core_data());
+var import_data9 = __toESM(require_data());
 var import_element90 = __toESM(require_element());
 var import_i18n51 = __toESM(require_i18n());
 var import_notices2 = __toESM(require_notices());
@@ -21673,10 +21678,10 @@ function EditTaxonomyModal({
   closeModal
 }) {
   const item = items[0];
-  const { record, hasResolved } = (0, import_core_data3.useEntityRecord)(
+  const { record, hasResolved } = (0, import_core_data4.useEntityRecord)(
     "postType",
     "wp_user_taxonomy",
-    item.id ?? 0
+    item.id
   );
   const initialData = (0, import_element90.useMemo)(
     () => record ? toFormData(record) : item,
@@ -21699,8 +21704,8 @@ function EditTaxonomyModal({
     [slugField, objectTypeField]
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, defaultForm);
-  const { saveEntityRecord } = (0, import_data8.useDispatch)(import_core_data3.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data8.useDispatch)(import_notices2.store);
+  const { saveEntityRecord } = (0, import_data9.useDispatch)(import_core_data4.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data9.useDispatch)(import_notices2.store);
   async function onSave() {
     if (isSaving || !isValid2) {
       return;
@@ -21732,7 +21737,7 @@ function EditTaxonomyModal({
     }
   }
   if (!hasResolved) {
-    return /* @__PURE__ */ React.createElement(React.Fragment, null);
+    return null;
   }
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
     Stack,
@@ -21812,16 +21817,16 @@ var editTaxonomyAction = {
 var edit_default = editTaxonomyAction;
 
 // routes/taxonomies/actions/toggle-active.ts
-var import_core_data4 = __toESM(require_core_data());
+var import_core_data5 = __toESM(require_core_data());
 var import_i18n52 = __toESM(require_i18n());
 var import_notices3 = __toESM(require_notices());
 var toggleActiveAction = {
   id: "toggle-active",
   label: (items) => items.every((i2) => i2.status === "publish") ? (0, import_i18n52.__)("Deactivate") : (0, import_i18n52.__)("Activate"),
   async callback(items, { registry }) {
-    const { saveEntityRecord } = registry.dispatch(import_core_data4.store);
+    const { saveEntityRecord } = registry.dispatch(import_core_data5.store);
     const { createSuccessNotice, createErrorNotice } = registry.dispatch(import_notices3.store);
-    const next = items.every((i2) => i2.status === "publish") ? "draft" : "publish";
+    const nextStatus = items.every((i2) => i2.status === "publish") ? "draft" : "publish";
     try {
       for (const item of items) {
         if (item.id === void 0) {
@@ -21830,12 +21835,12 @@ var toggleActiveAction = {
         await saveEntityRecord(
           "postType",
           "wp_user_taxonomy",
-          { id: item.id, status: next },
+          { id: item.id, status: nextStatus },
           { throwOnError: true }
         );
       }
       createSuccessNotice(
-        next === "publish" ? (0, import_i18n52.__)("Taxonomy activated.") : (0, import_i18n52.__)("Taxonomy deactivated."),
+        nextStatus === "publish" ? (0, import_i18n52.__)("Taxonomy activated.") : (0, import_i18n52.__)("Taxonomy deactivated."),
         { type: "snackbar" }
       );
     } catch (error2) {
@@ -21893,7 +21898,7 @@ function TaxonomiesPage() {
       status: statusFilter?.value ?? ["publish", "draft"]
     };
   }, [view]);
-  const { records, isResolving, hasResolved, totalItems, totalPages } = (0, import_core_data5.useEntityRecords)(
+  const { records, isResolving, hasResolved, totalItems, totalPages } = (0, import_core_data6.useEntityRecords)(
     "postType",
     "wp_user_taxonomy",
     queryArgs
