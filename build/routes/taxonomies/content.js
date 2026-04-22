@@ -21267,7 +21267,7 @@ var import_element91 = __toESM(require_element());
 var import_i18n53 = __toESM(require_i18n());
 
 // routes/taxonomies/add-taxonomy.tsx
-var import_components53 = __toESM(require_components());
+var import_components54 = __toESM(require_components());
 var import_core_data2 = __toESM(require_core_data());
 var import_data7 = __toESM(require_data());
 var import_element89 = __toESM(require_element());
@@ -21275,6 +21275,7 @@ var import_i18n50 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 
 // routes/taxonomies/fields.tsx
+var import_components53 = __toESM(require_components());
 var import_element88 = __toESM(require_element());
 var import_i18n49 = __toESM(require_i18n());
 
@@ -21436,17 +21437,20 @@ var statusField = {
   ],
   enableSorting: false
 };
-function useSlugField(currentSlug) {
-  const takenSlugs = useTakenTaxonomySlugs(currentSlug);
+function useSlugField(originalSlug, currentValue) {
+  const takenSlugs = useTakenTaxonomySlugs(originalSlug);
+  const showRenameWarning = originalSlug !== void 0 && currentValue !== originalSlug;
   return (0, import_element88.useMemo)(
     () => ({
       id: "slug",
       label: (0, import_i18n49.__)("Slug"),
       type: "text",
       enableGlobalSearch: true,
-      description: (0, import_i18n49.__)(
-        "Lower case letters, numbers, underscores, and dashes only. Maximum length: 32 characters. Changing the key renames the taxonomy \u2014 existing terms may become inaccessible until a migration updates the database."
-      ),
+      description: /* @__PURE__ */ React.createElement(Stack, { direction: "column", gap: "sm" }, showRenameWarning && /* @__PURE__ */ React.createElement(import_components53.Notice, { status: "warning", isDismissible: false }, (0, import_i18n49.__)(
+        "Changing the key renames the taxonomy \u2014 existing terms may become inaccessible until a migration updates the database."
+      )), /* @__PURE__ */ React.createElement("span", null, (0, import_i18n49.__)(
+        "Lower case letters, numbers, underscores, and dashes only. Maximum length: 32 characters."
+      ))),
       isValid: {
         required: true,
         pattern: "^[a-z0-9_-]{1,32}$",
@@ -21455,7 +21459,7 @@ function useSlugField(currentSlug) {
       filterBy: false,
       enableSorting: false
     }),
-    [takenSlugs]
+    [takenSlugs, showRenameWarning]
   );
 }
 function useObjectTypeField() {
@@ -21577,7 +21581,7 @@ function AddTaxonomyModal({
     }
   }
   return /* @__PURE__ */ React.createElement(
-    import_components53.Modal,
+    import_components54.Modal,
     {
       title: addNewLabel,
       onRequestClose: onClose,
@@ -21612,7 +21616,7 @@ function AddTaxonomyModal({
         }
       ),
       /* @__PURE__ */ React.createElement(Stack, { direction: "row", gap: "sm", justify: "end" }, /* @__PURE__ */ React.createElement(
-        import_components53.Button,
+        import_components54.Button,
         {
           __next40pxDefaultSize: true,
           variant: "tertiary",
@@ -21620,7 +21624,7 @@ function AddTaxonomyModal({
         },
         (0, import_i18n50.__)("Cancel")
       ), /* @__PURE__ */ React.createElement(
-        import_components53.Button,
+        import_components54.Button,
         {
           __next40pxDefaultSize: true,
           variant: "primary",
@@ -21640,7 +21644,7 @@ function AddTaxonomy() {
     []
   );
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
-    import_components53.Button,
+    import_components54.Button,
     {
       variant: "primary",
       size: "compact",
@@ -21658,7 +21662,7 @@ function AddTaxonomy() {
 }
 
 // routes/taxonomies/actions/edit.tsx
-var import_components54 = __toESM(require_components());
+var import_components55 = __toESM(require_components());
 var import_core_data3 = __toESM(require_core_data());
 var import_data8 = __toESM(require_data());
 var import_element90 = __toESM(require_element());
@@ -21690,7 +21694,7 @@ function EditTaxonomyModal({
   );
   const [data, setData] = (0, import_element90.useState)(initialData);
   const [isSaving, setIsSaving] = (0, import_element90.useState)(false);
-  const slugField = useSlugField(item.slug);
+  const slugField = useSlugField(item.slug, data.slug);
   const objectTypeField = useObjectTypeField();
   const fields = (0, import_element90.useMemo)(
     () => [
@@ -21758,7 +21762,7 @@ function EditTaxonomyModal({
       (0, import_i18n51.__)("Edit taxonomy")
     ),
     /* @__PURE__ */ React.createElement(
-      import_components54.Button,
+      import_components55.Button,
       {
         size: "small",
         icon: close_small_default,
@@ -21785,7 +21789,7 @@ function EditTaxonomyModal({
       gap: "sm"
     },
     /* @__PURE__ */ React.createElement(
-      import_components54.Button,
+      import_components55.Button,
       {
         __next40pxDefaultSize: true,
         variant: "secondary",
@@ -21794,7 +21798,7 @@ function EditTaxonomyModal({
       (0, import_i18n51.__)("Cancel")
     ),
     /* @__PURE__ */ React.createElement(
-      import_components54.Button,
+      import_components55.Button,
       {
         __next40pxDefaultSize: true,
         variant: "primary",
