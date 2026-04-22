@@ -1704,7 +1704,6 @@ var wp;
             url: blobUrl
           },
           additionalData: {
-            convert_format: false,
             generate_sub_sizes: false,
             ...additionalData
           },
@@ -1933,19 +1932,7 @@ var wp;
   function isValidImageFormat(format) {
     return VALID_IMAGE_FORMATS.includes(format);
   }
-  function getInterlacedSetting(outputMimeType, settings) {
-    switch (outputMimeType) {
-      case "image/jpeg":
-        return settings.jpegInterlaced ?? false;
-      case "image/png":
-        return settings.pngInterlaced ?? false;
-      case "image/gif":
-        return settings.gifInterlaced ?? false;
-      default:
-        return false;
-    }
-  }
-  async function getTranscodeImageOperation(file, outputMimeType, settings) {
+  async function getTranscodeImageOperation(file, outputMimeType, interlaced = false) {
     if (file.type === "image/png" && outputMimeType === "image/jpeg") {
       const blobUrl = (0, import_blob.createBlobURL)(file);
       try {
@@ -1968,7 +1955,7 @@ var wp;
       {
         outputFormat: formatPart,
         outputQuality: DEFAULT_OUTPUT_QUALITY,
-        interlaced: getInterlacedSetting(outputMimeType, settings)
+        interlaced
       }
     ];
   }
@@ -1988,17 +1975,18 @@ var wp;
       );
       const isHeic = HEIC_MIME_TYPES.includes(file.type);
       if (isImage && isVipsSupported) {
-        const { imageOutputFormats } = settings;
-        const outputMimeType = imageOutputFormats?.[file.type];
-        if (outputMimeType && outputMimeType !== file.type) {
-          const transcodeOperation = await getTranscodeImageOperation(
-            file,
-            outputMimeType,
-            settings
-          );
-          if (transcodeOperation) {
-            operations.push(transcodeOperation);
-          }
+        const { bigImageSizeThreshold } = settings;
+        if (bigImageSizeThreshold) {
+          operations.push([
+            OperationType.ResizeCrop,
+            {
+              resize: {
+                width: bigImageSizeThreshold,
+                height: bigImageSizeThreshold
+              },
+              isThresholdResize: true
+            }
+          ]);
         }
         operations.push(
           OperationType.Upload,
@@ -2322,15 +2310,14 @@ var wp;
         const thumbnailSource = item.sourceFile;
         const file = attachment.filename ? renameFile(thumbnailSource, attachment.filename) : thumbnailSource;
         const batchId = v4_default();
-        const { imageOutputFormats } = settings;
-        const sourceType = thumbnailSource.type;
-        const outputMimeType = imageOutputFormats?.[sourceType];
+        const outputMimeType = attachment.image_output_format;
+        const interlaced = attachment.image_save_progressive ?? false;
         let thumbnailTranscodeOperation = null;
-        if (outputMimeType && outputMimeType !== sourceType) {
+        if (outputMimeType) {
           thumbnailTranscodeOperation = await getTranscodeImageOperation(
             thumbnailSource,
             outputMimeType,
-            settings
+            interlaced
           );
         }
         const dimensionGroups = /* @__PURE__ */ new Map();
