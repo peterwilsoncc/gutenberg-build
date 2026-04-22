@@ -4899,6 +4899,124 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   cursor: nesw-resize;
 }
 
+/**
+ * Typography
+ */
+/**
+ * Breakpoints & Media Queries
+ */
+/**
+*  Converts a hex value into the rgb equivalent.
+*
+* @param {string} hex - the hexadecimal value to convert
+* @return {string} comma separated rgb values
+*/
+/**
+ * Long content fade mixin
+ *
+ * Creates a fading overlay to signify that the content is longer
+ * than the space allows.
+ */
+/**
+ * Breakpoint mixins
+ */
+/**
+ * Focus styles.
+ */
+/**
+ * Applies editor left position to the selector passed as argument
+ */
+/**
+ * Styles that are reused verbatim in a few places
+ */
+/**
+ * Allows users to opt-out of animations via OS-level preferences.
+ */
+/**
+ * Reset default styles for JavaScript UI based pages.
+ * This is a WP-admin agnostic reset
+ */
+/**
+ * Reset the WP Admin page styles for Gutenberg-like pages.
+ */
+/**
+ * Creates a checkerboard pattern background to indicate transparency.
+ * @param {String} $size - The size of the squares in the checkerboard pattern. Default is 12px.
+ */
+.media-editor-modal.components-modal__frame .components-modal__content {
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.media-editor-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.media-editor-modal .interface-interface-skeleton {
+  position: relative;
+  top: auto;
+  left: auto;
+  bottom: auto;
+  right: auto;
+  height: 100%;
+  max-height: none;
+  flex: 1;
+}
+
+.media-editor-modal .interface-interface-skeleton__editor {
+  min-width: 0;
+}
+
+.media-editor-modal .media-editor-modal__canvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  overflow: auto;
+  padding: 16px;
+  height: 100%;
+}
+
+.media-editor-modal .media-editor-modal__canvas .media-editor-preview {
+  height: 100%;
+}
+
+.media-editor-modal .media-editor-modal__canvas img,
+.media-editor-modal .media-editor-modal__canvas video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.media-editor-modal .media-editor-modal__sidebar {
+  box-sizing: border-box;
+}
+
+.media-editor-modal .media-editor-modal__sidebar *,
+.media-editor-modal .media-editor-modal__sidebar *::before,
+.media-editor-modal .media-editor-modal__sidebar *::after {
+  box-sizing: inherit;
+}
+
+.media-editor-modal .media-editor-modal__panel {
+  padding: 16px;
+}
+
+.media-editor-modal .components-panel__header.media-editor-modal__sidebar-header {
+  padding-right: 0;
+  padding-left: 8px;
+}
+
+.media-editor-modal .components-panel__header.media-editor-modal__sidebar-header .components-button.has-icon {
+  padding: 0;
+}
+
+@media (min-width: 782px) {
+  .media-editor-modal .components-panel__header.media-editor-modal__sidebar-header .components-button.has-icon {
+    display: flex;
+  }
+}
 .editor-autocompleters__link {
   white-space: nowrap;
   gap: 8px;

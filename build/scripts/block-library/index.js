@@ -30751,9 +30751,12 @@ ${js}
 
   // packages/block-library/build-module/image/image.mjs
   var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
-  var { DimensionsTool, ResolutionTool: ResolutionTool2, mediaEditKey } = unlock(
-    import_block_editor112.privateApis
-  );
+  var {
+    DimensionsTool,
+    ResolutionTool: ResolutionTool2,
+    mediaEditKey,
+    openMediaEditorModalKey
+  } = unlock(import_block_editor112.privateApis);
   var scaleOptions = [
     {
       value: "cover",
@@ -31010,12 +31013,12 @@ ${js}
       (select9) => {
         const { getBlockRootClientId, canInsertBlockType, getSettings: getSettings22 } = select9(import_block_editor112.store);
         const rootClientId = getBlockRootClientId(clientId);
-        const settings122 = getSettings22();
+        const settings210 = getSettings22();
         return {
-          imageEditing: settings122.imageEditing,
-          imageSizes: settings122.imageSizes,
-          maxWidth: settings122.maxWidth,
-          editMediaEntity: settings122?.[mediaEditKey],
+          imageEditing: settings210.imageEditing,
+          imageSizes: settings210.imageSizes,
+          maxWidth: settings210.maxWidth,
+          editMediaEntity: settings210?.[mediaEditKey],
           canInsertCover: canInsertBlockType(
             "core/cover",
             rootClientId
@@ -31025,7 +31028,20 @@ ${js}
       [clientId]
     );
     const { getBlock, getSettings: getSettings2 } = (0, import_data47.useSelect)(import_block_editor112.store);
-    const onNavigateToEntityRecord = getSettings2().onNavigateToEntityRecord;
+    const settings122 = getSettings2();
+    const { onNavigateToEntityRecord } = settings122;
+    const openMediaEditorModal = settings122[openMediaEditorModalKey];
+    const handleMediaUpdate = (0, import_element44.useCallback)(
+      ({ id: newId, url: newUrl }) => {
+        if (typeof newId === "number" && newId !== id) {
+          setAttributes({
+            id: newId,
+            url: newUrl ?? url
+          });
+        }
+      },
+      [id, url, setAttributes]
+    );
     const {
       replaceBlocks,
       toggleSelection,
@@ -31373,7 +31389,10 @@ ${js}
         allowCrop && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
           import_components56.ToolbarButton,
           {
-            onClick: () => setIsEditingImage(true),
+            onClick: openMediaEditorModal && id ? () => openMediaEditorModal({
+              id,
+              onUpdate: handleMediaUpdate
+            }) : () => setIsEditingImage(true),
             icon: crop_default,
             label: (0, import_i18n93.__)("Crop")
           }

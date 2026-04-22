@@ -7861,6 +7861,7 @@ var wp;
   );
   var isNavigationPostEditorKey = /* @__PURE__ */ Symbol("isNavigationPostEditor");
   var mediaUploadOnSuccessKey = /* @__PURE__ */ Symbol("mediaUploadOnSuccess");
+  var openMediaEditorModalKey = /* @__PURE__ */ Symbol("openMediaEditorModal");
 
   // packages/block-editor/build-module/store/reducer.mjs
   var { isContentBlock } = unlock(import_blocks2.privateApis);
@@ -78097,6 +78098,7 @@ var wp;
     isNavigationOverlayContextKey,
     isNavigationPostEditorKey,
     mediaUploadOnSuccessKey,
+    openMediaEditorModalKey,
     useBlockElement,
     useBlockElementRef,
     LinkPicker,
