@@ -4560,63 +4560,63 @@ var wp;
   var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
   var symbol_default = /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_primitives132.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_primitives132.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
-  // packages/icons/build-module/library/tab.mjs
+  // packages/icons/build-module/library/tab-list.mjs
   var import_primitives133 = __toESM(require_primitives(), 1);
   var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
-  var tab_default = /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_primitives133.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_primitives133.Path, { d: "M4 16.5h13V15H4v1.5ZM4 12v1.5h16V12H4Zm1.5-4.2c0-.1.1-.2.2-.2h3.5c.1 0 .2.1.2.2v2.5h1.5V7.8c0-1-.8-1.8-1.8-1.8H5.6c-1 0-1.8.8-1.8 1.8v2.5h1.5V7.8Z" }) });
+  var tab_list_default = /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_primitives133.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_primitives133.Path, { d: "M18.2 9.5h-3.5c-1 0-1.8.8-1.8 1.8v2.5h1.5v-2.5c0-.1.1-.2.2-.2h3.5c.1 0 .2.1.2.2v2.5h1.5v-2.5c0-1-.8-1.8-1.8-1.8Zm-9 0H5.7c-1 0-1.8.8-1.8 1.8v2.5h7v-2.5c0-1-.8-1.8-1.8-1.8Z" }) });
 
-  // packages/icons/build-module/library/table-column-after.mjs
+  // packages/icons/build-module/library/tab-panel.mjs
   var import_primitives134 = __toESM(require_primitives(), 1);
   var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
-  var table_column_after_default = /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_primitives134.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_primitives134.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm0-5.5h-4v-4h4v4Zm0-5.5h-4V5c0-.3.2-.5.5-.5h3.5v4Zm11 10.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14Zm-4-10.8H14v3h-3v1.5h3v3h1.5v-3h3v-1.5h-3v-3Z" }) });
+  var tab_panel_default = /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_primitives134.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_primitives134.Path, { d: "M4 16.5h13V15H4v1.5ZM4 12v1.5h16V12H4Zm1.5-4.2c0-.1.1-.2.2-.2h3.5c.1 0 .2.1.2.2v2.5h1.5V7.8c0-1-.8-1.8-1.8-1.8H5.6c-1 0-1.8.8-1.8 1.8v2.5h1.5V7.8Z" }) });
 
-  // packages/icons/build-module/library/table-column-before.mjs
+  // packages/icons/build-module/library/tab.mjs
   var import_primitives135 = __toESM(require_primitives(), 1);
   var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
-  var table_column_before_default = /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_primitives135.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_primitives135.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1 .8 1.9 1.8 2H19.2c.9-.1 1.7-.9 1.8-1.8V5c0-1.1-.9-2-2-2Zm-5 16.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h9v15Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19Zm0-5h-4v-4h4v4Zm0-5.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-11 7.3H10v-3h3v-1.5h-3v-3H8.5v3h-3v1.5h3v3Z" }) });
+  var tab_default = /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_primitives135.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_primitives135.Path, { d: "M14 11.25a.25.25 0 0 0-.25-.25h-3.5a.25.25 0 0 0-.25.25v2.5H8.5v-2.5c0-.966.784-1.75 1.75-1.75h3.5c.966 0 1.75.784 1.75 1.75v2.5H14v-2.5Z" }) });
 
-  // packages/icons/build-module/library/table-column-delete.mjs
+  // packages/icons/build-module/library/table-column-after.mjs
   var import_primitives136 = __toESM(require_primitives(), 1);
   var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
-  var table_column_delete_default = /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_primitives136.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_primitives136.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h3.5v15Zm11-.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14ZM16.9 8.8l-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1L18 9.9l-1.1-1.1Z" }) });
+  var table_column_after_default = /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_primitives136.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_primitives136.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm0-5.5h-4v-4h4v4Zm0-5.5h-4V5c0-.3.2-.5.5-.5h3.5v4Zm11 10.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14Zm-4-10.8H14v3h-3v1.5h3v3h1.5v-3h3v-1.5h-3v-3Z" }) });
 
-  // packages/icons/build-module/library/table-of-contents.mjs
+  // packages/icons/build-module/library/table-column-before.mjs
   var import_primitives137 = __toESM(require_primitives(), 1);
   var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
-  var table_of_contents_default = /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(import_primitives137.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_primitives137.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M20 9.484h-8.889v-1.5H20v1.5Zm0 7h-4.889v-1.5H20v1.5Zm-14 .032a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" }),
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_primitives137.Path, { d: "M13 15.516a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 8.484a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" })
+  var table_column_before_default = /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_primitives137.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_primitives137.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1 .8 1.9 1.8 2H19.2c.9-.1 1.7-.9 1.8-1.8V5c0-1.1-.9-2-2-2Zm-5 16.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h9v15Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19Zm0-5h-4v-4h4v4Zm0-5.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-11 7.3H10v-3h3v-1.5h-3v-3H8.5v3h-3v1.5h3v3Z" }) });
+
+  // packages/icons/build-module/library/table-column-delete.mjs
+  var import_primitives138 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
+  var table_column_delete_default = /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_primitives138.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_primitives138.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h3.5v15Zm11-.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14ZM16.9 8.8l-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1L18 9.9l-1.1-1.1Z" }) });
+
+  // packages/icons/build-module/library/table-of-contents.mjs
+  var import_primitives139 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+  var table_of_contents_default = /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(import_primitives139.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_primitives139.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M20 9.484h-8.889v-1.5H20v1.5Zm0 7h-4.889v-1.5H20v1.5Zm-14 .032a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" }),
+    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_primitives139.Path, { d: "M13 15.516a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 8.484a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" })
   ] });
 
   // packages/icons/build-module/library/table-row-after.mjs
-  var import_primitives138 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
-  var table_row_after_default = /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_primitives138.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_primitives138.Path, { d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm-9 1.5h4v4h-4v-4ZM4.5 5c0-.3.2-.5.5-.5h3.5v4h-4V5Zm15 14c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-8.3 10h1.5v-3h3V14h-3v-3h-1.5v3h-3v1.5h3v3Z" }) });
-
-  // packages/icons/build-module/library/table-row-before.mjs
-  var import_primitives139 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
-  var table_row_before_default = /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_primitives139.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_primitives139.Path, { d: "M21 5c0-1.1-.9-2-2-2H5c-1 0-1.9.8-2 1.8V19.2c.1.9.9 1.7 1.8 1.8H19c1.1 0 2-.9 2-2V5ZM4.5 14V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v9h-15Zm4 5.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm5.5 0h-4v-4h4v4Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19ZM11.2 10h-3V8.5h3v-3h1.5v3h3V10h-3v3h-1.5v-3Z" }) });
-
-  // packages/icons/build-module/library/table-row-delete.mjs
   var import_primitives140 = __toESM(require_primitives(), 1);
   var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
-  var table_row_delete_default = /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_primitives140.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_primitives140.Path, { d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-15V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v3.5Zm-9.6 9.4 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1 2.1-2.1-1.1-1.1-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1Z" }) });
+  var table_row_after_default = /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_primitives140.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_primitives140.Path, { d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm-9 1.5h4v4h-4v-4ZM4.5 5c0-.3.2-.5.5-.5h3.5v4h-4V5Zm15 14c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-8.3 10h1.5v-3h3V14h-3v-3h-1.5v3h-3v1.5h3v3Z" }) });
 
-  // packages/icons/build-module/library/table.mjs
+  // packages/icons/build-module/library/table-row-before.mjs
   var import_primitives141 = __toESM(require_primitives(), 1);
   var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
-  var table_default = /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(import_primitives141.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(import_primitives141.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 2v6.2h-6.8V4.4h6.2c.3 0 .5.2.5.5ZM5 4.5h6.2v6.8H4.4V5.1c0-.3.2-.5.5-.5ZM4.5 19v-6.2h6.8v6.8H5.1c-.3 0-.5-.2-.5-.5Zm14.5.5h-6.2v-6.8h6.8v6.2c0 .3-.2.5-.5.5Z" }) });
+  var table_row_before_default = /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(import_primitives141.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(import_primitives141.Path, { d: "M21 5c0-1.1-.9-2-2-2H5c-1 0-1.9.8-2 1.8V19.2c.1.9.9 1.7 1.8 1.8H19c1.1 0 2-.9 2-2V5ZM4.5 14V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v9h-15Zm4 5.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm5.5 0h-4v-4h4v4Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19ZM11.2 10h-3V8.5h3v-3h1.5v3h3V10h-3v3h-1.5v-3Z" }) });
 
-  // packages/icons/build-module/library/tabs-menu-item.mjs
+  // packages/icons/build-module/library/table-row-delete.mjs
   var import_primitives142 = __toESM(require_primitives(), 1);
   var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
-  var tabs_menu_item_default = /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(import_primitives142.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(import_primitives142.Path, { d: "M14 11.25a.25.25 0 0 0-.25-.25h-3.5a.25.25 0 0 0-.25.25v2.5H8.5v-2.5c0-.966.784-1.75 1.75-1.75h3.5c.966 0 1.75.784 1.75 1.75v2.5H14v-2.5Z" }) });
+  var table_row_delete_default = /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(import_primitives142.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(import_primitives142.Path, { d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-15V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v3.5Zm-9.6 9.4 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1 2.1-2.1-1.1-1.1-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1Z" }) });
 
-  // packages/icons/build-module/library/tabs-menu.mjs
+  // packages/icons/build-module/library/table.mjs
   var import_primitives143 = __toESM(require_primitives(), 1);
   var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
-  var tabs_menu_default = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_primitives143.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_primitives143.Path, { d: "M18.2 9.5h-3.5c-1 0-1.8.8-1.8 1.8v2.5h1.5v-2.5c0-.1.1-.2.2-.2h3.5c.1 0 .2.1.2.2v2.5h1.5v-2.5c0-1-.8-1.8-1.8-1.8Zm-9 0H5.7c-1 0-1.8.8-1.8 1.8v2.5h7v-2.5c0-1-.8-1.8-1.8-1.8Z" }) });
+  var table_default = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_primitives143.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_primitives143.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 2v6.2h-6.8V4.4h6.2c.3 0 .5.2.5.5ZM5 4.5h6.2v6.8H4.4V5.1c0-.3.2-.5.5-.5ZM4.5 19v-6.2h6.8v6.8H5.1c-.3 0-.5-.2-.5-.5Zm14.5.5h-6.2v-6.8h6.8v6.2c0 .3-.2.5-.5.5Z" }) });
 
   // packages/icons/build-module/library/tabs.mjs
   var import_primitives144 = __toESM(require_primitives(), 1);
@@ -65756,18 +65756,15 @@ ${js}
   });
 
   // packages/block-library/build-module/tab/edit.mjs
-  var import_i18n239 = __toESM(require_i18n(), 1);
+  var import_i18n238 = __toESM(require_i18n(), 1);
   var import_block_editor252 = __toESM(require_block_editor(), 1);
-  var import_data141 = __toESM(require_data(), 1);
+  var import_data140 = __toESM(require_data(), 1);
   var import_element125 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tab/controls.mjs
   var import_block_editor251 = __toESM(require_block_editor(), 1);
-  var import_components158 = __toESM(require_components(), 1);
-  var import_i18n238 = __toESM(require_i18n(), 1);
-  var import_data140 = __toESM(require_data(), 1);
 
-  // packages/block-library/build-module/tab/add-tab-toolbar-control.mjs
+  // packages/block-library/build-module/tab-panel/add-tab-toolbar-control.mjs
   var import_i18n236 = __toESM(require_i18n(), 1);
   var import_blocks111 = __toESM(require_blocks(), 1);
   var import_block_editor249 = __toESM(require_block_editor(), 1);
@@ -65776,40 +65773,40 @@ ${js}
   var import_jsx_runtime489 = __toESM(require_jsx_runtime(), 1);
   function AddTabToolbarControl({ tabsClientId }) {
     const { insertBlock } = (0, import_data138.useDispatch)(import_block_editor249.store);
-    const { tabPanelClientId, tabsMenuClientId } = (0, import_data138.useSelect)(
+    const { tabPanelsClientId, tabsListClientId } = (0, import_data138.useSelect)(
       (select9) => {
         if (!tabsClientId) {
           return {
-            tabPanelClientId: null,
-            tabsMenuClientId: null
+            tabPanelsClientId: null,
+            tabsListClientId: null
           };
         }
         const { getBlocks } = select9(import_block_editor249.store);
         const innerBlocks = getBlocks(tabsClientId);
-        const tabPanel = innerBlocks.find(
-          (block) => block.name === "core/tab-panel"
+        const tabPanels = innerBlocks.find(
+          (block) => block.name === "core/tab-panels"
         );
-        const tabsMenu = innerBlocks.find(
-          (block) => block.name === "core/tabs-menu"
+        const tabList = innerBlocks.find(
+          (block) => block.name === "core/tab-list"
         );
         return {
-          tabPanelClientId: tabPanel?.clientId || null,
-          tabsMenuClientId: tabsMenu?.clientId || null
+          tabPanelsClientId: tabPanels?.clientId || null,
+          tabsListClientId: tabList?.clientId || null
         };
       },
       [tabsClientId]
     );
     const addTab = () => {
-      if (!tabPanelClientId) {
+      if (!tabPanelsClientId) {
         return;
       }
-      const newTabBlock = (0, import_blocks111.createBlock)("core/tab", {
+      const newTabPanelBlock = (0, import_blocks111.createBlock)("core/tab-panel", {
         label: (0, import_i18n236.__)("Tab")
       });
-      insertBlock(newTabBlock, void 0, tabPanelClientId);
-      if (tabsMenuClientId) {
-        const newMenuItemBlock = (0, import_blocks111.createBlock)("core/tabs-menu-item", {});
-        insertBlock(newMenuItemBlock, void 0, tabsMenuClientId);
+      insertBlock(newTabPanelBlock, void 0, tabPanelsClientId);
+      if (tabsListClientId) {
+        const newTabBlock = (0, import_blocks111.createBlock)("core/tab", {});
+        insertBlock(newTabBlock, void 0, tabsListClientId);
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_block_editor249.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_components156.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
@@ -65822,7 +65819,7 @@ ${js}
     ) }) });
   }
 
-  // packages/block-library/build-module/tab/remove-tab-toolbar-control.mjs
+  // packages/block-library/build-module/tab-panel/remove-tab-toolbar-control.mjs
   var import_block_editor250 = __toESM(require_block_editor(), 1);
   var import_components157 = __toESM(require_components(), 1);
   var import_i18n237 = __toESM(require_i18n(), 1);
@@ -65836,16 +65833,16 @@ ${js}
       __unstableMarkNextChangeAsNotPersistent
     } = (0, import_data139.useDispatch)(import_block_editor250.store);
     const {
+      activeTabPanelClientId,
       activeTabClientId,
-      activeMenuItemClientId,
       tabCount,
       editorActiveTabIndex
     } = (0, import_data139.useSelect)(
       (select9) => {
         if (!tabsClientId) {
           return {
+            activeTabPanelClientId: null,
             activeTabClientId: null,
-            activeMenuItemClientId: null,
             tabCount: 0,
             editorActiveTabIndex: 0
           };
@@ -65854,19 +65851,19 @@ ${js}
         const tabsAttributes = getBlockAttributes4(tabsClientId);
         const activeIndex = tabsAttributes?.editorActiveTabIndex ?? tabsAttributes?.activeTabIndex ?? 0;
         const innerBlocks = getBlocks(tabsClientId);
-        const tabPanel = innerBlocks.find(
-          (block) => block.name === "core/tab-panel"
+        const tabPanels = innerBlocks.find(
+          (block) => block.name === "core/tab-panels"
         );
-        const tabsMenu = innerBlocks.find(
-          (block) => block.name === "core/tabs-menu"
+        const tabList = innerBlocks.find(
+          (block) => block.name === "core/tab-list"
         );
-        const tabs = tabPanel?.innerBlocks || [];
-        const menuItems = tabsMenu?.innerBlocks || [];
+        const tabPanelBlocks = tabPanels?.innerBlocks || [];
+        const tabs = tabList?.innerBlocks || [];
+        const activeTabPanel = tabPanelBlocks[activeIndex];
         const activeTab = tabs[activeIndex];
-        const activeMenuItem = menuItems[activeIndex];
         return {
+          activeTabPanelClientId: activeTabPanel?.clientId || null,
           activeTabClientId: activeTab?.clientId || null,
-          activeMenuItemClientId: activeMenuItem?.clientId || null,
           tabCount: tabs.length,
           editorActiveTabIndex: activeIndex
         };
@@ -65874,7 +65871,7 @@ ${js}
       [tabsClientId]
     );
     const removeTab = () => {
-      if (!activeTabClientId || tabCount <= 1) {
+      if (!activeTabPanelClientId || tabCount <= 1) {
         return;
       }
       const newActiveIndex = editorActiveTabIndex >= tabCount - 1 ? tabCount - 2 : editorActiveTabIndex;
@@ -65882,15 +65879,15 @@ ${js}
       updateBlockAttributes(tabsClientId, {
         editorActiveTabIndex: newActiveIndex
       });
-      removeBlock(activeTabClientId, false);
-      if (activeMenuItemClientId) {
-        removeBlock(activeMenuItemClientId, false);
+      removeBlock(activeTabPanelClientId, false);
+      if (activeTabClientId) {
+        removeBlock(activeTabClientId, false);
       }
       if (tabsClientId) {
         selectBlock(tabsClientId);
       }
     };
-    const isDisabled = tabCount <= 1 || !activeTabClientId;
+    const isDisabled = tabCount <= 1 || !activeTabPanelClientId;
     return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor250.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_components157.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
       import_components157.ToolbarButton,
       {
@@ -65904,26 +65901,227 @@ ${js}
 
   // packages/block-library/build-module/tab/controls.mjs
   var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
-  function Controls3({ tabsClientId, blockIndex, isDefaultTab }) {
-    const { updateBlockAttributes } = (0, import_data140.useDispatch)(import_block_editor251.store);
-    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_jsx_runtime491.Fragment, { children: [
+  function Controls3({ tabsClientId }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_block_editor251.BlockControls, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(AddTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(RemoveTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor251.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(RemoveTabToolbarControl, { tabsClientId })
+    ] });
+  }
+
+  // packages/block-library/build-module/tab/edit.mjs
+  var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
+  var EMPTY_ARRAY6 = [];
+  function Edit19({ context, clientId }) {
+    const tabsList = context["core/tabs-list"] || EMPTY_ARRAY6;
+    const activeTabIndex = context["core/tabs-activeTabIndex"];
+    const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
+    const effectiveActiveIndex = (0, import_element125.useMemo)(() => {
+      return editorActiveTabIndex ?? activeTabIndex;
+    }, [editorActiveTabIndex, activeTabIndex]);
+    const { tabIndex, tabsClientId, selectedTabClientId } = (0, import_data140.useSelect)(
+      (select9) => {
+        const {
+          getBlockOrder,
+          getBlockRootClientId,
+          getSelectedBlockClientIds,
+          hasSelectedInnerBlock
+        } = select9(import_block_editor252.store);
+        const _tabsListClientId = getBlockRootClientId(clientId);
+        const _tabsClientId = _tabsListClientId ? getBlockRootClientId(_tabsListClientId) : null;
+        const siblings = getBlockOrder(_tabsListClientId);
+        const _tabIndex = siblings.indexOf(clientId);
+        const selectedIds = getSelectedBlockClientIds();
+        let _selectedTabClientId = null;
+        for (const tab2 of tabsList) {
+          if (selectedIds.includes(tab2.clientId) || hasSelectedInnerBlock(tab2.clientId, true)) {
+            _selectedTabClientId = tab2.clientId;
+            break;
+          }
+        }
+        return {
+          tabIndex: _tabIndex,
+          tabsClientId: _tabsClientId,
+          selectedTabClientId: _selectedTabClientId
+        };
+      },
+      [clientId, tabsList]
+    );
+    const tab = tabsList[tabIndex] || {};
+    const tabListIndex = tab.index ?? tabIndex;
+    const tabClientId = tab.clientId || "";
+    const label = tab.label || "";
+    const isActive = tabListIndex === effectiveActiveIndex;
+    const isSelected = tabClientId === selectedTabClientId;
+    const { __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes } = (0, import_data140.useDispatch)(import_block_editor252.store);
+    const handleTabClick = (0, import_element125.useCallback)(
+      (event) => {
+        event.preventDefault();
+        if (tabsClientId && tabListIndex !== effectiveActiveIndex) {
+          __unstableMarkNextChangeAsNotPersistent();
+          updateBlockAttributes(tabsClientId, {
+            editorActiveTabIndex: tabListIndex
+          });
+        }
+      },
+      [
+        tabsClientId,
+        tabListIndex,
+        effectiveActiveIndex,
+        updateBlockAttributes,
+        __unstableMarkNextChangeAsNotPersistent
+      ]
+    );
+    const handleLabelChange = (0, import_element125.useCallback)(
+      (newLabel) => {
+        if (tabClientId) {
+          updateBlockAttributes(tabClientId, { label: newLabel });
+        }
+      },
+      [tabClientId, updateBlockAttributes]
+    );
+    const blockProps = (0, import_block_editor252.useBlockProps)({
+      className: clsx_default({
+        "is-active": isActive,
+        "is-selected": isSelected
+      }),
+      tabIndex: -1,
+      onClick: handleTabClick
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(import_jsx_runtime492.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(Controls3, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime492.jsx)("button", { ...blockProps, type: "button", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+        import_block_editor252.RichText,
+        {
+          tagName: "span",
+          withoutInteractiveFormatting: true,
+          placeholder: (0, import_i18n238.__)("Tab title"),
+          value: label,
+          onChange: handleLabelChange
+        }
+      ) })
+    ] });
+  }
+  var edit_default35 = Edit19;
+
+  // packages/block-library/build-module/tab/save.mjs
+  var import_block_editor253 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
+  function save48() {
+    const blockProps = import_block_editor253.useBlockProps.save({
+      type: "button",
+      role: "tab"
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("button", { ...blockProps });
+  }
+
+  // packages/block-library/build-module/tab/block.json
+  var block_default104 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    __experimental: true,
+    apiVersion: 3,
+    name: "core/tab",
+    title: "Tab",
+    description: "A single tab button in the tab list.",
+    category: "design",
+    textdomain: "default",
+    parent: ["core/tab-list"],
+    usesContext: [
+      "core/tabs-list",
+      "core/tabs-activeTabIndex",
+      "core/tabs-editorActiveTabIndex",
+      "core/tab-index",
+      "core/tab-id",
+      "core/tab-label"
+    ],
+    supports: {
+      html: false,
+      reusable: false,
+      visibility: false,
+      lock: false,
+      color: {
+        background: true,
+        text: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      typography: {
+        fontSize: true,
+        __experimentalFontFamily: true,
+        textAlign: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      spacing: {
+        padding: true,
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
+    editorScript: "file:./index.js",
+    editorStyle: "file:./editor.css",
+    style: "file:./style-index.css"
+  };
+
+  // packages/block-library/build-module/tab/index.mjs
+  var { name: name105 } = block_default104;
+  var settings104 = {
+    icon: tab_default,
+    edit: edit_default35,
+    save: save48
+  };
+  var init104 = () => initBlock({ name: name105, metadata: block_default104, settings: settings104 });
+
+  // packages/block-library/build-module/tab-panel/index.mjs
+  var tab_panel_exports = {};
+  __export(tab_panel_exports, {
+    init: () => init105,
+    metadata: () => block_default105,
+    name: () => name106,
+    settings: () => settings105
+  });
+
+  // packages/block-library/build-module/tab-panel/edit.mjs
+  var import_i18n240 = __toESM(require_i18n(), 1);
+  var import_block_editor255 = __toESM(require_block_editor(), 1);
+  var import_data142 = __toESM(require_data(), 1);
+  var import_element126 = __toESM(require_element(), 1);
+
+  // packages/block-library/build-module/tab-panel/controls.mjs
+  var import_block_editor254 = __toESM(require_block_editor(), 1);
+  var import_components158 = __toESM(require_components(), 1);
+  var import_i18n239 = __toESM(require_i18n(), 1);
+  var import_data141 = __toESM(require_data(), 1);
+  var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
+  function Controls4({ tabsClientId, blockIndex, isDefaultTab }) {
+    const { updateBlockAttributes } = (0, import_data141.useDispatch)(import_block_editor254.store);
+    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+    return /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_jsx_runtime494.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(AddTabToolbarControl, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(RemoveTabToolbarControl, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_block_editor254.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
         import_components158.__experimentalToolsPanel,
         {
-          label: (0, import_i18n238.__)("Settings"),
+          label: (0, import_i18n239.__)("Settings"),
           resetAll: () => {
             updateBlockAttributes(tabsClientId, {
               activeTabIndex: 0
             });
           },
           dropdownMenuProps,
-          children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
             import_components158.__experimentalToolsPanelItem,
             {
-              label: (0, import_i18n238.__)("Default tab"),
+              label: (0, import_i18n239.__)("Default tab"),
               hasValue: () => isDefaultTab && blockIndex !== 0,
               onDeselect: () => {
                 updateBlockAttributes(tabsClientId, {
@@ -65931,10 +66129,10 @@ ${js}
                 });
               },
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
                 import_components158.CheckboxControl,
                 {
-                  label: (0, import_i18n238.__)("Default tab"),
+                  label: (0, import_i18n239.__)("Default tab"),
                   checked: isDefaultTab,
                   onChange: (value) => {
                     updateBlockAttributes(tabsClientId, {
@@ -65950,38 +66148,38 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/tab/edit.mjs
-  var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
+  // packages/block-library/build-module/tab-panel/edit.mjs
+  var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE17 = [
     [
       "core/paragraph",
       {
-        placeholder: (0, import_i18n239.__)("Type / to choose a block")
+        placeholder: (0, import_i18n240.__)("Type / to choose a block")
       }
     ]
   ];
   var { cancelAnimationFrame: cancelAnimationFrame2 } = window;
-  function Edit19({ clientId, context, isSelected }) {
-    const focusRef = (0, import_element125.useRef)();
+  function Edit20({ clientId, context, isSelected }) {
+    const focusRef = (0, import_element126.useRef)();
     const activeTabIndex = context["core/tabs-activeTabIndex"];
     const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
     const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
-    (0, import_element125.useEffect)(() => {
+    (0, import_element126.useEffect)(() => {
       return () => {
         if (focusRef.current) {
           cancelAnimationFrame2(focusRef.current);
         }
       };
     }, []);
-    const { blockIndex, hasInnerBlocksSelected, tabsClientId } = (0, import_data141.useSelect)(
+    const { blockIndex, hasInnerBlocksSelected, tabsClientId } = (0, import_data142.useSelect)(
       (select9) => {
         const {
           getBlockRootClientId,
           getBlockIndex,
           hasSelectedInnerBlock
-        } = select9(import_block_editor252.store);
-        const tabPanelClientId = getBlockRootClientId(clientId);
-        const _tabsClientId = getBlockRootClientId(tabPanelClientId);
+        } = select9(import_block_editor255.store);
+        const tabPanelsClientId = getBlockRootClientId(clientId);
+        const _tabsClientId = getBlockRootClientId(tabPanelsClientId);
         const _blockIndex = getBlockIndex(clientId);
         const _hasInnerBlocksSelected = hasSelectedInnerBlock(
           clientId,
@@ -65995,8 +66193,8 @@ ${js}
       },
       [clientId]
     );
-    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data141.useDispatch)(import_block_editor252.store);
-    (0, import_element125.useEffect)(() => {
+    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data142.useDispatch)(import_block_editor255.store);
+    (0, import_element126.useEffect)(() => {
       const isTabSelected = isSelected || hasInnerBlocksSelected;
       if (isTabSelected && tabsClientId && effectiveActiveIndex !== blockIndex) {
         __unstableMarkNextChangeAsNotPersistent();
@@ -66015,7 +66213,7 @@ ${js}
     ]);
     const isActiveTab = effectiveActiveIndex === blockIndex;
     const isDefaultTab = activeTabIndex === blockIndex;
-    const isSelectedTab = (0, import_element125.useMemo)(() => {
+    const isSelectedTab = (0, import_element126.useMemo)(() => {
       if (isSelected || hasInnerBlocksSelected) {
         return true;
       }
@@ -66024,16 +66222,16 @@ ${js}
       }
       return false;
     }, [isSelected, hasInnerBlocksSelected, isActiveTab]);
-    const blockProps = (0, import_block_editor252.useBlockProps)({
+    const blockProps = (0, import_block_editor255.useBlockProps)({
       hidden: !isSelectedTab,
       tabIndex: isSelectedTab ? 0 : -1
     });
-    const innerBlocksProps = (0, import_block_editor252.useInnerBlocksProps)(blockProps, {
+    const innerBlocksProps = (0, import_block_editor255.useInnerBlocksProps)(blockProps, {
       template: TEMPLATE17
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)("section", { ...innerBlocksProps, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
-        Controls3,
+    return /* @__PURE__ */ (0, import_jsx_runtime495.jsxs)("section", { ...innerBlocksProps, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
+        Controls4,
         {
           tabsClientId,
           blockIndex,
@@ -66044,24 +66242,24 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/tab/save.mjs
-  var import_block_editor253 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
-  function save48() {
-    const blockProps = import_block_editor253.useBlockProps.save({
+  // packages/block-library/build-module/tab-panel/save.mjs
+  var import_block_editor256 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
+  function save49() {
+    const blockProps = import_block_editor256.useBlockProps.save({
       role: "tabpanel"
     });
-    const innerBlocksProps = import_block_editor253.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("section", { ...innerBlocksProps });
+    const innerBlocksProps = import_block_editor256.useInnerBlocksProps.save(blockProps);
+    return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)("section", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/tab/block.json
-  var block_default104 = {
+  // packages/block-library/build-module/tab-panel/block.json
+  var block_default105 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     __experimental: true,
     apiVersion: 3,
-    name: "core/tab",
-    title: "Tab",
+    name: "core/tab-panel",
+    title: "Tab Panel",
     description: "Content for a tab in a tabbed interface.",
     category: "design",
     textdomain: "default",
@@ -66071,7 +66269,7 @@ ${js}
         default: ""
       }
     },
-    parent: ["core/tab-panel"],
+    parent: ["core/tab-panels"],
     usesContext: [
       "core/tabs-activeTabIndex",
       "core/tabs-editorActiveTabIndex",
@@ -66113,69 +66311,69 @@ ${js}
     style: "file:./style-index.css"
   };
 
-  // packages/block-library/build-module/tab/index.mjs
-  var { name: name105 } = block_default104;
-  var settings104 = {
-    icon: tab_default,
-    edit: Edit19,
-    save: save48
-  };
-  var init104 = () => initBlock({ name: name105, metadata: block_default104, settings: settings104 });
-
   // packages/block-library/build-module/tab-panel/index.mjs
-  var tab_panel_exports = {};
-  __export(tab_panel_exports, {
-    init: () => init105,
-    metadata: () => block_default105,
-    name: () => name106,
-    settings: () => settings105
+  var { name: name106 } = block_default105;
+  var settings105 = {
+    icon: tab_panel_default,
+    edit: Edit20,
+    save: save49
+  };
+  var init105 = () => initBlock({ name: name106, metadata: block_default105, settings: settings105 });
+
+  // packages/block-library/build-module/tab-panels/index.mjs
+  var tab_panels_exports = {};
+  __export(tab_panels_exports, {
+    init: () => init106,
+    metadata: () => block_default106,
+    name: () => name107,
+    settings: () => settings106
   });
 
-  // packages/block-library/build-module/tab-panel/edit.mjs
-  var import_block_editor254 = __toESM(require_block_editor(), 1);
-  var import_data142 = __toESM(require_data(), 1);
-  var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
-  var TAB_PANELS_TEMPLATE = [["core/tab", {}]];
-  function Edit20({ clientId }) {
-    const blockProps = (0, import_block_editor254.useBlockProps)();
-    const innerBlocksProps = (0, import_block_editor254.useInnerBlocksProps)(blockProps, {
+  // packages/block-library/build-module/tab-panels/edit.mjs
+  var import_block_editor257 = __toESM(require_block_editor(), 1);
+  var import_data143 = __toESM(require_data(), 1);
+  var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
+  var TAB_PANELS_TEMPLATE = [["core/tab-panel", {}]];
+  function Edit21({ clientId }) {
+    const blockProps = (0, import_block_editor257.useBlockProps)();
+    const innerBlocksProps = (0, import_block_editor257.useInnerBlocksProps)(blockProps, {
       template: TAB_PANELS_TEMPLATE,
       templateLock: false,
       renderAppender: false
       // Appender handled by individual tab blocks
     });
-    const tabsClientId = (0, import_data142.useSelect)(
-      (select9) => select9(import_block_editor254.store).getBlockRootClientId(clientId),
+    const tabsClientId = (0, import_data143.useSelect)(
+      (select9) => select9(import_block_editor257.store).getBlockRootClientId(clientId),
       [clientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_jsx_runtime494.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(AddTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(RemoveTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)("div", { ...innerBlocksProps })
+    return /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(import_jsx_runtime497.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(AddTabToolbarControl, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(RemoveTabToolbarControl, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime497.jsx)("div", { ...innerBlocksProps })
     ] });
   }
 
-  // packages/block-library/build-module/tab-panel/save.mjs
-  var import_block_editor255 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
-  function save49() {
-    const blockProps = import_block_editor255.useBlockProps.save();
-    const innerBlocksProps = import_block_editor255.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)("div", { ...innerBlocksProps });
+  // packages/block-library/build-module/tab-panels/save.mjs
+  var import_block_editor258 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
+  function save50() {
+    const blockProps = import_block_editor258.useBlockProps.save();
+    const innerBlocksProps = import_block_editor258.useInnerBlocksProps.save(blockProps);
+    return /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/tab-panel/block.json
-  var block_default105 = {
+  // packages/block-library/build-module/tab-panels/block.json
+  var block_default106 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     __experimental: true,
     apiVersion: 3,
-    name: "core/tab-panel",
-    title: "Tab Panel",
+    name: "core/tab-panels",
+    title: "Tab Panels",
     description: "Container for tab panel content in a tabbed interface.",
     category: "design",
     textdomain: "default",
     parent: ["core/tabs"],
-    allowedBlocks: ["core/tab"],
+    allowedBlocks: ["core/tab-panel"],
     attributes: {},
     supports: {
       anchor: false,
@@ -66232,28 +66430,28 @@ ${js}
     style: "file:./style-index.css"
   };
 
-  // packages/block-library/build-module/tab-panel/index.mjs
-  var { name: name106 } = block_default105;
-  var settings105 = {
+  // packages/block-library/build-module/tab-panels/index.mjs
+  var { name: name107 } = block_default106;
+  var settings106 = {
     icon: contents_default,
-    edit: Edit20,
-    save: save49
+    edit: Edit21,
+    save: save50
   };
-  var init105 = () => initBlock({ name: name106, metadata: block_default105, settings: settings105 });
+  var init106 = () => initBlock({ name: name107, metadata: block_default106, settings: settings106 });
 
   // packages/block-library/build-module/table/index.mjs
   var table_exports = {};
   __export(table_exports, {
-    init: () => init106,
-    metadata: () => block_default106,
-    name: () => name107,
-    settings: () => settings106
+    init: () => init107,
+    metadata: () => block_default107,
+    name: () => name108,
+    settings: () => settings107
   });
-  var import_i18n241 = __toESM(require_i18n(), 1);
+  var import_i18n242 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/table/deprecated.mjs
-  var import_block_editor256 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
+  var import_block_editor259 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
   var oldColors = {
     "subtle-light-gray": "#f3f4f5",
     "subtle-pale-green": "#e9fbe5",
@@ -66402,18 +66600,18 @@ ${js}
       if (isEmpty) {
         return null;
       }
-      const colorProps = (0, import_block_editor256.__experimentalGetColorClassesAndStyles)(attributes2);
-      const borderProps = (0, import_block_editor256.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor259.__experimentalGetColorClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor259.__experimentalGetBorderClassesAndStyles)(attributes2);
       const classes = clsx_default(colorProps.className, borderProps.className, {
         "has-fixed-layout": hasFixedLayout
       });
-      const hasCaption = !import_block_editor256.RichText.isEmpty(caption);
+      const hasCaption = !import_block_editor259.RichText.isEmpty(caption);
       const Section = ({ type, rows }) => {
         if (!rows.length) {
           return null;
         }
         const Tag = `t${type}`;
-        return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime496.jsx)("tr", { children: cells.map(
+        return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("tr", { children: cells.map(
           ({
             content,
             tag,
@@ -66425,8 +66623,8 @@ ${js}
             const cellClasses = clsx_default({
               [`has-text-align-${align}`]: align
             });
-            return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
-              import_block_editor256.RichText.Content,
+            return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+              import_block_editor259.RichText.Content,
               {
                 className: cellClasses ? cellClasses : void 0,
                 "data-align": align,
@@ -66441,25 +66639,25 @@ ${js}
           }
         ) }, rowIndex)) });
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)("figure", { ...import_block_editor256.useBlockProps.save(), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)("figure", { ...import_block_editor259.useBlockProps.save(), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(
           "table",
           {
             className: classes === "" ? void 0 : classes,
             style: { ...colorProps.style, ...borderProps.style },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "head", rows: head }),
-              /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "body", rows: body }),
-              /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "foot", rows: foot })
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "head", rows: head }),
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "body", rows: body }),
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "foot", rows: foot })
             ]
           }
         ),
-        hasCaption && /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
-          import_block_editor256.RichText.Content,
+        hasCaption && /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+          import_block_editor259.RichText.Content,
           {
             tagName: "figcaption",
             value: caption,
-            className: (0, import_block_editor256.__experimentalGetElementClassName)(
+            className: (0, import_block_editor259.__experimentalGetElementClassName)(
               "caption"
             )
           }
@@ -66593,24 +66791,24 @@ ${js}
       if (isEmpty) {
         return null;
       }
-      const colorProps = (0, import_block_editor256.__experimentalGetColorClassesAndStyles)(attributes2);
-      const borderProps = (0, import_block_editor256.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor259.__experimentalGetColorClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor259.__experimentalGetBorderClassesAndStyles)(attributes2);
       const classes = clsx_default(colorProps.className, borderProps.className, {
         "has-fixed-layout": hasFixedLayout
       });
-      const hasCaption = !import_block_editor256.RichText.isEmpty(caption);
+      const hasCaption = !import_block_editor259.RichText.isEmpty(caption);
       const Section = ({ type, rows }) => {
         if (!rows.length) {
           return null;
         }
         const Tag = `t${type}`;
-        return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime496.jsx)("tr", { children: cells.map(
+        return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("tr", { children: cells.map(
           ({ content, tag, scope, align }, cellIndex) => {
             const cellClasses = clsx_default({
               [`has-text-align-${align}`]: align
             });
-            return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
-              import_block_editor256.RichText.Content,
+            return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+              import_block_editor259.RichText.Content,
               {
                 className: cellClasses ? cellClasses : void 0,
                 "data-align": align,
@@ -66623,20 +66821,20 @@ ${js}
           }
         ) }, rowIndex)) });
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)("figure", { ...import_block_editor256.useBlockProps.save(), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)("figure", { ...import_block_editor259.useBlockProps.save(), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(
           "table",
           {
             className: classes === "" ? void 0 : classes,
             style: { ...colorProps.style, ...borderProps.style },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "head", rows: head }),
-              /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "body", rows: body }),
-              /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "foot", rows: foot })
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "head", rows: head }),
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "body", rows: body }),
+              /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "foot", rows: foot })
             ]
           }
         ),
-        hasCaption && /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(import_block_editor256.RichText.Content, { tagName: "figcaption", value: caption })
+        hasCaption && /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_block_editor259.RichText.Content, { tagName: "figcaption", value: caption })
       ] });
     }
   };
@@ -66733,7 +66931,7 @@ ${js}
       if (isEmpty) {
         return null;
       }
-      const backgroundClass = (0, import_block_editor256.getColorClassName)(
+      const backgroundClass = (0, import_block_editor259.getColorClassName)(
         "background-color",
         backgroundColor
       );
@@ -66741,19 +66939,19 @@ ${js}
         "has-fixed-layout": hasFixedLayout,
         "has-background": !!backgroundClass
       });
-      const hasCaption = !import_block_editor256.RichText.isEmpty(caption);
+      const hasCaption = !import_block_editor259.RichText.isEmpty(caption);
       const Section = ({ type, rows }) => {
         if (!rows.length) {
           return null;
         }
         const Tag = `t${type}`;
-        return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime496.jsx)("tr", { children: cells.map(
+        return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("tr", { children: cells.map(
           ({ content, tag, scope, align }, cellIndex) => {
             const cellClasses = clsx_default({
               [`has-text-align-${align}`]: align
             });
-            return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
-              import_block_editor256.RichText.Content,
+            return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+              import_block_editor259.RichText.Content,
               {
                 className: cellClasses ? cellClasses : void 0,
                 "data-align": align,
@@ -66766,13 +66964,13 @@ ${js}
           }
         ) }, rowIndex)) });
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)("figure", { ...import_block_editor256.useBlockProps.save(), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)("table", { className: classes === "" ? void 0 : classes, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "head", rows: head }),
-          /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "body", rows: body }),
-          /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "foot", rows: foot })
+      return /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)("figure", { ...import_block_editor259.useBlockProps.save(), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)("table", { className: classes === "" ? void 0 : classes, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "head", rows: head }),
+          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "body", rows: body }),
+          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "foot", rows: foot })
         ] }),
-        hasCaption && /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(import_block_editor256.RichText.Content, { tagName: "figcaption", value: caption })
+        hasCaption && /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_block_editor259.RichText.Content, { tagName: "figcaption", value: caption })
       ] });
     },
     isEligible: (attributes2) => {
@@ -66872,7 +67070,7 @@ ${js}
       if (isEmpty) {
         return null;
       }
-      const backgroundClass = (0, import_block_editor256.getColorClassName)(
+      const backgroundClass = (0, import_block_editor259.getColorClassName)(
         "background-color",
         backgroundColor
       );
@@ -66885,9 +67083,9 @@ ${js}
           return null;
         }
         const Tag = `t${type}`;
-        return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime496.jsx)("tr", { children: cells.map(
-          ({ content, tag, scope }, cellIndex) => /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
-            import_block_editor256.RichText.Content,
+        return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("tr", { children: cells.map(
+          ({ content, tag, scope }, cellIndex) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+            import_block_editor259.RichText.Content,
             {
               tagName: tag,
               value: content,
@@ -66897,19 +67095,19 @@ ${js}
           )
         ) }, rowIndex)) });
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime496.jsxs)("table", { className: classes, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "head", rows: head }),
-        /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "body", rows: body }),
-        /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(Section, { type: "foot", rows: foot })
+      return /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)("table", { className: classes, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "head", rows: head }),
+        /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "body", rows: body }),
+        /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Section, { type: "foot", rows: foot })
       ] });
     }
   };
   var deprecated_default52 = [v412, v312, v222, v147];
 
   // packages/block-library/build-module/table/edit.mjs
-  var import_element126 = __toESM(require_element(), 1);
-  var import_block_editor257 = __toESM(require_block_editor(), 1);
-  var import_i18n240 = __toESM(require_i18n(), 1);
+  var import_element127 = __toESM(require_element(), 1);
+  var import_block_editor260 = __toESM(require_block_editor(), 1);
+  var import_i18n241 = __toESM(require_i18n(), 1);
   var import_components159 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/table/state.mjs
@@ -67097,36 +67295,36 @@ ${js}
   }
 
   // packages/block-library/build-module/table/edit.mjs
-  var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
   var ALIGNMENT_CONTROLS = [
     {
       icon: align_left_default,
-      title: (0, import_i18n240.__)("Align column left"),
+      title: (0, import_i18n241.__)("Align column left"),
       align: "left"
     },
     {
       icon: align_center_default,
-      title: (0, import_i18n240.__)("Align column center"),
+      title: (0, import_i18n241.__)("Align column center"),
       align: "center"
     },
     {
       icon: align_right_default,
-      title: (0, import_i18n240.__)("Align column right"),
+      title: (0, import_i18n241.__)("Align column right"),
       align: "right"
     }
   ];
   var cellAriaLabel = {
-    head: (0, import_i18n240.__)("Header cell text"),
-    body: (0, import_i18n240.__)("Body cell text"),
-    foot: (0, import_i18n240.__)("Footer cell text")
+    head: (0, import_i18n241.__)("Header cell text"),
+    body: (0, import_i18n241.__)("Body cell text"),
+    foot: (0, import_i18n241.__)("Footer cell text")
   };
   var placeholder = {
-    head: (0, import_i18n240.__)("Header label"),
-    foot: (0, import_i18n240.__)("Footer label")
+    head: (0, import_i18n241.__)("Header label"),
+    foot: (0, import_i18n241.__)("Footer label")
   };
   function TSection({ name: name123, ...props }) {
     const TagName2 = `t${name123}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(TagName2, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(TagName2, { ...props });
   }
   function TableEdit({
     attributes: attributes2,
@@ -67135,14 +67333,14 @@ ${js}
     isSelected: isSingleSelected
   }) {
     const { hasFixedLayout, head, foot } = attributes2;
-    const [initialRowCount, setInitialRowCount] = (0, import_element126.useState)(2);
-    const [initialColumnCount, setInitialColumnCount] = (0, import_element126.useState)(2);
-    const [selectedCell, setSelectedCell] = (0, import_element126.useState)();
-    const colorProps = (0, import_block_editor257.__experimentalUseColorProps)(attributes2);
-    const borderProps = (0, import_block_editor257.__experimentalUseBorderProps)(attributes2);
-    const blockEditingMode = (0, import_block_editor257.useBlockEditingMode)();
-    const tableRef = (0, import_element126.useRef)();
-    const [hasTableCreated, setHasTableCreated] = (0, import_element126.useState)(false);
+    const [initialRowCount, setInitialRowCount] = (0, import_element127.useState)(2);
+    const [initialColumnCount, setInitialColumnCount] = (0, import_element127.useState)(2);
+    const [selectedCell, setSelectedCell] = (0, import_element127.useState)();
+    const colorProps = (0, import_block_editor260.__experimentalUseColorProps)(attributes2);
+    const borderProps = (0, import_block_editor260.__experimentalUseBorderProps)(attributes2);
+    const blockEditingMode = (0, import_block_editor260.useBlockEditingMode)();
+    const tableRef = (0, import_element127.useRef)();
+    const [hasTableCreated, setHasTableCreated] = (0, import_element127.useState)(false);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     function onChangeInitialColumnCount(count) {
       setInitialColumnCount(count);
@@ -67163,7 +67361,7 @@ ${js}
     function onChangeFixedLayout() {
       setAttributes({ hasFixedLayout: !hasFixedLayout });
     }
-    const onChange = (0, import_element126.useCallback)(
+    const onChange = (0, import_element127.useCallback)(
       function(content) {
         if (!selectedCell) {
           return;
@@ -67277,12 +67475,12 @@ ${js}
         deleteColumn(attributes2, { sectionName, columnIndex })
       );
     }
-    (0, import_element126.useEffect)(() => {
+    (0, import_element127.useEffect)(() => {
       if (!isSingleSelected) {
         setSelectedCell();
       }
     }, [isSingleSelected]);
-    (0, import_element126.useEffect)(() => {
+    (0, import_element127.useEffect)(() => {
       if (hasTableCreated) {
         tableRef?.current?.querySelector('td div[contentEditable="true"]')?.focus();
         setHasTableCreated(false);
@@ -67294,44 +67492,44 @@ ${js}
     const tableControls = [
       {
         icon: table_row_before_default,
-        title: (0, import_i18n240.__)("Insert row before"),
+        title: (0, import_i18n241.__)("Insert row before"),
         isDisabled: !selectedCell,
         onClick: onInsertRowBefore
       },
       {
         icon: table_row_after_default,
-        title: (0, import_i18n240.__)("Insert row after"),
+        title: (0, import_i18n241.__)("Insert row after"),
         isDisabled: !selectedCell,
         onClick: onInsertRowAfter
       },
       {
         icon: table_row_delete_default,
-        title: (0, import_i18n240.__)("Delete row"),
+        title: (0, import_i18n241.__)("Delete row"),
         isDisabled: !selectedCell,
         onClick: onDeleteRow
       },
       {
         icon: table_column_before_default,
-        title: (0, import_i18n240.__)("Insert column before"),
+        title: (0, import_i18n241.__)("Insert column before"),
         isDisabled: !selectedCell,
         onClick: onInsertColumnBefore
       },
       {
         icon: table_column_after_default,
-        title: (0, import_i18n240.__)("Insert column after"),
+        title: (0, import_i18n241.__)("Insert column after"),
         isDisabled: !selectedCell,
         onClick: onInsertColumnAfter
       },
       {
         icon: table_column_delete_default,
-        title: (0, import_i18n240.__)("Delete column"),
+        title: (0, import_i18n241.__)("Delete column"),
         isDisabled: !selectedCell,
         onClick: onDeleteColumn
       }
     ];
-    const renderedSections = sections.map((name123) => /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(TSection, { name: name123, children: attributes2[name123].map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime497.jsx)("tr", { children: cells.map((cellProps, columnIndex) => {
+    const renderedSections = sections.map((name123) => /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(TSection, { name: name123, children: attributes2[name123].map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime500.jsx)("tr", { children: cells.map((cellProps, columnIndex) => {
       const isSelected = selectedCell?.sectionName === name123 && selectedCell?.rowIndex === rowIndex && selectedCell?.columnIndex === columnIndex;
-      return /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
         Cell,
         {
           name: name123,
@@ -67351,30 +67549,30 @@ ${js}
       );
     }) }, rowIndex)) }, name123));
     const isEmpty = !sections.length;
-    return /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)("figure", { ...(0, import_block_editor257.useBlockProps)({ ref: tableRef }), children: [
-      !isEmpty && blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(import_jsx_runtime497.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(import_block_editor257.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
-          import_block_editor257.AlignmentControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)("figure", { ...(0, import_block_editor260.useBlockProps)({ ref: tableRef }), children: [
+      !isEmpty && blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_jsx_runtime500.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_block_editor260.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+          import_block_editor260.AlignmentControl,
           {
-            label: (0, import_i18n240.__)("Change column alignment"),
+            label: (0, import_i18n241.__)("Change column alignment"),
             alignmentControls: ALIGNMENT_CONTROLS,
             value: getCellAlignment(),
             onChange: (nextAlign) => onChangeColumnAlignment(nextAlign)
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(import_block_editor257.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_block_editor260.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
           import_components159.ToolbarDropdownMenu,
           {
             icon: table_default,
-            label: (0, import_i18n240.__)("Edit table"),
+            label: (0, import_i18n241.__)("Edit table"),
             controls: tableControls
           }
         ) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(import_block_editor257.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_block_editor260.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
         import_components159.__experimentalToolsPanel,
         {
-          label: (0, import_i18n240.__)("Settings"),
+          label: (0, import_i18n241.__)("Settings"),
           resetAll: () => {
             setAttributes({
               hasFixedLayout: true,
@@ -67384,52 +67582,52 @@ ${js}
           },
           dropdownMenuProps,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
               import_components159.__experimentalToolsPanelItem,
               {
                 hasValue: () => hasFixedLayout !== true,
-                label: (0, import_i18n240.__)("Fixed width table cells"),
+                label: (0, import_i18n241.__)("Fixed width table cells"),
                 onDeselect: () => setAttributes({ hasFixedLayout: true }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                   import_components159.ToggleControl,
                   {
-                    label: (0, import_i18n240.__)("Fixed width table cells"),
+                    label: (0, import_i18n241.__)("Fixed width table cells"),
                     checked: !!hasFixedLayout,
                     onChange: onChangeFixedLayout
                   }
                 )
               }
             ),
-            !isEmpty && /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(import_jsx_runtime497.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+            !isEmpty && /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_jsx_runtime500.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                 import_components159.__experimentalToolsPanelItem,
                 {
                   hasValue: () => head && head.length,
-                  label: (0, import_i18n240.__)("Header section"),
+                  label: (0, import_i18n241.__)("Header section"),
                   onDeselect: () => setAttributes({ head: [] }),
                   isShownByDefault: true,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+                  children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                     import_components159.ToggleControl,
                     {
-                      label: (0, import_i18n240.__)("Header section"),
+                      label: (0, import_i18n241.__)("Header section"),
                       checked: !!(head && head.length),
                       onChange: onToggleHeaderSection
                     }
                   )
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                 import_components159.__experimentalToolsPanelItem,
                 {
                   hasValue: () => foot && foot.length,
-                  label: (0, import_i18n240.__)("Footer section"),
+                  label: (0, import_i18n241.__)("Footer section"),
                   onDeselect: () => setAttributes({ foot: [] }),
                   isShownByDefault: true,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+                  children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                     import_components159.ToggleControl,
                     {
-                      label: (0, import_i18n240.__)("Footer section"),
+                      label: (0, import_i18n241.__)("Footer section"),
                       checked: !!(foot && foot.length),
                       onChange: onToggleFooterSection
                     }
@@ -67440,7 +67638,7 @@ ${js}
           ]
         }
       ) }),
-      !isEmpty && /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+      !isEmpty && /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
         "table",
         {
           className: clsx_default(
@@ -67460,69 +67658,69 @@ ${js}
           children: renderedSections
         }
       ),
-      isEmpty ? /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+      isEmpty ? /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
         import_components159.Placeholder,
         {
-          label: (0, import_i18n240.__)("Table"),
-          icon: /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(import_block_editor257.BlockIcon, { icon: block_table_default, showColors: true }),
-          instructions: (0, import_i18n240.__)("Insert a table for sharing data."),
-          children: /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(
+          label: (0, import_i18n241.__)("Table"),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_block_editor260.BlockIcon, { icon: block_table_default, showColors: true }),
+          instructions: (0, import_i18n241.__)("Insert a table for sharing data."),
+          children: /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
             "form",
             {
               className: "blocks-table__placeholder-form",
               onSubmit: onCreateTable,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                   import_components159.TextControl,
                   {
                     __next40pxDefaultSize: true,
                     type: "number",
-                    label: (0, import_i18n240.__)("Column count"),
+                    label: (0, import_i18n241.__)("Column count"),
                     value: initialColumnCount,
                     onChange: onChangeInitialColumnCount,
                     min: "1",
                     className: "blocks-table__placeholder-input"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                   import_components159.TextControl,
                   {
                     __next40pxDefaultSize: true,
                     type: "number",
-                    label: (0, import_i18n240.__)("Row count"),
+                    label: (0, import_i18n241.__)("Row count"),
                     value: initialRowCount,
                     onChange: onChangeInitialRowCount,
                     min: "1",
                     className: "blocks-table__placeholder-input"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
                   import_components159.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "primary",
                     type: "submit",
-                    children: (0, import_i18n240.__)("Create Table")
+                    children: (0, import_i18n241.__)("Create Table")
                   }
                 )
               ]
             }
           )
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+      ) : /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
         Caption,
         {
           attributes: attributes2,
           setAttributes,
           isSelected: isSingleSelected,
           insertBlocksAfter,
-          label: (0, import_i18n240.__)("Table caption text"),
+          label: (0, import_i18n241.__)("Table caption text"),
           showToolbarButton: isSingleSelected && blockEditingMode === "default"
         }
       )
     ] });
   }
-  var Cell = (0, import_element126.memo)(function({
+  var Cell = (0, import_element127.memo)(function({
     tag: CellTag,
     name: name123,
     scope,
@@ -67535,7 +67733,7 @@ ${js}
     onChange,
     setSelectedCell
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
       CellTag,
       {
         scope: CellTag === "th" ? scope : void 0,
@@ -67547,8 +67745,8 @@ ${js}
           },
           "wp-block-table__cell-content"
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
-          import_block_editor257.RichText,
+        children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+          import_block_editor260.RichText,
           {
             value: content,
             onChange,
@@ -67567,10 +67765,10 @@ ${js}
       }
     );
   });
-  var edit_default35 = TableEdit;
+  var edit_default36 = TableEdit;
 
   // packages/block-library/build-module/table/block.json
-  var block_default106 = {
+  var block_default107 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
     name: "core/table",
@@ -67792,26 +67990,26 @@ ${js}
   };
 
   // packages/block-library/build-module/table/save.mjs
-  var import_block_editor258 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
-  function save50({ attributes: attributes2 }) {
+  var import_block_editor261 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
+  function save51({ attributes: attributes2 }) {
     const { hasFixedLayout, head, body, foot, caption } = attributes2;
     const isEmpty = !head.length && !body.length && !foot.length;
     if (isEmpty) {
       return null;
     }
-    const colorProps = (0, import_block_editor258.__experimentalGetColorClassesAndStyles)(attributes2);
-    const borderProps = (0, import_block_editor258.__experimentalGetBorderClassesAndStyles)(attributes2);
+    const colorProps = (0, import_block_editor261.__experimentalGetColorClassesAndStyles)(attributes2);
+    const borderProps = (0, import_block_editor261.__experimentalGetBorderClassesAndStyles)(attributes2);
     const classes = clsx_default(colorProps.className, borderProps.className, {
       "has-fixed-layout": hasFixedLayout
     });
-    const hasCaption = !import_block_editor258.RichText.isEmpty(caption);
+    const hasCaption = !import_block_editor261.RichText.isEmpty(caption);
     const Section = ({ type, rows }) => {
       if (!rows.length) {
         return null;
       }
       const Tag = `t${type}`;
-      return /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("tr", { children: cells.map(
+      return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(Tag, { children: rows.map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime501.jsx)("tr", { children: cells.map(
         ({
           content,
           tag,
@@ -67823,8 +68021,8 @@ ${js}
           const cellClasses = clsx_default({
             [`has-text-align-${align}`]: align
           });
-          return /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-            import_block_editor258.RichText.Content,
+          return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
+            import_block_editor261.RichText.Content,
             {
               className: cellClasses ? cellClasses : void 0,
               "data-align": align,
@@ -67839,25 +68037,25 @@ ${js}
         }
       ) }, rowIndex)) });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)("figure", { ...import_block_editor258.useBlockProps.save(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime501.jsxs)("figure", { ...import_block_editor261.useBlockProps.save(), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime501.jsxs)(
         "table",
         {
           className: classes === "" ? void 0 : classes,
           style: { ...colorProps.style, ...borderProps.style },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(Section, { type: "head", rows: head }),
-            /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(Section, { type: "body", rows: body }),
-            /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(Section, { type: "foot", rows: foot })
+            /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(Section, { type: "head", rows: head }),
+            /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(Section, { type: "body", rows: body }),
+            /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(Section, { type: "foot", rows: foot })
           ]
         }
       ),
-      hasCaption && /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-        import_block_editor258.RichText.Content,
+      hasCaption && /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
+        import_block_editor261.RichText.Content,
         {
           tagName: "figcaption",
           value: caption,
-          className: (0, import_block_editor258.__experimentalGetElementClassName)("caption")
+          className: (0, import_block_editor261.__experimentalGetElementClassName)("caption")
         }
       )
     ] });
@@ -67971,8 +68169,8 @@ ${js}
   var transforms_default35 = transforms34;
 
   // packages/block-library/build-module/table/index.mjs
-  var { name: name107 } = block_default106;
-  var settings106 = {
+  var { name: name108 } = block_default107;
+  var settings107 = {
     icon: block_table_default,
     example: {
       attributes: {
@@ -67980,15 +68178,15 @@ ${js}
           {
             cells: [
               {
-                content: (0, import_i18n241.__)("Version"),
+                content: (0, import_i18n242.__)("Version"),
                 tag: "th"
               },
               {
-                content: (0, import_i18n241.__)("Jazz Musician"),
+                content: (0, import_i18n242.__)("Jazz Musician"),
                 tag: "th"
               },
               {
-                content: (0, import_i18n241.__)("Release Date"),
+                content: (0, import_i18n242.__)("Release Date"),
                 tag: "th"
               }
             ]
@@ -68002,11 +68200,11 @@ ${js}
                 tag: "td"
               },
               {
-                content: (0, import_i18n241.__)("Jaco Pastorius"),
+                content: (0, import_i18n242.__)("Jaco Pastorius"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n241.__)("May 7, 2019"),
+                content: (0, import_i18n242.__)("May 7, 2019"),
                 tag: "td"
               }
             ]
@@ -68018,11 +68216,11 @@ ${js}
                 tag: "td"
               },
               {
-                content: (0, import_i18n241.__)("Betty Carter"),
+                content: (0, import_i18n242.__)("Betty Carter"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n241.__)("February 21, 2019"),
+                content: (0, import_i18n242.__)("February 21, 2019"),
                 tag: "td"
               }
             ]
@@ -68034,11 +68232,11 @@ ${js}
                 tag: "td"
               },
               {
-                content: (0, import_i18n241.__)("Bebo Vald\xE9s"),
+                content: (0, import_i18n242.__)("Bebo Vald\xE9s"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n241.__)("December 6, 2018"),
+                content: (0, import_i18n242.__)("December 6, 2018"),
                 tag: "td"
               }
             ]
@@ -68048,24 +68246,24 @@ ${js}
       viewportWidth: 450
     },
     transforms: transforms_default35,
-    edit: edit_default35,
-    save: save50,
+    edit: edit_default36,
+    save: save51,
     deprecated: deprecated_default52
   };
-  var init106 = () => initBlock({ name: name107, metadata: block_default106, settings: settings106 });
+  var init107 = () => initBlock({ name: name108, metadata: block_default107, settings: settings107 });
 
   // packages/block-library/build-module/table-of-contents/index.mjs
   var table_of_contents_exports = {};
   __export(table_of_contents_exports, {
-    init: () => init107,
-    metadata: () => block_default107,
-    name: () => name108,
-    settings: () => settings107
+    init: () => init108,
+    metadata: () => block_default108,
+    name: () => name109,
+    settings: () => settings108
   });
-  var import_i18n243 = __toESM(require_i18n(), 1);
+  var import_i18n244 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/table-of-contents/block.json
-  var block_default107 = {
+  var block_default108 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
     __experimental: true,
@@ -68142,17 +68340,17 @@ ${js}
   };
 
   // packages/block-library/build-module/table-of-contents/edit.mjs
-  var import_block_editor260 = __toESM(require_block_editor(), 1);
+  var import_block_editor263 = __toESM(require_block_editor(), 1);
   var import_blocks113 = __toESM(require_blocks(), 1);
   var import_components160 = __toESM(require_components(), 1);
-  var import_data144 = __toESM(require_data(), 1);
-  var import_element128 = __toESM(require_element(), 1);
-  var import_i18n242 = __toESM(require_i18n(), 1);
+  var import_data145 = __toESM(require_data(), 1);
+  var import_element129 = __toESM(require_element(), 1);
+  var import_i18n243 = __toESM(require_i18n(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
   var import_notices18 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/table-of-contents/list.mjs
-  var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
   var ENTRY_CLASS_NAME = "wp-block-table-of-contents__entry";
   function TableOfContentsList({
     nestedHeadingList,
@@ -68160,9 +68358,9 @@ ${js}
     onClick,
     ordered = true
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_jsx_runtime499.Fragment, { children: nestedHeadingList.map((node, index) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(import_jsx_runtime502.Fragment, { children: nestedHeadingList.map((node, index) => {
       const { content, link } = node.heading;
-      const entry = link ? /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+      const entry = link ? /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(
         "a",
         {
           className: ENTRY_CLASS_NAME,
@@ -68171,11 +68369,11 @@ ${js}
           onClick: disableLinkActivation && "function" === typeof onClick ? onClick : void 0,
           children: content
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("span", { className: ENTRY_CLASS_NAME, children: content });
+      ) : /* @__PURE__ */ (0, import_jsx_runtime502.jsx)("span", { className: ENTRY_CLASS_NAME, children: content });
       const NestedListTag = ordered ? "ol" : "ul";
-      return /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)("li", { children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime502.jsxs)("li", { children: [
         entry,
-        node.children ? /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(NestedListTag, { children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+        node.children ? /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(NestedListTag, { children: /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(
           TableOfContentsList,
           {
             nestedHeadingList: node.children,
@@ -68223,18 +68421,18 @@ ${js}
 
   // packages/block-library/build-module/table-of-contents/hooks.mjs
   var import_es6 = __toESM(require_es6(), 1);
-  var import_data143 = __toESM(require_data(), 1);
+  var import_data144 = __toESM(require_data(), 1);
   var import_dom11 = __toESM(require_dom(), 1);
-  var import_element127 = __toESM(require_element(), 1);
+  var import_element128 = __toESM(require_element(), 1);
   var import_url21 = __toESM(require_url(), 1);
-  var import_block_editor259 = __toESM(require_block_editor(), 1);
+  var import_block_editor262 = __toESM(require_block_editor(), 1);
   function getLatestHeadings(select9, clientId) {
     const {
       getBlockAttributes: getBlockAttributes4,
       getBlockName,
       getBlocksByName,
       getClientIdsOfDescendants
-    } = select9(import_block_editor259.store);
+    } = select9(import_block_editor262.store);
     const permalink = select9("core/editor").getPermalink() ?? null;
     const isPaginated = getBlocksByName("core/nextpage").length !== 0;
     const { onlyIncludeCurrentPage, maxLevel } = getBlockAttributes4(clientId) ?? {};
@@ -68298,8 +68496,8 @@ ${js}
     return latestHeadings;
   }
   function observeCallback(select9, dispatch, clientId) {
-    const { getBlockAttributes: getBlockAttributes4 } = select9(import_block_editor259.store);
-    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = dispatch(import_block_editor259.store);
+    const { getBlockAttributes: getBlockAttributes4 } = select9(import_block_editor262.store);
+    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = dispatch(import_block_editor262.store);
     const attributes2 = getBlockAttributes4(clientId);
     if (attributes2 === null) {
       return;
@@ -68313,8 +68511,8 @@ ${js}
     }
   }
   function useObserveHeadings(clientId) {
-    const registry = (0, import_data143.useRegistry)();
-    (0, import_element127.useEffect)(() => {
+    const registry = (0, import_data144.useRegistry)();
+    (0, import_element128.useEffect)(() => {
       return registry.subscribe(
         () => observeCallback(registry.select, registry.dispatch, clientId)
       );
@@ -68322,7 +68520,7 @@ ${js}
   }
 
   // packages/block-library/build-module/table-of-contents/edit.mjs
-  var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
   function TableOfContentsEdit({
     attributes: {
       headings = [],
@@ -68334,62 +68532,62 @@ ${js}
     setAttributes
   }) {
     useObserveHeadings(clientId);
-    const blockProps = (0, import_block_editor260.useBlockProps)();
+    const blockProps = (0, import_block_editor263.useBlockProps)();
     const instanceId = (0, import_compose59.useInstanceId)(
       TableOfContentsEdit,
       "table-of-contents"
     );
-    const { createWarningNotice } = (0, import_data144.useDispatch)(import_notices18.store);
+    const { createWarningNotice } = (0, import_data145.useDispatch)(import_notices18.store);
     const showRedirectionPreventedNotice = (event) => {
       event.preventDefault();
-      createWarningNotice((0, import_i18n242.__)("Links are disabled in the editor."), {
+      createWarningNotice((0, import_i18n243.__)("Links are disabled in the editor."), {
         id: `block-library/core/table-of-contents/redirection-prevented/${instanceId}`,
         type: "snackbar"
       });
     };
-    const canInsertList = (0, import_data144.useSelect)(
+    const canInsertList = (0, import_data145.useSelect)(
       (select9) => {
-        const { getBlockRootClientId, canInsertBlockType } = select9(import_block_editor260.store);
+        const { getBlockRootClientId, canInsertBlockType } = select9(import_block_editor263.store);
         const rootClientId = getBlockRootClientId(clientId);
         return canInsertBlockType("core/list", rootClientId);
       },
       [clientId]
     );
-    const { replaceBlocks } = (0, import_data144.useDispatch)(import_block_editor260.store);
+    const { replaceBlocks } = (0, import_data145.useDispatch)(import_block_editor263.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const headingTree = linearToNestedHeadingList(headings);
-    const toolbarControls = /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_block_editor260.BlockControls, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_components160.ToolbarGroup, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+    const toolbarControls = /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_block_editor263.BlockControls, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_components160.ToolbarGroup, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
           import_components160.ToolbarButton,
           {
-            icon: (0, import_i18n242.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
-            title: (0, import_i18n242.__)("Unordered"),
-            description: (0, import_i18n242.__)("Convert to unordered list"),
+            icon: (0, import_i18n243.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
+            title: (0, import_i18n243.__)("Unordered"),
+            description: (0, import_i18n243.__)("Convert to unordered list"),
             onClick: () => setAttributes({ ordered: false }),
             isActive: ordered === false
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
           import_components160.ToolbarButton,
           {
-            icon: (0, import_i18n242.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
-            title: (0, import_i18n242.__)("Ordered"),
-            description: (0, import_i18n242.__)("Convert to ordered list"),
+            icon: (0, import_i18n243.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
+            title: (0, import_i18n243.__)("Ordered"),
+            description: (0, import_i18n243.__)("Convert to ordered list"),
             onClick: () => setAttributes({ ordered: true }),
             isActive: ordered === true
           }
         )
       ] }),
-      canInsertList && /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_components160.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+      canInsertList && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_components160.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
         import_components160.ToolbarButton,
         {
           onClick: () => replaceBlocks(
             clientId,
             (0, import_blocks113.createBlock)("core/list", {
               ordered,
-              values: (0, import_element128.renderToString)(
-                /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+              values: (0, import_element129.renderToString)(
+                /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
                   TableOfContentsList,
                   {
                     nestedHeadingList: headingTree,
@@ -68399,14 +68597,14 @@ ${js}
               )
             })
           ),
-          children: (0, import_i18n242.__)("Convert to static list")
+          children: (0, import_i18n243.__)("Convert to static list")
         }
       ) })
     ] });
-    const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_block_editor260.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
+    const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_block_editor263.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(
       import_components160.__experimentalToolsPanel,
       {
-        label: (0, import_i18n242.__)("Settings"),
+        label: (0, import_i18n243.__)("Settings"),
         resetAll: () => {
           setAttributes({
             onlyIncludeCurrentPage: false,
@@ -68416,56 +68614,56 @@ ${js}
         },
         dropdownMenuProps,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
             import_components160.__experimentalToolsPanelItem,
             {
               hasValue: () => !!onlyIncludeCurrentPage,
-              label: (0, import_i18n242.__)("Only include current page"),
+              label: (0, import_i18n243.__)("Only include current page"),
               onDeselect: () => setAttributes({ onlyIncludeCurrentPage: false }),
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
                 import_components160.ToggleControl,
                 {
-                  label: (0, import_i18n242.__)("Only include current page"),
+                  label: (0, import_i18n243.__)("Only include current page"),
                   checked: onlyIncludeCurrentPage,
                   onChange: (value) => setAttributes({ onlyIncludeCurrentPage: value }),
-                  help: onlyIncludeCurrentPage ? (0, import_i18n242.__)(
+                  help: onlyIncludeCurrentPage ? (0, import_i18n243.__)(
                     "Only including headings from the current page (if the post is paginated)."
-                  ) : (0, import_i18n242.__)(
+                  ) : (0, import_i18n243.__)(
                     "Include headings from all pages (if the post is paginated)."
                   )
                 }
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
             import_components160.__experimentalToolsPanelItem,
             {
               hasValue: () => !!maxLevel,
-              label: (0, import_i18n242.__)("Limit heading levels"),
+              label: (0, import_i18n243.__)("Limit heading levels"),
               onDeselect: () => setAttributes({ maxLevel: void 0 }),
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
                 import_components160.SelectControl,
                 {
                   __next40pxDefaultSize: true,
-                  label: (0, import_i18n242.__)("Include headings down to level"),
+                  label: (0, import_i18n243.__)("Include headings down to level"),
                   value: maxLevel || "",
                   options: [
-                    { value: "", label: (0, import_i18n242.__)("All levels") },
-                    { value: "1", label: (0, import_i18n242.__)("Heading 1") },
-                    { value: "2", label: (0, import_i18n242.__)("Heading 2") },
-                    { value: "3", label: (0, import_i18n242.__)("Heading 3") },
-                    { value: "4", label: (0, import_i18n242.__)("Heading 4") },
-                    { value: "5", label: (0, import_i18n242.__)("Heading 5") },
-                    { value: "6", label: (0, import_i18n242.__)("Heading 6") }
+                    { value: "", label: (0, import_i18n243.__)("All levels") },
+                    { value: "1", label: (0, import_i18n243.__)("Heading 1") },
+                    { value: "2", label: (0, import_i18n243.__)("Heading 2") },
+                    { value: "3", label: (0, import_i18n243.__)("Heading 3") },
+                    { value: "4", label: (0, import_i18n243.__)("Heading 4") },
+                    { value: "5", label: (0, import_i18n243.__)("Heading 5") },
+                    { value: "6", label: (0, import_i18n243.__)("Heading 6") }
                   ],
                   onChange: (value) => setAttributes({
                     maxLevel: value ? parseInt(value) : void 0
                   }),
-                  help: !maxLevel ? (0, import_i18n242.__)(
+                  help: !maxLevel ? (0, import_i18n243.__)(
                     "Including all heading levels in the table of contents."
-                  ) : (0, import_i18n242.__)(
+                  ) : (0, import_i18n243.__)(
                     "Only include headings up to and including this level."
                   )
                 }
@@ -68476,13 +68674,13 @@ ${js}
       }
     ) });
     if (headings.length === 0) {
-      return /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_jsx_runtime500.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime500.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_jsx_runtime503.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime503.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
           import_components160.Placeholder,
           {
-            icon: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_block_editor260.BlockIcon, { icon: table_of_contents_default }),
-            label: (0, import_i18n242.__)("Table of Contents"),
-            instructions: (0, import_i18n242.__)(
+            icon: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_block_editor263.BlockIcon, { icon: table_of_contents_default }),
+            label: (0, import_i18n243.__)("Table of Contents"),
+            instructions: (0, import_i18n243.__)(
               "Start adding Heading blocks to create a table of contents. Headings with HTML anchors will be linked here."
             )
           }
@@ -68491,8 +68689,8 @@ ${js}
       ] });
     }
     const ListTag = ordered ? "ol" : "ul";
-    return /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_jsx_runtime500.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime500.jsx)("nav", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(ListTag, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_jsx_runtime503.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime503.jsx)("nav", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(ListTag, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
         TableOfContentsList,
         {
           nestedHeadingList: headingTree,
@@ -68507,16 +68705,16 @@ ${js}
   }
 
   // packages/block-library/build-module/table-of-contents/save.mjs
-  var import_block_editor261 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
-  function save51({
+  var import_block_editor264 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
+  function save52({
     attributes: { headings = [], ordered = true }
   }) {
     if (headings.length === 0) {
       return null;
     }
     const ListTag = ordered ? "ol" : "ul";
-    return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)("nav", { ...import_block_editor261.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(ListTag, { children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)("nav", { ...import_block_editor264.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(ListTag, { children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
       TableOfContentsList,
       {
         nestedHeadingList: linearToNestedHeadingList(headings),
@@ -68526,185 +68724,291 @@ ${js}
   }
 
   // packages/block-library/build-module/table-of-contents/index.mjs
-  var { name: name108 } = block_default107;
-  var settings107 = {
+  var { name: name109 } = block_default108;
+  var settings108 = {
     icon: table_of_contents_default,
     edit: TableOfContentsEdit,
-    save: save51,
+    save: save52,
     example: {
       innerBlocks: [
         {
           name: "core/heading",
           attributes: {
             level: 2,
-            content: (0, import_i18n243.__)("Heading")
+            content: (0, import_i18n244.__)("Heading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 3,
-            content: (0, import_i18n243.__)("Subheading")
+            content: (0, import_i18n244.__)("Subheading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 2,
-            content: (0, import_i18n243.__)("Heading")
+            content: (0, import_i18n244.__)("Heading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 3,
-            content: (0, import_i18n243.__)("Subheading")
+            content: (0, import_i18n244.__)("Subheading")
           }
         }
       ],
       attributes: {
         headings: [
           {
-            content: (0, import_i18n243.__)("Heading"),
+            content: (0, import_i18n244.__)("Heading"),
             level: 2
           },
           {
-            content: (0, import_i18n243.__)("Subheading"),
+            content: (0, import_i18n244.__)("Subheading"),
             level: 3
           },
           {
-            content: (0, import_i18n243.__)("Heading"),
+            content: (0, import_i18n244.__)("Heading"),
             level: 2
           },
           {
-            content: (0, import_i18n243.__)("Subheading"),
+            content: (0, import_i18n244.__)("Subheading"),
             level: 3
           }
         ]
       }
     }
   };
-  var init107 = () => initBlock({ name: name108, metadata: block_default107, settings: settings107 });
+  var init108 = () => initBlock({ name: name109, metadata: block_default108, settings: settings108 });
+
+  // packages/block-library/build-module/tab-list/index.mjs
+  var tab_list_exports = {};
+  __export(tab_list_exports, {
+    init: () => init109,
+    metadata: () => block_default109,
+    name: () => name110,
+    settings: () => settings109
+  });
+
+  // packages/block-library/build-module/tab-list/edit.mjs
+  var import_block_editor265 = __toESM(require_block_editor(), 1);
+  var import_data146 = __toESM(require_data(), 1);
+  var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
+  function Edit22({ clientId }) {
+    const tabsClientId = (0, import_data146.useSelect)(
+      (select9) => select9(import_block_editor265.store).getBlockRootClientId(clientId),
+      [clientId]
+    );
+    const blockProps = (0, import_block_editor265.useBlockProps)();
+    const innerBlocksProps = (0, import_block_editor265.useInnerBlocksProps)(blockProps, {
+      allowedBlocks: ["core/tab"],
+      orientation: "horizontal",
+      templateLock: false,
+      renderAppender: false
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime505.jsxs)(import_jsx_runtime505.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(AddTabToolbarControl, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(RemoveTabToolbarControl, { tabsClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { ...innerBlocksProps })
+    ] });
+  }
+  var edit_default37 = Edit22;
+
+  // packages/block-library/build-module/tab-list/save.mjs
+  var import_block_editor266 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
+  function save53() {
+    const blockProps = import_block_editor266.useBlockProps.save({
+      role: "tablist"
+    });
+    const innerBlocksProps = import_block_editor266.useInnerBlocksProps.save(blockProps);
+    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("div", { ...innerBlocksProps });
+  }
+
+  // packages/block-library/build-module/tab-list/block.json
+  var block_default109 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    __experimental: true,
+    apiVersion: 3,
+    name: "core/tab-list",
+    title: "Tab List",
+    description: "Display the tab buttons for a tabbed interface.",
+    category: "design",
+    textdomain: "default",
+    parent: ["core/tabs"],
+    allowedBlocks: ["core/tab"],
+    usesContext: ["core/tabs-list"],
+    attributes: {},
+    supports: {
+      html: false,
+      reusable: false,
+      visibility: false,
+      lock: false,
+      dimensions: {
+        aspectRatio: false,
+        height: false,
+        minHeight: false,
+        width: false
+      },
+      color: {
+        background: true,
+        text: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      typography: {
+        fontSize: true,
+        __experimentalFontFamily: true
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      },
+      layout: {
+        default: {
+          type: "flex",
+          flexWrap: "nowrap",
+          orientation: "horizontal"
+        },
+        allowSwitching: false,
+        allowVerticalAlignment: true,
+        allowJustification: true,
+        allowOrientation: true
+      },
+      spacing: {
+        padding: true,
+        margin: true,
+        blockGap: true,
+        __experimentalDefaultControls: {
+          padding: true,
+          margin: true,
+          blockGap: true
+        }
+      }
+    },
+    editorScript: "file:./index.js",
+    editorStyle: "file:./editor.css"
+  };
+
+  // packages/block-library/build-module/tab-list/index.mjs
+  var { name: name110 } = block_default109;
+  var settings109 = {
+    icon: tab_list_default,
+    edit: edit_default37,
+    save: save53
+  };
+  var init109 = () => initBlock({ name: name110, metadata: block_default109, settings: settings109 });
 
   // packages/block-library/build-module/tabs/index.mjs
   var tabs_exports = {};
   __export(tabs_exports, {
-    init: () => init108,
-    metadata: () => block_default108,
-    name: () => name109,
-    settings: () => settings108
+    init: () => init110,
+    metadata: () => block_default110,
+    name: () => name111,
+    settings: () => settings110
   });
-  var import_i18n245 = __toESM(require_i18n(), 1);
+  var import_i18n246 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/tabs/edit.mjs
-  var import_block_editor263 = __toESM(require_block_editor(), 1);
-  var import_data146 = __toESM(require_data(), 1);
-  var import_element130 = __toESM(require_element(), 1);
-  var import_i18n244 = __toESM(require_i18n(), 1);
+  var import_block_editor268 = __toESM(require_block_editor(), 1);
+  var import_data148 = __toESM(require_data(), 1);
+  var import_element131 = __toESM(require_element(), 1);
+  var import_i18n245 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/tabs/controls.mjs
-  var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
-  function Controls4({ clientId }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime502.jsxs)(import_jsx_runtime502.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(AddTabToolbarControl, { tabsClientId: clientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(RemoveTabToolbarControl, { tabsClientId: clientId })
+  var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
+  function Controls5({ clientId }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime507.jsxs)(import_jsx_runtime507.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(AddTabToolbarControl, { tabsClientId: clientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(RemoveTabToolbarControl, { tabsClientId: clientId })
     ] });
   }
 
-  // packages/block-library/build-module/tabs/use-tab-menu-sync.mjs
+  // packages/block-library/build-module/tabs/use-tab-list-sync.mjs
   var import_blocks114 = __toESM(require_blocks(), 1);
-  var import_block_editor262 = __toESM(require_block_editor(), 1);
-  var import_data145 = __toESM(require_data(), 1);
-  var import_element129 = __toESM(require_element(), 1);
-  function useTabMenuSync({
+  var import_block_editor267 = __toESM(require_block_editor(), 1);
+  var import_data147 = __toESM(require_data(), 1);
+  var import_element130 = __toESM(require_element(), 1);
+  function useTabListSync({
+    tabPanels,
     tabs,
-    menuItems,
-    tabPanelClientId,
-    tabsMenuClientId
+    tabPanelsClientId,
+    tabsListClientId
   }) {
     const {
       removeBlock,
       insertBlocks,
       replaceInnerBlocks,
       __unstableMarkNextChangeAsNotPersistent
-    } = (0, import_data145.useDispatch)(import_block_editor262.store);
-    const prevSyncStateRef = (0, import_element129.useRef)(null);
-    (0, import_element129.useEffect)(() => {
+    } = (0, import_data147.useDispatch)(import_block_editor267.store);
+    const prevSyncStateRef = (0, import_element130.useRef)(null);
+    (0, import_element130.useEffect)(() => {
       if (prevSyncStateRef.current === null) {
         prevSyncStateRef.current = {
-          tabs: [...tabs],
-          menuItems: [...menuItems]
+          tabPanels: [...tabPanels],
+          tabs: [...tabs]
         };
         return;
       }
-      const { tabs: prevTabs, menuItems: prevMenuItems } = prevSyncStateRef.current;
+      const { tabPanels: prevTabPanels, tabs: prevTabs } = prevSyncStateRef.current;
+      const tabPanelCountChange = tabPanels.length - prevTabPanels.length;
       const tabCountChange = tabs.length - prevTabs.length;
-      const menuItemCountChange = menuItems.length - prevMenuItems.length;
+      const tabPanelsInserted = tabPanelCountChange > 0;
       const tabsInserted = tabCountChange > 0;
-      const menuItemsInserted = menuItemCountChange > 0;
-      if (tabCountChange === menuItemCountChange) {
-        if (tabCountChange === 0 && tabPanelClientId && menuItems.some(
-          (m2, i2) => m2.clientId !== prevMenuItems[i2]?.clientId
-        )) {
-          const reorderedTabs = menuItems.map((menuItem) => {
-            const oldIndex = prevMenuItems.findIndex(
-              (pm) => pm.clientId === menuItem.clientId
+      if (tabPanelCountChange === tabCountChange) {
+        if (tabPanelCountChange === 0 && tabPanelsClientId && tabs.some((m2, i2) => m2.clientId !== prevTabs[i2]?.clientId)) {
+          const reorderedTabPanels = tabs.map((tab) => {
+            const oldIndex = prevTabs.findIndex(
+              (pm) => pm.clientId === tab.clientId
             );
-            return oldIndex !== -1 ? tabs[oldIndex] : null;
+            return oldIndex !== -1 ? tabPanels[oldIndex] : null;
           }).filter(Boolean);
-          if (reorderedTabs.length === tabs.length) {
+          if (reorderedTabPanels.length === tabPanels.length) {
             __unstableMarkNextChangeAsNotPersistent();
             replaceInnerBlocks(
-              tabPanelClientId,
-              reorderedTabs,
+              tabPanelsClientId,
+              reorderedTabPanels,
               false
             );
           }
         }
         prevSyncStateRef.current = {
-          tabs: [...tabs],
-          menuItems: [...menuItems]
+          tabPanels: [...tabPanels],
+          tabs: [...tabs]
         };
         return;
       }
-      if (tabCountChange > 0 && menuItemCountChange > 0 || tabCountChange < 0 && menuItemCountChange < 0) {
+      if (tabPanelCountChange > 0 && tabCountChange > 0 || tabPanelCountChange < 0 && tabCountChange < 0) {
         prevSyncStateRef.current = {
-          tabs: [...tabs],
-          menuItems: [...menuItems]
+          tabPanels: [...tabPanels],
+          tabs: [...tabs]
         };
         return;
       }
-      if (tabsInserted && !tabsMenuClientId) {
+      if (tabPanelsInserted && !tabsListClientId) {
         return;
       }
-      if (menuItemsInserted && !tabPanelClientId) {
+      if (tabsInserted && !tabPanelsClientId) {
         return;
       }
       prevSyncStateRef.current = {
-        tabs: [...tabs],
-        menuItems: [...menuItems]
+        tabPanels: [...tabPanels],
+        tabs: [...tabs]
       };
-      const currentTabIds = new Set(tabs.map((t3) => t3.clientId));
-      const currentMenuItemIds = new Set(
-        menuItems.map((m2) => m2.clientId)
+      const currentTabPanelIds = new Set(
+        tabPanels.map((t3) => t3.clientId)
       );
-      if (tabCountChange < 0) {
-        const removedIndices = prevTabs.map(
-          (t3, i2) => !currentTabIds.has(t3.clientId) ? i2 : -1
-        ).filter((i2) => i2 !== -1);
-        const removedSet = new Set(removedIndices);
-        removedIndices.forEach((removedIndex) => {
-          if (menuItems[removedIndex]) {
-            __unstableMarkNextChangeAsNotPersistent();
-            removeBlock(menuItems[removedIndex].clientId, false);
-          }
-        });
-        prevSyncStateRef.current.menuItems = prevSyncStateRef.current.menuItems.filter(
-          (_, i2) => !removedSet.has(i2)
-        );
-      } else if (menuItemCountChange < 0) {
-        const removedIndices = prevMenuItems.map(
-          (m2, i2) => !currentMenuItemIds.has(m2.clientId) ? i2 : -1
+      const currentTabIds = new Set(tabs.map((m2) => m2.clientId));
+      if (tabPanelCountChange < 0) {
+        const removedIndices = prevTabPanels.map(
+          (t3, i2) => !currentTabPanelIds.has(t3.clientId) ? i2 : -1
         ).filter((i2) => i2 !== -1);
         const removedSet = new Set(removedIndices);
         removedIndices.forEach((removedIndex) => {
@@ -68716,131 +69020,150 @@ ${js}
         prevSyncStateRef.current.tabs = prevSyncStateRef.current.tabs.filter(
           (_, i2) => !removedSet.has(i2)
         );
-      } else if (tabsInserted) {
-        const prevTabIds = new Set(prevTabs.map((t3) => t3.clientId));
-        const newMenuItems = tabs.map(
-          (tab, tabIndex) => !prevTabIds.has(tab.clientId) ? {
-            tabIndex,
-            block: (0, import_blocks114.createBlock)("core/tabs-menu-item", {})
+      } else if (tabCountChange < 0) {
+        const removedIndices = prevTabs.map(
+          (m2, i2) => !currentTabIds.has(m2.clientId) ? i2 : -1
+        ).filter((i2) => i2 !== -1);
+        const removedSet = new Set(removedIndices);
+        removedIndices.forEach((removedIndex) => {
+          if (tabPanels[removedIndex]) {
+            __unstableMarkNextChangeAsNotPersistent();
+            removeBlock(tabPanels[removedIndex].clientId, false);
+          }
+        });
+        prevSyncStateRef.current.tabPanels = prevSyncStateRef.current.tabPanels.filter(
+          (_, i2) => !removedSet.has(i2)
+        );
+      } else if (tabPanelsInserted) {
+        const prevTabPanelIds = new Set(
+          prevTabPanels.map((t3) => t3.clientId)
+        );
+        const newTabs = tabPanels.map(
+          (tabPanel, tabPanelIndex) => !prevTabPanelIds.has(tabPanel.clientId) ? {
+            tabPanelIndex,
+            block: (0, import_blocks114.createBlock)("core/tab", {})
           } : null
         ).filter(Boolean);
-        if (newMenuItems.length > 0) {
-          __unstableMarkNextChangeAsNotPersistent();
-          insertBlocks(
-            newMenuItems.map(({ block }) => block),
-            newMenuItems[0].tabIndex,
-            tabsMenuClientId,
-            false
-          );
-          newMenuItems.forEach(({ tabIndex, block }) => {
-            prevSyncStateRef.current.menuItems.splice(tabIndex, 0, {
-              clientId: block.clientId
-            });
-          });
-        }
-      } else if (menuItemsInserted) {
-        const prevMenuItemIds = new Set(
-          prevMenuItems.map((m2) => m2.clientId)
-        );
-        const newTabs = menuItems.map((menuItem, menuItemIndex) => {
-          if (prevMenuItemIds.has(menuItem.clientId)) {
-            return null;
-          }
-          const label = tabs[menuItemIndex - 1]?.attributes?.label ?? tabs[menuItemIndex]?.attributes?.label ?? "";
-          return {
-            menuItemIndex,
-            block: (0, import_blocks114.createBlock)("core/tab", { label })
-          };
-        }).filter(Boolean);
         if (newTabs.length > 0) {
           __unstableMarkNextChangeAsNotPersistent();
           insertBlocks(
             newTabs.map(({ block }) => block),
-            newTabs[0].menuItemIndex,
-            tabPanelClientId,
+            newTabs[0].tabPanelIndex,
+            tabsListClientId,
             false
           );
-          newTabs.forEach(({ menuItemIndex, block }) => {
-            prevSyncStateRef.current.tabs.splice(menuItemIndex, 0, {
+          newTabs.forEach(({ tabPanelIndex, block }) => {
+            prevSyncStateRef.current.tabs.splice(tabPanelIndex, 0, {
+              clientId: block.clientId
+            });
+          });
+        }
+      } else if (tabsInserted) {
+        const prevTabIds = new Set(prevTabs.map((m2) => m2.clientId));
+        const newTabPanels = tabs.map((tab, tabIndex) => {
+          if (prevTabIds.has(tab.clientId)) {
+            return null;
+          }
+          const label = tabPanels[tabIndex - 1]?.attributes?.label ?? tabPanels[tabIndex]?.attributes?.label ?? "";
+          return {
+            tabIndex,
+            block: (0, import_blocks114.createBlock)("core/tab-panel", { label })
+          };
+        }).filter(Boolean);
+        if (newTabPanels.length > 0) {
+          __unstableMarkNextChangeAsNotPersistent();
+          insertBlocks(
+            newTabPanels.map(({ block }) => block),
+            newTabPanels[0].tabIndex,
+            tabPanelsClientId,
+            false
+          );
+          newTabPanels.forEach(({ tabIndex, block }) => {
+            prevSyncStateRef.current.tabPanels.splice(tabIndex, 0, {
               clientId: block.clientId
             });
           });
         }
       }
     }, [
+      tabPanels,
       tabs,
-      menuItems,
       removeBlock,
       insertBlocks,
       replaceInnerBlocks,
       __unstableMarkNextChangeAsNotPersistent,
-      tabsMenuClientId,
-      tabPanelClientId
+      tabsListClientId,
+      tabPanelsClientId
     ]);
   }
 
   // packages/block-library/build-module/tabs/edit.mjs
-  var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY6 = [];
+  var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
+  var EMPTY_ARRAY7 = [];
   var TABS_TEMPLATE = [
     [
-      "core/tabs-menu",
+      "core/tab-list",
       {},
       [
-        ["core/tabs-menu-item", {}],
-        ["core/tabs-menu-item", {}]
+        ["core/tab", {}],
+        ["core/tab", {}]
       ]
     ],
     [
-      "core/tab-panel",
+      "core/tab-panels",
       {},
       [
         [
-          "core/tab",
+          "core/tab-panel",
           {
-            label: (0, import_i18n244.__)("Tab")
+            label: (0, import_i18n245.__)("Tab")
           },
           [["core/paragraph"]]
         ],
         [
-          "core/tab",
+          "core/tab-panel",
           {
-            label: (0, import_i18n244.__)("Tab")
+            label: (0, import_i18n245.__)("Tab")
           },
           [["core/paragraph"]]
         ]
       ]
     ]
   ];
-  function Edit21({ clientId, attributes: attributes2, setAttributes }) {
+  function Edit23({ clientId, attributes: attributes2, setAttributes }) {
     const { anchor, activeTabIndex, editorActiveTabIndex } = attributes2;
-    (0, import_element130.useEffect)(() => {
+    (0, import_element131.useEffect)(() => {
       if (editorActiveTabIndex === void 0) {
         setAttributes({ editorActiveTabIndex: activeTabIndex });
       }
     }, []);
-    const { tabs, tabPanelClientId, menuItems, tabsMenuClientId } = (0, import_data146.useSelect)(
+    const { tabPanels, tabPanelsClientId, tabs, tabListClientId } = (0, import_data148.useSelect)(
       (select9) => {
-        const { getBlocks } = select9(import_block_editor263.store);
+        const { getBlocks } = select9(import_block_editor268.store);
         const innerBlocks = getBlocks(clientId);
-        const tabPanel = innerBlocks.find(
-          (block) => block.name === "core/tab-panel"
+        const tabPanelBlocks = innerBlocks.find(
+          (block) => block.name === "core/tab-panels"
         );
-        const tabsMenu = innerBlocks.find(
-          (block) => block.name === "core/tabs-menu"
+        const tabList = innerBlocks.find(
+          (block) => block.name === "core/tab-list"
         );
         return {
-          tabs: tabPanel?.innerBlocks ?? EMPTY_ARRAY6,
-          tabPanelClientId: tabPanel?.clientId ?? null,
-          menuItems: tabsMenu?.innerBlocks ?? EMPTY_ARRAY6,
-          tabsMenuClientId: tabsMenu?.clientId ?? null
+          tabPanels: tabPanelBlocks?.innerBlocks ?? EMPTY_ARRAY7,
+          tabPanelsClientId: tabPanelBlocks?.clientId ?? null,
+          tabs: tabList?.innerBlocks ?? EMPTY_ARRAY7,
+          tabListClientId: tabList?.clientId ?? null
         };
       },
       [clientId]
     );
-    useTabMenuSync({ tabs, menuItems, tabPanelClientId, tabsMenuClientId });
-    const contextValue = (0, import_element130.useMemo)(() => {
-      const tabList = tabs.map((tab, index) => ({
+    useTabListSync({
+      tabPanels,
+      tabs,
+      tabPanelsClientId,
+      tabListClientId
+    });
+    const contextValue = (0, import_element131.useMemo)(() => {
+      const tabList = tabPanels.map((tab, index) => ({
         id: tab.attributes.anchor || `tab-${index}`,
         label: tab.attributes.label || "",
         clientId: tab.clientId,
@@ -68852,17 +69175,17 @@ ${js}
         "core/tabs-activeTabIndex": activeTabIndex,
         "core/tabs-editorActiveTabIndex": editorActiveTabIndex
       };
-    }, [tabs, anchor, activeTabIndex, editorActiveTabIndex]);
-    const blockProps = (0, import_block_editor263.useBlockProps)();
-    const innerBlockProps = (0, import_block_editor263.useInnerBlocksProps)(blockProps, {
+    }, [tabPanels, anchor, activeTabIndex, editorActiveTabIndex]);
+    const blockProps = (0, import_block_editor268.useBlockProps)();
+    const innerBlockProps = (0, import_block_editor268.useInnerBlocksProps)(blockProps, {
       __experimentalCaptureToolbars: true,
       template: TABS_TEMPLATE,
       templateLock: "all",
       renderAppender: false
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_block_editor263.BlockContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)("div", { ...innerBlockProps, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-        Controls4,
+    return /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(import_block_editor268.BlockContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime508.jsxs)("div", { ...innerBlockProps, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
+        Controls5,
         {
           clientId,
           attributes: attributes2,
@@ -68872,19 +69195,19 @@ ${js}
       innerBlockProps.children
     ] }) });
   }
-  var edit_default36 = Edit21;
+  var edit_default38 = Edit23;
 
   // packages/block-library/build-module/tabs/save.mjs
-  var import_block_editor264 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
-  function save52() {
-    const blockProps = import_block_editor264.useBlockProps.save();
-    const innerBlocksProps = import_block_editor264.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)("div", { ...innerBlocksProps });
+  var import_block_editor269 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
+  function save54() {
+    const blockProps = import_block_editor269.useBlockProps.save();
+    const innerBlocksProps = import_block_editor269.useInnerBlocksProps.save(blockProps);
+    return /* @__PURE__ */ (0, import_jsx_runtime509.jsx)("div", { ...innerBlocksProps });
   }
 
   // packages/block-library/build-module/tabs/block.json
-  var block_default108 = {
+  var block_default110 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     __experimental: true,
     apiVersion: 3,
@@ -68893,7 +69216,7 @@ ${js}
     description: "Display content in a tabbed interface to help users navigate detailed content with ease.",
     category: "design",
     textdomain: "default",
-    allowedBlocks: ["core/tabs-menu", "core/tab-panel"],
+    allowedBlocks: ["core/tab-list", "core/tab-panels"],
     attributes: {
       activeTabIndex: {
         type: "number",
@@ -68954,33 +69277,33 @@ ${js}
   };
 
   // packages/block-library/build-module/tabs/index.mjs
-  var { name: name109 } = block_default108;
-  var settings108 = {
+  var { name: name111 } = block_default110;
+  var settings110 = {
     icon: tabs_default,
     example: {
       innerBlocks: [
         {
-          name: "core/tabs-menu",
+          name: "core/tab-list",
           innerBlocks: [
             {
-              name: "core/tabs-menu-item",
+              name: "core/tab",
               attributes: { anchor: "tab-1-button" }
             },
             {
-              name: "core/tabs-menu-item",
+              name: "core/tab",
               attributes: { anchor: "tab-2-button" }
             }
           ]
         },
         {
-          name: "core/tab-panel",
+          name: "core/tab-panels",
           innerBlocks: [1, 2].map((index) => ({
-            name: "core/tab",
+            name: "core/tab-panel",
             attributes: {
               anchor: `tab-${index}`,
-              label: (0, import_i18n245.sprintf)(
+              label: (0, import_i18n246.sprintf)(
                 /** translators: %s: tab index number */
-                (0, import_i18n245.__)("Tab %s"),
+                (0, import_i18n246.__)("Tab %s"),
                 index
               )
             },
@@ -68988,7 +69311,7 @@ ${js}
               {
                 name: "core/paragraph",
                 attributes: {
-                  content: (0, import_i18n245.__)(
+                  content: (0, import_i18n246.__)(
                     "In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing."
                   )
                 }
@@ -68998,326 +69321,6 @@ ${js}
         }
       ]
     },
-    edit: edit_default36,
-    save: save52
-  };
-  var init108 = () => initBlock({ name: name109, metadata: block_default108, settings: settings108 });
-
-  // packages/block-library/build-module/tabs-menu/index.mjs
-  var tabs_menu_exports = {};
-  __export(tabs_menu_exports, {
-    init: () => init109,
-    metadata: () => block_default109,
-    name: () => name110,
-    settings: () => settings109
-  });
-
-  // packages/block-library/build-module/tabs-menu/edit.mjs
-  var import_block_editor265 = __toESM(require_block_editor(), 1);
-  var import_data147 = __toESM(require_data(), 1);
-  var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
-  function Edit22({ clientId }) {
-    const tabsClientId = (0, import_data147.useSelect)(
-      (select9) => select9(import_block_editor265.store).getBlockRootClientId(clientId),
-      [clientId]
-    );
-    const blockProps = (0, import_block_editor265.useBlockProps)();
-    const innerBlocksProps = (0, import_block_editor265.useInnerBlocksProps)(blockProps, {
-      allowedBlocks: ["core/tabs-menu-item"],
-      orientation: "horizontal",
-      templateLock: false,
-      renderAppender: false
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime505.jsxs)(import_jsx_runtime505.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(AddTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(RemoveTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { ...innerBlocksProps })
-    ] });
-  }
-  var edit_default37 = Edit22;
-
-  // packages/block-library/build-module/tabs-menu/save.mjs
-  var import_block_editor266 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
-  function save53() {
-    const blockProps = import_block_editor266.useBlockProps.save({
-      role: "tablist"
-    });
-    const innerBlocksProps = import_block_editor266.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("div", { ...innerBlocksProps });
-  }
-
-  // packages/block-library/build-module/tabs-menu/block.json
-  var block_default109 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    __experimental: true,
-    apiVersion: 3,
-    name: "core/tabs-menu",
-    title: "Tabs Menu",
-    description: "Display the tab buttons for a tabbed interface.",
-    category: "design",
-    textdomain: "default",
-    parent: ["core/tabs"],
-    allowedBlocks: ["core/tabs-menu-item"],
-    usesContext: ["core/tabs-list"],
-    attributes: {},
-    supports: {
-      html: false,
-      reusable: false,
-      visibility: false,
-      lock: false,
-      dimensions: {
-        aspectRatio: false,
-        height: false,
-        minHeight: false,
-        width: false
-      },
-      color: {
-        background: true,
-        text: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        }
-      },
-      typography: {
-        fontSize: true,
-        __experimentalFontFamily: true
-      },
-      __experimentalBorder: {
-        color: true,
-        radius: true,
-        style: true,
-        width: true
-      },
-      layout: {
-        default: {
-          type: "flex",
-          flexWrap: "nowrap",
-          orientation: "horizontal"
-        },
-        allowSwitching: false,
-        allowVerticalAlignment: true,
-        allowJustification: true,
-        allowOrientation: true
-      },
-      spacing: {
-        padding: true,
-        margin: true,
-        blockGap: true,
-        __experimentalDefaultControls: {
-          padding: true,
-          margin: true,
-          blockGap: true
-        }
-      }
-    },
-    editorScript: "file:./index.js",
-    editorStyle: "file:./editor.css"
-  };
-
-  // packages/block-library/build-module/tabs-menu/index.mjs
-  var { name: name110 } = block_default109;
-  var settings109 = {
-    icon: tabs_menu_default,
-    edit: edit_default37,
-    save: save53
-  };
-  var init109 = () => initBlock({ name: name110, metadata: block_default109, settings: settings109 });
-
-  // packages/block-library/build-module/tabs-menu-item/index.mjs
-  var tabs_menu_item_exports = {};
-  __export(tabs_menu_item_exports, {
-    init: () => init110,
-    metadata: () => block_default110,
-    name: () => name111,
-    settings: () => settings110
-  });
-
-  // packages/block-library/build-module/tabs-menu-item/edit.mjs
-  var import_i18n246 = __toESM(require_i18n(), 1);
-  var import_block_editor268 = __toESM(require_block_editor(), 1);
-  var import_data148 = __toESM(require_data(), 1);
-  var import_element131 = __toESM(require_element(), 1);
-
-  // packages/block-library/build-module/tabs-menu-item/controls.mjs
-  var import_block_editor267 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
-  function Controls5({ tabsClientId }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime507.jsxs)(import_block_editor267.BlockControls, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(AddTabToolbarControl, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(RemoveTabToolbarControl, { tabsClientId })
-    ] });
-  }
-
-  // packages/block-library/build-module/tabs-menu-item/edit.mjs
-  var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY7 = [];
-  function Edit23({ context, clientId }) {
-    const tabsList = context["core/tabs-list"] || EMPTY_ARRAY7;
-    const activeTabIndex = context["core/tabs-activeTabIndex"];
-    const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
-    const effectiveActiveIndex = (0, import_element131.useMemo)(() => {
-      return editorActiveTabIndex ?? activeTabIndex;
-    }, [editorActiveTabIndex, activeTabIndex]);
-    const { menuItemIndex, tabsClientId, selectedTabClientId } = (0, import_data148.useSelect)(
-      (select9) => {
-        const {
-          getBlockOrder,
-          getBlockRootClientId,
-          getSelectedBlockClientIds,
-          hasSelectedInnerBlock
-        } = select9(import_block_editor268.store);
-        const _tabsMenuClientId = getBlockRootClientId(clientId);
-        const _tabsClientId = _tabsMenuClientId ? getBlockRootClientId(_tabsMenuClientId) : null;
-        const siblings = getBlockOrder(_tabsMenuClientId);
-        const _menuItemIndex = siblings.indexOf(clientId);
-        const selectedIds = getSelectedBlockClientIds();
-        let _selectedTabClientId = null;
-        for (const tab2 of tabsList) {
-          if (selectedIds.includes(tab2.clientId) || hasSelectedInnerBlock(tab2.clientId, true)) {
-            _selectedTabClientId = tab2.clientId;
-            break;
-          }
-        }
-        return {
-          menuItemIndex: _menuItemIndex,
-          tabsClientId: _tabsClientId,
-          selectedTabClientId: _selectedTabClientId
-        };
-      },
-      [clientId, tabsList]
-    );
-    const tab = tabsList[menuItemIndex] || {};
-    const tabListIndex = tab.index ?? menuItemIndex;
-    const tabClientId = tab.clientId || "";
-    const label = tab.label || "";
-    const isActive = tabListIndex === effectiveActiveIndex;
-    const isSelected = tabClientId === selectedTabClientId;
-    const { __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes } = (0, import_data148.useDispatch)(import_block_editor268.store);
-    const handleTabClick = (0, import_element131.useCallback)(
-      (event) => {
-        event.preventDefault();
-        if (tabsClientId && tabListIndex !== effectiveActiveIndex) {
-          __unstableMarkNextChangeAsNotPersistent();
-          updateBlockAttributes(tabsClientId, {
-            editorActiveTabIndex: tabListIndex
-          });
-        }
-      },
-      [
-        tabsClientId,
-        tabListIndex,
-        effectiveActiveIndex,
-        updateBlockAttributes,
-        __unstableMarkNextChangeAsNotPersistent
-      ]
-    );
-    const handleLabelChange = (0, import_element131.useCallback)(
-      (newLabel) => {
-        if (tabClientId) {
-          updateBlockAttributes(tabClientId, { label: newLabel });
-        }
-      },
-      [tabClientId, updateBlockAttributes]
-    );
-    const blockProps = (0, import_block_editor268.useBlockProps)({
-      className: clsx_default({
-        "is-active": isActive,
-        "is-selected": isSelected
-      }),
-      tabIndex: -1,
-      onClick: handleTabClick
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime508.jsxs)(import_jsx_runtime508.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(Controls5, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime508.jsx)("button", { ...blockProps, type: "button", children: /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
-        import_block_editor268.RichText,
-        {
-          tagName: "span",
-          withoutInteractiveFormatting: true,
-          placeholder: (0, import_i18n246.__)("Tab title"),
-          value: label,
-          onChange: handleLabelChange
-        }
-      ) })
-    ] });
-  }
-  var edit_default38 = Edit23;
-
-  // packages/block-library/build-module/tabs-menu-item/save.mjs
-  var import_block_editor269 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
-  function save54() {
-    const blockProps = import_block_editor269.useBlockProps.save({
-      type: "button",
-      role: "tab"
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime509.jsx)("button", { ...blockProps });
-  }
-
-  // packages/block-library/build-module/tabs-menu-item/block.json
-  var block_default110 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    __experimental: true,
-    apiVersion: 3,
-    name: "core/tabs-menu-item",
-    title: "Tab Menu Item",
-    description: "A single tab button in the tabs menu.",
-    category: "design",
-    textdomain: "default",
-    parent: ["core/tabs-menu"],
-    usesContext: [
-      "core/tabs-list",
-      "core/tabs-activeTabIndex",
-      "core/tabs-editorActiveTabIndex",
-      "core/tabs-menu-item-index",
-      "core/tabs-menu-item-id",
-      "core/tabs-menu-item-label"
-    ],
-    supports: {
-      html: false,
-      reusable: false,
-      visibility: false,
-      lock: false,
-      color: {
-        background: true,
-        text: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        }
-      },
-      typography: {
-        fontSize: true,
-        __experimentalFontFamily: true,
-        textAlign: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      spacing: {
-        padding: true,
-        __experimentalDefaultControls: {
-          padding: true
-        }
-      },
-      __experimentalBorder: {
-        radius: true,
-        color: true,
-        width: true,
-        style: true
-      }
-    },
-    editorScript: "file:./index.js",
-    editorStyle: "file:./editor.css",
-    style: "file:./style-index.css"
-  };
-
-  // packages/block-library/build-module/tabs-menu-item/index.mjs
-  var { name: name111 } = block_default110;
-  var settings110 = {
-    icon: tabs_menu_item_default,
     edit: edit_default38,
     save: save54
   };
@@ -74685,10 +74688,10 @@ ${js}
     }
     if (window?.__experimentalEnableBlockExperiments) {
       blocks.push(tab_exports);
+      blocks.push(tab_list_exports);
       blocks.push(tabs_exports);
-      blocks.push(tabs_menu_exports);
-      blocks.push(tabs_menu_item_exports);
       blocks.push(tab_panel_exports);
+      blocks.push(tab_panels_exports);
       blocks.push(playlist_exports);
       blocks.push(playlist_track_exports);
     }
