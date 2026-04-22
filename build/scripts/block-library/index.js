@@ -62578,7 +62578,9 @@ ${js}
   var import_notices17 = __toESM(require_notices(), 1);
   var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES9 = ["image"];
-  var { mediaEditKey: mediaEditKey2 } = unlock(import_block_editor238.privateApis);
+  var { mediaEditKey: mediaEditKey2, openMediaEditorModalKey: openMediaEditorModalKey2 } = unlock(
+    import_block_editor238.privateApis
+  );
   var SiteLogo = ({
     alt,
     attributes: { align, width, height, isLink, linkTarget, shouldSyncIcon },
@@ -62601,22 +62603,26 @@ ${js}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor238.useBlockEditingMode)();
     const isContentOnlyMode = blockEditingMode === "contentOnly";
-    const { imageEditing, maxWidth, title, editMediaEntity } = (0, import_data132.useSelect)(
-      (select9) => {
-        const settings122 = select9(import_block_editor238.store).getSettings();
-        const siteEntities = select9(import_core_data79.store).getEntityRecord(
-          "root",
-          "__unstableBase"
-        );
-        return {
-          title: siteEntities?.name,
-          imageEditing: settings122.imageEditing,
-          maxWidth: settings122.maxWidth,
-          editMediaEntity: settings122?.[mediaEditKey2]
-        };
-      },
-      []
-    );
+    const {
+      imageEditing,
+      maxWidth,
+      title,
+      editMediaEntity,
+      openMediaEditorModal
+    } = (0, import_data132.useSelect)((select9) => {
+      const settings122 = select9(import_block_editor238.store).getSettings();
+      const siteEntities = select9(import_core_data79.store).getEntityRecord(
+        "root",
+        "__unstableBase"
+      );
+      return {
+        title: siteEntities?.name,
+        imageEditing: settings122.imageEditing,
+        maxWidth: settings122.maxWidth,
+        editMediaEntity: settings122?.[mediaEditKey2],
+        openMediaEditorModal: settings122?.[openMediaEditorModalKey2]
+      };
+    }, []);
     (0, import_element121.useEffect)(() => {
       if (shouldSyncIcon && logoId !== iconId) {
         setAttributes({ shouldSyncIcon: false });
@@ -62627,6 +62633,11 @@ ${js}
         setIsEditingImage(false);
       }
     }, [isSelected]);
+    const handleMediaUpdate = ({ id: newId }) => {
+      if (typeof newId === "number" && newId !== logoId) {
+        setLogo(newId);
+      }
+    };
     function onResizeStart() {
       toggleSelection(false);
     }
@@ -62863,7 +62874,10 @@ ${js}
       canEditImage && !isEditingImage && shouldShowCropAndDimensions && /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_block_editor238.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
         import_components149.ToolbarButton,
         {
-          onClick: () => setIsEditingImage(true),
+          onClick: openMediaEditorModal && logoId ? () => openMediaEditorModal({
+            id: logoId,
+            onUpdate: handleMediaUpdate
+          }) : () => setIsEditingImage(true),
           icon: crop_default,
           label: (0, import_i18n227.__)("Crop")
         }
