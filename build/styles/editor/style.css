@@ -5047,6 +5047,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   max-width: 240px;
 }
 
+@media (max-width: 480px) {
+  .media-editor-toolbar .media-editor-toolbar__rotation-slider {
+    display: none;
+  }
+}
 .editor-autocompleters__link {
   white-space: nowrap;
   gap: 8px;

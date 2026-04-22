@@ -37606,7 +37606,29 @@ If there's a particular need for this, please submit a feature request at https:
     freeformCrop,
     onFreeformChange
   }) {
+    const { state, setZoom } = useCropper();
     return /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(Stack, { direction: "column", gap: "md", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
+        import_components88.RangeControl,
+        {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          label: (0, import_i18n122.__)("Zoom"),
+          min: MIN_ZOOM,
+          max: MAX_ZOOM,
+          step: 0.1,
+          value: state.zoom,
+          onChange: (value) => setZoom(typeof value === "number" ? value : MIN_ZOOM),
+          renderTooltipContent: (value) => {
+            const zoom = typeof value === "number" ? value : MIN_ZOOM;
+            return (0, import_i18n122.sprintf)(
+              /* translators: %d: zoom level as a percentage. */
+              (0, import_i18n122.__)("%d%%"),
+              Math.round(zoom * 100)
+            );
+          }
+        }
+      ),
       /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
         import_components88.SelectControl,
         {
