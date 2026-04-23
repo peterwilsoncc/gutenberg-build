@@ -241,26 +241,26 @@ var wp;
         })(Node)
       );
       exports.DataNode = DataNode;
-      var Text4 = (
+      var Text2 = (
         /** @class */
         (function(_super) {
-          __extends(Text5, _super);
-          function Text5() {
+          __extends(Text3, _super);
+          function Text3() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
             _this.type = domelementtype_1.ElementType.Text;
             return _this;
           }
-          Object.defineProperty(Text5.prototype, "nodeType", {
+          Object.defineProperty(Text3.prototype, "nodeType", {
             get: function() {
               return 3;
             },
             enumerable: false,
             configurable: true
           });
-          return Text5;
+          return Text3;
         })(DataNode)
       );
-      exports.Text = Text4;
+      exports.Text = Text2;
       var Comment2 = (
         /** @class */
         (function(_super) {
@@ -480,7 +480,7 @@ var wp;
         }
         var result;
         if (isText(node)) {
-          result = new Text4(node.data);
+          result = new Text2(node.data);
         } else if (isComment(node)) {
           result = new Comment2(node.data);
         } else if (isTag(node)) {
@@ -2561,26 +2561,26 @@ var wp;
         })(Node)
       );
       exports.DataNode = DataNode;
-      var Text4 = (
+      var Text2 = (
         /** @class */
         (function(_super) {
-          __extends(Text5, _super);
-          function Text5() {
+          __extends(Text3, _super);
+          function Text3() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
             _this.type = domelementtype_1.ElementType.Text;
             return _this;
           }
-          Object.defineProperty(Text5.prototype, "nodeType", {
+          Object.defineProperty(Text3.prototype, "nodeType", {
             get: function() {
               return 3;
             },
             enumerable: false,
             configurable: true
           });
-          return Text5;
+          return Text3;
         })(DataNode)
       );
-      exports.Text = Text4;
+      exports.Text = Text2;
       var Comment2 = (
         /** @class */
         (function(_super) {
@@ -2800,7 +2800,7 @@ var wp;
         }
         var result;
         if (isText(node)) {
-          result = new Text4(node.data);
+          result = new Text2(node.data);
         } else if (isComment(node)) {
           result = new Comment2(node.data);
         } else if (isTag(node)) {
@@ -34773,7 +34773,7 @@ ${js}
   var import_data51 = __toESM(require_data(), 1);
   var import_a11y = __toESM(require_a11y(), 1);
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
-  var { Badge } = unlock(import_components62.privateApis);
+  var { Badge: WCBadge } = unlock(import_components62.privateApis);
   function MathEdit({ attributes: attributes2, setAttributes, isSelected }) {
     const { latex, mathML } = attributes2;
     const [blockRef, setBlockRef] = (0, import_element51.useState)();
@@ -34860,7 +34860,7 @@ ${js}
             ),
             error && /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(import_jsx_runtime288.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-                Badge,
+                WCBadge,
                 {
                   intent: "error",
                   className: "wp-block-math__error",
@@ -73442,7 +73442,7 @@ ${js}
   var import_element144 = __toESM(require_element(), 1);
   var import_url22 = __toESM(require_url(), 1);
   var import_jsx_runtime546 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge2 } = unlock(import_components183.privateApis);
+  var { Badge: WCBadge2 } = unlock(import_components183.privateApis);
   var ALLOWED_TYPES = ["text/vtt"];
   var DEFAULT_KIND = "subtitles";
   var KIND_OPTIONS = [
@@ -73468,7 +73468,7 @@ ${js}
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime546.jsx)("span", { children: track.label }),
             /* @__PURE__ */ (0, import_jsx_runtime546.jsxs)(import_components183.__experimentalHStack, { justify: "flex-end", children: [
-              track.default && /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(Badge2, { children: (0, import_i18n269.__)("Default") }),
+              track.default && /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(WCBadge2, { children: (0, import_i18n269.__)("Default") }),
               /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(
                 import_components183.Button,
                 {

@@ -1813,7 +1813,7 @@ var wp;
   var import_components6 = __toESM(require_components(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-  var { Badge } = unlock(import_components6.privateApis);
+  var { Badge: WCBadge } = unlock(import_components6.privateApis);
   var name14 = "core/math";
   var title14 = (0, import_i18n17.__)("Math");
   function InlineUI2({
@@ -1887,7 +1887,7 @@ var wp;
           ),
           error && /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_jsx_runtime30.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
-              Badge,
+              WCBadge,
               {
                 intent: "error",
                 className: "wp-block-math__error",

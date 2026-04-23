@@ -3737,7 +3737,7 @@ function usePlaceholdersNeeded(data, isInfiniteScroll, gridColumns) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
 var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
-var { Badge } = unlock2(import_components8.privateApis);
+var { Badge: WCBadge } = unlock2(import_components8.privateApis);
 function chunk(array, size) {
   const chunks = [];
   for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size) {
@@ -3916,7 +3916,7 @@ var GridItem = (0, import_element15.forwardRef)(
                 justify: "flex-start",
                 children: badgeFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
-                    Badge,
+                    WCBadge,
                     {
                       className: "dataviews-view-grid__field-value",
                       children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
@@ -5276,7 +5276,7 @@ function useIsMultiselectPicker(actions) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-var { Badge: Badge2 } = unlock2(import_components15.privateApis);
+var { Badge: WCBadge2 } = unlock2(import_components15.privateApis);
 function GridItem3({
   view,
   multiselect,
@@ -5373,7 +5373,7 @@ function GridItem3({
               justify: "flex-start",
               children: badgeFields.map((field) => {
                 return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                  Badge2,
+                  WCBadge2,
                   {
                     className: "dataviews-view-picker-grid__field-value",
                     children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
@@ -18092,7 +18092,7 @@ var descriptionField = {
 // routes/template-list/fields/active.tsx
 var import_i18n46 = __toESM(require_i18n());
 var import_components48 = __toESM(require_components());
-var { Badge: Badge3 } = unlock3(import_components48.privateApis);
+var { Badge: WCBadge3 } = unlock3(import_components48.privateApis);
 var activeField = {
   label: (0, import_i18n46.__)("Status"),
   id: "active",
@@ -18102,7 +18102,7 @@ var activeField = {
     const activeLabel = item._isCustom ? (0, import_i18n46._x)("Active when used", "template") : (0, import_i18n46._x)("Active", "template");
     const activeIntent = item._isCustom ? "info" : "success";
     const isActive = item._isActive;
-    return /* @__PURE__ */ React.createElement(Badge3, { intent: isActive ? activeIntent : "default" }, isActive ? activeLabel : (0, import_i18n46._x)("Inactive", "template"));
+    return /* @__PURE__ */ React.createElement(WCBadge3, { intent: isActive ? activeIntent : "default" }, isActive ? activeLabel : (0, import_i18n46._x)("Inactive", "template"));
   }
 };
 

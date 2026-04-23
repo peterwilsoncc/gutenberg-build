@@ -5485,7 +5485,7 @@ function usePlaceholdersNeeded(data, isInfiniteScroll, gridColumns) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
 var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
-var { Badge: Badge3 } = unlock(import_components10.privateApis);
+var { Badge: WCBadge } = unlock(import_components10.privateApis);
 function chunk(array, size) {
   const chunks = [];
   for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size) {
@@ -5664,7 +5664,7 @@ var GridItem = (0, import_element32.forwardRef)(
                 justify: "flex-start",
                 children: badgeFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
-                    Badge3,
+                    WCBadge,
                     {
                       className: "dataviews-view-grid__field-value",
                       children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
@@ -7024,7 +7024,7 @@ function useIsMultiselectPicker(actions2) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
-var { Badge: Badge4 } = unlock(import_components17.privateApis);
+var { Badge: WCBadge2 } = unlock(import_components17.privateApis);
 function GridItem3({
   view,
   multiselect,
@@ -7121,7 +7121,7 @@ function GridItem3({
               justify: "flex-start",
               children: badgeFields.map((field) => {
                 return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-                  Badge4,
+                  WCBadge2,
                   {
                     className: "dataviews-view-picker-grid__field-value",
                     children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
@@ -17168,7 +17168,7 @@ function Radio({
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
 var import_element66 = __toESM(require_element(), 1);
 var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
-function Text4({
+function Text3({
   data,
   field,
   onChange,
@@ -17736,7 +17736,7 @@ var FORM_CONTROLS = {
   password: Password,
   radio: Radio,
   select: Select,
-  text: Text4,
+  text: Text3,
   toggle: Toggle,
   textarea: Textarea,
   toggleGroup: ToggleGroup

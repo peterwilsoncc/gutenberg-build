@@ -22439,7 +22439,7 @@ var wp;
   var import_data28 = __toESM(require_data(), 1);
   var import_i18n29 = __toESM(require_i18n(), 1);
   var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
-  var { Badge } = unlock(import_components27.privateApis);
+  var { Badge: WCBadge } = unlock(import_components27.privateApis);
   var DEFAULT_VISIBILITY_STATE = {
     currentBlockVisibility: void 0,
     hasParentHiddenEverywhere: false,
@@ -22513,7 +22513,7 @@ var wp;
         viewportLabel
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(Badge, { className: "block-editor-block-visibility-info", children: /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(import_components27.__experimentalHStack, { spacing: 2, justify: "start", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(WCBadge, { className: "block-editor-block-visibility-info", children: /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(import_components27.__experimentalHStack, { spacing: 2, justify: "start", children: [
       /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(import_components27.Icon, { icon: unseen_default }),
       /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(import_components27.__experimentalText, { children: label })
     ] }) });
@@ -23328,7 +23328,7 @@ var wp;
   var import_i18n32 = __toESM(require_i18n(), 1);
   var import_blocks23 = __toESM(require_blocks(), 1);
   var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge2 } = unlock(import_components30.privateApis);
+  var { Badge: WCBadge2 } = unlock(import_components30.privateApis);
   function OptionalParentSelectButton({ children, onClick }) {
     if (!onClick) {
       return children;
@@ -23426,7 +23426,7 @@ var wp;
                   /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(import_components30.__experimentalVStack, { spacing: 1, children: [
                     /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(TitleElement, { className: "block-editor-block-card__title", children: [
                       /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { className: "block-editor-block-card__name", children: !!name?.length ? name : title }),
-                      !parentClientId && !isChild && !!name?.length && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Badge2, { children: title })
+                      !parentClientId && !isChild && !!name?.length && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(WCBadge2, { children: title })
                     ] }),
                     children
                   ] })
@@ -41588,7 +41588,7 @@ var wp;
 
   // packages/block-editor/build-module/components/list-view/block-select-button.mjs
   var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge3 } = unlock(import_components121.privateApis);
+  var { Badge: WCBadge3 } = unlock(import_components121.privateApis);
   function ListViewBlockSelectButton({
     className,
     block: { clientId },
@@ -41673,7 +41673,7 @@ var wp;
               spacing: 1,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_components121.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) }),
-                blockInformation?.anchor && /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(Badge3, { className: "block-editor-list-view-block-select-button__anchor", children: blockInformation.anchor }) }),
+                blockInformation?.anchor && /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(WCBadge3, { className: "block-editor-list-view-block-select-button__anchor", children: blockInformation.anchor }) }),
                 isSticky && /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("span", { className: "block-editor-list-view-block-select-button__sticky", children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(icon_default, { icon: pin_small_default }) }),
                 images.length ? /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
                   "span",
@@ -49740,7 +49740,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/link-preview.mjs
   var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge4 } = unlock(import_components168.privateApis);
+  var { Badge: WCBadge4 } = unlock(import_components168.privateApis);
   function LinkPreview({
     value,
     onEditClick,
@@ -49845,7 +49845,7 @@ var wp;
                           gap: 1,
                           children: value.badges.map(
                             (badge, index) => /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-                              Badge4,
+                              WCBadge4,
                               {
                                 intent: badge.intent,
                                 children: badge.label
@@ -64579,7 +64579,7 @@ var wp;
     document.head.appendChild(style);
   }
   var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-  var Text11 = (0, import_element225.forwardRef)(function Text22({ variant = "body-md", render: render4, className, ...props }, ref) {
+  var Text = (0, import_element225.forwardRef)(function Text2({ variant = "body-md", render: render4, className, ...props }, ref) {
     const element = useRender({
       render: render4,
       defaultTagName: "span",
@@ -64606,9 +64606,9 @@ var wp;
     document.head.appendChild(style);
   }
   var style_default2 = { "badge": "_96e6251aad1a6136__badge", "is-high-intent": "_99f7158cb520f750__is-high-intent", "is-medium-intent": "c20ebef2365bc8b7__is-medium-intent", "is-low-intent": "_365e1626c6202e52__is-low-intent", "is-stable-intent": "_33f8198127ddf4ef__is-stable-intent", "is-informational-intent": "_04c1aca8fc449412__is-informational-intent", "is-draft-intent": "_90726e69d495ec19__is-draft-intent", "is-none-intent": "_898f4a544993bd39__is-none-intent" };
-  var Badge5 = (0, import_element226.forwardRef)(function Badge22({ intent = "none", className, ...props }, ref) {
+  var Badge = (0, import_element226.forwardRef)(function Badge2({ intent = "none", className, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
-      Text11,
+      Text,
       {
         ref,
         className: clsx_default(
@@ -64750,7 +64750,7 @@ var wp;
   var Title = (0, import_element232.forwardRef)(
     function CardTitle({ render: render4 = DEFAULT_TAG, children, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
-        Text11,
+        Text,
         {
           ref,
           variant: "heading-lg",
@@ -68697,7 +68697,7 @@ var wp;
   // packages/dataviews/build-module/components/dataform-controls/text.mjs
   var import_element254 = __toESM(require_element(), 1);
   var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
-  function Text12({
+  function Text3({
     data,
     field,
     onChange,
@@ -69107,7 +69107,7 @@ var wp;
     password: Password,
     radio: Radio,
     select: Select,
-    text: Text12,
+    text: Text3,
     toggle: Toggle,
     textarea: Textarea,
     toggleGroup: ToggleGroup
@@ -71637,7 +71637,7 @@ var wp;
     if (invalidCount === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(Badge5, { intent: "high", children: (0, import_i18n225.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(Badge, { intent: "high", children: (0, import_i18n225.sprintf)(
       /* translators: %d: Number of fields that need attention */
       (0, import_i18n225._n)(
         "%d field needs attention",
@@ -77876,7 +77876,7 @@ var wp;
   var import_components282 = __toESM(require_components(), 1);
   var import_dom43 = __toESM(require_dom(), 1);
   var import_jsx_runtime482 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge6 } = unlock(import_components282.privateApis);
+  var { Badge: WCBadge5 } = unlock(import_components282.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
     return /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(import_components282.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
       /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(import_components282.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(import_components282.__experimentalHStack, { alignment: "top", children: [
@@ -77916,7 +77916,7 @@ var wp;
                   className: "link-preview-button__badges",
                   alignment: "left",
                   children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
-                    Badge6,
+                    WCBadge5,
                     {
                       intent: badge.intent,
                       children: badge.label

@@ -3847,7 +3847,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
-  var { Badge } = unlock(import_components8.privateApis);
+  var { Badge: WCBadge } = unlock(import_components8.privateApis);
   function chunk(array, size) {
     const chunks = [];
     for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size) {
@@ -4026,7 +4026,7 @@ var wp;
                   justify: "flex-start",
                   children: badgeFields.map((field) => {
                     return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-                      Badge,
+                      WCBadge,
                       {
                         className: "dataviews-view-grid__field-value",
                         children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
@@ -5543,7 +5543,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge2 } = unlock(import_components15.privateApis);
+  var { Badge: WCBadge2 } = unlock(import_components15.privateApis);
   function GridItem3({
     view,
     multiselect,
@@ -5640,7 +5640,7 @@ var wp;
                 justify: "flex-start",
                 children: badgeFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
-                    Badge2,
+                    WCBadge2,
                     {
                       className: "dataviews-view-picker-grid__field-value",
                       children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(

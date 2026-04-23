@@ -5609,7 +5609,7 @@ var wp;
 
   // packages/fields/build-module/fields/page-title/view.mjs
   var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
-  var { Badge } = unlock2(import_components3.privateApis);
+  var { Badge: WCBadge } = unlock2(import_components3.privateApis);
   function PageTitleView({ item }) {
     const { frontPageId, postsPageId } = (0, import_data5.useSelect)((select7) => {
       const { getEntityRecord } = select7(import_core_data3.store);
@@ -5622,7 +5622,7 @@ var wp;
         postsPageId: siteSettings?.page_for_posts
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(BaseTitleView, { item, className: "fields-field__page-title", children: [frontPageId, postsPageId].includes(item.id) && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(Badge, { children: item.id === frontPageId ? (0, import_i18n8.__)("Homepage") : (0, import_i18n8.__)("Posts Page") }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(BaseTitleView, { item, className: "fields-field__page-title", children: [frontPageId, postsPageId].includes(item.id) && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(WCBadge, { children: item.id === frontPageId ? (0, import_i18n8.__)("Homepage") : (0, import_i18n8.__)("Posts Page") }) });
   }
 
   // packages/fields/build-module/fields/page-title/index.mjs
@@ -15219,7 +15219,7 @@ var wp;
     document.head.appendChild(style);
   }
   var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-  var Text8 = (0, import_element29.forwardRef)(function Text22({ variant = "body-md", render: render4, className, ...props }, ref) {
+  var Text = (0, import_element29.forwardRef)(function Text2({ variant = "body-md", render: render4, className, ...props }, ref) {
     const element = useRender({
       render: render4,
       defaultTagName: "span",
@@ -15246,9 +15246,9 @@ var wp;
     document.head.appendChild(style);
   }
   var style_default2 = { "badge": "_96e6251aad1a6136__badge", "is-high-intent": "_99f7158cb520f750__is-high-intent", "is-medium-intent": "c20ebef2365bc8b7__is-medium-intent", "is-low-intent": "_365e1626c6202e52__is-low-intent", "is-stable-intent": "_33f8198127ddf4ef__is-stable-intent", "is-informational-intent": "_04c1aca8fc449412__is-informational-intent", "is-draft-intent": "_90726e69d495ec19__is-draft-intent", "is-none-intent": "_898f4a544993bd39__is-none-intent" };
-  var Badge2 = (0, import_element30.forwardRef)(function Badge22({ intent = "none", className, ...props }, ref) {
+  var Badge = (0, import_element30.forwardRef)(function Badge2({ intent = "none", className, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
-      Text8,
+      Text,
       {
         ref,
         className: clsx_default(
@@ -15390,7 +15390,7 @@ var wp;
   var Title = (0, import_element36.forwardRef)(
     function CardTitle({ render: render4 = DEFAULT_TAG, children, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-        Text8,
+        Text,
         {
           ref,
           variant: "heading-lg",
@@ -17543,7 +17543,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge3 } = unlock3(import_components36.privateApis);
+  var { Badge: WCBadge2 } = unlock3(import_components36.privateApis);
   function chunk(array, size) {
     const chunks = [];
     for (let i3 = 0, j2 = array.length; i3 < j2; i3 += size) {
@@ -17722,7 +17722,7 @@ var wp;
                   justify: "flex-start",
                   children: badgeFields.map((field) => {
                     return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-                      Badge3,
+                      WCBadge2,
                       {
                         className: "dataviews-view-grid__field-value",
                         children: /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
@@ -19082,7 +19082,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge4 } = unlock3(import_components43.privateApis);
+  var { Badge: WCBadge3 } = unlock3(import_components43.privateApis);
   function GridItem3({
     view: view2,
     multiselect,
@@ -19179,7 +19179,7 @@ var wp;
                 justify: "flex-start",
                 children: badgeFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
-                    Badge4,
+                    WCBadge3,
                     {
                       className: "dataviews-view-picker-grid__field-value",
                       children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
@@ -29226,7 +29226,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/text.mjs
   var import_element92 = __toESM(require_element(), 1);
   var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
-  function Text9({
+  function Text3({
     data,
     field,
     onChange,
@@ -29800,7 +29800,7 @@ If there's a particular need for this, please submit a feature request at https:
     password: Password,
     radio: Radio,
     select: Select,
-    text: Text9,
+    text: Text3,
     toggle: Toggle,
     textarea: Textarea,
     toggleGroup: ToggleGroup
@@ -32887,7 +32887,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (invalidCount === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Badge2, { intent: "high", children: (0, import_i18n114.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Badge, { intent: "high", children: (0, import_i18n114.sprintf)(
       /* translators: %d: Number of fields that need attention */
       (0, import_i18n114._n)(
         "%d field needs attention",
@@ -78262,7 +78262,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_jsx_runtime472 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge5 } = unlock(import_components259.privateApis);
+  var { Badge: WCBadge4 } = unlock(import_components259.privateApis);
   function PostCardPanel({
     postType: postType2,
     postId: postId2,
@@ -78352,7 +78352,7 @@ If there's a particular need for this, please submit a feature request at https:
                 as: "h2",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime472.jsx)("span", { className: "editor-post-card-panel__title-name", children: title }),
-                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(Badge5, { children: pageTypeBadge })
+                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(WCBadge4, { children: pageTypeBadge })
                 ]
               }
             ),
@@ -80115,7 +80115,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data249 = __toESM(require_data(), 1);
   var import_i18n309 = __toESM(require_i18n(), 1);
   var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge6 } = unlock(import_components278.privateApis);
+  var { Badge: WCBadge5 } = unlock(import_components278.privateApis);
   var DAY_IN_MILLISECONDS2 = 864e5;
   var EMPTY_ARRAY14 = [];
   var defaultLayouts = { activity: true };
@@ -80195,7 +80195,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         title: /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(import_components278.__experimentalHStack, { justify: "space-between", align: "center", as: "span", children: [
           /* @__PURE__ */ (0, import_jsx_runtime497.jsx)("span", { children: (0, import_i18n309.__)("Revisions") }),
-          /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(Badge6, { className: "editor-post-revisions-panel__revisions-count", children: revisionsCount })
+          /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(WCBadge5, { className: "editor-post-revisions-panel__revisions-count", children: revisionsCount })
         ] }),
         initialOpen: false,
         children: /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(import_components278.__experimentalVStack, { className: "editor-post-revisions-panel", children: [
