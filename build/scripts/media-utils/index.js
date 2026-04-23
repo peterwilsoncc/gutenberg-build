@@ -19241,8 +19241,26 @@ If there's a particular need for this, please submit a feature request at https:
           filters.mime_type = filter.value;
         }
       });
-      if (!filters.media_type) {
-        filters.media_type = allowedTypes?.includes("*") ? void 0 : allowedTypes;
+      if (!filters.media_type && !filters.mime_type && allowedTypes && !allowedTypes.includes("*")) {
+        const { mediaTypes, mimeTypes } = allowedTypes.reduce(
+          (acc, type) => {
+            if (type.endsWith("/*")) {
+              acc.mediaTypes.push(type.replace("/*", ""));
+            } else if (type.includes("/")) {
+              acc.mimeTypes.push(type);
+            } else {
+              acc.mediaTypes.push(type);
+            }
+            return acc;
+          },
+          { mediaTypes: [], mimeTypes: [] }
+        );
+        if (mediaTypes.length) {
+          filters.media_type = mediaTypes;
+        }
+        if (mimeTypes.length) {
+          filters.mime_type = mimeTypes;
+        }
       }
       return {
         per_page: view.perPage || 20,
