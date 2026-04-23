@@ -5198,6 +5198,15 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   font-weight: 499;
 }
 
+.editor-collab-sidebar-panel__deleted-block-notice {
+  font-weight: 499;
+  color: #757575;
+}
+
+.editor-collab-sidebar-panel__participant-overflow {
+  font-weight: 499;
+}
+
 .editor-collab-sidebar-panel__resolution-text {
   font-style: italic;
 }
