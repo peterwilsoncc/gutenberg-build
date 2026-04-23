@@ -735,7 +735,7 @@ var wp;
               href: buttonHref,
               label: buttonLabel,
               showTooltip,
-              tooltipPosition: "middle right",
+              tooltipPosition: "bottom",
               children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_components.__unstableMotion.div, { variants: !disableMotion && siteIconVariants, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "edit-post-fullscreen-mode-close__view-mode-toggle-icon", children: buttonIcon }) })
             }
           ),
