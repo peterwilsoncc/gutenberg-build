@@ -6728,6 +6728,7 @@ var wp;
   var import_components6 = __toESM(require_components(), 1);
   var import_element5 = __toESM(require_element(), 1);
   var import_blocks3 = __toESM(require_blocks(), 1);
+  var import_url2 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/embed/block.json
   var block_default7 = {
@@ -6818,6 +6819,14 @@ var wp;
   var findMoreSuitableBlock = (url) => (0, import_blocks3.getBlockVariations)(DEFAULT_EMBED_BLOCK)?.find(
     ({ patterns }) => matchesPatterns(url, patterns)
   );
+  function rewriteXToTwitter(url) {
+    if (!url || (0, import_url2.getAuthority)(url) !== "x.com") {
+      return url;
+    }
+    const rewritten = new URL(url);
+    rewritten.host = "twitter.com";
+    return rewritten.toString();
+  }
   var isFromWordPress = (html) => html && html.includes('class="wp-embedded-content"');
   var getPhotoHtml = (photo) => {
     const imageUrl = photo.url || photo.thumbnail_url;
@@ -9498,7 +9507,7 @@ var wp;
   var NOFOLLOW_REL = "nofollow";
 
   // packages/block-library/build-module/button/get-updated-link-attributes.mjs
-  var import_url2 = __toESM(require_url(), 1);
+  var import_url3 = __toESM(require_url(), 1);
   function getUpdatedLinkAttributes({
     rel = "",
     url = "",
@@ -9521,7 +9530,7 @@ var wp;
       updatedRel = updatedRel?.replace(relRegex, "").trim();
     }
     return {
-      url: (0, import_url2.prependHTTPS)(url),
+      url: (0, import_url3.prependHTTPS)(url),
       linkTarget: newLinkTarget,
       rel: updatedRel || void 0
     };
@@ -14627,7 +14636,7 @@ var wp;
   var import_element16 = __toESM(require_element(), 1);
   var import_data24 = __toESM(require_data(), 1);
   var import_block_editor52 = __toESM(require_block_editor(), 1);
-  var import_url3 = __toESM(require_url(), 1);
+  var import_url4 = __toESM(require_url(), 1);
   var import_api_fetch = __toESM(require_api_fetch(), 1);
   var MAX_COMMENTS_PER_PAGE = 100;
   var useCommentQueryArgs = ({ postId }) => {
@@ -14672,7 +14681,7 @@ var wp;
         return;
       }
       (0, import_api_fetch.default)({
-        path: (0, import_url3.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url4.addQueryArgs)("/wp/v2/comments", {
           ...queryArgs,
           post: postId,
           per_page: perPage,
@@ -15558,7 +15567,7 @@ var wp;
   var import_element18 = __toESM(require_element(), 1);
   var import_data27 = __toESM(require_data(), 1);
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
-  var import_url4 = __toESM(require_url(), 1);
+  var import_url5 = __toESM(require_url(), 1);
   var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
   function Edit12(props) {
     useDeprecatedTextAlign(props);
@@ -15595,7 +15604,7 @@ var wp;
       }
       const currentPostId = postId;
       (0, import_api_fetch2.default)({
-        path: (0, import_url4.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url5.addQueryArgs)("/wp/v2/comments", {
           post: postId,
           _fields: "id"
         }),
@@ -20861,6 +20870,14 @@ var wp;
     settings: () => settings32
   });
 
+  // packages/block-library/build-module/embed/edit.mjs
+  var import_i18n60 = __toESM(require_i18n(), 1);
+  var import_element28 = __toESM(require_element(), 1);
+  var import_data32 = __toESM(require_data(), 1);
+  var import_block_editor75 = __toESM(require_block_editor(), 1);
+  var import_core_data17 = __toESM(require_core_data(), 1);
+  var import_primitives155 = __toESM(require_primitives(), 1);
+
   // packages/block-library/build-module/embed/embed-controls.mjs
   var import_i18n57 = __toESM(require_i18n(), 1);
   var import_components36 = __toESM(require_components(), 1);
@@ -21155,7 +21172,7 @@ var wp;
   var import_components40 = __toESM(require_components(), 1);
   var import_block_editor74 = __toESM(require_block_editor(), 1);
   var import_element27 = __toESM(require_element(), 1);
-  var import_url5 = __toESM(require_url(), 1);
+  var import_url6 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/embed/wp-embed-preview.mjs
   var import_compose18 = __toESM(require_compose(), 1);
@@ -21229,7 +21246,7 @@ var wp;
     };
     const { scripts } = preview;
     const html = "photo" === type ? getPhotoHtml(preview) : preview.html;
-    const embedSourceUrl = (0, import_url5.getAuthority)(url);
+    const embedSourceUrl = (0, import_url6.getAuthority)(url);
     const iframeTitle = (0, import_i18n59.sprintf)(
       // translators: %s: host providing embed content e.g: www.youtube.com
       (0, import_i18n59.__)("Embedded content from %s"),
@@ -21280,13 +21297,6 @@ var wp;
   }
 
   // packages/block-library/build-module/embed/edit.mjs
-  var import_i18n60 = __toESM(require_i18n(), 1);
-  var import_element28 = __toESM(require_element(), 1);
-  var import_data32 = __toESM(require_data(), 1);
-  var import_block_editor75 = __toESM(require_block_editor(), 1);
-  var import_core_data17 = __toESM(require_core_data(), 1);
-  var import_primitives155 = __toESM(require_primitives(), 1);
-  var import_url6 = __toESM(require_url(), 1);
   var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
   var EmbedEdit = (props) => {
     const {
@@ -21311,6 +21321,7 @@ var wp;
     const [url, setURL] = (0, import_element28.useState)(attributesUrl);
     const [isEditingURL, setIsEditingURL] = (0, import_element28.useState)(false);
     const { invalidateResolution } = (0, import_data32.useDispatch)(import_core_data17.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data32.useDispatch)(import_block_editor75.store);
     const {
       preview,
       fetching,
@@ -21365,48 +21376,46 @@ var wp;
       });
     }
     (0, import_element28.useEffect)(() => {
-      if (preview?.html || !cannotEmbed || !hasResolved) {
+      if (!cannotEmbed || !hasResolved || !attributesUrl) {
         return;
       }
       const newURL = attributesUrl.replace(/\/$/, "");
+      if (newURL === attributesUrl) {
+        return;
+      }
       setURL(newURL);
       setIsEditingURL(false);
+      __unstableMarkNextChangeAsNotPersistent();
       setAttributes({ url: newURL });
     }, [
-      preview?.html,
       attributesUrl,
       cannotEmbed,
       hasResolved,
-      setAttributes
+      setAttributes,
+      __unstableMarkNextChangeAsNotPersistent
     ]);
     (0, import_element28.useEffect)(() => {
-      if (!cannotEmbed || fetching || !url) {
+      if (!preview || isEditingURL) {
         return;
       }
-      if ((0, import_url6.getAuthority)(url) === "x.com") {
-        const newURL = new URL(url);
-        newURL.host = "twitter.com";
-        setAttributes({ url: newURL.toString() });
-      }
-    }, [url, cannotEmbed, fetching, setAttributes]);
-    (0, import_element28.useEffect)(() => {
-      if (preview && !isEditingURL) {
-        const mergedAttributes = getMergedAttributes();
-        const hasChanges = Object.keys(mergedAttributes).some(
-          (key) => mergedAttributes[key] !== attributes2[key]
+      const mergedAttributes = getMergedAttributes();
+      if (onReplace) {
+        const upgradedBlock = createUpgradedEmbedBlock(
+          props,
+          mergedAttributes
         );
-        if (hasChanges) {
-          setAttributes(mergedAttributes);
+        if (upgradedBlock) {
+          __unstableMarkNextChangeAsNotPersistent();
+          setAttributes(upgradedBlock.attributes);
+          return;
         }
-        if (onReplace) {
-          const upgradedBlock = createUpgradedEmbedBlock(
-            props,
-            mergedAttributes
-          );
-          if (upgradedBlock) {
-            onReplace(upgradedBlock);
-          }
-        }
+      }
+      const hasChanges = Object.keys(mergedAttributes).some(
+        (key) => mergedAttributes[key] !== attributes2[key]
+      );
+      if (hasChanges) {
+        __unstableMarkNextChangeAsNotPersistent();
+        setAttributes(mergedAttributes);
       }
     }, [preview, isEditingURL]);
     const blockProps = (0, import_block_editor75.useBlockProps)();
@@ -21426,11 +21435,17 @@ var wp;
             if (event) {
               event.preventDefault();
             }
+            const rewrittenURL = rewriteXToTwitter(url);
             const blockClass = removeAspectRatioClasses(
               attributes2.className
             );
+            setURL(rewrittenURL);
+            setAttributes({
+              url: rewrittenURL,
+              ...findMoreSuitableBlock(rewrittenURL)?.attributes,
+              className: blockClass
+            });
             setIsEditingURL(false);
-            setAttributes({ url, className: blockClass });
           },
           value: url,
           cannotEmbed,
@@ -21544,8 +21559,10 @@ ${url}
         type: "raw",
         isMatch: (node) => node.nodeName === "P" && /^\s*(https?:\/\/\S+)\s*$/i.test(node.textContent) && node.textContent?.match(/https/gi)?.length === 1,
         transform: (node) => {
+          const url = rewriteXToTwitter(node.textContent.trim());
           return (0, import_blocks26.createBlock)(EMBED_BLOCK, {
-            url: node.textContent.trim()
+            url,
+            ...findMoreSuitableBlock(url)?.attributes
           });
         }
       }
