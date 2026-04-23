@@ -29441,10 +29441,10 @@ var import_i18n55 = __toESM(require_i18n());
 var import_notices3 = __toESM(require_notices());
 
 // routes/taxonomies/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d564f0b20a']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7e22e4649d']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "d564f0b20a");
-  style.appendChild(document.createTextNode(".dataviews-action-modal__edit-taxonomy{align-items:stretch;justify-content:flex-end}.dataviews-action-modal__edit-taxonomy .components-modal__frame{animation-name:none;border-radius:8px;height:calc(100% - 32px);margin:16px 16px 16px 0;max-height:calc(100% - 32px);max-width:400px;position:relative}@media (prefers-reduced-motion:no-preference){.dataviews-action-modal__edit-taxonomy .components-modal__frame{animation-duration:.2s;animation-name:edit-taxonomy-slide-in-right;animation-timing-function:ease-out}}.dataviews-action-modal__edit-taxonomy.is-animating-out .components-modal__frame{animation-name:none}@media (prefers-reduced-motion:no-preference){.dataviews-action-modal__edit-taxonomy.is-animating-out .components-modal__frame{animation-duration:.2s;animation-name:edit-taxonomy-slide-out-right;animation-timing-function:ease-out}}.dataviews-action-modal__edit-taxonomy .components-modal__content{display:flex;flex-direction:column;height:100%;padding:0}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-header{background:#fff;border-bottom:1px solid #e0e0e0;flex:0 0 auto;padding:12px 16px 12px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-title{font-size:13px;font-weight:600;line-height:1.4;margin:0}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-content{flex:1 1 auto;min-height:0;overflow-y:auto;padding:16px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-footer{background:#fff;border-top:1px solid #e0e0e0;flex:0 0 auto;padding:16px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-footer .components-button{flex:1;justify-content:center}@keyframes edit-taxonomy-slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes edit-taxonomy-slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}"));
+  style.setAttribute("data-wp-hash", "7e22e4649d");
+  style.appendChild(document.createTextNode(".boot-layout__stage:has(.taxonomies-page){height:calc(100vh - 46px)}@media (min-width:782px){.boot-layout__stage:has(.taxonomies-page){height:calc(100vh - 32px)}}.dataviews-action-modal__edit-taxonomy{align-items:stretch;justify-content:flex-end}.dataviews-action-modal__edit-taxonomy .components-modal__frame{animation-name:none;border-radius:8px;height:calc(100% - 32px);margin:16px 16px 16px 0;max-height:calc(100% - 32px);max-width:400px;position:relative}@media (prefers-reduced-motion:no-preference){.dataviews-action-modal__edit-taxonomy .components-modal__frame{animation-duration:.2s;animation-name:edit-taxonomy-slide-in-right;animation-timing-function:ease-out}}.dataviews-action-modal__edit-taxonomy.is-animating-out .components-modal__frame{animation-name:none}@media (prefers-reduced-motion:no-preference){.dataviews-action-modal__edit-taxonomy.is-animating-out .components-modal__frame{animation-duration:.2s;animation-name:edit-taxonomy-slide-out-right;animation-timing-function:ease-out}}.dataviews-action-modal__edit-taxonomy .components-modal__content{display:flex;flex-direction:column;height:100%;padding:0}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-header{background:#fff;border-bottom:1px solid #e0e0e0;flex:0 0 auto;padding:12px 16px 12px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-title{font-size:13px;font-weight:600;line-height:1.4;margin:0}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-content{flex:1 1 auto;min-height:0;overflow-y:auto;padding:16px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-footer{background:#fff;border-top:1px solid #e0e0e0;flex:0 0 auto;padding:16px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-footer .components-button{flex:1;justify-content:center}@keyframes edit-taxonomy-slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes edit-taxonomy-slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}"));
   document.head.appendChild(style);
 }
 
@@ -29690,20 +29690,29 @@ function TaxonomiesPage() {
     }),
     [totalItems, totalPages]
   );
-  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n57.__)("Taxonomies"), actions: /* @__PURE__ */ React.createElement(AddTaxonomy, null) }, /* @__PURE__ */ React.createElement(
-    dataviews_default,
+  return /* @__PURE__ */ React.createElement(
+    page_default,
     {
-      data,
-      fields,
-      actions: taxonomyActions,
-      view,
-      onChangeView: setView,
-      isLoading: isResolving || !hasResolved,
-      paginationInfo,
-      defaultLayouts,
-      getItemId: (item) => String(item.id)
-    }
-  ));
+      title: (0, import_i18n57.__)("Taxonomies"),
+      className: "taxonomies-page",
+      hasPadding: false,
+      actions: /* @__PURE__ */ React.createElement(AddTaxonomy, null)
+    },
+    /* @__PURE__ */ React.createElement(
+      dataviews_default,
+      {
+        data,
+        fields,
+        actions: taxonomyActions,
+        view,
+        onChangeView: setView,
+        isLoading: isResolving || !hasResolved,
+        paginationInfo,
+        defaultLayouts,
+        getItemId: (item) => String(item.id)
+      }
+    )
+  );
 }
 var stage = TaxonomiesPage;
 export {
