@@ -4760,6 +4760,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   cursor: grab;
 }
 
+.wp-media-editor-image-editor__canvas {
+  position: absolute;
+  inset: 22px;
+}
+
 .wp-media-editor-image-editor--dragging {
   cursor: grabbing;
 }
@@ -4988,7 +4993,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   justify-content: center;
   background: #f0f0f0;
   overflow: auto;
-  padding: 16px;
   height: 100%;
 }
 

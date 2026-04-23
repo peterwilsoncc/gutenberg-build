@@ -37131,10 +37131,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='c7ac9aead7']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='0da8cc3a64']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "c7ac9aead7");
-    style.appendChild(document.createTextNode('.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;user-select:none;width:100%}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;width:12px}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}'));
+    style.setAttribute("data-wp-hash", "0da8cc3a64");
+    style.appendChild(document.createTextNode('.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:22px;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;width:12px}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}'));
     document.head.appendChild(style);
   }
   var CROP_RECT_EPSILON = 1e-6;
@@ -37179,20 +37179,20 @@ If there's a particular need for this, please submit a feature request at https:
       settleCrop,
       __dispatch: dispatch7
     } = controller;
-    const containerRef = (0, import_element124.useRef)(null);
-    const [containerSize, setContainerSize] = (0, import_element124.useState)({
+    const canvasRef = (0, import_element124.useRef)(null);
+    const [canvasSize, setCanvasSize] = (0, import_element124.useState)({
       width: 0,
       height: 0
     });
     (0, import_element124.useEffect)(() => {
-      const element = containerRef.current;
+      const element = canvasRef.current;
       if (!element) {
         return;
       }
       const observer = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const { width, height } = entry.contentRect;
-          setContainerSize((prev) => {
+          setCanvasSize((prev) => {
             if (prev.width === width && prev.height === height) {
               return prev;
             }
@@ -37213,11 +37213,11 @@ If there's a particular need for this, please submit a feature request at https:
     const naturalHeight = state.image?.naturalHeight ?? 0;
     const { elementSize, visualSize } = (0, import_element124.useMemo)(
       () => getImageFit(
-        containerSize,
+        canvasSize,
         { width: naturalWidth, height: naturalHeight },
         state.rotation
       ),
-      [containerSize, naturalWidth, naturalHeight, state.rotation]
+      [canvasSize, naturalWidth, naturalHeight, state.rotation]
     );
     (0, import_element124.useEffect)(() => {
       if (freeformCrop || visualSize.width === 0 || visualSize.height === 0) {
@@ -37245,12 +37245,12 @@ If there's a particular need for this, please submit a feature request at https:
       if (!state.image || elementSize.width === 0) {
         return void 0;
       }
-      return getCropBounds(state, elementSize, visualSize, containerSize);
-    }, [state, elementSize, visualSize, containerSize]);
+      return getCropBounds(state, elementSize, visualSize, canvasSize);
+    }, [state, elementSize, visualSize, canvasSize]);
     const { handlers, onWheelNative, isDragging, isZooming } = useInteraction(
       state,
       dispatch7,
-      containerSize,
+      canvasSize,
       visualSize,
       {
         minZoom,
@@ -37260,7 +37260,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     (0, import_element124.useEffect)(() => {
-      const el = containerRef.current;
+      const el = canvasRef.current;
       if (!el) {
         return;
       }
@@ -37316,8 +37316,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (elementSize.width === 0 || elementSize.height === 0) {
         return {};
       }
-      const centerX = (containerSize.width - elementSize.width) / 2;
-      const centerY = (containerSize.height - elementSize.height) / 2;
+      const centerX = (canvasSize.width - elementSize.width) / 2;
+      const centerY = (canvasSize.height - elementSize.height) / 2;
       return {
         width: elementSize.width,
         height: elementSize.height,
@@ -37328,10 +37328,9 @@ If there's a particular need for this, please submit a feature request at https:
         transform: transformString,
         transition: imageTransition
       };
-    }, [containerSize, elementSize, transformString, imageTransition]);
+    }, [canvasSize, elementSize, transformString, imageTransition]);
     const setContainerRef = (0, import_element124.useCallback)(
       (element) => {
-        containerRef.current = element;
         if (typeof ref === "function") {
           ref(element);
         } else if (ref) {
@@ -37340,7 +37339,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [ref]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
       "div",
       {
         ref: setContainerRef,
@@ -37349,74 +37348,81 @@ If there's a particular need for this, please submit a feature request at https:
           isDragging && "wp-media-editor-image-editor--dragging",
           className
         ),
-        tabIndex: 0,
-        role: "group",
-        "aria-label": (0, import_i18n120.__)("Image editor"),
-        ...handlers,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
-            "img",
-            {
-              className: "wp-media-editor-image-editor__image",
-              src,
-              alt: "",
-              onLoad: handleImageLoad,
-              style: imageStyle,
-              draggable: false
-            }
-          ),
-          showDimming && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
-            DimmingOverlay,
-            {
-              cropRect: state.cropRect,
-              containerSize,
-              imageSize: visualSize
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
-            StencilComponent,
-            {
-              cropRect: state.cropRect,
-              containerSize,
-              imageSize: visualSize,
-              onCropChange: handleCropChange,
-              onResizeStart: onGestureStart,
-              onResizeEnd: handleResizeEnd,
-              aspectRatio,
-              freeformCrop,
-              stencilTransition: settleStencilTransition,
-              cropBounds
-            }
-          ),
-          showGrid && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
-            GridOverlay,
-            {
-              cropRect: state.cropRect,
-              containerSize,
-              imageSize: visualSize
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
-            "div",
-            {
-              "aria-live": "polite",
-              "aria-atomic": "true",
-              className: "wp-media-editor-image-editor__aria-live",
-              style: {
-                position: "absolute",
-                width: 1,
-                height: 1,
-                padding: 0,
-                margin: -1,
-                overflow: "hidden",
-                clip: "rect(0, 0, 0, 0)",
-                whiteSpace: "nowrap",
-                border: 0
-              },
-              children: ariaMessage
-            }
-          )
-        ]
+        children: /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(
+          "div",
+          {
+            ref: canvasRef,
+            className: "wp-media-editor-image-editor__canvas",
+            tabIndex: 0,
+            role: "group",
+            "aria-label": (0, import_i18n120.__)("Image editor"),
+            ...handlers,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
+                "img",
+                {
+                  className: "wp-media-editor-image-editor__image",
+                  src,
+                  alt: "",
+                  onLoad: handleImageLoad,
+                  style: imageStyle,
+                  draggable: false
+                }
+              ),
+              showDimming && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
+                DimmingOverlay,
+                {
+                  cropRect: state.cropRect,
+                  containerSize: canvasSize,
+                  imageSize: visualSize
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
+                StencilComponent,
+                {
+                  cropRect: state.cropRect,
+                  containerSize: canvasSize,
+                  imageSize: visualSize,
+                  onCropChange: handleCropChange,
+                  onResizeStart: onGestureStart,
+                  onResizeEnd: handleResizeEnd,
+                  aspectRatio,
+                  freeformCrop,
+                  stencilTransition: settleStencilTransition,
+                  cropBounds
+                }
+              ),
+              showGrid && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
+                GridOverlay,
+                {
+                  cropRect: state.cropRect,
+                  containerSize: canvasSize,
+                  imageSize: visualSize
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
+                "div",
+                {
+                  "aria-live": "polite",
+                  "aria-atomic": "true",
+                  className: "wp-media-editor-image-editor__aria-live",
+                  style: {
+                    position: "absolute",
+                    width: 1,
+                    height: 1,
+                    padding: 0,
+                    margin: -1,
+                    overflow: "hidden",
+                    clip: "rect(0, 0, 0, 0)",
+                    whiteSpace: "nowrap",
+                    border: 0
+                  },
+                  children: ariaMessage
+                }
+              )
+            ]
+          }
+        )
       }
     );
   }
