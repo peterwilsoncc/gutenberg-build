@@ -15,6 +15,13 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'dashboard',
+		'path'        => '/',
+		'page'        => 'dashboard',
+		'has_route'   => false,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'font-list',
 		'path'        => '/font-list',
 		'page'        => 'font-library',

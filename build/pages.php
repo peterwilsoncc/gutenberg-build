@@ -16,3 +16,5 @@ require_once __DIR__ . '/pages/guidelines/page.php';
 require_once __DIR__ . '/pages/guidelines/page-wp-admin.php';
 require_once __DIR__ . '/pages/taxonomies/page.php';
 require_once __DIR__ . '/pages/taxonomies/page-wp-admin.php';
+require_once __DIR__ . '/pages/dashboard/page.php';
+require_once __DIR__ . '/pages/dashboard/page-wp-admin.php';
