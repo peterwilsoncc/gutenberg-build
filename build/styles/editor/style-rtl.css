@@ -4962,10 +4962,21 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   height: 100%;
   max-height: none;
   flex: 1;
+  flex-direction: column;
 }
 
 .media-editor-modal .interface-interface-skeleton__editor {
   min-width: 0;
+  flex: 1;
+}
+
+.media-editor-modal .interface-interface-skeleton__footer {
+  position: relative;
+  display: flex;
+}
+
+.media-editor-modal .interface-interface-skeleton.has-footer .interface-interface-skeleton__body {
+  padding-bottom: 0;
 }
 
 .media-editor-modal .media-editor-modal__canvas {
@@ -5021,6 +5032,16 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+.media-editor-toolbar {
+  width: 100%;
+  padding: 8px 16px;
+}
+
+.media-editor-toolbar .media-editor-toolbar__rotation-slider {
+  flex: 1 1 auto;
+  max-width: 240px;
 }
 
 .editor-autocompleters__link {
