@@ -28888,7 +28888,7 @@ function DataForm({
 // routes/taxonomies/stage.tsx
 var import_core_data7 = __toESM(require_core_data());
 var import_element114 = __toESM(require_element());
-var import_i18n57 = __toESM(require_i18n());
+var import_i18n58 = __toESM(require_i18n());
 
 // routes/taxonomies/add-taxonomy.tsx
 var import_components53 = __toESM(require_components());
@@ -29293,21 +29293,163 @@ function AddTaxonomy() {
   ));
 }
 
+// routes/taxonomies/actions/activate.ts
+var import_i18n54 = __toESM(require_i18n());
+
+// routes/taxonomies/actions/utils.ts
+var import_core_data4 = __toESM(require_core_data());
+var import_notices2 = __toESM(require_notices());
+function createStatusAction(config) {
+  const isEligible = (item) => item.status !== config.targetStatus;
+  return {
+    id: config.id,
+    label: config.label,
+    supportsBulk: true,
+    isEligible,
+    async callback(items, { registry }) {
+      const itemsToUpdate = items.filter(isEligible);
+      if (itemsToUpdate.length === 0) {
+        return;
+      }
+      const { saveEntityRecord } = registry.dispatch(import_core_data4.store);
+      const { createSuccessNotice, createErrorNotice } = registry.dispatch(import_notices2.store);
+      const promiseResult = await Promise.allSettled(
+        itemsToUpdate.map(
+          (item) => saveEntityRecord(
+            "postType",
+            "wp_user_taxonomy",
+            { id: item.id, status: config.targetStatus },
+            { throwOnError: true }
+          )
+        )
+      );
+      if (promiseResult.every(({ status }) => status === "fulfilled")) {
+        createSuccessNotice(
+          itemsToUpdate.length === 1 ? config.messages.successSingle : config.messages.successMany(itemsToUpdate.length),
+          { type: "snackbar" }
+        );
+        return;
+      }
+      let errorMessage;
+      if (promiseResult.length === 1) {
+        const typedError = promiseResult[0];
+        if (typedError.reason?.message && typedError.reason.code !== "unknown_error") {
+          errorMessage = typedError.reason.message;
+        } else {
+          errorMessage = config.messages.failSingle;
+        }
+      } else {
+        const errorMessages = /* @__PURE__ */ new Set();
+        const failedPromises = promiseResult.filter(
+          ({ status }) => status === "rejected"
+        );
+        for (const failedPromise of failedPromises) {
+          const typedError = failedPromise;
+          if (typedError.reason?.message && typedError.reason.code !== "unknown_error") {
+            errorMessages.add(typedError.reason.message);
+          }
+        }
+        if (errorMessages.size === 0) {
+          errorMessage = config.messages.failMany;
+        } else if (errorMessages.size === 1) {
+          errorMessage = config.messages.errorSingle(
+            [...errorMessages][0]
+          );
+        } else {
+          errorMessage = config.messages.errorMany(
+            [...errorMessages].join(",")
+          );
+        }
+      }
+      createErrorNotice(errorMessage, { type: "snackbar" });
+    }
+  };
+}
+
+// routes/taxonomies/actions/activate.ts
+var activateAction = createStatusAction({
+  id: "activate",
+  label: (0, import_i18n54.__)("Activate"),
+  targetStatus: "publish",
+  messages: {
+    successSingle: (0, import_i18n54.__)("Taxonomy activated."),
+    successMany: (count) => (0, import_i18n54.sprintf)(
+      /* translators: %d: The number of taxonomies. */
+      (0, import_i18n54._n)(
+        "%d taxonomy activated.",
+        "%d taxonomies activated.",
+        count
+      ),
+      count
+    ),
+    failSingle: (0, import_i18n54.__)("Failed to activate taxonomy."),
+    failMany: (0, import_i18n54.__)("Failed to activate taxonomies."),
+    errorSingle: (message2) => (0, import_i18n54.sprintf)(
+      /* translators: %s: an error message */
+      (0, import_i18n54.__)("An error occurred while activating the taxonomy: %s"),
+      message2
+    ),
+    errorMany: (messages) => (0, import_i18n54.sprintf)(
+      /* translators: %s: a list of comma separated error messages */
+      (0, import_i18n54.__)(
+        "Some errors occurred while activating the taxonomies: %s"
+      ),
+      messages
+    )
+  }
+});
+var activate_default = activateAction;
+
+// routes/taxonomies/actions/deactivate.ts
+var import_i18n55 = __toESM(require_i18n());
+var deactivateAction = createStatusAction({
+  id: "deactivate",
+  label: (0, import_i18n55.__)("Deactivate"),
+  targetStatus: "draft",
+  messages: {
+    successSingle: (0, import_i18n55.__)("Taxonomy deactivated."),
+    successMany: (count) => (0, import_i18n55.sprintf)(
+      /* translators: %d: The number of taxonomies. */
+      (0, import_i18n55._n)(
+        "%d taxonomy deactivated.",
+        "%d taxonomies deactivated.",
+        count
+      ),
+      count
+    ),
+    failSingle: (0, import_i18n55.__)("Failed to deactivate taxonomy."),
+    failMany: (0, import_i18n55.__)("Failed to deactivate taxonomies."),
+    errorSingle: (message2) => (0, import_i18n55.sprintf)(
+      /* translators: %s: an error message */
+      (0, import_i18n55.__)("An error occurred while deactivating the taxonomy: %s"),
+      message2
+    ),
+    errorMany: (messages) => (0, import_i18n55.sprintf)(
+      /* translators: %s: a list of comma separated error messages */
+      (0, import_i18n55.__)(
+        "Some errors occurred while deactivating the taxonomies: %s"
+      ),
+      messages
+    )
+  }
+});
+var deactivate_default = deactivateAction;
+
 // routes/taxonomies/actions/delete.tsx
 var import_components54 = __toESM(require_components());
-var import_core_data4 = __toESM(require_core_data());
+var import_core_data5 = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
 var import_element112 = __toESM(require_element());
-var import_i18n54 = __toESM(require_i18n());
-var import_notices2 = __toESM(require_notices());
+var import_i18n56 = __toESM(require_i18n());
+var import_notices3 = __toESM(require_notices());
 function DeleteTaxonomyModal({
   items,
   closeModal,
   onActionPerformed
 }) {
   const [isDeleting, setIsDeleting] = (0, import_element112.useState)(false);
-  const { deleteEntityRecord } = (0, import_data9.useDispatch)(import_core_data4.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data9.useDispatch)(import_notices2.store);
+  const { deleteEntityRecord } = (0, import_data9.useDispatch)(import_core_data5.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data9.useDispatch)(import_notices3.store);
   async function onDelete() {
     if (isDeleting) {
       return;
@@ -29327,13 +29469,13 @@ function DeleteTaxonomyModal({
     );
     if (promiseResult.every(({ status }) => status === "fulfilled")) {
       createSuccessNotice(
-        itemsToDelete.length === 1 ? (0, import_i18n54.sprintf)(
+        itemsToDelete.length === 1 ? (0, import_i18n56.sprintf)(
           /* translators: %s: The taxonomy's plural label. */
-          (0, import_i18n54.__)('"%s" taxonomy deleted.'),
+          (0, import_i18n56.__)('"%s" taxonomy deleted.'),
           itemsToDelete[0].title.raw
-        ) : (0, import_i18n54.sprintf)(
+        ) : (0, import_i18n56.sprintf)(
           /* translators: %d: The number of taxonomies. */
-          (0, import_i18n54._n)(
+          (0, import_i18n56._n)(
             "%d taxonomy deleted.",
             "%d taxonomies deleted.",
             itemsToDelete.length
@@ -29349,7 +29491,7 @@ function DeleteTaxonomyModal({
         if (typedError.reason?.message && typedError.reason.code !== "unknown_error") {
           errorMessage = typedError.reason.message;
         } else {
-          errorMessage = (0, import_i18n54.__)("Failed to delete taxonomy.");
+          errorMessage = (0, import_i18n56.__)("Failed to delete taxonomy.");
         }
       } else {
         const errorMessages = /* @__PURE__ */ new Set();
@@ -29363,19 +29505,19 @@ function DeleteTaxonomyModal({
           }
         }
         if (errorMessages.size === 0) {
-          errorMessage = (0, import_i18n54.__)("Failed to delete taxonomies.");
+          errorMessage = (0, import_i18n56.__)("Failed to delete taxonomies.");
         } else if (errorMessages.size === 1) {
-          errorMessage = (0, import_i18n54.sprintf)(
+          errorMessage = (0, import_i18n56.sprintf)(
             /* translators: %s: an error message */
-            (0, import_i18n54.__)(
+            (0, import_i18n56.__)(
               "An error occurred while deleting the taxonomy: %s"
             ),
             [...errorMessages][0]
           );
         } else {
-          errorMessage = (0, import_i18n54.sprintf)(
+          errorMessage = (0, import_i18n56.sprintf)(
             /* translators: %s: a list of comma separated error messages */
-            (0, import_i18n54.__)(
+            (0, import_i18n56.__)(
               "Some errors occurred while deleting the taxonomies: %s"
             ),
             [...errorMessages].join(",")
@@ -29388,17 +29530,17 @@ function DeleteTaxonomyModal({
     setIsDeleting(false);
     closeModal?.();
   }
-  return /* @__PURE__ */ React.createElement(Stack, { direction: "column", gap: "md" }, /* @__PURE__ */ React.createElement(Text, null, items.length > 1 ? (0, import_i18n54.sprintf)(
+  return /* @__PURE__ */ React.createElement(Stack, { direction: "column", gap: "md" }, /* @__PURE__ */ React.createElement(Text, null, items.length > 1 ? (0, import_i18n56.sprintf)(
     /* translators: %d: number of taxonomies to delete. */
-    (0, import_i18n54._n)(
+    (0, import_i18n56._n)(
       "Are you sure you want to delete %d taxonomy?",
       "Are you sure you want to delete %d taxonomies?",
       items.length
     ),
     items.length
-  ) : (0, import_i18n54.sprintf)(
+  ) : (0, import_i18n56.sprintf)(
     /* translators: %s: The taxonomy's plural label. */
-    (0, import_i18n54.__)('Are you sure you want to delete "%s"?'),
+    (0, import_i18n56.__)('Are you sure you want to delete "%s"?'),
     items[0].title.raw
   )), /* @__PURE__ */ React.createElement(Stack, { direction: "row", justify: "flex-end", gap: "sm" }, /* @__PURE__ */ React.createElement(
     import_components54.Button,
@@ -29409,7 +29551,7 @@ function DeleteTaxonomyModal({
       disabled: isDeleting,
       accessibleWhenDisabled: true
     },
-    (0, import_i18n54.__)("Cancel")
+    (0, import_i18n56.__)("Cancel")
   ), /* @__PURE__ */ React.createElement(
     import_components54.Button,
     {
@@ -29421,12 +29563,12 @@ function DeleteTaxonomyModal({
       accessibleWhenDisabled: true,
       onClick: onDelete
     },
-    (0, import_i18n54._x)("Delete", "verb")
+    (0, import_i18n56._x)("Delete", "verb")
   )));
 }
 var deleteTaxonomyAction = {
   id: "delete-taxonomy",
-  label: (0, import_i18n54._x)("Delete", "verb"),
+  label: (0, import_i18n56._x)("Delete", "verb"),
   icon: trash_default,
   supportsBulk: true,
   hideModalHeader: true,
@@ -29438,11 +29580,11 @@ var delete_default = deleteTaxonomyAction;
 
 // routes/taxonomies/actions/edit.tsx
 var import_components55 = __toESM(require_components());
-var import_core_data5 = __toESM(require_core_data());
+var import_core_data6 = __toESM(require_core_data());
 var import_data10 = __toESM(require_data());
 var import_element113 = __toESM(require_element());
-var import_i18n55 = __toESM(require_i18n());
-var import_notices3 = __toESM(require_notices());
+var import_i18n57 = __toESM(require_i18n());
+var import_notices4 = __toESM(require_notices());
 
 // routes/taxonomies/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7e22e4649d']")) {
@@ -29458,7 +29600,7 @@ function EditTaxonomyModal({
   closeModal
 }) {
   const item = items[0];
-  const { record, hasResolved } = (0, import_core_data5.useEntityRecord)(
+  const { record, hasResolved } = (0, import_core_data6.useEntityRecord)(
     "postType",
     "wp_user_taxonomy",
     item.id
@@ -29484,8 +29626,8 @@ function EditTaxonomyModal({
     [slugField, objectTypeField]
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, defaultForm);
-  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data5.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data10.useDispatch)(import_notices3.store);
+  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data6.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data10.useDispatch)(import_notices4.store);
   async function onSave() {
     if (isSaving || !isValid2) {
       return;
@@ -29499,9 +29641,9 @@ function EditTaxonomyModal({
         { throwOnError: true }
       );
       createSuccessNotice(
-        (0, import_i18n55.sprintf)(
+        (0, import_i18n57.sprintf)(
           /* translators: %s: taxonomy plural label. */
-          (0, import_i18n55.__)('"%s" taxonomy updated.'),
+          (0, import_i18n57.__)('"%s" taxonomy updated.'),
           data.title.raw
         ),
         { type: "snackbar" }
@@ -29509,7 +29651,7 @@ function EditTaxonomyModal({
       closeModal?.();
     } catch (error2) {
       createErrorNotice(
-        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n55.__)("Failed to update taxonomy."),
+        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n57.__)("Failed to update taxonomy."),
         { type: "snackbar" }
       );
     } finally {
@@ -29534,14 +29676,14 @@ function EditTaxonomyModal({
         render: /* @__PURE__ */ React.createElement("h2", null),
         className: "dataviews-action-modal__edit-taxonomy-title"
       },
-      (0, import_i18n55.__)("Edit taxonomy")
+      (0, import_i18n57.__)("Edit taxonomy")
     ),
     /* @__PURE__ */ React.createElement(
       import_components55.Button,
       {
         size: "small",
         icon: close_small_default,
-        label: (0, import_i18n55.__)("Close"),
+        label: (0, import_i18n57.__)("Close"),
         onClick: closeModal
       }
     )
@@ -29570,7 +29712,7 @@ function EditTaxonomyModal({
         variant: "secondary",
         onClick: closeModal
       },
-      (0, import_i18n55.__)("Cancel")
+      (0, import_i18n57.__)("Cancel")
     ),
     /* @__PURE__ */ React.createElement(
       import_components55.Button,
@@ -29582,56 +29724,19 @@ function EditTaxonomyModal({
         accessibleWhenDisabled: true,
         onClick: onSave
       },
-      (0, import_i18n55.__)("Done")
+      (0, import_i18n57.__)("Done")
     )
   ));
 }
 var editTaxonomyAction = {
   id: "edit-taxonomy",
-  label: (0, import_i18n55.__)("Edit"),
+  label: (0, import_i18n57.__)("Edit"),
   icon: pencil_default,
   isPrimary: true,
   hideModalHeader: true,
   RenderModal: EditTaxonomyModal
 };
 var edit_default = editTaxonomyAction;
-
-// routes/taxonomies/actions/toggle-active.ts
-var import_core_data6 = __toESM(require_core_data());
-var import_i18n56 = __toESM(require_i18n());
-var import_notices4 = __toESM(require_notices());
-var toggleActiveAction = {
-  id: "toggle-active",
-  label: (items) => items.every((i2) => i2.status === "publish") ? (0, import_i18n56.__)("Deactivate") : (0, import_i18n56.__)("Activate"),
-  async callback(items, { registry }) {
-    const { saveEntityRecord } = registry.dispatch(import_core_data6.store);
-    const { createSuccessNotice, createErrorNotice } = registry.dispatch(import_notices4.store);
-    const nextStatus = items.every((i2) => i2.status === "publish") ? "draft" : "publish";
-    try {
-      for (const item of items) {
-        if (item.id === void 0) {
-          continue;
-        }
-        await saveEntityRecord(
-          "postType",
-          "wp_user_taxonomy",
-          { id: item.id, status: nextStatus },
-          { throwOnError: true }
-        );
-      }
-      createSuccessNotice(
-        nextStatus === "publish" ? (0, import_i18n56.__)("Taxonomy activated.") : (0, import_i18n56.__)("Taxonomy deactivated."),
-        { type: "snackbar" }
-      );
-    } catch (error2) {
-      createErrorNotice(
-        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n56.__)("Failed to update taxonomy status."),
-        { type: "snackbar" }
-      );
-    }
-  }
-};
-var toggle_active_default = toggleActiveAction;
 
 // routes/taxonomies/stage.tsx
 var defaultLayouts = {
@@ -29648,7 +29753,12 @@ var DEFAULT_VIEW = {
 function TaxonomiesPage() {
   const [view, setView] = (0, import_element114.useState)(DEFAULT_VIEW);
   const taxonomyActions = (0, import_element114.useMemo)(
-    () => [edit_default, toggle_active_default, delete_default],
+    () => [
+      edit_default,
+      activate_default,
+      deactivate_default,
+      delete_default
+    ],
     []
   );
   const slugField = useSlugField();
@@ -29697,7 +29807,7 @@ function TaxonomiesPage() {
   return /* @__PURE__ */ React.createElement(
     page_default,
     {
-      title: (0, import_i18n57.__)("Taxonomies"),
+      title: (0, import_i18n58.__)("Taxonomies"),
       className: "taxonomies-page",
       hasPadding: false,
       actions: /* @__PURE__ */ React.createElement(AddTaxonomy, null)
