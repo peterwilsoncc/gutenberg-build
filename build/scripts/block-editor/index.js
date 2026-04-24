@@ -34523,6 +34523,7 @@ var wp;
       const instanceId = (0, import_compose62.useInstanceId)(BlockMoverButton);
       const normalizedClientIds = Array.isArray(clientIds) ? clientIds : [clientIds];
       const blocksCount = normalizedClientIds.length;
+      const isMobileViewport = (0, import_compose62.useViewportMatch)("small", "<");
       const {
         blockType,
         isDisabled,
@@ -34587,7 +34588,7 @@ var wp;
               direction,
               orientation
             ),
-            tooltipPosition: direction === "down" ? "bottom" : "top",
+            tooltipPosition: !isMobileViewport && direction === "down" && orientation === "vertical" ? "bottom" : "top",
             "aria-describedby": descriptionId,
             ...props,
             onClick: isDisabled ? null : onClick,
