@@ -36406,7 +36406,7 @@ If there's a particular need for this, please submit a feature request at https:
               ...currentState,
               pan: {
                 x: currentState.pan.x,
-                y: currentState.pan.y - this.keyboardStep
+                y: currentState.pan.y + this.keyboardStep
               }
             },
             getImageSizeFromState(currentState),
@@ -36425,7 +36425,7 @@ If there's a particular need for this, please submit a feature request at https:
               ...currentState,
               pan: {
                 x: currentState.pan.x,
-                y: currentState.pan.y + this.keyboardStep
+                y: currentState.pan.y - this.keyboardStep
               }
             },
             getImageSizeFromState(currentState),
@@ -36443,7 +36443,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               ...currentState,
               pan: {
-                x: currentState.pan.x - this.keyboardStep,
+                x: currentState.pan.x + this.keyboardStep,
                 y: currentState.pan.y
               }
             },
@@ -36462,7 +36462,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               ...currentState,
               pan: {
-                x: currentState.pan.x + this.keyboardStep,
+                x: currentState.pan.x - this.keyboardStep,
                 y: currentState.pan.y
               }
             },
@@ -36503,6 +36503,9 @@ If there's a particular need for this, please submit a feature request at https:
         }
         case "r":
         case "R": {
+          if (e3.metaKey || e3.ctrlKey || e3.altKey || e3.shiftKey) {
+            break;
+          }
           e3.preventDefault();
           this.options.dispatch({
             type: "SNAP_ROTATE_90",
@@ -36765,16 +36768,16 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
-  var CORNER_POSITIONS = ["nw", "ne", "sw", "se"];
+  var CORNER_POSITIONS = ["nw", "ne", "se", "sw"];
   var ALL_POSITIONS = [
-    "n",
-    "s",
-    "e",
-    "w",
     "nw",
+    "n",
     "ne",
+    "e",
+    "se",
+    "s",
     "sw",
-    "se"
+    "w"
   ];
   function getHandleLabel(pos) {
     switch (pos) {
@@ -36796,7 +36799,8 @@ If there's a particular need for this, please submit a feature request at https:
         return (0, import_i18n119.__)("Resize bottom-right corner");
     }
   }
-  var KEYBOARD_STEP = 0.02;
+  var KEYBOARD_STEP = 0.01;
+  var KEYBOARD_STEP_SHIFT = 0.1;
   var KEYBOARD_SETTLE_DELAY = 500;
   function RectangleStencil({
     cropRect,
@@ -36808,7 +36812,8 @@ If there's a particular need for this, please submit a feature request at https:
     aspectRatio,
     freeformCrop = false,
     stencilTransition,
-    cropBounds
+    cropBounds,
+    onEscape
   }) {
     const boundsMinX = cropBounds?.minX ?? 0;
     const boundsMinY = cropBounds?.minY ?? 0;
@@ -36896,6 +36901,7 @@ If there's a particular need for this, please submit a feature request at https:
           el.removeEventListener("pointerup", onEnd);
           el.removeEventListener("lostpointercapture", onEnd);
           latestHandlersRef.current?.onResizeEnd?.();
+          el.focus({ preventScroll: true });
         };
         el.addEventListener("pointermove", onMove);
         el.addEventListener("pointerup", onEnd);
@@ -36929,24 +36935,31 @@ If there's a particular need for this, please submit a feature request at https:
     const handleKeyDown = (0, import_element123.useCallback)(
       (handle, event) => {
         const key = event.key;
+        if (key === "Escape") {
+          event.preventDefault();
+          event.stopPropagation();
+          onEscape?.();
+          return;
+        }
         if (key !== "ArrowUp" && key !== "ArrowDown" && key !== "ArrowLeft" && key !== "ArrowRight") {
           return;
         }
         event.preventDefault();
         event.stopPropagation();
+        const step = event.shiftKey ? KEYBOARD_STEP_SHIFT : KEYBOARD_STEP;
         let dx = 0;
         let dy = 0;
         if (key === "ArrowLeft") {
-          dx = -KEYBOARD_STEP;
+          dx = -step;
         }
         if (key === "ArrowRight") {
-          dx = KEYBOARD_STEP;
+          dx = step;
         }
         if (key === "ArrowUp") {
-          dy = -KEYBOARD_STEP;
+          dy = -step;
         }
         if (key === "ArrowDown") {
-          dy = KEYBOARD_STEP;
+          dy = step;
         }
         if (hasLockedRatio) {
           const syntheticDrag = {
@@ -36990,7 +37003,8 @@ If there's a particular need for this, please submit a feature request at https:
         computeLockedRect,
         computeFreeRect,
         onCropChange,
-        onResizeEnd
+        onResizeEnd,
+        onEscape
       ]
     );
     if (containerSize.width === 0 || containerSize.height === 0) {
@@ -37132,10 +37146,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='0da8cc3a64']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='921271db02']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "0da8cc3a64");
-    style.appendChild(document.createTextNode('.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:22px;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;width:12px}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}'));
+    style.setAttribute("data-wp-hash", "921271db02");
+    style.appendChild(document.createTextNode('.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:22px;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__handle:focus-visible{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:#0000;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}'));
     document.head.appendChild(style);
   }
   var CROP_RECT_EPSILON = 1e-6;
@@ -37302,6 +37316,9 @@ If there's a particular need for this, please submit a feature request at https:
         clearTimeout(settleTimerRef.current);
       };
     }, []);
+    const handleEscape = (0, import_element124.useCallback)(() => {
+      canvasRef.current?.focus({ preventScroll: true });
+    }, []);
     const handleResizeEnd = (0, import_element124.useCallback)(() => {
       setSettling(true);
       settleCrop();
@@ -37387,6 +37404,7 @@ If there's a particular need for this, please submit a feature request at https:
                   onCropChange: handleCropChange,
                   onResizeStart: onGestureStart,
                   onResizeEnd: handleResizeEnd,
+                  onEscape: handleEscape,
                   aspectRatio,
                   freeformCrop,
                   stencilTransition: settleStencilTransition,
