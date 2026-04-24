@@ -2665,7 +2665,7 @@ return array(
 		'__experimental' => true,
 		'name' => 'core/form',
 		'title' => 'Form',
-		'category' => 'common',
+		'category' => 'widgets',
 		'allowedBlocks' => array(
 			'core/paragraph',
 			'core/heading',
@@ -2735,7 +2735,7 @@ return array(
 		'__experimental' => true,
 		'name' => 'core/form-input',
 		'title' => 'Input Field',
-		'category' => 'common',
+		'category' => 'widgets',
 		'ancestor' => array(
 			'core/form'
 		),
@@ -2817,7 +2817,7 @@ return array(
 		'__experimental' => true,
 		'name' => 'core/form-submission-notification',
 		'title' => 'Form Submission Notification',
-		'category' => 'common',
+		'category' => 'widgets',
 		'ancestor' => array(
 			'core/form'
 		),
@@ -2843,7 +2843,7 @@ return array(
 		'__experimental' => true,
 		'name' => 'core/form-submit-button',
 		'title' => 'Form Submit Button',
-		'category' => 'common',
+		'category' => 'widgets',
 		'icon' => 'button',
 		'ancestor' => array(
 			'core/form'
