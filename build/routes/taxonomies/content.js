@@ -29040,6 +29040,10 @@ var statusField = {
     { value: "publish", label: (0, import_i18n52.__)("Active") },
     { value: "draft", label: (0, import_i18n52.__)("Inactive") }
   ],
+  render: ({ item }) => {
+    const isActive = item.status === "publish";
+    return /* @__PURE__ */ React.createElement(Badge, { intent: isActive ? "stable" : "draft" }, isActive ? (0, import_i18n52.__)("Active") : (0, import_i18n52.__)("Inactive"));
+  },
   enableSorting: false
 };
 function useSlugField(originalSlug, currentValue) {
