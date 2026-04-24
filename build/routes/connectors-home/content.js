@@ -776,8 +776,9 @@ function useConnectorPlugin({
         };
       }
       if (plugin) {
+        const isPluginActive = plugin.status === "active" || plugin.status === "network-active";
         return {
-          derivedPluginStatus: plugin.status === "active" ? "active" : "inactive",
+          derivedPluginStatus: isPluginActive ? "active" : "inactive",
           canManagePlugins: true,
           currentApiKey: apiKey,
           canInstallPlugins: canCreate
