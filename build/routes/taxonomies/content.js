@@ -29607,10 +29607,10 @@ var import_i18n57 = __toESM(require_i18n());
 var import_notices4 = __toESM(require_notices());
 
 // routes/taxonomies/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7e22e4649d']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='c03c8f8c68']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "7e22e4649d");
-  style.appendChild(document.createTextNode(".boot-layout__stage:has(.taxonomies-page){height:calc(100vh - 46px)}@media (min-width:782px){.boot-layout__stage:has(.taxonomies-page){height:calc(100vh - 32px)}}.dataviews-action-modal__edit-taxonomy{align-items:stretch;justify-content:flex-end}.dataviews-action-modal__edit-taxonomy .components-modal__frame{animation-name:none;border-radius:8px;height:calc(100% - 32px);margin:16px 16px 16px 0;max-height:calc(100% - 32px);max-width:400px;position:relative}@media (prefers-reduced-motion:no-preference){.dataviews-action-modal__edit-taxonomy .components-modal__frame{animation-duration:.2s;animation-name:edit-taxonomy-slide-in-right;animation-timing-function:ease-out}}.dataviews-action-modal__edit-taxonomy.is-animating-out .components-modal__frame{animation-name:none}@media (prefers-reduced-motion:no-preference){.dataviews-action-modal__edit-taxonomy.is-animating-out .components-modal__frame{animation-duration:.2s;animation-name:edit-taxonomy-slide-out-right;animation-timing-function:ease-out}}.dataviews-action-modal__edit-taxonomy .components-modal__content{display:flex;flex-direction:column;height:100%;padding:0}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-header{background:#fff;border-bottom:1px solid #e0e0e0;flex:0 0 auto;padding:12px 16px 12px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-title{font-size:13px;font-weight:600;line-height:1.4;margin:0}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-content{flex:1 1 auto;min-height:0;overflow-y:auto;padding:16px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-footer{background:#fff;border-top:1px solid #e0e0e0;flex:0 0 auto;padding:16px 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-footer .components-button{flex:1;justify-content:center}@keyframes edit-taxonomy-slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes edit-taxonomy-slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}"));
+  style.setAttribute("data-wp-hash", "c03c8f8c68");
+  style.appendChild(document.createTextNode(".boot-layout__stage:has(.taxonomies-page){height:calc(100vh - 46px)}@media (min-width:782px){.boot-layout__stage:has(.taxonomies-page){height:calc(100vh - 32px)}}.dataviews-action-modal__edit-taxonomy{align-items:stretch;justify-content:flex-end}.dataviews-action-modal__edit-taxonomy .components-modal__frame{animation-name:none;border-radius:8px;height:calc(100% - 32px);margin:16px 16px 16px 0;max-height:calc(100% - 32px);max-width:400px;position:relative}@media (prefers-reduced-motion:no-preference){.dataviews-action-modal__edit-taxonomy .components-modal__frame{animation-duration:.2s;animation-name:edit-taxonomy-slide-in-right;animation-timing-function:ease-out}}.dataviews-action-modal__edit-taxonomy.is-animating-out .components-modal__frame{animation-name:none}@media (prefers-reduced-motion:no-preference){.dataviews-action-modal__edit-taxonomy.is-animating-out .components-modal__frame{animation-duration:.2s;animation-name:edit-taxonomy-slide-out-right;animation-timing-function:ease-out}}.dataviews-action-modal__edit-taxonomy .components-modal__content{overflow-y:auto;padding:0}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-header{background:#fff;padding:16px 24px;position:sticky;top:0;z-index:1}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-content{padding:0 24px}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-footer{background:#fff;bottom:0;padding:16px 24px;position:sticky;z-index:1}.dataviews-action-modal__edit-taxonomy .dataviews-action-modal__edit-taxonomy-footer .components-button{flex:1;justify-content:center}@keyframes edit-taxonomy-slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes edit-taxonomy-slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}"));
   document.head.appendChild(style);
 }
 
@@ -29620,16 +29620,7 @@ function EditTaxonomyModal({
   closeModal
 }) {
   const item = items[0];
-  const { record, hasResolved } = (0, import_core_data6.useEntityRecord)(
-    "postType",
-    "wp_user_taxonomy",
-    item.id
-  );
-  const initialData = (0, import_element114.useMemo)(
-    () => record ? toFormData(record) : item,
-    [record, item]
-  );
-  const [data, setData] = (0, import_element114.useState)(initialData);
+  const [data, setData] = (0, import_element114.useState)(item);
   const [isSaving, setIsSaving] = (0, import_element114.useState)(false);
   const slugField = useSlugField(item.slug, data.slug);
   const objectTypeField = useObjectTypeField();
@@ -29678,75 +29669,73 @@ function EditTaxonomyModal({
       setIsSaving(false);
     }
   }
-  if (!hasResolved) {
-    return null;
-  }
-  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(
     Stack,
     {
-      className: "dataviews-action-modal__edit-taxonomy-header",
-      direction: "row",
-      justify: "space-between",
-      align: "center"
+      className: "dataviews-action-modal__edit-taxonomy-body",
+      direction: "column"
     },
     /* @__PURE__ */ React.createElement(
-      Text,
+      Stack,
       {
-        variant: "heading-sm",
-        render: /* @__PURE__ */ React.createElement("h2", null),
-        className: "dataviews-action-modal__edit-taxonomy-title"
+        className: "dataviews-action-modal__edit-taxonomy-header",
+        direction: "row",
+        justify: "space-between",
+        align: "center"
       },
-      (0, import_i18n57.__)("Edit taxonomy")
-    ),
-    /* @__PURE__ */ React.createElement(
-      import_components54.Button,
-      {
-        size: "small",
-        icon: close_small_default,
-        label: (0, import_i18n57.__)("Close"),
-        onClick: closeModal
-      }
-    )
-  ), /* @__PURE__ */ React.createElement("div", { className: "dataviews-action-modal__edit-taxonomy-content" }, /* @__PURE__ */ React.createElement(
-    DataForm,
-    {
-      data,
-      fields,
-      form: defaultForm,
-      validity,
-      onChange: (edits) => setData(
-        (prev) => ({ ...prev, ...edits })
+      /* @__PURE__ */ React.createElement(Text, { variant: "heading-sm", render: /* @__PURE__ */ React.createElement("h2", null) }, (0, import_i18n57.__)("Edit taxonomy")),
+      /* @__PURE__ */ React.createElement(
+        import_components54.Button,
+        {
+          size: "small",
+          icon: close_small_default,
+          label: (0, import_i18n57.__)("Close"),
+          onClick: closeModal
+        }
       )
-    }
-  )), /* @__PURE__ */ React.createElement(
-    Stack,
-    {
-      className: "dataviews-action-modal__edit-taxonomy-footer",
-      direction: "row",
-      gap: "sm"
-    },
-    /* @__PURE__ */ React.createElement(
-      import_components54.Button,
-      {
-        __next40pxDefaultSize: true,
-        variant: "secondary",
-        onClick: closeModal
-      },
-      (0, import_i18n57.__)("Cancel")
     ),
-    /* @__PURE__ */ React.createElement(
-      import_components54.Button,
+    /* @__PURE__ */ React.createElement("div", { className: "dataviews-action-modal__edit-taxonomy-content" }, /* @__PURE__ */ React.createElement(
+      DataForm,
       {
-        __next40pxDefaultSize: true,
-        variant: "primary",
-        isBusy: isSaving,
-        disabled: isSaving,
-        accessibleWhenDisabled: true,
-        onClick: onSave
+        data,
+        fields,
+        form: defaultForm,
+        validity,
+        onChange: (edits) => setData(
+          (prev) => ({ ...prev, ...edits })
+        )
+      }
+    )),
+    /* @__PURE__ */ React.createElement(
+      Stack,
+      {
+        className: "dataviews-action-modal__edit-taxonomy-footer",
+        direction: "row",
+        gap: "sm"
       },
-      (0, import_i18n57.__)("Done")
+      /* @__PURE__ */ React.createElement(
+        import_components54.Button,
+        {
+          __next40pxDefaultSize: true,
+          variant: "secondary",
+          onClick: closeModal
+        },
+        (0, import_i18n57.__)("Cancel")
+      ),
+      /* @__PURE__ */ React.createElement(
+        import_components54.Button,
+        {
+          __next40pxDefaultSize: true,
+          variant: "primary",
+          isBusy: isSaving,
+          disabled: isSaving,
+          accessibleWhenDisabled: true,
+          onClick: onSave
+        },
+        (0, import_i18n57.__)("Done")
+      )
     )
-  ));
+  );
 }
 var editTaxonomyAction = {
   id: "edit-taxonomy",
