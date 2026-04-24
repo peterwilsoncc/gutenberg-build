@@ -36016,9 +36016,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
       e3.preventDefault();
       const ownerDoc = el.ownerDocument;
-      if (ownerDoc?.activeElement instanceof HTMLElement) {
+      if (ownerDoc?.activeElement instanceof HTMLElement && ownerDoc.activeElement !== el) {
         ownerDoc.activeElement.blur();
       }
+      el.focus();
       el.setPointerCapture(e3.pointerId);
       this.setStatus({ isDragging: true });
       this.options.onGestureStart?.();
