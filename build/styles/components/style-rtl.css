@@ -1685,6 +1685,7 @@ body.is-dragging-components-draggable {
 
 .components-form-toggle {
   position: relative;
+  isolation: isolate;
   display: inline-block;
   height: 16px;
 }
