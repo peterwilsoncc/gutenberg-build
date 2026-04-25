@@ -130,6 +130,25 @@ function gutenberg_register_dashboard_wp_admin_page_routes() {
 }
 add_action( 'dashboard-wp-admin_init', 'gutenberg_register_dashboard_wp_admin_page_routes' );
 
+// Page-specific route registration functions for experiments
+/**
+ * Register routes for experiments page (full-page mode).
+ */
+function gutenberg_register_experiments_page_routes() {
+	global $gutenberg_experiments_routes_data;
+	gutenberg_register_page_routes( $gutenberg_experiments_routes_data, 'gutenberg_register_experiments_route' );
+}
+add_action( 'experiments_init', 'gutenberg_register_experiments_page_routes' );
+
+/**
+ * Register routes for experiments page (wp-admin mode).
+ */
+function gutenberg_register_experiments_wp_admin_page_routes() {
+	global $gutenberg_experiments_routes_data;
+	gutenberg_register_page_routes( $gutenberg_experiments_routes_data, 'gutenberg_register_experiments_wp_admin_route' );
+}
+add_action( 'experiments-wp-admin_init', 'gutenberg_register_experiments_wp_admin_page_routes' );
+
 // Page-specific route registration functions for font-library
 /**
  * Register routes for font-library page (full-page mode).

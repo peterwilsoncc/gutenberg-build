@@ -22,6 +22,13 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'experiments-home',
+		'path'        => '/',
+		'page'        => 'experiments',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'font-list',
 		'path'        => '/font-list',
 		'page'        => 'font-library',
