@@ -18408,6 +18408,10 @@ var wp;
       [clientId]
     );
     const { updateBlock: updateBlock2 } = (0, import_data19.useDispatch)(store);
+    const blockContent = (0, import_element26.useMemo)(
+      () => block ? (0, import_blocks18.getBlockContent)(block) : "",
+      [block]
+    );
     const onChange = () => {
       const blockType = (0, import_blocks18.getBlockType)(block.name);
       if (!blockType) {
@@ -18434,8 +18438,8 @@ var wp;
       }
     };
     (0, import_element26.useEffect)(() => {
-      setHtml((0, import_blocks18.getBlockContent)(block));
-    }, [block]);
+      setHtml(blockContent);
+    }, [blockContent]);
     return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
       import_react_autosize_textarea.default,
       {
