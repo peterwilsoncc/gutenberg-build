@@ -77,6 +77,13 @@ var require_primitives = __commonJS({
   }
 });
 
+// package-external:@wordpress/compose
+var require_compose = __commonJS({
+  "package-external:@wordpress/compose"(exports, module) {
+    module.exports = window.wp.compose;
+  }
+});
+
 // package-external:@wordpress/theme
 var require_theme = __commonJS({
   "package-external:@wordpress/theme"(exports, module) {
@@ -88,13 +95,6 @@ var require_theme = __commonJS({
 var require_private_apis = __commonJS({
   "package-external:@wordpress/private-apis"(exports, module) {
     module.exports = window.wp.privateApis;
-  }
-});
-
-// package-external:@wordpress/compose
-var require_compose = __commonJS({
-  "package-external:@wordpress/compose"(exports, module) {
-    module.exports = window.wp.compose;
   }
 });
 
