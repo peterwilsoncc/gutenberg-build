@@ -5328,7 +5328,7 @@ var wp;
   var import_block_editor36 = __toESM(require_block_editor(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
   var import_url13 = __toESM(require_url(), 1);
-  var import_api_fetch5 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch6 = __toESM(require_api_fetch(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_date16 = __toESM(require_date(), 1);
@@ -33586,6 +33586,7 @@ If there's a particular need for this, please submit a feature request at https:
   (0, import_data33.register)(store);
 
   // packages/media-editor/build-module/components/media-editor-modal/index.mjs
+  var import_api_fetch3 = __toESM(require_api_fetch(), 1);
   var import_components89 = __toESM(require_components(), 1);
   var import_data39 = __toESM(require_data(), 1);
   var import_core_data25 = __toESM(require_core_data(), 1);
@@ -37787,8 +37788,77 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
+  // packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
+  var CROP_TOLERANCE = 0.1;
+  function buildModifiers(state, imageSize) {
+    const modifiers = [];
+    if (imageSize.width === 0 || imageSize.height === 0) {
+      return modifiers;
+    }
+    const { cropRect, pan, zoom, flip } = state;
+    const hasFlipH = flip.horizontal;
+    const hasFlipV = flip.vertical;
+    if (hasFlipH || hasFlipV) {
+      modifiers.push({
+        type: "flip",
+        args: { flip: { horizontal: hasFlipH, vertical: hasFlipV } }
+      });
+    }
+    const rawAngle = (state.rotation % 360 + 360) % 360;
+    const singleAxisFlip = hasFlipH !== hasFlipV;
+    const signedAngle2 = singleAxisFlip ? (360 - rawAngle) % 360 : rawAngle;
+    if (signedAngle2 !== 0) {
+      modifiers.push({ type: "rotate", args: { angle: signedAngle2 } });
+    }
+    const snapRotation = Math.round(state.rotation / 90) * 90;
+    const { width: snapW, height: snapH } = getRotatedBBox(
+      imageSize.width,
+      imageSize.height,
+      snapRotation
+    );
+    const { width: fullW, height: fullH } = getRotatedBBox(
+      imageSize.width,
+      imageSize.height,
+      state.rotation
+    );
+    const imgLeft = 0.5 + pan.x - zoom / 2;
+    const imgTop = 0.5 + pan.y - zoom / 2;
+    const snapX = (cropRect.x - imgLeft) / zoom * snapW;
+    const snapY = (cropRect.y - imgTop) / zoom * snapH;
+    const widthPx = cropRect.width / zoom * snapW;
+    const heightPx = cropRect.height / zoom * snapH;
+    const offsetX = (fullW - snapW) / 2;
+    const offsetY = (fullH - snapH) / 2;
+    const fullX = snapX + offsetX;
+    const fullY = snapY + offsetY;
+    const leftPct = fullX / fullW * 100;
+    const topPct = fullY / fullH * 100;
+    const widthPct = widthPx / fullW * 100;
+    const heightPct = heightPx / fullH * 100;
+    const coversFullFrame = leftPct <= CROP_TOLERANCE && topPct <= CROP_TOLERANCE && widthPct >= 100 - CROP_TOLERANCE && heightPct >= 100 - CROP_TOLERANCE;
+    if (!coversFullFrame) {
+      modifiers.push({
+        type: "crop",
+        args: {
+          left: leftPct,
+          top: topPct,
+          width: widthPct,
+          height: heightPct
+        }
+      });
+    }
+    return modifiers;
+  }
+
   // packages/media-editor/build-module/components/media-editor-modal/index.mjs
   var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
+  var METADATA_EDIT_KEYS = [
+    "title",
+    "caption",
+    "description",
+    "alt_text",
+    "post"
+  ];
   var { Tabs } = unlock4(import_components89.privateApis);
   function MediaEditorModalSidebar({ tabs }) {
     const tabsContextValue = (0, import_element127.useContext)(Tabs.Context);
@@ -37823,7 +37893,8 @@ If there's a particular need for this, please submit a feature request at https:
     onCancel,
     onSave
   }) {
-    const { isDirty } = useCropper();
+    const controller = useCropper();
+    const { isDirty } = controller;
     const saveDisabled = isSaving || !hasMedia || !isDirty && !hasEdits;
     return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(
       import_components89.Flex,
@@ -37850,7 +37921,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               size: "compact",
               variant: "primary",
-              onClick: onSave,
+              onClick: () => onSave(controller),
               isBusy: isSaving,
               disabled: saveDisabled,
               accessibleWhenDisabled: true,
@@ -37894,25 +37965,15 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [id]
     );
-    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data39.useDispatch)(import_core_data25.store);
+    const registry = (0, import_data39.useRegistry)();
+    const {
+      clearEntityRecordEdits,
+      editEntityRecord,
+      receiveEntityRecords,
+      saveEditedEntityRecord
+    } = (0, import_data39.useDispatch)(import_core_data25.store);
     const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data39.useDispatch)(store);
     const [isSaving, setIsSaving] = (0, import_element127.useState)(false);
-    const originalFieldValuesRef = (0, import_element127.useRef)(
-      null
-    );
-    (0, import_element127.useEffect)(() => {
-      if (!isModalOpen) {
-        originalFieldValuesRef.current = null;
-        return;
-      }
-      if (!originalFieldValuesRef.current && media) {
-        const snapshot = {};
-        fields3.forEach((field) => {
-          snapshot[field.id] = media[field.id];
-        });
-        originalFieldValuesRef.current = snapshot;
-      }
-    }, [isModalOpen, media, fields3]);
     const [aspectRatioValue, setAspectRatioValue] = (0, import_element127.useState)("0");
     const [freeformCrop, setFreeformCrop] = (0, import_element127.useState)(true);
     (0, import_element127.useEffect)(() => {
@@ -37982,25 +38043,58 @@ If there's a particular need for this, please submit a feature request at https:
       editEntityRecord("postType", "attachment", id, updates);
     };
     const handleCancel = () => {
-      if (originalFieldValuesRef.current) {
-        editEntityRecord(
-          "postType",
-          "attachment",
-          id,
-          originalFieldValuesRef.current
-        );
-      }
+      clearEntityRecordEdits("postType", "attachment", id);
       closeMediaEditorModal2();
     };
-    const handleSave = async () => {
+    const handleSave = async (controller) => {
       setIsSaving(true);
       try {
-        const saved = await saveEditedEntityRecord(
-          "postType",
-          "attachment",
-          id
-        );
+        let saved;
+        const modifiers = controller.isDirty && controller.state.image ? buildModifiers(controller.state, {
+          width: controller.state.image.naturalWidth,
+          height: controller.state.image.naturalHeight
+        }) : [];
+        if (modifiers.length > 0) {
+          const pendingEdits = registry.select(import_core_data25.store).getEntityRecordNonTransientEdits(
+            "postType",
+            "attachment",
+            id
+          );
+          const metadataEdits = {};
+          for (const key of METADATA_EDIT_KEYS) {
+            if (pendingEdits && key in pendingEdits) {
+              metadataEdits[key] = pendingEdits[key];
+            }
+          }
+          saved = await (0, import_api_fetch3.default)({
+            path: `/wp/v2/media/${id}/edit`,
+            method: "POST",
+            data: {
+              src: media?.source_url,
+              modifiers,
+              ...metadataEdits
+            }
+          });
+          if (saved) {
+            receiveEntityRecords(
+              "postType",
+              "attachment",
+              saved,
+              void 0,
+              true
+            );
+          }
+        } else {
+          saved = await saveEditedEntityRecord(
+            "postType",
+            "attachment",
+            id
+          );
+        }
         const next = saved ?? media;
+        if (next && next.id !== id) {
+          clearEntityRecordEdits("postType", "attachment", id);
+        }
         if (next && next.id && onUpdate) {
           onUpdate({ id: next.id, url: next.source_url });
         }
@@ -38417,9 +38511,9 @@ If there's a particular need for this, please submit a feature request at https:
   var media_sideload_default = mediaSideload;
 
   // packages/editor/build-module/utils/media-finalize/index.mjs
-  var import_api_fetch3 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   async function mediaFinalize(id, subSizes = []) {
-    await (0, import_api_fetch3.default)({
+    await (0, import_api_fetch4.default)({
       path: `/wp/v2/media/${id}/finalize`,
       method: "POST",
       data: { sub_sizes: subSizes }
@@ -45822,7 +45916,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n148 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/font-library/api.mjs
-  var import_api_fetch4 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch5 = __toESM(require_api_fetch(), 1);
   var import_core_data42 = __toESM(require_core_data(), 1);
   var FONT_FAMILIES_URL = "/wp/v2/font-families";
   function invalidateFontFamilyCache(registry) {
@@ -45842,7 +45936,7 @@ If there's a particular need for this, please submit a feature request at https:
       method: "POST",
       body: data
     };
-    const response = await (0, import_api_fetch4.default)(config2);
+    const response = await (0, import_api_fetch5.default)(config2);
     invalidateFontFamilyCache(registry);
     return {
       id: response.id,
@@ -45856,7 +45950,7 @@ If there's a particular need for this, please submit a feature request at https:
       method: "POST",
       body: data
     };
-    const response = await (0, import_api_fetch4.default)(config2);
+    const response = await (0, import_api_fetch5.default)(config2);
     invalidateFontFamilyCache(registry);
     return {
       id: response.id,
@@ -61878,7 +61972,7 @@ If there's a particular need for this, please submit a feature request at https:
         `${templateEntityConfig.baseURL}/${template2.id}`,
         { context: "edit", source: template2.origin }
       );
-      const fileTemplate = await (0, import_api_fetch5.default)({ path: fileTemplatePath });
+      const fileTemplate = await (0, import_api_fetch6.default)({ path: fileTemplatePath });
       if (!fileTemplate) {
         registry.dispatch(import_notices17.store).createErrorNotice(
           (0, import_i18n185.__)(
@@ -62562,7 +62656,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_hooks50 = __toESM(require_hooks(), 1);
 
   // packages/editor/build-module/components/autocompleters/link.mjs
-  var import_api_fetch6 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch7 = __toESM(require_api_fetch(), 1);
   var import_url14 = __toESM(require_url(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
@@ -62573,7 +62667,7 @@ If there's a particular need for this, please submit a feature request at https:
     triggerPrefix: "[[",
     isDebounced: true,
     async options(filterValue) {
-      const options = await (0, import_api_fetch6.default)({
+      const options = await (0, import_api_fetch7.default)({
         path: (0, import_url14.addQueryArgs)("/wp/v2/search", {
           per_page: SHOWN_SUGGESTIONS,
           search: filterValue,
