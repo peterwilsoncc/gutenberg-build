@@ -1455,6 +1455,13 @@ var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components
 
 // packages/admin-ui/build-module/page/header.mjs
 var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d8ee42603']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "6d8ee42603");
+  style.appendChild(document.createTextNode('._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-bg-surface-neutral,#fcfcfc);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-bg-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}._8113be94e7caf73c__header-title{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-lg,15px);font-weight:var(--wpds-typography-font-weight-medium,499);line-height:var(--wpds-typography-line-height-lg,28px);margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:24px;width:24px;>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-fg-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);margin:0;padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}'));
+  document.head.appendChild(style);
+}
+var style_default3 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Header({
   headingLevel = 2,
   breadcrumbs,
@@ -1470,7 +1477,7 @@ function Header({
     Stack,
     {
       direction: "column",
-      className: "admin-ui-page__header",
+      className: style_default3.header,
       render: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("header", {}),
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(Stack, { direction: "row", justify: "space-between", gap: "sm", children: [
@@ -1479,18 +1486,18 @@ function Header({
               SidebarToggleSlot,
               {
                 bubblesVirtually: true,
-                className: "admin-ui-page__sidebar-toggle-slot"
+                className: style_default3["sidebar-toggle-slot"]
               }
             ),
             visual && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
               "div",
               {
-                className: "admin-ui-page__header-visual",
+                className: style_default3["header-visual"],
                 "aria-hidden": "true",
                 children: visual
               }
             ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(HeadingTag, { className: "admin-ui-page__header-title", children: title }),
+            title && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(HeadingTag, { className: style_default3["header-title"], children: title }),
             breadcrumbs,
             badges
           ] }),
@@ -1500,13 +1507,13 @@ function Header({
               direction: "row",
               gap: "sm",
               style: { width: "auto", flexShrink: 0 },
-              className: "admin-ui-page__header-actions",
+              className: style_default3["header-actions"],
               align: "center",
               children: actions
             }
           )
         ] }),
-        subTitle && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "admin-ui-page__header-subtitle", children: subTitle })
+        subTitle && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: style_default3["header-subtitle"], children: subTitle })
       ]
     }
   );
@@ -1514,6 +1521,13 @@ function Header({
 
 // packages/admin-ui/build-module/page/index.mjs
 var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d8ee42603']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "6d8ee42603");
+  style.appendChild(document.createTextNode('._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-bg-surface-neutral,#fcfcfc);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-bg-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}._8113be94e7caf73c__header-title{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-lg,15px);font-weight:var(--wpds-typography-font-weight-medium,499);line-height:var(--wpds-typography-line-height-lg,28px);margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:24px;width:24px;>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-fg-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);margin:0;padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}'));
+  document.head.appendChild(style);
+}
+var style_default4 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Page({
   headingLevel,
   breadcrumbs,
@@ -1528,7 +1542,7 @@ function Page({
   hasPadding = false,
   showSidebarToggle = true
 }) {
-  const classes = clsx_default("admin-ui-page", className);
+  const classes = clsx_default(style_default4.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
   return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
     (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
@@ -1544,7 +1558,16 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "admin-ui-page__content has-padding", children }) : children
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+      "div",
+      {
+        className: clsx_default(
+          style_default4.content,
+          style_default4["has-padding"]
+        ),
+        children
+      }
+    ) : children
   ] });
 }
 Page.SidebarToggleFill = SidebarToggleFill;
