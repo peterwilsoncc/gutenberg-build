@@ -38109,7 +38109,7 @@ This message will only show in development mode. It won't appear in production. 
         // - the list of suggestions are rendered in the DOM (`isExpanded`)
         hasFocus2 && selectedSuggestionIndex !== -1 && isExpanded ? `components-form-token-suggestions-${instanceId}-${selectedSuggestionIndex}` : void 0
       ),
-      "aria-describedby": [`components-form-token-suggestions-howto-${instanceId}`, ariaDescribedBy].filter(Boolean).join(" ")
+      "aria-describedby": ariaDescribedBy
     });
   }
   var TokenInput = (0, import_element115.forwardRef)(UnForwardedTokenInput);
@@ -42512,6 +42512,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose59 = __toESM(require_compose(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
+  var import_deprecated17 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/form-token-field/token.mjs
   var import_compose58 = __toESM(require_compose(), 1);
@@ -42624,16 +42625,29 @@ This message will only show in development mode. It won't appear in production. 
       __experimentalRenderItem,
       __experimentalExpandOnFocus = false,
       __experimentalValidateInput = () => true,
-      __experimentalShowHowTo = true,
+      __experimentalShowHowTo,
       __next40pxDefaultSize = false,
       __experimentalAutoSelectFirstMatch = false,
-      tokenizeOnBlur = false
+      tokenizeOnBlur = false,
+      help
     } = useDeprecated36pxDefaultSizeProp(props);
     maybeWarnDeprecated36pxSize({
       componentName: "FormTokenField",
       size: void 0,
       __next40pxDefaultSize
     });
+    const defaultHelp = tokenizeOnSpace ? (0, import_i18n57.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n57.__)("Separate with commas or the Enter key.");
+    let computedHelp = help !== void 0 ? help : defaultHelp;
+    if (typeof __experimentalShowHowTo === "boolean") {
+      (0, import_deprecated17.default)("`__experimentalShowHowTo` prop in wp.components.FormTokenField", {
+        since: "7.1",
+        alternative: "`help` prop",
+        hint: "The `help` prop now defaults to the previous how-to text. Pass an empty string to hide it."
+      });
+      if (__experimentalShowHowTo === false && help === void 0) {
+        computedHelp = "";
+      }
+    }
     const instanceId = (0, import_compose59.useInstanceId)(FormTokenField);
     const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element143.useState)("");
     const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element143.useState)(0);
@@ -43026,6 +43040,7 @@ This message will only show in development mode. It won't appear in production. 
       }, "token-" + _value);
     }
     function renderInput() {
+      const describedById = computedHelp ? `components-form-token-input-${instanceId}__help` : void 0;
       const inputProps = {
         instanceId,
         autoCapitalize,
@@ -43035,7 +43050,8 @@ This message will only show in development mode. It won't appear in production. 
         value: incompleteTokenValue,
         onBlur,
         isExpanded,
-        selectedSuggestionIndex
+        selectedSuggestionIndex,
+        "aria-describedby": describedById
       };
       return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(token_input_default, {
         ...inputProps,
@@ -43090,10 +43106,10 @@ This message will only show in development mode. It won't appear in production. 
           onSelect: onSuggestionSelected,
           __experimentalRenderItem
         })]
-      }), __experimentalShowHowTo && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(StyledHelp, {
-        id: `components-form-token-suggestions-howto-${instanceId}`,
+      }), computedHelp && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(StyledHelp, {
+        id: `components-form-token-input-${instanceId}__help`,
         className: "components-form-token-field__help",
-        children: tokenizeOnSpace ? (0, import_i18n57.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n57.__)("Separate with commas or the Enter key.")
+        children: computedHelp
       })]
     });
   }
@@ -43101,7 +43117,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/index.mjs
   var import_element144 = __toESM(require_element(), 1);
-  var import_deprecated17 = __toESM(require_deprecated(), 1);
+  var import_deprecated18 = __toESM(require_deprecated(), 1);
   var import_i18n59 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/guide/page-control.mjs
@@ -43174,7 +43190,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [currentPage]);
     (0, import_element144.useEffect)(() => {
       if (import_element144.Children.count(children)) {
-        (0, import_deprecated17.default)("Passing children to <Guide>", {
+        (0, import_deprecated18.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
@@ -43253,11 +43269,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/page.mjs
   var import_element145 = __toESM(require_element(), 1);
-  var import_deprecated18 = __toESM(require_deprecated(), 1);
+  var import_deprecated19 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
   function GuidePage(props) {
     (0, import_element145.useEffect)(() => {
-      (0, import_deprecated18.default)("<GuidePage>", {
+      (0, import_deprecated19.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
       });
@@ -43268,7 +43284,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/button/deprecated.mjs
-  var import_deprecated19 = __toESM(require_deprecated(), 1);
+  var import_deprecated20 = __toESM(require_deprecated(), 1);
   var import_element146 = __toESM(require_element(), 1);
   var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedIconButton({
@@ -43278,7 +43294,7 @@ This message will only show in development mode. It won't appear in production. 
     tooltip,
     ...props
   }, ref) {
-    (0, import_deprecated19.default)("wp.components.IconButton", {
+    (0, import_deprecated20.default)("wp.components.IconButton", {
       since: "5.4",
       alternative: "wp.components.Button",
       version: "6.2"
@@ -43474,7 +43490,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_items_choice_default = MenuItemsChoice;
 
   // packages/components/build-module/navigation/index.mjs
-  var import_deprecated20 = __toESM(require_deprecated(), 1);
+  var import_deprecated21 = __toESM(require_deprecated(), 1);
   var import_element153 = __toESM(require_element(), 1);
   var import_i18n61 = __toESM(require_i18n(), 1);
 
@@ -43735,7 +43751,7 @@ This message will only show in development mode. It won't appear in production. 
     const [slideOrigin, setSlideOrigin] = (0, import_element153.useState)();
     const navigationTree = useCreateNavigationTree();
     const defaultSlideOrigin = (0, import_i18n61.isRTL)() ? "right" : "left";
-    (0, import_deprecated20.default)("wp.components.Navigation (and all subcomponents)", {
+    (0, import_deprecated21.default)("wp.components.Navigation (and all subcomponents)", {
       since: "6.8",
       version: "7.1",
       alternative: "wp.components.Navigator"
@@ -44103,7 +44119,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose63 = __toESM(require_compose(), 1);
   var import_i18n64 = __toESM(require_i18n(), 1);
   var import_element161 = __toESM(require_element(), 1);
-  var import_deprecated21 = __toESM(require_deprecated(), 1);
+  var import_deprecated22 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/search-control/styles.mjs
   function _EMOTION_STRINGIFIED_CSS_ERROR__35() {
@@ -44148,7 +44164,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     if (onClose) {
-      (0, import_deprecated21.default)("`onClose` prop in wp.components.SearchControl", {
+      (0, import_deprecated22.default)("`onClose` prop in wp.components.SearchControl", {
         since: "6.8"
       });
     }
@@ -44435,7 +44451,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_default3 = NavigationMenu;
 
   // packages/components/build-module/navigator/navigator/component.mjs
-  var import_deprecated22 = __toESM(require_deprecated(), 1);
+  var import_deprecated23 = __toESM(require_deprecated(), 1);
   var import_element166 = __toESM(require_element(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_warning7 = __toESM(require_warning(), 1);
@@ -45069,7 +45085,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         options: options2
       }),
       goToParent: (options2) => {
-        (0, import_deprecated22.default)(`wp.components.useNavigator().goToParent`, {
+        (0, import_deprecated23.default)(`wp.components.useNavigator().goToParent`, {
           since: "6.7",
           alternative: "wp.components.useNavigator().goBack"
         });
@@ -45376,10 +45392,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, "Navigator.BackButton");
 
   // packages/components/build-module/navigator/navigator-to-parent-button/component.mjs
-  var import_deprecated23 = __toESM(require_deprecated(), 1);
+  var import_deprecated24 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
-    (0, import_deprecated23.default)("wp.components.NavigatorToParentButton", {
+    (0, import_deprecated24.default)("wp.components.NavigatorToParentButton", {
       since: "6.7",
       alternative: "wp.components.Navigator.BackButton"
     });
@@ -46251,7 +46267,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var radio_default = Radio22;
 
   // packages/components/build-module/radio-group/index.mjs
-  var import_deprecated24 = __toESM(require_deprecated(), 1);
+  var import_deprecated25 = __toESM(require_deprecated(), 1);
   var import_element182 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
@@ -46276,7 +46292,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store: radioStore,
       disabled
     }), [radioStore, disabled]);
-    (0, import_deprecated24.default)("wp.components.__experimentalRadioGroup", {
+    (0, import_deprecated25.default)("wp.components.__experimentalRadioGroup", {
       alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
@@ -48439,7 +48455,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar/index.mjs
   var import_element202 = __toESM(require_element(), 1);
-  var import_deprecated25 = __toESM(require_deprecated(), 1);
+  var import_deprecated26 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/toolbar/toolbar-group/index.mjs
   var import_element200 = __toESM(require_element(), 1);
@@ -48722,7 +48738,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [isVariantDefined]);
     if (!label) {
-      (0, import_deprecated25.default)("Using Toolbar without label prop", {
+      (0, import_deprecated26.default)("Using Toolbar without label prop", {
         since: "5.6",
         alternative: "ToolbarGroup component",
         link: "https://developer.wordpress.org/block-editor/components/toolbar/"
@@ -49818,13 +49834,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/isolated-event-container/index.mjs
   var import_element215 = __toESM(require_element(), 1);
-  var import_deprecated26 = __toESM(require_deprecated(), 1);
+  var import_deprecated27 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
   var IsolatedEventContainer = (0, import_element215.forwardRef)((props, ref) => {
-    (0, import_deprecated26.default)("wp.components.IsolatedEventContainer", {
+    (0, import_deprecated27.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("div", {
@@ -50127,7 +50143,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
   var import_element220 = __toESM(require_element(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_deprecated27 = __toESM(require_deprecated(), 1);
+  var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element220.Component || typeof object === "function";
@@ -50160,7 +50176,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Provider3 = ({
     children
   }) => {
-    (0, import_deprecated27.default)("wp.components.FocusReturnProvider component", {
+    (0, import_deprecated28.default)("wp.components.FocusReturnProvider component", {
       since: "5.7",
       hint: "This provider is not used anymore. You can just remove it from your codebase"
     });

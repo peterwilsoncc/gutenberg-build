@@ -68963,7 +68963,7 @@ var wp;
           return true;
         },
         __experimentalExpandOnFocus: elements && elements.length > 0,
-        __experimentalShowHowTo: !field.isValid?.elements,
+        help: field.isValid?.elements ? "" : void 0,
         displayTransform: (token) => {
           if (typeof token === "object" && "label" in token) {
             return token.label;

@@ -56851,7 +56851,7 @@ ${js}
         value: sanitizedValue,
         suggestions: authorsInfo.names,
         onChange: onAuthorChange,
-        __experimentalShowHowTo: false,
+        help: "",
         __next40pxDefaultSize: true
       }
     );
@@ -56982,7 +56982,7 @@ ${js}
         onInputChange: debouncedSearch,
         suggestions,
         onChange: onParentChange,
-        __experimentalShowHowTo: false
+        help: ""
       }
     );
   }
@@ -57166,7 +57166,7 @@ ${js}
         suggestions,
         displayTransform: import_html_entities11.decodeEntities,
         onChange: onTermsChange,
-        __experimentalShowHowTo: false,
+        help: "",
         __next40pxDefaultSize: true
       }
     ) });
@@ -57233,7 +57233,7 @@ ${js}
             format: formatNamesToValues(newValues, formats)
           });
         },
-        __experimentalShowHowTo: false,
+        help: "",
         __experimentalExpandOnFocus: true,
         __next40pxDefaultSize: true
       }
@@ -72404,7 +72404,7 @@ ${js}
         onInputChange: debouncedSearch,
         suggestions,
         onChange: onTermChange,
-        __experimentalShowHowTo: false,
+        help: "",
         ...props
       }
     );
