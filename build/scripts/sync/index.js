@@ -10265,6 +10265,7 @@ var wp;
 
   // packages/sync/build-module/undo-manager.mjs
   function createUndoManager() {
+    const undoMetaHandlers = /* @__PURE__ */ new Map();
     const yUndoManager = new YMultiDocUndoManager([], {
       // Throttle undo/redo captures after 500ms of inactivity.
       // 500 was selected from subjective local UX testing, shorter timeouts
@@ -10273,6 +10274,20 @@ var wp;
       // Ensure that we only scope the undo/redo to the current editor.
       // The yjs document's clientID is added once it's available.
       trackedOrigins: /* @__PURE__ */ new Set([LOCAL_EDITOR_ORIGIN])
+    });
+    yUndoManager.on("stack-item-added", (event) => {
+      const handlers = undoMetaHandlers.get(event.ydoc);
+      if (!handlers) {
+        return;
+      }
+      handlers.addUndoMeta(event.ydoc, event.stackItem.meta);
+    });
+    yUndoManager.on("stack-item-popped", (event) => {
+      const handlers = undoMetaHandlers.get(event.ydoc);
+      if (!handlers) {
+        return;
+      }
+      handlers.restoreUndoMeta(event.ydoc, event.stackItem.meta);
     });
     return {
       /**
@@ -10299,13 +10314,10 @@ var wp;
         }
         const ydoc = ymap.doc;
         yUndoManager.addToScope(ymap);
-        const { addUndoMeta, restoreUndoMeta } = handlers;
-        yUndoManager.on("stack-item-added", (event) => {
-          addUndoMeta(ydoc, event.stackItem.meta);
-        });
-        yUndoManager.on("stack-item-popped", (event) => {
-          restoreUndoMeta(ydoc, event.stackItem.meta);
-        });
+        if (!undoMetaHandlers.has(ydoc)) {
+          ydoc.on("destroy", () => undoMetaHandlers.delete(ydoc));
+        }
+        undoMetaHandlers.set(ydoc, handlers);
       },
       /**
        * Undo the last recorded changes.
