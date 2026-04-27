@@ -613,7 +613,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 var style_default2 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Header({
-  headingLevel = 2,
+  headingLevel = 1,
   breadcrumbs,
   badges,
   visual,
@@ -726,7 +726,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_i18n = __toESM(require_i18n());
 function Dashboard() {
-  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n.__)("Dashboard"), headingLevel: 1 }, /* @__PURE__ */ React.createElement("div", { className: "dashboard-widgets" }));
+  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n.__)("Dashboard") }, /* @__PURE__ */ React.createElement("div", { className: "dashboard-widgets" }));
 }
 var stage = Dashboard;
 export {

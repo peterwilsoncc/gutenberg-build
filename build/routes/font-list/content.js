@@ -900,7 +900,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 var style_default2 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Header({
-  headingLevel = 2,
+  headingLevel = 1,
   breadcrumbs,
   badges,
   visual,
@@ -15655,40 +15655,32 @@ function FontLibraryPage() {
       }))
     );
   }
-  return /* @__PURE__ */ React.createElement(
-    page_default,
+  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n47.__)("Fonts"), className: "font-library-page" }, /* @__PURE__ */ React.createElement(
+    Tabs3,
     {
-      headingLevel: 1,
-      title: (0, import_i18n47.__)("Fonts"),
-      className: "font-library-page"
+      selectedTabId: activeTab,
+      onSelect: (tabId) => setActiveTab(tabId)
     },
-    /* @__PURE__ */ React.createElement(
-      Tabs3,
+    /* @__PURE__ */ React.createElement("div", { className: "font-library-page__tablist" }, /* @__PURE__ */ React.createElement(Tabs3.TabList, null, tabs.map(({ id, title }) => /* @__PURE__ */ React.createElement(Tabs3.Tab, { key: id, tabId: id }, title)))),
+    tabs.map(({ id }) => /* @__PURE__ */ React.createElement(
+      Tabs3.TabPanel,
       {
-        selectedTabId: activeTab,
-        onSelect: (tabId) => setActiveTab(tabId)
+        key: id,
+        tabId: id,
+        focusable: false,
+        className: "font-library-page__tab-panel"
       },
-      /* @__PURE__ */ React.createElement("div", { className: "font-library-page__tablist" }, /* @__PURE__ */ React.createElement(Tabs3.TabList, null, tabs.map(({ id, title }) => /* @__PURE__ */ React.createElement(Tabs3.Tab, { key: id, tabId: id }, title)))),
-      tabs.map(({ id }) => /* @__PURE__ */ React.createElement(
-        Tabs3.TabPanel,
+      /* @__PURE__ */ React.createElement(
+        FontLibrary,
         {
-          key: id,
-          tabId: id,
-          focusable: false,
-          className: "font-library-page__tab-panel"
-        },
-        /* @__PURE__ */ React.createElement(
-          FontLibrary,
-          {
-            value: user,
-            baseValue: base,
-            onChange: setUser,
-            activeTab: id
-          }
-        )
-      ))
-    )
-  );
+          value: user,
+          baseValue: base,
+          onChange: setUser,
+          activeTab: id
+        }
+      )
+    ))
+  ));
 }
 function Stage() {
   return /* @__PURE__ */ React.createElement(FontLibraryPage, null);

@@ -4437,7 +4437,7 @@ var wp;
   }
   var style_default11 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
   function Header3({
-    headingLevel = 2,
+    headingLevel = 1,
     breadcrumbs,
     badges,
     visual,
@@ -43536,7 +43536,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onChange = (edits) => {
       editEntityRecord("root", "site", void 0, edits);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(page_default2, { title: (0, import_i18n122.__)("Identity"), hasPadding: true, children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(page_default2, { title: (0, import_i18n122.__)("Identity"), headingLevel: 2, hasPadding: true, children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
       DataForm,
       {
         data,
@@ -43661,6 +43661,7 @@ If there's a particular need for this, please submit a feature request at https:
         ) : null,
         className: "edit-site-styles",
         title: (0, import_i18n123.__)("Styles"),
+        headingLevel: 2,
         children: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
           GlobalStylesUIWrapper,
           {
@@ -46475,6 +46476,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: "edit-site-page-patterns-dataviews",
         title,
+        headingLevel: 2,
         subTitle: description,
         actions: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
           PatternsActions,
@@ -48443,6 +48445,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: "edit-site-page-templates",
         title: (0, import_i18n149.__)("Templates"),
+        headingLevel: 2,
         actions: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(add_new_template_default, {}),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
@@ -49927,6 +49930,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: "edit-site-page-templates",
         title: (0, import_i18n154.__)("Templates"),
+        headingLevel: 2,
         actions: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(add_new_template_legacy_default, {}),
         children: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
           dataviews_default,
@@ -50576,6 +50580,7 @@ If there's a particular need for this, please submit a feature request at https:
       page_default2,
       {
         title: labels?.name,
+        headingLevel: 2,
         actions: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(import_jsx_runtime312.Fragment, { children: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ (0, import_jsx_runtime312.jsxs)(import_jsx_runtime312.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
             import_components159.Button,
