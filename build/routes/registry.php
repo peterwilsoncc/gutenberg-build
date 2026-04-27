@@ -134,6 +134,13 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'taxonomy-edit',
+		'path'        => '/edit/$id',
+		'page'        => 'taxonomies',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'template',
 		'path'        => '/templates',
 		'page'        => 'site-editor-v2',
