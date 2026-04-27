@@ -9413,6 +9413,62 @@ var wp;
 
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
   var POLLING_MANAGER_ORIGIN = "polling-manager";
+  function isForbiddenError(error) {
+    return error?.data?.status === 403;
+  }
+  function identifyForbiddenRoom(error, rooms) {
+    const message = typeof error.message === "string" ? error.message : "";
+    const sortedRooms = [...rooms].sort((a, b) => b.length - a.length);
+    for (const room of sortedRooms) {
+      if (message.includes(room)) {
+        return room;
+      }
+    }
+    return null;
+  }
+  function handleForbiddenError(error, requestedRooms) {
+    const forbiddenRoom = identifyForbiddenRoom(
+      error,
+      requestedRooms.map((r) => r.room)
+    );
+    if (forbiddenRoom) {
+      const state = roomStates.get(forbiddenRoom);
+      if (state) {
+        state.log(
+          "Permission denied, unregistering room",
+          { error },
+          "error",
+          true
+          // force
+        );
+        unregisterRoom(forbiddenRoom, { sendDisconnectSignal: false });
+      }
+      for (const room of requestedRooms) {
+        if (room.room === forbiddenRoom || !roomStates.has(room.room)) {
+          continue;
+        }
+        const remainingState = roomStates.get(room.room);
+        if (room.updates.length > 0) {
+          remainingState.updateQueue.restore(room.updates);
+        }
+      }
+    } else {
+      const rooms = [...roomStates.keys()];
+      for (const room of rooms) {
+        const state = roomStates.get(room);
+        if (state) {
+          state.log(
+            "Permission denied, unregistering room",
+            { error },
+            "error",
+            true
+            // force
+          );
+          unregisterRoom(room, { sendDisconnectSignal: false });
+        }
+      }
+    }
+  }
   var roomStates = /* @__PURE__ */ new Map();
   function createDeprecatedCompactionUpdate(updates) {
     const mergeable = updates.filter(
@@ -9676,47 +9732,55 @@ var wp;
           pollInterval = POLLING_INTERVAL_BACKGROUND_TAB_IN_MS;
         }
       } catch (error) {
-        consecutiveFailures++;
-        const retrySchedule = hasCollaborators ? ERROR_RETRY_DELAYS_WITH_COLLABORATORS_MS : ERROR_RETRY_DELAYS_SOLO_MS;
-        if (consecutiveFailures <= retrySchedule.length) {
-          pollInterval = retrySchedule[consecutiveFailures - 1];
+        if (isForbiddenError(error)) {
+          handleForbiddenError(error, payload.rooms);
+          if (roomStates.size === 0) {
+            isPolling = false;
+            return;
+          }
         } else {
-          pollInterval = DISCONNECT_DIALOG_RETRY_MS;
-        }
-        if (isManualRetry) {
-          pollInterval = MANUAL_RETRY_INTERVAL_MS;
-          isManualRetry = false;
-        }
-        for (const room of payload.rooms) {
-          if (!roomStates.has(room.room)) {
-            continue;
+          consecutiveFailures++;
+          const retrySchedule = hasCollaborators ? ERROR_RETRY_DELAYS_WITH_COLLABORATORS_MS : ERROR_RETRY_DELAYS_SOLO_MS;
+          if (consecutiveFailures <= retrySchedule.length) {
+            pollInterval = retrySchedule[consecutiveFailures - 1];
+          } else {
+            pollInterval = DISCONNECT_DIALOG_RETRY_MS;
           }
-          const state = roomStates.get(room.room);
-          if (room.updates.length > 0 && state.endCursor > 0) {
-            state.updateQueue.clear();
-            state.updateQueue.add(state.createCompactionUpdate());
-          } else if (room.updates.length > 0) {
-            state.updateQueue.restore(room.updates);
+          if (isManualRetry) {
+            pollInterval = MANUAL_RETRY_INTERVAL_MS;
+            isManualRetry = false;
           }
-          state.log(
-            "Error posting sync update, will retry with backoff",
-            { error, nextPoll: pollInterval },
-            "error",
-            true
-            // force
-          );
-        }
-        if (!isUnloadPending) {
-          const backgroundRetriesFailed = consecutiveFailures > retrySchedule.length;
-          roomStates.forEach((state) => {
-            state.onStatusChange({
-              status: "disconnected",
-              canManuallyRetry: true,
-              consecutiveFailures,
-              backgroundRetriesFailed,
-              willAutoRetryInMs: pollInterval
+          for (const room of payload.rooms) {
+            if (!roomStates.has(room.room)) {
+              continue;
+            }
+            const state = roomStates.get(room.room);
+            if (room.updates.length > 0 && state.endCursor > 0) {
+              state.updateQueue.clear();
+              state.updateQueue.add(state.createCompactionUpdate());
+            } else if (room.updates.length > 0) {
+              state.updateQueue.restore(room.updates);
+            }
+            state.log(
+              "Error posting sync update, will retry with backoff",
+              { error, nextPoll: pollInterval },
+              "error",
+              true
+              // force
+            );
+          }
+          if (!isUnloadPending) {
+            const backgroundRetriesFailed = consecutiveFailures > retrySchedule.length;
+            roomStates.forEach((state) => {
+              state.onStatusChange({
+                status: "disconnected",
+                canManuallyRetry: true,
+                consecutiveFailures,
+                backgroundRetriesFailed,
+                willAutoRetryInMs: pollInterval
+              });
             });
-          });
+          }
         }
       }
       pollingTimeoutId = setTimeout(poll, pollInterval);
@@ -9798,19 +9862,21 @@ var wp;
       poll();
     }
   }
-  function unregisterRoom(room) {
+  function unregisterRoom(room, { sendDisconnectSignal = true } = {}) {
     const state = roomStates.get(room);
     if (state) {
-      const rooms = [
-        {
-          after: 0,
-          awareness: null,
-          client_id: state.clientId,
-          room,
-          updates: []
-        }
-      ];
-      postSyncUpdateNonBlocking({ rooms });
+      if (sendDisconnectSignal) {
+        const rooms = [
+          {
+            after: 0,
+            awareness: null,
+            client_id: state.clientId,
+            room,
+            updates: []
+          }
+        ];
+        postSyncUpdateNonBlocking({ rooms });
+      }
       state.unregister();
       roomStates.delete(room);
     }
