@@ -36750,8 +36750,11 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio) {
-    const dx = imageSize.width > 0 ? (clientX - drag2.startX) / imageSize.width : 0;
-    const dy = imageSize.height > 0 ? (clientY - drag2.startY) / imageSize.height : 0;
+    if (normalizedRatio <= 0 || imageSize.width <= 0 || imageSize.height <= 0) {
+      return { ...drag2.startRect };
+    }
+    const dx = (clientX - drag2.startX) / imageSize.width;
+    const dy = (clientY - drag2.startY) / imageSize.height;
     const s3 = drag2.startRect;
     const handle = drag2.handle;
     const anchorX = handle === "nw" || handle === "sw" ? s3.x + s3.width : s3.x;
@@ -36766,7 +36769,8 @@ If there's a particular need for this, please submit a feature request at https:
     distH = Math.max(distH, MIN_CROP_SIZE);
     const pixelDistW = distW * imageSize.width;
     const pixelDistH = distH * imageSize.height;
-    if (pixelDistW / pixelDistH > normalizedRatio) {
+    const pixelRatio = normalizedRatio * imageSize.width / imageSize.height;
+    if (pixelDistW / pixelDistH > pixelRatio) {
       distH = distW / normalizedRatio;
     } else {
       distW = distH * normalizedRatio;
