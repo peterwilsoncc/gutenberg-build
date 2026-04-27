@@ -10533,7 +10533,6 @@ var Popup = (0, import_element30.forwardRef)(function TooltipPopup3({
   sideOffset = 4,
   children,
   className,
-  style,
   ...props
 }, ref) {
   const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
@@ -10542,17 +10541,12 @@ var Popup = (0, import_element30.forwardRef)(function TooltipPopup3({
       align,
       side,
       sideOffset,
-      style,
-      className: clsx_default(
-        resets_default3["box-sizing"],
-        className,
-        style_default11.positioner
-      ),
+      className: clsx_default(resets_default3["box-sizing"], style_default11.positioner),
       children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(ThemeProvider, { color: { bg: "#1e1e1e" }, children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
         index_parts_exports2.Popup,
         {
           ref,
-          className: style_default11.popup,
+          className: clsx_default(style_default11.popup, className),
           ...props,
           children
         }
