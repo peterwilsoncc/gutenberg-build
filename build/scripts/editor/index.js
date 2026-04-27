@@ -36791,6 +36791,84 @@ If there's a particular need for this, please submit a feature request at https:
     const newY = dirY > 0 ? anchorY : anchorY - distH;
     return { x: newX, y: newY, width: distW, height: distH };
   }
+  function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds) {
+    const s3 = drag2.startRect;
+    const pixelW = s3.width * imageSize.width;
+    const pixelH = s3.height * imageSize.height;
+    if (pixelH <= 0 || pixelW <= 0) {
+      return computeFreeResizeRect(
+        drag2,
+        clientX,
+        clientY,
+        imageSize,
+        bounds
+      );
+    }
+    const normalizedRatio = s3.width / s3.height;
+    const handle = drag2.handle;
+    if (handle === "nw" || handle === "ne" || handle === "sw" || handle === "se") {
+      return computeLockedResizeRect(
+        drag2,
+        clientX,
+        clientY,
+        imageSize,
+        bounds,
+        normalizedRatio
+      );
+    }
+    const free = computeFreeResizeRect(
+      drag2,
+      clientX,
+      clientY,
+      imageSize,
+      bounds
+    );
+    if (handle === "n" || handle === "s") {
+      let newHeight2 = free.height;
+      let newWidth2 = newHeight2 * normalizedRatio;
+      const centerX = s3.x + s3.width / 2;
+      const maxWidth = Math.min(centerX - bounds.minX, bounds.maxX - centerX) * 2;
+      if (newWidth2 > maxWidth) {
+        newWidth2 = maxWidth;
+        newHeight2 = newWidth2 / normalizedRatio;
+      }
+      const minHeight = Math.max(
+        MIN_CROP_SIZE,
+        MIN_CROP_SIZE / normalizedRatio
+      );
+      if (newHeight2 < minHeight) {
+        newHeight2 = minHeight;
+        newWidth2 = newHeight2 * normalizedRatio;
+      }
+      const newY = handle === "n" ? s3.y + s3.height - newHeight2 : s3.y;
+      return {
+        x: centerX - newWidth2 / 2,
+        y: newY,
+        width: newWidth2,
+        height: newHeight2
+      };
+    }
+    let newWidth = free.width;
+    let newHeight = newWidth / normalizedRatio;
+    const centerY = s3.y + s3.height / 2;
+    const maxHeight = Math.min(centerY - bounds.minY, bounds.maxY - centerY) * 2;
+    if (newHeight > maxHeight) {
+      newHeight = maxHeight;
+      newWidth = newHeight * normalizedRatio;
+    }
+    const minWidth = Math.max(MIN_CROP_SIZE, MIN_CROP_SIZE * normalizedRatio);
+    if (newWidth < minWidth) {
+      newWidth = minWidth;
+      newHeight = newWidth / normalizedRatio;
+    }
+    const newX = handle === "w" ? s3.x + s3.width - newWidth : s3.x;
+    return {
+      x: newX,
+      y: centerY - newHeight / 2,
+      width: newWidth,
+      height: newHeight
+    };
+  }
 
   // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
@@ -36896,10 +36974,12 @@ If there's a particular need for this, please submit a feature request at https:
         let rafId = 0;
         let latestX = event.clientX;
         let latestY = event.clientY;
+        let latestShift = event.shiftKey;
         const onMove = (e3) => {
           const pe = e3;
           latestX = pe.clientX;
           latestY = pe.clientY;
+          latestShift = pe.shiftKey;
           if (rafId) {
             return;
           }
@@ -36909,7 +36989,18 @@ If there's a particular need for this, please submit a feature request at https:
             if (!h3) {
               return;
             }
-            const newRect = h3.hasLockedRatio ? h3.computeLockedRect(drag2, latestX, latestY) : h3.computeFreeRect(drag2, latestX, latestY);
+            let newRect;
+            if (h3.hasLockedRatio) {
+              newRect = h3.computeLockedRect(drag2, latestX, latestY);
+            } else if (latestShift) {
+              newRect = h3.computeShiftLockedRect(
+                drag2,
+                latestX,
+                latestY
+              );
+            } else {
+              newRect = h3.computeFreeRect(drag2, latestX, latestY);
+            }
             h3.onCropChange(newRect);
           });
         };
@@ -36951,10 +37042,21 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [imageSize, bounds, normalizedRatio]
     );
+    const computeShiftLockedRect = (0, import_element124.useCallback)(
+      (drag2, clientX, clientY) => computeShiftLockedResizeRect(
+        drag2,
+        clientX,
+        clientY,
+        imageSize,
+        bounds
+      ),
+      [imageSize, bounds]
+    );
     latestHandlersRef.current = {
       hasLockedRatio,
       computeLockedRect,
       computeFreeRect,
+      computeShiftLockedRect,
       onCropChange,
       onResizeEnd
     };
