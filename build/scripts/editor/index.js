@@ -37889,13 +37889,11 @@ If there's a particular need for this, please submit a feature request at https:
   function HeaderActions({
     isSaving,
     hasMedia,
-    hasEdits,
+    hasChanges,
     onCancel,
     onSave
   }) {
-    const controller = useCropper();
-    const { isDirty } = controller;
-    const saveDisabled = isSaving || !hasMedia || !isDirty && !hasEdits;
+    const saveDisabled = isSaving || !hasMedia || !hasChanges;
     return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(
       import_components89.Flex,
       {
@@ -37921,50 +37919,38 @@ If there's a particular need for this, please submit a feature request at https:
             {
               size: "compact",
               variant: "primary",
-              onClick: () => onSave(controller),
+              onClick: onSave,
               isBusy: isSaving,
               disabled: saveDisabled,
               accessibleWhenDisabled: true,
               children: (0, import_i18n123.__)("Save")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+            import_components89.Button,
+            {
+              size: "compact",
+              icon: close_default,
+              label: (0, import_i18n123.__)("Close"),
+              onClick: onCancel,
+              disabled: isSaving,
+              accessibleWhenDisabled: true
             }
           )
         ]
       }
     );
   }
-  function MediaEditorModal({
-    fields: fields3 = [],
-    aspectRatioPresets
+  function MediaEditorModalContent({
+    fields: fields3,
+    id,
+    media,
+    hasEdits,
+    aspectRatioPresets,
+    onUpdate
   }) {
-    const { isModalOpen, id, onUpdate } = (0, import_data39.useSelect)((select7) => {
-      const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2 } = select7(store);
-      return {
-        isModalOpen: isOpen2(),
-        id: getId2(),
-        onUpdate: getOnUpdate2()
-      };
-    }, []);
-    const { media, hasEdits } = (0, import_data39.useSelect)(
-      (select7) => {
-        if (!id) {
-          return { media: null, hasEdits: false };
-        }
-        const { getEditedEntityRecord, hasEditsForEntityRecord } = select7(import_core_data25.store);
-        return {
-          media: getEditedEntityRecord(
-            "postType",
-            "attachment",
-            id
-          ),
-          hasEdits: hasEditsForEntityRecord(
-            "postType",
-            "attachment",
-            id
-          )
-        };
-      },
-      [id]
-    );
+    const cropper = useCropper();
+    const hasChanges = cropper.isDirty || hasEdits;
     const registry = (0, import_data39.useRegistry)();
     const {
       clearEntityRecordEdits,
@@ -37974,6 +37960,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = (0, import_data39.useDispatch)(import_core_data25.store);
     const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data39.useDispatch)(store);
     const [isSaving, setIsSaving] = (0, import_element127.useState)(false);
+    const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element127.useState)(false);
     const [aspectRatioValue, setAspectRatioValue] = (0, import_element127.useState)("0");
     const [freeformCrop, setFreeformCrop] = (0, import_element127.useState)(true);
     (0, import_element127.useEffect)(() => {
@@ -38036,23 +38023,30 @@ If there's a particular need for this, please submit a feature request at https:
         detailsTab
       ];
     }, [isImage, aspectRatioValue, freeformCrop, aspectRatioPresets]);
-    if (!isModalOpen || !id) {
-      return null;
-    }
     const handleChange = (updates) => {
       editEntityRecord("postType", "attachment", id, updates);
     };
-    const handleCancel = () => {
+    const discardAndClose = () => {
       clearEntityRecordEdits("postType", "attachment", id);
       closeMediaEditorModal2();
     };
-    const handleSave = async (controller) => {
+    const handleRequestClose = () => {
+      if (isSaving) {
+        return;
+      }
+      if (hasChanges) {
+        setIsDiscardDialogOpen(true);
+        return;
+      }
+      discardAndClose();
+    };
+    const handleSave = async () => {
       setIsSaving(true);
       try {
         let saved;
-        const modifiers = controller.isDirty && controller.state.image ? buildModifiers(controller.state, {
-          width: controller.state.image.naturalWidth,
-          height: controller.state.image.naturalHeight
+        const modifiers = cropper.isDirty && cropper.state.image ? buildModifiers(cropper.state, {
+          width: cropper.state.image.naturalWidth,
+          height: cropper.state.image.naturalHeight
         }) : [];
         if (modifiers.length > 0) {
           const pendingEdits = registry.select(import_core_data25.store).getEntityRecordNonTransientEdits(
@@ -38103,60 +38097,141 @@ If there's a particular need for this, please submit a feature request at https:
         setIsSaving(false);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(CropperProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
       import_components89.Modal,
       {
         className: "media-editor-modal",
         title: (0, import_i18n123.__)("Edit media"),
         size: "fill",
-        onRequestClose: handleCancel,
+        isDismissible: false,
+        shouldCloseOnClickOutside: !hasChanges && !isSaving,
+        onKeyDown: (event) => {
+          if (event.code !== "Escape" && event.key !== "Escape") {
+            return;
+          }
+          if (isSaving) {
+            event.preventDefault();
+            return;
+          }
+          if (hasChanges) {
+            event.preventDefault();
+            setIsDiscardDialogOpen(true);
+          }
+        },
+        onRequestClose: handleRequestClose,
         headerActions: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
           HeaderActions,
           {
             isSaving,
             hasMedia: !!media,
-            hasEdits,
-            onCancel: handleCancel,
+            hasChanges,
+            onCancel: handleRequestClose,
             onSave: handleSave
           }
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(
           MediaEditorProvider,
           {
             value: media ?? void 0,
             onChange: handleChange,
             settings: { fields: fields3 },
-            children: !media ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components89.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(import_jsx_runtime240.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaEditorModalSidebar, { tabs }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
-                interface_skeleton_default,
-                {
-                  className: "media-editor-modal__skeleton",
-                  content: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", { className: "media-editor-modal__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
-                    MediaEditorCanvas,
-                    {
-                      aspectRatio: resolveAspectRatio(
-                        aspectRatioValue,
-                        imageAspectRatio
-                      ),
-                      freeformCrop
-                    }
-                  ) : /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaPreview2, {}) }),
-                  footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
-                    MediaEditorToolbar,
-                    {
-                      onReset: () => {
-                        setAspectRatioValue("0");
-                        setFreeformCrop(true);
+            children: [
+              !media ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components89.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(import_jsx_runtime240.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaEditorModalSidebar, { tabs }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+                  interface_skeleton_default,
+                  {
+                    className: "media-editor-modal__skeleton",
+                    content: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", { className: "media-editor-modal__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+                      MediaEditorCanvas,
+                      {
+                        aspectRatio: resolveAspectRatio(
+                          aspectRatioValue,
+                          imageAspectRatio
+                        ),
+                        freeformCrop
                       }
-                    }
-                  ) : void 0,
-                  sidebar: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+                    ) : /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaPreview2, {}) }),
+                    footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+                      MediaEditorToolbar,
+                      {
+                        onReset: () => {
+                          setAspectRatioValue("0");
+                          setFreeformCrop(true);
+                        }
+                      }
+                    ) : void 0,
+                    sidebar: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+                import_components89.__experimentalConfirmDialog,
+                {
+                  isOpen: isDiscardDialogOpen,
+                  confirmButtonText: (0, import_i18n123.__)("Discard"),
+                  cancelButtonText: (0, import_i18n123.__)("Keep editing"),
+                  onCancel: () => setIsDiscardDialogOpen(false),
+                  onConfirm: () => {
+                    setIsDiscardDialogOpen(false);
+                    discardAndClose();
+                  },
+                  children: (0, import_i18n123.__)(
+                    "Are you sure you want to discard your unsaved changes?"
+                  )
                 }
               )
-            ] })
+            ]
           }
         )
+      }
+    );
+  }
+  function MediaEditorModal({
+    fields: fields3 = [],
+    aspectRatioPresets
+  }) {
+    const { isModalOpen, id, onUpdate } = (0, import_data39.useSelect)((select7) => {
+      const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2 } = select7(store);
+      return {
+        isModalOpen: isOpen2(),
+        id: getId2(),
+        onUpdate: getOnUpdate2()
+      };
+    }, []);
+    const { media, hasEdits } = (0, import_data39.useSelect)(
+      (select7) => {
+        if (!id) {
+          return { media: null, hasEdits: false };
+        }
+        const { getEditedEntityRecord, hasEditsForEntityRecord } = select7(import_core_data25.store);
+        return {
+          media: getEditedEntityRecord(
+            "postType",
+            "attachment",
+            id
+          ),
+          hasEdits: hasEditsForEntityRecord(
+            "postType",
+            "attachment",
+            id
+          )
+        };
+      },
+      [id]
+    );
+    if (!isModalOpen || !id) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(CropperProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+      MediaEditorModalContent,
+      {
+        fields: fields3,
+        id,
+        media,
+        hasEdits,
+        aspectRatioPresets,
+        onUpdate
       }
     ) }, media?.id ?? "none");
   }
