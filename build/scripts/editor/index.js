@@ -53654,6 +53654,7 @@ var wp;
   function SyncConnectionErrorModal() {
     const [hasInitialized, setHasInitialized] = (0, import_element166.useState)(false);
     const [showModal, setShowModal] = (0, import_element166.useState)(false);
+    const [isManualRetryAvailable, setIsManualRetryAvailable] = (0, import_element166.useState)(false);
     const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data202.useSelect)(
       (selectFn) => {
         const currentPostType = selectFn(store).getCurrentPostType();
@@ -53678,6 +53679,14 @@ var wp;
       }, INITIAL_DISCONNECTED_DEBOUNCE_MS);
       return () => clearTimeout(timeout);
     }, []);
+    (0, import_element166.useEffect)(() => {
+      if ("connecting" === connectionStatus?.status) {
+        return;
+      }
+      setIsManualRetryAvailable(
+        connectionStatus !== null && "canManuallyRetry" in connectionStatus && connectionStatus.canManuallyRetry === true
+      );
+    }, [connectionStatus]);
     const canRetry = connectionStatus && "disconnected" === connectionStatus.status && (connectionStatus.canManuallyRetry || connectionStatus.willAutoRetryInMs);
     (0, import_element166.useEffect)(() => {
       if ("connected" === connectionStatus?.status) {
@@ -53699,7 +53708,7 @@ var wp;
     ) !== false) {
       return null;
     }
-    const manualRetry = connectionStatus && "canManuallyRetry" in connectionStatus && connectionStatus.canManuallyRetry ? () => {
+    const manualRetry = isManualRetryAvailable ? () => {
       onManualRetry();
       retrySyncConnection();
     } : void 0;
