@@ -53244,6 +53244,7 @@ var wp;
       import_components191.RangeControl,
       {
         __next40pxDefaultSize: true,
+        "aria-valuetext": renderTooltipContent(selectedIndex),
         className: "editor-revisions-header__slider",
         hideLabelFromVision: true,
         label: (0, import_i18n214.__)("Revision"),
@@ -54358,7 +54359,7 @@ var wp;
         {
           className: "revision-diff-markers",
           role: "navigation",
-          "aria-label": (0, import_i18n219.__)("Diff markers"),
+          "aria-label": (0, import_i18n219.__)("Document changes"),
           children: isMounted && diffBlocks.map(({ clientId, status }) => /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
             DiffMarkerButton,
             {
