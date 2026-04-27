@@ -2682,6 +2682,12 @@ var wp;
     createAwareness: (ydoc) => new BaseAwareness(ydoc),
     getChangesFromCRDTDoc: defaultGetChangesFromCRDTDoc
   };
+  var defaultCollectionSyncConfig = {
+    applyChangesToCRDTDoc: () => {
+    },
+    getChangesFromCRDTDoc: () => ({}),
+    shouldSync: (_, objectId) => null === objectId
+  };
   function getRawValue(value) {
     if ("string" === typeof value) {
       return value;
@@ -2821,7 +2827,8 @@ var wp;
       baseURLParams: { context: "edit" },
       plural: "comments",
       label: (0, import_i18n.__)("Comment"),
-      supportsPagination: true
+      supportsPagination: true,
+      syncConfig: defaultCollectionSyncConfig
     },
     {
       name: "menu",
@@ -2915,13 +2922,7 @@ var wp;
       plural: "icons",
       key: "name"
     }
-  ].map((entity2) => {
-    const syncEnabledRootEntities = /* @__PURE__ */ new Set(["comment"]);
-    if (syncEnabledRootEntities.has(entity2.name)) {
-      entity2.syncConfig = defaultSyncConfig;
-    }
-    return entity2;
-  });
+  ];
   var deprecatedEntities = {
     root: {
       media: {

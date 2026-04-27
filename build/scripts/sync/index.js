@@ -10437,6 +10437,10 @@ var wp;
         log("loadEntity", "already loaded", entityId);
         return;
       }
+      if (false === syncConfig.shouldSync?.(objectType, objectId)) {
+        log("loadEntity", "shouldSync false, skipping", entityId);
+        return;
+      }
       log("loadEntity", "loading", entityId);
       handlers = {
         addUndoMeta: debugWrap(handlers.addUndoMeta),
@@ -10529,6 +10533,10 @@ var wp;
       }
       if (collectionStates.has(objectType)) {
         log("loadCollection", "already loaded", entityId);
+        return;
+      }
+      if (false === syncConfig.shouldSync?.(objectType, null)) {
+        log("loadCollection", "shouldSync false, skipping", entityId);
         return;
       }
       log("loadCollection", "loading", entityId);
