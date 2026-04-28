@@ -68911,7 +68911,7 @@ var wp;
     markWhenOptional,
     validity
   }) {
-    const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
+    const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const disabled2 = field.isDisabled({ item: data, field });
     const { elements, isLoading } = useElements({
@@ -68963,7 +68963,7 @@ var wp;
           return true;
         },
         __experimentalExpandOnFocus: elements && elements.length > 0,
-        help: field.isValid?.elements ? "" : void 0,
+        help: description ?? (field.isValid?.elements ? "" : void 0),
         displayTransform: (token) => {
           if (typeof token === "object" && "label" in token) {
             return token.label;
