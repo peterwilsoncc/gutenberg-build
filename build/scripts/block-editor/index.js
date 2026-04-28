@@ -37695,10 +37695,10 @@ var wp;
     });
   }
 
-  // packages/block-editor/build-module/components/collab/block-comment-icon-slot.mjs
+  // packages/block-editor/build-module/components/collab/note-icon-slot.mjs
   var import_components83 = __toESM(require_components(), 1);
-  var CommentIconSlotFill = (0, import_components83.createSlotFill)(/* @__PURE__ */ Symbol("CommentIconSlotFill"));
-  var block_comment_icon_slot_default = CommentIconSlotFill;
+  var NoteIconSlotFill = (0, import_components83.createSlotFill)(/* @__PURE__ */ Symbol("NoteIconSlotFill"));
+  var note_icon_slot_default = NoteIconSlotFill;
 
   // packages/block-editor/build-module/components/block-settings-menu/block-html-convert-button.mjs
   var import_i18n75 = __toESM(require_i18n(), 1);
@@ -38870,7 +38870,7 @@ var wp;
                     )
                   ] }),
                   canEdit && count === 1 && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
-                    block_comment_icon_slot_default.Slot,
+                    note_icon_slot_default.Slot,
                     {
                       fillProps: {
                         clientId: firstBlockClientId,
@@ -38926,18 +38926,18 @@ var wp;
   }
   var block_settings_dropdown_default = BlockSettingsDropdown;
 
-  // packages/block-editor/build-module/components/collab/block-comment-icon-toolbar-slot.mjs
+  // packages/block-editor/build-module/components/collab/note-icon-toolbar-slot.mjs
   var import_components97 = __toESM(require_components(), 1);
-  var CommentIconToolbarSlotFill = (0, import_components97.createSlotFill)(
-    /* @__PURE__ */ Symbol("CommentIconToolbarSlotFill")
+  var NoteIconToolbarSlotFill = (0, import_components97.createSlotFill)(
+    /* @__PURE__ */ Symbol("NoteIconToolbarSlotFill")
   );
-  var block_comment_icon_toolbar_slot_default = CommentIconToolbarSlotFill;
+  var note_icon_toolbar_slot_default = NoteIconToolbarSlotFill;
 
   // packages/block-editor/build-module/components/block-settings-menu/index.mjs
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
   function BlockSettingsMenu({ clientIds, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_components98.ToolbarGroup, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(block_comment_icon_toolbar_slot_default.Slot, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(note_icon_toolbar_slot_default.Slot, {}),
       /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_components98.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
         block_settings_dropdown_default,
         {
@@ -78118,8 +78118,8 @@ var wp;
     BlockStyleVariationOverridesWithConfig,
     setBackgroundStyleDefaults: setBackgroundStyleDefaults2,
     sectionRootClientIdKey,
-    CommentIconSlotFill: block_comment_icon_slot_default,
-    CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot_default,
+    NoteIconSlotFill: note_icon_slot_default,
+    NoteIconToolbarSlotFill: note_icon_toolbar_slot_default,
     mediaEditKey,
     getMediaSelectKey,
     deviceTypeKey,
