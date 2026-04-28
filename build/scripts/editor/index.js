@@ -76647,6 +76647,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_components248.RangeControl,
       {
         __next40pxDefaultSize: true,
+        "aria-valuetext": renderTooltipContent(selectedIndex),
         className: "editor-revisions-header__slider",
         hideLabelFromVision: true,
         label: (0, import_i18n278.__)("Revision"),
@@ -77753,7 +77754,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           className: "revision-diff-markers",
           role: "navigation",
-          "aria-label": (0, import_i18n283.__)("Diff markers"),
+          "aria-label": (0, import_i18n283.__)("Document changes"),
           children: isMounted && diffBlocks.map(({ clientId, status }) => /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
             DiffMarkerButton,
             {
