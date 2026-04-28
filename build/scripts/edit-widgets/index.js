@@ -1155,28 +1155,6 @@ var wp;
   ComplementaryArea.Slot = ComplementaryAreaSlot;
   var complementary_area_default = ComplementaryArea;
 
-  // packages/admin-ui/build-module/navigable-region/index.mjs
-  var import_element3 = __toESM(require_element(), 1);
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-  var NavigableRegion = (0, import_element3.forwardRef)(
-    ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
-        Tag,
-        {
-          ref,
-          className: clsx_default("admin-ui-navigable-region", className),
-          "aria-label": ariaLabel,
-          role: "region",
-          tabIndex: "-1",
-          ...props,
-          children
-        }
-      );
-    }
-  );
-  NavigableRegion.displayName = "NavigableRegion";
-  var navigable_region_default = NavigableRegion;
-
   // node_modules/@base-ui/utils/esm/useRefWithInit.js
   var React = __toESM(require_react(), 1);
   var UNINITIALIZED = {};
@@ -1646,7 +1624,7 @@ var wp;
   }
 
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-  var import_element4 = __toESM(require_element(), 1);
+  var import_element3 = __toESM(require_element(), 1);
   if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='c46e8cb841']")) {
     const style = document.createElement("style");
     style.setAttribute("data-wp-hash", "c46e8cb841");
@@ -1654,7 +1632,7 @@ var wp;
     document.head.appendChild(style);
   }
   var style_default = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-  var VisuallyHidden = (0, import_element4.forwardRef)(
+  var VisuallyHidden = (0, import_element3.forwardRef)(
     function VisuallyHidden2({ render, ...restProps }, ref) {
       const element = useRender({
         render,
@@ -1671,6 +1649,28 @@ var wp;
       return element;
     }
   );
+
+  // packages/admin-ui/build-module/navigable-region/index.mjs
+  var import_element4 = __toESM(require_element(), 1);
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  var NavigableRegion = (0, import_element4.forwardRef)(
+    ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
+      return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+        Tag,
+        {
+          ref,
+          className: clsx_default("admin-ui-navigable-region", className),
+          "aria-label": ariaLabel,
+          role: "region",
+          tabIndex: "-1",
+          ...props,
+          children
+        }
+      );
+    }
+  );
+  NavigableRegion.displayName = "NavigableRegion";
+  var navigable_region_default = NavigableRegion;
 
   // packages/interface/build-module/components/interface-skeleton/index.mjs
   var import_element5 = __toESM(require_element(), 1);
