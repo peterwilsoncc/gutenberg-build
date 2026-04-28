@@ -1104,6 +1104,7 @@ svg.components-checkbox-control__indeterminate {
   display: inline-block;
   width: 100%;
   min-width: 188px;
+  isolation: isolate;
 }
 .components-circular-option-picker .components-circular-option-picker__custom-clear-wrapper {
   display: flex;
