@@ -1795,24 +1795,26 @@ function ConnectorsPage() {
           "Connectors appear here when you install plugins that use external services. Each plugin registers the API keys it needs, and you manage them all in one place."
         ))),
         /* @__PURE__ */ React.createElement(import_components4.Button, { variant: "secondary", href: "plugin-install.php" }, (0, import_i18n4.__)("Learn more"))
-      ) : /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { spacing: 3 }, /* @__PURE__ */ React.createElement(AiPluginCallout, null), connectors.map((connector) => {
-        if (connector.render) {
-          return /* @__PURE__ */ React.createElement(
-            connector.render,
-            {
-              key: connector.slug,
-              slug: connector.slug,
-              name: connector.name,
-              description: connector.description,
-              type: connector.type,
-              logo: connector.logo,
-              authentication: connector.authentication,
-              plugin: connector.plugin
-            }
-          );
+      ) : /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { spacing: 3 }, /* @__PURE__ */ React.createElement(AiPluginCallout, null), /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { spacing: 3, role: "list" }, connectors.map(
+        (connector) => {
+          if (connector.render) {
+            return /* @__PURE__ */ React.createElement(
+              connector.render,
+              {
+                key: connector.slug,
+                slug: connector.slug,
+                name: connector.name,
+                description: connector.description,
+                type: connector.type,
+                logo: connector.logo,
+                authentication: connector.authentication,
+                plugin: connector.plugin
+              }
+            );
+          }
+          return null;
         }
-        return null;
-      })),
+      ))),
       canInstallPlugins && /* @__PURE__ */ React.createElement("p", null, (0, import_element8.createInterpolateElement)(
         (0, import_i18n4.__)(
           "If the connector you need is not listed, <a>search the plugin directory</a> to see if a connector is available."
