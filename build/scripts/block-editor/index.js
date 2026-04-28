@@ -24501,7 +24501,7 @@ var wp;
       targetRect = target.getBoundingClientRect();
     }
     function isTabCandidate(node) {
-      if (getBlockClientId(node) && import_dom10.focus.focusable.find(node).filter((element) => !(0, import_dom10.isFormElement)(element)).length !== 0) {
+      if (node.contentEditable !== "true" && getBlockClientId(node) && import_dom10.focus.focusable.find(node).filter((element) => !(0, import_dom10.isFormElement)(element)).length !== 0) {
         return false;
       }
       if (!import_dom10.focus.tabbable.isTabbableIndex(node)) {
