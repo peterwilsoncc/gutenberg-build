@@ -5324,7 +5324,7 @@ var wp;
   });
   var import_core_data54 = __toESM(require_core_data(), 1);
   var import_i18n185 = __toESM(require_i18n(), 1);
-  var import_notices17 = __toESM(require_notices(), 1);
+  var import_notices18 = __toESM(require_notices(), 1);
   var import_block_editor36 = __toESM(require_block_editor(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
   var import_url13 = __toESM(require_url(), 1);
@@ -15462,7 +15462,7 @@ var wp;
   var import_i18n136 = __toESM(require_i18n(), 1);
   var import_core_data38 = __toESM(require_core_data(), 1);
   var import_block_editor18 = __toESM(require_block_editor(), 1);
-  var import_notices16 = __toESM(require_notices(), 1);
+  var import_notices17 = __toESM(require_notices(), 1);
   var import_patterns7 = __toESM(require_patterns(), 1);
   var import_blocks14 = __toESM(require_blocks(), 1);
 
@@ -33592,6 +33592,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data25 = __toESM(require_core_data(), 1);
   var import_element127 = __toESM(require_element(), 1);
   var import_i18n123 = __toESM(require_i18n(), 1);
+  var import_notices14 = __toESM(require_notices(), 1);
 
   // packages/interface/build-module/index.mjs
   var build_module_exports = {};
@@ -37859,6 +37860,7 @@ If there's a particular need for this, please submit a feature request at https:
     "alt_text",
     "post"
   ];
+  var NOTICES_CONTEXT = "media-editor";
   var { Tabs } = unlock4(import_components89.privateApis);
   function MediaEditorModalSidebar({ tabs }) {
     const tabsContextValue = (0, import_element127.useContext)(Tabs.Context);
@@ -37959,6 +37961,7 @@ If there's a particular need for this, please submit a feature request at https:
       saveEditedEntityRecord
     } = (0, import_data39.useDispatch)(import_core_data25.store);
     const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data39.useDispatch)(store);
+    const { createErrorNotice, removeAllNotices } = (0, import_data39.useDispatch)(import_notices14.store);
     const [isSaving, setIsSaving] = (0, import_element127.useState)(false);
     const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element127.useState)(false);
     const [aspectRatioValue, setAspectRatioValue] = (0, import_element127.useState)("0");
@@ -38027,6 +38030,7 @@ If there's a particular need for this, please submit a feature request at https:
       editEntityRecord("postType", "attachment", id, updates);
     };
     const discardAndClose = () => {
+      removeAllNotices("snackbar", NOTICES_CONTEXT);
       clearEntityRecordEdits("postType", "attachment", id);
       closeMediaEditorModal2();
     };
@@ -38041,6 +38045,7 @@ If there's a particular need for this, please submit a feature request at https:
       discardAndClose();
     };
     const handleSave = async () => {
+      removeAllNotices("snackbar", NOTICES_CONTEXT);
       setIsSaving(true);
       try {
         let saved;
@@ -38093,11 +38098,21 @@ If there's a particular need for this, please submit a feature request at https:
           onUpdate({ id: next.id, url: next.source_url });
         }
         closeMediaEditorModal2();
+      } catch (error2) {
+        const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n123.__)("An unknown error occurred.");
+        createErrorNotice(
+          (0, import_i18n123.sprintf)(
+            /* translators: %s: Error message. */
+            (0, import_i18n123.__)("Could not save image. %s"),
+            message2
+          ),
+          { type: "snackbar", context: NOTICES_CONTEXT }
+        );
       } finally {
         setIsSaving(false);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(
       import_components89.Modal,
       {
         className: "media-editor-modal",
@@ -38129,61 +38144,73 @@ If there's a particular need for this, please submit a feature request at https:
             onSave: handleSave
           }
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(
-          MediaEditorProvider,
-          {
-            value: media ?? void 0,
-            onChange: handleChange,
-            settings: { fields: fields3 },
-            children: [
-              !media ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components89.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(import_jsx_runtime240.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaEditorModalSidebar, { tabs }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
-                  interface_skeleton_default,
-                  {
-                    className: "media-editor-modal__skeleton",
-                    content: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", { className: "media-editor-modal__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
-                      MediaEditorCanvas,
-                      {
-                        aspectRatio: resolveAspectRatio(
-                          aspectRatioValue,
-                          imageAspectRatio
-                        ),
-                        freeformCrop
-                      }
-                    ) : /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaPreview2, {}) }),
-                    footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
-                      MediaEditorToolbar,
-                      {
-                        onReset: () => {
-                          setAspectRatioValue("0");
-                          setFreeformCrop(true);
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(
+            MediaEditorProvider,
+            {
+              value: media ?? void 0,
+              onChange: handleChange,
+              settings: { fields: fields3 },
+              children: [
+                !media ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components89.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(import_jsx_runtime240.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaEditorModalSidebar, { tabs }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+                    interface_skeleton_default,
+                    {
+                      className: "media-editor-modal__skeleton",
+                      content: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", { className: "media-editor-modal__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+                        MediaEditorCanvas,
+                        {
+                          aspectRatio: resolveAspectRatio(
+                            aspectRatioValue,
+                            imageAspectRatio
+                          ),
+                          freeformCrop
                         }
-                      }
-                    ) : void 0,
-                    sidebar: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+                      ) : /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaPreview2, {}) }),
+                      footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+                        MediaEditorToolbar,
+                        {
+                          onReset: () => {
+                            setAspectRatioValue("0");
+                            setFreeformCrop(true);
+                          }
+                        }
+                      ) : void 0,
+                      sidebar: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+                  import_components89.__experimentalConfirmDialog,
+                  {
+                    isOpen: isDiscardDialogOpen,
+                    confirmButtonText: (0, import_i18n123.__)("Discard"),
+                    cancelButtonText: (0, import_i18n123.__)("Keep editing"),
+                    onCancel: () => setIsDiscardDialogOpen(false),
+                    onConfirm: () => {
+                      setIsDiscardDialogOpen(false);
+                      discardAndClose();
+                    },
+                    children: (0, import_i18n123.__)(
+                      "Are you sure you want to discard your unsaved changes?"
+                    )
                   }
                 )
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
-                import_components89.__experimentalConfirmDialog,
-                {
-                  isOpen: isDiscardDialogOpen,
-                  confirmButtonText: (0, import_i18n123.__)("Discard"),
-                  cancelButtonText: (0, import_i18n123.__)("Keep editing"),
-                  onCancel: () => setIsDiscardDialogOpen(false),
-                  onConfirm: () => {
-                    setIsDiscardDialogOpen(false);
-                    discardAndClose();
-                  },
-                  children: (0, import_i18n123.__)(
-                    "Are you sure you want to discard your unsaved changes?"
-                  )
-                }
-              )
-            ]
-          }
-        )
+              ]
+            }
+          ),
+          (0, import_element127.createPortal)(
+            /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+              import_notices14.SnackbarNotices,
+              {
+                className: "media-editor-modal__snackbar",
+                context: NOTICES_CONTEXT
+              }
+            ),
+            document.body
+          )
+        ]
       }
     );
   }
@@ -42237,7 +42264,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_commands = __toESM(require_commands(), 1);
   var import_preferences7 = __toESM(require_preferences(), 1);
-  var import_notices14 = __toESM(require_notices(), 1);
+  var import_notices15 = __toESM(require_notices(), 1);
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_core_data33 = __toESM(require_core_data(), 1);
   var import_html_entities8 = __toESM(require_html_entities(), 1);
@@ -42356,7 +42383,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data51.useSelect)(store2);
     const { toggle } = (0, import_data51.useDispatch)(import_preferences7.store);
-    const { createInfoNotice } = (0, import_data51.useDispatch)(import_notices14.store);
+    const { createInfoNotice } = (0, import_data51.useDispatch)(import_notices15.store);
     const {
       __unstableSaveForPreview: __unstableSaveForPreview2,
       setIsListViewOpened: setIsListViewOpened2,
@@ -43616,13 +43643,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks13 = __toESM(require_blocks(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
   var import_element141 = __toESM(require_element(), 1);
-  var import_notices15 = __toESM(require_notices(), 1);
+  var import_notices16 = __toESM(require_notices(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
   var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
   function ConvertToTemplatePart({ clientIds, blocks }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element141.useState)(false);
     const { replaceBlocks: replaceBlocks2 } = (0, import_data60.useDispatch)(import_block_editor15.store);
-    const { createSuccessNotice } = (0, import_data60.useDispatch)(import_notices15.store);
+    const { createSuccessNotice } = (0, import_data60.useDispatch)(import_notices16.store);
     const { isBlockBasedTheme, canCreate } = (0, import_data60.useSelect)((select7) => {
       return {
         isBlockBasedTheme: select7(import_core_data37.store).getCurrentTheme()?.is_block_theme,
@@ -43964,7 +43991,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         [editEntityRecord, post2.type, post2.id]
       );
-      const { createWarningNotice, removeNotice } = (0, import_data63.useDispatch)(import_notices16.store);
+      const { createWarningNotice, removeNotice } = (0, import_data63.useDispatch)(import_notices17.store);
       (0, import_element144.useLayoutEffect)(() => {
         if (recovery) {
           return;
@@ -61915,7 +61942,7 @@ If there's a particular need for this, please submit a feature request at https:
         template: savedTemplate.slug
       }
     );
-    registry.dispatch(import_notices17.store).createSuccessNotice(
+    registry.dispatch(import_notices18.store).createSuccessNotice(
       (0, import_i18n185.__)("Custom template created. You're in template mode now."),
       {
         type: "snackbar",
@@ -61958,7 +61985,7 @@ If there's a particular need for this, please submit a feature request at https:
     ];
     const saveNoticeId = "site-editor-save-success";
     const homeUrl = registry.select(import_core_data54.store).getEntityRecord("root", "__unstableBase")?.home;
-    registry.dispatch(import_notices17.store).removeNotice(saveNoticeId);
+    registry.dispatch(import_notices18.store).removeNotice(saveNoticeId);
     const entitiesToSave = dirtyEntityRecords.filter(
       ({ kind, name: name2, key, property }) => {
         return !entitiesToSkip.some(
@@ -62000,9 +62027,9 @@ If there's a particular need for this, please submit a feature request at https:
       return onSave ? onSave(values) : values;
     }).then((values) => {
       if (values.some((value) => typeof value === "undefined")) {
-        registry.dispatch(import_notices17.store).createErrorNotice((0, import_i18n185.__)("Saving failed."));
+        registry.dispatch(import_notices18.store).createErrorNotice((0, import_i18n185.__)("Saving failed."));
       } else {
-        registry.dispatch(import_notices17.store).createSuccessNotice(
+        registry.dispatch(import_notices18.store).createSuccessNotice(
           successNoticeContent || (0, import_i18n185.__)("Site updated."),
           {
             type: "snackbar",
@@ -62018,16 +62045,16 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     }).catch(
-      (error2) => registry.dispatch(import_notices17.store).createErrorNotice(
+      (error2) => registry.dispatch(import_notices18.store).createErrorNotice(
         `${(0, import_i18n185.__)("Saving failed.")} ${error2}`
       )
     );
   };
   var revertTemplate2 = (template2, { allowUndo = true } = {}) => async ({ registry }) => {
     const noticeId = "edit-site-template-reverted";
-    registry.dispatch(import_notices17.store).removeNotice(noticeId);
+    registry.dispatch(import_notices18.store).removeNotice(noticeId);
     if (!isTemplateRevertable(template2)) {
-      registry.dispatch(import_notices17.store).createErrorNotice((0, import_i18n185.__)("This template is not revertable."), {
+      registry.dispatch(import_notices18.store).createErrorNotice((0, import_i18n185.__)("This template is not revertable."), {
         type: "snackbar"
       });
       return;
@@ -62035,7 +62062,7 @@ If there's a particular need for this, please submit a feature request at https:
     try {
       const templateEntityConfig = registry.select(import_core_data54.store).getEntityConfig("postType", template2.type);
       if (!templateEntityConfig) {
-        registry.dispatch(import_notices17.store).createErrorNotice(
+        registry.dispatch(import_notices18.store).createErrorNotice(
           (0, import_i18n185.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
@@ -62049,7 +62076,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
       const fileTemplate = await (0, import_api_fetch6.default)({ path: fileTemplatePath });
       if (!fileTemplate) {
-        registry.dispatch(import_notices17.store).createErrorNotice(
+        registry.dispatch(import_notices18.store).createErrorNotice(
           (0, import_i18n185.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
@@ -62101,7 +62128,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           );
         };
-        registry.dispatch(import_notices17.store).createSuccessNotice((0, import_i18n185.__)("Template reset."), {
+        registry.dispatch(import_notices18.store).createSuccessNotice((0, import_i18n185.__)("Template reset."), {
           type: "snackbar",
           id: noticeId,
           actions: [
@@ -62114,7 +62141,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     } catch (error2) {
       const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n185.__)("Template revert failed. Please reload.");
-      registry.dispatch(import_notices17.store).createErrorNotice(errorMessage, { type: "snackbar" });
+      registry.dispatch(import_notices18.store).createErrorNotice(errorMessage, { type: "snackbar" });
     }
   };
   var removeTemplates = (items) => async ({ registry }) => {
@@ -62153,7 +62180,7 @@ If there's a particular need for this, please submit a feature request at https:
       } else {
         successMessage = isResetting ? (0, import_i18n185.__)("Items reset.") : (0, import_i18n185.__)("Items deleted.");
       }
-      registry.dispatch(import_notices17.store).createSuccessNotice(successMessage, {
+      registry.dispatch(import_notices18.store).createSuccessNotice(successMessage, {
         type: "snackbar",
         id: "editor-template-deleted-success"
       });
@@ -62209,7 +62236,7 @@ If there's a particular need for this, please submit a feature request at https:
           );
         }
       }
-      registry.dispatch(import_notices17.store).createErrorNotice(errorMessage, { type: "snackbar" });
+      registry.dispatch(import_notices18.store).createErrorNotice(errorMessage, { type: "snackbar" });
     }
   };
   var setDefaultRenderingMode = (mode) => ({ select: select7, registry }) => {
@@ -62296,7 +62323,7 @@ If there's a particular need for this, please submit a feature request at https:
     dispatch7.editPost(edits);
     dispatch7.setCurrentRevisionId(null);
     await dispatch7.savePost();
-    registry.dispatch(import_notices17.store).createSuccessNotice(
+    registry.dispatch(import_notices18.store).createSuccessNotice(
       (0, import_i18n185.sprintf)(
         /* translators: %s: Date and time of the revision. */
         (0, import_i18n185.__)("Restored to revision from %s."),
@@ -65237,7 +65264,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/editor-notices/index.mjs
   var import_deprecated9 = __toESM(require_deprecated(), 1);
-  var import_notices18 = __toESM(require_notices(), 1);
+  var import_notices19 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/template-validation-notice/index.mjs
   var import_components166 = __toESM(require_components(), 1);
@@ -65305,7 +65332,7 @@ If there's a particular need for this, please submit a feature request at https:
       alternative: "wp.notices.InlineNotices"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
-      import_notices18.InlineNotices,
+      import_notices19.InlineNotices,
       {
         pinnedNoticesClassName: "components-editor-notices__pinned",
         dismissibleNoticesClassName: "components-editor-notices__dismissible",
@@ -65317,7 +65344,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/editor-snackbars/index.mjs
   var import_deprecated10 = __toESM(require_deprecated(), 1);
-  var import_notices19 = __toESM(require_notices(), 1);
+  var import_notices20 = __toESM(require_notices(), 1);
   var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
   function EditorSnackbars() {
     (0, import_deprecated10.default)("wp.editor.EditorSnackbars", {
@@ -65325,7 +65352,7 @@ If there's a particular need for this, please submit a feature request at https:
       version: "7.2",
       alternative: "wp.notices.SnackbarNotices"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(import_notices19.SnackbarNotices, { className: "components-editor-notices__snackbar" });
+    return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(import_notices20.SnackbarNotices, { className: "components-editor-notices__snackbar" });
   }
 
   // packages/editor/build-module/components/entities-saved-states/index.mjs
@@ -65790,7 +65817,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data104 = __toESM(require_data(), 1);
   var import_i18n202 = __toESM(require_i18n(), 1);
   var import_blocks24 = __toESM(require_blocks(), 1);
-  var import_notices20 = __toESM(require_notices(), 1);
+  var import_notices21 = __toESM(require_notices(), 1);
   var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var requestIdleCallback = window.requestIdleCallback ? window.requestIdleCallback : window.requestAnimationFrame;
   var hasStorageSupport;
@@ -65817,7 +65844,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const { getEditedPostAttribute: getEditedPostAttribute2 } = (0, import_data104.useSelect)(store3);
-    const { createWarningNotice, removeNotice } = (0, import_data104.useDispatch)(import_notices20.store);
+    const { createWarningNotice, removeNotice } = (0, import_data104.useDispatch)(import_notices21.store);
     const { editPost: editPost2, resetEditorBlocks: resetEditorBlocks2 } = (0, import_data104.useDispatch)(store3);
     (0, import_element197.useEffect)(() => {
       let localAutosave = localAutosaveGet(postId2, isEditedPostNew2);
@@ -66350,7 +66377,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data72 = __toESM(require_core_data(), 1);
   var import_block_editor48 = __toESM(require_block_editor(), 1);
   var import_element203 = __toESM(require_element(), 1);
-  var import_notices21 = __toESM(require_notices(), 1);
+  var import_notices22 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-template/create-new-template-modal.mjs
   var import_data110 = __toESM(require_data(), 1);
@@ -66714,7 +66741,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const selectedOption = options.find((option) => option.value === selectedTemplateSlug) ?? options.find((option) => !option.value);
     const { editPost: editPost2 } = (0, import_data112.useDispatch)(store3);
-    const { createSuccessNotice } = (0, import_data112.useDispatch)(import_notices21.store);
+    const { createSuccessNotice } = (0, import_data112.useDispatch)(import_notices22.store);
     const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element203.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)("div", { className: "editor-post-template__classic-theme-dropdown", children: [
       /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
@@ -67073,7 +67100,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element206 = __toESM(require_element(), 1);
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_core_data76 = __toESM(require_core_data(), 1);
-  var import_notices22 = __toESM(require_notices(), 1);
+  var import_notices23 = __toESM(require_notices(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/post-template/swap-template-button.mjs
@@ -67325,7 +67352,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { getEntityRecord } = (0, import_data118.useSelect)(import_core_data76.store);
     const { editEntityRecord } = (0, import_data118.useDispatch)(import_core_data76.store);
-    const { createSuccessNotice } = (0, import_data118.useDispatch)(import_notices22.store);
+    const { createSuccessNotice } = (0, import_data118.useDispatch)(import_notices23.store);
     const { setRenderingMode: setRenderingMode2, setDefaultRenderingMode: setDefaultRenderingMode2 } = unlock(
       (0, import_data118.useDispatch)(store3)
     );
@@ -69878,7 +69905,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data90 = __toESM(require_core_data(), 1);
   var import_compose47 = __toESM(require_compose(), 1);
   var import_a11y4 = __toESM(require_a11y(), 1);
-  var import_notices23 = __toESM(require_notices(), 1);
+  var import_notices24 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
   var import_components207 = __toESM(require_components(), 1);
@@ -70021,7 +70048,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [searchResults]);
     const { editPost: editPost2 } = (0, import_data148.useDispatch)(store3);
     const { saveEntityRecord } = (0, import_data148.useDispatch)(import_core_data90.store);
-    const { createErrorNotice } = (0, import_data148.useDispatch)(import_notices23.store);
+    const { createErrorNotice } = (0, import_data148.useDispatch)(import_notices24.store);
     if (!hasAssignAction) {
       return null;
     }
@@ -70275,7 +70302,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
   var import_i18n237 = __toESM(require_i18n(), 1);
   var import_element221 = __toESM(require_element(), 1);
-  var import_notices24 = __toESM(require_notices(), 1);
+  var import_notices25 = __toESM(require_notices(), 1);
   var import_components211 = __toESM(require_components(), 1);
   var import_data151 = __toESM(require_data(), 1);
   var import_compose48 = __toESM(require_compose(), 1);
@@ -70390,7 +70417,7 @@ If there's a particular need for this, please submit a feature request at https:
       // checking or unchecking a term.
       [availableTerms]
     );
-    const { createErrorNotice } = (0, import_data151.useDispatch)(import_notices24.store);
+    const { createErrorNotice } = (0, import_data151.useDispatch)(import_notices25.store);
     if (!hasAssignAction) {
       return null;
     }
@@ -72344,7 +72371,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor61 = __toESM(require_block_editor(), 1);
   var import_i18n253 = __toESM(require_i18n(), 1);
   var import_components225 = __toESM(require_components(), 1);
-  var import_notices25 = __toESM(require_notices(), 1);
+  var import_notices26 = __toESM(require_notices(), 1);
   var import_core_data103 = __toESM(require_core_data(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
   var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
@@ -72377,7 +72404,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { editPost: editPost2 } = (0, import_data175.useDispatch)(store3);
-    const { createNotice } = (0, import_data175.useDispatch)(import_notices25.store);
+    const { createNotice } = (0, import_data175.useDispatch)(import_notices26.store);
     const [forceEmptyField, setForceEmptyField] = (0, import_element235.useState)(false);
     const copyButtonRef = (0, import_compose55.useCopyToClipboard)(permalink, () => {
       createNotice("info", (0, import_i18n253.__)("Copied Permalink to clipboard."), {
@@ -73368,7 +73395,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks29 = __toESM(require_blocks(), 1);
   var import_element244 = __toESM(require_element(), 1);
   var import_data189 = __toESM(require_data(), 1);
-  var import_notices26 = __toESM(require_notices(), 1);
+  var import_notices27 = __toESM(require_notices(), 1);
   var import_core_data107 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/utils/set-nested-value.mjs
@@ -73561,7 +73588,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { user: userConfig, setUser: setUserConfig } = useGlobalStyles();
     const changes = useChangesToPush(name2, attributes, userConfig);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data189.useDispatch)(import_block_editor68.store);
-    const { createSuccessNotice } = (0, import_data189.useDispatch)(import_notices26.store);
+    const { createSuccessNotice } = (0, import_data189.useDispatch)(import_notices27.store);
     const pushChanges = (0, import_element244.useCallback)(() => {
       if (changes.length === 0) {
         return;
@@ -73715,7 +73742,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose75 = __toESM(require_compose(), 1);
   var import_element275 = __toESM(require_element(), 1);
   var import_html_entities29 = __toESM(require_html_entities(), 1);
-  var import_notices31 = __toESM(require_notices(), 1);
+  var import_notices32 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/header/index.mjs
   var import_block_editor74 = __toESM(require_block_editor(), 1);
@@ -73987,10 +74014,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data192 = __toESM(require_data(), 1);
   var import_i18n265 = __toESM(require_i18n(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
-  var import_notices27 = __toESM(require_notices(), 1);
+  var import_notices28 = __toESM(require_notices(), 1);
   var import_jsx_runtime439 = __toESM(require_jsx_runtime(), 1);
   function CopyContentMenuItem() {
-    const { createNotice } = (0, import_data192.useDispatch)(import_notices27.store);
+    const { createNotice } = (0, import_data192.useDispatch)(import_notices28.store);
     const { getEditedPostContent: getEditedPostContent2 } = (0, import_data192.useSelect)(store3);
     function getText() {
       return getEditedPostContent2();
@@ -77855,7 +77882,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data214 = __toESM(require_data(), 1);
   var import_element266 = __toESM(require_element(), 1);
   var import_i18n284 = __toESM(require_i18n(), 1);
-  var import_notices28 = __toESM(require_notices(), 1);
+  var import_notices29 = __toESM(require_notices(), 1);
   var import_core_data118 = __toESM(require_core_data(), 1);
   var import_preferences23 = __toESM(require_preferences(), 1);
   var { useOnCollaboratorJoin, useOnCollaboratorLeave, useOnPostSave } = unlock(import_core_data118.privateApis);
@@ -77889,7 +77916,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const { createNotice } = (0, import_data214.useDispatch)(import_notices28.store);
+    const { createNotice } = (0, import_data214.useDispatch)(import_notices29.store);
     const shouldSubscribe = isCollaborationEnabled && showNotifications;
     const effectivePostId = shouldSubscribe ? postId2 : null;
     const effectivePostType = shouldSubscribe ? postType2 : null;
@@ -78145,7 +78172,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components255 = __toESM(require_components(), 1);
   var import_data218 = __toESM(require_data(), 1);
   var import_core_data119 = __toESM(require_core_data(), 1);
-  var import_notices29 = __toESM(require_notices(), 1);
+  var import_notices30 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/utils/get-item-title.mjs
   var import_html_entities28 = __toESM(require_html_entities(), 1);
@@ -78184,7 +78211,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     const { saveEntityRecord } = (0, import_data218.useDispatch)(import_core_data119.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data218.useDispatch)(import_notices29.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data218.useDispatch)(import_notices30.store);
     async function onSetPageAsHomepage(event) {
       event.preventDefault();
       try {
@@ -78295,7 +78322,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components256 = __toESM(require_components(), 1);
   var import_data219 = __toESM(require_data(), 1);
   var import_core_data120 = __toESM(require_core_data(), 1);
-  var import_notices30 = __toESM(require_notices(), 1);
+  var import_notices31 = __toESM(require_notices(), 1);
   var import_jsx_runtime469 = __toESM(require_jsx_runtime(), 1);
   var SetAsPostsPageModal = ({ items, closeModal: closeModal2 }) => {
     const [item] = items;
@@ -78317,7 +78344,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     const { saveEntityRecord } = (0, import_data219.useDispatch)(import_core_data120.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data219.useDispatch)(import_notices30.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data219.useDispatch)(import_notices31.store);
     async function onSetPageAsPostsPage(event) {
       event.preventDefault();
       try {
@@ -78848,7 +78875,7 @@ If there's a particular need for this, please submit a feature request at https:
     footer: (0, import_i18n291.__)("Editor footer")
   };
   var Notices = () => /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
-    import_notices31.InlineNotices,
+    import_notices32.InlineNotices,
     {
       pinnedNoticesClassName: "editor-notices__pinned",
       dismissibleNoticesClassName: "editor-notices__dismissible",
@@ -80119,7 +80146,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element286 = __toESM(require_element(), 1);
   var import_i18n305 = __toESM(require_i18n(), 1);
   var import_html_entities33 = __toESM(require_html_entities(), 1);
-  var import_notices32 = __toESM(require_notices(), 1);
+  var import_notices33 = __toESM(require_notices(), 1);
   var import_preferences27 = __toESM(require_preferences(), 1);
   var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
   function TemplateActionsPanelContent() {
@@ -80152,7 +80179,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { get: getPreference } = (0, import_data244.useSelect)(import_preferences27.store);
-    const { createSuccessNotice } = (0, import_data244.useDispatch)(import_notices32.store);
+    const { createSuccessNotice } = (0, import_data244.useDispatch)(import_notices33.store);
     const { editedRecord: template2, hasResolved } = (0, import_core_data134.useEntityRecord)(
       "postType",
       "wp_template",
@@ -80269,7 +80296,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element287 = __toESM(require_element(), 1);
   var import_i18n306 = __toESM(require_i18n(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
-  var import_notices33 = __toESM(require_notices(), 1);
+  var import_notices34 = __toESM(require_notices(), 1);
   var import_preferences28 = __toESM(require_preferences(), 1);
   var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
   function ClassicThemeContent() {
@@ -80299,7 +80326,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { get: getPreference } = (0, import_data245.useSelect)(import_preferences28.store);
-    const { createSuccessNotice } = (0, import_data245.useDispatch)(import_notices33.store);
+    const { createSuccessNotice } = (0, import_data245.useDispatch)(import_notices34.store);
     const { editedRecord: template2 } = (0, import_core_data135.useEntityRecord)(
       "postType",
       "wp_template",
@@ -81032,7 +81059,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data138 = __toESM(require_core_data(), 1);
   var import_data254 = __toESM(require_data(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
-  var import_notices34 = __toESM(require_notices(), 1);
+  var import_notices35 = __toESM(require_notices(), 1);
   var import_dom15 = __toESM(require_dom(), 1);
   var import_html_entities35 = __toESM(require_html_entities(), 1);
 
@@ -81198,7 +81225,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useBlockCommentsActions() {
-    const { createNotice } = (0, import_data254.useDispatch)(import_notices34.store);
+    const { createNotice } = (0, import_data254.useDispatch)(import_notices35.store);
     const { saveEntityRecord, deleteEntityRecord } = (0, import_data254.useDispatch)(import_core_data138.store);
     const { getCurrentPostId: getCurrentPostId2 } = (0, import_data254.useSelect)(store3);
     const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = (0, import_data254.useSelect)(import_block_editor99.store);

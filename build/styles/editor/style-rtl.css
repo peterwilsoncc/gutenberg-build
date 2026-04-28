@@ -4907,6 +4907,26 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
     display: flex;
   }
 }
+.media-editor-modal__snackbar {
+  position: fixed;
+  bottom: 24px;
+  right: 0;
+  left: 0;
+  padding-inline: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.media-editor-modal__snackbar .components-snackbar {
+  margin-inline: auto;
+}
+
+.media-editor-modal__snackbar {
+  z-index: 1000001;
+}
+
 .media-editor-canvas {
   position: relative;
   width: 100%;
