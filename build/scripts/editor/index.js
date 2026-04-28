@@ -38253,7 +38253,7 @@ If there's a particular need for this, please submit a feature request at https:
               onChange: handleChange,
               settings: { fields: fields3 },
               children: [
-                !media ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components89.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(import_jsx_runtime240.Fragment, { children: [
+                !media ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", { className: "media-editor-modal__loading", children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components89.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(import_jsx_runtime240.Fragment, { children: [
                   /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaEditorModalSidebar, { tabs }) }),
                   /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
                     interface_skeleton_default,
@@ -38363,7 +38363,7 @@ If there's a particular need for this, please submit a feature request at https:
         aspectRatioPresets,
         onUpdate
       }
-    ) }, media?.id ?? "none");
+    ) }, id);
   }
 
   // packages/media-editor/build-module/private-apis.mjs

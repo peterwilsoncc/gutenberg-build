@@ -4844,6 +4844,13 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex-direction: column;
 }
 
+.media-editor-modal .media-editor-modal__loading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .media-editor-modal .interface-interface-skeleton {
   position: relative;
   top: auto;
