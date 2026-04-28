@@ -4663,6 +4663,17 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   position: absolute;
   pointer-events: none;
   overflow: hidden;
+  transition: opacity 0.15s ease;
+}
+
+.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid {
+  opacity: 0;
+  transition-delay: 0.1s;
+}
+
+.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid {
+  opacity: 1;
+  transition-delay: 0s;
 }
 
 .wp-media-editor-image-editor__grid-line {

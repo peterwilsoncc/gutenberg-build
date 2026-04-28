@@ -36530,9 +36530,24 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-interaction.mjs
+  var KEYBOARD_INTERACTION_IDLE_MS = 300;
+  function isHandledKeyboardPan(event) {
+    switch (event.key) {
+      case "ArrowUp":
+      case "ArrowDown":
+      case "ArrowLeft":
+      case "ArrowRight":
+        return true;
+      default:
+        return false;
+    }
+  }
   function useInteraction(state, actions2, containerSize, imageSize, options) {
     const [isDragging, setIsDragging] = (0, import_element121.useState)(false);
     const [isZooming, setIsZooming] = (0, import_element121.useState)(false);
+    const [isGestureActive, setIsGestureActive] = (0, import_element121.useState)(false);
+    const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element121.useState)(false);
+    const keyboardInteractionTimerRef = (0, import_element121.useRef)();
     const stateRef = (0, import_element121.useRef)(state);
     stateRef.current = state;
     const containerSizeRef = (0, import_element121.useRef)(containerSize);
@@ -36544,6 +36559,24 @@ If there's a particular need for this, please submit a feature request at https:
     const actionsRef = (0, import_element121.useRef)(actions2);
     actionsRef.current = actions2;
     const controllerRef = (0, import_element121.useRef)(null);
+    const startPlacementGesture = (0, import_element121.useCallback)(() => {
+      setIsGestureActive(true);
+    }, []);
+    const stopPlacementGesture = (0, import_element121.useCallback)(() => {
+      setIsGestureActive(false);
+    }, []);
+    const signalKeyboardPlacement = (0, import_element121.useCallback)(() => {
+      setIsKeyboardPanning(true);
+      clearTimeout(keyboardInteractionTimerRef.current);
+      keyboardInteractionTimerRef.current = setTimeout(() => {
+        setIsKeyboardPanning(false);
+      }, KEYBOARD_INTERACTION_IDLE_MS);
+    }, []);
+    (0, import_element121.useEffect)(() => {
+      return () => {
+        clearTimeout(keyboardInteractionTimerRef.current);
+      };
+    }, []);
     (0, import_element121.useEffect)(() => {
       const controller = new InteractionController({
         getState: () => stateRef.current,
@@ -36570,8 +36603,14 @@ If there's a particular need for this, please submit a feature request at https:
         get doubleTapZoom() {
           return optionsRef.current?.doubleTapZoom;
         },
-        onGestureStart: () => optionsRef.current?.onGestureStart?.(),
-        onGestureEnd: () => optionsRef.current?.onGestureEnd?.(),
+        onGestureStart: () => {
+          startPlacementGesture();
+          optionsRef.current?.onGestureStart?.();
+        },
+        onGestureEnd: () => {
+          stopPlacementGesture();
+          optionsRef.current?.onGestureEnd?.();
+        },
         onStatusChange: (status) => {
           setIsDragging(status.isDragging);
           setIsZooming(status.isZooming);
@@ -36582,7 +36621,7 @@ If there's a particular need for this, please submit a feature request at https:
         controller.destroy();
         controllerRef.current = null;
       };
-    }, []);
+    }, [startPlacementGesture, stopPlacementGesture]);
     const onPointerDown = (0, import_element121.useCallback)((e3) => {
       const el = e3.currentTarget;
       controllerRef.current?.handlePointerDown(e3.nativeEvent, el);
@@ -36596,9 +36635,15 @@ If there's a particular need for this, please submit a feature request at https:
         el.ownerDocument
       );
     }, []);
-    const onKeyDown = (0, import_element121.useCallback)((e3) => {
-      controllerRef.current?.handleKeyDown(e3.nativeEvent);
-    }, []);
+    const onKeyDown = (0, import_element121.useCallback)(
+      (e3) => {
+        if (isHandledKeyboardPan(e3.nativeEvent)) {
+          signalKeyboardPlacement();
+        }
+        controllerRef.current?.handleKeyDown(e3.nativeEvent);
+      },
+      [signalKeyboardPlacement]
+    );
     const onWheelNative = (0, import_element121.useCallback)((e3) => {
       controllerRef.current?.handleWheel(e3);
     }, []);
@@ -36610,7 +36655,8 @@ If there's a particular need for this, please submit a feature request at https:
       },
       onWheelNative,
       isDragging,
-      isZooming
+      isZooming,
+      isPlacementActive: isGestureActive || isKeyboardPanning || isZooming
     };
   }
 
@@ -36912,10 +36958,12 @@ If there's a particular need for this, please submit a feature request at https:
       [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
     );
     const keyboardSettleTimerRef = (0, import_element124.useRef)();
+    const keyboardResizeActiveRef = (0, import_element124.useRef)(false);
     const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
     (0, import_element124.useEffect)(() => {
       return () => {
         clearTimeout(keyboardSettleTimerRef.current);
+        keyboardResizeActiveRef.current = false;
       };
     }, []);
     const latestHandlersRef = (0, import_element124.useRef)(null);
@@ -37003,6 +37051,8 @@ If there's a particular need for this, please submit a feature request at https:
         el.addEventListener("pointerup", onEnd);
         el.addEventListener("lostpointercapture", onEnd);
         onResizeStart?.();
+        clearTimeout(keyboardSettleTimerRef.current);
+        keyboardResizeActiveRef.current = false;
       },
       [cropRect, onResizeStart]
     );
@@ -37053,6 +37103,17 @@ If there's a particular need for this, please submit a feature request at https:
         }
         event.preventDefault();
         event.stopPropagation();
+        if (!keyboardResizeActiveRef.current) {
+          keyboardResizeActiveRef.current = true;
+          onResizeStart?.();
+        }
+        const scheduleKeyboardResizeEnd = () => {
+          clearTimeout(keyboardSettleTimerRef.current);
+          keyboardSettleTimerRef.current = setTimeout(() => {
+            keyboardResizeActiveRef.current = false;
+            onResizeEnd?.();
+          }, KEYBOARD_SETTLE_DELAY);
+        };
         const step = event.shiftKey ? KEYBOARD_STEP_SHIFT : KEYBOARD_STEP;
         let dx = 0;
         let dy = 0;
@@ -37080,10 +37141,7 @@ If there's a particular need for this, please submit a feature request at https:
           onCropChange(
             computeLockedRect(syntheticDrag, clientX, clientY)
           );
-          clearTimeout(keyboardSettleTimerRef.current);
-          keyboardSettleTimerRef.current = setTimeout(() => {
-            onResizeEnd?.();
-          }, KEYBOARD_SETTLE_DELAY);
+          scheduleKeyboardResizeEnd();
         } else {
           const syntheticDrag = {
             handle,
@@ -37096,10 +37154,7 @@ If there's a particular need for this, please submit a feature request at https:
           onCropChange(
             computeFreeRect(syntheticDrag, clientX, clientY)
           );
-          clearTimeout(keyboardSettleTimerRef.current);
-          keyboardSettleTimerRef.current = setTimeout(() => {
-            onResizeEnd?.();
-          }, KEYBOARD_SETTLE_DELAY);
+          scheduleKeyboardResizeEnd();
         }
       },
       [
@@ -37110,6 +37165,7 @@ If there's a particular need for this, please submit a feature request at https:
         computeLockedRect,
         computeFreeRect,
         onCropChange,
+        onResizeStart,
         onResizeEnd,
         onEscape
       ]
@@ -37211,6 +37267,7 @@ If there's a particular need for this, please submit a feature request at https:
       "div",
       {
         className: "wp-media-editor-image-editor__grid",
+        "data-testid": "cropper-grid",
         style: {
           left,
           top,
@@ -37253,10 +37310,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='921271db02']")) {
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d3d6b4ac29']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "921271db02");
-    style.appendChild(document.createTextNode('.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:22px;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__handle:focus-visible{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:#0000;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}'));
+    style.setAttribute("data-wp-hash", "d3d6b4ac29");
+    style.appendChild(document.createTextNode('.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:22px;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__handle:focus-visible{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:#0000;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}'));
     document.head.appendChild(style);
   }
   var CROP_RECT_EPSILON = 1e-6;
@@ -37283,6 +37340,7 @@ If there's a particular need for this, please submit a feature request at https:
     controller,
     stencil: StencilComponent = RectangleStencil,
     showGrid = false,
+    isPlacementActive = false,
     showDimming = true,
     minZoom,
     maxZoom,
@@ -37363,18 +37421,18 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return getCropBounds(state, elementSize, visualSize, canvasSize);
     }, [state, elementSize, visualSize, canvasSize]);
-    const { handlers, onWheelNative, isDragging, isZooming } = useInteraction(
-      state,
-      controller,
-      canvasSize,
-      visualSize,
-      {
-        minZoom,
-        maxZoom,
-        onGestureStart,
-        onGestureEnd
-      }
-    );
+    const {
+      handlers,
+      onWheelNative,
+      isDragging,
+      isZooming,
+      isPlacementActive: isInteractionPlacementActive
+    } = useInteraction(state, controller, canvasSize, visualSize, {
+      minZoom,
+      maxZoom,
+      onGestureStart,
+      onGestureEnd
+    });
     (0, import_element125.useEffect)(() => {
       const el = canvasRef.current;
       if (!el) {
@@ -37417,10 +37475,18 @@ If there's a particular need for this, please submit a feature request at https:
         clearTimeout(settleTimerRef.current);
       };
     }, []);
+    const [isResizing, setIsResizing] = (0, import_element125.useState)(false);
+    const isInteractiveGrid = showGrid === "interactive";
+    const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
     const handleEscape = (0, import_element125.useCallback)(() => {
       canvasRef.current?.focus({ preventScroll: true });
     }, []);
+    const handleResizeStart = (0, import_element125.useCallback)(() => {
+      setIsResizing(true);
+      onGestureStart?.();
+    }, [onGestureStart]);
     const handleResizeEnd = (0, import_element125.useCallback)(() => {
+      setIsResizing(false);
       setSettling(true);
       settleCrop();
       onGestureEnd?.();
@@ -37471,7 +37537,11 @@ If there's a particular need for this, please submit a feature request at https:
           "div",
           {
             ref: canvasRef,
-            className: "wp-media-editor-image-editor__canvas",
+            className: clsx_default(
+              "wp-media-editor-image-editor__canvas",
+              isInteractiveGrid && "wp-media-editor-image-editor__canvas--grid-interactive",
+              showInteractiveGrid && "wp-media-editor-image-editor__canvas--show-grid"
+            ),
             tabIndex: 0,
             role: "group",
             "aria-label": (0, import_i18n120.__)("Image editor"),
@@ -37503,7 +37573,7 @@ If there's a particular need for this, please submit a feature request at https:
                   containerSize: canvasSize,
                   imageSize: visualSize,
                   onCropChange: handleCropChange,
-                  onResizeStart: onGestureStart,
+                  onResizeStart: handleResizeStart,
                   onResizeEnd: handleResizeEnd,
                   onEscape: handleEscape,
                   aspectRatio,
@@ -37512,7 +37582,7 @@ If there's a particular need for this, please submit a feature request at https:
                   cropBounds
                 }
               ),
-              showGrid && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
+              (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
                 GridOverlay,
                 {
                   cropRect: state.cropRect,
@@ -37573,7 +37643,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   function MediaEditorCanvas({
     aspectRatio,
-    freeformCrop
+    freeformCrop,
+    isPlacementActive = false
   }) {
     const { media } = useMediaEditorContext();
     const controller = useCropper();
@@ -37588,7 +37659,9 @@ If there's a particular need for this, please submit a feature request at https:
         src: mediaUrl,
         controller,
         aspectRatio,
-        freeformCrop
+        freeformCrop,
+        showGrid: "interactive",
+        isPlacementActive
       }
     ) });
   }
@@ -37598,7 +37671,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n121 = __toESM(require_i18n(), 1);
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   function MediaEditorToolbar({
-    onReset
+    onReset,
+    onPlacementControlInteraction
   }) {
     const { state, setRotation, setFlip, snapRotate90, reset, isDirty } = useCropper();
     const handleReset = () => {
@@ -37618,6 +37692,7 @@ If there's a particular need for this, please submit a feature request at https:
         -MAX_ROTATION_OFFSET + EPS,
         Math.min(MAX_ROTATION_OFFSET - EPS, value)
       );
+      onPlacementControlInteraction?.();
       setRotation(baseAngle + clamped * visualDir);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(
@@ -37731,6 +37806,7 @@ If there's a particular need for this, please submit a feature request at https:
     onAspectRatioChange,
     freeformCrop,
     onFreeformChange,
+    onPlacementControlInteraction,
     aspectRatioPresets
   }) {
     const { state, setZoom } = useCropper();
@@ -37749,7 +37825,10 @@ If there's a particular need for this, please submit a feature request at https:
           max: MAX_ZOOM,
           step: 0.1,
           value: state.zoom,
-          onChange: (value) => setZoom(typeof value === "number" ? value : MIN_ZOOM),
+          onChange: (value) => {
+            onPlacementControlInteraction?.();
+            setZoom(typeof value === "number" ? value : MIN_ZOOM);
+          },
           renderTooltipContent: (value) => {
             const zoom = typeof value === "number" ? value : MIN_ZOOM;
             return (0, import_i18n122.sprintf)(
@@ -37861,6 +37940,7 @@ If there's a particular need for this, please submit a feature request at https:
     "post"
   ];
   var NOTICES_CONTEXT = "media-editor";
+  var PLACEMENT_CONTROL_IDLE_MS = 300;
   var { Tabs } = unlock4(import_components89.privateApis);
   function MediaEditorModalSidebar({ tabs }) {
     const tabsContextValue = (0, import_element127.useContext)(Tabs.Context);
@@ -37964,8 +38044,22 @@ If there's a particular need for this, please submit a feature request at https:
     const { createErrorNotice, removeAllNotices } = (0, import_data39.useDispatch)(import_notices14.store);
     const [isSaving, setIsSaving] = (0, import_element127.useState)(false);
     const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element127.useState)(false);
+    const [isPlacementActive, setIsPlacementActive] = (0, import_element127.useState)(false);
+    const placementControlTimerRef = (0, import_element127.useRef)();
     const [aspectRatioValue, setAspectRatioValue] = (0, import_element127.useState)("0");
     const [freeformCrop, setFreeformCrop] = (0, import_element127.useState)(true);
+    const signalPlacementControlInteraction = (0, import_element127.useCallback)(() => {
+      setIsPlacementActive(true);
+      clearTimeout(placementControlTimerRef.current);
+      placementControlTimerRef.current = setTimeout(() => {
+        setIsPlacementActive(false);
+      }, PLACEMENT_CONTROL_IDLE_MS);
+    }, []);
+    (0, import_element127.useEffect)(() => {
+      return () => {
+        clearTimeout(placementControlTimerRef.current);
+      };
+    }, []);
     (0, import_element127.useEffect)(() => {
       setAspectRatioValue("0");
       setFreeformCrop(true);
@@ -38017,6 +38111,7 @@ If there's a particular need for this, please submit a feature request at https:
                   onAspectRatioChange: setAspectRatioValue,
                   freeformCrop,
                   onFreeformChange: setFreeformCrop,
+                  onPlacementControlInteraction: signalPlacementControlInteraction,
                   aspectRatioPresets
                 }
               )
@@ -38025,7 +38120,13 @@ If there's a particular need for this, please submit a feature request at https:
         },
         detailsTab
       ];
-    }, [isImage, aspectRatioValue, freeformCrop, aspectRatioPresets]);
+    }, [
+      isImage,
+      aspectRatioValue,
+      freeformCrop,
+      aspectRatioPresets,
+      signalPlacementControlInteraction
+    ]);
     const handleChange = (updates) => {
       editEntityRecord("postType", "attachment", id, updates);
     };
@@ -38165,7 +38266,8 @@ If there's a particular need for this, please submit a feature request at https:
                             aspectRatioValue,
                             imageAspectRatio
                           ),
-                          freeformCrop
+                          freeformCrop,
+                          isPlacementActive
                         }
                       ) : /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(MediaPreview2, {}) }),
                       footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
@@ -38174,7 +38276,8 @@ If there's a particular need for this, please submit a feature request at https:
                           onReset: () => {
                             setAspectRatioValue("0");
                             setFreeformCrop(true);
-                          }
+                          },
+                          onPlacementControlInteraction: signalPlacementControlInteraction
                         }
                       ) : void 0,
                       sidebar: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
