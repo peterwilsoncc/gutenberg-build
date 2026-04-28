@@ -9285,7 +9285,8 @@ var wp;
   ];
   var DISCONNECT_DIALOG_RETRY_MS = 3e4;
   var MANUAL_RETRY_INTERVAL_MS = 15e3;
-  var MAX_UPDATE_SIZE_IN_BYTES = 1 * 1024 * 1024;
+  var MAX_ENCODED_UPDATE_SIZE_IN_BYTES = 1 * 1024 * 1024;
+  var MAX_UPDATE_SIZE_IN_BYTES = Math.floor(MAX_ENCODED_UPDATE_SIZE_IN_BYTES / 4) * 3;
   var MAX_ROOMS_PER_REQUEST = 50;
   var POLLING_INTERVAL_IN_MS = (0, import_hooks.applyFilters)(
     "sync.pollingManager.pollingInterval",
@@ -9853,6 +9854,7 @@ var wp;
           )
         });
         unregisterRoom(room);
+        return;
       }
       updateQueue.add(createSyncUpdate(update, SyncUpdateType.UPDATE));
     }
