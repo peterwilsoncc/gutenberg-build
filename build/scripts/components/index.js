@@ -47587,7 +47587,118 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 		margin-bottom: 0 !important;
 	}
 `;
-  function SandBox({
+  function buildSandBoxDocument({
+    html,
+    title,
+    type,
+    styles: styles3,
+    scripts
+  }) {
+    const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)("html", {
+      lang: document.documentElement.lang,
+      className: type,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime265.jsxs)("head", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime265.jsx)("title", {
+          children: title
+        }), /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("style", {
+          dangerouslySetInnerHTML: {
+            __html: style
+          }
+        }), styles3.map((rules, i3) => /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("style", {
+          dangerouslySetInnerHTML: {
+            __html: rules
+          }
+        }, i3))]
+      }), /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)("body", {
+        "data-resizable-iframe-connected": "data-resizable-iframe-connected",
+        className: type,
+        children: [/* @__PURE__ */ (0, import_jsx_runtime265.jsx)("div", {
+          dangerouslySetInnerHTML: {
+            __html: html
+          }
+        }), /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("script", {
+          type: "text/javascript",
+          dangerouslySetInnerHTML: {
+            __html: `(${observeAndResizeJS.toString()})();`
+          }
+        }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("script", {
+          src
+        }, src))]
+      })]
+    });
+    return "<!DOCTYPE html>" + (0, import_element189.renderToString)(htmlDoc);
+  }
+  function IsolatedSandBox({
+    html = "",
+    title = "",
+    type,
+    styles: styles3 = [],
+    scripts = [],
+    onFocus,
+    tabIndex
+  }) {
+    const ref = (0, import_element189.useRef)(null);
+    const [width, setWidth] = (0, import_element189.useState)(0);
+    const [height, setHeight] = (0, import_element189.useState)(0);
+    const srcDoc = (0, import_element189.useMemo)(() => buildSandBoxDocument({
+      html,
+      title,
+      type,
+      styles: styles3,
+      scripts
+    }), [html, title, type, styles3, scripts]);
+    (0, import_element189.useEffect)(() => {
+      const iframe = ref.current;
+      if (!iframe) {
+        return;
+      }
+      function checkMessageForResize(event) {
+        if (!iframe || iframe.contentWindow !== event.source) {
+          return;
+        }
+        let data = event.data || {};
+        if ("string" === typeof data) {
+          try {
+            data = JSON.parse(data);
+          } catch {
+          }
+        }
+        if ("resize" !== data.action) {
+          return;
+        }
+        setWidth(data.width);
+        setHeight(data.height);
+      }
+      let currentView = null;
+      function syncListener() {
+        const view = iframe?.ownerDocument?.defaultView ?? null;
+        if (view === currentView) {
+          return;
+        }
+        currentView?.removeEventListener("message", checkMessageForResize);
+        currentView = view;
+        currentView?.addEventListener("message", checkMessageForResize);
+      }
+      syncListener();
+      iframe.addEventListener("load", syncListener);
+      return () => {
+        iframe.removeEventListener("load", syncListener);
+        currentView?.removeEventListener("message", checkMessageForResize);
+      };
+    }, []);
+    return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("iframe", {
+      ref: (0, import_compose69.useMergeRefs)([ref, (0, import_compose69.useFocusableIframe)()]),
+      title,
+      tabIndex,
+      className: "components-sandbox",
+      sandbox: "allow-scripts allow-presentation",
+      srcDoc,
+      onFocus,
+      width: Math.ceil(width),
+      height: Math.ceil(height)
+    });
+  }
+  function SameOriginSandBox({
     html = "",
     title = "",
     type,
@@ -47700,6 +47811,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onFocus,
       width: Math.ceil(width),
       height: Math.ceil(height)
+    });
+  }
+  function SandBox({
+    allowSameOrigin = false,
+    ...contentProps
+  }) {
+    if (allowSameOrigin) {
+      return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(SameOriginSandBox, {
+        ...contentProps
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(IsolatedSandBox, {
+      ...contentProps
     });
   }
   var sandbox_default = SandBox;
