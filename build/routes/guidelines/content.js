@@ -21684,7 +21684,7 @@ function isValidGuidelinesImport(data) {
 async function fetchGuidelines() {
   const { setFromResponse } = (0, import_data7.dispatch)(store);
   const response = await (0, import_api_fetch.default)({
-    path: "/wp/v2/guidelines?context=edit"
+    path: "/wp/v2/content-guidelines?context=edit"
   });
   setFromResponse(response);
   return response;
@@ -21730,7 +21730,7 @@ async function saveGuidelinesBypassingStore(id, status, categories) {
       )
     }
   };
-  const path = id ? `/wp/v2/guidelines/${id}` : "/wp/v2/guidelines";
+  const path = id ? `/wp/v2/content-guidelines/${id}` : "/wp/v2/content-guidelines";
   const method = id ? "PUT" : "POST";
   const response = await (0, import_api_fetch.default)({
     path,
@@ -21842,7 +21842,7 @@ async function fetchGuidelinesRevisions({
     ...search ? { search } : {}
   });
   const response = await (0, import_api_fetch.default)({
-    path: `/wp/v2/guidelines/${guidelinesId}/revisions?${params}`,
+    path: `/wp/v2/content-guidelines/${guidelinesId}/revisions?${params}`,
     parse: false
   });
   const revisions = await response.json();
@@ -21855,7 +21855,7 @@ async function fetchGuidelinesRevisions({
 }
 async function restoreGuidelinesRevision(guidelinesId, revisionId) {
   return await (0, import_api_fetch.default)({
-    path: `/wp/v2/guidelines/${guidelinesId}/revisions/${revisionId}/restore`,
+    path: `/wp/v2/content-guidelines/${guidelinesId}/revisions/${revisionId}/restore`,
     method: "POST"
   });
 }
