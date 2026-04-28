@@ -54848,7 +54848,8 @@ var wp;
         onReplace,
         __unstableEmbedURLOnPaste,
         preserveWhiteSpace,
-        pastePlainText
+        pastePlainText,
+        registry
       } = props.current;
       if (!element.contains(event.target)) {
         return;
@@ -54909,11 +54910,16 @@ var wp;
       });
       if (typeof content === "string") {
         pasteInline(content);
-      } else if (content.length > 0) {
-        if (onReplace && (0, import_rich_text8.isEmpty)(value)) {
-          onReplace(content, content.length - 1, -1);
-        }
+        return;
       }
+      if (!content.length || !onReplace || !(0, import_rich_text8.isEmpty)(value)) {
+        return;
+      }
+      if (mode2 === "BLOCKS") {
+        pasteInline(html);
+        registry.dispatch(store).__unstableMarkLastChangeAsPersistent();
+      }
+      onReplace(content, content.length - 1, -1);
     }
     const { defaultView } = element.ownerDocument;
     defaultView.addEventListener("paste", _onPaste);
