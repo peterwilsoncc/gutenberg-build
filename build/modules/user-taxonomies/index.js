@@ -9441,6 +9441,7 @@ var generalForm = {
     "slug",
     "description",
     "object_type",
+    "public",
     "hierarchical",
     "status"
   ]
