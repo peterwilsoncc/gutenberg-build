@@ -283,17 +283,6 @@ var BLANK_RECORD = {
     hierarchical: false
   }
 };
-function parseConfig(raw) {
-  if (!raw) {
-    return {};
-  }
-  try {
-    const parsed = JSON.parse(raw);
-    return typeof parsed === "object" && parsed !== null ? parsed : {};
-  } catch {
-    return {};
-  }
-}
 var STRING_LABEL_KEYS = [
   "singular_name",
   "menu_name",
@@ -314,10 +303,10 @@ var STRING_LABEL_KEYS = [
   "choose_from_most_used"
 ];
 function toFormData(row) {
-  const parsed = parseConfig(row.content.raw);
+  const config = row.config ?? {};
   const labels = {};
   for (const key of STRING_LABEL_KEYS) {
-    const value = parsed.labels?.[key];
+    const value = config.labels?.[key];
     if (typeof value === "string") {
       labels[key] = value;
     }
@@ -329,14 +318,14 @@ function toFormData(row) {
     title: { raw: row.title.raw },
     config: {
       labels: { singular_name: "", ...labels },
-      object_type: Array.isArray(parsed.object_type) ? parsed.object_type : [],
-      description: parsed.description ?? "",
-      public: parsed.public ?? true,
-      hierarchical: parsed.hierarchical ?? false
+      object_type: Array.isArray(row.object_type) ? row.object_type : [],
+      description: config.description ?? "",
+      public: config.public ?? true,
+      hierarchical: config.hierarchical ?? false
     }
   };
 }
-function serializeConfig(data) {
+function serializeForSave(data) {
   const { config } = data;
   const labels = {};
   for (const key of STRING_LABEL_KEYS) {
@@ -348,20 +337,17 @@ function serializeConfig(data) {
   labels.singular_name = config.labels.singular_name;
   const description = config.description.trim();
   return {
-    labels,
-    object_type: config.object_type,
-    public: config.public,
-    hierarchical: config.hierarchical,
-    ...description !== "" ? { description } : {}
-  };
-}
-function serializeForSave(data) {
-  return {
     ...data.id !== void 0 ? { id: data.id } : {},
     slug: data.slug,
     status: data.status,
     title: data.title.raw,
-    content: JSON.stringify(serializeConfig(data))
+    object_type: config.object_type,
+    config: {
+      labels,
+      public: config.public,
+      hierarchical: config.hierarchical,
+      ...description !== "" ? { description } : {}
+    }
   };
 }
 function usePublicPostTypes() {
@@ -9245,7 +9231,7 @@ var titleField = {
   enableGlobalSearch: true,
   getValue: ({ item }) => item.title.raw,
   setValue: ({ value }) => ({ title: { raw: String(value ?? "") } }),
-  isValid: { required: true },
+  isValid: { required: true, maxLength: 200 },
   filterBy: false,
   enableHiding: false
 };
@@ -9255,7 +9241,7 @@ var pluralLabelField = {
   type: "text",
   getValue: ({ item }) => item.title.raw,
   setValue: ({ value }) => ({ title: { raw: String(value ?? "") } }),
-  isValid: { required: true }
+  isValid: { required: true, maxLength: 200 }
 };
 var singularLabelField = {
   id: "singular_name",
@@ -9271,7 +9257,7 @@ var singularLabelField = {
       }
     }
   }),
-  isValid: { required: true },
+  isValid: { required: true, maxLength: 200 },
   enableSorting: false
 };
 var descriptionField = {
@@ -9286,6 +9272,7 @@ var descriptionField = {
   setValue: ({ item, value }) => ({
     config: { ...item.config, description: String(value ?? "") }
   }),
+  isValid: { maxLength: 1e3 },
   enableSorting: false
 };
 var publicField = {
@@ -9417,7 +9404,7 @@ function useObjectTypeField() {
         return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_jsx_runtime34.Fragment, { children: slugs.map((s) => labelMap[s] ?? s).join(", ") });
       },
       isValid: { required: true },
-      filterBy: false
+      filterBy: { operators: ["isAny"] }
     };
   }, [publicPostTypes]);
 }
@@ -9466,6 +9453,7 @@ function labelField(id, label, options = {}) {
         }
       }
     }),
+    isValid: { maxLength: 200 },
     enableSorting: false
   };
   if (options.isVisible) {
@@ -9901,7 +9889,6 @@ export {
   notFoundField,
   parentItemColonField,
   parentItemField,
-  parseConfig,
   pluralLabelField,
   popularItemsField,
   publicField,
