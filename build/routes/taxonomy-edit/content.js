@@ -10385,6 +10385,7 @@ import {
   editItemField,
   generalForm,
   hierarchicalField,
+  labelsActionsField,
   labelsForm,
   menuNameField,
   newItemNameField,
@@ -10407,10 +10408,10 @@ import {
 } from "@wordpress/user-taxonomies";
 
 // routes/taxonomy-edit/taxonomy-form.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='edb0d9dde2']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='eda8453059']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "edb0d9dde2");
-  style.appendChild(document.createTextNode(".taxonomy-form{box-sizing:border-box;margin:0 auto;max-width:680px;padding:24px;width:100%}"));
+  style.setAttribute("data-wp-hash", "eda8453059");
+  style.appendChild(document.createTextNode(".taxonomy-form{box-sizing:border-box;margin:0 auto;max-width:680px;padding:24px;width:100%}.taxonomy-form__help-text{color:#757575}"));
   document.head.appendChild(style);
 }
 
@@ -10483,6 +10484,7 @@ function TaxonomyPage({
       hierarchicalField,
       statusField,
       // Labels
+      labelsActionsField,
       menuNameField,
       allItemsField,
       editItemField,
@@ -10522,9 +10524,6 @@ function TaxonomyPage({
         {
           id: "labels",
           label: (0, import_i18n23.__)("Labels"),
-          description: (0, import_i18n23.__)(
-            "Override the text WordPress shows in admin lists, menus, and forms. Leave blank to use defaults derived from the plural and singular names."
-          ),
           layout: {
             type: "card",
             isCollapsible: true,
