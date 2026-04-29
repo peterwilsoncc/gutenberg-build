@@ -29298,13 +29298,19 @@ This message will only show in development mode. It won't appear in production. 
       })
     };
   }
+  function recordValuesMatch(a3, b3) {
+    return a3.text === b3.text && a3.start === b3.start && a3.end === b3.end;
+  }
   function useLastDifferentValue(value) {
-    const history = (0, import_element52.useRef)(/* @__PURE__ */ new Set());
-    history.current.add(value);
-    if (history.current.size > 2) {
-      history.current.delete(Array.from(history.current)[0]);
+    const history = (0, import_element52.useRef)([]);
+    const lastEntry = history.current[history.current.length - 1];
+    if (!lastEntry || !recordValuesMatch(value, lastEntry)) {
+      history.current.push(value);
     }
-    return Array.from(history.current)[0];
+    if (history.current.length > 2) {
+      history.current.shift();
+    }
+    return history.current[0];
   }
   function useAutocompleteProps(options2) {
     const ref = (0, import_element52.useRef)(null);
