@@ -1267,19 +1267,6 @@ function ApiKeyConnector({
   const showUnavailableBadge = pluginStatus === "not-installed" && canInstallPlugins === false || pluginStatus === "inactive" && canActivatePlugins === false;
   const showActionButton = !showUnavailableBadge;
   const actionButtonRef = (0, import_element5.useRef)(null);
-  const pendingFocusRef = (0, import_element5.useRef)(false);
-  (0, import_element5.useEffect)(() => {
-    if (pendingFocusRef.current && !isBusy) {
-      pendingFocusRef.current = false;
-      actionButtonRef.current?.focus();
-    }
-  }, [isBusy, isExpanded, isConnected]);
-  const handleActionClick = () => {
-    if (pluginStatus === "not-installed" || pluginStatus === "inactive") {
-      pendingFocusRef.current = true;
-    }
-    handleButtonClick();
-  };
   return /* @__PURE__ */ React.createElement(
     ConnectorItem,
     {
@@ -1293,9 +1280,10 @@ function ApiKeyConnector({
           ref: actionButtonRef,
           variant: isExpanded || isConnected ? "tertiary" : "secondary",
           size: "compact",
-          onClick: handleActionClick,
+          onClick: handleButtonClick,
           disabled: pluginStatus === "checking" || isBusy,
-          isBusy
+          isBusy,
+          accessibleWhenDisabled: true
         },
         getButtonLabel()
       ))
@@ -1310,17 +1298,13 @@ function ApiKeyConnector({
         readOnly: isConnected || isExternallyConfigured,
         keySource,
         onRemove: isExternallyConfigured ? void 0 : async () => {
-          pendingFocusRef.current = true;
-          try {
-            await removeApiKey();
-          } catch {
-            pendingFocusRef.current = false;
-          }
+          await removeApiKey();
+          actionButtonRef.current?.focus();
         },
         onSave: async (apiKey) => {
           await saveApiKey(apiKey);
-          pendingFocusRef.current = true;
           setIsExpanded(false);
+          actionButtonRef.current?.focus();
         }
       }
     )
