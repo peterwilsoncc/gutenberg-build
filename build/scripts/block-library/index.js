@@ -4857,7 +4857,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
                   import_components.ToggleControl,
                   {
-                    isBlock: true,
                     label: (0, import_i18n.__)("Auto-close"),
                     onChange: (value) => {
                       setAttributes({
@@ -4882,7 +4881,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
                   import_components.ToggleControl,
                   {
-                    isBlock: true,
                     label: (0, import_i18n.__)("Show icon"),
                     onChange: (value) => {
                       setAttributes({
