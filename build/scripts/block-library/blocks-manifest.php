@@ -226,6 +226,7 @@ return array(
 					'top',
 					'bottom'
 				),
+				'padding' => true,
 				'blockGap' => true
 			),
 			'__experimentalBorder' => array(

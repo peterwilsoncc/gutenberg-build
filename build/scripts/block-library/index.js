@@ -5214,6 +5214,7 @@ var wp;
       interactivity: true,
       spacing: {
         margin: ["top", "bottom"],
+        padding: true,
         blockGap: true
       },
       __experimentalBorder: {
