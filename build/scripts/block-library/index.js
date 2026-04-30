@@ -75223,9 +75223,7 @@ ${js}
       blocks.push(playlist_exports);
       blocks.push(playlist_track_exports);
     }
-    if (window?.wp?.oldEditor && (window?.wp?.needsClassicBlock || !window?.__experimentalDisableTinymce || !!new URLSearchParams(window?.location?.search).get(
-      "requiresTinymce"
-    ))) {
+    if (window?.wp?.oldEditor && (window?.wp?.needsClassicBlock || !window?.__experimentalDisableTinymce)) {
       blocks.push(freeform_exports);
     }
     return blocks.filter(Boolean);
