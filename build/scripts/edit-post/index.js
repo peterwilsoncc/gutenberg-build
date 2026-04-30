@@ -3160,8 +3160,7 @@ var wp;
         ...settings,
         styles,
         onNavigateToEntityRecord,
-        onNavigateToPreviousEntityRecord,
-        defaultRenderingMode: "post-only"
+        onNavigateToPreviousEntityRecord
       }),
       [
         settings,

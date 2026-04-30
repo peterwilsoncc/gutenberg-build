@@ -62883,16 +62883,22 @@ If there's a particular need for this, please submit a feature request at https:
         "core",
         "renderingModes"
       )?.[theme]?.[postType2];
+      if (RENDERING_MODES.includes(defaultModePreference)) {
+        return defaultModePreference;
+      }
       const postTypeDefaultMode = Array.isArray(
         postTypeEntity?.supports?.editor
       ) ? postTypeEntity.supports.editor.find(
         (features) => "default-mode" in features
       )?.["default-mode"] : void 0;
-      const defaultMode = defaultModePreference || postTypeDefaultMode;
-      if (!RENDERING_MODES.includes(defaultMode)) {
-        return "post-only";
+      if (RENDERING_MODES.includes(postTypeDefaultMode)) {
+        return postTypeDefaultMode;
       }
-      return defaultMode;
+      const settingsDefaultMode = getEditorSettings(state).defaultRenderingMode;
+      if (RENDERING_MODES.includes(settingsDefaultMode)) {
+        return settingsDefaultMode;
+      }
+      return "post-only";
     }
   );
   function getStylesPath(state) {
