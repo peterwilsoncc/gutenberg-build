@@ -4359,10 +4359,6 @@ button.font-library__upload-area {
   text-wrap: pretty;
 }
 
-.edit-site-page-templates .dataviews-pagination {
-  z-index: 2;
-}
-
 .edit-site-list__rename-modal {
   z-index: 1000001;
 }
