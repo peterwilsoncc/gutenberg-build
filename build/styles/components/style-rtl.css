@@ -3497,7 +3497,7 @@ body.lockscroll {
 }
 @media not (prefers-reduced-motion) {
   .components-tab-panel__tabs-item::after {
-    transition: all 0.1s linear;
+    transition: height 0.1s linear;
   }
 }
 .components-tab-panel__tabs-item.is-active::after {
@@ -3518,7 +3518,7 @@ body.lockscroll {
 }
 @media not (prefers-reduced-motion) {
   .components-tab-panel__tabs-item::before {
-    transition: all 0.1s linear;
+    transition: box-shadow 0.1s linear;
   }
 }
 .components-tab-panel__tabs-item:focus-visible::before {
