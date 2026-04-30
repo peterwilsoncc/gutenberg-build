@@ -18,5 +18,7 @@ require_once __DIR__ . '/pages/experiments/page.php';
 require_once __DIR__ . '/pages/experiments/page-wp-admin.php';
 require_once __DIR__ . '/pages/taxonomies/page.php';
 require_once __DIR__ . '/pages/taxonomies/page-wp-admin.php';
+require_once __DIR__ . '/pages/post-types/page.php';
+require_once __DIR__ . '/pages/post-types/page-wp-admin.php';
 require_once __DIR__ . '/pages/dashboard/page.php';
 require_once __DIR__ . '/pages/dashboard/page-wp-admin.php';
