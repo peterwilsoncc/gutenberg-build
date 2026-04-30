@@ -832,6 +832,7 @@ iframe[name=editor-canvas] {
 }
 
 .block-editor-block-manager__category {
+  isolation: isolate;
   margin: 0 0 24px 0;
 }
 

@@ -5478,7 +5478,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   text-align: center;
   position: sticky;
   top: -5px;
-  z-index: 2;
+  z-index: 1;
 }
 .editor-block-visibility__disabled-blocks-count ~ .block-editor-block-manager__content .block-editor-block-manager__category-title {
   top: 31px;
