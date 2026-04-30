@@ -34598,6 +34598,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n118 = __toESM(require_i18n(), 1);
   var MIN_ZOOM = 1;
   var MAX_ZOOM = 10;
+  var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
   var MAX_ROTATION_OFFSET = 45;
   var DEFAULT_CROP_RECT = {
     x: 0,
@@ -36008,7 +36009,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     /** Read zoomSpeed lazily so option changes take effect immediately. */
     get zoomSpeed() {
-      return this.options.zoomSpeed ?? 0.01;
+      return this.options.zoomSpeed ?? DEFAULT_WHEEL_ZOOM_SPEED;
     }
     /** Read keyboardStep lazily so option changes take effect immediately. */
     get keyboardStep() {
@@ -37425,6 +37426,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return getCropBounds(state, elementSize, visualSize, canvasSize);
     }, [state, elementSize, visualSize, canvasSize]);
+    const [isResizing, setIsResizing] = (0, import_element125.useState)(false);
+    const isResizingRef = (0, import_element125.useRef)(false);
     const {
       handlers,
       onWheelNative,
@@ -37442,11 +37445,18 @@ If there's a particular need for this, please submit a feature request at https:
       if (!el) {
         return;
       }
-      el.addEventListener("wheel", onWheelNative, {
+      const handleWheel = (event) => {
+        if (isResizingRef.current) {
+          event.preventDefault();
+          return;
+        }
+        onWheelNative(event);
+      };
+      el.addEventListener("wheel", handleWheel, {
         passive: false
       });
       return () => {
-        el.removeEventListener("wheel", onWheelNative);
+        el.removeEventListener("wheel", handleWheel);
       };
     }, [onWheelNative]);
     const transformString = useTransformStyle(state, visualSize);
@@ -37479,17 +37489,18 @@ If there's a particular need for this, please submit a feature request at https:
         clearTimeout(settleTimerRef.current);
       };
     }, []);
-    const [isResizing, setIsResizing] = (0, import_element125.useState)(false);
     const isInteractiveGrid = showGrid === "interactive";
     const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
     const handleEscape = (0, import_element125.useCallback)(() => {
       canvasRef.current?.focus({ preventScroll: true });
     }, []);
     const handleResizeStart = (0, import_element125.useCallback)(() => {
+      isResizingRef.current = true;
       setIsResizing(true);
       onGestureStart?.();
     }, [onGestureStart]);
     const handleResizeEnd = (0, import_element125.useCallback)(() => {
+      isResizingRef.current = false;
       setIsResizing(false);
       setSettling(true);
       settleCrop();
