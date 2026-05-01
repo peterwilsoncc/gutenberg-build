@@ -36129,6 +36129,9 @@ If there's a particular need for this, please submit a feature request at https:
      */
     handleWheel(e3) {
       e3.preventDefault();
+      if (this.drag) {
+        return;
+      }
       if (!this.wheelGestureActive) {
         this.wheelGestureActive = true;
         this.options.onGestureStart?.();
