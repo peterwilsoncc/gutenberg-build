@@ -34602,6 +34602,8 @@ If there's a particular need for this, please submit a feature request at https:
   var MIN_ZOOM = 1;
   var MAX_ZOOM = 10;
   var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
+  var DEFAULT_KEYBOARD_STEP = 0.01;
+  var KEYBOARD_SHIFT_STEP_MULTIPLIER = 10;
   var MAX_ROTATION_OFFSET = 45;
   var DEFAULT_CROP_RECT = {
     x: 0,
@@ -36139,7 +36141,16 @@ If there's a particular need for this, please submit a feature request at https:
     }
     /** Read keyboardStep lazily so option changes take effect immediately. */
     get keyboardStep() {
-      return this.options.keyboardStep ?? 0.05;
+      return this.options.keyboardStep ?? DEFAULT_KEYBOARD_STEP;
+    }
+    /**
+     * Get the keyboard pan step, including modifier-based coarse movement.
+     *
+     * @param event The native KeyboardEvent.
+     * @return The normalized pan step.
+     */
+    getKeyboardStep(event) {
+      return event.shiftKey ? this.keyboardStep * KEYBOARD_SHIFT_STEP_MULTIPLIER : this.keyboardStep;
     }
     /** Read doubleTapZoom lazily so option changes take effect immediately. */
     get doubleTapZoom() {
@@ -36552,12 +36563,13 @@ If there's a particular need for this, please submit a feature request at https:
       switch (e3.key) {
         case "ArrowUp": {
           e3.preventDefault();
+          const keyboardStep = this.getKeyboardStep(e3);
           const { pan: newCrop } = restrictPanZoom(
             {
               ...currentState,
               pan: {
                 x: currentState.pan.x,
-                y: currentState.pan.y + this.keyboardStep
+                y: currentState.pan.y + keyboardStep
               }
             },
             getImageSizeFromState(currentState),
@@ -36568,12 +36580,13 @@ If there's a particular need for this, please submit a feature request at https:
         }
         case "ArrowDown": {
           e3.preventDefault();
+          const keyboardStep = this.getKeyboardStep(e3);
           const { pan: newCrop } = restrictPanZoom(
             {
               ...currentState,
               pan: {
                 x: currentState.pan.x,
-                y: currentState.pan.y - this.keyboardStep
+                y: currentState.pan.y - keyboardStep
               }
             },
             getImageSizeFromState(currentState),
@@ -36584,11 +36597,12 @@ If there's a particular need for this, please submit a feature request at https:
         }
         case "ArrowLeft": {
           e3.preventDefault();
+          const keyboardStep = this.getKeyboardStep(e3);
           const { pan: newCrop } = restrictPanZoom(
             {
               ...currentState,
               pan: {
-                x: currentState.pan.x + this.keyboardStep,
+                x: currentState.pan.x + keyboardStep,
                 y: currentState.pan.y
               }
             },
@@ -36600,11 +36614,12 @@ If there's a particular need for this, please submit a feature request at https:
         }
         case "ArrowRight": {
           e3.preventDefault();
+          const keyboardStep = this.getKeyboardStep(e3);
           const { pan: newCrop } = restrictPanZoom(
             {
               ...currentState,
               pan: {
-                x: currentState.pan.x - this.keyboardStep,
+                x: currentState.pan.x - keyboardStep,
                 y: currentState.pan.y
               }
             },
@@ -37103,8 +37118,6 @@ If there's a particular need for this, please submit a feature request at https:
         return (0, import_i18n120.__)("Resize bottom-right corner");
     }
   }
-  var KEYBOARD_STEP = 0.01;
-  var KEYBOARD_STEP_SHIFT = 0.1;
   var KEYBOARD_SETTLE_DELAY = 500;
   function RectangleStencil({
     cropRect,
@@ -37289,7 +37302,7 @@ If there's a particular need for this, please submit a feature request at https:
             onResizeEnd?.();
           }, KEYBOARD_SETTLE_DELAY);
         };
-        const step = event.shiftKey ? KEYBOARD_STEP_SHIFT : KEYBOARD_STEP;
+        const step = event.shiftKey ? DEFAULT_KEYBOARD_STEP * KEYBOARD_SHIFT_STEP_MULTIPLIER : DEFAULT_KEYBOARD_STEP;
         let dx = 0;
         let dy = 0;
         if (key === "ArrowLeft") {
@@ -38228,7 +38241,7 @@ If there's a particular need for this, please submit a feature request at https:
       keyCombination: { character: "V" }
     },
     {
-      description: (0, import_i18n124.__)("Resize crop (large step)"),
+      description: (0, import_i18n124.__)("Pan or resize crop (large step)"),
       keyCombination: {
         modifier: "shift",
         character: ["\u2191", "\u2193", "\u2190", "\u2192"],
