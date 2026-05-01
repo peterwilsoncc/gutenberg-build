@@ -6939,7 +6939,7 @@ var wp;
     __experimentalUseBorderProps: () => useBorderProps,
     __experimentalUseColorProps: () => useColorProps,
     __experimentalUseCustomSides: () => useCustomSides,
-    __experimentalUseGradient: () => __experimentalUseGradient,
+    __experimentalUseGradient: () => useGradient,
     __experimentalUseHasRecursion: () => DeprecatedExperimentalUseHasRecursion,
     __experimentalUseMultipleOriginColorsAndGradients: () => useMultipleOriginColorsAndGradients,
     __experimentalUseResizeCanvas: () => useResizeCanvas,
@@ -14920,7 +14920,7 @@ var wp;
     );
     return gradient && gradient.slug;
   }
-  function __experimentalUseGradient({
+  function useGradient({
     gradientAttribute = "gradient",
     customGradientAttribute = "customGradient"
   } = {}) {
@@ -25672,7 +25672,7 @@ var wp;
   ];
   function Tips() {
     const [randomIndex] = (0, import_element52.useState)(
-      Math.floor(Math.random() * globalTips.length)
+      () => Math.floor(Math.random() * globalTips.length)
     );
     return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(import_components29.Tip, { children: globalTips[randomIndex] });
   }
@@ -46796,7 +46796,7 @@ var wp;
       }
     ) });
   }
-  function __experimentalBlockVariationTransforms({ blockClientId }) {
+  function BlockVariationTransforms({ blockClientId }) {
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data140.useDispatch)(store);
     const {
       activeBlockVariation,
@@ -46866,7 +46866,7 @@ var wp;
       }
     );
   }
-  var block_variation_transforms_default = __experimentalBlockVariationTransforms;
+  var block_variation_transforms_default = BlockVariationTransforms;
 
   // packages/block-editor/build-module/components/block-vertical-alignment-control/ui.mjs
   var import_i18n118 = __toESM(require_i18n(), 1);

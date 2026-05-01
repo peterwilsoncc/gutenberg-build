@@ -48132,27 +48132,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (renderConfirmDialog) {
       return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(google_fonts_confirm_dialog_default, {});
     }
-    const ActionsComponent = () => {
-      if (slug !== "google-fonts" || renderConfirmDialog || selectedFont) {
-        return null;
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
-        import_components121.DropdownMenu,
-        {
-          icon: more_vertical_default,
-          label: (0, import_i18n154.__)("Actions"),
-          popoverProps: {
-            position: "bottom left"
-          },
-          controls: [
-            {
-              title: (0, import_i18n154.__)("Revoke access to Google Fonts"),
-              onClick: revokeAccess
-            }
-          ]
-        }
-      );
-    };
+    const showActions = slug === "google-fonts" && !renderConfirmDialog && !selectedFont;
     return /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
       isLoading && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components121.ProgressBar, {}) }),
       !isLoading && selectedCollection && /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(import_jsx_runtime282.Fragment, { children: [
@@ -48168,7 +48148,24 @@ If there's a particular need for this, please submit a feature request at https:
                     /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components121.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
                     /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components121.__experimentalText, { children: selectedCollection.description })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(ActionsComponent, {})
+                  showActions && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+                    import_components121.DropdownMenu,
+                    {
+                      icon: more_vertical_default,
+                      label: (0, import_i18n154.__)("Actions"),
+                      popoverProps: {
+                        position: "bottom left"
+                      },
+                      controls: [
+                        {
+                          title: (0, import_i18n154.__)(
+                            "Revoke access to Google Fonts"
+                          ),
+                          onClick: revokeAccess
+                        }
+                      ]
+                    }
+                  )
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components121.__experimentalSpacer, { margin: 4 }),
                 /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(import_components121.__experimentalHStack, { spacing: 4, justify: "space-between", children: [

@@ -4611,27 +4611,7 @@ function FontCollection({ slug }) {
   if (renderConfirmDialog) {
     return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(google_fonts_confirm_dialog_default, {});
   }
-  const ActionsComponent = () => {
-    if (slug !== "google-fonts" || renderConfirmDialog || selectedFont) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
-      import_components27.DropdownMenu,
-      {
-        icon: more_vertical_default,
-        label: (0, import_i18n16.__)("Actions"),
-        popoverProps: {
-          position: "bottom left"
-        },
-        controls: [
-          {
-            title: (0, import_i18n16.__)("Revoke access to Google Fonts"),
-            onClick: revokeAccess
-          }
-        ]
-      }
-    );
-  };
+  const showActions = slug === "google-fonts" && !renderConfirmDialog && !selectedFont;
   return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
     isLoading && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components27.ProgressBar, {}) }),
     !isLoading && selectedCollection && /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
@@ -4647,7 +4627,24 @@ function FontCollection({ slug }) {
                   /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components27.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
                   /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components27.__experimentalText, { children: selectedCollection.description })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ActionsComponent, {})
+                showActions && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  import_components27.DropdownMenu,
+                  {
+                    icon: more_vertical_default,
+                    label: (0, import_i18n16.__)("Actions"),
+                    popoverProps: {
+                      position: "bottom left"
+                    },
+                    controls: [
+                      {
+                        title: (0, import_i18n16.__)(
+                          "Revoke access to Google Fonts"
+                        ),
+                        onClick: revokeAccess
+                      }
+                    ]
+                  }
+                )
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components27.__experimentalSpacer, { margin: 4 }),
               /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components27.__experimentalHStack, { spacing: 4, justify: "space-between", children: [
