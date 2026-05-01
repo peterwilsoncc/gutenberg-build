@@ -225,7 +225,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState135({
+          cachedValue = useState136({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -237,7 +237,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect95(
+          useEffect96(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -263,7 +263,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React27 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState135 = React27.useState, useEffect95 = React27.useEffect, useLayoutEffect10 = React27.useLayoutEffect, useDebugValue = React27.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React27 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState136 = React27.useState, useEffect96 = React27.useEffect, useLayoutEffect10 = React27.useLayoutEffect, useDebugValue = React27.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React27.useSyncExternalStore ? React27.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -33596,6 +33596,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data25 = __toESM(require_core_data(), 1);
   var import_element127 = __toESM(require_element(), 1);
   var import_i18n123 = __toESM(require_i18n(), 1);
+  var import_keycodes4 = __toESM(require_keycodes(), 1);
   var import_notices14 = __toESM(require_notices(), 1);
 
   // packages/interface/build-module/index.mjs
@@ -35590,6 +35591,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-editor/build-module/image-editor/core/state.mjs
+  var STATE_EPSILON = 1e-6;
+  function nearlyEqual(a3, b3) {
+    return Math.abs(a3 - b3) < STATE_EPSILON;
+  }
   function operationToAction(state, op) {
     switch (op.type) {
       case "crop":
@@ -35820,10 +35825,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   function isStateDirty(current, initial) {
-    return current.pan.x !== initial.pan.x || current.pan.y !== initial.pan.y || current.zoom !== initial.zoom || current.rotation !== initial.rotation || current.flip.horizontal !== initial.flip.horizontal || current.flip.vertical !== initial.flip.vertical || current.cropRect.x !== initial.cropRect.x || current.cropRect.y !== initial.cropRect.y || current.cropRect.width !== initial.cropRect.width || current.cropRect.height !== initial.cropRect.height;
+    return !nearlyEqual(current.pan.x, initial.pan.x) || !nearlyEqual(current.pan.y, initial.pan.y) || !nearlyEqual(current.zoom, initial.zoom) || !nearlyEqual(current.rotation, initial.rotation) || current.flip.horizontal !== initial.flip.horizontal || current.flip.vertical !== initial.flip.vertical || !nearlyEqual(current.cropRect.x, initial.cropRect.x) || !nearlyEqual(current.cropRect.y, initial.cropRect.y) || !nearlyEqual(current.cropRect.width, initial.cropRect.width) || !nearlyEqual(current.cropRect.height, initial.cropRect.height);
   }
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-cropper-state.mjs
+  var HISTORY_DEBOUNCE_MS = 300;
+  var HISTORY_EPSILON = 1e-6;
+  function nearlyEqual2(a3, b3) {
+    return Math.abs(a3 - b3) < HISTORY_EPSILON;
+  }
+  function areHistoryStatesEqual(a3, b3) {
+    const aImage = a3.image;
+    const bImage = b3.image;
+    return aImage?.src === bImage?.src && aImage?.naturalWidth === bImage?.naturalWidth && aImage?.naturalHeight === bImage?.naturalHeight && nearlyEqual2(a3.pan.x, b3.pan.x) && nearlyEqual2(a3.pan.y, b3.pan.y) && nearlyEqual2(a3.zoom, b3.zoom) && nearlyEqual2(a3.rotation, b3.rotation) && a3.flip.horizontal === b3.flip.horizontal && a3.flip.vertical === b3.flip.vertical && nearlyEqual2(a3.cropRect.x, b3.cropRect.x) && nearlyEqual2(a3.cropRect.y, b3.cropRect.y) && nearlyEqual2(a3.cropRect.width, b3.cropRect.width) && nearlyEqual2(a3.cropRect.height, b3.cropRect.height);
+  }
   function useCropperState(initialState) {
     const [state, dispatch7] = (0, import_element120.useReducer)(
       cropperReducer,
@@ -35835,8 +35850,85 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const stateRef = (0, import_element120.useRef)(state);
     stateRef.current = state;
+    const historyRef = (0, import_element120.useRef)([]);
+    const redoStackRef = (0, import_element120.useRef)([]);
+    const [hasUndo, setHasUndo] = (0, import_element120.useState)(false);
+    const [hasRedo, setHasRedo] = (0, import_element120.useState)(false);
+    const lastCommittedStateRef = (0, import_element120.useRef)(state);
+    const debounceTimerRef = (0, import_element120.useRef)();
+    const suppressDebounceRef = (0, import_element120.useRef)(false);
+    const pushToHistory = (0, import_element120.useCallback)((entry) => {
+      const target = entry ?? stateRef.current;
+      const previousEntry = historyRef.current[historyRef.current.length - 1];
+      if (previousEntry && areHistoryStatesEqual(previousEntry, target)) {
+        return;
+      }
+      historyRef.current = [...historyRef.current, target];
+      redoStackRef.current = [];
+      setHasUndo(true);
+      setHasRedo(false);
+    }, []);
+    (0, import_element120.useEffect)(() => {
+      if (suppressDebounceRef.current) {
+        suppressDebounceRef.current = false;
+        lastCommittedStateRef.current = stateRef.current;
+        return;
+      }
+      if (lastCommittedStateRef.current !== null && areHistoryStatesEqual(
+        lastCommittedStateRef.current,
+        stateRef.current
+      )) {
+        lastCommittedStateRef.current = stateRef.current;
+        return;
+      }
+      clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = setTimeout(() => {
+        const snapshot = lastCommittedStateRef.current;
+        if (snapshot !== null && !areHistoryStatesEqual(snapshot, stateRef.current)) {
+          pushToHistory(snapshot);
+        }
+        lastCommittedStateRef.current = stateRef.current;
+      }, HISTORY_DEBOUNCE_MS);
+      return () => clearTimeout(debounceTimerRef.current);
+    }, [state, pushToHistory]);
+    const commitHistory = (0, import_element120.useCallback)(() => {
+      clearTimeout(debounceTimerRef.current);
+      const snapshot = lastCommittedStateRef.current;
+      if (snapshot !== null && !areHistoryStatesEqual(snapshot, stateRef.current)) {
+        pushToHistory(snapshot);
+      }
+      lastCommittedStateRef.current = stateRef.current;
+    }, [pushToHistory]);
+    const undo2 = (0, import_element120.useCallback)(() => {
+      commitHistory();
+      const prev = historyRef.current[historyRef.current.length - 1];
+      if (!prev) {
+        return;
+      }
+      redoStackRef.current = [stateRef.current, ...redoStackRef.current];
+      historyRef.current = historyRef.current.slice(0, -1);
+      suppressDebounceRef.current = true;
+      setHasUndo(historyRef.current.length > 0);
+      setHasRedo(true);
+      dispatch7({ type: "RESET", payload: prev });
+    }, [dispatch7, commitHistory]);
+    const redo2 = (0, import_element120.useCallback)(() => {
+      commitHistory();
+      const next = redoStackRef.current[0];
+      if (!next) {
+        return;
+      }
+      historyRef.current = [...historyRef.current, stateRef.current];
+      redoStackRef.current = redoStackRef.current.slice(1);
+      suppressDebounceRef.current = true;
+      setHasUndo(true);
+      setHasRedo(redoStackRef.current.length > 0);
+      dispatch7({ type: "RESET", payload: next });
+    }, [dispatch7, commitHistory]);
     const setImage = (0, import_element120.useCallback)(
       (image) => {
+        clearTimeout(debounceTimerRef.current);
+        suppressDebounceRef.current = true;
         dispatch7({ type: "SET_IMAGE", payload: image });
         initialRef.current = enforceContainment({
           ...initialRef.current,
@@ -35874,18 +35966,24 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const setFlip = (0, import_element120.useCallback)(
       (flip) => {
+        commitHistory();
+        pushToHistory();
+        suppressDebounceRef.current = true;
         dispatch7({ type: "SET_FLIP", payload: flip });
       },
-      [dispatch7]
+      [dispatch7, pushToHistory, commitHistory]
     );
     const snapRotate90 = (0, import_element120.useCallback)(
       (direction) => {
+        commitHistory();
+        pushToHistory();
+        suppressDebounceRef.current = true;
         dispatch7({
           type: "SNAP_ROTATE_90",
           payload: { direction }
         });
       },
-      [dispatch7]
+      [dispatch7, pushToHistory, commitHistory]
     );
     const setCropRect = (0, import_element120.useCallback)(
       (rect) => {
@@ -35894,24 +35992,35 @@ If there's a particular need for this, please submit a feature request at https:
       [dispatch7]
     );
     const settleCrop = (0, import_element120.useCallback)(() => {
+      commitHistory();
+      suppressDebounceRef.current = true;
       dispatch7({ type: "SETTLE_CROP" });
-    }, [dispatch7]);
+    }, [dispatch7, commitHistory]);
     const applyOperation = (0, import_element120.useCallback)(
       (op) => {
+        commitHistory();
+        pushToHistory();
+        suppressDebounceRef.current = true;
         dispatch7({ type: "APPLY_OPERATION", payload: op });
       },
-      [dispatch7]
+      [dispatch7, pushToHistory, commitHistory]
     );
     const reset = (0, import_element120.useCallback)(
       (resetState) => {
-        dispatch7({ type: "RESET", payload: resetState });
-        initialRef.current = enforceContainment({
+        commitHistory();
+        const nextInitialState = enforceContainment({
           ...DEFAULT_STATE2,
           image: stateRef.current.image,
           ...resetState
         });
+        if (!areHistoryStatesEqual(stateRef.current, nextInitialState)) {
+          pushToHistory();
+        }
+        suppressDebounceRef.current = true;
+        dispatch7({ type: "RESET", payload: resetState });
+        initialRef.current = nextInitialState;
       },
-      [dispatch7]
+      [dispatch7, pushToHistory, commitHistory]
     );
     const isDirty = isStateDirty(state, initialRef.current);
     const getCroppedImage = (0, import_element120.useCallback)(
@@ -35944,7 +36053,12 @@ If there's a particular need for this, please submit a feature request at https:
       applyOperation,
       reset,
       isDirty,
-      getCroppedImage
+      getCroppedImage,
+      hasUndo,
+      hasRedo,
+      undo: undo2,
+      redo: redo2,
+      commitHistory
     };
     return controller;
   }
@@ -36389,6 +36503,7 @@ If there's a particular need for this, please submit a feature request at https:
       this.zoomTimer = setTimeout(() => {
         this.setStatus({ isZooming: false });
       }, ZOOM_ANIMATION_DURATION);
+      this.options.onGestureStart?.();
       if (visSize.width > 0 && visSize.height > 0) {
         const fx = tapX - containerRect.left - containerSize.width / 2;
         const fy = tapY - containerRect.top - containerSize.height / 2;
@@ -36410,6 +36525,7 @@ If there's a particular need for this, please submit a feature request at https:
       } else {
         this.options.actions.setZoom(targetZoom);
       }
+      this.options.onGestureEnd?.();
       return true;
     }
     /**
@@ -36550,12 +36666,24 @@ If there's a particular need for this, please submit a feature request at https:
         return false;
     }
   }
+  function isHandledKeyboardZoom(event) {
+    switch (event.key) {
+      case "+":
+      case "=":
+      case "-":
+      case "_":
+        return true;
+      default:
+        return false;
+    }
+  }
   function useInteraction(state, actions2, containerSize, imageSize, options) {
     const [isDragging, setIsDragging] = (0, import_element121.useState)(false);
     const [isZooming, setIsZooming] = (0, import_element121.useState)(false);
     const [isGestureActive, setIsGestureActive] = (0, import_element121.useState)(false);
     const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element121.useState)(false);
     const keyboardInteractionTimerRef = (0, import_element121.useRef)();
+    const isKeyboardGestureActiveRef = (0, import_element121.useRef)(false);
     const stateRef = (0, import_element121.useRef)(state);
     stateRef.current = state;
     const containerSizeRef = (0, import_element121.useRef)(containerSize);
@@ -36573,11 +36701,16 @@ If there's a particular need for this, please submit a feature request at https:
     const stopPlacementGesture = (0, import_element121.useCallback)(() => {
       setIsGestureActive(false);
     }, []);
-    const signalKeyboardPlacement = (0, import_element121.useCallback)(() => {
-      setIsKeyboardPanning(true);
+    const signalKeyboardGesture = (0, import_element121.useCallback)(() => {
+      if (!isKeyboardGestureActiveRef.current) {
+        isKeyboardGestureActiveRef.current = true;
+        optionsRef.current?.onGestureStart?.();
+      }
       clearTimeout(keyboardInteractionTimerRef.current);
       keyboardInteractionTimerRef.current = setTimeout(() => {
+        isKeyboardGestureActiveRef.current = false;
         setIsKeyboardPanning(false);
+        optionsRef.current?.onGestureEnd?.();
       }, KEYBOARD_INTERACTION_IDLE_MS);
     }, []);
     (0, import_element121.useEffect)(() => {
@@ -36646,11 +36779,14 @@ If there's a particular need for this, please submit a feature request at https:
     const onKeyDown = (0, import_element121.useCallback)(
       (e3) => {
         if (isHandledKeyboardPan(e3.nativeEvent)) {
-          signalKeyboardPlacement();
+          setIsKeyboardPanning(true);
+          signalKeyboardGesture();
+        } else if (isHandledKeyboardZoom(e3.nativeEvent)) {
+          signalKeyboardGesture();
         }
         controllerRef.current?.handleKeyDown(e3.nativeEvent);
       },
-      [signalKeyboardPlacement]
+      [signalKeyboardGesture]
     );
     const onWheelNative = (0, import_element121.useCallback)((e3) => {
       controllerRef.current?.handleWheel(e3);
@@ -37679,7 +37815,9 @@ If there's a particular need for this, please submit a feature request at https:
         aspectRatio,
         freeformCrop,
         showGrid: "interactive",
-        isPlacementActive
+        isPlacementActive,
+        onGestureStart: controller.commitHistory,
+        onGestureEnd: controller.commitHistory
       }
     ) });
   }
@@ -37687,12 +37825,38 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-editor/build-module/components/media-editor-toolbar/index.mjs
   var import_components87 = __toESM(require_components(), 1);
   var import_i18n121 = __toESM(require_i18n(), 1);
+  var import_keycodes3 = __toESM(require_keycodes(), 1);
+
+  // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
+  var CROP_CONTROL_ATTR = "data-crop-control";
+  function useCropGestureHandlers() {
+    const { commitHistory } = useCropper();
+    return {
+      [CROP_CONTROL_ATTR]: true,
+      onPointerUp: commitHistory,
+      onKeyUp: commitHistory
+    };
+  }
+
+  // packages/media-editor/build-module/components/media-editor-toolbar/index.mjs
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   function MediaEditorToolbar({
     onReset,
     onPlacementControlInteraction
   }) {
-    const { state, setRotation, setFlip, snapRotate90, reset, isDirty } = useCropper();
+    const {
+      state,
+      setRotation,
+      setFlip,
+      snapRotate90,
+      reset,
+      isDirty,
+      hasUndo,
+      hasRedo,
+      undo: undoCrop,
+      redo: redoCrop
+    } = useCropper();
+    const rotationGestureHandlers = useCropGestureHandlers();
     const handleReset = () => {
       reset();
       onReset?.();
@@ -37723,6 +37887,32 @@ If there's a particular need for this, please submit a feature request at https:
         gap: "sm",
         wrap: "wrap",
         children: [
+          /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+            import_components87.Button,
+            {
+              size: "compact",
+              icon: undo_default,
+              label: (0, import_i18n121.__)("Undo"),
+              showTooltip: true,
+              shortcut: import_keycodes3.displayShortcut.primary("z"),
+              disabled: !hasUndo,
+              accessibleWhenDisabled: true,
+              onClick: undoCrop
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+            import_components87.Button,
+            {
+              size: "compact",
+              icon: redo_default,
+              label: (0, import_i18n121.__)("Redo"),
+              showTooltip: true,
+              shortcut: (0, import_keycodes3.isAppleOS)() ? import_keycodes3.displayShortcut.primaryShift("z") : import_keycodes3.displayShortcut.primary("y"),
+              disabled: !hasRedo,
+              accessibleWhenDisabled: true,
+              onClick: redoCrop
+            }
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
             import_components87.Button,
             {
@@ -37771,21 +37961,29 @@ If there's a particular need for this, please submit a feature request at https:
               })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("div", { className: "media-editor-toolbar__rotation-slider", children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
-            import_components87.RangeControl,
+          /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+            "div",
             {
-              __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
-              label: (0, import_i18n121.__)("Fine rotation"),
-              hideLabelFromVision: true,
-              min: -MAX_ROTATION_OFFSET,
-              max: MAX_ROTATION_OFFSET,
-              step: 0.5,
-              value: fineOffset,
-              onChange: handleRotationSlider,
-              showTooltip: false
+              role: "presentation",
+              className: "media-editor-toolbar__rotation-slider",
+              ...rotationGestureHandlers,
+              children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+                import_components87.RangeControl,
+                {
+                  __next40pxDefaultSize: true,
+                  __nextHasNoMarginBottom: true,
+                  label: (0, import_i18n121.__)("Fine rotation"),
+                  hideLabelFromVision: true,
+                  min: -MAX_ROTATION_OFFSET,
+                  max: MAX_ROTATION_OFFSET,
+                  step: 0.5,
+                  value: fineOffset,
+                  onChange: handleRotationSlider,
+                  showTooltip: false
+                }
+              )
             }
-          ) }),
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
             import_components87.Button,
             {
@@ -37828,12 +38026,13 @@ If there's a particular need for this, please submit a feature request at https:
     aspectRatioPresets
   }) {
     const { state, setZoom } = useCropper();
+    const zoomGestureHandlers = useCropGestureHandlers();
     const aspectRatioOptions = [
       ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
       ...aspectRatioPresets ?? DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value > 0)
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(Stack, { direction: "column", gap: "md", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
         import_components88.RangeControl,
         {
           __next40pxDefaultSize: true,
@@ -37856,7 +38055,7 @@ If there's a particular need for this, please submit a feature request at https:
             );
           }
         }
-      ),
+      ) }),
       /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
         import_components88.SelectControl,
         {
@@ -38240,6 +38439,21 @@ If there's a particular need for this, please submit a feature request at https:
         isDismissible: false,
         shouldCloseOnClickOutside: !hasChanges && !isSaving,
         onKeyDown: (event) => {
+          const isUndoShortcut = import_keycodes4.isKeyboardEvent.primary(event, "z");
+          const isRedoShortcut = import_keycodes4.isKeyboardEvent.primaryShift(event, "z") || !(0, import_keycodes4.isAppleOS)() && import_keycodes4.isKeyboardEvent.primary(event, "y");
+          if ((isUndoShortcut || isRedoShortcut) && isImage) {
+            const target = event.target;
+            const isMetadataField = (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) && !target.closest(`[${CROP_CONTROL_ATTR}]`);
+            if (!isMetadataField) {
+              event.preventDefault();
+              if (isRedoShortcut) {
+                cropper.redo();
+              } else {
+                cropper.undo();
+              }
+              return;
+            }
+          }
           if (event.code !== "Escape" && event.key !== "Escape") {
             return;
           }
@@ -43185,13 +43399,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/keyboard-shortcut-help-modal/shortcut.mjs
   var import_element138 = __toESM(require_element(), 1);
-  var import_keycodes3 = __toESM(require_keycodes(), 1);
+  var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
   function KeyCombination({ keyCombination, forceAriaLabel }) {
-    const shortcut = keyCombination.modifier ? import_keycodes3.displayShortcutList[keyCombination.modifier](
+    const shortcut = keyCombination.modifier ? import_keycodes5.displayShortcutList[keyCombination.modifier](
       keyCombination.character
     ) : keyCombination.character;
-    const ariaLabel = keyCombination.modifier ? import_keycodes3.shortcutAriaLabel[keyCombination.modifier](
+    const ariaLabel = keyCombination.modifier ? import_keycodes5.shortcutAriaLabel[keyCombination.modifier](
       keyCombination.character
     ) : keyCombination.character;
     return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
@@ -46007,7 +46221,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/variations/variation.mjs
   var import_components111 = __toESM(require_components(), 1);
   var import_element153 = __toESM(require_element(), 1);
-  var import_keycodes4 = __toESM(require_keycodes(), 1);
+  var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n146 = __toESM(require_i18n(), 1);
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
   function Variation({
@@ -46038,7 +46252,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [variation, base, properties]);
     const selectVariation = () => setUserConfig(variation);
     const selectOnEnter = (event) => {
-      if (event.keyCode === import_keycodes4.ENTER) {
+      if (event.keyCode === import_keycodes6.ENTER) {
         event.preventDefault();
         selectVariation();
       }
@@ -60323,7 +60537,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_date15 = __toESM(require_date(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
   var import_data74 = __toESM(require_data(), 1);
-  var import_keycodes5 = __toESM(require_keycodes(), 1);
+  var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
   function ChangesSummary({ revision, previousRevision }) {
@@ -60425,7 +60639,7 @@ If there's a particular need for this, please submit a feature request at https:
               role: "option",
               onKeyDown: (event) => {
                 const { keyCode } = event;
-                if (keyCode === import_keycodes5.ENTER || keyCode === import_keycodes5.SPACE) {
+                if (keyCode === import_keycodes7.ENTER || keyCode === import_keycodes7.SPACE) {
                   onChange(revision);
                 }
               },
@@ -63056,7 +63270,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data92 = __toESM(require_data(), 1);
   var import_components162 = __toESM(require_components(), 1);
   var import_block_editor42 = __toESM(require_block_editor(), 1);
-  var import_keycodes9 = __toESM(require_keycodes(), 1);
+  var import_keycodes11 = __toESM(require_keycodes(), 1);
   var import_core_data62 = __toESM(require_core_data(), 1);
   var import_commands3 = __toESM(require_commands(), 1);
   var import_element188 = __toESM(require_element(), 1);
@@ -63091,7 +63305,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/styles-canvas/index.mjs
   var import_components161 = __toESM(require_components(), 1);
-  var import_keycodes8 = __toESM(require_keycodes(), 1);
+  var import_keycodes10 = __toESM(require_keycodes(), 1);
   var import_i18n191 = __toESM(require_i18n(), 1);
   var import_data90 = __toESM(require_data(), 1);
   var import_compose33 = __toESM(require_compose(), 1);
@@ -63106,7 +63320,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor39 = __toESM(require_block_editor(), 1);
   var import_data88 = __toESM(require_data(), 1);
   var import_element184 = __toESM(require_element(), 1);
-  var import_keycodes6 = __toESM(require_keycodes(), 1);
+  var import_keycodes8 = __toESM(require_keycodes(), 1);
   var import_media_utils5 = __toESM(require_media_utils(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
 
@@ -64176,7 +64390,7 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         const { keyCode } = event;
-        if (onClick && (keyCode === import_keycodes6.ENTER || keyCode === import_keycodes6.SPACE)) {
+        if (onClick && (keyCode === import_keycodes8.ENTER || keyCode === import_keycodes8.SPACE)) {
           event.preventDefault();
           onClick(event);
         }
@@ -64496,20 +64710,20 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/resizable-editor/resize-handle.mjs
   var import_i18n190 = __toESM(require_i18n(), 1);
-  var import_keycodes7 = __toESM(require_keycodes(), 1);
+  var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_components159 = __toESM(require_components(), 1);
   var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
   var DELTA_DISTANCE = 20;
   function ResizeHandle({ direction, resizeWidthBy }) {
     function handleKeyDown(event) {
       const { keyCode } = event;
-      if (keyCode !== import_keycodes7.LEFT && keyCode !== import_keycodes7.RIGHT) {
+      if (keyCode !== import_keycodes9.LEFT && keyCode !== import_keycodes9.RIGHT) {
         return;
       }
       event.preventDefault();
-      if (direction === "left" && keyCode === import_keycodes7.LEFT || direction === "right" && keyCode === import_keycodes7.RIGHT) {
+      if (direction === "left" && keyCode === import_keycodes9.LEFT || direction === "right" && keyCode === import_keycodes9.RIGHT) {
         resizeWidthBy(DELTA_DISTANCE);
-      } else if (direction === "left" && keyCode === import_keycodes7.RIGHT || direction === "right" && keyCode === import_keycodes7.LEFT) {
+      } else if (direction === "left" && keyCode === import_keycodes9.RIGHT || direction === "right" && keyCode === import_keycodes9.LEFT) {
         resizeWidthBy(-DELTA_DISTANCE);
       }
     }
@@ -64674,7 +64888,7 @@ If there's a particular need for this, please submit a feature request at https:
       resetStylesNavigation2();
     };
     const closeOnEscape = (event) => {
-      if (event.keyCode === import_keycodes8.ESCAPE && !event.defaultPrevented) {
+      if (event.keyCode === import_keycodes10.ESCAPE && !event.defaultPrevented) {
         event.preventDefault();
         onCloseCanvas();
       }
@@ -64922,7 +65136,7 @@ If there's a particular need for this, please submit a feature request at https:
                   },
                   hasBackButton
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime339.jsx)("span", { className: "editor-document-bar__shortcut", children: import_keycodes9.displayShortcut.primary("k") })
+                /* @__PURE__ */ (0, import_jsx_runtime339.jsx)("span", { className: "editor-document-bar__shortcut", children: import_keycodes11.displayShortcut.primary("k") })
               ]
             }
           )
@@ -65187,7 +65401,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n194 = __toESM(require_i18n(), 1);
   var import_block_editor45 = __toESM(require_block_editor(), 1);
   var import_keyboard_shortcuts4 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes10 = __toESM(require_keycodes(), 1);
+  var import_keycodes12 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
   function EditorKeyboardShortcutsRegister() {
     const { registerShortcut } = (0, import_data95.useDispatch)(import_keyboard_shortcuts4.store);
@@ -65231,7 +65445,7 @@ If there's a particular need for this, please submit a feature request at https:
         // history shortcut. It's a fine alias for both Windows and Linux.
         // Since there's no conflict for Ctrl+Shift+Z on both Windows and
         // Linux, we keep it as the default for consistency.
-        aliases: (0, import_keycodes10.isAppleOS)() ? [] : [
+        aliases: (0, import_keycodes12.isAppleOS)() ? [] : [
           {
             modifier: "primary",
             character: "y"
@@ -65326,11 +65540,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n195 = __toESM(require_i18n(), 1);
   var import_components164 = __toESM(require_components(), 1);
   var import_data96 = __toESM(require_data(), 1);
-  var import_keycodes11 = __toESM(require_keycodes(), 1);
+  var import_keycodes13 = __toESM(require_keycodes(), 1);
   var import_element191 = __toESM(require_element(), 1);
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
   function EditorHistoryRedo(props, ref) {
-    const shortcut = (0, import_keycodes11.isAppleOS)() ? import_keycodes11.displayShortcut.primaryShift("z") : import_keycodes11.displayShortcut.primary("y");
+    const shortcut = (0, import_keycodes13.isAppleOS)() ? import_keycodes13.displayShortcut.primaryShift("z") : import_keycodes13.displayShortcut.primary("y");
     const hasRedo = (0, import_data96.useSelect)(
       (select7) => select7(store3).hasEditorRedo(),
       []
@@ -65357,7 +65571,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n196 = __toESM(require_i18n(), 1);
   var import_components165 = __toESM(require_components(), 1);
   var import_data97 = __toESM(require_data(), 1);
-  var import_keycodes12 = __toESM(require_keycodes(), 1);
+  var import_keycodes14 = __toESM(require_keycodes(), 1);
   var import_element192 = __toESM(require_element(), 1);
   var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
   function EditorHistoryUndo(props, ref) {
@@ -65374,7 +65588,7 @@ If there's a particular need for this, please submit a feature request at https:
         ref,
         icon: !(0, import_i18n196.isRTL)() ? undo_default : redo_default,
         label: (0, import_i18n196.__)("Undo"),
-        shortcut: import_keycodes12.displayShortcut.primary("z"),
+        shortcut: import_keycodes14.displayShortcut.primary("z"),
         "aria-disabled": !hasUndo,
         onClick: hasUndo ? undo2 : void 0,
         className: "editor-history__undo"
@@ -71453,7 +71667,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data160 = __toESM(require_data(), 1);
   var import_element227 = __toESM(require_element(), 1);
   var import_i18n245 = __toESM(require_i18n(), 1);
-  var import_keycodes13 = __toESM(require_keycodes(), 1);
+  var import_keycodes15 = __toESM(require_keycodes(), 1);
   var import_preferences14 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/post-status/index.mjs
@@ -71831,7 +72045,7 @@ If there's a particular need for this, please submit a feature request at https:
           })]: isSaving
         }) : void 0,
         onClick: isDisabled ? void 0 : () => savePost2(),
-        shortcut: isDisabled ? void 0 : import_keycodes13.displayShortcut.primary("s"),
+        shortcut: isDisabled ? void 0 : import_keycodes15.displayShortcut.primary("s"),
         variant: "tertiary",
         size: "compact",
         icon: isLargeViewport ? void 0 : cloud_upload_default,
@@ -72158,7 +72372,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities26 = __toESM(require_html_entities(), 1);
   var import_data171 = __toESM(require_data(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
-  var import_keycodes14 = __toESM(require_keycodes(), 1);
+  var import_keycodes16 = __toESM(require_keycodes(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
   var import_rich_text3 = __toESM(require_rich_text(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
@@ -72280,7 +72494,7 @@ If there's a particular need for this, please submit a feature request at https:
       insertDefaultBlock2(void 0, void 0, 0);
     }
     function onKeyDown(event) {
-      if (event.keyCode === import_keycodes14.ENTER) {
+      if (event.keyCode === import_keycodes16.ENTER) {
         event.preventDefault();
         onEnterPress();
       }
@@ -74126,7 +74340,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/more-menu/index.mjs
   var import_i18n267 = __toESM(require_i18n(), 1);
   var import_data194 = __toESM(require_data(), 1);
-  var import_keycodes15 = __toESM(require_keycodes(), 1);
+  var import_keycodes17 = __toESM(require_keycodes(), 1);
   var import_components240 = __toESM(require_components(), 1);
   var import_preferences16 = __toESM(require_preferences(), 1);
 
@@ -74304,7 +74518,7 @@ If there's a particular need for this, please submit a feature request at https:
                 messageDeactivated: (0, import_i18n267.__)(
                   "Distraction free mode deactivated."
                 ),
-                shortcut: import_keycodes15.displayShortcut.primaryShift(
+                shortcut: import_keycodes17.displayShortcut.primaryShift(
                   "\\"
                 )
               }
@@ -74340,7 +74554,7 @@ If there's a particular need for this, please submit a feature request at https:
               import_components240.MenuItem,
               {
                 onClick: () => openModal2("editor/keyboard-shortcut-help"),
-                shortcut: import_keycodes15.displayShortcut.access("h"),
+                shortcut: import_keycodes17.displayShortcut.access("h"),
                 children: (0, import_i18n267.__)("Keyboard shortcuts")
               }
             ),
@@ -74652,7 +74866,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor72 = __toESM(require_block_editor(), 1);
   var import_preferences19 = __toESM(require_preferences(), 1);
   var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes16 = __toESM(require_keycodes(), 1);
+  var import_keycodes18 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
   var ZoomOutToggle = ({ disabled: disabled2 }) => {
     const { isZoomOut, showIconLabels, isDistractionFree } = (0, import_data198.useSelect)(
@@ -74682,7 +74896,7 @@ If there's a particular need for this, please submit a feature request at https:
         keyCombination: {
           // `primaryShift+0` (`ctrl+shift+0`) is the shortcut for switching
           // to input mode in Windows, so apply a different key combination.
-          modifier: (0, import_keycodes16.isAppleOS)() ? "primaryShift" : "secondary",
+          modifier: (0, import_keycodes18.isAppleOS)() ? "primaryShift" : "secondary",
           character: "0"
         }
       });
@@ -76473,7 +76687,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose66 = __toESM(require_compose(), 1);
   var import_element258 = __toESM(require_element(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
-  var import_keycodes17 = __toESM(require_keycodes(), 1);
+  var import_keycodes19 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
   var { PrivateInserterLibrary } = unlock(import_block_editor75.privateApis);
   function InserterSidebar() {
@@ -76519,7 +76733,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [inserterSidebarToggleRef2, setIsInserterOpened2]);
     const closeOnEscape = (0, import_element258.useCallback)(
       (event) => {
-        if (event.keyCode === import_keycodes17.ESCAPE && !event.defaultPrevented) {
+        if (event.keyCode === import_keycodes19.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
           closeInserterSidebar();
         }
@@ -76557,7 +76771,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element259 = __toESM(require_element(), 1);
   var import_i18n277 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes18 = __toESM(require_keycodes(), 1);
+  var import_keycodes20 = __toESM(require_keycodes(), 1);
 
   // packages/editor/build-module/components/list-view-sidebar/list-view-outline.mjs
   var import_components247 = __toESM(require_components(), 1);
@@ -76596,7 +76810,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [getListViewToggleRef2, setIsListViewOpened2]);
     const closeOnEscape = (0, import_element259.useCallback)(
       (event) => {
-        if (event.keyCode === import_keycodes18.ESCAPE && !event.defaultPrevented) {
+        if (event.keyCode === import_keycodes20.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
           closeListView();
         }
@@ -81138,7 +81352,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components281 = __toESM(require_components(), 1);
   var import_i18n313 = __toESM(require_i18n(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
-  var import_keycodes19 = __toESM(require_keycodes(), 1);
+  var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
   function NoteForm({ onSubmit, onCancel, note, labels }) {
     const [inputComment, setInputComment] = (0, import_element291.useState)(
@@ -81169,7 +81383,7 @@ If there's a particular need for this, please submit a feature request at https:
               rows: 1,
               maxRows: 20,
               onKeyDown: (event) => {
-                if (import_keycodes19.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
+                if (import_keycodes21.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
                   event.target.parentNode.requestSubmit();
                 }
                 if (event.key === "Escape") {
