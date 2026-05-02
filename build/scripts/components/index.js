@@ -28170,45 +28170,41 @@ This message will only show in development mode. It won't appear in production. 
   SlotFillContext.displayName = "SlotFillContext";
   var context_default = SlotFillContext;
 
-  // node_modules/uuid/dist/esm-browser/rng.js
-  var getRandomValues;
-  var rnds8 = new Uint8Array(16);
-  function rng() {
-    if (!getRandomValues) {
-      getRandomValues = typeof crypto !== "undefined" && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
-      if (!getRandomValues) {
-        throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
-      }
-    }
-    return getRandomValues(rnds8);
-  }
-
-  // node_modules/uuid/dist/esm-browser/stringify.js
+  // packages/components/node_modules/uuid/dist/stringify.js
   var byteToHex = [];
   for (let i3 = 0; i3 < 256; ++i3) {
     byteToHex.push((i3 + 256).toString(16).slice(1));
   }
   function unsafeStringify(arr, offset3 = 0) {
-    return byteToHex[arr[offset3 + 0]] + byteToHex[arr[offset3 + 1]] + byteToHex[arr[offset3 + 2]] + byteToHex[arr[offset3 + 3]] + "-" + byteToHex[arr[offset3 + 4]] + byteToHex[arr[offset3 + 5]] + "-" + byteToHex[arr[offset3 + 6]] + byteToHex[arr[offset3 + 7]] + "-" + byteToHex[arr[offset3 + 8]] + byteToHex[arr[offset3 + 9]] + "-" + byteToHex[arr[offset3 + 10]] + byteToHex[arr[offset3 + 11]] + byteToHex[arr[offset3 + 12]] + byteToHex[arr[offset3 + 13]] + byteToHex[arr[offset3 + 14]] + byteToHex[arr[offset3 + 15]];
+    return (byteToHex[arr[offset3 + 0]] + byteToHex[arr[offset3 + 1]] + byteToHex[arr[offset3 + 2]] + byteToHex[arr[offset3 + 3]] + "-" + byteToHex[arr[offset3 + 4]] + byteToHex[arr[offset3 + 5]] + "-" + byteToHex[arr[offset3 + 6]] + byteToHex[arr[offset3 + 7]] + "-" + byteToHex[arr[offset3 + 8]] + byteToHex[arr[offset3 + 9]] + "-" + byteToHex[arr[offset3 + 10]] + byteToHex[arr[offset3 + 11]] + byteToHex[arr[offset3 + 12]] + byteToHex[arr[offset3 + 13]] + byteToHex[arr[offset3 + 14]] + byteToHex[arr[offset3 + 15]]).toLowerCase();
   }
 
-  // node_modules/uuid/dist/esm-browser/native.js
-  var randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
-  var native_default = {
-    randomUUID
-  };
+  // packages/components/node_modules/uuid/dist/rng.js
+  var rnds8 = new Uint8Array(16);
+  function rng() {
+    return crypto.getRandomValues(rnds8);
+  }
 
-  // node_modules/uuid/dist/esm-browser/v4.js
+  // packages/components/node_modules/uuid/dist/v4.js
   function v4(options2, buf, offset3) {
-    if (native_default.randomUUID && !buf && !options2) {
-      return native_default.randomUUID();
+    if (!buf && !options2 && crypto.randomUUID) {
+      return crypto.randomUUID();
     }
+    return _v4(options2, buf, offset3);
+  }
+  function _v4(options2, buf, offset3) {
     options2 = options2 || {};
-    const rnds = options2.random || (options2.rng || rng)();
+    const rnds = options2.random ?? options2.rng?.() ?? rng();
+    if (rnds.length < 16) {
+      throw new Error("Random bytes length must be >= 16");
+    }
     rnds[6] = rnds[6] & 15 | 64;
     rnds[8] = rnds[8] & 63 | 128;
     if (buf) {
       offset3 = offset3 || 0;
+      if (offset3 < 0 || offset3 + 16 > buf.length) {
+        throw new RangeError(`UUID byte range ${offset3}:${offset3 + 15} is out of buffer bounds`);
+      }
       for (let i3 = 0; i3 < 16; ++i3) {
         buf[offset3 + i3] = rnds[i3];
       }
