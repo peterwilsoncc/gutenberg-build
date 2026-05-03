@@ -36651,11 +36651,11 @@ If there's a particular need for this, please submit a feature request at https:
         }
         case "r":
         case "R": {
-          if (e3.metaKey || e3.ctrlKey || e3.altKey || e3.shiftKey) {
+          if (e3.metaKey || e3.ctrlKey || e3.altKey) {
             break;
           }
           e3.preventDefault();
-          this.options.actions.snapRotate90(1);
+          this.options.actions.snapRotate90(e3.shiftKey ? -1 : 1);
           break;
         }
         case "h":
@@ -38231,6 +38231,10 @@ If there's a particular need for this, please submit a feature request at https:
     {
       description: (0, import_i18n124.__)("Rotate 90\xB0 clockwise"),
       keyCombination: { character: "R" }
+    },
+    {
+      description: (0, import_i18n124.__)("Rotate 90\xB0 counter-clockwise"),
+      keyCombination: { modifier: "shift", character: "R" }
     },
     {
       description: (0, import_i18n124.__)("Flip horizontal"),
