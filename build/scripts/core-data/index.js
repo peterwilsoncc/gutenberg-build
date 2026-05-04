@@ -1345,6 +1345,12 @@ var wp;
   function isYMap(value) {
     return value instanceof import_sync4.Y.Map;
   }
+  function asRichTextOffset(offset) {
+    return offset;
+  }
+  function asHtmlStringIndex(index) {
+    return index;
+  }
   function findBlockByClientIdInDoc(blockId, ydoc) {
     const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
     const blocks = ymap.get("blocks");
@@ -1366,24 +1372,24 @@ var wp;
   }
   function htmlIndexToRichTextOffset(html, htmlIndex) {
     if (!html.includes("<") && !html.includes("&")) {
-      return htmlIndex;
+      return asRichTextOffset(htmlIndex);
     }
     const marker = pickMarker(html);
     if (!marker) {
-      return htmlIndex;
+      return asRichTextOffset(htmlIndex);
     }
     const withMarker = html.slice(0, htmlIndex) + marker + html.slice(htmlIndex);
     const value = (0, import_rich_text.create)({ html: withMarker });
     const markerPos = value.text.indexOf(marker);
-    return markerPos === -1 ? htmlIndex : markerPos;
+    return asRichTextOffset(markerPos === -1 ? htmlIndex : markerPos);
   }
   function richTextOffsetToHtmlIndex(html, richTextOffset) {
     if (!html.includes("<") && !html.includes("&")) {
-      return richTextOffset;
+      return asHtmlStringIndex(richTextOffset);
     }
     const marker = pickMarker(html);
     if (!marker) {
-      return richTextOffset;
+      return asHtmlStringIndex(richTextOffset);
     }
     const value = (0, import_rich_text.create)({ html });
     const markerValue = (0, import_rich_text.create)({ text: marker });
@@ -1398,7 +1404,9 @@ var wp;
     );
     const htmlWithMarker = (0, import_rich_text.toHTMLString)({ value: withMarker });
     const markerIndex = htmlWithMarker.indexOf(marker);
-    return markerIndex === -1 ? richTextOffset : markerIndex;
+    return asHtmlStringIndex(
+      markerIndex === -1 ? richTextOffset : markerIndex
+    );
   }
   function findBlockByClientIdInBlocks(blockId, blocks) {
     for (const block of blocks) {
@@ -1506,7 +1514,10 @@ var wp;
     }
     const relativePosition = import_sync6.Y.createRelativePositionFromTypeIndex(
       currentYText,
-      richTextOffsetToHtmlIndex(currentYText.toString(), selection.offset)
+      richTextOffsetToHtmlIndex(
+        currentYText.toString(),
+        asRichTextOffset(selection.offset)
+      )
     );
     return {
       relativePosition,
@@ -1787,7 +1798,7 @@ var wp;
       return {
         richTextOffset: htmlIndexToRichTextOffset(
           absolutePosition.type.toString(),
-          absolutePosition.index
+          asHtmlStringIndex(absolutePosition.index)
         ),
         localClientId
       };
@@ -1973,8 +1984,19 @@ var wp;
   }
   function makeBlocksSerializable(blocks) {
     return blocks.map((block) => {
-      const { name, innerBlocks, attributes, ...rest } = block;
-      delete rest.validationIssues;
+      const {
+        name,
+        innerBlocks,
+        attributes,
+        /*
+         * Any validation issues discovered when loading a block are appended
+         * to the block node with a logging function, which cannot be serialized.
+         *
+         * @see import("@wordpress/blocks/src/api/parser").parseRawBlock()
+         */
+        validationIssues,
+        ...rest
+      } = block;
       return {
         ...rest,
         name,
@@ -2130,111 +2152,138 @@ var wp;
       )
     );
   }
-  function mergeCrdtBlocks(yblocks, incomingBlocks, cursorPosition) {
+  function mergeCrdtBlocks(yblocks, incomingBlocks, attributeCursor) {
     if (!serializableBlocksCache.has(incomingBlocks)) {
       serializableBlocksCache.set(
         incomingBlocks,
         makeBlocksSerializable(incomingBlocks)
       );
     }
-    const blocksToSync = serializableBlocksCache.get(incomingBlocks) ?? [];
+    const incomingBlocksToSync = serializableBlocksCache.get(incomingBlocks) ?? [];
     const numOfCommonEntries = Math.min(
-      blocksToSync.length ?? 0,
+      incomingBlocksToSync.length ?? 0,
       yblocks.length
     );
     let left = 0;
     let right = 0;
-    for (; left < numOfCommonEntries && areBlocksEqual(blocksToSync[left], yblocks.get(left)); left++) {
+    for (; left < numOfCommonEntries && areBlocksEqual(incomingBlocksToSync[left], yblocks.get(left)); left++) {
     }
     for (; right < numOfCommonEntries - left && areBlocksEqual(
-      blocksToSync[blocksToSync.length - right - 1],
+      incomingBlocksToSync[incomingBlocksToSync.length - right - 1],
       yblocks.get(yblocks.length - right - 1)
     ); right++) {
     }
     const numOfUpdatesNeeded = numOfCommonEntries - left - right;
     const numOfInsertionsNeeded = Math.max(
       0,
-      blocksToSync.length - yblocks.length
+      incomingBlocksToSync.length - yblocks.length
     );
     const numOfDeletionsNeeded = Math.max(
       0,
-      yblocks.length - blocksToSync.length
+      yblocks.length - incomingBlocksToSync.length
     );
     for (let i = 0; i < numOfUpdatesNeeded; i++, left++) {
-      const block = blocksToSync[left];
-      const yblock = yblocks.get(left);
-      Object.entries(block).forEach(([key, value]) => {
-        switch (key) {
-          case "attributes": {
-            const currentAttributes = yblock.get(key);
-            if (!currentAttributes) {
-              yblock.set(
-                key,
-                createNewYAttributeMap(block.name, value)
+      const incomingYBlock = incomingBlocksToSync[left];
+      const localYBlock = yblocks.get(left);
+      Object.entries(incomingYBlock).forEach(
+        ([incomingBlockProperty, incomingBlockPropertyValue]) => {
+          switch (incomingBlockProperty) {
+            case "attributes": {
+              const localAttributes = localYBlock.get(
+                incomingBlockProperty
+              );
+              const incomingAttributes = incomingBlockPropertyValue;
+              if (!localAttributes) {
+                localYBlock.set(
+                  incomingBlockProperty,
+                  createNewYAttributeMap(
+                    incomingYBlock.name,
+                    incomingAttributes
+                  )
+                );
+                break;
+              }
+              Object.entries(incomingAttributes).forEach(
+                ([
+                  incomingAttributeName,
+                  incomingAttributeValue
+                ]) => {
+                  const currentAttribute = localAttributes?.get(
+                    incomingAttributeName
+                  );
+                  const isExpectedType = isExpectedAttributeType(
+                    incomingYBlock.name,
+                    incomingAttributeName,
+                    currentAttribute
+                  );
+                  const isYType = currentAttribute instanceof import_sync9.Y.AbstractType;
+                  const isAttributeChanged = !isExpectedType || isYType || !(0, import_es62.default)(
+                    currentAttribute,
+                    incomingAttributeValue
+                  );
+                  if (isAttributeChanged) {
+                    updateYBlockAttribute(
+                      incomingYBlock.name,
+                      incomingYBlock.clientId,
+                      incomingAttributeName,
+                      incomingAttributeValue,
+                      localAttributes,
+                      attributeCursor
+                    );
+                  }
+                }
+              );
+              localAttributes.forEach(
+                (_attrValue, attrName) => {
+                  if (!incomingBlockPropertyValue.hasOwnProperty(
+                    attrName
+                  )) {
+                    localAttributes.delete(attrName);
+                  }
+                }
               );
               break;
             }
-            Object.entries(value).forEach(
-              ([attributeName, attributeValue]) => {
-                const currentAttribute = currentAttributes?.get(attributeName);
-                const isExpectedType = isExpectedAttributeType(
-                  block.name,
-                  attributeName,
-                  currentAttribute
+            case "innerBlocks": {
+              let yInnerBlocks = localYBlock.get(
+                incomingBlockProperty
+              );
+              if (!(yInnerBlocks instanceof import_sync9.Y.Array)) {
+                yInnerBlocks = new import_sync9.Y.Array();
+                localYBlock.set(
+                  incomingBlockProperty,
+                  yInnerBlocks
                 );
-                const isYType = currentAttribute instanceof import_sync9.Y.AbstractType;
-                const isAttributeChanged = !isExpectedType || isYType || !(0, import_es62.default)(
-                  currentAttribute,
-                  attributeValue
+              }
+              mergeCrdtBlocks(
+                yInnerBlocks,
+                incomingBlockPropertyValue ?? [],
+                attributeCursor
+              );
+              break;
+            }
+            default:
+              if (!(0, import_es62.default)(
+                incomingYBlock[incomingBlockProperty],
+                localYBlock.get(incomingBlockProperty)
+              )) {
+                localYBlock.set(
+                  incomingBlockProperty,
+                  incomingBlockPropertyValue
                 );
-                if (isAttributeChanged) {
-                  updateYBlockAttribute(
-                    block.name,
-                    attributeName,
-                    attributeValue,
-                    currentAttributes,
-                    cursorPosition
-                  );
-                }
               }
-            );
-            currentAttributes.forEach(
-              (_attrValue, attrName) => {
-                if (!value.hasOwnProperty(attrName)) {
-                  currentAttributes.delete(attrName);
-                }
-              }
-            );
-            break;
           }
-          case "innerBlocks": {
-            let yInnerBlocks = yblock.get(key);
-            if (!(yInnerBlocks instanceof import_sync9.Y.Array)) {
-              yInnerBlocks = new import_sync9.Y.Array();
-              yblock.set(key, yInnerBlocks);
-            }
-            mergeCrdtBlocks(
-              yInnerBlocks,
-              value ?? [],
-              cursorPosition
-            );
-            break;
-          }
-          default:
-            if (!(0, import_es62.default)(block[key], yblock.get(key))) {
-              yblock.set(key, value);
-            }
         }
-      });
-      yblock.forEach((_v, k) => {
-        if (!block.hasOwnProperty(k)) {
-          yblock.delete(k);
+      );
+      localYBlock.forEach((_v, k) => {
+        if (!incomingYBlock.hasOwnProperty(k)) {
+          localYBlock.delete(k);
         }
       });
     }
     yblocks.delete(left, numOfDeletionsNeeded);
     for (let i = 0; i < numOfInsertionsNeeded; i++, left++) {
-      const newBlock = [createNewYBlock(blocksToSync[left])];
+      const newBlock = [createNewYBlock(incomingBlocksToSync[left])];
       yblocks.insert(left, newBlock);
     }
     const knownClientIds = /* @__PURE__ */ new Set();
@@ -2257,7 +2306,7 @@ var wp;
     }
     return (0, import_es62.default)(newElement, yElement);
   }
-  function mergeYArray(yArray, newValue, schema, cursorPosition) {
+  function mergeYArray(yArray, newValue, schema, cursorPosition, cursorScope) {
     if (!schema.query) {
       return;
     }
@@ -2281,7 +2330,8 @@ var wp;
           currentElement,
           newElement,
           query,
-          cursorPosition
+          cursorPosition,
+          cursorScope
         );
       } else {
         yArray.delete(0, yArray.length);
@@ -2314,14 +2364,24 @@ var wp;
       yArray.insert(insertAt, itemsToInsert);
     }
   }
-  function mergeYValue(schema, newVal, yMap, key, cursorPosition) {
+  function mergeYValue(schema, newVal, yMap, key, cursorPosition, cursorScope) {
     const currentVal = yMap.get(key);
     if (schema?.type === "rich-text" && typeof newVal === "string" && currentVal instanceof import_sync9.Y.Text) {
-      mergeRichTextUpdate(currentVal, newVal, cursorPosition);
+      mergeRichTextUpdate(
+        currentVal,
+        newVal,
+        resolveRichTextCursorPosition(cursorPosition, cursorScope, newVal)
+      );
     } else if (schema?.type === "array" && schema.query && Array.isArray(newVal) && currentVal instanceof import_sync9.Y.Array) {
-      mergeYArray(currentVal, newVal, schema, cursorPosition);
+      mergeYArray(currentVal, newVal, schema, cursorPosition, cursorScope);
     } else if (schema?.type === "object" && schema.query && isRecord(newVal) && currentVal instanceof import_sync9.Y.Map) {
-      mergeYMapValues(currentVal, newVal, schema.query, cursorPosition);
+      mergeYMapValues(
+        currentVal,
+        newVal,
+        schema.query,
+        cursorPosition,
+        cursorScope
+      );
     } else {
       const newYValue = createYValueFromSchema(schema, newVal);
       if (newYValue !== newVal || !(0, import_es62.default)(currentVal, newVal)) {
@@ -2329,9 +2389,16 @@ var wp;
       }
     }
   }
-  function mergeYMapValues(yMap, newObj, query, cursorPosition) {
+  function mergeYMapValues(yMap, newObj, query, cursorPosition, cursorScope) {
     for (const [key, newVal] of Object.entries(newObj)) {
-      mergeYValue(query[key], newVal, yMap, key, cursorPosition);
+      mergeYValue(
+        query[key],
+        newVal,
+        yMap,
+        key,
+        cursorPosition,
+        cursorScope
+      );
     }
     for (const key of yMap.keys()) {
       if (!Object.hasOwn(newObj, key)) {
@@ -2339,15 +2406,22 @@ var wp;
       }
     }
   }
-  function updateYBlockAttribute(blockName, attributeName, attributeValue, currentAttributes, cursorPosition) {
+  function updateYBlockAttribute(blockName, clientId, attributeName, attributeValue, currentAttributes, newCursorPosition) {
     const schema = getBlockAttributeSchema(blockName, attributeName);
     mergeYValue(
       schema,
       attributeValue,
       currentAttributes,
       attributeName,
-      cursorPosition
+      newCursorPosition,
+      { attributeKey: attributeName, clientId }
     );
+  }
+  function resolveRichTextCursorPosition(cursorPosition, cursorScope, updatedValue) {
+    return cursorPosition && cursorPosition.clientId === cursorScope.clientId && cursorPosition.attributeKey === cursorScope.attributeKey && "number" === typeof cursorPosition.offset && Number.isInteger(cursorPosition.offset) ? richTextOffsetToHtmlIndex(
+      updatedValue,
+      asRichTextOffset(cursorPosition.offset)
+    ) : null;
   }
   var cachedBlockAttributeSchemas;
   function getBlockAttributeSchema(blockName, attributeName) {
@@ -2389,20 +2463,25 @@ var wp;
     return "local" === getBlockAttributeSchema(blockName, attributeName)?.role;
   }
   var localDoc;
-  function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition = null) {
+  function mergeRichTextUpdate(blockYText, updatedValue, htmlCursorIndex = null) {
+    const currentValueAsDelta = new Delta(blockYText.toDelta());
+    const updatedValueAsDelta = new Delta([{ insert: updatedValue }]);
+    const deltaDiff = currentValueAsDelta.diffWithCursor(
+      updatedValueAsDelta,
+      htmlCursorIndex
+    );
+    const safeDiff = htmlCursorIndex === null || isDeltaVerificationMatch(blockYText, deltaDiff, updatedValue) ? deltaDiff : currentValueAsDelta.diff(updatedValueAsDelta);
+    blockYText.applyDelta(safeDiff.ops);
+  }
+  function isDeltaVerificationMatch(blockYText, delta, expectedValue) {
     if (!localDoc) {
       localDoc = new import_sync9.Y.Doc();
     }
-    const localYText = localDoc.getText("temporary-text");
-    localYText.delete(0, localYText.length);
-    localYText.insert(0, updatedValue);
-    const currentValueAsDelta = new Delta(blockYText.toDelta());
-    const updatedValueAsDelta = new Delta(localYText.toDelta());
-    const deltaDiff = currentValueAsDelta.diffWithCursor(
-      updatedValueAsDelta,
-      cursorPosition
-    );
-    blockYText.applyDelta(deltaDiff.ops);
+    const verificationYText = localDoc.getText("verification-text");
+    verificationYText.delete(0, verificationYText.length);
+    verificationYText.insert(0, blockYText.toString());
+    verificationYText.applyDelta(delta.ops);
+    return verificationYText.toString() === expectedValue;
   }
 
   // packages/core-data/build-module/utils/crdt-selection.mjs
@@ -2470,7 +2549,10 @@ var wp;
     const offset = selection.offset ?? 0;
     const relativePosition = import_sync11.Y.createRelativePositionFromTypeIndex(
       changedYText,
-      richTextOffsetToHtmlIndex(changedYText.toString(), offset)
+      richTextOffsetToHtmlIndex(
+        changedYText.toString(),
+        asRichTextOffset(offset)
+      )
     );
     return {
       type: "RelativeSelection",
@@ -2510,7 +2592,7 @@ var wp;
           attributeKey,
           offset: htmlIndexToRichTextOffset(
             absolutePosition.type.toString(),
-            absolutePosition.index
+            asHtmlStringIndex(absolutePosition.index)
           )
         };
       }
@@ -2652,8 +2734,10 @@ var wp;
             currentBlocks = new import_sync13.Y.Array();
             ymap.set(key, currentBlocks);
           }
-          const cursorPosition = changes.selection?.selectionStart?.offset ?? null;
-          mergeCrdtBlocks(currentBlocks, newValue, cursorPosition);
+          const newCursorPosition = parseCursorSelection(
+            changes.selection
+          );
+          mergeCrdtBlocks(currentBlocks, newValue, newCursorPosition);
           break;
         }
         case "content":
@@ -2717,6 +2801,14 @@ var wp;
         updateSelectionHistory(ydoc, selection);
       }, 0);
     }
+  }
+  function parseCursorSelection(selection) {
+    const selectionStart = selection?.selectionStart;
+    return selectionStart?.clientId && selectionStart.attributeKey && "number" === typeof selectionStart.offset && Number.isInteger(selectionStart.offset) ? {
+      attributeKey: selectionStart.attributeKey,
+      clientId: selectionStart.clientId,
+      offset: asRichTextOffset(selectionStart.offset)
+    } : null;
   }
   function defaultGetChangesFromCRDTDoc(crdtDoc) {
     return getRootMap(crdtDoc, CRDT_RECORD_MAP_KEY).toJSON();
