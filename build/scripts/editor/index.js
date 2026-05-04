@@ -37974,7 +37974,9 @@ If there's a particular need for this, please submit a feature request at https:
   function MediaEditorCanvas({
     aspectRatio,
     freeformCrop,
-    isPlacementActive = false
+    isPlacementActive = false,
+    onGestureStart,
+    onGestureEnd
   }) {
     const { media } = useMediaEditorContext();
     const controller = useCropper();
@@ -37992,8 +37994,14 @@ If there's a particular need for this, please submit a feature request at https:
         freeformCrop,
         showGrid: "interactive",
         isPlacementActive,
-        onGestureStart: controller.commitHistory,
-        onGestureEnd: controller.commitHistory
+        onGestureStart: () => {
+          onGestureStart?.();
+          controller.commitHistory();
+        },
+        onGestureEnd: () => {
+          controller.commitHistory();
+          onGestureEnd?.();
+        }
       }
     ) });
   }
@@ -38018,7 +38026,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
   function MediaEditorToolbar({
     onReset,
-    onPlacementControlInteraction
+    onPlacementControlInteraction,
+    isUndoRedoDisabled = false
   }) {
     const {
       state,
@@ -38036,6 +38045,18 @@ If there's a particular need for this, please submit a feature request at https:
     const handleReset = () => {
       reset();
       onReset?.();
+    };
+    const handleUndo = () => {
+      if (isUndoRedoDisabled) {
+        return;
+      }
+      undoCrop();
+    };
+    const handleRedo = () => {
+      if (isUndoRedoDisabled) {
+        return;
+      }
+      redoCrop();
     };
     const baseAngle = Math.round(state.rotation / 90) * 90;
     const singleFlip = state.flip.horizontal !== state.flip.vertical;
@@ -38071,9 +38092,9 @@ If there's a particular need for this, please submit a feature request at https:
               label: (0, import_i18n122.__)("Undo"),
               showTooltip: true,
               shortcut: import_keycodes3.displayShortcut.primary("z"),
-              disabled: !hasUndo,
+              disabled: isUndoRedoDisabled || !hasUndo,
               accessibleWhenDisabled: true,
-              onClick: undoCrop
+              onClick: handleUndo
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
@@ -38084,9 +38105,9 @@ If there's a particular need for this, please submit a feature request at https:
               label: (0, import_i18n122.__)("Redo"),
               showTooltip: true,
               shortcut: (0, import_keycodes3.isAppleOS)() ? import_keycodes3.displayShortcut.primaryShift("z") : import_keycodes3.displayShortcut.primary("y"),
-              disabled: !hasRedo,
+              disabled: isUndoRedoDisabled || !hasRedo,
               accessibleWhenDisabled: true,
-              onClick: redoCrop
+              onClick: handleRedo
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
@@ -38599,6 +38620,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [isSaving, setIsSaving] = (0, import_element130.useState)(false);
     const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element130.useState)(false);
     const [isPlacementActive, setIsPlacementActive] = (0, import_element130.useState)(false);
+    const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element130.useState)(false);
     const placementControlTimerRef = (0, import_element130.useRef)();
     const [aspectRatioValue, setAspectRatioValue] = (0, import_element130.useState)("0");
     const [freeformCrop, setFreeformCrop] = (0, import_element130.useState)(true);
@@ -38609,6 +38631,13 @@ If there's a particular need for this, please submit a feature request at https:
         setIsPlacementActive(false);
       }, PLACEMENT_CONTROL_IDLE_MS);
     }, []);
+    const handleCanvasGestureStart = (0, import_element130.useCallback)(() => {
+      setIsCanvasGestureActive(true);
+    }, []);
+    const handleCanvasGestureEnd = (0, import_element130.useCallback)(() => {
+      setIsCanvasGestureActive(false);
+    }, []);
+    const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
     (0, import_element130.useEffect)(() => {
       return () => {
         clearTimeout(placementControlTimerRef.current);
@@ -38617,6 +38646,8 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element130.useEffect)(() => {
       setAspectRatioValue("0");
       setFreeformCrop(true);
+      setIsPlacementActive(false);
+      setIsCanvasGestureActive(false);
     }, [id]);
     const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
     const isImage = !!media && mediaType === "image";
@@ -38783,6 +38814,9 @@ If there's a particular need for this, please submit a feature request at https:
             const isMetadataField = (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) && !target.closest(`[${CROP_CONTROL_ATTR}]`);
             if (!isMetadataField) {
               event.preventDefault();
+              if (isCropInteractionActive) {
+                return;
+              }
               if (isRedoShortcut) {
                 cropper.redo();
               } else {
@@ -38841,7 +38875,9 @@ If there's a particular need for this, please submit a feature request at https:
                             imageAspectRatio
                           ),
                           freeformCrop,
-                          isPlacementActive
+                          isPlacementActive,
+                          onGestureStart: handleCanvasGestureStart,
+                          onGestureEnd: handleCanvasGestureEnd
                         }
                       ) : /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(MediaPreview2, {}) }),
                       footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
@@ -38851,7 +38887,8 @@ If there's a particular need for this, please submit a feature request at https:
                             setAspectRatioValue("0");
                             setFreeformCrop(true);
                           },
-                          onPlacementControlInteraction: signalPlacementControlInteraction
+                          onPlacementControlInteraction: signalPlacementControlInteraction,
+                          isUndoRedoDisabled: isCropInteractionActive
                         }
                       ) : void 0,
                       sidebar: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
