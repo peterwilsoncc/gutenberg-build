@@ -75421,9 +75421,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return { positions };
   }
-  function focusNoteThread(noteId, container, additionalSelector) {
+  function findNoteThread(noteId, container, additionalSelector) {
     if (!container) {
-      return;
+      return Promise.resolve(null);
     }
     const threadSelector = noteId && noteId !== "new" ? `[role=treeitem][id="note-thread-${noteId}"]` : "[role=treeitem]:not([id])";
     const selector2 = additionalSelector ? `${threadSelector} ${additionalSelector}` : threadSelector;
@@ -75439,15 +75439,28 @@ If there's a particular need for this, please submit a feature request at https:
           resolve(container.querySelector(selector2));
         }
       });
-      observer.observe(container, {
-        childList: true,
-        subtree: true
-      });
+      observer.observe(container, { childList: true, subtree: true });
       timer = setTimeout(() => {
         observer.disconnect();
         resolve(null);
       }, 3e3);
-    }).then((element) => element?.focus());
+    });
+  }
+  function focusNoteThread(noteId, container, additionalSelector) {
+    return findNoteThread(noteId, container, additionalSelector).then(
+      (element) => {
+        if (!element) {
+          return;
+        }
+        element.focus();
+        element.scrollIntoView({ block: "nearest" });
+      }
+    );
+  }
+  function scrollNoteThreadIntoView(noteId, container) {
+    return findNoteThread(noteId, container).then((element) => {
+      element?.scrollIntoView({ block: "nearest" });
+    });
   }
 
   // packages/editor/build-module/components/collaborators-presence/list.mjs
@@ -81915,6 +81928,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return () => unregisterThread?.(note.id);
     }, [relatedBlockElement, note.id, registerThread, unregisterThread]);
+    (0, import_element294.useEffect)(() => {
+      if (!isSelected2 || note.id === "new") {
+        return;
+      }
+      scrollNoteThreadIntoView(note.id, sidebarRef.current);
+    }, [isSelected2, floating?.y, note.id, sidebarRef]);
     const onMouseEnter = () => {
       debouncedToggleBlockHighlight(note.blockClientId, true);
     };
@@ -81943,22 +81962,26 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       toggleBlockHighlight(note.blockClientId, false);
-      unselectNote();
+      onDeselectNote();
     };
-    const handleNoteSelect = () => {
+    const onSelectNote = () => {
+      if (isSelected2) {
+        return;
+      }
       selectNote2(note.id);
+      focusNoteThread(note.id, sidebarRef.current);
       toggleBlockSpotlight(note.blockClientId, true);
       if (!!note.blockClientId) {
         selectBlock2(note.blockClientId, null);
       }
     };
-    const unselectNote = () => {
+    const onDeselectNote = () => {
       selectNote2(void 0);
       toggleBlockSpotlight(note.blockClientId, false);
     };
     const handleResolve = () => {
       onEditNote({ id: note.id, status: "approved" });
-      unselectNote();
+      onDeselectNote();
       if (isFloating) {
         relatedBlockElement?.focus();
       } else {
@@ -82000,7 +82023,7 @@ If there's a particular need for this, please submit a feature request at https:
         }),
         id: `note-thread-${note.id}`,
         gap: "md",
-        onClick: handleNoteSelect,
+        onClick: onSelectNote,
         onMouseEnter,
         onMouseLeave,
         onFocus,
@@ -82069,9 +82092,9 @@ If there's a particular need for this, please submit a feature request at https:
                   size: "compact",
                   variant: "tertiary",
                   className: "editor-collab-sidebar-panel__more-reply-button",
-                  onClick: () => {
-                    selectNote2(note.id);
-                    focusNoteThread(note.id, sidebarRef.current);
+                  onClick: (event) => {
+                    event.stopPropagation();
+                    onSelectNote();
                   },
                   children: (0, import_i18n318.sprintf)(
                     // translators: %s: number of replies.
@@ -82115,7 +82138,7 @@ If there's a particular need for this, please submit a feature request at https:
               },
               onCancel: (event) => {
                 event.stopPropagation();
-                unselectNote();
+                onDeselectNote();
                 focusNoteThread(note.id, sidebarRef.current);
               },
               labels: {
@@ -82598,12 +82621,14 @@ If there's a particular need for this, please submit a feature request at https:
         focusNoteThread(note.parent, sidebarRef.current);
         return;
       }
-      if (nextThread) {
-        selectNote2(nextThread.id);
-        focusNoteThread(nextThread.id, sidebarRef.current);
-      } else if (prevThread) {
-        selectNote2(prevThread.id);
-        focusNoteThread(prevThread.id, sidebarRef.current);
+      const adjacentThread = nextThread ?? prevThread;
+      if (adjacentThread) {
+        selectNote2(adjacentThread.id);
+        focusNoteThread(adjacentThread.id, sidebarRef.current);
+        if (adjacentThread.blockClientId) {
+          toggleBlockSpotlight(adjacentThread.blockClientId, true);
+          selectBlock2(adjacentThread.blockClientId, null);
+        }
       } else {
         selectNote2(void 0);
         toggleBlockSpotlight(note.blockClientId, false);
