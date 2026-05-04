@@ -28273,9 +28273,9 @@ This message will only show in development mode. It won't appear in production. 
     (0, import_element42.useLayoutEffect)(() => {
       registry.updateFill(name, {
         instance: instanceRef.current,
-        children: childrenRef.current
+        children
       });
-    });
+    }, [registry, name, children]);
     const slot = (0, import_compose11.useObservableValue)(registry.slots, name);
     if (!slot) {
       return null;
