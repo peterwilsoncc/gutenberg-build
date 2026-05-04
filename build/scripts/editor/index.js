@@ -40605,6 +40605,10 @@ If there's a particular need for this, please submit a feature request at https:
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
   };
+  var RESPONSIVE_BREAKPOINTS = {
+    mobile: "@media (width <= 480px)",
+    tablet: "@media (480px < width <= 782px)"
+  };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
       (declarations, { path, cssVarInfix, classes }) => {
@@ -40986,7 +40990,7 @@ If there's a particular need for this, please submit a feature request at https:
     const entries = Object.entries(treeToPickFrom);
     const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
     const pickedEntries = entries.filter(
-      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key)
+      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
     );
     const clonedEntries = pickedEntries.map(([key, style]) => [
       key,
@@ -41051,6 +41055,86 @@ If there's a particular need for this, please submit a feature request at https:
         ";"
       )};}`;
       ruleset += pseudoRule;
+    });
+    return ruleset;
+  }
+  function appendResponsiveStyles(styles, selector2, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector, blockRootSelector, styleVariationName) {
+    const responsiveStyles = Object.entries(styles).filter(
+      ([key]) => RESPONSIVE_BREAKPOINTS[key]
+    );
+    if (!responsiveStyles.length) {
+      return ruleset;
+    }
+    responsiveStyles.forEach(([breakpointKey, breakpointStyle]) => {
+      if (!breakpointStyle || typeof breakpointStyle !== "object") {
+        return;
+      }
+      const mediaQuery = RESPONSIVE_BREAKPOINTS[breakpointKey];
+      const remainingBreakpointStyles = JSON.parse(
+        JSON.stringify(breakpointStyle)
+      );
+      if (featureSelectors && typeof featureSelectors !== "string") {
+        let breakpointFeatureDeclarations = getFeatureDeclarations(
+          featureSelectors,
+          remainingBreakpointStyles
+        );
+        breakpointFeatureDeclarations = updateParagraphTextIndentSelector(
+          breakpointFeatureDeclarations,
+          treeSettings,
+          blockName
+        );
+        breakpointFeatureDeclarations = updateButtonWidthDeclarations(
+          breakpointFeatureDeclarations,
+          treeSettings
+        );
+        Object.entries(breakpointFeatureDeclarations).forEach(
+          ([baseSelector, declarations]) => {
+            if (!declarations.length) {
+              return;
+            }
+            let cssSelector;
+            if (!styleVariationSelector) {
+              cssSelector = baseSelector;
+            } else if (blockRootSelector && styleVariationName && !baseSelector.includes(blockRootSelector)) {
+              cssSelector = getBlockStyleVariationSelector(
+                styleVariationName,
+                baseSelector
+              );
+            } else {
+              cssSelector = concatFeatureVariationSelectorString(
+                baseSelector,
+                styleVariationSelector
+              );
+            }
+            const rules = declarations.join(";");
+            ruleset += `${mediaQuery}{:root :where(${cssSelector}){${rules};}}`;
+          }
+        );
+      }
+      const breakpointDeclarations = getStylesDeclarations(
+        remainingBreakpointStyles
+      );
+      if (breakpointDeclarations.length) {
+        const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
+          selector2,
+          styleVariationSelector
+        ) : selector2;
+        ruleset += `${mediaQuery}{:root :where(${cssSelector}){${breakpointDeclarations.join(
+          ";"
+        )};}}`;
+      }
+      const breakpointPseudoRules = appendPseudoSelectorStyles(
+        remainingBreakpointStyles,
+        selector2,
+        "",
+        featureSelectors,
+        treeSettings,
+        blockName,
+        styleVariationSelector
+      );
+      if (breakpointPseudoRules) {
+        ruleset += `${mediaQuery}{${breakpointPseudoRules}}`;
+      }
     });
     return ruleset;
   }
@@ -41502,6 +41586,17 @@ If there's a particular need for this, please submit a feature request at https:
                     name2,
                     styleVariationSelector
                   );
+                  ruleset = appendResponsiveStyles(
+                    styleVariations,
+                    styleVariationSelector,
+                    ruleset,
+                    featureSelectors,
+                    tree.settings,
+                    name2,
+                    styleVariationSelector,
+                    selector2,
+                    styleVariationName
+                  );
                   if (hasLayoutSupport && styleVariations?.spacing?.blockGap) {
                     const variationSelectorWithBlock = styleVariationSelector + selector2;
                     ruleset += getLayoutStyles({
@@ -41517,6 +41612,14 @@ If there's a particular need for this, please submit a feature request at https:
             );
           }
           ruleset = appendPseudoSelectorStyles(
+            styles,
+            selector2,
+            ruleset,
+            featureSelectors,
+            tree.settings,
+            name2
+          );
+          ruleset = appendResponsiveStyles(
             styles,
             selector2,
             ruleset,
@@ -45009,14 +45112,21 @@ If there's a particular need for this, please submit a feature request at https:
       { value: ":active", label: (0, import_i18n139.__)("Active") }
     ]
   };
-  function getValidStates(name2) {
+  var RESPONSIVE_STATES = [
+    { value: "tablet", label: (0, import_i18n139.__)("Tablet") },
+    { value: "mobile", label: (0, import_i18n139.__)("Mobile") }
+  ];
+  function getValidPseudoStates(name2) {
     if (VALID_BLOCK_STATES[name2]) {
-      return VALID_BLOCK_STATES[name2];
+      return VALID_BLOCK_STATES[name2] ?? [];
     }
     if (VALID_ELEMENT_STATES[name2]) {
       return VALID_ELEMENT_STATES[name2];
     }
     return [];
+  }
+  function getValidViewportStates() {
+    return RESPONSIVE_STATES;
   }
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {
@@ -45126,6 +45236,12 @@ If there's a particular need for this, please submit a feature request at https:
   k([a11y_default]);
   function useStyle(path, blockName, readFrom = "merged", shouldDecodeEncode = true, state) {
     const { user, base, merged, onChange } = (0, import_element150.useContext)(GlobalStylesContext);
+    const statePathParts = state?.split(".").filter(Boolean) ?? [];
+    const pseudoSelectorState = statePathParts.find(
+      (value) => value.startsWith(":")
+    );
+    const statePathWithoutPseudo = statePathParts.filter((value) => !value.startsWith(":")).join(".");
+    const stylePath = [path, statePathWithoutPseudo].filter(Boolean).join(".");
     let sourceValue = merged;
     if (readFrom === "base") {
       sourceValue = base;
@@ -45135,39 +45251,45 @@ If there's a particular need for this, please submit a feature request at https:
     const styleValue = (0, import_element150.useMemo)(() => {
       const rawValue = getStyle(
         sourceValue,
-        path,
+        stylePath,
         blockName,
         shouldDecodeEncode
       );
-      if (state) {
-        return rawValue?.[state] ?? {};
+      if (pseudoSelectorState) {
+        return rawValue?.[pseudoSelectorState] ?? {};
       }
       return rawValue;
-    }, [sourceValue, path, blockName, shouldDecodeEncode, state]);
+    }, [
+      sourceValue,
+      stylePath,
+      blockName,
+      shouldDecodeEncode,
+      pseudoSelectorState
+    ]);
     const setStyleValue = (0, import_element150.useCallback)(
       (newValue) => {
         let valueToSet = newValue;
-        if (state) {
+        if (pseudoSelectorState) {
           const fullCurrentValue = getStyle(
             user,
-            path,
+            stylePath,
             blockName,
             false
           );
           valueToSet = {
             ...fullCurrentValue,
-            [state]: newValue
+            [pseudoSelectorState]: newValue
           };
         }
         const newGlobalStyles = setStyle(
           user,
-          path,
+          stylePath,
           valueToSet,
           blockName
         );
         onChange(newGlobalStyles);
       },
-      [user, onChange, path, blockName, state]
+      [user, onChange, stylePath, blockName, pseudoSelectorState]
     );
     return [styleValue, setStyleValue];
   }
@@ -45900,12 +46022,15 @@ If there's a particular need for this, please submit a feature request at https:
     title,
     description,
     onBack,
-    states,
-    selectedState = "default",
-    onChangeState
+    viewportStates,
+    pseudoStates,
+    selectedViewport = "default",
+    selectedPseudoState = "default",
+    onChangeViewport,
+    onChangePseudoState
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components104.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components104.__experimentalView, { children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components104.__experimentalSpacer, { marginBottom: 0, paddingX: 4, paddingY: 3, children: /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(import_components104.__experimentalVStack, { spacing: 2, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(import_components104.__experimentalHStack, { spacing: 2, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(import_components104.__experimentalHStack, { spacing: 2, alignment: "top", children: [
         /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
           import_components104.Navigator.BackButton,
           {
@@ -45915,32 +46040,28 @@ If there's a particular need for this, please submit a feature request at https:
             onClick: onBack
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components104.__experimentalSpacer, { children: /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(
-          import_components104.__experimentalHStack,
-          {
-            justify: "space-between",
-            alignment: "center",
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
-                import_components104.__experimentalHeading,
-                {
-                  className: "global-styles-ui-header",
-                  level: 2,
-                  size: 13,
-                  children: title
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
-                StateControl,
-                {
-                  states,
-                  value: selectedState,
-                  onChange: onChangeState
-                }
-              )
-            ]
-          }
-        ) })
+        /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components104.__experimentalSpacer, { children: /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(import_components104.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+            import_components104.__experimentalHeading,
+            {
+              className: "global-styles-ui-header",
+              level: 2,
+              size: 13,
+              children: title
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+            StateControl,
+            {
+              viewportStates,
+              pseudoStates,
+              viewportValue: selectedViewport,
+              pseudoStateValue: selectedPseudoState,
+              onChangeViewport,
+              onChangePseudoState
+            }
+          )
+        ] }) })
       ] }),
       description && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components104.__experimentalText, { className: "global-styles-ui-header__description", children: description })
     ] }) }) }) });
@@ -46216,22 +46337,28 @@ If there's a particular need for this, please submit a feature request at https:
       prefixParts = ["variations", variation].concat(prefixParts);
     }
     const prefix2 = prefixParts.join(".");
-    const [selectedState, setSelectedState] = (0, import_element155.useState)("default");
-    const validStates = (0, import_element155.useMemo)(() => getValidStates(name2), [name2]);
-    const stateParam = selectedState !== "default" ? selectedState : void 0;
+    const [selectedViewport, setSelectedViewport] = (0, import_element155.useState)("default");
+    const [selectedPseudoState, setSelectedPseudoState] = (0, import_element155.useState)("default");
+    const validViewportStates = (0, import_element155.useMemo)(() => getValidViewportStates(), []);
+    const validPseudoStates = (0, import_element155.useMemo)(
+      () => getValidPseudoStates(name2),
+      [name2]
+    );
+    const stateParam = [selectedViewport, selectedPseudoState].filter((value) => value !== "default").join(".");
+    const hasSelectedState = stateParam.length > 0;
     const [style, setStyle2] = useStyle(
       prefix2,
       name2,
       "user",
       false,
-      stateParam
+      hasSelectedState ? stateParam : void 0
     );
     const [inheritedStyle] = useStyle(
       prefix2,
       name2,
       "merged",
       false,
-      stateParam
+      hasSelectedState ? stateParam : void 0
     );
     const [userSettings] = useSetting("", name2, "user");
     const [rawSettings, setSettings] = useSetting("", name2);
@@ -46267,6 +46394,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasBorderPanel = useHasBorderPanel2(settings);
     const hasDimensionsPanel = useHasDimensionsPanel3(settings);
     const hasFiltersPanel = useHasFiltersPanel(settings);
+    const shouldShowFiltersPanel = hasFiltersPanel && selectedViewport === "default";
     const hasImageSettingsPanel = useHasImageSettingsPanel(
       name2,
       userSettings,
@@ -46324,9 +46452,10 @@ If there's a particular need for this, please submit a feature request at https:
     const onChangeTypography = (newStyle) => {
       const { settings: newSettings, ...styleWithoutSettings } = newStyle;
       if (newSettings?.typography) {
+        const stylePathForState = [prefix2, stateParam].filter(Boolean).join(".");
         let updatedConfig = setStyle(
           userConfig,
-          prefix2,
+          stylePathForState,
           styleWithoutSettings,
           name2
         );
@@ -46369,9 +46498,12 @@ If there's a particular need for this, please submit a feature request at https:
         ScreenHeader,
         {
           title: variation ? currentBlockStyle?.label : blockType?.title,
-          states: validStates,
-          selectedState,
-          onChangeState: setSelectedState
+          viewportStates: validViewportStates,
+          pseudoStates: validPseudoStates,
+          selectedViewport,
+          selectedPseudoState,
+          onChangeViewport: setSelectedViewport,
+          onChangePseudoState: setSelectedPseudoState
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
@@ -46379,8 +46511,8 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: name2,
           variation,
-          selectedState,
-          stateStyles: selectedState !== "default" ? style : void 0
+          selectedState: hasSelectedState ? stateParam : "default",
+          stateStyles: hasSelectedState ? style : void 0
         }
       ),
       hasVariationsPanel && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("div", { className: "global-styles-ui-screen-variations", children: /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(import_components108.__experimentalVStack, { spacing: 3, children: [
@@ -46413,7 +46545,7 @@ If there's a particular need for this, please submit a feature request at https:
           value: style,
           onChange: onChangeTypography,
           settings,
-          isGlobalStyles: true
+          isGlobalStyles: !hasSelectedState
         }
       ),
       hasDimensionsPanel && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
@@ -46435,7 +46567,7 @@ If there's a particular need for this, please submit a feature request at https:
           settings
         }
       ),
-      hasFiltersPanel && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+      shouldShowFiltersPanel && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
         StylesFiltersPanel,
         {
           inheritedValue: inheritedStyleWithLayout,
@@ -46445,7 +46577,7 @@ If there's a particular need for this, please submit a feature request at https:
           includeLayoutControls: true
         }
       ),
-      hasImageSettingsPanel && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+      hasImageSettingsPanel && !hasSelectedState && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
         ImageSettingsPanel,
         {
           onChange: onChangeLightbox,

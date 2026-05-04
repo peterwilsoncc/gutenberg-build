@@ -1026,7 +1026,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment92 = REACT_FRAGMENT_TYPE;
+          var Fragment93 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1085,7 +1085,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment92;
+          exports.Fragment = Fragment93;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -40201,6 +40201,10 @@ var wp;
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
   };
+  var RESPONSIVE_BREAKPOINTS = {
+    mobile: "@media (width <= 480px)",
+    tablet: "@media (480px < width <= 782px)"
+  };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
       (declarations, { path, cssVarInfix, classes }) => {
@@ -40548,7 +40552,7 @@ var wp;
     const entries = Object.entries(treeToPickFrom);
     const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
     const pickedEntries = entries.filter(
-      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key)
+      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
     );
     const clonedEntries = pickedEntries.map(([key, style]) => [
       key,
@@ -40613,6 +40617,86 @@ var wp;
         ";"
       )};}`;
       ruleset += pseudoRule;
+    });
+    return ruleset;
+  }
+  function appendResponsiveStyles(styles, selector3, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector, blockRootSelector, styleVariationName) {
+    const responsiveStyles = Object.entries(styles).filter(
+      ([key]) => RESPONSIVE_BREAKPOINTS[key]
+    );
+    if (!responsiveStyles.length) {
+      return ruleset;
+    }
+    responsiveStyles.forEach(([breakpointKey, breakpointStyle]) => {
+      if (!breakpointStyle || typeof breakpointStyle !== "object") {
+        return;
+      }
+      const mediaQuery = RESPONSIVE_BREAKPOINTS[breakpointKey];
+      const remainingBreakpointStyles = JSON.parse(
+        JSON.stringify(breakpointStyle)
+      );
+      if (featureSelectors && typeof featureSelectors !== "string") {
+        let breakpointFeatureDeclarations = getFeatureDeclarations(
+          featureSelectors,
+          remainingBreakpointStyles
+        );
+        breakpointFeatureDeclarations = updateParagraphTextIndentSelector(
+          breakpointFeatureDeclarations,
+          treeSettings,
+          blockName
+        );
+        breakpointFeatureDeclarations = updateButtonWidthDeclarations(
+          breakpointFeatureDeclarations,
+          treeSettings
+        );
+        Object.entries(breakpointFeatureDeclarations).forEach(
+          ([baseSelector, declarations]) => {
+            if (!declarations.length) {
+              return;
+            }
+            let cssSelector;
+            if (!styleVariationSelector) {
+              cssSelector = baseSelector;
+            } else if (blockRootSelector && styleVariationName && !baseSelector.includes(blockRootSelector)) {
+              cssSelector = getBlockStyleVariationSelector(
+                styleVariationName,
+                baseSelector
+              );
+            } else {
+              cssSelector = concatFeatureVariationSelectorString(
+                baseSelector,
+                styleVariationSelector
+              );
+            }
+            const rules = declarations.join(";");
+            ruleset += `${mediaQuery}{:root :where(${cssSelector}){${rules};}}`;
+          }
+        );
+      }
+      const breakpointDeclarations = getStylesDeclarations(
+        remainingBreakpointStyles
+      );
+      if (breakpointDeclarations.length) {
+        const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
+          selector3,
+          styleVariationSelector
+        ) : selector3;
+        ruleset += `${mediaQuery}{:root :where(${cssSelector}){${breakpointDeclarations.join(
+          ";"
+        )};}}`;
+      }
+      const breakpointPseudoRules = appendPseudoSelectorStyles(
+        remainingBreakpointStyles,
+        selector3,
+        "",
+        featureSelectors,
+        treeSettings,
+        blockName,
+        styleVariationSelector
+      );
+      if (breakpointPseudoRules) {
+        ruleset += `${mediaQuery}{${breakpointPseudoRules}}`;
+      }
     });
     return ruleset;
   }
@@ -40979,6 +41063,17 @@ var wp;
                     name,
                     styleVariationSelector
                   );
+                  ruleset = appendResponsiveStyles(
+                    styleVariations,
+                    styleVariationSelector,
+                    ruleset,
+                    featureSelectors,
+                    tree.settings,
+                    name,
+                    styleVariationSelector,
+                    selector3,
+                    styleVariationName
+                  );
                   if (hasLayoutSupport2 && styleVariations?.spacing?.blockGap) {
                     const variationSelectorWithBlock = styleVariationSelector + selector3;
                     ruleset += getLayoutStyles({
@@ -40994,6 +41089,14 @@ var wp;
             );
           }
           ruleset = appendPseudoSelectorStyles(
+            styles,
+            selector3,
+            ruleset,
+            featureSelectors,
+            tree.settings,
+            name
+          );
+          ruleset = appendResponsiveStyles(
             styles,
             selector3,
             ruleset,
@@ -61558,54 +61661,126 @@ var wp;
   var import_i18n196 = __toESM(require_i18n(), 1);
   var import_components209 = __toESM(require_components(), 1);
   var import_jsx_runtime381 = __toESM(require_jsx_runtime(), 1);
+  var { Badge: WCBadge5 } = unlock(import_components209.privateApis);
   function StateControl({
-    states = [],
-    value = "default",
-    onChange
+    viewportStates = [],
+    pseudoStates = [],
+    viewportValue = "default",
+    pseudoStateValue = "default",
+    onChangeViewport,
+    onChangePseudoState
   }) {
-    if (!states || states.length === 0) {
+    if (!viewportStates.length && !pseudoStates.length) {
       return null;
     }
-    const stateOptions = [
+    const viewportOptions = [
       { label: (0, import_i18n196.__)("Default"), value: "default" },
-      ...states.map((state) => ({
+      ...viewportStates.map((state) => ({
         label: state.label,
         value: state.value
       }))
     ];
-    const getCurrentStateLabel = () => {
-      const currentOption = stateOptions.find(
-        (option) => option.value === value
+    const pseudoStateOptions = [
+      { label: (0, import_i18n196.__)("Default"), value: "default" },
+      ...pseudoStates.map((state) => ({
+        label: state.label,
+        value: state.value
+      }))
+    ];
+    const hasViewportOptions = viewportStates.length > 0;
+    const hasPseudoStateOptions = pseudoStates.length > 0;
+    const triggerLabel = (0, import_i18n196.__)("States");
+    const activeStates = [];
+    if (hasViewportOptions && viewportValue !== "default") {
+      const selectedViewport = viewportOptions.find(
+        (option) => option.value === viewportValue
       );
-      return currentOption?.label || (0, import_i18n196.__)("Default");
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
-      import_components209.DropdownMenu,
+      if (selectedViewport) {
+        activeStates.push({
+          key: `viewport-${selectedViewport.value}`,
+          label: selectedViewport.label
+        });
+      }
+    }
+    if (hasPseudoStateOptions && pseudoStateValue !== "default") {
+      const selectedPseudoState = pseudoStateOptions.find(
+        (option) => option.value === pseudoStateValue
+      );
+      if (selectedPseudoState) {
+        activeStates.push({
+          key: `pseudo-${selectedPseudoState.value}`,
+          label: selectedPseudoState.label
+        });
+      }
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime381.jsxs)(
+      Stack,
       {
-        icon: chevron_down_default,
-        label: (0, import_i18n196.sprintf)(
-          /* translators: %s: Current state (e.g. "Hover", "Focus") */
-          (0, import_i18n196.__)("State: %s"),
-          getCurrentStateLabel()
-        ),
-        text: getCurrentStateLabel(),
-        toggleProps: {
-          size: "compact",
-          variant: "tertiary",
-          iconPosition: "right"
-        },
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components209.MenuGroup, { label: (0, import_i18n196.__)("State"), children: stateOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
-          import_components209.MenuItem,
-          {
-            onClick: () => {
-              onChange(option.value);
-              onClose();
-            },
-            icon: value === option.value ? check_default : null,
-            children: option.label
-          },
-          option.value
-        )) })
+        direction: "column",
+        gap: "sm",
+        align: "flex-end",
+        className: "block-editor-global-styles-state-control",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
+            import_components209.DropdownMenu,
+            {
+              icon: chevron_down_default,
+              label: triggerLabel,
+              popoverProps: {
+                placement: "right-start"
+              },
+              text: triggerLabel,
+              toggleProps: {
+                size: "compact",
+                variant: "tertiary",
+                iconPosition: "right"
+              },
+              children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime381.jsxs)(import_jsx_runtime381.Fragment, { children: [
+                hasViewportOptions && /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components209.MenuGroup, { label: (0, import_i18n196.__)("Viewport"), children: viewportOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
+                  import_components209.MenuItem,
+                  {
+                    onClick: () => {
+                      onChangeViewport?.(option.value);
+                      if (!hasPseudoStateOptions) {
+                        onClose();
+                      }
+                    },
+                    icon: viewportValue === option.value ? check_default : null,
+                    children: option.label
+                  },
+                  `viewport-${option.value}`
+                )) }),
+                hasPseudoStateOptions && /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components209.MenuGroup, { label: (0, import_i18n196.__)("Pseudo state"), children: pseudoStateOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
+                  import_components209.MenuItem,
+                  {
+                    onClick: () => {
+                      onChangePseudoState?.(
+                        option.value
+                      );
+                      if (!hasViewportOptions) {
+                        onClose();
+                      }
+                    },
+                    icon: pseudoStateValue === option.value ? check_default : null,
+                    children: option.label
+                  },
+                  `pseudo-${option.value}`
+                )) })
+              ] })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
+            Stack,
+            {
+              className: "block-editor-global-styles-state-control__badges",
+              direction: "row",
+              justify: "flex-start",
+              gap: "xs",
+              wrap: "wrap",
+              children: activeStates.map((activeState) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(WCBadge5, { intent: "info", children: activeState.label }, activeState.key))
+            }
+          )
+        ]
       }
     );
   }
@@ -77917,7 +78092,7 @@ var wp;
   var import_components280 = __toESM(require_components(), 1);
   var import_dom43 = __toESM(require_dom(), 1);
   var import_jsx_runtime482 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge5 } = unlock(import_components280.privateApis);
+  var { Badge: WCBadge6 } = unlock(import_components280.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
     return /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(import_components280.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
       /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(import_components280.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(import_components280.__experimentalHStack, { alignment: "top", children: [
@@ -77957,7 +78132,7 @@ var wp;
                   className: "link-preview-button__badges",
                   alignment: "left",
                   children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
-                    WCBadge5,
+                    WCBadge6,
                     {
                       intent: badge.intent,
                       children: badge.label

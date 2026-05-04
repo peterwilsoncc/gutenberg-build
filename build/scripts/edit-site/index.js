@@ -10358,6 +10358,10 @@ var wp;
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
   };
+  var RESPONSIVE_BREAKPOINTS = {
+    mobile: "@media (width <= 480px)",
+    tablet: "@media (480px < width <= 782px)"
+  };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
       (declarations, { path, cssVarInfix, classes }) => {
@@ -10739,7 +10743,7 @@ var wp;
     const entries = Object.entries(treeToPickFrom);
     const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
     const pickedEntries = entries.filter(
-      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key)
+      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
     );
     const clonedEntries = pickedEntries.map(([key, style]) => [
       key,
@@ -10804,6 +10808,86 @@ var wp;
         ";"
       )};}`;
       ruleset += pseudoRule;
+    });
+    return ruleset;
+  }
+  function appendResponsiveStyles(styles, selector2, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector, blockRootSelector, styleVariationName) {
+    const responsiveStyles = Object.entries(styles).filter(
+      ([key]) => RESPONSIVE_BREAKPOINTS[key]
+    );
+    if (!responsiveStyles.length) {
+      return ruleset;
+    }
+    responsiveStyles.forEach(([breakpointKey, breakpointStyle]) => {
+      if (!breakpointStyle || typeof breakpointStyle !== "object") {
+        return;
+      }
+      const mediaQuery = RESPONSIVE_BREAKPOINTS[breakpointKey];
+      const remainingBreakpointStyles = JSON.parse(
+        JSON.stringify(breakpointStyle)
+      );
+      if (featureSelectors && typeof featureSelectors !== "string") {
+        let breakpointFeatureDeclarations = getFeatureDeclarations(
+          featureSelectors,
+          remainingBreakpointStyles
+        );
+        breakpointFeatureDeclarations = updateParagraphTextIndentSelector(
+          breakpointFeatureDeclarations,
+          treeSettings,
+          blockName
+        );
+        breakpointFeatureDeclarations = updateButtonWidthDeclarations(
+          breakpointFeatureDeclarations,
+          treeSettings
+        );
+        Object.entries(breakpointFeatureDeclarations).forEach(
+          ([baseSelector, declarations]) => {
+            if (!declarations.length) {
+              return;
+            }
+            let cssSelector;
+            if (!styleVariationSelector) {
+              cssSelector = baseSelector;
+            } else if (blockRootSelector && styleVariationName && !baseSelector.includes(blockRootSelector)) {
+              cssSelector = getBlockStyleVariationSelector(
+                styleVariationName,
+                baseSelector
+              );
+            } else {
+              cssSelector = concatFeatureVariationSelectorString(
+                baseSelector,
+                styleVariationSelector
+              );
+            }
+            const rules = declarations.join(";");
+            ruleset += `${mediaQuery}{:root :where(${cssSelector}){${rules};}}`;
+          }
+        );
+      }
+      const breakpointDeclarations = getStylesDeclarations(
+        remainingBreakpointStyles
+      );
+      if (breakpointDeclarations.length) {
+        const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
+          selector2,
+          styleVariationSelector
+        ) : selector2;
+        ruleset += `${mediaQuery}{:root :where(${cssSelector}){${breakpointDeclarations.join(
+          ";"
+        )};}}`;
+      }
+      const breakpointPseudoRules = appendPseudoSelectorStyles(
+        remainingBreakpointStyles,
+        selector2,
+        "",
+        featureSelectors,
+        treeSettings,
+        blockName,
+        styleVariationSelector
+      );
+      if (breakpointPseudoRules) {
+        ruleset += `${mediaQuery}{${breakpointPseudoRules}}`;
+      }
     });
     return ruleset;
   }
@@ -11255,6 +11339,17 @@ var wp;
                     name2,
                     styleVariationSelector
                   );
+                  ruleset = appendResponsiveStyles(
+                    styleVariations,
+                    styleVariationSelector,
+                    ruleset,
+                    featureSelectors,
+                    tree.settings,
+                    name2,
+                    styleVariationSelector,
+                    selector2,
+                    styleVariationName
+                  );
                   if (hasLayoutSupport && styleVariations?.spacing?.blockGap) {
                     const variationSelectorWithBlock = styleVariationSelector + selector2;
                     ruleset += getLayoutStyles({
@@ -11270,6 +11365,14 @@ var wp;
             );
           }
           ruleset = appendPseudoSelectorStyles(
+            styles,
+            selector2,
+            ruleset,
+            featureSelectors,
+            tree.settings,
+            name2
+          );
+          ruleset = appendResponsiveStyles(
             styles,
             selector2,
             ruleset,
@@ -11652,6 +11755,10 @@ var wp;
       { value: ":active", label: (0, import_i18n12.__)("Active") }
     ]
   };
+  var RESPONSIVE_STATES = [
+    { value: "tablet", label: (0, import_i18n12.__)("Tablet") },
+    { value: "mobile", label: (0, import_i18n12.__)("Mobile") }
+  ];
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {
       return object;
@@ -11738,6 +11845,12 @@ var wp;
   k([a11y_default]);
   function useStyle2(path, blockName, readFrom = "merged", shouldDecodeEncode = true, state) {
     const { user, base, merged, onChange } = (0, import_element36.useContext)(GlobalStylesContext);
+    const statePathParts = state?.split(".").filter(Boolean) ?? [];
+    const pseudoSelectorState = statePathParts.find(
+      (value) => value.startsWith(":")
+    );
+    const statePathWithoutPseudo = statePathParts.filter((value) => !value.startsWith(":")).join(".");
+    const stylePath = [path, statePathWithoutPseudo].filter(Boolean).join(".");
     let sourceValue = merged;
     if (readFrom === "base") {
       sourceValue = base;
@@ -11747,39 +11860,45 @@ var wp;
     const styleValue = (0, import_element36.useMemo)(() => {
       const rawValue = getStyle(
         sourceValue,
-        path,
+        stylePath,
         blockName,
         shouldDecodeEncode
       );
-      if (state) {
-        return rawValue?.[state] ?? {};
+      if (pseudoSelectorState) {
+        return rawValue?.[pseudoSelectorState] ?? {};
       }
       return rawValue;
-    }, [sourceValue, path, blockName, shouldDecodeEncode, state]);
+    }, [
+      sourceValue,
+      stylePath,
+      blockName,
+      shouldDecodeEncode,
+      pseudoSelectorState
+    ]);
     const setStyleValue = (0, import_element36.useCallback)(
       (newValue) => {
         let valueToSet = newValue;
-        if (state) {
+        if (pseudoSelectorState) {
           const fullCurrentValue = getStyle(
             user,
-            path,
+            stylePath,
             blockName,
             false
           );
           valueToSet = {
             ...fullCurrentValue,
-            [state]: newValue
+            [pseudoSelectorState]: newValue
           };
         }
         const newGlobalStyles = setStyle(
           user,
-          path,
+          stylePath,
           valueToSet,
           blockName
         );
         onChange(newGlobalStyles);
       },
-      [user, onChange, path, blockName, state]
+      [user, onChange, stylePath, blockName, pseudoSelectorState]
     );
     return [styleValue, setStyleValue];
   }

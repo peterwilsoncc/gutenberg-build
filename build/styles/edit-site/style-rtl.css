@@ -3858,6 +3858,7 @@ button.font-library__upload-area {
 
 .global-styles-ui-header {
   margin-bottom: 0 !important;
+  line-height: 1.9 !important;
 }
 
 .global-styles-ui-subtitle {
