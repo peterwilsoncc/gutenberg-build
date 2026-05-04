@@ -4563,15 +4563,6 @@ button.font-library__upload-area {
   z-index: 2;
   overflow: visible;
 }
-.edit-site-layout__canvas-container.is-resizing::after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  content: "";
-  z-index: 100;
-}
 
 .edit-site-layout__canvas {
   position: absolute;
