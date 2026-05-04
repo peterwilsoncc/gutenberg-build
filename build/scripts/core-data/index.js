@@ -618,7 +618,7 @@ var wp;
   function receiveItems(items2, edits, meta) {
     return {
       type: "RECEIVE_ITEMS",
-      items: Array.isArray(items2) ? items2 : [items2],
+      items: items2,
       persistedEdits: edits,
       meta
     };
@@ -3165,18 +3165,20 @@ var wp;
       case "RECEIVE_ITEMS": {
         const context = getContextFromAction(action);
         const key = action.key || DEFAULT_ENTITY_KEY;
+        const itemsList = Array.isArray(action.items) ? action.items : [action.items];
         return {
           ...state,
           [context]: {
             ...state[context],
-            ...action.items.reduce((accumulator, value) => {
-              const itemId = value?.[key];
-              accumulator[itemId] = conservativeMapItem(
-                state?.[context]?.[itemId],
-                value
-              );
-              return accumulator;
-            }, {})
+            ...Object.fromEntries(
+              itemsList.map((item) => [
+                item?.[key],
+                conservativeMapItem(
+                  state?.[context]?.[item?.[key]],
+                  item
+                )
+              ])
+            )
           }
         };
       }
@@ -3195,13 +3197,14 @@ var wp;
       case "RECEIVE_ITEMS": {
         const context = getContextFromAction(action);
         const { query, key = DEFAULT_ENTITY_KEY } = action;
+        const itemsList = Array.isArray(action.items) ? action.items : [action.items];
         const queryParts = query ? get_query_parts_default(query) : {};
         const isCompleteQuery = !query || !Array.isArray(queryParts.fields);
         return {
           ...state,
           [context]: {
             ...state[context],
-            ...action.items.reduce((result, item) => {
+            ...itemsList.reduce((result, item) => {
               const itemId = item?.[key];
               result[itemId] = state?.[context]?.[itemId] || isCompleteQuery;
               return result;
@@ -3238,16 +3241,19 @@ var wp;
     // reducer tracks only a single query object.
     on_sub_key_default("stableKey")
   ])((state = {}, action) => {
-    const { type, page, perPage, key = DEFAULT_ENTITY_KEY } = action;
-    if (type !== "RECEIVE_ITEMS") {
+    if (action.type !== "RECEIVE_ITEMS") {
       return state;
     }
+    if (!Array.isArray(action.items)) {
+      return state;
+    }
+    const key = action.key ?? DEFAULT_ENTITY_KEY;
     return {
       itemIds: getMergedItemIds(
         state?.itemIds || [],
         action.items.map((item) => item?.[key]).filter(Boolean),
-        page,
-        perPage
+        action.page,
+        action.perPage
       ),
       meta: action.meta
     };
@@ -3405,7 +3411,8 @@ var wp;
                 return state;
               }
               const nextState = { ...state };
-              for (const record of action.items) {
+              const itemsList = Array.isArray(action.items) ? action.items : [action.items];
+              for (const record of itemsList) {
                 const recordId = record?.[action.key];
                 const edits = nextState[recordId];
                 if (!edits) {
@@ -4754,6 +4761,9 @@ var wp;
   };
 
   // packages/core-data/build-module/actions.mjs
+  function addTitleToAutoDraft(record) {
+    return record.status === "auto-draft" ? { ...record, title: "" } : record;
+  }
   function receiveUserQuery(queryID, users2) {
     return {
       type: "RECEIVE_USER_QUERY",
@@ -4775,9 +4785,7 @@ var wp;
   }
   function receiveEntityRecords(kind, name, records, query = void 0, invalidateCache = false, edits = void 0, meta = void 0) {
     if (kind === "postType") {
-      records = (Array.isArray(records) ? records : [records]).map(
-        (record) => record.status === "auto-draft" ? { ...record, title: "" } : record
-      );
+      records = Array.isArray(records) ? records.map(addTitleToAutoDraft) : addTitleToAutoDraft(records);
     }
     let action;
     if (query) {
@@ -5351,7 +5359,7 @@ var wp;
     dispatch3({
       type: "RECEIVE_ITEM_REVISIONS",
       key,
-      items: Array.isArray(records) ? records : [records],
+      items: records,
       recordKey,
       meta,
       query,
@@ -5436,7 +5444,7 @@ var wp;
           dispatch3.receiveEntityRecords(
             kind,
             name,
-            [newRecord],
+            newRecord,
             void 0,
             true,
             void 0,
@@ -6343,9 +6351,11 @@ var wp;
       template.id = id;
       registry.batch(() => {
         dispatch3.receiveDefaultTemplateId(query, id);
-        dispatch3.receiveEntityRecords("postType", template.type, [
+        dispatch3.receiveEntityRecords(
+          "postType",
+          template.type,
           template
-        ]);
+        );
         dispatch3.finishResolution("getEntityRecord", [
           "postType",
           template.type,
