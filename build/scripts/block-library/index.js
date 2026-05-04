@@ -131,10 +131,10 @@ var wp;
           if (typeof b2 !== "function" && b2 !== null)
             throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
           extendStatics(d2, b2);
-          function __270() {
+          function __269() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__270.prototype = b2.prototype, new __270());
+          d2.prototype = b2 === null ? Object.create(b2) : (__269.prototype = b2.prototype, new __269());
         };
       })();
       var __assign2 = exports && exports.__assign || function() {
@@ -2451,10 +2451,10 @@ var wp;
           if (typeof b2 !== "function" && b2 !== null)
             throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
           extendStatics(d2, b2);
-          function __270() {
+          function __269() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__270.prototype = b2.prototype, new __270());
+          d2.prototype = b2 === null ? Object.create(b2) : (__269.prototype = b2.prototype, new __269());
         };
       })();
       var __assign2 = exports && exports.__assign || function() {
@@ -13741,7 +13741,8 @@ var wp;
             "aria-label": (0, import_i18n30.__)(
               "Reply to A WordPress Commenter"
             ),
-            children: (0, import_i18n30.__)("Reply")
+            /* translators: Comment reply button text. */
+            children: (0, import_i18n30._x)("Reply", "verb")
           }
         ) })
       ] }) }) }),
@@ -15003,7 +15004,8 @@ var wp;
       {
         href: "#comment-reply-pseudo-link",
         onClick: (event) => event.preventDefault(),
-        children: (0, import_i18n37.__)("Reply")
+        /* translators: Comment reply button text. */
+        children: (0, import_i18n37._x)("Reply", "verb")
       }
     ) }) });
   }
