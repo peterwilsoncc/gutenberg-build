@@ -10622,7 +10622,7 @@ function PostTypePage({
           type: "submit",
           form: formId,
           isBusy: isSaving,
-          disabled: isSaving,
+          disabled: isSaving || !isValid2,
           accessibleWhenDisabled: true
         },
         isAddMode ? (0, import_i18n23.__)("Create") : (0, import_i18n23.__)("Save")
