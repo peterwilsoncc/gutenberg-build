@@ -16208,10 +16208,33 @@ var wp;
     if (!text1 || !text2) {
       return 0;
     }
-    const changes = (0, import_word.diffWords)(text1, text2);
-    const unchanged = changes.filter((c6) => !c6.added && !c6.removed).reduce((sum, c6) => sum + c6.value.length, 0);
-    const total = Math.max(text1.length, text2.length);
-    return total > 0 ? unchanged / total : 0;
+    const segmenter = new Intl.Segmenter(void 0, {
+      granularity: "word"
+    });
+    const wordLikeRegex = /[\p{L}\p{N}]/u;
+    const getWords = (text) => {
+      const words = [];
+      for (const { segment, isWordLike } of segmenter.segment(text)) {
+        if (isWordLike || wordLikeRegex.test(segment)) {
+          words.push(segment);
+        }
+      }
+      return words;
+    };
+    const words1 = getWords(text1);
+    const words2 = getWords(text2);
+    if (words1.length === 0 && words2.length === 0) {
+      return 1;
+    }
+    const set1 = new Set(words1);
+    let intersection = 0;
+    for (const word of words2) {
+      if (set1.has(word)) {
+        intersection++;
+      }
+    }
+    const total = Math.max(words1.length, words2.length);
+    return total > 0 ? intersection / total : 0;
   }
   function pairSimilarBlocks(blocks) {
     const removed = [];
@@ -16228,39 +16251,84 @@ var wp;
       return blocks;
     }
     const pairedRemoved = /* @__PURE__ */ new Set();
+    const pairedAdded = /* @__PURE__ */ new Set();
     const modifications = /* @__PURE__ */ new Map();
-    const SIMILARITY_THRESHOLD = 0.3;
+    const SIMILARITY_THRESHOLD = 0.5;
+    const addedByName = /* @__PURE__ */ new Map();
+    for (const add of added) {
+      const name2 = add.block.blockName;
+      if (!addedByName.has(name2)) {
+        addedByName.set(name2, []);
+      }
+      addedByName.get(name2).push(add);
+    }
+    const removedByName = /* @__PURE__ */ new Map();
     for (const rem of removed) {
+      const name2 = rem.block.blockName;
+      if (!removedByName.has(name2)) {
+        removedByName.set(name2, []);
+      }
+      removedByName.get(name2).push(rem);
+    }
+    let maxPairedAddedIndex = -1;
+    for (const rem of removed) {
+      const candidates = addedByName.get(rem.block.blockName) || [];
+      const sameNameRemoved = removedByName.get(rem.block.blockName) || [];
+      const unpaired = candidates.filter(
+        (add) => !modifications.has(add.index) && add.index > maxPairedAddedIndex
+      );
+      if (unpaired.length === 0) {
+        continue;
+      }
       let bestMatch = null;
-      let bestScore = 0;
-      for (const add of added) {
-        if (modifications.has(add.index)) {
-          continue;
-        }
-        if (add.block.blockName !== rem.block.blockName) {
-          continue;
-        }
-        const score = textSimilarity(
-          rem.block.innerHTML || "",
-          add.block.innerHTML || ""
-        );
+      if (sameNameRemoved.length === 1 && unpaired.length === 1) {
+        const add = unpaired[0];
         const attrsMatch = JSON.stringify(rem.block.attrs) === JSON.stringify(add.block.attrs);
-        if (score > bestScore && score > SIMILARITY_THRESHOLD && (score < 1 || !attrsMatch)) {
-          bestScore = score;
+        const contentMatch = (rem.block.innerHTML || "") === (add.block.innerHTML || "");
+        if (!contentMatch || !attrsMatch) {
           bestMatch = add;
+        }
+      } else {
+        let bestScore = 0;
+        for (const add of unpaired) {
+          const score = textSimilarity(
+            rem.block.innerHTML || "",
+            add.block.innerHTML || ""
+          );
+          const attrsMatch = JSON.stringify(rem.block.attrs) === JSON.stringify(add.block.attrs);
+          if (score > bestScore && score > SIMILARITY_THRESHOLD && (score < 1 || !attrsMatch)) {
+            bestScore = score;
+            bestMatch = add;
+          }
         }
       }
       if (bestMatch) {
-        pairedRemoved.add(rem.index);
-        modifications.set(bestMatch.index, {
+        maxPairedAddedIndex = bestMatch.index;
+        const modifiedBlock = {
           ...bestMatch.block,
           __revisionDiffStatus: { status: "modified" },
           __previousRawBlock: rem.block
-        });
+        };
+        const lo = Math.min(rem.index, bestMatch.index);
+        const hi = Math.max(rem.index, bestMatch.index);
+        let hasAddedBetween = false;
+        for (let i3 = lo + 1; i3 < hi; i3++) {
+          if (blocks[i3].__revisionDiffStatus?.status === "added" && !pairedAdded.has(i3)) {
+            hasAddedBetween = true;
+            break;
+          }
+        }
+        if (hasAddedBetween) {
+          modifications.set(bestMatch.index, modifiedBlock);
+          pairedRemoved.add(rem.index);
+        } else {
+          modifications.set(rem.index, modifiedBlock);
+          pairedAdded.add(bestMatch.index);
+        }
       }
     }
     return blocks.map((block, index2) => {
-      if (pairedRemoved.has(index2)) {
+      if (pairedRemoved.has(index2) || pairedAdded.has(index2)) {
         return null;
       }
       if (modifications.has(index2)) {
