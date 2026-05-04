@@ -21621,7 +21621,9 @@ function PostTypesPage() {
         isLoading: isResolving || !hasResolved,
         paginationInfo,
         defaultLayouts,
-        getItemId: (item) => String(item.id)
+        getItemId: (item) => String(item.id),
+        isItemClickable: () => true,
+        onClickItem: (item) => navigate({ to: `/edit/${item.id}` })
       }
     )
   );
