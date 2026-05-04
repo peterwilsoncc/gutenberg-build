@@ -281,7 +281,15 @@ var BLANK_RECORD = {
     object_type: [],
     description: "",
     public: true,
-    hierarchical: false
+    hierarchical: false,
+    publicly_queryable: true,
+    show_ui: true,
+    show_in_menu: true,
+    show_in_nav_menus: true,
+    show_tagcloud: true,
+    show_in_quick_edit: true,
+    show_admin_column: false,
+    show_in_rest: true
   }
 };
 var STRING_LABEL_KEYS = [
@@ -393,18 +401,27 @@ function toFormData(row) {
       labels[key] = value;
     }
   }
+  const formConfig = {
+    labels: { singular_name: "", ...labels },
+    object_type: Array.isArray(row.object_type) ? row.object_type : [],
+    description: config.description ?? "",
+    public: config.public,
+    hierarchical: config.hierarchical,
+    publicly_queryable: config.publicly_queryable,
+    show_ui: config.show_ui,
+    show_in_menu: config.show_in_menu,
+    show_in_nav_menus: config.show_in_nav_menus,
+    show_tagcloud: config.show_tagcloud,
+    show_in_quick_edit: config.show_in_quick_edit,
+    show_admin_column: config.show_admin_column,
+    show_in_rest: config.show_in_rest
+  };
   return {
     id: row.id,
     slug: row.slug,
     status: row.status,
     title: { raw: row.title.raw },
-    config: {
-      labels: { singular_name: "", ...labels },
-      object_type: Array.isArray(row.object_type) ? row.object_type : [],
-      description: config.description ?? "",
-      public: config.public ?? true,
-      hierarchical: config.hierarchical ?? false
-    }
+    config: formConfig
   };
 }
 function serializeForSave(data) {
@@ -428,6 +445,14 @@ function serializeForSave(data) {
       labels,
       public: config.public,
       hierarchical: config.hierarchical,
+      publicly_queryable: config.publicly_queryable,
+      show_ui: config.show_ui,
+      show_in_menu: config.show_in_menu,
+      show_in_nav_menus: config.show_in_nav_menus,
+      show_tagcloud: config.show_tagcloud,
+      show_in_quick_edit: config.show_in_quick_edit,
+      show_admin_column: config.show_admin_column,
+      show_in_rest: config.show_in_rest,
       ...description !== "" ? { description } : {}
     }
   };
@@ -9304,6 +9329,27 @@ var ActionLink = (0, import_element27.forwardRef)(
   }
 );
 
+// packages/user-taxonomies/build-module/fields/utils.mjs
+function booleanField(id, label, options) {
+  const field = {
+    id,
+    label,
+    type: "boolean",
+    description: options.description,
+    Edit: "toggle",
+    getValue: ({ item }) => item.config[id],
+    setValue: ({ item, value }) => ({
+      config: { ...item.config, [id]: !!value }
+    }),
+    filterBy: false,
+    enableSorting: false
+  };
+  if (options.isVisible) {
+    field.isVisible = options.isVisible;
+  }
+  return field;
+}
+
 // packages/user-taxonomies/build-module/fields/general.mjs
 var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
 var titleField = {
@@ -9357,34 +9403,15 @@ var descriptionField = {
   isValid: { maxLength: 1e3 },
   enableSorting: false
 };
-var publicField = {
-  id: "public",
-  label: (0, import_i18n5.__)("Public"),
-  type: "boolean",
-  description: (0, import_i18n5.__)(
-    "Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users."
-  ),
-  getValue: ({ item }) => item.config.public,
-  setValue: ({ item, value }) => ({
-    config: { ...item.config, public: !!value }
-  }),
-  filterBy: false,
-  enableSorting: false
-};
-var hierarchicalField = {
-  id: "hierarchical",
-  label: (0, import_i18n5.__)("Hierarchical"),
-  type: "boolean",
-  description: (0, import_i18n5.__)(
-    "When on, terms behave like categories with parent-child relationships. When off, terms behave like tags."
-  ),
-  getValue: ({ item }) => item.config.hierarchical,
-  setValue: ({ item, value }) => ({
-    config: { ...item.config, hierarchical: !!value }
-  }),
-  filterBy: false,
-  enableSorting: false
-};
+var hierarchicalField = booleanField(
+  "hierarchical",
+  (0, import_i18n5.__)("Hierarchical"),
+  {
+    description: (0, import_i18n5.__)(
+      "When on, terms behave like categories with parent-child relationships. When off, terms behave like tags."
+    )
+  }
+);
 var statusField = {
   id: "status",
   label: (0, import_i18n5.__)("Status"),
@@ -9497,24 +9524,19 @@ var defaultForm = {
     "singular_name",
     "slug",
     "object_type",
-    "public",
     "hierarchical",
     "status"
   ]
 };
-var generalForm = {
-  layout: { type: "regular" },
-  fields: [
-    "plural_name",
-    "singular_name",
-    "slug",
-    "description",
-    "object_type",
-    "public",
-    "hierarchical",
-    "status"
-  ]
-};
+var generalFormFields = [
+  "plural_name",
+  "singular_name",
+  "slug",
+  "object_type",
+  "description",
+  "hierarchical",
+  "status"
+];
 
 // packages/user-taxonomies/build-module/fields/labels.mjs
 var import_components = __toESM(require_components(), 1);
@@ -9726,20 +9748,108 @@ var labelsActionsField = {
   enableSorting: false,
   filterBy: false
 };
-var labelsForm = {
-  layout: { type: "regular" },
+var labelsFormFields = [
+  {
+    id: "__labels_actions",
+    layout: { type: "regular", labelPosition: "none" }
+  },
   // singular_name lives in the General card, so exclude it here.
-  fields: [
-    {
-      id: "__labels_actions",
-      layout: { type: "regular", labelPosition: "none" }
-    },
-    ...STRING_LABEL_KEYS.filter((key) => key !== "singular_name")
-  ]
-};
+  ...STRING_LABEL_KEYS.filter((key) => key !== "singular_name")
+];
+
+// packages/user-taxonomies/build-module/fields/visibility.mjs
+var import_i18n7 = __toESM(require_i18n(), 1);
+var publicField = booleanField("public", (0, import_i18n7.__)("Public"), {
+  description: (0, import_i18n7.__)(
+    "Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users."
+  )
+});
+var showInRestField = booleanField(
+  "show_in_rest",
+  (0, import_i18n7.__)("Show in REST API"),
+  {
+    description: (0, import_i18n7.__)(
+      "Required for the block editor. Turn off only for taxonomies that should not be exposed via REST."
+    )
+  }
+);
+var publiclyQueryableField = booleanField(
+  "publicly_queryable",
+  (0, import_i18n7.__)("Publicly queryable"),
+  {
+    description: (0, import_i18n7.__)(
+      "Whether front-end queries (e.g. ?taxonomy=\u2026&term=\u2026) can return terms from this taxonomy."
+    )
+  }
+);
+var showUiField = booleanField("show_ui", (0, import_i18n7.__)("Show admin UI"), {
+  description: (0, import_i18n7.__)(
+    "Whether to generate a default admin interface for managing terms."
+  )
+});
+var showInMenuField = booleanField(
+  "show_in_menu",
+  (0, import_i18n7.__)("Show in admin menu"),
+  {
+    description: (0, import_i18n7.__)(
+      "Whether to show the taxonomy in the admin menu. Has no effect when Show admin UI is off; the value is preserved either way."
+    ),
+    // Hide when `show_ui` is off — `show_in_menu` is silently ignored by
+    // register_taxonomy() in that case, so showing the toggle would be
+    // misleading. The stored value is preserved across the toggle.
+    isVisible: (item) => item.config.show_ui
+  }
+);
+var showInQuickEditField = booleanField(
+  "show_in_quick_edit",
+  (0, import_i18n7.__)("Show in Quick Edit"),
+  {
+    description: (0, import_i18n7.__)(
+      "Whether to show the taxonomy in the Quick/Bulk Edit panel."
+    )
+  }
+);
+var showAdminColumnField = booleanField(
+  "show_admin_column",
+  (0, import_i18n7.__)("Show admin column"),
+  {
+    description: (0, import_i18n7.__)(
+      "Whether to display a column for the taxonomy on the associated post type list tables."
+    )
+  }
+);
+var showInNavMenusField = booleanField(
+  "show_in_nav_menus",
+  (0, import_i18n7.__)("Available in nav menus"),
+  {
+    description: (0, import_i18n7.__)(
+      "Whether terms are selectable in the theme nav menu builder."
+    )
+  }
+);
+var showTagcloudField = booleanField(
+  "show_tagcloud",
+  (0, import_i18n7.__)("Available in Tag Cloud widget"),
+  {
+    description: (0, import_i18n7.__)(
+      "Whether terms can be displayed in the Tag Cloud widget."
+    )
+  }
+);
+var visibilityFormFields = [
+  "public",
+  "show_in_rest",
+  "publicly_queryable",
+  "show_ui",
+  "show_in_menu",
+  "show_in_quick_edit",
+  "show_in_nav_menus",
+  "show_tagcloud",
+  "show_admin_column"
+];
 
 // packages/user-taxonomies/build-module/actions/activate.mjs
-var import_i18n7 = __toESM(require_i18n(), 1);
+var import_i18n8 = __toESM(require_i18n(), 1);
 
 // packages/user-taxonomies/build-module/actions/utils.mjs
 var import_core_data3 = __toESM(require_core_data(), 1);
@@ -9814,29 +9924,29 @@ function createStatusAction(config) {
 // packages/user-taxonomies/build-module/actions/activate.mjs
 var activateAction = createStatusAction({
   id: "activate",
-  label: (0, import_i18n7.__)("Activate"),
+  label: (0, import_i18n8.__)("Activate"),
   targetStatus: "publish",
   messages: {
-    successSingle: (0, import_i18n7.__)("Taxonomy activated."),
-    successMany: (count) => (0, import_i18n7.sprintf)(
+    successSingle: (0, import_i18n8.__)("Taxonomy activated."),
+    successMany: (count) => (0, import_i18n8.sprintf)(
       /* translators: %d: The number of taxonomies. */
-      (0, import_i18n7._n)(
+      (0, import_i18n8._n)(
         "%d taxonomy activated.",
         "%d taxonomies activated.",
         count
       ),
       count
     ),
-    failSingle: (0, import_i18n7.__)("Failed to activate taxonomy."),
-    failMany: (0, import_i18n7.__)("Failed to activate taxonomies."),
-    errorSingle: (message) => (0, import_i18n7.sprintf)(
+    failSingle: (0, import_i18n8.__)("Failed to activate taxonomy."),
+    failMany: (0, import_i18n8.__)("Failed to activate taxonomies."),
+    errorSingle: (message) => (0, import_i18n8.sprintf)(
       /* translators: %s: an error message */
-      (0, import_i18n7.__)("An error occurred while activating the taxonomy: %s"),
+      (0, import_i18n8.__)("An error occurred while activating the taxonomy: %s"),
       message
     ),
-    errorMany: (messages) => (0, import_i18n7.sprintf)(
+    errorMany: (messages) => (0, import_i18n8.sprintf)(
       /* translators: %s: a list of comma separated error messages */
-      (0, import_i18n7.__)(
+      (0, import_i18n8.__)(
         "Some errors occurred while activating the taxonomies: %s"
       ),
       messages
@@ -9846,32 +9956,32 @@ var activateAction = createStatusAction({
 var activate_default = activateAction;
 
 // packages/user-taxonomies/build-module/actions/deactivate.mjs
-var import_i18n8 = __toESM(require_i18n(), 1);
+var import_i18n9 = __toESM(require_i18n(), 1);
 var deactivateAction = createStatusAction({
   id: "deactivate",
-  label: (0, import_i18n8.__)("Deactivate"),
+  label: (0, import_i18n9.__)("Deactivate"),
   targetStatus: "draft",
   messages: {
-    successSingle: (0, import_i18n8.__)("Taxonomy deactivated."),
-    successMany: (count) => (0, import_i18n8.sprintf)(
+    successSingle: (0, import_i18n9.__)("Taxonomy deactivated."),
+    successMany: (count) => (0, import_i18n9.sprintf)(
       /* translators: %d: The number of taxonomies. */
-      (0, import_i18n8._n)(
+      (0, import_i18n9._n)(
         "%d taxonomy deactivated.",
         "%d taxonomies deactivated.",
         count
       ),
       count
     ),
-    failSingle: (0, import_i18n8.__)("Failed to deactivate taxonomy."),
-    failMany: (0, import_i18n8.__)("Failed to deactivate taxonomies."),
-    errorSingle: (message) => (0, import_i18n8.sprintf)(
+    failSingle: (0, import_i18n9.__)("Failed to deactivate taxonomy."),
+    failMany: (0, import_i18n9.__)("Failed to deactivate taxonomies."),
+    errorSingle: (message) => (0, import_i18n9.sprintf)(
       /* translators: %s: an error message */
-      (0, import_i18n8.__)("An error occurred while deactivating the taxonomy: %s"),
+      (0, import_i18n9.__)("An error occurred while deactivating the taxonomy: %s"),
       message
     ),
-    errorMany: (messages) => (0, import_i18n8.sprintf)(
+    errorMany: (messages) => (0, import_i18n9.sprintf)(
       /* translators: %s: a list of comma separated error messages */
-      (0, import_i18n8.__)(
+      (0, import_i18n9.__)(
         "Some errors occurred while deactivating the taxonomies: %s"
       ),
       messages
@@ -9885,7 +9995,7 @@ var import_components2 = __toESM(require_components(), 1);
 var import_core_data4 = __toESM(require_core_data(), 1);
 var import_data3 = __toESM(require_data(), 1);
 var import_element29 = __toESM(require_element(), 1);
-var import_i18n9 = __toESM(require_i18n(), 1);
+var import_i18n10 = __toESM(require_i18n(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
 function DeleteTaxonomyModal({
@@ -9915,13 +10025,13 @@ function DeleteTaxonomyModal({
     );
     if (promiseResult.every(({ status }) => status === "fulfilled")) {
       createSuccessNotice(
-        itemsToDelete.length === 1 ? (0, import_i18n9.sprintf)(
+        itemsToDelete.length === 1 ? (0, import_i18n10.sprintf)(
           /* translators: %s: The taxonomy's plural label. */
-          (0, import_i18n9.__)('"%s" taxonomy deleted.'),
+          (0, import_i18n10.__)('"%s" taxonomy deleted.'),
           itemsToDelete[0].title.raw
-        ) : (0, import_i18n9.sprintf)(
+        ) : (0, import_i18n10.sprintf)(
           /* translators: %d: The number of taxonomies. */
-          (0, import_i18n9._n)(
+          (0, import_i18n10._n)(
             "%d taxonomy deleted.",
             "%d taxonomies deleted.",
             itemsToDelete.length
@@ -9937,7 +10047,7 @@ function DeleteTaxonomyModal({
         if (typedError.reason?.message && typedError.reason.code !== "unknown_error") {
           errorMessage = typedError.reason.message;
         } else {
-          errorMessage = (0, import_i18n9.__)("Failed to delete taxonomy.");
+          errorMessage = (0, import_i18n10.__)("Failed to delete taxonomy.");
         }
       } else {
         const errorMessages = /* @__PURE__ */ new Set();
@@ -9951,19 +10061,19 @@ function DeleteTaxonomyModal({
           }
         }
         if (errorMessages.size === 0) {
-          errorMessage = (0, import_i18n9.__)("Failed to delete taxonomies.");
+          errorMessage = (0, import_i18n10.__)("Failed to delete taxonomies.");
         } else if (errorMessages.size === 1) {
-          errorMessage = (0, import_i18n9.sprintf)(
+          errorMessage = (0, import_i18n10.sprintf)(
             /* translators: %s: an error message */
-            (0, import_i18n9.__)(
+            (0, import_i18n10.__)(
               "An error occurred while deleting the taxonomy: %s"
             ),
             [...errorMessages][0]
           );
         } else {
-          errorMessage = (0, import_i18n9.sprintf)(
+          errorMessage = (0, import_i18n10.sprintf)(
             /* translators: %s: a list of comma separated error messages */
-            (0, import_i18n9.__)(
+            (0, import_i18n10.__)(
               "Some errors occurred while deleting the taxonomies: %s"
             ),
             [...errorMessages].join(",")
@@ -9977,17 +10087,17 @@ function DeleteTaxonomyModal({
     closeModal?.();
   }
   return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(Stack, { direction: "column", gap: "md", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Text, { children: items.length > 1 ? (0, import_i18n9.sprintf)(
+    /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Text, { children: items.length > 1 ? (0, import_i18n10.sprintf)(
       /* translators: %d: number of taxonomies to delete. */
-      (0, import_i18n9._n)(
+      (0, import_i18n10._n)(
         "Are you sure you want to delete %d taxonomy?",
         "Are you sure you want to delete %d taxonomies?",
         items.length
       ),
       items.length
-    ) : (0, import_i18n9.sprintf)(
+    ) : (0, import_i18n10.sprintf)(
       /* translators: %s: The taxonomy's plural label. */
-      (0, import_i18n9.__)('Are you sure you want to delete "%s"?'),
+      (0, import_i18n10.__)('Are you sure you want to delete "%s"?'),
       items[0].title.raw
     ) }),
     /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
@@ -9999,7 +10109,7 @@ function DeleteTaxonomyModal({
           onClick: closeModal,
           disabled: isDeleting,
           accessibleWhenDisabled: true,
-          children: (0, import_i18n9.__)("Cancel")
+          children: (0, import_i18n10.__)("Cancel")
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
@@ -10012,7 +10122,7 @@ function DeleteTaxonomyModal({
           disabled: isDeleting,
           accessibleWhenDisabled: true,
           onClick: onDelete,
-          children: (0, import_i18n9._x)("Delete", "verb")
+          children: (0, import_i18n10._x)("Delete", "verb")
         }
       )
     ] })
@@ -10020,7 +10130,7 @@ function DeleteTaxonomyModal({
 }
 var deleteTaxonomyAction = {
   id: "delete-taxonomy",
-  label: (0, import_i18n9._x)("Delete", "verb"),
+  label: (0, import_i18n10._x)("Delete", "verb"),
   icon: trash_default,
   supportsBulk: true,
   hideModalHeader: true,
@@ -10043,10 +10153,10 @@ export {
   delete_default as deleteTaxonomyAction,
   descriptionField,
   editItemField,
-  generalForm,
+  generalFormFields,
   hierarchicalField,
   labelsActionsField,
-  labelsForm,
+  labelsFormFields,
   menuNameField,
   newItemNameField,
   notFoundField,
@@ -10055,9 +10165,17 @@ export {
   pluralLabelField,
   popularItemsField,
   publicField,
+  publiclyQueryableField,
   searchItemsField,
   separateItemsField,
   serializeForSave,
+  showAdminColumnField,
+  showInMenuField,
+  showInNavMenusField,
+  showInQuickEditField,
+  showInRestField,
+  showTagcloudField,
+  showUiField,
   singularLabelField,
   statusField,
   titleField,
@@ -10066,7 +10184,8 @@ export {
   useObjectTypeField,
   usePublicPostTypes,
   useSlugField,
-  viewItemField
+  viewItemField,
+  visibilityFormFields
 };
 /*! Bundled license information:
 

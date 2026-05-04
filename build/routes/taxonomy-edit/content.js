@@ -10383,10 +10383,10 @@ import {
   chooseFromMostUsedField,
   descriptionField,
   editItemField,
-  generalForm,
+  generalFormFields,
   hierarchicalField,
   labelsActionsField,
-  labelsForm,
+  labelsFormFields,
   menuNameField,
   newItemNameField,
   notFoundField,
@@ -10395,16 +10395,25 @@ import {
   pluralLabelField,
   popularItemsField,
   publicField,
+  publiclyQueryableField,
   searchItemsField,
   separateItemsField,
   serializeForSave,
+  showAdminColumnField,
+  showInMenuField,
+  showInNavMenusField,
+  showInQuickEditField,
+  showInRestField,
+  showTagcloudField,
+  showUiField,
   singularLabelField,
   statusField,
   toFormData,
   updateItemField,
   useObjectTypeField,
   useSlugField,
-  viewItemField
+  viewItemField,
+  visibilityFormFields
 } from "@wordpress/user-taxonomies";
 
 // routes/taxonomy-edit/taxonomy-form.scss
@@ -10480,9 +10489,18 @@ function TaxonomyPage({
       slugField,
       descriptionField,
       objectTypeField,
-      publicField,
       hierarchicalField,
       statusField,
+      // Visibility
+      publicField,
+      showInRestField,
+      publiclyQueryableField,
+      showUiField,
+      showInMenuField,
+      showInQuickEditField,
+      showAdminColumnField,
+      showInNavMenusField,
+      showTagcloudField,
       // Labels
       labelsActionsField,
       menuNameField,
@@ -10519,7 +10537,20 @@ function TaxonomyPage({
             isCollapsible: true,
             isOpened: true
           },
-          children: generalForm.fields
+          children: generalFormFields
+        },
+        {
+          id: "visibility",
+          label: (0, import_i18n23.__)("Visibility"),
+          description: (0, import_i18n23.__)(
+            "Where this taxonomy appears: REST API, admin UI, and front-end surfaces."
+          ),
+          layout: {
+            type: "card",
+            isCollapsible: true,
+            isOpened: false
+          },
+          children: visibilityFormFields
         },
         {
           id: "labels",
@@ -10529,7 +10560,7 @@ function TaxonomyPage({
             isCollapsible: true,
             isOpened: false
           },
-          children: labelsForm.fields
+          children: labelsFormFields
         }
       ]
     }),
