@@ -31664,7 +31664,7 @@ This message will only show in development mode. It won't appear in production. 
     enableAlpha
   }) => {
     const handleChange = (nextValue) => {
-      if (!nextValue) {
+      if (nextValue === void 0) {
         return;
       }
       const hexValue = nextValue.startsWith("#") ? nextValue : "#" + nextValue;
