@@ -10432,22 +10432,18 @@ function PostTypeEditStage() {
   const navigate = useNavigate();
   const isAddMode = id === NEW_ID;
   const postTypeId = parseInt(id, 10);
-  const initialData = (0, import_data.useSelect)(
+  const record = (0, import_data.useSelect)(
     (select) => {
-      if (isAddMode) {
-        return BLANK_RECORD;
-      }
-      const record = select(
-        import_core_data.store
-      ).getEntityRecord(
+      return !isAddMode && // beforeLoad (route.ts) guarantees the record is in cache.
+      select(import_core_data.store).getEntityRecord(
         "postType",
         USER_POST_TYPE_POST_TYPE,
         postTypeId
       );
-      return toFormData(record);
     },
     [isAddMode, postTypeId]
   );
+  const initialData = !isAddMode && record ? toFormData(record) : BLANK_RECORD;
   const title = isAddMode ? (0, import_i18n23.__)("Add post type") : initialData.title.raw;
   const commonProps = { initialData, title };
   const postTypePageProps = isAddMode ? {

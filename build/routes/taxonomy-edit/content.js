@@ -10432,22 +10432,18 @@ function TaxonomyEditStage() {
   const navigate = useNavigate();
   const isAddMode = id === NEW_ID;
   const taxonomyId = parseInt(id, 10);
-  const initialData = (0, import_data.useSelect)(
+  const record = (0, import_data.useSelect)(
     (select) => {
-      if (isAddMode) {
-        return BLANK_RECORD;
-      }
-      const record = select(
-        import_core_data.store
-      ).getEntityRecord(
+      return !isAddMode && // beforeLoad (route.ts) guarantees the record is in cache.
+      select(import_core_data.store).getEntityRecord(
         "postType",
         USER_TAXONOMY_POST_TYPE,
         taxonomyId
       );
-      return toFormData(record);
     },
     [isAddMode, taxonomyId]
   );
+  const initialData = !isAddMode && record ? toFormData(record) : BLANK_RECORD;
   const title = isAddMode ? (0, import_i18n23.__)("Add taxonomy") : initialData.title.raw;
   const commonProps = { initialData, title };
   const taxonomyPageProps = isAddMode ? {
