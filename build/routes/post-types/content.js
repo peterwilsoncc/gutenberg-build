@@ -21342,7 +21342,8 @@ import {
   useTaxonomiesField as useTaxonomiesField2,
   activateAction,
   deactivateAction,
-  deletePostTypeAction
+  deletePostTypeAction,
+  duplicatePostTypeAction
 } from "@wordpress/user-post-types";
 
 // routes/post-types/actions/edit.tsx
@@ -21542,6 +21543,7 @@ function PostTypesPage() {
     () => [
       editAction,
       quick_edit_default,
+      duplicatePostTypeAction,
       activateAction,
       deactivateAction,
       deletePostTypeAction
