@@ -7,6 +7,10 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -59,6 +63,27 @@ var require_components = __commonJS({
   }
 });
 
+// package-external:@wordpress/data
+var require_data = __commonJS({
+  "package-external:@wordpress/data"(exports, module) {
+    module.exports = window.wp.data;
+  }
+});
+
+// package-external:@wordpress/hooks
+var require_hooks = __commonJS({
+  "package-external:@wordpress/hooks"(exports, module) {
+    module.exports = window.wp.hooks;
+  }
+});
+
+// package-external:@wordpress/warning
+var require_warning = __commonJS({
+  "package-external:@wordpress/warning"(exports, module) {
+    module.exports = window.wp.warning;
+  }
+});
+
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
   var t, f, n = "";
@@ -76,10 +101,10 @@ function clsx() {
 var clsx_default = clsx;
 
 // node_modules/@base-ui/utils/esm/useRefWithInit.js
-var React2 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React2.useRef(UNINITIALIZED);
+  const ref = React.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
@@ -102,7 +127,7 @@ function warn(...messages) {
 }
 
 // node_modules/@base-ui/react/esm/internals/useRenderElement.js
-var React5 = __toESM(require_react(), 1);
+var React4 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/useMergedRefs.js
 function useMergedRefs(a, b, c, d) {
@@ -194,18 +219,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
-var React4 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/reactVersion.js
-var React3 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React3.version, 10);
+var React2 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React2.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React4.isValidElement(element)) {
+  if (!/* @__PURE__ */ React3.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -490,15 +515,15 @@ function evaluateRenderProp(element, render, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React5.Children.toArray(render);
+      const children = React4.Children.toArray(render);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React5.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React4.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React5.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React4.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -535,7 +560,7 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React5.createElement(Tag, props);
+  return /* @__PURE__ */ React4.createElement(Tag, props);
 }
 
 // node_modules/@base-ui/react/esm/use-render/useRender.js
@@ -783,8 +808,177 @@ var page_default = Page;
 
 // routes/dashboard/stage.tsx
 var import_i18n = __toESM(require_i18n());
+
+// routes/dashboard/widget-types/hooks/use-widget-types.ts
+var import_data2 = __toESM(require_data());
+
+// routes/dashboard/widget-types/store/index.ts
+var import_data = __toESM(require_data());
+
+// routes/dashboard/widget-types/store/reducer.ts
+var DEFAULT_STATE = {};
+function widgetTypes(state = DEFAULT_STATE, action) {
+  switch (action.type) {
+    case "ADD_WIDGET_TYPE":
+      return {
+        ...state,
+        [action.widgetType.name]: action.widgetType
+      };
+    case "REMOVE_WIDGET_TYPE": {
+      const { [action.name]: _, ...remaining } = state;
+      return remaining;
+    }
+  }
+  return state;
+}
+
+// routes/dashboard/widget-types/store/actions.ts
+var actions_exports = {};
+__export(actions_exports, {
+  registerWidgetType: () => registerWidgetType,
+  unregisterWidgetType: () => unregisterWidgetType
+});
+var import_hooks = __toESM(require_hooks());
+var import_warning = __toESM(require_warning());
+var WIDGET_NAME_REGEXP = /^[a-z][a-z0-9-]*\/[a-z][a-z0-9-]*$/;
+var DEFAULT_WIDGET_TYPE_SETTINGS = {
+  apiVersion: 1,
+  keywords: [],
+  attributes: []
+};
+var registerWidgetType = (name, settings) => ({
+  select,
+  dispatch
+}) => {
+  if (typeof name !== "string") {
+    (0, import_warning.default)("Widget type names must be strings.");
+    return;
+  }
+  if (!WIDGET_NAME_REGEXP.test(name)) {
+    (0, import_warning.default)(
+      "Widget type names must contain a namespace prefix, e.g. core/on-this-day"
+    );
+    return;
+  }
+  if (!settings.title) {
+    (0, import_warning.default)('The widget "' + name + '" must have a title.');
+    return;
+  }
+  if (typeof settings.title !== "string") {
+    (0, import_warning.default)("Widget type titles must be strings.");
+    return;
+  }
+  if (settings.description !== void 0 && typeof settings.description !== "string") {
+    (0, import_warning.default)("Widget type descriptions must be strings.");
+    return;
+  }
+  if (settings.attributes !== void 0 && !Array.isArray(settings.attributes)) {
+    (0, import_warning.default)("Widget type attributes must be an array.");
+    return;
+  }
+  if (!settings.renderModule) {
+    (0, import_warning.default)('The widget "' + name + '" must have a renderModule.');
+    return;
+  }
+  if (select.getWidgetType(name)) {
+    (0, import_warning.default)('Widget type "' + name + '" is already registered.');
+    return;
+  }
+  const widgetType = (0, import_hooks.applyFilters)(
+    "widgets.registerWidgetType",
+    { ...DEFAULT_WIDGET_TYPE_SETTINGS, ...settings, name },
+    name
+  );
+  dispatch({ type: "ADD_WIDGET_TYPE", widgetType });
+};
+var unregisterWidgetType = (name) => ({
+  select,
+  dispatch
+}) => {
+  const oldWidgetType = select.getWidgetType(name);
+  if (!oldWidgetType) {
+    (0, import_warning.default)('Widget type "' + name + '" is not registered.');
+    return void 0;
+  }
+  dispatch({ type: "REMOVE_WIDGET_TYPE", name });
+  return oldWidgetType;
+};
+
+// routes/dashboard/widget-types/store/selectors.ts
+var selectors_exports = {};
+__export(selectors_exports, {
+  getWidgetType: () => getWidgetType,
+  getWidgetTypes: () => getWidgetTypes
+});
+function getWidgetTypes(state) {
+  return Object.values(state.widgetTypes);
+}
+function getWidgetType(state, name) {
+  return state.widgetTypes[name];
+}
+
+// routes/dashboard/widget-types/store/resolvers.ts
+var resolvers_exports = {};
+__export(resolvers_exports, {
+  getWidgetType: () => getWidgetType2,
+  getWidgetTypes: () => getWidgetTypes2
+});
+var getWidgetTypes2 = () => async ({ dispatch }) => {
+  const registered = window.__registeredWidgetTypes ?? [];
+  const results = await Promise.all(
+    registered.map(async (entry) => {
+      try {
+        if (!entry.widget_module) {
+          return null;
+        }
+        const module = await import(
+          /* webpackIgnore: true */
+          entry.widget_module
+        );
+        if (!module?.default) {
+          return null;
+        }
+        return {
+          ...module.default,
+          name: entry.name,
+          renderModule: entry.render_module ?? ""
+        };
+      } catch {
+        return null;
+      }
+    })
+  );
+  for (const widgetType of results) {
+    if (widgetType?.name) {
+      dispatch.registerWidgetType(widgetType.name, widgetType);
+    }
+  }
+};
+var getWidgetType2 = () => async ({ resolveSelect }) => {
+  await resolveSelect.getWidgetTypes();
+};
+
+// routes/dashboard/widget-types/store/index.ts
+var STORE_NAME = "core/widget-types";
+var store = (0, import_data.createReduxStore)(STORE_NAME, {
+  reducer: (0, import_data.combineReducers)({ widgetTypes }),
+  actions: actions_exports,
+  selectors: selectors_exports,
+  resolvers: resolvers_exports
+});
+(0, import_data.register)(store);
+
+// routes/dashboard/widget-types/hooks/use-widget-types.ts
+function useWidgetTypes() {
+  return (0, import_data2.useSelect)((select) => select(store).getWidgetTypes(), []);
+}
+
+// routes/dashboard/stage.tsx
+var import_jsx_runtime4 = __toESM(require_jsx_runtime());
 function Dashboard() {
-  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n.__)("Dashboard") }, /* @__PURE__ */ React.createElement("div", { className: "dashboard-widgets" }));
+  const widgetTypes2 = useWidgetTypes();
+  console.log("widgetTypes", widgetTypes2);
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(page_default, { title: (0, import_i18n.__)("Dashboard"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "dashboard-widgets" }) });
 }
 var stage = Dashboard;
 export {

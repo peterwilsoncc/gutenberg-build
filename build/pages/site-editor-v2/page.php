@@ -209,6 +209,24 @@ function gutenberg_site_editor_v2_render_page() {
 			}
 		}
 
+		// Add registered widgets as dynamic dependencies
+		if ( function_exists( 'gutenberg_get_registered_widget_modules' ) ) {
+			foreach ( gutenberg_get_registered_widget_modules() as $widget ) {
+				if ( ! empty( $widget['widget_module'] ) ) {
+					$boot_dependencies[] = array(
+						'import' => 'dynamic',
+						'id'     => $widget['widget_module'],
+					);
+				}
+				if ( ! empty( $widget['render_module'] ) ) {
+					$boot_dependencies[] = array(
+						'import' => 'dynamic',
+						'id'     => $widget['render_module'],
+					);
+				}
+			}
+		}
+
 		// Dummy script module to ensure dependencies are loaded
 		wp_register_script_module(
 			'site-editor-v2',
