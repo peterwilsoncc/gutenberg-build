@@ -14380,7 +14380,7 @@ var wp;
     }
     const rootClientId = select3.getBlockRootClientId(clientId);
     const blockIndex = select3.getBlockIndex(clientId);
-    const directInsertBlock = rootClientId ? select3.getDirectInsertBlock(rootClientId) : null;
+    const { defaultBlock: directInsertBlock } = rootClientId ? select3.getBlockListSettings(rootClientId) ?? {} : {};
     if (!directInsertBlock) {
       return dispatch.insertDefaultBlock({}, rootClientId, blockIndex);
     }
@@ -14405,7 +14405,7 @@ var wp;
     }
     const rootClientId = select3.getBlockRootClientId(clientId);
     const blockIndex = select3.getBlockIndex(clientId);
-    const directInsertBlock = rootClientId ? select3.getDirectInsertBlock(rootClientId) : null;
+    const { defaultBlock: directInsertBlock } = rootClientId ? select3.getBlockListSettings(rootClientId) ?? {} : {};
     if (!directInsertBlock) {
       return dispatch.insertDefaultBlock(
         {},
@@ -32779,12 +32779,12 @@ var wp;
       const {
         position,
         hasSingleBlockType,
-        directInsertBlock,
+        blockToInsert,
         insertOnlyAllowedBlock,
         __experimentalIsQuick: isQuick,
         onSelectOrClose
       } = this.props;
-      if (hasSingleBlockType || directInsertBlock) {
+      if (hasSingleBlockType || blockToInsert) {
         return this.renderToggle({ onToggle: insertOnlyAllowedBlock });
       }
       return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
@@ -32812,16 +32812,19 @@ var wp;
           getBlockRootClientId: getBlockRootClientId2,
           hasInserterItems: hasInserterItems2,
           getAllowedBlocks: getAllowedBlocks2,
-          getDirectInsertBlock: getDirectInsertBlock2
+          getDirectInsertBlock: getDirectInsertBlock2,
+          getBlockListSettings: getBlockListSettings2
         } = select3(store);
         const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType27 } = select3(import_blocks38.store);
         rootClientId = rootClientId || getBlockRootClientId2(clientId) || void 0;
         const allowedBlocks = getAllowedBlocks2(rootClientId);
         const directInsertBlock = shouldDirectInsert && getDirectInsertBlock2(rootClientId);
+        const { defaultBlock } = getBlockListSettings2(rootClientId) ?? {};
         const hasSingleBlockType = allowedBlocks?.length === 1 && getBlockVariations2(allowedBlocks[0].name, "inserter")?.length === 0;
-        let allowedBlockType = false;
-        if (hasSingleBlockType) {
-          allowedBlockType = allowedBlocks[0];
+        const allowedBlockType = hasSingleBlockType ? allowedBlocks[0] : null;
+        let blockToInsert = directInsertBlock || null;
+        if (!blockToInsert && hasSingleBlockType && defaultBlock?.name === allowedBlockType.name) {
+          blockToInsert = defaultBlock;
         }
         const defaultBlockType = directInsertBlock ? getBlockType27(directInsertBlock.name) : null;
         const appenderLabel = getAppenderLabel(
@@ -32833,7 +32836,7 @@ var wp;
           hasSingleBlockType,
           blockTitle: allowedBlockType ? allowedBlockType.title : "",
           allowedBlockType,
-          directInsertBlock,
+          blockToInsert,
           appenderLabel,
           rootClientId
         };
@@ -32848,43 +32851,43 @@ var wp;
             isAppender,
             hasSingleBlockType,
             allowedBlockType,
-            directInsertBlock,
+            blockToInsert,
             onSelectOrClose,
             selectBlockOnInsert
           } = ownProps;
-          if (!hasSingleBlockType && !directInsertBlock) {
+          if (!hasSingleBlockType && !blockToInsert) {
             return;
           }
+          const blockName = blockToInsert?.name ?? allowedBlockType.name;
           function getAdjacentBlockAttributes(attributesToCopy) {
-            const { getBlock: getBlock2, getPreviousBlockClientId: getPreviousBlockClientId2 } = select3(store);
-            if (!attributesToCopy || !clientId && !rootClientId) {
+            if (!attributesToCopy?.length) {
               return {};
             }
-            const result = {};
-            let adjacentAttributes = {};
-            if (!clientId) {
-              const parentBlock = getBlock2(rootClientId);
-              if (parentBlock?.innerBlocks?.length) {
-                const lastInnerBlock = parentBlock.innerBlocks[parentBlock.innerBlocks.length - 1];
-                if (directInsertBlock && directInsertBlock?.name === lastInnerBlock.name) {
-                  adjacentAttributes = lastInnerBlock.attributes;
-                }
-              }
-            } else {
+            const { getBlock: getBlock2, getPreviousBlockClientId: getPreviousBlockClientId2 } = select3(store);
+            let adjacentAttributes;
+            if (clientId) {
               const currentBlock = getBlock2(clientId);
               const previousBlock = getBlock2(
                 getPreviousBlockClientId2(clientId)
               );
               if (currentBlock?.name === previousBlock?.name) {
-                adjacentAttributes = previousBlock?.attributes || {};
+                adjacentAttributes = previousBlock?.attributes;
+              }
+            } else if (rootClientId) {
+              const lastInnerBlock = getBlock2(rootClientId)?.innerBlocks?.at(-1);
+              if (lastInnerBlock?.name === blockName) {
+                adjacentAttributes = lastInnerBlock.attributes;
               }
             }
-            attributesToCopy.forEach((attribute) => {
-              if (adjacentAttributes.hasOwnProperty(attribute)) {
-                result[attribute] = adjacentAttributes[attribute];
-              }
-            });
-            return result;
+            if (!adjacentAttributes) {
+              return {};
+            }
+            return Object.fromEntries(
+              attributesToCopy.filter((attr) => attr in adjacentAttributes).map((attr) => [
+                attr,
+                adjacentAttributes[attr]
+              ])
+            );
           }
           function getInsertionIndex() {
             const {
@@ -32903,26 +32906,21 @@ var wp;
             return getBlockOrder2(rootClientId).length;
           }
           const { insertBlock: insertBlock2 } = dispatch(store);
-          let blockToInsert;
-          if (directInsertBlock) {
-            const newAttributes = getAdjacentBlockAttributes(
-              directInsertBlock.attributesToCopy
-            );
-            blockToInsert = (0, import_blocks38.createBlock)(directInsertBlock.name, {
-              ...directInsertBlock.attributes || {},
-              ...newAttributes
-            });
-          } else {
-            blockToInsert = (0, import_blocks38.createBlock)(allowedBlockType.name);
-          }
+          const newAttributes = getAdjacentBlockAttributes(
+            blockToInsert?.attributesToCopy
+          );
+          const newBlock = (0, import_blocks38.createBlock)(blockName, {
+            ...blockToInsert?.attributes || {},
+            ...newAttributes
+          });
           insertBlock2(
-            blockToInsert,
+            newBlock,
             getInsertionIndex(),
             rootClientId,
             selectBlockOnInsert
           );
           if (onSelectOrClose) {
-            onSelectOrClose(blockToInsert);
+            onSelectOrClose(newBlock);
           }
           const message2 = (0, import_i18n61.sprintf)(
             // translators: %s: the name of the block that has been added
