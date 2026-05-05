@@ -49,6 +49,13 @@ var require_element = __commonJS({
   }
 });
 
+// package-external:@wordpress/components
+var require_components = __commonJS({
+  "package-external:@wordpress/components"(exports, module) {
+    module.exports = window.wp.components;
+  }
+});
+
 // package-external:@wordpress/i18n
 var require_i18n = __commonJS({
   "package-external:@wordpress/i18n"(exports, module) {
@@ -260,17 +267,17 @@ var require_private_apis = __commonJS({
   }
 });
 
+// package-external:@wordpress/url
+var require_url = __commonJS({
+  "package-external:@wordpress/url"(exports, module) {
+    module.exports = window.wp.url;
+  }
+});
+
 // package-external:@wordpress/notices
 var require_notices = __commonJS({
   "package-external:@wordpress/notices"(exports, module) {
     module.exports = window.wp.notices;
-  }
-});
-
-// package-external:@wordpress/components
-var require_components = __commonJS({
-  "package-external:@wordpress/components"(exports, module) {
-    module.exports = window.wp.components;
   }
 });
 
@@ -575,6 +582,7 @@ function usePublicTaxonomies() {
 }
 
 // packages/user-post-types/build-module/fields/general.mjs
+var import_components = __toESM(require_components(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 var import_data2 = __toESM(require_data(), 1);
 var import_element41 = __toESM(require_element(), 1);
@@ -10527,7 +10535,18 @@ var ActionLink = (0, import_element40.forwardRef)(
 );
 
 // packages/user-post-types/build-module/fields/general.mjs
+var import_url = __toESM(require_url(), 1);
+
+// packages/user-post-types/build-module/lock-unlock.mjs
+var import_private_apis2 = __toESM(require_private_apis(), 1);
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/user-post-types"
+);
+
+// packages/user-post-types/build-module/fields/general.mjs
 var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl } = unlock2(import_components.privateApis);
 var SUPPORT_LABELS = {
   title: (0, import_i18n4.__)("Title"),
   editor: (0, import_i18n4.__)("Editor"),
@@ -10693,6 +10712,19 @@ var statusField = {
   },
   enableSorting: false
 };
+var SLUG_MAX_LENGTH = 20;
+function getSlugCustomValidity(validity) {
+  if (validity?.required?.message) {
+    return validity.required;
+  }
+  if (validity?.pattern) {
+    return validity.pattern;
+  }
+  if (validity?.maxLength) {
+    return validity.maxLength;
+  }
+  return validity?.custom;
+}
 function useSlugField(originalSlug, currentValue) {
   const registeredPostTypes = (0, import_data2.useSelect)(
     (select) => select(import_core_data2.store).getPostTypes(),
@@ -10715,7 +10747,8 @@ function useSlugField(originalSlug, currentValue) {
       ] }),
       isValid: {
         required: true,
-        pattern: "^[a-z0-9_\\-]{1,20}$",
+        pattern: "^[a-z0-9_\\-]+$",
+        maxLength: SLUG_MAX_LENGTH,
         custom: async (value) => {
           const slug = value.slug;
           if (originalSlug !== void 0 && slug === originalSlug) {
@@ -10737,6 +10770,52 @@ function useSlugField(originalSlug, currentValue) {
           });
           return !!drafts?.length ? (0, import_i18n4.__)("This post type key is already in use.") : null;
         }
+      },
+      Edit: function SlugEdit({
+        data,
+        field,
+        onChange,
+        hideLabelFromVision,
+        markWhenOptional,
+        validity
+      }) {
+        const { label, description, getValue, setValue, isValid: isValid2 } = field;
+        const value = getValue({ item: data }) ?? "";
+        const handleChange = (newValue) => onChange(setValue({ item: data, value: newValue }));
+        const onFocus = () => {
+          if (data.id !== void 0 || data.slug) {
+            return;
+          }
+          const singular = data.config.labels.singular_name?.trim();
+          if (!singular) {
+            return;
+          }
+          const cleaned = (0, import_url.cleanForSlug)(singular);
+          if (/[^a-z0-9_-]/.test(cleaned)) {
+            return;
+          }
+          const trimmed = cleaned.slice(0, SLUG_MAX_LENGTH).replace(/-+$/, "");
+          if (trimmed) {
+            handleChange(trimmed);
+          }
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+          ValidatedInputControl,
+          {
+            __next40pxDefaultSize: true,
+            required: !!isValid2.required,
+            markWhenOptional,
+            customValidity: getSlugCustomValidity(validity),
+            label,
+            value,
+            help: description,
+            onChange: handleChange,
+            onFocus,
+            hideLabelFromVision,
+            pattern: isValid2.pattern?.constraint,
+            maxLength: isValid2.maxLength?.constraint
+          }
+        );
       },
       filterBy: false,
       enableSorting: false
@@ -11124,7 +11203,7 @@ var deactivateAction = createStatusAction({
 var deactivate_default = deactivateAction;
 
 // packages/user-post-types/build-module/actions/delete.mjs
-var import_components = __toESM(require_components(), 1);
+var import_components2 = __toESM(require_components(), 1);
 var import_core_data4 = __toESM(require_core_data(), 1);
 var import_data3 = __toESM(require_data(), 1);
 var import_element42 = __toESM(require_element(), 1);
@@ -11235,7 +11314,7 @@ function DeletePostTypeModal({
     ) }),
     /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
       /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-        import_components.Button,
+        import_components2.Button,
         {
           __next40pxDefaultSize: true,
           variant: "tertiary",
@@ -11246,7 +11325,7 @@ function DeletePostTypeModal({
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-        import_components.Button,
+        import_components2.Button,
         {
           __next40pxDefaultSize: true,
           variant: "primary",
@@ -11274,7 +11353,7 @@ var deletePostTypeAction = {
 var delete_default = deletePostTypeAction;
 
 // packages/user-post-types/build-module/actions/duplicate.mjs
-var import_components26 = __toESM(require_components(), 1);
+var import_components27 = __toESM(require_components(), 1);
 var import_core_data5 = __toESM(require_core_data(), 1);
 var import_data4 = __toESM(require_data(), 1);
 
@@ -11308,8 +11387,8 @@ var sortLabels = {
 };
 
 // packages/dataviews/build-module/lock-unlock.mjs
-var import_private_apis2 = __toESM(require_private_apis(), 1);
-var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis3 = __toESM(require_private_apis(), 1);
+var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/dataviews"
 );
@@ -13533,7 +13612,7 @@ var getOperatorByName = (name) => OPERATORS.find((op) => op.name === name);
 var getAllOperatorNames = () => OPERATORS.map((op) => op.name);
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_components2 = __toESM(require_components(), 1);
+var import_components3 = __toESM(require_components(), 1);
 var import_element45 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
@@ -13561,7 +13640,7 @@ function getCustomValidity(isValid2, validity) {
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
 var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedCheckboxControl } = unlock2(import_components2.privateApis);
+var { ValidatedCheckboxControl } = unlock3(import_components3.privateApis);
 function Checkbox({
   field,
   onChange,
@@ -13594,10 +13673,10 @@ function Checkbox({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
-var import_components3 = __toESM(require_components(), 1);
+var import_components4 = __toESM(require_components(), 1);
 var import_element46 = __toESM(require_element(), 1);
 var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedComboboxControl } = unlock2(import_components3.privateApis);
+var { ValidatedComboboxControl } = unlock3(import_components4.privateApis);
 function Combobox({
   data,
   field,
@@ -13616,7 +13695,7 @@ function Combobox({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_components3.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_components4.Spinner, {});
   }
   return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
     ValidatedComboboxControl,
@@ -13637,13 +13716,13 @@ function Combobox({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_components5 = __toESM(require_components(), 1);
+var import_components6 = __toESM(require_components(), 1);
 var import_element49 = __toESM(require_element(), 1);
 var import_i18n12 = __toESM(require_i18n(), 1);
 var import_date3 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
-var import_components4 = __toESM(require_components(), 1);
+var import_components5 = __toESM(require_components(), 1);
 var import_element47 = __toESM(require_element(), 1);
 var import_i18n11 = __toESM(require_i18n(), 1);
 var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
@@ -13693,7 +13772,7 @@ function RelativeDateControl({
     [onChange, setValue, data, relValue]
   );
   return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
-    import_components4.BaseControl,
+    import_components5.BaseControl,
     {
       id,
       className: clsx_default(className, "dataviews-controls__relative-date"),
@@ -13702,7 +13781,7 @@ function RelativeDateControl({
       help: description,
       children: /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)(Stack, { direction: "row", gap: "sm", children: [
         /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
-          import_components4.__experimentalNumberControl,
+          import_components5.__experimentalNumberControl,
           {
             __next40pxDefaultSize: true,
             className: "dataviews-controls__relative-date-number",
@@ -13715,7 +13794,7 @@ function RelativeDateControl({
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
-          import_components4.SelectControl,
+          import_components5.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
             __next40pxDefaultSize: true,
@@ -13768,7 +13847,7 @@ function parseDateTime(dateTimeString) {
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar, ValidatedInputControl } = unlock2(import_components5.privateApis);
+var { DateCalendar, ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components6.privateApis);
 var formatDateTime = (value) => {
   if (!value) {
     return "";
@@ -13869,7 +13948,7 @@ function CalendarDateTimeControl({
     displayLabel = `${label} (${(0, import_i18n12.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-    import_components5.BaseControl,
+    import_components6.BaseControl,
     {
       id,
       label: displayLabel,
@@ -13877,7 +13956,7 @@ function CalendarDateTimeControl({
       hideLabelFromVision,
       children: /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(Stack, { direction: "column", gap: "lg", children: [
         /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-          ValidatedInputControl,
+          ValidatedInputControl2,
           {
             ref: inputControlRef,
             __next40pxDefaultSize: true,
@@ -13948,12 +14027,12 @@ function DateTime({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
-var import_components6 = __toESM(require_components(), 1);
+var import_components7 = __toESM(require_components(), 1);
 var import_element50 = __toESM(require_element(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock2(import_components6.privateApis);
+var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components7.privateApis);
 var DATE_PRESETS = [
   {
     id: "today",
@@ -14121,7 +14200,7 @@ function ValidatedDateControl({
         ),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-            import_components6.Icon,
+            import_components7.Icon,
             {
               className: "components-validated-control__indicator-icon",
               icon: error_default,
@@ -14222,7 +14301,7 @@ function CalendarDateControl({
       isTouched,
       setIsTouched,
       children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-        import_components6.BaseControl,
+        import_components7.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
@@ -14241,7 +14320,7 @@ function CalendarDateControl({
                   DATE_PRESETS.map((preset) => {
                     const isSelected = selectedPresetId === preset.id;
                     return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                      import_components6.Button,
+                      import_components7.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -14256,7 +14335,7 @@ function CalendarDateControl({
                     );
                   }),
                   /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                    import_components6.Button,
+                    import_components7.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -14271,7 +14350,7 @@ function CalendarDateControl({
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-              import_components6.__experimentalInputControl,
+              import_components7.__experimentalInputControl,
               {
                 __next40pxDefaultSize: true,
                 ref: validityTargetRef,
@@ -14428,7 +14507,7 @@ function CalendarDateRangeControl({
       isTouched,
       setIsTouched,
       children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-        import_components6.BaseControl,
+        import_components7.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
@@ -14447,7 +14526,7 @@ function CalendarDateRangeControl({
                   DATE_RANGE_PRESETS.map((preset) => {
                     const isSelected = selectedPresetId === preset.id;
                     return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                      import_components6.Button,
+                      import_components7.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -14462,7 +14541,7 @@ function CalendarDateRangeControl({
                     );
                   }),
                   /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                    import_components6.Button,
+                    import_components7.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -14485,7 +14564,7 @@ function CalendarDateRangeControl({
                 className: "dataviews-controls__date-range-inputs",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                    import_components6.__experimentalInputControl,
+                    import_components7.__experimentalInputControl,
                     {
                       __next40pxDefaultSize: true,
                       ref: fromInputRef,
@@ -14501,7 +14580,7 @@ function CalendarDateRangeControl({
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                    import_components6.__experimentalInputControl,
+                    import_components7.__experimentalInputControl,
                     {
                       __next40pxDefaultSize: true,
                       ref: toInputRef,
@@ -14587,10 +14666,10 @@ function DateControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
-var import_components7 = __toESM(require_components(), 1);
+var import_components8 = __toESM(require_components(), 1);
 var import_element51 = __toESM(require_element(), 1);
 var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedSelectControl } = unlock2(import_components7.privateApis);
+var { ValidatedSelectControl } = unlock3(import_components8.privateApis);
 function Select({
   data,
   field,
@@ -14612,7 +14691,7 @@ function Select({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components7.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components8.Spinner, {});
   }
   return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
     ValidatedSelectControl,
@@ -14649,13 +14728,13 @@ function AdaptiveSelect(props) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_components9 = __toESM(require_components(), 1);
+var import_components10 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
-var import_components8 = __toESM(require_components(), 1);
+var import_components9 = __toESM(require_components(), 1);
 var import_element52 = __toESM(require_element(), 1);
 var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components8.privateApis);
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components9.privateApis);
 function ValidatedText({
   data,
   field,
@@ -14680,7 +14759,7 @@ function ValidatedText({
     [data, setValue, onChange]
   );
   return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-    ValidatedInputControl2,
+    ValidatedInputControl3,
     {
       required: !!isValid2.required,
       markWhenOptional,
@@ -14724,14 +14803,14 @@ function Email({
         markWhenOptional,
         validity,
         type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_components9.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_components9.Icon, { icon: envelope_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_components10.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_components10.Icon, { icon: envelope_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/telephone.mjs
-var import_components10 = __toESM(require_components(), 1);
+var import_components11 = __toESM(require_components(), 1);
 var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 function Telephone({
   data,
@@ -14752,14 +14831,14 @@ function Telephone({
         markWhenOptional,
         validity,
         type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_components10.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_components10.Icon, { icon: mobile_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_components11.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_components11.Icon, { icon: mobile_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/url.mjs
-var import_components11 = __toESM(require_components(), 1);
+var import_components12 = __toESM(require_components(), 1);
 var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 function Url({
   data,
@@ -14780,18 +14859,18 @@ function Url({
         markWhenOptional,
         validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_components11.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_components11.Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_components12.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_components12.Icon, { icon: link_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
-var import_components12 = __toESM(require_components(), 1);
+var import_components13 = __toESM(require_components(), 1);
 var import_element53 = __toESM(require_element(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
 var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedNumberControl } = unlock2(import_components12.privateApis);
+var { ValidatedNumberControl } = unlock3(import_components13.privateApis);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
     return "";
@@ -14815,12 +14894,12 @@ function BetweenControls({
     [onChange, min2]
   );
   return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
-    import_components12.BaseControl,
+    import_components13.BaseControl,
     {
       help: (0, import_i18n14.__)("The max. value must be greater than the min. value."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)(import_components12.Flex, { direction: "row", gap: 4, children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)(import_components13.Flex, { direction: "row", gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
-          import_components12.__experimentalNumberControl,
+          import_components13.__experimentalNumberControl,
           {
             label: (0, import_i18n14.__)("Min."),
             value: min2,
@@ -14832,7 +14911,7 @@ function BetweenControls({
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
-          import_components12.__experimentalNumberControl,
+          import_components13.__experimentalNumberControl,
           {
             label: (0, import_i18n14.__)("Max."),
             value: max2,
@@ -14936,10 +15015,10 @@ function Number2(props) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
-var import_components13 = __toESM(require_components(), 1);
+var import_components14 = __toESM(require_components(), 1);
 var import_element54 = __toESM(require_element(), 1);
 var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedRadioControl } = unlock2(import_components13.privateApis);
+var { ValidatedRadioControl } = unlock3(import_components14.privateApis);
 function Radio({
   data,
   field,
@@ -14960,7 +15039,7 @@ function Radio({
     [data, onChange, setValue]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_components13.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_components14.Spinner, {});
   }
   return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
     ValidatedRadioControl,
@@ -15010,10 +15089,10 @@ function Text3({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
-var import_components14 = __toESM(require_components(), 1);
+var import_components15 = __toESM(require_components(), 1);
 var import_element56 = __toESM(require_element(), 1);
 var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleControl } = unlock2(import_components14.privateApis);
+var { ValidatedToggleControl } = unlock3(import_components15.privateApis);
 function Toggle({
   field,
   onChange,
@@ -15046,10 +15125,10 @@ function Toggle({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-var import_components15 = __toESM(require_components(), 1);
+var import_components16 = __toESM(require_components(), 1);
 var import_element57 = __toESM(require_element(), 1);
 var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedTextareaControl } = unlock2(import_components15.privateApis);
+var { ValidatedTextareaControl } = unlock3(import_components16.privateApis);
 function Textarea({
   data,
   field,
@@ -15089,10 +15168,10 @@ function Textarea({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
-var import_components16 = __toESM(require_components(), 1);
+var import_components17 = __toESM(require_components(), 1);
 var import_element58 = __toESM(require_element(), 1);
 var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleGroupControl } = unlock2(import_components16.privateApis);
+var { ValidatedToggleGroupControl } = unlock3(import_components17.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -15113,7 +15192,7 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components16.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components17.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
@@ -15133,7 +15212,7 @@ function ToggleGroup({
       value,
       hideLabelFromVision,
       children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-        import_components16.__experimentalToggleGroupControlOption,
+        import_components17.__experimentalToggleGroupControlOption,
         {
           label: el.label,
           value: el.value,
@@ -15146,10 +15225,10 @@ function ToggleGroup({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
-var import_components17 = __toESM(require_components(), 1);
+var import_components18 = __toESM(require_components(), 1);
 var import_element59 = __toESM(require_element(), 1);
 var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedFormTokenField } = unlock2(import_components17.privateApis);
+var { ValidatedFormTokenField } = unlock3(import_components18.privateApis);
 function ArrayControl({
   data,
   field,
@@ -15187,7 +15266,7 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_components17.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_components18.Spinner, {});
   }
   return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
     ValidatedFormTokenField,
@@ -15395,11 +15474,11 @@ var w = function(r3) {
 };
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
-var import_components18 = __toESM(require_components(), 1);
+var import_components19 = __toESM(require_components(), 1);
 var import_element60 = __toESM(require_element(), 1);
 var import_i18n15 = __toESM(require_i18n(), 1);
 var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components18.privateApis);
+var { ValidatedInputControl: ValidatedInputControl4 } = unlock3(import_components19.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
@@ -15407,23 +15486,23 @@ var ColorPickerDropdown = ({
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
   return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-    import_components18.Dropdown,
+    import_components19.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
       renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-        import_components18.Button,
+        import_components19.Button,
         {
           onClick: onToggle,
           "aria-label": (0, import_i18n15.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components18.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components19.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components18.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-        import_components18.ColorPicker,
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components19.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+        import_components19.ColorPicker,
         {
           color: validColor,
           onChange: onColorChange,
@@ -15457,7 +15536,7 @@ function Color({
     [data, onChange, setValue]
   );
   return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-    ValidatedInputControl3,
+    ValidatedInputControl4,
     {
       required: !!field.isValid?.required,
       markWhenOptional,
@@ -15470,7 +15549,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components18.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components19.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -15483,7 +15562,7 @@ function Color({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
-var import_components19 = __toESM(require_components(), 1);
+var import_components20 = __toESM(require_components(), 1);
 var import_element61 = __toESM(require_element(), 1);
 var import_i18n16 = __toESM(require_i18n(), 1);
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
@@ -15511,8 +15590,8 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components19.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-          import_components19.Button,
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components20.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+          import_components20.Button,
           {
             icon: isVisible ? unseen_default : seen_default,
             onClick: toggleVisibility,
@@ -16699,7 +16778,7 @@ var import_element72 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
 var import_element63 = __toESM(require_element(), 1);
-var import_components20 = __toESM(require_components(), 1);
+var import_components21 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
 var import_i18n23 = __toESM(require_i18n(), 1);
@@ -16828,7 +16907,7 @@ function Header3({ title }) {
       direction: "column",
       className: "dataforms-layouts-regular__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components20.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components21.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
@@ -16885,7 +16964,7 @@ function FormRegularField({
                 "dataforms-layouts-regular__field-label",
                 `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
               ),
-              children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components20.BaseControl.VisualLabel, { children: fieldDefinition.label })
+              children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components21.BaseControl.VisualLabel, { children: fieldDefinition.label })
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
@@ -16911,7 +16990,7 @@ function FormRegularField({
     );
   }
   return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_jsx_runtime80.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_jsx_runtime80.Fragment, { children: [
-    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components20.BaseControl.VisualLabel, { children: fieldDefinition.label }),
+    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components21.BaseControl.VisualLabel, { children: fieldDefinition.label }),
     /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
       fieldDefinition.render,
       {
@@ -16934,12 +17013,12 @@ function FormRegularField({
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
-var import_components23 = __toESM(require_components(), 1);
+var import_components24 = __toESM(require_components(), 1);
 var import_element68 = __toESM(require_element(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_components22 = __toESM(require_components(), 1);
+var import_components23 = __toESM(require_components(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
 var import_compose = __toESM(require_compose(), 1);
 var import_element64 = __toESM(require_element(), 1);
@@ -16955,11 +17034,11 @@ function getLabelClassName(labelPosition, showError) {
 var get_label_classname_default = getLabelClassName;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-content.mjs
-var import_components21 = __toESM(require_components(), 1);
+var import_components22 = __toESM(require_components(), 1);
 var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components21.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components21.Icon, { icon: error_default, size: 16 }),
+  return showError ? /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components22.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components22.Icon, { icon: error_default, size: 16 }),
     fieldLabel
   ] }) }) : fieldLabel;
 }
@@ -17062,7 +17141,7 @@ function SummaryButton({
       onKeyDown: !disabled2 ? handleKeyDown : void 0,
       children: [
         labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components22.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components22.Icon, { icon: error_default, size: 16 }) }) }),
+        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components23.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components23.Icon, { icon: error_default, size: 16 }) }) }),
         /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
           "span",
           {
@@ -17104,7 +17183,7 @@ function SummaryButton({
           }
         ),
         !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
-          import_components22.Button,
+          import_components23.Button,
           {
             className: "dataforms-layouts-panel__field-trigger-icon",
             label: ariaLabel,
@@ -17753,7 +17832,7 @@ function ModalContent({
   const mergedRef = (0, import_compose2.useMergeRefs)([focusOnMountRef, contentRef]);
   useReportValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(
-    import_components23.Modal,
+    import_components24.Modal,
     {
       className: "dataforms-layouts-panel__modal",
       onRequestClose: onClose,
@@ -17789,9 +17868,9 @@ function ModalContent({
             className: "dataforms-layouts-panel__modal-footer",
             gap: "md",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components23.__experimentalSpacer, { style: { flex: 1 } }),
+              /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components24.__experimentalSpacer, { style: { flex: 1 } }),
               /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
-                import_components23.Button,
+                import_components24.Button,
                 {
                   variant: "tertiary",
                   onClick: onClose,
@@ -17800,7 +17879,7 @@ function ModalContent({
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
-                import_components23.Button,
+                import_components24.Button,
                 {
                   variant: "primary",
                   onClick: onApply,
@@ -17862,7 +17941,7 @@ function PanelModal({
 var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
-var import_components24 = __toESM(require_components(), 1);
+var import_components25 = __toESM(require_components(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
 var import_element69 = __toESM(require_element(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
@@ -17878,10 +17957,10 @@ function DropdownHeader({
       className: "dataforms-layouts-panel__dropdown-header",
       gap: "lg",
       children: /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        title && /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components24.__experimentalHeading, { level: 2, size: 13, children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components24.__experimentalSpacer, { style: { flex: 1 } }),
+        title && /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components25.__experimentalHeading, { level: 2, size: 13, children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components25.__experimentalSpacer, { style: { flex: 1 } }),
         onClose && /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
-          import_components24.Button,
+          import_components25.Button,
           {
             label: (0, import_i18n26.__)("Close"),
             icon: close_small_default,
@@ -17954,7 +18033,7 @@ function PanelDropdown({
       ref: setPopoverAnchor,
       className: "dataforms-layouts-panel__field-dropdown-anchor",
       children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
-        import_components24.Dropdown,
+        import_components25.Dropdown,
         {
           contentClassName: "dataforms-layouts-panel__field-dropdown",
           popoverProps,
@@ -18300,7 +18379,7 @@ function FormCardField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
-var import_components25 = __toESM(require_components(), 1);
+var import_components26 = __toESM(require_components(), 1);
 var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 function Header4({ title }) {
   return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
@@ -18309,7 +18388,7 @@ function Header4({ title }) {
       direction: "column",
       className: "dataforms-layouts-row__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components25.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components26.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
@@ -18636,7 +18715,7 @@ var import_element74 = __toESM(require_element(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var SLUG_MAX_LENGTH = 20;
+var SLUG_MAX_LENGTH2 = 20;
 var duplicateForm = {
   layout: { type: "regular" },
   fields: ["plural_name", "singular_name", "slug"]
@@ -18647,7 +18726,7 @@ function buildCopySlug(slug) {
   const nextNumber = String(match2 ? parseInt(match2[2], 10) + 1 : 2);
   return `${base.slice(
     0,
-    SLUG_MAX_LENGTH - nextNumber.length
+    SLUG_MAX_LENGTH2 - nextNumber.length
   )}${nextNumber}`;
 }
 function DuplicatePostTypeModal({
@@ -18729,7 +18808,7 @@ function DuplicatePostTypeModal({
     ),
     /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
       /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-        import_components26.Button,
+        import_components27.Button,
         {
           __next40pxDefaultSize: true,
           variant: "tertiary",
@@ -18740,7 +18819,7 @@ function DuplicatePostTypeModal({
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-        import_components26.Button,
+        import_components27.Button,
         {
           __next40pxDefaultSize: true,
           variant: "primary",
