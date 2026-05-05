@@ -39162,7 +39162,7 @@ If there's a particular need for this, please submit a feature request at https:
   ];
   var media_categories_default = inserterMediaCategories;
 
-  // packages/editor/node_modules/uuid/dist/stringify.js
+  // node_modules/uuid/dist/stringify.js
   var byteToHex = [];
   for (let i3 = 0; i3 < 256; ++i3) {
     byteToHex.push((i3 + 256).toString(16).slice(1));
@@ -39171,13 +39171,13 @@ If there's a particular need for this, please submit a feature request at https:
     return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
   }
 
-  // packages/editor/node_modules/uuid/dist/rng.js
+  // node_modules/uuid/dist/rng.js
   var rnds8 = new Uint8Array(16);
   function rng() {
     return crypto.getRandomValues(rnds8);
   }
 
-  // packages/editor/node_modules/uuid/dist/v4.js
+  // node_modules/uuid/dist/v4.js
   function v4(options, buf, offset) {
     if (!buf && !options && crypto.randomUUID) {
       return crypto.randomUUID();

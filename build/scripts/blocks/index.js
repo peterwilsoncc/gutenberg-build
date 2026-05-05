@@ -6777,7 +6777,7 @@ var wp;
   unlock(store).registerPrivateSelectors(private_selectors_exports);
   unlock(store).registerPrivateActions(private_actions_exports);
 
-  // packages/blocks/node_modules/uuid/dist/stringify.js
+  // node_modules/uuid/dist/stringify.js
   var byteToHex = [];
   for (let i2 = 0; i2 < 256; ++i2) {
     byteToHex.push((i2 + 256).toString(16).slice(1));
@@ -6786,13 +6786,13 @@ var wp;
     return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
   }
 
-  // packages/blocks/node_modules/uuid/dist/rng.js
+  // node_modules/uuid/dist/rng.js
   var rnds8 = new Uint8Array(16);
   function rng() {
     return crypto.getRandomValues(rnds8);
   }
 
-  // packages/blocks/node_modules/uuid/dist/v4.js
+  // node_modules/uuid/dist/v4.js
   function v4(options, buf, offset) {
     if (!buf && !options && crypto.randomUUID) {
       return crypto.randomUUID();
