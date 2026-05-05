@@ -287,17 +287,6 @@ var BLANK_RECORD = {
     show_in_rest: true
   }
 };
-function parseConfig(raw) {
-  if (!raw) {
-    return {};
-  }
-  try {
-    const parsed = JSON.parse(raw);
-    return typeof parsed === "object" && parsed !== null ? parsed : {};
-  } catch {
-    return {};
-  }
-}
 var STRING_LABEL_KEYS = [
   "singular_name",
   "menu_name",
@@ -338,15 +327,15 @@ var SUPPORT_FEATURES = [
   "post-formats"
 ];
 function toFormData(row) {
-  const parsed = parseConfig(row.content.raw);
+  const config = row.config ?? {};
   const labels = {};
   for (const key of STRING_LABEL_KEYS) {
-    const value = parsed.labels?.[key];
+    const value = config.labels?.[key];
     if (typeof value === "string") {
       labels[key] = value;
     }
   }
-  const supports = Array.isArray(parsed.supports) ? parsed.supports.filter(
+  const supports = Array.isArray(config.supports) ? config.supports.filter(
     (s) => SUPPORT_FEATURES.includes(s)
   ) : [...DEFAULT_SUPPORTS];
   return {
@@ -356,17 +345,17 @@ function toFormData(row) {
     title: { raw: row.title.raw },
     config: {
       labels: { singular_name: "", ...labels },
-      taxonomies: Array.isArray(parsed.taxonomies) ? parsed.taxonomies : [],
+      taxonomies: Array.isArray(config.taxonomies) ? config.taxonomies : [],
       supports,
-      description: parsed.description ?? "",
-      public: parsed.public ?? true,
-      hierarchical: parsed.hierarchical ?? false,
-      has_archive: parsed.has_archive ?? false,
-      show_in_rest: parsed.show_in_rest ?? true
+      description: config.description ?? "",
+      public: config.public ?? true,
+      hierarchical: config.hierarchical ?? false,
+      has_archive: config.has_archive ?? false,
+      show_in_rest: config.show_in_rest ?? true
     }
   };
 }
-function serializeConfig(data) {
+function serializeForSave(data) {
   const { config } = data;
   const labels = {};
   for (const key of STRING_LABEL_KEYS) {
@@ -378,23 +367,20 @@ function serializeConfig(data) {
   labels.singular_name = config.labels.singular_name;
   const description = config.description.trim();
   return {
-    labels,
-    taxonomies: config.taxonomies,
-    supports: config.supports,
-    public: config.public,
-    hierarchical: config.hierarchical,
-    has_archive: config.has_archive,
-    show_in_rest: config.show_in_rest,
-    ...description !== "" ? { description } : {}
-  };
-}
-function serializeForSave(data) {
-  return {
     ...data.id !== void 0 ? { id: data.id } : {},
     slug: data.slug,
     status: data.status,
     title: data.title.raw,
-    content: JSON.stringify(serializeConfig(data))
+    config: {
+      labels,
+      taxonomies: config.taxonomies,
+      supports: config.supports,
+      public: config.public,
+      hierarchical: config.hierarchical,
+      has_archive: config.has_archive,
+      show_in_rest: config.show_in_rest,
+      ...description !== "" ? { description } : {}
+    }
   };
 }
 var CORE_TAXONOMY_SLUGS = ["category", "post_tag"];
@@ -10045,7 +10031,6 @@ export {
   notFoundField,
   notFoundInTrashField,
   parentItemColonField,
-  parseConfig,
   pluralLabelField,
   publicField,
   removeFeaturedImageField,
