@@ -4625,6 +4625,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   inset: 22px;
 }
 
+.wp-media-editor-image-editor__stage {
+  position: absolute;
+  inset: 0;
+}
+
 .wp-media-editor-image-editor--dragging {
   cursor: grabbing;
 }
@@ -4671,6 +4676,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 .wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid {
   opacity: 1;
   transition-delay: 0s;
+}
+
+.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid {
+  opacity: 0;
+  transition: none;
 }
 
 .wp-media-editor-image-editor__grid-line {
