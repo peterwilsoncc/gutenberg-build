@@ -22072,6 +22072,17 @@ ${url}
             ...findMoreSuitableBlock(url)?.attributes
           });
         }
+      },
+      {
+        type: "shortcode",
+        tag: "embed",
+        transform: (_attrs, { shortcode }) => {
+          const url = rewriteXToTwitter(shortcode.content?.trim());
+          return (0, import_blocks26.createBlock)(EMBED_BLOCK, {
+            url,
+            ...findMoreSuitableBlock(url)?.attributes
+          });
+        }
       }
     ],
     to: [
