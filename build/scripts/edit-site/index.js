@@ -45835,9 +45835,12 @@ If there's a particular need for this, please submit a feature request at https:
         __experimentalFeatures,
         ...restStoredSettings
       } = storedSettings;
+      const nonGlobalStyles = (styles ?? []).filter(
+        (style) => !style.isGlobalStyles
+      );
       return {
         ...restStoredSettings,
-        styles: globalStyles,
+        styles: [...nonGlobalStyles, ...globalStyles],
         __experimentalFeatures: globalSettings,
         [globalStylesDataKey]: mergedConfig.styles ?? {},
         __experimentalBlockPatterns: blockPatterns,
