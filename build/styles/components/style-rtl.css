@@ -1694,6 +1694,8 @@ body.is-dragging-components-draggable {
 }
 .components-external-link:focus {
   outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .components-external-link__contents {
@@ -1703,6 +1705,7 @@ body.is-dragging-components-draggable {
 }
 
 .components-external-link__icon {
+  line-height: 1;
   display: inline-block;
   margin-inline-start: var(--wpds-dimension-padding-xs, 4px);
   font-weight: var(--wpds-typography-font-weight-regular, 400);
