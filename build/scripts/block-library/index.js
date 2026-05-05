@@ -12006,7 +12006,7 @@ var wp;
   var init13 = () => {
     const supports2 = {
       ...block_default14.supports,
-      inserter: !window?.__experimentalDisableTinymce || !!window?.wp?.needsClassicBlock
+      inserter: !!window?.__needsClassicBlock
     };
     return initBlock({ name: name13, metadata: block_default14, settings: { ...settings13, supports: supports2 } });
   };
