@@ -8016,7 +8016,6 @@ var wp;
           false
         );
         break;
-      case "SYNC_DERIVED_BLOCK_ATTRIBUTES":
       case "UPDATE_BLOCK_ATTRIBUTES": {
         newState.tree = new Map(newState.tree);
         action.clientIds.forEach((clientId) => {
@@ -8119,40 +8118,20 @@ var wp;
   function withPersistentBlockChange(reducer3) {
     let lastAction;
     let markNextChangeAsNotPersistent = false;
-    let explicitPersistent;
     return (state, action) => {
-      let nextState = reducer3(state, action);
-      let nextIsPersistentChange;
-      if (action.type === "SET_EXPLICIT_PERSISTENT") {
-        explicitPersistent = action.isPersistentChange;
-        nextIsPersistentChange = state.isPersistentChange ?? true;
-      }
-      if (explicitPersistent !== void 0) {
-        nextIsPersistentChange = explicitPersistent;
-        return nextIsPersistentChange === nextState.isPersistentChange ? nextState : {
-          ...nextState,
-          isPersistentChange: nextIsPersistentChange
-        };
-      }
-      const isExplicitPersistentChange = action.type === "MARK_LAST_CHANGE_AS_PERSISTENT" || markNextChangeAsNotPersistent;
+      const nextState = reducer3(state, action);
+      const wasMarkedAsNotPersistent = markNextChangeAsNotPersistent;
+      markNextChangeAsNotPersistent = action.type === "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT";
+      const isExplicitPersistentChange = action.type === "MARK_LAST_CHANGE_AS_PERSISTENT" || wasMarkedAsNotPersistent;
       if (state === nextState && !isExplicitPersistentChange) {
-        markNextChangeAsNotPersistent = action.type === "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT";
-        nextIsPersistentChange = state?.isPersistentChange ?? true;
-        if (state.isPersistentChange === nextIsPersistentChange) {
+        if (state.isPersistentChange !== void 0) {
           return state;
         }
-        return {
-          ...nextState,
-          isPersistentChange: nextIsPersistentChange
-        };
+        return { ...nextState, isPersistentChange: true };
       }
-      nextState = {
-        ...nextState,
-        isPersistentChange: isExplicitPersistentChange ? !markNextChangeAsNotPersistent : !isUpdatingSameBlockAttribute(action, lastAction)
-      };
+      const isPersistentChange = isExplicitPersistentChange ? !wasMarkedAsNotPersistent : !isUpdatingSameBlockAttribute(action, lastAction);
       lastAction = action;
-      markNextChangeAsNotPersistent = action.type === "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT";
-      return nextState;
+      return { ...nextState, isPersistentChange };
     };
   }
   function withIgnoredBlockChange(reducer3) {
@@ -8428,7 +8407,6 @@ var wp;
           });
           return newState;
         }
-        case "SYNC_DERIVED_BLOCK_ATTRIBUTES":
         case "UPDATE_BLOCK_ATTRIBUTES": {
           if (action.clientIds.every((id) => !state.get(id))) {
             return state;
