@@ -31927,6 +31927,7 @@ ${js}
               id,
               onUpdate: handleMediaUpdate
             }) : () => setIsEditingImage(true),
+            "aria-haspopup": openMediaEditorModal && id ? "dialog" : void 0,
             icon: crop_default,
             label: (0, import_i18n93.__)("Crop")
           }
@@ -63406,6 +63407,7 @@ ${js}
             id: logoId,
             onUpdate: handleMediaUpdate
           }) : () => setIsEditingImage(true),
+          "aria-haspopup": openMediaEditorModal && logoId ? "dialog" : void 0,
           icon: crop_default,
           label: (0, import_i18n227.__)("Crop")
         }
