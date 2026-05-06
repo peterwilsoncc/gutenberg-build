@@ -19174,14 +19174,16 @@ If there's a particular need for this, please submit a feature request at https:
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
   var NOTICES_CONTEXT = "media-modal";
   var NOTICE_ID_UPLOAD_PROGRESS = "media-modal-upload-progress";
+  var defaultQueryParams = {
+    page: 1,
+    search: ""
+  };
   var defaultView = {
     type: LAYOUT_PICKER_GRID2,
     fields: [],
     showTitle: false,
     titleField: "title",
     mediaField: "media_thumbnail",
-    search: "",
-    page: 1,
     perPage: 50,
     filters: [],
     layout: {
@@ -19231,12 +19233,27 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const { createSuccessNotice, removeAllNotices } = (0, import_data13.useDispatch)(import_notices.store);
     const invalidateAttachmentResolutions = useInvalidateAttachmentResolutions();
+    const [queryParams, setQueryParams] = (0, import_element68.useState)(
+      () => defaultQueryParams
+    );
     const { view, updateView, isModified, resetToDefault } = useView({
       kind: "postType",
       name: "attachment",
       slug: "media-modal",
-      defaultView
+      defaultView,
+      queryParams,
+      onChangeQueryParams: setQueryParams
     });
+    const handleChangeView = (0, import_element68.useCallback)(
+      (nextView) => {
+        const normalizedView = { ...nextView };
+        if (normalizedView.startPosition === void 0) {
+          delete normalizedView.startPosition;
+        }
+        updateView(normalizedView);
+      },
+      [updateView]
+    );
     const queryArgs = (0, import_element68.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
@@ -19401,6 +19418,11 @@ If there's a particular need for this, please submit a feature request at https:
       removeAllNotices("snackbar", NOTICES_CONTEXT);
       onClose?.();
     }, [removeAllNotices, onClose]);
+    (0, import_element68.useEffect)(() => {
+      if (!isOpen) {
+        setQueryParams(defaultQueryParams);
+      }
+    }, [isOpen]);
     const handleUpload = onUpload || uploadMedia;
     const prevAllCompleteRef = (0, import_element68.useRef)(false);
     (0, import_element68.useEffect)(() => {
@@ -19525,7 +19547,7 @@ If there's a particular need for this, please submit a feature request at https:
               data: mediaRecords || [],
               fields,
               view,
-              onChangeView: updateView,
+              onChangeView: handleChangeView,
               actions,
               selection,
               onChangeSelection: setSelection,
