@@ -114,6 +114,24 @@ function clsx() {
 }
 var clsx_default = clsx;
 
+// node_modules/@base-ui/utils/esm/error.js
+var set;
+if (true) {
+  set = /* @__PURE__ */ new Set();
+}
+function error(...messages) {
+  if (true) {
+    const messageKey = messages.join(" ");
+    if (!set.has(messageKey)) {
+      set.add(messageKey);
+      console.error(`Base UI: ${messageKey}`);
+    }
+  }
+}
+
+// node_modules/@base-ui/utils/esm/useStableCallback.js
+var React2 = __toESM(require_react(), 1);
+
 // node_modules/@base-ui/utils/esm/useRefWithInit.js
 var React = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
@@ -125,23 +143,62 @@ function useRefWithInit(init, initArg) {
   return ref;
 }
 
+// node_modules/@base-ui/utils/esm/useStableCallback.js
+var useInsertionEffect = React2[`useInsertionEffect${Math.random().toFixed(1)}`.slice(0, -3)];
+var useSafeInsertionEffect = (
+  // React 17 doesn't have useInsertionEffect.
+  useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
+  useInsertionEffect !== React2.useLayoutEffect ? useInsertionEffect : (fn) => fn()
+);
+function useStableCallback(callback) {
+  const stable = useRefWithInit(createStableCallback).current;
+  stable.next = callback;
+  useSafeInsertionEffect(stable.effect);
+  return stable.trampoline;
+}
+function createStableCallback() {
+  const stable = {
+    next: void 0,
+    callback: assertNotCalled,
+    trampoline: (...args) => stable.callback?.(...args),
+    effect: () => {
+      stable.callback = stable.next;
+    }
+  };
+  return stable;
+}
+function assertNotCalled() {
+  if (true) {
+    throw (
+      /* minify-error-disabled */
+      new Error("Base UI: Cannot call an event handler while rendering.")
+    );
+  }
+}
+
+// node_modules/@base-ui/utils/esm/useIsoLayoutEffect.js
+var React3 = __toESM(require_react(), 1);
+var noop = () => {
+};
+var useIsoLayoutEffect = typeof document !== "undefined" ? React3.useLayoutEffect : noop;
+
 // node_modules/@base-ui/utils/esm/warn.js
-var set;
+var set2;
 if (true) {
-  set = /* @__PURE__ */ new Set();
+  set2 = /* @__PURE__ */ new Set();
 }
 function warn(...messages) {
   if (true) {
     const messageKey = messages.join(" ");
-    if (!set.has(messageKey)) {
-      set.add(messageKey);
+    if (!set2.has(messageKey)) {
+      set2.add(messageKey);
       console.warn(`Base UI: ${messageKey}`);
     }
   }
 }
 
 // node_modules/@base-ui/react/esm/internals/useRenderElement.js
-var React4 = __toESM(require_react(), 1);
+var React6 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/useMergedRefs.js
 function useMergedRefs(a, b, c, d) {
@@ -233,18 +290,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
-var React3 = __toESM(require_react(), 1);
+var React5 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/reactVersion.js
-var React2 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React2.version, 10);
+var React4 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React4.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React3.isValidElement(element)) {
+  if (!/* @__PURE__ */ React5.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -529,15 +586,15 @@ function evaluateRenderProp(element, render, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React4.Children.toArray(render);
+      const children = React6.Children.toArray(render);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React4.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React6.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React4.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React6.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -574,8 +631,274 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React4.createElement(Tag, props);
+  return /* @__PURE__ */ React6.createElement(Tag, props);
 }
+
+// node_modules/@base-ui/utils/esm/safeReact.js
+var React7 = __toESM(require_react(), 1);
+var SafeReact = {
+  ...React7
+};
+
+// node_modules/@base-ui/react/esm/internals/use-button/useButton.js
+var React10 = __toESM(require_react(), 1);
+
+// node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
+function hasWindow() {
+  return typeof window !== "undefined";
+}
+function getWindow(node) {
+  var _node$ownerDocument;
+  return (node == null || (_node$ownerDocument = node.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
+}
+function isHTMLElement(value) {
+  if (!hasWindow()) {
+    return false;
+  }
+  return value instanceof HTMLElement || value instanceof getWindow(value).HTMLElement;
+}
+
+// node_modules/@base-ui/react/esm/internals/composite/root/CompositeRootContext.js
+var React8 = __toESM(require_react(), 1);
+var CompositeRootContext = /* @__PURE__ */ React8.createContext(void 0);
+if (true) CompositeRootContext.displayName = "CompositeRootContext";
+function useCompositeRootContext(optional = false) {
+  const context = React8.useContext(CompositeRootContext);
+  if (context === void 0 && !optional) {
+    throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
+  }
+  return context;
+}
+
+// node_modules/@base-ui/react/esm/utils/useFocusableWhenDisabled.js
+var React9 = __toESM(require_react(), 1);
+function useFocusableWhenDisabled(parameters) {
+  const {
+    focusableWhenDisabled,
+    disabled,
+    composite = false,
+    tabIndex: tabIndexProp = 0,
+    isNativeButton
+  } = parameters;
+  const isFocusableComposite = composite && focusableWhenDisabled !== false;
+  const isNonFocusableComposite = composite && focusableWhenDisabled === false;
+  const props = React9.useMemo(() => {
+    const additionalProps = {
+      // allow Tabbing away from focusableWhenDisabled elements
+      onKeyDown(event) {
+        if (disabled && focusableWhenDisabled && event.key !== "Tab") {
+          event.preventDefault();
+        }
+      }
+    };
+    if (!composite) {
+      additionalProps.tabIndex = tabIndexProp;
+      if (!isNativeButton && disabled) {
+        additionalProps.tabIndex = focusableWhenDisabled ? tabIndexProp : -1;
+      }
+    }
+    if (isNativeButton && (focusableWhenDisabled || isFocusableComposite) || !isNativeButton && disabled) {
+      additionalProps["aria-disabled"] = disabled;
+    }
+    if (isNativeButton && (!focusableWhenDisabled || isNonFocusableComposite)) {
+      additionalProps.disabled = disabled;
+    }
+    return additionalProps;
+  }, [composite, disabled, focusableWhenDisabled, isFocusableComposite, isNonFocusableComposite, isNativeButton, tabIndexProp]);
+  return {
+    props
+  };
+}
+
+// node_modules/@base-ui/react/esm/internals/use-button/useButton.js
+function useButton(parameters = {}) {
+  const {
+    disabled = false,
+    focusableWhenDisabled,
+    tabIndex = 0,
+    native: isNativeButton = true,
+    composite: compositeProp
+  } = parameters;
+  const elementRef = React10.useRef(null);
+  const compositeRootContext = useCompositeRootContext(true);
+  const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
+  const {
+    props: focusableWhenDisabledProps
+  } = useFocusableWhenDisabled({
+    focusableWhenDisabled,
+    disabled,
+    composite: isCompositeItem,
+    tabIndex,
+    isNativeButton
+  });
+  if (true) {
+    React10.useEffect(() => {
+      if (!elementRef.current) {
+        return;
+      }
+      const isButtonTag = isButtonElement(elementRef.current);
+      if (isNativeButton) {
+        if (!isButtonTag) {
+          const ownerStackMessage = SafeReact.captureOwnerStack?.() || "";
+          const message = "A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.";
+          error(`${message}${ownerStackMessage}`);
+        }
+      } else if (isButtonTag) {
+        const ownerStackMessage = SafeReact.captureOwnerStack?.() || "";
+        const message = "A component that acts as a button expected a non-<button> because the `nativeButton` prop is false. Rendering a <button> keeps native behavior while Base UI applies non-native attributes and handlers, which can add unintended extra attributes (such as `role` or `aria-disabled`). Use a non-<button> in the `render` prop, or set `nativeButton` to `true`.";
+        error(`${message}${ownerStackMessage}`);
+      }
+    }, [isNativeButton]);
+  }
+  const updateDisabled = React10.useCallback(() => {
+    const element = elementRef.current;
+    if (!isButtonElement(element)) {
+      return;
+    }
+    if (isCompositeItem && disabled && focusableWhenDisabledProps.disabled === void 0 && element.disabled) {
+      element.disabled = false;
+    }
+  }, [disabled, focusableWhenDisabledProps.disabled, isCompositeItem]);
+  useIsoLayoutEffect(updateDisabled, [updateDisabled]);
+  const getButtonProps = React10.useCallback((externalProps = {}) => {
+    const {
+      onClick: externalOnClick,
+      onMouseDown: externalOnMouseDown,
+      onKeyUp: externalOnKeyUp,
+      onKeyDown: externalOnKeyDown,
+      onPointerDown: externalOnPointerDown,
+      ...otherExternalProps
+    } = externalProps;
+    const type = isNativeButton ? "button" : void 0;
+    return mergeProps({
+      type,
+      onClick(event) {
+        if (disabled) {
+          event.preventDefault();
+          return;
+        }
+        externalOnClick?.(event);
+      },
+      onMouseDown(event) {
+        if (!disabled) {
+          externalOnMouseDown?.(event);
+        }
+      },
+      onKeyDown(event) {
+        if (disabled) {
+          return;
+        }
+        makeEventPreventable(event);
+        externalOnKeyDown?.(event);
+        if (event.baseUIHandlerPrevented) {
+          return;
+        }
+        const isCurrentTarget = event.target === event.currentTarget;
+        const currentTarget = event.currentTarget;
+        const isButton = isButtonElement(currentTarget);
+        const isLink = !isNativeButton && isValidLinkElement(currentTarget);
+        const shouldClick = isCurrentTarget && (isNativeButton ? isButton : !isLink);
+        const isEnterKey = event.key === "Enter";
+        const isSpaceKey = event.key === " ";
+        const role = currentTarget.getAttribute("role");
+        const isTextNavigationRole = role?.startsWith("menuitem") || role === "option" || role === "gridcell";
+        if (isCurrentTarget && isCompositeItem && isSpaceKey) {
+          if (event.defaultPrevented && isTextNavigationRole) {
+            return;
+          }
+          event.preventDefault();
+          if (isLink || isNativeButton && isButton) {
+            currentTarget.click();
+            event.preventBaseUIHandler();
+          } else if (shouldClick) {
+            externalOnClick?.(event);
+            event.preventBaseUIHandler();
+          }
+          return;
+        }
+        if (shouldClick) {
+          if (!isNativeButton && (isSpaceKey || isEnterKey)) {
+            event.preventDefault();
+          }
+          if (!isNativeButton && isEnterKey) {
+            externalOnClick?.(event);
+          }
+        }
+      },
+      onKeyUp(event) {
+        if (disabled) {
+          return;
+        }
+        makeEventPreventable(event);
+        externalOnKeyUp?.(event);
+        if (event.target === event.currentTarget && isNativeButton && isCompositeItem && isButtonElement(event.currentTarget) && event.key === " ") {
+          event.preventDefault();
+          return;
+        }
+        if (event.baseUIHandlerPrevented) {
+          return;
+        }
+        if (event.target === event.currentTarget && !isNativeButton && !isCompositeItem && event.key === " ") {
+          externalOnClick?.(event);
+        }
+      },
+      onPointerDown(event) {
+        if (disabled) {
+          event.preventDefault();
+          return;
+        }
+        externalOnPointerDown?.(event);
+      }
+    }, !isNativeButton ? {
+      role: "button"
+    } : void 0, focusableWhenDisabledProps, otherExternalProps);
+  }, [disabled, focusableWhenDisabledProps, isCompositeItem, isNativeButton]);
+  const buttonRef = useStableCallback((element) => {
+    elementRef.current = element;
+    updateDisabled();
+  });
+  return {
+    getButtonProps,
+    buttonRef
+  };
+}
+function isButtonElement(elem) {
+  return isHTMLElement(elem) && elem.tagName === "BUTTON";
+}
+function isValidLinkElement(elem) {
+  return Boolean(elem?.tagName === "A" && elem?.href);
+}
+
+// node_modules/@base-ui/react/esm/button/Button.js
+var React11 = __toESM(require_react(), 1);
+var Button = /* @__PURE__ */ React11.forwardRef(function Button2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    disabled = false,
+    focusableWhenDisabled = false,
+    nativeButton = true,
+    style,
+    ...elementProps
+  } = componentProps;
+  const {
+    getButtonProps,
+    buttonRef
+  } = useButton({
+    disabled,
+    focusableWhenDisabled,
+    native: nativeButton
+  });
+  const state = {
+    disabled
+  };
+  return useRenderElement("button", componentProps, {
+    state,
+    ref: [forwardedRef, buttonRef],
+    props: [elementProps, getButtonProps]
+  });
+});
+if (true) Button.displayName = "Button";
 
 // node_modules/@base-ui/react/esm/use-render/useRender.js
 function useRender(params) {
@@ -616,12 +939,91 @@ var Text = (0, import_element.forwardRef)(function Text2({ variant = "body-md", 
   return element;
 });
 
-// packages/ui/build-module/icon/icon.mjs
+// packages/ui/build-module/button/button.mjs
 var import_element2 = __toESM(require_element(), 1);
-var import_primitives = __toESM(require_primitives(), 1);
+var import_i18n = __toESM(require_i18n(), 1);
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element2.forwardRef)(function Icon2({ icon, size = 24, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+import { speak } from "@wordpress/a11y";
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='26d90ece4e']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "26d90ece4e");
+  style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:499;--wp-ui-button-background-color:var(--wpds-color-bg-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-bg-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-fg-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-fg-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-fg-interactive-neutral-strong-disabled,#8d8d8d);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:40px;--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:padding-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);cursor:var(--wpds-cursor-control,pointer);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);height:var(--wp-ui-button-height);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);min-width:var(--wp-ui-button-min-width);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-decoration:none;@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:#0000;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:#0000;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:24px}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-fg-interactive-brand-active,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-disabled:var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-bg-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-bg-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-bg-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-bg-interactive-neutral-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-bg-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-fg-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-fg-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-fg-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-fg-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-bg-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-bg-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-bg-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-bg-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:32px}._914b42f315c0e580__is-loading{color:#0000;&:not([data-disabled]):is(:hover,:active,:focus){color:#0000}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}[aria-pressed=true].ad0619a3217c6a5b__is-minimal.e722a8f96726aa99__is-neutral{--wp-ui-button-background-color:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--wp-ui-button-foreground-color:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0)}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}'));
+  document.head.appendChild(style);
+}
+var style_default2 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='e3ae230cea']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "e3ae230cea");
+  style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}"));
+  document.head.appendChild(style);
+}
+var resets_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='2a5ab8f3a7']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "2a5ab8f3a7");
+  style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-utilities{._08e8a2e44959f892__outset-ring--focus,._970d04df7376df67__outset-ring--focus-within-except-active,.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible,.cd83dfc2126a0846__outset-ring--focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active,.ecadb9e080e2dfa5__outset-ring--focus-parent-visible{@media not (prefers-reduced-motion){--_gcd-a-transition:outline 0.1s ease-out;transition:outline .1s ease-out}outline:0 solid #0000;outline-offset:1px}._08e8a2e44959f892__outset-ring--focus:focus,._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active),:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9))}}"));
+  document.head.appendChild(style);
+}
+var focus_default = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible" };
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='1fb29d3a3c']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "1fb29d3a3c");
+  style.appendChild(document.createTextNode("._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,#0000);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 #0000);color:var(--_gcd-input-color,var(--wpds-color-fg-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,#0000);border-color:var(--_gcd-input-border-color-disabled,#0000);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid #0000)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-fg-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-medium,499));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid #0000);transition:var(--_gcd-a-transition,none)}"));
+  document.head.appendChild(style);
+}
+var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+var Button3 = (0, import_element2.forwardRef)(
+  function Button22({
+    tone = "brand",
+    variant = "solid",
+    size = "default",
+    className,
+    focusableWhenDisabled = true,
+    disabled,
+    loading,
+    loadingAnnouncement = (0, import_i18n.__)("Loading"),
+    children,
+    ...props
+  }, ref) {
+    const mergedClassName = clsx_default(
+      global_css_defense_default2.button,
+      resets_default["box-sizing"],
+      focus_default["outset-ring--focus-except-active"],
+      variant !== "unstyled" && style_default2.button,
+      style_default2[`is-${tone}`],
+      style_default2[`is-${variant}`],
+      style_default2[`is-${size}`],
+      loading && style_default2["is-loading"],
+      className
+    );
+    (0, import_element2.useEffect)(() => {
+      if (loading && loadingAnnouncement) {
+        speak(loadingAnnouncement);
+      }
+    }, [loading, loadingAnnouncement]);
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      Button,
+      {
+        ref,
+        className: mergedClassName,
+        focusableWhenDisabled,
+        disabled: disabled ?? loading,
+        ...props,
+        children
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/button/icon.mjs
+var import_element4 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/icon/icon.mjs
+var import_element3 = __toESM(require_element(), 1);
+var import_primitives = __toESM(require_primitives(), 1);
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var Icon = (0, import_element3.forwardRef)(function Icon2({ icon, size = 24, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
     import_primitives.SVG,
     {
       ref,
@@ -634,20 +1036,46 @@ var Icon = (0, import_element2.forwardRef)(function Icon2({ icon, size = 24, ...
   );
 });
 
+// packages/ui/build-module/button/icon.mjs
+var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var ButtonIcon = (0, import_element4.forwardRef)(
+  function ButtonIcon2({ icon, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+      Icon,
+      {
+        ref,
+        icon,
+        viewBox: "4 4 16 16",
+        size: 16,
+        ...props
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/button/index.mjs
+var Button4 = Object.assign(Button3, {
+  /**
+   * An icon component specifically designed to work well when rendered inside
+   * a `Button` component.
+   */
+  Icon: ButtonIcon
+});
+
 // packages/icons/build-module/library/home.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var home_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.Path, { d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z" }) });
+var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+var home_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives2.Path, { d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z" }) });
 
 // packages/ui/build-module/stack/stack.mjs
-var import_element3 = __toESM(require_element(), 1);
+var import_element5 = __toESM(require_element(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b51ff41489']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "b51ff41489");
   style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
   document.head.appendChild(style);
 }
-var style_default2 = { "stack": "_19ce0419607e1896__stack" };
+var style_default3 = { "stack": "_19ce0419607e1896__stack" };
 var gapTokens = {
   xs: "var(--wpds-dimension-gap-xs, 4px)",
   sm: "var(--wpds-dimension-gap-sm, 8px)",
@@ -657,7 +1085,7 @@ var gapTokens = {
   "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
   "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 };
-var Stack = (0, import_element3.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+var Stack = (0, import_element5.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render, ...props }, ref) {
   const style = {
     gap: gap && gapTokens[gap],
     alignItems: align,
@@ -668,7 +1096,7 @@ var Stack = (0, import_element3.forwardRef)(function Stack2({ direction, gap, al
   const element = useRender({
     render,
     ref,
-    props: mergeProps(props, { style, className: style_default2.stack })
+    props: mergeProps(props, { style, className: style_default3.stack })
   });
   return element;
 });
@@ -685,17 +1113,17 @@ __export(empty_state_exports, {
 });
 
 // packages/ui/build-module/empty-state/root.mjs
-var import_element4 = __toESM(require_element(), 1);
+var import_element6 = __toESM(require_element(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d6361d221']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "6d6361d221");
   style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-fg-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-bg-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-fg-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}'));
   document.head.appendChild(style);
 }
-var style_default3 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Root = (0, import_element4.forwardRef)(
+var style_default4 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
+var Root = (0, import_element6.forwardRef)(
   function EmptyStateRoot({ render, ...props }, ref) {
-    const className = clsx_default(style_default3.root);
+    const className = clsx_default(style_default4.root);
     const element = useRender({
       defaultTagName: "div",
       render,
@@ -707,17 +1135,17 @@ var Root = (0, import_element4.forwardRef)(
 );
 
 // packages/ui/build-module/empty-state/visual.mjs
-var import_element5 = __toESM(require_element(), 1);
+var import_element7 = __toESM(require_element(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d6361d221']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "6d6361d221");
   style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-fg-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-bg-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-fg-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}'));
   document.head.appendChild(style);
 }
-var style_default4 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Visual = (0, import_element5.forwardRef)(
+var style_default5 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
+var Visual = (0, import_element7.forwardRef)(
   function EmptyStateVisual({ render, ...props }, ref) {
-    const className = clsx_default(style_default4.visual);
+    const className = clsx_default(style_default5.visual);
     const element = useRender({
       defaultTagName: "div",
       render,
@@ -729,57 +1157,6 @@ var Visual = (0, import_element5.forwardRef)(
 );
 
 // packages/ui/build-module/empty-state/icon.mjs
-var import_element6 = __toESM(require_element(), 1);
-var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d6361d221']")) {
-  const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "6d6361d221");
-  style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-fg-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-bg-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-fg-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}'));
-  document.head.appendChild(style);
-}
-var style_default5 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Icon3 = (0, import_element6.forwardRef)(
-  function EmptyStateIcon({ icon, className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-      Visual,
-      {
-        ref,
-        className: clsx_default(style_default5.icon, className),
-        ...restProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Icon, { icon })
-      }
-    );
-  }
-);
-
-// packages/ui/build-module/empty-state/title.mjs
-var import_element7 = __toESM(require_element(), 1);
-var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d6361d221']")) {
-  const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "6d6361d221");
-  style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-fg-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-bg-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-fg-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}'));
-  document.head.appendChild(style);
-}
-var style_default6 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h2", {});
-var Title = (0, import_element7.forwardRef)(
-  function EmptyStateTitle({ render = DEFAULT_TAG, className, children, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-      Text,
-      {
-        ref,
-        variant: "heading-lg",
-        render,
-        className: clsx_default(style_default6.title, className),
-        ...props,
-        children
-      }
-    );
-  }
-);
-
-// packages/ui/build-module/empty-state/description.mjs
 var import_element8 = __toESM(require_element(), 1);
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d6361d221']")) {
@@ -788,24 +1165,51 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-fg-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-bg-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-fg-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}'));
   document.head.appendChild(style);
 }
-var style_default7 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var DEFAULT_TAG2 = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", {});
-var Description = (0, import_element8.forwardRef)(function EmptyStateDescription({ render = DEFAULT_TAG2, className, children, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-    Text,
-    {
-      ref,
-      variant: "body-md",
-      render,
-      className: clsx_default(style_default7.description, className),
-      ...props,
-      children
-    }
-  );
-});
+var style_default6 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
+var Icon3 = (0, import_element8.forwardRef)(
+  function EmptyStateIcon({ icon, className, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+      Visual,
+      {
+        ref,
+        className: clsx_default(style_default6.icon, className),
+        ...restProps,
+        children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Icon, { icon })
+      }
+    );
+  }
+);
 
-// packages/ui/build-module/empty-state/actions.mjs
+// packages/ui/build-module/empty-state/title.mjs
 var import_element9 = __toESM(require_element(), 1);
+var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d6361d221']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "6d6361d221");
+  style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-fg-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-bg-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-fg-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}'));
+  document.head.appendChild(style);
+}
+var style_default7 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
+var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", {});
+var Title = (0, import_element9.forwardRef)(
+  function EmptyStateTitle({ render = DEFAULT_TAG, className, children, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+      Text,
+      {
+        ref,
+        variant: "heading-lg",
+        render,
+        className: clsx_default(style_default7.title, className),
+        ...props,
+        children
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/empty-state/description.mjs
+var import_element10 = __toESM(require_element(), 1);
+var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d6361d221']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "6d6361d221");
@@ -813,9 +1217,33 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 var style_default8 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Actions = (0, import_element9.forwardRef)(
+var DEFAULT_TAG2 = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", {});
+var Description = (0, import_element10.forwardRef)(function EmptyStateDescription({ render = DEFAULT_TAG2, className, children, ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+    Text,
+    {
+      ref,
+      variant: "body-md",
+      render,
+      className: clsx_default(style_default8.description, className),
+      ...props,
+      children
+    }
+  );
+});
+
+// packages/ui/build-module/empty-state/actions.mjs
+var import_element11 = __toESM(require_element(), 1);
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d6361d221']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "6d6361d221");
+  style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-fg-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-bg-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-fg-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}'));
+  document.head.appendChild(style);
+}
+var style_default9 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
+var Actions = (0, import_element11.forwardRef)(
   function EmptyStateActions({ render, ...props }, ref) {
-    const className = clsx_default(style_default8.actions);
+    const className = clsx_default(style_default9.actions);
     const element = useRender({
       defaultTagName: "div",
       render,
@@ -827,11 +1255,11 @@ var Actions = (0, import_element9.forwardRef)(
 );
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element10 = __toESM(require_element(), 1);
-var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element10.forwardRef)(
+var import_element12 = __toESM(require_element(), 1);
+var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+var NavigableRegion = (0, import_element12.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
       Tag,
       {
         ref,
@@ -853,14 +1281,14 @@ var import_components = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
 
 // packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='aa9c241ccc']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "aa9c241ccc");
   style.appendChild(document.createTextNode("._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-bg-surface-neutral,#fcfcfc);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-bg-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:calc(var(--wpds-dimension-base, 4px)*8)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:calc(var(--wpds-dimension-base, 4px)*6);width:calc(var(--wpds-dimension-base, 4px)*6);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-fg-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}"));
   document.head.appendChild(style);
 }
-var style_default9 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+var style_default10 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Header({
   headingLevel = 1,
   breadcrumbs,
@@ -872,42 +1300,42 @@ function Header({
   showSidebarToggle = true
 }) {
   const HeadingTag = `h${headingLevel}`;
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
     Stack,
     {
       direction: "column",
-      className: style_default9.header,
-      render: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("header", {}),
+      className: style_default10.header,
+      render: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("header", {}),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
           Stack,
           {
-            className: style_default9["header-content"],
+            className: style_default10["header-content"],
             direction: "row",
             gap: "sm",
             justify: "space-between",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-                showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+                showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
                   SidebarToggleSlot,
                   {
                     bubblesVirtually: true,
-                    className: style_default9["sidebar-toggle-slot"]
+                    className: style_default10["sidebar-toggle-slot"]
                   }
                 ),
-                visual && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                visual && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
                   "div",
                   {
-                    className: style_default9["header-visual"],
+                    className: style_default10["header-visual"],
                     "aria-hidden": "true",
                     children: visual
                   }
                 ),
-                title && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                title && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
                   Text,
                   {
-                    className: style_default9["header-title"],
-                    render: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(HeadingTag, {}),
+                    className: style_default10["header-title"],
+                    render: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(HeadingTag, {}),
                     variant: "heading-lg",
                     children: title
                   }
@@ -915,11 +1343,11 @@ function Header({
                 breadcrumbs,
                 badges
               ] }),
-              actions && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+              actions && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
                 Stack,
                 {
                   align: "center",
-                  className: style_default9["header-actions"],
+                  className: style_default10["header-actions"],
                   direction: "row",
                   gap: "sm",
                   children: actions
@@ -928,12 +1356,12 @@ function Header({
             ]
           }
         ),
-        subTitle && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        subTitle && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
           Text,
           {
-            render: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", {}),
+            render: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", {}),
             variant: "body-md",
-            className: style_default9["header-subtitle"],
+            className: style_default10["header-subtitle"],
             children: subTitle
           }
         )
@@ -943,14 +1371,14 @@ function Header({
 }
 
 // packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='aa9c241ccc']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "aa9c241ccc");
   style.appendChild(document.createTextNode("._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-bg-surface-neutral,#fcfcfc);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-bg-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:calc(var(--wpds-dimension-base, 4px)*8)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:calc(var(--wpds-dimension-base, 4px)*6);width:calc(var(--wpds-dimension-base, 4px)*6);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-fg-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}"));
   document.head.appendChild(style);
 }
-var style_default10 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+var style_default11 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Page({
   headingLevel,
   breadcrumbs,
@@ -965,10 +1393,10 @@ function Page({
   hasPadding = false,
   showSidebarToggle = true
 }) {
-  const classes = clsx_default(style_default10.page, className);
+  const classes = clsx_default(style_default11.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
       Header,
       {
         headingLevel,
@@ -981,12 +1409,12 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
       "div",
       {
         className: clsx_default(
-          style_default10.content,
-          style_default10["has-padding"]
+          style_default11.content,
+          style_default11["has-padding"]
         ),
         children
       }
@@ -997,12 +1425,12 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/dashboard/stage.tsx
-var import_element21 = __toESM(require_element());
-var import_i18n4 = __toESM(require_i18n());
+var import_element24 = __toESM(require_element());
+var import_i18n6 = __toESM(require_i18n());
 
 // routes/dashboard/widget-dashboard/context/dashboard-context.tsx
-var import_element11 = __toESM(require_element());
-var import_jsx_runtime9 = __toESM(require_jsx_runtime());
+var import_element13 = __toESM(require_element());
+var import_jsx_runtime11 = __toESM(require_jsx_runtime());
 var DEFAULT_GRID = {
   minColumnWidth: 350,
   rowHeight: 200,
@@ -1012,9 +1440,9 @@ var DEFAULT_RESOLVE_WIDGET_MODULE = (moduleId) => import(
   /* webpackIgnore: true */
   moduleId
 );
-var Context = (0, import_element11.createContext)(null);
+var Context = (0, import_element13.createContext)(null);
 function useDashboardInternalContext() {
-  const ctx = (0, import_element11.useContext)(Context);
+  const ctx = (0, import_element13.useContext)(Context);
   if (!ctx) {
     throw new Error(
       "Dashboard compound used outside a WidgetDashboard subtree."
@@ -1032,7 +1460,7 @@ function WidgetDashboardProvider({
   gridSettings = DEFAULT_GRID,
   children
 }) {
-  const value = (0, import_element11.useMemo)(
+  const value = (0, import_element13.useMemo)(
     () => ({
       widgetTypes,
       layout,
@@ -1052,29 +1480,95 @@ function WidgetDashboardProvider({
       gridSettings
     ]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Context.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Context.Provider, { value, children });
+}
+
+// routes/dashboard/widget-dashboard/components/actions/actions.tsx
+var import_element14 = __toESM(require_element());
+var import_i18n2 = __toESM(require_i18n());
+var import_jsx_runtime12 = __toESM(require_jsx_runtime());
+function Actions2() {
+  const { editMode, onEditChange } = useDashboardInternalContext();
+  const handleEditMode = (0, import_element14.useCallback)(() => {
+    onEditChange?.(!editMode);
+  }, [editMode, onEditChange]);
+  const handleInsertWidget = (0, import_element14.useCallback)(() => {
+    console.log("insert widget");
+  }, []);
+  const handleCancel = (0, import_element14.useCallback)(() => {
+    console.log("cancel");
+    onEditChange?.(false);
+  }, [onEditChange]);
+  const handleDone = (0, import_element14.useCallback)(() => {
+    console.log("done");
+    onEditChange?.(false);
+  }, [onEditChange]);
+  if (!onEditChange) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Stack, { direction: "row", gap: "sm", children: editMode ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      Button4,
+      {
+        variant: "minimal",
+        tone: "brand",
+        size: "compact",
+        onClick: handleInsertWidget,
+        children: (0, import_i18n2.__)("Add widgets")
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      Button4,
+      {
+        variant: "minimal",
+        tone: "brand",
+        size: "compact",
+        onClick: handleCancel,
+        children: (0, import_i18n2.__)("Cancel")
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      Button4,
+      {
+        variant: "solid",
+        tone: "brand",
+        size: "compact",
+        onClick: handleDone,
+        children: (0, import_i18n2.__)("Done")
+      }
+    )
+  ] }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    Button4,
+    {
+      variant: "outline",
+      tone: "brand",
+      size: "compact",
+      onClick: handleEditMode,
+      children: (0, import_i18n2.__)("Customize")
+    }
+  ) });
 }
 
 // routes/dashboard/widget-dashboard/components/widget/widget.tsx
-var import_element15 = __toESM(require_element());
+var import_element18 = __toESM(require_element());
 
 // routes/dashboard/widget-dashboard/context/widget-context.tsx
-var import_element12 = __toESM(require_element());
-var import_jsx_runtime10 = __toESM(require_jsx_runtime());
-var WidgetContext = (0, import_element12.createContext)(null);
+var import_element15 = __toESM(require_element());
+var import_jsx_runtime13 = __toESM(require_jsx_runtime());
+var WidgetContext = (0, import_element15.createContext)(null);
 function WidgetContextProvider({
   value,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(WidgetContext.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(WidgetContext.Provider, { value, children });
 }
 
 // routes/dashboard/widget-dashboard/components/widget-render/widget-render.tsx
-var import_element14 = __toESM(require_element());
-var import_i18n = __toESM(require_i18n());
+var import_element17 = __toESM(require_element());
+var import_i18n3 = __toESM(require_i18n());
 
 // routes/dashboard/widget-dashboard/utils/get-lazy-widget-component/get-lazy-widget-component.ts
-var import_element13 = __toESM(require_element());
+var import_element16 = __toESM(require_element());
 function isValidWidgetModule(module) {
   return typeof module === "object" && module !== null && "default" in module && typeof module.default === "function";
 }
@@ -1084,7 +1578,7 @@ function getLazyWidgetComponent(renderModule, resolveWidgetModule) {
   if (cached) {
     return cached;
   }
-  const lazyComponent = (0, import_element13.lazy)(async () => {
+  const lazyComponent = (0, import_element16.lazy)(async () => {
     const module = await resolveWidgetModule(renderModule);
     if (!isValidWidgetModule(module)) {
       throw new Error(`Invalid widget module: ${renderModule}`);
@@ -1105,15 +1599,15 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 var widget_render_default = { "loading": "_83d8fad41ee8d2bd__loading", "error": "b3d663783bbae8f0__error" };
 
 // routes/dashboard/widget-dashboard/components/widget-render/widget-render.tsx
-var import_jsx_runtime11 = __toESM(require_jsx_runtime());
-var WidgetErrorBoundary = class extends import_element14.Component {
+var import_jsx_runtime14 = __toESM(require_jsx_runtime());
+var WidgetErrorBoundary = class extends import_element17.Component {
   state = { hasError: false };
   static getDerivedStateFromError() {
     return { hasError: true };
   }
   render() {
     if (this.state.hasError) {
-      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
         Stack,
         {
           direction: "column",
@@ -1121,7 +1615,7 @@ var WidgetErrorBoundary = class extends import_element14.Component {
           align: "center",
           className: widget_render_default.error,
           role: "alert",
-          children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { children: (0, import_i18n.__)("This widget encountered an error.") })
+          children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { children: (0, import_i18n3.__)("This widget encountered an error.") })
         }
       );
     }
@@ -1129,7 +1623,7 @@ var WidgetErrorBoundary = class extends import_element14.Component {
   }
 };
 function LoadingOverlay() {
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Stack, { justify: "center", align: "center", className: widget_render_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: (0, import_i18n.__)("Loading\u2026") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Stack, { justify: "center", align: "center", className: widget_render_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { children: (0, import_i18n3.__)("Loading\u2026") }) });
 }
 function WidgetRenderImpl({ widget, widgetType }) {
   const { layout, onLayoutChange, resolveWidgetModule } = useDashboardInternalContext();
@@ -1137,7 +1631,7 @@ function WidgetRenderImpl({ widget, widgetType }) {
     widgetType.renderModule,
     resolveWidgetModule
   );
-  const setAttributes = (0, import_element14.useCallback)(
+  const setAttributes = (0, import_element17.useCallback)(
     (next) => {
       onLayoutChange(
         layout.map(
@@ -1153,7 +1647,7 @@ function WidgetRenderImpl({ widget, widgetType }) {
     },
     [widget.uuid, layout, onLayoutChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_element14.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_element17.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
     WidgetComponent,
     {
       attributes: widget.attributes,
@@ -1173,12 +1667,12 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 var widget_default = { "widget": "_4d5f25e056f1d1c6__widget" };
 
 // routes/dashboard/widget-dashboard/components/widget/widget.tsx
-var import_jsx_runtime12 = __toESM(require_jsx_runtime());
-var Widget = (0, import_element15.forwardRef)(
+var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+var Widget = (0, import_element18.forwardRef)(
   function Widget2({ widget, index }, ref) {
     const { widgetTypes, editMode } = useDashboardInternalContext();
     const widgetType = widgetTypes.find((t) => t.name === widget.type);
-    const contextValue = (0, import_element15.useMemo)(
+    const contextValue = (0, import_element18.useMemo)(
       () => ({
         uuid: widget.uuid,
         name: widget.type,
@@ -1189,20 +1683,20 @@ var Widget = (0, import_element15.forwardRef)(
     if (!widgetType) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
       "div",
       {
         ref,
         className: widget_default.widget,
         ...editMode ? { inert: "" } : {},
-        children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(WidgetRender, { widget, widgetType })
+        children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(WidgetRender, { widget, widgetType })
       }
     ) });
   }
 );
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
-var import_element19 = __toESM(require_element());
+var import_element22 = __toESM(require_element());
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react9 = __toESM(require_react());
@@ -1231,7 +1725,7 @@ function isWindow(element) {
 function isNode(node) {
   return "nodeType" in node;
 }
-function getWindow(target) {
+function getWindow2(target) {
   var _target$ownerDocument, _target$ownerDocument2;
   if (!target) {
     return window;
@@ -1247,17 +1741,17 @@ function getWindow(target) {
 function isDocument(node) {
   const {
     Document
-  } = getWindow(node);
+  } = getWindow2(node);
   return node instanceof Document;
 }
-function isHTMLElement(node) {
+function isHTMLElement2(node) {
   if (isWindow(node)) {
     return false;
   }
-  return node instanceof getWindow(node).HTMLElement;
+  return node instanceof getWindow2(node).HTMLElement;
 }
 function isSVGElement(node) {
-  return node instanceof getWindow(node).SVGElement;
+  return node instanceof getWindow2(node).SVGElement;
 }
 function getOwnerDocument(target) {
   if (!target) {
@@ -1272,7 +1766,7 @@ function getOwnerDocument(target) {
   if (isDocument(target)) {
     return target;
   }
-  if (isHTMLElement(target) || isSVGElement(target)) {
+  if (isHTMLElement2(target) || isSVGElement(target)) {
     return target.ownerDocument;
   }
   return document;
@@ -1292,7 +1786,7 @@ function useEvent(handler) {
 }
 function useInterval() {
   const intervalRef = (0, import_react7.useRef)(null);
-  const set2 = (0, import_react7.useCallback)((listener, duration) => {
+  const set3 = (0, import_react7.useCallback)((listener, duration) => {
     intervalRef.current = setInterval(listener, duration);
   }, []);
   const clear = (0, import_react7.useCallback)(() => {
@@ -1301,7 +1795,7 @@ function useInterval() {
       intervalRef.current = null;
     }
   }, []);
-  return [set2, clear];
+  return [set3, clear];
 }
 function useLatestValue(value, dependencies) {
   if (dependencies === void 0) {
@@ -1390,7 +1884,7 @@ function isKeyboardEvent(event) {
   }
   const {
     KeyboardEvent
-  } = getWindow(event.target);
+  } = getWindow2(event.target);
   return KeyboardEvent && event instanceof KeyboardEvent;
 }
 function isTouchEvent(event) {
@@ -1399,7 +1893,7 @@ function isTouchEvent(event) {
   }
   const {
     TouchEvent
-  } = getWindow(event.target);
+  } = getWindow2(event.target);
   return TouchEvent && event instanceof TouchEvent;
 }
 function getEventCoordinates(event) {
@@ -1432,7 +1926,7 @@ function getEventCoordinates(event) {
   }
   return null;
 }
-var CSS = /* @__PURE__ */ Object.freeze({
+var CSS2 = /* @__PURE__ */ Object.freeze({
   Translate: {
     toString(transform) {
       if (!transform) {
@@ -1462,7 +1956,7 @@ var CSS = /* @__PURE__ */ Object.freeze({
       if (!transform) {
         return;
       }
-      return [CSS.Translate.toString(transform), CSS.Scale.toString(transform)].join(" ");
+      return [CSS2.Translate.toString(transform), CSS2.Scale.toString(transform)].join(" ");
     }
   },
   Transition: {
@@ -1698,7 +2192,7 @@ var Action;
   Action2["SetDroppableDisabled"] = "setDroppableDisabled";
   Action2["UnregisterDroppable"] = "unregisterDroppable";
 })(Action || (Action = {}));
-function noop() {
+function noop2() {
 }
 function useSensor(sensor, options) {
   return (0, import_react9.useMemo)(
@@ -1951,7 +2445,7 @@ function getClientRect(element, options) {
     const {
       transform,
       transformOrigin
-    } = getWindow(element).getComputedStyle(element);
+    } = getWindow2(element).getComputedStyle(element);
     if (transform) {
       rect = inverseTransform(rect, transform, transformOrigin);
     }
@@ -1992,13 +2486,13 @@ function getWindowClientRect(element) {
 }
 function isFixed(node, computedStyle) {
   if (computedStyle === void 0) {
-    computedStyle = getWindow(node).getComputedStyle(node);
+    computedStyle = getWindow2(node).getComputedStyle(node);
   }
   return computedStyle.position === "fixed";
 }
 function isScrollable(element, computedStyle) {
   if (computedStyle === void 0) {
-    computedStyle = getWindow(element).getComputedStyle(element);
+    computedStyle = getWindow2(element).getComputedStyle(element);
   }
   const overflowRegex = /(auto|scroll|overlay)/;
   const properties2 = ["overflow", "overflowX", "overflowY"];
@@ -2020,13 +2514,13 @@ function getScrollableAncestors(element, limit) {
       scrollParents.push(node.scrollingElement);
       return scrollParents;
     }
-    if (!isHTMLElement(node) || isSVGElement(node)) {
+    if (!isHTMLElement2(node) || isSVGElement(node)) {
       return scrollParents;
     }
     if (scrollParents.includes(node)) {
       return scrollParents;
     }
-    const computedStyle = getWindow(element).getComputedStyle(node);
+    const computedStyle = getWindow2(element).getComputedStyle(node);
     if (node !== element) {
       if (isScrollable(node, computedStyle)) {
         scrollParents.push(node);
@@ -2059,7 +2553,7 @@ function getScrollableElement(element) {
   if (isDocument(element) || element === getOwnerDocument(element).scrollingElement) {
     return window;
   }
-  if (isHTMLElement(element)) {
+  if (isHTMLElement2(element)) {
     return element;
   }
   return null;
@@ -2300,7 +2794,7 @@ var Listeners = class {
 function getEventListenerTarget(target) {
   const {
     EventTarget
-  } = getWindow(target);
+  } = getWindow2(target);
   return target instanceof EventTarget ? target : getOwnerDocument(target);
 }
 function hasExceededDistance(delta, measurement) {
@@ -2395,7 +2889,7 @@ var KeyboardSensor = class {
     } = props;
     this.props = props;
     this.listeners = new Listeners(getOwnerDocument(target));
-    this.windowListeners = new Listeners(getWindow(target));
+    this.windowListeners = new Listeners(getWindow2(target));
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.attach();
@@ -2621,7 +3115,7 @@ var AbstractPointerSensor = class {
     this.document = getOwnerDocument(target);
     this.documentListeners = new Listeners(this.document);
     this.listeners = new Listeners(listenerTarget);
-    this.windowListeners = new Listeners(getWindow(target));
+    this.windowListeners = new Listeners(getWindow2(target));
     this.initialCoordinates = (_getEventCoordinates = getEventCoordinates(event)) != null ? _getEventCoordinates : defaultCoordinates;
     this.handleStart = this.handleStart.bind(this);
     this.handleMove = this.handleMove.bind(this);
@@ -2867,14 +3361,14 @@ var TouchSensor = class extends AbstractPointerSensor {
     super(props, events$2);
   }
   static setup() {
-    window.addEventListener(events$2.move.name, noop2, {
+    window.addEventListener(events$2.move.name, noop3, {
       capture: false,
       passive: false
     });
     return function teardown() {
-      window.removeEventListener(events$2.move.name, noop2);
+      window.removeEventListener(events$2.move.name, noop3);
     };
-    function noop2() {
+    function noop3() {
     }
   }
 };
@@ -3465,7 +3959,7 @@ function useRects(elements, measure) {
     measure = getClientRect;
   }
   const [firstElement] = elements;
-  const windowRect = useWindowRect(firstElement ? getWindow(firstElement) : null);
+  const windowRect = useWindowRect(firstElement ? getWindow2(firstElement) : null);
   const [rects, setRects] = (0, import_react9.useState)(defaultValue$2);
   function measureRects() {
     setRects(() => {
@@ -3493,7 +3987,7 @@ function getMeasurableNode(node) {
     return node;
   }
   const firstChild = node.children[0];
-  return isHTMLElement(firstChild) ? firstChild : node;
+  return isHTMLElement2(firstChild) ? firstChild : node;
 }
 function useDragOverlayMeasuring(_ref) {
   let {
@@ -3504,7 +3998,7 @@ function useDragOverlayMeasuring(_ref) {
     for (const {
       target
     } of entries) {
-      if (isHTMLElement(target)) {
+      if (isHTMLElement2(target)) {
         setRect((rect2) => {
           const newRect = measure(target);
           return rect2 ? {
@@ -3595,12 +4089,12 @@ var defaultPublicContext = {
       current: null
     },
     rect: null,
-    setRef: noop
+    setRef: noop2
   },
   scrollableAncestors: [],
   scrollableAncestorRects: [],
   measuringConfiguration: defaultMeasuringConfiguration,
-  measureDroppableContainers: noop,
+  measureDroppableContainers: noop2,
   windowRect: null,
   measuringScheduled: false
 };
@@ -3612,10 +4106,10 @@ var defaultInternalContext = {
   ariaDescribedById: {
     draggable: ""
   },
-  dispatch: noop,
+  dispatch: noop2,
   draggableNodes: /* @__PURE__ */ new Map(),
   over: null,
-  measureDroppableContainers: noop
+  measureDroppableContainers: noop2
 };
 var InternalContext = /* @__PURE__ */ (0, import_react9.createContext)(defaultInternalContext);
 var PublicContext = /* @__PURE__ */ (0, import_react9.createContext)(defaultPublicContext);
@@ -3977,7 +4471,7 @@ var DndContext = /* @__PURE__ */ (0, import_react9.memo)(function DndContext2(_r
   const draggingNodeRect = isInitialized ? (_dragOverlay$rect = dragOverlay.rect) != null ? _dragOverlay$rect : activeNodeRect : null;
   const usesDragOverlay = Boolean(dragOverlay.nodeRef.current && dragOverlay.rect);
   const nodeRectDelta = useRectDelta(usesDragOverlay ? null : activeNodeRect);
-  const windowRect = useWindowRect(draggingNode ? getWindow(draggingNode) : null);
+  const windowRect = useWindowRect(draggingNode ? getWindow2(draggingNode) : null);
   const scrollableAncestors = useScrollableAncestors(isInitialized ? overNode != null ? overNode : activeNode : null);
   const scrollableAncestorRects = useRects(scrollableAncestors);
   const modifiedTranslate = applyModifiers(modifiers, {
@@ -4653,7 +5147,7 @@ var PositionedOverlay = /* @__PURE__ */ (0, import_react9.forwardRef)((_ref, ref
     height: rect.height,
     top: rect.top,
     left: rect.left,
-    transform: CSS.Transform.toString(scaleAdjustedTransform),
+    transform: CSS2.Transform.toString(scaleAdjustedTransform),
     transformOrigin: adjustScale2 && activatorEvent ? getRelativeTransformOrigin(activatorEvent, rect) : void 0,
     transition: typeof transition === "function" ? transition(activatorEvent) : transition,
     ...style
@@ -4714,9 +5208,9 @@ var defaultKeyframeResolver = (_ref2) => {
     }
   } = _ref2;
   return [{
-    transform: CSS.Transform.toString(initial)
+    transform: CSS2.Transform.toString(initial)
   }, {
-    transform: CSS.Transform.toString(final)
+    transform: CSS2.Transform.toString(final)
   }];
 };
 var defaultDropAnimationConfiguration = {
@@ -4756,7 +5250,7 @@ function useDropAnimation(_ref3) {
     }
     const {
       transform
-    } = getWindow(node).getComputedStyle(node);
+    } = getWindow2(node).getComputedStyle(node);
     const parsedTransform = parseTransform(transform);
     if (!parsedTransform) {
       return;
@@ -5091,7 +5585,7 @@ var defaultTransition2 = {
   easing: "ease"
 };
 var transitionProperty = "transform";
-var disabledTransition = /* @__PURE__ */ CSS.Transition.toString({
+var disabledTransition = /* @__PURE__ */ CSS2.Transition.toString({
   property: transitionProperty,
   duration: 0,
   easing: "linear"
@@ -5311,7 +5805,7 @@ function useSortable(_ref) {
       return void 0;
     }
     if (isSorting || shouldAnimateLayoutChanges) {
-      return CSS.Transition.toString({
+      return CSS2.Transition.toString({
         ...transition,
         property: transitionProperty
       });
@@ -5449,16 +5943,16 @@ function isAfter(a, b) {
 
 // packages/grid/build-module/grid.mjs
 var import_compose3 = __toESM(require_compose(), 1);
-var import_element18 = __toESM(require_element(), 1);
+var import_element21 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/grid-item.mjs
-var import_element17 = __toESM(require_element(), 1);
+var import_element20 = __toESM(require_element(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
 
 // packages/grid/build-module/resize-handle.mjs
-var import_element16 = __toESM(require_element(), 1);
+var import_element19 = __toESM(require_element(), 1);
 var import_compose = __toESM(require_compose(), 1);
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b9f1dbb396']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "b9f1dbb396");
@@ -5475,9 +5969,9 @@ function ResizeHandle({
     id: "draggable",
     data: { itemId }
   });
-  const nodeRef = (0, import_element16.useRef)(null);
+  const nodeRef = (0, import_element19.useRef)(null);
   const mergedRef = (0, import_compose.useMergeRefs)([nodeRef, setNodeRef]);
-  (0, import_element16.useEffect)(() => {
+  (0, import_element19.useEffect)(() => {
     if (!isDragging) {
       return;
     }
@@ -5491,7 +5985,7 @@ function ResizeHandle({
   }, [isDragging, verticalResizable]);
   if (renderResizeHandle) {
     const RenderResizeHandle = renderResizeHandle;
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
       RenderResizeHandle,
       {
         ref: mergedRef,
@@ -5503,7 +5997,7 @@ function ResizeHandle({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
     "div",
     {
       ref: mergedRef,
@@ -5537,7 +6031,7 @@ function ResizeHandleWrapper(props) {
       props.onResizeEnd();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
     DndContext,
     {
       autoScroll: {
@@ -5546,13 +6040,13 @@ function ResizeHandleWrapper(props) {
       },
       onDragMove: handleDragMove,
       onDragEnd: handleDragEnd,
-      children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ResizeHandle, { ...props })
+      children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ResizeHandle, { ...props })
     }
   );
 }
 
 // packages/grid/build-module/grid-item.mjs
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='e8b7abbbd3']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "e8b7abbbd3");
@@ -5581,13 +6075,13 @@ function GridItem({
   onResizeEnd,
   renderResizeHandle
 }) {
-  const [previewDelta, setPreviewDelta] = (0, import_element17.useState)(
+  const [previewDelta, setPreviewDelta] = (0, import_element20.useState)(
     null
   );
-  const itemRef = (0, import_element17.useRef)(null);
-  const initialResizeRectRef = (0, import_element17.useRef)(null);
-  const initialResizeScrollRef = (0, import_element17.useRef)(null);
-  const lastResizeDeltaRef = (0, import_element17.useRef)(null);
+  const itemRef = (0, import_element20.useRef)(null);
+  const initialResizeRectRef = (0, import_element20.useRef)(null);
+  const initialResizeScrollRef = (0, import_element20.useRef)(null);
+  const lastResizeDeltaRef = (0, import_element20.useRef)(null);
   const { attributes, listeners, setNodeRef, isDragging } = useSortable({
     id: item.key,
     disabled
@@ -5640,7 +6134,7 @@ function GridItem({
       });
     }
   };
-  (0, import_element17.useLayoutEffect)(() => {
+  (0, import_element20.useLayoutEffect)(() => {
     const lastDelta = lastResizeDeltaRef.current;
     const initialRect = initialResizeRectRef.current;
     const initialScroll = initialResizeScrollRef.current;
@@ -5671,7 +6165,7 @@ function GridItem({
     lastResizeDeltaRef.current = null;
     onResizeEnd();
   };
-  const previewOverlay = previewDelta ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+  const previewOverlay = previewDelta ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
     "div",
     {
       className: grid_item_default["preview-overlay"],
@@ -5681,7 +6175,7 @@ function GridItem({
       }
     }
   ) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
     "div",
     {
       ref: mergedRef,
@@ -5689,7 +6183,7 @@ function GridItem({
       style,
       ...attributes,
       children: [
-        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           "div",
           {
             style: { display: "contents" },
@@ -5697,10 +6191,10 @@ function GridItem({
             children: actionableArea
           }
         ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { ...listeners, style: { height: "100%" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: grid_item_default["item-content"], children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { ...listeners, style: { height: "100%" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: grid_item_default["item-content"], children: [
             children,
-            !disabled && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+            !disabled && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
               ResizeHandleWrapper,
               {
                 itemId: item.key,
@@ -5880,7 +6374,7 @@ function resolveFillWidths(sortedKeys, layoutMap, maxColumns) {
 }
 
 // packages/grid/build-module/grid.mjs
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6fffc883b9']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "6fffc883b9");
@@ -5889,7 +6383,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 var grid_default = { "grid": "_40a7c261e568c69f__grid", "drag-preview": "_1c1b25f895d429f8__drag-preview" };
 var NO_SORT_STRATEGY = () => null;
-var DashboardGrid = (0, import_element18.forwardRef)(
+var DashboardGrid = (0, import_element21.forwardRef)(
   function DashboardGrid2(props, ref) {
     const {
       layout,
@@ -5906,15 +6400,15 @@ var DashboardGrid = (0, import_element18.forwardRef)(
       renderResizeHandle,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element18.useState)();
-    const [activeId, setActiveId] = (0, import_element18.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element18.useState)(false);
-    const latestLayoutRef = (0, import_element18.useRef)();
-    const lastReorderCursorRef = (0, import_element18.useRef)(null);
-    const resizeBaselineRef = (0, import_element18.useRef)(null);
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element21.useState)();
+    const [activeId, setActiveId] = (0, import_element21.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element21.useState)(false);
+    const latestLayoutRef = (0, import_element21.useRef)();
+    const lastReorderCursorRef = (0, import_element21.useRef)(null);
+    const resizeBaselineRef = (0, import_element21.useRef)(null);
     const activeLayout = temporaryLayout ?? layout;
-    const rootRef = (0, import_element18.useRef)(null);
-    const [containerWidth, setContainerWidth] = (0, import_element18.useState)(0);
+    const rootRef = (0, import_element21.useRef)(null);
+    const [containerWidth, setContainerWidth] = (0, import_element21.useState)(0);
     const resizeObserverRef = (0, import_compose3.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -5925,7 +6419,7 @@ var DashboardGrid = (0, import_element18.forwardRef)(
       resizeObserverRef,
       ref
     ]);
-    (0, import_element18.useLayoutEffect)(() => {
+    (0, import_element21.useLayoutEffect)(() => {
       if (rootRef.current) {
         const { width } = rootRef.current.getBoundingClientRect();
         if (width > 0) {
@@ -5934,7 +6428,7 @@ var DashboardGrid = (0, import_element18.forwardRef)(
       }
     }, []);
     const gapPx = spacing * 4;
-    const effectiveColumns = (0, import_element18.useMemo)(() => {
+    const effectiveColumns = (0, import_element21.useMemo)(() => {
       if (!minColumnWidth) {
         return columns;
       }
@@ -5945,13 +6439,13 @@ var DashboardGrid = (0, import_element18.forwardRef)(
       return Math.max(1, maxColumns);
     }, [minColumnWidth, gapPx, containerWidth, columns]);
     const columnWidth = (containerWidth - (effectiveColumns - 1) * gapPx) / effectiveColumns;
-    const layoutMap = (0, import_element18.useMemo)(() => {
+    const layoutMap = (0, import_element21.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
     const layoutKeysSig = layout.map((item) => item.key).join("\0");
-    const layoutKeysRef = (0, import_element18.useRef)(null);
+    const layoutKeysRef = (0, import_element21.useRef)(null);
     if (layoutKeysRef.current?.sig !== layoutKeysSig) {
       layoutKeysRef.current = {
         sig: layoutKeysSig,
@@ -5963,12 +6457,12 @@ var DashboardGrid = (0, import_element18.forwardRef)(
       (a, b) => (a.item.order ?? a.index) - (b.item.order ?? b.index)
     ).map(({ item }) => item.key);
     const itemsSig = sortedItems.join("\0");
-    const itemsRef = (0, import_element18.useRef)(null);
+    const itemsRef = (0, import_element21.useRef)(null);
     if (itemsRef.current?.sig !== itemsSig) {
       itemsRef.current = { sig: itemsSig, arr: sortedItems };
     }
     const items = itemsRef.current.arr;
-    const resolvedItemMap = (0, import_element18.useMemo)(() => {
+    const resolvedItemMap = (0, import_element21.useMemo)(() => {
       const fillWidths = resolveFillWidths(
         items,
         layoutMap,
@@ -5987,12 +6481,12 @@ var DashboardGrid = (0, import_element18.forwardRef)(
       }
       return map;
     }, [items, layoutMap, effectiveColumns]);
-    const [childrenMap, actionableAreaMap, remaining] = (0, import_element18.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining] = (0, import_element21.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
-      import_element18.Children.forEach(children, (child) => {
-        if (!(0, import_element18.isValidElement)(child)) {
+      import_element21.Children.forEach(children, (child) => {
+        if (!(0, import_element21.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -6003,7 +6497,7 @@ var DashboardGrid = (0, import_element18.forwardRef)(
             actionableMap.set(key2, actionableArea);
             childMap.set(
               key2,
-              (0, import_element18.cloneElement)(child, { actionableArea: void 0 })
+              (0, import_element21.cloneElement)(child, { actionableArea: void 0 })
             );
           } else {
             childMap.set(key2, child);
@@ -6143,7 +6637,7 @@ var DashboardGrid = (0, import_element18.forwardRef)(
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
       DndContext,
       {
         sensors,
@@ -6156,7 +6650,7 @@ var DashboardGrid = (0, import_element18.forwardRef)(
           lastReorderCursorRef.current = null;
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
             "div",
             {
               ...divProps,
@@ -6169,7 +6663,7 @@ var DashboardGrid = (0, import_element18.forwardRef)(
                 gap: gapPx
               },
               children: [
-                items.map((id) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+                items.map((id) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
                   GridItem,
                   {
                     item: resolvedItemMap.get(
@@ -6191,7 +6685,7 @@ var DashboardGrid = (0, import_element18.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DragOverlay, { children: activeId && childrenMap.get(activeId) ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: grid_default["drag-preview"], children: childrenMap.get(activeId) }) : null })
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(DragOverlay, { children: activeId && childrenMap.get(activeId) ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: grid_default["drag-preview"], children: childrenMap.get(activeId) }) : null })
         ]
       }
     );
@@ -6208,7 +6702,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 var widgets_default = { "grid": "_561eb2c5c7cbcb6b__grid" };
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
-var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+var import_jsx_runtime19 = __toESM(require_jsx_runtime());
 function toGridLayout(widgets) {
   return widgets.map((w) => ({
     key: w.uuid,
@@ -6231,17 +6725,17 @@ function applyGridChange(widgets, gridLayout) {
     };
   });
 }
-var Widgets = (0, import_element19.forwardRef)(
+var Widgets = (0, import_element22.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings } = useDashboardInternalContext();
-    const gridLayout = (0, import_element19.useMemo)(() => toGridLayout(layout), [layout]);
-    const handleLayoutChange = (0, import_element19.useCallback)(
+    const gridLayout = (0, import_element22.useMemo)(() => toGridLayout(layout), [layout]);
+    const handleLayoutChange = (0, import_element22.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const children = layout.map((widget, index) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Widget, { widget, index }, widget.uuid));
+    const children = layout.map((widget, index) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Widget, { widget, index }, widget.uuid));
     const sharedProps = {
       layout: gridLayout,
       spacing: gridSettings.spacing,
@@ -6249,14 +6743,14 @@ var Widgets = (0, import_element19.forwardRef)(
       editMode,
       onChangeLayout: handleLayoutChange
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: gridSettings.columns !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: gridSettings.columns !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
       DashboardGrid,
       {
         ...sharedProps,
         columns: gridSettings.columns,
         children
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
       DashboardGrid,
       {
         ...sharedProps,
@@ -6268,7 +6762,7 @@ var Widgets = (0, import_element19.forwardRef)(
 );
 
 // routes/dashboard/widget-dashboard/components/no-widgets-state/no-widgets-state.tsx
-var import_i18n2 = __toESM(require_i18n());
+var import_i18n4 = __toESM(require_i18n());
 
 // routes/dashboard/widget-dashboard/components/no-widgets-state/no-widgets-state.module.css
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='4dec2ea292']")) {
@@ -6280,16 +6774,16 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 var no_widgets_state_default = { "root": "_43aa5df1b0907556__root" };
 
 // routes/dashboard/widget-dashboard/components/no-widgets-state/no-widgets-state.tsx
-var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+var import_jsx_runtime20 = __toESM(require_jsx_runtime());
 function NoWidgetsStateImpl({ children }) {
   const { layout } = useDashboardInternalContext();
   if (layout.length > 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(empty_state_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(empty_state_exports.Icon, { icon: home_default }),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(empty_state_exports.Title, { children: (0, import_i18n2.__)("Your dashboard is empty") }),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(empty_state_exports.Description, { children: (0, import_i18n2.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(empty_state_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(empty_state_exports.Icon, { icon: home_default }),
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(empty_state_exports.Title, { children: (0, import_i18n4.__)("Your dashboard is empty") }),
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(empty_state_exports.Description, { children: (0, import_i18n4.__)(
       "Add widgets to start customizing your dashboard."
     ) })
   ] }) });
@@ -6297,7 +6791,7 @@ function NoWidgetsStateImpl({ children }) {
 var NoWidgetsState = NoWidgetsStateImpl;
 
 // routes/dashboard/widget-dashboard/widget-dashboard.tsx
-var import_jsx_runtime18 = __toESM(require_jsx_runtime());
+var import_jsx_runtime21 = __toESM(require_jsx_runtime());
 var WidgetDashboard = Object.assign(
   function WidgetDashboard2({
     layout,
@@ -6309,7 +6803,7 @@ var WidgetDashboard = Object.assign(
     gridSettings,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       WidgetDashboardProvider,
       {
         layout,
@@ -6319,21 +6813,22 @@ var WidgetDashboard = Object.assign(
         onEditChange,
         resolveWidgetModule,
         gridSettings,
-        children: children ?? /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(NoWidgetsState, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Widgets, {})
+        children: children ?? /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(NoWidgetsState, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Actions2, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Widgets, {})
         ] })
       }
     );
   },
-  { Widgets, Widget, NoWidgetsState }
+  { Actions: Actions2, Widgets, Widget, NoWidgetsState }
 );
 
 // routes/dashboard/widget-types/hooks/use-widget-types.ts
 var import_data = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
-var import_element20 = __toESM(require_element());
-var import_i18n3 = __toESM(require_i18n());
+var import_element23 = __toESM(require_element());
+var import_i18n5 = __toESM(require_i18n());
 (0, import_data.dispatch)(import_core_data.store).addEntities([
   {
     name: "widgetModule",
@@ -6341,7 +6836,7 @@ var import_i18n3 = __toESM(require_i18n());
     key: "name",
     baseURL: "/wp/v2/widget-modules",
     plural: "widgetModules",
-    label: (0, import_i18n3.__)("Widget modules"),
+    label: (0, import_i18n5.__)("Widget modules"),
     supportsPagination: false
   }
 ]);
@@ -6350,8 +6845,8 @@ function useWidgetTypes() {
     (select) => select(import_core_data.store).getEntityRecords("root", "widgetModule"),
     []
   );
-  const [widgetTypes, setWidgetTypes] = (0, import_element20.useState)([]);
-  (0, import_element20.useEffect)(() => {
+  const [widgetTypes, setWidgetTypes] = (0, import_element23.useState)([]);
+  (0, import_element23.useEffect)(() => {
     if (!records) {
       return;
     }
@@ -6394,7 +6889,7 @@ function useWidgetTypes() {
 }
 
 // routes/dashboard/stage.tsx
-var import_jsx_runtime19 = __toESM(require_jsx_runtime());
+var import_jsx_runtime22 = __toESM(require_jsx_runtime());
 var DEFAULT_LAYOUT = [
   {
     uuid: "1",
@@ -6406,16 +6901,27 @@ var DEFAULT_LAYOUT = [
   }
 ];
 function Dashboard() {
-  const [layout, setLayout] = (0, import_element21.useState)(DEFAULT_LAYOUT);
+  const [layout, setLayout] = (0, import_element24.useState)(DEFAULT_LAYOUT);
   const widgetTypes = useWidgetTypes();
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(page_default, { title: (0, import_i18n4.__)("Dashboard"), headingLevel: 1, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+  const [editMode, setEditMode] = (0, import_element24.useState)(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     WidgetDashboard,
     {
       layout,
       onLayoutChange: setLayout,
-      widgetTypes
+      widgetTypes,
+      editMode,
+      onEditChange: setEditMode,
+      children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        page_default,
+        {
+          title: (0, import_i18n6.__)("Dashboard"),
+          actions: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WidgetDashboard.Actions, {}),
+          children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WidgetDashboard.Widgets, {})
+        }
+      )
     }
-  ) });
+  );
 }
 var stage = Dashboard;
 export {
