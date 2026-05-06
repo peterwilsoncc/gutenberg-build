@@ -18883,14 +18883,17 @@ var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters =
     (select2) => {
       return Object.keys(templatePrefixes || {}).reduce(
         (accumulator, slug) => {
-          accumulator[slug] = !!select2(
-            import_core_data7.store
-          ).getEntityRecords(entityName, slug, {
-            per_page: 1,
-            _fields: "id",
-            context: "view",
-            ...additionalQueryParameters[slug]
-          })?.length;
+          const records = select2(import_core_data7.store).getEntityRecords(
+            entityName,
+            slug,
+            {
+              per_page: 1,
+              _fields: "id",
+              context: "view",
+              ...additionalQueryParameters[slug]
+            }
+          );
+          accumulator[slug] = records === null || records.length > 0;
           return accumulator;
         },
         {}
