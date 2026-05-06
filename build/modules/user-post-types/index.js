@@ -570,7 +570,7 @@ function usePublicTaxonomies() {
     []
   );
   return (0, import_element.useMemo)(() => {
-    return taxonomies?.filter((t2) => t2.visibility?.public ?? false).sort((a2, b2) => {
+    return taxonomies?.filter((t2) => !!t2.visibility?.public).sort((a2, b2) => {
       const aIsCore = CORE_TAXONOMY_SLUGS.includes(a2.slug);
       const bIsCore = CORE_TAXONOMY_SLUGS.includes(b2.slug);
       if (aIsCore !== bIsCore) {
