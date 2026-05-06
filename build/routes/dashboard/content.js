@@ -91,17 +91,10 @@ var require_data = __commonJS({
   }
 });
 
-// package-external:@wordpress/hooks
-var require_hooks = __commonJS({
-  "package-external:@wordpress/hooks"(exports, module) {
-    module.exports = window.wp.hooks;
-  }
-});
-
-// package-external:@wordpress/warning
-var require_warning = __commonJS({
-  "package-external:@wordpress/warning"(exports, module) {
-    module.exports = window.wp.warning;
+// package-external:@wordpress/core-data
+var require_core_data = __commonJS({
+  "package-external:@wordpress/core-data"(exports, module) {
+    module.exports = window.wp.coreData;
   }
 });
 
@@ -1004,8 +997,8 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/dashboard/stage.tsx
-var import_element20 = __toESM(require_element());
-var import_i18n3 = __toESM(require_i18n());
+var import_element21 = __toESM(require_element());
+var import_i18n4 = __toESM(require_i18n());
 
 // routes/dashboard/widget-dashboard/context/dashboard-context.tsx
 var import_element11 = __toESM(require_element());
@@ -1030,7 +1023,7 @@ function useDashboardInternalContext() {
   return ctx;
 }
 function WidgetDashboardProvider({
-  widgetTypes: widgetTypes2,
+  widgetTypes,
   layout,
   onLayoutChange,
   editMode = false,
@@ -1041,7 +1034,7 @@ function WidgetDashboardProvider({
 }) {
   const value = (0, import_element11.useMemo)(
     () => ({
-      widgetTypes: widgetTypes2,
+      widgetTypes,
       layout,
       onLayoutChange,
       editMode,
@@ -1050,7 +1043,7 @@ function WidgetDashboardProvider({
       gridSettings
     }),
     [
-      widgetTypes2,
+      widgetTypes,
       layout,
       onLayoutChange,
       editMode,
@@ -1183,8 +1176,8 @@ var widget_default = { "widget": "_4d5f25e056f1d1c6__widget" };
 var import_jsx_runtime12 = __toESM(require_jsx_runtime());
 var Widget = (0, import_element15.forwardRef)(
   function Widget2({ widget, index }, ref) {
-    const { widgetTypes: widgetTypes2, editMode } = useDashboardInternalContext();
-    const widgetType = widgetTypes2.find((t) => t.name === widget.type);
+    const { widgetTypes, editMode } = useDashboardInternalContext();
+    const widgetType = widgetTypes.find((t) => t.name === widget.type);
     const contextValue = (0, import_element15.useMemo)(
       () => ({
         uuid: widget.uuid,
@@ -1565,7 +1558,7 @@ function useDndMonitorProvider() {
     listeners.add(listener);
     return () => listeners.delete(listener);
   }, [listeners]);
-  const dispatch = (0, import_react9.useCallback)((_ref) => {
+  const dispatch2 = (0, import_react9.useCallback)((_ref) => {
     let {
       type,
       event
@@ -1575,7 +1568,7 @@ function useDndMonitorProvider() {
       return (_listener$type = listener[type]) == null ? void 0 : _listener$type.call(listener, event);
     });
   }, [listeners]);
-  return [dispatch, registerListener];
+  return [dispatch2, registerListener];
 }
 var defaultScreenReaderInstructions = {
   draggable: "\n    To pick up a draggable item, press the space bar.\n    While dragging, use the arrow keys to move the item.\n    Press space again to drop the item in its new position, or press escape to cancel.\n  "
@@ -3904,8 +3897,8 @@ var DndContext = /* @__PURE__ */ (0, import_react9.memo)(function DndContext2(_r
     modifiers,
     ...props
   } = _ref;
-  const store2 = (0, import_react9.useReducer)(reducer, void 0, getInitialState);
-  const [state, dispatch] = store2;
+  const store = (0, import_react9.useReducer)(reducer, void 0, getInitialState);
+  const [state, dispatch2] = store;
   const [dispatchMonitorEvent, registerMonitorListener] = useDndMonitorProvider();
   const [status, setStatus] = (0, import_react9.useState)(Status.Uninitialized);
   const isInitialized = status === Status.Initialized;
@@ -4105,7 +4098,7 @@ var DndContext = /* @__PURE__ */ (0, import_react9.memo)(function DndContext2(_r
           (0, import_react_dom.unstable_batchedUpdates)(() => {
             onDragStart == null ? void 0 : onDragStart(event2);
             setStatus(Status.Initializing);
-            dispatch({
+            dispatch2({
               type: Action.DragStart,
               initialCoordinates,
               active: id2
@@ -4119,7 +4112,7 @@ var DndContext = /* @__PURE__ */ (0, import_react9.memo)(function DndContext2(_r
           });
         },
         onMove(coordinates) {
-          dispatch({
+          dispatch2({
             type: Action.DragMove,
             coordinates
           });
@@ -4157,7 +4150,7 @@ var DndContext = /* @__PURE__ */ (0, import_react9.memo)(function DndContext2(_r
           }
           activeRef.current = null;
           (0, import_react_dom.unstable_batchedUpdates)(() => {
-            dispatch({
+            dispatch2({
               type
             });
             setStatus(Status.Uninitialized);
@@ -4352,13 +4345,13 @@ var DndContext = /* @__PURE__ */ (0, import_react9.memo)(function DndContext2(_r
       ariaDescribedById: {
         draggable: draggableDescribedById
       },
-      dispatch,
+      dispatch: dispatch2,
       draggableNodes,
       over,
       measureDroppableContainers
     };
     return context;
-  }, [activatorEvent, activators, active, activeNodeRect, dispatch, draggableDescribedById, draggableNodes, over, measureDroppableContainers]);
+  }, [activatorEvent, activators, active, activeNodeRect, dispatch2, draggableDescribedById, draggableNodes, over, measureDroppableContainers]);
   return import_react9.default.createElement(DndMonitorContext.Provider, {
     value: registerMonitorListener
   }, import_react9.default.createElement(InternalContext.Provider, {
@@ -4477,7 +4470,7 @@ function useDroppable(_ref) {
   const key2 = useUniqueId(ID_PREFIX$1);
   const {
     active,
-    dispatch,
+    dispatch: dispatch2,
     over,
     measureDroppableContainers
   } = (0, import_react9.useContext)(InternalContext);
@@ -4541,7 +4534,7 @@ function useDroppable(_ref) {
   }, [nodeRef, resizeObserver]);
   (0, import_react9.useEffect)(
     () => {
-      dispatch({
+      dispatch2({
         type: Action.RegisterDroppable,
         element: {
           id,
@@ -4552,7 +4545,7 @@ function useDroppable(_ref) {
           data: dataRef
         }
       });
-      return () => dispatch({
+      return () => dispatch2({
         type: Action.UnregisterDroppable,
         key: key2,
         id
@@ -4563,7 +4556,7 @@ function useDroppable(_ref) {
   );
   (0, import_react9.useEffect)(() => {
     if (disabled !== previous.current.disabled) {
-      dispatch({
+      dispatch2({
         type: Action.SetDroppableDisabled,
         id,
         key: key2,
@@ -4571,7 +4564,7 @@ function useDroppable(_ref) {
       });
       previous.current.disabled = disabled;
     }
-  }, [id, key2, disabled, dispatch]);
+  }, [id, key2, disabled, dispatch2]);
   return {
     active,
     rect,
@@ -6309,7 +6302,7 @@ var WidgetDashboard = Object.assign(
   function WidgetDashboard2({
     layout,
     onLayoutChange,
-    widgetTypes: widgetTypes2,
+    widgetTypes,
     editMode,
     onEditChange,
     resolveWidgetModule,
@@ -6321,7 +6314,7 @@ var WidgetDashboard = Object.assign(
       {
         layout,
         onLayoutChange,
-        widgetTypes: widgetTypes2,
+        widgetTypes,
         editMode,
         onEditChange,
         resolveWidgetModule,
@@ -6336,166 +6329,68 @@ var WidgetDashboard = Object.assign(
   { Widgets, Widget, NoWidgetsState }
 );
 
-// routes/dashboard/widget-types/store/index.ts
-var import_data = __toESM(require_data());
-
-// routes/dashboard/widget-types/store/reducer.ts
-var DEFAULT_STATE = {};
-function widgetTypes(state = DEFAULT_STATE, action) {
-  switch (action.type) {
-    case "ADD_WIDGET_TYPE":
-      return {
-        ...state,
-        [action.widgetType.name]: action.widgetType
-      };
-    case "REMOVE_WIDGET_TYPE": {
-      const { [action.name]: _, ...remaining } = state;
-      return remaining;
-    }
-  }
-  return state;
-}
-
-// routes/dashboard/widget-types/store/actions.ts
-var actions_exports = {};
-__export(actions_exports, {
-  registerWidgetType: () => registerWidgetType,
-  unregisterWidgetType: () => unregisterWidgetType
-});
-var import_hooks = __toESM(require_hooks());
-var import_warning = __toESM(require_warning());
-var WIDGET_NAME_REGEXP = /^[a-z][a-z0-9-]*\/[a-z][a-z0-9-]*$/;
-var DEFAULT_WIDGET_TYPE_SETTINGS = {
-  apiVersion: 1,
-  keywords: [],
-  attributes: []
-};
-var registerWidgetType = (name, settings) => ({
-  select,
-  dispatch
-}) => {
-  if (typeof name !== "string") {
-    (0, import_warning.default)("Widget type names must be strings.");
-    return;
-  }
-  if (!WIDGET_NAME_REGEXP.test(name)) {
-    (0, import_warning.default)(
-      "Widget type names must contain a namespace prefix, e.g. core/on-this-day"
-    );
-    return;
-  }
-  if (!settings.title) {
-    (0, import_warning.default)('The widget "' + name + '" must have a title.');
-    return;
-  }
-  if (typeof settings.title !== "string") {
-    (0, import_warning.default)("Widget type titles must be strings.");
-    return;
-  }
-  if (settings.description !== void 0 && typeof settings.description !== "string") {
-    (0, import_warning.default)("Widget type descriptions must be strings.");
-    return;
-  }
-  if (settings.attributes !== void 0 && !Array.isArray(settings.attributes)) {
-    (0, import_warning.default)("Widget type attributes must be an array.");
-    return;
-  }
-  if (!settings.renderModule) {
-    (0, import_warning.default)('The widget "' + name + '" must have a renderModule.');
-    return;
-  }
-  if (select.getWidgetType(name)) {
-    (0, import_warning.default)('Widget type "' + name + '" is already registered.');
-    return;
-  }
-  const widgetType = (0, import_hooks.applyFilters)(
-    "widgets.registerWidgetType",
-    { ...DEFAULT_WIDGET_TYPE_SETTINGS, ...settings, name },
-    name
-  );
-  dispatch({ type: "ADD_WIDGET_TYPE", widgetType });
-};
-var unregisterWidgetType = (name) => ({
-  select,
-  dispatch
-}) => {
-  const oldWidgetType = select.getWidgetType(name);
-  if (!oldWidgetType) {
-    (0, import_warning.default)('Widget type "' + name + '" is not registered.');
-    return void 0;
-  }
-  dispatch({ type: "REMOVE_WIDGET_TYPE", name });
-  return oldWidgetType;
-};
-
-// routes/dashboard/widget-types/store/selectors.ts
-var selectors_exports = {};
-__export(selectors_exports, {
-  getWidgetType: () => getWidgetType,
-  getWidgetTypes: () => getWidgetTypes
-});
-function getWidgetTypes(state) {
-  return Object.values(state.widgetTypes);
-}
-function getWidgetType(state, name) {
-  return state.widgetTypes[name];
-}
-
-// routes/dashboard/widget-types/store/resolvers.ts
-var resolvers_exports = {};
-__export(resolvers_exports, {
-  getWidgetType: () => getWidgetType2,
-  getWidgetTypes: () => getWidgetTypes2
-});
-var getWidgetTypes2 = () => async ({ dispatch }) => {
-  const registered = window.__registeredWidgetTypes ?? [];
-  const results = await Promise.all(
-    registered.map(async (entry) => {
-      try {
-        if (!entry.widget_module) {
-          return null;
-        }
-        const module = await import(
-          /* webpackIgnore: true */
-          entry.widget_module
-        );
-        if (!module?.default) {
-          return null;
-        }
-        return {
-          ...module.default,
-          name: entry.name,
-          renderModule: entry.render_module ?? ""
-        };
-      } catch {
-        return null;
-      }
-    })
-  );
-  for (const widgetType of results) {
-    if (widgetType?.name) {
-      dispatch.registerWidgetType(widgetType.name, widgetType);
-    }
-  }
-};
-var getWidgetType2 = () => async ({ resolveSelect }) => {
-  await resolveSelect.getWidgetTypes();
-};
-
-// routes/dashboard/widget-types/store/index.ts
-var STORE_NAME = "core/widget-types";
-var store = (0, import_data.createReduxStore)(STORE_NAME, {
-  reducer: (0, import_data.combineReducers)({ widgetTypes }),
-  actions: actions_exports,
-  selectors: selectors_exports,
-  resolvers: resolvers_exports
-});
-(0, import_data.register)(store);
-
 // routes/dashboard/widget-types/hooks/use-widget-types.ts
-var import_data2 = __toESM(require_data());
+var import_data = __toESM(require_data());
+var import_core_data = __toESM(require_core_data());
+var import_element20 = __toESM(require_element());
+var import_i18n3 = __toESM(require_i18n());
+(0, import_data.dispatch)(import_core_data.store).addEntities([
+  {
+    name: "widgetModule",
+    kind: "root",
+    key: "name",
+    baseURL: "/wp/v2/widget-modules",
+    plural: "widgetModules",
+    label: (0, import_i18n3.__)("Widget modules"),
+    supportsPagination: false
+  }
+]);
 function useWidgetTypes() {
-  return (0, import_data2.useSelect)((select) => select(store).getWidgetTypes(), []);
+  const records = (0, import_data.useSelect)(
+    (select) => select(import_core_data.store).getEntityRecords("root", "widgetModule"),
+    []
+  );
+  const [widgetTypes, setWidgetTypes] = (0, import_element20.useState)([]);
+  (0, import_element20.useEffect)(() => {
+    if (!records) {
+      return;
+    }
+    let cancelled = false;
+    Promise.all(
+      records.map(async (record) => {
+        if (!record.widget_module) {
+          return null;
+        }
+        try {
+          const module = await import(
+            /* webpackIgnore: true */
+            record.widget_module
+          );
+          if (!module?.default) {
+            return null;
+          }
+          return {
+            ...module.default,
+            name: record.name,
+            renderModule: record.render_module ?? ""
+          };
+        } catch {
+          return null;
+        }
+      })
+    ).then((results) => {
+      if (cancelled) {
+        return;
+      }
+      setWidgetTypes(
+        results.filter((t) => t !== null)
+      );
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [records]);
+  return widgetTypes;
 }
 
 // routes/dashboard/stage.tsx
@@ -6511,14 +6406,14 @@ var DEFAULT_LAYOUT = [
   }
 ];
 function Dashboard() {
-  const [layout, setLayout] = (0, import_element20.useState)(DEFAULT_LAYOUT);
-  const widgetTypes2 = useWidgetTypes();
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(page_default, { title: (0, import_i18n3.__)("Dashboard"), headingLevel: 1, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+  const [layout, setLayout] = (0, import_element21.useState)(DEFAULT_LAYOUT);
+  const widgetTypes = useWidgetTypes();
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(page_default, { title: (0, import_i18n4.__)("Dashboard"), headingLevel: 1, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
     WidgetDashboard,
     {
       layout,
       onLayoutChange: setLayout,
-      widgetTypes: widgetTypes2
+      widgetTypes
     }
   ) });
 }
