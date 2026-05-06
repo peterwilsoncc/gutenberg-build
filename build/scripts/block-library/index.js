@@ -12003,7 +12003,13 @@ var wp;
     edit: FreeformEdit,
     save: save8
   };
-  var init13 = () => initBlock({ name: name13, metadata: block_default14, settings: settings13 });
+  var init13 = () => {
+    const supports2 = {
+      ...block_default14.supports,
+      inserter: !window?.__experimentalDisableTinymce || !!window?.wp?.needsClassicBlock
+    };
+    return initBlock({ name: name13, metadata: block_default14, settings: { ...settings13, supports: supports2 } });
+  };
 
   // packages/block-library/build-module/code/index.mjs
   var code_exports = {};
@@ -75223,9 +75229,7 @@ ${js}
       blocks.push(playlist_exports);
       blocks.push(playlist_track_exports);
     }
-    if (window?.wp?.oldEditor && (window?.wp?.needsClassicBlock || !window?.__experimentalDisableTinymce)) {
-      blocks.push(freeform_exports);
-    }
+    blocks.push(freeform_exports);
     return blocks.filter(Boolean);
   };
   var __experimentalGetCoreBlocks = () => getAllBlocks().filter(
