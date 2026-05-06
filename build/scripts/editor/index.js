@@ -37644,7 +37644,7 @@ If there's a particular need for this, please submit a feature request at https:
       [canvasSize, naturalWidth, naturalHeight, state.rotation]
     );
     (0, import_element127.useEffect)(() => {
-      if (freeformCrop || visualSize.width === 0 || visualSize.height === 0) {
+      if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
         return;
       }
       const rect = computeInscribedRect(aspectRatio, visualSize);
@@ -38502,8 +38502,38 @@ If there's a particular need for this, please submit a feature request at https:
       ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
       ...aspectRatioPresets ?? DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value > 0)
     ];
+    const handleAspectRatioChange = (value) => {
+      onAspectRatioChange(value);
+      if (value === "0" && !freeformCrop) {
+        onFreeformChange(true);
+      }
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(Stack, { direction: "column", gap: "md", children: [
       /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("h2", {}), children: (0, import_i18n123.__)("Crop options") }),
+      /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
+        import_components88.SelectControl,
+        {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          label: (0, import_i18n123.__)("Aspect ratio"),
+          value: aspectRatioValue,
+          onChange: handleAspectRatioChange,
+          options: aspectRatioOptions.map((preset) => ({
+            label: preset.label,
+            value: preset.value.toString()
+          }))
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
+        import_components88.ToggleControl,
+        {
+          __nextHasNoMarginBottom: true,
+          label: (0, import_i18n123.__)("Resize crop area"),
+          help: (0, import_i18n123.__)("Show handles to adjust the crop box."),
+          checked: freeformCrop,
+          onChange: onFreeformChange
+        }
+      ),
       /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
         import_components88.RangeControl,
         {
@@ -38527,33 +38557,7 @@ If there's a particular need for this, please submit a feature request at https:
             );
           }
         }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
-        import_components88.SelectControl,
-        {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
-          label: (0, import_i18n123.__)("Aspect ratio"),
-          value: aspectRatioValue,
-          onChange: onAspectRatioChange,
-          options: aspectRatioOptions.map((preset) => ({
-            label: preset.label,
-            value: preset.value.toString()
-          }))
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
-        import_components88.ToggleControl,
-        {
-          __nextHasNoMarginBottom: true,
-          label: (0, import_i18n123.__)("Freeform crop"),
-          help: (0, import_i18n123.__)(
-            "Drag the crop edges to resize freely. When off, the crop is fixed to the selected ratio."
-          ),
-          checked: freeformCrop,
-          onChange: onFreeformChange
-        }
-      )
+      ) })
     ] });
   }
 
