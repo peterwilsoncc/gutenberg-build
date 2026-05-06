@@ -10521,10 +10521,10 @@ var wp;
           return provider;
         })
       );
-      recordMap.observeDeep(onRecordUpdate);
-      stateMap.observe(onStateMapUpdate);
       initializeYjsDoc(ydoc);
       internal.applyPersistedCrdtDoc(objectType, objectId, record);
+      recordMap.observeDeep(onRecordUpdate);
+      stateMap.observe(onStateMapUpdate);
     }
     async function loadCollection(syncConfig, objectType, handlers) {
       const providerCreators2 = getProviderCreators();
