@@ -25063,12 +25063,14 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/node_modules/date-fns/constants.js
+  // node_modules/date-fns/constants.js
   var daysInYear = 365.2425;
   var maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1e3;
   var minTime = -maxTime;
   var millisecondsInWeek = 6048e5;
   var millisecondsInDay = 864e5;
+  var millisecondsInMinute = 6e4;
+  var millisecondsInHour = 36e5;
   var secondsInHour = 3600;
   var secondsInDay = secondsInHour * 24;
   var secondsInWeek = secondsInDay * 7;
@@ -25077,7 +25079,7 @@ If there's a particular need for this, please submit a feature request at https:
   var secondsInQuarter = secondsInMonth * 3;
   var constructFromSymbol = /* @__PURE__ */ Symbol.for("constructDateFrom");
 
-  // packages/dataviews/node_modules/date-fns/constructFrom.js
+  // node_modules/date-fns/constructFrom.js
   function constructFrom(date, value) {
     if (typeof date === "function") return date(value);
     if (date && typeof date === "object" && constructFromSymbol in date)
@@ -25086,12 +25088,12 @@ If there's a particular need for this, please submit a feature request at https:
     return new Date(value);
   }
 
-  // packages/dataviews/node_modules/date-fns/toDate.js
+  // node_modules/date-fns/toDate.js
   function toDate(argument, context) {
     return constructFrom(context || argument, argument);
   }
 
-  // packages/dataviews/node_modules/date-fns/addDays.js
+  // node_modules/date-fns/addDays.js
   function addDays(date, amount, options) {
     const _date = toDate(date, options?.in);
     if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
@@ -25100,7 +25102,7 @@ If there's a particular need for this, please submit a feature request at https:
     return _date;
   }
 
-  // packages/dataviews/node_modules/date-fns/addMonths.js
+  // node_modules/date-fns/addMonths.js
   function addMonths(date, amount, options) {
     const _date = toDate(date, options?.in);
     if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
@@ -25123,13 +25125,13 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
 
-  // packages/dataviews/node_modules/date-fns/_lib/defaultOptions.js
+  // node_modules/date-fns/_lib/defaultOptions.js
   var defaultOptions = {};
   function getDefaultOptions() {
     return defaultOptions;
   }
 
-  // packages/dataviews/node_modules/date-fns/startOfWeek.js
+  // node_modules/date-fns/startOfWeek.js
   function startOfWeek(date, options) {
     const defaultOptions2 = getDefaultOptions();
     const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0;
@@ -25141,12 +25143,12 @@ If there's a particular need for this, please submit a feature request at https:
     return _date;
   }
 
-  // packages/dataviews/node_modules/date-fns/startOfISOWeek.js
+  // node_modules/date-fns/startOfISOWeek.js
   function startOfISOWeek(date, options) {
     return startOfWeek(date, { ...options, weekStartsOn: 1 });
   }
 
-  // packages/dataviews/node_modules/date-fns/getISOWeekYear.js
+  // node_modules/date-fns/getISOWeekYear.js
   function getISOWeekYear(date, options) {
     const _date = toDate(date, options?.in);
     const year = _date.getFullYear();
@@ -25167,7 +25169,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
 
-  // packages/dataviews/node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds.js
+  // node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds.js
   function getTimezoneOffsetInMilliseconds(date) {
     const _date = toDate(date);
     const utcDate = new Date(
@@ -25185,7 +25187,7 @@ If there's a particular need for this, please submit a feature request at https:
     return +date - +utcDate;
   }
 
-  // packages/dataviews/node_modules/date-fns/_lib/normalizeDates.js
+  // node_modules/date-fns/_lib/normalizeDates.js
   function normalizeDates(context, ...dates) {
     const normalize2 = constructFrom.bind(
       null,
@@ -25194,14 +25196,14 @@ If there's a particular need for this, please submit a feature request at https:
     return dates.map(normalize2);
   }
 
-  // packages/dataviews/node_modules/date-fns/startOfDay.js
+  // node_modules/date-fns/startOfDay.js
   function startOfDay(date, options) {
     const _date = toDate(date, options?.in);
     _date.setHours(0, 0, 0, 0);
     return _date;
   }
 
-  // packages/dataviews/node_modules/date-fns/differenceInCalendarDays.js
+  // node_modules/date-fns/differenceInCalendarDays.js
   function differenceInCalendarDays(laterDate, earlierDate, options) {
     const [laterDate_, earlierDate_] = normalizeDates(
       options?.in,
@@ -25215,7 +25217,7 @@ If there's a particular need for this, please submit a feature request at https:
     return Math.round((laterTimestamp - earlierTimestamp) / millisecondsInDay);
   }
 
-  // packages/dataviews/node_modules/date-fns/startOfISOWeekYear.js
+  // node_modules/date-fns/startOfISOWeekYear.js
   function startOfISOWeekYear(date, options) {
     const year = getISOWeekYear(date, options);
     const fourthOfJanuary = constructFrom(options?.in || date, 0);
@@ -25224,27 +25226,36 @@ If there's a particular need for this, please submit a feature request at https:
     return startOfISOWeek(fourthOfJanuary);
   }
 
-  // packages/dataviews/node_modules/date-fns/addWeeks.js
+  // node_modules/date-fns/addWeeks.js
   function addWeeks(date, amount, options) {
     return addDays(date, amount * 7, options);
   }
 
-  // packages/dataviews/node_modules/date-fns/addYears.js
+  // node_modules/date-fns/addYears.js
   function addYears(date, amount, options) {
     return addMonths(date, amount * 12, options);
   }
 
-  // packages/dataviews/node_modules/date-fns/isDate.js
+  // node_modules/date-fns/isDate.js
   function isDate(value) {
     return value instanceof Date || typeof value === "object" && Object.prototype.toString.call(value) === "[object Date]";
   }
 
-  // packages/dataviews/node_modules/date-fns/isValid.js
+  // node_modules/date-fns/isValid.js
   function isValid(date) {
     return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
   }
 
-  // packages/dataviews/node_modules/date-fns/startOfMonth.js
+  // node_modules/date-fns/endOfMonth.js
+  function endOfMonth(date, options) {
+    const _date = toDate(date, options?.in);
+    const month = _date.getMonth();
+    _date.setFullYear(_date.getFullYear(), month + 1, 0);
+    _date.setHours(23, 59, 59, 999);
+    return _date;
+  }
+
+  // node_modules/date-fns/startOfMonth.js
   function startOfMonth(date, options) {
     const _date = toDate(date, options?.in);
     _date.setDate(1);
@@ -25252,7 +25263,7 @@ If there's a particular need for this, please submit a feature request at https:
     return _date;
   }
 
-  // packages/dataviews/node_modules/date-fns/startOfYear.js
+  // node_modules/date-fns/startOfYear.js
   function startOfYear(date, options) {
     const date_ = toDate(date, options?.in);
     date_.setFullYear(date_.getFullYear(), 0, 1);
@@ -25260,7 +25271,7 @@ If there's a particular need for this, please submit a feature request at https:
     return date_;
   }
 
-  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatDistance.js
+  // node_modules/date-fns/locale/en-US/_lib/formatDistance.js
   var formatDistanceLocale = {
     lessThanXSeconds: {
       one: "less than a second",
@@ -25344,7 +25355,7 @@ If there's a particular need for this, please submit a feature request at https:
     return result;
   };
 
-  // packages/dataviews/node_modules/date-fns/locale/_lib/buildFormatLongFn.js
+  // node_modules/date-fns/locale/_lib/buildFormatLongFn.js
   function buildFormatLongFn(args) {
     return (options = {}) => {
       const width = options.width ? String(options.width) : args.defaultWidth;
@@ -25353,7 +25364,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatLong.js
+  // node_modules/date-fns/locale/en-US/_lib/formatLong.js
   var dateFormats = {
     full: "EEEE, MMMM do, y",
     long: "MMMM do, y",
@@ -25387,7 +25398,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   };
 
-  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatRelative.js
+  // node_modules/date-fns/locale/en-US/_lib/formatRelative.js
   var formatRelativeLocale = {
     lastWeek: "'last' eeee 'at' p",
     yesterday: "'yesterday at' p",
@@ -25398,7 +25409,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var formatRelative = (token, _date, _baseDate, _options) => formatRelativeLocale[token];
 
-  // packages/dataviews/node_modules/date-fns/locale/_lib/buildLocalizeFn.js
+  // node_modules/date-fns/locale/_lib/buildLocalizeFn.js
   function buildLocalizeFn(args) {
     return (value, options) => {
       const context = options?.context ? String(options.context) : "standalone";
@@ -25417,7 +25428,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/localize.js
+  // node_modules/date-fns/locale/en-US/_lib/localize.js
   var eraValues = {
     narrow: ["B", "A"],
     abbreviated: ["BC", "AD"],
@@ -25579,7 +25590,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   };
 
-  // packages/dataviews/node_modules/date-fns/locale/_lib/buildMatchFn.js
+  // node_modules/date-fns/locale/_lib/buildMatchFn.js
   function buildMatchFn(args) {
     return (string, options = {}) => {
       const width = options.width;
@@ -25621,7 +25632,7 @@ If there's a particular need for this, please submit a feature request at https:
     return void 0;
   }
 
-  // packages/dataviews/node_modules/date-fns/locale/_lib/buildMatchPatternFn.js
+  // node_modules/date-fns/locale/_lib/buildMatchPatternFn.js
   function buildMatchPatternFn(args) {
     return (string, options = {}) => {
       const matchResult = string.match(args.matchPattern);
@@ -25636,7 +25647,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/match.js
+  // node_modules/date-fns/locale/en-US/_lib/match.js
   var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
   var parseOrdinalNumberPattern = /\d+/i;
   var matchEraPatterns = {
@@ -25755,7 +25766,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   };
 
-  // packages/dataviews/node_modules/date-fns/locale/en-US.js
+  // node_modules/date-fns/locale/en-US.js
   var enUS = {
     code: "en-US",
     formatDistance,
@@ -25769,7 +25780,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/node_modules/date-fns/getDayOfYear.js
+  // node_modules/date-fns/getDayOfYear.js
   function getDayOfYear(date, options) {
     const _date = toDate(date, options?.in);
     const diff = differenceInCalendarDays(_date, startOfYear(_date));
@@ -25777,14 +25788,14 @@ If there's a particular need for this, please submit a feature request at https:
     return dayOfYear;
   }
 
-  // packages/dataviews/node_modules/date-fns/getISOWeek.js
+  // node_modules/date-fns/getISOWeek.js
   function getISOWeek(date, options) {
     const _date = toDate(date, options?.in);
     const diff = +startOfISOWeek(_date) - +startOfISOWeekYear(_date);
     return Math.round(diff / millisecondsInWeek) + 1;
   }
 
-  // packages/dataviews/node_modules/date-fns/getWeekYear.js
+  // node_modules/date-fns/getWeekYear.js
   function getWeekYear(date, options) {
     const _date = toDate(date, options?.in);
     const year = _date.getFullYear();
@@ -25807,7 +25818,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
 
-  // packages/dataviews/node_modules/date-fns/startOfWeekYear.js
+  // node_modules/date-fns/startOfWeekYear.js
   function startOfWeekYear(date, options) {
     const defaultOptions2 = getDefaultOptions();
     const firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions2.firstWeekContainsDate ?? defaultOptions2.locale?.options?.firstWeekContainsDate ?? 1;
@@ -25819,21 +25830,21 @@ If there's a particular need for this, please submit a feature request at https:
     return _date;
   }
 
-  // packages/dataviews/node_modules/date-fns/getWeek.js
+  // node_modules/date-fns/getWeek.js
   function getWeek(date, options) {
     const _date = toDate(date, options?.in);
     const diff = +startOfWeek(_date, options) - +startOfWeekYear(_date, options);
     return Math.round(diff / millisecondsInWeek) + 1;
   }
 
-  // packages/dataviews/node_modules/date-fns/_lib/addLeadingZeros.js
+  // node_modules/date-fns/_lib/addLeadingZeros.js
   function addLeadingZeros(number, targetLength) {
     const sign = number < 0 ? "-" : "";
     const output = Math.abs(number).toString().padStart(targetLength, "0");
     return sign + output;
   }
 
-  // packages/dataviews/node_modules/date-fns/_lib/format/lightFormatters.js
+  // node_modules/date-fns/_lib/format/lightFormatters.js
   var lightFormatters = {
     // Year
     y(date, token) {
@@ -25893,7 +25904,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/node_modules/date-fns/_lib/format/formatters.js
+  // node_modules/date-fns/_lib/format/formatters.js
   var dayPeriodEnum = {
     am: "am",
     pm: "pm",
@@ -26539,7 +26550,7 @@ If there's a particular need for this, please submit a feature request at https:
     return sign + hours + delimiter + minutes;
   }
 
-  // packages/dataviews/node_modules/date-fns/_lib/format/longFormatters.js
+  // node_modules/date-fns/_lib/format/longFormatters.js
   var dateLongFormatter = (pattern, formatLong2) => {
     switch (pattern) {
       case "P":
@@ -26596,7 +26607,7 @@ If there's a particular need for this, please submit a feature request at https:
     P: dateTimeLongFormatter
   };
 
-  // packages/dataviews/node_modules/date-fns/_lib/protectedTokens.js
+  // node_modules/date-fns/_lib/protectedTokens.js
   var dayOfYearTokenRE = /^D+$/;
   var weekYearTokenRE = /^Y+$/;
   var throwTokens = ["D", "DD", "YY", "YYYY"];
@@ -26616,7 +26627,7 @@ If there's a particular need for this, please submit a feature request at https:
     return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format6}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
   }
 
-  // packages/dataviews/node_modules/date-fns/format.js
+  // node_modules/date-fns/format.js
   var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
   var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
   var escapedStringRegExp = /^'([^]*?)'?$/;
@@ -26682,22 +26693,197 @@ If there's a particular need for this, please submit a feature request at https:
     return matched[1].replace(doubleQuoteRegExp, "'");
   }
 
-  // packages/dataviews/node_modules/date-fns/subDays.js
+  // node_modules/date-fns/subDays.js
   function subDays(date, amount, options) {
     return addDays(date, -amount, options);
   }
 
-  // packages/dataviews/node_modules/date-fns/subMonths.js
+  // node_modules/date-fns/parseISO.js
+  function parseISO(argument, options) {
+    const invalidDate = () => constructFrom(options?.in, NaN);
+    const additionalDigits = options?.additionalDigits ?? 2;
+    const dateStrings = splitDateString(argument);
+    let date;
+    if (dateStrings.date) {
+      const parseYearResult = parseYear(dateStrings.date, additionalDigits);
+      date = parseDate(parseYearResult.restDateString, parseYearResult.year);
+    }
+    if (!date || isNaN(+date)) return invalidDate();
+    const timestamp = +date;
+    let time = 0;
+    let offset;
+    if (dateStrings.time) {
+      time = parseTime(dateStrings.time);
+      if (isNaN(time)) return invalidDate();
+    }
+    if (dateStrings.timezone) {
+      offset = parseTimezone(dateStrings.timezone);
+      if (isNaN(offset)) return invalidDate();
+    } else {
+      const tmpDate = new Date(timestamp + time);
+      const result = toDate(0, options?.in);
+      result.setFullYear(
+        tmpDate.getUTCFullYear(),
+        tmpDate.getUTCMonth(),
+        tmpDate.getUTCDate()
+      );
+      result.setHours(
+        tmpDate.getUTCHours(),
+        tmpDate.getUTCMinutes(),
+        tmpDate.getUTCSeconds(),
+        tmpDate.getUTCMilliseconds()
+      );
+      return result;
+    }
+    return toDate(timestamp + time + offset, options?.in);
+  }
+  var patterns = {
+    dateTimeDelimiter: /[T ]/,
+    timeZoneDelimiter: /[Z ]/i,
+    timezone: /([Z+-].*)$/
+  };
+  var dateRegex = /^-?(?:(\d{3})|(\d{2})(?:-?(\d{2}))?|W(\d{2})(?:-?(\d{1}))?|)$/;
+  var timeRegex = /^(\d{2}(?:[.,]\d*)?)(?::?(\d{2}(?:[.,]\d*)?))?(?::?(\d{2}(?:[.,]\d*)?))?$/;
+  var timezoneRegex = /^([+-])(\d{2})(?::?(\d{2}))?$/;
+  function splitDateString(dateString) {
+    const dateStrings = {};
+    const array = dateString.split(patterns.dateTimeDelimiter);
+    let timeString;
+    if (array.length > 2) {
+      return dateStrings;
+    }
+    if (/:/.test(array[0])) {
+      timeString = array[0];
+    } else {
+      dateStrings.date = array[0];
+      timeString = array[1];
+      if (patterns.timeZoneDelimiter.test(dateStrings.date)) {
+        dateStrings.date = dateString.split(patterns.timeZoneDelimiter)[0];
+        timeString = dateString.substr(
+          dateStrings.date.length,
+          dateString.length
+        );
+      }
+    }
+    if (timeString) {
+      const token = patterns.timezone.exec(timeString);
+      if (token) {
+        dateStrings.time = timeString.replace(token[1], "");
+        dateStrings.timezone = token[1];
+      } else {
+        dateStrings.time = timeString;
+      }
+    }
+    return dateStrings;
+  }
+  function parseYear(dateString, additionalDigits) {
+    const regex = new RegExp(
+      "^(?:(\\d{4}|[+-]\\d{" + (4 + additionalDigits) + "})|(\\d{2}|[+-]\\d{" + (2 + additionalDigits) + "})$)"
+    );
+    const captures = dateString.match(regex);
+    if (!captures) return { year: NaN, restDateString: "" };
+    const year = captures[1] ? parseInt(captures[1]) : null;
+    const century = captures[2] ? parseInt(captures[2]) : null;
+    return {
+      year: century === null ? year : century * 100,
+      restDateString: dateString.slice((captures[1] || captures[2]).length)
+    };
+  }
+  function parseDate(dateString, year) {
+    if (year === null) return /* @__PURE__ */ new Date(NaN);
+    const captures = dateString.match(dateRegex);
+    if (!captures) return /* @__PURE__ */ new Date(NaN);
+    const isWeekDate = !!captures[4];
+    const dayOfYear = parseDateUnit(captures[1]);
+    const month = parseDateUnit(captures[2]) - 1;
+    const day = parseDateUnit(captures[3]);
+    const week = parseDateUnit(captures[4]);
+    const dayOfWeek = parseDateUnit(captures[5]) - 1;
+    if (isWeekDate) {
+      if (!validateWeekDate(year, week, dayOfWeek)) {
+        return /* @__PURE__ */ new Date(NaN);
+      }
+      return dayOfISOWeekYear(year, week, dayOfWeek);
+    } else {
+      const date = /* @__PURE__ */ new Date(0);
+      if (!validateDate(year, month, day) || !validateDayOfYearDate(year, dayOfYear)) {
+        return /* @__PURE__ */ new Date(NaN);
+      }
+      date.setUTCFullYear(year, month, Math.max(dayOfYear, day));
+      return date;
+    }
+  }
+  function parseDateUnit(value) {
+    return value ? parseInt(value) : 1;
+  }
+  function parseTime(timeString) {
+    const captures = timeString.match(timeRegex);
+    if (!captures) return NaN;
+    const hours = parseTimeUnit(captures[1]);
+    const minutes = parseTimeUnit(captures[2]);
+    const seconds = parseTimeUnit(captures[3]);
+    if (!validateTime(hours, minutes, seconds)) {
+      return NaN;
+    }
+    return hours * millisecondsInHour + minutes * millisecondsInMinute + seconds * 1e3;
+  }
+  function parseTimeUnit(value) {
+    return value && parseFloat(value.replace(",", ".")) || 0;
+  }
+  function parseTimezone(timezoneString) {
+    if (timezoneString === "Z") return 0;
+    const captures = timezoneString.match(timezoneRegex);
+    if (!captures) return 0;
+    const sign = captures[1] === "+" ? -1 : 1;
+    const hours = parseInt(captures[2]);
+    const minutes = captures[3] && parseInt(captures[3]) || 0;
+    if (!validateTimezone(hours, minutes)) {
+      return NaN;
+    }
+    return sign * (hours * millisecondsInHour + minutes * millisecondsInMinute);
+  }
+  function dayOfISOWeekYear(isoWeekYear, week, day) {
+    const date = /* @__PURE__ */ new Date(0);
+    date.setUTCFullYear(isoWeekYear, 0, 4);
+    const fourthOfJanuaryDay = date.getUTCDay() || 7;
+    const diff = (week - 1) * 7 + day + 1 - fourthOfJanuaryDay;
+    date.setUTCDate(date.getUTCDate() + diff);
+    return date;
+  }
+  var daysInMonths = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  function isLeapYearIndex(year) {
+    return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+  }
+  function validateDate(year, month, date) {
+    return month >= 0 && month <= 11 && date >= 1 && date <= (daysInMonths[month] || (isLeapYearIndex(year) ? 29 : 28));
+  }
+  function validateDayOfYearDate(year, dayOfYear) {
+    return dayOfYear >= 1 && dayOfYear <= (isLeapYearIndex(year) ? 366 : 365);
+  }
+  function validateWeekDate(_year, week, day) {
+    return week >= 1 && week <= 53 && day >= 0 && day <= 6;
+  }
+  function validateTime(hours, minutes, seconds) {
+    if (hours === 24) {
+      return minutes === 0 && seconds === 0;
+    }
+    return seconds >= 0 && seconds < 60 && minutes >= 0 && minutes < 60 && hours >= 0 && hours < 25;
+  }
+  function validateTimezone(_hours, minutes) {
+    return minutes >= 0 && minutes <= 59;
+  }
+
+  // node_modules/date-fns/subMonths.js
   function subMonths(date, amount, options) {
     return addMonths(date, -amount, options);
   }
 
-  // packages/dataviews/node_modules/date-fns/subWeeks.js
+  // node_modules/date-fns/subWeeks.js
   function subWeeks(date, amount, options) {
     return addWeeks(date, -amount, options);
   }
 
-  // packages/dataviews/node_modules/date-fns/subYears.js
+  // node_modules/date-fns/subYears.js
   function subYears(date, amount, options) {
     return addYears(date, -amount, options);
   }
@@ -28818,7 +29004,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
   ];
-  var parseDate = (dateString) => {
+  var parseDate2 = (dateString) => {
     if (!dateString) {
       return null;
     }
@@ -28951,12 +29137,12 @@ If there's a particular need for this, please submit a feature request at https:
     const fieldValue = getValue2({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element88.useState)(() => {
-      const parsedDate = parseDate(value);
+      const parsedDate = parseDate2(value);
       return parsedDate || /* @__PURE__ */ new Date();
     });
     const [isTouched, setIsTouched] = (0, import_element88.useState)(false);
     const validityTargetRef = (0, import_element88.useRef)(null);
-    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
+    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element88.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
@@ -28985,7 +29171,7 @@ If there's a particular need for this, please submit a feature request at https:
       (newValue) => {
         onChangeCallback(newValue);
         if (newValue) {
-          const parsedDate = parseDate(newValue);
+          const parsedDate = parseDate2(newValue);
           if (parsedDate) {
             setCalendarMonth(parsedDate);
           }
@@ -29081,7 +29267,7 @@ If there's a particular need for this, please submit a feature request at https:
                 DateCalendar2,
                 {
                   style: { width: "100%" },
-                  selected: value ? parseDate(value) || void 0 : void 0,
+                  selected: value ? parseDate2(value) || void 0 : void 0,
                   onSelect: onSelectDate,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
@@ -29121,7 +29307,7 @@ If there's a particular need for this, please submit a feature request at https:
       value = fieldValue;
     }
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date9.getSettings)().l10n.startOfWeek;
-    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
+    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element88.useCallback)(
       (newValue) => {
         onChange(
@@ -29142,8 +29328,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const [from, to2] = value;
       return {
-        from: parseDate(from) || void 0,
-        to: parseDate(to2) || void 0
+        from: parseDate2(from) || void 0,
+        to: parseDate2(to2) || void 0
       };
     }, [value]);
     const [calendarMonth, setCalendarMonth] = (0, import_element88.useState)(() => {
@@ -29153,13 +29339,13 @@ If there's a particular need for this, please submit a feature request at https:
     const fromInputRef = (0, import_element88.useRef)(null);
     const toInputRef = (0, import_element88.useRef)(null);
     const updateDateRange = (0, import_element88.useCallback)(
-      (fromDate, toDate3) => {
-        if (fromDate && toDate3) {
+      (fromDate, toDate2) => {
+        if (fromDate && toDate2) {
           onChangeCallback([
             formatDate(fromDate),
-            formatDate(toDate3)
+            formatDate(toDate2)
           ]);
-        } else if (!fromDate && !toDate3) {
+        } else if (!fromDate && !toDate2) {
           onChangeCallback(void 0);
         }
       },
@@ -29193,7 +29379,7 @@ If there's a particular need for this, please submit a feature request at https:
         const updatedTo = fromOrTo === "to" ? newValue : currentTo;
         updateDateRange(updatedFrom, updatedTo);
         if (newValue) {
-          const parsedDate = parseDate(newValue);
+          const parsedDate = parseDate2(newValue);
           if (parsedDate) {
             setCalendarMonth(parsedDate);
           }
@@ -70824,228 +71010,6 @@ If there's a particular need for this, please submit a feature request at https:
     return VISIBILITY_OPTIONS.find((option) => option.value === visibility)?.label;
   }
 
-  // node_modules/date-fns/toDate.mjs
-  function toDate2(argument) {
-    const argStr = Object.prototype.toString.call(argument);
-    if (argument instanceof Date || typeof argument === "object" && argStr === "[object Date]") {
-      return new argument.constructor(+argument);
-    } else if (typeof argument === "number" || argStr === "[object Number]" || typeof argument === "string" || argStr === "[object String]") {
-      return new Date(argument);
-    } else {
-      return /* @__PURE__ */ new Date(NaN);
-    }
-  }
-
-  // node_modules/date-fns/constants.mjs
-  var daysInYear2 = 365.2425;
-  var maxTime2 = Math.pow(10, 8) * 24 * 60 * 60 * 1e3;
-  var minTime2 = -maxTime2;
-  var millisecondsInMinute = 6e4;
-  var millisecondsInHour = 36e5;
-  var secondsInHour2 = 3600;
-  var secondsInDay2 = secondsInHour2 * 24;
-  var secondsInWeek2 = secondsInDay2 * 7;
-  var secondsInYear2 = secondsInDay2 * daysInYear2;
-  var secondsInMonth2 = secondsInYear2 / 12;
-  var secondsInQuarter2 = secondsInMonth2 * 3;
-
-  // node_modules/date-fns/endOfMonth.mjs
-  function endOfMonth(date) {
-    const _date = toDate2(date);
-    const month = _date.getMonth();
-    _date.setFullYear(_date.getFullYear(), month + 1, 0);
-    _date.setHours(23, 59, 59, 999);
-    return _date;
-  }
-
-  // node_modules/date-fns/startOfMonth.mjs
-  function startOfMonth2(date) {
-    const _date = toDate2(date);
-    _date.setDate(1);
-    _date.setHours(0, 0, 0, 0);
-    return _date;
-  }
-
-  // node_modules/date-fns/parseISO.mjs
-  function parseISO(argument, options) {
-    const additionalDigits = options?.additionalDigits ?? 2;
-    const dateStrings = splitDateString(argument);
-    let date;
-    if (dateStrings.date) {
-      const parseYearResult = parseYear(dateStrings.date, additionalDigits);
-      date = parseDate2(parseYearResult.restDateString, parseYearResult.year);
-    }
-    if (!date || isNaN(date.getTime())) {
-      return /* @__PURE__ */ new Date(NaN);
-    }
-    const timestamp = date.getTime();
-    let time = 0;
-    let offset;
-    if (dateStrings.time) {
-      time = parseTime(dateStrings.time);
-      if (isNaN(time)) {
-        return /* @__PURE__ */ new Date(NaN);
-      }
-    }
-    if (dateStrings.timezone) {
-      offset = parseTimezone(dateStrings.timezone);
-      if (isNaN(offset)) {
-        return /* @__PURE__ */ new Date(NaN);
-      }
-    } else {
-      const dirtyDate = new Date(timestamp + time);
-      const result = /* @__PURE__ */ new Date(0);
-      result.setFullYear(
-        dirtyDate.getUTCFullYear(),
-        dirtyDate.getUTCMonth(),
-        dirtyDate.getUTCDate()
-      );
-      result.setHours(
-        dirtyDate.getUTCHours(),
-        dirtyDate.getUTCMinutes(),
-        dirtyDate.getUTCSeconds(),
-        dirtyDate.getUTCMilliseconds()
-      );
-      return result;
-    }
-    return new Date(timestamp + time + offset);
-  }
-  var patterns = {
-    dateTimeDelimiter: /[T ]/,
-    timeZoneDelimiter: /[Z ]/i,
-    timezone: /([Z+-].*)$/
-  };
-  var dateRegex = /^-?(?:(\d{3})|(\d{2})(?:-?(\d{2}))?|W(\d{2})(?:-?(\d{1}))?|)$/;
-  var timeRegex = /^(\d{2}(?:[.,]\d*)?)(?::?(\d{2}(?:[.,]\d*)?))?(?::?(\d{2}(?:[.,]\d*)?))?$/;
-  var timezoneRegex = /^([+-])(\d{2})(?::?(\d{2}))?$/;
-  function splitDateString(dateString) {
-    const dateStrings = {};
-    const array = dateString.split(patterns.dateTimeDelimiter);
-    let timeString;
-    if (array.length > 2) {
-      return dateStrings;
-    }
-    if (/:/.test(array[0])) {
-      timeString = array[0];
-    } else {
-      dateStrings.date = array[0];
-      timeString = array[1];
-      if (patterns.timeZoneDelimiter.test(dateStrings.date)) {
-        dateStrings.date = dateString.split(patterns.timeZoneDelimiter)[0];
-        timeString = dateString.substr(
-          dateStrings.date.length,
-          dateString.length
-        );
-      }
-    }
-    if (timeString) {
-      const token = patterns.timezone.exec(timeString);
-      if (token) {
-        dateStrings.time = timeString.replace(token[1], "");
-        dateStrings.timezone = token[1];
-      } else {
-        dateStrings.time = timeString;
-      }
-    }
-    return dateStrings;
-  }
-  function parseYear(dateString, additionalDigits) {
-    const regex = new RegExp(
-      "^(?:(\\d{4}|[+-]\\d{" + (4 + additionalDigits) + "})|(\\d{2}|[+-]\\d{" + (2 + additionalDigits) + "})$)"
-    );
-    const captures = dateString.match(regex);
-    if (!captures) return { year: NaN, restDateString: "" };
-    const year = captures[1] ? parseInt(captures[1]) : null;
-    const century = captures[2] ? parseInt(captures[2]) : null;
-    return {
-      year: century === null ? year : century * 100,
-      restDateString: dateString.slice((captures[1] || captures[2]).length)
-    };
-  }
-  function parseDate2(dateString, year) {
-    if (year === null) return /* @__PURE__ */ new Date(NaN);
-    const captures = dateString.match(dateRegex);
-    if (!captures) return /* @__PURE__ */ new Date(NaN);
-    const isWeekDate = !!captures[4];
-    const dayOfYear = parseDateUnit(captures[1]);
-    const month = parseDateUnit(captures[2]) - 1;
-    const day = parseDateUnit(captures[3]);
-    const week = parseDateUnit(captures[4]);
-    const dayOfWeek = parseDateUnit(captures[5]) - 1;
-    if (isWeekDate) {
-      if (!validateWeekDate(year, week, dayOfWeek)) {
-        return /* @__PURE__ */ new Date(NaN);
-      }
-      return dayOfISOWeekYear(year, week, dayOfWeek);
-    } else {
-      const date = /* @__PURE__ */ new Date(0);
-      if (!validateDate(year, month, day) || !validateDayOfYearDate(year, dayOfYear)) {
-        return /* @__PURE__ */ new Date(NaN);
-      }
-      date.setUTCFullYear(year, month, Math.max(dayOfYear, day));
-      return date;
-    }
-  }
-  function parseDateUnit(value) {
-    return value ? parseInt(value) : 1;
-  }
-  function parseTime(timeString) {
-    const captures = timeString.match(timeRegex);
-    if (!captures) return NaN;
-    const hours = parseTimeUnit(captures[1]);
-    const minutes = parseTimeUnit(captures[2]);
-    const seconds = parseTimeUnit(captures[3]);
-    if (!validateTime(hours, minutes, seconds)) {
-      return NaN;
-    }
-    return hours * millisecondsInHour + minutes * millisecondsInMinute + seconds * 1e3;
-  }
-  function parseTimeUnit(value) {
-    return value && parseFloat(value.replace(",", ".")) || 0;
-  }
-  function parseTimezone(timezoneString) {
-    if (timezoneString === "Z") return 0;
-    const captures = timezoneString.match(timezoneRegex);
-    if (!captures) return 0;
-    const sign = captures[1] === "+" ? -1 : 1;
-    const hours = parseInt(captures[2]);
-    const minutes = captures[3] && parseInt(captures[3]) || 0;
-    if (!validateTimezone(hours, minutes)) {
-      return NaN;
-    }
-    return sign * (hours * millisecondsInHour + minutes * millisecondsInMinute);
-  }
-  function dayOfISOWeekYear(isoWeekYear, week, day) {
-    const date = /* @__PURE__ */ new Date(0);
-    date.setUTCFullYear(isoWeekYear, 0, 4);
-    const fourthOfJanuaryDay = date.getUTCDay() || 7;
-    const diff = (week - 1) * 7 + day + 1 - fourthOfJanuaryDay;
-    date.setUTCDate(date.getUTCDate() + diff);
-    return date;
-  }
-  var daysInMonths = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  function isLeapYearIndex(year) {
-    return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
-  }
-  function validateDate(year, month, date) {
-    return month >= 0 && month <= 11 && date >= 1 && date <= (daysInMonths[month] || (isLeapYearIndex(year) ? 29 : 28));
-  }
-  function validateDayOfYearDate(year, dayOfYear) {
-    return dayOfYear >= 1 && dayOfYear <= (isLeapYearIndex(year) ? 366 : 365);
-  }
-  function validateWeekDate(_year, week, day) {
-    return week >= 1 && week <= 53 && day >= 0 && day <= 6;
-  }
-  function validateTime(hours, minutes, seconds) {
-    if (hours === 24) {
-      return minutes === 0 && seconds === 0;
-    }
-    return seconds >= 0 && seconds < 60 && minutes >= 0 && minutes < 60 && hours >= 0 && hours < 25;
-  }
-  function validateTimezone(_hours, minutes) {
-    return minutes >= 0 && minutes <= 59;
-  }
-
   // packages/editor/build-module/components/post-schedule/index.mjs
   var import_date17 = __toESM(require_date(), 1);
   var import_i18n235 = __toESM(require_i18n(), 1);
@@ -71080,12 +71044,12 @@ If there's a particular need for this, please submit a feature request at https:
     const { editPost: editPost2 } = (0, import_data145.useDispatch)(store);
     const onUpdateDate = (date) => editPost2({ date });
     const [previewedMonth, setPreviewedMonth] = (0, import_element223.useState)(
-      startOfMonth2(new Date(postDate))
+      startOfMonth(new Date(postDate))
     );
     const eventsByPostType = (0, import_data145.useSelect)(
       (select7) => select7(import_core_data88.store).getEntityRecords("postType", postType2, {
         status: "publish,future",
-        after: startOfMonth2(previewedMonth).toISOString(),
+        after: startOfMonth(previewedMonth).toISOString(),
         before: endOfMonth(previewedMonth).toISOString(),
         exclude: [select7(store).getCurrentPostId()],
         per_page: 100,
