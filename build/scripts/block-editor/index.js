@@ -77700,7 +77700,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
       import_components276.__experimentalToolsPanelItem,
       {
-        label: (0, import_i18n243.__)("Scale"),
+        label: (0, import_i18n243._x)("Scale", "Image scaling options"),
         isShownByDefault,
         hasValue: () => displayValue !== defaultValue,
         onDeselect: () => onChange(defaultValue),
@@ -77708,7 +77708,7 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
           import_components276.__experimentalToggleGroupControl,
           {
-            label: (0, import_i18n243.__)("Scale"),
+            label: (0, import_i18n243._x)("Scale", "Image scaling options"),
             isBlock: true,
             help: scaleHelp[displayValue],
             value: displayValue,
