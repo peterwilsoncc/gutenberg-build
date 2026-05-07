@@ -8,7 +8,7 @@
 
 return array(
 	array(
-		'name'       => 'wordpress/hello-world',
+		'name'       => 'core/hello-world',
 		'dir_name'   => 'hello-world',
 		'has_render' => true,
 		'has_widget' => true,

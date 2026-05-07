@@ -1,6 +1,6 @@
 // widgets/hello-world/widget.ts
 var widget_default = {
-  name: "wordpress/hello-world",
+  name: "core/hello-world",
   title: "Hello World"
 };
 export {
