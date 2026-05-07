@@ -32258,6 +32258,28 @@ var wp;
     );
     const showPatternPanel = selectedTab === "patterns" && !delayedFilterValue && !!selectedPatternCategory;
     const showMediaPanel = selectedTab === "media" && !!selectedMediaCategory;
+    const [isScrolled, setIsScrolled] = (0, import_element93.useState)(false);
+    const blocksPanelRef = (0, import_element93.useRef)(null);
+    const patternsPanelRef = (0, import_element93.useRef)(null);
+    const mediaPanelRef = (0, import_element93.useRef)(null);
+    (0, import_element93.useEffect)(() => {
+      const handleScroll = (event) => {
+        setIsScrolled(event.currentTarget.scrollTop > 0);
+      };
+      const panels = [
+        blocksPanelRef.current,
+        patternsPanelRef.current,
+        mediaPanelRef.current
+      ].filter(Boolean);
+      panels.forEach(
+        (panel) => panel.addEventListener("scroll", handleScroll)
+      );
+      return () => {
+        panels.forEach(
+          (panel) => panel.removeEventListener("scroll", handleScroll)
+        );
+      };
+    }, []);
     const inserterSearch = (0, import_element93.useMemo)(() => {
       if (selectedTab === "media") {
         return null;
@@ -32266,7 +32288,9 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
           import_components59.SearchControl,
           {
-            className: "block-editor-inserter__search",
+            className: clsx_default("block-editor-inserter__search", {
+              "is-scrolled": isScrolled
+            }),
             onChange: (value) => {
               if (hoveredItem) {
                 setHoveredItem(null);
@@ -32307,7 +32331,8 @@ var wp;
       clientId,
       rootClientId,
       __experimentalInsertionIndex,
-      isAppender
+      isAppender,
+      isScrolled
     ]);
     const blocksTab = (0, import_element93.useMemo)(() => {
       return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
@@ -32421,6 +32446,7 @@ var wp;
                 {
                   name: "blocks",
                   title: (0, import_i18n59.__)("Blocks"),
+                  panelRef: blocksPanelRef,
                   panel: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
                     inserterSearch,
                     selectedTab === "blocks" && !delayedFilterValue && blocksTab
@@ -32429,6 +32455,7 @@ var wp;
                 {
                   name: "patterns",
                   title: (0, import_i18n59.__)("Patterns"),
+                  panelRef: patternsPanelRef,
                   panel: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
                     inserterSearch,
                     selectedTab === "patterns" && !delayedFilterValue && patternsTab
@@ -32437,6 +32464,7 @@ var wp;
                 {
                   name: "media",
                   title: (0, import_i18n59.__)("Media"),
+                  panelRef: mediaPanelRef,
                   panel: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
                     inserterSearch,
                     mediaTab
