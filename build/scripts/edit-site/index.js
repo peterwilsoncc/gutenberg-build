@@ -165,7 +165,7 @@ var wp;
         function is2(x2, y2) {
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
-        function useSyncExternalStore$2(subscribe2, getSnapshot) {
+        function useSyncExternalStore$2(subscribe3, getSnapshot) {
           didWarnOld18Alpha || void 0 === React27.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
@@ -186,16 +186,16 @@ var wp;
               inst.getSnapshot = getSnapshot;
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             },
-            [subscribe2, value, getSnapshot]
+            [subscribe3, value, getSnapshot]
           );
           useEffect61(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
-              return subscribe2(function() {
+              return subscribe3(function() {
                 checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               });
             },
-            [subscribe2]
+            [subscribe3]
           );
           useDebugValue(value);
           return value;
@@ -210,7 +210,7 @@ var wp;
             return true;
           }
         }
-        function useSyncExternalStore$1(subscribe2, getSnapshot) {
+        function useSyncExternalStore$1(subscribe3, getSnapshot) {
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
@@ -1449,19 +1449,19 @@ var wp;
 
   // packages/edit-site/build-module/store/selectors.mjs
   var isFeatureActive = (0, import_data2.createRegistrySelector)(
-    (select3) => (_, featureName) => {
+    (select4) => (_, featureName) => {
       (0, import_deprecated2.default)(`select( 'core/edit-site' ).isFeatureActive`, {
         since: "6.0",
         alternative: `select( 'core/preferences' ).get`
       });
-      return !!select3(import_preferences2.store).get(
+      return !!select4(import_preferences2.store).get(
         "core/edit-site",
         featureName
       );
     }
   );
   var __experimentalGetPreviewDeviceType = (0, import_data2.createRegistrySelector)(
-    (select3) => () => {
+    (select4) => () => {
       (0, import_deprecated2.default)(
         `select( 'core/edit-site' ).__experimentalGetPreviewDeviceType`,
         {
@@ -1470,11 +1470,11 @@ var wp;
           alternative: `select( 'core/editor' ).getDeviceType`
         }
       );
-      return select3(import_editor2.store).getDeviceType();
+      return select4(import_editor2.store).getDeviceType();
     }
   );
   var getCanUserCreateMedia = (0, import_data2.createRegistrySelector)(
-    (select3) => () => {
+    (select4) => () => {
       (0, import_deprecated2.default)(
         `wp.data.select( 'core/edit-site' ).getCanUserCreateMedia()`,
         {
@@ -1482,17 +1482,17 @@ var wp;
           alternative: `wp.data.select( 'core' ).canUser( 'create', { kind: 'postType', type: 'attachment' } )`
         }
       );
-      return select3(import_core_data2.store).canUser("create", "media");
+      return select4(import_core_data2.store).canUser("create", "media");
     }
   );
-  var getReusableBlocks = (0, import_data2.createRegistrySelector)((select3) => () => {
+  var getReusableBlocks = (0, import_data2.createRegistrySelector)((select4) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-site' ).getReusableBlocks()`, {
       since: "6.5",
       version: "6.8",
       alternative: `select( 'core/core' ).getEntityRecords( 'postType', 'wp_block' )`
     });
     const isWeb = import_element.Platform.OS === "web";
-    return isWeb ? select3(import_core_data2.store).getEntityRecords("postType", "wp_block", {
+    return isWeb ? select4(import_core_data2.store).getEntityRecords("postType", "wp_block", {
       per_page: -1
     }) : [];
   });
@@ -1531,15 +1531,15 @@ var wp;
     });
     return { context: state.editedPost.context };
   }
-  var isInserterOpened = (0, import_data2.createRegistrySelector)((select3) => () => {
+  var isInserterOpened = (0, import_data2.createRegistrySelector)((select4) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-site' ).isInserterOpened`, {
       since: "6.5",
       alternative: `select( 'core/editor' ).isInserterOpened`
     });
-    return select3(import_editor2.store).isInserterOpened();
+    return select4(import_editor2.store).isInserterOpened();
   });
   var __experimentalGetInsertionPoint = (0, import_data2.createRegistrySelector)(
-    (select3) => () => {
+    (select4) => () => {
       (0, import_deprecated2.default)(
         `select( 'core/edit-site' ).__experimentalGetInsertionPoint`,
         {
@@ -1547,32 +1547,32 @@ var wp;
           version: "6.7"
         }
       );
-      return unlock(select3(import_editor2.store)).getInserter();
+      return unlock(select4(import_editor2.store)).getInserter();
     }
   );
-  var isListViewOpened = (0, import_data2.createRegistrySelector)((select3) => () => {
+  var isListViewOpened = (0, import_data2.createRegistrySelector)((select4) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-site' ).isListViewOpened`, {
       since: "6.5",
       alternative: `select( 'core/editor' ).isListViewOpened`
     });
-    return select3(import_editor2.store).isListViewOpened();
+    return select4(import_editor2.store).isListViewOpened();
   });
   function isSaveViewOpened(state) {
     return state.saveViewPanel;
   }
-  function getBlocksAndTemplateParts(select3) {
-    const templateParts = select3(import_core_data2.store).getEntityRecords(
+  function getBlocksAndTemplateParts(select4) {
+    const templateParts = select4(import_core_data2.store).getEntityRecords(
       "postType",
       TEMPLATE_PART_POST_TYPE,
       { per_page: -1 }
     );
-    const { getBlocksByName, getBlocksByClientId } = select3(import_block_editor2.store);
+    const { getBlocksByName, getBlocksByClientId } = select4(import_block_editor2.store);
     const clientIds = getBlocksByName("core/template-part");
     const blocks = getBlocksByClientId(clientIds);
     return [blocks, templateParts];
   }
   var getCurrentTemplateTemplateParts = (0, import_data2.createRegistrySelector)(
-    (select3) => (0, import_data2.createSelector)(
+    (select4) => (0, import_data2.createSelector)(
       () => {
         (0, import_deprecated2.default)(
           `select( 'core/edit-site' ).getCurrentTemplateTemplateParts()`,
@@ -1583,14 +1583,14 @@ var wp;
           }
         );
         return getFilteredTemplatePartBlocks(
-          ...getBlocksAndTemplateParts(select3)
+          ...getBlocksAndTemplateParts(select4)
         );
       },
-      () => getBlocksAndTemplateParts(select3)
+      () => getBlocksAndTemplateParts(select4)
     )
   );
-  var getEditorMode = (0, import_data2.createRegistrySelector)((select3) => () => {
-    return select3(import_preferences2.store).get("core", "editorMode");
+  var getEditorMode = (0, import_data2.createRegistrySelector)((select4) => () => {
+    return select4(import_preferences2.store).get("core", "editorMode");
   });
   function getCurrentTemplateNavigationPanelSubMenu() {
     (0, import_deprecated2.default)(
@@ -4606,8 +4606,8 @@ var wp;
   var import_core_data3 = __toESM(require_core_data(), 1);
   var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
   function SiteIcon({ className }) {
-    const { isRequestingSite, siteIconUrl } = (0, import_data4.useSelect)((select3) => {
-      const { getEntityRecord } = select3(import_core_data3.store);
+    const { isRequestingSite, siteIconUrl } = (0, import_data4.useSelect)((select4) => {
+      const { getEntityRecord } = select4(import_core_data3.store);
       const siteData = getEntityRecord("root", "__unstableBase", void 0);
       return {
         isRequestingSite: !siteData,
@@ -4713,9 +4713,9 @@ var wp;
   var { useLocation, useHistory } = unlock(import_router.privateApis);
   var SiteHub = (0, import_element23.memo)(
     (0, import_element23.forwardRef)(({ isTransparent }, ref) => {
-      const { dashboardLink, homeUrl, siteTitle } = (0, import_data5.useSelect)((select3) => {
-        const { getSettings: getSettings7 } = unlock(select3(store));
-        const { getEntityRecord } = select3(import_core_data4.store);
+      const { dashboardLink, homeUrl, siteTitle } = (0, import_data5.useSelect)((select4) => {
+        const { getSettings: getSettings7 } = unlock(select4(store));
+        const { getEntityRecord } = select4(import_core_data4.store);
         const _site = getEntityRecord("root", "site");
         return {
           dashboardLink: getSettings7().__experimentalDashboardLink,
@@ -4805,9 +4805,9 @@ var wp;
         siteTitle,
         isBlockTheme,
         isClassicThemeWithStyleBookSupport: isClassicThemeWithStyleBookSupport2
-      } = (0, import_data5.useSelect)((select3) => {
-        const { getSettings: getSettings7 } = unlock(select3(store));
-        const { getEntityRecord, getCurrentTheme } = select3(import_core_data4.store);
+      } = (0, import_data5.useSelect)((select4) => {
+        const { getSettings: getSettings7 } = unlock(select4(store));
+        const { getEntityRecord, getCurrentTheme } = select4(import_core_data4.store);
         const _site = getEntityRecord("root", "site");
         const currentTheme = getCurrentTheme();
         const settings2 = getSettings7();
@@ -4971,8 +4971,8 @@ var wp;
       "edit-site-resizable-frame-handle-help"
     );
     const defaultAspectRatio = defaultSize.width / defaultSize.height;
-    const isBlockTheme = (0, import_data6.useSelect)((select3) => {
-      const { getCurrentTheme } = select3(import_core_data5.store);
+    const isBlockTheme = (0, import_data6.useSelect)((select4) => {
+      const { getCurrentTheme } = select4(import_core_data5.store);
       return getCurrentTheme()?.is_block_theme;
     }, []);
     const handleResizeStart = (_event, _direction, ref) => {
@@ -5215,37 +5215,44 @@ var wp;
   var import_data8 = __toESM(require_data(), 1);
   var import_core_data7 = __toESM(require_core_data(), 1);
   var MAX_LOADING_TIME = 1e4;
+  var MAX_PAUSE_TIME = 100;
+  function waitWhileSiteEditorLoading() {
+    let pauseTimeout;
+    const { promise, resolve } = Promise.withResolvers();
+    function finish() {
+      unsubscribe();
+      clearTimeout(pauseTimeout);
+      clearTimeout(maxTimeout);
+      resolve();
+    }
+    const maxTimeout = setTimeout(finish, MAX_LOADING_TIME);
+    function checkResolving() {
+      const isResolving = (0, import_data8.select)(import_core_data7.store).hasResolvingSelectors();
+      if (isResolving) {
+        clearTimeout(pauseTimeout);
+        pauseTimeout = void 0;
+        return;
+      }
+      if (!pauseTimeout) {
+        pauseTimeout = setTimeout(finish, MAX_PAUSE_TIME);
+      }
+    }
+    const unsubscribe = (0, import_data8.subscribe)(checkResolving, import_core_data7.store);
+    checkResolving();
+    function cancel() {
+      unsubscribe();
+      clearTimeout(pauseTimeout);
+      clearTimeout(maxTimeout);
+    }
+    return [promise, cancel];
+  }
   function useIsSiteEditorLoading() {
     const [loaded, setLoaded] = (0, import_element26.useState)(false);
-    const inLoadingPause = (0, import_data8.useSelect)(
-      (select3) => {
-        const hasResolvingSelectors = select3(import_core_data7.store).hasResolvingSelectors();
-        return !loaded && !hasResolvingSelectors;
-      },
-      [loaded]
-    );
     (0, import_element26.useEffect)(() => {
-      let timeout;
-      if (!loaded) {
-        timeout = setTimeout(() => {
-          setLoaded(true);
-        }, MAX_LOADING_TIME);
-      }
-      return () => {
-        clearTimeout(timeout);
-      };
-    }, [loaded]);
-    (0, import_element26.useEffect)(() => {
-      if (inLoadingPause) {
-        const ARTIFICIAL_DELAY = 100;
-        const timeout = setTimeout(() => {
-          setLoaded(true);
-        }, ARTIFICIAL_DELAY);
-        return () => {
-          clearTimeout(timeout);
-        };
-      }
-    }, [inLoadingPause]);
+      const [promise, cancel] = waitWhileSiteEditorLoading();
+      promise.then(() => setLoaded(true));
+      return cancel;
+    }, []);
     return !loaded;
   }
 
@@ -8272,9 +8279,9 @@ var wp;
     const { saveDirtyEntities } = unlock((0, import_data9.useDispatch)(import_editor4.store));
     const { dirtyEntityRecords } = (0, import_editor4.useEntitiesSavedStatesIsDirty)();
     const { isSaving, isSaveViewOpen, previewingThemeName } = (0, import_data9.useSelect)(
-      (select3) => {
-        const { isSavingEntityRecord, isResolving } = select3(import_core_data8.store);
-        const { isSaveViewOpened: isSaveViewOpened2 } = select3(store);
+      (select4) => {
+        const { isSavingEntityRecord, isResolving } = select4(import_core_data8.store);
+        const { isSaveViewOpened: isSaveViewOpened2 } = select4(store);
         const isActivatingTheme = isResolving("activateTheme");
         const currentlyPreviewingThemeId = currentlyPreviewingTheme();
         return {
@@ -8288,7 +8295,7 @@ var wp;
           isSaveViewOpen: isSaveViewOpened2(),
           // Do not call `getTheme` with null, it will cause a request to
           // the server.
-          previewingThemeName: currentlyPreviewingThemeId ? select3(import_core_data8.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
+          previewingThemeName: currentlyPreviewingThemeId ? select4(import_core_data8.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
         };
       },
       [dirtyEntityRecords]
@@ -8370,8 +8377,8 @@ var wp;
   // packages/edit-site/build-module/components/save-hub/index.mjs
   var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
   function SaveHub() {
-    const { isDisabled, isSaving } = (0, import_data10.useSelect)((select3) => {
-      const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } = select3(import_core_data9.store);
+    const { isDisabled, isSaving } = (0, import_data10.useSelect)((select4) => {
+      const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } = select4(import_core_data9.store);
       const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
       const _isSaving = dirtyEntityRecords.some(
         (record) => isSavingEntityRecord(record.kind, record.name, record.key)
@@ -8462,7 +8469,7 @@ var wp;
     }
     const currentTheme = useActualCurrentTheme();
     const previewingTheme = (0, import_data12.useSelect)(
-      (select3) => select3(import_core_data11.store).getCurrentTheme(),
+      (select4) => select4(import_core_data11.store).getCurrentTheme(),
       []
     );
     const additionalPrompt = /* @__PURE__ */ (0, import_jsx_runtime90.jsx)("p", { children: (0, import_i18n7.sprintf)(
@@ -8518,15 +8525,15 @@ var wp;
   function SavePanel() {
     const { query } = useLocation5();
     const { canvas = "view" } = query;
-    const { isSaveViewOpen, isDirty, isSaving } = (0, import_data12.useSelect)((select3) => {
+    const { isSaveViewOpen, isDirty, isSaving } = (0, import_data12.useSelect)((select4) => {
       const {
         __experimentalGetDirtyEntityRecords,
         isSavingEntityRecord,
         isResolving
-      } = select3(import_core_data11.store);
+      } = select4(import_core_data11.store);
       const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
       const isActivatingTheme = isResolving("activateTheme");
-      const { isSaveViewOpened: isSaveViewOpened2 } = unlock(select3(store));
+      const { isSaveViewOpened: isSaveViewOpened2 } = unlock(select4(store));
       return {
         isSaveViewOpen: isSaveViewOpened2(),
         isDirty: dirtyEntityRecords.length > 0,
@@ -8607,9 +8614,9 @@ var wp;
     const animationRef = animation_default({
       triggerAnimationOnChange: routeKey + "-" + canvas
     });
-    const { showIconLabels } = (0, import_data13.useSelect)((select3) => {
+    const { showIconLabels } = (0, import_data13.useSelect)((select4) => {
       return {
-        showIconLabels: select3(import_preferences3.store).get(
+        showIconLabels: select4(import_preferences3.store).get(
           "core",
           "showIconLabels"
         )
@@ -8789,8 +8796,8 @@ var wp;
     const { canvas = "view" } = params;
     const { set: set3 } = (0, import_data14.useDispatch)(import_preferences4.store);
     const history = useHistory4();
-    const isBlockBasedTheme = (0, import_data14.useSelect)((select3) => {
-      return select3(import_core_data12.store).getCurrentTheme().is_block_theme;
+    const isBlockBasedTheme = (0, import_data14.useSelect)((select4) => {
+      return select4(import_core_data12.store).getCurrentTheme().is_block_theme;
     }, []);
     const commands = (0, import_element31.useMemo)(() => {
       if (!isBlockBasedTheme) {
@@ -8852,8 +8859,8 @@ var wp;
     const { params } = useLocation7();
     const { canvas = "view" } = params;
     const history = useHistory4();
-    const hasRevisions = (0, import_data14.useSelect)((select3) => {
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select3(import_core_data12.store);
+    const hasRevisions = (0, import_data14.useSelect)((select4) => {
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select4(import_core_data12.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return !!globalStyles?._links?.["version-history"]?.[0]?.count;
@@ -8916,8 +8923,8 @@ var wp;
   function useSetCommandContext() {
     const { query = {} } = useLocation8();
     const { canvas = "view" } = query;
-    const hasBlockSelected = (0, import_data15.useSelect)((select3) => {
-      return select3(import_block_editor3.store).getBlockSelectionStart();
+    const hasBlockSelected = (0, import_data15.useSelect)((select4) => {
+      return select4(import_block_editor3.store).getBlockSelectionStart();
     }, []);
     let commandContext = "site-editor";
     if (canvas === "edit") {
@@ -8974,15 +8981,15 @@ var wp;
     backPath: backPathProp
   }) {
     const { dashboardLink, dashboardLinkText, previewingThemeName } = (0, import_data16.useSelect)(
-      (select3) => {
-        const { getSettings: getSettings7 } = unlock(select3(store));
+      (select4) => {
+        const { getSettings: getSettings7 } = unlock(select4(store));
         const currentlyPreviewingThemeId = currentlyPreviewingTheme();
         return {
           dashboardLink: getSettings7().__experimentalDashboardLink,
           dashboardLinkText: getSettings7().__experimentalDashboardLinkText,
           // Do not call `getTheme` with null, it will cause a request to
           // the server.
-          previewingThemeName: currentlyPreviewingThemeId ? select3(import_core_data13.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
+          previewingThemeName: currentlyPreviewingThemeId ? select4(import_core_data13.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
         };
       },
       []
@@ -10358,6 +10365,10 @@ var wp;
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
   };
+  var RESPONSIVE_BREAKPOINTS = {
+    mobile: "@media (width <= 480px)",
+    tablet: "@media (480px < width <= 782px)"
+  };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
       (declarations, { path, cssVarInfix, classes }) => {
@@ -10739,7 +10750,7 @@ var wp;
     const entries = Object.entries(treeToPickFrom);
     const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
     const pickedEntries = entries.filter(
-      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key)
+      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
     );
     const clonedEntries = pickedEntries.map(([key, style]) => [
       key,
@@ -10804,6 +10815,86 @@ var wp;
         ";"
       )};}`;
       ruleset += pseudoRule;
+    });
+    return ruleset;
+  }
+  function appendResponsiveStyles(styles, selector2, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector, blockRootSelector, styleVariationName) {
+    const responsiveStyles = Object.entries(styles).filter(
+      ([key]) => RESPONSIVE_BREAKPOINTS[key]
+    );
+    if (!responsiveStyles.length) {
+      return ruleset;
+    }
+    responsiveStyles.forEach(([breakpointKey, breakpointStyle]) => {
+      if (!breakpointStyle || typeof breakpointStyle !== "object") {
+        return;
+      }
+      const mediaQuery = RESPONSIVE_BREAKPOINTS[breakpointKey];
+      const remainingBreakpointStyles = JSON.parse(
+        JSON.stringify(breakpointStyle)
+      );
+      if (featureSelectors && typeof featureSelectors !== "string") {
+        let breakpointFeatureDeclarations = getFeatureDeclarations(
+          featureSelectors,
+          remainingBreakpointStyles
+        );
+        breakpointFeatureDeclarations = updateParagraphTextIndentSelector(
+          breakpointFeatureDeclarations,
+          treeSettings,
+          blockName
+        );
+        breakpointFeatureDeclarations = updateButtonWidthDeclarations(
+          breakpointFeatureDeclarations,
+          treeSettings
+        );
+        Object.entries(breakpointFeatureDeclarations).forEach(
+          ([baseSelector, declarations]) => {
+            if (!declarations.length) {
+              return;
+            }
+            let cssSelector;
+            if (!styleVariationSelector) {
+              cssSelector = baseSelector;
+            } else if (blockRootSelector && styleVariationName && !baseSelector.includes(blockRootSelector)) {
+              cssSelector = getBlockStyleVariationSelector(
+                styleVariationName,
+                baseSelector
+              );
+            } else {
+              cssSelector = concatFeatureVariationSelectorString(
+                baseSelector,
+                styleVariationSelector
+              );
+            }
+            const rules = declarations.join(";");
+            ruleset += `${mediaQuery}{:root :where(${cssSelector}){${rules};}}`;
+          }
+        );
+      }
+      const breakpointDeclarations = getStylesDeclarations(
+        remainingBreakpointStyles
+      );
+      if (breakpointDeclarations.length) {
+        const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
+          selector2,
+          styleVariationSelector
+        ) : selector2;
+        ruleset += `${mediaQuery}{:root :where(${cssSelector}){${breakpointDeclarations.join(
+          ";"
+        )};}}`;
+      }
+      const breakpointPseudoRules = appendPseudoSelectorStyles(
+        remainingBreakpointStyles,
+        selector2,
+        "",
+        featureSelectors,
+        treeSettings,
+        blockName,
+        styleVariationSelector
+      );
+      if (breakpointPseudoRules) {
+        ruleset += `${mediaQuery}{${breakpointPseudoRules}}`;
+      }
     });
     return ruleset;
   }
@@ -11255,6 +11346,17 @@ var wp;
                     name2,
                     styleVariationSelector
                   );
+                  ruleset = appendResponsiveStyles(
+                    styleVariations,
+                    styleVariationSelector,
+                    ruleset,
+                    featureSelectors,
+                    tree.settings,
+                    name2,
+                    styleVariationSelector,
+                    selector2,
+                    styleVariationName
+                  );
                   if (hasLayoutSupport && styleVariations?.spacing?.blockGap) {
                     const variationSelectorWithBlock = styleVariationSelector + selector2;
                     ruleset += getLayoutStyles({
@@ -11270,6 +11372,14 @@ var wp;
             );
           }
           ruleset = appendPseudoSelectorStyles(
+            styles,
+            selector2,
+            ruleset,
+            featureSelectors,
+            tree.settings,
+            name2
+          );
+          ruleset = appendResponsiveStyles(
             styles,
             selector2,
             ruleset,
@@ -11652,6 +11762,10 @@ var wp;
       { value: ":active", label: (0, import_i18n12.__)("Active") }
     ]
   };
+  var RESPONSIVE_STATES = [
+    { value: "tablet", label: (0, import_i18n12.__)("Tablet") },
+    { value: "mobile", label: (0, import_i18n12.__)("Mobile") }
+  ];
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {
       return object;
@@ -11738,6 +11852,12 @@ var wp;
   k([a11y_default]);
   function useStyle2(path, blockName, readFrom = "merged", shouldDecodeEncode = true, state) {
     const { user, base, merged, onChange } = (0, import_element36.useContext)(GlobalStylesContext);
+    const statePathParts = state?.split(".").filter(Boolean) ?? [];
+    const pseudoSelectorState = statePathParts.find(
+      (value) => value.startsWith(":")
+    );
+    const statePathWithoutPseudo = statePathParts.filter((value) => !value.startsWith(":")).join(".");
+    const stylePath = [path, statePathWithoutPseudo].filter(Boolean).join(".");
     let sourceValue = merged;
     if (readFrom === "base") {
       sourceValue = base;
@@ -11747,39 +11867,45 @@ var wp;
     const styleValue = (0, import_element36.useMemo)(() => {
       const rawValue = getStyle(
         sourceValue,
-        path,
+        stylePath,
         blockName,
         shouldDecodeEncode
       );
-      if (state) {
-        return rawValue?.[state] ?? {};
+      if (pseudoSelectorState) {
+        return rawValue?.[pseudoSelectorState] ?? {};
       }
       return rawValue;
-    }, [sourceValue, path, blockName, shouldDecodeEncode, state]);
+    }, [
+      sourceValue,
+      stylePath,
+      blockName,
+      shouldDecodeEncode,
+      pseudoSelectorState
+    ]);
     const setStyleValue = (0, import_element36.useCallback)(
       (newValue) => {
         let valueToSet = newValue;
-        if (state) {
+        if (pseudoSelectorState) {
           const fullCurrentValue = getStyle(
             user,
-            path,
+            stylePath,
             blockName,
             false
           );
           valueToSet = {
             ...fullCurrentValue,
-            [state]: newValue
+            [pseudoSelectorState]: newValue
           };
         }
         const newGlobalStyles = setStyle(
           user,
-          path,
+          stylePath,
           valueToSet,
           blockName
         );
         onChange(newGlobalStyles);
       },
-      [user, onChange, path, blockName, state]
+      [user, onChange, stylePath, blockName, pseudoSelectorState]
     );
     return [styleValue, setStyleValue];
   }
@@ -11818,8 +11944,8 @@ var wp;
     return title === (0, import_i18n13.__)("Default") || Object.keys(settings2 || {}).length > 0 || Object.keys(styles || {}).length > 0;
   }
   function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
-    const { variationsFromTheme } = (0, import_data18.useSelect)((select3) => {
-      const _variationsFromTheme = select3(
+    const { variationsFromTheme } = (0, import_data18.useSelect)((select4) => {
+      const _variationsFromTheme = select4(
         import_core_data14.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations?.();
       return {
@@ -12344,8 +12470,8 @@ var wp;
   }
   function useBlockVariations(name2) {
     const blockStyles = (0, import_data20.useSelect)(
-      (select3) => {
-        const { getBlockStyles } = select3(import_blocks4.store);
+      (select4) => {
+        const { getBlockStyles } = select4(import_blocks4.store);
         return getBlockStyles(name2);
       },
       [name2]
@@ -12373,7 +12499,7 @@ var wp;
   } = unlock2(import_block_editor6.privateApis);
   function useSortedBlockTypes() {
     const blockItems = (0, import_data21.useSelect)(
-      (select3) => select3(import_blocks5.store).getBlockTypes(),
+      (select4) => select4(import_blocks5.store).getBlockTypes(),
       []
     );
     const groupByType = (blocks, block) => {
@@ -23129,8 +23255,8 @@ var wp;
   }) {
     const { user } = (0, import_element58.useContext)(GlobalStylesContext);
     const userStyles = user?.styles;
-    const variations = (0, import_data26.useSelect)((select3) => {
-      const result = select3(
+    const variations = (0, import_data26.useSelect)((select4) => {
+      const result = select4(
         import_core_data22.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations();
       return Array.isArray(result) ? result : void 0;
@@ -23257,7 +23383,7 @@ var wp;
       isLoadingGlobalStylesRevisions,
       revisionsCount
     } = (0, import_data27.useSelect)(
-      (select3) => {
+      (select4) => {
         const {
           __experimentalGetDirtyEntityRecords,
           getCurrentUser,
@@ -23266,7 +23392,7 @@ var wp;
           __experimentalGetCurrentGlobalStylesId,
           getEntityRecord,
           isResolving
-        } = select3(import_core_data23.store);
+        } = select4(import_core_data23.store);
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords() || [];
         const _currentUser = getCurrentUser();
         const _isDirty = dirtyEntityRecords.length > 0;
@@ -23672,7 +23798,7 @@ var wp;
   }
   function SidebarNavigationScreenMain({ customDescription }) {
     const isBlockBasedTheme = (0, import_data31.useSelect)(
-      (select3) => select3(import_core_data25.store).getCurrentTheme()?.is_block_theme,
+      (select4) => select4(import_core_data25.store).getCurrentTheme()?.is_block_theme,
       []
     );
     let description;
@@ -23755,13 +23881,13 @@ var wp;
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideEditor() {
     const { toggle } = (0, import_data32.useDispatch)(import_preferences6.store);
-    const { isActive, isBlockBasedTheme } = (0, import_data32.useSelect)((select3) => {
+    const { isActive, isBlockBasedTheme } = (0, import_data32.useSelect)((select4) => {
       return {
-        isActive: !!select3(import_preferences6.store).get(
+        isActive: !!select4(import_preferences6.store).get(
           "core/edit-site",
           "welcomeGuide"
         ),
-        isBlockBasedTheme: select3(import_core_data26.store).getCurrentTheme()?.is_block_theme
+        isBlockBasedTheme: select4(import_core_data26.store).getCurrentTheme()?.is_block_theme
       };
     }, []);
     if (!isActive || !isBlockBasedTheme) {
@@ -23817,12 +23943,12 @@ var wp;
   var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuidePage() {
     const { toggle } = (0, import_data33.useDispatch)(import_preferences7.store);
-    const isVisible2 = (0, import_data33.useSelect)((select3) => {
-      const isPageActive = !!select3(import_preferences7.store).get(
+    const isVisible2 = (0, import_data33.useSelect)((select4) => {
+      const isPageActive = !!select4(import_preferences7.store).get(
         "core/edit-site",
         "welcomeGuidePage"
       );
-      const isEditorActive = !!select3(import_preferences7.store).get(
+      const isEditorActive = !!select4(import_preferences7.store).get(
         "core/edit-site",
         "welcomeGuide"
       );
@@ -23881,9 +24007,9 @@ var wp;
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideTemplate() {
     const { toggle } = (0, import_data34.useDispatch)(import_preferences8.store);
-    const { isActive, hasPreviousEntity } = (0, import_data34.useSelect)((select3) => {
-      const { getEditorSettings } = select3(import_editor9.store);
-      const { get } = select3(import_preferences8.store);
+    const { isActive, hasPreviousEntity } = (0, import_data34.useSelect)((select4) => {
+      const { getEditorSettings } = select4(import_editor9.store);
+      const { get } = select4(import_preferences8.store);
       return {
         isActive: get("core/edit-site", "welcomeGuideTemplate"),
         hasPreviousEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord
@@ -23954,8 +24080,8 @@ var wp;
   function CanvasLoader({ id }) {
     const textColor = useStyle3("color.text");
     const backgroundColor = useStyle3("color.background");
-    const { elapsed, total } = (0, import_data35.useSelect)((select3) => {
-      const selectorsByStatus = select3(import_core_data27.store).countSelectorsByStatus();
+    const { elapsed, total } = (0, import_data35.useSelect)((select4) => {
+      const selectorsByStatus = select4(import_core_data27.store).countSelectorsByStatus();
       const resolving = selectorsByStatus.resolving ?? 0;
       const finished = selectorsByStatus.finished ?? 0;
       return {
@@ -24013,7 +24139,7 @@ var wp;
     const { query, path } = location;
     const registry = (0, import_data37.useRegistry)();
     const currentDeviceType = (0, import_data37.useSelect)(
-      (select3) => select3(import_editor13.store).getDeviceType(),
+      (select4) => select4(import_editor13.store).getDeviceType(),
       []
     );
     const onNavigateToEntityRecord = (0, import_element68.useCallback)(
@@ -24084,9 +24210,9 @@ var wp;
     const { canvas = "view" } = query;
     const onNavigateToEntityRecord = useNavigateToEntityRecord();
     const { merged: mergedConfig } = useGlobalStyles2();
-    const { settings: settings2, currentPostIsTrashed } = (0, import_data38.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
-      const { getCurrentPostAttribute } = select3(import_editor14.store);
+    const { settings: settings2, currentPostIsTrashed } = (0, import_data38.useSelect)((select4) => {
+      const { getSettings: getSettings7 } = select4(store);
+      const { getCurrentPostAttribute } = select4(import_editor14.store);
       return {
         settings: getSettings7(),
         currentPostIsTrashed: getCurrentPostAttribute("status") === "trash"
@@ -24147,7 +24273,7 @@ var wp;
       alternative: "wp.editor.PluginDocumentSettingPanel"
     });
     const isCurrentEntityTemplate = (0, import_data39.useSelect)(
-      (select3) => select3(import_editor15.store).getCurrentPostType() === "wp_template",
+      (select4) => select4(import_editor15.store).getCurrentPostType() === "wp_template",
       []
     );
     if (!isCurrentEntityTemplate) {
@@ -24171,8 +24297,8 @@ var wp;
   var import_notices2 = __toESM(require_notices(), 1);
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
   function SiteExport() {
-    const canExport = (0, import_data40.useSelect)((select3) => {
-      const targetHints = select3(import_core_data29.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
+    const canExport = (0, import_data40.useSelect)((select4) => {
+      const targetHints = select4(import_core_data29.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
       return !!targetHints.allow?.includes("GET");
     }, []);
     const { createErrorNotice } = (0, import_data40.useDispatch)(import_notices2.store);
@@ -24256,8 +24382,8 @@ var wp;
     const { query, path } = useLocation15();
     const history = useHistory10();
     const { canvas = "view" } = query;
-    const currentPostIsTrashed = (0, import_data42.useSelect)((select3) => {
-      return select3(import_editor17.store).getCurrentPostAttribute("status") === "trash";
+    const currentPostIsTrashed = (0, import_data42.useSelect)((select4) => {
+      return select4(import_editor17.store).getCurrentPostAttribute("status") === "trash";
     }, []);
     const [isFocused, setIsFocused] = (0, import_element70.useState)(false);
     (0, import_element70.useEffect)(() => {
@@ -24320,7 +24446,7 @@ var wp;
   function useTitle(title) {
     const location = useLocation16();
     const siteTitle = (0, import_data43.useSelect)(
-      (select3) => select3(import_core_data30.store).getEntityRecord("root", "site")?.title,
+      (select4) => select4(import_core_data30.store).getEntityRecord("root", "site")?.title,
       []
     );
     const isInitialLocationRef = (0, import_element71.useRef)(true);
@@ -24348,12 +24474,12 @@ var wp;
   var { getTemplateInfo } = unlock(import_editor18.privateApis);
   function useEditorTitle(postType2, postId) {
     const { title, isLoaded } = (0, import_data44.useSelect)(
-      (select3) => {
+      (select4) => {
         const {
           getEditedEntityRecord,
           getCurrentTheme,
           hasFinishedResolution
-        } = select3(import_core_data31.store);
+        } = select4(import_core_data31.store);
         if (!postId) {
           return { isLoaded: false };
         }
@@ -24483,19 +24609,19 @@ var wp;
     const postType2 = getPostType(name2, postId) ?? query?.postType;
     const { selectedBlock } = query;
     const appliedSelectionRef = (0, import_element73.useRef)(null);
-    const homePage = (0, import_data46.useSelect)((select3) => {
-      const { getHomePage } = unlock(select3(import_core_data32.store));
+    const homePage = (0, import_data46.useSelect)((select4) => {
+      const { getHomePage } = unlock(select4(import_core_data32.store));
       return getHomePage();
     }, []);
     const resolvedTemplateId = (0, import_data46.useSelect)(
-      (select3) => {
+      (select4) => {
         if (postTypesWithoutParentTemplate.includes(postType2) && postId) {
           return;
         }
         if (postId && postId.includes(",")) {
           return;
         }
-        const { getTemplateId } = unlock(select3(import_core_data32.store));
+        const { getTemplateId } = unlock(select4(import_core_data32.store));
         if (postType2 && postId && authorizedPostTypes.includes(postType2)) {
           return getTemplateId(postType2, postId);
         }
@@ -24576,8 +24702,8 @@ var wp;
   var import_url10 = __toESM(require_url(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   function SitePreview() {
-    const siteUrl = (0, import_data47.useSelect)((select3) => {
-      const { getEntityRecord } = select3(import_core_data33.store);
+    const siteUrl = (0, import_data47.useSelect)((select4) => {
+      const { getEntityRecord } = select4(import_core_data33.store);
       const siteData = getEntityRecord("root", "__unstableBase");
       return siteData?.home;
     }, []);
@@ -24676,8 +24802,8 @@ var wp;
     const entity = useResolveEditedEntity();
     useSyncDeprecatedEntityIntoState(entity);
     const { postType: postType2, postId, context } = entity;
-    const { isBlockBasedTheme, hasSiteIcon } = (0, import_data48.useSelect)((select3) => {
-      const { getCurrentTheme, getEntityRecord } = select3(import_core_data34.store);
+    const { isBlockBasedTheme, hasSiteIcon } = (0, import_data48.useSelect)((select4) => {
+      const { getCurrentTheme, getEntityRecord } = select4(import_core_data34.store);
       const siteData = getEntityRecord("root", "__unstableBase", void 0);
       return {
         isBlockBasedTheme: getCurrentTheme()?.is_block_theme,
@@ -30743,7 +30869,7 @@ var wp;
     if (!store2) return;
     return getInternal(store2, "init")(...args);
   }
-  function subscribe(store2, ...args) {
+  function subscribe2(store2, ...args) {
     if (!store2) return;
     return getInternal(store2, "subscribe")(...args);
   }
@@ -30818,7 +30944,7 @@ If there's a particular need for this, please submit a feature request at https:
     const storeSubscribe = React26.useCallback(
       (callback) => {
         if (!store2) return noopSubscribe();
-        return subscribe(store2, null, callback);
+        return subscribe2(store2, null, callback);
       },
       [store2]
     );
@@ -30841,7 +30967,7 @@ If there's a particular need for this, please submit a feature request at https:
     const storeSubscribe = React26.useCallback(
       (callback) => {
         if (!store2) return noopSubscribe();
-        return subscribe(store2, null, callback);
+        return subscribe2(store2, null, callback);
       },
       [store2]
     );
@@ -31714,7 +31840,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     setup(
       disclosure,
-      () => subscribe(disclosure, ["open"], () => {
+      () => subscribe2(disclosure, ["open"], () => {
         if (!disclosure.getState().animated) return;
         disclosure.setState("animating", true);
       })
@@ -43131,13 +43257,13 @@ If there's a particular need for this, please submit a feature request at https:
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, []);
     const attachments = (0, import_data54.useSelect)(
-      (select3) => {
+      (select4) => {
         if (!value) {
           return null;
         }
         const normalizedValue = normalizeValue2(value);
         const sortedIds = normalizedValue.toSorted((a2, b2) => a2 - b2);
-        const { getEntityRecords } = select3(import_core_data35.store);
+        const { getEntityRecords } = select4(import_core_data35.store);
         return getEntityRecords("postType", "attachment", {
           include: sortedIds
         });
@@ -43557,7 +43683,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function SidebarIdentity() {
     const data = (0, import_data55.useSelect)(
-      (select3) => select3(import_core_data36.store).getEditedEntityRecord("root", "site"),
+      (select4) => select4(import_core_data36.store).getEditedEntityRecord("root", "site"),
       []
     );
     const { editEntityRecord } = (0, import_data55.useDispatch)(import_core_data36.store);
@@ -43672,7 +43798,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isMobileViewport = (0, import_compose26.useViewportMatch)("medium", "<");
     const [section, onChangeSection] = useSection();
     const settings2 = (0, import_data56.useSelect)(
-      (select3) => select3(store).getSettings(),
+      (select4) => select4(store).getSettings(),
       []
     );
     return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
@@ -43997,8 +44123,8 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_block_editor20.BlockTitle)({ clientId, maximumLength: 25 })
     );
     const rootClientId = (0, import_data57.useSelect)(
-      (select3) => {
-        const { getBlockRootClientId } = select3(import_block_editor20.store);
+      (select4) => {
+        const { getBlockRootClientId } = select4(import_block_editor20.store);
         return getBlockRootClientId(clientId);
       },
       [clientId]
@@ -44101,14 +44227,14 @@ If there's a particular need for this, please submit a feature request at https:
   ];
   function NavigationMenuContent({ rootClientId }) {
     const { listViewRootClientId, isLoading } = (0, import_data58.useSelect)(
-      (select3) => {
+      (select4) => {
         const {
           areInnerBlocksControlled,
           getBlockName,
           getBlockCount,
           getBlockOrder
-        } = select3(import_block_editor21.store);
-        const { isResolving } = select3(import_core_data37.store);
+        } = select4(import_block_editor21.store);
+        const { isResolving } = select4(import_core_data37.store);
         const blockClientIds = getBlockOrder(rootClientId);
         const hasOnlyPageListBlock = blockClientIds.length === 1 && getBlockName(blockClientIds[0]) === "core/page-list";
         const pageListHasBlocks = hasOnlyPageListBlock && getBlockCount(blockClientIds[0]) > 0;
@@ -44159,8 +44285,8 @@ If there's a particular need for this, please submit a feature request at https:
   var noop4 = () => {
   };
   function NavigationMenuEditor({ navigationMenuId }) {
-    const { storedSettings } = (0, import_data59.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = unlock(select3(store));
+    const { storedSettings } = (0, import_data59.useSelect)((select4) => {
+      const { getSettings: getSettings7 } = unlock(select4(store));
       return {
         storedSettings: getSettings7()
       };
@@ -44274,8 +44400,8 @@ If there's a particular need for this, please submit a feature request at https:
       postId
     );
     const { isSaving, isDeleting } = (0, import_data60.useSelect)(
-      (select3) => {
-        const { isSavingEntityRecord, isDeletingEntityRecord } = select3(import_core_data39.store);
+      (select4) => {
+        const { isSavingEntityRecord, isDeletingEntityRecord } = select4(import_core_data39.store);
         return {
           isSaving: isSavingEntityRecord("postType", postType, postId),
           isDeleting: isDeletingEntityRecord(
@@ -44393,8 +44519,8 @@ If there's a particular need for this, please submit a feature request at https:
     return handleDelete;
   }
   function useSaveNavigationMenu() {
-    const { getEditedEntityRecord } = (0, import_data61.useSelect)((select3) => {
-      const { getEditedEntityRecord: getEditedEntityRecordSelector } = select3(import_core_data40.store);
+    const { getEditedEntityRecord } = (0, import_data61.useSelect)((select4) => {
+      const { getEditedEntityRecord: getEditedEntityRecordSelector } = select4(import_core_data40.store);
       return {
         getEditedEntityRecord: getEditedEntityRecordSelector
       };
@@ -44526,7 +44652,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isLoading = isResolvingNavigationMenus && !hasResolvedNavigationMenus;
     const { getNavigationFallbackId } = unlock((0, import_data62.useSelect)(import_core_data41.store));
     const isCreatingNavigationFallback = (0, import_data62.useSelect)(
-      (select3) => select3(import_core_data41.store).isResolving("getNavigationFallbackId"),
+      (select4) => select4(import_core_data41.store).isResolving("getNavigationFallbackId"),
       []
     );
     const firstNavigationMenu = navigationMenus?.[0];
@@ -44881,8 +45007,8 @@ If there's a particular need for this, please submit a feature request at https:
     } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
     const persistedView = (0, import_data63.useSelect)(
-      (select3) => {
-        return select3(import_preferences11.store).get(
+      (select4) => {
+        return select4(import_preferences11.store).get(
           "core/views",
           preferenceKey
         );
@@ -45011,8 +45137,8 @@ If there's a particular need for this, please submit a feature request at https:
     name: name2
   }) {
     return (0, import_data65.useSelect)(
-      (select3) => {
-        return unlock5(select3(import_core_data42.store)).getViewConfig(kind, name2);
+      (select4) => {
+        return unlock5(select4(import_core_data42.store)).getViewConfig(kind, name2);
       },
       [kind, name2]
     );
@@ -45055,13 +45181,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data43 = __toESM(require_core_data(), 1);
   var import_data66 = __toESM(require_data(), 1);
   function useDefaultPatternCategories() {
-    const blockPatternCategories = (0, import_data66.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = unlock(select3(store));
+    const blockPatternCategories = (0, import_data66.useSelect)((select4) => {
+      const { getSettings: getSettings7 } = unlock(select4(store));
       const settings2 = getSettings7();
       return settings2.__experimentalAdditionalBlockPatternCategories ?? settings2.__experimentalBlockPatternCategories;
     });
     const restBlockPatternCategories = (0, import_data66.useSelect)(
-      (select3) => select3(import_core_data43.store).getBlockPatternCategories()
+      (select4) => select4(import_core_data43.store).getBlockPatternCategories()
     );
     return [
       ...blockPatternCategories || [],
@@ -45079,12 +45205,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
   function useThemePatterns() {
-    const blockPatterns = (0, import_data67.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = unlock(select3(store));
+    const blockPatterns = (0, import_data67.useSelect)((select4) => {
+      const { getSettings: getSettings7 } = unlock(select4(store));
       return getSettings7().__experimentalAdditionalBlockPatterns ?? getSettings7().__experimentalBlockPatterns;
     });
     const restBlockPatterns = (0, import_data67.useSelect)(
-      (select3) => select3(import_core_data44.store).getBlockPatterns()
+      (select4) => select4(import_core_data44.store).getBlockPatterns()
     );
     const patterns = (0, import_element152.useMemo)(
       () => [...blockPatterns || [], ...restBlockPatterns || []].filter(
@@ -45200,12 +45326,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
   var EMPTY_PATTERN_LIST = [];
   var selectTemplateParts = (0, import_data68.createSelector)(
-    (select3, categoryId, search = "") => {
+    (select4, categoryId, search = "") => {
       const {
         getEntityRecords,
         getCurrentTheme,
         isResolving: isResolvingSelector
-      } = select3(import_core_data45.store);
+      } = select4(import_core_data45.store);
       const query = { per_page: -1 };
       const templateParts = getEntityRecords("postType", TEMPLATE_PART_POST_TYPE, query) ?? EMPTY_PATTERN_LIST;
       const knownAreas = getCurrentTheme()?.default_template_part_areas || [];
@@ -45227,29 +45353,29 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return { patterns, isResolving };
     },
-    (select3) => [
-      select3(import_core_data45.store).getEntityRecords(
+    (select4) => [
+      select4(import_core_data45.store).getEntityRecords(
         "postType",
         TEMPLATE_PART_POST_TYPE,
         {
           per_page: -1
         }
       ),
-      select3(import_core_data45.store).isResolving("getEntityRecords", [
+      select4(import_core_data45.store).isResolving("getEntityRecords", [
         "postType",
         TEMPLATE_PART_POST_TYPE,
         { per_page: -1 }
       ]),
-      select3(import_core_data45.store).getCurrentTheme()?.default_template_part_areas
+      select4(import_core_data45.store).getCurrentTheme()?.default_template_part_areas
     ]
   );
   var selectThemePatterns = (0, import_data68.createSelector)(
-    (select3) => {
-      const { getSettings: getSettings7 } = unlock(select3(store));
-      const { isResolving: isResolvingSelector } = select3(import_core_data45.store);
+    (select4) => {
+      const { getSettings: getSettings7 } = unlock(select4(store));
+      const { isResolving: isResolvingSelector } = select4(import_core_data45.store);
       const settings2 = getSettings7();
       const blockPatterns = settings2.__experimentalAdditionalBlockPatterns ?? settings2.__experimentalBlockPatterns;
-      const restBlockPatterns = select3(import_core_data45.store).getBlockPatterns();
+      const restBlockPatterns = select4(import_core_data45.store).getBlockPatterns();
       const patterns = [
         ...blockPatterns || [],
         ...restBlockPatterns || []
@@ -45268,23 +45394,23 @@ If there's a particular need for this, please submit a feature request at https:
         isResolving: isResolvingSelector("getBlockPatterns")
       };
     },
-    (select3) => [
-      select3(import_core_data45.store).getBlockPatterns(),
-      select3(import_core_data45.store).isResolving("getBlockPatterns"),
-      unlock(select3(store)).getSettings()
+    (select4) => [
+      select4(import_core_data45.store).getBlockPatterns(),
+      select4(import_core_data45.store).isResolving("getBlockPatterns"),
+      unlock(select4(store)).getSettings()
     ]
   );
   var selectPatterns = (0, import_data68.createSelector)(
-    (select3, categoryId, syncStatus, search = "") => {
+    (select4, categoryId, syncStatus, search = "") => {
       const {
         patterns: themePatterns,
         isResolving: isResolvingThemePatterns
-      } = selectThemePatterns(select3);
+      } = selectThemePatterns(select4);
       const {
         patterns: userPatterns,
         isResolving: isResolvingUserPatterns,
         categories: userPatternCategories
-      } = selectUserPatterns(select3);
+      } = selectUserPatterns(select4);
       let patterns = [
         ...themePatterns || [],
         ...userPatterns || []
@@ -45327,18 +45453,18 @@ If there's a particular need for this, please submit a feature request at https:
         isResolving: isResolvingThemePatterns || isResolvingUserPatterns
       };
     },
-    (select3) => [
-      selectThemePatterns(select3),
-      selectUserPatterns(select3)
+    (select4) => [
+      selectThemePatterns(select4),
+      selectUserPatterns(select4)
     ]
   );
   var selectUserPatterns = (0, import_data68.createSelector)(
-    (select3, syncStatus, search = "") => {
+    (select4, syncStatus, search = "") => {
       const {
         getEntityRecords,
         isResolving: isResolvingSelector,
         getUserPatternCategories
-      } = select3(import_core_data45.store);
+      } = select4(import_core_data45.store);
       const query = { per_page: -1 };
       const patternPosts = getEntityRecords(
         "postType",
@@ -45373,16 +45499,16 @@ If there's a particular need for this, please submit a feature request at https:
         categories: userPatternCategories
       };
     },
-    (select3) => [
-      select3(import_core_data45.store).getEntityRecords("postType", PATTERN_TYPES.user, {
+    (select4) => [
+      select4(import_core_data45.store).getEntityRecords("postType", PATTERN_TYPES.user, {
         per_page: -1
       }),
-      select3(import_core_data45.store).isResolving("getEntityRecords", [
+      select4(import_core_data45.store).isResolving("getEntityRecords", [
         "postType",
         PATTERN_TYPES.user,
         { per_page: -1 }
       ]),
-      select3(import_core_data45.store).getUserPatternCategories()
+      select4(import_core_data45.store).getUserPatternCategories()
     ]
   );
   function useAugmentPatternsWithPermissions(patterns) {
@@ -45391,9 +45517,9 @@ If there's a particular need for this, please submit a feature request at https:
       [patterns]
     );
     const permissions = (0, import_data68.useSelect)(
-      (select3) => {
+      (select4) => {
         const { getEntityRecordPermissions } = unlock(
-          select3(import_core_data45.store)
+          select4(import_core_data45.store)
         );
         return idsAndTypes.reduce((acc, [type, id]) => {
           acc[id] = getEntityRecordPermissions("postType", type, id);
@@ -45412,19 +45538,19 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var usePatterns = (postType2, categoryId, { search = "", syncStatus } = {}) => {
     return (0, import_data68.useSelect)(
-      (select3) => {
+      (select4) => {
         if (postType2 === TEMPLATE_PART_POST_TYPE) {
-          return selectTemplateParts(select3, categoryId, search);
+          return selectTemplateParts(select4, categoryId, search);
         } else if (postType2 === PATTERN_TYPES.user && !!categoryId) {
           const appliedCategory = categoryId === "uncategorized" ? "" : categoryId;
           return selectPatterns(
-            select3,
+            select4,
             appliedCategory,
             syncStatus,
             search
           );
         } else if (postType2 === PATTERN_TYPES.user) {
-          return selectUserPatterns(select3, syncStatus, search);
+          return selectUserPatterns(select4, syncStatus, search);
         }
         return {
           patterns: EMPTY_PATTERN_LIST,
@@ -45526,7 +45652,7 @@ If there's a particular need for this, please submit a feature request at https:
   var useTemplatePartsGroupedByArea = (items) => {
     const allItems = items || [];
     const templatePartAreas = (0, import_data69.useSelect)(
-      (select3) => select3(import_core_data46.store).getCurrentTheme()?.default_template_part_areas || [],
+      (select4) => select4(import_core_data46.store).getCurrentTheme()?.default_template_part_areas || [],
       []
     );
     const knownAreas = {
@@ -45687,14 +45813,14 @@ If there's a particular need for this, please submit a feature request at https:
   var { globalStylesDataKey } = unlock(import_block_editor24.privateApis);
   function usePatternSettings() {
     const { merged: mergedConfig } = useGlobalStyles3();
-    const storedSettings = (0, import_data70.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = unlock(select3(store));
+    const storedSettings = (0, import_data70.useSelect)((select4) => {
+      const { getSettings: getSettings7 } = unlock(select4(store));
       return getSettings7();
     }, []);
     const settingsBlockPatterns = storedSettings.__experimentalAdditionalBlockPatterns ?? // WP 6.0
     storedSettings.__experimentalBlockPatterns;
     const restBlockPatterns = (0, import_data70.useSelect)(
-      (select3) => select3(import_core_data47.store).getBlockPatterns(),
+      (select4) => select4(import_core_data47.store).getBlockPatterns(),
       []
     );
     const blockPatterns = (0, import_element156.useMemo)(
@@ -45716,9 +45842,12 @@ If there's a particular need for this, please submit a feature request at https:
         __experimentalFeatures,
         ...restStoredSettings
       } = storedSettings;
+      const nonGlobalStyles = (styles ?? []).filter(
+        (style) => !style.isGlobalStyles
+      );
       return {
         ...restStoredSettings,
-        styles: globalStyles,
+        styles: [...nonGlobalStyles, ...globalStyles],
         __experimentalFeatures: globalSettings,
         [globalStylesDataKey]: mergedConfig.styles ?? {},
         __experimentalBlockPatterns: blockPatterns,
@@ -45768,8 +45897,8 @@ If there's a particular need for this, please submit a feature request at https:
       addNewTemplatePartLabel,
       canCreatePattern,
       canCreateTemplatePart
-    } = (0, import_data71.useSelect)((select3) => {
-      const { getCurrentTheme, getPostType: getPostType2, canUser } = select3(import_core_data48.store);
+    } = (0, import_data71.useSelect)((select4) => {
+      const { getCurrentTheme, getPostType: getPostType2, canUser } = select4(import_core_data48.store);
       return {
         isBlockBasedTheme: getCurrentTheme()?.is_block_theme,
         addNewPatternLabel: getPostType2(PATTERN_TYPES.user)?.labels?.add_new_item,
@@ -46099,7 +46228,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { useLocation: useLocation28, useHistory: useHistory19 } = unlock(import_router32.privateApis);
   var useSetActiveTemplateAction = () => {
     const activeTheme = (0, import_data73.useSelect)(
-      (select3) => select3(import_core_data50.store).getCurrentTheme()
+      (select4) => select4(import_core_data50.store).getCurrentTheme()
     );
     const { getEntityRecord } = (0, import_data73.useSelect)(import_core_data50.store);
     const { editEntityRecord, saveEditedEntityRecord } = (0, import_data73.useDispatch)(import_core_data50.store);
@@ -46210,8 +46339,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data74 = __toESM(require_data(), 1);
   function useAddedBy(postType2, postId) {
     return (0, import_data74.useSelect)(
-      (select3) => {
-        const { getEntityRecord, getUser, getEditedEntityRecord } = select3(import_core_data51.store);
+      (select4) => {
+        const { getEntityRecord, getUser, getEditedEntityRecord } = select4(import_core_data51.store);
         const template = getEditedEntityRecord(
           "postType",
           postType2,
@@ -46387,7 +46516,7 @@ If there's a particular need for this, please submit a feature request at https:
   function usePagePatternsHeader(type, categoryId) {
     const { patternCategories } = usePatternCategories();
     const templatePartAreas = (0, import_data75.useSelect)(
-      (select3) => select3(import_core_data52.store).getCurrentTheme()?.default_template_part_areas || [],
+      (select4) => select4(import_core_data52.store).getCurrentTheme()?.default_template_part_areas || [],
       []
     );
     let title, description, patternCategory;
@@ -46741,8 +46870,8 @@ If there's a particular need for this, please submit a feature request at https:
     site: globe_default
   };
   function DataviewsTemplatesSidebarContent2() {
-    const authorSourceMap = (0, import_data76.useSelect)((select3) => {
-      const templates = select3(import_core_data54.store).getEntityRecords(
+    const authorSourceMap = (0, import_data76.useSelect)((select4) => {
+      const templates = select4(import_core_data54.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
         { per_page: -1 }
@@ -46848,7 +46977,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useExistingTemplates = () => {
     return (0, import_data77.useSelect)(
-      (select3) => select3(import_core_data55.store).getEntityRecords(
+      (select4) => select4(import_core_data55.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
         {
@@ -46860,13 +46989,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useDefaultTemplateTypes = () => {
     return (0, import_data77.useSelect)(
-      (select3) => select3(import_core_data55.store).getCurrentTheme()?.default_template_types || [],
+      (select4) => select4(import_core_data55.store).getCurrentTheme()?.default_template_types || [],
       []
     );
   };
   var usePublicPostTypes = () => {
     const postTypes = (0, import_data77.useSelect)(
-      (select3) => select3(import_core_data55.store).getPostTypes({ per_page: -1 }),
+      (select4) => select4(import_core_data55.store).getPostTypes({ per_page: -1 }),
       []
     );
     return (0, import_element164.useMemo)(() => {
@@ -46883,7 +47012,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var usePublicTaxonomies = () => {
     const taxonomies = (0, import_data77.useSelect)(
-      (select3) => select3(import_core_data55.store).getTaxonomies({ per_page: -1 }),
+      (select4) => select4(import_core_data55.store).getTaxonomies({ per_page: -1 }),
       []
     );
     return (0, import_element164.useMemo)(() => {
@@ -47293,17 +47422,20 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters = EMPTY_OBJECT2) => {
     const entitiesHasRecords = (0, import_data77.useSelect)(
-      (select3) => {
+      (select4) => {
         return Object.keys(templatePrefixes || {}).reduce(
           (accumulator, slug) => {
-            accumulator[slug] = !!select3(
-              import_core_data55.store
-            ).getEntityRecords(entityName, slug, {
-              per_page: 1,
-              _fields: "id",
-              context: "view",
-              ...additionalQueryParameters[slug]
-            })?.length;
+            const records = select4(import_core_data55.store).getEntityRecords(
+              entityName,
+              slug,
+              {
+                per_page: 1,
+                _fields: "id",
+                context: "view",
+                ...additionalQueryParameters[slug]
+              }
+            );
+            accumulator[slug] = records === null || records.length > 0;
             return accumulator;
           },
           {}
@@ -47807,8 +47939,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { createErrorNotice, createSuccessNotice } = (0, import_data78.useDispatch)(import_notices8.store);
     const containerRef = (0, import_element167.useRef)(null);
     const isMobile = (0, import_compose28.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data78.useSelect)((select3) => {
-      return select3(import_core_data57.store).getEntityRecord("root", "__unstableBase")?.home;
+    const homeUrl = (0, import_data78.useSelect)((select4) => {
+      return select4(import_core_data57.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
       "front-page": homeUrl,
@@ -47970,8 +48102,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function NewTemplate() {
     const [showModal, setShowModal] = (0, import_element167.useState)(false);
-    const { postType: postType2 } = (0, import_data78.useSelect)((select3) => {
-      const { getPostType: getPostType2 } = select3(import_core_data57.store);
+    const { postType: postType2 } = (0, import_data78.useSelect)((select4) => {
+      const { getPostType: getPostType2 } = select4(import_core_data57.store);
       return {
         postType: getPostType2(TEMPLATE_POST_TYPE)
       };
@@ -48152,7 +48284,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useThemeField = () => {
     const activeTheme = (0, import_data79.useSelect)(
-      (select3) => select3(import_core_data58.store).getCurrentTheme()
+      (select4) => select4(import_core_data58.store).getCurrentTheme()
     );
     return (0, import_element168.useMemo)(
       () => ({
@@ -48264,12 +48396,12 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     });
-    const { activeTemplatesOption, activeTheme, defaultTemplateTypes } = (0, import_data80.useSelect)((select3) => {
-      const { getEntityRecord, getCurrentTheme } = select3(import_core_data59.store);
+    const { activeTemplatesOption, activeTheme, defaultTemplateTypes } = (0, import_data80.useSelect)((select4) => {
+      const { getEntityRecord, getCurrentTheme } = select4(import_core_data59.store);
       return {
         activeTemplatesOption: getEntityRecord("root", "site")?.active_templates,
         activeTheme: getCurrentTheme(),
-        defaultTemplateTypes: select3(import_core_data59.store).getCurrentTheme()?.default_template_types
+        defaultTemplateTypes: select4(import_core_data59.store).getCurrentTheme()?.default_template_types
       };
     });
     const { records: userRecords, isResolving: isLoadingUserRecords } = useEntityRecordsWithPermissions2("postType", TEMPLATE_POST_TYPE, {
@@ -48346,8 +48478,8 @@ If there's a particular need for this, please submit a feature request at https:
       activeView
     ]);
     const users = (0, import_data80.useSelect)(
-      (select3) => {
-        const { getUser } = select3(import_core_data59.store);
+      (select4) => {
+        const { getUser } = select4(import_core_data59.store);
         return records.reduce((acc, record) => {
           if (record.author_text) {
             if (!acc[record.author_text]) {
@@ -48583,7 +48715,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useExistingTemplates2 = () => {
     return (0, import_data81.useSelect)(
-      (select3) => select3(import_core_data60.store).getEntityRecords(
+      (select4) => select4(import_core_data60.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
         {
@@ -48595,13 +48727,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useDefaultTemplateTypes2 = () => {
     return (0, import_data81.useSelect)(
-      (select3) => select3(import_core_data60.store).getCurrentTheme()?.default_template_types || [],
+      (select4) => select4(import_core_data60.store).getCurrentTheme()?.default_template_types || [],
       []
     );
   };
   var usePublicPostTypes2 = () => {
     const postTypes = (0, import_data81.useSelect)(
-      (select3) => select3(import_core_data60.store).getPostTypes({ per_page: -1 }),
+      (select4) => select4(import_core_data60.store).getPostTypes({ per_page: -1 }),
       []
     );
     return (0, import_element170.useMemo)(() => {
@@ -48618,7 +48750,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var usePublicTaxonomies2 = () => {
     const taxonomies = (0, import_data81.useSelect)(
-      (select3) => select3(import_core_data60.store).getTaxonomies({ per_page: -1 }),
+      (select4) => select4(import_core_data60.store).getTaxonomies({ per_page: -1 }),
       []
     );
     return (0, import_element170.useMemo)(() => {
@@ -49060,10 +49192,10 @@ If there's a particular need for this, please submit a feature request at https:
   var useTemplatesToExclude = (entityName, templatePrefixes, additionalQueryParameters = {}) => {
     const slugsToExcludePerEntity = useExistingTemplateSlugs(templatePrefixes);
     const recordsToExcludePerEntity = (0, import_data81.useSelect)(
-      (select3) => {
+      (select4) => {
         return Object.entries(slugsToExcludePerEntity || {}).reduce(
           (accumulator, [slug, slugsWithTemplates]) => {
-            const entitiesWithTemplates = select3(
+            const entitiesWithTemplates = select4(
               import_core_data60.store
             ).getEntityRecords(entityName, slug, {
               _fields: "id",
@@ -49090,21 +49222,24 @@ If there's a particular need for this, please submit a feature request at https:
       additionalQueryParameters
     );
     const entitiesHasRecords = (0, import_data81.useSelect)(
-      (select3) => {
+      (select4) => {
         return Object.keys(templatePrefixes || {}).reduce(
           (accumulator, slug) => {
             const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(
               ({ id }) => id
             ) || [];
-            accumulator[slug] = !!select3(
-              import_core_data60.store
-            ).getEntityRecords(entityName, slug, {
-              per_page: 1,
-              _fields: "id",
-              context: "view",
-              exclude: existingEntitiesIds,
-              ...additionalQueryParameters[slug]
-            })?.length;
+            const records = select4(import_core_data60.store).getEntityRecords(
+              entityName,
+              slug,
+              {
+                per_page: 1,
+                _fields: "id",
+                context: "view",
+                exclude: existingEntitiesIds,
+                ...additionalQueryParameters[slug]
+              }
+            );
+            accumulator[slug] = records === null || records.length > 0;
             return accumulator;
           },
           {}
@@ -49619,8 +49754,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { createErrorNotice, createSuccessNotice } = (0, import_data82.useDispatch)(import_notices10.store);
     const containerRef = (0, import_element173.useRef)(null);
     const isMobile = (0, import_compose31.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data82.useSelect)((select3) => {
-      return select3(import_core_data62.store).getEntityRecord("root", "__unstableBase")?.home;
+    const homeUrl = (0, import_data82.useSelect)((select4) => {
+      return select4(import_core_data62.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
       "front-page": homeUrl,
@@ -49780,8 +49915,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function NewTemplate2() {
     const [showModal, setShowModal] = (0, import_element173.useState)(false);
-    const { postType: postType2 } = (0, import_data82.useSelect)((select3) => {
-      const { getPostType: getPostType2 } = select3(import_core_data62.store);
+    const { postType: postType2 } = (0, import_data82.useSelect)((select4) => {
+      const { getPostType: getPostType2 } = select4(import_core_data62.store);
       return {
         postType: getPostType2(TEMPLATE_POST_TYPE)
       };
@@ -50107,7 +50242,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   function AddNewPostModal({ postType: postType2, onSave, onClose }) {
     const labels = (0, import_data84.useSelect)(
-      (select3) => select3(import_core_data65.store).getPostType(postType2)?.labels,
+      (select4) => select4(import_core_data65.store).getPostType(postType2)?.labels,
       [postType2]
     );
     const [isCreatingPost, setIsCreatingPost] = (0, import_element175.useState)(false);
@@ -50256,11 +50391,11 @@ If there's a particular need for this, please submit a feature request at https:
     const isBulk = postId.length > 1;
     const [localEdits, setLocalEdits] = (0, import_element177.useState)({});
     const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data85.useSelect)(
-      (select3) => {
+      (select4) => {
         const {
           getEditedEntityRecord,
           hasFinishedResolution: hasFinished
-        } = select3(import_core_data67.store);
+        } = select4(import_core_data67.store);
         if (isBulk) {
           return {
             record: null,
@@ -50269,7 +50404,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         const args = ["postType", postType2, postId[0]];
         const { getHomePage, getPostsPageId } = unlock(
-          select3(import_core_data67.store)
+          select4(import_core_data67.store)
         );
         const singlePostId = String(postId[0]);
         const isPostsPage = singlePostId !== void 0 && getPostsPageId() === singlePostId;
@@ -50564,8 +50699,8 @@ If there's a particular need for this, please submit a feature request at https:
       [totalItems, totalPages]
     );
     const { labels, canCreateRecord } = (0, import_data86.useSelect)(
-      (select3) => {
-        const { getPostType: getPostType2, canUser } = select3(import_core_data68.store);
+      (select4) => {
+        const { getPostType: getPostType2, canUser } = select4(import_core_data68.store);
         return {
           labels: getPostType2(postType2)?.labels,
           canCreateRecord: canUser("create", {
@@ -50903,12 +51038,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function App() {
     useRegisterSiteEditorRoutes();
-    const { routes: routes3, currentTheme, editorSettings } = (0, import_data89.useSelect)((select3) => {
+    const { routes: routes3, currentTheme, editorSettings } = (0, import_data89.useSelect)((select4) => {
       return {
-        routes: unlock(select3(store)).getRoutes(),
-        currentTheme: select3(import_core_data70.store).getCurrentTheme(),
+        routes: unlock(select4(store)).getRoutes(),
+        currentTheme: select4(import_core_data70.store).getCurrentTheme(),
         // This is a temp solution until the has_theme_json value is available for the current theme.
-        editorSettings: select3(store).getSettings()
+        editorSettings: select4(store).getSettings()
       };
     }, []);
     const beforeNavigate = (0, import_element180.useCallback)(({ path, query }) => {

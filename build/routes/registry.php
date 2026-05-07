@@ -120,6 +120,20 @@ return array(
 		'has_content' => false,
 	),
 	array(
+		'name'        => 'post-type-edit',
+		'path'        => '/edit/$id',
+		'page'        => 'post-types',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
+		'name'        => 'post-types',
+		'path'        => '/',
+		'page'        => 'post-types',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'styles',
 		'path'        => '/styles',
 		'page'        => 'site-editor-v2',

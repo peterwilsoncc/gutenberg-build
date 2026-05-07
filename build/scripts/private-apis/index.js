@@ -64,6 +64,8 @@ var wp;
     "@wordpress/upload-media",
     "@wordpress/global-styles-ui",
     "@wordpress/ui",
+    "@wordpress/user-post-types",
+    "@wordpress/user-taxonomies",
     "@wordpress/views"
   ];
   var requiredConsent = "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.";
