@@ -10054,9 +10054,23 @@ ${p3}`
   function bulletsToAsterisks(text2) {
     return text2.replace(/(^|\n)•( +)/g, "$1*$2");
   }
+  function escapeSingleLineOrderedListMarker(text2) {
+    if (text2.includes("\n")) {
+      return text2;
+    }
+    return text2.replace(/^(\d+)\.(\s)/, "$1\\.$2");
+  }
+  var correctors = [
+    escapeSingleLineOrderedListMarker,
+    bulletsToAsterisks,
+    slackMarkdownVariantCorrector
+  ];
   function markdownConverter(text2) {
     return converter.makeHtml(
-      slackMarkdownVariantCorrector(bulletsToAsterisks(text2))
+      correctors.reduce(
+        (current, corrector) => corrector(current),
+        text2
+      )
     );
   }
 
