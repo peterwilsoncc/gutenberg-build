@@ -83538,31 +83538,18 @@ If there's a particular need for this, please submit a feature request at https:
     useEnableFloatingSidebar(
       showFloatingSidebar && (unresolvedNotes.length > 0 || selectedNote2 !== void 0)
     );
-    (0, import_keyboard_shortcuts12.useShortcut)(
-      "core/editor/new-note",
-      (event) => {
-        event.preventDefault();
-        openTheSidebar();
-      },
-      {
-        // When multiple notes per block are supported. Remove note ID check.
-        // See: https://github.com/WordPress/gutenberg/pull/75147.
-        isDisabled: isDistractionFree || isClassicBlock || !clientId || !!noteId
+    async function focusNote({
+      targetClientId,
+      noteId: targetNoteId,
+      isApproved
+    }) {
+      if (!targetClientId) {
+        return;
       }
-    );
-    const { merged: GlobalStyles } = useGlobalStylesContext();
-    const backgroundColor = GlobalStyles?.styles?.color?.background;
-    const currentThread = noteId ? notes.find((thread) => thread.id === noteId) : null;
-    async function openTheSidebar(selectedClientId) {
       const prevArea = await getActiveComplementaryArea2("core");
-      const activeNotesArea = SIDEBARS.find((name2) => name2 === prevArea);
-      const targetClientId = selectedClientId && selectedClientId !== clientId ? selectedClientId : clientId;
-      const targetNote = notes.find(
-        (note) => note.blockClientId === targetClientId
-      );
-      if (targetNote?.status === "approved") {
+      if (isApproved) {
         enableComplementaryArea2("core", ALL_NOTES_SIDEBAR);
-      } else if (!activeNotesArea || !showAllNotesSidebar) {
+      } else if (!SIDEBARS.includes(prevArea) || !showAllNotesSidebar) {
         enableComplementaryArea2(
           "core",
           showFloatingSidebar ? FLOATING_NOTES_SIDEBAR : ALL_NOTES_SIDEBAR
@@ -83574,8 +83561,33 @@ If there's a particular need for this, please submit a feature request at https:
       }
       selectBlock2(targetClientId, null);
       toggleBlockSpotlight(targetClientId, true);
-      selectNote2(targetNote ? targetNote.id : "new", { focus: true });
+      selectNote2(targetNoteId, { focus: true });
     }
+    function openNoteForBlock(targetClientId) {
+      const target = notes.find(
+        (note) => note.blockClientId === targetClientId
+      );
+      return focusNote({
+        targetClientId,
+        noteId: target?.id ?? "new",
+        isApproved: target?.status === "approved"
+      });
+    }
+    (0, import_keyboard_shortcuts12.useShortcut)(
+      "core/editor/new-note",
+      (event) => {
+        event.preventDefault();
+        openNoteForBlock(clientId);
+      },
+      {
+        // When multiple notes per block are supported. Remove note ID check.
+        // See: https://github.com/WordPress/gutenberg/pull/75147.
+        isDisabled: isDistractionFree || isClassicBlock || !clientId || !!noteId
+      }
+    );
+    const { merged: GlobalStyles } = useGlobalStylesContext();
+    const backgroundColor = GlobalStyles?.styles?.color?.background;
+    const currentThread = noteId ? notes.find((thread) => thread.id === noteId) : null;
     if (isDistractionFree) {
       return /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(AddNoteMenuItem, { isDistractionFree: true });
     }
@@ -83584,10 +83596,15 @@ If there's a particular need for this, please submit a feature request at https:
         NoteAvatarIndicator,
         {
           note: currentThread,
-          onClick: openTheSidebar
+          onClick: () => openNoteForBlock(clientId)
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(AddNoteMenuItem, { onClick: openTheSidebar }),
+      /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
+        AddNoteMenuItem,
+        {
+          onClick: (menuClientId) => openNoteForBlock(menuClientId)
+        }
+      ),
       showAllNotesSidebar && /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
         PluginSidebar,
         {
