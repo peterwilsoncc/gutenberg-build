@@ -123,11 +123,6 @@ return array(
 		'asset' => 'route/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/user-post-types',
-		'path' => 'user-post-types/index',
-		'asset' => 'user-post-types/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/user-taxonomies',
 		'path' => 'user-taxonomies/index',
 		'asset' => 'user-taxonomies/index.min.asset.php',

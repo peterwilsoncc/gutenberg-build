@@ -1711,11 +1711,11 @@ function AiPluginCallout() {
     }
     if (isActiveNoProvider) {
       return (0, import_i18n3.__)(
-        "The <strong>AI plugin</strong> is installed. Connect an AI provider below to generate featured images, alt text, titles, excerpts, and more. <a>Learn more</a>"
+        "The <strong>AI plugin</strong> is installed. Connect a provider below to generate featured images, alt text, titles, excerpts, and more. <a>Learn more</a>"
       );
     }
     return (0, import_i18n3.__)(
-      "The <strong>AI plugin</strong> can use your AI connectors to generate featured images, alt text, titles, excerpts and more. <a>Learn more</a>"
+      "The <strong>AI plugin</strong> can use your connectors to generate featured images, alt text, titles, excerpts and more. <a>Learn more</a>"
     );
   };
   const getPrimaryButtonProps = () => {

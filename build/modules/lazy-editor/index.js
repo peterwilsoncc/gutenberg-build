@@ -1132,10 +1132,6 @@ var VALID_BLOCK_PSEUDO_SELECTORS = {
   "core/button": [":hover", ":focus", ":focus-visible", ":active"],
   "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
 };
-var RESPONSIVE_BREAKPOINTS = {
-  mobile: "@media (width <= 480px)",
-  tablet: "@media (480px < width <= 782px)"
-};
 function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
   return PRESET_METADATA.reduce(
     (declarations, { path, cssVarInfix, classes }) => {
@@ -1517,7 +1513,7 @@ function pickStyleAndPseudoKeys(treeToPickFrom, blockName) {
   const entries = Object.entries(treeToPickFrom);
   const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
   const pickedEntries = entries.filter(
-    ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
+    ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key)
   );
   const clonedEntries = pickedEntries.map(([key, style]) => [
     key,
@@ -1582,86 +1578,6 @@ function appendPseudoSelectorStyles(styles, selector, ruleset, featureSelectors,
       ";"
     )};}`;
     ruleset += pseudoRule;
-  });
-  return ruleset;
-}
-function appendResponsiveStyles(styles, selector, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector, blockRootSelector, styleVariationName) {
-  const responsiveStyles = Object.entries(styles).filter(
-    ([key]) => RESPONSIVE_BREAKPOINTS[key]
-  );
-  if (!responsiveStyles.length) {
-    return ruleset;
-  }
-  responsiveStyles.forEach(([breakpointKey, breakpointStyle]) => {
-    if (!breakpointStyle || typeof breakpointStyle !== "object") {
-      return;
-    }
-    const mediaQuery = RESPONSIVE_BREAKPOINTS[breakpointKey];
-    const remainingBreakpointStyles = JSON.parse(
-      JSON.stringify(breakpointStyle)
-    );
-    if (featureSelectors && typeof featureSelectors !== "string") {
-      let breakpointFeatureDeclarations = getFeatureDeclarations(
-        featureSelectors,
-        remainingBreakpointStyles
-      );
-      breakpointFeatureDeclarations = updateParagraphTextIndentSelector(
-        breakpointFeatureDeclarations,
-        treeSettings,
-        blockName
-      );
-      breakpointFeatureDeclarations = updateButtonWidthDeclarations(
-        breakpointFeatureDeclarations,
-        treeSettings
-      );
-      Object.entries(breakpointFeatureDeclarations).forEach(
-        ([baseSelector, declarations]) => {
-          if (!declarations.length) {
-            return;
-          }
-          let cssSelector;
-          if (!styleVariationSelector) {
-            cssSelector = baseSelector;
-          } else if (blockRootSelector && styleVariationName && !baseSelector.includes(blockRootSelector)) {
-            cssSelector = getBlockStyleVariationSelector(
-              styleVariationName,
-              baseSelector
-            );
-          } else {
-            cssSelector = concatFeatureVariationSelectorString(
-              baseSelector,
-              styleVariationSelector
-            );
-          }
-          const rules = declarations.join(";");
-          ruleset += `${mediaQuery}{:root :where(${cssSelector}){${rules};}}`;
-        }
-      );
-    }
-    const breakpointDeclarations = getStylesDeclarations(
-      remainingBreakpointStyles
-    );
-    if (breakpointDeclarations.length) {
-      const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
-        selector,
-        styleVariationSelector
-      ) : selector;
-      ruleset += `${mediaQuery}{:root :where(${cssSelector}){${breakpointDeclarations.join(
-        ";"
-      )};}}`;
-    }
-    const breakpointPseudoRules = appendPseudoSelectorStyles(
-      remainingBreakpointStyles,
-      selector,
-      "",
-      featureSelectors,
-      treeSettings,
-      blockName,
-      styleVariationSelector
-    );
-    if (breakpointPseudoRules) {
-      ruleset += `${mediaQuery}{${breakpointPseudoRules}}`;
-    }
   });
   return ruleset;
 }
@@ -2113,17 +2029,6 @@ var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGa
                   name,
                   styleVariationSelector
                 );
-                ruleset = appendResponsiveStyles(
-                  styleVariations,
-                  styleVariationSelector,
-                  ruleset,
-                  featureSelectors,
-                  tree.settings,
-                  name,
-                  styleVariationSelector,
-                  selector,
-                  styleVariationName
-                );
                 if (hasLayoutSupport && styleVariations?.spacing?.blockGap) {
                   const variationSelectorWithBlock = styleVariationSelector + selector;
                   ruleset += getLayoutStyles({
@@ -2139,14 +2044,6 @@ var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGa
           );
         }
         ruleset = appendPseudoSelectorStyles(
-          styles,
-          selector,
-          ruleset,
-          featureSelectors,
-          tree.settings,
-          name
-        );
-        ruleset = appendResponsiveStyles(
           styles,
           selector,
           ruleset,

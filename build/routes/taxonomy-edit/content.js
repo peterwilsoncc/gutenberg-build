@@ -2699,10 +2699,10 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 var focus_default2 = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible" };
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='90a23568f8']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='3cfc19ad21']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "90a23568f8");
-  style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-fg-interactive-brand-active,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-fg-interactive-brand-active,var(--wp-admin-theme-color,#3858e9))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-fg-interactive-neutral,#1e1e1e);color:var(--wpds-color-fg-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-fg-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-fg-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-regular,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}'));
+  style.setAttribute("data-wp-hash", "3cfc19ad21");
+  style.appendChild(document.createTextNode('@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-fg-interactive-brand-active,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-fg-interactive-brand-active,var(--wp-admin-theme-color,#3858e9))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-fg-interactive-neutral,#1e1e1e);color:var(--wpds-color-fg-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-fg-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-fg-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-regular,400);margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}'));
   document.head.appendChild(style);
 }
 var style_default10 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
@@ -10383,10 +10383,10 @@ import {
   chooseFromMostUsedField,
   descriptionField,
   editItemField,
-  generalFormFields,
+  generalForm,
   hierarchicalField,
   labelsActionsField,
-  labelsFormFields,
+  labelsForm,
   menuNameField,
   newItemNameField,
   notFoundField,
@@ -10395,25 +10395,16 @@ import {
   pluralLabelField,
   popularItemsField,
   publicField,
-  publiclyQueryableField,
   searchItemsField,
   separateItemsField,
   serializeForSave,
-  showAdminColumnField,
-  showInMenuField,
-  showInNavMenusField,
-  showInQuickEditField,
-  showInRestField,
-  showTagcloudField,
-  showUiField,
   singularLabelField,
   statusField,
   toFormData,
   updateItemField,
   useObjectTypeField,
   useSlugField,
-  viewItemField,
-  visibilityFormFields
+  viewItemField
 } from "@wordpress/user-taxonomies";
 
 // routes/taxonomy-edit/taxonomy-form.scss
@@ -10432,18 +10423,22 @@ function TaxonomyEditStage() {
   const navigate = useNavigate();
   const isAddMode = id === NEW_ID;
   const taxonomyId = parseInt(id, 10);
-  const record = (0, import_data.useSelect)(
+  const initialData = (0, import_data.useSelect)(
     (select) => {
-      return !isAddMode && // beforeLoad (route.ts) guarantees the record is in cache.
-      select(import_core_data.store).getEntityRecord(
+      if (isAddMode) {
+        return BLANK_RECORD;
+      }
+      const record = select(
+        import_core_data.store
+      ).getEntityRecord(
         "postType",
         USER_TAXONOMY_POST_TYPE,
         taxonomyId
       );
+      return toFormData(record);
     },
     [isAddMode, taxonomyId]
   );
-  const initialData = !isAddMode && record ? toFormData(record) : BLANK_RECORD;
   const title = isAddMode ? (0, import_i18n23.__)("Add taxonomy") : initialData.title.raw;
   const commonProps = { initialData, title };
   const taxonomyPageProps = isAddMode ? {
@@ -10485,18 +10480,9 @@ function TaxonomyPage({
       slugField,
       descriptionField,
       objectTypeField,
+      publicField,
       hierarchicalField,
       statusField,
-      // Visibility
-      publicField,
-      showInRestField,
-      publiclyQueryableField,
-      showUiField,
-      showInMenuField,
-      showInQuickEditField,
-      showAdminColumnField,
-      showInNavMenusField,
-      showTagcloudField,
       // Labels
       labelsActionsField,
       menuNameField,
@@ -10533,20 +10519,7 @@ function TaxonomyPage({
             isCollapsible: true,
             isOpened: true
           },
-          children: generalFormFields
-        },
-        {
-          id: "visibility",
-          label: (0, import_i18n23.__)("Visibility"),
-          description: (0, import_i18n23.__)(
-            "Where this taxonomy appears: REST API, admin UI, and front-end surfaces."
-          ),
-          layout: {
-            type: "card",
-            isCollapsible: true,
-            isOpened: false
-          },
-          children: visibilityFormFields
+          children: generalForm.fields
         },
         {
           id: "labels",
@@ -10556,7 +10529,7 @@ function TaxonomyPage({
             isCollapsible: true,
             isOpened: false
           },
-          children: labelsFormFields
+          children: labelsForm.fields
         }
       ]
     }),
@@ -10628,7 +10601,7 @@ function TaxonomyPage({
           type: "submit",
           form: formId,
           isBusy: isSaving,
-          disabled: isSaving || !isValid2,
+          disabled: isSaving,
           accessibleWhenDisabled: true
         },
         isAddMode ? (0, import_i18n23.__)("Create") : (0, import_i18n23.__)("Save")

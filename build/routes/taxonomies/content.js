@@ -21340,8 +21340,7 @@ import {
   useSlugField as useSlugField2,
   activateAction,
   deactivateAction,
-  deleteTaxonomyAction,
-  duplicateTaxonomyAction
+  deleteTaxonomyAction
 } from "@wordpress/user-taxonomies";
 
 // routes/taxonomies/actions/edit.tsx
@@ -21539,7 +21538,6 @@ function TaxonomiesPage() {
     () => [
       editAction,
       quick_edit_default,
-      duplicateTaxonomyAction,
       activateAction,
       deactivateAction,
       deleteTaxonomyAction
