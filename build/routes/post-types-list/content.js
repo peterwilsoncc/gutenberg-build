@@ -1,7 +1,7 @@
-// routes/post-type-edit/stage.tsx
-import { PostTypeEdit } from "@wordpress/content-types";
+// routes/post-types-list/stage.tsx
+import { Layout, PostTypesList } from "@wordpress/content-types";
 
-// routes/post-type-edit/style.scss
+// routes/post-types-list/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='bbd81beba0']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "bbd81beba0");
@@ -9,8 +9,11 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 
-// routes/post-type-edit/stage.tsx
-var stage = PostTypeEdit;
+// routes/post-types-list/stage.tsx
+function Stage() {
+  return /* @__PURE__ */ React.createElement(Layout, { activeTab: "post-types" }, /* @__PURE__ */ React.createElement(PostTypesList, null));
+}
+var stage = Stage;
 export {
   stage
 };

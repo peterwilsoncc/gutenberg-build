@@ -57,9 +57,12 @@ var import_data = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_i18n = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
+import {
+  NEW_ID,
+  POST_TYPE_ENTITY,
+  POST_TYPES_PATH
+} from "@wordpress/content-types";
 import { redirect } from "@wordpress/route";
-var USER_POST_TYPE_POST_TYPE = "wp_user_post_type";
-var NEW_ID = "new";
 var route = {
   beforeLoad: async ({ params }) => {
     if (params.id === NEW_ID) {
@@ -71,7 +74,7 @@ var route = {
       try {
         record = await (0, import_data.resolveSelect)(import_core_data.store).getEntityRecord(
           "postType",
-          USER_POST_TYPE_POST_TYPE,
+          POST_TYPE_ENTITY,
           id
         );
       } catch {
@@ -82,7 +85,7 @@ var route = {
         (0, import_i18n.__)("Post type not found."),
         { type: "snackbar" }
       );
-      throw redirect({ throw: true, to: "/" });
+      throw redirect({ throw: true, to: POST_TYPES_PATH });
     }
   },
   title: async ({ params }) => {
@@ -92,7 +95,7 @@ var route = {
     const id = parseInt(params.id, 10);
     const record = await (0, import_data.resolveSelect)(import_core_data.store).getEntityRecord(
       "postType",
-      USER_POST_TYPE_POST_TYPE,
+      POST_TYPE_ENTITY,
       id
     );
     return record?.title?.raw ?? record?.title?.rendered ?? (0, import_i18n.__)("Post type");

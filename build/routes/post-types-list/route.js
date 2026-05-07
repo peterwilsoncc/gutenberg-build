@@ -31,10 +31,10 @@ var require_i18n = __commonJS({
   }
 });
 
-// routes/taxonomies/route.ts
+// routes/post-types-list/route.ts
 var import_i18n = __toESM(require_i18n());
 var route = {
-  title: () => (0, import_i18n.__)("Taxonomies")
+  title: () => (0, import_i18n.__)("Post Types")
 };
 export {
   route
