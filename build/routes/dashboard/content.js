@@ -91,6 +91,13 @@ var require_data = __commonJS({
   }
 });
 
+// package-external:@wordpress/preferences
+var require_preferences = __commonJS({
+  "package-external:@wordpress/preferences"(exports, module) {
+    module.exports = window.wp.preferences;
+  }
+});
+
 // package-external:@wordpress/core-data
 var require_core_data = __commonJS({
   "package-external:@wordpress/core-data"(exports, module) {
@@ -1427,6 +1434,27 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_element24 = __toESM(require_element());
 var import_i18n6 = __toESM(require_i18n());
+
+// routes/dashboard/hooks/use-dashboard-layout/use-dashboard-layout.ts
+var import_data = __toESM(require_data());
+var import_preferences = __toESM(require_preferences());
+var SCOPE = "core/dashboard";
+var KEY = "dashboardLayout";
+function useDashboardLayout() {
+  const layout = (0, import_data.useSelect)(
+    (select) => select(import_preferences.store).get(SCOPE, KEY) ?? [],
+    []
+  );
+  const { set: set3 } = (0, import_data.useDispatch)(import_preferences.store);
+  function setLayout(newLayout) {
+    void set3(SCOPE, KEY, newLayout);
+  }
+  function resetLayout() {
+    void set3(SCOPE, KEY, []);
+  }
+  return [layout, setLayout, resetLayout];
+}
+var use_dashboard_layout_default = useDashboardLayout;
 
 // routes/dashboard/widget-dashboard/context/dashboard-context.tsx
 var import_element13 = __toESM(require_element());
@@ -6825,11 +6853,11 @@ var WidgetDashboard = Object.assign(
 );
 
 // routes/dashboard/widget-types/hooks/use-widget-types.ts
-var import_data = __toESM(require_data());
+var import_data2 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_element23 = __toESM(require_element());
 var import_i18n5 = __toESM(require_i18n());
-(0, import_data.dispatch)(import_core_data.store).addEntities([
+(0, import_data2.dispatch)(import_core_data.store).addEntities([
   {
     name: "widgetModule",
     kind: "root",
@@ -6841,7 +6869,7 @@ var import_i18n5 = __toESM(require_i18n());
   }
 ]);
 function useWidgetTypes() {
-  const records = (0, import_data.useSelect)(
+  const records = (0, import_data2.useSelect)(
     (select) => select(import_core_data.store).getEntityRecords("root", "widgetModule"),
     []
   );
@@ -6890,18 +6918,8 @@ function useWidgetTypes() {
 
 // routes/dashboard/stage.tsx
 var import_jsx_runtime22 = __toESM(require_jsx_runtime());
-var DEFAULT_LAYOUT = [
-  {
-    uuid: "1",
-    type: "wordpress/hello-world",
-    placement: {
-      width: "full",
-      height: 1
-    }
-  }
-];
 function Dashboard() {
-  const [layout, setLayout] = (0, import_element24.useState)(DEFAULT_LAYOUT);
+  const [layout, setLayout] = use_dashboard_layout_default();
   const widgetTypes = useWidgetTypes();
   const [editMode, setEditMode] = (0, import_element24.useState)(false);
   return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
