@@ -5334,11 +5334,13 @@ var wp;
   var __unstableCreateUndoLevel = () => ({ select: select5 }) => {
     select5.getUndoManager().addRecord();
   };
-  var saveEntityRecord = (kind, name, record, {
-    isAutosave = false,
-    __unstableFetch = import_api_fetch3.default,
-    throwOnError = false
-  } = {}) => async ({ select: select5, resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
+  var saveEntityRecord = (kind, name, record, options = {}) => async ({ select: select5, resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
+    const {
+      isAutosave = false,
+      __unstableFetch = import_api_fetch3.default,
+      __unstableSkipSyncUpdate = false,
+      throwOnError = false
+    } = options;
     logEntityDeprecation(kind, name, "saveEntityRecord");
     const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
@@ -5482,7 +5484,7 @@ var wp;
             getSyncManager()?.update(
               `${kind}/${name}`,
               recordId,
-              updatedRecord,
+              __unstableSkipSyncUpdate ? {} : updatedRecord,
               LOCAL_UNDO_IGNORED_ORIGIN,
               { isSave: true }
             );
@@ -6169,7 +6171,8 @@ var wp;
                 dispatch3.saveEntityRecord(
                   kind,
                   name,
-                  editedRecord
+                  editedRecord,
+                  { __unstableSkipSyncUpdate: true }
                 );
               });
             },
