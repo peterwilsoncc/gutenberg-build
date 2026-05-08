@@ -40201,6 +40201,26 @@ var wp;
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
   };
+  var VALID_ELEMENT_PSEUDO_SELECTORS = {
+    link: [
+      ":link",
+      ":any-link",
+      ":visited",
+      ":hover",
+      ":focus",
+      ":focus-visible",
+      ":active"
+    ],
+    button: [
+      ":link",
+      ":any-link",
+      ":visited",
+      ":hover",
+      ":focus",
+      ":focus-visible",
+      ":active"
+    ]
+  };
   var RESPONSIVE_BREAKPOINTS = {
     mobile: "@media (width <= 480px)",
     tablet: "@media (480px < width <= 782px)"
@@ -40560,145 +40580,100 @@ var wp;
     ]);
     return Object.fromEntries(clonedEntries);
   }
-  function appendPseudoSelectorStyles(styles, selector3, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector) {
-    const pseudoSelectorStyles = Object.entries(styles).filter(
-      ([key]) => key.startsWith(":")
-    );
-    if (!pseudoSelectorStyles.length) {
-      return ruleset;
+  function getPseudoStyleNodes(node) {
+    const {
+      styles,
+      selector: selector3,
+      featureSelectors,
+      name,
+      elementName,
+      mediaQuery
+    } = node;
+    const pseudoSelectors = name ? VALID_BLOCK_PSEUDO_SELECTORS[name] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
+    if (!pseudoSelectors.length) {
+      return [];
     }
-    pseudoSelectorStyles.forEach(([pseudoKey, pseudoStyle]) => {
-      if (!pseudoStyle || typeof pseudoStyle !== "object") {
-        return;
+    return pseudoSelectors.flatMap((pseudoSelector) => {
+      const pseudoStyles = styles?.[pseudoSelector];
+      if (!pseudoStyles || typeof pseudoStyles !== "object") {
+        return [];
       }
-      const remainingPseudoStyles = JSON.parse(
-        JSON.stringify(pseudoStyle)
-      );
-      if (featureSelectors && typeof featureSelectors !== "string") {
-        let pseudoFeatureDeclarations = getFeatureDeclarations(
-          featureSelectors,
-          remainingPseudoStyles
-        );
-        pseudoFeatureDeclarations = updateParagraphTextIndentSelector(
-          pseudoFeatureDeclarations,
-          treeSettings,
-          blockName
-        );
-        pseudoFeatureDeclarations = updateButtonWidthDeclarations(
-          pseudoFeatureDeclarations,
-          treeSettings
-        );
-        Object.entries(pseudoFeatureDeclarations).forEach(
-          ([baseSelector, declarations]) => {
-            if (!declarations.length) {
-              return;
-            }
-            const pseudoFeatureSelector = appendToSelector(
-              baseSelector,
-              pseudoKey
-            );
-            const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
-              pseudoFeatureSelector,
-              styleVariationSelector
-            ) : pseudoFeatureSelector;
-            const rules = declarations.join(";");
-            ruleset += `:root :where(${cssSelector}){${rules};}`;
-          }
-        );
-      }
-      const pseudoDeclarations = getStylesDeclarations(
-        remainingPseudoStyles
-      );
-      if (!pseudoDeclarations.length) {
-        return;
-      }
-      const pseudoSelector = appendToSelector(selector3, pseudoKey);
-      const pseudoRule = `:root :where(${pseudoSelector}){${pseudoDeclarations.join(
-        ";"
-      )};}`;
-      ruleset += pseudoRule;
+      return [
+        {
+          styles: JSON.parse(JSON.stringify(pseudoStyles)),
+          selector: selector3,
+          selectorSuffix: pseudoSelector,
+          mediaQuery,
+          featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
+          name,
+          elementName
+        }
+      ];
     });
-    return ruleset;
   }
-  function appendResponsiveStyles(styles, selector3, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector, blockRootSelector, styleVariationName) {
-    const responsiveStyles = Object.entries(styles).filter(
-      ([key]) => RESPONSIVE_BREAKPOINTS[key]
-    );
-    if (!responsiveStyles.length) {
-      return ruleset;
+  function getResponsiveStyleNodes(node) {
+    const {
+      styles,
+      selector: selector3,
+      featureSelectors,
+      name,
+      elementName,
+      isStyleVariation
+    } = node;
+    if (!name && !elementName) {
+      return [];
     }
-    responsiveStyles.forEach(([breakpointKey, breakpointStyle]) => {
-      if (!breakpointStyle || typeof breakpointStyle !== "object") {
-        return;
-      }
-      const mediaQuery = RESPONSIVE_BREAKPOINTS[breakpointKey];
-      const remainingBreakpointStyles = JSON.parse(
-        JSON.stringify(breakpointStyle)
-      );
-      if (featureSelectors && typeof featureSelectors !== "string") {
-        let breakpointFeatureDeclarations = getFeatureDeclarations(
-          featureSelectors,
-          remainingBreakpointStyles
-        );
-        breakpointFeatureDeclarations = updateParagraphTextIndentSelector(
-          breakpointFeatureDeclarations,
-          treeSettings,
-          blockName
-        );
-        breakpointFeatureDeclarations = updateButtonWidthDeclarations(
-          breakpointFeatureDeclarations,
-          treeSettings
-        );
-        Object.entries(breakpointFeatureDeclarations).forEach(
-          ([baseSelector, declarations]) => {
-            if (!declarations.length) {
-              return;
-            }
-            let cssSelector;
-            if (!styleVariationSelector) {
-              cssSelector = baseSelector;
-            } else if (blockRootSelector && styleVariationName && !baseSelector.includes(blockRootSelector)) {
-              cssSelector = getBlockStyleVariationSelector(
-                styleVariationName,
-                baseSelector
-              );
-            } else {
-              cssSelector = concatFeatureVariationSelectorString(
-                baseSelector,
-                styleVariationSelector
-              );
-            }
-            const rules = declarations.join(";");
-            ruleset += `${mediaQuery}{:root :where(${cssSelector}){${rules};}}`;
+    return Object.entries(RESPONSIVE_BREAKPOINTS).flatMap(
+      ([breakpointKey, mediaQuery]) => {
+        const breakpointStyles = styles?.[breakpointKey];
+        if (!breakpointStyles || typeof breakpointStyles !== "object") {
+          return [];
+        }
+        return [
+          {
+            styles: JSON.parse(JSON.stringify(breakpointStyles)),
+            selector: selector3,
+            mediaQuery,
+            featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
+            name,
+            elementName,
+            isStyleVariation
           }
-        );
+        ];
       }
-      const breakpointDeclarations = getStylesDeclarations(
-        remainingBreakpointStyles
-      );
-      if (breakpointDeclarations.length) {
-        const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
-          selector3,
-          styleVariationSelector
-        ) : selector3;
-        ruleset += `${mediaQuery}{:root :where(${cssSelector}){${breakpointDeclarations.join(
-          ";"
-        )};}}`;
-      }
-      const breakpointPseudoRules = appendPseudoSelectorStyles(
-        remainingBreakpointStyles,
-        selector3,
-        "",
-        featureSelectors,
-        treeSettings,
-        blockName,
-        styleVariationSelector
-      );
-      if (breakpointPseudoRules) {
-        ruleset += `${mediaQuery}{${breakpointPseudoRules}}`;
-      }
-    });
-    return ruleset;
+    );
+  }
+  function getVariationFeatureSelectors(featureSelectors, styleVariationSelector) {
+    if (!featureSelectors || typeof featureSelectors === "string") {
+      return void 0;
+    }
+    return Object.fromEntries(
+      Object.entries(featureSelectors).map(([feature, selector3]) => {
+        if (typeof selector3 === "string") {
+          return [
+            feature,
+            concatFeatureVariationSelectorString(
+              selector3,
+              styleVariationSelector
+            )
+          ];
+        }
+        return [
+          feature,
+          Object.fromEntries(
+            Object.entries(selector3).map(
+              ([subfeature, subfeatureSelector]) => [
+                subfeature,
+                concatFeatureVariationSelectorString(
+                  subfeatureSelector,
+                  styleVariationSelector
+                )
+              ]
+            )
+          )
+        ];
+      })
+    );
   }
   var getNodesWithStyles = (tree, blockSelectors) => {
     const nodes = [];
@@ -40720,6 +40695,7 @@ var wp;
         nodes.push({
           styles: tree.styles?.elements?.[name] ?? {},
           selector: selector3,
+          elementName: name,
           // Top level elements that don't use a class name should not receive the
           // `:root :where()` wrapper to maintain backwards compatibility.
           skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name]
@@ -40731,19 +40707,36 @@ var wp;
         const blockStyles = pickStyleAndPseudoKeys(node, blockName);
         const typedNode = node;
         const variationNodesToAdd = [];
+        const variationStyleNodesToAdd = [];
         if (typedNode?.variations) {
-          const variations = {};
           Object.entries(typedNode.variations).forEach(
             ([variationName, variation]) => {
               const typedVariation = variation;
-              variations[variationName] = pickStyleAndPseudoKeys(
+              const variationStyles = pickStyleAndPseudoKeys(
                 typedVariation,
                 blockName
               );
               if (typedVariation?.css) {
-                variations[variationName].css = typedVariation.css;
+                variationStyles.css = typedVariation.css;
               }
               const variationSelector = typeof blockSelectors !== "string" ? blockSelectors[blockName]?.styleVariationSelectors?.[variationName] : void 0;
+              if (variationSelector && typeof blockSelectors !== "string") {
+                const blockSelector = blockSelectors[blockName];
+                variationStyleNodesToAdd.push({
+                  styles: variationStyles,
+                  selector: variationSelector,
+                  featureSelectors: getVariationFeatureSelectors(
+                    blockSelector?.featureSelectors,
+                    variationSelector
+                  ),
+                  fallbackGapValue: blockSelector?.fallbackGapValue,
+                  hasLayoutSupport: blockSelector?.hasLayoutSupport,
+                  isStyleVariation: true,
+                  layoutSelector: variationSelector + blockSelector.selector,
+                  layoutHasBlockGapSupport: true,
+                  name: blockName
+                });
+              }
               Object.entries(
                 typedVariation?.elements ?? {}
               ).forEach(([element, elementStyles]) => {
@@ -40753,7 +40746,9 @@ var wp;
                     selector: scopeSelector2(
                       variationSelector,
                       import_blocks65.__EXPERIMENTAL_ELEMENTS[element]
-                    )
+                    ),
+                    elementName: element,
+                    isStyleVariation: true
                   });
                 }
               });
@@ -40786,6 +40781,8 @@ var wp;
                   }
                   variationNodesToAdd.push({
                     selector: variationBlockSelector,
+                    name: variationBlockName,
+                    isStyleVariation: true,
                     duotoneSelector: variationDuotoneSelector,
                     featureSelectors: variationFeatureSelectors,
                     fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
@@ -40805,7 +40802,9 @@ var wp;
                           selector: scopeSelector2(
                             variationBlockSelector,
                             import_blocks65.__EXPERIMENTAL_ELEMENTS[variationBlockElement]
-                          )
+                          ),
+                          elementName: variationBlockElement,
+                          isStyleVariation: true
                         });
                       }
                     }
@@ -40814,7 +40813,6 @@ var wp;
               );
             }
           );
-          blockStyles.variations = variations;
         }
         if (typeof blockSelectors !== "string" && blockSelectors?.[blockName]?.selector) {
           nodes.push({
@@ -40824,10 +40822,10 @@ var wp;
             selector: blockSelectors[blockName].selector,
             styles: blockStyles,
             featureSelectors: blockSelectors[blockName].featureSelectors,
-            styleVariationSelectors: blockSelectors[blockName].styleVariationSelectors,
             name: blockName
           });
         }
+        nodes.push(...variationStyleNodesToAdd);
         Object.entries(typedNode?.elements ?? {}).forEach(
           ([elementName, value]) => {
             if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks65.__EXPERIMENTAL_ELEMENTS[elementName]) {
@@ -40838,7 +40836,8 @@ var wp;
                   return elementSelectors.map(
                     (elementSelector) => sel + " " + elementSelector
                   );
-                }).join(",")
+                }).join(","),
+                elementName
               });
             }
           }
@@ -40891,6 +40890,100 @@ var wp;
     );
     return nodes;
   };
+  function renderStylesNode(node, {
+    tree,
+    useRootPaddingAlign,
+    disableLayoutStyles,
+    hasBlockGapSupport,
+    hasFallbackGapSupport,
+    disableRootPadding
+  }) {
+    const {
+      selector: selector3,
+      selectorSuffix,
+      mediaQuery,
+      duotoneSelector,
+      styles,
+      fallbackGapValue,
+      hasLayoutSupport: hasLayoutSupport2,
+      featureSelectors,
+      layoutSelector,
+      layoutHasBlockGapSupport,
+      skipSelectorWrapper,
+      name
+    } = node;
+    let ruleset = "";
+    const effectiveSelector = selectorSuffix ? appendToSelector(selector3, selectorSuffix) : selector3;
+    if (featureSelectors && typeof featureSelectors !== "string") {
+      let featureDeclarations = getFeatureDeclarations(
+        featureSelectors,
+        styles
+      );
+      featureDeclarations = updateParagraphTextIndentSelector(
+        featureDeclarations,
+        tree.settings,
+        name
+      );
+      featureDeclarations = updateButtonWidthDeclarations(
+        featureDeclarations,
+        tree.settings
+      );
+      Object.entries(featureDeclarations).forEach(
+        ([featureSelector, declarations]) => {
+          if (declarations.length) {
+            const selectorForRule = selectorSuffix ? appendToSelector(featureSelector, selectorSuffix) : featureSelector;
+            const rules = declarations.join(";");
+            ruleset += `:root :where(${selectorForRule}){${rules};}`;
+          }
+        }
+      );
+    }
+    if (duotoneSelector) {
+      const duotoneStyles = {};
+      if (styles?.filter) {
+        duotoneStyles.filter = styles.filter;
+        delete styles.filter;
+      }
+      const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
+      if (duotoneDeclarations.length) {
+        ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
+          ";"
+        )};}`;
+      }
+    }
+    const selectorForLayout = layoutSelector ?? effectiveSelector;
+    const hasBlockGapSupportForLayout = layoutHasBlockGapSupport ?? hasBlockGapSupport;
+    if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selectorForLayout || hasLayoutSupport2)) {
+      ruleset += getLayoutStyles({
+        style: styles,
+        selector: selectorForLayout,
+        hasBlockGapSupport: hasBlockGapSupportForLayout,
+        hasFallbackGapSupport,
+        fallbackGapValue
+      });
+    }
+    const styleDeclarations = getStylesDeclarations(
+      styles,
+      effectiveSelector,
+      useRootPaddingAlign,
+      tree,
+      disableRootPadding
+    );
+    if (styleDeclarations?.length) {
+      const generalSelector = skipSelectorWrapper ? effectiveSelector : `:root :where(${effectiveSelector})`;
+      ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
+    }
+    if (styles?.css) {
+      ruleset += processCSSNesting(
+        styles.css,
+        `:root :where(${effectiveSelector})`
+      );
+    }
+    if (mediaQuery && ruleset) {
+      return `${mediaQuery}{${ruleset}}`;
+    }
+    return ruleset;
+  }
   var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => {
     const options = {
       blockGap: true,
@@ -40927,185 +41020,27 @@ var wp;
       ruleset += "}";
     }
     if (options.blockStyles) {
-      nodesWithStyles.forEach(
-        ({
-          selector: selector3,
-          duotoneSelector,
-          styles,
-          fallbackGapValue,
-          hasLayoutSupport: hasLayoutSupport2,
-          featureSelectors,
-          styleVariationSelectors,
-          skipSelectorWrapper,
-          name
-        }) => {
-          if (featureSelectors) {
-            let featureDeclarations = getFeatureDeclarations(
-              featureSelectors,
-              styles
-            );
-            featureDeclarations = updateParagraphTextIndentSelector(
-              featureDeclarations,
-              tree.settings,
-              name
-            );
-            featureDeclarations = updateButtonWidthDeclarations(
-              featureDeclarations,
-              tree.settings
-            );
-            Object.entries(featureDeclarations).forEach(
-              ([cssSelector, declarations]) => {
-                if (declarations.length) {
-                  const rules = declarations.join(";");
-                  ruleset += `:root :where(${cssSelector}){${rules};}`;
-                }
-              }
-            );
-          }
-          if (duotoneSelector) {
-            const duotoneStyles = {};
-            if (styles?.filter) {
-              duotoneStyles.filter = styles.filter;
-              delete styles.filter;
-            }
-            const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
-            if (duotoneDeclarations.length) {
-              ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
-                ";"
-              )};}`;
-            }
-          }
-          if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selector3 || hasLayoutSupport2)) {
-            ruleset += getLayoutStyles({
-              style: styles,
-              selector: selector3,
-              hasBlockGapSupport,
-              hasFallbackGapSupport,
-              fallbackGapValue
-            });
-          }
-          const styleDeclarations = getStylesDeclarations(
-            styles,
-            selector3,
-            useRootPaddingAlign,
-            tree,
-            disableRootPadding
-          );
-          if (styleDeclarations?.length) {
-            const generalSelector = skipSelectorWrapper ? selector3 : `:root :where(${selector3})`;
-            ruleset += `${generalSelector}{${styleDeclarations.join(
-              ";"
-            )};}`;
-          }
-          if (styles?.css) {
-            ruleset += processCSSNesting(
-              styles.css,
-              `:root :where(${selector3})`
-            );
-          }
-          if (options.variationStyles && styleVariationSelectors) {
-            Object.entries(styleVariationSelectors).forEach(
-              ([styleVariationName, styleVariationSelector]) => {
-                const styleVariations = styles?.variations?.[styleVariationName];
-                if (styleVariations) {
-                  if (featureSelectors) {
-                    let featureDeclarations = getFeatureDeclarations(
-                      featureSelectors,
-                      styleVariations
-                    );
-                    featureDeclarations = updateParagraphTextIndentSelector(
-                      featureDeclarations,
-                      tree.settings,
-                      name
-                    );
-                    featureDeclarations = updateButtonWidthDeclarations(
-                      featureDeclarations,
-                      tree.settings
-                    );
-                    Object.entries(
-                      featureDeclarations
-                    ).forEach(
-                      ([baseSelector, declarations]) => {
-                        if (declarations.length) {
-                          const cssSelector = concatFeatureVariationSelectorString(
-                            baseSelector,
-                            styleVariationSelector
-                          );
-                          const rules = declarations.join(";");
-                          ruleset += `:root :where(${cssSelector}){${rules};}`;
-                        }
-                      }
-                    );
-                  }
-                  const styleVariationDeclarations = getStylesDeclarations(
-                    styleVariations,
-                    styleVariationSelector,
-                    useRootPaddingAlign,
-                    tree
-                  );
-                  if (styleVariationDeclarations.length) {
-                    ruleset += `:root :where(${styleVariationSelector}){${styleVariationDeclarations.join(
-                      ";"
-                    )};}`;
-                  }
-                  if (styleVariations?.css) {
-                    ruleset += processCSSNesting(
-                      styleVariations.css,
-                      `:root :where(${styleVariationSelector})`
-                    );
-                  }
-                  ruleset = appendPseudoSelectorStyles(
-                    styleVariations,
-                    styleVariationSelector,
-                    ruleset,
-                    featureSelectors,
-                    tree.settings,
-                    name,
-                    styleVariationSelector
-                  );
-                  ruleset = appendResponsiveStyles(
-                    styleVariations,
-                    styleVariationSelector,
-                    ruleset,
-                    featureSelectors,
-                    tree.settings,
-                    name,
-                    styleVariationSelector,
-                    selector3,
-                    styleVariationName
-                  );
-                  if (hasLayoutSupport2 && styleVariations?.spacing?.blockGap) {
-                    const variationSelectorWithBlock = styleVariationSelector + selector3;
-                    ruleset += getLayoutStyles({
-                      style: styleVariations,
-                      selector: variationSelectorWithBlock,
-                      hasBlockGapSupport: true,
-                      hasFallbackGapSupport,
-                      fallbackGapValue
-                    });
-                  }
-                }
-              }
-            );
-          }
-          ruleset = appendPseudoSelectorStyles(
-            styles,
-            selector3,
-            ruleset,
-            featureSelectors,
-            tree.settings,
-            name
-          );
-          ruleset = appendResponsiveStyles(
-            styles,
-            selector3,
-            ruleset,
-            featureSelectors,
-            tree.settings,
-            name
-          );
+      nodesWithStyles.forEach((node) => {
+        if (node.isStyleVariation && !options.variationStyles) {
+          return;
         }
-      );
+        const responsiveNodes = getResponsiveStyleNodes(node);
+        [
+          node,
+          ...responsiveNodes,
+          ...getPseudoStyleNodes(node),
+          ...responsiveNodes.flatMap(getPseudoStyleNodes)
+        ].forEach((expandedNode) => {
+          ruleset += renderStylesNode(expandedNode, {
+            tree,
+            useRootPaddingAlign,
+            disableLayoutStyles,
+            hasBlockGapSupport,
+            hasFallbackGapSupport,
+            disableRootPadding
+          });
+        });
+      });
     }
     if (options.layoutStyles) {
       ruleset = ruleset + ".wp-site-blocks > .alignleft { float: left; margin-right: 2em; }";
