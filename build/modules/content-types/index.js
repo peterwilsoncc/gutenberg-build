@@ -11394,14 +11394,14 @@ function DataViewsSelectionCheckbox({
   onChangeSelection,
   item,
   getItemId,
-  titleField: titleField3,
+  titleField: titleField2,
   disabled: disabled2,
   ...extraProps
 }) {
   const id = getItemId(item);
   const isInSelectionArray = selection.includes(id);
   const checked = !disabled2 && isInSelectionArray;
-  const selectionLabel = titleField3?.getValue?.({ item }) || (0, import_i18n7.__)("(no title)");
+  const selectionLabel = titleField2?.getValue?.({ item }) || (0, import_i18n7.__)("(no title)");
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     import_components3.CheckboxControl,
     {
@@ -12382,7 +12382,7 @@ var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 function ColumnPrimary({
   item,
   level,
-  titleField: titleField3,
+  titleField: titleField2,
   mediaField,
   descriptionField: descriptionField3,
   onClickItem,
@@ -12398,7 +12398,7 @@ function ColumnPrimary({
         onClickItem,
         renderItemLink,
         className: "dataviews-view-table__cell-content-wrapper dataviews-column-primary__media",
-        "aria-label": isItemClickable(item) && (!!onClickItem || !!renderItemLink) && !!titleField3 ? titleField3.getValue?.({ item }) : void 0,
+        "aria-label": isItemClickable(item) && (!!onClickItem || !!renderItemLink) && !!titleField2 ? titleField2.getValue?.({ item }) : void 0,
         children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
           mediaField.render,
           {
@@ -12416,7 +12416,7 @@ function ColumnPrimary({
         align: "flex-start",
         className: "dataviews-view-table__primary-column-content",
         children: [
-          titleField3 && /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+          titleField2 && /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
             ItemClickWrapper,
             {
               item,
@@ -12429,7 +12429,7 @@ function ColumnPrimary({
                   Array(level).fill("\u2014").join(" "),
                   "\xA0"
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(titleField3.render, { item, field: titleField3 })
+                /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(titleField2.render, { item, field: titleField2 })
               ]
             }
           ),
@@ -12528,14 +12528,14 @@ function PropertiesSection({
   if (!regularFields?.length) {
     return null;
   }
-  const titleField3 = fields.find((f2) => f2.id === view.titleField);
+  const titleField2 = fields.find((f2) => f2.id === view.titleField);
   const previewField = fields.find((f2) => f2.id === view.mediaField);
   const descriptionField3 = fields.find(
     (f2) => f2.id === view.descriptionField
   );
   const lockedFields = [
     {
-      field: titleField3,
+      field: titleField2,
       isVisibleFlag: "showTitle"
     },
     {
@@ -12665,7 +12665,7 @@ function TableRow({
   fields,
   id,
   view,
-  titleField: titleField3,
+  titleField: titleField2,
   mediaField,
   descriptionField: descriptionField3,
   selection,
@@ -12688,7 +12688,7 @@ function TableRow({
   } = view;
   const isTouchDeviceRef = (0, import_element50.useRef)(false);
   const columns = view.fields ?? [];
-  const hasPrimaryColumn = titleField3 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
+  const hasPrimaryColumn = titleField2 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
   return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(
     "tr",
     {
@@ -12727,7 +12727,7 @@ function TableRow({
             selection,
             onChangeSelection,
             getItemId,
-            titleField: titleField3,
+            titleField: titleField2,
             disabled: !hasPossibleBulkAction
           }
         ) }) }),
@@ -12736,7 +12736,7 @@ function TableRow({
           {
             item,
             level,
-            titleField: showTitle ? titleField3 : void 0,
+            titleField: showTitle ? titleField2 : void 0,
             mediaField: showMedia ? mediaField : void 0,
             descriptionField: showDescription ? descriptionField3 : void 0,
             isItemClickable,
@@ -12856,7 +12856,7 @@ function ViewTable({
     });
   };
   const hasData = !!data?.length;
-  const titleField3 = fields.find((field) => field.id === view.titleField);
+  const titleField2 = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
   const descriptionField3 = fields.find(
     (field) => field.id === view.descriptionField
@@ -12864,7 +12864,7 @@ function ViewTable({
   const groupField = view.groupBy?.field ? fields.find((f2) => f2.id === view.groupBy?.field) : null;
   const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const { showTitle = true, showMedia = true, showDescription = true } = view;
-  const hasPrimaryColumn = titleField3 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
+  const hasPrimaryColumn = titleField2 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
   const columns = view.fields ?? [];
   const headerMenuRef = (column, index2) => (node) => {
     if (node) {
@@ -12958,14 +12958,14 @@ function ViewTable({
                     )
                   }
                 ),
-                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("th", { scope: "col", children: titleField3 && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("th", { scope: "col", children: titleField2 && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
                   column_header_menu_default,
                   {
                     ref: headerMenuRef(
-                      titleField3.id,
+                      titleField2.id,
                       0
                     ),
-                    fieldId: titleField3.id,
+                    fieldId: titleField2.id,
                     view,
                     fields,
                     onChangeView,
@@ -13057,7 +13057,7 @@ function ViewTable({
                   fields,
                   id: getItemId(item) || index2.toString(),
                   view,
-                  titleField: titleField3,
+                  titleField: titleField2,
                   mediaField,
                   descriptionField: descriptionField3,
                   selection,
@@ -13081,7 +13081,7 @@ function ViewTable({
               fields,
               id: getItemId(item) || index2.toString(),
               view,
-              titleField: titleField3,
+              titleField: titleField2,
               mediaField,
               descriptionField: descriptionField3,
               selection,
@@ -13223,7 +13223,7 @@ var GridItem = (0, import_element54.forwardRef)(
     item,
     actions,
     mediaField,
-    titleField: titleField3,
+    titleField: titleField2,
     descriptionField: descriptionField3,
     regularFields,
     badgeFields,
@@ -13265,7 +13265,7 @@ var GridItem = (0, import_element54.forwardRef)(
         config
       }
     ) : mediaPlaceholder;
-    const renderedTitleField = showTitle && titleField3?.render ? /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(titleField3.render, { item, field: titleField3 }) : null;
+    const renderedTitleField = showTitle && titleField2?.render ? /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(titleField2.render, { item, field: titleField2 }) : null;
     let mediaA11yProps;
     let titleA11yProps;
     if (isItemClickable(item) && onClickItem) {
@@ -13335,7 +13335,7 @@ var GridItem = (0, import_element54.forwardRef)(
               selection,
               onChangeSelection,
               getItemId,
-              titleField: titleField3,
+              titleField: titleField2,
               disabled: !hasBulkAction
             }
           ),
@@ -13356,9 +13356,9 @@ var GridItem = (0, import_element54.forwardRef)(
               renderItemLink,
               className: "dataviews-view-grid__title-field dataviews-title-field",
               ...titleA11yProps,
-              title: titleField3?.getValueFormatted({
+              title: titleField2?.getValueFormatted({
                 item,
-                field: titleField3
+                field: titleField2
               }) || void 0,
               children: renderedTitleField
             }
@@ -13462,7 +13462,7 @@ function CompositeGrid({
   const { paginationInfo, resizeObserverRef } = (0, import_element54.useContext)(dataviews_context_default);
   const gridColumns = useGridColumns();
   const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
-  const titleField3 = fields.find(
+  const titleField2 = fields.find(
     (field) => field.id === view?.titleField
   );
   const mediaField = fields.find(
@@ -13560,7 +13560,7 @@ function CompositeGrid({
                       item,
                       actions,
                       mediaField,
-                      titleField: titleField3,
+                      titleField: titleField2,
                       descriptionField: descriptionField3,
                       regularFields,
                       badgeFields,
@@ -13634,7 +13634,7 @@ function CompositeGrid({
                         item,
                         actions,
                         mediaField,
-                        titleField: titleField3,
+                        titleField: titleField2,
                         descriptionField: descriptionField3,
                         regularFields,
                         badgeFields,
@@ -13827,7 +13827,7 @@ function ListItem({
   idPrefix,
   isSelected: isSelected2,
   item,
-  titleField: titleField3,
+  titleField: titleField2,
   mediaField,
   descriptionField: descriptionField3,
   onSelect,
@@ -13884,7 +13884,7 @@ function ListItem({
       config: { sizes: "52px" }
     }
   ) }) : null;
-  const renderedTitleField = showTitle && titleField3?.render ? /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(titleField3.render, { item, field: titleField3 }) : null;
+  const renderedTitleField = showTitle && titleField2?.render ? /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(titleField2.render, { item, field: titleField2 }) : null;
   const renderDescription = showDescription && descriptionField3?.render;
   const hasOnlyMediaAndTitle = !!renderedMediaField && !renderDescription && !otherFields.length;
   const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(
@@ -14087,7 +14087,7 @@ function ViewList(props) {
   const selectedItem = data?.findLast(
     (item) => selection.includes(getItemId(item))
   );
-  const titleField3 = fields.find((field) => field.id === view.titleField);
+  const titleField2 = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
   const descriptionField3 = fields.find(
     (field) => field.id === view.descriptionField
@@ -14229,7 +14229,7 @@ function ViewList(props) {
                           isSelected: item === selectedItem,
                           onSelect,
                           mediaField,
-                          titleField: titleField3,
+                          titleField: titleField2,
                           descriptionField: descriptionField3,
                           otherFields,
                           onDropdownTriggerKeyDown
@@ -14276,7 +14276,7 @@ function ViewList(props) {
               isSelected: item === selectedItem,
               onSelect,
               mediaField,
-              titleField: titleField3,
+              titleField: titleField2,
               descriptionField: descriptionField3,
               otherFields,
               onDropdownTriggerKeyDown,
@@ -14342,7 +14342,7 @@ function ActivityItem(props) {
     view,
     actions,
     item,
-    titleField: titleField3,
+    titleField: titleField2,
     mediaField,
     descriptionField: descriptionField3,
     otherFields,
@@ -14391,7 +14391,7 @@ function ActivityItem(props) {
       "aria-hidden": "true"
     }
   ) });
-  const renderedTitleField = showTitle && titleField3?.render ? /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(titleField3.render, { item, field: titleField3 }) : null;
+  const renderedTitleField = showTitle && titleField2?.render ? /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(titleField2.render, { item, field: titleField2 }) : null;
   const verticalGap = (0, import_element57.useMemo)(() => {
     switch (density) {
       case "comfortable":
@@ -14510,7 +14510,7 @@ function isDefined3(item) {
 }
 function ActivityItems(props) {
   const { data, fields, getItemId, view } = props;
-  const titleField3 = fields.find((field) => field.id === view.titleField);
+  const titleField2 = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
   const descriptionField3 = fields.find(
     (field) => field.id === view.descriptionField
@@ -14524,7 +14524,7 @@ function ActivityItems(props) {
         key: getItemId(item),
         item,
         mediaField,
-        titleField: titleField3,
+        titleField: titleField2,
         descriptionField: descriptionField3,
         otherFields,
         posinset: view.infiniteScrollEnabled ? index2 + 1 : void 0
@@ -14750,7 +14750,7 @@ function GridItem3({
   getItemId,
   item,
   mediaField,
-  titleField: titleField3,
+  titleField: titleField2,
   descriptionField: descriptionField3,
   regularFields,
   badgeFields,
@@ -14771,12 +14771,12 @@ function GridItem3({
       config
     }
   ) : null;
-  const renderedTitleField = showTitle && titleField3?.render ? /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(titleField3.render, { item, field: titleField3 }) : null;
+  const renderedTitleField = showTitle && titleField2?.render ? /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(titleField2.render, { item, field: titleField2 }) : null;
   return /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(
     import_components16.Composite.Item,
     {
       ref: elementRef,
-      "aria-label": titleField3 ? titleField3.getValue({ item }) || (0, import_i18n22.__)("(no title)") : void 0,
+      "aria-label": titleField2 ? titleField2.getValue({ item }) || (0, import_i18n22.__)("(no title)") : void 0,
       render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(Stack, { direction: "column", children, ...props }),
       role: "option",
       "aria-posinset": posinset,
@@ -14804,7 +14804,7 @@ function GridItem3({
             selection,
             onChangeSelection,
             getItemId,
-            titleField: titleField3,
+            titleField: titleField2,
             disabled: false,
             "aria-hidden": true,
             tabIndex: -1
@@ -14949,7 +14949,7 @@ function ViewPickerGrid({
   empty
 }) {
   const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element60.useContext)(dataviews_context_default);
-  const titleField3 = fields.find(
+  const titleField2 = fields.find(
     (field) => field.id === view?.titleField
   );
   const mediaField = fields.find(
@@ -15044,7 +15044,7 @@ function ViewPickerGrid({
                           getItemId,
                           item,
                           mediaField,
-                          titleField: titleField3,
+                          titleField: titleField2,
                           descriptionField: descriptionField3,
                           regularFields,
                           badgeFields,
@@ -15125,7 +15125,7 @@ function ViewPickerGrid({
                   getItemId,
                   item,
                   mediaField,
-                  titleField: titleField3,
+                  titleField: titleField2,
                   descriptionField: descriptionField3,
                   regularFields,
                   badgeFields,
@@ -15184,7 +15184,7 @@ function TableRow2({
   fields,
   id,
   view,
-  titleField: titleField3,
+  titleField: titleField2,
   mediaField,
   descriptionField: descriptionField3,
   selection,
@@ -15211,7 +15211,7 @@ function TableRow2({
     setIsHovered(false);
   };
   const columns = view.fields ?? [];
-  const hasPrimaryColumn = titleField3 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
+  const hasPrimaryColumn = titleField2 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
   return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(
     import_components17.Composite.Item,
     {
@@ -15256,7 +15256,7 @@ function TableRow2({
                 selection,
                 onChangeSelection,
                 getItemId,
-                titleField: titleField3,
+                titleField: titleField2,
                 disabled: false,
                 "aria-hidden": true,
                 tabIndex: -1
@@ -15272,7 +15272,7 @@ function TableRow2({
               column_primary_default,
               {
                 item,
-                titleField: showTitle ? titleField3 : void 0,
+                titleField: showTitle ? titleField2 : void 0,
                 mediaField: showMedia ? mediaField : void 0,
                 descriptionField: showDescription ? descriptionField3 : void 0,
                 isItemClickable: () => false
@@ -15348,13 +15348,13 @@ function ViewPickerTable({
     setNextHeaderMenuToFocus(fallback?.node);
   };
   const hasData = !!data?.length;
-  const titleField3 = fields.find((field) => field.id === view.titleField);
+  const titleField2 = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
   const descriptionField3 = fields.find(
     (field) => field.id === view.descriptionField
   );
   const { showTitle = true, showMedia = true, showDescription = true } = view;
-  const hasPrimaryColumn = titleField3 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
+  const hasPrimaryColumn = titleField2 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
   const columns = view.fields ?? [];
   const headerMenuRef = (column, index2) => (node) => {
     if (node) {
@@ -15401,14 +15401,14 @@ function ViewPickerTable({
                     disableSelectAll: isInfiniteScroll
                   }
                 ) }),
-                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("th", { children: titleField3 && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("th", { children: titleField2 && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
                   column_header_menu_default,
                   {
                     ref: headerMenuRef(
-                      titleField3.id,
+                      titleField2.id,
                       0
                     ),
-                    fieldId: titleField3.id,
+                    fieldId: titleField2.id,
                     view,
                     fields,
                     onChangeView,
@@ -15486,7 +15486,7 @@ function ViewPickerTable({
                       fields,
                       id: getItemId(item) || index2.toString(),
                       view,
-                      titleField: titleField3,
+                      titleField: titleField2,
                       mediaField,
                       descriptionField: descriptionField3,
                       selection,
@@ -15516,7 +15516,7 @@ function ViewPickerTable({
                     fields,
                     id: itemId || index2.toString(),
                     view,
-                    titleField: titleField3,
+                    titleField: titleField2,
                     mediaField,
                     descriptionField: descriptionField3,
                     selection,
@@ -29088,7 +29088,7 @@ function DataForm({
 // packages/content-types/build-module/post-types/list.mjs
 var import_core_data7 = __toESM(require_core_data(), 1);
 var import_element116 = __toESM(require_element(), 1);
-var import_i18n62 = __toESM(require_i18n(), 1);
+var import_i18n63 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate3 } from "@wordpress/route";
 
 // packages/content-types/build-module/post-types/actions/activate.mjs
@@ -29397,21 +29397,238 @@ var import_components55 = __toESM(require_components(), 1);
 var import_core_data5 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_element113 = __toESM(require_element(), 1);
-var import_i18n58 = __toESM(require_i18n(), 1);
+var import_i18n59 = __toESM(require_i18n(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/content-types/build-module/post-types/fields/general.mjs
-var import_components54 = __toESM(require_components(), 1);
 var import_core_data4 = __toESM(require_core_data(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_element112 = __toESM(require_element(), 1);
+var import_i18n58 = __toESM(require_i18n(), 1);
+
+// packages/content-types/build-module/utils/fields.mjs
+var import_components54 = __toESM(require_components(), 1);
 var import_i18n57 = __toESM(require_i18n(), 1);
 var import_url3 = __toESM(require_url(), 1);
+var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components54.privateApis);
+function getCustomValidity2(validity) {
+  if (validity?.required?.message) {
+    return validity.required;
+  }
+  if (validity?.pattern) {
+    return validity.pattern;
+  }
+  if (validity?.maxLength) {
+    return validity.maxLength;
+  }
+  return validity?.custom;
+}
+function createBooleanField(id, label, options) {
+  const field = {
+    id,
+    label,
+    type: "boolean",
+    description: options.description,
+    Edit: "toggle",
+    getValue: ({ item }) => item.config[id],
+    setValue: ({ item, value }) => ({
+      config: { ...item.config, [id]: !!value }
+    }),
+    filterBy: false,
+    enableSorting: false
+  };
+  if (options.isVisible) {
+    field.isVisible = options.isVisible;
+  }
+  return field;
+}
+function createLabelField(id, label, options = {}) {
+  const field = {
+    id,
+    label,
+    type: "text",
+    placeholder: options.placeholder,
+    description: options.description,
+    getValue: ({ item }) => item.config.labels[id] ?? "",
+    setValue: ({ item, value }) => ({
+      config: {
+        ...item.config,
+        labels: {
+          ...item.config.labels,
+          [id]: String(value ?? "")
+        }
+      }
+    }),
+    isValid: {
+      ...options.required ? { required: true } : {},
+      // Mirrors the server REST schema: 200 chars for labels.
+      maxLength: 200
+    },
+    enableSorting: false
+  };
+  if (options.isVisible) {
+    field.isVisible = options.isVisible;
+  }
+  return field;
+}
+var titleField = {
+  id: "title",
+  label: (0, import_i18n57.__)("Title"),
+  type: "text",
+  enableGlobalSearch: true,
+  getValue: ({ item }) => item.title.raw,
+  setValue: ({ value }) => ({
+    title: { raw: String(value ?? "") }
+  }),
+  isValid: {
+    required: true,
+    // Title is stored as the plural label — mirrors the server REST schema (200 chars).
+    maxLength: 200
+  },
+  filterBy: false,
+  enableHiding: false
+};
+var pluralLabelField = {
+  id: "plural_name",
+  label: (0, import_i18n57.__)("Plural label"),
+  type: "text",
+  getValue: ({ item }) => item.title.raw,
+  setValue: ({ value }) => ({
+    title: { raw: String(value ?? "") }
+  }),
+  isValid: {
+    required: true,
+    maxLength: 200
+  }
+};
+var singularLabelField = {
+  id: "singular_name",
+  label: (0, import_i18n57.__)("Singular label"),
+  type: "text",
+  getValue: ({ item }) => item.config.labels.singular_name,
+  setValue: ({ item, value }) => ({
+    config: {
+      ...item.config,
+      labels: {
+        ...item.config.labels,
+        singular_name: String(value ?? "")
+      }
+    }
+  }),
+  isValid: {
+    required: true,
+    maxLength: 200
+  },
+  enableSorting: false
+};
+function createDescriptionField(description) {
+  return {
+    id: "description",
+    label: (0, import_i18n57.__)("Description"),
+    type: "text",
+    Edit: { control: "textarea", rows: 3 },
+    description,
+    getValue: ({ item }) => item.config.description,
+    setValue: ({ item, value }) => ({
+      config: { ...item.config, description: String(value ?? "") }
+    }),
+    // Mirrors the server REST schema (1000 chars for description).
+    isValid: { maxLength: 1e3 },
+    enableSorting: false
+  };
+}
+var statusField = {
+  id: "status",
+  label: (0, import_i18n57.__)("Status"),
+  description: (0, import_i18n57.__)("Enabled and registered with WordPress when active."),
+  elements: [
+    { value: "publish", label: (0, import_i18n57.__)("Active") },
+    { value: "draft", label: (0, import_i18n57.__)("Inactive") }
+  ],
+  render: ({ item }) => {
+    const isActive = item.status === "publish";
+    return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(Badge, { intent: isActive ? "stable" : "draft", children: isActive ? (0, import_i18n57.__)("Active") : (0, import_i18n57.__)("Inactive") });
+  },
+  enableSorting: false
+};
+function SlugEdit({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  markWhenOptional,
+  validity
+}) {
+  const { label, description, getValue, setValue } = field;
+  const isValid2 = field.isValid;
+  const value = getValue({ item: data }) ?? "";
+  const handleChange = (newValue) => onChange(setValue({ item: data, value: newValue }));
+  const onFocus = () => {
+    if (data.id !== void 0 || data.slug) {
+      return;
+    }
+    const singular = data.config.labels.singular_name?.trim();
+    if (!singular) {
+      return;
+    }
+    const cleaned = (0, import_url3.cleanForSlug)(singular);
+    if (/[^a-z0-9_-]/.test(cleaned)) {
+      return;
+    }
+    const trimmed = cleaned.slice(0, isValid2.maxLength.constraint).replace(/-+$/, "");
+    if (trimmed) {
+      handleChange(trimmed);
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+    ValidatedInputControl4,
+    {
+      __next40pxDefaultSize: true,
+      required: !!isValid2.required,
+      markWhenOptional,
+      customValidity: getCustomValidity2(validity),
+      label,
+      value,
+      help: description,
+      onChange: handleChange,
+      onFocus,
+      hideLabelFromVision,
+      pattern: isValid2.pattern?.constraint,
+      maxLength: isValid2.maxLength.constraint
+    }
+  );
+}
 
 // packages/content-types/build-module/post-types/utils.mjs
 var import_core_data3 = __toESM(require_core_data(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_element111 = __toESM(require_element(), 1);
+
+// packages/content-types/build-module/utils/form-data.mjs
+function pickStoredLabels(source, keys) {
+  const labels = {};
+  for (const key of keys) {
+    const value = source?.[key];
+    if (typeof value === "string") {
+      labels[key] = value;
+    }
+  }
+  return labels;
+}
+function serializeLabels(source, keys) {
+  const labels = {};
+  for (const key of keys) {
+    const value = source[key];
+    if (typeof value === "string" && value.trim() !== "") {
+      labels[key] = value.trim();
+    }
+  }
+  labels.singular_name = source.singular_name;
+  return labels;
+}
+
+// packages/content-types/build-module/post-types/utils.mjs
 var DEFAULT_SUPPORTS = ["title", "editor"];
 var BLANK_RECORD = {
   slug: "",
@@ -29469,13 +29686,10 @@ var SUPPORT_FEATURES = [
 ];
 function toFormData(row) {
   const config = row.config ?? {};
-  const labels = {};
-  for (const key of STRING_LABEL_KEYS) {
-    const value = config.labels?.[key];
-    if (typeof value === "string") {
-      labels[key] = value;
-    }
-  }
+  const labels = pickStoredLabels(
+    config.labels,
+    STRING_LABEL_KEYS
+  );
   const supports = Array.isArray(config.supports) ? config.supports.filter(
     (s2) => SUPPORT_FEATURES.includes(s2)
   ) : [...DEFAULT_SUPPORTS];
@@ -29498,14 +29712,10 @@ function toFormData(row) {
 }
 function serializeForSave(data) {
   const { config } = data;
-  const labels = {};
-  for (const key of STRING_LABEL_KEYS) {
-    const value = config.labels[key];
-    if (typeof value === "string" && value.trim() !== "") {
-      labels[key] = value.trim();
-    }
-  }
-  labels.singular_name = config.labels.singular_name;
+  const labels = serializeLabels(
+    config.labels,
+    STRING_LABEL_KEYS
+  );
   const description = config.description.trim();
   return {
     ...data.id !== void 0 ? { id: data.id } : {},
@@ -29543,132 +29753,62 @@ function usePublicTaxonomies() {
 }
 
 // packages/content-types/build-module/post-types/fields/general.mjs
-var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components54.privateApis);
+var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
 var SUPPORT_LABELS = {
-  title: (0, import_i18n57.__)("Title"),
-  editor: (0, import_i18n57.__)("Editor"),
-  thumbnail: (0, import_i18n57.__)("Featured image"),
-  excerpt: (0, import_i18n57.__)("Excerpt"),
-  comments: (0, import_i18n57.__)("Comments"),
-  revisions: (0, import_i18n57.__)("Revisions"),
-  author: (0, import_i18n57.__)("Author"),
-  "page-attributes": (0, import_i18n57.__)("Page attributes"),
-  "custom-fields": (0, import_i18n57.__)("Custom fields"),
-  trackbacks: (0, import_i18n57.__)("Trackbacks"),
-  "post-formats": (0, import_i18n57.__)("Post formats")
+  title: (0, import_i18n58.__)("Title"),
+  editor: (0, import_i18n58.__)("Editor"),
+  thumbnail: (0, import_i18n58.__)("Featured image"),
+  excerpt: (0, import_i18n58.__)("Excerpt"),
+  comments: (0, import_i18n58.__)("Comments"),
+  revisions: (0, import_i18n58.__)("Revisions"),
+  author: (0, import_i18n58.__)("Author"),
+  "page-attributes": (0, import_i18n58.__)("Page attributes"),
+  "custom-fields": (0, import_i18n58.__)("Custom fields"),
+  trackbacks: (0, import_i18n58.__)("Trackbacks"),
+  "post-formats": (0, import_i18n58.__)("Post formats")
 };
-var titleField = {
-  id: "title",
-  label: (0, import_i18n57.__)("Title"),
-  type: "text",
-  enableGlobalSearch: true,
-  getValue: ({ item }) => item.title.raw,
-  setValue: ({ value }) => ({ title: { raw: String(value ?? "") } }),
-  isValid: { required: true },
-  filterBy: false,
-  enableHiding: false
-};
-var pluralLabelField = {
-  id: "plural_name",
-  label: (0, import_i18n57.__)("Plural label"),
-  type: "text",
-  getValue: ({ item }) => item.title.raw,
-  setValue: ({ value }) => ({ title: { raw: String(value ?? "") } }),
-  isValid: { required: true }
-};
-var singularLabelField = {
-  id: "singular_name",
-  label: (0, import_i18n57.__)("Singular label"),
-  type: "text",
-  getValue: ({ item }) => item.config.labels.singular_name,
-  setValue: ({ item, value }) => ({
-    config: {
-      ...item.config,
-      labels: {
-        ...item.config.labels,
-        singular_name: String(value ?? "")
-      }
-    }
-  }),
-  isValid: { required: true },
-  enableSorting: false
-};
-var descriptionField = {
-  id: "description",
-  label: (0, import_i18n57.__)("Description"),
-  type: "text",
-  Edit: { control: "textarea", rows: 3 },
-  description: (0, import_i18n57.__)(
+var descriptionField = createDescriptionField(
+  (0, import_i18n58.__)(
     "Optional summary of the post type. Shown in admin UIs that surface post type details."
-  ),
-  getValue: ({ item }) => item.config.description,
-  setValue: ({ item, value }) => ({
-    config: { ...item.config, description: String(value ?? "") }
-  }),
-  enableSorting: false
-};
-var publicField = {
-  id: "public",
-  label: (0, import_i18n57.__)("Public"),
-  type: "boolean",
-  description: (0, import_i18n57.__)(
+  )
+);
+var publicField = createBooleanField("public", (0, import_i18n58.__)("Public"), {
+  description: (0, import_i18n58.__)(
     "Whether the post type is intended for use publicly either via the admin interface or by front-end users."
-  ),
-  getValue: ({ item }) => item.config.public,
-  setValue: ({ item, value }) => ({
-    config: { ...item.config, public: !!value }
-  }),
-  filterBy: false,
-  enableSorting: false
-};
-var hierarchicalField = {
-  id: "hierarchical",
-  label: (0, import_i18n57.__)("Hierarchical"),
-  type: "boolean",
-  description: (0, import_i18n57.__)(
-    "When on, posts of this type can have parent-child relationships like pages, and the parent picker is shown in the editor. When off, they behave like posts."
-  ),
-  getValue: ({ item }) => item.config.hierarchical,
-  setValue: ({ item, value }) => ({
-    config: { ...item.config, hierarchical: !!value }
-  }),
-  filterBy: false,
-  enableSorting: false
-};
-var hasArchiveField = {
-  id: "has_archive",
-  label: (0, import_i18n57.__)("Has archive"),
-  type: "boolean",
-  description: (0, import_i18n57.__)(
-    "Whether the post type has an archive page (e.g. /book/). Requires permalink rewrite rules to be flushed after enabling."
-  ),
-  getValue: ({ item }) => item.config.has_archive,
-  setValue: ({ item, value }) => ({
-    config: { ...item.config, has_archive: !!value }
-  }),
-  filterBy: false,
-  enableSorting: false
-};
-var showInRestField = {
-  id: "show_in_rest",
-  label: (0, import_i18n57.__)("Show in REST API"),
-  type: "boolean",
-  description: (0, import_i18n57.__)(
-    "Required for the block editor. Disable only if posts of this type should not be available via the REST API."
-  ),
-  getValue: ({ item }) => item.config.show_in_rest,
-  setValue: ({ item, value }) => ({
-    config: { ...item.config, show_in_rest: !!value }
-  }),
-  filterBy: false,
-  enableSorting: false
-};
+  )
+});
+var hierarchicalField = createBooleanField(
+  "hierarchical",
+  (0, import_i18n58.__)("Hierarchical"),
+  {
+    description: (0, import_i18n58.__)(
+      "When on, posts of this type can have parent-child relationships like pages, and the parent picker is shown in the editor. When off, they behave like posts."
+    )
+  }
+);
+var hasArchiveField = createBooleanField(
+  "has_archive",
+  (0, import_i18n58.__)("Has archive"),
+  {
+    description: (0, import_i18n58.__)(
+      "Whether the post type has an archive page (e.g. /book/). Requires permalink rewrite rules to be flushed after enabling."
+    )
+  }
+);
+var showInRestField = createBooleanField(
+  "show_in_rest",
+  (0, import_i18n58.__)("Show in REST API"),
+  {
+    description: (0, import_i18n58.__)(
+      "Required for the block editor. Disable only if posts of this type should not be available via the REST API."
+    )
+  }
+);
 var supportsField = {
   id: "supports",
-  label: (0, import_i18n57.__)("Supports"),
+  label: (0, import_i18n58.__)("Supports"),
   type: "array",
-  description: (0, import_i18n57.__)(
+  description: (0, import_i18n58.__)(
     "Editor features and metadata enabled for posts of this type."
   ),
   elements: SUPPORT_FEATURES.map((feature) => ({
@@ -29688,41 +29828,13 @@ var supportsField = {
   render: ({ item }) => {
     const features = item.config.supports;
     if (!features || features.length === 0) {
-      return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)("span", { "aria-hidden": "true", children: "\u2014" });
+      return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("span", { "aria-hidden": "true", children: "\u2014" });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(import_jsx_runtime157.Fragment, { children: features.map((f2) => SUPPORT_LABELS[f2] ?? f2).join(", ") });
+    return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_jsx_runtime158.Fragment, { children: features.map((f2) => SUPPORT_LABELS[f2] ?? f2).join(", ") });
   },
   filterBy: false
 };
-var statusField = {
-  id: "status",
-  label: (0, import_i18n57.__)("Status"),
-  description: (0, import_i18n57.__)(
-    "Active post types are enabled and registered with WordPress."
-  ),
-  elements: [
-    { value: "publish", label: (0, import_i18n57.__)("Active") },
-    { value: "draft", label: (0, import_i18n57.__)("Inactive") }
-  ],
-  render: ({ item }) => {
-    const isActive = item.status === "publish";
-    return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(Badge, { intent: isActive ? "stable" : "draft", children: isActive ? (0, import_i18n57.__)("Active") : (0, import_i18n57.__)("Inactive") });
-  },
-  enableSorting: false
-};
 var SLUG_MAX_LENGTH = 20;
-function getSlugCustomValidity(validity) {
-  if (validity?.required?.message) {
-    return validity.required;
-  }
-  if (validity?.pattern) {
-    return validity.pattern;
-  }
-  if (validity?.maxLength) {
-    return validity.maxLength;
-  }
-  return validity?.custom;
-}
 function useSlugField(originalSlug, currentValue) {
   const registeredPostTypes = (0, import_data8.useSelect)(
     (select) => select(import_core_data4.store).getPostTypes(),
@@ -29732,14 +29844,14 @@ function useSlugField(originalSlug, currentValue) {
   return (0, import_element112.useMemo)(
     () => ({
       id: "slug",
-      label: (0, import_i18n57.__)("Post type key"),
+      label: (0, import_i18n58.__)("Post type key"),
       type: "text",
       enableGlobalSearch: true,
-      description: /* @__PURE__ */ (0, import_jsx_runtime157.jsxs)(Stack, { direction: "column", gap: "sm", render: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)("span", {}), children: [
-        showRenameWarning && /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(notice_exports.Root, { intent: "warning", render: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)("span", {}), children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(notice_exports.Description, { children: (0, import_i18n57.__)(
+      description: /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(Stack, { direction: "column", gap: "sm", render: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("span", {}), children: [
+        showRenameWarning && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(notice_exports.Root, { intent: "warning", render: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("span", {}), children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(notice_exports.Description, { children: (0, import_i18n58.__)(
           "Changing the key renames the post type \u2014 existing posts may become inaccessible until a migration updates the database."
         ) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime157.jsx)("span", { children: (0, import_i18n57.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("span", { children: (0, import_i18n58.__)(
           "Lower case letters, numbers, underscores, and dashes only. Maximum length: 20 characters."
         ) })
       ] }),
@@ -29756,7 +29868,7 @@ function useSlugField(originalSlug, currentValue) {
             (pt) => pt.slug === slug
           );
           if (slugTaken) {
-            return (0, import_i18n57.__)("This post type key is already in use.");
+            return (0, import_i18n58.__)("This post type key is already in use.");
           }
           const drafts = await (0, import_data8.resolveSelect)(
             import_core_data4.store
@@ -29766,55 +29878,10 @@ function useSlugField(originalSlug, currentValue) {
             _fields: "id,name",
             per_page: 1
           });
-          return !!drafts?.length ? (0, import_i18n57.__)("This post type key is already in use.") : null;
+          return drafts?.length ? (0, import_i18n58.__)("This post type key is already in use.") : null;
         }
       },
-      Edit: function SlugEdit({
-        data,
-        field,
-        onChange,
-        hideLabelFromVision,
-        markWhenOptional,
-        validity
-      }) {
-        const { label, description, getValue, setValue, isValid: isValid2 } = field;
-        const value = getValue({ item: data }) ?? "";
-        const handleChange = (newValue) => onChange(setValue({ item: data, value: newValue }));
-        const onFocus = () => {
-          if (data.id !== void 0 || data.slug) {
-            return;
-          }
-          const singular = data.config.labels.singular_name?.trim();
-          if (!singular) {
-            return;
-          }
-          const cleaned = (0, import_url3.cleanForSlug)(singular);
-          if (/[^a-z0-9_-]/.test(cleaned)) {
-            return;
-          }
-          const trimmed = cleaned.slice(0, SLUG_MAX_LENGTH).replace(/-+$/, "");
-          if (trimmed) {
-            handleChange(trimmed);
-          }
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
-          ValidatedInputControl4,
-          {
-            __next40pxDefaultSize: true,
-            required: !!isValid2.required,
-            markWhenOptional,
-            customValidity: getSlugCustomValidity(validity),
-            label,
-            value,
-            help: description,
-            onChange: handleChange,
-            onFocus,
-            hideLabelFromVision,
-            pattern: isValid2.pattern?.constraint,
-            maxLength: isValid2.maxLength?.constraint
-          }
-        );
-      },
+      Edit: SlugEdit,
       filterBy: false,
       enableSorting: false
     }),
@@ -29833,9 +29900,9 @@ function useTaxonomiesField() {
     );
     return {
       id: "taxonomies",
-      label: (0, import_i18n57.__)("Taxonomies"),
+      label: (0, import_i18n58.__)("Taxonomies"),
       type: "array",
-      description: (0, import_i18n57.__)(
+      description: (0, import_i18n58.__)(
         "One or more taxonomies that should be associated with this post type."
       ),
       elements,
@@ -29850,9 +29917,9 @@ function useTaxonomiesField() {
       render: ({ item }) => {
         const slugs = item.config.taxonomies;
         if (!slugs || slugs.length === 0) {
-          return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)("span", { "aria-hidden": "true", children: "\u2014" });
+          return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("span", { "aria-hidden": "true", children: "\u2014" });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(import_jsx_runtime157.Fragment, { children: slugs.map((s2) => labelMap[s2] ?? s2).join(", ") });
+        return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_jsx_runtime158.Fragment, { children: slugs.map((s2) => labelMap[s2] ?? s2).join(", ") });
       },
       filterBy: false
     };
@@ -29889,7 +29956,7 @@ var generalForm = {
 };
 
 // packages/content-types/build-module/post-types/actions/duplicate.mjs
-var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
 var SLUG_MAX_LENGTH2 = 20;
 var duplicateForm = {
   layout: { type: "regular" },
@@ -29915,9 +29982,9 @@ function DuplicatePostTypeModal({
     id: void 0,
     status: "draft",
     title: {
-      raw: (0, import_i18n58.sprintf)(
+      raw: (0, import_i18n59.sprintf)(
         /* translators: %s: existing post type title. */
-        (0, import_i18n58._x)("%s (Copy)", "post type"),
+        (0, import_i18n59._x)("%s (Copy)", "post type"),
         source.title.raw
       )
     },
@@ -29926,7 +29993,11 @@ function DuplicatePostTypeModal({
   const [isDuplicating, setIsDuplicating] = (0, import_element113.useState)(false);
   const slugField = useSlugField(void 0, data.slug);
   const fields = (0, import_element113.useMemo)(
-    () => [pluralLabelField, singularLabelField, slugField],
+    () => [
+      pluralLabelField,
+      singularLabelField,
+      slugField
+    ],
     [slugField]
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(
@@ -29949,9 +30020,9 @@ function DuplicatePostTypeModal({
         { throwOnError: true }
       );
       createSuccessNotice(
-        (0, import_i18n58.sprintf)(
+        (0, import_i18n59.sprintf)(
           /* translators: %s: post type plural label. */
-          (0, import_i18n58.__)('"%s" post type created.'),
+          (0, import_i18n59.__)('"%s" post type created.'),
           data.title.raw
         ),
         { type: "snackbar" }
@@ -29961,15 +30032,15 @@ function DuplicatePostTypeModal({
     } catch (error2) {
       const typedError = error2;
       createErrorNotice(
-        typedError?.message && typedError.code !== "unknown_error" ? typedError.message : (0, import_i18n58.__)("Failed to duplicate post type."),
+        typedError?.message && typedError.code !== "unknown_error" ? typedError.message : (0, import_i18n59.__)("Failed to duplicate post type."),
         { type: "snackbar" }
       );
     } finally {
       setIsDuplicating(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(Stack, { direction: "column", gap: "md", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(Stack, { direction: "column", gap: "md", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
       DataForm,
       {
         data,
@@ -29981,8 +30052,8 @@ function DuplicatePostTypeModal({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
         import_components55.Button,
         {
           __next40pxDefaultSize: true,
@@ -29990,10 +30061,10 @@ function DuplicatePostTypeModal({
           onClick: closeModal,
           disabled: isDuplicating,
           accessibleWhenDisabled: true,
-          children: (0, import_i18n58.__)("Cancel")
+          children: (0, import_i18n59.__)("Cancel")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
         import_components55.Button,
         {
           __next40pxDefaultSize: true,
@@ -30002,7 +30073,7 @@ function DuplicatePostTypeModal({
           disabled: isDuplicating || !isValid2,
           accessibleWhenDisabled: true,
           onClick: onDuplicate,
-          children: (0, import_i18n58._x)("Duplicate", "action label")
+          children: (0, import_i18n59._x)("Duplicate", "action label")
         }
       )
     ] })
@@ -30010,178 +30081,160 @@ function DuplicatePostTypeModal({
 }
 var duplicatePostTypeAction = {
   id: "duplicate-post-type",
-  label: (0, import_i18n58._x)("Duplicate", "action label"),
+  label: (0, import_i18n59._x)("Duplicate", "action label"),
   icon: copy_default,
-  modalHeader: (0, import_i18n58.__)("Duplicate post type"),
+  modalHeader: (0, import_i18n59.__)("Duplicate post type"),
   modalFocusOnMount: "firstContentElement",
   RenderModal: DuplicatePostTypeModal
 };
 var duplicate_default = duplicatePostTypeAction;
 
 // packages/content-types/build-module/post-types/fields/labels.mjs
-var import_i18n59 = __toESM(require_i18n(), 1);
-function labelField(id, label, options = {}) {
-  const field = {
-    id,
-    label,
-    type: "text",
-    placeholder: options.placeholder,
-    description: options.description,
-    getValue: ({ item }) => item.config.labels[id] ?? "",
-    setValue: ({ item, value }) => ({
-      config: {
-        ...item.config,
-        labels: {
-          ...item.config.labels,
-          [id]: String(value ?? "")
-        }
-      }
-    }),
-    enableSorting: false
-  };
-  if (options.isVisible) {
-    field.isVisible = options.isVisible;
-  }
-  return field;
-}
-var menuNameField = labelField("menu_name", (0, import_i18n59.__)("Menu name"), {
-  placeholder: (0, import_i18n59.__)("Posts"),
-  description: (0, import_i18n59.__)("Defaults to the plural label.")
+var import_i18n60 = __toESM(require_i18n(), 1);
+var menuNameField = createLabelField("menu_name", (0, import_i18n60.__)("Menu name"), {
+  placeholder: (0, import_i18n60.__)("Posts"),
+  description: (0, import_i18n60.__)("Defaults to the plural label.")
 });
-var allItemsField = labelField("all_items", (0, import_i18n59.__)("All items"), {
-  placeholder: (0, import_i18n59.__)("All Posts")
+var allItemsField = createLabelField("all_items", (0, import_i18n60.__)("All items"), {
+  placeholder: (0, import_i18n60.__)("All Posts")
 });
-var addNewField = labelField("add_new", (0, import_i18n59.__)("Add new"), {
-  placeholder: (0, import_i18n59.__)("Add New"),
-  description: (0, import_i18n59.__)("Shown in the admin menu and on toolbar buttons.")
+var addNewField = createLabelField("add_new", (0, import_i18n60.__)("Add new"), {
+  placeholder: (0, import_i18n60.__)("Add New"),
+  description: (0, import_i18n60.__)("Shown in the admin menu and on toolbar buttons.")
 });
-var addNewItemLabelField = labelField(
+var addNewItemLabelField = createLabelField(
   "add_new_item",
-  (0, import_i18n59.__)("Add new item"),
+  (0, import_i18n60.__)("Add new item"),
+  { placeholder: (0, import_i18n60.__)("Add New Post") }
+);
+var editItemField = createLabelField("edit_item", (0, import_i18n60.__)("Edit item"), {
+  placeholder: (0, import_i18n60.__)("Edit Post")
+});
+var newItemField = createLabelField("new_item", (0, import_i18n60.__)("New item"), {
+  placeholder: (0, import_i18n60.__)("New Post")
+});
+var viewItemField = createLabelField("view_item", (0, import_i18n60.__)("View item"), {
+  placeholder: (0, import_i18n60.__)("View Post")
+});
+var viewItemsField = createLabelField(
+  "view_items",
+  (0, import_i18n60.__)("View items"),
   {
-    placeholder: (0, import_i18n59.__)("Add New Post")
+    placeholder: (0, import_i18n60.__)("View Posts"),
+    description: (0, import_i18n60.__)("Used as the link label for the post type archive.")
   }
 );
-var editItemField = labelField("edit_item", (0, import_i18n59.__)("Edit item"), {
-  placeholder: (0, import_i18n59.__)("Edit Post")
-});
-var newItemField = labelField("new_item", (0, import_i18n59.__)("New item"), {
-  placeholder: (0, import_i18n59.__)("New Post")
-});
-var viewItemField = labelField("view_item", (0, import_i18n59.__)("View item"), {
-  placeholder: (0, import_i18n59.__)("View Post")
-});
-var viewItemsField = labelField("view_items", (0, import_i18n59.__)("View items"), {
-  placeholder: (0, import_i18n59.__)("View Posts"),
-  description: (0, import_i18n59.__)("Used as the link label for the post type archive.")
-});
-var searchItemsField = labelField(
+var searchItemsField = createLabelField(
   "search_items",
-  (0, import_i18n59.__)("Search items"),
-  {
-    placeholder: (0, import_i18n59.__)("Search Posts")
-  }
+  (0, import_i18n60.__)("Search items"),
+  { placeholder: (0, import_i18n60.__)("Search Posts") }
 );
-var notFoundField = labelField("not_found", (0, import_i18n59.__)("Not found"), {
-  placeholder: (0, import_i18n59.__)("No posts found."),
-  description: (0, import_i18n59.__)("Shown in the admin list when no posts match.")
+var notFoundField = createLabelField("not_found", (0, import_i18n60.__)("Not found"), {
+  placeholder: (0, import_i18n60.__)("No posts found."),
+  description: (0, import_i18n60.__)("Shown in the admin list when no posts match.")
 });
-var notFoundInTrashField = labelField(
+var notFoundInTrashField = createLabelField(
   "not_found_in_trash",
-  (0, import_i18n59.__)("Not found in trash"),
-  {
-    placeholder: (0, import_i18n59.__)("No posts found in Trash.")
-  }
+  (0, import_i18n60.__)("Not found in trash"),
+  { placeholder: (0, import_i18n60.__)("No posts found in Trash.") }
 );
-var archivesField = labelField("archives", (0, import_i18n59.__)("Archives"), {
-  placeholder: (0, import_i18n59.__)("Post Archives"),
-  description: (0, import_i18n59.__)(
+var archivesField = createLabelField("archives", (0, import_i18n60.__)("Archives"), {
+  placeholder: (0, import_i18n60.__)("Post Archives"),
+  description: (0, import_i18n60.__)(
     "Used in the navigation menus block when adding a link to the post type archive."
   )
 });
-var attributesField = labelField("attributes", (0, import_i18n59.__)("Attributes"), {
-  placeholder: (0, import_i18n59.__)("Post Attributes"),
-  description: (0, import_i18n59.__)(
-    "Title of the Attributes meta box. Not used on non-hierarchical post types."
-  ),
-  isVisible: (item) => item.config.hierarchical
-});
-var parentItemColonField = labelField(
-  "parent_item_colon",
-  (0, import_i18n59.__)("Parent item with colon"),
+var attributesField = createLabelField(
+  "attributes",
+  (0, import_i18n60.__)("Attributes"),
   {
-    placeholder: (0, import_i18n59.__)("Parent Page:"),
-    description: (0, import_i18n59.__)(
+    placeholder: (0, import_i18n60.__)("Post Attributes"),
+    description: (0, import_i18n60.__)(
+      "Title of the Attributes meta box. Not used on non-hierarchical post types."
+    ),
+    isVisible: (item) => item.config.hierarchical
+  }
+);
+var parentItemColonField = createLabelField(
+  "parent_item_colon",
+  (0, import_i18n60.__)("Parent item with colon"),
+  {
+    placeholder: (0, import_i18n60.__)("Parent Page:"),
+    description: (0, import_i18n60.__)(
       "Shown above the parent dropdown. Not used on non-hierarchical post types."
     ),
     isVisible: (item) => item.config.hierarchical
   }
 );
-var insertIntoItemField = labelField(
+var insertIntoItemField = createLabelField(
   "insert_into_item",
-  (0, import_i18n59.__)("Insert into item"),
+  (0, import_i18n60.__)("Insert into item"),
   {
-    placeholder: (0, import_i18n59.__)("Insert into post"),
-    description: (0, import_i18n59.__)("Shown in the media library uploader.")
+    placeholder: (0, import_i18n60.__)("Insert into post"),
+    description: (0, import_i18n60.__)("Shown in the media library uploader.")
   }
 );
-var uploadedToThisItemField = labelField(
+var uploadedToThisItemField = createLabelField(
   "uploaded_to_this_item",
-  (0, import_i18n59.__)("Uploaded to this item"),
+  (0, import_i18n60.__)("Uploaded to this item"),
   {
-    placeholder: (0, import_i18n59.__)("Uploaded to this post")
+    placeholder: (0, import_i18n60.__)("Uploaded to this post")
   }
 );
-var featuredImageField = labelField(
+var featuredImageField = createLabelField(
   "featured_image",
-  (0, import_i18n59.__)("Featured image"),
+  (0, import_i18n60.__)("Featured image"),
   {
-    placeholder: (0, import_i18n59.__)("Featured image")
+    placeholder: (0, import_i18n60.__)("Featured image")
   }
 );
-var setFeaturedImageField = labelField(
+var setFeaturedImageField = createLabelField(
   "set_featured_image",
-  (0, import_i18n59.__)("Set featured image"),
+  (0, import_i18n60.__)("Set featured image"),
   {
-    placeholder: (0, import_i18n59.__)("Set featured image")
+    placeholder: (0, import_i18n60.__)("Set featured image")
   }
 );
-var removeFeaturedImageField = labelField(
+var removeFeaturedImageField = createLabelField(
   "remove_featured_image",
-  (0, import_i18n59.__)("Remove featured image"),
+  (0, import_i18n60.__)("Remove featured image"),
   {
-    placeholder: (0, import_i18n59.__)("Remove featured image")
+    placeholder: (0, import_i18n60.__)("Remove featured image")
   }
 );
-var useFeaturedImageField = labelField(
+var useFeaturedImageField = createLabelField(
   "use_featured_image",
-  (0, import_i18n59.__)("Use as featured image"),
+  (0, import_i18n60.__)("Use as featured image"),
   {
-    placeholder: (0, import_i18n59.__)("Use as featured image")
+    placeholder: (0, import_i18n60.__)("Use as featured image")
   }
 );
-var filterItemsListField = labelField(
+var filterItemsListField = createLabelField(
   "filter_items_list",
-  (0, import_i18n59.__)("Filter items list"),
+  (0, import_i18n60.__)("Filter items list"),
   {
-    placeholder: (0, import_i18n59.__)("Filter posts list"),
-    description: (0, import_i18n59.__)(
+    placeholder: (0, import_i18n60.__)("Filter posts list"),
+    description: (0, import_i18n60.__)(
       "Screen reader text for the admin list filter controls."
     )
   }
 );
-var itemsListNavigationField = labelField(
+var itemsListNavigationField = createLabelField(
   "items_list_navigation",
-  (0, import_i18n59.__)("Items list navigation"),
+  (0, import_i18n60.__)("Items list navigation"),
   {
-    placeholder: (0, import_i18n59.__)("Posts list navigation"),
-    description: (0, import_i18n59.__)("Screen reader text for the admin list pagination.")
+    placeholder: (0, import_i18n60.__)("Posts list navigation"),
+    description: (0, import_i18n60.__)("Screen reader text for the admin list pagination.")
   }
 );
-var itemsListField = labelField("items_list", (0, import_i18n59.__)("Items list"), {
-  placeholder: (0, import_i18n59.__)("Posts list"),
-  description: (0, import_i18n59.__)("Screen reader text for the admin list table.")
-});
+var itemsListField = createLabelField(
+  "items_list",
+  (0, import_i18n60.__)("Items list"),
+  {
+    placeholder: (0, import_i18n60.__)("Posts list"),
+    description: (0, import_i18n60.__)("Screen reader text for the admin list table.")
+  }
+);
 var labelsForm = {
   layout: { type: "regular" },
   // singular_name lives in the General card, so exclude it here.
@@ -30190,14 +30243,14 @@ var labelsForm = {
 
 // packages/content-types/build-module/post-types/actions/edit.mjs
 var import_element114 = __toESM(require_element(), 1);
-var import_i18n60 = __toESM(require_i18n(), 1);
+var import_i18n61 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate2 } from "@wordpress/route";
 function useEditPostTypeAction() {
   const navigate = useNavigate2();
   return (0, import_element114.useMemo)(
     () => ({
       id: "edit-post-type",
-      label: (0, import_i18n60.__)("Edit"),
+      label: (0, import_i18n61.__)("Edit"),
       callback: (items) => {
         const item = items[0];
         if (item?.id === void 0) {
@@ -30217,9 +30270,9 @@ var import_components56 = __toESM(require_components(), 1);
 var import_core_data6 = __toESM(require_core_data(), 1);
 var import_data10 = __toESM(require_data(), 1);
 var import_element115 = __toESM(require_element(), 1);
-var import_i18n61 = __toESM(require_i18n(), 1);
+var import_i18n62 = __toESM(require_i18n(), 1);
 var import_notices4 = __toESM(require_notices(), 1);
-var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
 function QuickEditPostTypeModal({
   items,
   closeModal
@@ -30258,9 +30311,9 @@ function QuickEditPostTypeModal({
         { throwOnError: true }
       );
       createSuccessNotice(
-        (0, import_i18n61.sprintf)(
+        (0, import_i18n62.sprintf)(
           /* translators: %s: post type plural label. */
-          (0, import_i18n61.__)('"%s" post type updated.'),
+          (0, import_i18n62.__)('"%s" post type updated.'),
           data.title.raw
         ),
         { type: "snackbar" }
@@ -30268,15 +30321,15 @@ function QuickEditPostTypeModal({
       closeModal?.();
     } catch (error2) {
       createErrorNotice(
-        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n61.__)("Failed to update post type."),
+        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n62.__)("Failed to update post type."),
         { type: "snackbar" }
       );
     } finally {
       setIsSaving(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(import_jsx_runtime159.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(import_jsx_runtime160.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(
       Stack,
       {
         className: "dataviews-action-modal__quick-edit-post-type-header",
@@ -30284,20 +30337,20 @@ function QuickEditPostTypeModal({
         justify: "space-between",
         align: "center",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("h2", {}), children: (0, import_i18n61.__)("Quick edit post type") }),
-          /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("h2", {}), children: (0, import_i18n62.__)("Quick edit post type") }),
+          /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
             import_components56.Button,
             {
               size: "small",
               icon: close_small_default,
-              label: (0, import_i18n61.__)("Close"),
+              label: (0, import_i18n62.__)("Close"),
               onClick: closeModal
             }
           )
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("div", { className: "dataviews-action-modal__quick-edit-post-type-content", children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", { className: "dataviews-action-modal__quick-edit-post-type-content", children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
       DataForm,
       {
         data,
@@ -30309,23 +30362,23 @@ function QuickEditPostTypeModal({
         )
       }
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(
       Stack,
       {
         className: "dataviews-action-modal__quick-edit-post-type-footer",
         direction: "row",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
             import_components56.Button,
             {
               __next40pxDefaultSize: true,
               variant: "secondary",
               onClick: closeModal,
-              children: (0, import_i18n61.__)("Cancel")
+              children: (0, import_i18n62.__)("Cancel")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
             import_components56.Button,
             {
               __next40pxDefaultSize: true,
@@ -30334,7 +30387,7 @@ function QuickEditPostTypeModal({
               disabled: isSaving,
               accessibleWhenDisabled: true,
               onClick: onSave,
-              children: (0, import_i18n61.__)("Done")
+              children: (0, import_i18n62.__)("Done")
             }
           )
         ]
@@ -30344,7 +30397,7 @@ function QuickEditPostTypeModal({
 }
 var quickEditPostTypeAction = {
   id: "quick-edit-post-type",
-  label: (0, import_i18n61.__)("Quick edit"),
+  label: (0, import_i18n62.__)("Quick edit"),
   icon: pencil_default,
   isPrimary: true,
   hideModalHeader: true,
@@ -30353,7 +30406,7 @@ var quickEditPostTypeAction = {
 var quick_edit_default = quickEditPostTypeAction;
 
 // packages/content-types/build-module/post-types/list.mjs
-var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
 var defaultLayouts = {
   table: {}
 };
@@ -30425,7 +30478,7 @@ function PostTypesList() {
     }),
     [totalItems, totalPages]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
     dataviews_default,
     {
       data,
@@ -30441,7 +30494,7 @@ function PostTypesList() {
       onClickItem: (item) => navigate({
         to: `${POST_TYPES_PATH}/${item.id}`
       }),
-      header: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
+      header: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
         import_components57.Button,
         {
           variant: "primary",
@@ -30450,7 +30503,7 @@ function PostTypesList() {
           onClick: () => navigate({
             to: `${POST_TYPES_PATH}/${NEW_ID}`
           }),
-          children: (0, import_i18n62.__)("Add post type")
+          children: (0, import_i18n63.__)("Add post type")
         }
       )
     }
@@ -30463,10 +30516,10 @@ var import_compose16 = __toESM(require_compose(), 1);
 var import_core_data8 = __toESM(require_core_data(), 1);
 var import_data11 = __toESM(require_data(), 1);
 var import_element117 = __toESM(require_element(), 1);
-var import_i18n63 = __toESM(require_i18n(), 1);
+var import_i18n64 = __toESM(require_i18n(), 1);
 var import_notices5 = __toESM(require_notices(), 1);
 import { useNavigate as useNavigate4, useParams } from "@wordpress/route";
-var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
 function PostTypeEdit() {
   const { id } = useParams({ from: `${POST_TYPES_PATH}/$id` });
   const navigate = useNavigate4();
@@ -30484,13 +30537,13 @@ function PostTypeEdit() {
     [isAddMode, postTypeId]
   );
   const initialData = !isAddMode && record ? toFormData(record) : BLANK_RECORD;
-  const title = isAddMode ? (0, import_i18n63.__)("Add post type") : initialData.title.raw;
+  const title = isAddMode ? (0, import_i18n64.__)("Add post type") : initialData.title.raw;
   const commonProps = { initialData, title };
   const postTypePageProps = isAddMode ? {
     ...commonProps,
     isAddMode: true,
-    breadcrumbLabel: (0, import_i18n63.__)("Add new"),
-    subTitle: (0, import_i18n63.__)(
+    breadcrumbLabel: (0, import_i18n64.__)("Add new"),
+    subTitle: (0, import_i18n64.__)(
       "Define a new post type. Fill in the essentials under General; expand Labels to customize."
     ),
     onSaved: (saved) => navigate({
@@ -30500,11 +30553,11 @@ function PostTypeEdit() {
     ...commonProps,
     isAddMode: false,
     breadcrumbLabel: title,
-    subTitle: (0, import_i18n63.__)(
+    subTitle: (0, import_i18n64.__)(
       "Edit this post type. Expand the Labels section to adjust labels."
     )
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(PostTypePage, { ...postTypePageProps }, id);
+  return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(PostTypePage, { ...postTypePageProps }, id);
 }
 function PostTypePage({
   isAddMode,
@@ -30566,8 +30619,8 @@ function PostTypePage({
       fields: [
         {
           id: "general",
-          label: (0, import_i18n63.__)("General"),
-          description: (0, import_i18n63.__)(
+          label: (0, import_i18n64.__)("General"),
+          description: (0, import_i18n64.__)(
             "Core identity, taxonomies, supports, and activation."
           ),
           layout: {
@@ -30579,8 +30632,8 @@ function PostTypePage({
         },
         {
           id: "labels",
-          label: (0, import_i18n63.__)("Labels"),
-          description: (0, import_i18n63.__)(
+          label: (0, import_i18n64.__)("Labels"),
+          description: (0, import_i18n64.__)(
             "Override the text WordPress shows in admin lists, menus, and forms. Leave blank to use defaults derived from the plural and singular names."
           ),
           layout: {
@@ -30610,13 +30663,13 @@ function PostTypePage({
         serializeForSave(data),
         { throwOnError: true }
       );
-      const successMessage = isAddMode ? (0, import_i18n63.sprintf)(
+      const successMessage = isAddMode ? (0, import_i18n64.sprintf)(
         /* translators: %s: post type plural label. */
-        (0, import_i18n63.__)('"%s" post type created.'),
+        (0, import_i18n64.__)('"%s" post type created.'),
         data.title.raw
-      ) : (0, import_i18n63.sprintf)(
+      ) : (0, import_i18n64.sprintf)(
         /* translators: %s: post type plural label. */
-        (0, import_i18n63.__)('"%s" post type updated.'),
+        (0, import_i18n64.__)('"%s" post type updated.'),
         data.title.raw
       );
       createSuccessNotice(successMessage, { type: "snackbar" });
@@ -30628,30 +30681,30 @@ function PostTypePage({
       if (error2?.message && error2?.code !== "unknown_error") {
         errorMessage = error2.message;
       } else if (isAddMode) {
-        errorMessage = (0, import_i18n63.__)("Failed to create post type.");
+        errorMessage = (0, import_i18n64.__)("Failed to create post type.");
       } else {
-        errorMessage = (0, import_i18n63.__)("Failed to update post type.");
+        errorMessage = (0, import_i18n64.__)("Failed to update post type.");
       }
       createErrorNotice(errorMessage, { type: "snackbar" });
     } finally {
       setIsSaving(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
     page_default,
     {
       ariaLabel: title,
-      breadcrumbs: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
+      breadcrumbs: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
         breadcrumbs_default,
         {
           items: [
-            { label: (0, import_i18n63.__)("Post Types"), to: POST_TYPES_PATH },
+            { label: (0, import_i18n64.__)("Post Types"), to: POST_TYPES_PATH },
             { label: breadcrumbLabel }
           ]
         }
       ),
       subTitle,
-      actions: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
+      actions: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
         import_components58.Button,
         {
           __next40pxDefaultSize: true,
@@ -30662,16 +30715,16 @@ function PostTypePage({
           isBusy: isSaving,
           disabled: isSaving || !isValid2,
           accessibleWhenDisabled: true,
-          children: isAddMode ? (0, import_i18n63.__)("Create") : (0, import_i18n63.__)("Save")
+          children: isAddMode ? (0, import_i18n64.__)("Create") : (0, import_i18n64.__)("Save")
         }
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
         Stack,
         {
           direction: "column",
           gap: "md",
           className: "post-type-form",
-          render: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
             "form",
             {
               id: formId,
@@ -30681,7 +30734,7 @@ function PostTypePage({
               }
             }
           ),
-          children: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
             DataForm,
             {
               data,
@@ -30703,14 +30756,14 @@ function PostTypePage({
 }
 
 // packages/content-types/build-module/taxonomies/list.mjs
-var import_components64 = __toESM(require_components(), 1);
+var import_components63 = __toESM(require_components(), 1);
 var import_core_data15 = __toESM(require_core_data(), 1);
 var import_element124 = __toESM(require_element(), 1);
-var import_i18n74 = __toESM(require_i18n(), 1);
+var import_i18n75 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate6 } from "@wordpress/route";
 
 // packages/content-types/build-module/taxonomies/actions/activate.mjs
-var import_i18n64 = __toESM(require_i18n(), 1);
+var import_i18n65 = __toESM(require_i18n(), 1);
 
 // packages/content-types/build-module/taxonomies/actions/utils.mjs
 var import_core_data9 = __toESM(require_core_data(), 1);
@@ -30785,29 +30838,29 @@ function createStatusAction2(config) {
 // packages/content-types/build-module/taxonomies/actions/activate.mjs
 var activateAction2 = createStatusAction2({
   id: "activate",
-  label: (0, import_i18n64.__)("Activate"),
+  label: (0, import_i18n65.__)("Activate"),
   targetStatus: "publish",
   messages: {
-    successSingle: (0, import_i18n64.__)("Taxonomy activated."),
-    successMany: (count) => (0, import_i18n64.sprintf)(
+    successSingle: (0, import_i18n65.__)("Taxonomy activated."),
+    successMany: (count) => (0, import_i18n65.sprintf)(
       /* translators: %d: The number of taxonomies. */
-      (0, import_i18n64._n)(
+      (0, import_i18n65._n)(
         "%d taxonomy activated.",
         "%d taxonomies activated.",
         count
       ),
       count
     ),
-    failSingle: (0, import_i18n64.__)("Failed to activate taxonomy."),
-    failMany: (0, import_i18n64.__)("Failed to activate taxonomies."),
-    errorSingle: (message2) => (0, import_i18n64.sprintf)(
+    failSingle: (0, import_i18n65.__)("Failed to activate taxonomy."),
+    failMany: (0, import_i18n65.__)("Failed to activate taxonomies."),
+    errorSingle: (message2) => (0, import_i18n65.sprintf)(
       /* translators: %s: an error message */
-      (0, import_i18n64.__)("An error occurred while activating the taxonomy: %s"),
+      (0, import_i18n65.__)("An error occurred while activating the taxonomy: %s"),
       message2
     ),
-    errorMany: (messages) => (0, import_i18n64.sprintf)(
+    errorMany: (messages) => (0, import_i18n65.sprintf)(
       /* translators: %s: a list of comma separated error messages */
-      (0, import_i18n64.__)(
+      (0, import_i18n65.__)(
         "Some errors occurred while activating the taxonomies: %s"
       ),
       messages
@@ -30817,32 +30870,32 @@ var activateAction2 = createStatusAction2({
 var activate_default2 = activateAction2;
 
 // packages/content-types/build-module/taxonomies/actions/deactivate.mjs
-var import_i18n65 = __toESM(require_i18n(), 1);
+var import_i18n66 = __toESM(require_i18n(), 1);
 var deactivateAction2 = createStatusAction2({
   id: "deactivate",
-  label: (0, import_i18n65.__)("Deactivate"),
+  label: (0, import_i18n66.__)("Deactivate"),
   targetStatus: "draft",
   messages: {
-    successSingle: (0, import_i18n65.__)("Taxonomy deactivated."),
-    successMany: (count) => (0, import_i18n65.sprintf)(
+    successSingle: (0, import_i18n66.__)("Taxonomy deactivated."),
+    successMany: (count) => (0, import_i18n66.sprintf)(
       /* translators: %d: The number of taxonomies. */
-      (0, import_i18n65._n)(
+      (0, import_i18n66._n)(
         "%d taxonomy deactivated.",
         "%d taxonomies deactivated.",
         count
       ),
       count
     ),
-    failSingle: (0, import_i18n65.__)("Failed to deactivate taxonomy."),
-    failMany: (0, import_i18n65.__)("Failed to deactivate taxonomies."),
-    errorSingle: (message2) => (0, import_i18n65.sprintf)(
+    failSingle: (0, import_i18n66.__)("Failed to deactivate taxonomy."),
+    failMany: (0, import_i18n66.__)("Failed to deactivate taxonomies."),
+    errorSingle: (message2) => (0, import_i18n66.sprintf)(
       /* translators: %s: an error message */
-      (0, import_i18n65.__)("An error occurred while deactivating the taxonomy: %s"),
+      (0, import_i18n66.__)("An error occurred while deactivating the taxonomy: %s"),
       message2
     ),
-    errorMany: (messages) => (0, import_i18n65.sprintf)(
+    errorMany: (messages) => (0, import_i18n66.sprintf)(
       /* translators: %s: a list of comma separated error messages */
-      (0, import_i18n65.__)(
+      (0, import_i18n66.__)(
         "Some errors occurred while deactivating the taxonomies: %s"
       ),
       messages
@@ -30856,9 +30909,9 @@ var import_components59 = __toESM(require_components(), 1);
 var import_core_data10 = __toESM(require_core_data(), 1);
 var import_data12 = __toESM(require_data(), 1);
 var import_element118 = __toESM(require_element(), 1);
-var import_i18n66 = __toESM(require_i18n(), 1);
+var import_i18n67 = __toESM(require_i18n(), 1);
 var import_notices7 = __toESM(require_notices(), 1);
-var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
 function DeleteTaxonomyModal({
   items,
   closeModal,
@@ -30886,13 +30939,13 @@ function DeleteTaxonomyModal({
     );
     if (promiseResult.every(({ status }) => status === "fulfilled")) {
       createSuccessNotice(
-        itemsToDelete.length === 1 ? (0, import_i18n66.sprintf)(
+        itemsToDelete.length === 1 ? (0, import_i18n67.sprintf)(
           /* translators: %s: The taxonomy's plural label. */
-          (0, import_i18n66.__)('"%s" taxonomy deleted.'),
+          (0, import_i18n67.__)('"%s" taxonomy deleted.'),
           itemsToDelete[0].title.raw
-        ) : (0, import_i18n66.sprintf)(
+        ) : (0, import_i18n67.sprintf)(
           /* translators: %d: The number of taxonomies. */
-          (0, import_i18n66._n)(
+          (0, import_i18n67._n)(
             "%d taxonomy deleted.",
             "%d taxonomies deleted.",
             itemsToDelete.length
@@ -30908,7 +30961,7 @@ function DeleteTaxonomyModal({
         if (typedError.reason?.message && typedError.reason.code !== "unknown_error") {
           errorMessage = typedError.reason.message;
         } else {
-          errorMessage = (0, import_i18n66.__)("Failed to delete taxonomy.");
+          errorMessage = (0, import_i18n67.__)("Failed to delete taxonomy.");
         }
       } else {
         const errorMessages = /* @__PURE__ */ new Set();
@@ -30922,19 +30975,19 @@ function DeleteTaxonomyModal({
           }
         }
         if (errorMessages.size === 0) {
-          errorMessage = (0, import_i18n66.__)("Failed to delete taxonomies.");
+          errorMessage = (0, import_i18n67.__)("Failed to delete taxonomies.");
         } else if (errorMessages.size === 1) {
-          errorMessage = (0, import_i18n66.sprintf)(
+          errorMessage = (0, import_i18n67.sprintf)(
             /* translators: %s: an error message */
-            (0, import_i18n66.__)(
+            (0, import_i18n67.__)(
               "An error occurred while deleting the taxonomy: %s"
             ),
             [...errorMessages][0]
           );
         } else {
-          errorMessage = (0, import_i18n66.sprintf)(
+          errorMessage = (0, import_i18n67.sprintf)(
             /* translators: %s: a list of comma separated error messages */
-            (0, import_i18n66.__)(
+            (0, import_i18n67.__)(
               "Some errors occurred while deleting the taxonomies: %s"
             ),
             [...errorMessages].join(",")
@@ -30947,22 +31000,22 @@ function DeleteTaxonomyModal({
     setIsDeleting(false);
     closeModal?.();
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(Stack, { direction: "column", gap: "md", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(Text, { children: items.length > 1 ? (0, import_i18n66.sprintf)(
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(Stack, { direction: "column", gap: "md", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(Text, { children: items.length > 1 ? (0, import_i18n67.sprintf)(
       /* translators: %d: number of taxonomies to delete. */
-      (0, import_i18n66._n)(
+      (0, import_i18n67._n)(
         "Are you sure you want to delete %d taxonomy?",
         "Are you sure you want to delete %d taxonomies?",
         items.length
       ),
       items.length
-    ) : (0, import_i18n66.sprintf)(
+    ) : (0, import_i18n67.sprintf)(
       /* translators: %s: The taxonomy's plural label. */
-      (0, import_i18n66.__)('Are you sure you want to delete "%s"?'),
+      (0, import_i18n67.__)('Are you sure you want to delete "%s"?'),
       items[0].title.raw
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
         import_components59.Button,
         {
           __next40pxDefaultSize: true,
@@ -30970,10 +31023,10 @@ function DeleteTaxonomyModal({
           onClick: closeModal,
           disabled: isDeleting,
           accessibleWhenDisabled: true,
-          children: (0, import_i18n66.__)("Cancel")
+          children: (0, import_i18n67.__)("Cancel")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
         import_components59.Button,
         {
           __next40pxDefaultSize: true,
@@ -30983,7 +31036,7 @@ function DeleteTaxonomyModal({
           disabled: isDeleting,
           accessibleWhenDisabled: true,
           onClick: onDelete,
-          children: (0, import_i18n66._x)("Delete", "verb")
+          children: (0, import_i18n67._x)("Delete", "verb")
         }
       )
     ] })
@@ -30991,7 +31044,7 @@ function DeleteTaxonomyModal({
 }
 var deleteTaxonomyAction = {
   id: "delete-taxonomy",
-  label: (0, import_i18n66._x)("Delete", "verb"),
+  label: (0, import_i18n67._x)("Delete", "verb"),
   icon: trash_default,
   supportsBulk: true,
   hideModalHeader: true,
@@ -31002,26 +31055,24 @@ var deleteTaxonomyAction = {
 var delete_default2 = deleteTaxonomyAction;
 
 // packages/content-types/build-module/taxonomies/actions/duplicate.mjs
-var import_components61 = __toESM(require_components(), 1);
+var import_components60 = __toESM(require_components(), 1);
 var import_core_data13 = __toESM(require_core_data(), 1);
 var import_data15 = __toESM(require_data(), 1);
 var import_element121 = __toESM(require_element(), 1);
-var import_i18n69 = __toESM(require_i18n(), 1);
+var import_i18n70 = __toESM(require_i18n(), 1);
 var import_notices8 = __toESM(require_notices(), 1);
 
 // packages/content-types/build-module/taxonomies/fields/general.mjs
-var import_components60 = __toESM(require_components(), 1);
 var import_core_data12 = __toESM(require_core_data(), 1);
 var import_data14 = __toESM(require_data(), 1);
 var import_element120 = __toESM(require_element(), 1);
-var import_i18n68 = __toESM(require_i18n(), 1);
-var import_url4 = __toESM(require_url(), 1);
+var import_i18n69 = __toESM(require_i18n(), 1);
 
 // packages/content-types/build-module/taxonomies/utils.mjs
 var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data13 = __toESM(require_data(), 1);
 var import_element119 = __toESM(require_element(), 1);
-var import_i18n67 = __toESM(require_i18n(), 1);
+var import_i18n68 = __toESM(require_i18n(), 1);
 var BLANK_RECORD2 = {
   slug: "",
   status: "publish",
@@ -31065,92 +31116,89 @@ function deriveLabels(plural, singular) {
   const lcPlural = plural.toLowerCase();
   return {
     menu_name: plural,
-    all_items: (0, import_i18n67.sprintf)(
+    all_items: (0, import_i18n68.sprintf)(
       /* translators: %s: Plural taxonomy label. */
-      (0, import_i18n67.__)("All %s"),
+      (0, import_i18n68.__)("All %s"),
       plural
     ),
-    edit_item: (0, import_i18n67.sprintf)(
+    edit_item: (0, import_i18n68.sprintf)(
       /* translators: %s: Singular taxonomy label. */
-      (0, import_i18n67.__)("Edit %s"),
+      (0, import_i18n68.__)("Edit %s"),
       singular
     ),
-    view_item: (0, import_i18n67.sprintf)(
+    view_item: (0, import_i18n68.sprintf)(
       /* translators: %s: Singular taxonomy label. */
-      (0, import_i18n67.__)("View %s"),
+      (0, import_i18n68.__)("View %s"),
       singular
     ),
-    update_item: (0, import_i18n67.sprintf)(
+    update_item: (0, import_i18n68.sprintf)(
       /* translators: %s: Singular taxonomy label. */
-      (0, import_i18n67.__)("Update %s"),
+      (0, import_i18n68.__)("Update %s"),
       singular
     ),
-    add_new_item: (0, import_i18n67.sprintf)(
+    add_new_item: (0, import_i18n68.sprintf)(
       /* translators: %s: Singular taxonomy label. */
-      (0, import_i18n67.__)("Add New %s"),
+      (0, import_i18n68.__)("Add New %s"),
       singular
     ),
-    new_item_name: (0, import_i18n67.sprintf)(
+    new_item_name: (0, import_i18n68.sprintf)(
       /* translators: %s: Singular taxonomy label. */
-      (0, import_i18n67.__)("New %s Name"),
+      (0, import_i18n68.__)("New %s Name"),
       singular
     ),
-    search_items: (0, import_i18n67.sprintf)(
+    search_items: (0, import_i18n68.sprintf)(
       /* translators: %s: Plural taxonomy label. */
-      (0, import_i18n67.__)("Search %s"),
+      (0, import_i18n68.__)("Search %s"),
       plural
     ),
-    not_found: (0, import_i18n67.sprintf)(
+    not_found: (0, import_i18n68.sprintf)(
       /* translators: %s: Plural taxonomy label, lowercase. */
-      (0, import_i18n67.__)("No %s found."),
+      (0, import_i18n68.__)("No %s found."),
       lcPlural
     ),
-    back_to_items: (0, import_i18n67.sprintf)(
+    back_to_items: (0, import_i18n68.sprintf)(
       /* translators: %s: Plural taxonomy label. */
-      (0, import_i18n67.__)("\u2190 Back to %s"),
+      (0, import_i18n68.__)("\u2190 Back to %s"),
       plural
     ),
-    parent_item: (0, import_i18n67.sprintf)(
+    parent_item: (0, import_i18n68.sprintf)(
       /* translators: %s: Singular taxonomy label. */
-      (0, import_i18n67.__)("Parent %s"),
+      (0, import_i18n68.__)("Parent %s"),
       singular
     ),
-    popular_items: (0, import_i18n67.sprintf)(
+    popular_items: (0, import_i18n68.sprintf)(
       /* translators: %s: Plural taxonomy label. */
-      (0, import_i18n67.__)("Popular %s"),
+      (0, import_i18n68.__)("Popular %s"),
       plural
     ),
-    separate_items_with_commas: (0, import_i18n67.sprintf)(
+    separate_items_with_commas: (0, import_i18n68.sprintf)(
       /* translators: %s: Plural taxonomy label, lowercase. */
-      (0, import_i18n67.__)("Separate %s with commas"),
+      (0, import_i18n68.__)("Separate %s with commas"),
       lcPlural
     ),
-    parent_item_colon: (0, import_i18n67.sprintf)(
+    parent_item_colon: (0, import_i18n68.sprintf)(
       /* translators: %s: Singular taxonomy label. */
-      (0, import_i18n67.__)("Parent %s:"),
+      (0, import_i18n68.__)("Parent %s:"),
       singular
     ),
-    add_or_remove_items: (0, import_i18n67.sprintf)(
+    add_or_remove_items: (0, import_i18n68.sprintf)(
       /* translators: %s: Plural taxonomy label, lowercase. */
-      (0, import_i18n67.__)("Add or remove %s"),
+      (0, import_i18n68.__)("Add or remove %s"),
       lcPlural
     ),
-    choose_from_most_used: (0, import_i18n67.sprintf)(
+    choose_from_most_used: (0, import_i18n68.sprintf)(
       /* translators: %s: Plural taxonomy label, lowercase. */
-      (0, import_i18n67.__)("Choose from the most used %s"),
+      (0, import_i18n68.__)("Choose from the most used %s"),
       lcPlural
     )
   };
 }
 function toFormData2(row) {
   const config = row.config ?? {};
-  const labels = {};
-  for (const key of STRING_LABEL_KEYS2) {
-    const value = config.labels?.[key];
-    if (typeof value === "string") {
-      labels[key] = value;
-    }
-  }
+  const labels = pickStoredLabels(
+    config.labels,
+    STRING_LABEL_KEYS2
+  );
   const formConfig = {
     labels: { singular_name: "", ...labels },
     object_type: Array.isArray(row.object_type) ? row.object_type : [],
@@ -31176,14 +31224,10 @@ function toFormData2(row) {
 }
 function serializeForSave2(data) {
   const { config } = data;
-  const labels = {};
-  for (const key of STRING_LABEL_KEYS2) {
-    const value = config.labels[key];
-    if (typeof value === "string" && value.trim() !== "") {
-      labels[key] = value.trim();
-    }
-  }
-  labels.singular_name = config.labels.singular_name;
+  const labels = serializeLabels(
+    config.labels,
+    STRING_LABEL_KEYS2
+  );
   const description = config.description.trim();
   return {
     ...data.id !== void 0 ? { id: data.id } : {},
@@ -31225,119 +31269,23 @@ function usePublicPostTypes() {
   }, [postTypes]);
 }
 
-// packages/content-types/build-module/taxonomies/fields/utils.mjs
-function booleanField(id, label, options) {
-  const field = {
-    id,
-    label,
-    type: "boolean",
-    description: options.description,
-    Edit: "toggle",
-    getValue: ({ item }) => item.config[id],
-    setValue: ({ item, value }) => ({
-      config: { ...item.config, [id]: !!value }
-    }),
-    filterBy: false,
-    enableSorting: false
-  };
-  if (options.isVisible) {
-    field.isVisible = options.isVisible;
-  }
-  return field;
-}
-
 // packages/content-types/build-module/taxonomies/fields/general.mjs
-var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl5 } = unlock2(import_components60.privateApis);
-var titleField2 = {
-  id: "title",
-  label: (0, import_i18n68.__)("Title"),
-  type: "text",
-  enableGlobalSearch: true,
-  getValue: ({ item }) => item.title.raw,
-  setValue: ({ value }) => ({ title: { raw: String(value ?? "") } }),
-  isValid: { required: true, maxLength: 200 },
-  filterBy: false,
-  enableHiding: false
-};
-var pluralLabelField2 = {
-  id: "plural_name",
-  label: (0, import_i18n68.__)("Plural label"),
-  type: "text",
-  getValue: ({ item }) => item.title.raw,
-  setValue: ({ value }) => ({ title: { raw: String(value ?? "") } }),
-  isValid: { required: true, maxLength: 200 }
-};
-var singularLabelField2 = {
-  id: "singular_name",
-  label: (0, import_i18n68.__)("Singular label"),
-  type: "text",
-  getValue: ({ item }) => item.config.labels.singular_name,
-  setValue: ({ item, value }) => ({
-    config: {
-      ...item.config,
-      labels: {
-        ...item.config.labels,
-        singular_name: String(value ?? "")
-      }
-    }
-  }),
-  isValid: { required: true, maxLength: 200 },
-  enableSorting: false
-};
-var descriptionField2 = {
-  id: "description",
-  label: (0, import_i18n68.__)("Description"),
-  type: "text",
-  Edit: { control: "textarea", rows: 3 },
-  description: (0, import_i18n68.__)(
+var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
+var descriptionField2 = createDescriptionField(
+  (0, import_i18n69.__)(
     "Optional summary of the taxonomy. Shown in admin UIs that surface taxonomy details."
-  ),
-  getValue: ({ item }) => item.config.description,
-  setValue: ({ item, value }) => ({
-    config: { ...item.config, description: String(value ?? "") }
-  }),
-  isValid: { maxLength: 1e3 },
-  enableSorting: false
-};
-var hierarchicalField2 = booleanField(
+  )
+);
+var hierarchicalField2 = createBooleanField(
   "hierarchical",
-  (0, import_i18n68.__)("Hierarchical"),
+  (0, import_i18n69.__)("Hierarchical"),
   {
-    description: (0, import_i18n68.__)(
+    description: (0, import_i18n69.__)(
       "When on, terms behave like categories with parent-child relationships. When off, terms behave like tags."
     )
   }
 );
-var statusField2 = {
-  id: "status",
-  label: (0, import_i18n68.__)("Status"),
-  description: (0, import_i18n68.__)(
-    "Active taxonomies are enabled and registered with WordPress."
-  ),
-  elements: [
-    { value: "publish", label: (0, import_i18n68.__)("Active") },
-    { value: "draft", label: (0, import_i18n68.__)("Inactive") }
-  ],
-  render: ({ item }) => {
-    const isActive = item.status === "publish";
-    return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(Badge, { intent: isActive ? "stable" : "draft", children: isActive ? (0, import_i18n68.__)("Active") : (0, import_i18n68.__)("Inactive") });
-  },
-  enableSorting: false
-};
 var SLUG_MAX_LENGTH3 = 32;
-function getSlugCustomValidity2(validity) {
-  if (validity?.required?.message) {
-    return validity.required;
-  }
-  if (validity?.pattern) {
-    return validity.pattern;
-  }
-  if (validity?.maxLength) {
-    return validity.maxLength;
-  }
-  return validity?.custom;
-}
 function useSlugField2(originalSlug, currentValue) {
   const registeredTaxonomies = (0, import_data14.useSelect)(
     (select) => select(import_core_data12.store).getTaxonomies(),
@@ -31347,14 +31295,14 @@ function useSlugField2(originalSlug, currentValue) {
   return (0, import_element120.useMemo)(
     () => ({
       id: "slug",
-      label: (0, import_i18n68.__)("Taxonomy key"),
+      label: (0, import_i18n69.__)("Taxonomy key"),
       type: "text",
       enableGlobalSearch: true,
-      description: /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(Stack, { direction: "column", gap: "sm", render: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("span", {}), children: [
-        showRenameWarning && /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(notice_exports.Root, { intent: "warning", render: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("span", {}), children: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(notice_exports.Description, { children: (0, import_i18n68.__)(
+      description: /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(Stack, { direction: "column", gap: "sm", render: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("span", {}), children: [
+        showRenameWarning && /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(notice_exports.Root, { intent: "warning", render: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("span", {}), children: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(notice_exports.Description, { children: (0, import_i18n69.__)(
           "Changing the key renames the taxonomy \u2014 existing terms may become inaccessible until a migration updates the database."
         ) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("span", { children: (0, import_i18n68.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("span", { children: (0, import_i18n69.__)(
           "Lower case letters, numbers, underscores, and dashes only. Maximum length: 32 characters."
         ) })
       ] }),
@@ -31371,7 +31319,7 @@ function useSlugField2(originalSlug, currentValue) {
             (t2) => t2.slug === slug
           );
           if (slugTaken) {
-            return (0, import_i18n68.__)("This taxonomy key is already in use.");
+            return (0, import_i18n69.__)("This taxonomy key is already in use.");
           }
           const drafts = await (0, import_data14.resolveSelect)(
             import_core_data12.store
@@ -31381,55 +31329,10 @@ function useSlugField2(originalSlug, currentValue) {
             _fields: "id,name",
             per_page: 1
           });
-          return !!drafts?.length ? (0, import_i18n68.__)("This taxonomy key is already in use.") : null;
+          return drafts?.length ? (0, import_i18n69.__)("This taxonomy key is already in use.") : null;
         }
       },
-      Edit: function SlugEdit({
-        data,
-        field,
-        onChange,
-        hideLabelFromVision,
-        markWhenOptional,
-        validity
-      }) {
-        const { label, description, getValue, setValue, isValid: isValid2 } = field;
-        const value = getValue({ item: data }) ?? "";
-        const handleChange = (newValue) => onChange(setValue({ item: data, value: newValue }));
-        const onFocus = () => {
-          if (data.id !== void 0 || data.slug) {
-            return;
-          }
-          const singular = data.config.labels.singular_name?.trim();
-          if (!singular) {
-            return;
-          }
-          const cleaned = (0, import_url4.cleanForSlug)(singular);
-          if (/[^a-z0-9_-]/.test(cleaned)) {
-            return;
-          }
-          const trimmed = cleaned.slice(0, SLUG_MAX_LENGTH3).replace(/-+$/, "");
-          if (trimmed) {
-            handleChange(trimmed);
-          }
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
-          ValidatedInputControl5,
-          {
-            __next40pxDefaultSize: true,
-            required: !!isValid2.required,
-            markWhenOptional,
-            customValidity: getSlugCustomValidity2(validity),
-            label,
-            value,
-            help: description,
-            onChange: handleChange,
-            onFocus,
-            hideLabelFromVision,
-            pattern: isValid2.pattern?.constraint,
-            maxLength: isValid2.maxLength?.constraint
-          }
-        );
-      },
+      Edit: SlugEdit,
       filterBy: false,
       enableSorting: false
     }),
@@ -31448,9 +31351,9 @@ function useObjectTypeField() {
     );
     return {
       id: "object_type",
-      label: (0, import_i18n68.__)("Post types"),
+      label: (0, import_i18n69.__)("Post types"),
       type: "array",
-      description: (0, import_i18n68.__)(
+      description: (0, import_i18n69.__)(
         "One or more post types with which the taxonomy should be associated."
       ),
       elements,
@@ -31465,9 +31368,9 @@ function useObjectTypeField() {
       render: ({ item }) => {
         const slugs = item.config.object_type;
         if (!slugs || slugs.length === 0) {
-          return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("span", { "aria-hidden": "true", children: "\u2014" });
+          return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("span", { "aria-hidden": "true", children: "\u2014" });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(import_jsx_runtime163.Fragment, { children: slugs.map((s2) => labelMap[s2] ?? s2).join(", ") });
+        return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(import_jsx_runtime164.Fragment, { children: slugs.map((s2) => labelMap[s2] ?? s2).join(", ") });
       },
       isValid: { required: true },
       filterBy: { operators: ["isAny"] }
@@ -31496,7 +31399,7 @@ var generalFormFields = [
 ];
 
 // packages/content-types/build-module/taxonomies/actions/duplicate.mjs
-var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
 var SLUG_MAX_LENGTH4 = 32;
 var duplicateForm2 = {
   layout: { type: "regular" },
@@ -31522,9 +31425,9 @@ function DuplicateTaxonomyModal({
     id: void 0,
     status: "draft",
     title: {
-      raw: (0, import_i18n69.sprintf)(
+      raw: (0, import_i18n70.sprintf)(
         /* translators: %s: existing taxonomy title. */
-        (0, import_i18n69._x)("%s (Copy)", "taxonomy"),
+        (0, import_i18n70._x)("%s (Copy)", "taxonomy"),
         source.title.raw
       )
     },
@@ -31533,7 +31436,11 @@ function DuplicateTaxonomyModal({
   const [isDuplicating, setIsDuplicating] = (0, import_element121.useState)(false);
   const slugField = useSlugField2(void 0, data.slug);
   const fields = (0, import_element121.useMemo)(
-    () => [pluralLabelField2, singularLabelField2, slugField],
+    () => [
+      pluralLabelField,
+      singularLabelField,
+      slugField
+    ],
     [slugField]
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(
@@ -31556,9 +31463,9 @@ function DuplicateTaxonomyModal({
         { throwOnError: true }
       );
       createSuccessNotice(
-        (0, import_i18n69.sprintf)(
+        (0, import_i18n70.sprintf)(
           /* translators: %s: taxonomy plural label. */
-          (0, import_i18n69.__)('"%s" taxonomy created.'),
+          (0, import_i18n70.__)('"%s" taxonomy created.'),
           data.title.raw
         ),
         { type: "snackbar" }
@@ -31568,15 +31475,15 @@ function DuplicateTaxonomyModal({
     } catch (error2) {
       const typedError = error2;
       createErrorNotice(
-        typedError?.message && typedError.code !== "unknown_error" ? typedError.message : (0, import_i18n69.__)("Failed to duplicate taxonomy."),
+        typedError?.message && typedError.code !== "unknown_error" ? typedError.message : (0, import_i18n70.__)("Failed to duplicate taxonomy."),
         { type: "snackbar" }
       );
     } finally {
       setIsDuplicating(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(Stack, { direction: "column", gap: "md", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(Stack, { direction: "column", gap: "md", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
       DataForm,
       {
         data,
@@ -31588,20 +31495,20 @@ function DuplicateTaxonomyModal({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
-        import_components61.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+        import_components60.Button,
         {
           __next40pxDefaultSize: true,
           variant: "tertiary",
           onClick: closeModal,
           disabled: isDuplicating,
           accessibleWhenDisabled: true,
-          children: (0, import_i18n69.__)("Cancel")
+          children: (0, import_i18n70.__)("Cancel")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
-        import_components61.Button,
+      /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+        import_components60.Button,
         {
           __next40pxDefaultSize: true,
           variant: "primary",
@@ -31609,7 +31516,7 @@ function DuplicateTaxonomyModal({
           disabled: isDuplicating || !isValid2,
           accessibleWhenDisabled: true,
           onClick: onDuplicate,
-          children: (0, import_i18n69._x)("Duplicate", "action label")
+          children: (0, import_i18n70._x)("Duplicate", "action label")
         }
       )
     ] })
@@ -31617,147 +31524,122 @@ function DuplicateTaxonomyModal({
 }
 var duplicateTaxonomyAction = {
   id: "duplicate-taxonomy",
-  label: (0, import_i18n69._x)("Duplicate", "action label"),
+  label: (0, import_i18n70._x)("Duplicate", "action label"),
   icon: copy_default,
-  modalHeader: (0, import_i18n69.__)("Duplicate taxonomy"),
+  modalHeader: (0, import_i18n70.__)("Duplicate taxonomy"),
   modalFocusOnMount: "firstContentElement",
   RenderModal: DuplicateTaxonomyModal
 };
 var duplicate_default2 = duplicateTaxonomyAction;
 
 // packages/content-types/build-module/taxonomies/fields/labels.mjs
-var import_components62 = __toESM(require_components(), 1);
-var import_i18n70 = __toESM(require_i18n(), 1);
-var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
-function labelField2(id, label, options = {}) {
-  const field = {
-    id,
-    label,
-    type: "text",
-    placeholder: options.placeholder,
-    description: options.description,
-    getValue: ({ item }) => item.config.labels[id] ?? "",
-    setValue: ({ item, value }) => ({
-      config: {
-        ...item.config,
-        labels: {
-          ...item.config.labels,
-          [id]: String(value ?? "")
-        }
-      }
-    }),
-    isValid: { maxLength: 200 },
-    enableSorting: false
-  };
-  if (options.isVisible) {
-    field.isVisible = options.isVisible;
-  }
-  return field;
-}
-var menuNameField2 = labelField2("menu_name", (0, import_i18n70.__)("Menu name"), {
-  placeholder: (0, import_i18n70.__)("Categories"),
-  description: (0, import_i18n70.__)("Defaults to the plural label.")
+var import_components61 = __toESM(require_components(), 1);
+var import_i18n71 = __toESM(require_i18n(), 1);
+var import_jsx_runtime166 = __toESM(require_jsx_runtime(), 1);
+var menuNameField2 = createLabelField("menu_name", (0, import_i18n71.__)("Menu name"), {
+  placeholder: (0, import_i18n71.__)("Categories"),
+  description: (0, import_i18n71.__)("Defaults to the plural label.")
 });
-var allItemsField2 = labelField2("all_items", (0, import_i18n70.__)("All items"), {
-  placeholder: (0, import_i18n70.__)("All Categories")
+var allItemsField2 = createLabelField("all_items", (0, import_i18n71.__)("All items"), {
+  placeholder: (0, import_i18n71.__)("All Categories")
 });
-var editItemField2 = labelField2("edit_item", (0, import_i18n70.__)("Edit item"), {
-  placeholder: (0, import_i18n70.__)("Edit Category")
+var editItemField2 = createLabelField("edit_item", (0, import_i18n71.__)("Edit item"), {
+  placeholder: (0, import_i18n71.__)("Edit Category")
 });
-var viewItemField2 = labelField2("view_item", (0, import_i18n70.__)("View item"), {
-  placeholder: (0, import_i18n70.__)("View Category")
+var viewItemField2 = createLabelField("view_item", (0, import_i18n71.__)("View item"), {
+  placeholder: (0, import_i18n71.__)("View Category")
 });
-var updateItemField = labelField2("update_item", (0, import_i18n70.__)("Update item"), {
-  placeholder: (0, import_i18n70.__)("Update Category")
-});
-var addNewItemLabelField2 = labelField2(
+var updateItemField = createLabelField(
+  "update_item",
+  (0, import_i18n71.__)("Update item"),
+  { placeholder: (0, import_i18n71.__)("Update Category") }
+);
+var addNewItemLabelField2 = createLabelField(
   "add_new_item",
-  (0, import_i18n70.__)("Add new item"),
-  {
-    placeholder: (0, import_i18n70.__)("Add New Category")
-  }
+  (0, import_i18n71.__)("Add new item"),
+  { placeholder: (0, import_i18n71.__)("Add New Category") }
 );
-var newItemNameField = labelField2(
+var newItemNameField = createLabelField(
   "new_item_name",
-  (0, import_i18n70.__)("New item name"),
-  {
-    placeholder: (0, import_i18n70.__)("New Category Name")
-  }
+  (0, import_i18n71.__)("New item name"),
+  { placeholder: (0, import_i18n71.__)("New Category Name") }
 );
-var searchItemsField2 = labelField2(
+var searchItemsField2 = createLabelField(
   "search_items",
-  (0, import_i18n70.__)("Search items"),
-  {
-    placeholder: (0, import_i18n70.__)("Search Categories")
-  }
+  (0, import_i18n71.__)("Search items"),
+  { placeholder: (0, import_i18n71.__)("Search Categories") }
 );
-var notFoundField2 = labelField2("not_found", (0, import_i18n70.__)("Not found"), {
-  placeholder: (0, import_i18n70.__)("No categories found."),
-  description: (0, import_i18n70.__)(
+var notFoundField2 = createLabelField("not_found", (0, import_i18n71.__)("Not found"), {
+  placeholder: (0, import_i18n71.__)("No categories found."),
+  description: (0, import_i18n71.__)(
     "The text displayed when no terms are available in the term meta box and tag cloud."
   )
 });
-var backToItemsField = labelField2(
+var backToItemsField = createLabelField(
   "back_to_items",
-  (0, import_i18n70.__)("Back to items"),
+  (0, import_i18n71.__)("Back to items"),
   {
-    placeholder: (0, import_i18n70.__)("\u2190 Back to Categories"),
-    description: (0, import_i18n70.__)("Label displayed after a term has been updated.")
+    placeholder: (0, import_i18n71.__)("\u2190 Back to Categories"),
+    description: (0, import_i18n71.__)("Label displayed after a term has been updated.")
   }
 );
-var parentItemField = labelField2("parent_item", (0, import_i18n70.__)("Parent item"), {
-  placeholder: (0, import_i18n70.__)("Parent Category"),
-  description: (0, import_i18n70.__)("Not used on non-hierarchical taxonomies."),
-  isVisible: (item) => item.config.hierarchical
-});
-var popularItemsField = labelField2(
-  "popular_items",
-  (0, import_i18n70.__)("Popular items"),
+var parentItemField = createLabelField(
+  "parent_item",
+  (0, import_i18n71.__)("Parent item"),
   {
-    placeholder: (0, import_i18n70.__)("Popular Tags"),
-    description: (0, import_i18n70.__)(
+    placeholder: (0, import_i18n71.__)("Parent Category"),
+    description: (0, import_i18n71.__)("Not used on non-hierarchical taxonomies."),
+    isVisible: (item) => item.config.hierarchical
+  }
+);
+var popularItemsField = createLabelField(
+  "popular_items",
+  (0, import_i18n71.__)("Popular items"),
+  {
+    placeholder: (0, import_i18n71.__)("Popular Tags"),
+    description: (0, import_i18n71.__)(
       "The popular items text. Not used on hierarchical taxonomies."
     ),
     isVisible: (item) => !item.config.hierarchical
   }
 );
-var separateItemsField = labelField2(
+var separateItemsField = createLabelField(
   "separate_items_with_commas",
-  (0, import_i18n70.__)("Separate items with commas"),
+  (0, import_i18n71.__)("Separate items with commas"),
   {
-    placeholder: (0, import_i18n70.__)("Separate tags with commas"),
-    description: (0, import_i18n70.__)(
+    placeholder: (0, import_i18n71.__)("Separate tags with commas"),
+    description: (0, import_i18n71.__)(
       "Shown in the taxonomy meta box. Not used on hierarchical taxonomies."
     ),
     isVisible: (item) => !item.config.hierarchical
   }
 );
-var parentItemColonField2 = labelField2(
+var parentItemColonField2 = createLabelField(
   "parent_item_colon",
-  (0, import_i18n70.__)("Parent item with colon"),
+  (0, import_i18n71.__)("Parent item with colon"),
   {
-    placeholder: (0, import_i18n70.__)("Parent Category:"),
-    description: (0, import_i18n70.__)("Same as Parent item, with a colon at the end."),
+    placeholder: (0, import_i18n71.__)("Parent Category:"),
+    description: (0, import_i18n71.__)("Same as Parent item, with a colon at the end."),
     isVisible: (item) => item.config.hierarchical
   }
 );
-var addOrRemoveItemsField = labelField2(
+var addOrRemoveItemsField = createLabelField(
   "add_or_remove_items",
-  (0, import_i18n70.__)("Add or remove items"),
+  (0, import_i18n71.__)("Add or remove items"),
   {
-    placeholder: (0, import_i18n70.__)("Add or remove tags"),
-    description: (0, import_i18n70.__)(
+    placeholder: (0, import_i18n71.__)("Add or remove tags"),
+    description: (0, import_i18n71.__)(
       "Shown in the meta box when JavaScript is disabled. Not used on hierarchical taxonomies."
     ),
     isVisible: (item) => !item.config.hierarchical
   }
 );
-var chooseFromMostUsedField = labelField2(
+var chooseFromMostUsedField = createLabelField(
   "choose_from_most_used",
-  (0, import_i18n70.__)("Choose from the most used"),
+  (0, import_i18n71.__)("Choose from the most used"),
   {
-    placeholder: (0, import_i18n70.__)("Choose from the most used tags"),
-    description: (0, import_i18n70.__)(
+    placeholder: (0, import_i18n71.__)("Choose from the most used tags"),
+    description: (0, import_i18n71.__)(
       "Shown in the taxonomy meta box. Not used on hierarchical taxonomies."
     ),
     isVisible: (item) => !item.config.hierarchical
@@ -31773,13 +31655,13 @@ function LabelsActionsEdit({
   const hasOverrides = STRING_LABEL_KEYS2.some(
     (key) => key !== "singular_name" && (data.config.labels[key] ?? "") !== ""
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(Stack, { direction: "column", gap: "md", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(Text, { variant: "body-md", className: "taxonomy-form__help-text", children: (0, import_i18n70.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(Stack, { direction: "column", gap: "md", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Text, { variant: "body-md", className: "taxonomy-form__help-text", children: (0, import_i18n71.__)(
       "Override the text WordPress shows in admin lists, menus, and forms. Auto-fill replaces every label below with values derived from the current plural and singular names \u2014 including any you have already customized. Clearing removes all overrides so WordPress falls back to its defaults. If you rename the taxonomy after auto-filling, click Auto-fill again to keep them in sync."
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
-        import_components62.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(Stack, { direction: "row", justify: "flex-end", gap: "sm", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+        import_components61.Button,
         {
           __next40pxDefaultSize: true,
           variant: "secondary",
@@ -31795,17 +31677,17 @@ function LabelsActionsEdit({
               }
             }
           }),
-          children: (0, import_i18n70.__)("Auto-fill labels")
+          children: (0, import_i18n71.__)("Auto-fill labels")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
-        import_components62.Button,
+      /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+        import_components61.Button,
         {
           __next40pxDefaultSize: true,
           size: "compact",
           icon: trash_default,
           isDestructive: true,
-          label: (0, import_i18n70.__)("Clear labels"),
+          label: (0, import_i18n71.__)("Clear labels"),
           accessibleWhenDisabled: true,
           disabled: !hasOverrides,
           onClick: () => {
@@ -31845,40 +31727,44 @@ var labelsFormFields = [
 ];
 
 // packages/content-types/build-module/taxonomies/fields/visibility.mjs
-var import_i18n71 = __toESM(require_i18n(), 1);
-var publicField2 = booleanField("public", (0, import_i18n71.__)("Public"), {
-  description: (0, import_i18n71.__)(
+var import_i18n72 = __toESM(require_i18n(), 1);
+var publicField2 = createBooleanField("public", (0, import_i18n72.__)("Public"), {
+  description: (0, import_i18n72.__)(
     "Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users."
   )
 });
-var showInRestField2 = booleanField(
+var showInRestField2 = createBooleanField(
   "show_in_rest",
-  (0, import_i18n71.__)("Show in REST API"),
+  (0, import_i18n72.__)("Show in REST API"),
   {
-    description: (0, import_i18n71.__)(
+    description: (0, import_i18n72.__)(
       "Required for the block editor. Turn off only for taxonomies that should not be exposed via REST."
     )
   }
 );
-var publiclyQueryableField = booleanField(
+var publiclyQueryableField = createBooleanField(
   "publicly_queryable",
-  (0, import_i18n71.__)("Publicly queryable"),
+  (0, import_i18n72.__)("Publicly queryable"),
   {
-    description: (0, import_i18n71.__)(
+    description: (0, import_i18n72.__)(
       "Whether front-end queries (e.g. ?taxonomy=\u2026&term=\u2026) can return terms from this taxonomy."
     )
   }
 );
-var showUiField = booleanField("show_ui", (0, import_i18n71.__)("Show admin UI"), {
-  description: (0, import_i18n71.__)(
-    "Whether to generate a default admin interface for managing terms."
-  )
-});
-var showInMenuField = booleanField(
-  "show_in_menu",
-  (0, import_i18n71.__)("Show in admin menu"),
+var showUiField = createBooleanField(
+  "show_ui",
+  (0, import_i18n72.__)("Show admin UI"),
   {
-    description: (0, import_i18n71.__)(
+    description: (0, import_i18n72.__)(
+      "Whether to generate a default admin interface for managing terms."
+    )
+  }
+);
+var showInMenuField = createBooleanField(
+  "show_in_menu",
+  (0, import_i18n72.__)("Show in admin menu"),
+  {
+    description: (0, import_i18n72.__)(
       "Whether to show the taxonomy in the admin menu. Has no effect when Show admin UI is off; the value is preserved either way."
     ),
     // Hide when `show_ui` is off — `show_in_menu` is silently ignored by
@@ -31887,38 +31773,38 @@ var showInMenuField = booleanField(
     isVisible: (item) => item.config.show_ui
   }
 );
-var showInQuickEditField = booleanField(
+var showInQuickEditField = createBooleanField(
   "show_in_quick_edit",
-  (0, import_i18n71.__)("Show in Quick Edit"),
+  (0, import_i18n72.__)("Show in Quick Edit"),
   {
-    description: (0, import_i18n71.__)(
+    description: (0, import_i18n72.__)(
       "Whether to show the taxonomy in the Quick/Bulk Edit panel."
     )
   }
 );
-var showAdminColumnField = booleanField(
+var showAdminColumnField = createBooleanField(
   "show_admin_column",
-  (0, import_i18n71.__)("Show admin column"),
+  (0, import_i18n72.__)("Show admin column"),
   {
-    description: (0, import_i18n71.__)(
+    description: (0, import_i18n72.__)(
       "Whether to display a column for the taxonomy on the associated post type list tables."
     )
   }
 );
-var showInNavMenusField = booleanField(
+var showInNavMenusField = createBooleanField(
   "show_in_nav_menus",
-  (0, import_i18n71.__)("Available in nav menus"),
+  (0, import_i18n72.__)("Available in nav menus"),
   {
-    description: (0, import_i18n71.__)(
+    description: (0, import_i18n72.__)(
       "Whether terms are selectable in the theme nav menu builder."
     )
   }
 );
-var showTagcloudField = booleanField(
+var showTagcloudField = createBooleanField(
   "show_tagcloud",
-  (0, import_i18n71.__)("Available in Tag Cloud widget"),
+  (0, import_i18n72.__)("Available in Tag Cloud widget"),
   {
-    description: (0, import_i18n71.__)(
+    description: (0, import_i18n72.__)(
       "Whether terms can be displayed in the Tag Cloud widget."
     )
   }
@@ -31937,14 +31823,14 @@ var visibilityFormFields = [
 
 // packages/content-types/build-module/taxonomies/actions/edit.mjs
 var import_element122 = __toESM(require_element(), 1);
-var import_i18n72 = __toESM(require_i18n(), 1);
+var import_i18n73 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate5 } from "@wordpress/route";
 function useEditTaxonomyAction() {
   const navigate = useNavigate5();
   return (0, import_element122.useMemo)(
     () => ({
       id: "edit-taxonomy",
-      label: (0, import_i18n72.__)("Edit"),
+      label: (0, import_i18n73.__)("Edit"),
       callback: (items) => {
         const item = items[0];
         if (item?.id === void 0) {
@@ -31960,13 +31846,13 @@ function useEditTaxonomyAction() {
 }
 
 // packages/content-types/build-module/taxonomies/actions/quick-edit.mjs
-var import_components63 = __toESM(require_components(), 1);
+var import_components62 = __toESM(require_components(), 1);
 var import_core_data14 = __toESM(require_core_data(), 1);
 var import_data16 = __toESM(require_data(), 1);
 var import_element123 = __toESM(require_element(), 1);
-var import_i18n73 = __toESM(require_i18n(), 1);
+var import_i18n74 = __toESM(require_i18n(), 1);
 var import_notices9 = __toESM(require_notices(), 1);
-var import_jsx_runtime166 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
 function QuickEditTaxonomyModal({
   items,
   closeModal
@@ -31978,13 +31864,13 @@ function QuickEditTaxonomyModal({
   const objectTypeField = useObjectTypeField();
   const fields = (0, import_element123.useMemo)(
     () => [
-      pluralLabelField2,
-      singularLabelField2,
+      pluralLabelField,
+      singularLabelField,
       slugField,
       objectTypeField,
       publicField2,
       hierarchicalField2,
-      statusField2
+      statusField
     ],
     [slugField, objectTypeField]
   );
@@ -32004,9 +31890,9 @@ function QuickEditTaxonomyModal({
         { throwOnError: true }
       );
       createSuccessNotice(
-        (0, import_i18n73.sprintf)(
+        (0, import_i18n74.sprintf)(
           /* translators: %s: taxonomy plural label. */
-          (0, import_i18n73.__)('"%s" taxonomy updated.'),
+          (0, import_i18n74.__)('"%s" taxonomy updated.'),
           data.title.raw
         ),
         { type: "snackbar" }
@@ -32014,15 +31900,15 @@ function QuickEditTaxonomyModal({
       closeModal?.();
     } catch (error2) {
       createErrorNotice(
-        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n73.__)("Failed to update taxonomy."),
+        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n74.__)("Failed to update taxonomy."),
         { type: "snackbar" }
       );
     } finally {
       setIsSaving(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(import_jsx_runtime166.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(import_jsx_runtime167.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(
       Stack,
       {
         className: "dataviews-action-modal__quick-edit-taxonomy-header",
@@ -32030,20 +31916,20 @@ function QuickEditTaxonomyModal({
         justify: "space-between",
         align: "center",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("h2", {}), children: (0, import_i18n73.__)("Quick edit taxonomy") }),
-          /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
-            import_components63.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)("h2", {}), children: (0, import_i18n74.__)("Quick edit taxonomy") }),
+          /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+            import_components62.Button,
             {
               size: "small",
               icon: close_small_default,
-              label: (0, import_i18n73.__)("Close"),
+              label: (0, import_i18n74.__)("Close"),
               onClick: closeModal
             }
           )
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { className: "dataviews-action-modal__quick-edit-taxonomy-content", children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime167.jsx)("div", { className: "dataviews-action-modal__quick-edit-taxonomy-content", children: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
       DataForm,
       {
         data,
@@ -32055,24 +31941,24 @@ function QuickEditTaxonomyModal({
         )
       }
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(
       Stack,
       {
         className: "dataviews-action-modal__quick-edit-taxonomy-footer",
         direction: "row",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
-            import_components63.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+            import_components62.Button,
             {
               __next40pxDefaultSize: true,
               variant: "secondary",
               onClick: closeModal,
-              children: (0, import_i18n73.__)("Cancel")
+              children: (0, import_i18n74.__)("Cancel")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
-            import_components63.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+            import_components62.Button,
             {
               __next40pxDefaultSize: true,
               variant: "primary",
@@ -32080,7 +31966,7 @@ function QuickEditTaxonomyModal({
               disabled: isSaving,
               accessibleWhenDisabled: true,
               onClick: onSave,
-              children: (0, import_i18n73.__)("Done")
+              children: (0, import_i18n74.__)("Done")
             }
           )
         ]
@@ -32090,7 +31976,7 @@ function QuickEditTaxonomyModal({
 }
 var quickEditTaxonomyAction = {
   id: "quick-edit-taxonomy",
-  label: (0, import_i18n73.__)("Quick edit"),
+  label: (0, import_i18n74.__)("Quick edit"),
   icon: pencil_default,
   isPrimary: true,
   hideModalHeader: true,
@@ -32099,7 +31985,7 @@ var quickEditTaxonomyAction = {
 var quick_edit_default2 = quickEditTaxonomyAction;
 
 // packages/content-types/build-module/taxonomies/list.mjs
-var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
 var defaultLayouts2 = {
   table: {}
 };
@@ -32130,9 +32016,9 @@ function TaxonomiesList() {
   const objectTypeField = useObjectTypeField();
   const fields = (0, import_element124.useMemo)(
     () => [
-      titleField2,
+      titleField,
       objectTypeField,
-      statusField2,
+      statusField,
       publicField2,
       slugField,
       hierarchicalField2
@@ -32173,7 +32059,7 @@ function TaxonomiesList() {
     }),
     [totalItems, totalPages]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
     dataviews_default,
     {
       data,
@@ -32189,8 +32075,8 @@ function TaxonomiesList() {
       onClickItem: (item) => navigate({
         to: `${TAXONOMIES_PATH}/${item.id}`
       }),
-      header: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
-        import_components64.Button,
+      header: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+        import_components63.Button,
         {
           variant: "primary",
           size: "compact",
@@ -32198,7 +32084,7 @@ function TaxonomiesList() {
           onClick: () => navigate({
             to: `${TAXONOMIES_PATH}/${NEW_ID}`
           }),
-          children: (0, import_i18n74.__)("Add taxonomy")
+          children: (0, import_i18n75.__)("Add taxonomy")
         }
       )
     }
@@ -32206,15 +32092,15 @@ function TaxonomiesList() {
 }
 
 // packages/content-types/build-module/taxonomies/edit.mjs
-var import_components65 = __toESM(require_components(), 1);
+var import_components64 = __toESM(require_components(), 1);
 var import_compose17 = __toESM(require_compose(), 1);
 var import_core_data16 = __toESM(require_core_data(), 1);
 var import_data17 = __toESM(require_data(), 1);
 var import_element125 = __toESM(require_element(), 1);
-var import_i18n75 = __toESM(require_i18n(), 1);
+var import_i18n76 = __toESM(require_i18n(), 1);
 var import_notices10 = __toESM(require_notices(), 1);
 import { useNavigate as useNavigate7, useParams as useParams2 } from "@wordpress/route";
-var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
 function TaxonomyEdit() {
   const { id } = useParams2({ from: `${TAXONOMIES_PATH}/$id` });
   const navigate = useNavigate7();
@@ -32232,13 +32118,13 @@ function TaxonomyEdit() {
     [isAddMode, taxonomyId]
   );
   const initialData = !isAddMode && record ? toFormData2(record) : BLANK_RECORD2;
-  const title = isAddMode ? (0, import_i18n75.__)("Add taxonomy") : initialData.title.raw;
+  const title = isAddMode ? (0, import_i18n76.__)("Add taxonomy") : initialData.title.raw;
   const commonProps = { initialData, title };
   const taxonomyPageProps = isAddMode ? {
     ...commonProps,
     isAddMode: true,
-    breadcrumbLabel: (0, import_i18n75.__)("Add new"),
-    subTitle: (0, import_i18n75.__)(
+    breadcrumbLabel: (0, import_i18n76.__)("Add new"),
+    subTitle: (0, import_i18n76.__)(
       "Define a new taxonomy. Fill in the essentials under General; expand Labels to customize."
     ),
     onSaved: (saved) => navigate({
@@ -32248,11 +32134,11 @@ function TaxonomyEdit() {
     ...commonProps,
     isAddMode: false,
     breadcrumbLabel: title,
-    subTitle: (0, import_i18n75.__)(
+    subTitle: (0, import_i18n76.__)(
       "Edit this taxonomy. Expand the Labels section to adjust labels."
     )
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(TaxonomyPage, { ...taxonomyPageProps }, id);
+  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(TaxonomyPage, { ...taxonomyPageProps }, id);
 }
 function TaxonomyPage({
   isAddMode,
@@ -32270,13 +32156,13 @@ function TaxonomyPage({
   const fields = (0, import_element125.useMemo)(
     () => [
       // General
-      pluralLabelField2,
-      singularLabelField2,
+      pluralLabelField,
+      singularLabelField,
       slugField,
       descriptionField2,
       objectTypeField,
       hierarchicalField2,
-      statusField2,
+      statusField,
       // Visibility
       publicField2,
       showInRestField2,
@@ -32314,8 +32200,8 @@ function TaxonomyPage({
       fields: [
         {
           id: "general",
-          label: (0, import_i18n75.__)("General"),
-          description: (0, import_i18n75.__)(
+          label: (0, import_i18n76.__)("General"),
+          description: (0, import_i18n76.__)(
             "Core identity, post types, and activation."
           ),
           layout: {
@@ -32327,8 +32213,8 @@ function TaxonomyPage({
         },
         {
           id: "visibility",
-          label: (0, import_i18n75.__)("Visibility"),
-          description: (0, import_i18n75.__)(
+          label: (0, import_i18n76.__)("Visibility"),
+          description: (0, import_i18n76.__)(
             "Where this taxonomy appears: REST API, admin UI, and front-end surfaces."
           ),
           layout: {
@@ -32340,7 +32226,7 @@ function TaxonomyPage({
         },
         {
           id: "labels",
-          label: (0, import_i18n75.__)("Labels"),
+          label: (0, import_i18n76.__)("Labels"),
           layout: {
             type: "card",
             isCollapsible: true,
@@ -32368,13 +32254,13 @@ function TaxonomyPage({
         serializeForSave2(data),
         { throwOnError: true }
       );
-      const successMessage = isAddMode ? (0, import_i18n75.sprintf)(
+      const successMessage = isAddMode ? (0, import_i18n76.sprintf)(
         /* translators: %s: taxonomy plural label. */
-        (0, import_i18n75.__)('"%s" taxonomy created.'),
+        (0, import_i18n76.__)('"%s" taxonomy created.'),
         data.title.raw
-      ) : (0, import_i18n75.sprintf)(
+      ) : (0, import_i18n76.sprintf)(
         /* translators: %s: taxonomy plural label. */
-        (0, import_i18n75.__)('"%s" taxonomy updated.'),
+        (0, import_i18n76.__)('"%s" taxonomy updated.'),
         data.title.raw
       );
       createSuccessNotice(successMessage, { type: "snackbar" });
@@ -32386,31 +32272,31 @@ function TaxonomyPage({
       if (error2?.message && error2?.code !== "unknown_error") {
         errorMessage = error2.message;
       } else if (isAddMode) {
-        errorMessage = (0, import_i18n75.__)("Failed to create taxonomy.");
+        errorMessage = (0, import_i18n76.__)("Failed to create taxonomy.");
       } else {
-        errorMessage = (0, import_i18n75.__)("Failed to update taxonomy.");
+        errorMessage = (0, import_i18n76.__)("Failed to update taxonomy.");
       }
       createErrorNotice(errorMessage, { type: "snackbar" });
     } finally {
       setIsSaving(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
     page_default,
     {
       ariaLabel: title,
-      breadcrumbs: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+      breadcrumbs: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
         breadcrumbs_default,
         {
           items: [
-            { label: (0, import_i18n75.__)("Taxonomies"), to: TAXONOMIES_PATH },
+            { label: (0, import_i18n76.__)("Taxonomies"), to: TAXONOMIES_PATH },
             { label: breadcrumbLabel }
           ]
         }
       ),
       subTitle,
-      actions: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
-        import_components65.Button,
+      actions: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+        import_components64.Button,
         {
           __next40pxDefaultSize: true,
           variant: "primary",
@@ -32420,16 +32306,16 @@ function TaxonomyPage({
           isBusy: isSaving,
           disabled: isSaving || !isValid2,
           accessibleWhenDisabled: true,
-          children: isAddMode ? (0, import_i18n75.__)("Create") : (0, import_i18n75.__)("Save")
+          children: isAddMode ? (0, import_i18n76.__)("Create") : (0, import_i18n76.__)("Save")
         }
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
         Stack,
         {
           direction: "column",
           gap: "md",
           className: "taxonomy-form",
-          render: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
             "form",
             {
               id: formId,
@@ -32439,7 +32325,7 @@ function TaxonomyPage({
               }
             }
           ),
-          children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
             DataForm,
             {
               data,
