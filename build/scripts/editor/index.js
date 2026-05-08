@@ -38200,6 +38200,7 @@ If there's a particular need for this, please submit a feature request at https:
     const canvasRef = (0, import_element127.useRef)(null);
     const cropAreaDescriptionId = (0, import_element127.useId)();
     const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element127.useState)(focusOnMount);
+    const [isFocusVisible, setIsFocusVisible] = (0, import_element127.useState)(false);
     const [canvasSize, setCanvasSize] = (0, import_element127.useState)({
       width: 0,
       height: 0
@@ -38213,6 +38214,9 @@ If there's a particular need for this, please submit a feature request at https:
       (event) => {
         if (event.target === event.currentTarget) {
           setIsCropAreaFocused(true);
+          if (event.relatedTarget !== null && event.currentTarget.matches(":focus-visible")) {
+            setIsFocusVisible(true);
+          }
         }
       },
       []
@@ -38221,6 +38225,7 @@ If there's a particular need for this, please submit a feature request at https:
       (event) => {
         if (event.target === event.currentTarget) {
           setIsCropAreaFocused(false);
+          setIsFocusVisible(false);
         }
       },
       []
@@ -38303,6 +38308,19 @@ If there's a particular need for this, please submit a feature request at https:
       onGestureStart,
       onGestureEnd
     });
+    const canvasHandlers = {
+      ...handlers,
+      onPointerDown: (event) => {
+        handlers.onPointerDown?.(event);
+        setIsFocusVisible(false);
+      },
+      onKeyDown: (event) => {
+        if (event.target === event.currentTarget && !["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
+          setIsFocusVisible(true);
+        }
+        handlers.onKeyDown?.(event);
+      }
+    };
     (0, import_element127.useEffect)(() => {
       const el = canvasRef.current;
       if (!el) {
@@ -38379,6 +38397,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isInteractiveGrid = showGrid === "interactive";
     const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
     const handleEscape = (0, import_element127.useCallback)(() => {
+      setIsFocusVisible(true);
       canvasRef.current?.focus({ preventScroll: true });
     }, []);
     const handleResizeStart = (0, import_element127.useCallback)(() => {
@@ -38467,7 +38486,10 @@ If there's a particular need for this, please submit a feature request at https:
               "wp-media-editor-image-editor__canvas",
               isInteractiveGrid && "wp-media-editor-image-editor__canvas--grid-interactive",
               showInteractiveGrid && "wp-media-editor-image-editor__canvas--show-grid",
-              settling && "wp-media-editor-image-editor__canvas--settling"
+              settling && "wp-media-editor-image-editor__canvas--settling",
+              // Show the keyboard focus outline only when the canvas
+              // itself (not a child handle) has keyboard focus.
+              isFocusVisible && isCropAreaFocused && "wp-media-editor-image-editor__canvas--focus-visible"
             ),
             tabIndex: 0,
             role: "group",
@@ -38475,7 +38497,7 @@ If there's a particular need for this, please submit a feature request at https:
             "aria-describedby": isCropAreaFocused ? cropAreaDescriptionId : void 0,
             onFocus: handleCropAreaFocus,
             onBlur: handleCropAreaBlur,
-            ...handlers,
+            ...canvasHandlers,
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
                 "div",
