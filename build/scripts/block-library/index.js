@@ -68007,8 +68007,8 @@ ${js}
     foot: (0, import_i18n242.__)("Footer cell text")
   };
   var placeholder = {
-    head: (0, import_i18n242.__)("Header label"),
-    foot: (0, import_i18n242.__)("Footer label")
+    head: (0, import_i18n242._x)("Header label", "table header"),
+    foot: (0, import_i18n242._x)("Footer label", "table footer")
   };
   function TSection({ name: name123, ...props }) {
     const TagName2 = `t${name123}`;
