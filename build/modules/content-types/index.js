@@ -30906,18 +30906,9 @@ import { useNavigate as useNavigate3 } from "@wordpress/route";
 // packages/content-types/build-module/post-types/actions/activate.mjs
 var import_i18n54 = __toESM(require_i18n(), 1);
 
-// packages/content-types/build-module/post-types/actions/utils.mjs
+// packages/content-types/build-module/utils/actions.mjs
 var import_core_data = __toESM(require_core_data(), 1);
 var import_notices = __toESM(require_notices(), 1);
-
-// packages/content-types/build-module/constants.mjs
-var POST_TYPES_PATH = "/post-types";
-var TAXONOMIES_PATH = "/taxonomies";
-var POST_TYPE_ENTITY = "wp_user_post_type";
-var TAXONOMY_ENTITY = "wp_user_taxonomy";
-var NEW_ID = "new";
-
-// packages/content-types/build-module/post-types/actions/utils.mjs
 function createStatusAction(config) {
   const isEligible = (item) => item.status !== config.targetStatus;
   return {
@@ -30936,7 +30927,7 @@ function createStatusAction(config) {
         itemsToUpdate.map(
           (item) => saveEntityRecord(
             "postType",
-            POST_TYPE_ENTITY,
+            config.entity,
             { id: item.id, status: config.targetStatus },
             { throwOnError: true }
           )
@@ -30985,10 +30976,18 @@ function createStatusAction(config) {
   };
 }
 
+// packages/content-types/build-module/constants.mjs
+var POST_TYPES_PATH = "/post-types";
+var TAXONOMIES_PATH = "/taxonomies";
+var POST_TYPE_ENTITY = "wp_user_post_type";
+var TAXONOMY_ENTITY = "wp_user_taxonomy";
+var NEW_ID = "new";
+
 // packages/content-types/build-module/post-types/actions/activate.mjs
 var activateAction = createStatusAction({
   id: "activate",
   label: (0, import_i18n54.__)("Activate"),
+  entity: POST_TYPE_ENTITY,
   targetStatus: "publish",
   messages: {
     successSingle: (0, import_i18n54.__)("Post type activated."),
@@ -31024,6 +31023,7 @@ var import_i18n55 = __toESM(require_i18n(), 1);
 var deactivateAction = createStatusAction({
   id: "deactivate",
   label: (0, import_i18n55.__)("Deactivate"),
+  entity: POST_TYPE_ENTITY,
   targetStatus: "draft",
   messages: {
     successSingle: (0, import_i18n55.__)("Post type deactivated."),
@@ -31314,26 +31314,11 @@ var pluralLabelField = {
     maxLength: 200
   }
 };
-var singularLabelField = {
-  id: "singular_name",
-  label: (0, import_i18n57.__)("Singular label"),
-  type: "text",
-  getValue: ({ item }) => item.config.labels.singular_name,
-  setValue: ({ item, value }) => ({
-    config: {
-      ...item.config,
-      labels: {
-        ...item.config.labels,
-        singular_name: String(value ?? "")
-      }
-    }
-  }),
-  isValid: {
-    required: true,
-    maxLength: 200
-  },
-  enableSorting: false
-};
+var singularLabelField = createLabelField(
+  "singular_name",
+  (0, import_i18n57.__)("Singular label"),
+  { required: true }
+);
 function createDescriptionField(description) {
   return {
     id: "description",
@@ -32762,88 +32747,17 @@ function PostTypePage({
 
 // packages/content-types/build-module/taxonomies/list.mjs
 var import_components63 = __toESM(require_components(), 1);
-var import_core_data15 = __toESM(require_core_data(), 1);
+var import_core_data14 = __toESM(require_core_data(), 1);
 var import_element124 = __toESM(require_element(), 1);
 var import_i18n77 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate6 } from "@wordpress/route";
 
 // packages/content-types/build-module/taxonomies/actions/activate.mjs
 var import_i18n67 = __toESM(require_i18n(), 1);
-
-// packages/content-types/build-module/taxonomies/actions/utils.mjs
-var import_core_data9 = __toESM(require_core_data(), 1);
-var import_notices6 = __toESM(require_notices(), 1);
-function createStatusAction2(config) {
-  const isEligible = (item) => item.status !== config.targetStatus;
-  return {
-    id: config.id,
-    label: config.label,
-    supportsBulk: true,
-    isEligible,
-    async callback(items, { registry }) {
-      const itemsToUpdate = items.filter(isEligible);
-      if (itemsToUpdate.length === 0) {
-        return;
-      }
-      const { saveEntityRecord } = registry.dispatch(import_core_data9.store);
-      const { createSuccessNotice, createErrorNotice } = registry.dispatch(import_notices6.store);
-      const promiseResult = await Promise.allSettled(
-        itemsToUpdate.map(
-          (item) => saveEntityRecord(
-            "postType",
-            TAXONOMY_ENTITY,
-            { id: item.id, status: config.targetStatus },
-            { throwOnError: true }
-          )
-        )
-      );
-      if (promiseResult.every(({ status }) => status === "fulfilled")) {
-        createSuccessNotice(
-          itemsToUpdate.length === 1 ? config.messages.successSingle : config.messages.successMany(itemsToUpdate.length),
-          { type: "snackbar" }
-        );
-        return;
-      }
-      let errorMessage;
-      if (promiseResult.length === 1) {
-        const typedError = promiseResult[0];
-        if (typedError.reason?.message && typedError.reason.code !== "unknown_error") {
-          errorMessage = typedError.reason.message;
-        } else {
-          errorMessage = config.messages.failSingle;
-        }
-      } else {
-        const errorMessages = /* @__PURE__ */ new Set();
-        const failedPromises = promiseResult.filter(
-          ({ status }) => status === "rejected"
-        );
-        for (const failedPromise of failedPromises) {
-          const typedError = failedPromise;
-          if (typedError.reason?.message && typedError.reason.code !== "unknown_error") {
-            errorMessages.add(typedError.reason.message);
-          }
-        }
-        if (errorMessages.size === 0) {
-          errorMessage = config.messages.failMany;
-        } else if (errorMessages.size === 1) {
-          errorMessage = config.messages.errorSingle(
-            [...errorMessages][0]
-          );
-        } else {
-          errorMessage = config.messages.errorMany(
-            [...errorMessages].join(",")
-          );
-        }
-      }
-      createErrorNotice(errorMessage, { type: "snackbar" });
-    }
-  };
-}
-
-// packages/content-types/build-module/taxonomies/actions/activate.mjs
-var activateAction2 = createStatusAction2({
+var activateAction2 = createStatusAction({
   id: "activate",
   label: (0, import_i18n67.__)("Activate"),
+  entity: TAXONOMY_ENTITY,
   targetStatus: "publish",
   messages: {
     successSingle: (0, import_i18n67.__)("Taxonomy activated."),
@@ -32876,9 +32790,10 @@ var activate_default2 = activateAction2;
 
 // packages/content-types/build-module/taxonomies/actions/deactivate.mjs
 var import_i18n68 = __toESM(require_i18n(), 1);
-var deactivateAction2 = createStatusAction2({
+var deactivateAction2 = createStatusAction({
   id: "deactivate",
   label: (0, import_i18n68.__)("Deactivate"),
+  entity: TAXONOMY_ENTITY,
   targetStatus: "draft",
   messages: {
     successSingle: (0, import_i18n68.__)("Taxonomy deactivated."),
@@ -32911,11 +32826,11 @@ var deactivate_default2 = deactivateAction2;
 
 // packages/content-types/build-module/taxonomies/actions/delete.mjs
 var import_components60 = __toESM(require_components(), 1);
-var import_core_data10 = __toESM(require_core_data(), 1);
+var import_core_data9 = __toESM(require_core_data(), 1);
 var import_data12 = __toESM(require_data(), 1);
 var import_element118 = __toESM(require_element(), 1);
 var import_i18n69 = __toESM(require_i18n(), 1);
-var import_notices7 = __toESM(require_notices(), 1);
+var import_notices6 = __toESM(require_notices(), 1);
 var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
 function DeleteTaxonomyModal({
   items,
@@ -32923,8 +32838,8 @@ function DeleteTaxonomyModal({
   onActionPerformed
 }) {
   const [isDeleting, setIsDeleting] = (0, import_element118.useState)(false);
-  const { deleteEntityRecord } = (0, import_data12.useDispatch)(import_core_data10.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data12.useDispatch)(import_notices7.store);
+  const { deleteEntityRecord } = (0, import_data12.useDispatch)(import_core_data9.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data12.useDispatch)(import_notices6.store);
   async function onDelete() {
     if (isDeleting) {
       return;
@@ -33061,20 +32976,20 @@ var delete_default2 = deleteTaxonomyAction;
 
 // packages/content-types/build-module/taxonomies/actions/duplicate.mjs
 var import_components61 = __toESM(require_components(), 1);
-var import_core_data13 = __toESM(require_core_data(), 1);
+var import_core_data12 = __toESM(require_core_data(), 1);
 var import_data15 = __toESM(require_data(), 1);
 var import_element121 = __toESM(require_element(), 1);
 var import_i18n72 = __toESM(require_i18n(), 1);
-var import_notices8 = __toESM(require_notices(), 1);
+var import_notices7 = __toESM(require_notices(), 1);
 
 // packages/content-types/build-module/taxonomies/fields/general.mjs
-var import_core_data12 = __toESM(require_core_data(), 1);
+var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data14 = __toESM(require_data(), 1);
 var import_element120 = __toESM(require_element(), 1);
 var import_i18n71 = __toESM(require_i18n(), 1);
 
 // packages/content-types/build-module/taxonomies/utils.mjs
-var import_core_data11 = __toESM(require_core_data(), 1);
+var import_core_data10 = __toESM(require_core_data(), 1);
 var import_data13 = __toESM(require_data(), 1);
 var import_element119 = __toESM(require_element(), 1);
 var import_i18n70 = __toESM(require_i18n(), 1);
@@ -33258,7 +33173,7 @@ function serializeForSave2(data) {
 }
 function usePublicPostTypes() {
   const postTypes = (0, import_data13.useSelect)(
-    (select) => select(import_core_data11.store).getPostTypes({ per_page: -1 }),
+    (select) => select(import_core_data10.store).getPostTypes({ per_page: -1 }),
     []
   );
   return (0, import_element119.useMemo)(() => {
@@ -33293,7 +33208,7 @@ var hierarchicalField2 = createBooleanField(
 var SLUG_MAX_LENGTH3 = 32;
 function useSlugField2(originalSlug, currentValue) {
   const registeredTaxonomies = (0, import_data14.useSelect)(
-    (select) => select(import_core_data12.store).getTaxonomies(),
+    (select) => select(import_core_data11.store).getTaxonomies(),
     []
   );
   const showRenameWarning = originalSlug !== void 0 && currentValue !== originalSlug;
@@ -33327,7 +33242,7 @@ function useSlugField2(originalSlug, currentValue) {
             return (0, import_i18n71.__)("This taxonomy key is already in use.");
           }
           const drafts = await (0, import_data14.resolveSelect)(
-            import_core_data12.store
+            import_core_data11.store
           ).getEntityRecords("postType", TAXONOMY_ENTITY, {
             slug,
             status: "draft",
@@ -33453,8 +33368,8 @@ function DuplicateTaxonomyModal({
     fields,
     duplicateForm2
   );
-  const { saveEntityRecord } = (0, import_data15.useDispatch)(import_core_data13.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data15.useDispatch)(import_notices8.store);
+  const { saveEntityRecord } = (0, import_data15.useDispatch)(import_core_data12.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data15.useDispatch)(import_notices7.store);
   async function onDuplicate() {
     if (isDuplicating || !isValid2) {
       return;
@@ -33787,11 +33702,11 @@ function useEditTaxonomyAction() {
 
 // packages/content-types/build-module/taxonomies/actions/quick-edit.mjs
 var import_components62 = __toESM(require_components(), 1);
-var import_core_data14 = __toESM(require_core_data(), 1);
+var import_core_data13 = __toESM(require_core_data(), 1);
 var import_data16 = __toESM(require_data(), 1);
 var import_element123 = __toESM(require_element(), 1);
 var import_i18n76 = __toESM(require_i18n(), 1);
-var import_notices9 = __toESM(require_notices(), 1);
+var import_notices8 = __toESM(require_notices(), 1);
 var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
 function QuickEditTaxonomyModal({
   items,
@@ -33815,8 +33730,8 @@ function QuickEditTaxonomyModal({
     [slugField, objectTypeField]
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, defaultForm2);
-  const { saveEntityRecord } = (0, import_data16.useDispatch)(import_core_data14.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data16.useDispatch)(import_notices9.store);
+  const { saveEntityRecord } = (0, import_data16.useDispatch)(import_core_data13.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data16.useDispatch)(import_notices8.store);
   async function onSave() {
     if (isSaving || !isValid2) {
       return;
@@ -33983,7 +33898,7 @@ function TaxonomiesList() {
       object_type: objectTypeFilter?.value
     };
   }, [view]);
-  const { records, isResolving, hasResolved, totalItems, totalPages } = (0, import_core_data15.useEntityRecords)(
+  const { records, isResolving, hasResolved, totalItems, totalPages } = (0, import_core_data14.useEntityRecords)(
     "postType",
     TAXONOMY_ENTITY,
     queryArgs
@@ -34034,11 +33949,11 @@ function TaxonomiesList() {
 // packages/content-types/build-module/taxonomies/edit.mjs
 var import_components64 = __toESM(require_components(), 1);
 var import_compose17 = __toESM(require_compose(), 1);
-var import_core_data16 = __toESM(require_core_data(), 1);
+var import_core_data15 = __toESM(require_core_data(), 1);
 var import_data17 = __toESM(require_data(), 1);
 var import_element125 = __toESM(require_element(), 1);
 var import_i18n78 = __toESM(require_i18n(), 1);
-var import_notices10 = __toESM(require_notices(), 1);
+var import_notices9 = __toESM(require_notices(), 1);
 import { useNavigate as useNavigate7, useParams as useParams2 } from "@wordpress/route";
 var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
 function TaxonomyEdit() {
@@ -34049,7 +33964,7 @@ function TaxonomyEdit() {
   const record = (0, import_data17.useSelect)(
     (select) => {
       return !isAddMode && // beforeLoad (route.ts) guarantees the record is in cache.
-      select(import_core_data16.store).getEntityRecord(
+      select(import_core_data15.store).getEntityRecord(
         "postType",
         TAXONOMY_ENTITY,
         taxonomyId
@@ -34180,8 +34095,8 @@ function TaxonomyPage({
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, form);
   const formId = (0, import_compose17.useInstanceId)(TaxonomyPage, "taxonomy-form");
-  const { saveEntityRecord } = (0, import_data17.useDispatch)(import_core_data16.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data17.useDispatch)(import_notices10.store);
+  const { saveEntityRecord } = (0, import_data17.useDispatch)(import_core_data15.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data17.useDispatch)(import_notices9.store);
   async function onSave() {
     if (isSaving || !isValid2) {
       return;
