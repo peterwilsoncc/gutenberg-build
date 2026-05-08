@@ -31,10 +31,15 @@ var require_i18n = __commonJS({
   }
 });
 
-// routes/taxonomies/route.ts
+// routes/content-types/route.ts
 var import_i18n = __toESM(require_i18n());
+import { POST_TYPES_PATH } from "@wordpress/content-types";
+import { redirect } from "@wordpress/route";
 var route = {
-  title: () => (0, import_i18n.__)("Taxonomies")
+  beforeLoad: () => {
+    throw redirect({ to: POST_TYPES_PATH });
+  },
+  title: () => (0, import_i18n.__)("Content Types")
 };
 export {
   route

@@ -3022,6 +3022,8 @@ var wp;
     const separatorRef = (0, import_element13.useRef)();
     const separatorHelpId = (0, import_element13.useId)();
     const heightRef = (0, import_element13.useRef)();
+    const getAriaValueNow = (height) => Math.round((height - min) / (max - min) * 100);
+    const persistIsOpen = (to = !isOpen) => setPreference("core/edit-post", "metaBoxesMainIsOpen", to);
     const applyHeight = (candidateHeight = "auto", isPersistent) => {
       let styleHeight;
       if (candidateHeight === "auto") {
@@ -3098,9 +3100,7 @@ var wp;
     const isAutoHeight = openHeight === void 0;
     const usedOpenHeight = isShort ? "auto" : openHeight;
     const usedHeight = isOpen ? usedOpenHeight : min;
-    const getAriaValueNow = (height) => Math.round((height - min) / (max - min) * 100);
     const usedAriaValueNow = max === void 0 || isAutoHeight ? 50 : getAriaValueNow(usedHeight);
-    const persistIsOpen = (to = !isOpen) => setPreference("core/edit-post", "metaBoxesMainIsOpen", to);
     const paneLabel = (0, import_i18n14.__)("Meta Boxes");
     const toggle = /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
       "button",
@@ -3237,8 +3237,7 @@ var wp;
         ...settings,
         styles,
         onNavigateToEntityRecord,
-        onNavigateToPreviousEntityRecord,
-        defaultRenderingMode: "post-only"
+        onNavigateToPreviousEntityRecord
       }),
       [
         settings,
@@ -3322,48 +3321,40 @@ var wp;
     const backButton = (0, import_compose3.useViewportMatch)("medium") && isFullscreenActive ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(back_button_default, { initialPost }) : null;
     return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_components9.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_editor18.ErrorBoundary, { canCopyContent: true, children: [
       /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(WelcomeGuide, { postType: currentPostType }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-        "div",
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { ...navigateRegionsProps, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
+        Editor,
         {
-          className: navigateRegionsProps.className,
-          ...navigateRegionsProps,
-          ref: navigateRegionsProps.ref,
-          children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
-            Editor,
-            {
-              settings: editorSettings,
-              initialEdits,
-              postType: currentPostType,
-              postId: currentPostId,
-              templateId,
-              className,
-              forceIsDirty: hasActiveMetaboxes,
-              disableIframe: !shouldIframe,
-              autoFocus: !isWelcomeGuideVisible,
-              onActionPerformed,
-              extraSidebarPanels: showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxes, { location: "side" }),
-              extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxesMain, { isLegacy: isDevicePreview }),
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.PostLockedModal, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(EditorInitialization, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(FullscreenMode, { isActive: isFullscreenActive }),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(BrowserURL, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.UnsavedChangesWarning, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.AutosaveMonitor, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.LocalAutosaveMonitor, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(keyboard_shortcuts_default, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.EditorKeyboardShortcutsRegister, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(BlockKeyboardShortcuts, {}),
-                currentPostType === "wp_block" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(InitPatternModal, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_plugins.PluginArea, { onError: onPluginAreaError }),
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(more_menu_default, {}),
-                backButton,
-                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_notices3.SnackbarNotices, { className: "edit-post-layout__snackbar" })
-              ]
-            }
-          )
+          settings: editorSettings,
+          initialEdits,
+          postType: currentPostType,
+          postId: currentPostId,
+          templateId,
+          className,
+          forceIsDirty: hasActiveMetaboxes,
+          disableIframe: !shouldIframe,
+          autoFocus: !isWelcomeGuideVisible,
+          onActionPerformed,
+          extraSidebarPanels: showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxes, { location: "side" }),
+          extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxesMain, { isLegacy: isDevicePreview }),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.PostLockedModal, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(EditorInitialization, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(FullscreenMode, { isActive: isFullscreenActive }),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(BrowserURL, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.UnsavedChangesWarning, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.AutosaveMonitor, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.LocalAutosaveMonitor, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(keyboard_shortcuts_default, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.EditorKeyboardShortcutsRegister, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(BlockKeyboardShortcuts, {}),
+            currentPostType === "wp_block" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(InitPatternModal, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_plugins.PluginArea, { onError: onPluginAreaError }),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(more_menu_default, {}),
+            backButton,
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_notices3.SnackbarNotices, { className: "edit-post-layout__snackbar" })
+          ]
         }
-      )
+      ) })
     ] }) });
   }
   var layout_default = Layout;
