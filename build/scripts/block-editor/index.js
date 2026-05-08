@@ -1026,7 +1026,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment93 = REACT_FRAGMENT_TYPE;
+          var Fragment92 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1085,7 +1085,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment93;
+          exports.Fragment = Fragment92;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -6939,7 +6939,7 @@ var wp;
     __experimentalUseBorderProps: () => useBorderProps,
     __experimentalUseColorProps: () => useColorProps,
     __experimentalUseCustomSides: () => useCustomSides,
-    __experimentalUseGradient: () => useGradient,
+    __experimentalUseGradient: () => __experimentalUseGradient,
     __experimentalUseHasRecursion: () => DeprecatedExperimentalUseHasRecursion,
     __experimentalUseMultipleOriginColorsAndGradients: () => useMultipleOriginColorsAndGradients,
     __experimentalUseResizeCanvas: () => useResizeCanvas,
@@ -8016,6 +8016,7 @@ var wp;
           false
         );
         break;
+      case "SYNC_DERIVED_BLOCK_ATTRIBUTES":
       case "UPDATE_BLOCK_ATTRIBUTES": {
         newState.tree = new Map(newState.tree);
         action.clientIds.forEach((clientId) => {
@@ -8118,20 +8119,40 @@ var wp;
   function withPersistentBlockChange(reducer3) {
     let lastAction;
     let markNextChangeAsNotPersistent = false;
+    let explicitPersistent;
     return (state, action) => {
-      const nextState = reducer3(state, action);
-      const wasMarkedAsNotPersistent = markNextChangeAsNotPersistent;
-      markNextChangeAsNotPersistent = action.type === "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT";
-      const isExplicitPersistentChange = action.type === "MARK_LAST_CHANGE_AS_PERSISTENT" || wasMarkedAsNotPersistent;
+      let nextState = reducer3(state, action);
+      let nextIsPersistentChange;
+      if (action.type === "SET_EXPLICIT_PERSISTENT") {
+        explicitPersistent = action.isPersistentChange;
+        nextIsPersistentChange = state.isPersistentChange ?? true;
+      }
+      if (explicitPersistent !== void 0) {
+        nextIsPersistentChange = explicitPersistent;
+        return nextIsPersistentChange === nextState.isPersistentChange ? nextState : {
+          ...nextState,
+          isPersistentChange: nextIsPersistentChange
+        };
+      }
+      const isExplicitPersistentChange = action.type === "MARK_LAST_CHANGE_AS_PERSISTENT" || markNextChangeAsNotPersistent;
       if (state === nextState && !isExplicitPersistentChange) {
-        if (state.isPersistentChange !== void 0) {
+        markNextChangeAsNotPersistent = action.type === "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT";
+        nextIsPersistentChange = state?.isPersistentChange ?? true;
+        if (state.isPersistentChange === nextIsPersistentChange) {
           return state;
         }
-        return { ...nextState, isPersistentChange: true };
+        return {
+          ...nextState,
+          isPersistentChange: nextIsPersistentChange
+        };
       }
-      const isPersistentChange = isExplicitPersistentChange ? !wasMarkedAsNotPersistent : !isUpdatingSameBlockAttribute(action, lastAction);
+      nextState = {
+        ...nextState,
+        isPersistentChange: isExplicitPersistentChange ? !markNextChangeAsNotPersistent : !isUpdatingSameBlockAttribute(action, lastAction)
+      };
       lastAction = action;
-      return { ...nextState, isPersistentChange };
+      markNextChangeAsNotPersistent = action.type === "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT";
+      return nextState;
     };
   }
   function withIgnoredBlockChange(reducer3) {
@@ -8407,6 +8428,7 @@ var wp;
           });
           return newState;
         }
+        case "SYNC_DERIVED_BLOCK_ATTRIBUTES":
         case "UPDATE_BLOCK_ATTRIBUTES": {
           if (action.clientIds.every((id) => !state.get(id))) {
             return state;
@@ -14358,7 +14380,7 @@ var wp;
     }
     const rootClientId = select3.getBlockRootClientId(clientId);
     const blockIndex = select3.getBlockIndex(clientId);
-    const { defaultBlock: directInsertBlock } = rootClientId ? select3.getBlockListSettings(rootClientId) ?? {} : {};
+    const directInsertBlock = rootClientId ? select3.getDirectInsertBlock(rootClientId) : null;
     if (!directInsertBlock) {
       return dispatch.insertDefaultBlock({}, rootClientId, blockIndex);
     }
@@ -14383,7 +14405,7 @@ var wp;
     }
     const rootClientId = select3.getBlockRootClientId(clientId);
     const blockIndex = select3.getBlockIndex(clientId);
-    const { defaultBlock: directInsertBlock } = rootClientId ? select3.getBlockListSettings(rootClientId) ?? {} : {};
+    const directInsertBlock = rootClientId ? select3.getDirectInsertBlock(rootClientId) : null;
     if (!directInsertBlock) {
       return dispatch.insertDefaultBlock(
         {},
@@ -14898,7 +14920,7 @@ var wp;
     );
     return gradient && gradient.slug;
   }
-  function useGradient({
+  function __experimentalUseGradient({
     gradientAttribute = "gradient",
     customGradientAttribute = "customGradient"
   } = {}) {
@@ -22024,6 +22046,12 @@ var wp;
 
   // packages/block-editor/build-module/components/block-visibility/modal.mjs
   var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
+  if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='e252bf6889']")) {
+    const style = document.createElement("style");
+    style.setAttribute("data-wp-hash", "e252bf6889");
+    style.appendChild(document.createTextNode(".block-editor-block-visibility-modal{z-index:1000001}.block-editor-block-visibility-modal__options{border:0;list-style:none;margin:24px 0;padding:0}.block-editor-block-visibility-modal__options-item{align-items:center;display:flex;gap:24px;justify-content:space-between;margin:0 0 16px}.block-editor-block-visibility-modal__options-item:last-child{margin:0}.block-editor-block-visibility-modal__options-item--everywhere{align-items:start;flex-direction:column}.block-editor-block-visibility-modal__options-checkbox--everywhere{font-weight:600}.block-editor-block-visibility-modal__options-icon--checked{fill:#ddd}.block-editor-block-visibility-modal__sub-options{padding-inline-start:12px;width:100%}.block-editor-block-visibility-modal__description{color:#757575;font-size:12px}.block-editor-block-visibility-info{align-items:center;display:flex;justify-content:start;margin:0 16px 16px;padding-bottom:4px;padding-top:4px}"));
+    document.head.appendChild(style);
+  }
   var DEFAULT_VIEWPORT_CHECKBOX_VALUES = {
     [BLOCK_VISIBILITY_VIEWPORTS.mobile.key]: false,
     [BLOCK_VISIBILITY_VIEWPORTS.tablet.key]: false,
@@ -26402,7 +26430,7 @@ var wp;
   ];
   function Tips() {
     const [randomIndex] = (0, import_element52.useState)(
-      () => Math.floor(Math.random() * globalTips.length)
+      Math.floor(Math.random() * globalTips.length)
     );
     return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(import_components29.Tip, { children: globalTips[randomIndex] });
   }
@@ -33016,28 +33044,6 @@ var wp;
     );
     const showPatternPanel = selectedTab === "patterns" && !delayedFilterValue && !!selectedPatternCategory;
     const showMediaPanel = selectedTab === "media" && !!selectedMediaCategory;
-    const [isScrolled, setIsScrolled] = (0, import_element93.useState)(false);
-    const blocksPanelRef = (0, import_element93.useRef)(null);
-    const patternsPanelRef = (0, import_element93.useRef)(null);
-    const mediaPanelRef = (0, import_element93.useRef)(null);
-    (0, import_element93.useEffect)(() => {
-      const handleScroll = (event) => {
-        setIsScrolled(event.currentTarget.scrollTop > 0);
-      };
-      const panels = [
-        blocksPanelRef.current,
-        patternsPanelRef.current,
-        mediaPanelRef.current
-      ].filter(Boolean);
-      panels.forEach(
-        (panel) => panel.addEventListener("scroll", handleScroll)
-      );
-      return () => {
-        panels.forEach(
-          (panel) => panel.removeEventListener("scroll", handleScroll)
-        );
-      };
-    }, []);
     const inserterSearch = (0, import_element93.useMemo)(() => {
       if (selectedTab === "media") {
         return null;
@@ -33046,9 +33052,7 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
           import_components59.SearchControl,
           {
-            className: clsx_default("block-editor-inserter__search", {
-              "is-scrolled": isScrolled
-            }),
+            className: "block-editor-inserter__search",
             onChange: (value) => {
               if (hoveredItem) {
                 setHoveredItem(null);
@@ -33089,8 +33093,7 @@ var wp;
       clientId,
       rootClientId,
       __experimentalInsertionIndex,
-      isAppender,
-      isScrolled
+      isAppender
     ]);
     const blocksTab = (0, import_element93.useMemo)(() => {
       return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
@@ -33204,7 +33207,6 @@ var wp;
                 {
                   name: "blocks",
                   title: (0, import_i18n59.__)("Blocks"),
-                  panelRef: blocksPanelRef,
                   panel: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
                     inserterSearch,
                     selectedTab === "blocks" && !delayedFilterValue && blocksTab
@@ -33213,7 +33215,6 @@ var wp;
                 {
                   name: "patterns",
                   title: (0, import_i18n59.__)("Patterns"),
-                  panelRef: patternsPanelRef,
                   panel: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
                     inserterSearch,
                     selectedTab === "patterns" && !delayedFilterValue && patternsTab
@@ -33222,7 +33223,6 @@ var wp;
                 {
                   name: "media",
                   title: (0, import_i18n59.__)("Media"),
-                  panelRef: mediaPanelRef,
                   panel: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
                     inserterSearch,
                     mediaTab
@@ -33537,12 +33537,12 @@ var wp;
       const {
         position,
         hasSingleBlockType,
-        blockToInsert,
+        directInsertBlock,
         insertOnlyAllowedBlock,
         __experimentalIsQuick: isQuick,
         onSelectOrClose
       } = this.props;
-      if (hasSingleBlockType || blockToInsert) {
+      if (hasSingleBlockType || directInsertBlock) {
         return this.renderToggle({ onToggle: insertOnlyAllowedBlock });
       }
       return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
@@ -33570,19 +33570,16 @@ var wp;
           getBlockRootClientId: getBlockRootClientId2,
           hasInserterItems: hasInserterItems2,
           getAllowedBlocks: getAllowedBlocks2,
-          getDirectInsertBlock: getDirectInsertBlock2,
-          getBlockListSettings: getBlockListSettings2
+          getDirectInsertBlock: getDirectInsertBlock2
         } = select3(store);
         const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType27 } = select3(import_blocks38.store);
         rootClientId = rootClientId || getBlockRootClientId2(clientId) || void 0;
         const allowedBlocks = getAllowedBlocks2(rootClientId);
         const directInsertBlock = shouldDirectInsert && getDirectInsertBlock2(rootClientId);
-        const { defaultBlock } = getBlockListSettings2(rootClientId) ?? {};
         const hasSingleBlockType = allowedBlocks?.length === 1 && getBlockVariations2(allowedBlocks[0].name, "inserter")?.length === 0;
-        const allowedBlockType = hasSingleBlockType ? allowedBlocks[0] : null;
-        let blockToInsert = directInsertBlock || null;
-        if (!blockToInsert && hasSingleBlockType && defaultBlock?.name === allowedBlockType.name) {
-          blockToInsert = defaultBlock;
+        let allowedBlockType = false;
+        if (hasSingleBlockType) {
+          allowedBlockType = allowedBlocks[0];
         }
         const defaultBlockType = directInsertBlock ? getBlockType27(directInsertBlock.name) : null;
         const appenderLabel = getAppenderLabel(
@@ -33594,7 +33591,7 @@ var wp;
           hasSingleBlockType,
           blockTitle: allowedBlockType ? allowedBlockType.title : "",
           allowedBlockType,
-          blockToInsert,
+          directInsertBlock,
           appenderLabel,
           rootClientId
         };
@@ -33609,43 +33606,43 @@ var wp;
             isAppender,
             hasSingleBlockType,
             allowedBlockType,
-            blockToInsert,
+            directInsertBlock,
             onSelectOrClose,
             selectBlockOnInsert
           } = ownProps;
-          if (!hasSingleBlockType && !blockToInsert) {
+          if (!hasSingleBlockType && !directInsertBlock) {
             return;
           }
-          const blockName = blockToInsert?.name ?? allowedBlockType.name;
           function getAdjacentBlockAttributes(attributesToCopy) {
-            if (!attributesToCopy?.length) {
+            const { getBlock: getBlock2, getPreviousBlockClientId: getPreviousBlockClientId2 } = select3(store);
+            if (!attributesToCopy || !clientId && !rootClientId) {
               return {};
             }
-            const { getBlock: getBlock2, getPreviousBlockClientId: getPreviousBlockClientId2 } = select3(store);
-            let adjacentAttributes;
-            if (clientId) {
+            const result = {};
+            let adjacentAttributes = {};
+            if (!clientId) {
+              const parentBlock = getBlock2(rootClientId);
+              if (parentBlock?.innerBlocks?.length) {
+                const lastInnerBlock = parentBlock.innerBlocks[parentBlock.innerBlocks.length - 1];
+                if (directInsertBlock && directInsertBlock?.name === lastInnerBlock.name) {
+                  adjacentAttributes = lastInnerBlock.attributes;
+                }
+              }
+            } else {
               const currentBlock = getBlock2(clientId);
               const previousBlock = getBlock2(
                 getPreviousBlockClientId2(clientId)
               );
               if (currentBlock?.name === previousBlock?.name) {
-                adjacentAttributes = previousBlock?.attributes;
-              }
-            } else if (rootClientId) {
-              const lastInnerBlock = getBlock2(rootClientId)?.innerBlocks?.at(-1);
-              if (lastInnerBlock?.name === blockName) {
-                adjacentAttributes = lastInnerBlock.attributes;
+                adjacentAttributes = previousBlock?.attributes || {};
               }
             }
-            if (!adjacentAttributes) {
-              return {};
-            }
-            return Object.fromEntries(
-              attributesToCopy.filter((attr) => attr in adjacentAttributes).map((attr) => [
-                attr,
-                adjacentAttributes[attr]
-              ])
-            );
+            attributesToCopy.forEach((attribute) => {
+              if (adjacentAttributes.hasOwnProperty(attribute)) {
+                result[attribute] = adjacentAttributes[attribute];
+              }
+            });
+            return result;
           }
           function getInsertionIndex() {
             const {
@@ -33664,21 +33661,26 @@ var wp;
             return getBlockOrder2(rootClientId).length;
           }
           const { insertBlock: insertBlock2 } = dispatch(store);
-          const newAttributes = getAdjacentBlockAttributes(
-            blockToInsert?.attributesToCopy
-          );
-          const newBlock = (0, import_blocks38.createBlock)(blockName, {
-            ...blockToInsert?.attributes || {},
-            ...newAttributes
-          });
+          let blockToInsert;
+          if (directInsertBlock) {
+            const newAttributes = getAdjacentBlockAttributes(
+              directInsertBlock.attributesToCopy
+            );
+            blockToInsert = (0, import_blocks38.createBlock)(directInsertBlock.name, {
+              ...directInsertBlock.attributes || {},
+              ...newAttributes
+            });
+          } else {
+            blockToInsert = (0, import_blocks38.createBlock)(allowedBlockType.name);
+          }
           insertBlock2(
-            newBlock,
+            blockToInsert,
             getInsertionIndex(),
             rootClientId,
             selectBlockOnInsert
           );
           if (onSelectOrClose) {
-            onSelectOrClose(newBlock);
+            onSelectOrClose(blockToInsert);
           }
           const message2 = (0, import_i18n61.sprintf)(
             // translators: %s: the name of the block that has been added
@@ -40959,30 +40961,6 @@ var wp;
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
   };
-  var VALID_ELEMENT_PSEUDO_SELECTORS = {
-    link: [
-      ":link",
-      ":any-link",
-      ":visited",
-      ":hover",
-      ":focus",
-      ":focus-visible",
-      ":active"
-    ],
-    button: [
-      ":link",
-      ":any-link",
-      ":visited",
-      ":hover",
-      ":focus",
-      ":focus-visible",
-      ":active"
-    ]
-  };
-  var RESPONSIVE_BREAKPOINTS = {
-    mobile: "@media (width <= 480px)",
-    tablet: "@media (480px < width <= 782px)"
-  };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
       (declarations, { path, cssVarInfix, classes }) => {
@@ -41330,7 +41308,7 @@ var wp;
     const entries = Object.entries(treeToPickFrom);
     const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
     const pickedEntries = entries.filter(
-      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
+      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key)
     );
     const clonedEntries = pickedEntries.map(([key, style]) => [
       key,
@@ -41338,100 +41316,65 @@ var wp;
     ]);
     return Object.fromEntries(clonedEntries);
   }
-  function getPseudoStyleNodes(node) {
-    const {
-      styles,
-      selector: selector3,
-      featureSelectors,
-      name,
-      elementName,
-      mediaQuery
-    } = node;
-    const pseudoSelectors = name ? VALID_BLOCK_PSEUDO_SELECTORS[name] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
-    if (!pseudoSelectors.length) {
-      return [];
-    }
-    return pseudoSelectors.flatMap((pseudoSelector) => {
-      const pseudoStyles = styles?.[pseudoSelector];
-      if (!pseudoStyles || typeof pseudoStyles !== "object") {
-        return [];
-      }
-      return [
-        {
-          styles: JSON.parse(JSON.stringify(pseudoStyles)),
-          selector: selector3,
-          selectorSuffix: pseudoSelector,
-          mediaQuery,
-          featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
-          name,
-          elementName
-        }
-      ];
-    });
-  }
-  function getResponsiveStyleNodes(node) {
-    const {
-      styles,
-      selector: selector3,
-      featureSelectors,
-      name,
-      elementName,
-      isStyleVariation
-    } = node;
-    if (!name && !elementName) {
-      return [];
-    }
-    return Object.entries(RESPONSIVE_BREAKPOINTS).flatMap(
-      ([breakpointKey, mediaQuery]) => {
-        const breakpointStyles = styles?.[breakpointKey];
-        if (!breakpointStyles || typeof breakpointStyles !== "object") {
-          return [];
-        }
-        return [
-          {
-            styles: JSON.parse(JSON.stringify(breakpointStyles)),
-            selector: selector3,
-            mediaQuery,
-            featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
-            name,
-            elementName,
-            isStyleVariation
-          }
-        ];
-      }
+  function appendPseudoSelectorStyles(styles, selector3, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector) {
+    const pseudoSelectorStyles = Object.entries(styles).filter(
+      ([key]) => key.startsWith(":")
     );
-  }
-  function getVariationFeatureSelectors(featureSelectors, styleVariationSelector) {
-    if (!featureSelectors || typeof featureSelectors === "string") {
-      return void 0;
+    if (!pseudoSelectorStyles.length) {
+      return ruleset;
     }
-    return Object.fromEntries(
-      Object.entries(featureSelectors).map(([feature, selector3]) => {
-        if (typeof selector3 === "string") {
-          return [
-            feature,
-            concatFeatureVariationSelectorString(
-              selector3,
+    pseudoSelectorStyles.forEach(([pseudoKey, pseudoStyle]) => {
+      if (!pseudoStyle || typeof pseudoStyle !== "object") {
+        return;
+      }
+      const remainingPseudoStyles = JSON.parse(
+        JSON.stringify(pseudoStyle)
+      );
+      if (featureSelectors && typeof featureSelectors !== "string") {
+        let pseudoFeatureDeclarations = getFeatureDeclarations(
+          featureSelectors,
+          remainingPseudoStyles
+        );
+        pseudoFeatureDeclarations = updateParagraphTextIndentSelector(
+          pseudoFeatureDeclarations,
+          treeSettings,
+          blockName
+        );
+        pseudoFeatureDeclarations = updateButtonWidthDeclarations(
+          pseudoFeatureDeclarations,
+          treeSettings
+        );
+        Object.entries(pseudoFeatureDeclarations).forEach(
+          ([baseSelector, declarations]) => {
+            if (!declarations.length) {
+              return;
+            }
+            const pseudoFeatureSelector = appendToSelector(
+              baseSelector,
+              pseudoKey
+            );
+            const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
+              pseudoFeatureSelector,
               styleVariationSelector
-            )
-          ];
-        }
-        return [
-          feature,
-          Object.fromEntries(
-            Object.entries(selector3).map(
-              ([subfeature, subfeatureSelector]) => [
-                subfeature,
-                concatFeatureVariationSelectorString(
-                  subfeatureSelector,
-                  styleVariationSelector
-                )
-              ]
-            )
-          )
-        ];
-      })
-    );
+            ) : pseudoFeatureSelector;
+            const rules = declarations.join(";");
+            ruleset += `:root :where(${cssSelector}){${rules};}`;
+          }
+        );
+      }
+      const pseudoDeclarations = getStylesDeclarations(
+        remainingPseudoStyles
+      );
+      if (!pseudoDeclarations.length) {
+        return;
+      }
+      const pseudoSelector = appendToSelector(selector3, pseudoKey);
+      const pseudoRule = `:root :where(${pseudoSelector}){${pseudoDeclarations.join(
+        ";"
+      )};}`;
+      ruleset += pseudoRule;
+    });
+    return ruleset;
   }
   var getNodesWithStyles = (tree, blockSelectors) => {
     const nodes = [];
@@ -41453,7 +41396,6 @@ var wp;
         nodes.push({
           styles: tree.styles?.elements?.[name] ?? {},
           selector: selector3,
-          elementName: name,
           // Top level elements that don't use a class name should not receive the
           // `:root :where()` wrapper to maintain backwards compatibility.
           skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name]
@@ -41465,36 +41407,19 @@ var wp;
         const blockStyles = pickStyleAndPseudoKeys(node, blockName);
         const typedNode = node;
         const variationNodesToAdd = [];
-        const variationStyleNodesToAdd = [];
         if (typedNode?.variations) {
+          const variations = {};
           Object.entries(typedNode.variations).forEach(
             ([variationName, variation]) => {
               const typedVariation = variation;
-              const variationStyles = pickStyleAndPseudoKeys(
+              variations[variationName] = pickStyleAndPseudoKeys(
                 typedVariation,
                 blockName
               );
               if (typedVariation?.css) {
-                variationStyles.css = typedVariation.css;
+                variations[variationName].css = typedVariation.css;
               }
               const variationSelector = typeof blockSelectors !== "string" ? blockSelectors[blockName]?.styleVariationSelectors?.[variationName] : void 0;
-              if (variationSelector && typeof blockSelectors !== "string") {
-                const blockSelector = blockSelectors[blockName];
-                variationStyleNodesToAdd.push({
-                  styles: variationStyles,
-                  selector: variationSelector,
-                  featureSelectors: getVariationFeatureSelectors(
-                    blockSelector?.featureSelectors,
-                    variationSelector
-                  ),
-                  fallbackGapValue: blockSelector?.fallbackGapValue,
-                  hasLayoutSupport: blockSelector?.hasLayoutSupport,
-                  isStyleVariation: true,
-                  layoutSelector: variationSelector + blockSelector.selector,
-                  layoutHasBlockGapSupport: true,
-                  name: blockName
-                });
-              }
               Object.entries(
                 typedVariation?.elements ?? {}
               ).forEach(([element, elementStyles]) => {
@@ -41504,9 +41429,7 @@ var wp;
                     selector: scopeSelector2(
                       variationSelector,
                       import_blocks65.__EXPERIMENTAL_ELEMENTS[element]
-                    ),
-                    elementName: element,
-                    isStyleVariation: true
+                    )
                   });
                 }
               });
@@ -41539,8 +41462,6 @@ var wp;
                   }
                   variationNodesToAdd.push({
                     selector: variationBlockSelector,
-                    name: variationBlockName,
-                    isStyleVariation: true,
                     duotoneSelector: variationDuotoneSelector,
                     featureSelectors: variationFeatureSelectors,
                     fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
@@ -41560,9 +41481,7 @@ var wp;
                           selector: scopeSelector2(
                             variationBlockSelector,
                             import_blocks65.__EXPERIMENTAL_ELEMENTS[variationBlockElement]
-                          ),
-                          elementName: variationBlockElement,
-                          isStyleVariation: true
+                          )
                         });
                       }
                     }
@@ -41571,6 +41490,7 @@ var wp;
               );
             }
           );
+          blockStyles.variations = variations;
         }
         if (typeof blockSelectors !== "string" && blockSelectors?.[blockName]?.selector) {
           nodes.push({
@@ -41580,10 +41500,10 @@ var wp;
             selector: blockSelectors[blockName].selector,
             styles: blockStyles,
             featureSelectors: blockSelectors[blockName].featureSelectors,
+            styleVariationSelectors: blockSelectors[blockName].styleVariationSelectors,
             name: blockName
           });
         }
-        nodes.push(...variationStyleNodesToAdd);
         Object.entries(typedNode?.elements ?? {}).forEach(
           ([elementName, value]) => {
             if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks65.__EXPERIMENTAL_ELEMENTS[elementName]) {
@@ -41594,8 +41514,7 @@ var wp;
                   return elementSelectors.map(
                     (elementSelector) => sel + " " + elementSelector
                   );
-                }).join(","),
-                elementName
+                }).join(",")
               });
             }
           }
@@ -41648,100 +41567,6 @@ var wp;
     );
     return nodes;
   };
-  function renderStylesNode(node, {
-    tree,
-    useRootPaddingAlign,
-    disableLayoutStyles,
-    hasBlockGapSupport,
-    hasFallbackGapSupport,
-    disableRootPadding
-  }) {
-    const {
-      selector: selector3,
-      selectorSuffix,
-      mediaQuery,
-      duotoneSelector,
-      styles,
-      fallbackGapValue,
-      hasLayoutSupport: hasLayoutSupport2,
-      featureSelectors,
-      layoutSelector,
-      layoutHasBlockGapSupport,
-      skipSelectorWrapper,
-      name
-    } = node;
-    let ruleset = "";
-    const effectiveSelector = selectorSuffix ? appendToSelector(selector3, selectorSuffix) : selector3;
-    if (featureSelectors && typeof featureSelectors !== "string") {
-      let featureDeclarations = getFeatureDeclarations(
-        featureSelectors,
-        styles
-      );
-      featureDeclarations = updateParagraphTextIndentSelector(
-        featureDeclarations,
-        tree.settings,
-        name
-      );
-      featureDeclarations = updateButtonWidthDeclarations(
-        featureDeclarations,
-        tree.settings
-      );
-      Object.entries(featureDeclarations).forEach(
-        ([featureSelector, declarations]) => {
-          if (declarations.length) {
-            const selectorForRule = selectorSuffix ? appendToSelector(featureSelector, selectorSuffix) : featureSelector;
-            const rules = declarations.join(";");
-            ruleset += `:root :where(${selectorForRule}){${rules};}`;
-          }
-        }
-      );
-    }
-    if (duotoneSelector) {
-      const duotoneStyles = {};
-      if (styles?.filter) {
-        duotoneStyles.filter = styles.filter;
-        delete styles.filter;
-      }
-      const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
-      if (duotoneDeclarations.length) {
-        ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
-          ";"
-        )};}`;
-      }
-    }
-    const selectorForLayout = layoutSelector ?? effectiveSelector;
-    const hasBlockGapSupportForLayout = layoutHasBlockGapSupport ?? hasBlockGapSupport;
-    if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selectorForLayout || hasLayoutSupport2)) {
-      ruleset += getLayoutStyles({
-        style: styles,
-        selector: selectorForLayout,
-        hasBlockGapSupport: hasBlockGapSupportForLayout,
-        hasFallbackGapSupport,
-        fallbackGapValue
-      });
-    }
-    const styleDeclarations = getStylesDeclarations(
-      styles,
-      effectiveSelector,
-      useRootPaddingAlign,
-      tree,
-      disableRootPadding
-    );
-    if (styleDeclarations?.length) {
-      const generalSelector = skipSelectorWrapper ? effectiveSelector : `:root :where(${effectiveSelector})`;
-      ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
-    }
-    if (styles?.css) {
-      ruleset += processCSSNesting(
-        styles.css,
-        `:root :where(${effectiveSelector})`
-      );
-    }
-    if (mediaQuery && ruleset) {
-      return `${mediaQuery}{${ruleset}}`;
-    }
-    return ruleset;
-  }
   var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => {
     const options = {
       blockGap: true,
@@ -41778,27 +41603,166 @@ var wp;
       ruleset += "}";
     }
     if (options.blockStyles) {
-      nodesWithStyles.forEach((node) => {
-        if (node.isStyleVariation && !options.variationStyles) {
-          return;
-        }
-        const responsiveNodes = getResponsiveStyleNodes(node);
-        [
-          node,
-          ...responsiveNodes,
-          ...getPseudoStyleNodes(node),
-          ...responsiveNodes.flatMap(getPseudoStyleNodes)
-        ].forEach((expandedNode) => {
-          ruleset += renderStylesNode(expandedNode, {
-            tree,
+      nodesWithStyles.forEach(
+        ({
+          selector: selector3,
+          duotoneSelector,
+          styles,
+          fallbackGapValue,
+          hasLayoutSupport: hasLayoutSupport2,
+          featureSelectors,
+          styleVariationSelectors,
+          skipSelectorWrapper,
+          name
+        }) => {
+          if (featureSelectors) {
+            let featureDeclarations = getFeatureDeclarations(
+              featureSelectors,
+              styles
+            );
+            featureDeclarations = updateParagraphTextIndentSelector(
+              featureDeclarations,
+              tree.settings,
+              name
+            );
+            featureDeclarations = updateButtonWidthDeclarations(
+              featureDeclarations,
+              tree.settings
+            );
+            Object.entries(featureDeclarations).forEach(
+              ([cssSelector, declarations]) => {
+                if (declarations.length) {
+                  const rules = declarations.join(";");
+                  ruleset += `:root :where(${cssSelector}){${rules};}`;
+                }
+              }
+            );
+          }
+          if (duotoneSelector) {
+            const duotoneStyles = {};
+            if (styles?.filter) {
+              duotoneStyles.filter = styles.filter;
+              delete styles.filter;
+            }
+            const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
+            if (duotoneDeclarations.length) {
+              ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
+                ";"
+              )};}`;
+            }
+          }
+          if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selector3 || hasLayoutSupport2)) {
+            ruleset += getLayoutStyles({
+              style: styles,
+              selector: selector3,
+              hasBlockGapSupport,
+              hasFallbackGapSupport,
+              fallbackGapValue
+            });
+          }
+          const styleDeclarations = getStylesDeclarations(
+            styles,
+            selector3,
             useRootPaddingAlign,
-            disableLayoutStyles,
-            hasBlockGapSupport,
-            hasFallbackGapSupport,
+            tree,
             disableRootPadding
-          });
-        });
-      });
+          );
+          if (styleDeclarations?.length) {
+            const generalSelector = skipSelectorWrapper ? selector3 : `:root :where(${selector3})`;
+            ruleset += `${generalSelector}{${styleDeclarations.join(
+              ";"
+            )};}`;
+          }
+          if (styles?.css) {
+            ruleset += processCSSNesting(
+              styles.css,
+              `:root :where(${selector3})`
+            );
+          }
+          if (options.variationStyles && styleVariationSelectors) {
+            Object.entries(styleVariationSelectors).forEach(
+              ([styleVariationName, styleVariationSelector]) => {
+                const styleVariations = styles?.variations?.[styleVariationName];
+                if (styleVariations) {
+                  if (featureSelectors) {
+                    let featureDeclarations = getFeatureDeclarations(
+                      featureSelectors,
+                      styleVariations
+                    );
+                    featureDeclarations = updateParagraphTextIndentSelector(
+                      featureDeclarations,
+                      tree.settings,
+                      name
+                    );
+                    featureDeclarations = updateButtonWidthDeclarations(
+                      featureDeclarations,
+                      tree.settings
+                    );
+                    Object.entries(
+                      featureDeclarations
+                    ).forEach(
+                      ([baseSelector, declarations]) => {
+                        if (declarations.length) {
+                          const cssSelector = concatFeatureVariationSelectorString(
+                            baseSelector,
+                            styleVariationSelector
+                          );
+                          const rules = declarations.join(";");
+                          ruleset += `:root :where(${cssSelector}){${rules};}`;
+                        }
+                      }
+                    );
+                  }
+                  const styleVariationDeclarations = getStylesDeclarations(
+                    styleVariations,
+                    styleVariationSelector,
+                    useRootPaddingAlign,
+                    tree
+                  );
+                  if (styleVariationDeclarations.length) {
+                    ruleset += `:root :where(${styleVariationSelector}){${styleVariationDeclarations.join(
+                      ";"
+                    )};}`;
+                  }
+                  if (styleVariations?.css) {
+                    ruleset += processCSSNesting(
+                      styleVariations.css,
+                      `:root :where(${styleVariationSelector})`
+                    );
+                  }
+                  ruleset = appendPseudoSelectorStyles(
+                    styleVariations,
+                    styleVariationSelector,
+                    ruleset,
+                    featureSelectors,
+                    tree.settings,
+                    name,
+                    styleVariationSelector
+                  );
+                  if (hasLayoutSupport2 && styleVariations?.spacing?.blockGap) {
+                    const variationSelectorWithBlock = styleVariationSelector + selector3;
+                    ruleset += getLayoutStyles({
+                      style: styleVariations,
+                      selector: variationSelectorWithBlock,
+                      hasBlockGapSupport: true,
+                      hasFallbackGapSupport,
+                      fallbackGapValue
+                    });
+                  }
+                }
+              }
+            );
+          }
+          ruleset = appendPseudoSelectorStyles(
+            styles,
+            selector3,
+            ruleset,
+            featureSelectors,
+            tree.settings,
+            name
+          );
+        }
+      );
     }
     if (options.layoutStyles) {
       ruleset = ruleset + ".wp-site-blocks > .alignleft { float: left; margin-right: 2em; }";
@@ -47590,7 +47554,7 @@ var wp;
       }
     ) });
   }
-  function BlockVariationTransforms({ blockClientId }) {
+  function __experimentalBlockVariationTransforms({ blockClientId }) {
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data140.useDispatch)(store);
     const {
       activeBlockVariation,
@@ -47660,7 +47624,7 @@ var wp;
       }
     );
   }
-  var block_variation_transforms_default = BlockVariationTransforms;
+  var block_variation_transforms_default = __experimentalBlockVariationTransforms;
 
   // packages/block-editor/build-module/components/block-vertical-alignment-control/ui.mjs
   var import_i18n118 = __toESM(require_i18n(), 1);
@@ -62354,126 +62318,54 @@ var wp;
   var import_i18n196 = __toESM(require_i18n(), 1);
   var import_components209 = __toESM(require_components(), 1);
   var import_jsx_runtime381 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge5 } = unlock(import_components209.privateApis);
   function StateControl({
-    viewportStates = [],
-    pseudoStates = [],
-    viewportValue = "default",
-    pseudoStateValue = "default",
-    onChangeViewport,
-    onChangePseudoState
+    states = [],
+    value = "default",
+    onChange
   }) {
-    if (!viewportStates.length && !pseudoStates.length) {
+    if (!states || states.length === 0) {
       return null;
     }
-    const viewportOptions = [
+    const stateOptions = [
       { label: (0, import_i18n196.__)("Default"), value: "default" },
-      ...viewportStates.map((state) => ({
+      ...states.map((state) => ({
         label: state.label,
         value: state.value
       }))
     ];
-    const pseudoStateOptions = [
-      { label: (0, import_i18n196.__)("Default"), value: "default" },
-      ...pseudoStates.map((state) => ({
-        label: state.label,
-        value: state.value
-      }))
-    ];
-    const hasViewportOptions = viewportStates.length > 0;
-    const hasPseudoStateOptions = pseudoStates.length > 0;
-    const triggerLabel = (0, import_i18n196.__)("States");
-    const activeStates = [];
-    if (hasViewportOptions && viewportValue !== "default") {
-      const selectedViewport = viewportOptions.find(
-        (option) => option.value === viewportValue
+    const getCurrentStateLabel = () => {
+      const currentOption = stateOptions.find(
+        (option) => option.value === value
       );
-      if (selectedViewport) {
-        activeStates.push({
-          key: `viewport-${selectedViewport.value}`,
-          label: selectedViewport.label
-        });
-      }
-    }
-    if (hasPseudoStateOptions && pseudoStateValue !== "default") {
-      const selectedPseudoState = pseudoStateOptions.find(
-        (option) => option.value === pseudoStateValue
-      );
-      if (selectedPseudoState) {
-        activeStates.push({
-          key: `pseudo-${selectedPseudoState.value}`,
-          label: selectedPseudoState.label
-        });
-      }
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime381.jsxs)(
-      Stack,
+      return currentOption?.label || (0, import_i18n196.__)("Default");
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
+      import_components209.DropdownMenu,
       {
-        direction: "column",
-        gap: "sm",
-        align: "flex-end",
-        className: "block-editor-global-styles-state-control",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
-            import_components209.DropdownMenu,
-            {
-              icon: chevron_down_default,
-              label: triggerLabel,
-              popoverProps: {
-                placement: "right-start"
-              },
-              text: triggerLabel,
-              toggleProps: {
-                size: "compact",
-                variant: "tertiary",
-                iconPosition: "right"
-              },
-              children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime381.jsxs)(import_jsx_runtime381.Fragment, { children: [
-                hasViewportOptions && /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components209.MenuGroup, { label: (0, import_i18n196.__)("Viewport"), children: viewportOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
-                  import_components209.MenuItem,
-                  {
-                    onClick: () => {
-                      onChangeViewport?.(option.value);
-                      if (!hasPseudoStateOptions) {
-                        onClose();
-                      }
-                    },
-                    icon: viewportValue === option.value ? check_default : null,
-                    children: option.label
-                  },
-                  `viewport-${option.value}`
-                )) }),
-                hasPseudoStateOptions && /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components209.MenuGroup, { label: (0, import_i18n196.__)("Pseudo state"), children: pseudoStateOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
-                  import_components209.MenuItem,
-                  {
-                    onClick: () => {
-                      onChangePseudoState?.(
-                        option.value
-                      );
-                      if (!hasViewportOptions) {
-                        onClose();
-                      }
-                    },
-                    icon: pseudoStateValue === option.value ? check_default : null,
-                    children: option.label
-                  },
-                  `pseudo-${option.value}`
-                )) })
-              ] })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
-            Stack,
-            {
-              className: "block-editor-global-styles-state-control__badges",
-              direction: "row",
-              justify: "flex-start",
-              gap: "xs",
-              wrap: "wrap",
-              children: activeStates.map((activeState) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(WCBadge5, { intent: "info", children: activeState.label }, activeState.key))
-            }
-          )
-        ]
+        icon: chevron_down_default,
+        label: (0, import_i18n196.sprintf)(
+          /* translators: %s: Current state (e.g. "Hover", "Focus") */
+          (0, import_i18n196.__)("State: %s"),
+          getCurrentStateLabel()
+        ),
+        text: getCurrentStateLabel(),
+        toggleProps: {
+          size: "compact",
+          variant: "tertiary",
+          iconPosition: "right"
+        },
+        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components209.MenuGroup, { label: (0, import_i18n196.__)("State"), children: stateOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
+          import_components209.MenuItem,
+          {
+            onClick: () => {
+              onChange(option.value);
+              onClose();
+            },
+            icon: value === option.value ? check_default : null,
+            children: option.label
+          },
+          option.value
+        )) })
       }
     );
   }
@@ -65979,7 +65871,7 @@ var wp;
     };
   }
 
-  // node_modules/date-fns/constants.js
+  // packages/dataviews/node_modules/date-fns/constants.js
   var daysInYear = 365.2425;
   var maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1e3;
   var minTime = -maxTime;
@@ -65993,7 +65885,7 @@ var wp;
   var secondsInQuarter = secondsInMonth * 3;
   var constructFromSymbol = /* @__PURE__ */ Symbol.for("constructDateFrom");
 
-  // node_modules/date-fns/constructFrom.js
+  // packages/dataviews/node_modules/date-fns/constructFrom.js
   function constructFrom(date, value) {
     if (typeof date === "function") return date(value);
     if (date && typeof date === "object" && constructFromSymbol in date)
@@ -66002,12 +65894,12 @@ var wp;
     return new Date(value);
   }
 
-  // node_modules/date-fns/toDate.js
+  // packages/dataviews/node_modules/date-fns/toDate.js
   function toDate(argument, context) {
     return constructFrom(context || argument, argument);
   }
 
-  // node_modules/date-fns/addDays.js
+  // packages/dataviews/node_modules/date-fns/addDays.js
   function addDays(date, amount, options) {
     const _date = toDate(date, options?.in);
     if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
@@ -66016,7 +65908,7 @@ var wp;
     return _date;
   }
 
-  // node_modules/date-fns/addMonths.js
+  // packages/dataviews/node_modules/date-fns/addMonths.js
   function addMonths(date, amount, options) {
     const _date = toDate(date, options?.in);
     if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
@@ -66039,13 +65931,13 @@ var wp;
     }
   }
 
-  // node_modules/date-fns/_lib/defaultOptions.js
+  // packages/dataviews/node_modules/date-fns/_lib/defaultOptions.js
   var defaultOptions = {};
   function getDefaultOptions() {
     return defaultOptions;
   }
 
-  // node_modules/date-fns/startOfWeek.js
+  // packages/dataviews/node_modules/date-fns/startOfWeek.js
   function startOfWeek(date, options) {
     const defaultOptions2 = getDefaultOptions();
     const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0;
@@ -66057,12 +65949,12 @@ var wp;
     return _date;
   }
 
-  // node_modules/date-fns/startOfISOWeek.js
+  // packages/dataviews/node_modules/date-fns/startOfISOWeek.js
   function startOfISOWeek(date, options) {
     return startOfWeek(date, { ...options, weekStartsOn: 1 });
   }
 
-  // node_modules/date-fns/getISOWeekYear.js
+  // packages/dataviews/node_modules/date-fns/getISOWeekYear.js
   function getISOWeekYear(date, options) {
     const _date = toDate(date, options?.in);
     const year = _date.getFullYear();
@@ -66083,7 +65975,7 @@ var wp;
     }
   }
 
-  // node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds.js
+  // packages/dataviews/node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds.js
   function getTimezoneOffsetInMilliseconds(date) {
     const _date = toDate(date);
     const utcDate = new Date(
@@ -66101,7 +65993,7 @@ var wp;
     return +date - +utcDate;
   }
 
-  // node_modules/date-fns/_lib/normalizeDates.js
+  // packages/dataviews/node_modules/date-fns/_lib/normalizeDates.js
   function normalizeDates(context, ...dates) {
     const normalize = constructFrom.bind(
       null,
@@ -66110,14 +66002,14 @@ var wp;
     return dates.map(normalize);
   }
 
-  // node_modules/date-fns/startOfDay.js
+  // packages/dataviews/node_modules/date-fns/startOfDay.js
   function startOfDay(date, options) {
     const _date = toDate(date, options?.in);
     _date.setHours(0, 0, 0, 0);
     return _date;
   }
 
-  // node_modules/date-fns/differenceInCalendarDays.js
+  // packages/dataviews/node_modules/date-fns/differenceInCalendarDays.js
   function differenceInCalendarDays(laterDate, earlierDate, options) {
     const [laterDate_, earlierDate_] = normalizeDates(
       options?.in,
@@ -66131,7 +66023,7 @@ var wp;
     return Math.round((laterTimestamp - earlierTimestamp) / millisecondsInDay);
   }
 
-  // node_modules/date-fns/startOfISOWeekYear.js
+  // packages/dataviews/node_modules/date-fns/startOfISOWeekYear.js
   function startOfISOWeekYear(date, options) {
     const year = getISOWeekYear(date, options);
     const fourthOfJanuary = constructFrom(options?.in || date, 0);
@@ -66140,27 +66032,27 @@ var wp;
     return startOfISOWeek(fourthOfJanuary);
   }
 
-  // node_modules/date-fns/addWeeks.js
+  // packages/dataviews/node_modules/date-fns/addWeeks.js
   function addWeeks(date, amount, options) {
     return addDays(date, amount * 7, options);
   }
 
-  // node_modules/date-fns/addYears.js
+  // packages/dataviews/node_modules/date-fns/addYears.js
   function addYears(date, amount, options) {
     return addMonths(date, amount * 12, options);
   }
 
-  // node_modules/date-fns/isDate.js
+  // packages/dataviews/node_modules/date-fns/isDate.js
   function isDate(value) {
     return value instanceof Date || typeof value === "object" && Object.prototype.toString.call(value) === "[object Date]";
   }
 
-  // node_modules/date-fns/isValid.js
+  // packages/dataviews/node_modules/date-fns/isValid.js
   function isValid(date) {
     return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
   }
 
-  // node_modules/date-fns/startOfMonth.js
+  // packages/dataviews/node_modules/date-fns/startOfMonth.js
   function startOfMonth(date, options) {
     const _date = toDate(date, options?.in);
     _date.setDate(1);
@@ -66168,7 +66060,7 @@ var wp;
     return _date;
   }
 
-  // node_modules/date-fns/startOfYear.js
+  // packages/dataviews/node_modules/date-fns/startOfYear.js
   function startOfYear(date, options) {
     const date_ = toDate(date, options?.in);
     date_.setFullYear(date_.getFullYear(), 0, 1);
@@ -66176,7 +66068,7 @@ var wp;
     return date_;
   }
 
-  // node_modules/date-fns/locale/en-US/_lib/formatDistance.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatDistance.js
   var formatDistanceLocale = {
     lessThanXSeconds: {
       one: "less than a second",
@@ -66260,7 +66152,7 @@ var wp;
     return result;
   };
 
-  // node_modules/date-fns/locale/_lib/buildFormatLongFn.js
+  // packages/dataviews/node_modules/date-fns/locale/_lib/buildFormatLongFn.js
   function buildFormatLongFn(args) {
     return (options = {}) => {
       const width = options.width ? String(options.width) : args.defaultWidth;
@@ -66269,7 +66161,7 @@ var wp;
     };
   }
 
-  // node_modules/date-fns/locale/en-US/_lib/formatLong.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatLong.js
   var dateFormats = {
     full: "EEEE, MMMM do, y",
     long: "MMMM do, y",
@@ -66303,7 +66195,7 @@ var wp;
     })
   };
 
-  // node_modules/date-fns/locale/en-US/_lib/formatRelative.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatRelative.js
   var formatRelativeLocale = {
     lastWeek: "'last' eeee 'at' p",
     yesterday: "'yesterday at' p",
@@ -66314,7 +66206,7 @@ var wp;
   };
   var formatRelative = (token, _date, _baseDate, _options) => formatRelativeLocale[token];
 
-  // node_modules/date-fns/locale/_lib/buildLocalizeFn.js
+  // packages/dataviews/node_modules/date-fns/locale/_lib/buildLocalizeFn.js
   function buildLocalizeFn(args) {
     return (value, options) => {
       const context = options?.context ? String(options.context) : "standalone";
@@ -66333,7 +66225,7 @@ var wp;
     };
   }
 
-  // node_modules/date-fns/locale/en-US/_lib/localize.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/localize.js
   var eraValues = {
     narrow: ["B", "A"],
     abbreviated: ["BC", "AD"],
@@ -66495,7 +66387,7 @@ var wp;
     })
   };
 
-  // node_modules/date-fns/locale/_lib/buildMatchFn.js
+  // packages/dataviews/node_modules/date-fns/locale/_lib/buildMatchFn.js
   function buildMatchFn(args) {
     return (string, options = {}) => {
       const width = options.width;
@@ -66537,7 +66429,7 @@ var wp;
     return void 0;
   }
 
-  // node_modules/date-fns/locale/_lib/buildMatchPatternFn.js
+  // packages/dataviews/node_modules/date-fns/locale/_lib/buildMatchPatternFn.js
   function buildMatchPatternFn(args) {
     return (string, options = {}) => {
       const matchResult = string.match(args.matchPattern);
@@ -66552,7 +66444,7 @@ var wp;
     };
   }
 
-  // node_modules/date-fns/locale/en-US/_lib/match.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/match.js
   var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
   var parseOrdinalNumberPattern = /\d+/i;
   var matchEraPatterns = {
@@ -66671,7 +66563,7 @@ var wp;
     })
   };
 
-  // node_modules/date-fns/locale/en-US.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US.js
   var enUS = {
     code: "en-US",
     formatDistance,
@@ -66685,7 +66577,7 @@ var wp;
     }
   };
 
-  // node_modules/date-fns/getDayOfYear.js
+  // packages/dataviews/node_modules/date-fns/getDayOfYear.js
   function getDayOfYear(date, options) {
     const _date = toDate(date, options?.in);
     const diff = differenceInCalendarDays(_date, startOfYear(_date));
@@ -66693,14 +66585,14 @@ var wp;
     return dayOfYear;
   }
 
-  // node_modules/date-fns/getISOWeek.js
+  // packages/dataviews/node_modules/date-fns/getISOWeek.js
   function getISOWeek(date, options) {
     const _date = toDate(date, options?.in);
     const diff = +startOfISOWeek(_date) - +startOfISOWeekYear(_date);
     return Math.round(diff / millisecondsInWeek) + 1;
   }
 
-  // node_modules/date-fns/getWeekYear.js
+  // packages/dataviews/node_modules/date-fns/getWeekYear.js
   function getWeekYear(date, options) {
     const _date = toDate(date, options?.in);
     const year = _date.getFullYear();
@@ -66723,7 +66615,7 @@ var wp;
     }
   }
 
-  // node_modules/date-fns/startOfWeekYear.js
+  // packages/dataviews/node_modules/date-fns/startOfWeekYear.js
   function startOfWeekYear(date, options) {
     const defaultOptions2 = getDefaultOptions();
     const firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions2.firstWeekContainsDate ?? defaultOptions2.locale?.options?.firstWeekContainsDate ?? 1;
@@ -66735,21 +66627,21 @@ var wp;
     return _date;
   }
 
-  // node_modules/date-fns/getWeek.js
+  // packages/dataviews/node_modules/date-fns/getWeek.js
   function getWeek(date, options) {
     const _date = toDate(date, options?.in);
     const diff = +startOfWeek(_date, options) - +startOfWeekYear(_date, options);
     return Math.round(diff / millisecondsInWeek) + 1;
   }
 
-  // node_modules/date-fns/_lib/addLeadingZeros.js
+  // packages/dataviews/node_modules/date-fns/_lib/addLeadingZeros.js
   function addLeadingZeros(number, targetLength) {
     const sign = number < 0 ? "-" : "";
     const output = Math.abs(number).toString().padStart(targetLength, "0");
     return sign + output;
   }
 
-  // node_modules/date-fns/_lib/format/lightFormatters.js
+  // packages/dataviews/node_modules/date-fns/_lib/format/lightFormatters.js
   var lightFormatters = {
     // Year
     y(date, token) {
@@ -66809,7 +66701,7 @@ var wp;
     }
   };
 
-  // node_modules/date-fns/_lib/format/formatters.js
+  // packages/dataviews/node_modules/date-fns/_lib/format/formatters.js
   var dayPeriodEnum = {
     am: "am",
     pm: "pm",
@@ -67455,7 +67347,7 @@ var wp;
     return sign + hours + delimiter + minutes;
   }
 
-  // node_modules/date-fns/_lib/format/longFormatters.js
+  // packages/dataviews/node_modules/date-fns/_lib/format/longFormatters.js
   var dateLongFormatter = (pattern, formatLong2) => {
     switch (pattern) {
       case "P":
@@ -67512,7 +67404,7 @@ var wp;
     P: dateTimeLongFormatter
   };
 
-  // node_modules/date-fns/_lib/protectedTokens.js
+  // packages/dataviews/node_modules/date-fns/_lib/protectedTokens.js
   var dayOfYearTokenRE = /^D+$/;
   var weekYearTokenRE = /^Y+$/;
   var throwTokens = ["D", "DD", "YY", "YYYY"];
@@ -67532,7 +67424,7 @@ var wp;
     return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format6}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
   }
 
-  // node_modules/date-fns/format.js
+  // packages/dataviews/node_modules/date-fns/format.js
   var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
   var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
   var escapedStringRegExp = /^'([^]*?)'?$/;
@@ -67598,22 +67490,22 @@ var wp;
     return matched[1].replace(doubleQuoteRegExp, "'");
   }
 
-  // node_modules/date-fns/subDays.js
+  // packages/dataviews/node_modules/date-fns/subDays.js
   function subDays(date, amount, options) {
     return addDays(date, -amount, options);
   }
 
-  // node_modules/date-fns/subMonths.js
+  // packages/dataviews/node_modules/date-fns/subMonths.js
   function subMonths(date, amount, options) {
     return addMonths(date, -amount, options);
   }
 
-  // node_modules/date-fns/subWeeks.js
+  // packages/dataviews/node_modules/date-fns/subWeeks.js
   function subWeeks(date, amount, options) {
     return addWeeks(date, -amount, options);
   }
 
-  // node_modules/date-fns/subYears.js
+  // packages/dataviews/node_modules/date-fns/subYears.js
   function subYears(date, amount, options) {
     return addYears(date, -amount, options);
   }
@@ -78393,7 +78285,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
       import_components276.__experimentalToolsPanelItem,
       {
-        label: (0, import_i18n243._x)("Scale", "Image scaling options"),
+        label: (0, import_i18n243.__)("Scale"),
         isShownByDefault,
         hasValue: () => displayValue !== defaultValue,
         onDeselect: () => onChange(defaultValue),
@@ -78401,7 +78293,7 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
           import_components276.__experimentalToggleGroupControl,
           {
-            label: (0, import_i18n243._x)("Scale", "Image scaling options"),
+            label: (0, import_i18n243.__)("Scale"),
             isBlock: true,
             help: scaleHelp[displayValue],
             value: displayValue,
@@ -78785,7 +78677,7 @@ var wp;
   var import_components280 = __toESM(require_components(), 1);
   var import_dom43 = __toESM(require_dom(), 1);
   var import_jsx_runtime482 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge6 } = unlock(import_components280.privateApis);
+  var { Badge: WCBadge5 } = unlock(import_components280.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
     return /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(import_components280.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
       /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(import_components280.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(import_components280.__experimentalHStack, { alignment: "top", children: [
@@ -78825,7 +78717,7 @@ var wp;
                   className: "link-preview-button__badges",
                   alignment: "left",
                   children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
-                    WCBadge6,
+                    WCBadge5,
                     {
                       intent: badge.intent,
                       children: badge.label

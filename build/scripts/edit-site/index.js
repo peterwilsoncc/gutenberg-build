@@ -165,7 +165,7 @@ var wp;
         function is2(x2, y2) {
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
-        function useSyncExternalStore$2(subscribe3, getSnapshot) {
+        function useSyncExternalStore$2(subscribe2, getSnapshot) {
           didWarnOld18Alpha || void 0 === React27.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
@@ -186,16 +186,16 @@ var wp;
               inst.getSnapshot = getSnapshot;
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             },
-            [subscribe3, value, getSnapshot]
+            [subscribe2, value, getSnapshot]
           );
           useEffect61(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
-              return subscribe3(function() {
+              return subscribe2(function() {
                 checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               });
             },
-            [subscribe3]
+            [subscribe2]
           );
           useDebugValue(value);
           return value;
@@ -210,7 +210,7 @@ var wp;
             return true;
           }
         }
-        function useSyncExternalStore$1(subscribe3, getSnapshot) {
+        function useSyncExternalStore$1(subscribe2, getSnapshot) {
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
@@ -1449,19 +1449,19 @@ var wp;
 
   // packages/edit-site/build-module/store/selectors.mjs
   var isFeatureActive = (0, import_data2.createRegistrySelector)(
-    (select4) => (_, featureName) => {
+    (select3) => (_, featureName) => {
       (0, import_deprecated2.default)(`select( 'core/edit-site' ).isFeatureActive`, {
         since: "6.0",
         alternative: `select( 'core/preferences' ).get`
       });
-      return !!select4(import_preferences2.store).get(
+      return !!select3(import_preferences2.store).get(
         "core/edit-site",
         featureName
       );
     }
   );
   var __experimentalGetPreviewDeviceType = (0, import_data2.createRegistrySelector)(
-    (select4) => () => {
+    (select3) => () => {
       (0, import_deprecated2.default)(
         `select( 'core/edit-site' ).__experimentalGetPreviewDeviceType`,
         {
@@ -1470,11 +1470,11 @@ var wp;
           alternative: `select( 'core/editor' ).getDeviceType`
         }
       );
-      return select4(import_editor2.store).getDeviceType();
+      return select3(import_editor2.store).getDeviceType();
     }
   );
   var getCanUserCreateMedia = (0, import_data2.createRegistrySelector)(
-    (select4) => () => {
+    (select3) => () => {
       (0, import_deprecated2.default)(
         `wp.data.select( 'core/edit-site' ).getCanUserCreateMedia()`,
         {
@@ -1482,17 +1482,17 @@ var wp;
           alternative: `wp.data.select( 'core' ).canUser( 'create', { kind: 'postType', type: 'attachment' } )`
         }
       );
-      return select4(import_core_data2.store).canUser("create", "media");
+      return select3(import_core_data2.store).canUser("create", "media");
     }
   );
-  var getReusableBlocks = (0, import_data2.createRegistrySelector)((select4) => () => {
+  var getReusableBlocks = (0, import_data2.createRegistrySelector)((select3) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-site' ).getReusableBlocks()`, {
       since: "6.5",
       version: "6.8",
       alternative: `select( 'core/core' ).getEntityRecords( 'postType', 'wp_block' )`
     });
     const isWeb = import_element.Platform.OS === "web";
-    return isWeb ? select4(import_core_data2.store).getEntityRecords("postType", "wp_block", {
+    return isWeb ? select3(import_core_data2.store).getEntityRecords("postType", "wp_block", {
       per_page: -1
     }) : [];
   });
@@ -1531,15 +1531,15 @@ var wp;
     });
     return { context: state.editedPost.context };
   }
-  var isInserterOpened = (0, import_data2.createRegistrySelector)((select4) => () => {
+  var isInserterOpened = (0, import_data2.createRegistrySelector)((select3) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-site' ).isInserterOpened`, {
       since: "6.5",
       alternative: `select( 'core/editor' ).isInserterOpened`
     });
-    return select4(import_editor2.store).isInserterOpened();
+    return select3(import_editor2.store).isInserterOpened();
   });
   var __experimentalGetInsertionPoint = (0, import_data2.createRegistrySelector)(
-    (select4) => () => {
+    (select3) => () => {
       (0, import_deprecated2.default)(
         `select( 'core/edit-site' ).__experimentalGetInsertionPoint`,
         {
@@ -1547,32 +1547,32 @@ var wp;
           version: "6.7"
         }
       );
-      return unlock(select4(import_editor2.store)).getInserter();
+      return unlock(select3(import_editor2.store)).getInserter();
     }
   );
-  var isListViewOpened = (0, import_data2.createRegistrySelector)((select4) => () => {
+  var isListViewOpened = (0, import_data2.createRegistrySelector)((select3) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-site' ).isListViewOpened`, {
       since: "6.5",
       alternative: `select( 'core/editor' ).isListViewOpened`
     });
-    return select4(import_editor2.store).isListViewOpened();
+    return select3(import_editor2.store).isListViewOpened();
   });
   function isSaveViewOpened(state) {
     return state.saveViewPanel;
   }
-  function getBlocksAndTemplateParts(select4) {
-    const templateParts = select4(import_core_data2.store).getEntityRecords(
+  function getBlocksAndTemplateParts(select3) {
+    const templateParts = select3(import_core_data2.store).getEntityRecords(
       "postType",
       TEMPLATE_PART_POST_TYPE,
       { per_page: -1 }
     );
-    const { getBlocksByName, getBlocksByClientId } = select4(import_block_editor2.store);
+    const { getBlocksByName, getBlocksByClientId } = select3(import_block_editor2.store);
     const clientIds = getBlocksByName("core/template-part");
     const blocks = getBlocksByClientId(clientIds);
     return [blocks, templateParts];
   }
   var getCurrentTemplateTemplateParts = (0, import_data2.createRegistrySelector)(
-    (select4) => (0, import_data2.createSelector)(
+    (select3) => (0, import_data2.createSelector)(
       () => {
         (0, import_deprecated2.default)(
           `select( 'core/edit-site' ).getCurrentTemplateTemplateParts()`,
@@ -1583,14 +1583,14 @@ var wp;
           }
         );
         return getFilteredTemplatePartBlocks(
-          ...getBlocksAndTemplateParts(select4)
+          ...getBlocksAndTemplateParts(select3)
         );
       },
-      () => getBlocksAndTemplateParts(select4)
+      () => getBlocksAndTemplateParts(select3)
     )
   );
-  var getEditorMode = (0, import_data2.createRegistrySelector)((select4) => () => {
-    return select4(import_preferences2.store).get("core", "editorMode");
+  var getEditorMode = (0, import_data2.createRegistrySelector)((select3) => () => {
+    return select3(import_preferences2.store).get("core", "editorMode");
   });
   function getCurrentTemplateNavigationPanelSubMenu() {
     (0, import_deprecated2.default)(
@@ -5286,66 +5286,74 @@ var wp;
     showSidebarToggle = true
   }) {
     const HeadingTag = `h${headingLevel}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Stack, { direction: "column", className: style_default11.header, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(
-        Stack,
-        {
-          className: style_default11["header-content"],
-          direction: "row",
-          gap: "sm",
-          justify: "space-between",
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-              showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
-                SidebarToggleSlot,
-                {
-                  bubblesVirtually: true,
-                  className: style_default11["sidebar-toggle-slot"]
-                }
-              ),
-              visual && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
-                "div",
-                {
-                  className: style_default11["header-visual"],
-                  "aria-hidden": "true",
-                  children: visual
-                }
-              ),
-              title && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
-                Text,
-                {
-                  className: style_default11["header-title"],
-                  render: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(HeadingTag, {}),
-                  variant: "heading-lg",
-                  children: title
-                }
-              ),
-              breadcrumbs,
-              badges
-            ] }),
-            actions && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
-              Stack,
-              {
-                align: "center",
-                className: style_default11["header-actions"],
-                direction: "row",
-                gap: "sm",
-                children: actions
-              }
-            )
-          ]
-        }
-      ),
-      subTitle && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
-        Text,
-        {
-          render: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("p", {}),
-          variant: "body-md",
-          className: style_default11["header-subtitle"],
-          children: subTitle
-        }
-      )
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(
+      Stack,
+      {
+        direction: "column",
+        className: style_default11.header,
+        render: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("header", {}),
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(
+            Stack,
+            {
+              className: style_default11["header-content"],
+              direction: "row",
+              gap: "sm",
+              justify: "space-between",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+                  showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+                    SidebarToggleSlot,
+                    {
+                      bubblesVirtually: true,
+                      className: style_default11["sidebar-toggle-slot"]
+                    }
+                  ),
+                  visual && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+                    "div",
+                    {
+                      className: style_default11["header-visual"],
+                      "aria-hidden": "true",
+                      children: visual
+                    }
+                  ),
+                  title && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+                    Text,
+                    {
+                      className: style_default11["header-title"],
+                      render: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(HeadingTag, {}),
+                      variant: "heading-lg",
+                      children: title
+                    }
+                  ),
+                  breadcrumbs,
+                  badges
+                ] }),
+                actions && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+                  Stack,
+                  {
+                    align: "center",
+                    className: style_default11["header-actions"],
+                    direction: "row",
+                    gap: "sm",
+                    children: actions
+                  }
+                )
+              ]
+            }
+          ),
+          subTitle && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+            Text,
+            {
+              render: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("p", {}),
+              variant: "body-md",
+              className: style_default11["header-subtitle"],
+              children: subTitle
+            }
+          )
+        ]
+      }
+    );
   }
 
   // packages/admin-ui/build-module/page/index.mjs
@@ -5510,8 +5518,8 @@ var wp;
   var import_core_data3 = __toESM(require_core_data(), 1);
   var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
   function SiteIcon({ className }) {
-    const { isRequestingSite, siteIconUrl } = (0, import_data4.useSelect)((select4) => {
-      const { getEntityRecord } = select4(import_core_data3.store);
+    const { isRequestingSite, siteIconUrl } = (0, import_data4.useSelect)((select3) => {
+      const { getEntityRecord } = select3(import_core_data3.store);
       const siteData = getEntityRecord("root", "__unstableBase", void 0);
       return {
         isRequestingSite: !siteData,
@@ -5617,9 +5625,9 @@ var wp;
   var { useLocation, useHistory } = unlock(import_router.privateApis);
   var SiteHub = (0, import_element23.memo)(
     (0, import_element23.forwardRef)(({ isTransparent }, ref) => {
-      const { dashboardLink, homeUrl, siteTitle } = (0, import_data5.useSelect)((select4) => {
-        const { getSettings: getSettings7 } = unlock(select4(store));
-        const { getEntityRecord } = select4(import_core_data4.store);
+      const { dashboardLink, homeUrl, siteTitle } = (0, import_data5.useSelect)((select3) => {
+        const { getSettings: getSettings7 } = unlock(select3(store));
+        const { getEntityRecord } = select3(import_core_data4.store);
         const _site = getEntityRecord("root", "site");
         return {
           dashboardLink: getSettings7().__experimentalDashboardLink,
@@ -5709,9 +5717,9 @@ var wp;
         siteTitle,
         isBlockTheme,
         isClassicThemeWithStyleBookSupport: isClassicThemeWithStyleBookSupport2
-      } = (0, import_data5.useSelect)((select4) => {
-        const { getSettings: getSettings7 } = unlock(select4(store));
-        const { getEntityRecord, getCurrentTheme } = select4(import_core_data4.store);
+      } = (0, import_data5.useSelect)((select3) => {
+        const { getSettings: getSettings7 } = unlock(select3(store));
+        const { getEntityRecord, getCurrentTheme } = select3(import_core_data4.store);
         const _site = getEntityRecord("root", "site");
         const currentTheme = getCurrentTheme();
         const settings2 = getSettings7();
@@ -5875,8 +5883,8 @@ var wp;
       "edit-site-resizable-frame-handle-help"
     );
     const defaultAspectRatio = defaultSize.width / defaultSize.height;
-    const isBlockTheme = (0, import_data6.useSelect)((select4) => {
-      const { getCurrentTheme } = select4(import_core_data5.store);
+    const isBlockTheme = (0, import_data6.useSelect)((select3) => {
+      const { getCurrentTheme } = select3(import_core_data5.store);
       return getCurrentTheme()?.is_block_theme;
     }, []);
     const handleResizeStart = (_event, _direction, ref) => {
@@ -6119,44 +6127,37 @@ var wp;
   var import_data8 = __toESM(require_data(), 1);
   var import_core_data7 = __toESM(require_core_data(), 1);
   var MAX_LOADING_TIME = 1e4;
-  var MAX_PAUSE_TIME = 100;
-  function waitWhileSiteEditorLoading() {
-    let pauseTimeout;
-    const { promise, resolve } = Promise.withResolvers();
-    function finish() {
-      unsubscribe();
-      clearTimeout(pauseTimeout);
-      clearTimeout(maxTimeout);
-      resolve();
-    }
-    const maxTimeout = setTimeout(finish, MAX_LOADING_TIME);
-    function checkResolving() {
-      const isResolving = (0, import_data8.select)(import_core_data7.store).hasResolvingSelectors();
-      if (isResolving) {
-        clearTimeout(pauseTimeout);
-        pauseTimeout = void 0;
-        return;
-      }
-      if (!pauseTimeout) {
-        pauseTimeout = setTimeout(finish, MAX_PAUSE_TIME);
-      }
-    }
-    const unsubscribe = (0, import_data8.subscribe)(checkResolving, import_core_data7.store);
-    checkResolving();
-    function cancel() {
-      unsubscribe();
-      clearTimeout(pauseTimeout);
-      clearTimeout(maxTimeout);
-    }
-    return [promise, cancel];
-  }
   function useIsSiteEditorLoading() {
     const [loaded, setLoaded] = (0, import_element26.useState)(false);
+    const inLoadingPause = (0, import_data8.useSelect)(
+      (select3) => {
+        const hasResolvingSelectors = select3(import_core_data7.store).hasResolvingSelectors();
+        return !loaded && !hasResolvingSelectors;
+      },
+      [loaded]
+    );
     (0, import_element26.useEffect)(() => {
-      const [promise, cancel] = waitWhileSiteEditorLoading();
-      promise.then(() => setLoaded(true));
-      return cancel;
-    }, []);
+      let timeout;
+      if (!loaded) {
+        timeout = setTimeout(() => {
+          setLoaded(true);
+        }, MAX_LOADING_TIME);
+      }
+      return () => {
+        clearTimeout(timeout);
+      };
+    }, [loaded]);
+    (0, import_element26.useEffect)(() => {
+      if (inLoadingPause) {
+        const ARTIFICIAL_DELAY = 100;
+        const timeout = setTimeout(() => {
+          setLoaded(true);
+        }, ARTIFICIAL_DELAY);
+        return () => {
+          clearTimeout(timeout);
+        };
+      }
+    }, [inLoadingPause]);
     return !loaded;
   }
 
@@ -9183,9 +9184,9 @@ var wp;
     const { saveDirtyEntities } = unlock((0, import_data9.useDispatch)(import_editor4.store));
     const { dirtyEntityRecords } = (0, import_editor4.useEntitiesSavedStatesIsDirty)();
     const { isSaving, isSaveViewOpen, previewingThemeName } = (0, import_data9.useSelect)(
-      (select4) => {
-        const { isSavingEntityRecord, isResolving } = select4(import_core_data8.store);
-        const { isSaveViewOpened: isSaveViewOpened2 } = select4(store);
+      (select3) => {
+        const { isSavingEntityRecord, isResolving } = select3(import_core_data8.store);
+        const { isSaveViewOpened: isSaveViewOpened2 } = select3(store);
         const isActivatingTheme = isResolving("activateTheme");
         const currentlyPreviewingThemeId = currentlyPreviewingTheme();
         return {
@@ -9199,7 +9200,7 @@ var wp;
           isSaveViewOpen: isSaveViewOpened2(),
           // Do not call `getTheme` with null, it will cause a request to
           // the server.
-          previewingThemeName: currentlyPreviewingThemeId ? select4(import_core_data8.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
+          previewingThemeName: currentlyPreviewingThemeId ? select3(import_core_data8.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
         };
       },
       [dirtyEntityRecords]
@@ -9281,8 +9282,8 @@ var wp;
   // packages/edit-site/build-module/components/save-hub/index.mjs
   var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
   function SaveHub() {
-    const { isDisabled, isSaving } = (0, import_data10.useSelect)((select4) => {
-      const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } = select4(import_core_data9.store);
+    const { isDisabled, isSaving } = (0, import_data10.useSelect)((select3) => {
+      const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } = select3(import_core_data9.store);
       const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
       const _isSaving = dirtyEntityRecords.some(
         (record) => isSavingEntityRecord(record.kind, record.name, record.key)
@@ -9373,7 +9374,7 @@ var wp;
     }
     const currentTheme = useActualCurrentTheme();
     const previewingTheme = (0, import_data12.useSelect)(
-      (select4) => select4(import_core_data11.store).getCurrentTheme(),
+      (select3) => select3(import_core_data11.store).getCurrentTheme(),
       []
     );
     const additionalPrompt = /* @__PURE__ */ (0, import_jsx_runtime90.jsx)("p", { children: (0, import_i18n7.sprintf)(
@@ -9429,15 +9430,15 @@ var wp;
   function SavePanel() {
     const { query } = useLocation5();
     const { canvas = "view" } = query;
-    const { isSaveViewOpen, isDirty, isSaving } = (0, import_data12.useSelect)((select4) => {
+    const { isSaveViewOpen, isDirty, isSaving } = (0, import_data12.useSelect)((select3) => {
       const {
         __experimentalGetDirtyEntityRecords,
         isSavingEntityRecord,
         isResolving
-      } = select4(import_core_data11.store);
+      } = select3(import_core_data11.store);
       const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
       const isActivatingTheme = isResolving("activateTheme");
-      const { isSaveViewOpened: isSaveViewOpened2 } = unlock(select4(store));
+      const { isSaveViewOpened: isSaveViewOpened2 } = unlock(select3(store));
       return {
         isSaveViewOpen: isSaveViewOpened2(),
         isDirty: dirtyEntityRecords.length > 0,
@@ -9518,9 +9519,9 @@ var wp;
     const animationRef = animation_default({
       triggerAnimationOnChange: routeKey + "-" + canvas
     });
-    const { showIconLabels } = (0, import_data13.useSelect)((select4) => {
+    const { showIconLabels } = (0, import_data13.useSelect)((select3) => {
       return {
-        showIconLabels: select4(import_preferences3.store).get(
+        showIconLabels: select3(import_preferences3.store).get(
           "core",
           "showIconLabels"
         )
@@ -9700,8 +9701,8 @@ var wp;
     const { canvas = "view" } = params;
     const { set: set3 } = (0, import_data14.useDispatch)(import_preferences4.store);
     const history = useHistory4();
-    const isBlockBasedTheme = (0, import_data14.useSelect)((select4) => {
-      return select4(import_core_data12.store).getCurrentTheme().is_block_theme;
+    const isBlockBasedTheme = (0, import_data14.useSelect)((select3) => {
+      return select3(import_core_data12.store).getCurrentTheme().is_block_theme;
     }, []);
     const commands = (0, import_element31.useMemo)(() => {
       if (!isBlockBasedTheme) {
@@ -9763,8 +9764,8 @@ var wp;
     const { params } = useLocation7();
     const { canvas = "view" } = params;
     const history = useHistory4();
-    const hasRevisions = (0, import_data14.useSelect)((select4) => {
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select4(import_core_data12.store);
+    const hasRevisions = (0, import_data14.useSelect)((select3) => {
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select3(import_core_data12.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return !!globalStyles?._links?.["version-history"]?.[0]?.count;
@@ -9827,8 +9828,8 @@ var wp;
   function useSetCommandContext() {
     const { query = {} } = useLocation8();
     const { canvas = "view" } = query;
-    const hasBlockSelected = (0, import_data15.useSelect)((select4) => {
-      return select4(import_block_editor3.store).getBlockSelectionStart();
+    const hasBlockSelected = (0, import_data15.useSelect)((select3) => {
+      return select3(import_block_editor3.store).getBlockSelectionStart();
     }, []);
     let commandContext = "site-editor";
     if (canvas === "edit") {
@@ -9885,15 +9886,15 @@ var wp;
     backPath: backPathProp
   }) {
     const { dashboardLink, dashboardLinkText, previewingThemeName } = (0, import_data16.useSelect)(
-      (select4) => {
-        const { getSettings: getSettings7 } = unlock(select4(store));
+      (select3) => {
+        const { getSettings: getSettings7 } = unlock(select3(store));
         const currentlyPreviewingThemeId = currentlyPreviewingTheme();
         return {
           dashboardLink: getSettings7().__experimentalDashboardLink,
           dashboardLinkText: getSettings7().__experimentalDashboardLinkText,
           // Do not call `getTheme` with null, it will cause a request to
           // the server.
-          previewingThemeName: currentlyPreviewingThemeId ? select4(import_core_data13.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
+          previewingThemeName: currentlyPreviewingThemeId ? select3(import_core_data13.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
         };
       },
       []
@@ -11269,30 +11270,6 @@ var wp;
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
   };
-  var VALID_ELEMENT_PSEUDO_SELECTORS = {
-    link: [
-      ":link",
-      ":any-link",
-      ":visited",
-      ":hover",
-      ":focus",
-      ":focus-visible",
-      ":active"
-    ],
-    button: [
-      ":link",
-      ":any-link",
-      ":visited",
-      ":hover",
-      ":focus",
-      ":focus-visible",
-      ":active"
-    ]
-  };
-  var RESPONSIVE_BREAKPOINTS = {
-    mobile: "@media (width <= 480px)",
-    tablet: "@media (480px < width <= 782px)"
-  };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
       (declarations, { path, cssVarInfix, classes }) => {
@@ -11674,7 +11651,7 @@ var wp;
     const entries = Object.entries(treeToPickFrom);
     const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
     const pickedEntries = entries.filter(
-      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
+      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key)
     );
     const clonedEntries = pickedEntries.map(([key, style]) => [
       key,
@@ -11682,100 +11659,65 @@ var wp;
     ]);
     return Object.fromEntries(clonedEntries);
   }
-  function getPseudoStyleNodes(node) {
-    const {
-      styles,
-      selector: selector2,
-      featureSelectors,
-      name: name2,
-      elementName,
-      mediaQuery
-    } = node;
-    const pseudoSelectors = name2 ? VALID_BLOCK_PSEUDO_SELECTORS[name2] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
-    if (!pseudoSelectors.length) {
-      return [];
-    }
-    return pseudoSelectors.flatMap((pseudoSelector) => {
-      const pseudoStyles = styles?.[pseudoSelector];
-      if (!pseudoStyles || typeof pseudoStyles !== "object") {
-        return [];
-      }
-      return [
-        {
-          styles: JSON.parse(JSON.stringify(pseudoStyles)),
-          selector: selector2,
-          selectorSuffix: pseudoSelector,
-          mediaQuery,
-          featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
-          name: name2,
-          elementName
-        }
-      ];
-    });
-  }
-  function getResponsiveStyleNodes(node) {
-    const {
-      styles,
-      selector: selector2,
-      featureSelectors,
-      name: name2,
-      elementName,
-      isStyleVariation
-    } = node;
-    if (!name2 && !elementName) {
-      return [];
-    }
-    return Object.entries(RESPONSIVE_BREAKPOINTS).flatMap(
-      ([breakpointKey, mediaQuery]) => {
-        const breakpointStyles = styles?.[breakpointKey];
-        if (!breakpointStyles || typeof breakpointStyles !== "object") {
-          return [];
-        }
-        return [
-          {
-            styles: JSON.parse(JSON.stringify(breakpointStyles)),
-            selector: selector2,
-            mediaQuery,
-            featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
-            name: name2,
-            elementName,
-            isStyleVariation
-          }
-        ];
-      }
+  function appendPseudoSelectorStyles(styles, selector2, ruleset, featureSelectors, treeSettings, blockName, styleVariationSelector) {
+    const pseudoSelectorStyles = Object.entries(styles).filter(
+      ([key]) => key.startsWith(":")
     );
-  }
-  function getVariationFeatureSelectors(featureSelectors, styleVariationSelector) {
-    if (!featureSelectors || typeof featureSelectors === "string") {
-      return void 0;
+    if (!pseudoSelectorStyles.length) {
+      return ruleset;
     }
-    return Object.fromEntries(
-      Object.entries(featureSelectors).map(([feature, selector2]) => {
-        if (typeof selector2 === "string") {
-          return [
-            feature,
-            concatFeatureVariationSelectorString(
-              selector2,
+    pseudoSelectorStyles.forEach(([pseudoKey, pseudoStyle]) => {
+      if (!pseudoStyle || typeof pseudoStyle !== "object") {
+        return;
+      }
+      const remainingPseudoStyles = JSON.parse(
+        JSON.stringify(pseudoStyle)
+      );
+      if (featureSelectors && typeof featureSelectors !== "string") {
+        let pseudoFeatureDeclarations = getFeatureDeclarations(
+          featureSelectors,
+          remainingPseudoStyles
+        );
+        pseudoFeatureDeclarations = updateParagraphTextIndentSelector(
+          pseudoFeatureDeclarations,
+          treeSettings,
+          blockName
+        );
+        pseudoFeatureDeclarations = updateButtonWidthDeclarations(
+          pseudoFeatureDeclarations,
+          treeSettings
+        );
+        Object.entries(pseudoFeatureDeclarations).forEach(
+          ([baseSelector, declarations]) => {
+            if (!declarations.length) {
+              return;
+            }
+            const pseudoFeatureSelector = appendToSelector(
+              baseSelector,
+              pseudoKey
+            );
+            const cssSelector = styleVariationSelector ? concatFeatureVariationSelectorString(
+              pseudoFeatureSelector,
               styleVariationSelector
-            )
-          ];
-        }
-        return [
-          feature,
-          Object.fromEntries(
-            Object.entries(selector2).map(
-              ([subfeature, subfeatureSelector]) => [
-                subfeature,
-                concatFeatureVariationSelectorString(
-                  subfeatureSelector,
-                  styleVariationSelector
-                )
-              ]
-            )
-          )
-        ];
-      })
-    );
+            ) : pseudoFeatureSelector;
+            const rules = declarations.join(";");
+            ruleset += `:root :where(${cssSelector}){${rules};}`;
+          }
+        );
+      }
+      const pseudoDeclarations = getStylesDeclarations(
+        remainingPseudoStyles
+      );
+      if (!pseudoDeclarations.length) {
+        return;
+      }
+      const pseudoSelector = appendToSelector(selector2, pseudoKey);
+      const pseudoRule = `:root :where(${pseudoSelector}){${pseudoDeclarations.join(
+        ";"
+      )};}`;
+      ruleset += pseudoRule;
+    });
+    return ruleset;
   }
   var getNodesWithStyles = (tree, blockSelectors) => {
     const nodes = [];
@@ -11797,7 +11739,6 @@ var wp;
         nodes.push({
           styles: tree.styles?.elements?.[name2] ?? {},
           selector: selector2,
-          elementName: name2,
           // Top level elements that don't use a class name should not receive the
           // `:root :where()` wrapper to maintain backwards compatibility.
           skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name2]
@@ -11809,36 +11750,19 @@ var wp;
         const blockStyles = pickStyleAndPseudoKeys(node, blockName);
         const typedNode = node;
         const variationNodesToAdd = [];
-        const variationStyleNodesToAdd = [];
         if (typedNode?.variations) {
+          const variations = {};
           Object.entries(typedNode.variations).forEach(
             ([variationName, variation]) => {
               const typedVariation = variation;
-              const variationStyles = pickStyleAndPseudoKeys(
+              variations[variationName] = pickStyleAndPseudoKeys(
                 typedVariation,
                 blockName
               );
               if (typedVariation?.css) {
-                variationStyles.css = typedVariation.css;
+                variations[variationName].css = typedVariation.css;
               }
               const variationSelector = typeof blockSelectors !== "string" ? blockSelectors[blockName]?.styleVariationSelectors?.[variationName] : void 0;
-              if (variationSelector && typeof blockSelectors !== "string") {
-                const blockSelector = blockSelectors[blockName];
-                variationStyleNodesToAdd.push({
-                  styles: variationStyles,
-                  selector: variationSelector,
-                  featureSelectors: getVariationFeatureSelectors(
-                    blockSelector?.featureSelectors,
-                    variationSelector
-                  ),
-                  fallbackGapValue: blockSelector?.fallbackGapValue,
-                  hasLayoutSupport: blockSelector?.hasLayoutSupport,
-                  isStyleVariation: true,
-                  layoutSelector: variationSelector + blockSelector.selector,
-                  layoutHasBlockGapSupport: true,
-                  name: blockName
-                });
-              }
               Object.entries(
                 typedVariation?.elements ?? {}
               ).forEach(([element, elementStyles]) => {
@@ -11848,9 +11772,7 @@ var wp;
                     selector: scopeSelector(
                       variationSelector,
                       import_blocks3.__EXPERIMENTAL_ELEMENTS[element]
-                    ),
-                    elementName: element,
-                    isStyleVariation: true
+                    )
                   });
                 }
               });
@@ -11883,8 +11805,6 @@ var wp;
                   }
                   variationNodesToAdd.push({
                     selector: variationBlockSelector,
-                    name: variationBlockName,
-                    isStyleVariation: true,
                     duotoneSelector: variationDuotoneSelector,
                     featureSelectors: variationFeatureSelectors,
                     fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
@@ -11904,9 +11824,7 @@ var wp;
                           selector: scopeSelector(
                             variationBlockSelector,
                             import_blocks3.__EXPERIMENTAL_ELEMENTS[variationBlockElement]
-                          ),
-                          elementName: variationBlockElement,
-                          isStyleVariation: true
+                          )
                         });
                       }
                     }
@@ -11915,6 +11833,7 @@ var wp;
               );
             }
           );
+          blockStyles.variations = variations;
         }
         if (typeof blockSelectors !== "string" && blockSelectors?.[blockName]?.selector) {
           nodes.push({
@@ -11924,10 +11843,10 @@ var wp;
             selector: blockSelectors[blockName].selector,
             styles: blockStyles,
             featureSelectors: blockSelectors[blockName].featureSelectors,
+            styleVariationSelectors: blockSelectors[blockName].styleVariationSelectors,
             name: blockName
           });
         }
-        nodes.push(...variationStyleNodesToAdd);
         Object.entries(typedNode?.elements ?? {}).forEach(
           ([elementName, value]) => {
             if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks3.__EXPERIMENTAL_ELEMENTS[elementName]) {
@@ -11938,8 +11857,7 @@ var wp;
                   return elementSelectors.map(
                     (elementSelector) => sel + " " + elementSelector
                   );
-                }).join(","),
-                elementName
+                }).join(",")
               });
             }
           }
@@ -12077,100 +11995,6 @@ var wp;
     }
     return ruleset;
   };
-  function renderStylesNode(node, {
-    tree,
-    useRootPaddingAlign,
-    disableLayoutStyles,
-    hasBlockGapSupport,
-    hasFallbackGapSupport,
-    disableRootPadding
-  }) {
-    const {
-      selector: selector2,
-      selectorSuffix,
-      mediaQuery,
-      duotoneSelector,
-      styles,
-      fallbackGapValue,
-      hasLayoutSupport,
-      featureSelectors,
-      layoutSelector,
-      layoutHasBlockGapSupport,
-      skipSelectorWrapper,
-      name: name2
-    } = node;
-    let ruleset = "";
-    const effectiveSelector = selectorSuffix ? appendToSelector(selector2, selectorSuffix) : selector2;
-    if (featureSelectors && typeof featureSelectors !== "string") {
-      let featureDeclarations = getFeatureDeclarations(
-        featureSelectors,
-        styles
-      );
-      featureDeclarations = updateParagraphTextIndentSelector(
-        featureDeclarations,
-        tree.settings,
-        name2
-      );
-      featureDeclarations = updateButtonWidthDeclarations(
-        featureDeclarations,
-        tree.settings
-      );
-      Object.entries(featureDeclarations).forEach(
-        ([featureSelector, declarations]) => {
-          if (declarations.length) {
-            const selectorForRule = selectorSuffix ? appendToSelector(featureSelector, selectorSuffix) : featureSelector;
-            const rules = declarations.join(";");
-            ruleset += `:root :where(${selectorForRule}){${rules};}`;
-          }
-        }
-      );
-    }
-    if (duotoneSelector) {
-      const duotoneStyles = {};
-      if (styles?.filter) {
-        duotoneStyles.filter = styles.filter;
-        delete styles.filter;
-      }
-      const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
-      if (duotoneDeclarations.length) {
-        ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
-          ";"
-        )};}`;
-      }
-    }
-    const selectorForLayout = layoutSelector ?? effectiveSelector;
-    const hasBlockGapSupportForLayout = layoutHasBlockGapSupport ?? hasBlockGapSupport;
-    if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selectorForLayout || hasLayoutSupport)) {
-      ruleset += getLayoutStyles({
-        style: styles,
-        selector: selectorForLayout,
-        hasBlockGapSupport: hasBlockGapSupportForLayout,
-        hasFallbackGapSupport,
-        fallbackGapValue
-      });
-    }
-    const styleDeclarations = getStylesDeclarations(
-      styles,
-      effectiveSelector,
-      useRootPaddingAlign,
-      tree,
-      disableRootPadding
-    );
-    if (styleDeclarations?.length) {
-      const generalSelector = skipSelectorWrapper ? effectiveSelector : `:root :where(${effectiveSelector})`;
-      ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
-    }
-    if (styles?.css) {
-      ruleset += processCSSNesting(
-        styles.css,
-        `:root :where(${effectiveSelector})`
-      );
-    }
-    if (mediaQuery && ruleset) {
-      return `${mediaQuery}{${ruleset}}`;
-    }
-    return ruleset;
-  }
   var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => {
     const options = {
       blockGap: true,
@@ -12207,27 +12031,166 @@ var wp;
       ruleset += "}";
     }
     if (options.blockStyles) {
-      nodesWithStyles.forEach((node) => {
-        if (node.isStyleVariation && !options.variationStyles) {
-          return;
-        }
-        const responsiveNodes = getResponsiveStyleNodes(node);
-        [
-          node,
-          ...responsiveNodes,
-          ...getPseudoStyleNodes(node),
-          ...responsiveNodes.flatMap(getPseudoStyleNodes)
-        ].forEach((expandedNode) => {
-          ruleset += renderStylesNode(expandedNode, {
-            tree,
+      nodesWithStyles.forEach(
+        ({
+          selector: selector2,
+          duotoneSelector,
+          styles,
+          fallbackGapValue,
+          hasLayoutSupport,
+          featureSelectors,
+          styleVariationSelectors,
+          skipSelectorWrapper,
+          name: name2
+        }) => {
+          if (featureSelectors) {
+            let featureDeclarations = getFeatureDeclarations(
+              featureSelectors,
+              styles
+            );
+            featureDeclarations = updateParagraphTextIndentSelector(
+              featureDeclarations,
+              tree.settings,
+              name2
+            );
+            featureDeclarations = updateButtonWidthDeclarations(
+              featureDeclarations,
+              tree.settings
+            );
+            Object.entries(featureDeclarations).forEach(
+              ([cssSelector, declarations]) => {
+                if (declarations.length) {
+                  const rules = declarations.join(";");
+                  ruleset += `:root :where(${cssSelector}){${rules};}`;
+                }
+              }
+            );
+          }
+          if (duotoneSelector) {
+            const duotoneStyles = {};
+            if (styles?.filter) {
+              duotoneStyles.filter = styles.filter;
+              delete styles.filter;
+            }
+            const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
+            if (duotoneDeclarations.length) {
+              ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
+                ";"
+              )};}`;
+            }
+          }
+          if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selector2 || hasLayoutSupport)) {
+            ruleset += getLayoutStyles({
+              style: styles,
+              selector: selector2,
+              hasBlockGapSupport,
+              hasFallbackGapSupport,
+              fallbackGapValue
+            });
+          }
+          const styleDeclarations = getStylesDeclarations(
+            styles,
+            selector2,
             useRootPaddingAlign,
-            disableLayoutStyles,
-            hasBlockGapSupport,
-            hasFallbackGapSupport,
+            tree,
             disableRootPadding
-          });
-        });
-      });
+          );
+          if (styleDeclarations?.length) {
+            const generalSelector = skipSelectorWrapper ? selector2 : `:root :where(${selector2})`;
+            ruleset += `${generalSelector}{${styleDeclarations.join(
+              ";"
+            )};}`;
+          }
+          if (styles?.css) {
+            ruleset += processCSSNesting(
+              styles.css,
+              `:root :where(${selector2})`
+            );
+          }
+          if (options.variationStyles && styleVariationSelectors) {
+            Object.entries(styleVariationSelectors).forEach(
+              ([styleVariationName, styleVariationSelector]) => {
+                const styleVariations = styles?.variations?.[styleVariationName];
+                if (styleVariations) {
+                  if (featureSelectors) {
+                    let featureDeclarations = getFeatureDeclarations(
+                      featureSelectors,
+                      styleVariations
+                    );
+                    featureDeclarations = updateParagraphTextIndentSelector(
+                      featureDeclarations,
+                      tree.settings,
+                      name2
+                    );
+                    featureDeclarations = updateButtonWidthDeclarations(
+                      featureDeclarations,
+                      tree.settings
+                    );
+                    Object.entries(
+                      featureDeclarations
+                    ).forEach(
+                      ([baseSelector, declarations]) => {
+                        if (declarations.length) {
+                          const cssSelector = concatFeatureVariationSelectorString(
+                            baseSelector,
+                            styleVariationSelector
+                          );
+                          const rules = declarations.join(";");
+                          ruleset += `:root :where(${cssSelector}){${rules};}`;
+                        }
+                      }
+                    );
+                  }
+                  const styleVariationDeclarations = getStylesDeclarations(
+                    styleVariations,
+                    styleVariationSelector,
+                    useRootPaddingAlign,
+                    tree
+                  );
+                  if (styleVariationDeclarations.length) {
+                    ruleset += `:root :where(${styleVariationSelector}){${styleVariationDeclarations.join(
+                      ";"
+                    )};}`;
+                  }
+                  if (styleVariations?.css) {
+                    ruleset += processCSSNesting(
+                      styleVariations.css,
+                      `:root :where(${styleVariationSelector})`
+                    );
+                  }
+                  ruleset = appendPseudoSelectorStyles(
+                    styleVariations,
+                    styleVariationSelector,
+                    ruleset,
+                    featureSelectors,
+                    tree.settings,
+                    name2,
+                    styleVariationSelector
+                  );
+                  if (hasLayoutSupport && styleVariations?.spacing?.blockGap) {
+                    const variationSelectorWithBlock = styleVariationSelector + selector2;
+                    ruleset += getLayoutStyles({
+                      style: styleVariations,
+                      selector: variationSelectorWithBlock,
+                      hasBlockGapSupport: true,
+                      hasFallbackGapSupport,
+                      fallbackGapValue
+                    });
+                  }
+                }
+              }
+            );
+          }
+          ruleset = appendPseudoSelectorStyles(
+            styles,
+            selector2,
+            ruleset,
+            featureSelectors,
+            tree.settings,
+            name2
+          );
+        }
+      );
     }
     if (options.layoutStyles) {
       ruleset = ruleset + ".wp-site-blocks > .alignleft { float: left; margin-right: 2em; }";
@@ -12601,10 +12564,6 @@ var wp;
       { value: ":active", label: (0, import_i18n12.__)("Active") }
     ]
   };
-  var RESPONSIVE_STATES = [
-    { value: "tablet", label: (0, import_i18n12.__)("Tablet") },
-    { value: "mobile", label: (0, import_i18n12.__)("Mobile") }
-  ];
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {
       return object;
@@ -12691,12 +12650,6 @@ var wp;
   k([a11y_default]);
   function useStyle2(path, blockName, readFrom = "merged", shouldDecodeEncode = true, state) {
     const { user, base, merged, onChange } = (0, import_element36.useContext)(GlobalStylesContext);
-    const statePathParts = state?.split(".").filter(Boolean) ?? [];
-    const pseudoSelectorState = statePathParts.find(
-      (value) => value.startsWith(":")
-    );
-    const statePathWithoutPseudo = statePathParts.filter((value) => !value.startsWith(":")).join(".");
-    const stylePath = [path, statePathWithoutPseudo].filter(Boolean).join(".");
     let sourceValue = merged;
     if (readFrom === "base") {
       sourceValue = base;
@@ -12706,45 +12659,39 @@ var wp;
     const styleValue = (0, import_element36.useMemo)(() => {
       const rawValue = getStyle(
         sourceValue,
-        stylePath,
+        path,
         blockName,
         shouldDecodeEncode
       );
-      if (pseudoSelectorState) {
-        return rawValue?.[pseudoSelectorState] ?? {};
+      if (state) {
+        return rawValue?.[state] ?? {};
       }
       return rawValue;
-    }, [
-      sourceValue,
-      stylePath,
-      blockName,
-      shouldDecodeEncode,
-      pseudoSelectorState
-    ]);
+    }, [sourceValue, path, blockName, shouldDecodeEncode, state]);
     const setStyleValue = (0, import_element36.useCallback)(
       (newValue) => {
         let valueToSet = newValue;
-        if (pseudoSelectorState) {
+        if (state) {
           const fullCurrentValue = getStyle(
             user,
-            stylePath,
+            path,
             blockName,
             false
           );
           valueToSet = {
             ...fullCurrentValue,
-            [pseudoSelectorState]: newValue
+            [state]: newValue
           };
         }
         const newGlobalStyles = setStyle(
           user,
-          stylePath,
+          path,
           valueToSet,
           blockName
         );
         onChange(newGlobalStyles);
       },
-      [user, onChange, stylePath, blockName, pseudoSelectorState]
+      [user, onChange, path, blockName, state]
     );
     return [styleValue, setStyleValue];
   }
@@ -12783,8 +12730,8 @@ var wp;
     return title === (0, import_i18n13.__)("Default") || Object.keys(settings2 || {}).length > 0 || Object.keys(styles || {}).length > 0;
   }
   function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
-    const { variationsFromTheme } = (0, import_data18.useSelect)((select4) => {
-      const _variationsFromTheme = select4(
+    const { variationsFromTheme } = (0, import_data18.useSelect)((select3) => {
+      const _variationsFromTheme = select3(
         import_core_data14.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations?.();
       return {
@@ -13309,8 +13256,8 @@ var wp;
   }
   function useBlockVariations(name2) {
     const blockStyles = (0, import_data20.useSelect)(
-      (select4) => {
-        const { getBlockStyles } = select4(import_blocks4.store);
+      (select3) => {
+        const { getBlockStyles } = select3(import_blocks4.store);
         return getBlockStyles(name2);
       },
       [name2]
@@ -13338,7 +13285,7 @@ var wp;
   } = unlock2(import_block_editor6.privateApis);
   function useSortedBlockTypes() {
     const blockItems = (0, import_data21.useSelect)(
-      (select4) => select4(import_blocks5.store).getBlockTypes(),
+      (select3) => select3(import_blocks5.store).getBlockTypes(),
       []
     );
     const groupByType = (blocks, block) => {
@@ -24094,8 +24041,8 @@ var wp;
   }) {
     const { user } = (0, import_element58.useContext)(GlobalStylesContext);
     const userStyles = user?.styles;
-    const variations = (0, import_data26.useSelect)((select4) => {
-      const result = select4(
+    const variations = (0, import_data26.useSelect)((select3) => {
+      const result = select3(
         import_core_data22.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations();
       return Array.isArray(result) ? result : void 0;
@@ -24222,7 +24169,7 @@ var wp;
       isLoadingGlobalStylesRevisions,
       revisionsCount
     } = (0, import_data27.useSelect)(
-      (select4) => {
+      (select3) => {
         const {
           __experimentalGetDirtyEntityRecords,
           getCurrentUser,
@@ -24231,7 +24178,7 @@ var wp;
           __experimentalGetCurrentGlobalStylesId,
           getEntityRecord,
           isResolving
-        } = select4(import_core_data23.store);
+        } = select3(import_core_data23.store);
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords() || [];
         const _currentUser = getCurrentUser();
         const _isDirty = dirtyEntityRecords.length > 0;
@@ -24637,7 +24584,7 @@ var wp;
   }
   function SidebarNavigationScreenMain({ customDescription }) {
     const isBlockBasedTheme = (0, import_data31.useSelect)(
-      (select4) => select4(import_core_data25.store).getCurrentTheme()?.is_block_theme,
+      (select3) => select3(import_core_data25.store).getCurrentTheme()?.is_block_theme,
       []
     );
     let description;
@@ -24720,13 +24667,13 @@ var wp;
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideEditor() {
     const { toggle } = (0, import_data32.useDispatch)(import_preferences6.store);
-    const { isActive, isBlockBasedTheme } = (0, import_data32.useSelect)((select4) => {
+    const { isActive, isBlockBasedTheme } = (0, import_data32.useSelect)((select3) => {
       return {
-        isActive: !!select4(import_preferences6.store).get(
+        isActive: !!select3(import_preferences6.store).get(
           "core/edit-site",
           "welcomeGuide"
         ),
-        isBlockBasedTheme: select4(import_core_data26.store).getCurrentTheme()?.is_block_theme
+        isBlockBasedTheme: select3(import_core_data26.store).getCurrentTheme()?.is_block_theme
       };
     }, []);
     if (!isActive || !isBlockBasedTheme) {
@@ -24782,12 +24729,12 @@ var wp;
   var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuidePage() {
     const { toggle } = (0, import_data33.useDispatch)(import_preferences7.store);
-    const isVisible2 = (0, import_data33.useSelect)((select4) => {
-      const isPageActive = !!select4(import_preferences7.store).get(
+    const isVisible2 = (0, import_data33.useSelect)((select3) => {
+      const isPageActive = !!select3(import_preferences7.store).get(
         "core/edit-site",
         "welcomeGuidePage"
       );
-      const isEditorActive = !!select4(import_preferences7.store).get(
+      const isEditorActive = !!select3(import_preferences7.store).get(
         "core/edit-site",
         "welcomeGuide"
       );
@@ -24846,9 +24793,9 @@ var wp;
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideTemplate() {
     const { toggle } = (0, import_data34.useDispatch)(import_preferences8.store);
-    const { isActive, hasPreviousEntity } = (0, import_data34.useSelect)((select4) => {
-      const { getEditorSettings } = select4(import_editor9.store);
-      const { get } = select4(import_preferences8.store);
+    const { isActive, hasPreviousEntity } = (0, import_data34.useSelect)((select3) => {
+      const { getEditorSettings } = select3(import_editor9.store);
+      const { get } = select3(import_preferences8.store);
       return {
         isActive: get("core/edit-site", "welcomeGuideTemplate"),
         hasPreviousEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord
@@ -24919,8 +24866,8 @@ var wp;
   function CanvasLoader({ id }) {
     const textColor = useStyle3("color.text");
     const backgroundColor = useStyle3("color.background");
-    const { elapsed, total } = (0, import_data35.useSelect)((select4) => {
-      const selectorsByStatus = select4(import_core_data27.store).countSelectorsByStatus();
+    const { elapsed, total } = (0, import_data35.useSelect)((select3) => {
+      const selectorsByStatus = select3(import_core_data27.store).countSelectorsByStatus();
       const resolving = selectorsByStatus.resolving ?? 0;
       const finished = selectorsByStatus.finished ?? 0;
       return {
@@ -24978,7 +24925,7 @@ var wp;
     const { query, path } = location;
     const registry = (0, import_data37.useRegistry)();
     const currentDeviceType = (0, import_data37.useSelect)(
-      (select4) => select4(import_editor13.store).getDeviceType(),
+      (select3) => select3(import_editor13.store).getDeviceType(),
       []
     );
     const onNavigateToEntityRecord = (0, import_element68.useCallback)(
@@ -25049,9 +24996,9 @@ var wp;
     const { canvas = "view" } = query;
     const onNavigateToEntityRecord = useNavigateToEntityRecord();
     const { merged: mergedConfig } = useGlobalStyles2();
-    const { settings: settings2, currentPostIsTrashed } = (0, import_data38.useSelect)((select4) => {
-      const { getSettings: getSettings7 } = select4(store);
-      const { getCurrentPostAttribute } = select4(import_editor14.store);
+    const { settings: settings2, currentPostIsTrashed } = (0, import_data38.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = select3(store);
+      const { getCurrentPostAttribute } = select3(import_editor14.store);
       return {
         settings: getSettings7(),
         currentPostIsTrashed: getCurrentPostAttribute("status") === "trash"
@@ -25112,7 +25059,7 @@ var wp;
       alternative: "wp.editor.PluginDocumentSettingPanel"
     });
     const isCurrentEntityTemplate = (0, import_data39.useSelect)(
-      (select4) => select4(import_editor15.store).getCurrentPostType() === "wp_template",
+      (select3) => select3(import_editor15.store).getCurrentPostType() === "wp_template",
       []
     );
     if (!isCurrentEntityTemplate) {
@@ -25136,8 +25083,8 @@ var wp;
   var import_notices2 = __toESM(require_notices(), 1);
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
   function SiteExport() {
-    const canExport = (0, import_data40.useSelect)((select4) => {
-      const targetHints = select4(import_core_data29.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
+    const canExport = (0, import_data40.useSelect)((select3) => {
+      const targetHints = select3(import_core_data29.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
       return !!targetHints.allow?.includes("GET");
     }, []);
     const { createErrorNotice } = (0, import_data40.useDispatch)(import_notices2.store);
@@ -25221,8 +25168,8 @@ var wp;
     const { query, path } = useLocation15();
     const history = useHistory10();
     const { canvas = "view" } = query;
-    const currentPostIsTrashed = (0, import_data42.useSelect)((select4) => {
-      return select4(import_editor17.store).getCurrentPostAttribute("status") === "trash";
+    const currentPostIsTrashed = (0, import_data42.useSelect)((select3) => {
+      return select3(import_editor17.store).getCurrentPostAttribute("status") === "trash";
     }, []);
     const [isFocused, setIsFocused] = (0, import_element70.useState)(false);
     (0, import_element70.useEffect)(() => {
@@ -25285,7 +25232,7 @@ var wp;
   function useTitle(title) {
     const location = useLocation16();
     const siteTitle = (0, import_data43.useSelect)(
-      (select4) => select4(import_core_data30.store).getEntityRecord("root", "site")?.title,
+      (select3) => select3(import_core_data30.store).getEntityRecord("root", "site")?.title,
       []
     );
     const isInitialLocationRef = (0, import_element71.useRef)(true);
@@ -25313,12 +25260,12 @@ var wp;
   var { getTemplateInfo } = unlock(import_editor18.privateApis);
   function useEditorTitle(postType2, postId) {
     const { title, isLoaded } = (0, import_data44.useSelect)(
-      (select4) => {
+      (select3) => {
         const {
           getEditedEntityRecord,
           getCurrentTheme,
           hasFinishedResolution
-        } = select4(import_core_data31.store);
+        } = select3(import_core_data31.store);
         if (!postId) {
           return { isLoaded: false };
         }
@@ -25448,19 +25395,19 @@ var wp;
     const postType2 = getPostType(name2, postId) ?? query?.postType;
     const { selectedBlock } = query;
     const appliedSelectionRef = (0, import_element73.useRef)(null);
-    const homePage = (0, import_data46.useSelect)((select4) => {
-      const { getHomePage } = unlock(select4(import_core_data32.store));
+    const homePage = (0, import_data46.useSelect)((select3) => {
+      const { getHomePage } = unlock(select3(import_core_data32.store));
       return getHomePage();
     }, []);
     const resolvedTemplateId = (0, import_data46.useSelect)(
-      (select4) => {
+      (select3) => {
         if (postTypesWithoutParentTemplate.includes(postType2) && postId) {
           return;
         }
         if (postId && postId.includes(",")) {
           return;
         }
-        const { getTemplateId } = unlock(select4(import_core_data32.store));
+        const { getTemplateId } = unlock(select3(import_core_data32.store));
         if (postType2 && postId && authorizedPostTypes.includes(postType2)) {
           return getTemplateId(postType2, postId);
         }
@@ -25541,8 +25488,8 @@ var wp;
   var import_url10 = __toESM(require_url(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   function SitePreview() {
-    const siteUrl = (0, import_data47.useSelect)((select4) => {
-      const { getEntityRecord } = select4(import_core_data33.store);
+    const siteUrl = (0, import_data47.useSelect)((select3) => {
+      const { getEntityRecord } = select3(import_core_data33.store);
       const siteData = getEntityRecord("root", "__unstableBase");
       return siteData?.home;
     }, []);
@@ -25641,8 +25588,8 @@ var wp;
     const entity = useResolveEditedEntity();
     useSyncDeprecatedEntityIntoState(entity);
     const { postType: postType2, postId, context } = entity;
-    const { isBlockBasedTheme, hasSiteIcon } = (0, import_data48.useSelect)((select4) => {
-      const { getCurrentTheme, getEntityRecord } = select4(import_core_data34.store);
+    const { isBlockBasedTheme, hasSiteIcon } = (0, import_data48.useSelect)((select3) => {
+      const { getCurrentTheme, getEntityRecord } = select3(import_core_data34.store);
       const siteData = getEntityRecord("root", "__unstableBase", void 0);
       return {
         isBlockBasedTheme: getCurrentTheme()?.is_block_theme,
@@ -31708,7 +31655,7 @@ var wp;
     if (!store2) return;
     return getInternal(store2, "init")(...args);
   }
-  function subscribe2(store2, ...args) {
+  function subscribe(store2, ...args) {
     if (!store2) return;
     return getInternal(store2, "subscribe")(...args);
   }
@@ -31783,7 +31730,7 @@ If there's a particular need for this, please submit a feature request at https:
     const storeSubscribe = React26.useCallback(
       (callback) => {
         if (!store2) return noopSubscribe();
-        return subscribe2(store2, null, callback);
+        return subscribe(store2, null, callback);
       },
       [store2]
     );
@@ -31806,7 +31753,7 @@ If there's a particular need for this, please submit a feature request at https:
     const storeSubscribe = React26.useCallback(
       (callback) => {
         if (!store2) return noopSubscribe();
-        return subscribe2(store2, null, callback);
+        return subscribe(store2, null, callback);
       },
       [store2]
     );
@@ -32679,7 +32626,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     setup(
       disclosure,
-      () => subscribe2(disclosure, ["open"], () => {
+      () => subscribe(disclosure, ["open"], () => {
         if (!disclosure.getState().animated) return;
         disclosure.setState("animating", true);
       })
@@ -34730,7 +34677,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // node_modules/date-fns/constants.js
+  // packages/dataviews/node_modules/date-fns/constants.js
   var daysInYear = 365.2425;
   var maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1e3;
   var minTime = -maxTime;
@@ -34744,7 +34691,7 @@ If there's a particular need for this, please submit a feature request at https:
   var secondsInQuarter = secondsInMonth * 3;
   var constructFromSymbol = /* @__PURE__ */ Symbol.for("constructDateFrom");
 
-  // node_modules/date-fns/constructFrom.js
+  // packages/dataviews/node_modules/date-fns/constructFrom.js
   function constructFrom(date, value) {
     if (typeof date === "function") return date(value);
     if (date && typeof date === "object" && constructFromSymbol in date)
@@ -34753,12 +34700,12 @@ If there's a particular need for this, please submit a feature request at https:
     return new Date(value);
   }
 
-  // node_modules/date-fns/toDate.js
+  // packages/dataviews/node_modules/date-fns/toDate.js
   function toDate(argument, context) {
     return constructFrom(context || argument, argument);
   }
 
-  // node_modules/date-fns/addDays.js
+  // packages/dataviews/node_modules/date-fns/addDays.js
   function addDays(date, amount, options) {
     const _date = toDate(date, options?.in);
     if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
@@ -34767,7 +34714,7 @@ If there's a particular need for this, please submit a feature request at https:
     return _date;
   }
 
-  // node_modules/date-fns/addMonths.js
+  // packages/dataviews/node_modules/date-fns/addMonths.js
   function addMonths(date, amount, options) {
     const _date = toDate(date, options?.in);
     if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
@@ -34790,13 +34737,13 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
 
-  // node_modules/date-fns/_lib/defaultOptions.js
+  // packages/dataviews/node_modules/date-fns/_lib/defaultOptions.js
   var defaultOptions = {};
   function getDefaultOptions() {
     return defaultOptions;
   }
 
-  // node_modules/date-fns/startOfWeek.js
+  // packages/dataviews/node_modules/date-fns/startOfWeek.js
   function startOfWeek(date, options) {
     const defaultOptions2 = getDefaultOptions();
     const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0;
@@ -34808,12 +34755,12 @@ If there's a particular need for this, please submit a feature request at https:
     return _date;
   }
 
-  // node_modules/date-fns/startOfISOWeek.js
+  // packages/dataviews/node_modules/date-fns/startOfISOWeek.js
   function startOfISOWeek(date, options) {
     return startOfWeek(date, { ...options, weekStartsOn: 1 });
   }
 
-  // node_modules/date-fns/getISOWeekYear.js
+  // packages/dataviews/node_modules/date-fns/getISOWeekYear.js
   function getISOWeekYear(date, options) {
     const _date = toDate(date, options?.in);
     const year = _date.getFullYear();
@@ -34834,7 +34781,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
 
-  // node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds.js
+  // packages/dataviews/node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds.js
   function getTimezoneOffsetInMilliseconds(date) {
     const _date = toDate(date);
     const utcDate = new Date(
@@ -34852,7 +34799,7 @@ If there's a particular need for this, please submit a feature request at https:
     return +date - +utcDate;
   }
 
-  // node_modules/date-fns/_lib/normalizeDates.js
+  // packages/dataviews/node_modules/date-fns/_lib/normalizeDates.js
   function normalizeDates(context, ...dates) {
     const normalize = constructFrom.bind(
       null,
@@ -34861,14 +34808,14 @@ If there's a particular need for this, please submit a feature request at https:
     return dates.map(normalize);
   }
 
-  // node_modules/date-fns/startOfDay.js
+  // packages/dataviews/node_modules/date-fns/startOfDay.js
   function startOfDay(date, options) {
     const _date = toDate(date, options?.in);
     _date.setHours(0, 0, 0, 0);
     return _date;
   }
 
-  // node_modules/date-fns/differenceInCalendarDays.js
+  // packages/dataviews/node_modules/date-fns/differenceInCalendarDays.js
   function differenceInCalendarDays(laterDate, earlierDate, options) {
     const [laterDate_, earlierDate_] = normalizeDates(
       options?.in,
@@ -34882,7 +34829,7 @@ If there's a particular need for this, please submit a feature request at https:
     return Math.round((laterTimestamp - earlierTimestamp) / millisecondsInDay);
   }
 
-  // node_modules/date-fns/startOfISOWeekYear.js
+  // packages/dataviews/node_modules/date-fns/startOfISOWeekYear.js
   function startOfISOWeekYear(date, options) {
     const year = getISOWeekYear(date, options);
     const fourthOfJanuary = constructFrom(options?.in || date, 0);
@@ -34891,27 +34838,27 @@ If there's a particular need for this, please submit a feature request at https:
     return startOfISOWeek(fourthOfJanuary);
   }
 
-  // node_modules/date-fns/addWeeks.js
+  // packages/dataviews/node_modules/date-fns/addWeeks.js
   function addWeeks(date, amount, options) {
     return addDays(date, amount * 7, options);
   }
 
-  // node_modules/date-fns/addYears.js
+  // packages/dataviews/node_modules/date-fns/addYears.js
   function addYears(date, amount, options) {
     return addMonths(date, amount * 12, options);
   }
 
-  // node_modules/date-fns/isDate.js
+  // packages/dataviews/node_modules/date-fns/isDate.js
   function isDate(value) {
     return value instanceof Date || typeof value === "object" && Object.prototype.toString.call(value) === "[object Date]";
   }
 
-  // node_modules/date-fns/isValid.js
+  // packages/dataviews/node_modules/date-fns/isValid.js
   function isValid(date) {
     return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
   }
 
-  // node_modules/date-fns/startOfMonth.js
+  // packages/dataviews/node_modules/date-fns/startOfMonth.js
   function startOfMonth(date, options) {
     const _date = toDate(date, options?.in);
     _date.setDate(1);
@@ -34919,7 +34866,7 @@ If there's a particular need for this, please submit a feature request at https:
     return _date;
   }
 
-  // node_modules/date-fns/startOfYear.js
+  // packages/dataviews/node_modules/date-fns/startOfYear.js
   function startOfYear(date, options) {
     const date_ = toDate(date, options?.in);
     date_.setFullYear(date_.getFullYear(), 0, 1);
@@ -34927,7 +34874,7 @@ If there's a particular need for this, please submit a feature request at https:
     return date_;
   }
 
-  // node_modules/date-fns/locale/en-US/_lib/formatDistance.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatDistance.js
   var formatDistanceLocale = {
     lessThanXSeconds: {
       one: "less than a second",
@@ -35011,7 +34958,7 @@ If there's a particular need for this, please submit a feature request at https:
     return result;
   };
 
-  // node_modules/date-fns/locale/_lib/buildFormatLongFn.js
+  // packages/dataviews/node_modules/date-fns/locale/_lib/buildFormatLongFn.js
   function buildFormatLongFn(args) {
     return (options = {}) => {
       const width = options.width ? String(options.width) : args.defaultWidth;
@@ -35020,7 +34967,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/date-fns/locale/en-US/_lib/formatLong.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatLong.js
   var dateFormats = {
     full: "EEEE, MMMM do, y",
     long: "MMMM do, y",
@@ -35054,7 +35001,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   };
 
-  // node_modules/date-fns/locale/en-US/_lib/formatRelative.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/formatRelative.js
   var formatRelativeLocale = {
     lastWeek: "'last' eeee 'at' p",
     yesterday: "'yesterday at' p",
@@ -35065,7 +35012,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var formatRelative = (token, _date, _baseDate, _options) => formatRelativeLocale[token];
 
-  // node_modules/date-fns/locale/_lib/buildLocalizeFn.js
+  // packages/dataviews/node_modules/date-fns/locale/_lib/buildLocalizeFn.js
   function buildLocalizeFn(args) {
     return (value, options) => {
       const context = options?.context ? String(options.context) : "standalone";
@@ -35084,7 +35031,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/date-fns/locale/en-US/_lib/localize.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/localize.js
   var eraValues = {
     narrow: ["B", "A"],
     abbreviated: ["BC", "AD"],
@@ -35246,7 +35193,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   };
 
-  // node_modules/date-fns/locale/_lib/buildMatchFn.js
+  // packages/dataviews/node_modules/date-fns/locale/_lib/buildMatchFn.js
   function buildMatchFn(args) {
     return (string, options = {}) => {
       const width = options.width;
@@ -35288,7 +35235,7 @@ If there's a particular need for this, please submit a feature request at https:
     return void 0;
   }
 
-  // node_modules/date-fns/locale/_lib/buildMatchPatternFn.js
+  // packages/dataviews/node_modules/date-fns/locale/_lib/buildMatchPatternFn.js
   function buildMatchPatternFn(args) {
     return (string, options = {}) => {
       const matchResult = string.match(args.matchPattern);
@@ -35303,7 +35250,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/date-fns/locale/en-US/_lib/match.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US/_lib/match.js
   var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
   var parseOrdinalNumberPattern = /\d+/i;
   var matchEraPatterns = {
@@ -35422,7 +35369,7 @@ If there's a particular need for this, please submit a feature request at https:
     })
   };
 
-  // node_modules/date-fns/locale/en-US.js
+  // packages/dataviews/node_modules/date-fns/locale/en-US.js
   var enUS = {
     code: "en-US",
     formatDistance,
@@ -35436,7 +35383,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // node_modules/date-fns/getDayOfYear.js
+  // packages/dataviews/node_modules/date-fns/getDayOfYear.js
   function getDayOfYear(date, options) {
     const _date = toDate(date, options?.in);
     const diff = differenceInCalendarDays(_date, startOfYear(_date));
@@ -35444,14 +35391,14 @@ If there's a particular need for this, please submit a feature request at https:
     return dayOfYear;
   }
 
-  // node_modules/date-fns/getISOWeek.js
+  // packages/dataviews/node_modules/date-fns/getISOWeek.js
   function getISOWeek(date, options) {
     const _date = toDate(date, options?.in);
     const diff = +startOfISOWeek(_date) - +startOfISOWeekYear(_date);
     return Math.round(diff / millisecondsInWeek) + 1;
   }
 
-  // node_modules/date-fns/getWeekYear.js
+  // packages/dataviews/node_modules/date-fns/getWeekYear.js
   function getWeekYear(date, options) {
     const _date = toDate(date, options?.in);
     const year = _date.getFullYear();
@@ -35474,7 +35421,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
 
-  // node_modules/date-fns/startOfWeekYear.js
+  // packages/dataviews/node_modules/date-fns/startOfWeekYear.js
   function startOfWeekYear(date, options) {
     const defaultOptions2 = getDefaultOptions();
     const firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions2.firstWeekContainsDate ?? defaultOptions2.locale?.options?.firstWeekContainsDate ?? 1;
@@ -35486,21 +35433,21 @@ If there's a particular need for this, please submit a feature request at https:
     return _date;
   }
 
-  // node_modules/date-fns/getWeek.js
+  // packages/dataviews/node_modules/date-fns/getWeek.js
   function getWeek(date, options) {
     const _date = toDate(date, options?.in);
     const diff = +startOfWeek(_date, options) - +startOfWeekYear(_date, options);
     return Math.round(diff / millisecondsInWeek) + 1;
   }
 
-  // node_modules/date-fns/_lib/addLeadingZeros.js
+  // packages/dataviews/node_modules/date-fns/_lib/addLeadingZeros.js
   function addLeadingZeros(number, targetLength) {
     const sign = number < 0 ? "-" : "";
     const output = Math.abs(number).toString().padStart(targetLength, "0");
     return sign + output;
   }
 
-  // node_modules/date-fns/_lib/format/lightFormatters.js
+  // packages/dataviews/node_modules/date-fns/_lib/format/lightFormatters.js
   var lightFormatters = {
     // Year
     y(date, token) {
@@ -35560,7 +35507,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // node_modules/date-fns/_lib/format/formatters.js
+  // packages/dataviews/node_modules/date-fns/_lib/format/formatters.js
   var dayPeriodEnum = {
     am: "am",
     pm: "pm",
@@ -36206,7 +36153,7 @@ If there's a particular need for this, please submit a feature request at https:
     return sign + hours + delimiter + minutes;
   }
 
-  // node_modules/date-fns/_lib/format/longFormatters.js
+  // packages/dataviews/node_modules/date-fns/_lib/format/longFormatters.js
   var dateLongFormatter = (pattern, formatLong2) => {
     switch (pattern) {
       case "P":
@@ -36263,7 +36210,7 @@ If there's a particular need for this, please submit a feature request at https:
     P: dateTimeLongFormatter
   };
 
-  // node_modules/date-fns/_lib/protectedTokens.js
+  // packages/dataviews/node_modules/date-fns/_lib/protectedTokens.js
   var dayOfYearTokenRE = /^D+$/;
   var weekYearTokenRE = /^Y+$/;
   var throwTokens = ["D", "DD", "YY", "YYYY"];
@@ -36283,7 +36230,7 @@ If there's a particular need for this, please submit a feature request at https:
     return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format6}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
   }
 
-  // node_modules/date-fns/format.js
+  // packages/dataviews/node_modules/date-fns/format.js
   var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
   var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
   var escapedStringRegExp = /^'([^]*?)'?$/;
@@ -36349,22 +36296,22 @@ If there's a particular need for this, please submit a feature request at https:
     return matched[1].replace(doubleQuoteRegExp, "'");
   }
 
-  // node_modules/date-fns/subDays.js
+  // packages/dataviews/node_modules/date-fns/subDays.js
   function subDays(date, amount, options) {
     return addDays(date, -amount, options);
   }
 
-  // node_modules/date-fns/subMonths.js
+  // packages/dataviews/node_modules/date-fns/subMonths.js
   function subMonths(date, amount, options) {
     return addMonths(date, -amount, options);
   }
 
-  // node_modules/date-fns/subWeeks.js
+  // packages/dataviews/node_modules/date-fns/subWeeks.js
   function subWeeks(date, amount, options) {
     return addWeeks(date, -amount, options);
   }
 
-  // node_modules/date-fns/subYears.js
+  // packages/dataviews/node_modules/date-fns/subYears.js
   function subYears(date, amount, options) {
     return addYears(date, -amount, options);
   }
@@ -44096,13 +44043,13 @@ If there's a particular need for this, please submit a feature request at https:
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, []);
     const attachments = (0, import_data54.useSelect)(
-      (select4) => {
+      (select3) => {
         if (!value) {
           return null;
         }
         const normalizedValue = normalizeValue2(value);
         const sortedIds = normalizedValue.toSorted((a2, b2) => a2 - b2);
-        const { getEntityRecords } = select4(import_core_data35.store);
+        const { getEntityRecords } = select3(import_core_data35.store);
         return getEntityRecords("postType", "attachment", {
           include: sortedIds
         });
@@ -44522,7 +44469,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function SidebarIdentity() {
     const data = (0, import_data55.useSelect)(
-      (select4) => select4(import_core_data36.store).getEditedEntityRecord("root", "site"),
+      (select3) => select3(import_core_data36.store).getEditedEntityRecord("root", "site"),
       []
     );
     const { editEntityRecord } = (0, import_data55.useDispatch)(import_core_data36.store);
@@ -44637,7 +44584,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isMobileViewport = (0, import_compose26.useViewportMatch)("medium", "<");
     const [section, onChangeSection] = useSection();
     const settings2 = (0, import_data56.useSelect)(
-      (select4) => select4(store).getSettings(),
+      (select3) => select3(store).getSettings(),
       []
     );
     return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
@@ -44962,8 +44909,8 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_block_editor20.BlockTitle)({ clientId, maximumLength: 25 })
     );
     const rootClientId = (0, import_data57.useSelect)(
-      (select4) => {
-        const { getBlockRootClientId } = select4(import_block_editor20.store);
+      (select3) => {
+        const { getBlockRootClientId } = select3(import_block_editor20.store);
         return getBlockRootClientId(clientId);
       },
       [clientId]
@@ -45066,14 +45013,14 @@ If there's a particular need for this, please submit a feature request at https:
   ];
   function NavigationMenuContent({ rootClientId }) {
     const { listViewRootClientId, isLoading } = (0, import_data58.useSelect)(
-      (select4) => {
+      (select3) => {
         const {
           areInnerBlocksControlled,
           getBlockName,
           getBlockCount,
           getBlockOrder
-        } = select4(import_block_editor21.store);
-        const { isResolving } = select4(import_core_data37.store);
+        } = select3(import_block_editor21.store);
+        const { isResolving } = select3(import_core_data37.store);
         const blockClientIds = getBlockOrder(rootClientId);
         const hasOnlyPageListBlock = blockClientIds.length === 1 && getBlockName(blockClientIds[0]) === "core/page-list";
         const pageListHasBlocks = hasOnlyPageListBlock && getBlockCount(blockClientIds[0]) > 0;
@@ -45124,8 +45071,8 @@ If there's a particular need for this, please submit a feature request at https:
   var noop4 = () => {
   };
   function NavigationMenuEditor({ navigationMenuId }) {
-    const { storedSettings } = (0, import_data59.useSelect)((select4) => {
-      const { getSettings: getSettings7 } = unlock(select4(store));
+    const { storedSettings } = (0, import_data59.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
       return {
         storedSettings: getSettings7()
       };
@@ -45239,8 +45186,8 @@ If there's a particular need for this, please submit a feature request at https:
       postId
     );
     const { isSaving, isDeleting } = (0, import_data60.useSelect)(
-      (select4) => {
-        const { isSavingEntityRecord, isDeletingEntityRecord } = select4(import_core_data39.store);
+      (select3) => {
+        const { isSavingEntityRecord, isDeletingEntityRecord } = select3(import_core_data39.store);
         return {
           isSaving: isSavingEntityRecord("postType", postType, postId),
           isDeleting: isDeletingEntityRecord(
@@ -45358,8 +45305,8 @@ If there's a particular need for this, please submit a feature request at https:
     return handleDelete;
   }
   function useSaveNavigationMenu() {
-    const { getEditedEntityRecord } = (0, import_data61.useSelect)((select4) => {
-      const { getEditedEntityRecord: getEditedEntityRecordSelector } = select4(import_core_data40.store);
+    const { getEditedEntityRecord } = (0, import_data61.useSelect)((select3) => {
+      const { getEditedEntityRecord: getEditedEntityRecordSelector } = select3(import_core_data40.store);
       return {
         getEditedEntityRecord: getEditedEntityRecordSelector
       };
@@ -45491,7 +45438,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isLoading = isResolvingNavigationMenus && !hasResolvedNavigationMenus;
     const { getNavigationFallbackId } = unlock((0, import_data62.useSelect)(import_core_data41.store));
     const isCreatingNavigationFallback = (0, import_data62.useSelect)(
-      (select4) => select4(import_core_data41.store).isResolving("getNavigationFallbackId"),
+      (select3) => select3(import_core_data41.store).isResolving("getNavigationFallbackId"),
       []
     );
     const firstNavigationMenu = navigationMenus?.[0];
@@ -45846,8 +45793,8 @@ If there's a particular need for this, please submit a feature request at https:
     } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
     const persistedView = (0, import_data63.useSelect)(
-      (select4) => {
-        return select4(import_preferences11.store).get(
+      (select3) => {
+        return select3(import_preferences11.store).get(
           "core/views",
           preferenceKey
         );
@@ -45976,8 +45923,8 @@ If there's a particular need for this, please submit a feature request at https:
     name: name2
   }) {
     return (0, import_data65.useSelect)(
-      (select4) => {
-        return unlock5(select4(import_core_data42.store)).getViewConfig(kind, name2);
+      (select3) => {
+        return unlock5(select3(import_core_data42.store)).getViewConfig(kind, name2);
       },
       [kind, name2]
     );
@@ -46020,13 +45967,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data43 = __toESM(require_core_data(), 1);
   var import_data66 = __toESM(require_data(), 1);
   function useDefaultPatternCategories() {
-    const blockPatternCategories = (0, import_data66.useSelect)((select4) => {
-      const { getSettings: getSettings7 } = unlock(select4(store));
+    const blockPatternCategories = (0, import_data66.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
       const settings2 = getSettings7();
       return settings2.__experimentalAdditionalBlockPatternCategories ?? settings2.__experimentalBlockPatternCategories;
     });
     const restBlockPatternCategories = (0, import_data66.useSelect)(
-      (select4) => select4(import_core_data43.store).getBlockPatternCategories()
+      (select3) => select3(import_core_data43.store).getBlockPatternCategories()
     );
     return [
       ...blockPatternCategories || [],
@@ -46044,12 +45991,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
   function useThemePatterns() {
-    const blockPatterns = (0, import_data67.useSelect)((select4) => {
-      const { getSettings: getSettings7 } = unlock(select4(store));
+    const blockPatterns = (0, import_data67.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
       return getSettings7().__experimentalAdditionalBlockPatterns ?? getSettings7().__experimentalBlockPatterns;
     });
     const restBlockPatterns = (0, import_data67.useSelect)(
-      (select4) => select4(import_core_data44.store).getBlockPatterns()
+      (select3) => select3(import_core_data44.store).getBlockPatterns()
     );
     const patterns = (0, import_element152.useMemo)(
       () => [...blockPatterns || [], ...restBlockPatterns || []].filter(
@@ -46165,12 +46112,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
   var EMPTY_PATTERN_LIST = [];
   var selectTemplateParts = (0, import_data68.createSelector)(
-    (select4, categoryId, search = "") => {
+    (select3, categoryId, search = "") => {
       const {
         getEntityRecords,
         getCurrentTheme,
         isResolving: isResolvingSelector
-      } = select4(import_core_data45.store);
+      } = select3(import_core_data45.store);
       const query = { per_page: -1 };
       const templateParts = getEntityRecords("postType", TEMPLATE_PART_POST_TYPE, query) ?? EMPTY_PATTERN_LIST;
       const knownAreas = getCurrentTheme()?.default_template_part_areas || [];
@@ -46192,29 +46139,29 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return { patterns, isResolving };
     },
-    (select4) => [
-      select4(import_core_data45.store).getEntityRecords(
+    (select3) => [
+      select3(import_core_data45.store).getEntityRecords(
         "postType",
         TEMPLATE_PART_POST_TYPE,
         {
           per_page: -1
         }
       ),
-      select4(import_core_data45.store).isResolving("getEntityRecords", [
+      select3(import_core_data45.store).isResolving("getEntityRecords", [
         "postType",
         TEMPLATE_PART_POST_TYPE,
         { per_page: -1 }
       ]),
-      select4(import_core_data45.store).getCurrentTheme()?.default_template_part_areas
+      select3(import_core_data45.store).getCurrentTheme()?.default_template_part_areas
     ]
   );
   var selectThemePatterns = (0, import_data68.createSelector)(
-    (select4) => {
-      const { getSettings: getSettings7 } = unlock(select4(store));
-      const { isResolving: isResolvingSelector } = select4(import_core_data45.store);
+    (select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
+      const { isResolving: isResolvingSelector } = select3(import_core_data45.store);
       const settings2 = getSettings7();
       const blockPatterns = settings2.__experimentalAdditionalBlockPatterns ?? settings2.__experimentalBlockPatterns;
-      const restBlockPatterns = select4(import_core_data45.store).getBlockPatterns();
+      const restBlockPatterns = select3(import_core_data45.store).getBlockPatterns();
       const patterns = [
         ...blockPatterns || [],
         ...restBlockPatterns || []
@@ -46233,23 +46180,23 @@ If there's a particular need for this, please submit a feature request at https:
         isResolving: isResolvingSelector("getBlockPatterns")
       };
     },
-    (select4) => [
-      select4(import_core_data45.store).getBlockPatterns(),
-      select4(import_core_data45.store).isResolving("getBlockPatterns"),
-      unlock(select4(store)).getSettings()
+    (select3) => [
+      select3(import_core_data45.store).getBlockPatterns(),
+      select3(import_core_data45.store).isResolving("getBlockPatterns"),
+      unlock(select3(store)).getSettings()
     ]
   );
   var selectPatterns = (0, import_data68.createSelector)(
-    (select4, categoryId, syncStatus, search = "") => {
+    (select3, categoryId, syncStatus, search = "") => {
       const {
         patterns: themePatterns,
         isResolving: isResolvingThemePatterns
-      } = selectThemePatterns(select4);
+      } = selectThemePatterns(select3);
       const {
         patterns: userPatterns,
         isResolving: isResolvingUserPatterns,
         categories: userPatternCategories
-      } = selectUserPatterns(select4);
+      } = selectUserPatterns(select3);
       let patterns = [
         ...themePatterns || [],
         ...userPatterns || []
@@ -46292,18 +46239,18 @@ If there's a particular need for this, please submit a feature request at https:
         isResolving: isResolvingThemePatterns || isResolvingUserPatterns
       };
     },
-    (select4) => [
-      selectThemePatterns(select4),
-      selectUserPatterns(select4)
+    (select3) => [
+      selectThemePatterns(select3),
+      selectUserPatterns(select3)
     ]
   );
   var selectUserPatterns = (0, import_data68.createSelector)(
-    (select4, syncStatus, search = "") => {
+    (select3, syncStatus, search = "") => {
       const {
         getEntityRecords,
         isResolving: isResolvingSelector,
         getUserPatternCategories
-      } = select4(import_core_data45.store);
+      } = select3(import_core_data45.store);
       const query = { per_page: -1 };
       const patternPosts = getEntityRecords(
         "postType",
@@ -46338,16 +46285,16 @@ If there's a particular need for this, please submit a feature request at https:
         categories: userPatternCategories
       };
     },
-    (select4) => [
-      select4(import_core_data45.store).getEntityRecords("postType", PATTERN_TYPES.user, {
+    (select3) => [
+      select3(import_core_data45.store).getEntityRecords("postType", PATTERN_TYPES.user, {
         per_page: -1
       }),
-      select4(import_core_data45.store).isResolving("getEntityRecords", [
+      select3(import_core_data45.store).isResolving("getEntityRecords", [
         "postType",
         PATTERN_TYPES.user,
         { per_page: -1 }
       ]),
-      select4(import_core_data45.store).getUserPatternCategories()
+      select3(import_core_data45.store).getUserPatternCategories()
     ]
   );
   function useAugmentPatternsWithPermissions(patterns) {
@@ -46356,9 +46303,9 @@ If there's a particular need for this, please submit a feature request at https:
       [patterns]
     );
     const permissions = (0, import_data68.useSelect)(
-      (select4) => {
+      (select3) => {
         const { getEntityRecordPermissions } = unlock(
-          select4(import_core_data45.store)
+          select3(import_core_data45.store)
         );
         return idsAndTypes.reduce((acc, [type, id]) => {
           acc[id] = getEntityRecordPermissions("postType", type, id);
@@ -46377,19 +46324,19 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var usePatterns = (postType2, categoryId, { search = "", syncStatus } = {}) => {
     return (0, import_data68.useSelect)(
-      (select4) => {
+      (select3) => {
         if (postType2 === TEMPLATE_PART_POST_TYPE) {
-          return selectTemplateParts(select4, categoryId, search);
+          return selectTemplateParts(select3, categoryId, search);
         } else if (postType2 === PATTERN_TYPES.user && !!categoryId) {
           const appliedCategory = categoryId === "uncategorized" ? "" : categoryId;
           return selectPatterns(
-            select4,
+            select3,
             appliedCategory,
             syncStatus,
             search
           );
         } else if (postType2 === PATTERN_TYPES.user) {
-          return selectUserPatterns(select4, syncStatus, search);
+          return selectUserPatterns(select3, syncStatus, search);
         }
         return {
           patterns: EMPTY_PATTERN_LIST,
@@ -46491,7 +46438,7 @@ If there's a particular need for this, please submit a feature request at https:
   var useTemplatePartsGroupedByArea = (items) => {
     const allItems = items || [];
     const templatePartAreas = (0, import_data69.useSelect)(
-      (select4) => select4(import_core_data46.store).getCurrentTheme()?.default_template_part_areas || [],
+      (select3) => select3(import_core_data46.store).getCurrentTheme()?.default_template_part_areas || [],
       []
     );
     const knownAreas = {
@@ -46652,14 +46599,14 @@ If there's a particular need for this, please submit a feature request at https:
   var { globalStylesDataKey } = unlock(import_block_editor24.privateApis);
   function usePatternSettings() {
     const { merged: mergedConfig } = useGlobalStyles3();
-    const storedSettings = (0, import_data70.useSelect)((select4) => {
-      const { getSettings: getSettings7 } = unlock(select4(store));
+    const storedSettings = (0, import_data70.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = unlock(select3(store));
       return getSettings7();
     }, []);
     const settingsBlockPatterns = storedSettings.__experimentalAdditionalBlockPatterns ?? // WP 6.0
     storedSettings.__experimentalBlockPatterns;
     const restBlockPatterns = (0, import_data70.useSelect)(
-      (select4) => select4(import_core_data47.store).getBlockPatterns(),
+      (select3) => select3(import_core_data47.store).getBlockPatterns(),
       []
     );
     const blockPatterns = (0, import_element156.useMemo)(
@@ -46681,12 +46628,9 @@ If there's a particular need for this, please submit a feature request at https:
         __experimentalFeatures,
         ...restStoredSettings
       } = storedSettings;
-      const nonGlobalStyles = (styles ?? []).filter(
-        (style) => !style.isGlobalStyles
-      );
       return {
         ...restStoredSettings,
-        styles: [...nonGlobalStyles, ...globalStyles],
+        styles: globalStyles,
         __experimentalFeatures: globalSettings,
         [globalStylesDataKey]: mergedConfig.styles ?? {},
         __experimentalBlockPatterns: blockPatterns,
@@ -46736,8 +46680,8 @@ If there's a particular need for this, please submit a feature request at https:
       addNewTemplatePartLabel,
       canCreatePattern,
       canCreateTemplatePart
-    } = (0, import_data71.useSelect)((select4) => {
-      const { getCurrentTheme, getPostType: getPostType2, canUser } = select4(import_core_data48.store);
+    } = (0, import_data71.useSelect)((select3) => {
+      const { getCurrentTheme, getPostType: getPostType2, canUser } = select3(import_core_data48.store);
       return {
         isBlockBasedTheme: getCurrentTheme()?.is_block_theme,
         addNewPatternLabel: getPostType2(PATTERN_TYPES.user)?.labels?.add_new_item,
@@ -47067,7 +47011,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { useLocation: useLocation28, useHistory: useHistory19 } = unlock(import_router32.privateApis);
   var useSetActiveTemplateAction = () => {
     const activeTheme = (0, import_data73.useSelect)(
-      (select4) => select4(import_core_data50.store).getCurrentTheme()
+      (select3) => select3(import_core_data50.store).getCurrentTheme()
     );
     const { getEntityRecord } = (0, import_data73.useSelect)(import_core_data50.store);
     const { editEntityRecord, saveEditedEntityRecord } = (0, import_data73.useDispatch)(import_core_data50.store);
@@ -47178,8 +47122,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data74 = __toESM(require_data(), 1);
   function useAddedBy(postType2, postId) {
     return (0, import_data74.useSelect)(
-      (select4) => {
-        const { getEntityRecord, getUser, getEditedEntityRecord } = select4(import_core_data51.store);
+      (select3) => {
+        const { getEntityRecord, getUser, getEditedEntityRecord } = select3(import_core_data51.store);
         const template = getEditedEntityRecord(
           "postType",
           postType2,
@@ -47355,7 +47299,7 @@ If there's a particular need for this, please submit a feature request at https:
   function usePagePatternsHeader(type, categoryId) {
     const { patternCategories } = usePatternCategories();
     const templatePartAreas = (0, import_data75.useSelect)(
-      (select4) => select4(import_core_data52.store).getCurrentTheme()?.default_template_part_areas || [],
+      (select3) => select3(import_core_data52.store).getCurrentTheme()?.default_template_part_areas || [],
       []
     );
     let title, description, patternCategory;
@@ -47709,8 +47653,8 @@ If there's a particular need for this, please submit a feature request at https:
     site: globe_default
   };
   function DataviewsTemplatesSidebarContent2() {
-    const authorSourceMap = (0, import_data76.useSelect)((select4) => {
-      const templates = select4(import_core_data54.store).getEntityRecords(
+    const authorSourceMap = (0, import_data76.useSelect)((select3) => {
+      const templates = select3(import_core_data54.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
         { per_page: -1 }
@@ -47816,7 +47760,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useExistingTemplates = () => {
     return (0, import_data77.useSelect)(
-      (select4) => select4(import_core_data55.store).getEntityRecords(
+      (select3) => select3(import_core_data55.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
         {
@@ -47828,13 +47772,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useDefaultTemplateTypes = () => {
     return (0, import_data77.useSelect)(
-      (select4) => select4(import_core_data55.store).getCurrentTheme()?.default_template_types || [],
+      (select3) => select3(import_core_data55.store).getCurrentTheme()?.default_template_types || [],
       []
     );
   };
   var usePublicPostTypes = () => {
     const postTypes = (0, import_data77.useSelect)(
-      (select4) => select4(import_core_data55.store).getPostTypes({ per_page: -1 }),
+      (select3) => select3(import_core_data55.store).getPostTypes({ per_page: -1 }),
       []
     );
     return (0, import_element164.useMemo)(() => {
@@ -47851,7 +47795,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var usePublicTaxonomies = () => {
     const taxonomies = (0, import_data77.useSelect)(
-      (select4) => select4(import_core_data55.store).getTaxonomies({ per_page: -1 }),
+      (select3) => select3(import_core_data55.store).getTaxonomies({ per_page: -1 }),
       []
     );
     return (0, import_element164.useMemo)(() => {
@@ -48261,20 +48205,17 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters = EMPTY_OBJECT2) => {
     const entitiesHasRecords = (0, import_data77.useSelect)(
-      (select4) => {
+      (select3) => {
         return Object.keys(templatePrefixes || {}).reduce(
           (accumulator, slug) => {
-            const records = select4(import_core_data55.store).getEntityRecords(
-              entityName,
-              slug,
-              {
-                per_page: 1,
-                _fields: "id",
-                context: "view",
-                ...additionalQueryParameters[slug]
-              }
-            );
-            accumulator[slug] = records === null || records.length > 0;
+            accumulator[slug] = !!select3(
+              import_core_data55.store
+            ).getEntityRecords(entityName, slug, {
+              per_page: 1,
+              _fields: "id",
+              context: "view",
+              ...additionalQueryParameters[slug]
+            })?.length;
             return accumulator;
           },
           {}
@@ -48778,8 +48719,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { createErrorNotice, createSuccessNotice } = (0, import_data78.useDispatch)(import_notices8.store);
     const containerRef = (0, import_element167.useRef)(null);
     const isMobile = (0, import_compose28.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data78.useSelect)((select4) => {
-      return select4(import_core_data57.store).getEntityRecord("root", "__unstableBase")?.home;
+    const homeUrl = (0, import_data78.useSelect)((select3) => {
+      return select3(import_core_data57.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
       "front-page": homeUrl,
@@ -48941,8 +48882,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function NewTemplate() {
     const [showModal, setShowModal] = (0, import_element167.useState)(false);
-    const { postType: postType2 } = (0, import_data78.useSelect)((select4) => {
-      const { getPostType: getPostType2 } = select4(import_core_data57.store);
+    const { postType: postType2 } = (0, import_data78.useSelect)((select3) => {
+      const { getPostType: getPostType2 } = select3(import_core_data57.store);
       return {
         postType: getPostType2(TEMPLATE_POST_TYPE)
       };
@@ -49123,7 +49064,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useThemeField = () => {
     const activeTheme = (0, import_data79.useSelect)(
-      (select4) => select4(import_core_data58.store).getCurrentTheme()
+      (select3) => select3(import_core_data58.store).getCurrentTheme()
     );
     return (0, import_element168.useMemo)(
       () => ({
@@ -49235,12 +49176,12 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     });
-    const { activeTemplatesOption, activeTheme, defaultTemplateTypes } = (0, import_data80.useSelect)((select4) => {
-      const { getEntityRecord, getCurrentTheme } = select4(import_core_data59.store);
+    const { activeTemplatesOption, activeTheme, defaultTemplateTypes } = (0, import_data80.useSelect)((select3) => {
+      const { getEntityRecord, getCurrentTheme } = select3(import_core_data59.store);
       return {
         activeTemplatesOption: getEntityRecord("root", "site")?.active_templates,
         activeTheme: getCurrentTheme(),
-        defaultTemplateTypes: select4(import_core_data59.store).getCurrentTheme()?.default_template_types
+        defaultTemplateTypes: select3(import_core_data59.store).getCurrentTheme()?.default_template_types
       };
     });
     const { records: userRecords, isResolving: isLoadingUserRecords } = useEntityRecordsWithPermissions2("postType", TEMPLATE_POST_TYPE, {
@@ -49317,8 +49258,8 @@ If there's a particular need for this, please submit a feature request at https:
       activeView
     ]);
     const users = (0, import_data80.useSelect)(
-      (select4) => {
-        const { getUser } = select4(import_core_data59.store);
+      (select3) => {
+        const { getUser } = select3(import_core_data59.store);
         return records.reduce((acc, record) => {
           if (record.author_text) {
             if (!acc[record.author_text]) {
@@ -49554,7 +49495,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useExistingTemplates2 = () => {
     return (0, import_data81.useSelect)(
-      (select4) => select4(import_core_data60.store).getEntityRecords(
+      (select3) => select3(import_core_data60.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
         {
@@ -49566,13 +49507,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useDefaultTemplateTypes2 = () => {
     return (0, import_data81.useSelect)(
-      (select4) => select4(import_core_data60.store).getCurrentTheme()?.default_template_types || [],
+      (select3) => select3(import_core_data60.store).getCurrentTheme()?.default_template_types || [],
       []
     );
   };
   var usePublicPostTypes2 = () => {
     const postTypes = (0, import_data81.useSelect)(
-      (select4) => select4(import_core_data60.store).getPostTypes({ per_page: -1 }),
+      (select3) => select3(import_core_data60.store).getPostTypes({ per_page: -1 }),
       []
     );
     return (0, import_element170.useMemo)(() => {
@@ -49589,7 +49530,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var usePublicTaxonomies2 = () => {
     const taxonomies = (0, import_data81.useSelect)(
-      (select4) => select4(import_core_data60.store).getTaxonomies({ per_page: -1 }),
+      (select3) => select3(import_core_data60.store).getTaxonomies({ per_page: -1 }),
       []
     );
     return (0, import_element170.useMemo)(() => {
@@ -50031,10 +49972,10 @@ If there's a particular need for this, please submit a feature request at https:
   var useTemplatesToExclude = (entityName, templatePrefixes, additionalQueryParameters = {}) => {
     const slugsToExcludePerEntity = useExistingTemplateSlugs(templatePrefixes);
     const recordsToExcludePerEntity = (0, import_data81.useSelect)(
-      (select4) => {
+      (select3) => {
         return Object.entries(slugsToExcludePerEntity || {}).reduce(
           (accumulator, [slug, slugsWithTemplates]) => {
-            const entitiesWithTemplates = select4(
+            const entitiesWithTemplates = select3(
               import_core_data60.store
             ).getEntityRecords(entityName, slug, {
               _fields: "id",
@@ -50061,24 +50002,21 @@ If there's a particular need for this, please submit a feature request at https:
       additionalQueryParameters
     );
     const entitiesHasRecords = (0, import_data81.useSelect)(
-      (select4) => {
+      (select3) => {
         return Object.keys(templatePrefixes || {}).reduce(
           (accumulator, slug) => {
             const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(
               ({ id }) => id
             ) || [];
-            const records = select4(import_core_data60.store).getEntityRecords(
-              entityName,
-              slug,
-              {
-                per_page: 1,
-                _fields: "id",
-                context: "view",
-                exclude: existingEntitiesIds,
-                ...additionalQueryParameters[slug]
-              }
-            );
-            accumulator[slug] = records === null || records.length > 0;
+            accumulator[slug] = !!select3(
+              import_core_data60.store
+            ).getEntityRecords(entityName, slug, {
+              per_page: 1,
+              _fields: "id",
+              context: "view",
+              exclude: existingEntitiesIds,
+              ...additionalQueryParameters[slug]
+            })?.length;
             return accumulator;
           },
           {}
@@ -50593,8 +50531,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { createErrorNotice, createSuccessNotice } = (0, import_data82.useDispatch)(import_notices10.store);
     const containerRef = (0, import_element173.useRef)(null);
     const isMobile = (0, import_compose31.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data82.useSelect)((select4) => {
-      return select4(import_core_data62.store).getEntityRecord("root", "__unstableBase")?.home;
+    const homeUrl = (0, import_data82.useSelect)((select3) => {
+      return select3(import_core_data62.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
       "front-page": homeUrl,
@@ -50754,8 +50692,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function NewTemplate2() {
     const [showModal, setShowModal] = (0, import_element173.useState)(false);
-    const { postType: postType2 } = (0, import_data82.useSelect)((select4) => {
-      const { getPostType: getPostType2 } = select4(import_core_data62.store);
+    const { postType: postType2 } = (0, import_data82.useSelect)((select3) => {
+      const { getPostType: getPostType2 } = select3(import_core_data62.store);
       return {
         postType: getPostType2(TEMPLATE_POST_TYPE)
       };
@@ -51081,7 +51019,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   function AddNewPostModal({ postType: postType2, onSave, onClose }) {
     const labels = (0, import_data84.useSelect)(
-      (select4) => select4(import_core_data65.store).getPostType(postType2)?.labels,
+      (select3) => select3(import_core_data65.store).getPostType(postType2)?.labels,
       [postType2]
     );
     const [isCreatingPost, setIsCreatingPost] = (0, import_element175.useState)(false);
@@ -51230,11 +51168,11 @@ If there's a particular need for this, please submit a feature request at https:
     const isBulk = postId.length > 1;
     const [localEdits, setLocalEdits] = (0, import_element177.useState)({});
     const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data85.useSelect)(
-      (select4) => {
+      (select3) => {
         const {
           getEditedEntityRecord,
           hasFinishedResolution: hasFinished
-        } = select4(import_core_data67.store);
+        } = select3(import_core_data67.store);
         if (isBulk) {
           return {
             record: null,
@@ -51243,7 +51181,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         const args = ["postType", postType2, postId[0]];
         const { getHomePage, getPostsPageId } = unlock(
-          select4(import_core_data67.store)
+          select3(import_core_data67.store)
         );
         const singlePostId = String(postId[0]);
         const isPostsPage = singlePostId !== void 0 && getPostsPageId() === singlePostId;
@@ -51538,8 +51476,8 @@ If there's a particular need for this, please submit a feature request at https:
       [totalItems, totalPages]
     );
     const { labels, canCreateRecord } = (0, import_data86.useSelect)(
-      (select4) => {
-        const { getPostType: getPostType2, canUser } = select4(import_core_data68.store);
+      (select3) => {
+        const { getPostType: getPostType2, canUser } = select3(import_core_data68.store);
         return {
           labels: getPostType2(postType2)?.labels,
           canCreateRecord: canUser("create", {
@@ -51877,12 +51815,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function App() {
     useRegisterSiteEditorRoutes();
-    const { routes: routes3, currentTheme, editorSettings } = (0, import_data89.useSelect)((select4) => {
+    const { routes: routes3, currentTheme, editorSettings } = (0, import_data89.useSelect)((select3) => {
       return {
-        routes: unlock(select4(store)).getRoutes(),
-        currentTheme: select4(import_core_data70.store).getCurrentTheme(),
+        routes: unlock(select3(store)).getRoutes(),
+        currentTheme: select3(import_core_data70.store).getCurrentTheme(),
         // This is a temp solution until the has_theme_json value is available for the current theme.
-        editorSettings: select4(store).getSettings()
+        editorSettings: select3(store).getSettings()
       };
     }, []);
     const beforeNavigate = (0, import_element180.useCallback)(({ path, query }) => {

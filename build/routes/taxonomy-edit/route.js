@@ -57,12 +57,9 @@ var import_data = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_i18n = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
-import {
-  NEW_ID,
-  TAXONOMIES_PATH,
-  TAXONOMY_ENTITY
-} from "@wordpress/content-types";
 import { redirect } from "@wordpress/route";
+var USER_TAXONOMY_POST_TYPE = "wp_user_taxonomy";
+var NEW_ID = "new";
 var route = {
   beforeLoad: async ({ params }) => {
     if (params.id === NEW_ID) {
@@ -74,7 +71,7 @@ var route = {
       try {
         record = await (0, import_data.resolveSelect)(import_core_data.store).getEntityRecord(
           "postType",
-          TAXONOMY_ENTITY,
+          USER_TAXONOMY_POST_TYPE,
           id
         );
       } catch {
@@ -85,7 +82,7 @@ var route = {
         (0, import_i18n.__)("Taxonomy not found."),
         { type: "snackbar" }
       );
-      throw redirect({ throw: true, to: TAXONOMIES_PATH });
+      throw redirect({ throw: true, to: "/" });
     }
   },
   title: async ({ params }) => {
@@ -95,7 +92,7 @@ var route = {
     const id = parseInt(params.id, 10);
     const record = await (0, import_data.resolveSelect)(import_core_data.store).getEntityRecord(
       "postType",
-      TAXONOMY_ENTITY,
+      USER_TAXONOMY_POST_TYPE,
       id
     );
     return record?.title?.raw ?? record?.title?.rendered ?? (0, import_i18n.__)("Taxonomy");
