@@ -21530,74 +21530,66 @@ function Header5({
   showSidebarToggle = true
 }) {
   const HeadingTag = `h${headingLevel}`;
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
-    Stack,
-    {
-      direction: "column",
-      className: style_default11.header,
-      render: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("header", {}),
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
-          Stack,
-          {
-            className: style_default11["header-content"],
-            direction: "row",
-            gap: "sm",
-            justify: "space-between",
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-                showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-                  SidebarToggleSlot,
-                  {
-                    bubblesVirtually: true,
-                    className: style_default11["sidebar-toggle-slot"]
-                  }
-                ),
-                visual && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-                  "div",
-                  {
-                    className: style_default11["header-visual"],
-                    "aria-hidden": "true",
-                    children: visual
-                  }
-                ),
-                title && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-                  Text,
-                  {
-                    className: style_default11["header-title"],
-                    render: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(HeadingTag, {}),
-                    variant: "heading-lg",
-                    children: title
-                  }
-                ),
-                breadcrumbs,
-                badges
-              ] }),
-              actions && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-                Stack,
-                {
-                  align: "center",
-                  className: style_default11["header-actions"],
-                  direction: "row",
-                  gap: "sm",
-                  children: actions
-                }
-              )
-            ]
-          }
-        ),
-        subTitle && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-          Text,
-          {
-            render: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("p", {}),
-            variant: "body-md",
-            className: style_default11["header-subtitle"],
-            children: subTitle
-          }
-        )
-      ]
-    }
-  );
+  return /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(Stack, { direction: "column", className: style_default11.header, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
+      Stack,
+      {
+        className: style_default11["header-content"],
+        direction: "row",
+        gap: "sm",
+        justify: "space-between",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+              SidebarToggleSlot,
+              {
+                bubblesVirtually: true,
+                className: style_default11["sidebar-toggle-slot"]
+              }
+            ),
+            visual && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+              "div",
+              {
+                className: style_default11["header-visual"],
+                "aria-hidden": "true",
+                children: visual
+              }
+            ),
+            title && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+              Text,
+              {
+                className: style_default11["header-title"],
+                render: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(HeadingTag, {}),
+                variant: "heading-lg",
+                children: title
+              }
+            ),
+            breadcrumbs,
+            badges
+          ] }),
+          actions && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+            Stack,
+            {
+              align: "center",
+              className: style_default11["header-actions"],
+              direction: "row",
+              gap: "sm",
+              children: actions
+            }
+          )
+        ]
+      }
+    ),
+    subTitle && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+      Text,
+      {
+        render: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("p", {}),
+        variant: "body-md",
+        className: style_default11["header-subtitle"],
+        children: subTitle
+      }
+    )
+  ] });
 }
 
 // packages/admin-ui/build-module/page/index.mjs
