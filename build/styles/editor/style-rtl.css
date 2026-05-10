@@ -4855,24 +4855,22 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
  * Creates a checkerboard pattern background to indicate transparency.
  * @param {String} $size - The size of the squares in the checkerboard pattern. Default is 12px.
  */
-.media-editor-modal.components-modal__frame .components-modal__content {
-  padding: 0;
-  margin-bottom: 0;
-}
-
-.media-editor-modal {
+.media-editor {
   display: flex;
+  flex: 1;
   flex-direction: column;
+  height: 100%;
+  min-height: 0;
 }
 
-.media-editor-modal .media-editor-modal__loading {
+.media-editor .media-editor__loading {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.media-editor-modal .interface-interface-skeleton {
+.media-editor .interface-interface-skeleton {
   position: relative;
   top: auto;
   left: auto;
@@ -4884,21 +4882,21 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex-direction: column;
 }
 
-.media-editor-modal .interface-interface-skeleton__editor {
+.media-editor .interface-interface-skeleton__editor {
   min-width: 0;
   flex: 1;
 }
 
-.media-editor-modal .interface-interface-skeleton__footer {
+.media-editor .interface-interface-skeleton__footer {
   position: relative;
   display: flex;
 }
 
-.media-editor-modal .interface-interface-skeleton.has-footer .interface-interface-skeleton__body {
+.media-editor .interface-interface-skeleton.has-footer .interface-interface-skeleton__body {
   padding-bottom: 0;
 }
 
-.media-editor-modal .media-editor-modal__canvas {
+.media-editor .media-editor__canvas {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4907,45 +4905,81 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   height: 100%;
 }
 
-.media-editor-modal .media-editor-modal__canvas .media-editor-preview {
+.media-editor .media-editor__canvas .media-editor-preview {
   height: 100%;
 }
 
-.media-editor-modal .media-editor-modal__canvas img,
-.media-editor-modal .media-editor-modal__canvas video {
+.media-editor .media-editor__canvas img,
+.media-editor .media-editor__canvas video {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
-.media-editor-modal .media-editor-modal__sidebar {
+.media-editor .media-editor__sidebar {
   box-sizing: border-box;
 }
 
-.media-editor-modal .media-editor-modal__sidebar *,
-.media-editor-modal .media-editor-modal__sidebar *::before,
-.media-editor-modal .media-editor-modal__sidebar *::after {
+.media-editor .media-editor__sidebar *,
+.media-editor .media-editor__sidebar *::before,
+.media-editor .media-editor__sidebar *::after {
   box-sizing: inherit;
 }
 
-.media-editor-modal .media-editor-modal__panel {
+.media-editor .media-editor__panel {
   padding: 16px;
 }
 
-.media-editor-modal .components-panel__header.media-editor-modal__sidebar-header {
+.media-editor .components-panel__header.media-editor__sidebar-header {
   padding-right: 0;
   padding-left: 8px;
 }
 
-.media-editor-modal .components-panel__header.media-editor-modal__sidebar-header .components-button.has-icon {
+.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon {
   padding: 0;
 }
 
 @media (min-width: 782px) {
-  .media-editor-modal .components-panel__header.media-editor-modal__sidebar-header .components-button.has-icon {
+  .media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon {
     display: flex;
   }
 }
+.media-editor__snackbar {
+  position: fixed;
+  bottom: 24px;
+  right: 0;
+  left: 0;
+  padding-inline: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.media-editor__snackbar .components-snackbar {
+  margin-inline: auto;
+}
+
+.media-editor-modal.components-modal__frame .components-modal__content {
+  padding: 0;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.media-editor-modal.components-modal__frame .components-modal__children-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.media-editor-modal {
+  display: flex;
+  flex-direction: column;
+}
+
 .media-editor-modal__snackbar {
   position: fixed;
   bottom: 24px;

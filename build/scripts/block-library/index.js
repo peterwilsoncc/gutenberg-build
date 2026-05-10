@@ -31630,7 +31630,7 @@ ${js}
     }, [imageElement]);
     const setRefs = (0, import_compose22.useMergeRefs)([setImageElement, setResizeObserved]);
     const { allowResize = true } = context;
-    const { image, canUserEdit, attachmentResolutionError } = (0, import_data45.useSelect)(
+    const { image, attachmentResolutionError } = (0, import_data45.useSelect)(
       (select9) => {
         const imageRecord = id && isSingleSelected ? select9(import_core_data23.store).getEntityRecord(
           "postType",
@@ -31647,17 +31647,8 @@ ${js}
             { context: "view" }
           ]
         ) : null;
-        let canEdit = false;
-        if (imageRecord && window?.__experimentalMediaEditor) {
-          canEdit = !!select9(import_core_data23.store).canUser("update", {
-            kind: "postType",
-            name: "attachment",
-            id
-          });
-        }
         return {
           image: imageRecord,
-          canUserEdit: canEdit,
           attachmentResolutionError: resolutionError
         };
       },
@@ -31689,7 +31680,6 @@ ${js}
     );
     const { getBlock, getSettings: getSettings2 } = (0, import_data45.useSelect)(import_block_editor112.store);
     const settings122 = getSettings2();
-    const { onNavigateToEntityRecord } = settings122;
     const openMediaEditorModal = settings122[openMediaEditorModalKey];
     const handleMediaUpdate = (0, import_element45.useCallback)(
       ({ id: newId, url: newUrl }) => {
@@ -32015,18 +32005,6 @@ ${js}
       }
     ) });
     const hasDataFormBlockFields = window?.__experimentalContentOnlyInspectorFields;
-    const editMediaButton = window?.__experimentalMediaEditor && id && isSingleSelected && canUserEdit && !!editMediaEntity && !isExternalImage(id, url) && !isEditingImage && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor112.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
-      import_components57.ToolbarButton,
-      {
-        onClick: () => {
-          onNavigateToEntityRecord({
-            postId: id,
-            postType: "attachment"
-          });
-        },
-        children: (0, import_i18n94.__)("Edit media")
-      }
-    ) });
     const controls = /* @__PURE__ */ (0, import_jsx_runtime278.jsxs)(import_jsx_runtime278.Fragment, { children: [
       showBlockControls && /* @__PURE__ */ (0, import_jsx_runtime278.jsxs)(import_block_editor112.BlockControls, { group: "block", children: [
         showUrlInput && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
@@ -32414,7 +32392,6 @@ ${js}
     };
     const featuredImageControl = !isDescendentOfQueryLoop && postId && id ? /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor112.BlockSettingsMenuControls, { children: ({ canEdit, selectedClientIds }) => canEdit && selectedClientIds.length === 1 && clientId === selectedClientIds[0] && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components57.MenuItem, { onClick: setPostFeatureImage, children: (0, import_i18n94.__)("Set as featured image") }) }) : null;
     return /* @__PURE__ */ (0, import_jsx_runtime278.jsxs)(import_jsx_runtime278.Fragment, { children: [
-      editMediaButton,
       mediaReplaceFlow,
       controls,
       featuredImageControl,
