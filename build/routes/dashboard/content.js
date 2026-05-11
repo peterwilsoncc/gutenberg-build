@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect45(
+        useEffect46(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React79 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState49 = React79.useState, useEffect45 = React79.useEffect, useLayoutEffect10 = React79.useLayoutEffect, useDebugValue2 = React79.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React79 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState49 = React79.useState, useEffect46 = React79.useEffect, useLayoutEffect10 = React79.useLayoutEffect, useDebugValue2 = React79.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React79.useSyncExternalStore ? React79.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,7 +148,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React79 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef61 = React79.useRef, useEffect45 = React79.useEffect, useMemo57 = React79.useMemo, useDebugValue2 = React79.useDebugValue;
+      var React79 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef61 = React79.useRef, useEffect46 = React79.useEffect, useMemo57 = React79.useMemo, useDebugValue2 = React79.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef61(null);
         if (null === instRef.current) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect45(
+        useEffect46(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -16093,6 +16093,94 @@ function WidgetDashboardUIProvider({ children }) {
 var import_element64 = __toESM(require_element());
 var import_i18n7 = __toESM(require_i18n());
 
+// packages/style-runtime/src/index.ts
+var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
+function getRuntime34() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument34(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash34(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE34}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle34(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime34();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash34(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE34, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument34(targetDocument) {
+  const runtime = getRuntime34();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle34(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle34(hash, css) {
+  const runtime = getRuntime34();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle34(targetDocument, hash, css);
+  }
+}
+
+// routes/dashboard/widget-dashboard/components/actions/actions.module.css
+if (typeof process === "undefined" || true) {
+  registerStyle34("c278d66262", ".a6e8ada13acc9f11__editActionsExit,.aa9a2b8bca16d3d4__editActionsEnter{display:inline-flex;gap:var(--wp--preset--spacing--20);transform-origin:right center}@media not (prefers-reduced-motion){.a6e8ada13acc9f11__editActionsExit,.aa9a2b8bca16d3d4__editActionsEnter{will-change:opacity,transform}.aa9a2b8bca16d3d4__editActionsEnter{animation:_6ad9417d3c8378ea__actions-slide-in .22s ease-out forwards}.a6e8ada13acc9f11__editActionsExit{animation:ca863286783f6f27__actions-fold-out 50ms ease-in forwards}@keyframes _6ad9417d3c8378ea__actions-slide-in{0%{opacity:0;transform:translateX(12px) scaleX(.92)}to{opacity:1;transform:translateX(0) scaleX(1)}}@keyframes ca863286783f6f27__actions-fold-out{0%{opacity:1;transform:translateX(0) scaleX(1)}to{opacity:0;transform:translateX(12px) scaleX(.92)}}}");
+}
+var actions_default = { "editActionsEnter": "aa9a2b8bca16d3d4__editActionsEnter", "editActionsExit": "a6e8ada13acc9f11__editActionsExit", "actions-slide-in": "_6ad9417d3c8378ea__actions-slide-in", "actions-fold-out": "ca863286783f6f27__actions-fold-out" };
+
 // routes/dashboard/widget-dashboard/components/more-actions-dropdown/more-actions-dropdown.tsx
 var import_components2 = __toESM(require_components());
 var import_i18n6 = __toESM(require_i18n());
@@ -16146,6 +16234,24 @@ function MoreActionsDropdown({
 var import_jsx_runtime85 = __toESM(require_jsx_runtime());
 function Actions3() {
   const { editMode, onEditChange, onLayoutReset } = useDashboardInternalContext();
+  const [isEditActionsMounted, setIsEditActionsMounted] = (0, import_element64.useState)(editMode);
+  const [isExitingEditActions, setIsExitingEditActions] = (0, import_element64.useState)(false);
+  (0, import_element64.useEffect)(() => {
+    if (editMode) {
+      setIsEditActionsMounted(true);
+      setIsExitingEditActions(false);
+      return;
+    }
+    if (!isEditActionsMounted) {
+      return;
+    }
+    setIsExitingEditActions(true);
+    const exitTimeout = setTimeout(() => {
+      setIsEditActionsMounted(false);
+      setIsExitingEditActions(false);
+    }, 220);
+    return () => clearTimeout(exitTimeout);
+  }, [editMode, isEditActionsMounted]);
   const { setInserterOpen } = useDashboardUIContext();
   const [isResetDialogOpen, setIsResetDialogOpen] = (0, import_element64.useState)(false);
   const handleEditMode = (0, import_element64.useCallback)(() => {
@@ -16173,38 +16279,46 @@ function Actions3() {
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-    editMode ? /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(import_jsx_runtime85.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
-        Button4,
-        {
-          variant: "minimal",
-          tone: "brand",
-          size: "compact",
-          onClick: insert,
-          children: (0, import_i18n7.__)("Add widgets")
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
-        Button4,
-        {
-          variant: "minimal",
-          tone: "brand",
-          size: "compact",
-          onClick: cancel,
-          children: (0, import_i18n7.__)("Cancel")
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
-        Button4,
-        {
-          variant: "solid",
-          tone: "brand",
-          size: "compact",
-          onClick: done,
-          children: (0, import_i18n7.__)("Done")
-        }
-      )
-    ] }) : /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+    isEditActionsMounted ? /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
+      Stack,
+      {
+        direction: "row",
+        gap: "sm",
+        className: isExitingEditActions ? actions_default.editActionsExit : actions_default.editActionsEnter,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+            Button4,
+            {
+              variant: "minimal",
+              tone: "brand",
+              size: "compact",
+              onClick: insert,
+              children: (0, import_i18n7.__)("Add widgets")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+            Button4,
+            {
+              variant: "minimal",
+              tone: "brand",
+              size: "compact",
+              onClick: cancel,
+              children: (0, import_i18n7.__)("Cancel")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+            Button4,
+            {
+              variant: "solid",
+              tone: "brand",
+              size: "compact",
+              onClick: done,
+              children: (0, import_i18n7.__)("Done")
+            }
+          )
+        ]
+      }
+    ) : /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
       Button4,
       {
         variant: "outline",
@@ -32073,88 +32187,6 @@ function WidgetRenderImpl({ widget, widgetType }) {
 }
 var WidgetRender = WidgetRenderImpl;
 
-// packages/style-runtime/src/index.ts
-var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
-function getRuntime34() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument34(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash34(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE34}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle34(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime34();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash34(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE34, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument34(targetDocument) {
-  const runtime = getRuntime34();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle34(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle34(hash, css) {
-  const runtime = getRuntime34();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle34(targetDocument, hash, css);
-  }
-}
-
 // routes/dashboard/widget-dashboard/components/widget-picker/widget-picker.module.css
 if (typeof process === "undefined" || true) {
   registerStyle34("5f9f70868a", "._32fba4d898ff4e12__preview{height:100%;overflow:hidden;padding:var(--wpds-dimension-padding-md,12px)}");
@@ -36893,7 +36925,7 @@ function registerStyle36(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle36("e8b7abbbd3", "._45ffcda9542501c7__item{position:relative}._69bf831f970b0e8f__item-content{height:100%;position:relative}._5dcf9498c8489dc2__is-dragging{opacity:.4;outline:var(--wpds-border-width-sm,2px) dashed var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));pointer-events:none}@media (forced-colors:active){._5dcf9498c8489dc2__is-dragging{outline-color:Highlight}}._328dc2560eba860d__preview-overlay{background:#0000;border:var(--wpds-border-width-sm,2px) dashed var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:1}@media (forced-colors:active){._328dc2560eba860d__preview-overlay{border-color:Highlight}}");
+  registerStyle36("7a1ea0b168", "._45ffcda9542501c7__item{position:relative}._69bf831f970b0e8f__item-content{height:100%;position:relative}._5dcf9498c8489dc2__is-dragging{border-radius:var(--wp-grid-placeholder-radius,var(--wpds-border-radius-lg,8px));opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) dashed var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));pointer-events:none}@media (forced-colors:active){._5dcf9498c8489dc2__is-dragging{outline-color:Highlight}}._328dc2560eba860d__preview-overlay{background:#0000;border:var(--wpds-border-width-sm,2px) dashed var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:1}@media (forced-colors:active){._328dc2560eba860d__preview-overlay{border-color:Highlight}}");
 }
 var grid_item_default = { "item": "_45ffcda9542501c7__item", "item-content": "_69bf831f970b0e8f__item-content", "is-dragging": "_5dcf9498c8489dc2__is-dragging", "preview-overlay": "_328dc2560eba860d__preview-overlay" };
 function getItemCursor(disabled2, interacting) {
@@ -37298,9 +37330,9 @@ function registerStyle37(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle37("6fffc883b9", "._40a7c261e568c69f__grid{display:grid}._1c1b25f895d429f8__drag-preview{box-shadow:0 5px 10px #00000026;cursor:grabbing;height:100%;transform:scale(1.05)}@media (prefers-reduced-motion:reduce){._1c1b25f895d429f8__drag-preview{transform:none}}");
+  registerStyle37("21e050b1cb", "._40a7c261e568c69f__grid{display:grid}._6f4ce9c6f496b1ee__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._6f4ce9c6f496b1ee__drag-preview-frame{transform:none}}");
 }
-var grid_default2 = { "grid": "_40a7c261e568c69f__grid", "drag-preview": "_1c1b25f895d429f8__drag-preview" };
+var grid_default2 = { "grid": "_40a7c261e568c69f__grid", "drag-preview-frame": "_6f4ce9c6f496b1ee__drag-preview-frame" };
 var NO_SORT_STRATEGY = () => null;
 var DashboardGrid = (0, import_element128.forwardRef)(
   function DashboardGrid2(props, ref) {
@@ -37317,6 +37349,7 @@ var DashboardGrid = (0, import_element128.forwardRef)(
       onChangeLayout,
       onPreviewLayout,
       renderResizeHandle,
+      renderDragPreview,
       ...divProps
     } = props;
     const [temporaryLayout, setTemporaryLayout] = (0, import_element128.useState)();
@@ -37556,6 +37589,9 @@ var DashboardGrid = (0, import_element128.forwardRef)(
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
+    const activeClone = activeId ? childrenMap.get(activeId) : null;
+    const DragPreview = renderDragPreview;
+    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: grid_default2["drag-preview-frame"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) : null;
     return /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
       DndContext,
       {
@@ -37604,7 +37640,7 @@ var DashboardGrid = (0, import_element128.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(DragOverlay, { children: activeId && childrenMap.get(activeId) ? /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: grid_default2["drag-preview"], children: childrenMap.get(activeId) }) : null })
+          /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(DragOverlay, { children: dragOverlayContent })
         ]
       }
     );
@@ -37613,9 +37649,9 @@ var DashboardGrid = (0, import_element128.forwardRef)(
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle34("587e07838a", "._561eb2c5c7cbcb6b__grid{width:100%}");
+  registerStyle34("e81c6396b0", "._561eb2c5c7cbcb6b__grid{width:100%}._8fa4ad5c2e86a6b9__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}._8a257ea80aac989e__tileEditMode{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._8a257ea80aac989e__tileEditMode:focus-visible,._8a257ea80aac989e__tileEditMode:hover{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}._8a257ea80aac989e__tileEditMode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._48e2b8516636ed6b__dragPreview{height:100%}._48e2b8516636ed6b__dragPreview ._8fa4ad5c2e86a6b9__tile{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}@media not (prefers-reduced-motion){._8fa4ad5c2e86a6b9__tile{transition:box-shadow .18s ease}}");
 }
-var widgets_default = { "grid": "_561eb2c5c7cbcb6b__grid" };
+var widgets_default = { "grid": "_561eb2c5c7cbcb6b__grid", "tile": "_8fa4ad5c2e86a6b9__tile", "tileEditMode": "_8a257ea80aac989e__tileEditMode", "dragPreview": "_48e2b8516636ed6b__dragPreview" };
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
 var import_jsx_runtime163 = __toESM(require_jsx_runtime());
@@ -37652,19 +37688,27 @@ var Widgets = (0, import_element129.forwardRef)(
       [layout, onLayoutChange]
     );
     const children = layout.map((widget, index2) => /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
-      WidgetChrome,
+      "div",
       {
-        widget,
-        index: index2
+        className: clsx_default(widgets_default.tile, {
+          [widgets_default.tileEditMode]: editMode
+        }),
+        tabIndex: editMode ? 0 : void 0,
+        children: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(WidgetChrome, { widget, index: index2 })
       },
       widget.uuid
     ));
+    const renderDragPreview = (0, import_element129.useCallback)(
+      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
+      []
+    );
     const sharedProps = {
       layout: gridLayout,
       spacing: gridSettings.spacing,
       rowHeight: gridSettings.rowHeight,
       editMode,
-      onChangeLayout: handleLayoutChange
+      onChangeLayout: handleLayoutChange,
+      renderDragPreview
     };
     return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: gridSettings.columns !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
       DashboardGrid,
