@@ -9028,7 +9028,7 @@ var wp;
   }
   glo[importIdentifier] = true;
 
-  // packages/sync/node_modules/y-protocols/awareness.js
+  // node_modules/y-protocols/awareness.js
   var outdatedTimeout = 3e4;
   var Awareness = class extends Observable {
     /**
@@ -9222,7 +9222,7 @@ var wp;
   // packages/sync/build-module/providers/http-polling/polling-manager.mjs
   var import_hooks2 = __toESM(require_hooks(), 1);
 
-  // packages/sync/node_modules/y-protocols/sync.js
+  // node_modules/y-protocols/sync.js
   var messageYjsSyncStep1 = 0;
   var messageYjsSyncStep2 = 1;
   var messageYjsUpdate = 2;
