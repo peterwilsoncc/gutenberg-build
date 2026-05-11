@@ -286,7 +286,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect97(
+          useEffect98(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -312,7 +312,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React27 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState136 = React27.useState, useEffect97 = React27.useEffect, useLayoutEffect12 = React27.useLayoutEffect, useDebugValue = React27.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React27 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState136 = React27.useState, useEffect98 = React27.useEffect, useLayoutEffect12 = React27.useLayoutEffect, useDebugValue = React27.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React27.useSyncExternalStore ? React27.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2697,7 +2697,7 @@ var wp;
     PostPreviewButton: () => PostPreviewButton,
     PostPublishButton: () => post_publish_button_default,
     PostPublishButtonLabel: () => PublishButtonLabel,
-    PostPublishPanel: () => post_publish_panel_default,
+    PostPublishPanel: () => PostPublishPanel,
     PostSavedState: () => PostSavedState,
     PostSchedule: () => PostSchedule,
     PostScheduleCheck: () => PostScheduleCheck,
@@ -10372,8 +10372,8 @@ var wp;
     };
     return _extends2.apply(this, arguments);
   }
-  var withAnimated = (Component6, host2) => {
-    const hasInstance = !is.fun(Component6) || Component6.prototype && Component6.prototype.isReactComponent;
+  var withAnimated = (Component5, host2) => {
+    const hasInstance = !is.fun(Component5) || Component5.prototype && Component5.prototype.isReactComponent;
     return (0, import_react10.forwardRef)((givenProps, givenRef) => {
       const instanceRef = (0, import_react10.useRef)(null);
       const ref = hasInstance && (0, import_react10.useCallback)((value) => {
@@ -10409,7 +10409,7 @@ var wp;
         each(observer2.deps, (dep) => removeFluidObserver(dep, observer2));
       });
       const usedProps = host2.getComponentProps(props.getValue());
-      return React22.createElement(Component6, _extends2({}, usedProps, {
+      return React22.createElement(Component5, _extends2({}, usedProps, {
         ref
       }));
     });
@@ -10453,21 +10453,21 @@ var wp;
       createAnimatedStyle: _createAnimatedStyle,
       getComponentProps: _getComponentProps
     };
-    const animated2 = (Component6) => {
-      const displayName = getDisplayName(Component6) || "Anonymous";
-      if (is.str(Component6)) {
-        Component6 = animated2[Component6] || (animated2[Component6] = withAnimated(Component6, hostConfig));
+    const animated2 = (Component5) => {
+      const displayName = getDisplayName(Component5) || "Anonymous";
+      if (is.str(Component5)) {
+        Component5 = animated2[Component5] || (animated2[Component5] = withAnimated(Component5, hostConfig));
       } else {
-        Component6 = Component6[cacheKey] || (Component6[cacheKey] = withAnimated(Component6, hostConfig));
+        Component5 = Component5[cacheKey] || (Component5[cacheKey] = withAnimated(Component5, hostConfig));
       }
-      Component6.displayName = `Animated(${displayName})`;
-      return Component6;
+      Component5.displayName = `Animated(${displayName})`;
+      return Component5;
     };
-    eachProp(components, (Component6, key) => {
+    eachProp(components, (Component5, key) => {
       if (is.arr(components)) {
-        key = getDisplayName(Component6);
+        key = getDisplayName(Component5);
       }
-      animated2[key] = animated2(Component6);
+      animated2[key] = animated2(Component5);
     });
     return {
       animated: animated2
@@ -22012,8 +22012,8 @@ var wp;
     Role.displayName = render4.displayName || render4.name;
     return Role;
   }
-  function memo22(Component6, propsAreEqual) {
-    return React25.memo(Component6, propsAreEqual);
+  function memo22(Component5, propsAreEqual) {
+    return React25.memo(Component5, propsAreEqual);
   }
   function createElement5(Type, props) {
     const { wrapElement, render: render4, ...rest } = props;
@@ -35451,7 +35451,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function ActionItemSlot({
     name: name2,
-    as: Component6 = import_components81.MenuGroup,
+    as: Component5 = import_components81.MenuGroup,
     fillProps = {},
     bubblesVirtually,
     ...props
@@ -35485,15 +35485,15 @@ If there's a particular need for this, please submit a feature request at https:
             }
             return child;
           });
-          return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Component6, { ...props, children });
+          return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Component5, { ...props, children });
         }
       }
     );
   }
-  function ActionItem({ name: name2, as: Component6 = import_components81.Button, onClick, ...props }) {
+  function ActionItem({ name: name2, as: Component5 = import_components81.Button, onClick, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(import_components81.Fill, { name: name2, children: ({ onClick: fpOnClick }) => {
       return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
-        Component6,
+        Component5,
         {
           onClick: onClick || fpOnClick ? (...args) => {
             (onClick || noop5)(...args);
@@ -64001,7 +64001,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/with-global-styles-provider.mjs
   var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
-  function withGlobalStylesProvider(Component6) {
+  function withGlobalStylesProvider(Component5) {
     return function WrappedComponent({
       value,
       baseValue,
@@ -64014,7 +64014,7 @@ If there's a particular need for this, please submit a feature request at https:
           value,
           baseValue,
           onChange,
-          children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(Component6, { ...props })
+          children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(Component5, { ...props })
         }
       );
     };
@@ -73279,104 +73279,25 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-publish-panel/index.mjs
   var import_jsx_runtime414 = __toESM(require_jsx_runtime(), 1);
-  var PostPublishPanel = class extends import_element230.Component {
-    constructor() {
-      super(...arguments);
-      this.onSubmit = this.onSubmit.bind(this);
-      this.cancelButtonNode = (0, import_element230.createRef)();
-    }
-    componentDidMount() {
-      this.timeoutID = setTimeout(() => {
-        this.cancelButtonNode.current.focus();
-      }, 0);
-    }
-    componentWillUnmount() {
-      clearTimeout(this.timeoutID);
-    }
-    componentDidUpdate(prevProps) {
-      if (prevProps.isPublished && !this.props.isSaving && this.props.isDirty || this.props.currentPostId !== prevProps.currentPostId) {
-        this.props.onClose();
-      }
-    }
-    onSubmit() {
-      const { onClose, hasPublishAction, isPostTypeViewable } = this.props;
-      if (!hasPublishAction || !isPostTypeViewable) {
-        onClose();
-      }
-    }
-    render() {
-      const {
-        forceIsDirty,
-        isBeingScheduled,
-        isPublished,
-        isPublishSidebarEnabled: isPublishSidebarEnabled2,
-        isScheduled,
-        isSaving,
-        isSavingNonPostEntityChanges: isSavingNonPostEntityChanges2,
-        onClose,
-        onTogglePublishSidebar,
-        PostPublishExtension,
-        PrePublishExtension,
-        currentPostId,
-        ...additionalProps
-      } = this.props;
-      const {
-        hasPublishAction,
-        isDirty,
-        isPostTypeViewable,
-        ...propsForPanel
-      } = additionalProps;
-      const isPublishedOrScheduled = isPublished || isScheduled && isBeingScheduled;
-      const isPrePublish = !isPublishedOrScheduled && !isSaving;
-      const isPostPublish = isPublishedOrScheduled && !isSaving;
-      return /* @__PURE__ */ (0, import_jsx_runtime414.jsxs)("div", { className: "editor-post-publish-panel", ...propsForPanel, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime414.jsx)("div", { className: "editor-post-publish-panel__header", children: isPostPublish ? /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
-          import_components218.Button,
-          {
-            size: "compact",
-            onClick: onClose,
-            icon: close_small_default,
-            label: (0, import_i18n246.__)("Close panel")
-          }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime414.jsxs)(import_jsx_runtime414.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime414.jsx)("div", { className: "editor-post-publish-panel__header-cancel-button", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
-            import_components218.Button,
-            {
-              ref: this.cancelButtonNode,
-              accessibleWhenDisabled: true,
-              disabled: isSavingNonPostEntityChanges2,
-              onClick: onClose,
-              variant: "secondary",
-              size: "compact",
-              children: (0, import_i18n246.__)("Cancel")
-            }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime414.jsx)("div", { className: "editor-post-publish-panel__header-publish-button", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
-            post_publish_button_default,
-            {
-              onSubmit: this.onSubmit,
-              forceIsDirty
-            }
-          ) })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime414.jsxs)("div", { className: "editor-post-publish-panel__content", children: [
-          isPrePublish && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(prepublish_default, { children: PrePublishExtension && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(PrePublishExtension, {}) }),
-          isPostPublish && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(PostPublishPanelPostpublish, { focusOnMount: true, children: PostPublishExtension && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(PostPublishExtension, {}) }),
-          isSaving && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_components218.Spinner, {})
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime414.jsx)("div", { className: "editor-post-publish-panel__footer", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
-          import_components218.CheckboxControl,
-          {
-            label: (0, import_i18n246.__)("Always show pre-publish checks."),
-            checked: isPublishSidebarEnabled2,
-            onChange: onTogglePublishSidebar
-          }
-        ) })
-      ] });
-    }
-  };
-  var post_publish_panel_default = (0, import_compose50.compose)([
-    (0, import_data157.withSelect)((select7) => {
+  function PostPublishPanel({
+    forceIsDirty,
+    onClose,
+    PostPublishExtension,
+    PrePublishExtension,
+    ...propsForPanel
+  }) {
+    const {
+      hasPublishAction,
+      isPostTypeViewable,
+      isBeingScheduled,
+      isDirty,
+      isPublished,
+      isPublishSidebarEnabled: isPublishSidebarEnabled2,
+      isSaving,
+      isSavingNonPostEntityChanges: isSavingNonPostEntityChanges2,
+      isScheduled,
+      currentPostId
+    } = (0, import_data157.useSelect)((select7) => {
       const { getPostType } = select7(import_core_data97.store);
       const {
         getCurrentPost: getCurrentPost2,
@@ -73388,9 +73309,9 @@ If there's a particular need for this, please submit a feature request at https:
         isEditedPostDirty: isEditedPostDirty2,
         isAutosavingPost: isAutosavingPost2,
         isSavingPost: isSavingPost2,
-        isSavingNonPostEntityChanges: isSavingNonPostEntityChanges2
+        isSavingNonPostEntityChanges: _isSavingNonPostEntityChanges,
+        isPublishSidebarEnabled: _isPublishSidebarEnabled
       } = select7(store);
-      const { isPublishSidebarEnabled: isPublishSidebarEnabled2 } = select7(store);
       const postType2 = getPostType(getEditedPostAttribute2("type"));
       return {
         hasPublishAction: getCurrentPost2()._links?.["wp:action-publish"] ?? false,
@@ -73398,28 +73319,100 @@ If there's a particular need for this, please submit a feature request at https:
         isBeingScheduled: isEditedPostBeingScheduled2(),
         isDirty: isEditedPostDirty2(),
         isPublished: isCurrentPostPublished2(),
-        isPublishSidebarEnabled: isPublishSidebarEnabled2(),
+        isPublishSidebarEnabled: _isPublishSidebarEnabled(),
         isSaving: isSavingPost2() && !isAutosavingPost2(),
-        isSavingNonPostEntityChanges: isSavingNonPostEntityChanges2(),
+        isSavingNonPostEntityChanges: _isSavingNonPostEntityChanges(),
         isScheduled: isCurrentPostScheduled2(),
         currentPostId: getCurrentPostId2()
       };
-    }),
-    (0, import_data157.withDispatch)((dispatch7, { isPublishSidebarEnabled: isPublishSidebarEnabled2 }) => {
-      const { disablePublishSidebar: disablePublishSidebar2, enablePublishSidebar: enablePublishSidebar2 } = dispatch7(store);
-      return {
-        onTogglePublishSidebar: () => {
-          if (isPublishSidebarEnabled2) {
-            disablePublishSidebar2();
-          } else {
-            enablePublishSidebar2();
-          }
-        }
-      };
-    }),
-    import_components218.withFocusReturn,
-    import_components218.withConstrainedTabbing
-  ])(PostPublishPanel);
+    }, []);
+    const { disablePublishSidebar: disablePublishSidebar2, enablePublishSidebar: enablePublishSidebar2 } = (0, import_data157.useDispatch)(store);
+    const cancelButtonRef = (0, import_element230.useRef)(null);
+    const wrapperRef = (0, import_compose50.useMergeRefs)([
+      (0, import_compose50.useFocusReturn)(),
+      (0, import_compose50.useConstrainedTabbing)()
+    ]);
+    (0, import_element230.useEffect)(() => {
+      cancelButtonRef.current?.focus();
+    }, []);
+    const prevPostIdRef = (0, import_element230.useRef)(currentPostId);
+    const stableOnClose = (0, import_compose50.useEvent)(onClose);
+    (0, import_element230.useEffect)(() => {
+      const postChanged = currentPostId !== prevPostIdRef.current;
+      prevPostIdRef.current = currentPostId;
+      if (postChanged || isPublished && !isSaving && isDirty) {
+        stableOnClose();
+      }
+    }, [isPublished, isSaving, isDirty, currentPostId, stableOnClose]);
+    function onTogglePublishSidebar() {
+      if (isPublishSidebarEnabled2) {
+        disablePublishSidebar2();
+      } else {
+        enablePublishSidebar2();
+      }
+    }
+    function onSubmit() {
+      if (!hasPublishAction || !isPostTypeViewable) {
+        onClose();
+      }
+    }
+    const isPublishedOrScheduled = isPublished || isScheduled && isBeingScheduled;
+    const isPrePublish = !isPublishedOrScheduled && !isSaving;
+    const isPostPublish = isPublishedOrScheduled && !isSaving;
+    return /* @__PURE__ */ (0, import_jsx_runtime414.jsxs)(
+      "div",
+      {
+        ref: wrapperRef,
+        tabIndex: -1,
+        className: "editor-post-publish-panel",
+        ...propsForPanel,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime414.jsx)("div", { className: "editor-post-publish-panel__header", children: isPostPublish ? /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
+            import_components218.Button,
+            {
+              size: "compact",
+              onClick: onClose,
+              icon: close_small_default,
+              label: (0, import_i18n246.__)("Close panel")
+            }
+          ) : /* @__PURE__ */ (0, import_jsx_runtime414.jsxs)(import_jsx_runtime414.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime414.jsx)("div", { className: "editor-post-publish-panel__header-cancel-button", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
+              import_components218.Button,
+              {
+                ref: cancelButtonRef,
+                accessibleWhenDisabled: true,
+                disabled: isSavingNonPostEntityChanges2,
+                onClick: onClose,
+                variant: "secondary",
+                size: "compact",
+                children: (0, import_i18n246.__)("Cancel")
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime414.jsx)("div", { className: "editor-post-publish-panel__header-publish-button", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
+              post_publish_button_default,
+              {
+                onSubmit,
+                forceIsDirty
+              }
+            ) })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime414.jsxs)("div", { className: "editor-post-publish-panel__content", children: [
+            isPrePublish && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(prepublish_default, { children: PrePublishExtension && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(PrePublishExtension, {}) }),
+            isPostPublish && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(PostPublishPanelPostpublish, { focusOnMount: true, children: PostPublishExtension && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(PostPublishExtension, {}) }),
+            isSaving && /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_components218.Spinner, {})
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime414.jsx)("div", { className: "editor-post-publish-panel__footer", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
+            import_components218.CheckboxControl,
+            {
+              label: (0, import_i18n246.__)("Always show pre-publish checks."),
+              checked: isPublishSidebarEnabled2,
+              onChange: onTogglePublishSidebar
+            }
+          ) })
+        ]
+      }
+    );
+  }
 
   // packages/editor/build-module/components/post-saved-state/index.mjs
   var import_components221 = __toESM(require_components(), 1);
@@ -74975,7 +74968,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_server_side_render = __toESM(require_server_side_render(), 1);
   var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
   function deprecateComponent(name2, Wrapped, staticsToHoist = []) {
-    const Component6 = (0, import_element245.forwardRef)((props, ref) => {
+    const Component5 = (0, import_element245.forwardRef)((props, ref) => {
       (0, import_deprecated12.default)("wp.editor." + name2, {
         since: "5.3",
         alternative: "wp.blockEditor." + name2,
@@ -74984,12 +74977,12 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(Wrapped, { ref, ...props });
     });
     staticsToHoist.forEach((staticName) => {
-      Component6[staticName] = deprecateComponent(
+      Component5[staticName] = deprecateComponent(
         name2 + "." + staticName,
         Wrapped[staticName]
       );
     });
-    return Component6;
+    return Component5;
   }
   function deprecateFunction(name2, func) {
     return (...args) => {
@@ -80179,7 +80172,7 @@ If there's a particular need for this, please submit a feature request at https:
     let unmountableContent;
     if (publishSidebarOpened) {
       unmountableContent = /* @__PURE__ */ (0, import_jsx_runtime469.jsx)(
-        post_publish_panel_default,
+        PostPublishPanel,
         {
           onClose: closePublishSidebar2,
           forceIsDirty: forceIsDirtyPublishPanel,
