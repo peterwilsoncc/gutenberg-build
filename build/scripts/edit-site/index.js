@@ -16686,8 +16686,8 @@ var wp;
                             ringbuffer,
                             ringbuffer_size
                           );
-                          for (var _x24 = 0; _x24 < copy_dst - ringbuffer_end; _x24++)
-                            ringbuffer[_x24] = ringbuffer[ringbuffer_end + _x24];
+                          for (var _x26 = 0; _x26 < copy_dst - ringbuffer_end; _x26++)
+                            ringbuffer[_x26] = ringbuffer[ringbuffer_end + _x26];
                         }
                       } else {
                         throw new Error(
@@ -24589,7 +24589,7 @@ var wp;
             to: "/identity",
             uid: "identity-navigation-item",
             icon: site_logo_default,
-            children: (0, import_i18n61.__)("Identity")
+            children: (0, import_i18n61._x)("Identity", "site identity")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
@@ -44529,15 +44529,23 @@ If there's a particular need for this, please submit a feature request at https:
     const onChange = (edits) => {
       editEntityRecord("root", "site", void 0, edits);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(page_default2, { title: (0, import_i18n122.__)("Identity"), headingLevel: 2, hasPadding: true, children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
-      DataForm,
+    return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+      page_default2,
       {
-        data,
-        fields,
-        form,
-        onChange
+        title: (0, import_i18n122._x)("Identity", "site identity"),
+        headingLevel: 2,
+        hasPadding: true,
+        children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+          DataForm,
+          {
+            data,
+            fields,
+            form,
+            onChange
+          }
+        )
       }
-    ) });
+    );
   }
 
   // packages/edit-site/build-module/components/site-editor-routes/identity.mjs
