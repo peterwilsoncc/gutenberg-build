@@ -31228,7 +31228,9 @@ var import_components54 = __toESM(require_components(), 1);
 var import_i18n57 = __toESM(require_i18n(), 1);
 var import_url3 = __toESM(require_url(), 1);
 var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components54.privateApis);
+var { ValidatedInputControl: ValidatedInputControl4, ValidatedToggleControl: ValidatedToggleControl2 } = unlock2(
+  import_components54.privateApis
+);
 function getCustomValidity2(validity) {
   if (validity?.required?.message) {
     return validity.required;
@@ -31344,6 +31346,36 @@ var statusField = {
   id: "status",
   label: (0, import_i18n57.__)("Status"),
   description: (0, import_i18n57.__)("Enabled and registered with WordPress when active."),
+  // The field keeps `label: 'Status'` so the filter chip and column header
+  // read naturally ("Status: Active"); the form toggle uses its own "Active"
+  // label — the on/off semantic is clearer next to a switch.
+  Edit: ({
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    markWhenOptional,
+    validity
+  }) => {
+    const isActive = field.getValue({ item: data }) === "publish";
+    return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+      ValidatedToggleControl2,
+      {
+        label: (0, import_i18n57.__)("Active"),
+        hidden: hideLabelFromVision,
+        help: field.description,
+        markWhenOptional,
+        customValidity: getCustomValidity2(validity),
+        checked: isActive,
+        onChange: (next) => onChange(
+          field.setValue({
+            item: data,
+            value: next ? "publish" : "draft"
+          })
+        )
+      }
+    );
+  },
   elements: [
     { value: "publish", label: (0, import_i18n57.__)("Active") },
     { value: "draft", label: (0, import_i18n57.__)("Inactive") }
