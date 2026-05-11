@@ -36661,15 +36661,15 @@ function isAfter(a2, b2) {
   return a2.data.current.sortable.index < b2.data.current.sortable.index;
 }
 
-// packages/grid/build-module/grid.mjs
+// packages/grid/build-module/dashboard-grid/index.mjs
 var import_compose19 = __toESM(require_compose(), 1);
 var import_element128 = __toESM(require_element(), 1);
 
-// packages/grid/build-module/grid-item.mjs
+// packages/grid/build-module/dashboard-grid/grid-item.mjs
 var import_element127 = __toESM(require_element(), 1);
 var import_compose18 = __toESM(require_compose(), 1);
 
-// packages/grid/build-module/resize-handle.mjs
+// packages/grid/build-module/shared/resize-handle.mjs
 var import_element126 = __toESM(require_element(), 1);
 var import_compose17 = __toESM(require_compose(), 1);
 var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
@@ -36754,9 +36754,9 @@ function registerStyle35(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle35("ee2dba8840", ".dab8841807890506__resize-handle{border-block-end:12px solid var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:12px solid #0000;bottom:0;cursor:nwse-resize;height:0;inset-inline-end:0;position:absolute;width:0;z-index:1}.c49c86a5ad590300__is-horizontal-only{cursor:ew-resize}");
+  registerStyle35("9ee34907fd", '._4da787f72dc00d8b__resize-handle{border-block-end:12px solid var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:12px solid #0000;bottom:0;cursor:nwse-resize;height:0;inset-inline-end:0;position:absolute;width:0;z-index:1}._885412b44a137da0__is-horizontal-only{align-items:center;background:#0000;border-style:none;bottom:auto;cursor:ew-resize;display:flex;height:40px;justify-content:center;top:50%;transform:translateY(-50%);width:16px}._885412b44a137da0__is-horizontal-only:before{background-color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-radius:2px;content:"";height:24px;width:4px}@media (forced-colors:active){._885412b44a137da0__is-horizontal-only:before{background-color:Highlight}}');
 }
-var resize_handle_default = { "resize-handle": "dab8841807890506__resize-handle", "is-horizontal-only": "c49c86a5ad590300__is-horizontal-only" };
+var resize_handle_default = { "resize-handle": "_4da787f72dc00d8b__resize-handle", "is-horizontal-only": "_885412b44a137da0__is-horizontal-only" };
 function ResizeHandle({
   itemId,
   verticalResizable = true,
@@ -36842,7 +36842,7 @@ function ResizeHandleWrapper(props) {
   );
 }
 
-// packages/grid/build-module/grid-item.mjs
+// packages/grid/build-module/dashboard-grid/grid-item.mjs
 var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE36 = "data-wp-hash";
 function getRuntime36() {
@@ -36925,9 +36925,9 @@ function registerStyle36(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle36("7a1ea0b168", "._45ffcda9542501c7__item{position:relative}._69bf831f970b0e8f__item-content{height:100%;position:relative}._5dcf9498c8489dc2__is-dragging{border-radius:var(--wp-grid-placeholder-radius,var(--wpds-border-radius-lg,8px));opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) dashed var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));pointer-events:none}@media (forced-colors:active){._5dcf9498c8489dc2__is-dragging{outline-color:Highlight}}._328dc2560eba860d__preview-overlay{background:#0000;border:var(--wpds-border-width-sm,2px) dashed var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:1}@media (forced-colors:active){._328dc2560eba860d__preview-overlay{border-color:Highlight}}");
+  registerStyle36("d1d61343be", "._5d1abcb332a18701__item{position:relative}._54de57c12d3ce67e__item-content{height:100%;position:relative}._81d4e1a6c979f1e4__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0);opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) dashed var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));pointer-events:none}@media (forced-colors:active){._81d4e1a6c979f1e4__is-dragging{outline-color:Highlight}}._2028fc095dbc5cb2__preview-overlay{background:#0000;border:var(--wpds-border-width-sm,2px) dashed var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:1}@media (forced-colors:active){._2028fc095dbc5cb2__preview-overlay{border-color:Highlight}}");
 }
-var grid_item_default = { "item": "_45ffcda9542501c7__item", "item-content": "_69bf831f970b0e8f__item-content", "is-dragging": "_5dcf9498c8489dc2__is-dragging", "preview-overlay": "_328dc2560eba860d__preview-overlay" };
+var grid_item_default = { "item": "_5d1abcb332a18701__item", "item-content": "_54de57c12d3ce67e__item-content", "is-dragging": "_81d4e1a6c979f1e4__is-dragging", "preview-overlay": "_2028fc095dbc5cb2__preview-overlay" };
 function getItemCursor(disabled2, interacting) {
   if (disabled2) {
     return "default";
@@ -36966,12 +36966,7 @@ function GridItem4({
       typeof item.width === "number" ? item.width : 1,
       maxColumns
     )}`,
-    gridRowEnd: `span ${item.height || 1}`,
-    // Suppress the grab hint while any gesture is active so the
-    // inline `cursor` on the tile doesn't override the gesture's
-    // document-level cursor (e.g. the resize lock). Setting
-    // `undefined` leaves the property off the DOM.
-    cursor: getItemCursor(disabled2, interacting)
+    gridRowEnd: `span ${item.height || 1}`
   };
   const itemClassName = clsx_default(
     grid_item_default.item,
@@ -37065,28 +37060,46 @@ function GridItem4({
             children: actionableArea
           }
         ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)("div", { ...listeners, style: { height: "100%" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)("div", { className: grid_item_default["item-content"], children: [
-            children,
-            !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
-              ResizeHandleWrapper,
-              {
-                itemId: item.key,
-                verticalResizable,
-                onResize: handleResize,
-                onResizeEnd: handleResizeEnd,
-                renderResizeHandle
-              }
-            )
-          ] }),
-          previewOverlay
-        ] })
+        /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)(
+          "div",
+          {
+            ...listeners,
+            style: {
+              height: "100%",
+              // Cursor lives on the listener wrapper rather
+              // than the outer tile so `actionableArea`
+              // children render their own cursor (e.g.
+              // `pointer` on buttons) instead of inheriting
+              // the grid's `grab`. Setting `undefined`
+              // during an active gesture leaves the property
+              // off the DOM so the document-level cursor
+              // lock from the resize handle takes over.
+              cursor: getItemCursor(disabled2, interacting)
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)("div", { className: grid_item_default["item-content"], children: [
+                children,
+                !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
+                  ResizeHandleWrapper,
+                  {
+                    itemId: item.key,
+                    verticalResizable,
+                    onResize: handleResize,
+                    onResizeEnd: handleResizeEnd,
+                    renderResizeHandle
+                  }
+                )
+              ] }),
+              previewOverlay
+            ]
+          }
+        )
       ]
     }
   );
 }
 
-// packages/grid/build-module/resolve-fill-widths.mjs
+// packages/grid/build-module/dashboard-grid/resolve-fill-widths.mjs
 function resolveFillWidths(sortedKeys, layoutMap, maxColumns) {
   const resolved = /* @__PURE__ */ new Map();
   const n2 = sortedKeys.length;
@@ -37247,7 +37260,7 @@ function resolveFillWidths(sortedKeys, layoutMap, maxColumns) {
   return resolved;
 }
 
-// packages/grid/build-module/grid.mjs
+// packages/grid/build-module/dashboard-grid/index.mjs
 var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE37 = "data-wp-hash";
 function getRuntime37() {
@@ -37330,9 +37343,9 @@ function registerStyle37(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle37("21e050b1cb", "._40a7c261e568c69f__grid{display:grid}._6f4ce9c6f496b1ee__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._6f4ce9c6f496b1ee__drag-preview-frame{transform:none}}");
+  registerStyle37("3665eca9bb", "._960c435c33759f46__grid{display:grid}._48e8cd4225dcb813__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{transform:none}}");
 }
-var grid_default2 = { "grid": "_40a7c261e568c69f__grid", "drag-preview-frame": "_6f4ce9c6f496b1ee__drag-preview-frame" };
+var grid_default2 = { "grid": "_960c435c33759f46__grid", "drag-preview-frame": "_48e8cd4225dcb813__drag-preview-frame" };
 var NO_SORT_STRATEGY = () => null;
 var DashboardGrid = (0, import_element128.forwardRef)(
   function DashboardGrid2(props, ref) {
