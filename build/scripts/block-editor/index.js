@@ -42334,7 +42334,13 @@ var wp;
         editContentOnlySection2(clientId);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(import_components103.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(import_components103.ToolbarButton, { onClick: handleClick, children: isEditing ? (0, import_i18n90.__)("Exit pattern") : (0, import_i18n90.__)("Edit pattern") }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(import_components103.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(import_components103.ToolbarButton, { onClick: handleClick, children: isEditing ? (
+      /* translators: Button label to leave pattern editing mode. */
+      (0, import_i18n90.__)("Exit pattern")
+    ) : (
+      /* translators: Button label to enter pattern editing mode. */
+      (0, import_i18n90.__)("Edit pattern")
+    ) }) });
   }
 
   // packages/block-editor/build-module/components/block-toolbar/block-toolbar-icon.mjs
@@ -57676,7 +57682,13 @@ var wp;
         __next40pxDefaultSize: true,
         variant: "secondary",
         onClick: handleClick,
-        children: editedContentOnlySection2 ? (0, import_i18n175.__)("Exit pattern") : (0, import_i18n175.__)("Edit pattern")
+        children: editedContentOnlySection2 ? (
+          /* translators: Button label to leave pattern editing mode. */
+          (0, import_i18n175.__)("Exit pattern")
+        ) : (
+          /* translators: Button label to enter pattern editing mode. */
+          (0, import_i18n175.__)("Edit pattern")
+        )
       }
     ) });
   }
