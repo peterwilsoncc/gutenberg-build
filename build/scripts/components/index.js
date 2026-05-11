@@ -32845,7 +32845,7 @@ This message will only show in development mode. It won't appear in production. 
     const valueIsColorMix = /color-mix\(/.test(value ?? "");
     return !valueIsCssVariable && !valueIsColorMix;
   };
-  var extractColorNameFromCurrentValue = (currentValue, colors = [], showMultiplePalettes = false) => {
+  var extractColorNameFromCurrentValue = (currentValue, colors = [], showMultiplePalettes = false, selectedSlug) => {
     if (!currentValue) {
       return "";
     }
@@ -32859,8 +32859,15 @@ This message will only show in development mode. It won't appear in production. 
     } of colorPalettes) {
       for (const {
         name: colorName,
-        color: colorValue
+        color: colorValue,
+        slug
       } of paletteColors) {
+        if (selectedSlug) {
+          if (slug === selectedSlug) {
+            return colorName;
+          }
+          continue;
+        }
         const normalizedColorValue = currentValueIsSimpleColor ? w(colorValue).toHex() : colorValue;
         if (normalizedCurrentValue === normalizedColorValue) {
           return colorName;
@@ -32896,15 +32903,17 @@ This message will only show in development mode. It won't appear in production. 
     colors,
     onChange,
     value,
+    selectedSlug,
     ...additionalProps
   }) {
     const colorOptions = (0, import_element80.useMemo)(() => {
       return colors.map(({
         color: color2,
-        name
+        name,
+        slug
       }, index2) => {
         const colordColor = w(color2);
-        const isSelected2 = value === color2;
+        const isSelected2 = selectedSlug ? slug === selectedSlug : value === color2;
         return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(circular_option_picker_default2.Option, {
           isSelected: isSelected2,
           selectedIconProps: isSelected2 ? {
@@ -32916,10 +32925,10 @@ This message will only show in development mode. It won't appear in production. 
             backgroundColor: color2,
             color: color2
           },
-          onClick: isSelected2 ? clearColor : () => onChange(color2, index2)
-        }, `${color2}-${index2}`);
+          onClick: isSelected2 ? clearColor : () => onChange(color2, index2, slug)
+        }, slug ?? `${color2}-${index2}`);
       });
-    }, [colors, value, onChange, clearColor]);
+    }, [colors, value, selectedSlug, onChange, clearColor]);
     return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(circular_option_picker_default2.OptionGroup, {
       className: className2,
       options: colorOptions,
@@ -32932,6 +32941,7 @@ This message will only show in development mode. It won't appear in production. 
     colors,
     onChange,
     value,
+    selectedSlug,
     headingLevel
   }) {
     const instanceId = (0, import_compose34.useInstanceId)(MultiplePalettes, "color-palette");
@@ -32955,8 +32965,9 @@ This message will only show in development mode. It won't appear in production. 
           }), /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(SinglePalette, {
             clearColor,
             colors: colorPalette,
-            onChange: (newColor) => onChange(newColor, index2),
+            onChange: (newColor, _colorIndex, slug) => onChange(newColor, index2, slug),
             value,
+            selectedSlug,
             "aria-labelledby": id3
           })]
         }, index2);
@@ -33002,6 +33013,7 @@ This message will only show in development mode. It won't appear in production. 
       enableAlpha = false,
       onChange,
       value,
+      selectedSlug,
       __experimentalIsRenderedInSidebar = false,
       headingLevel = 2,
       "aria-label": ariaLabel,
@@ -33014,7 +33026,7 @@ This message will only show in development mode. It won't appear in production. 
       setNormalizedColorValue(normalizeColorValue(value, node2));
     }, [value]);
     const hasMultipleColorOrigins = isMultiplePaletteArray(colors);
-    const buttonLabelName = (0, import_element80.useMemo)(() => extractColorNameFromCurrentValue(value, colors, hasMultipleColorOrigins), [value, colors, hasMultipleColorOrigins]);
+    const buttonLabelName = (0, import_element80.useMemo)(() => extractColorNameFromCurrentValue(value, colors, hasMultipleColorOrigins, selectedSlug), [value, colors, hasMultipleColorOrigins, selectedSlug]);
     const renderCustomColorPicker = () => /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(dropdown_content_wrapper_default, {
       paddingSize: "none",
       children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(LegacyAdapter, {
@@ -33034,7 +33046,8 @@ This message will only show in development mode. It won't appear in production. 
     const paletteCommonProps = {
       clearColor,
       onChange,
-      value
+      value,
+      selectedSlug
     };
     const actions = !!clearable && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(circular_option_picker_default2.ButtonAction, {
       onClick: clearColor,
