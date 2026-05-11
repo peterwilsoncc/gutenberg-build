@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState49({
+        cachedValue = useState50({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect46(
+        useEffect47(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React79 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState49 = React79.useState, useEffect46 = React79.useEffect, useLayoutEffect10 = React79.useLayoutEffect, useDebugValue2 = React79.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React79 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState50 = React79.useState, useEffect47 = React79.useEffect, useLayoutEffect10 = React79.useLayoutEffect, useDebugValue2 = React79.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React79.useSyncExternalStore ? React79.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,7 +148,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React79 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef61 = React79.useRef, useEffect46 = React79.useEffect, useMemo57 = React79.useMemo, useDebugValue2 = React79.useDebugValue;
+      var React79 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef61 = React79.useRef, useEffect47 = React79.useEffect, useMemo57 = React79.useMemo, useDebugValue2 = React79.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef61(null);
         if (null === instRef.current) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect46(
+        useEffect47(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -253,13 +253,6 @@ var require_components = __commonJS({
   }
 });
 
-// package-external:@wordpress/api-fetch
-var require_api_fetch = __commonJS({
-  "package-external:@wordpress/api-fetch"(exports, module) {
-    module.exports = window.wp.apiFetch;
-  }
-});
-
 // package-external:@wordpress/data
 var require_data = __commonJS({
   "package-external:@wordpress/data"(exports, module) {
@@ -267,10 +260,80 @@ var require_data = __commonJS({
   }
 });
 
+// package-external:@wordpress/notices
+var require_notices = __commonJS({
+  "package-external:@wordpress/notices"(exports, module) {
+    module.exports = window.wp.notices;
+  }
+});
+
+// package-external:@wordpress/api-fetch
+var require_api_fetch = __commonJS({
+  "package-external:@wordpress/api-fetch"(exports, module) {
+    module.exports = window.wp.apiFetch;
+  }
+});
+
 // package-external:@wordpress/preferences
 var require_preferences = __commonJS({
   "package-external:@wordpress/preferences"(exports, module) {
     module.exports = window.wp.preferences;
+  }
+});
+
+// node_modules/fast-deep-equal/es6/index.js
+var require_es6 = __commonJS({
+  "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
+    "use strict";
+    module.exports = function equal(a2, b2) {
+      if (a2 === b2) return true;
+      if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
+        if (a2.constructor !== b2.constructor) return false;
+        var length, i2, keys;
+        if (Array.isArray(a2)) {
+          length = a2.length;
+          if (length != b2.length) return false;
+          for (i2 = length; i2-- !== 0; )
+            if (!equal(a2[i2], b2[i2])) return false;
+          return true;
+        }
+        if (a2 instanceof Map && b2 instanceof Map) {
+          if (a2.size !== b2.size) return false;
+          for (i2 of a2.entries())
+            if (!b2.has(i2[0])) return false;
+          for (i2 of a2.entries())
+            if (!equal(i2[1], b2.get(i2[0]))) return false;
+          return true;
+        }
+        if (a2 instanceof Set && b2 instanceof Set) {
+          if (a2.size !== b2.size) return false;
+          for (i2 of a2.entries())
+            if (!b2.has(i2[0])) return false;
+          return true;
+        }
+        if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
+          length = a2.length;
+          if (length != b2.length) return false;
+          for (i2 = length; i2-- !== 0; )
+            if (a2[i2] !== b2[i2]) return false;
+          return true;
+        }
+        if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
+        if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
+        if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
+        keys = Object.keys(a2);
+        length = keys.length;
+        if (length !== Object.keys(b2).length) return false;
+        for (i2 = length; i2-- !== 0; )
+          if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
+        for (i2 = length; i2-- !== 0; ) {
+          var key2 = keys[i2];
+          if (!equal(a2[key2], b2[key2])) return false;
+        }
+        return true;
+      }
+      return a2 !== a2 && b2 !== b2;
+    };
   }
 });
 
@@ -760,62 +823,6 @@ var require_remove_accents = __commonJS({
     module.exports = removeAccents3;
     module.exports.has = hasAccents;
     module.exports.remove = removeAccents3;
-  }
-});
-
-// node_modules/fast-deep-equal/es6/index.js
-var require_es6 = __commonJS({
-  "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
-    "use strict";
-    module.exports = function equal(a2, b2) {
-      if (a2 === b2) return true;
-      if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
-        if (a2.constructor !== b2.constructor) return false;
-        var length, i2, keys;
-        if (Array.isArray(a2)) {
-          length = a2.length;
-          if (length != b2.length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (!equal(a2[i2], b2[i2])) return false;
-          return true;
-        }
-        if (a2 instanceof Map && b2 instanceof Map) {
-          if (a2.size !== b2.size) return false;
-          for (i2 of a2.entries())
-            if (!b2.has(i2[0])) return false;
-          for (i2 of a2.entries())
-            if (!equal(i2[1], b2.get(i2[0]))) return false;
-          return true;
-        }
-        if (a2 instanceof Set && b2 instanceof Set) {
-          if (a2.size !== b2.size) return false;
-          for (i2 of a2.entries())
-            if (!b2.has(i2[0])) return false;
-          return true;
-        }
-        if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-          length = a2.length;
-          if (length != b2.length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (a2[i2] !== b2[i2]) return false;
-          return true;
-        }
-        if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
-        if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
-        if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
-        keys = Object.keys(a2);
-        length = keys.length;
-        if (length !== Object.keys(b2).length) return false;
-        for (i2 = length; i2-- !== 0; )
-          if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-        for (i2 = length; i2-- !== 0; ) {
-          var key2 = keys[i2];
-          if (!equal(a2[key2], b2[key2])) return false;
-        }
-        return true;
-      }
-      return a2 !== a2 && b2 !== b2;
-    };
   }
 });
 
@@ -15981,8 +15988,10 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/dashboard/stage.tsx
+var import_data8 = __toESM(require_data());
 var import_element131 = __toESM(require_element());
 var import_i18n55 = __toESM(require_i18n());
+var import_notices = __toESM(require_notices());
 
 // routes/dashboard/hooks/use-dashboard-layout/use-dashboard-layout.ts
 var import_api_fetch = __toESM(require_api_fetch());
@@ -16007,9 +16016,9 @@ function useDashboardLayout(dashboardName) {
   }
   return [layout, setLayout, resetLayout];
 }
-var use_dashboard_layout_default = useDashboardLayout;
 
 // routes/dashboard/widget-dashboard/context/dashboard-context.tsx
+var import_es6 = __toESM(require_es6());
 var import_element62 = __toESM(require_element());
 var import_jsx_runtime82 = __toESM(require_jsx_runtime());
 var DEFAULT_GRID = {
@@ -16021,6 +16030,20 @@ var DEFAULT_RESOLVE_WIDGET_MODULE = (moduleId) => import(
   /* webpackIgnore: true */
   moduleId
 );
+function canonicalize(layout) {
+  const indexed = layout.map((widget, index2) => ({
+    widget,
+    order: widget.placement?.order ?? index2
+  }));
+  indexed.sort((a2, b2) => a2.order - b2.order);
+  return indexed.map(({ widget }) => {
+    if (!widget.placement) {
+      return widget;
+    }
+    const { order: _stripped, ...placement } = widget.placement;
+    return { ...widget, placement };
+  });
+}
 var Context = (0, import_element62.createContext)(null);
 function useDashboardInternalContext() {
   const ctx8 = (0, import_element62.useContext)(Context);
@@ -16033,7 +16056,7 @@ function useDashboardInternalContext() {
 }
 function WidgetDashboardProvider({
   widgetTypes,
-  layout,
+  layout: committedLayout,
   onLayoutChange,
   onLayoutReset,
   editMode = false,
@@ -16042,12 +16065,41 @@ function WidgetDashboardProvider({
   gridSettings = DEFAULT_GRID,
   children
 }) {
+  const [stagingLayout, setStagingLayout] = (0, import_element62.useState)(committedLayout);
+  (0, import_element62.useEffect)(() => {
+    setStagingLayout(committedLayout);
+  }, [committedLayout]);
+  const hasUncommittedChanges = (0, import_element62.useMemo)(
+    () => !(0, import_es6.default)(
+      canonicalize(committedLayout),
+      canonicalize(stagingLayout)
+    ),
+    [committedLayout, stagingLayout]
+  );
+  const commitLayout = (0, import_element62.useCallback)(() => {
+    if (hasUncommittedChanges) {
+      onLayoutChange(canonicalize(stagingLayout));
+    }
+    onEditChange?.(false);
+  }, [hasUncommittedChanges, onLayoutChange, stagingLayout, onEditChange]);
+  const cancelLayout = (0, import_element62.useCallback)(() => {
+    setStagingLayout(committedLayout);
+    onEditChange?.(false);
+  }, [committedLayout, onEditChange]);
+  (0, import_element62.useEffect)(() => {
+    if (stagingLayout.length === 0) {
+      onEditChange?.(true);
+    }
+  }, [stagingLayout.length === 0]);
   const value = (0, import_element62.useMemo)(
     () => ({
       widgetTypes,
-      layout,
-      onLayoutChange,
+      layout: stagingLayout,
+      onLayoutChange: setStagingLayout,
       onLayoutReset,
+      commitLayout,
+      cancelLayout,
+      hasUncommittedChanges,
       editMode,
       onEditChange,
       resolveWidgetModule,
@@ -16055,9 +16107,11 @@ function WidgetDashboardProvider({
     }),
     [
       widgetTypes,
-      layout,
-      onLayoutChange,
+      stagingLayout,
       onLayoutReset,
+      commitLayout,
+      cancelLayout,
+      hasUncommittedChanges,
       editMode,
       onEditChange,
       resolveWidgetModule,
@@ -16233,7 +16287,14 @@ function MoreActionsDropdown({
 // routes/dashboard/widget-dashboard/components/actions/actions.tsx
 var import_jsx_runtime85 = __toESM(require_jsx_runtime());
 function Actions3() {
-  const { editMode, onEditChange, onLayoutReset } = useDashboardInternalContext();
+  const {
+    editMode,
+    onEditChange,
+    onLayoutReset,
+    commitLayout,
+    cancelLayout,
+    hasUncommittedChanges
+  } = useDashboardInternalContext();
   const [isEditActionsMounted, setIsEditActionsMounted] = (0, import_element64.useState)(editMode);
   const [isExitingEditActions, setIsExitingEditActions] = (0, import_element64.useState)(false);
   (0, import_element64.useEffect)(() => {
@@ -16261,13 +16322,11 @@ function Actions3() {
     setInserterOpen(true);
   }, [setInserterOpen]);
   const cancel = (0, import_element64.useCallback)(() => {
-    console.log("cancel");
-    onEditChange?.(false);
-  }, [onEditChange]);
+    cancelLayout();
+  }, [cancelLayout]);
   const done = (0, import_element64.useCallback)(() => {
-    console.log("done");
-    onEditChange?.(false);
-  }, [onEditChange]);
+    commitLayout();
+  }, [commitLayout]);
   const moreActionsItems = [
     {
       label: (0, import_i18n7.__)("Reset to default"),
@@ -16313,6 +16372,7 @@ function Actions3() {
               tone: "brand",
               size: "compact",
               onClick: done,
+              disabled: !hasUncommittedChanges,
               children: (0, import_i18n7.__)("Done")
             }
           )
@@ -25052,7 +25112,7 @@ function SearchWidget(props) {
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
-var import_es6 = __toESM(require_es6(), 1);
+var import_es62 = __toESM(require_es6(), 1);
 var import_compose12 = __toESM(require_compose(), 1);
 var import_element89 = __toESM(require_element(), 1);
 var import_components21 = __toESM(require_components(), 1);
@@ -25101,7 +25161,7 @@ function InputWidget({
       return;
     }
     const nextValue = field.getValue({ item: updatedData });
-    if ((0, import_es6.default)(nextValue, currentValue)) {
+    if ((0, import_es62.default)(nextValue, currentValue)) {
       return;
     }
     onChangeView({
@@ -37879,17 +37939,24 @@ var stage_default = { "dashboard-widgets-container": "_2381d7918cf57baa__dashboa
 // routes/dashboard/stage.tsx
 var import_jsx_runtime166 = __toESM(require_jsx_runtime());
 function Dashboard() {
-  const [layout, setLayout, resetLayout] = use_dashboard_layout_default(
+  const [layout, setLayout, resetLayout] = useDashboardLayout(
     "gutenberg_dashboard"
   );
   const widgetTypes = useWidgetTypes();
   const [editMode, setEditMode] = (0, import_element131.useState)(false);
+  const { createSuccessNotice } = (0, import_data8.useDispatch)(import_notices.store);
+  const handleLayoutChange = (next) => {
+    setLayout(next);
+    void createSuccessNotice((0, import_i18n55.__)("Dashboard saved."), {
+      type: "snackbar"
+    });
+  };
   return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
     WidgetDashboard,
     {
       widgetTypes,
       layout,
-      onLayoutChange: setLayout,
+      onLayoutChange: handleLayoutChange,
       onLayoutReset: resetLayout,
       editMode,
       onEditChange: setEditMode,
