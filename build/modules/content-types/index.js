@@ -32349,72 +32349,81 @@ function QuickEditPostTypeModal({
       setIsSaving(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(import_jsx_runtime162.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
-      Stack,
-      {
-        className: "dataviews-action-modal__quick-edit-post-type-header",
-        direction: "row",
-        justify: "space-between",
-        align: "center",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("h2", {}), children: (0, import_i18n65.__)("Quick edit post type") }),
-          /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
-            import_components57.Button,
-            {
-              size: "small",
-              icon: close_small_default,
-              label: (0, import_i18n65.__)("Close"),
-              onClick: closeModal
-            }
-          )
-        ]
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: "dataviews-action-modal__quick-edit-post-type-content", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
-      DataForm,
-      {
-        data,
-        fields,
-        form: defaultForm,
-        validity,
-        onChange: (edits) => setData(
-          (prev) => ({ ...prev, ...edits })
+  return /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
+    "form",
+    {
+      onSubmit: (event) => {
+        event.preventDefault();
+        onSave();
+      },
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
+          Stack,
+          {
+            className: "dataviews-action-modal__quick-edit-post-type-header",
+            direction: "row",
+            justify: "space-between",
+            align: "center",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("h2", {}), children: (0, import_i18n65.__)("Quick edit post type") }),
+              /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+                import_components57.Button,
+                {
+                  size: "small",
+                  icon: close_small_default,
+                  label: (0, import_i18n65.__)("Close"),
+                  onClick: closeModal
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: "dataviews-action-modal__quick-edit-post-type-content", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+          DataForm,
+          {
+            data,
+            fields,
+            form: defaultForm,
+            validity,
+            onChange: (edits) => setData(
+              (prev) => ({ ...prev, ...edits })
+            )
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
+          Stack,
+          {
+            className: "dataviews-action-modal__quick-edit-post-type-footer",
+            direction: "row",
+            gap: "sm",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+                import_components57.Button,
+                {
+                  __next40pxDefaultSize: true,
+                  variant: "secondary",
+                  onClick: closeModal,
+                  children: (0, import_i18n65.__)("Cancel")
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+                import_components57.Button,
+                {
+                  __next40pxDefaultSize: true,
+                  variant: "primary",
+                  type: "submit",
+                  isBusy: isSaving,
+                  disabled: isSaving || !isValid2,
+                  accessibleWhenDisabled: true,
+                  children: (0, import_i18n65.__)("Done")
+                }
+              )
+            ]
+          }
         )
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
-      Stack,
-      {
-        className: "dataviews-action-modal__quick-edit-post-type-footer",
-        direction: "row",
-        gap: "sm",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
-            import_components57.Button,
-            {
-              __next40pxDefaultSize: true,
-              variant: "secondary",
-              onClick: closeModal,
-              children: (0, import_i18n65.__)("Cancel")
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
-            import_components57.Button,
-            {
-              __next40pxDefaultSize: true,
-              variant: "primary",
-              isBusy: isSaving,
-              disabled: isSaving,
-              accessibleWhenDisabled: true,
-              onClick: onSave,
-              children: (0, import_i18n65.__)("Done")
-            }
-          )
-        ]
-      }
-    )
-  ] });
+      ]
+    }
+  );
 }
 var quickEditPostTypeAction = {
   id: "quick-edit-post-type",
@@ -33819,72 +33828,81 @@ function QuickEditTaxonomyModal({
       setIsSaving(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(import_jsx_runtime168.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
-      Stack,
-      {
-        className: "dataviews-action-modal__quick-edit-taxonomy-header",
-        direction: "row",
-        justify: "space-between",
-        align: "center",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)("h2", {}), children: (0, import_i18n78.__)("Quick edit taxonomy") }),
-          /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
-            import_components62.Button,
-            {
-              size: "small",
-              icon: close_small_default,
-              label: (0, import_i18n78.__)("Close"),
-              onClick: closeModal
-            }
-          )
-        ]
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime168.jsx)("div", { className: "dataviews-action-modal__quick-edit-taxonomy-content", children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
-      DataForm,
-      {
-        data,
-        fields,
-        form: defaultForm2,
-        validity,
-        onChange: (edits) => setData(
-          (prev) => ({ ...prev, ...edits })
+  return /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
+    "form",
+    {
+      onSubmit: (event) => {
+        event.preventDefault();
+        onSave();
+      },
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
+          Stack,
+          {
+            className: "dataviews-action-modal__quick-edit-taxonomy-header",
+            direction: "row",
+            justify: "space-between",
+            align: "center",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)("h2", {}), children: (0, import_i18n78.__)("Quick edit taxonomy") }),
+              /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+                import_components62.Button,
+                {
+                  size: "small",
+                  icon: close_small_default,
+                  label: (0, import_i18n78.__)("Close"),
+                  onClick: closeModal
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime168.jsx)("div", { className: "dataviews-action-modal__quick-edit-taxonomy-content", children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+          DataForm,
+          {
+            data,
+            fields,
+            form: defaultForm2,
+            validity,
+            onChange: (edits) => setData(
+              (prev) => ({ ...prev, ...edits })
+            )
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
+          Stack,
+          {
+            className: "dataviews-action-modal__quick-edit-taxonomy-footer",
+            direction: "row",
+            gap: "sm",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+                import_components62.Button,
+                {
+                  __next40pxDefaultSize: true,
+                  variant: "secondary",
+                  onClick: closeModal,
+                  children: (0, import_i18n78.__)("Cancel")
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+                import_components62.Button,
+                {
+                  __next40pxDefaultSize: true,
+                  variant: "primary",
+                  type: "submit",
+                  isBusy: isSaving,
+                  disabled: isSaving || !isValid2,
+                  accessibleWhenDisabled: true,
+                  children: (0, import_i18n78.__)("Done")
+                }
+              )
+            ]
+          }
         )
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
-      Stack,
-      {
-        className: "dataviews-action-modal__quick-edit-taxonomy-footer",
-        direction: "row",
-        gap: "sm",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
-            import_components62.Button,
-            {
-              __next40pxDefaultSize: true,
-              variant: "secondary",
-              onClick: closeModal,
-              children: (0, import_i18n78.__)("Cancel")
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
-            import_components62.Button,
-            {
-              __next40pxDefaultSize: true,
-              variant: "primary",
-              isBusy: isSaving,
-              disabled: isSaving,
-              accessibleWhenDisabled: true,
-              onClick: onSave,
-              children: (0, import_i18n78.__)("Done")
-            }
-          )
-        ]
-      }
-    )
-  ] });
+      ]
+    }
+  );
 }
 var quickEditTaxonomyAction = {
   id: "quick-edit-taxonomy",
