@@ -11280,6 +11280,7 @@ var ButtonIcon = (0, import_element14.forwardRef)(
 );
 
 // packages/ui/build-module/button/index.mjs
+ButtonIcon.displayName = "Button.Icon";
 var Button4 = Object.assign(Button3, {
   /**
    * An icon component specifically designed to work well when rendered inside
