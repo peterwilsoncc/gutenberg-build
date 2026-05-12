@@ -7800,7 +7800,7 @@ var wp;
             checked: showOnHomePage,
             onChange: (value) => setAttributes({ showOnHomePage: value }),
             help: (0, import_i18n12.__)(
-              "If this breadcrumbs block appears in a template or template part that\u2019s shown on the homepage, enable this option to display the breadcrumb trail. Otherwise, this setting has no effect."
+              "If this Breadcrumbs block appears in a template or template part that\u2019s shown on the homepage, enable this option to display the breadcrumb trail. Otherwise, this setting has no effect."
             )
           }
         ),
