@@ -37264,6 +37264,122 @@ function GridItem4({
   );
 }
 
+// packages/grid/build-module/shared/grid-overlay.mjs
+var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
+function getRuntime38() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument38(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash38(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE38}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE38) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle38(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime38();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash38(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE38, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument38(targetDocument) {
+  const runtime = getRuntime38();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle38(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle38(hash, css) {
+  const runtime = getRuntime38();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle38(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle38("05bdcd8add", '._9d372b1b567c1c15__overlay{background-image:repeating-linear-gradient(135deg,var(--wp-grid-overlay-stripe-color,color-mix(in srgb,var(--wpds-color-bg-surface-info,#deebfa) 15%,#0000)) 0 6px,#0000 6px 12px);display:grid;inset:0;opacity:0;pointer-events:none;position:absolute;transition:opacity .2s ease,visibility 0s linear .2s;visibility:hidden}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{opacity:1;transition:opacity .2s ease,visibility 0s linear 0s;visibility:visible}@media (prefers-reduced-motion:reduce){._9d372b1b567c1c15__overlay{transition:none}}._04ff499ab60b4891__column{background-color:var(--wp-grid-overlay-column-fill,color-mix(in srgb,var(--wpds-color-bg-surface-info,#deebfa) 10%,#0000));outline:1px dashed var(--wp-grid-overlay-track-color,var(--wpds-color-stroke-surface-neutral,#dbdbdb));position:relative}._1cee1202cb622c6b__has-rows ._04ff499ab60b4891__column:after{background-image:linear-gradient(to bottom,var(--wp-grid-overlay-track-color,var(--wpds-color-stroke-surface-neutral,#dbdbdb)) 0,var(--wp-grid-overlay-track-color,var(--wpds-color-stroke-surface-neutral,#dbdbdb)) 1px,#0000 1px,#0000 calc(var(--wp-grid-overlay-row-height) - 1px),var(--wp-grid-overlay-track-color,var(--wpds-color-stroke-surface-neutral,#dbdbdb)) calc(var(--wp-grid-overlay-row-height) - 1px),var(--wp-grid-overlay-track-color,var(--wpds-color-stroke-surface-neutral,#dbdbdb)) var(--wp-grid-overlay-row-height),#0000 var(--wp-grid-overlay-row-height),#0000 var(--wp-grid-overlay-row-tile));background-repeat:repeat;background-size:100% var(--wp-grid-overlay-row-tile);content:"";inset:0;mask-image:repeating-linear-gradient(90deg,#000 0 4px,#0000 4px 8px);-webkit-mask-image:repeating-linear-gradient(90deg,#000 0 4px,#0000 4px 8px);pointer-events:none;position:absolute}');
+}
+var grid_overlay_default = { "overlay": "_9d372b1b567c1c15__overlay", "is-active": "acb42ab28bd5e371__is-active", "column": "_04ff499ab60b4891__column", "has-rows": "_1cee1202cb622c6b__has-rows" };
+function GridOverlay({
+  columns,
+  gapPx,
+  rowHeight,
+  isActive
+}) {
+  const showRows = typeof rowHeight === "number";
+  const style = {
+    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+    gap: `${gapPx}px`,
+    ...showRows ? {
+      "--wp-grid-overlay-row-height": `${rowHeight}px`,
+      "--wp-grid-overlay-row-tile": `${rowHeight + gapPx}px`
+    } : {}
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
+    "div",
+    {
+      "aria-hidden": true,
+      className: clsx_default(
+        grid_overlay_default.overlay,
+        isActive && grid_overlay_default["is-active"],
+        showRows && grid_overlay_default["has-rows"]
+      ),
+      style,
+      children: Array.from({ length: columns }).map((_, i2) => /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("div", { className: grid_overlay_default.column }, i2))
+    }
+  );
+}
+
 // packages/grid/build-module/dashboard-grid/resolve-fill-widths.mjs
 function resolveFillWidths(sortedKeys, layoutMap, maxColumns) {
   const resolved = /* @__PURE__ */ new Map();
@@ -37426,9 +37542,9 @@ function resolveFillWidths(sortedKeys, layoutMap, maxColumns) {
 }
 
 // packages/grid/build-module/dashboard-grid/index.mjs
-var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
-function getRuntime38() {
+var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE39 = "data-wp-hash";
+function getRuntime39() {
   const globalScope = globalThis;
   if (globalScope.__wpStyleRuntime) {
     return globalScope.__wpStyleRuntime;
@@ -37439,28 +37555,28 @@ function getRuntime38() {
     injectedStyles: /* @__PURE__ */ new WeakMap()
   };
   if (typeof document !== "undefined") {
-    registerDocument38(document);
+    registerDocument39(document);
   }
   return globalScope.__wpStyleRuntime;
 }
-function documentContainsStyleHash38(targetDocument, hash) {
+function documentContainsStyleHash39(targetDocument, hash) {
   if (!targetDocument.head) {
     return false;
   }
   for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE38}]`
+    `style[${STYLE_HASH_ATTRIBUTE39}]`
   )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE38) === hash) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE39) === hash) {
       return true;
     }
   }
   return false;
 }
-function injectStyle38(targetDocument, hash, css) {
+function injectStyle39(targetDocument, hash, css) {
   if (!targetDocument.head) {
     return;
   }
-  const runtime = getRuntime38();
+  const runtime = getRuntime39();
   let injectedStyles = runtime.injectedStyles.get(targetDocument);
   if (!injectedStyles) {
     injectedStyles = /* @__PURE__ */ new Set();
@@ -37469,24 +37585,24 @@ function injectStyle38(targetDocument, hash, css) {
   if (injectedStyles.has(hash)) {
     return;
   }
-  if (documentContainsStyleHash38(targetDocument, hash)) {
+  if (documentContainsStyleHash39(targetDocument, hash)) {
     injectedStyles.add(hash);
     return;
   }
   const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE38, hash);
+  style.setAttribute(STYLE_HASH_ATTRIBUTE39, hash);
   style.appendChild(targetDocument.createTextNode(css));
   targetDocument.head.appendChild(style);
   injectedStyles.add(hash);
 }
-function registerDocument38(targetDocument) {
-  const runtime = getRuntime38();
+function registerDocument39(targetDocument) {
+  const runtime = getRuntime39();
   runtime.documents.set(
     targetDocument,
     (runtime.documents.get(targetDocument) ?? 0) + 1
   );
   for (const [hash, css] of runtime.styles) {
-    injectStyle38(targetDocument, hash, css);
+    injectStyle39(targetDocument, hash, css);
   }
   return () => {
     const count = runtime.documents.get(targetDocument);
@@ -37500,15 +37616,15 @@ function registerDocument38(targetDocument) {
     runtime.documents.set(targetDocument, count - 1);
   };
 }
-function registerStyle38(hash, css) {
-  const runtime = getRuntime38();
+function registerStyle39(hash, css) {
+  const runtime = getRuntime39();
   runtime.styles.set(hash, css);
   for (const targetDocument of runtime.documents.keys()) {
-    injectStyle38(targetDocument, hash, css);
+    injectStyle39(targetDocument, hash, css);
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle38("3665eca9bb", "._960c435c33759f46__grid{display:grid}._48e8cd4225dcb813__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{transform:none}}");
+  registerStyle39("faf48c5174", "._960c435c33759f46__grid{display:grid;position:relative}._48e8cd4225dcb813__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{transform:none}}");
 }
 var grid_default2 = { "grid": "_960c435c33759f46__grid", "drag-preview-frame": "_48e8cd4225dcb813__drag-preview-frame" };
 var NO_SORT_STRATEGY = () => null;
@@ -37528,6 +37644,7 @@ var DashboardGrid = (0, import_element129.forwardRef)(
       onPreviewLayout,
       renderResizeHandle,
       renderDragPreview,
+      renderGridOverlay,
       ...divProps
     } = props;
     const [temporaryLayout, setTemporaryLayout] = (0, import_element129.useState)();
@@ -37769,8 +37886,22 @@ var DashboardGrid = (0, import_element129.forwardRef)(
     });
     const activeClone = activeId ? childrenMap.get(activeId) : null;
     const DragPreview = renderDragPreview;
-    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("div", { className: grid_default2["drag-preview-frame"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) : null;
-    return /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(
+    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("div", { className: grid_default2["drag-preview-frame"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) : null;
+    const Overlay = renderGridOverlay ?? GridOverlay;
+    const overlayRowHeight = typeof rowHeight === "number" ? rowHeight : void 0;
+    const gridOverlay = (0, import_element129.useMemo)(
+      () => /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+        Overlay,
+        {
+          columns: effectiveColumns,
+          gapPx,
+          rowHeight: overlayRowHeight,
+          isActive: editMode
+        }
+      ),
+      [Overlay, editMode, effectiveColumns, gapPx, overlayRowHeight]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(
       DndContext,
       {
         sensors,
@@ -37783,7 +37914,7 @@ var DashboardGrid = (0, import_element129.forwardRef)(
           lastReorderCursorRef.current = null;
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(
             "div",
             {
               ...divProps,
@@ -37796,7 +37927,8 @@ var DashboardGrid = (0, import_element129.forwardRef)(
                 gap: gapPx
               },
               children: [
-                items.map((id) => /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
+                gridOverlay,
+                items.map((id) => /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
                   GridItem4,
                   {
                     item: resolvedItemMap.get(
@@ -37818,7 +37950,7 @@ var DashboardGrid = (0, import_element129.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(DragOverlay, { children: dragOverlayContent })
+          /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(DragOverlay, { children: dragOverlayContent })
         ]
       }
     );
@@ -37832,7 +37964,7 @@ if (typeof process === "undefined" || true) {
 var widgets_default = { "grid": "_561eb2c5c7cbcb6b__grid", "tile": "_8fa4ad5c2e86a6b9__tile", "tileEditMode": "_8a257ea80aac989e__tileEditMode", "dragPreview": "_48e2b8516636ed6b__dragPreview" };
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
-var import_jsx_runtime164 = __toESM(require_jsx_runtime());
+var import_jsx_runtime165 = __toESM(require_jsx_runtime());
 function toGridLayout(widgets) {
   return widgets.map((w2) => ({
     key: w2.uuid,
@@ -37865,19 +37997,19 @@ var Widgets = (0, import_element130.forwardRef)(
       },
       [layout, onLayoutChange]
     );
-    const children = layout.map((widget, index2) => /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+    const children = layout.map((widget, index2) => /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
       "div",
       {
         className: clsx_default(widgets_default.tile, {
           [widgets_default.tileEditMode]: editMode
         }),
         tabIndex: editMode ? 0 : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(WidgetChrome, { widget, index: index2 })
+        children: /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(WidgetChrome, { widget, index: index2 })
       },
       widget.uuid
     ));
     const renderDragPreview = (0, import_element130.useCallback)(
-      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
+      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime165.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
       []
     );
     const sharedProps = {
@@ -37888,14 +38020,14 @@ var Widgets = (0, import_element130.forwardRef)(
       onChangeLayout: handleLayoutChange,
       renderDragPreview
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: gridSettings.columns !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: gridSettings.columns !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
       DashboardGrid,
       {
         ...sharedProps,
         columns: gridSettings.columns,
         children
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
       DashboardGrid,
       {
         ...sharedProps,
@@ -37916,16 +38048,16 @@ if (typeof process === "undefined" || true) {
 var no_widgets_state_default = { "root": "_43aa5df1b0907556__root" };
 
 // routes/dashboard/widget-dashboard/components/no-widgets-state/no-widgets-state.tsx
-var import_jsx_runtime165 = __toESM(require_jsx_runtime());
+var import_jsx_runtime166 = __toESM(require_jsx_runtime());
 function NoWidgetsStateImpl({ children }) {
   const { layout } = useDashboardInternalContext();
   if (layout.length > 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(empty_state_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(empty_state_exports.Icon, { icon: home_default }),
-    /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(empty_state_exports.Title, { children: (0, import_i18n53.__)("Your dashboard is empty") }),
-    /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(empty_state_exports.Description, { children: (0, import_i18n53.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(empty_state_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(empty_state_exports.Icon, { icon: home_default }),
+    /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(empty_state_exports.Title, { children: (0, import_i18n53.__)("Your dashboard is empty") }),
+    /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(empty_state_exports.Description, { children: (0, import_i18n53.__)(
       "Add widgets to start customizing your dashboard."
     ) })
   ] }) });
@@ -37933,7 +38065,7 @@ function NoWidgetsStateImpl({ children }) {
 var NoWidgetsState = NoWidgetsStateImpl;
 
 // routes/dashboard/widget-dashboard/widget-dashboard.tsx
-var import_jsx_runtime166 = __toESM(require_jsx_runtime());
+var import_jsx_runtime167 = __toESM(require_jsx_runtime());
 var WidgetDashboard = Object.assign(
   function WidgetDashboard2({
     layout,
@@ -37946,7 +38078,7 @@ var WidgetDashboard = Object.assign(
     gridSettings,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
       WidgetDashboardProvider,
       {
         layout,
@@ -37957,13 +38089,13 @@ var WidgetDashboard = Object.assign(
         onEditChange,
         resolveWidgetModule,
         gridSettings,
-        children: /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(WidgetDashboardUIProvider, { children: [
-          children ?? /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(import_jsx_runtime166.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(NoWidgetsState, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Actions3, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Widgets, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(WidgetDashboardUIProvider, { children: [
+          children ?? /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(import_jsx_runtime167.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(NoWidgetsState, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(Actions3, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(Widgets, {})
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Inserter, {})
+          /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(Inserter, {})
         ] })
       }
     );
@@ -38042,7 +38174,7 @@ if (typeof process === "undefined" || true) {
 var stage_default = { "dashboard-widgets-container": "_2381d7918cf57baa__dashboard-widgets-container" };
 
 // routes/dashboard/stage.tsx
-var import_jsx_runtime167 = __toESM(require_jsx_runtime());
+var import_jsx_runtime168 = __toESM(require_jsx_runtime());
 function Dashboard() {
   const [layout, setLayout, resetLayout] = useDashboardLayout(
     "gutenberg_dashboard"
@@ -38056,7 +38188,7 @@ function Dashboard() {
       type: "snackbar"
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
     WidgetDashboard,
     {
       widgetTypes,
@@ -38065,14 +38197,14 @@ function Dashboard() {
       onLayoutReset: resetLayout,
       editMode,
       onEditChange: setEditMode,
-      children: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
         page_default,
         {
           title: (0, import_i18n55.__)("Dashboard"),
-          actions: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(WidgetDashboard.Actions, {}),
-          children: /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)("div", { className: stage_default["dashboard-widgets-container"], children: [
-            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(WidgetDashboard.NoWidgetsState, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(WidgetDashboard.Widgets, {})
+          actions: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(WidgetDashboard.Actions, {}),
+          children: /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)("div", { className: stage_default["dashboard-widgets-container"], children: [
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(WidgetDashboard.NoWidgetsState, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(WidgetDashboard.Widgets, {})
           ] })
         }
       )
