@@ -936,6 +936,13 @@ var require_notices = __commonJS({
   }
 });
 
+// package-external:@wordpress/is-shallow-equal
+var require_is_shallow_equal = __commonJS({
+  "package-external:@wordpress/is-shallow-equal"(exports, module) {
+    module.exports = window.wp.isShallowEqual;
+  }
+});
+
 // package-external:@wordpress/url
 var require_url = __commonJS({
   "package-external:@wordpress/url"(exports, module) {
@@ -30898,8 +30905,8 @@ function DataForm({
 }
 
 // packages/content-types/build-module/post-types/list.mjs
-var import_core_data7 = __toESM(require_core_data(), 1);
-var import_element116 = __toESM(require_element(), 1);
+var import_core_data8 = __toESM(require_core_data(), 1);
+var import_element117 = __toESM(require_element(), 1);
 var import_i18n66 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate3 } from "@wordpress/route";
 
@@ -31056,20 +31063,47 @@ var deactivate_default = deactivateAction;
 
 // packages/content-types/build-module/post-types/actions/delete.mjs
 var import_components53 = __toESM(require_components(), 1);
-var import_core_data2 = __toESM(require_core_data(), 1);
-var import_data6 = __toESM(require_data(), 1);
-var import_element110 = __toESM(require_element(), 1);
+var import_core_data3 = __toESM(require_core_data(), 1);
+var import_data7 = __toESM(require_data(), 1);
+var import_element111 = __toESM(require_element(), 1);
 var import_i18n56 = __toESM(require_i18n(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
+
+// packages/content-types/build-module/utils/use-maybe-invalidate-content-type-cache.mjs
+var import_element110 = __toESM(require_element(), 1);
+var import_core_data2 = __toESM(require_core_data(), 1);
+var import_data6 = __toESM(require_data(), 1);
+var import_is_shallow_equal = __toESM(require_is_shallow_equal(), 1);
+function useMaybeInvalidateContentTypeCache() {
+  const registry = (0, import_data6.useRegistry)();
+  return (0, import_element110.useCallback)(
+    (prev, next, entityName) => {
+      if ((0, import_is_shallow_equal.isShallowEqual)([...prev].sort(), [...next].sort())) {
+        return;
+      }
+      const resolvers = registry.select(import_core_data2.store).getCachedResolvers();
+      const cache = resolvers.getEntityRecords;
+      cache?.forEach((_value, args) => {
+        if (args[0] === "postType" && args[1] === entityName) {
+          registry.dispatch(import_core_data2.store).invalidateResolution("getEntityRecords", args);
+        }
+      });
+    },
+    [registry]
+  );
+}
+
+// packages/content-types/build-module/post-types/actions/delete.mjs
 var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
 function DeletePostTypeModal({
   items,
   closeModal,
   onActionPerformed
 }) {
-  const [isDeleting, setIsDeleting] = (0, import_element110.useState)(false);
-  const { deleteEntityRecord } = (0, import_data6.useDispatch)(import_core_data2.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data6.useDispatch)(import_notices2.store);
+  const [isDeleting, setIsDeleting] = (0, import_element111.useState)(false);
+  const { deleteEntityRecord } = (0, import_data7.useDispatch)(import_core_data3.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data7.useDispatch)(import_notices2.store);
+  const maybeInvalidateCache = useMaybeInvalidateContentTypeCache();
   async function onDelete() {
     if (isDeleting) {
       return;
@@ -31146,6 +31180,8 @@ function DeletePostTypeModal({
       }
       createErrorNotice(errorMessage, { type: "snackbar" });
     }
+    const deletedRefs = itemsToDelete.filter((_, i2) => promiseResult[i2].status === "fulfilled").flatMap((item) => item.config.taxonomies);
+    maybeInvalidateCache(deletedRefs, [], TAXONOMY_ENTITY);
     onActionPerformed?.(itemsToDelete);
     setIsDeleting(false);
     closeModal?.();
@@ -31206,16 +31242,16 @@ var delete_default = deletePostTypeAction;
 
 // packages/content-types/build-module/post-types/actions/duplicate.mjs
 var import_components55 = __toESM(require_components(), 1);
-var import_core_data5 = __toESM(require_core_data(), 1);
-var import_data9 = __toESM(require_data(), 1);
-var import_element113 = __toESM(require_element(), 1);
+var import_core_data6 = __toESM(require_core_data(), 1);
+var import_data10 = __toESM(require_data(), 1);
+var import_element114 = __toESM(require_element(), 1);
 var import_i18n60 = __toESM(require_i18n(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/content-types/build-module/post-types/fields/general.mjs
-var import_core_data4 = __toESM(require_core_data(), 1);
-var import_data8 = __toESM(require_data(), 1);
-var import_element112 = __toESM(require_element(), 1);
+var import_core_data5 = __toESM(require_core_data(), 1);
+var import_data9 = __toESM(require_data(), 1);
+var import_element113 = __toESM(require_element(), 1);
 var import_i18n59 = __toESM(require_i18n(), 1);
 
 // packages/content-types/build-module/utils/fields.mjs
@@ -31430,9 +31466,9 @@ function SlugEdit({
 }
 
 // packages/content-types/build-module/post-types/utils.mjs
-var import_core_data3 = __toESM(require_core_data(), 1);
-var import_data7 = __toESM(require_data(), 1);
-var import_element111 = __toESM(require_element(), 1);
+var import_core_data4 = __toESM(require_core_data(), 1);
+var import_data8 = __toESM(require_data(), 1);
+var import_element112 = __toESM(require_element(), 1);
 var import_i18n58 = __toESM(require_i18n(), 1);
 
 // packages/content-types/build-module/utils/form-data.mjs
@@ -31663,11 +31699,11 @@ function serializeForSave(data) {
 }
 var CORE_TAXONOMY_SLUGS = ["category", "post_tag"];
 function usePublicTaxonomies() {
-  const taxonomies = (0, import_data7.useSelect)(
-    (select) => select(import_core_data3.store).getTaxonomies({ per_page: -1 }),
+  const taxonomies = (0, import_data8.useSelect)(
+    (select) => select(import_core_data4.store).getTaxonomies({ per_page: -1 }),
     []
   );
-  return (0, import_element111.useMemo)(() => {
+  return (0, import_element112.useMemo)(() => {
     return taxonomies?.filter((t2) => !!t2.visibility?.public).sort((a2, b2) => {
       const aIsCore = CORE_TAXONOMY_SLUGS.includes(a2.slug);
       const bIsCore = CORE_TAXONOMY_SLUGS.includes(b2.slug);
@@ -31763,12 +31799,12 @@ var supportsField = {
 };
 var SLUG_MAX_LENGTH = 20;
 function useSlugField(originalSlug, currentValue) {
-  const registeredPostTypes = (0, import_data8.useSelect)(
-    (select) => select(import_core_data4.store).getPostTypes(),
+  const registeredPostTypes = (0, import_data9.useSelect)(
+    (select) => select(import_core_data5.store).getPostTypes(),
     []
   );
   const showRenameWarning = originalSlug !== void 0 && currentValue !== originalSlug;
-  return (0, import_element112.useMemo)(
+  return (0, import_element113.useMemo)(
     () => ({
       id: "slug",
       label: (0, import_i18n59.__)("Post type key"),
@@ -31797,8 +31833,8 @@ function useSlugField(originalSlug, currentValue) {
           if (slugTaken) {
             return (0, import_i18n59.__)("This post type key is already in use.");
           }
-          const drafts = await (0, import_data8.resolveSelect)(
-            import_core_data4.store
+          const drafts = await (0, import_data9.resolveSelect)(
+            import_core_data5.store
           ).getEntityRecords("postType", POST_TYPE_ENTITY, {
             slug,
             status: "draft",
@@ -31817,7 +31853,7 @@ function useSlugField(originalSlug, currentValue) {
 }
 function useTaxonomiesField() {
   const publicTaxonomies = usePublicTaxonomies();
-  return (0, import_element112.useMemo)(() => {
+  return (0, import_element113.useMemo)(() => {
     const elements = (publicTaxonomies ?? []).map((tax) => ({
       value: tax.slug,
       label: tax.name
@@ -31904,7 +31940,7 @@ function DuplicatePostTypeModal({
   onActionPerformed
 }) {
   const source = items[0];
-  const [data, setData] = (0, import_element113.useState)(() => ({
+  const [data, setData] = (0, import_element114.useState)(() => ({
     ...source,
     id: void 0,
     status: "draft",
@@ -31917,9 +31953,9 @@ function DuplicatePostTypeModal({
     },
     slug: buildCopySlug(source.slug)
   }));
-  const [isDuplicating, setIsDuplicating] = (0, import_element113.useState)(false);
+  const [isDuplicating, setIsDuplicating] = (0, import_element114.useState)(false);
   const slugField = useSlugField(void 0, data.slug);
-  const fields = (0, import_element113.useMemo)(
+  const fields = (0, import_element114.useMemo)(
     () => [
       pluralLabelField,
       singularLabelField,
@@ -31932,8 +31968,8 @@ function DuplicatePostTypeModal({
     fields,
     duplicateForm
   );
-  const { saveEntityRecord } = (0, import_data9.useDispatch)(import_core_data5.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data9.useDispatch)(import_notices3.store);
+  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data6.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data10.useDispatch)(import_notices3.store);
   async function onDuplicate() {
     if (isDuplicating || !isValid2) {
       return;
@@ -32288,12 +32324,12 @@ var labelsForm = {
 };
 
 // packages/content-types/build-module/post-types/actions/edit.mjs
-var import_element114 = __toESM(require_element(), 1);
+var import_element115 = __toESM(require_element(), 1);
 var import_i18n64 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate2 } from "@wordpress/route";
 function useEditPostTypeAction() {
   const navigate = useNavigate2();
-  return (0, import_element114.useMemo)(
+  return (0, import_element115.useMemo)(
     () => ({
       id: "edit-post-type",
       label: (0, import_i18n64.__)("Edit"),
@@ -32313,9 +32349,9 @@ function useEditPostTypeAction() {
 
 // packages/content-types/build-module/post-types/actions/quick-edit.mjs
 var import_components57 = __toESM(require_components(), 1);
-var import_core_data6 = __toESM(require_core_data(), 1);
-var import_data10 = __toESM(require_data(), 1);
-var import_element115 = __toESM(require_element(), 1);
+var import_core_data7 = __toESM(require_core_data(), 1);
+var import_data11 = __toESM(require_data(), 1);
+var import_element116 = __toESM(require_element(), 1);
 var import_i18n65 = __toESM(require_i18n(), 1);
 var import_notices4 = __toESM(require_notices(), 1);
 var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
@@ -32324,11 +32360,11 @@ function QuickEditPostTypeModal({
   closeModal
 }) {
   const item = items[0];
-  const [data, setData] = (0, import_element115.useState)(item);
-  const [isSaving, setIsSaving] = (0, import_element115.useState)(false);
+  const [data, setData] = (0, import_element116.useState)(item);
+  const [isSaving, setIsSaving] = (0, import_element116.useState)(false);
   const slugField = useSlugField(item.slug, data.slug);
   const taxonomiesField = useTaxonomiesField();
-  const fields = (0, import_element115.useMemo)(
+  const fields = (0, import_element116.useMemo)(
     () => [
       pluralLabelField,
       singularLabelField,
@@ -32342,8 +32378,9 @@ function QuickEditPostTypeModal({
     [slugField, taxonomiesField]
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, defaultForm);
-  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data6.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data10.useDispatch)(import_notices4.store);
+  const { saveEntityRecord } = (0, import_data11.useDispatch)(import_core_data7.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data11.useDispatch)(import_notices4.store);
+  const maybeInvalidateCache = useMaybeInvalidateContentTypeCache();
   async function onSave() {
     if (isSaving || !isValid2) {
       return;
@@ -32363,6 +32400,11 @@ function QuickEditPostTypeModal({
           data.title.raw
         ),
         { type: "snackbar" }
+      );
+      maybeInvalidateCache(
+        item.config.taxonomies,
+        data.config.taxonomies,
+        TAXONOMY_ENTITY
       );
       closeModal?.();
     } catch (error2) {
@@ -32475,9 +32517,9 @@ var DEFAULT_VIEW = {
 };
 function PostTypesList() {
   const navigate = useNavigate3();
-  const [view, setView] = (0, import_element116.useState)(DEFAULT_VIEW);
+  const [view, setView] = (0, import_element117.useState)(DEFAULT_VIEW);
   const editAction = useEditPostTypeAction();
-  const postTypeActions = (0, import_element116.useMemo)(
+  const postTypeActions = (0, import_element117.useMemo)(
     () => [
       editAction,
       quick_edit_default,
@@ -32491,7 +32533,7 @@ function PostTypesList() {
   );
   const slugField = useSlugField();
   const taxonomiesField = useTaxonomiesField();
-  const fields = (0, import_element116.useMemo)(
+  const fields = (0, import_element117.useMemo)(
     () => [
       titleField,
       taxonomiesField,
@@ -32504,7 +32546,7 @@ function PostTypesList() {
     ],
     [slugField, taxonomiesField]
   );
-  const queryArgs = (0, import_element116.useMemo)(() => {
+  const queryArgs = (0, import_element117.useMemo)(() => {
     const statusFilter = view.filters?.find(
       (filter) => filter.field === "status"
     );
@@ -32518,16 +32560,16 @@ function PostTypesList() {
       status: statusFilter?.value ?? ["publish", "draft"]
     };
   }, [view]);
-  const { records, isResolving, hasResolved, totalItems, totalPages } = (0, import_core_data7.useEntityRecords)(
+  const { records, isResolving, hasResolved, totalItems, totalPages } = (0, import_core_data8.useEntityRecords)(
     "postType",
     POST_TYPE_ENTITY,
     queryArgs
   );
-  const data = (0, import_element116.useMemo)(
+  const data = (0, import_element117.useMemo)(
     () => (records ?? []).map(toFormData),
     [records]
   );
-  const paginationInfo = (0, import_element116.useMemo)(
+  const paginationInfo = (0, import_element117.useMemo)(
     () => ({
       totalItems: totalItems ?? 0,
       totalPages: totalPages ?? 0
@@ -32569,9 +32611,9 @@ function PostTypesList() {
 // packages/content-types/build-module/post-types/edit.mjs
 var import_components59 = __toESM(require_components(), 1);
 var import_compose16 = __toESM(require_compose(), 1);
-var import_core_data8 = __toESM(require_core_data(), 1);
-var import_data11 = __toESM(require_data(), 1);
-var import_element117 = __toESM(require_element(), 1);
+var import_core_data9 = __toESM(require_core_data(), 1);
+var import_data12 = __toESM(require_data(), 1);
+var import_element118 = __toESM(require_element(), 1);
 var import_i18n67 = __toESM(require_i18n(), 1);
 var import_notices5 = __toESM(require_notices(), 1);
 import { useNavigate as useNavigate4, useParams } from "@wordpress/route";
@@ -32581,10 +32623,10 @@ function PostTypeEdit() {
   const navigate = useNavigate4();
   const isAddMode = id === NEW_ID;
   const postTypeId = parseInt(id, 10);
-  const record = (0, import_data11.useSelect)(
+  const record = (0, import_data12.useSelect)(
     (select) => {
       return !isAddMode && // beforeLoad (route.ts) guarantees the record is in cache.
-      select(import_core_data8.store).getEntityRecord(
+      select(import_core_data9.store).getEntityRecord(
         "postType",
         POST_TYPE_ENTITY,
         postTypeId
@@ -32623,12 +32665,12 @@ function PostTypePage({
   subTitle,
   onSaved
 }) {
-  const [data, setData] = (0, import_element117.useState)(initialData);
-  const [isSaving, setIsSaving] = (0, import_element117.useState)(false);
+  const [data, setData] = (0, import_element118.useState)(initialData);
+  const [isSaving, setIsSaving] = (0, import_element118.useState)(false);
   const originalSlug = !isAddMode ? initialData.slug : void 0;
   const slugField = useSlugField(originalSlug, data.slug);
   const taxonomiesField = useTaxonomiesField();
-  const fields = (0, import_element117.useMemo)(
+  const fields = (0, import_element118.useMemo)(
     () => [
       // General
       pluralLabelField,
@@ -32670,7 +32712,7 @@ function PostTypePage({
     ],
     [slugField, taxonomiesField]
   );
-  const form = (0, import_element117.useMemo)(
+  const form = (0, import_element118.useMemo)(
     () => ({
       layout: { type: "card", isCollapsible: true },
       fields: [
@@ -32703,8 +32745,9 @@ function PostTypePage({
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, form);
   const formId = (0, import_compose16.useInstanceId)(PostTypePage, "post-type-form");
-  const { saveEntityRecord } = (0, import_data11.useDispatch)(import_core_data8.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data11.useDispatch)(import_notices5.store);
+  const { saveEntityRecord } = (0, import_data12.useDispatch)(import_core_data9.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data12.useDispatch)(import_notices5.store);
+  const maybeInvalidateCache = useMaybeInvalidateContentTypeCache();
   async function onSave() {
     if (isSaving || !isValid2) {
       return;
@@ -32727,6 +32770,11 @@ function PostTypePage({
         data.title.raw
       );
       createSuccessNotice(successMessage, { type: "snackbar" });
+      maybeInvalidateCache(
+        initialData.config.taxonomies,
+        data.config.taxonomies,
+        TAXONOMY_ENTITY
+      );
       if (saved?.id !== void 0) {
         onSaved?.({ ...data, id: saved.id });
       }
@@ -32811,8 +32859,8 @@ function PostTypePage({
 
 // packages/content-types/build-module/taxonomies/list.mjs
 var import_components63 = __toESM(require_components(), 1);
-var import_core_data14 = __toESM(require_core_data(), 1);
-var import_element124 = __toESM(require_element(), 1);
+var import_core_data15 = __toESM(require_core_data(), 1);
+var import_element125 = __toESM(require_element(), 1);
 var import_i18n79 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate6 } from "@wordpress/route";
 
@@ -32890,9 +32938,9 @@ var deactivate_default2 = deactivateAction2;
 
 // packages/content-types/build-module/taxonomies/actions/delete.mjs
 var import_components60 = __toESM(require_components(), 1);
-var import_core_data9 = __toESM(require_core_data(), 1);
-var import_data12 = __toESM(require_data(), 1);
-var import_element118 = __toESM(require_element(), 1);
+var import_core_data10 = __toESM(require_core_data(), 1);
+var import_data13 = __toESM(require_data(), 1);
+var import_element119 = __toESM(require_element(), 1);
 var import_i18n70 = __toESM(require_i18n(), 1);
 var import_notices6 = __toESM(require_notices(), 1);
 var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
@@ -32901,9 +32949,10 @@ function DeleteTaxonomyModal({
   closeModal,
   onActionPerformed
 }) {
-  const [isDeleting, setIsDeleting] = (0, import_element118.useState)(false);
-  const { deleteEntityRecord } = (0, import_data12.useDispatch)(import_core_data9.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data12.useDispatch)(import_notices6.store);
+  const [isDeleting, setIsDeleting] = (0, import_element119.useState)(false);
+  const { deleteEntityRecord } = (0, import_data13.useDispatch)(import_core_data10.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data13.useDispatch)(import_notices6.store);
+  const maybeInvalidateCache = useMaybeInvalidateContentTypeCache();
   async function onDelete() {
     if (isDeleting) {
       return;
@@ -32980,6 +33029,8 @@ function DeleteTaxonomyModal({
       }
       createErrorNotice(errorMessage, { type: "snackbar" });
     }
+    const deletedRefs = itemsToDelete.filter((_, i2) => promiseResult[i2].status === "fulfilled").flatMap((item) => item.config.object_type);
+    maybeInvalidateCache(deletedRefs, [], POST_TYPE_ENTITY);
     onActionPerformed?.(itemsToDelete);
     setIsDeleting(false);
     closeModal?.();
@@ -33040,22 +33091,22 @@ var delete_default2 = deleteTaxonomyAction;
 
 // packages/content-types/build-module/taxonomies/actions/duplicate.mjs
 var import_components61 = __toESM(require_components(), 1);
-var import_core_data12 = __toESM(require_core_data(), 1);
-var import_data15 = __toESM(require_data(), 1);
-var import_element121 = __toESM(require_element(), 1);
+var import_core_data13 = __toESM(require_core_data(), 1);
+var import_data16 = __toESM(require_data(), 1);
+var import_element122 = __toESM(require_element(), 1);
 var import_i18n73 = __toESM(require_i18n(), 1);
 var import_notices7 = __toESM(require_notices(), 1);
 
 // packages/content-types/build-module/taxonomies/fields/general.mjs
-var import_core_data11 = __toESM(require_core_data(), 1);
-var import_data14 = __toESM(require_data(), 1);
-var import_element120 = __toESM(require_element(), 1);
+var import_core_data12 = __toESM(require_core_data(), 1);
+var import_data15 = __toESM(require_data(), 1);
+var import_element121 = __toESM(require_element(), 1);
 var import_i18n72 = __toESM(require_i18n(), 1);
 
 // packages/content-types/build-module/taxonomies/utils.mjs
-var import_core_data10 = __toESM(require_core_data(), 1);
-var import_data13 = __toESM(require_data(), 1);
-var import_element119 = __toESM(require_element(), 1);
+var import_core_data11 = __toESM(require_core_data(), 1);
+var import_data14 = __toESM(require_data(), 1);
+var import_element120 = __toESM(require_element(), 1);
 var import_i18n71 = __toESM(require_i18n(), 1);
 var BLANK_RECORD2 = {
   slug: "",
@@ -33236,11 +33287,11 @@ function serializeForSave2(data) {
   };
 }
 function usePublicPostTypes() {
-  const postTypes = (0, import_data13.useSelect)(
-    (select) => select(import_core_data10.store).getPostTypes({ per_page: -1 }),
+  const postTypes = (0, import_data14.useSelect)(
+    (select) => select(import_core_data11.store).getPostTypes({ per_page: -1 }),
     []
   );
-  return (0, import_element119.useMemo)(() => {
+  return (0, import_element120.useMemo)(() => {
     return postTypes?.filter(({ viewable }) => viewable).sort((a2, b2) => {
       if (a2.slug === "post") {
         return -1;
@@ -33271,12 +33322,12 @@ var hierarchicalField2 = createBooleanField(
 );
 var SLUG_MAX_LENGTH3 = 32;
 function useSlugField2(originalSlug, currentValue) {
-  const registeredTaxonomies = (0, import_data14.useSelect)(
-    (select) => select(import_core_data11.store).getTaxonomies(),
+  const registeredTaxonomies = (0, import_data15.useSelect)(
+    (select) => select(import_core_data12.store).getTaxonomies(),
     []
   );
   const showRenameWarning = originalSlug !== void 0 && currentValue !== originalSlug;
-  return (0, import_element120.useMemo)(
+  return (0, import_element121.useMemo)(
     () => ({
       id: "slug",
       label: (0, import_i18n72.__)("Taxonomy key"),
@@ -33305,8 +33356,8 @@ function useSlugField2(originalSlug, currentValue) {
           if (slugTaken) {
             return (0, import_i18n72.__)("This taxonomy key is already in use.");
           }
-          const drafts = await (0, import_data14.resolveSelect)(
-            import_core_data11.store
+          const drafts = await (0, import_data15.resolveSelect)(
+            import_core_data12.store
           ).getEntityRecords("postType", TAXONOMY_ENTITY, {
             slug,
             status: "draft",
@@ -33325,7 +33376,7 @@ function useSlugField2(originalSlug, currentValue) {
 }
 function useObjectTypeField() {
   const publicPostTypes = usePublicPostTypes();
-  return (0, import_element120.useMemo)(() => {
+  return (0, import_element121.useMemo)(() => {
     const elements = (publicPostTypes ?? []).map((pt) => ({
       value: pt.slug,
       label: pt.name
@@ -33404,7 +33455,7 @@ function DuplicateTaxonomyModal({
   onActionPerformed
 }) {
   const source = items[0];
-  const [data, setData] = (0, import_element121.useState)(() => ({
+  const [data, setData] = (0, import_element122.useState)(() => ({
     ...source,
     id: void 0,
     status: "draft",
@@ -33417,9 +33468,9 @@ function DuplicateTaxonomyModal({
     },
     slug: buildCopySlug2(source.slug)
   }));
-  const [isDuplicating, setIsDuplicating] = (0, import_element121.useState)(false);
+  const [isDuplicating, setIsDuplicating] = (0, import_element122.useState)(false);
   const slugField = useSlugField2(void 0, data.slug);
-  const fields = (0, import_element121.useMemo)(
+  const fields = (0, import_element122.useMemo)(
     () => [
       pluralLabelField,
       singularLabelField,
@@ -33432,8 +33483,8 @@ function DuplicateTaxonomyModal({
     fields,
     duplicateForm2
   );
-  const { saveEntityRecord } = (0, import_data15.useDispatch)(import_core_data12.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data15.useDispatch)(import_notices7.store);
+  const { saveEntityRecord } = (0, import_data16.useDispatch)(import_core_data13.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data16.useDispatch)(import_notices7.store);
   async function onDuplicate() {
     if (isDuplicating || !isValid2) {
       return;
@@ -33766,12 +33817,12 @@ var visibilityFormFields = [
 ];
 
 // packages/content-types/build-module/taxonomies/actions/edit.mjs
-var import_element122 = __toESM(require_element(), 1);
+var import_element123 = __toESM(require_element(), 1);
 var import_i18n77 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate5 } from "@wordpress/route";
 function useEditTaxonomyAction() {
   const navigate = useNavigate5();
-  return (0, import_element122.useMemo)(
+  return (0, import_element123.useMemo)(
     () => ({
       id: "edit-taxonomy",
       label: (0, import_i18n77.__)("Edit"),
@@ -33791,9 +33842,9 @@ function useEditTaxonomyAction() {
 
 // packages/content-types/build-module/taxonomies/actions/quick-edit.mjs
 var import_components62 = __toESM(require_components(), 1);
-var import_core_data13 = __toESM(require_core_data(), 1);
-var import_data16 = __toESM(require_data(), 1);
-var import_element123 = __toESM(require_element(), 1);
+var import_core_data14 = __toESM(require_core_data(), 1);
+var import_data17 = __toESM(require_data(), 1);
+var import_element124 = __toESM(require_element(), 1);
 var import_i18n78 = __toESM(require_i18n(), 1);
 var import_notices8 = __toESM(require_notices(), 1);
 var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
@@ -33802,11 +33853,11 @@ function QuickEditTaxonomyModal({
   closeModal
 }) {
   const item = items[0];
-  const [data, setData] = (0, import_element123.useState)(item);
-  const [isSaving, setIsSaving] = (0, import_element123.useState)(false);
+  const [data, setData] = (0, import_element124.useState)(item);
+  const [isSaving, setIsSaving] = (0, import_element124.useState)(false);
   const slugField = useSlugField2(item.slug, data.slug);
   const objectTypeField = useObjectTypeField();
-  const fields = (0, import_element123.useMemo)(
+  const fields = (0, import_element124.useMemo)(
     () => [
       pluralLabelField,
       singularLabelField,
@@ -33819,8 +33870,9 @@ function QuickEditTaxonomyModal({
     [slugField, objectTypeField]
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, defaultForm2);
-  const { saveEntityRecord } = (0, import_data16.useDispatch)(import_core_data13.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data16.useDispatch)(import_notices8.store);
+  const { saveEntityRecord } = (0, import_data17.useDispatch)(import_core_data14.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data17.useDispatch)(import_notices8.store);
+  const maybeInvalidateCache = useMaybeInvalidateContentTypeCache();
   async function onSave() {
     if (isSaving || !isValid2) {
       return;
@@ -33840,6 +33892,11 @@ function QuickEditTaxonomyModal({
           data.title.raw
         ),
         { type: "snackbar" }
+      );
+      maybeInvalidateCache(
+        item.config.object_type,
+        data.config.object_type,
+        POST_TYPE_ENTITY
       );
       closeModal?.();
     } catch (error2) {
@@ -33952,9 +34009,9 @@ var DEFAULT_VIEW2 = {
 };
 function TaxonomiesList() {
   const navigate = useNavigate6();
-  const [view, setView] = (0, import_element124.useState)(DEFAULT_VIEW2);
+  const [view, setView] = (0, import_element125.useState)(DEFAULT_VIEW2);
   const editAction = useEditTaxonomyAction();
-  const taxonomyActions = (0, import_element124.useMemo)(
+  const taxonomyActions = (0, import_element125.useMemo)(
     () => [
       editAction,
       quick_edit_default2,
@@ -33968,7 +34025,7 @@ function TaxonomiesList() {
   );
   const slugField = useSlugField2();
   const objectTypeField = useObjectTypeField();
-  const fields = (0, import_element124.useMemo)(
+  const fields = (0, import_element125.useMemo)(
     () => [
       titleField,
       objectTypeField,
@@ -33979,7 +34036,7 @@ function TaxonomiesList() {
     ],
     [slugField, objectTypeField]
   );
-  const queryArgs = (0, import_element124.useMemo)(() => {
+  const queryArgs = (0, import_element125.useMemo)(() => {
     const statusFilter = view.filters?.find(
       (filter) => filter.field === "status"
     );
@@ -33997,16 +34054,16 @@ function TaxonomiesList() {
       object_type: objectTypeFilter?.value
     };
   }, [view]);
-  const { records, isResolving, hasResolved, totalItems, totalPages } = (0, import_core_data14.useEntityRecords)(
+  const { records, isResolving, hasResolved, totalItems, totalPages } = (0, import_core_data15.useEntityRecords)(
     "postType",
     TAXONOMY_ENTITY,
     queryArgs
   );
-  const data = (0, import_element124.useMemo)(
+  const data = (0, import_element125.useMemo)(
     () => (records ?? []).map(toFormData2),
     [records]
   );
-  const paginationInfo = (0, import_element124.useMemo)(
+  const paginationInfo = (0, import_element125.useMemo)(
     () => ({
       totalItems: totalItems ?? 0,
       totalPages: totalPages ?? 0
@@ -34048,9 +34105,9 @@ function TaxonomiesList() {
 // packages/content-types/build-module/taxonomies/edit.mjs
 var import_components64 = __toESM(require_components(), 1);
 var import_compose17 = __toESM(require_compose(), 1);
-var import_core_data15 = __toESM(require_core_data(), 1);
-var import_data17 = __toESM(require_data(), 1);
-var import_element125 = __toESM(require_element(), 1);
+var import_core_data16 = __toESM(require_core_data(), 1);
+var import_data18 = __toESM(require_data(), 1);
+var import_element126 = __toESM(require_element(), 1);
 var import_i18n80 = __toESM(require_i18n(), 1);
 var import_notices9 = __toESM(require_notices(), 1);
 import { useNavigate as useNavigate7, useParams as useParams2 } from "@wordpress/route";
@@ -34060,10 +34117,10 @@ function TaxonomyEdit() {
   const navigate = useNavigate7();
   const isAddMode = id === NEW_ID;
   const taxonomyId = parseInt(id, 10);
-  const record = (0, import_data17.useSelect)(
+  const record = (0, import_data18.useSelect)(
     (select) => {
       return !isAddMode && // beforeLoad (route.ts) guarantees the record is in cache.
-      select(import_core_data15.store).getEntityRecord(
+      select(import_core_data16.store).getEntityRecord(
         "postType",
         TAXONOMY_ENTITY,
         taxonomyId
@@ -34102,12 +34159,12 @@ function TaxonomyPage({
   subTitle,
   onSaved
 }) {
-  const [data, setData] = (0, import_element125.useState)(initialData);
-  const [isSaving, setIsSaving] = (0, import_element125.useState)(false);
+  const [data, setData] = (0, import_element126.useState)(initialData);
+  const [isSaving, setIsSaving] = (0, import_element126.useState)(false);
   const originalSlug = !isAddMode ? initialData.slug : void 0;
   const slugField = useSlugField2(originalSlug, data.slug);
   const objectTypeField = useObjectTypeField();
-  const fields = (0, import_element125.useMemo)(
+  const fields = (0, import_element126.useMemo)(
     () => [
       // General
       pluralLabelField,
@@ -34148,7 +34205,7 @@ function TaxonomyPage({
     ],
     [slugField, objectTypeField]
   );
-  const form = (0, import_element125.useMemo)(
+  const form = (0, import_element126.useMemo)(
     () => ({
       layout: { type: "card", isCollapsible: true },
       fields: [
@@ -34194,8 +34251,9 @@ function TaxonomyPage({
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, form);
   const formId = (0, import_compose17.useInstanceId)(TaxonomyPage, "taxonomy-form");
-  const { saveEntityRecord } = (0, import_data17.useDispatch)(import_core_data15.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data17.useDispatch)(import_notices9.store);
+  const { saveEntityRecord } = (0, import_data18.useDispatch)(import_core_data16.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data18.useDispatch)(import_notices9.store);
+  const maybeInvalidateCache = useMaybeInvalidateContentTypeCache();
   async function onSave() {
     if (isSaving || !isValid2) {
       return;
@@ -34218,6 +34276,11 @@ function TaxonomyPage({
         data.title.raw
       );
       createSuccessNotice(successMessage, { type: "snackbar" });
+      maybeInvalidateCache(
+        initialData.config.object_type,
+        data.config.object_type,
+        POST_TYPE_ENTITY
+      );
       if (saved?.id !== void 0) {
         onSaved?.({ ...data, id: saved.id });
       }
