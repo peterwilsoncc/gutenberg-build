@@ -6994,11 +6994,12 @@ var wp;
     }
     const blockType = normalizeBlockType(blockTypeOrName);
     const { name: blockName, transforms } = blockType || {};
-    if (!transforms || !Array.isArray(transforms[direction])) {
+    const directionTransforms = transforms?.[direction];
+    if (!transforms || !Array.isArray(directionTransforms)) {
       return [];
     }
     const usingMobileTransformations = transforms.supportedMobileTransforms && Array.isArray(transforms.supportedMobileTransforms);
-    const filteredTransforms = usingMobileTransformations ? transforms[direction].filter((t3) => {
+    const filteredTransforms = usingMobileTransformations ? directionTransforms.filter((t3) => {
       if (t3.type === "raw") {
         return true;
       }
@@ -7016,7 +7017,7 @@ var wp;
           transformBlockName
         )
       );
-    }) : transforms[direction];
+    }) : directionTransforms;
     return filteredTransforms.map((transform) => ({
       ...transform,
       blockName,
