@@ -7315,7 +7315,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 .revision-diff-markers {
   position: relative;
   flex-shrink: 0;
-  width: 12px;
+  width: 24px;
   background: rgba(0, 0, 0, 0.05);
 }
 .revision-diff-markers .revision-diff-marker {
