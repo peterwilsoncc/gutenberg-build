@@ -3048,10 +3048,6 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   width: 100%;
 }
 
-.components-popover__close.components-button {
-  z-index: 5;
-}
-
 .components-popover__arrow {
   position: absolute;
   width: 14px;
