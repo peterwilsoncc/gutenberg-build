@@ -70964,6 +70964,11 @@ If there's a particular need for this, please submit a feature request at https:
         onClick: () => setCurrentRevisionId2(lastRevisionId),
         className: "editor-private-post-last-revision__button",
         text: revisionsCount,
+        "aria-label": (0, import_i18n228.sprintf)(
+          /* translators: %s: number of revisions. */
+          (0, import_i18n228.__)("Open revisions screen: %s revisions"),
+          revisionsCount
+        ),
         variant: "tertiary",
         size: "compact"
       }
