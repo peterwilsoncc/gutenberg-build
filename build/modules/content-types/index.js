@@ -10916,9 +10916,9 @@ function registerStyle8(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle8("b49ef575a8", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._165c4572592944b2__overflowVisible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer wp-ui-compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}");
+  registerStyle8("f1b9bb6252", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._165c4572592944b2__overflowVisible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer wp-ui-compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}");
 }
-var style_default8 = { "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflowVisible": "_165c4572592944b2__overflowVisible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var style_default8 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflowVisible": "_165c4572592944b2__overflowVisible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
 if (typeof process === "undefined" || true) {
   registerStyle8("1fb29d3a3c", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,#0000);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 #0000);color:var(--_gcd-input-color,var(--wpds-color-fg-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,#0000);border-color:var(--_gcd-input-border-color-disabled,#0000);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid #0000)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-fg-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-medium,499));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid #0000);transition:var(--_gcd-a-transition,none)}");
 }
@@ -10934,53 +10934,58 @@ var Header2 = (0, import_element23.forwardRef)(
       () => ({ setDescriptionId }),
       [setDescriptionId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(HeaderDescriptionIdContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
-      Trigger,
-      {
-        className: clsx_default(style_default8.header, className),
-        render: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
-          Header,
-          {
-            ref,
-            render: render4,
-            ...restProps
-          }
+    return useRender({
+      defaultTagName: "div",
+      render: render4,
+      ref,
+      props: mergeProps(restProps, {
+        className: clsx_default(
+          global_css_defense_default3.heading,
+          style_default8["heading-wrapper"],
+          className
         ),
-        nativeButton: false,
-        "aria-describedby": descriptionId,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: style_default8["header-content"], children }),
-          /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
-            "div",
-            {
-              className: clsx_default(
-                style_default8["header-trigger-positioner"]
-              ),
-              children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(HeaderDescriptionIdContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
+          Trigger,
+          {
+            className: style_default8.header,
+            render: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Header, {}),
+            nativeButton: false,
+            "aria-describedby": descriptionId,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: style_default8["header-content"], children }),
+              /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
                 "div",
                 {
                   className: clsx_default(
-                    style_default8["header-trigger-wrapper"],
-                    global_css_defense_default3.div,
-                    // While the interactive trigger element is the whole header,
-                    // the focus ring will be displayed only on the icon to visually
-                    // emulate it being the button.
-                    focus_default2["outset-ring--focus-parent-visible"]
+                    style_default8["header-trigger-positioner"]
                   ),
                   children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
-                    Icon,
+                    "div",
                     {
-                      icon: chevron_down_default,
-                      className: style_default8["header-trigger"]
+                      className: clsx_default(
+                        style_default8["header-trigger-wrapper"],
+                        global_css_defense_default3.div,
+                        // While the interactive trigger element is the whole header,
+                        // the focus ring will be displayed only on the icon to visually
+                        // emulate it being the button.
+                        focus_default2["outset-ring--focus-parent-visible"]
+                      ),
+                      children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+                        Icon,
+                        {
+                          icon: chevron_down_default,
+                          className: style_default8["header-trigger"]
+                        }
+                      )
                     }
                   )
                 }
               )
-            }
-          )
-        ]
-      }
-    ) });
+            ]
+          }
+        ) })
+      })
+    });
   }
 );
 
@@ -11091,9 +11096,9 @@ function registerStyle9(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle9("b49ef575a8", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._165c4572592944b2__overflowVisible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer wp-ui-compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}");
+  registerStyle9("f1b9bb6252", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-fg-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._165c4572592944b2__overflowVisible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer wp-ui-compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}");
 }
-var style_default9 = { "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflowVisible": "_165c4572592944b2__overflowVisible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var style_default9 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflowVisible": "_165c4572592944b2__overflowVisible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
 var Content2 = (0, import_element25.forwardRef)(
   function CollapsibleCardContent({ className, render: render4, children, hiddenUntilFound = true, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
@@ -16428,7 +16433,7 @@ function ActivityItem(props) {
 var activity_item_default = ActivityItem;
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-items.mjs
-var import_react13 = __toESM(require_react(), 1);
+var import_react14 = __toESM(require_react(), 1);
 function isDefined3(item) {
   return !!item;
 }
@@ -16441,7 +16446,7 @@ function ActivityItems(props) {
   );
   const otherFields = (view?.fields ?? []).map((fieldId) => fields.find((f2) => fieldId === f2.id)).filter(isDefined3);
   return data.map((item, index2) => {
-    return /* @__PURE__ */ (0, import_react13.createElement)(
+    return /* @__PURE__ */ (0, import_react14.createElement)(
       activity_item_default,
       {
         ...props,
@@ -17757,7 +17762,7 @@ function defaultValue(...values) {
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/YXGXYGQX.js
-var import_react14 = __toESM(require_react(), 1);
+var import_react15 = __toESM(require_react(), 1);
 function setRef(ref, value) {
   if (typeof ref === "function") {
     ref(value);
@@ -17767,7 +17772,7 @@ function setRef(ref, value) {
 }
 function isValidElementWithRef(element) {
   if (!element) return false;
-  if (!(0, import_react14.isValidElement)(element)) return false;
+  if (!(0, import_react15.isValidElement)(element)) return false;
   if ("ref" in element.props) return true;
   if ("ref" in element) return true;
   return false;
@@ -18081,25 +18086,25 @@ function addGlobalEventListener(type, listener, options, scope = window) {
 
 // node_modules/@ariakit/react-core/esm/__chunks/KPHZR4MB.js
 var React59 = __toESM(require_react(), 1);
-var import_react15 = __toESM(require_react(), 1);
+var import_react16 = __toESM(require_react(), 1);
 var _React = { ...React59 };
 var useReactId = _React.useId;
 var useReactDeferredValue = _React.useDeferredValue;
 var useReactInsertionEffect = _React.useInsertionEffect;
-var useSafeLayoutEffect = canUseDOM ? import_react15.useLayoutEffect : import_react15.useEffect;
+var useSafeLayoutEffect = canUseDOM ? import_react16.useLayoutEffect : import_react16.useEffect;
 function useInitialValue(value) {
-  const [initialValue] = (0, import_react15.useState)(value);
+  const [initialValue] = (0, import_react16.useState)(value);
   return initialValue;
 }
 function useLiveRef(value) {
-  const ref = (0, import_react15.useRef)(value);
+  const ref = (0, import_react16.useRef)(value);
   useSafeLayoutEffect(() => {
     ref.current = value;
   });
   return ref;
 }
 function useEvent(callback) {
-  const ref = (0, import_react15.useRef)(() => {
+  const ref = (0, import_react16.useRef)(() => {
     throw new Error("Cannot call an event handler while rendering.");
   });
   if (useReactInsertionEffect) {
@@ -18109,13 +18114,13 @@ function useEvent(callback) {
   } else {
     ref.current = callback;
   }
-  return (0, import_react15.useCallback)((...args) => {
+  return (0, import_react16.useCallback)((...args) => {
     var _a;
     return (_a = ref.current) == null ? void 0 : _a.call(ref, ...args);
   }, []);
 }
 function useTransactionState(callback) {
-  const [state, setState] = (0, import_react15.useState)(null);
+  const [state, setState] = (0, import_react16.useState)(null);
   useSafeLayoutEffect(() => {
     if (state == null) return;
     if (!callback) return;
@@ -18131,7 +18136,7 @@ function useTransactionState(callback) {
   return [state, setState];
 }
 function useMergeRefs(...refs) {
-  return (0, import_react15.useMemo)(() => {
+  return (0, import_react16.useMemo)(() => {
     if (!refs.some(Boolean)) return;
     return (value) => {
       for (const ref of refs) {
@@ -18146,7 +18151,7 @@ function useId5(defaultId) {
     if (defaultId) return defaultId;
     return reactId;
   }
-  const [id, setId] = (0, import_react15.useState)(defaultId);
+  const [id, setId] = (0, import_react16.useState)(defaultId);
   useSafeLayoutEffect(() => {
     if (defaultId || id) return;
     const random = Math.random().toString(36).slice(2, 8);
@@ -18159,7 +18164,7 @@ function useTagName(refOrElement, type) {
     if (typeof type2 !== "string") return;
     return type2;
   };
-  const [tagName, setTagName] = (0, import_react15.useState)(() => stringOrUndefined(type));
+  const [tagName, setTagName] = (0, import_react16.useState)(() => stringOrUndefined(type));
   useSafeLayoutEffect(() => {
     const element = refOrElement && "current" in refOrElement ? refOrElement.current : refOrElement;
     setTagName((element == null ? void 0 : element.tagName.toLowerCase()) || stringOrUndefined(type));
@@ -18168,8 +18173,8 @@ function useTagName(refOrElement, type) {
 }
 function useAttribute(refOrElement, attributeName, defaultValue2) {
   const initialValue = useInitialValue(defaultValue2);
-  const [attribute, setAttribute] = (0, import_react15.useState)(initialValue);
-  (0, import_react15.useEffect)(() => {
+  const [attribute, setAttribute] = (0, import_react16.useState)(initialValue);
+  (0, import_react16.useEffect)(() => {
     const element = refOrElement && "current" in refOrElement ? refOrElement.current : refOrElement;
     if (!element) return;
     const callback = () => {
@@ -18184,14 +18189,14 @@ function useAttribute(refOrElement, attributeName, defaultValue2) {
   return attribute;
 }
 function useUpdateEffect(effect, deps) {
-  const mounted = (0, import_react15.useRef)(false);
-  (0, import_react15.useEffect)(() => {
+  const mounted = (0, import_react16.useRef)(false);
+  (0, import_react16.useEffect)(() => {
     if (mounted.current) {
       return effect();
     }
     mounted.current = true;
   }, deps);
-  (0, import_react15.useEffect)(
+  (0, import_react16.useEffect)(
     () => () => {
       mounted.current = false;
     },
@@ -18199,7 +18204,7 @@ function useUpdateEffect(effect, deps) {
   );
 }
 function useUpdateLayoutEffect(effect, deps) {
-  const mounted = (0, import_react15.useRef)(false);
+  const mounted = (0, import_react16.useRef)(false);
   useSafeLayoutEffect(() => {
     if (mounted.current) {
       return effect();
@@ -18214,7 +18219,7 @@ function useUpdateLayoutEffect(effect, deps) {
   );
 }
 function useForceUpdate() {
-  return (0, import_react15.useReducer)(() => [], []);
+  return (0, import_react16.useReducer)(() => [], []);
 }
 function useBooleanEvent(booleanOrCallback) {
   return useEvent(
@@ -18222,7 +18227,7 @@ function useBooleanEvent(booleanOrCallback) {
   );
 }
 function useWrapElement(props, callback, deps = []) {
-  const wrapElement = (0, import_react15.useCallback)(
+  const wrapElement = (0, import_react16.useCallback)(
     (element) => {
       if (props.wrapElement) {
         element = props.wrapElement(element);
@@ -18235,7 +18240,7 @@ function useWrapElement(props, callback, deps = []) {
 }
 function useMetadataProps(props, key, value) {
   const parent = props.onLoadedMetadataCapture;
-  const onLoadedMetadataCapture = (0, import_react15.useMemo)(() => {
+  const onLoadedMetadataCapture = (0, import_react16.useMemo)(() => {
     return Object.assign(() => {
     }, { ...parent, [key]: value });
   }, [parent, key, value]);
@@ -18243,7 +18248,7 @@ function useMetadataProps(props, key, value) {
 }
 var hasInstalledGlobalEventListeners = false;
 function useIsMouseMoving() {
-  (0, import_react15.useEffect)(() => {
+  (0, import_react16.useEffect)(() => {
     if (hasInstalledGlobalEventListeners) return;
     addGlobalEventListener("mousemove", setMouseMoving, true);
     addGlobalEventListener("mousedown", resetMouseMoving, true);
@@ -18363,7 +18368,7 @@ var CollectionContextProvider = ctx.ContextProvider;
 var CollectionScopedContextProvider = ctx.ScopedContextProvider;
 
 // node_modules/@ariakit/react-core/esm/__chunks/AVVXDJMZ.js
-var import_react16 = __toESM(require_react(), 1);
+var import_react17 = __toESM(require_react(), 1);
 var ctx2 = createStoreContext(
   [CollectionContextProvider],
   [CollectionScopedContextProvider]
@@ -18373,10 +18378,10 @@ var useCompositeScopedContext = ctx2.useScopedContext;
 var useCompositeProviderContext = ctx2.useProviderContext;
 var CompositeContextProvider = ctx2.ContextProvider;
 var CompositeScopedContextProvider = ctx2.ScopedContextProvider;
-var CompositeItemContext = (0, import_react16.createContext)(
+var CompositeItemContext = (0, import_react17.createContext)(
   void 0
 );
-var CompositeRowContext = (0, import_react16.createContext)(
+var CompositeRowContext = (0, import_react17.createContext)(
   void 0
 );
 
@@ -18442,7 +18447,7 @@ function isItem(store, element, exclude) {
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/Z2O3VLAQ.js
-var import_react17 = __toESM(require_react(), 1);
+var import_react18 = __toESM(require_react(), 1);
 var TagName = "div";
 var useCollectionItem = createHook(
   function useCollectionItem2({
@@ -18456,8 +18461,8 @@ var useCollectionItem = createHook(
     const context = useCollectionContext();
     store = store || context;
     const id = useId5(props.id);
-    const ref = (0, import_react17.useRef)(element);
-    (0, import_react17.useEffect)(() => {
+    const ref = (0, import_react18.useRef)(element);
+    (0, import_react18.useEffect)(() => {
       const element2 = ref.current;
       if (!id) return;
       if (!element2) return;
@@ -18478,8 +18483,8 @@ var CollectionItem = forwardRef210(function CollectionItem2(props) {
 });
 
 // node_modules/@ariakit/react-core/esm/__chunks/SWN3JYXT.js
-var import_react18 = __toESM(require_react(), 1);
-var FocusableContext = (0, import_react18.createContext)(true);
+var import_react19 = __toESM(require_react(), 1);
+var FocusableContext = (0, import_react19.createContext)(true);
 
 // node_modules/@ariakit/core/esm/utils/focus.js
 var selector = "input:not([type='hidden']):not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex], summary, iframe, object, embed, area[href], audio[controls], video[controls], [contenteditable]:not([contenteditable='false'])";
@@ -18528,7 +18533,7 @@ function focusIntoView(element, options) {
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/U6HHPQDW.js
-var import_react19 = __toESM(require_react(), 1);
+var import_react20 = __toESM(require_react(), 1);
 var TagName2 = "div";
 var isSafariBrowser = isSafari2();
 var alwaysFocusVisibleInputTypes = [
@@ -18635,8 +18640,8 @@ var useFocusable = createHook(
     onFocusVisible,
     ...props
   }) {
-    const ref = (0, import_react19.useRef)(null);
-    (0, import_react19.useEffect)(() => {
+    const ref = (0, import_react20.useRef)(null);
+    (0, import_react20.useEffect)(() => {
       if (!focusable2) return;
       if (hasInstalledGlobalEventListeners2) return;
       addGlobalEventListener("mousedown", onGlobalMouseDown, true);
@@ -18644,7 +18649,7 @@ var useFocusable = createHook(
       hasInstalledGlobalEventListeners2 = true;
     }, [focusable2]);
     if (isSafariBrowser) {
-      (0, import_react19.useEffect)(() => {
+      (0, import_react20.useEffect)(() => {
         if (!focusable2) return;
         const element = ref.current;
         if (!element) return;
@@ -18664,14 +18669,14 @@ var useFocusable = createHook(
     }
     const disabled2 = focusable2 && disabledFromProps(props);
     const trulyDisabled = !!disabled2 && !accessibleWhenDisabled;
-    const [focusVisible, setFocusVisible] = (0, import_react19.useState)(false);
-    (0, import_react19.useEffect)(() => {
+    const [focusVisible, setFocusVisible] = (0, import_react20.useState)(false);
+    (0, import_react20.useEffect)(() => {
       if (!focusable2) return;
       if (trulyDisabled && focusVisible) {
         setFocusVisible(false);
       }
     }, [focusable2, trulyDisabled, focusVisible]);
-    (0, import_react19.useEffect)(() => {
+    (0, import_react20.useEffect)(() => {
       if (!focusable2) return;
       if (!focusVisible) return;
       const element = ref.current;
@@ -18770,7 +18775,7 @@ var useFocusable = createHook(
       event.currentTarget.removeAttribute("data-focus-visible");
       setFocusVisible(false);
     });
-    const autoFocusOnShow = (0, import_react19.useContext)(FocusableContext);
+    const autoFocusOnShow = (0, import_react20.useContext)(FocusableContext);
     const autoFocusRef = useEvent((element) => {
       if (!focusable2) return;
       if (!autoFocus) return;
@@ -18786,7 +18791,7 @@ var useFocusable = createHook(
     const nativeTabbable = focusable2 && isNativeTabbable(tagName);
     const supportsDisabled = focusable2 && supportsDisabledAttribute(tagName);
     const styleProp = props.style;
-    const style = (0, import_react19.useMemo)(() => {
+    const style = (0, import_react20.useMemo)(() => {
       if (trulyDisabled) {
         return { pointerEvents: "none", ...styleProp };
       }
@@ -18826,7 +18831,7 @@ var Focusable = forwardRef210(function Focusable2(props) {
 });
 
 // node_modules/@ariakit/react-core/esm/__chunks/PZ3OL7I2.js
-var import_react20 = __toESM(require_react(), 1);
+var import_react21 = __toESM(require_react(), 1);
 var TagName3 = "button";
 function isNativeClick(event) {
   if (!event.isTrusted) return false;
@@ -18842,14 +18847,14 @@ function isNativeClick(event) {
 var symbol = /* @__PURE__ */ Symbol("command");
 var useCommand = createHook(
   function useCommand2({ clickOnEnter = true, clickOnSpace = true, ...props }) {
-    const ref = (0, import_react20.useRef)(null);
-    const [isNativeButton, setIsNativeButton] = (0, import_react20.useState)(false);
-    (0, import_react20.useEffect)(() => {
+    const ref = (0, import_react21.useRef)(null);
+    const [isNativeButton, setIsNativeButton] = (0, import_react21.useState)(false);
+    (0, import_react21.useEffect)(() => {
       if (!ref.current) return;
       setIsNativeButton(isButton(ref.current));
     }, []);
-    const [active, setActive] = (0, import_react20.useState)(false);
-    const activeRef = (0, import_react20.useRef)(false);
+    const [active, setActive] = (0, import_react21.useState)(false);
+    const activeRef = (0, import_react21.useRef)(false);
     const disabled2 = disabledFromProps(props);
     const [isDuplicate, metadataProps] = useMetadataProps(props, symbol, true);
     const onKeyDownProp = props.onKeyDown;
@@ -19243,7 +19248,7 @@ function useStore2(createStore2, props) {
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/WZWDIE3S.js
-var import_react21 = __toESM(require_react(), 1);
+var import_react22 = __toESM(require_react(), 1);
 var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 var TagName4 = "button";
 function isEditableElement(element) {
@@ -19316,8 +19321,8 @@ var useCompositeItem = createHook(
     const context = useCompositeContext();
     store = store || context;
     const id = useId5(props.id);
-    const ref = (0, import_react21.useRef)(null);
-    const row = (0, import_react21.useContext)(CompositeRowContext);
+    const ref = (0, import_react22.useRef)(null);
+    const row = (0, import_react22.useContext)(CompositeRowContext);
     const disabled2 = disabledFromProps(props);
     const trulyDisabled = disabled2 && !props.accessibleWhenDisabled;
     const {
@@ -19369,7 +19374,7 @@ var useCompositeItem = createHook(
         return state.activeId === id;
       }
     });
-    const getItem = (0, import_react21.useCallback)(
+    const getItem = (0, import_react22.useCallback)(
       (item) => {
         var _a;
         const nextItem = {
@@ -19387,7 +19392,7 @@ var useCompositeItem = createHook(
       [id, rowId, trulyDisabled, getItemProp]
     );
     const onFocusProp = props.onFocus;
-    const hasFocusedComposite = (0, import_react21.useRef)(false);
+    const hasFocusedComposite = (0, import_react22.useRef)(false);
     const onFocus = useEvent((event) => {
       onFocusProp == null ? void 0 : onFocusProp(event);
       if (event.defaultPrevented) return;
@@ -19497,7 +19502,7 @@ var useCompositeItem = createHook(
         }
       }
     });
-    const providerValue = (0, import_react21.useMemo)(
+    const providerValue = (0, import_react22.useMemo)(
       () => ({ id, baseElement }),
       [id, baseElement]
     );
@@ -19556,7 +19561,7 @@ function reverseArray(array) {
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/ZMWF7ASR.js
-var import_react22 = __toESM(require_react(), 1);
+var import_react23 = __toESM(require_react(), 1);
 var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 var TagName5 = "div";
 function isGrid(items) {
@@ -19601,12 +19606,12 @@ function findFirstEnabledItemInTheLastRow(items) {
   );
 }
 function useScheduleFocus(store) {
-  const [scheduled, setScheduled] = (0, import_react22.useState)(false);
-  const schedule = (0, import_react22.useCallback)(() => setScheduled(true), []);
+  const [scheduled, setScheduled] = (0, import_react23.useState)(false);
+  const schedule = (0, import_react23.useCallback)(() => setScheduled(true), []);
   const activeItem = store.useState(
     (state) => getEnabledItem(store, state.activeId)
   );
-  (0, import_react22.useEffect)(() => {
+  (0, import_react23.useEffect)(() => {
     const activeElement2 = activeItem == null ? void 0 : activeItem.element;
     if (!scheduled) return;
     if (!activeElement2) return;
@@ -19629,14 +19634,14 @@ var useComposite = createHook(
       store,
       "Composite must receive a `store` prop or be wrapped in a CompositeProvider component."
     );
-    const ref = (0, import_react22.useRef)(null);
-    const previousElementRef = (0, import_react22.useRef)(null);
+    const ref = (0, import_react23.useRef)(null);
+    const previousElementRef = (0, import_react23.useRef)(null);
     const scheduleFocus = useScheduleFocus(store);
     const moves = store.useState("moves");
     const [, setBaseElement] = useTransactionState(
       composite ? store.setBaseElement : null
     );
-    (0, import_react22.useEffect)(() => {
+    (0, import_react23.useEffect)(() => {
       var _a;
       if (!store) return;
       if (!moves) return;
@@ -19838,7 +19843,7 @@ var DisclosureContextProvider = ctx3.ContextProvider;
 var DisclosureScopedContextProvider = ctx3.ScopedContextProvider;
 
 // node_modules/@ariakit/react-core/esm/__chunks/A62MDFCW.js
-var import_react23 = __toESM(require_react(), 1);
+var import_react24 = __toESM(require_react(), 1);
 var ctx4 = createStoreContext(
   [DisclosureContextProvider],
   [DisclosureScopedContextProvider]
@@ -19848,11 +19853,11 @@ var useDialogScopedContext = ctx4.useScopedContext;
 var useDialogProviderContext = ctx4.useProviderContext;
 var DialogContextProvider = ctx4.ContextProvider;
 var DialogScopedContextProvider = ctx4.ScopedContextProvider;
-var DialogHeadingContext = (0, import_react23.createContext)(void 0);
-var DialogDescriptionContext = (0, import_react23.createContext)(void 0);
+var DialogHeadingContext = (0, import_react24.createContext)(void 0);
+var DialogDescriptionContext = (0, import_react24.createContext)(void 0);
 
 // node_modules/@ariakit/react-core/esm/__chunks/6B3RXHKP.js
-var import_react24 = __toESM(require_react(), 1);
+var import_react25 = __toESM(require_react(), 1);
 var import_react_dom4 = __toESM(require_react_dom(), 1);
 var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 var TagName6 = "div";
@@ -19884,9 +19889,9 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     store,
     "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component."
   );
-  const ref = (0, import_react24.useRef)(null);
+  const ref = (0, import_react25.useRef)(null);
   const id = useId5(props.id);
-  const [transition, setTransition] = (0, import_react24.useState)(null);
+  const [transition, setTransition] = (0, import_react25.useState)(null);
   const open = store.useState("open");
   const mounted = store.useState("mounted");
   const animated = store.useState("animated");
@@ -19973,7 +19978,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
   );
   const hidden = isHidden(mounted, props.hidden, alwaysVisible);
   const styleProp = props.style;
-  const style = (0, import_react24.useMemo)(() => {
+  const style = (0, import_react25.useMemo)(() => {
     if (hidden) {
       return { ...styleProp, display: "none" };
     }
@@ -20518,8 +20523,8 @@ function useCompositeStoreProps(store, update2, props) {
 }
 
 // node_modules/@ariakit/react-core/esm/__chunks/CVCFNOHX.js
-var import_react25 = __toESM(require_react(), 1);
-var ComboboxListRoleContext = (0, import_react25.createContext)(
+var import_react26 = __toESM(require_react(), 1);
+var ComboboxListRoleContext = (0, import_react26.createContext)(
   void 0
 );
 var ctx6 = createStoreContext(
@@ -20531,10 +20536,10 @@ var useComboboxScopedContext = ctx6.useScopedContext;
 var useComboboxProviderContext = ctx6.useProviderContext;
 var ComboboxContextProvider = ctx6.ContextProvider;
 var ComboboxScopedContextProvider = ctx6.ScopedContextProvider;
-var ComboboxItemValueContext = (0, import_react25.createContext)(
+var ComboboxItemValueContext = (0, import_react26.createContext)(
   void 0
 );
-var ComboboxItemCheckedContext = (0, import_react25.createContext)(false);
+var ComboboxItemCheckedContext = (0, import_react26.createContext)(false);
 
 // node_modules/@ariakit/core/esm/__chunks/KMAUV3TY.js
 function createDialogStore(props = {}) {
@@ -20615,7 +20620,7 @@ var PopoverAnchor = forwardRef210(function PopoverAnchor2(props) {
 });
 
 // node_modules/@ariakit/react-core/esm/__chunks/X6LNAU2F.js
-var import_react26 = __toESM(require_react(), 1);
+var import_react27 = __toESM(require_react(), 1);
 var TagName8 = "div";
 function getMouseDestination(event) {
   const relatedTarget = event.relatedTarget;
@@ -20682,7 +20687,7 @@ var useCompositeHover = createHook(
       store == null ? void 0 : store.setActiveId(null);
       (_a = store == null ? void 0 : store.getState().baseElement) == null ? void 0 : _a.focus();
     });
-    const ref = (0, import_react26.useCallback)((element) => {
+    const ref = (0, import_react27.useCallback)((element) => {
       if (!element) return;
       element[symbol2] = true;
     }, []);
@@ -20703,7 +20708,7 @@ var CompositeHover = memo22(
 );
 
 // node_modules/@ariakit/react-core/esm/combobox/combobox.js
-var import_react27 = __toESM(require_react(), 1);
+var import_react28 = __toESM(require_react(), 1);
 var TagName9 = "input";
 function isFirstItemAutoSelected(items, activeValue, autoSelect) {
   if (!autoSelect) return false;
@@ -20755,22 +20760,22 @@ var useCombobox = createHook(
       store,
       "Combobox must receive a `store` prop or be wrapped in a ComboboxProvider component."
     );
-    const ref = (0, import_react27.useRef)(null);
+    const ref = (0, import_react28.useRef)(null);
     const [valueUpdated, forceValueUpdate] = useForceUpdate();
-    const canAutoSelectRef = (0, import_react27.useRef)(false);
-    const composingRef = (0, import_react27.useRef)(false);
+    const canAutoSelectRef = (0, import_react28.useRef)(false);
+    const composingRef = (0, import_react28.useRef)(false);
     const autoSelect = store.useState(
       (state) => state.virtualFocus && autoSelectProp
     );
     const inline4 = autoComplete === "inline" || autoComplete === "both";
-    const [canInline, setCanInline] = (0, import_react27.useState)(inline4);
+    const [canInline, setCanInline] = (0, import_react28.useState)(inline4);
     useUpdateLayoutEffect(() => {
       if (!inline4) return;
       setCanInline(true);
     }, [inline4]);
     const storeValue = store.useState("value");
-    const prevSelectedValueRef = (0, import_react27.useRef)(void 0);
-    (0, import_react27.useEffect)(() => {
+    const prevSelectedValueRef = (0, import_react28.useRef)(void 0);
+    (0, import_react28.useEffect)(() => {
       return sync(store, ["selectedValue", "activeId"], (_, prev) => {
         prevSelectedValueRef.current = prev.selectedValue;
       });
@@ -20788,7 +20793,7 @@ var useCombobox = createHook(
     const items = store.useState("renderedItems");
     const open = store.useState("open");
     const contentElement = store.useState("contentElement");
-    const value = (0, import_react27.useMemo)(() => {
+    const value = (0, import_react28.useMemo)(() => {
       if (!inline4) return storeValue;
       if (!canInline) return storeValue;
       const firstItemAutoSelected = isFirstItemAutoSelected(
@@ -20805,7 +20810,7 @@ var useCombobox = createHook(
       }
       return inlineActiveValue || storeValue;
     }, [inline4, canInline, items, inlineActiveValue, autoSelect, storeValue]);
-    (0, import_react27.useEffect)(() => {
+    (0, import_react28.useEffect)(() => {
       const element = ref.current;
       if (!element) return;
       const onCompositeItemMove = () => setCanInline(true);
@@ -20814,7 +20819,7 @@ var useCombobox = createHook(
         element.removeEventListener("combobox-item-move", onCompositeItemMove);
       };
     }, []);
-    (0, import_react27.useEffect)(() => {
+    (0, import_react28.useEffect)(() => {
       if (!inline4) return;
       if (!canInline) return;
       if (!inlineActiveValue) return;
@@ -20851,10 +20856,10 @@ var useCombobox = createHook(
       autoSelect,
       storeValue
     ]);
-    const scrollingElementRef = (0, import_react27.useRef)(null);
+    const scrollingElementRef = (0, import_react28.useRef)(null);
     const getAutoSelectIdProp = useEvent(getAutoSelectId);
-    const autoSelectIdRef = (0, import_react27.useRef)(null);
-    (0, import_react27.useEffect)(() => {
+    const autoSelectIdRef = (0, import_react28.useRef)(null);
+    (0, import_react28.useEffect)(() => {
       if (!open) return;
       if (!contentElement) return;
       const scrollingElement = getScrollingElement(contentElement);
@@ -20926,7 +20931,7 @@ var useCombobox = createHook(
       getAutoSelectIdProp,
       items
     ]);
-    (0, import_react27.useEffect)(() => {
+    (0, import_react28.useEffect)(() => {
       if (!inline4) return;
       const combobox = ref.current;
       if (!combobox) return;
@@ -21095,7 +21100,7 @@ var Combobox = forwardRef210(function Combobox2(props) {
 });
 
 // node_modules/@ariakit/react-core/esm/__chunks/IBXZ2LQC.js
-var import_react28 = __toESM(require_react(), 1);
+var import_react29 = __toESM(require_react(), 1);
 var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 var TagName10 = "div";
 function isSelected(storeValue, itemValue) {
@@ -21145,7 +21150,7 @@ var useComboboxItem = createHook(
         return isSelected(state.selectedValue, value);
       }
     });
-    const getItem = (0, import_react28.useCallback)(
+    const getItem = (0, import_react29.useCallback)(
       (item) => {
         const nextItem = { ...item, value };
         if (getItemProp) {
@@ -21216,7 +21221,7 @@ var useComboboxItem = createHook(
       (element) => /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(ComboboxItemValueContext.Provider, { value, children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(ComboboxItemCheckedContext.Provider, { value: selected != null ? selected : false, children: element }) }),
       [value, selected]
     );
-    const popupRole = (0, import_react28.useContext)(ComboboxListRoleContext);
+    const popupRole = (0, import_react29.useContext)(ComboboxListRoleContext);
     props = {
       role: getItemRole(popupRole),
       children: value,
@@ -21252,7 +21257,7 @@ var ComboboxItem = memo22(
 );
 
 // node_modules/@ariakit/react-core/esm/combobox/combobox-item-value.js
-var import_react29 = __toESM(require_react(), 1);
+var import_react30 = __toESM(require_react(), 1);
 var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 var TagName11 = "span";
 function normalizeValue(value) {
@@ -21327,10 +21332,10 @@ function splitValue(itemValue, userValue) {
 var useComboboxItemValue = createHook(function useComboboxItemValue2({ store, value, userValue, ...props }) {
   const context = useComboboxScopedContext();
   store = store || context;
-  const itemContext = (0, import_react29.useContext)(ComboboxItemValueContext);
+  const itemContext = (0, import_react30.useContext)(ComboboxItemValueContext);
   const itemValue = value != null ? value : itemContext;
   const inputValue = useStoreState(store, (state) => userValue != null ? userValue : state == null ? void 0 : state.value);
-  const children = (0, import_react29.useMemo)(() => {
+  const children = (0, import_react30.useMemo)(() => {
     if (!itemValue) return;
     if (!inputValue) return itemValue;
     return splitValue(itemValue, inputValue);
@@ -21375,7 +21380,7 @@ var ComboboxLabel = memo22(
 );
 
 // node_modules/@ariakit/react-core/esm/__chunks/2G6YEJT4.js
-var import_react30 = __toESM(require_react(), 1);
+var import_react31 = __toESM(require_react(), 1);
 var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 var TagName13 = "div";
 var useComboboxList = createHook(
@@ -21388,7 +21393,7 @@ var useComboboxList = createHook(
       store,
       "ComboboxList must receive a `store` prop or be wrapped in a ComboboxProvider component."
     );
-    const ref = (0, import_react30.useRef)(null);
+    const ref = (0, import_react31.useRef)(null);
     const id = useId5(props.id);
     const mounted = store.useState("mounted");
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
@@ -21399,7 +21404,7 @@ var useComboboxList = createHook(
     const role = useAttribute(ref, "role", props.role);
     const isCompositeRole = role === "listbox" || role === "tree" || role === "grid";
     const ariaMultiSelectable = isCompositeRole ? multiSelectable || void 0 : void 0;
-    const [hasListboxInside, setHasListboxInside] = (0, import_react30.useState)(false);
+    const [hasListboxInside, setHasListboxInside] = (0, import_react31.useState)(false);
     const contentElement = store.useState("contentElement");
     useSafeLayoutEffect(() => {
       if (!mounted) return;
@@ -21447,9 +21452,9 @@ var ComboboxList = forwardRef210(function ComboboxList2(props) {
 });
 
 // node_modules/@ariakit/react-core/esm/__chunks/XSIEPKGA.js
-var import_react31 = __toESM(require_react(), 1);
-var TagValueContext = (0, import_react31.createContext)(null);
-var TagRemoveIdContext = (0, import_react31.createContext)(
+var import_react32 = __toESM(require_react(), 1);
+var TagValueContext = (0, import_react32.createContext)(null);
+var TagRemoveIdContext = (0, import_react32.createContext)(
   null
 );
 var ctx7 = createStoreContext(
