@@ -2322,7 +2322,7 @@ body.is-dragging-components-draggable {
 }
 @media not (prefers-reduced-motion) {
   .components-modal__screen-overlay {
-    animation: __wp-base-styles-fade-in 0.08s linear 0s;
+    animation: __wp-base-styles-fade-in var(--wpds-motion-duration-sm, 100ms) var(--wpds-motion-easing-subtle, cubic-bezier(0.15, 0, 0.15, 1)) 0s;
     animation-fill-mode: forwards;
   }
 }
@@ -2336,7 +2336,7 @@ body.is-dragging-components-draggable {
 }
 @media not (prefers-reduced-motion) {
   .components-modal__screen-overlay.is-animating-out {
-    animation: __wp-base-styles-fade-out 0.08s linear 80ms;
+    animation: __wp-base-styles-fade-out var(--wpds-motion-duration-sm, 100ms) var(--wpds-motion-easing-subtle, cubic-bezier(0.15, 0, 0.15, 1)) var(--wpds-motion-duration-xs, 50ms);
     animation-fill-mode: forwards;
   }
 }
@@ -2362,7 +2362,7 @@ body.is-dragging-components-draggable {
   color: #1e1e1e;
   animation-name: components-modal__appear-animation;
   animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.29, 0, 0, 1);
+  animation-timing-function: var(--wpds-motion-easing-expressive, cubic-bezier(0.25, 0, 0, 1));
 }
 .components-modal__frame h1,
 .components-modal__frame h2,
@@ -2371,12 +2371,12 @@ body.is-dragging-components-draggable {
 }
 @media not (prefers-reduced-motion) {
   .components-modal__frame {
-    animation-duration: var(--modal-frame-animation-duration);
+    animation-duration: var(--wpds-motion-duration-md, 200ms);
   }
 }
 .components-modal__screen-overlay.is-animating-out .components-modal__frame {
   animation-name: components-modal__disappear-animation;
-  animation-timing-function: cubic-bezier(1, 0, 0.2, 1);
+  animation-timing-function: var(--wpds-motion-easing-expressive, cubic-bezier(0.25, 0, 0, 1));
 }
 @media (min-width: 600px) {
   .components-modal__frame {

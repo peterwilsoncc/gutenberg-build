@@ -22550,6 +22550,9 @@ If there's a particular need for this, please submit a feature request at https:
     surfaceBorderSubtleColor: "rgba(0, 0, 0, 0.05)",
     surfaceBackgroundTertiaryColor: COLORS.white,
     surfaceColor: COLORS.white,
+    // Modal exit animation: `use-modal-exit-animation` parses this for the
+    // `animationend` timeout race; keep the numeric duration equal to
+    // `--wpds-motion-duration-md` on `.components-modal__frame` in modal/style.scss.
     transitionDuration: "200ms",
     transitionDurationFast: "160ms",
     transitionDurationFaster: "120ms",
@@ -22567,9 +22570,9 @@ If there's a particular need for this, please submit a feature request at https:
     SLIDE_DURATION: 200,
     SLIDE_EASING: {
       function: "cubic-bezier",
-      args: [0, 0, 0, 1]
+      args: [0.25, 0, 0, 1]
     },
-    FADE_DURATION: 80,
+    FADE_DURATION: 100,
     FADE_EASING: {
       function: "linear"
     }
@@ -38987,57 +38990,68 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose49 = __toESM(require_compose(), 1);
   var import_element121 = __toESM(require_element(), 1);
   var import_warning6 = __toESM(require_warning(), 1);
-  var FRAME_ANIMATION_DURATION = config_values_default.transitionDuration;
-  var FRAME_ANIMATION_DURATION_NUMBER = Number.parseInt(config_values_default.transitionDuration);
+  var FRAME_ANIMATION_DURATION_MS = Number.parseInt(
+    config_values_default.transitionDuration
+  );
   var EXIT_ANIMATION_NAME = "components-modal__disappear-animation";
   function useModalExitAnimation() {
     const frameRef = (0, import_element121.useRef)(null);
     const [isAnimatingOut, setIsAnimatingOut] = (0, import_element121.useState)(false);
     const isReducedMotion = (0, import_compose49.useReducedMotion)();
-    const closeModal = (0, import_element121.useCallback)(() => new Promise((closeModalResolve) => {
-      const frameEl = frameRef.current;
-      if (isReducedMotion) {
-        closeModalResolve();
-        return;
-      }
-      if (!frameEl) {
-        true ? (0, import_warning6.default)("wp.components.Modal: the Modal component can't be closed with an exit animation because of a missing reference to the modal frame element.") : void 0;
-        closeModalResolve();
-        return;
-      }
-      let handleAnimationEnd;
-      const startAnimation = () => new Promise((animationResolve) => {
-        handleAnimationEnd = (e3) => {
-          if (e3.animationName === EXIT_ANIMATION_NAME) {
-            animationResolve();
-          }
-        };
-        frameEl.addEventListener("animationend", handleAnimationEnd);
-        setIsAnimatingOut(true);
-      });
-      const animationTimeout = () => new Promise((timeoutResolve) => {
-        setTimeout(
-          () => timeoutResolve(),
-          // Allow an extra 20% of the animation duration for the
-          // animationend event to fire, in case the animation frame is
-          // slightly delayes by some other events in the event loop.
-          FRAME_ANIMATION_DURATION_NUMBER * 1.2
-        );
-      });
-      Promise.race([startAnimation(), animationTimeout()]).then(() => {
-        if (handleAnimationEnd) {
-          frameEl.removeEventListener("animationend", handleAnimationEnd);
+    const closeModal = (0, import_element121.useCallback)(
+      () => new Promise((closeModalResolve) => {
+        const frameEl = frameRef.current;
+        if (isReducedMotion) {
+          closeModalResolve();
+          return;
         }
-        setIsAnimatingOut(false);
-        closeModalResolve();
-      });
-    }), [isReducedMotion]);
+        if (!frameEl) {
+          (0, import_warning6.default)(
+            "wp.components.Modal: the Modal component can't be closed with an exit animation because of a missing reference to the modal frame element."
+          );
+          closeModalResolve();
+          return;
+        }
+        let handleAnimationEnd;
+        const startAnimation = () => new Promise((animationResolve) => {
+          handleAnimationEnd = (e3) => {
+            if (e3.animationName === EXIT_ANIMATION_NAME) {
+              animationResolve();
+            }
+          };
+          frameEl.addEventListener(
+            "animationend",
+            handleAnimationEnd
+          );
+          setIsAnimatingOut(true);
+        });
+        const animationTimeout = () => new Promise((timeoutResolve) => {
+          setTimeout(
+            () => timeoutResolve(),
+            // Allow an extra 20% of the animation duration for the
+            // animationend event to fire, in case the animation frame is
+            // slightly delayes by some other events in the event loop.
+            FRAME_ANIMATION_DURATION_MS * 1.2
+          );
+        });
+        Promise.race([startAnimation(), animationTimeout()]).then(
+          () => {
+            if (handleAnimationEnd) {
+              frameEl.removeEventListener(
+                "animationend",
+                handleAnimationEnd
+              );
+            }
+            setIsAnimatingOut(false);
+            closeModalResolve();
+          }
+        );
+      }),
+      [isReducedMotion]
+    );
     return {
       overlayClassname: isAnimatingOut ? "is-animating-out" : void 0,
       frameRef,
-      frameStyle: {
-        "--modal-frame-animation-duration": `${FRAME_ANIMATION_DURATION}`
-      },
       closeModal
     };
   }
@@ -39147,7 +39161,6 @@ This message will only show in development mode. It won't appear in production. 
     const {
       closeModal,
       frameRef,
-      frameStyle,
       overlayClassname
     } = useModalExitAnimation();
     (0, import_element123.useLayoutEffect)(() => {
@@ -39211,10 +39224,7 @@ This message will only show in development mode. It won't appear in production. 
           document,
           children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
             className: clsx_default("components-modal__frame", sizeClass, className2),
-            style: {
-              ...frameStyle,
-              ...style2
-            },
+            style: style2,
             ref: (0, import_compose50.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, focusOnMount !== "firstContentElement" ? focusOnMountRef : null]),
             role,
             "aria-label": contentLabel,
