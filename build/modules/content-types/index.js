@@ -31682,6 +31682,7 @@ var import_core_data6 = __toESM(require_core_data(), 1);
 var import_data12 = __toESM(require_data(), 1);
 var import_element115 = __toESM(require_element(), 1);
 var import_i18n59 = __toESM(require_i18n(), 1);
+var import_url4 = __toESM(require_url(), 1);
 
 // packages/content-types/build-module/utils/fields.mjs
 var import_components54 = __toESM(require_components(), 1);
@@ -32099,7 +32100,8 @@ function toFormData(row) {
       hierarchical: config.hierarchical ?? false,
       has_archive: config.has_archive ?? false,
       show_in_rest: config.show_in_rest ?? true
-    }
+    },
+    count: row.count
   };
 }
 function serializeForSave(data) {
@@ -32196,6 +32198,29 @@ var showInRestField = createBooleanField(
     )
   }
 );
+var countField = {
+  id: "count",
+  label: (0, import_i18n59.__)("Posts"),
+  type: "integer",
+  readOnly: true,
+  render: ({ item }) => {
+    const count = item.count;
+    if (item.status !== "publish" || !count) {
+      return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("span", { "aria-hidden": "true", children: "\u2014" });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+      Link,
+      {
+        href: (0, import_url4.addQueryArgs)("edit.php", {
+          post_type: item.slug
+        }),
+        children: count
+      }
+    );
+  },
+  enableSorting: false,
+  filterBy: false
+};
 var supportsField = {
   id: "supports",
   label: (0, import_i18n59.__)("Supports"),
@@ -32483,7 +32508,7 @@ var duplicate_default = duplicatePostTypeAction;
 
 // packages/content-types/build-module/post-types/actions/view-posts.mjs
 var import_i18n61 = __toESM(require_i18n(), 1);
-var import_url4 = __toESM(require_url(), 1);
+var import_url5 = __toESM(require_url(), 1);
 var viewPostsAction = {
   id: "view-posts",
   label: (items) => items[0]?.config.labels.view_items || (items[0]?.config.hierarchical ? (0, import_i18n61.__)("View pages") : (0, import_i18n61.__)("View posts")),
@@ -32495,7 +32520,7 @@ var viewPostsAction = {
     if (!item?.slug) {
       return;
     }
-    document.location.href = (0, import_url4.addQueryArgs)("edit.php", {
+    document.location.href = (0, import_url5.addQueryArgs)("edit.php", {
       post_type: item.slug
     });
     onActionPerformed?.(items);
@@ -32940,7 +32965,7 @@ var DEFAULT_VIEW = {
   type: "table",
   perPage: 20,
   page: 1,
-  fields: ["taxonomies", "status", "public", "hierarchical"],
+  fields: ["taxonomies", "count", "status"],
   titleField: "title",
   layout: {}
 };
@@ -32985,6 +33010,7 @@ function PostTypesList() {
     () => [
       titleField,
       taxonomiesField,
+      countField,
       statusField,
       publicField,
       slugField,
@@ -33551,6 +33577,7 @@ var import_core_data13 = __toESM(require_core_data(), 1);
 var import_data18 = __toESM(require_data(), 1);
 var import_element123 = __toESM(require_element(), 1);
 var import_i18n72 = __toESM(require_i18n(), 1);
+var import_url6 = __toESM(require_url(), 1);
 
 // packages/content-types/build-module/taxonomies/utils.mjs
 var import_core_data12 = __toESM(require_core_data(), 1);
@@ -33703,7 +33730,8 @@ function toFormData2(row) {
     slug: row.slug,
     status: row.status,
     title: { raw: row.title.raw },
-    config: formConfig
+    config: formConfig,
+    count: row.count
   };
 }
 function serializeForSave2(data) {
@@ -33861,6 +33889,34 @@ function useObjectTypeField() {
     };
   }, [publicPostTypes]);
 }
+var countField2 = {
+  id: "count",
+  label: (0, import_i18n72.__)("Terms"),
+  type: "integer",
+  readOnly: true,
+  render: ({ item }) => {
+    const count = item.count;
+    if (item.status !== "publish" || !count) {
+      return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("span", { "aria-hidden": "true", children: "\u2014" });
+    }
+    const postType = item.config.object_type?.[0];
+    if (!postType) {
+      return count;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+      Link,
+      {
+        href: (0, import_url6.addQueryArgs)("edit-tags.php", {
+          taxonomy: item.slug,
+          post_type: postType
+        }),
+        children: count
+      }
+    );
+  },
+  enableSorting: false,
+  filterBy: false
+};
 var defaultForm2 = {
   layout: { type: "regular" },
   fields: [
@@ -34018,7 +34074,7 @@ var duplicate_default2 = duplicateTaxonomyAction;
 
 // packages/content-types/build-module/taxonomies/actions/view-terms.mjs
 var import_i18n74 = __toESM(require_i18n(), 1);
-var import_url5 = __toESM(require_url(), 1);
+var import_url7 = __toESM(require_url(), 1);
 var viewTermsAction = {
   id: "view-terms",
   label: (0, import_i18n74.__)("View terms"),
@@ -34032,7 +34088,7 @@ var viewTermsAction = {
     if (!item?.slug || !postType) {
       return;
     }
-    document.location.href = (0, import_url5.addQueryArgs)("edit-tags.php", {
+    document.location.href = (0, import_url7.addQueryArgs)("edit-tags.php", {
       taxonomy: item.slug,
       post_type: postType
     });
@@ -34452,7 +34508,7 @@ var DEFAULT_VIEW2 = {
   type: "table",
   perPage: 20,
   page: 1,
-  fields: ["object_type", "status", "public"],
+  fields: ["object_type", "count", "status"],
   titleField: "title",
   layout: {}
 };
@@ -34497,6 +34553,7 @@ function TaxonomiesList() {
     () => [
       titleField,
       objectTypeField,
+      countField2,
       statusField,
       publicField2,
       slugField,
