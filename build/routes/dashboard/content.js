@@ -37121,7 +37121,13 @@ function GridItem4({
   const initialResizeRectRef = (0, import_element128.useRef)(null);
   const initialResizeScrollRef = (0, import_element128.useRef)(null);
   const lastResizeDeltaRef = (0, import_element128.useRef)(null);
-  const { attributes, listeners, setNodeRef, isDragging } = useSortable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    isDragging
+  } = useSortable({
     id: item.key,
     disabled: disabled2
   });
@@ -37209,59 +37215,54 @@ function GridItem4({
       }
     }
   ) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
-    "div",
-    {
-      ref: mergedRef,
-      className: itemClassName,
-      style,
-      ...attributes,
-      children: [
-        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
-          "div",
-          {
-            style: { display: "contents" },
-            ...interacting ? { inert: "" } : {},
-            children: actionableArea
-          }
-        ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
-          "div",
-          {
-            ...listeners,
-            style: {
-              height: "100%",
-              // Cursor lives on the listener wrapper rather
-              // than the outer tile so `actionableArea`
-              // children render their own cursor (e.g.
-              // `pointer` on buttons) instead of inheriting
-              // the grid's `grab`. Setting `undefined`
-              // during an active gesture leaves the property
-              // off the DOM so the document-level cursor
-              // lock from the resize handle takes over.
-              cursor: getItemCursor(disabled2, interacting)
-            },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)("div", { className: grid_item_default["item-content"], children: [
-                children,
-                !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
-                  ResizeHandleWrapper,
-                  {
-                    itemId: item.key,
-                    verticalResizable,
-                    onResize: handleResize,
-                    onResizeEnd: handleResizeEnd,
-                    renderResizeHandle
-                  }
-                )
-              ] }),
-              previewOverlay
-            ]
-          }
-        )
-      ]
-    }
-  );
+  return /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)("div", { ref: mergedRef, className: itemClassName, style, children: [
+    actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+      "div",
+      {
+        style: { display: "contents" },
+        ...interacting ? { inert: "" } : {},
+        children: actionableArea
+      }
+    ) : null,
+    /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
+      "div",
+      {
+        ref: setActivatorNodeRef,
+        ...attributes,
+        ...listeners,
+        style: {
+          height: "100%",
+          // Keyboard activation needs `attributes` (tabIndex)
+          // and `listeners` (onKeyDown) on the same focused
+          // node; `setActivatorNodeRef` points dnd-kit's
+          // keyboard sensor here, the outer keeps `setNodeRef`
+          // for measurement.
+          //
+          // Cursor lives on this wrapper so `actionableArea`
+          // children (mounted outside it) keep their own;
+          // `undefined` during a gesture defers to the resize
+          // handle's document cursor lock.
+          cursor: getItemCursor(disabled2, interacting)
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)("div", { className: grid_item_default["item-content"], children: [
+            children,
+            !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+              ResizeHandleWrapper,
+              {
+                itemId: item.key,
+                verticalResizable,
+                onResize: handleResize,
+                onResizeEnd: handleResizeEnd,
+                renderResizeHandle
+              }
+            )
+          ] }),
+          previewOverlay
+        ]
+      }
+    )
+  ] });
 }
 
 // packages/grid/build-module/shared/grid-overlay.mjs
