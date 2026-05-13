@@ -26491,8 +26491,8 @@ var wp;
           },
           className
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(import_components30.__experimentalVStack, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(import_components30.__experimentalHStack, { justify: "flex-start", spacing: 0, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(Stack, { direction: "column", gap: "sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(Stack, { direction: "row", align: "center", justify: "flex-start", children: [
             parentBlockClientId && /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
               import_components30.Button,
               {
@@ -26520,7 +26520,7 @@ var wp;
                 } : void 0,
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(block_icon_default, { icon, showColors: true }),
-                  /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(import_components30.__experimentalVStack, { spacing: 1, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(Stack, { direction: "column", gap: "xs", children: [
                     /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(TitleElement, { className: "block-editor-block-card__title", children: [
                       /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("span", { className: "block-editor-block-card__name", children: !!name?.length ? name : title }),
                       !parentClientId && !isChild && !!name?.length && /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(WCBadge2, { children: title })
@@ -26531,7 +26531,7 @@ var wp;
               }
             )
           ] }),
-          !parentClientId && !isChild && description && /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(import_components30.__experimentalText, { className: "block-editor-block-card__description", children: description })
+          !parentClientId && !isChild && description && /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(Text, { className: "block-editor-block-card__description", children: description })
         ] })
       }
     );
