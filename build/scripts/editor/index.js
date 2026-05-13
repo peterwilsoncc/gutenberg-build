@@ -77305,8 +77305,8 @@ If there's a particular need for this, please submit a feature request at https:
   var AVATAR_BORDER_COLORS = [
     "#C36EFF",
     // Purple
-    "#FF51A8",
-    // Pink
+    "#D94145",
+    // Red
     "#E4780A",
     // Orange
     "#FF35EE",
