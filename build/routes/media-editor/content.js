@@ -11847,7 +11847,7 @@ var import_i18n36 = __toESM(require_i18n(), 1);
 var import_components38 = __toESM(require_components(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
-var import_element70 = __toESM(require_element(), 1);
+var import_element71 = __toESM(require_element(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_keycodes3 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
@@ -16784,39 +16784,16 @@ function MediaEditorToolbar({
 var import_components36 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
-function resolveAspectRatio(value, imageAspectRatio) {
-  const num = parseFloat(value);
-  if (num === 0) {
-    return void 0;
-  }
-  if (num === ORIGINAL_ASPECT_RATIO && imageAspectRatio) {
-    return imageAspectRatio;
-  }
-  if (num > 0) {
-    return num;
-  }
-  return void 0;
-}
 function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
   freeformCrop,
   onFreeformChange,
   onPlacementControlInteraction,
-  aspectRatioPresets
+  aspectRatioOptions
 }) {
   const { state, setZoom } = useCropper();
   const zoomGestureHandlers = useCropGestureHandlers();
-  const aspectRatioOptions = [
-    ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
-    ...aspectRatioPresets ?? DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value > 0)
-  ];
-  const handleAspectRatioChange = (value) => {
-    onAspectRatioChange(value);
-    if (value === "0" && !freeformCrop) {
-      onFreeformChange(true);
-    }
-  };
   return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(Stack, { direction: "column", gap: "md", children: [
     /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("h2", {}), children: (0, import_i18n32.__)("Crop options") }),
     /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
@@ -16826,7 +16803,7 @@ function MediaEditorCropPanel({
         __nextHasNoMarginBottom: true,
         label: (0, import_i18n32.__)("Aspect ratio"),
         value: aspectRatioValue,
-        onChange: handleAspectRatioChange,
+        onChange: onAspectRatioChange,
         options: aspectRatioOptions.map((preset) => ({
           label: preset.label,
           value: preset.value.toString()
@@ -17211,13 +17188,98 @@ function useSaveMediaEditor({
   return { isSaving, save };
 }
 
+// packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
+var import_element70 = __toESM(require_element(), 1);
+var FREE_ASPECT_RATIO_VALUE = "0";
+var DEFAULT_FREEFORM_CROP = true;
+function resolveAspectRatio(value, imageAspectRatio) {
+  const num = parseFloat(value);
+  if (num === 0) {
+    return void 0;
+  }
+  if (num === ORIGINAL_ASPECT_RATIO && imageAspectRatio) {
+    return imageAspectRatio;
+  }
+  if (num > 0) {
+    return num;
+  }
+  return void 0;
+}
+function getAspectRatioOptions(aspectRatioPresets) {
+  return [
+    ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
+    ...aspectRatioPresets ?? DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value > 0)
+  ];
+}
+function getImageAspectRatio(media, isImage) {
+  if (!isImage) {
+    return null;
+  }
+  const naturalWidth = Number(media?.media_details?.width);
+  const naturalHeight = Number(media?.media_details?.height);
+  if (Number.isFinite(naturalWidth) && Number.isFinite(naturalHeight) && naturalHeight > 0) {
+    return naturalWidth / naturalHeight;
+  }
+  return null;
+}
+function useCropOptions({
+  id,
+  isImage,
+  media,
+  aspectRatioPresets
+}) {
+  const [aspectRatioValue, setAspectRatioValueState] = (0, import_element70.useState)(
+    FREE_ASPECT_RATIO_VALUE
+  );
+  const [freeformCrop, setFreeformCrop] = (0, import_element70.useState)(DEFAULT_FREEFORM_CROP);
+  const previousIdRef = (0, import_element70.useRef)(id);
+  const aspectRatioOptions = (0, import_element70.useMemo)(
+    () => getAspectRatioOptions(aspectRatioPresets),
+    [aspectRatioPresets]
+  );
+  const imageAspectRatio = (0, import_element70.useMemo)(
+    () => getImageAspectRatio(media, isImage),
+    [isImage, media]
+  );
+  const resolvedAspectRatio = (0, import_element70.useMemo)(
+    () => resolveAspectRatio(aspectRatioValue, imageAspectRatio),
+    [aspectRatioValue, imageAspectRatio]
+  );
+  const resetCropOptions = (0, import_element70.useCallback)(() => {
+    setAspectRatioValueState(FREE_ASPECT_RATIO_VALUE);
+    setFreeformCrop(DEFAULT_FREEFORM_CROP);
+  }, []);
+  const setAspectRatioValue = (0, import_element70.useCallback)((value) => {
+    setAspectRatioValueState(value);
+    if (value === FREE_ASPECT_RATIO_VALUE) {
+      setFreeformCrop(true);
+    }
+  }, []);
+  (0, import_element70.useEffect)(() => {
+    if (previousIdRef.current === id) {
+      return;
+    }
+    previousIdRef.current = id;
+    resetCropOptions();
+  }, [id, resetCropOptions]);
+  return {
+    aspectRatioValue,
+    setAspectRatioValue,
+    aspectRatioOptions,
+    freeformCrop,
+    setFreeformCrop,
+    resolvedAspectRatio,
+    resetCropOptions
+  };
+}
+
 // packages/media-editor/build-module/components/media-editor/index.mjs
 var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var PLACEMENT_CONTROL_IDLE_MS = 300;
 var { Tabs } = unlock2(import_components38.privateApis);
 function MediaEditorSidebar({ tabs }) {
-  const tabsContextValue = (0, import_element70.useContext)(Tabs.Context);
+  const tabsContextValue = (0, import_element71.useContext)(Tabs.Context);
   return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
     complementary_area_default,
     {
@@ -17252,7 +17314,7 @@ function HeaderActions({
   onSave
 }) {
   const saveDisabled = isSaving || !hasMedia || !hasChanges;
-  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element70.useState)(false);
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element71.useState)(false);
   return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
     import_components38.Flex,
     {
@@ -17359,38 +17421,34 @@ function MediaEditorContent({
   const hasChanges = cropper.isDirty || hasEdits;
   const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data8.useDispatch)(import_core_data2.store);
   const { removeAllNotices } = (0, import_data8.useDispatch)(import_notices2.store);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element70.useState)(false);
-  const [isPlacementActive, setIsPlacementActive] = (0, import_element70.useState)(false);
-  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element70.useState)(false);
-  const placementControlTimerRef = (0, import_element70.useRef)();
-  const [aspectRatioValue, setAspectRatioValue] = (0, import_element70.useState)("0");
-  const [freeformCrop, setFreeformCrop] = (0, import_element70.useState)(true);
-  const signalPlacementControlInteraction = (0, import_element70.useCallback)(() => {
+  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element71.useState)(false);
+  const [isPlacementActive, setIsPlacementActive] = (0, import_element71.useState)(false);
+  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element71.useState)(false);
+  const placementControlTimerRef = (0, import_element71.useRef)();
+  const signalPlacementControlInteraction = (0, import_element71.useCallback)(() => {
     setIsPlacementActive(true);
     clearTimeout(placementControlTimerRef.current);
     placementControlTimerRef.current = setTimeout(() => {
       setIsPlacementActive(false);
     }, PLACEMENT_CONTROL_IDLE_MS);
   }, []);
-  const handleCanvasGestureStart = (0, import_element70.useCallback)(() => {
+  const handleCanvasGestureStart = (0, import_element71.useCallback)(() => {
     setIsCanvasGestureActive(true);
   }, []);
-  const handleCanvasGestureEnd = (0, import_element70.useCallback)(() => {
+  const handleCanvasGestureEnd = (0, import_element71.useCallback)(() => {
     setIsCanvasGestureActive(false);
   }, []);
   const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
-  (0, import_element70.useEffect)(() => {
+  (0, import_element71.useEffect)(() => {
     return () => {
       clearTimeout(placementControlTimerRef.current);
     };
   }, []);
-  (0, import_element70.useEffect)(() => {
-    setAspectRatioValue("0");
-    setFreeformCrop(true);
+  (0, import_element71.useEffect)(() => {
     setIsPlacementActive(false);
     setIsCanvasGestureActive(false);
   }, [id]);
-  (0, import_element70.useEffect)(() => {
+  (0, import_element71.useEffect)(() => {
     invalidateResolution("getEntityRecord", [
       "postType",
       "attachment",
@@ -17400,6 +17458,20 @@ function MediaEditorContent({
   }, [id, invalidateResolution]);
   const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
   const isImage = !!media && mediaType === "image";
+  const {
+    aspectRatioValue,
+    setAspectRatioValue,
+    aspectRatioOptions,
+    freeformCrop,
+    setFreeformCrop,
+    resolvedAspectRatio,
+    resetCropOptions
+  } = useCropOptions({
+    id,
+    isImage,
+    media,
+    aspectRatioPresets
+  });
   const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
     cropper,
     id,
@@ -17407,18 +17479,7 @@ function MediaEditorContent({
     media,
     onSaved
   });
-  const imageAspectRatio = (0, import_element70.useMemo)(() => {
-    if (!isImage) {
-      return null;
-    }
-    const naturalWidth = Number(media?.media_details?.width);
-    const naturalHeight = Number(media?.media_details?.height);
-    if (Number.isFinite(naturalWidth) && Number.isFinite(naturalHeight) && naturalHeight > 0) {
-      return naturalWidth / naturalHeight;
-    }
-    return null;
-  }, [isImage, media]);
-  const tabs = (0, import_element70.useMemo)(() => {
+  const tabs = (0, import_element71.useMemo)(() => {
     const detailsTab = {
       id: "details",
       title: (0, import_i18n35.__)("Details"),
@@ -17453,7 +17514,7 @@ function MediaEditorContent({
                 freeformCrop,
                 onFreeformChange: setFreeformCrop,
                 onPlacementControlInteraction: signalPlacementControlInteraction,
-                aspectRatioPresets
+                aspectRatioOptions
               }
             )
           }
@@ -17464,8 +17525,10 @@ function MediaEditorContent({
   }, [
     isImage,
     aspectRatioValue,
+    setAspectRatioValue,
     freeformCrop,
-    aspectRatioPresets,
+    setFreeformCrop,
+    aspectRatioOptions,
     signalPlacementControlInteraction
   ]);
   const handleChange = (updates) => {
@@ -17546,10 +17609,7 @@ function MediaEditorContent({
               content: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { className: "media-editor__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
                 MediaEditorCanvas,
                 {
-                  aspectRatio: resolveAspectRatio(
-                    aspectRatioValue,
-                    imageAspectRatio
-                  ),
+                  aspectRatio: resolvedAspectRatio,
                   freeformCrop,
                   focusOnMount: true,
                   isPlacementActive,
@@ -17560,10 +17620,7 @@ function MediaEditorContent({
               footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
                 MediaEditorToolbar,
                 {
-                  onReset: () => {
-                    setAspectRatioValue("0");
-                    setFreeformCrop(true);
-                  },
+                  onReset: resetCropOptions,
                   onPlacementControlInteraction: signalPlacementControlInteraction,
                   isUndoRedoDisabled: isCropInteractionActive
                 }
@@ -17588,7 +17645,7 @@ function MediaEditorContent({
             )
           }
         ),
-        noticesPortalElement ? (0, import_element70.createPortal)(snackbar, noticesPortalElement) : snackbar
+        noticesPortalElement ? (0, import_element71.createPortal)(snackbar, noticesPortalElement) : snackbar
       ]
     }
   );
