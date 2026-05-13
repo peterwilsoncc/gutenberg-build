@@ -16273,7 +16273,7 @@ var wp;
     (0, import_element40.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
-          getRenderedContent(embeddedPostTitle) || embeddedPostId?.toString() || ""
+          getRenderedContent(embeddedPostTitle) || (0, import_i18n55.__)("(no title)")
         );
       }
       if (!parentId) {
@@ -40368,6 +40368,7 @@ If there's a particular need for this, please submit a feature request at https:
     "alt_text",
     "post"
   ];
+  var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
   var NOTICES_CONTEXT = "media-editor";
   var PLACEMENT_CONTROL_IDLE_MS = 300;
   var { Tabs } = unlock4(import_components90.privateApis);
@@ -40485,7 +40486,17 @@ If there's a particular need for this, please submit a feature request at https:
     const cropper = useCropper();
     const { media, hasEdits } = (0, import_data41.useSelect)(
       (select7) => {
-        const { getEditedEntityRecord, hasEditsForEntityRecord } = select7(import_core_data27.store);
+        const {
+          getEditedEntityRecord,
+          getEntityRecord,
+          hasEditsForEntityRecord
+        } = select7(import_core_data27.store);
+        getEntityRecord(
+          "postType",
+          "attachment",
+          id,
+          ATTACHMENT_EMBED_QUERY
+        );
         return {
           media: getEditedEntityRecord(
             "postType",
@@ -40506,6 +40517,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       clearEntityRecordEdits,
       editEntityRecord,
+      invalidateResolution,
       receiveEntityRecords,
       saveEditedEntityRecord
     } = (0, import_data41.useDispatch)(import_core_data27.store);
@@ -40542,6 +40554,14 @@ If there's a particular need for this, please submit a feature request at https:
       setIsPlacementActive(false);
       setIsCanvasGestureActive(false);
     }, [id]);
+    (0, import_element132.useEffect)(() => {
+      invalidateResolution("getEntityRecord", [
+        "postType",
+        "attachment",
+        id,
+        ATTACHMENT_EMBED_QUERY
+      ]);
+    }, [id, invalidateResolution]);
     const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
     const isImage = !!media && mediaType === "image";
     const imageAspectRatio = (0, import_element132.useMemo)(() => {
@@ -40643,6 +40663,9 @@ If there's a particular need for this, please submit a feature request at https:
             if (pendingEdits && key in pendingEdits) {
               metadataEdits[key] = pendingEdits[key];
             }
+          }
+          if (!("post" in metadataEdits) && media?.post !== void 0) {
+            metadataEdits.post = media.post;
           }
           saved = await (0, import_api_fetch3.default)({
             path: `/wp/v2/media/${id}/edit`,

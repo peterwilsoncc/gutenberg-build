@@ -17080,6 +17080,7 @@ var METADATA_EDIT_KEYS = [
   "alt_text",
   "post"
 ];
+var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var NOTICES_CONTEXT = "media-editor";
 var PLACEMENT_CONTROL_IDLE_MS = 300;
 var { Tabs } = unlock2(import_components38.privateApis);
@@ -17197,7 +17198,17 @@ function MediaEditorContent({
   const cropper = useCropper();
   const { media, hasEdits } = (0, import_data7.useSelect)(
     (select) => {
-      const { getEditedEntityRecord, hasEditsForEntityRecord } = select(import_core_data.store);
+      const {
+        getEditedEntityRecord,
+        getEntityRecord,
+        hasEditsForEntityRecord
+      } = select(import_core_data.store);
+      getEntityRecord(
+        "postType",
+        "attachment",
+        id,
+        ATTACHMENT_EMBED_QUERY
+      );
       return {
         media: getEditedEntityRecord(
           "postType",
@@ -17218,6 +17229,7 @@ function MediaEditorContent({
   const {
     clearEntityRecordEdits,
     editEntityRecord,
+    invalidateResolution,
     receiveEntityRecords,
     saveEditedEntityRecord
   } = (0, import_data7.useDispatch)(import_core_data.store);
@@ -17254,6 +17266,14 @@ function MediaEditorContent({
     setIsPlacementActive(false);
     setIsCanvasGestureActive(false);
   }, [id]);
+  (0, import_element69.useEffect)(() => {
+    invalidateResolution("getEntityRecord", [
+      "postType",
+      "attachment",
+      id,
+      ATTACHMENT_EMBED_QUERY
+    ]);
+  }, [id, invalidateResolution]);
   const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
   const isImage = !!media && mediaType === "image";
   const imageAspectRatio = (0, import_element69.useMemo)(() => {
@@ -17355,6 +17375,9 @@ function MediaEditorContent({
           if (pendingEdits && key in pendingEdits) {
             metadataEdits[key] = pendingEdits[key];
           }
+        }
+        if (!("post" in metadataEdits) && media?.post !== void 0) {
+          metadataEdits.post = media.post;
         }
         saved = await (0, import_api_fetch.default)({
           path: `/wp/v2/media/${id}/edit`,

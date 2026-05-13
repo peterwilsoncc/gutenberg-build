@@ -18405,7 +18405,7 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element60.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
-          getRenderedContent(embeddedPostTitle) || embeddedPostId?.toString() || ""
+          getRenderedContent(embeddedPostTitle) || (0, import_i18n50.__)("(no title)")
         );
       }
       if (!parentId) {
