@@ -299,13 +299,6 @@ var require_deprecated = __commonJS({
   }
 });
 
-// package-external:@wordpress/api-fetch
-var require_api_fetch = __commonJS({
-  "package-external:@wordpress/api-fetch"(exports, module) {
-    module.exports = window.wp.apiFetch;
-  }
-});
-
 // package-external:@wordpress/notices
 var require_notices = __commonJS({
   "package-external:@wordpress/notices"(exports, module) {
@@ -331,6 +324,13 @@ var require_preferences = __commonJS({
 var require_plugins = __commonJS({
   "package-external:@wordpress/plugins"(exports, module) {
     module.exports = window.wp.plugins;
+  }
+});
+
+// package-external:@wordpress/api-fetch
+var require_api_fetch = __commonJS({
+  "package-external:@wordpress/api-fetch"(exports, module) {
+    module.exports = window.wp.apiFetch;
   }
 });
 
@@ -4211,11 +4211,11 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/media-editor/stage.tsx
-var import_core_data2 = __toESM(require_core_data());
-var import_data9 = __toESM(require_data());
+var import_core_data3 = __toESM(require_core_data());
+var import_data10 = __toESM(require_data());
 var import_editor = __toESM(require_editor());
 var import_html_entities = __toESM(require_html_entities());
-var import_i18n36 = __toESM(require_i18n());
+var import_i18n37 = __toESM(require_i18n());
 
 // packages/media-editor/build-module/components/media-editor-provider/index.mjs
 var import_element21 = __toESM(require_element(), 1);
@@ -11840,18 +11840,17 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
 var import_components39 = __toESM(require_components(), 1);
-var import_data8 = __toESM(require_data(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_data9 = __toESM(require_data(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_components38 = __toESM(require_components(), 1);
-var import_data7 = __toESM(require_data(), 1);
-var import_core_data = __toESM(require_core_data(), 1);
-var import_element69 = __toESM(require_element(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_data8 = __toESM(require_data(), 1);
+var import_core_data2 = __toESM(require_core_data(), 1);
+var import_element70 = __toESM(require_element(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 var import_keycodes3 = __toESM(require_keycodes(), 1);
-var import_notices = __toESM(require_notices(), 1);
+var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
 var import_components32 = __toESM(require_components(), 1);
@@ -16871,68 +16870,6 @@ function MediaEditorCropPanel({
   ] });
 }
 
-// packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
-var CROP_TOLERANCE = 0.1;
-function buildModifiers(state, imageSize) {
-  const modifiers = [];
-  if (imageSize.width === 0 || imageSize.height === 0) {
-    return modifiers;
-  }
-  const { cropRect, pan, zoom, flip } = state;
-  const hasFlipH = flip.horizontal;
-  const hasFlipV = flip.vertical;
-  if (hasFlipH || hasFlipV) {
-    modifiers.push({
-      type: "flip",
-      args: { flip: { horizontal: hasFlipH, vertical: hasFlipV } }
-    });
-  }
-  const rawAngle = (state.rotation % 360 + 360) % 360;
-  const singleAxisFlip = hasFlipH !== hasFlipV;
-  const signedAngle2 = singleAxisFlip ? (360 - rawAngle) % 360 : rawAngle;
-  if (signedAngle2 !== 0) {
-    modifiers.push({ type: "rotate", args: { angle: signedAngle2 } });
-  }
-  const snapRotation = Math.round(state.rotation / 90) * 90;
-  const { width: snapW, height: snapH } = getRotatedBBox(
-    imageSize.width,
-    imageSize.height,
-    snapRotation
-  );
-  const { width: fullW, height: fullH } = getRotatedBBox(
-    imageSize.width,
-    imageSize.height,
-    state.rotation
-  );
-  const imgLeft = 0.5 + pan.x - zoom / 2;
-  const imgTop = 0.5 + pan.y - zoom / 2;
-  const snapX = (cropRect.x - imgLeft) / zoom * snapW;
-  const snapY = (cropRect.y - imgTop) / zoom * snapH;
-  const widthPx = cropRect.width / zoom * snapW;
-  const heightPx = cropRect.height / zoom * snapH;
-  const offsetX = (fullW - snapW) / 2;
-  const offsetY = (fullH - snapH) / 2;
-  const fullX = snapX + offsetX;
-  const fullY = snapY + offsetY;
-  const leftPct = fullX / fullW * 100;
-  const topPct = fullY / fullH * 100;
-  const widthPct = widthPx / fullW * 100;
-  const heightPct = heightPx / fullH * 100;
-  const coversFullFrame = leftPct <= CROP_TOLERANCE && topPct <= CROP_TOLERANCE && widthPct >= 100 - CROP_TOLERANCE && heightPct >= 100 - CROP_TOLERANCE;
-  if (!coversFullFrame) {
-    modifiers.push({
-      type: "crop",
-      args: {
-        left: leftPct,
-        top: topPct,
-        width: widthPct,
-        height: heightPct
-      }
-    });
-  }
-  return modifiers;
-}
-
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
 var import_components37 = __toESM(require_components(), 1);
 var import_element68 = __toESM(require_element(), 1);
@@ -17071,8 +17008,77 @@ function MediaEditorKeyboardShortcutsModal({
   );
 }
 
-// packages/media-editor/build-module/components/media-editor/index.mjs
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+// packages/media-editor/build-module/components/media-editor/use-save-media-editor.mjs
+var import_api_fetch = __toESM(require_api_fetch(), 1);
+var import_data7 = __toESM(require_data(), 1);
+var import_core_data = __toESM(require_core_data(), 1);
+var import_element69 = __toESM(require_element(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
+var import_notices = __toESM(require_notices(), 1);
+
+// packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
+var CROP_TOLERANCE = 0.1;
+function buildModifiers(state, imageSize) {
+  const modifiers = [];
+  if (imageSize.width === 0 || imageSize.height === 0) {
+    return modifiers;
+  }
+  const { cropRect, pan, zoom, flip } = state;
+  const hasFlipH = flip.horizontal;
+  const hasFlipV = flip.vertical;
+  if (hasFlipH || hasFlipV) {
+    modifiers.push({
+      type: "flip",
+      args: { flip: { horizontal: hasFlipH, vertical: hasFlipV } }
+    });
+  }
+  const rawAngle = (state.rotation % 360 + 360) % 360;
+  const singleAxisFlip = hasFlipH !== hasFlipV;
+  const signedAngle2 = singleAxisFlip ? (360 - rawAngle) % 360 : rawAngle;
+  if (signedAngle2 !== 0) {
+    modifiers.push({ type: "rotate", args: { angle: signedAngle2 } });
+  }
+  const snapRotation = Math.round(state.rotation / 90) * 90;
+  const { width: snapW, height: snapH } = getRotatedBBox(
+    imageSize.width,
+    imageSize.height,
+    snapRotation
+  );
+  const { width: fullW, height: fullH } = getRotatedBBox(
+    imageSize.width,
+    imageSize.height,
+    state.rotation
+  );
+  const imgLeft = 0.5 + pan.x - zoom / 2;
+  const imgTop = 0.5 + pan.y - zoom / 2;
+  const snapX = (cropRect.x - imgLeft) / zoom * snapW;
+  const snapY = (cropRect.y - imgTop) / zoom * snapH;
+  const widthPx = cropRect.width / zoom * snapW;
+  const heightPx = cropRect.height / zoom * snapH;
+  const offsetX = (fullW - snapW) / 2;
+  const offsetY = (fullH - snapH) / 2;
+  const fullX = snapX + offsetX;
+  const fullY = snapY + offsetY;
+  const leftPct = fullX / fullW * 100;
+  const topPct = fullY / fullH * 100;
+  const widthPct = widthPx / fullW * 100;
+  const heightPct = heightPx / fullH * 100;
+  const coversFullFrame = leftPct <= CROP_TOLERANCE && topPct <= CROP_TOLERANCE && widthPct >= 100 - CROP_TOLERANCE && heightPct >= 100 - CROP_TOLERANCE;
+  if (!coversFullFrame) {
+    modifiers.push({
+      type: "crop",
+      args: {
+        left: leftPct,
+        top: topPct,
+        width: widthPct,
+        height: heightPct
+      }
+    });
+  }
+  return modifiers;
+}
+
+// packages/media-editor/build-module/components/media-editor/use-save-media-editor.mjs
 var METADATA_EDIT_KEYS = [
   "title",
   "caption",
@@ -17080,305 +17086,56 @@ var METADATA_EDIT_KEYS = [
   "alt_text",
   "post"
 ];
-var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
-var NOTICES_CONTEXT = "media-editor";
-var PLACEMENT_CONTROL_IDLE_MS = 300;
-var { Tabs } = unlock2(import_components38.privateApis);
-function MediaEditorSidebar({ tabs }) {
-  const tabsContextValue = (0, import_element69.useContext)(Tabs.Context);
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-    complementary_area_default,
-    {
-      scope: "media-editor",
-      identifier: "media-editor/details",
-      title: (0, import_i18n34.__)("Details"),
-      icon: drawer_right_default,
-      isActiveByDefault: true,
-      className: "media-editor__sidebar",
-      panelClassName: "media-editor__sidebar-panel",
-      headerClassName: "media-editor__sidebar-header",
-      header: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-        Tabs.TabPanel,
-        {
-          tabId: tab.id,
-          focusable: false,
-          children: tab.panel
-        },
-        tab.id
-      )) })
-    }
-  );
+var MEDIA_EDITOR_NOTICES_CONTEXT = "media-editor";
+function getCropModifiers(cropper) {
+  if (!cropper.isDirty || !cropper.state.image) {
+    return [];
+  }
+  return buildModifiers(cropper.state, {
+    width: cropper.state.image.naturalWidth,
+    height: cropper.state.image.naturalHeight
+  });
 }
-function HeaderActions({
-  isSaving,
-  hasMedia,
-  hasChanges,
-  isImage,
-  showCloseButton = false,
-  onCancel,
-  onSave
-}) {
-  const saveDisabled = isSaving || !hasMedia || !hasChanges;
-  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element69.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
-    import_components38.Flex,
-    {
-      className: "media-editor__header-actions",
-      justify: "flex-end",
-      expanded: false,
-      gap: 2,
-      children: [
-        isImage && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.Button,
-          {
-            size: "compact",
-            icon: keyboard_default,
-            label: (0, import_i18n34.__)("Keyboard shortcuts"),
-            onClick: () => setIsShortcutsModalOpen(true)
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.Button,
-          {
-            size: "compact",
-            variant: "tertiary",
-            onClick: onCancel,
-            disabled: isSaving,
-            accessibleWhenDisabled: true,
-            children: (0, import_i18n34.__)("Cancel")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.Button,
-          {
-            size: "compact",
-            variant: "primary",
-            onClick: onSave,
-            isBusy: isSaving,
-            disabled: saveDisabled,
-            accessibleWhenDisabled: true,
-            children: (0, import_i18n34.__)("Save")
-          }
-        ),
-        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.Button,
-          {
-            size: "compact",
-            icon: close_default,
-            label: (0, import_i18n34.__)("Close"),
-            onClick: onCancel,
-            disabled: isSaving,
-            accessibleWhenDisabled: true
-          }
-        ),
-        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          MediaEditorKeyboardShortcutsModal,
-          {
-            onClose: () => setIsShortcutsModalOpen(false)
-          }
-        )
-      ]
+function getMetadataEdits(pendingEdits, media) {
+  const metadataEdits = {};
+  for (const key of METADATA_EDIT_KEYS) {
+    if (pendingEdits && key in pendingEdits) {
+      metadataEdits[key] = pendingEdits[key];
     }
-  );
+  }
+  if (!("post" in metadataEdits) && media?.post !== void 0) {
+    metadataEdits.post = media.post;
+  }
+  return metadataEdits;
 }
-function MediaEditorContent({
-  fields = [],
+function useSaveMediaEditor({
+  cropper,
   id,
-  aspectRatioPresets,
-  onClose,
-  onSaved,
-  renderFrame,
-  noticesClassName = "media-editor__snackbar",
-  noticesPortalElement,
-  showCloseButton = false,
-  shouldCloseOnEsc = false
+  isImage,
+  media,
+  onSaved
 }) {
-  const cropper = useCropper();
-  const { media, hasEdits } = (0, import_data7.useSelect)(
-    (select) => {
-      const {
-        getEditedEntityRecord,
-        getEntityRecord,
-        hasEditsForEntityRecord
-      } = select(import_core_data.store);
-      getEntityRecord(
-        "postType",
-        "attachment",
-        id,
-        ATTACHMENT_EMBED_QUERY
-      );
-      return {
-        media: getEditedEntityRecord(
-          "postType",
-          "attachment",
-          id
-        ),
-        hasEdits: hasEditsForEntityRecord(
-          "postType",
-          "attachment",
-          id
-        )
-      };
-    },
-    [id]
-  );
-  const hasChanges = cropper.isDirty || hasEdits;
   const registry = (0, import_data7.useRegistry)();
   const {
     clearEntityRecordEdits,
-    editEntityRecord,
-    invalidateResolution,
     receiveEntityRecords,
     saveEditedEntityRecord
   } = (0, import_data7.useDispatch)(import_core_data.store);
   const { createErrorNotice, removeAllNotices } = (0, import_data7.useDispatch)(import_notices.store);
   const [isSaving, setIsSaving] = (0, import_element69.useState)(false);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element69.useState)(false);
-  const [isPlacementActive, setIsPlacementActive] = (0, import_element69.useState)(false);
-  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element69.useState)(false);
-  const placementControlTimerRef = (0, import_element69.useRef)();
-  const [aspectRatioValue, setAspectRatioValue] = (0, import_element69.useState)("0");
-  const [freeformCrop, setFreeformCrop] = (0, import_element69.useState)(true);
-  const signalPlacementControlInteraction = (0, import_element69.useCallback)(() => {
-    setIsPlacementActive(true);
-    clearTimeout(placementControlTimerRef.current);
-    placementControlTimerRef.current = setTimeout(() => {
-      setIsPlacementActive(false);
-    }, PLACEMENT_CONTROL_IDLE_MS);
-  }, []);
-  const handleCanvasGestureStart = (0, import_element69.useCallback)(() => {
-    setIsCanvasGestureActive(true);
-  }, []);
-  const handleCanvasGestureEnd = (0, import_element69.useCallback)(() => {
-    setIsCanvasGestureActive(false);
-  }, []);
-  const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
-  (0, import_element69.useEffect)(() => {
-    return () => {
-      clearTimeout(placementControlTimerRef.current);
-    };
-  }, []);
-  (0, import_element69.useEffect)(() => {
-    setAspectRatioValue("0");
-    setFreeformCrop(true);
-    setIsPlacementActive(false);
-    setIsCanvasGestureActive(false);
-  }, [id]);
-  (0, import_element69.useEffect)(() => {
-    invalidateResolution("getEntityRecord", [
-      "postType",
-      "attachment",
-      id,
-      ATTACHMENT_EMBED_QUERY
-    ]);
-  }, [id, invalidateResolution]);
-  const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
-  const isImage = !!media && mediaType === "image";
-  const imageAspectRatio = (0, import_element69.useMemo)(() => {
-    if (!isImage) {
-      return null;
-    }
-    const naturalWidth = Number(media?.media_details?.width);
-    const naturalHeight = Number(media?.media_details?.height);
-    if (Number.isFinite(naturalWidth) && Number.isFinite(naturalHeight) && naturalHeight > 0) {
-      return naturalWidth / naturalHeight;
-    }
-    return null;
-  }, [isImage, media]);
-  const tabs = (0, import_element69.useMemo)(() => {
-    const detailsTab = {
-      id: "details",
-      title: (0, import_i18n34.__)("Details"),
-      panel: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-        Stack,
-        {
-          className: "media-editor__panel",
-          direction: "column",
-          gap: "lg",
-          children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(MediaForm, {})
-        }
-      )
-    };
-    if (!isImage) {
-      return [detailsTab];
-    }
-    return [
-      {
-        id: "crop",
-        title: (0, import_i18n34.__)("Crop"),
-        panel: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          Stack,
-          {
-            className: "media-editor__panel",
-            direction: "column",
-            gap: "lg",
-            children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-              MediaEditorCropPanel,
-              {
-                aspectRatioValue,
-                onAspectRatioChange: setAspectRatioValue,
-                freeformCrop,
-                onFreeformChange: setFreeformCrop,
-                onPlacementControlInteraction: signalPlacementControlInteraction,
-                aspectRatioPresets
-              }
-            )
-          }
-        )
-      },
-      detailsTab
-    ];
-  }, [
-    isImage,
-    aspectRatioValue,
-    freeformCrop,
-    aspectRatioPresets,
-    signalPlacementControlInteraction
-  ]);
-  const handleChange = (updates) => {
-    editEntityRecord("postType", "attachment", id, updates);
-  };
-  const discardAndClose = () => {
-    removeAllNotices("snackbar", NOTICES_CONTEXT);
-    clearEntityRecordEdits("postType", "attachment", id);
-    onClose?.();
-  };
-  const handleRequestClose = () => {
-    if (isSaving) {
-      return;
-    }
-    if (hasChanges) {
-      setIsDiscardDialogOpen(true);
-      return;
-    }
-    discardAndClose();
-  };
-  const handleSave = async () => {
-    removeAllNotices("snackbar", NOTICES_CONTEXT);
+  const save = (0, import_element69.useCallback)(async () => {
+    removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
     setIsSaving(true);
     try {
       let saved;
-      const modifiers = cropper.isDirty && cropper.state.image ? buildModifiers(cropper.state, {
-        width: cropper.state.image.naturalWidth,
-        height: cropper.state.image.naturalHeight
-      }) : [];
+      const modifiers = getCropModifiers(cropper);
       if (modifiers.length > 0) {
         const pendingEdits = registry.select(import_core_data.store).getEntityRecordNonTransientEdits(
           "postType",
           "attachment",
           id
         );
-        const metadataEdits = {};
-        for (const key of METADATA_EDIT_KEYS) {
-          if (pendingEdits && key in pendingEdits) {
-            metadataEdits[key] = pendingEdits[key];
-          }
-        }
-        if (!("post" in metadataEdits) && media?.post !== void 0) {
-          metadataEdits.post = media.post;
-        }
+        const metadataEdits = getMetadataEdits(pendingEdits, media);
         saved = await (0, import_api_fetch.default)({
           path: `/wp/v2/media/${id}/edit`,
           method: "POST",
@@ -17430,11 +17187,304 @@ function MediaEditorContent({
           (0, import_i18n34.__)("Could not save media. %s"),
           message2
         ),
-        { type: "snackbar", context: NOTICES_CONTEXT }
+        {
+          type: "snackbar",
+          context: MEDIA_EDITOR_NOTICES_CONTEXT
+        }
       );
     } finally {
       setIsSaving(false);
     }
+  }, [
+    clearEntityRecordEdits,
+    createErrorNotice,
+    cropper,
+    id,
+    isImage,
+    media,
+    onSaved,
+    receiveEntityRecords,
+    registry,
+    removeAllNotices,
+    saveEditedEntityRecord
+  ]);
+  return { isSaving, save };
+}
+
+// packages/media-editor/build-module/components/media-editor/index.mjs
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
+var PLACEMENT_CONTROL_IDLE_MS = 300;
+var { Tabs } = unlock2(import_components38.privateApis);
+function MediaEditorSidebar({ tabs }) {
+  const tabsContextValue = (0, import_element70.useContext)(Tabs.Context);
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+    complementary_area_default,
+    {
+      scope: "media-editor",
+      identifier: "media-editor/details",
+      title: (0, import_i18n35.__)("Details"),
+      icon: drawer_right_default,
+      isActiveByDefault: true,
+      className: "media-editor__sidebar",
+      panelClassName: "media-editor__sidebar-panel",
+      headerClassName: "media-editor__sidebar-header",
+      header: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
+      children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        Tabs.TabPanel,
+        {
+          tabId: tab.id,
+          focusable: false,
+          children: tab.panel
+        },
+        tab.id
+      )) })
+    }
+  );
+}
+function HeaderActions({
+  isSaving,
+  hasMedia,
+  hasChanges,
+  isImage,
+  showCloseButton = false,
+  onCancel,
+  onSave
+}) {
+  const saveDisabled = isSaving || !hasMedia || !hasChanges;
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element70.useState)(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
+    import_components38.Flex,
+    {
+      className: "media-editor__header-actions",
+      justify: "flex-end",
+      expanded: false,
+      gap: 2,
+      children: [
+        isImage && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+          import_components38.Button,
+          {
+            size: "compact",
+            icon: keyboard_default,
+            label: (0, import_i18n35.__)("Keyboard shortcuts"),
+            onClick: () => setIsShortcutsModalOpen(true)
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
+        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+          import_components38.Button,
+          {
+            size: "compact",
+            variant: "tertiary",
+            onClick: onCancel,
+            disabled: isSaving,
+            accessibleWhenDisabled: true,
+            children: (0, import_i18n35.__)("Cancel")
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+          import_components38.Button,
+          {
+            size: "compact",
+            variant: "primary",
+            onClick: onSave,
+            isBusy: isSaving,
+            disabled: saveDisabled,
+            accessibleWhenDisabled: true,
+            children: (0, import_i18n35.__)("Save")
+          }
+        ),
+        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+          import_components38.Button,
+          {
+            size: "compact",
+            icon: close_default,
+            label: (0, import_i18n35.__)("Close"),
+            onClick: onCancel,
+            disabled: isSaving,
+            accessibleWhenDisabled: true
+          }
+        ),
+        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+          MediaEditorKeyboardShortcutsModal,
+          {
+            onClose: () => setIsShortcutsModalOpen(false)
+          }
+        )
+      ]
+    }
+  );
+}
+function MediaEditorContent({
+  fields = [],
+  id,
+  aspectRatioPresets,
+  onClose,
+  onSaved,
+  renderFrame,
+  noticesClassName = "media-editor__snackbar",
+  noticesPortalElement,
+  showCloseButton = false,
+  shouldCloseOnEsc = false
+}) {
+  const cropper = useCropper();
+  const { media, hasEdits } = (0, import_data8.useSelect)(
+    (select) => {
+      const {
+        getEditedEntityRecord,
+        getEntityRecord,
+        hasEditsForEntityRecord
+      } = select(import_core_data2.store);
+      getEntityRecord(
+        "postType",
+        "attachment",
+        id,
+        ATTACHMENT_EMBED_QUERY
+      );
+      return {
+        media: getEditedEntityRecord(
+          "postType",
+          "attachment",
+          id
+        ),
+        hasEdits: hasEditsForEntityRecord(
+          "postType",
+          "attachment",
+          id
+        )
+      };
+    },
+    [id]
+  );
+  const hasChanges = cropper.isDirty || hasEdits;
+  const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data8.useDispatch)(import_core_data2.store);
+  const { removeAllNotices } = (0, import_data8.useDispatch)(import_notices2.store);
+  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element70.useState)(false);
+  const [isPlacementActive, setIsPlacementActive] = (0, import_element70.useState)(false);
+  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element70.useState)(false);
+  const placementControlTimerRef = (0, import_element70.useRef)();
+  const [aspectRatioValue, setAspectRatioValue] = (0, import_element70.useState)("0");
+  const [freeformCrop, setFreeformCrop] = (0, import_element70.useState)(true);
+  const signalPlacementControlInteraction = (0, import_element70.useCallback)(() => {
+    setIsPlacementActive(true);
+    clearTimeout(placementControlTimerRef.current);
+    placementControlTimerRef.current = setTimeout(() => {
+      setIsPlacementActive(false);
+    }, PLACEMENT_CONTROL_IDLE_MS);
+  }, []);
+  const handleCanvasGestureStart = (0, import_element70.useCallback)(() => {
+    setIsCanvasGestureActive(true);
+  }, []);
+  const handleCanvasGestureEnd = (0, import_element70.useCallback)(() => {
+    setIsCanvasGestureActive(false);
+  }, []);
+  const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
+  (0, import_element70.useEffect)(() => {
+    return () => {
+      clearTimeout(placementControlTimerRef.current);
+    };
+  }, []);
+  (0, import_element70.useEffect)(() => {
+    setAspectRatioValue("0");
+    setFreeformCrop(true);
+    setIsPlacementActive(false);
+    setIsCanvasGestureActive(false);
+  }, [id]);
+  (0, import_element70.useEffect)(() => {
+    invalidateResolution("getEntityRecord", [
+      "postType",
+      "attachment",
+      id,
+      ATTACHMENT_EMBED_QUERY
+    ]);
+  }, [id, invalidateResolution]);
+  const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
+  const isImage = !!media && mediaType === "image";
+  const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
+    cropper,
+    id,
+    isImage,
+    media,
+    onSaved
+  });
+  const imageAspectRatio = (0, import_element70.useMemo)(() => {
+    if (!isImage) {
+      return null;
+    }
+    const naturalWidth = Number(media?.media_details?.width);
+    const naturalHeight = Number(media?.media_details?.height);
+    if (Number.isFinite(naturalWidth) && Number.isFinite(naturalHeight) && naturalHeight > 0) {
+      return naturalWidth / naturalHeight;
+    }
+    return null;
+  }, [isImage, media]);
+  const tabs = (0, import_element70.useMemo)(() => {
+    const detailsTab = {
+      id: "details",
+      title: (0, import_i18n35.__)("Details"),
+      panel: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        Stack,
+        {
+          className: "media-editor__panel",
+          direction: "column",
+          gap: "lg",
+          children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(MediaForm, {})
+        }
+      )
+    };
+    if (!isImage) {
+      return [detailsTab];
+    }
+    return [
+      {
+        id: "crop",
+        title: (0, import_i18n35.__)("Crop"),
+        panel: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+          Stack,
+          {
+            className: "media-editor__panel",
+            direction: "column",
+            gap: "lg",
+            children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+              MediaEditorCropPanel,
+              {
+                aspectRatioValue,
+                onAspectRatioChange: setAspectRatioValue,
+                freeformCrop,
+                onFreeformChange: setFreeformCrop,
+                onPlacementControlInteraction: signalPlacementControlInteraction,
+                aspectRatioPresets
+              }
+            )
+          }
+        )
+      },
+      detailsTab
+    ];
+  }, [
+    isImage,
+    aspectRatioValue,
+    freeformCrop,
+    aspectRatioPresets,
+    signalPlacementControlInteraction
+  ]);
+  const handleChange = (updates) => {
+    editEntityRecord("postType", "attachment", id, updates);
+  };
+  const discardAndClose = () => {
+    removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
+    clearEntityRecordEdits("postType", "attachment", id);
+    onClose?.();
+  };
+  const handleRequestClose = () => {
+    if (isSaving) {
+      return;
+    }
+    if (hasChanges) {
+      setIsDiscardDialogOpen(true);
+      return;
+    }
+    discardAndClose();
   };
   const handleKeyDown = (event) => {
     const isUndoShortcut = import_keycodes3.isKeyboardEvent.primary(event, "z");
@@ -17469,10 +17519,10 @@ function MediaEditorContent({
     }
   };
   const snackbar = /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-    import_notices.SnackbarNotices,
+    import_notices2.SnackbarNotices,
     {
       className: noticesClassName,
-      context: NOTICES_CONTEXT
+      context: MEDIA_EDITOR_NOTICES_CONTEXT
     }
   );
   const children = /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
@@ -17489,9 +17539,9 @@ function MediaEditorContent({
             {
               className: "media-editor__skeleton",
               labels: {
-                body: isImage ? (0, import_i18n34.__)("Image editor") : (0, import_i18n34.__)("Media preview"),
-                sidebar: (0, import_i18n34.__)("Media details"),
-                footer: (0, import_i18n34.__)("Image editing tools")
+                body: isImage ? (0, import_i18n35.__)("Image editor") : (0, import_i18n35.__)("Media preview"),
+                sidebar: (0, import_i18n35.__)("Media details"),
+                footer: (0, import_i18n35.__)("Image editing tools")
               },
               content: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { className: "media-editor__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
                 MediaEditorCanvas,
@@ -17526,19 +17576,19 @@ function MediaEditorContent({
           import_components38.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
-            confirmButtonText: (0, import_i18n34.__)("Discard"),
-            cancelButtonText: (0, import_i18n34.__)("Keep editing"),
+            confirmButtonText: (0, import_i18n35.__)("Discard"),
+            cancelButtonText: (0, import_i18n35.__)("Keep editing"),
             onCancel: () => setIsDiscardDialogOpen(false),
             onConfirm: () => {
               setIsDiscardDialogOpen(false);
               discardAndClose();
             },
-            children: (0, import_i18n34.__)(
+            children: (0, import_i18n35.__)(
               "Are you sure you want to discard your unsaved changes?"
             )
           }
         ),
-        noticesPortalElement ? (0, import_element69.createPortal)(snackbar, noticesPortalElement) : snackbar
+        noticesPortalElement ? (0, import_element70.createPortal)(snackbar, noticesPortalElement) : snackbar
       ]
     }
   );
@@ -17553,7 +17603,7 @@ function MediaEditorContent({
         isImage,
         showCloseButton,
         onCancel: handleRequestClose,
-        onSave: handleSave
+        onSave: saveMediaEditor
       }
     ),
     onRequestClose: handleRequestClose,
@@ -17575,7 +17625,7 @@ function MediaEditorModal({
   fields = [],
   aspectRatioPresets
 }) {
-  const { isModalOpen, id, onUpdate } = (0, import_data8.useSelect)((select) => {
+  const { isModalOpen, id, onUpdate } = (0, import_data9.useSelect)((select) => {
     const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2 } = select(store);
     return {
       isModalOpen: isOpen2(),
@@ -17583,7 +17633,7 @@ function MediaEditorModal({
       onUpdate: getOnUpdate2()
     };
   }, []);
-  const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data8.useDispatch)(store);
+  const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data9.useDispatch)(store);
   if (!isModalOpen || !id) {
     return null;
   }
@@ -17619,7 +17669,7 @@ function MediaEditorModal({
         import_components39.Modal,
         {
           className: "media-editor-modal",
-          title: (0, import_i18n35.__)("Edit media"),
+          title: (0, import_i18n36.__)("Edit media"),
           size: "fill",
           isDismissible: false,
           shouldCloseOnClickOutside,
@@ -17670,7 +17720,7 @@ function isMediaEditorAdminPage() {
 }
 function getMediaTitle(media) {
   const title = typeof media?.title === "string" ? media.title : media?.title?.rendered || media?.title?.raw;
-  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n36.__)("Edit media");
+  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n37.__)("Edit media");
 }
 function MediaEditorRoute() {
   const { id } = useParams({ from: "/media-editor/$id" });
@@ -17678,8 +17728,8 @@ function MediaEditorRoute() {
   const navigate = useNavigate();
   const fields = usePostFields({ postType: "attachment" });
   const isStandaloneAdminPage = isMediaEditorAdminPage();
-  const media = (0, import_data9.useSelect)(
-    (select) => select(import_core_data2.store).getEditedEntityRecord(
+  const media = (0, import_data10.useSelect)(
+    (select) => select(import_core_data3.store).getEditedEntityRecord(
       "postType",
       "attachment",
       attachmentId
@@ -17719,7 +17769,7 @@ function MediaEditorRoute() {
             {
               items: isStandaloneAdminPage ? [{ label: title }] : [
                 {
-                  label: (0, import_i18n36.__)("Media"),
+                  label: (0, import_i18n37.__)("Media"),
                   to: MEDIA_LIST_PATH
                 },
                 { label: title }
