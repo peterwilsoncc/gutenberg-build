@@ -77340,6 +77340,38 @@ If there's a particular need for this, please submit a feature request at https:
     const isTrimmed = trimmedExcerpt !== rawText;
     return isTrimmed ? trimmedExcerpt + "\u2026" : trimmedExcerpt;
   }
+  function getNoteIdsFromMetadata(metadata) {
+    const noteId = metadata?.noteId;
+    const raw = Array.isArray(noteId) ? noteId : [noteId];
+    const ids = /* @__PURE__ */ new Set();
+    for (const value of raw) {
+      const id = Number(value);
+      if (Number.isFinite(id) && id > 0) {
+        ids.add(id);
+      }
+    }
+    return [...ids];
+  }
+  function addNoteIdToMetadata(metadata, noteId) {
+    const ids = new Set(getNoteIdsFromMetadata(metadata));
+    const id = Number(noteId);
+    if (ids.has(id)) {
+      return metadata;
+    }
+    ids.add(id);
+    return { ...metadata, noteId: [...ids] };
+  }
+  function pickPrimaryNote(threads) {
+    return threads.find((thread) => thread.status === "hold") ?? threads[0] ?? null;
+  }
+  function removeNoteIdFromMetadata(metadata, noteId) {
+    const ids = new Set(getNoteIdsFromMetadata(metadata));
+    ids.delete(Number(noteId));
+    return {
+      ...metadata,
+      noteId: ids.size > 0 ? [...ids] : void 0
+    };
+  }
   function calculateNotePositions({
     threads,
     selectedNoteId,
@@ -83484,7 +83516,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n326 = __toESM(require_i18n(), 1);
   var import_data261 = __toESM(require_data(), 1);
-  var import_element308 = __toESM(require_element(), 1);
+  var import_element309 = __toESM(require_element(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor105 = __toESM(require_block_editor(), 1);
@@ -83496,13 +83528,13 @@ If there's a particular need for this, please submit a feature request at https:
   var SIDEBARS = [ALL_NOTES_SIDEBAR, FLOATING_NOTES_SIDEBAR];
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
-  var import_element306 = __toESM(require_element(), 1);
+  var import_element307 = __toESM(require_element(), 1);
   var import_i18n323 = __toESM(require_i18n(), 1);
   var import_data259 = __toESM(require_data(), 1);
   var import_block_editor102 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
-  var import_element304 = __toESM(require_element(), 1);
+  var import_element305 = __toESM(require_element(), 1);
   var import_components287 = __toESM(require_components(), 1);
   var import_compose78 = __toESM(require_compose(), 1);
   var import_i18n321 = __toESM(require_i18n(), 1);
@@ -83512,6 +83544,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n319 = __toESM(require_i18n(), 1);
+  var import_element303 = __toESM(require_element(), 1);
   var import_data256 = __toESM(require_data(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
 
@@ -83741,6 +83774,7 @@ If there's a particular need for this, please submit a feature request at https:
     const blockElement = useBlockElement(clientId);
     const { toggleBlockSpotlight } = unlock((0, import_data256.useDispatch)(import_block_editor99.store));
     const { selectNote: selectNote2 } = unlock((0, import_data256.useDispatch)(store));
+    const isSubmittingRef = (0, import_element303.useRef)(false);
     const unselectNote = () => {
       selectNote2(void 0);
       blockElement?.focus();
@@ -83763,6 +83797,9 @@ If there's a particular need for this, please submit a feature request at https:
           if (!document.hasFocus()) {
             return;
           }
+          if (isSubmittingRef.current) {
+            return;
+          }
           if (event.currentTarget.contains(event.relatedTarget)) {
             return;
           }
@@ -83773,6 +83810,7 @@ If there's a particular need for this, please submit a feature request at https:
           NoteForm,
           {
             onSubmit: async (inputComment) => {
+              isSubmittingRef.current = true;
               const { id } = await onSubmit({
                 content: inputComment
               });
@@ -83788,7 +83826,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/note.mjs
-  var import_element303 = __toESM(require_element(), 1);
+  var import_element304 = __toESM(require_element(), 1);
   var import_components286 = __toESM(require_components(), 1);
   var import_i18n320 = __toESM(require_i18n(), 1);
   var import_jsx_runtime511 = __toESM(require_jsx_runtime(), 1);
@@ -83828,8 +83866,8 @@ If there's a particular need for this, please submit a feature request at https:
     onDeleteNote,
     onResolve
   }) {
-    const [actionState, setActionState] = (0, import_element303.useState)(null);
-    const actionButtonRef = (0, import_element303.useRef)(null);
+    const [actionState, setActionState] = (0, import_element304.useState)(null);
+    const actionButtonRef = (0, import_element304.useRef)(null);
     const canResolve = note.parent === 0;
     const isResolutionNote = note.type === "note" && note.meta && (note.meta._wp_note_status === "resolved" || note.meta._wp_note_status === "reopen");
     const menuItems = [
@@ -83893,7 +83931,7 @@ If there's a particular need for this, please submit a feature request at https:
         raw
       ) : actionText;
       body = /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
-        import_element303.RawHTML,
+        import_element304.RawHTML,
         {
           className: clsx_default(
             "editor-collab-sidebar-panel__note-content",
@@ -83903,7 +83941,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     } else {
-      body = /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(import_element303.RawHTML, { className: "editor-collab-sidebar-panel__note-content", children: note?.content?.rendered });
+      body = /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(import_element304.RawHTML, { className: "editor-collab-sidebar-panel__note-content", children: note?.content?.rendered });
     }
     const actions2 = isSelected2 ? /* @__PURE__ */ (0, import_jsx_runtime511.jsxs)(import_jsx_runtime511.Fragment, { children: [
       canResolve && onResolve && /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
@@ -83974,18 +84012,18 @@ If there's a particular need for this, please submit a feature request at https:
       toggleBlockHighlight,
       50
     );
-    const floatingRef = (0, import_element304.useRef)(null);
-    const isKeyboardTabbingRef = (0, import_element304.useRef)(false);
+    const floatingRef = (0, import_element305.useRef)(null);
+    const isKeyboardTabbingRef = (0, import_element305.useRef)(false);
     const registerThread = floating?.registerThread;
     const unregisterThread = floating?.unregisterThread;
-    (0, import_element304.useEffect)(() => {
+    (0, import_element305.useEffect)(() => {
       const floatingEl = floatingRef.current;
       if (floatingEl && registerThread) {
         registerThread(note.id, relatedBlockElement, floatingEl);
       }
       return () => unregisterThread?.(note.id);
     }, [relatedBlockElement, note.id, registerThread, unregisterThread]);
-    (0, import_element304.useEffect)(() => {
+    (0, import_element305.useEffect)(() => {
       if (!isSelected2 || note.id === "new") {
         return;
       }
@@ -84229,7 +84267,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
   var import_i18n322 = __toESM(require_i18n(), 1);
-  var import_element305 = __toESM(require_element(), 1);
+  var import_element306 = __toESM(require_element(), 1);
   var import_core_data139 = __toESM(require_core_data(), 1);
   var import_data258 = __toESM(require_data(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
@@ -84337,18 +84375,20 @@ If there's a particular need for this, please submit a feature request at https:
         clientIds: getClientIdsWithDescendants2()
       };
     }, []);
-    const { notes, unresolvedNotes } = (0, import_element305.useMemo)(() => {
+    const { notes, unresolvedNotes } = (0, import_element306.useMemo)(() => {
       if (!threads || threads.length === 0) {
         return { notes: [], unresolvedNotes: [] };
       }
       const blocksWithNotes = {};
       const clientIdByNoteId = /* @__PURE__ */ new Map();
       for (const clientId of clientIds) {
-        const noteId = getBlockAttributes2(clientId)?.metadata?.noteId;
-        if (noteId) {
-          const key = String(noteId);
-          blocksWithNotes[clientId] = key;
-          clientIdByNoteId.set(key, clientId);
+        const metadata = getBlockAttributes2(clientId)?.metadata;
+        const noteIds = getNoteIdsFromMetadata(metadata);
+        if (noteIds.length > 0) {
+          blocksWithNotes[clientId] = noteIds;
+          for (const noteId of noteIds) {
+            clientIdByNoteId.set(noteId, clientId);
+          }
         }
       }
       const threadsById = /* @__PURE__ */ new Map();
@@ -84357,7 +84397,7 @@ If there's a particular need for this, please submit a feature request at https:
         const thread = {
           ...item,
           reply: [],
-          blockClientId: item.parent === 0 ? clientIdByNoteId.get(String(item.id)) ?? null : null
+          blockClientId: item.parent === 0 ? clientIdByNoteId.get(item.id) ?? null : null
         };
         threadsById.set(item.id, thread);
         if (item.parent === 0) {
@@ -84374,15 +84414,17 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const unresolved = [];
       const resolved = [];
-      for (const noteId of Object.values(blocksWithNotes)) {
-        const thread = threadsById.get(Number(noteId)) ?? threadsById.get(noteId);
-        if (!thread) {
-          continue;
-        }
-        if (thread.status === "hold") {
-          unresolved.push(thread);
-        } else if (thread.status === "approved") {
-          resolved.push(thread);
+      for (const noteIds of Object.values(blocksWithNotes)) {
+        for (const noteId of noteIds) {
+          const thread = threadsById.get(noteId);
+          if (!thread) {
+            continue;
+          }
+          if (thread.status === "hold") {
+            unresolved.push(thread);
+          } else if (thread.status === "approved") {
+            resolved.push(thread);
+          }
         }
       }
       const orphans = rootThreads.filter(
@@ -84427,12 +84469,16 @@ If there's a particular need for this, please submit a feature request at https:
         );
         if (!parent && savedRecord?.id) {
           const clientId = getSelectedBlockClientId2();
+          if (!clientId) {
+            return savedRecord;
+          }
           const metadata = getBlockAttributes2(clientId)?.metadata;
+          const updatedMetadata = addNoteIdToMetadata(
+            metadata,
+            savedRecord.id
+          );
           updateBlockAttributes2(clientId, {
-            metadata: {
-              ...metadata,
-              noteId: savedRecord.id
-            }
+            metadata: cleanEmptyObject4(updatedMetadata)
           });
         }
         createNotice(
@@ -84510,13 +84556,17 @@ If there's a particular need for this, please submit a feature request at https:
           throwOnError: true
         });
         if (!note.parent) {
-          const clientId = getSelectedBlockClientId2();
+          const clientId = note.blockClientId || getSelectedBlockClientId2();
+          if (!clientId) {
+            return;
+          }
           const metadata = getBlockAttributes2(clientId)?.metadata;
+          const updatedMetadata = removeNoteIdFromMetadata(
+            metadata,
+            note.id
+          );
           updateBlockAttributes2(clientId, {
-            metadata: cleanEmptyObject4({
-              ...metadata,
-              noteId: void 0
-            })
+            metadata: cleanEmptyObject4(updatedMetadata)
           });
         }
         createNotice("snackbar", (0, import_i18n322.__)("Note deleted."), {
@@ -84531,7 +84581,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useEnableFloatingSidebar(enabled = false) {
     const registry = (0, import_data258.useRegistry)();
-    (0, import_element305.useEffect)(() => {
+    (0, import_element306.useEffect)(() => {
       if (!enabled) {
         return;
       }
@@ -84556,10 +84606,10 @@ If there's a particular need for this, please submit a feature request at https:
     isFloating,
     sidebarRef
   }) {
-    const [notePositions, setNotePositions] = (0, import_element305.useState)({});
-    const [store4] = (0, import_element305.useState)(createBoardStore);
-    const heights = (0, import_element305.useSyncExternalStore)(store4.subscribe, store4.getSnapshot);
-    (0, import_element305.useEffect)(() => {
+    const [notePositions, setNotePositions] = (0, import_element306.useState)({});
+    const [store4] = (0, import_element306.useState)(createBoardStore);
+    const heights = (0, import_element306.useSyncExternalStore)(store4.subscribe, store4.getSnapshot);
+    (0, import_element306.useEffect)(() => {
       if (!isFloating || !sidebarRef?.current) {
         return;
       }
@@ -84612,7 +84662,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data259.useDispatch)(import_block_editor102.store)
     );
-    const { blockNoteId, selectedBlockClientId, orderedBlockIds } = (0, import_data259.useSelect)(
+    const { noteId, selectedBlockClientId, orderedBlockIds } = (0, import_data259.useSelect)(
       (select7) => {
         const {
           getBlockAttributes: getBlockAttributes2,
@@ -84621,7 +84671,7 @@ If there's a particular need for this, please submit a feature request at https:
         } = select7(import_block_editor102.store);
         const clientId = getSelectedBlockClientId2();
         return {
-          blockNoteId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
+          noteId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
           selectedBlockClientId: clientId,
           orderedBlockIds: getClientIdsWithDescendants2()
         };
@@ -84638,7 +84688,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const relatedBlockElement = useBlockElement3(selectedBlockClientId);
-    const threads = (0, import_element306.useMemo)(() => {
+    const threads = (0, import_element307.useMemo)(() => {
       if (!isFloating || selectedNote2 !== "new") {
         return notes;
       }
@@ -84649,15 +84699,12 @@ If there's a particular need for this, please submit a feature request at https:
       };
       const out = [];
       orderedBlockIds.forEach((blockId) => {
+        const threadsForBlock = notes.filter(
+          (t4) => t4.blockClientId === blockId
+        );
+        out.push(...threadsForBlock);
         if (blockId === selectedBlockClientId) {
           out.push(newNoteThread);
-        } else {
-          const threadForBlock = notes.find(
-            (t4) => t4.blockClientId === blockId
-          );
-          if (threadForBlock) {
-            out.push(threadForBlock);
-          }
         }
       });
       return out;
@@ -84692,10 +84739,22 @@ If there's a particular need for this, please submit a feature request at https:
         relatedBlockElement?.focus();
       }
     };
-    (0, import_element306.useEffect)(() => {
-      selectNote2(blockNoteId ?? void 0);
-    }, [blockNoteId, selectNote2]);
-    (0, import_element306.useEffect)(() => {
+    const targetNoteId = (0, import_element307.useMemo)(() => {
+      const blockNoteIds = getNoteIdsFromMetadata({ noteId });
+      const blockThreads = notes.filter(
+        (t4) => blockNoteIds.includes(t4.id)
+      );
+      return pickPrimaryNote(blockThreads)?.id;
+    }, [noteId, notes]);
+    const prevBlockIdRef = (0, import_element307.useRef)(selectedBlockClientId);
+    (0, import_element307.useEffect)(() => {
+      if (prevBlockIdRef.current === selectedBlockClientId) {
+        return;
+      }
+      prevBlockIdRef.current = selectedBlockClientId;
+      selectNote2(targetNoteId);
+    }, [selectedBlockClientId, targetNoteId, selectNote2]);
+    (0, import_element307.useEffect)(() => {
       if (noteFocused && selectedNote2) {
         focusNoteThread(
           selectedNote2,
@@ -84860,12 +84919,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/note-indicator-toolbar.mjs
   var import_components289 = __toESM(require_components(), 1);
   var import_i18n325 = __toESM(require_i18n(), 1);
-  var import_element307 = __toESM(require_element(), 1);
+  var import_element308 = __toESM(require_element(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime515 = __toESM(require_jsx_runtime(), 1);
   var { NoteIconToolbarSlotFill } = unlock(import_block_editor104.privateApis);
   function NoteAvatarIndicator({ onClick, note }) {
-    const threadParticipants = (0, import_element307.useMemo)(() => {
+    const threadParticipants = (0, import_element308.useMemo)(() => {
       if (!note) {
         return [];
       }
@@ -84940,7 +84999,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { selectNote: selectNote2 } = unlock((0, import_data261.useDispatch)(store));
     const isLargeViewport = (0, import_compose79.useViewportMatch)("medium");
-    const sidebarRef = (0, import_element308.useRef)(null);
+    const sidebarRef = (0, import_element309.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data261.useSelect)((select7) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select7(import_block_editor105.store);
       const _clientId = getSelectedBlockClientId2();
@@ -84950,6 +85009,7 @@ If there's a particular need for this, please submit a feature request at https:
         isClassicBlock: _clientId ? getBlockName2(_clientId) === "core/freeform" : false
       };
     }, []);
+    const blockNoteIds = getNoteIdsFromMetadata({ noteId });
     const { isDistractionFree } = (0, import_data261.useSelect)((select7) => {
       const { get } = select7(import_preferences30.store);
       return {
@@ -84992,30 +85052,37 @@ If there's a particular need for this, please submit a feature request at https:
       selectNote2(targetNoteId, { focus: true });
     }
     function openNoteForBlock(targetClientId) {
-      const target = notes.find(
-        (note) => note.blockClientId === targetClientId
+      const blockThreads = notes.filter(
+        (thread) => thread.blockClientId === targetClientId
       );
+      const target = pickPrimaryNote(blockThreads);
       return focusNote({
         targetClientId,
         noteId: target?.id ?? "new",
         isApproved: target?.status === "approved"
       });
     }
+    function addNewNoteForBlock(targetClientId) {
+      return focusNote({
+        targetClientId,
+        noteId: "new",
+        isApproved: false
+      });
+    }
     (0, import_keyboard_shortcuts12.useShortcut)(
       "core/editor/new-note",
       (event) => {
         event.preventDefault();
-        openNoteForBlock(clientId);
+        addNewNoteForBlock(clientId);
       },
       {
-        // When multiple notes per block are supported. Remove note ID check.
-        // See: https://github.com/WordPress/gutenberg/pull/75147.
-        isDisabled: isDistractionFree || isClassicBlock || !clientId || !!noteId
+        isDisabled: isDistractionFree || isClassicBlock || !clientId
       }
     );
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
-    const currentThread = noteId ? notes.find((thread) => thread.id === noteId) : null;
+    const currentThreads = blockNoteIds.length > 0 ? notes.filter((thread) => blockNoteIds.includes(thread.id)) : [];
+    const currentThread = pickPrimaryNote(currentThreads);
     if (isDistractionFree) {
       return /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(AddNoteMenuItem, { isDistractionFree: true });
     }
@@ -85030,7 +85097,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
         AddNoteMenuItem,
         {
-          onClick: (menuClientId) => openNoteForBlock(menuClientId)
+          onClick: (menuClientId) => addNewNoteForBlock(menuClientId)
         }
       ),
       showAllNotesSidebar && /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
@@ -85091,7 +85158,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components292 = __toESM(require_components(), 1);
   var import_i18n329 = __toESM(require_i18n(), 1);
   var import_data264 = __toESM(require_data(), 1);
-  var import_element309 = __toESM(require_element(), 1);
+  var import_element310 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_core_data141 = __toESM(require_core_data(), 1);
@@ -85373,12 +85440,12 @@ If there's a particular need for this, please submit a feature request at https:
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
     const previousActiveArea = (0, import_compose80.usePrevious)(activeComplementaryArea);
-    (0, import_element309.useEffect)(() => {
+    (0, import_element310.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
         resetStylesNavigation2();
       }
     }, [activeComplementaryArea, previousActiveArea, resetStylesNavigation2]);
-    (0, import_element309.useEffect)(() => {
+    (0, import_element310.useEffect)(() => {
       if (shouldResetNavigation) {
         resetStylesNavigation2();
       }
@@ -85576,7 +85643,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n332 = __toESM(require_i18n(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
   var import_data268 = __toESM(require_data(), 1);
-  var import_element311 = __toESM(require_element(), 1);
+  var import_element312 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
@@ -85603,7 +85670,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data267 = __toESM(require_data(), 1);
   var import_preferences35 = __toESM(require_preferences(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
-  var import_element310 = __toESM(require_element(), 1);
+  var import_element311 = __toESM(require_element(), 1);
   var import_components294 = __toESM(require_components(), 1);
   var import_i18n331 = __toESM(require_i18n(), 1);
   var import_block_editor106 = __toESM(require_block_editor(), 1);
@@ -85625,7 +85692,7 @@ If there's a particular need for this, please submit a feature request at https:
         hiddenBlockTypes: select7(import_preferences35.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY15
       };
     }, []);
-    const allowedBlockTypes = (0, import_element310.useMemo)(() => {
+    const allowedBlockTypes = (0, import_element311.useMemo)(() => {
       if (_allowedBlockTypes === true) {
         return blockTypes;
       }
@@ -85733,7 +85800,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data268.useDispatch)(store);
     const { set: setPreference } = (0, import_data268.useDispatch)(import_preferences36.store);
-    const sections = (0, import_element311.useMemo)(
+    const sections = (0, import_element312.useMemo)(
       () => [
         {
           name: "general",
