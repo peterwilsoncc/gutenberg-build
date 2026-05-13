@@ -6072,6 +6072,12 @@ var wp;
     );
   }
 
+  // packages/core-data/build-module/parsed-blocks-cache.mjs
+  var parsedBlocksCache = /* @__PURE__ */ new Map();
+  function getCacheKey(kind, name, id) {
+    return `${kind}:${name}:${id}`;
+  }
+
   // packages/core-data/build-module/resolvers.mjs
   var getAuthors2 = (query) => async ({ dispatch: dispatch3 }) => {
     const path = (0, import_url6.addQueryArgs)(
@@ -6156,6 +6162,12 @@ var wp;
         ).forEach(([propName, transientConfig]) => {
           recordWithTransients[propName] = transientConfig.read(recordWithTransients);
         });
+        if (recordWithTransients.blocks && typeof recordWithTransients.content?.raw === "string") {
+          parsedBlocksCache.set(getCacheKey(kind, name, key), {
+            content: recordWithTransients.content.raw,
+            blocks: recordWithTransients.blocks
+          });
+        }
         void getSyncManager()?.load(
           entityConfig.syncConfig,
           objectType,
@@ -7663,7 +7675,6 @@ var wp;
 
   // packages/core-data/build-module/hooks/use-entity-block-editor.mjs
   var EMPTY_ARRAY2 = [];
-  var parsedBlocksCache = /* @__PURE__ */ new Map();
   function useEntityBlockEditor(kind, name, { id: _id } = {}) {
     const providerId = useEntityId(kind, name);
     const id = _id ?? providerId;
@@ -7693,7 +7704,7 @@ var wp;
       if (!content || typeof content !== "string") {
         return EMPTY_ARRAY2;
       }
-      const cacheKey = `${kind}:${name}:${id}`;
+      const cacheKey = getCacheKey(kind, name, id);
       const cached = parsedBlocksCache.get(cacheKey);
       let _blocks;
       if (cached && cached.content === content) {
