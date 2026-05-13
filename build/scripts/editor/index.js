@@ -77816,6 +77816,21 @@ If there's a particular need for this, please submit a feature request at https:
   var isNodeBefore = (a3, b3) => a3.compareDocumentPosition(b3) === Node.DOCUMENT_POSITION_FOLLOWING;
 
   // packages/editor/build-module/components/collaborators-overlay/compute-selection.mjs
+  function resolveTargetElement(editorDocument, resolvedSelection) {
+    if (!resolvedSelection.localClientId) {
+      return null;
+    }
+    const blockElement = editorDocument.querySelector(
+      `[data-block="${resolvedSelection.localClientId}"]`
+    );
+    if (!blockElement || !resolvedSelection.attributeKey) {
+      return blockElement;
+    }
+    const attrKey = CSS.escape(resolvedSelection.attributeKey);
+    return blockElement.querySelector(
+      `[data-wp-block-attribute-key="${attrKey}"]`
+    ) ?? blockElement;
+  }
   function computeSelectionVisual(selection, start2, end, overlayContext) {
     if (selection.type === import_core_data111.SelectionType.None || selection.type === import_core_data111.SelectionType.WholeBlock) {
       return {};
@@ -77832,13 +77847,14 @@ If there's a particular need for this, please submit a feature request at https:
     if (!start2.localClientId) {
       return {};
     }
-    const blockElement = overlayContext.editorDocument.querySelector(
-      `[data-block="${start2.localClientId}"]`
+    const targetElement = resolveTargetElement(
+      overlayContext.editorDocument,
+      start2
     );
     return {
       coords: getCursorPosition(
         start2.richTextOffset,
-        blockElement,
+        targetElement,
         overlayContext.editorDocument,
         overlayContext.overlayRect
       )
@@ -77872,8 +77888,9 @@ If there's a particular need for this, please submit a feature request at https:
         selectionRects: allRects
       };
     }
-    const startBlock = overlayContext.editorDocument.querySelector(
-      `[data-block="${start2.localClientId}"]`
+    const startBlock = resolveTargetElement(
+      overlayContext.editorDocument,
+      start2
     );
     return {
       coords: getCursorPosition(
@@ -77885,8 +77902,9 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function computeSingleBlockRects(start2, end, overlayContext) {
-    const blockElement = overlayContext.editorDocument.querySelector(
-      `[data-block="${start2.localClientId}"]`
+    const blockElement = resolveTargetElement(
+      overlayContext.editorDocument,
+      start2
     );
     if (!blockElement || start2.richTextOffset === null || end.richTextOffset === null) {
       return { rects: [], blockElement: null };
@@ -77905,11 +77923,13 @@ If there's a particular need for this, please submit a feature request at https:
   function computeMultiBlockRects(start2, end, overlayContext) {
     let docFirst = start2;
     let docLast = end;
-    let firstBlock = overlayContext.editorDocument.querySelector(
-      `[data-block="${docFirst.localClientId}"]`
+    let firstBlock = resolveTargetElement(
+      overlayContext.editorDocument,
+      docFirst
     );
-    let lastBlock = overlayContext.editorDocument.querySelector(
-      `[data-block="${docLast.localClientId}"]`
+    let lastBlock = resolveTargetElement(
+      overlayContext.editorDocument,
+      docLast
     );
     if (firstBlock && lastBlock && isNodeBefore(lastBlock, firstBlock)) {
       docFirst = end;
@@ -78008,7 +78028,8 @@ If there's a particular need for this, please submit a feature request at https:
         };
         let start2 = {
           richTextOffset: null,
-          localClientId: null
+          localClientId: null,
+          attributeKey: null
         };
         let end;
         if (selection.type === import_core_data112.SelectionType.Cursor) {

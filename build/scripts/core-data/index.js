@@ -1232,6 +1232,17 @@ var wp;
   var import_data2 = __toESM(require_data(), 1);
   var import_sync2 = __toESM(require_sync(), 1);
   var import_block_editor = __toESM(require_block_editor(), 1);
+  function getContainingBlockYMap(yType) {
+    let current = yType;
+    while (current) {
+      const parent = current.parent;
+      if (parent instanceof import_sync2.Y.Map && parent.parent instanceof import_sync2.Y.Array && parent.get("clientId") !== void 0 && parent.get("innerBlocks") instanceof import_sync2.Y.Array) {
+        return parent;
+      }
+      current = parent instanceof import_sync2.Y.AbstractType ? parent : null;
+    }
+    return null;
+  }
   function getBlockPathInYdoc(yType) {
     const path = [];
     let current = yType;
@@ -1350,6 +1361,27 @@ var wp;
   }
   function asHtmlStringIndex(index) {
     return index;
+  }
+  function getYTextByAttributeKey(attributes, attributeKey) {
+    const directValue = attributes.get(attributeKey);
+    if (directValue instanceof import_sync4.Y.Text) {
+      return directValue;
+    }
+    let value = attributes;
+    for (const pathPart of attributeKey.split(".")) {
+      if (value instanceof import_sync4.Y.Map) {
+        value = value.get(pathPart);
+      } else if (value instanceof import_sync4.Y.Array) {
+        const index = Number.parseInt(pathPart, 10);
+        if (!Number.isSafeInteger(index) || index < 0 || index.toString() !== pathPart) {
+          return null;
+        }
+        value = value.get(index);
+      } else {
+        return null;
+      }
+    }
+    return value instanceof import_sync4.Y.Text ? value : null;
   }
   function findBlockByClientIdInDoc(blockId, ydoc) {
     const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
@@ -1508,7 +1540,7 @@ var wp;
       return null;
     }
     const attributes = block.get("attributes");
-    const currentYText = attributes?.get(selection.attributeKey);
+    const currentYText = attributes ? getYTextByAttributeKey(attributes, selection.attributeKey) : null;
     if (!(currentYText instanceof import_sync6.Y.Text)) {
       return null;
     }
@@ -1521,7 +1553,8 @@ var wp;
     );
     return {
       relativePosition,
-      absoluteOffset: selection.offset
+      absoluteOffset: selection.offset,
+      attributeKey: selection.attributeKey
     };
   }
   function getBlockPathForLocalClientId(clientId) {
@@ -1766,7 +1799,11 @@ var wp;
      */
     convertSelectionStateToAbsolute(selection) {
       if (selection.type === SelectionType.None) {
-        return { richTextOffset: null, localClientId: null };
+        return {
+          richTextOffset: null,
+          localClientId: null,
+          attributeKey: null
+        };
       }
       if (selection.type === SelectionType.WholeBlock) {
         const absolutePos = import_sync8.Y.createAbsolutePositionFromRelativePosition(
@@ -1782,7 +1819,11 @@ var wp;
             localClientId2 = path2 ? resolveBlockClientIdByPath(path2) : null;
           }
         }
-        return { richTextOffset: null, localClientId: localClientId2 };
+        return {
+          richTextOffset: null,
+          localClientId: localClientId2,
+          attributeKey: null
+        };
       }
       const cursorPos = "cursorPosition" in selection ? selection.cursorPosition : selection.cursorStartPosition;
       const absolutePosition = import_sync8.Y.createAbsolutePositionFromRelativePosition(
@@ -1790,17 +1831,22 @@ var wp;
         this.doc
       );
       if (!absolutePosition) {
-        return { richTextOffset: null, localClientId: null };
+        return {
+          richTextOffset: null,
+          localClientId: null,
+          attributeKey: null
+        };
       }
-      const yType = absolutePosition.type.parent?.parent;
-      const path = yType instanceof import_sync8.Y.Map ? getBlockPathInYdoc(yType) : null;
+      const yType = getContainingBlockYMap(absolutePosition.type);
+      const path = yType ? getBlockPathInYdoc(yType) : null;
       const localClientId = path ? resolveBlockClientIdByPath(path) : null;
       return {
         richTextOffset: htmlIndexToRichTextOffset(
           absolutePosition.type.toString(),
           asHtmlStringIndex(absolutePosition.index)
         ),
-        localClientId
+        localClientId,
+        attributeKey: cursorPos.attributeKey ?? null
       };
     }
     /**
@@ -2537,10 +2583,11 @@ var wp;
     const block = findBlockByClientIdInDoc(clientId, ydoc);
     const attributes = block?.get("attributes");
     const attributeKey = selection.attributeKey;
-    const changedYText = attributeKey ? attributes?.get(attributeKey) : void 0;
-    const isYText = changedYText instanceof import_sync11.Y.Text;
-    const isFullyDefinedSelection = attributeKey && clientId;
-    if (!isYText || !isFullyDefinedSelection) {
+    let changedYText = null;
+    if (attributeKey && attributes) {
+      changedYText = getYTextByAttributeKey(attributes, attributeKey);
+    }
+    if (!(changedYText instanceof import_sync11.Y.Text) || !attributeKey || !clientId) {
       return {
         type: "BlockSelection",
         clientId
@@ -7765,7 +7812,8 @@ var wp;
   var import_element8 = __toESM(require_element(), 1);
   var defaultResolvedSelection = {
     richTextOffset: null,
-    localClientId: null
+    localClientId: null,
+    attributeKey: null
   };
   var defaultState = {
     activeCollaborators: [],

@@ -68619,6 +68619,7 @@ ${js}
         children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
           import_block_editor261.RichText,
           {
+            identifier: `${name123}.${rowIndex}.cells.${columnIndex}.content`,
             value: content,
             onChange,
             onFocus: () => {
