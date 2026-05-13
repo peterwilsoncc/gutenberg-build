@@ -4172,7 +4172,7 @@ var wp;
                 isCompact: true
               }
             ) }),
-            showTitle && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "dataviews-view-grid__title", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+            showTitle && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "dataviews-view-grid__title-actions", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
               ItemClickWrapper,
               {
                 item,

@@ -18529,7 +18529,7 @@ var GridItem = (0, import_element68.forwardRef)(
               isCompact: true
             }
           ) }),
-          showTitle && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { className: "dataviews-view-grid__title", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { className: "dataviews-view-grid__title-actions", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
             ItemClickWrapper,
             {
               item,
