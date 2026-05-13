@@ -2253,7 +2253,7 @@ var wp;
       "is-loading": isSaving
     });
     return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: classes, children: [
-      isSaving && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_components4.Spinner, {}),
+      isSaving && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_components4.Spinner, { className: "edit-post-meta-boxes-area__spinner" }),
       /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
         "div",
         {
