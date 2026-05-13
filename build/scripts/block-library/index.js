@@ -67203,8 +67203,12 @@ ${js}
   // packages/block-library/build-module/tab-panels/edit.mjs
   var import_block_editor258 = __toESM(require_block_editor(), 1);
   var import_data142 = __toESM(require_data(), 1);
+  var import_i18n242 = __toESM(require_i18n(), 1);
   var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
-  var TAB_PANELS_TEMPLATE = [["core/tab-panel", {}]];
+  var TAB_PANELS_TEMPLATE = [
+    ["core/tab-panel", { label: (0, import_i18n242.__)("Tab") }],
+    ["core/tab-panel", { label: (0, import_i18n242.__)("Tab") }]
+  ];
   function Edit21({ clientId }) {
     const blockProps = (0, import_block_editor258.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor258.useInnerBlocksProps)(blockProps, {
@@ -67318,7 +67322,7 @@ ${js}
     name: () => name108,
     settings: () => settings107
   });
-  var import_i18n243 = __toESM(require_i18n(), 1);
+  var import_i18n244 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/table/deprecated.mjs
   var import_block_editor260 = __toESM(require_block_editor(), 1);
@@ -67978,7 +67982,7 @@ ${js}
   // packages/block-library/build-module/table/edit.mjs
   var import_element129 = __toESM(require_element(), 1);
   var import_block_editor261 = __toESM(require_block_editor(), 1);
-  var import_i18n242 = __toESM(require_i18n(), 1);
+  var import_i18n243 = __toESM(require_i18n(), 1);
   var import_components158 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/table/state.mjs
@@ -68170,28 +68174,28 @@ ${js}
   var ALIGNMENT_CONTROLS = [
     {
       icon: align_left_default,
-      title: (0, import_i18n242.__)("Align column left"),
+      title: (0, import_i18n243.__)("Align column left"),
       align: "left"
     },
     {
       icon: align_center_default,
-      title: (0, import_i18n242.__)("Align column center"),
+      title: (0, import_i18n243.__)("Align column center"),
       align: "center"
     },
     {
       icon: align_right_default,
-      title: (0, import_i18n242.__)("Align column right"),
+      title: (0, import_i18n243.__)("Align column right"),
       align: "right"
     }
   ];
   var cellAriaLabel = {
-    head: (0, import_i18n242.__)("Header cell text"),
-    body: (0, import_i18n242.__)("Body cell text"),
-    foot: (0, import_i18n242.__)("Footer cell text")
+    head: (0, import_i18n243.__)("Header cell text"),
+    body: (0, import_i18n243.__)("Body cell text"),
+    foot: (0, import_i18n243.__)("Footer cell text")
   };
   var placeholder = {
-    head: (0, import_i18n242._x)("Header label", "table header"),
-    foot: (0, import_i18n242._x)("Footer label", "table footer")
+    head: (0, import_i18n243._x)("Header label", "table header"),
+    foot: (0, import_i18n243._x)("Footer label", "table footer")
   };
   function TSection({ name: name123, ...props }) {
     const TagName2 = `t${name123}`;
@@ -68363,37 +68367,37 @@ ${js}
     const tableControls = [
       {
         icon: table_row_before_default,
-        title: (0, import_i18n242.__)("Insert row before"),
+        title: (0, import_i18n243.__)("Insert row before"),
         isDisabled: !selectedCell,
         onClick: onInsertRowBefore
       },
       {
         icon: table_row_after_default,
-        title: (0, import_i18n242.__)("Insert row after"),
+        title: (0, import_i18n243.__)("Insert row after"),
         isDisabled: !selectedCell,
         onClick: onInsertRowAfter
       },
       {
         icon: table_row_delete_default,
-        title: (0, import_i18n242.__)("Delete row"),
+        title: (0, import_i18n243.__)("Delete row"),
         isDisabled: !selectedCell,
         onClick: onDeleteRow
       },
       {
         icon: table_column_before_default,
-        title: (0, import_i18n242.__)("Insert column before"),
+        title: (0, import_i18n243.__)("Insert column before"),
         isDisabled: !selectedCell,
         onClick: onInsertColumnBefore
       },
       {
         icon: table_column_after_default,
-        title: (0, import_i18n242.__)("Insert column after"),
+        title: (0, import_i18n243.__)("Insert column after"),
         isDisabled: !selectedCell,
         onClick: onInsertColumnAfter
       },
       {
         icon: table_column_delete_default,
-        title: (0, import_i18n242.__)("Delete column"),
+        title: (0, import_i18n243.__)("Delete column"),
         isDisabled: !selectedCell,
         onClick: onDeleteColumn
       }
@@ -68425,7 +68429,7 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_block_editor261.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
           import_block_editor261.AlignmentControl,
           {
-            label: (0, import_i18n242.__)("Change column alignment"),
+            label: (0, import_i18n243.__)("Change column alignment"),
             alignmentControls: ALIGNMENT_CONTROLS,
             value: getCellAlignment(),
             onChange: (nextAlign) => onChangeColumnAlignment(nextAlign)
@@ -68435,7 +68439,7 @@ ${js}
           import_components158.ToolbarDropdownMenu,
           {
             icon: table_default,
-            label: (0, import_i18n242.__)("Edit table"),
+            label: (0, import_i18n243.__)("Edit table"),
             controls: tableControls
           }
         ) })
@@ -68443,7 +68447,7 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_block_editor261.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime501.jsxs)(
         import_components158.__experimentalToolsPanel,
         {
-          label: (0, import_i18n242.__)("Settings"),
+          label: (0, import_i18n243.__)("Settings"),
           resetAll: () => {
             setAttributes({
               hasFixedLayout: true,
@@ -68457,13 +68461,13 @@ ${js}
               import_components158.__experimentalToolsPanelItem,
               {
                 hasValue: () => hasFixedLayout !== true,
-                label: (0, import_i18n242.__)("Fixed width table cells"),
+                label: (0, import_i18n243.__)("Fixed width table cells"),
                 onDeselect: () => setAttributes({ hasFixedLayout: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
                   import_components158.ToggleControl,
                   {
-                    label: (0, import_i18n242.__)("Fixed width table cells"),
+                    label: (0, import_i18n243.__)("Fixed width table cells"),
                     checked: !!hasFixedLayout,
                     onChange: onChangeFixedLayout
                   }
@@ -68475,13 +68479,13 @@ ${js}
                 import_components158.__experimentalToolsPanelItem,
                 {
                   hasValue: () => head && head.length,
-                  label: (0, import_i18n242.__)("Header section"),
+                  label: (0, import_i18n243.__)("Header section"),
                   onDeselect: () => setAttributes({ head: [] }),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
                     import_components158.ToggleControl,
                     {
-                      label: (0, import_i18n242.__)("Header section"),
+                      label: (0, import_i18n243.__)("Header section"),
                       checked: !!(head && head.length),
                       onChange: onToggleHeaderSection
                     }
@@ -68492,13 +68496,13 @@ ${js}
                 import_components158.__experimentalToolsPanelItem,
                 {
                   hasValue: () => foot && foot.length,
-                  label: (0, import_i18n242.__)("Footer section"),
+                  label: (0, import_i18n243.__)("Footer section"),
                   onDeselect: () => setAttributes({ foot: [] }),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
                     import_components158.ToggleControl,
                     {
-                      label: (0, import_i18n242.__)("Footer section"),
+                      label: (0, import_i18n243.__)("Footer section"),
                       checked: !!(foot && foot.length),
                       onChange: onToggleFooterSection
                     }
@@ -68532,9 +68536,9 @@ ${js}
       isEmpty ? /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
         import_components158.Placeholder,
         {
-          label: (0, import_i18n242.__)("Table"),
+          label: (0, import_i18n243.__)("Table"),
           icon: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_block_editor261.BlockIcon, { icon: block_table_default, showColors: true }),
-          instructions: (0, import_i18n242.__)("Insert a table for sharing data."),
+          instructions: (0, import_i18n243.__)("Insert a table for sharing data."),
           children: /* @__PURE__ */ (0, import_jsx_runtime501.jsxs)(
             "form",
             {
@@ -68546,7 +68550,7 @@ ${js}
                   {
                     __next40pxDefaultSize: true,
                     type: "number",
-                    label: (0, import_i18n242.__)("Column count"),
+                    label: (0, import_i18n243.__)("Column count"),
                     value: initialColumnCount,
                     onChange: onChangeInitialColumnCount,
                     min: "1",
@@ -68558,7 +68562,7 @@ ${js}
                   {
                     __next40pxDefaultSize: true,
                     type: "number",
-                    label: (0, import_i18n242.__)("Row count"),
+                    label: (0, import_i18n243.__)("Row count"),
                     value: initialRowCount,
                     onChange: onChangeInitialRowCount,
                     min: "1",
@@ -68571,7 +68575,7 @@ ${js}
                     __next40pxDefaultSize: true,
                     variant: "primary",
                     type: "submit",
-                    children: (0, import_i18n242.__)("Create Table")
+                    children: (0, import_i18n243.__)("Create Table")
                   }
                 )
               ]
@@ -68585,7 +68589,7 @@ ${js}
           setAttributes,
           isSelected: isSingleSelected,
           insertBlocksAfter,
-          label: (0, import_i18n242.__)("Table caption text"),
+          label: (0, import_i18n243.__)("Table caption text"),
           showToolbarButton: isSingleSelected && blockEditingMode === "default"
         }
       )
@@ -69050,15 +69054,15 @@ ${js}
           {
             cells: [
               {
-                content: (0, import_i18n243.__)("Version"),
+                content: (0, import_i18n244.__)("Version"),
                 tag: "th"
               },
               {
-                content: (0, import_i18n243.__)("Jazz Musician"),
+                content: (0, import_i18n244.__)("Jazz Musician"),
                 tag: "th"
               },
               {
-                content: (0, import_i18n243.__)("Release Date"),
+                content: (0, import_i18n244.__)("Release Date"),
                 tag: "th"
               }
             ]
@@ -69072,11 +69076,11 @@ ${js}
                 tag: "td"
               },
               {
-                content: (0, import_i18n243.__)("Jaco Pastorius"),
+                content: (0, import_i18n244.__)("Jaco Pastorius"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n243.__)("May 7, 2019"),
+                content: (0, import_i18n244.__)("May 7, 2019"),
                 tag: "td"
               }
             ]
@@ -69088,11 +69092,11 @@ ${js}
                 tag: "td"
               },
               {
-                content: (0, import_i18n243.__)("Betty Carter"),
+                content: (0, import_i18n244.__)("Betty Carter"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n243.__)("February 21, 2019"),
+                content: (0, import_i18n244.__)("February 21, 2019"),
                 tag: "td"
               }
             ]
@@ -69104,11 +69108,11 @@ ${js}
                 tag: "td"
               },
               {
-                content: (0, import_i18n243.__)("Bebo Vald\xE9s"),
+                content: (0, import_i18n244.__)("Bebo Vald\xE9s"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n243.__)("December 6, 2018"),
+                content: (0, import_i18n244.__)("December 6, 2018"),
                 tag: "td"
               }
             ]
@@ -69132,7 +69136,7 @@ ${js}
     name: () => name109,
     settings: () => settings108
   });
-  var import_i18n245 = __toESM(require_i18n(), 1);
+  var import_i18n246 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/table-of-contents/block.json
   var block_default108 = {
@@ -69217,7 +69221,7 @@ ${js}
   var import_components159 = __toESM(require_components(), 1);
   var import_data144 = __toESM(require_data(), 1);
   var import_element131 = __toESM(require_element(), 1);
-  var import_i18n244 = __toESM(require_i18n(), 1);
+  var import_i18n245 = __toESM(require_i18n(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
   var import_notices18 = __toESM(require_notices(), 1);
 
@@ -69412,7 +69416,7 @@ ${js}
     const { createWarningNotice } = (0, import_data144.useDispatch)(import_notices18.store);
     const showRedirectionPreventedNotice = (event) => {
       event.preventDefault();
-      createWarningNotice((0, import_i18n244.__)("Links are disabled in the editor."), {
+      createWarningNotice((0, import_i18n245.__)("Links are disabled in the editor."), {
         id: `block-library/core/table-of-contents/redirection-prevented/${instanceId}`,
         type: "snackbar"
       });
@@ -69433,9 +69437,9 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
           import_components159.ToolbarButton,
           {
-            icon: (0, import_i18n244.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
-            title: (0, import_i18n244.__)("Unordered"),
-            description: (0, import_i18n244.__)("Convert to unordered list"),
+            icon: (0, import_i18n245.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
+            title: (0, import_i18n245.__)("Unordered"),
+            description: (0, import_i18n245.__)("Convert to unordered list"),
             onClick: () => setAttributes({ ordered: false }),
             isActive: ordered === false
           }
@@ -69443,9 +69447,9 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
           import_components159.ToolbarButton,
           {
-            icon: (0, import_i18n244.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
-            title: (0, import_i18n244.__)("Ordered"),
-            description: (0, import_i18n244.__)("Convert to ordered list"),
+            icon: (0, import_i18n245.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
+            title: (0, import_i18n245.__)("Ordered"),
+            description: (0, import_i18n245.__)("Convert to ordered list"),
             onClick: () => setAttributes({ ordered: true }),
             isActive: ordered === true
           }
@@ -69469,14 +69473,14 @@ ${js}
               )
             })
           ),
-          children: (0, import_i18n244.__)("Convert to static list")
+          children: (0, import_i18n245.__)("Convert to static list")
         }
       ) })
     ] });
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_block_editor264.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(
       import_components159.__experimentalToolsPanel,
       {
-        label: (0, import_i18n244.__)("Settings"),
+        label: (0, import_i18n245.__)("Settings"),
         resetAll: () => {
           setAttributes({
             onlyIncludeCurrentPage: false,
@@ -69490,18 +69494,18 @@ ${js}
             import_components159.__experimentalToolsPanelItem,
             {
               hasValue: () => !!onlyIncludeCurrentPage,
-              label: (0, import_i18n244.__)("Only include current page"),
+              label: (0, import_i18n245.__)("Only include current page"),
               onDeselect: () => setAttributes({ onlyIncludeCurrentPage: false }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                 import_components159.ToggleControl,
                 {
-                  label: (0, import_i18n244.__)("Only include current page"),
+                  label: (0, import_i18n245.__)("Only include current page"),
                   checked: onlyIncludeCurrentPage,
                   onChange: (value) => setAttributes({ onlyIncludeCurrentPage: value }),
-                  help: onlyIncludeCurrentPage ? (0, import_i18n244.__)(
+                  help: onlyIncludeCurrentPage ? (0, import_i18n245.__)(
                     "Only including headings from the current page (if the post is paginated)."
-                  ) : (0, import_i18n244.__)(
+                  ) : (0, import_i18n245.__)(
                     "Include headings from all pages (if the post is paginated)."
                   )
                 }
@@ -69512,30 +69516,30 @@ ${js}
             import_components159.__experimentalToolsPanelItem,
             {
               hasValue: () => !!maxLevel,
-              label: (0, import_i18n244.__)("Limit heading levels"),
+              label: (0, import_i18n245.__)("Limit heading levels"),
               onDeselect: () => setAttributes({ maxLevel: void 0 }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                 import_components159.SelectControl,
                 {
                   __next40pxDefaultSize: true,
-                  label: (0, import_i18n244.__)("Include headings down to level"),
+                  label: (0, import_i18n245.__)("Include headings down to level"),
                   value: maxLevel || "",
                   options: [
-                    { value: "", label: (0, import_i18n244.__)("All levels") },
-                    { value: "1", label: (0, import_i18n244.__)("Heading 1") },
-                    { value: "2", label: (0, import_i18n244.__)("Heading 2") },
-                    { value: "3", label: (0, import_i18n244.__)("Heading 3") },
-                    { value: "4", label: (0, import_i18n244.__)("Heading 4") },
-                    { value: "5", label: (0, import_i18n244.__)("Heading 5") },
-                    { value: "6", label: (0, import_i18n244.__)("Heading 6") }
+                    { value: "", label: (0, import_i18n245.__)("All levels") },
+                    { value: "1", label: (0, import_i18n245.__)("Heading 1") },
+                    { value: "2", label: (0, import_i18n245.__)("Heading 2") },
+                    { value: "3", label: (0, import_i18n245.__)("Heading 3") },
+                    { value: "4", label: (0, import_i18n245.__)("Heading 4") },
+                    { value: "5", label: (0, import_i18n245.__)("Heading 5") },
+                    { value: "6", label: (0, import_i18n245.__)("Heading 6") }
                   ],
                   onChange: (value) => setAttributes({
                     maxLevel: value ? parseInt(value) : void 0
                   }),
-                  help: !maxLevel ? (0, import_i18n244.__)(
+                  help: !maxLevel ? (0, import_i18n245.__)(
                     "Including all heading levels in the table of contents."
-                  ) : (0, import_i18n244.__)(
+                  ) : (0, import_i18n245.__)(
                     "Only include headings up to and including this level."
                   )
                 }
@@ -69551,8 +69555,8 @@ ${js}
           import_components159.Placeholder,
           {
             icon: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_block_editor264.BlockIcon, { icon: table_of_contents_default }),
-            label: (0, import_i18n244.__)("Table of Contents"),
-            instructions: (0, import_i18n244.__)(
+            label: (0, import_i18n245.__)("Table of Contents"),
+            instructions: (0, import_i18n245.__)(
               "Start adding Heading blocks to create a table of contents. Headings with HTML anchors will be linked here."
             )
           }
@@ -69607,47 +69611,47 @@ ${js}
           name: "core/heading",
           attributes: {
             level: 2,
-            content: (0, import_i18n245.__)("Heading")
+            content: (0, import_i18n246.__)("Heading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 3,
-            content: (0, import_i18n245.__)("Subheading")
+            content: (0, import_i18n246.__)("Subheading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 2,
-            content: (0, import_i18n245.__)("Heading")
+            content: (0, import_i18n246.__)("Heading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 3,
-            content: (0, import_i18n245.__)("Subheading")
+            content: (0, import_i18n246.__)("Subheading")
           }
         }
       ],
       attributes: {
         headings: [
           {
-            content: (0, import_i18n245.__)("Heading"),
+            content: (0, import_i18n246.__)("Heading"),
             level: 2
           },
           {
-            content: (0, import_i18n245.__)("Subheading"),
+            content: (0, import_i18n246.__)("Subheading"),
             level: 3
           },
           {
-            content: (0, import_i18n245.__)("Heading"),
+            content: (0, import_i18n246.__)("Heading"),
             level: 2
           },
           {
-            content: (0, import_i18n245.__)("Subheading"),
+            content: (0, import_i18n246.__)("Subheading"),
             level: 3
           }
         ]
@@ -69669,6 +69673,7 @@ ${js}
   var import_block_editor266 = __toESM(require_block_editor(), 1);
   var import_data145 = __toESM(require_data(), 1);
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
+  var TAB_LIST_TEMPLATE = [["core/tab"], ["core/tab"]];
   function Edit22({ clientId }) {
     const tabsClientId = (0, import_data145.useSelect)(
       (select9) => select9(import_block_editor266.store).getBlockRootClientId(clientId),
@@ -69678,6 +69683,7 @@ ${js}
     const innerBlocksProps = (0, import_block_editor266.useInnerBlocksProps)(blockProps, {
       allowedBlocks: ["core/tab"],
       orientation: "horizontal",
+      template: TAB_LIST_TEMPLATE,
       templateLock: false,
       renderAppender: false
     });
@@ -69792,7 +69798,6 @@ ${js}
   var import_block_editor269 = __toESM(require_block_editor(), 1);
   var import_data147 = __toESM(require_data(), 1);
   var import_element133 = __toESM(require_element(), 1);
-  var import_i18n246 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/tabs/controls.mjs
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
@@ -69972,36 +69977,7 @@ ${js}
   // packages/block-library/build-module/tabs/edit.mjs
   var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY8 = [];
-  var TABS_TEMPLATE = [
-    [
-      "core/tab-list",
-      {},
-      [
-        ["core/tab", {}],
-        ["core/tab", {}]
-      ]
-    ],
-    [
-      "core/tab-panels",
-      {},
-      [
-        [
-          "core/tab-panel",
-          {
-            label: (0, import_i18n246.__)("Tab")
-          },
-          [["core/paragraph"]]
-        ],
-        [
-          "core/tab-panel",
-          {
-            label: (0, import_i18n246.__)("Tab")
-          },
-          [["core/paragraph"]]
-        ]
-      ]
-    ]
-  ];
+  var TABS_TEMPLATE = [["core/tab-list"], ["core/tab-panels"]];
   function Edit23({ clientId, attributes: attributes2, setAttributes }) {
     const { anchor, activeTabIndex, editorActiveTabIndex } = attributes2;
     (0, import_element133.useEffect)(() => {
