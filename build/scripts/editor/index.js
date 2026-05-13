@@ -39195,11 +39195,12 @@ If there's a particular need for this, please submit a feature request at https:
     }, [focusOnMount]);
     const handleCropAreaFocus = (0, import_element128.useCallback)(
       (event) => {
-        if (event.target === event.currentTarget) {
+        const target = event.target;
+        if (target === event.currentTarget) {
           setIsCropAreaFocused(true);
-          if (event.relatedTarget !== null && event.currentTarget.matches(":focus-visible")) {
-            setIsFocusVisible(true);
-          }
+        }
+        if (event.relatedTarget !== null && target.matches(":focus-visible")) {
+          setIsFocusVisible(true);
         }
       },
       []
@@ -39208,6 +39209,10 @@ If there's a particular need for this, please submit a feature request at https:
       (event) => {
         if (event.target === event.currentTarget) {
           setIsCropAreaFocused(false);
+        }
+        if (!event.currentTarget.contains(
+          event.relatedTarget
+        )) {
           setIsFocusVisible(false);
         }
       },
@@ -39293,15 +39298,17 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const canvasHandlers = {
       ...handlers,
+      onPointerDownCapture: () => {
+        setIsFocusVisible(false);
+      },
+      onKeyDownCapture: (event) => {
+        if (!["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
+          setIsFocusVisible(true);
+        }
+      },
       onPointerDown: (event) => {
         handlers.onPointerDown?.(event);
         setIsFocusVisible(false);
-      },
-      onKeyDown: (event) => {
-        if (event.target === event.currentTarget && !["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
-          setIsFocusVisible(true);
-        }
-        handlers.onKeyDown?.(event);
       }
     };
     (0, import_element128.useEffect)(() => {
@@ -39470,9 +39477,12 @@ If there's a particular need for this, please submit a feature request at https:
               isInteractiveGrid && "wp-media-editor-image-editor__canvas--grid-interactive",
               showInteractiveGrid && "wp-media-editor-image-editor__canvas--show-grid",
               settling && "wp-media-editor-image-editor__canvas--settling",
-              // Show the keyboard focus outline only when the canvas
-              // itself (not a child handle) has keyboard focus.
-              isFocusVisible && isCropAreaFocused && "wp-media-editor-image-editor__canvas--focus-visible"
+              // Marks the cropper as in keyboard-interaction mode.
+              // CSS uses :focus on the canvas to show the stencil
+              // outline and :focus on a handle to show its ring,
+              // so the class applies whenever any cropper element
+              // has keyboard focus.
+              isFocusVisible && "wp-media-editor-image-editor__canvas--focus-visible"
             ),
             tabIndex: 0,
             role: "group",

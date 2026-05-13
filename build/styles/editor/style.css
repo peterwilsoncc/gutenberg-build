@@ -4716,7 +4716,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__stencil-rect {
+.wp-media-editor-image-editor__canvas--focus-visible:focus .wp-media-editor-image-editor__stencil-rect {
   border-color: var(--wp-image-editor-focus-color, var(--wp-admin-theme-color, #007cba));
   box-shadow: 0 0 0 1px var(--wp-image-editor-focus-color, var(--wp-admin-theme-color, #007cba));
 }
@@ -4742,7 +4742,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   outline: none;
 }
 
-.wp-media-editor-image-editor__handle:focus-visible {
+.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__handle:focus {
   background: var(--wp-image-editor-focus-color, var(--wp-admin-theme-color, #007cba));
   border-color: transparent;
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--wp-image-editor-focus-color, var(--wp-admin-theme-color, #007cba));
