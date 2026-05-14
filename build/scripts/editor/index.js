@@ -71322,6 +71322,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n229 = __toESM(require_i18n(), 1);
   var import_components203 = __toESM(require_components(), 1);
   var import_data138 = __toESM(require_data(), 1);
+  var import_url16 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-last-revision/check.mjs
   var import_data137 = __toESM(require_data(), 1);
@@ -71345,21 +71346,31 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
   function usePostLastRevisionInfo() {
     return (0, import_data138.useSelect)((select7) => {
-      const { getCurrentPostLastRevisionId: getCurrentPostLastRevisionId2, getCurrentPostRevisionsCount: getCurrentPostRevisionsCount2 } = select7(store);
+      const {
+        getCurrentPostLastRevisionId: getCurrentPostLastRevisionId2,
+        getCurrentPostRevisionsCount: getCurrentPostRevisionsCount2,
+        getEditorSettings: getEditorSettings2
+      } = select7(store);
       return {
         lastRevisionId: getCurrentPostLastRevisionId2(),
-        revisionsCount: getCurrentPostRevisionsCount2()
+        revisionsCount: getCurrentPostRevisionsCount2(),
+        disableVisualRevisions: !!getEditorSettings2().disableVisualRevisions
       };
     }, []);
   }
   function PostLastRevision() {
-    const { lastRevisionId, revisionsCount } = usePostLastRevisionInfo();
+    const { lastRevisionId, revisionsCount, disableVisualRevisions } = usePostLastRevisionInfo();
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data138.useDispatch)(store));
+    const buttonProps = disableVisualRevisions ? {
+      href: (0, import_url16.addQueryArgs)("revision.php", {
+        revision: lastRevisionId
+      })
+    } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
     return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
       import_components203.Button,
       {
         __next40pxDefaultSize: true,
-        onClick: () => setCurrentRevisionId2(lastRevisionId),
+        ...buttonProps,
         className: "editor-post-last-revision__title",
         icon: backup_default,
         iconPosition: "right",
@@ -71372,12 +71383,17 @@ If there's a particular need for this, please submit a feature request at https:
     ) });
   }
   function PrivatePostLastRevision() {
-    const { lastRevisionId, revisionsCount } = usePostLastRevisionInfo();
+    const { lastRevisionId, revisionsCount, disableVisualRevisions } = usePostLastRevisionInfo();
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data138.useDispatch)(store));
+    const buttonProps = disableVisualRevisions ? {
+      href: (0, import_url16.addQueryArgs)("revision.php", {
+        revision: lastRevisionId
+      })
+    } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
     return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(post_panel_row_default, { label: (0, import_i18n229.__)("Revisions"), children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
       import_components203.Button,
       {
-        onClick: () => setCurrentRevisionId2(lastRevisionId),
+        ...buttonProps,
         className: "editor-private-post-last-revision__button",
         text: revisionsCount,
         "aria-label": (0, import_i18n229.sprintf)(
@@ -71404,7 +71420,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n231 = __toESM(require_i18n(), 1);
   var import_components205 = __toESM(require_components(), 1);
   var import_data139 = __toESM(require_data(), 1);
-  var import_url16 = __toESM(require_url(), 1);
+  var import_url17 = __toESM(require_url(), 1);
   var import_element224 = __toESM(require_element(), 1);
   var import_hooks48 = __toESM(require_hooks(), 1);
   var import_compose43 = __toESM(require_compose(), 1);
@@ -71585,14 +71601,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const userDisplayName = user.name;
     const userAvatar = user.avatar;
-    const unlockUrl = (0, import_url16.addQueryArgs)("post.php", {
+    const unlockUrl = (0, import_url17.addQueryArgs)("post.php", {
       "get-post-lock": "1",
       lockKey: true,
       post: postId2,
       action: "edit",
       _wpnonce: postLockUtils.nonce
     });
-    const allPostsUrl = (0, import_url16.addQueryArgs)("edit.php", {
+    const allPostsUrl = (0, import_url17.addQueryArgs)("edit.php", {
       post_type: postType2?.slug
     });
     const allPostsLabel = (0, import_i18n231.__)("Exit editor");
@@ -72137,7 +72153,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n245 = __toESM(require_i18n(), 1);
   var import_components217 = __toESM(require_components(), 1);
   var import_data156 = __toESM(require_data(), 1);
-  var import_url18 = __toESM(require_url(), 1);
+  var import_url19 = __toESM(require_url(), 1);
   var import_core_data96 = __toESM(require_core_data(), 1);
   var import_html_entities24 = __toESM(require_html_entities(), 1);
 
@@ -73215,12 +73231,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blob4 = __toESM(require_blob(), 1);
 
   // packages/editor/build-module/components/post-publish-panel/media-util.mjs
-  var import_url17 = __toESM(require_url(), 1);
+  var import_url18 = __toESM(require_url(), 1);
   function generateUniqueBasenames(urls) {
     const basenames = /* @__PURE__ */ new Set();
     return Object.fromEntries(
       urls.map((url) => {
-        const filename = (0, import_url17.getFilename)(url);
+        const filename = (0, import_url18.getFilename)(url);
         let basename = "";
         if (filename) {
           const parts = filename.split(".");
@@ -73468,7 +73484,7 @@ If there's a particular need for this, please submit a feature request at https:
         ]),
         siteIconUrl: siteData.site_icon_url,
         siteTitle: siteData.name,
-        siteHome: siteData.home && (0, import_url18.filterURLForDisplay)(siteData.home)
+        siteHome: siteData.home && (0, import_url19.filterURLForDisplay)(siteData.home)
       };
     }, []);
     let siteIcon = /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_components217.Icon, { className: "components-site-icon", size: "36px", icon: wordpress_default });
@@ -73564,7 +73580,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n246 = __toESM(require_i18n(), 1);
   var import_element234 = __toESM(require_element(), 1);
   var import_data157 = __toESM(require_data(), 1);
-  var import_url19 = __toESM(require_url(), 1);
+  var import_url20 = __toESM(require_url(), 1);
   var import_html_entities25 = __toESM(require_html_entities(), 1);
   var import_compose49 = __toESM(require_compose(), 1);
   var import_core_data97 = __toESM(require_core_data(), 1);
@@ -73623,7 +73639,7 @@ If there's a particular need for this, please submit a feature request at https:
     const viewPostLabel = postType2?.labels?.view_item;
     const addNewPostLabel = postType2?.labels?.add_new_item;
     const link = post2.status === "future" ? getFuturePostUrl(post2) : post2.link;
-    const addLink = (0, import_url19.addQueryArgs)("post-new.php", {
+    const addLink = (0, import_url20.addQueryArgs)("post-new.php", {
       post_type: post2.type
     });
     const postLinkRef = (0, import_element234.useCallback)(
@@ -73660,7 +73676,7 @@ If there's a particular need for this, please submit a feature request at https:
                 (0, import_i18n246.__)("%s address"),
                 postLabel
               ),
-              value: (0, import_url19.safeDecodeURIComponent)(link),
+              value: (0, import_url20.safeDecodeURIComponent)(link),
               onFocus: (event) => event.target.select()
             }
           ),
@@ -74878,7 +74894,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-url/index.mjs
   var import_data177 = __toESM(require_data(), 1);
-  var import_url20 = __toESM(require_url(), 1);
+  var import_url21 = __toESM(require_url(), 1);
   var import_element245 = __toESM(require_element(), 1);
   var import_block_editor61 = __toESM(require_block_editor(), 1);
   var import_i18n258 = __toESM(require_i18n(), 1);
@@ -74903,14 +74919,14 @@ If there's a particular need for this, please submit a feature request at https:
       const hasPublishAction = post2?._links?.["wp:action-publish"] ?? false;
       return {
         isEditable: select7(store).isPermalinkEditable() && hasPublishAction,
-        postSlug: (0, import_url20.safeDecodeURIComponent)(
+        postSlug: (0, import_url21.safeDecodeURIComponent)(
           select7(store).getEditedPostSlug()
         ),
         viewPostLabel: postType2?.labels.view_item,
         postLink: post2.link,
         permalinkPrefix: permalinkParts?.prefix,
         permalinkSuffix: permalinkParts?.suffix,
-        permalink: (0, import_url20.safeDecodeURIComponent)(
+        permalink: (0, import_url21.safeDecodeURIComponent)(
           select7(store).getPermalink()
         )
       };
@@ -74987,7 +75003,7 @@ If there's a particular need for this, please submit a feature request at https:
                 },
                 onBlur: (event) => {
                   editPost2({
-                    slug: (0, import_url20.cleanForSlug)(
+                    slug: (0, import_url21.cleanForSlug)(
                       event.target.value
                     )
                   });
@@ -75057,7 +75073,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-url/label.mjs
   var import_data179 = __toESM(require_data(), 1);
-  var import_url21 = __toESM(require_url(), 1);
+  var import_url22 = __toESM(require_url(), 1);
   function PostURLLabel() {
     return usePostURLLabel();
   }
@@ -75066,7 +75082,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select7) => select7(store).getPermalink(),
       []
     );
-    return (0, import_url21.filterURLForDisplay)((0, import_url21.safeDecodeURIComponent)(postLink));
+    return (0, import_url22.filterURLForDisplay)((0, import_url22.safeDecodeURIComponent)(postLink));
   }
 
   // packages/editor/build-module/components/post-url/panel.mjs
@@ -75074,7 +75090,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data180 = __toESM(require_data(), 1);
   var import_components229 = __toESM(require_components(), 1);
   var import_i18n259 = __toESM(require_i18n(), 1);
-  var import_url22 = __toESM(require_url(), 1);
+  var import_url23 = __toESM(require_url(), 1);
   var import_core_data106 = __toESM(require_core_data(), 1);
   var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
   function PostURLPanel() {
@@ -75130,7 +75146,7 @@ If there's a particular need for this, please submit a feature request at https:
         slug: select7(store).getEditedPostSlug()
       };
     }, []);
-    const decodedSlug = (0, import_url22.safeDecodeURIComponent)(slug);
+    const decodedSlug = (0, import_url23.safeDecodeURIComponent)(slug);
     return /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
       import_components229.Button,
       {
@@ -82341,7 +82357,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data242 = __toESM(require_data(), 1);
   var import_components274 = __toESM(require_components(), 1);
   var import_i18n307 = __toESM(require_i18n(), 1);
-  var import_url23 = __toESM(require_url(), 1);
+  var import_url24 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/revision-author-panel/index.mjs
   var import_data239 = __toESM(require_data(), 1);
@@ -82505,7 +82521,7 @@ If there's a particular need for this, please submit a feature request at https:
         /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
           import_components274.ExternalLink,
           {
-            href: (0, import_url23.addQueryArgs)("revision.php", {
+            href: (0, import_url24.addQueryArgs)("revision.php", {
               revision: revisionId2
             }),
             children: (0, import_i18n307.__)("Open classic revisions screen")
@@ -83238,6 +83254,13 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function PostRevisionsPanel() {
+    const disableVisualRevisions = (0, import_data251.useSelect)(
+      (select7) => !!select7(store).getEditorSettings().disableVisualRevisions,
+      []
+    );
+    if (disableVisualRevisions) {
+      return null;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(PostRevisionsPanelContent, {}) });
   }
 

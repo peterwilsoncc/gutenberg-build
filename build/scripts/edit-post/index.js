@@ -2899,7 +2899,8 @@ var wp;
     const {
       isEnabledAndEditorReady,
       isCollaborationEnabled,
-      hasIncompatibleMetaBoxes
+      hasIncompatibleMetaBoxes,
+      hasActiveMetaBoxes
     } = (0, import_data24.useSelect)(
       (select3) => {
         const {
@@ -2909,12 +2910,14 @@ var wp;
         return {
           isEnabledAndEditorReady: enabled && __unstableIsEditorReady(),
           isCollaborationEnabled: isCollaborationEnabledForCurrentPost(),
-          hasIncompatibleMetaBoxes: enabled ? select3(store).getAllMetaBoxes().some((metaBox) => !metaBox.__rtc_compatible) : false
+          hasIncompatibleMetaBoxes: enabled ? select3(store).getAllMetaBoxes().some((metaBox) => !metaBox.__rtc_compatible) : false,
+          hasActiveMetaBoxes: enabled && select3(store).hasMetaBoxes()
         };
       },
       [enabled]
     );
     const { setCollaborationSupported } = unlock((0, import_data24.useDispatch)(import_core_data7.store));
+    const { updateEditorSettings } = (0, import_data24.useDispatch)(import_editor17.store);
     const { initializeMetaBoxes: initializeMetaBoxes2 } = (0, import_data24.useDispatch)(store);
     (0, import_element12.useEffect)(() => {
       if (isEnabledAndEditorReady) {
@@ -2922,13 +2925,18 @@ var wp;
         if (isCollaborationEnabled && hasIncompatibleMetaBoxes) {
           setCollaborationSupported(false);
         }
+        if (hasActiveMetaBoxes) {
+          updateEditorSettings({ disableVisualRevisions: true });
+        }
       }
     }, [
       isEnabledAndEditorReady,
       initializeMetaBoxes2,
       isCollaborationEnabled,
       setCollaborationSupported,
-      hasIncompatibleMetaBoxes
+      hasIncompatibleMetaBoxes,
+      hasActiveMetaBoxes,
+      updateEditorSettings
     ]);
   };
 

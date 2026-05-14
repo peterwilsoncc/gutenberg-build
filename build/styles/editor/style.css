@@ -7017,10 +7017,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   padding: 16px;
 }
 
-.editor-private-post-last-revision__button {
-  display: inline-block;
-}
-
 .editor-post-locked-modal__buttons {
   margin-top: 24px;
 }
