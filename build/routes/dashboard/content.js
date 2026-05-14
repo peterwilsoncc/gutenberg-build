@@ -16243,7 +16243,7 @@ var page_default = Page;
 
 // routes/dashboard/stage.tsx
 var import_data8 = __toESM(require_data());
-var import_element132 = __toESM(require_element());
+var import_element133 = __toESM(require_element());
 var import_i18n55 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 
@@ -32730,7 +32730,7 @@ var WidgetChrome = (0, import_element126.forwardRef)(
 );
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
-var import_element130 = __toESM(require_element());
+var import_element131 = __toESM(require_element());
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react40 = __toESM(require_react());
@@ -38108,6 +38108,48 @@ var DashboardGrid = (0, import_element129.forwardRef)(
   }
 );
 
+// routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.tsx
+var import_element130 = __toESM(require_element());
+
+// routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.module.css
+if (typeof process === "undefined" || true) {
+  registerStyle36("5ce44b4889", '._41552c4502ad12ed__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:#0000;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}._41552c4502ad12ed__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:calc(var(--wpds-dimension-base, 4px)*.5)}._2b207b12a7288f5f__resizing{opacity:.72}._20bdd1c81423a95f__handleCorner{cursor:nwse-resize;height:calc(var(--wpds-dimension-base, 4px)*6);width:calc(var(--wpds-dimension-base, 4px)*6)}._20bdd1c81423a95f__handleCorner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:calc(var(--wpds-dimension-base, 4px)*2);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:calc(var(--wpds-dimension-base, 4px)*2)}[dir=rtl] ._20bdd1c81423a95f__handleCorner:after{transform-origin:0 100%}._20bdd1c81423a95f__handleCorner._2b207b12a7288f5f__resizing:after,._20bdd1c81423a95f__handleCorner:focus-visible:after,._20bdd1c81423a95f__handleCorner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-fg-interactive-brand-active,var(--wp-admin-theme-color,#3858e9));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-fg-interactive-brand-active,var(--wp-admin-theme-color,#3858e9));transform:scale(var(--widget-resize-handle-hover-scale))}.e518fe7259304488__handleHorizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:calc(var(--wpds-dimension-base, 4px)*10);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:calc(var(--wpds-dimension-base, 4px)*6)}@media not (prefers-reduced-motion){._20bdd1c81423a95f__handleCorner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}.e518fe7259304488__handleHorizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}.e518fe7259304488__handleHorizontal:after{background-color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:calc(var(--wpds-dimension-base, 4px)*3);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}.e518fe7259304488__handleHorizontal._2b207b12a7288f5f__resizing:after,.e518fe7259304488__handleHorizontal:focus-visible:after,.e518fe7259304488__handleHorizontal:hover:after{background-color:var(--wpds-color-fg-interactive-brand-active,var(--wp-admin-theme-color,#3858e9));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._20bdd1c81423a95f__handleCorner._2b207b12a7288f5f__resizing:after,._20bdd1c81423a95f__handleCorner:after,._20bdd1c81423a95f__handleCorner:focus-visible:after,._20bdd1c81423a95f__handleCorner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}.e518fe7259304488__handleHorizontal._2b207b12a7288f5f__resizing:after,.e518fe7259304488__handleHorizontal:after,.e518fe7259304488__handleHorizontal:focus-visible:after,.e518fe7259304488__handleHorizontal:hover:after{background-color:Highlight}}');
+}
+var widget_resize_handle_default = { "handle": "_41552c4502ad12ed__handle", "resizing": "_2b207b12a7288f5f__resizing", "handleCorner": "_20bdd1c81423a95f__handleCorner", "handleHorizontal": "e518fe7259304488__handleHorizontal" };
+
+// routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.tsx
+var import_jsx_runtime165 = __toESM(require_jsx_runtime());
+var WidgetResizeHandle = (0, import_element130.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+  if (!verticalResizable) {
+    return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+      "div",
+      {
+        ref,
+        className: clsx_default(
+          widget_resize_handle_default.handle,
+          widget_resize_handle_default.handleHorizontal,
+          isResizing && widget_resize_handle_default.resizing
+        ),
+        ...listeners,
+        ...attributes
+      }
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+    "div",
+    {
+      ref,
+      className: clsx_default(
+        widget_resize_handle_default.handle,
+        widget_resize_handle_default.handleCorner,
+        isResizing && widget_resize_handle_default.resizing
+      ),
+      ...listeners,
+      ...attributes
+    }
+  );
+});
+
 // routes/dashboard/widget-dashboard/components/widgets/widgets.module.css
 if (typeof process === "undefined" || true) {
   registerStyle36("20179368d6", "._561eb2c5c7cbcb6b__grid{width:100%}._8fa4ad5c2e86a6b9__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}._8a257ea80aac989e__tileEditMode{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._8a257ea80aac989e__tileEditMode:focus-visible,._8a257ea80aac989e__tileEditMode:hover{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}[data-wp-dashboard-grid-resizing] ._8a257ea80aac989e__tileEditMode:focus-visible,[data-wp-dashboard-grid-resizing] ._8a257ea80aac989e__tileEditMode:hover{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._8a257ea80aac989e__tileEditMode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._48e2b8516636ed6b__dragPreview{height:100%}._48e2b8516636ed6b__dragPreview ._8fa4ad5c2e86a6b9__tile{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}@media not (prefers-reduced-motion){._8fa4ad5c2e86a6b9__tile{transition:box-shadow var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}");
@@ -38115,7 +38157,7 @@ if (typeof process === "undefined" || true) {
 var widgets_default = { "grid": "_561eb2c5c7cbcb6b__grid", "tile": "_8fa4ad5c2e86a6b9__tile", "tileEditMode": "_8a257ea80aac989e__tileEditMode", "dragPreview": "_48e2b8516636ed6b__dragPreview" };
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
-var import_jsx_runtime165 = __toESM(require_jsx_runtime());
+var import_jsx_runtime166 = __toESM(require_jsx_runtime());
 function toGridLayout(widgets) {
   return widgets.map((w2) => ({
     key: w2.uuid,
@@ -38138,29 +38180,29 @@ function applyGridChange(widgets, gridLayout) {
     };
   });
 }
-var Widgets = (0, import_element130.forwardRef)(
+var Widgets = (0, import_element131.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings } = useDashboardInternalContext();
-    const gridLayout = (0, import_element130.useMemo)(() => toGridLayout(layout), [layout]);
-    const handleLayoutChange = (0, import_element130.useCallback)(
+    const gridLayout = (0, import_element131.useMemo)(() => toGridLayout(layout), [layout]);
+    const handleLayoutChange = (0, import_element131.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const children = layout.map((widget, index2) => /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+    const children = layout.map((widget, index2) => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
       "div",
       {
         className: clsx_default(widgets_default.tile, {
           [widgets_default.tileEditMode]: editMode
         }),
         tabIndex: editMode ? 0 : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(WidgetChrome, { widget, index: index2 })
+        children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(WidgetChrome, { widget, index: index2 })
       },
       widget.uuid
     ));
-    const renderDragPreview = (0, import_element130.useCallback)(
-      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime165.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
+    const renderDragPreview = (0, import_element131.useCallback)(
+      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
       []
     );
     const sharedProps = {
@@ -38169,16 +38211,17 @@ var Widgets = (0, import_element130.forwardRef)(
       rowHeight: gridSettings.rowHeight,
       editMode,
       onChangeLayout: handleLayoutChange,
-      renderDragPreview
+      renderDragPreview,
+      renderResizeHandle: WidgetResizeHandle
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: gridSettings.columns !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: gridSettings.columns !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
       DashboardGrid,
       {
         ...sharedProps,
         columns: gridSettings.columns,
         children
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
       DashboardGrid,
       {
         ...sharedProps,
@@ -38199,16 +38242,16 @@ if (typeof process === "undefined" || true) {
 var no_widgets_state_default = { "root": "_43aa5df1b0907556__root" };
 
 // routes/dashboard/widget-dashboard/components/no-widgets-state/no-widgets-state.tsx
-var import_jsx_runtime166 = __toESM(require_jsx_runtime());
+var import_jsx_runtime167 = __toESM(require_jsx_runtime());
 function NoWidgetsStateImpl({ children }) {
   const { layout } = useDashboardInternalContext();
   if (layout.length > 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(empty_state_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(empty_state_exports.Icon, { icon: home_default }),
-    /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(empty_state_exports.Title, { children: (0, import_i18n53.__)("Your dashboard is empty") }),
-    /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(empty_state_exports.Description, { children: (0, import_i18n53.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(empty_state_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(empty_state_exports.Icon, { icon: home_default }),
+    /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(empty_state_exports.Title, { children: (0, import_i18n53.__)("Your dashboard is empty") }),
+    /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(empty_state_exports.Description, { children: (0, import_i18n53.__)(
       "Add widgets to start customizing your dashboard."
     ) })
   ] }) });
@@ -38216,7 +38259,7 @@ function NoWidgetsStateImpl({ children }) {
 var NoWidgetsState = NoWidgetsStateImpl;
 
 // routes/dashboard/widget-dashboard/widget-dashboard.tsx
-var import_jsx_runtime167 = __toESM(require_jsx_runtime());
+var import_jsx_runtime168 = __toESM(require_jsx_runtime());
 var WidgetDashboard = Object.assign(
   function WidgetDashboard2({
     layout,
@@ -38229,7 +38272,7 @@ var WidgetDashboard = Object.assign(
     gridSettings,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
       WidgetDashboardProvider,
       {
         layout,
@@ -38240,13 +38283,13 @@ var WidgetDashboard = Object.assign(
         onEditChange,
         resolveWidgetModule,
         gridSettings,
-        children: /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(WidgetDashboardUIProvider, { children: [
-          children ?? /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(import_jsx_runtime167.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(NoWidgetsState, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(Actions3, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(Widgets, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(WidgetDashboardUIProvider, { children: [
+          children ?? /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(import_jsx_runtime168.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(NoWidgetsState, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Actions3, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Widgets, {})
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(Inserter, {})
+          /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Inserter, {})
         ] })
       }
     );
@@ -38257,7 +38300,7 @@ var WidgetDashboard = Object.assign(
 // routes/dashboard/widget-types/hooks/use-widget-types.ts
 var import_data7 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
-var import_element131 = __toESM(require_element());
+var import_element132 = __toESM(require_element());
 var import_i18n54 = __toESM(require_i18n());
 (0, import_data7.dispatch)(import_core_data.store).addEntities([
   {
@@ -38275,8 +38318,8 @@ function useWidgetTypes() {
     (select) => select(import_core_data.store).getEntityRecords("root", "widgetModule"),
     []
   );
-  const [widgetTypes, setWidgetTypes] = (0, import_element131.useState)([]);
-  (0, import_element131.useEffect)(() => {
+  const [widgetTypes, setWidgetTypes] = (0, import_element132.useState)([]);
+  (0, import_element132.useEffect)(() => {
     if (!records) {
       return;
     }
@@ -38325,13 +38368,13 @@ if (typeof process === "undefined" || true) {
 var stage_default = { "dashboard-widgets-container": "_2381d7918cf57baa__dashboard-widgets-container" };
 
 // routes/dashboard/stage.tsx
-var import_jsx_runtime168 = __toESM(require_jsx_runtime());
+var import_jsx_runtime169 = __toESM(require_jsx_runtime());
 function Dashboard() {
   const [layout, setLayout, resetLayout] = useDashboardLayout(
     "gutenberg_dashboard"
   );
   const widgetTypes = useWidgetTypes();
-  const [editMode, setEditMode] = (0, import_element132.useState)(false);
+  const [editMode, setEditMode] = (0, import_element133.useState)(false);
   const { createSuccessNotice } = (0, import_data8.useDispatch)(import_notices.store);
   const handleLayoutChange = (next) => {
     setLayout(next);
@@ -38339,7 +38382,7 @@ function Dashboard() {
       type: "snackbar"
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
     WidgetDashboard,
     {
       widgetTypes,
@@ -38348,14 +38391,14 @@ function Dashboard() {
       onLayoutReset: resetLayout,
       editMode,
       onEditChange: setEditMode,
-      children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
         page_default,
         {
           title: (0, import_i18n55.__)("Dashboard"),
-          actions: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(WidgetDashboard.Actions, {}),
-          children: /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)("div", { className: stage_default["dashboard-widgets-container"], children: [
-            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(WidgetDashboard.NoWidgetsState, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(WidgetDashboard.Widgets, {})
+          actions: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(WidgetDashboard.Actions, {}),
+          children: /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)("div", { className: stage_default["dashboard-widgets-container"], children: [
+            /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(WidgetDashboard.NoWidgetsState, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(WidgetDashboard.Widgets, {})
           ] })
         }
       )
