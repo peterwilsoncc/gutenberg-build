@@ -48787,6 +48787,7 @@ var wp;
     onColorChange,
     onGradientChange,
     colorValue,
+    colorSlug,
     gradientValue,
     clearable,
     showTitle = true,
@@ -48798,15 +48799,17 @@ var wp;
     if (!canChooseAColor && !canChooseAGradient) {
       return null;
     }
+    const colorPaletteOnChange = canChooseAGradient ? (newColor, _index, newSlug) => {
+      onColorChange(newColor, newSlug);
+      onGradientChange();
+    } : (newColor, _index, newSlug) => onColorChange(newColor, newSlug);
     const tabPanels = {
       [TAB_IDS.color]: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
         import_components140.ColorPalette,
         {
           value: colorValue,
-          onChange: canChooseAGradient ? (newColor) => {
-            onColorChange(newColor);
-            onGradientChange();
-          } : onColorChange,
+          selectedSlug: colorSlug,
+          onChange: colorPaletteOnChange,
           ...{ colors: colors2, disableCustomColors },
           __experimentalIsRenderedInSidebar,
           clearable,
@@ -60976,6 +60979,22 @@ var wp;
   var import_components204 = __toESM(require_components(), 1);
   var import_element222 = __toESM(require_element(), 1);
   var import_i18n190 = __toESM(require_i18n(), 1);
+
+  // packages/block-editor/build-module/utils/color-values.mjs
+  function extractColorSlug(rawValue) {
+    if (typeof rawValue !== "string") {
+      return void 0;
+    }
+    if (rawValue.startsWith("var:preset|color|")) {
+      return rawValue.slice("var:preset|color|".length);
+    }
+    const themeFormatMatch = rawValue.match(
+      /^var\(--wp--preset--color--([^)]+)\)$/
+    );
+    return themeFormatMatch?.[1];
+  }
+
+  // packages/block-editor/build-module/components/global-styles/color-panel.mjs
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   function useHasColorPanel(settings2) {
     const hasTextPanel = useHasTextPanel(settings2);
@@ -61042,6 +61061,13 @@ var wp;
       }
     );
   }
+  function encodeColorValueWithPalette(allColors, colorValue, slug) {
+    if (slug) {
+      return "var:preset|color|" + slug;
+    }
+    const colorObject = allColors.find(({ color }) => color === colorValue);
+    return colorObject ? "var:preset|color|" + colorObject.slug : colorValue;
+  }
   var DEFAULT_CONTROLS6 = {
     text: true,
     background: true,
@@ -61063,6 +61089,7 @@ var wp;
   function ColorPanelTab({
     isGradient,
     inheritedValue,
+    inheritedSlug,
     userValue,
     setValue,
     colorGradientControlSettings
@@ -61075,6 +61102,7 @@ var wp;
         enableAlpha: true,
         __experimentalIsRenderedInSidebar: true,
         colorValue: isGradient ? void 0 : inheritedValue,
+        colorSlug: isGradient ? void 0 : inheritedSlug,
         gradientValue: isGradient ? inheritedValue : void 0,
         onColorChange: isGradient ? void 0 : setValue,
         onGradientChange: isGradient ? setValue : void 0,
@@ -61212,15 +61240,10 @@ var wp;
     const hasBackgroundGradientSupport = !!settings2?.background?.gradient;
     const showGradientColors = hasGradientColors && !hasBackgroundGradientSupport;
     const decodeValue = (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue);
-    const encodeColorValue = (colorValue) => {
-      const allColors = colors2.flatMap(
-        ({ colors: originColors }) => originColors
-      );
-      const colorObject = allColors.find(
-        ({ color }) => color === colorValue
-      );
-      return colorObject ? "var:preset|color|" + colorObject.slug : colorValue;
-    };
+    const allColors = (0, import_element222.useMemo)(
+      () => colors2.flatMap(({ colors: originColors }) => originColors),
+      [colors2]
+    );
     const encodeGradientValue = (gradientValue) => {
       const allGradients = gradients.flatMap(
         ({ gradients: originGradients }) => originGradients
@@ -61236,11 +61259,11 @@ var wp;
     const gradient = decodeValue(inheritedValue?.color?.gradient);
     const userGradient = decodeValue(value?.color?.gradient);
     const hasBackground = () => !!userBackgroundColor || !hasBackgroundGradientSupport && !!userGradient;
-    const setBackgroundColor = (newColor) => {
+    const setBackgroundColor = (newColor, newSlug) => {
       const newValue = setImmutably(
         value,
         ["color", "background"],
-        encodeColorValue(newColor)
+        encodeColorValueWithPalette(allColors, newColor, newSlug)
       );
       if (!hasBackgroundGradientSupport) {
         newValue.color.gradient = void 0;
@@ -61272,12 +61295,12 @@ var wp;
       inheritedValue?.elements?.link?.color?.text
     );
     const userLinkColor = decodeValue(value?.elements?.link?.color?.text);
-    const setLinkColor = (newColor) => {
+    const setLinkColor = (newColor, newSlug) => {
       onChange(
         setImmutably(
           value,
           ["elements", "link", "color", "text"],
-          encodeColorValue(newColor)
+          encodeColorValueWithPalette(allColors, newColor, newSlug)
         )
       );
     };
@@ -61287,12 +61310,12 @@ var wp;
     const userHoverLinkColor = decodeValue(
       value?.elements?.link?.[":hover"]?.color?.text
     );
-    const setHoverLinkColor = (newColor) => {
+    const setHoverLinkColor = (newColor, newSlug) => {
       onChange(
         setImmutably(
           value,
           ["elements", "link", ":hover", "color", "text"],
-          encodeColorValue(newColor)
+          encodeColorValueWithPalette(allColors, newColor, newSlug)
         )
       );
     };
@@ -61314,17 +61337,17 @@ var wp;
     const textColor = decodeValue(inheritedValue?.color?.text);
     const userTextColor = decodeValue(value?.color?.text);
     const hasTextColor = () => !!userTextColor;
-    const setTextColor = (newColor) => {
+    const setTextColor = (newColor, newSlug) => {
       let changedObject = setImmutably(
         value,
         ["color", "text"],
-        encodeColorValue(newColor)
+        encodeColorValueWithPalette(allColors, newColor, newSlug)
       );
-      if (textColor === linkColor) {
+      if (inheritedValue?.color?.text === inheritedValue?.elements?.link?.color?.text) {
         changedObject = setImmutably(
           changedObject,
           ["elements", "link", "color", "text"],
-          encodeColorValue(newColor)
+          encodeColorValueWithPalette(allColors, newColor, newSlug)
         );
       }
       onChange(changedObject);
@@ -61377,34 +61400,31 @@ var wp;
         showPanel: useHasHeadingPanel(settings2)
       }
     ];
-    const resetAllFilter = (0, import_element222.useCallback)(
-      (previousValue) => {
-        return {
-          ...previousValue,
-          color: void 0,
-          elements: {
-            ...previousValue?.elements,
-            link: {
-              ...previousValue?.elements?.link,
-              color: void 0,
-              ":hover": {
+    const resetAllFilter = (previousValue) => {
+      return {
+        ...previousValue,
+        color: void 0,
+        elements: {
+          ...previousValue?.elements,
+          link: {
+            ...previousValue?.elements?.link,
+            color: void 0,
+            ":hover": {
+              color: void 0
+            }
+          },
+          ...elements.reduce((acc, element) => {
+            return {
+              ...acc,
+              [element.name]: {
+                ...previousValue?.elements?.[element.name],
                 color: void 0
               }
-            },
-            ...elements.reduce((acc, element) => {
-              return {
-                ...acc,
-                [element.name]: {
-                  ...previousValue?.elements?.[element.name],
-                  color: void 0
-                }
-              };
-            }, {})
-          }
-        };
-      },
-      [elements]
-    );
+            };
+          }, {})
+        }
+      };
+    };
     const items = [
       showTextPanel && {
         key: "text",
@@ -61418,6 +61438,9 @@ var wp;
             key: "text",
             label: (0, import_i18n190.__)("Text"),
             inheritedValue: textColor,
+            inheritedSlug: extractColorSlug(
+              inheritedValue?.color?.text
+            ),
             setValue: setTextColor,
             userValue: userTextColor
           }
@@ -61437,6 +61460,9 @@ var wp;
             key: "background",
             label: (0, import_i18n190.__)("Color"),
             inheritedValue: backgroundColor,
+            inheritedSlug: extractColorSlug(
+              inheritedValue?.color?.background
+            ),
             setValue: setBackgroundColor,
             userValue: userBackgroundColor
           },
@@ -61462,6 +61488,9 @@ var wp;
             key: "link",
             label: (0, import_i18n190.__)("Default"),
             inheritedValue: linkColor,
+            inheritedSlug: extractColorSlug(
+              inheritedValue?.elements?.link?.color?.text
+            ),
             setValue: setLinkColor,
             userValue: userLinkColor
           },
@@ -61469,6 +61498,9 @@ var wp;
             key: "hover",
             label: (0, import_i18n190.__)("Hover"),
             inheritedValue: hoverLinkColor,
+            inheritedSlug: extractColorSlug(
+              inheritedValue?.elements?.link?.[":hover"]?.color?.text
+            ),
             setValue: setHoverLinkColor,
             userValue: userHoverLinkColor
           }
@@ -61508,20 +61540,28 @@ var wp;
         newValue.elements[name].color.text = void 0;
         onChange(newValue);
       };
-      const setElementTextColor = (newTextColor) => {
+      const setElementTextColor = (newTextColor, newSlug) => {
         onChange(
           setImmutably(
             value,
             ["elements", name, "color", "text"],
-            encodeColorValue(newTextColor)
+            encodeColorValueWithPalette(
+              allColors,
+              newTextColor,
+              newSlug
+            )
           )
         );
       };
-      const setElementBackgroundColor = (newBackgroundColor) => {
+      const setElementBackgroundColor = (newBackgroundColor, newSlug) => {
         const newValue = setImmutably(
           value,
           ["elements", name, "color", "background"],
-          encodeColorValue(newBackgroundColor)
+          encodeColorValueWithPalette(
+            allColors,
+            newBackgroundColor,
+            newSlug
+          )
         );
         newValue.elements[name].color.gradient = void 0;
         onChange(newValue);
@@ -61554,6 +61594,9 @@ var wp;
             key: "text",
             label: (0, import_i18n190.__)("Text"),
             inheritedValue: elementTextColor,
+            inheritedSlug: extractColorSlug(
+              inheritedValue?.elements?.[name]?.color?.text
+            ),
             setValue: setElementTextColor,
             userValue: elementTextUserColor
           },
@@ -61561,6 +61604,9 @@ var wp;
             key: "background",
             label: (0, import_i18n190.__)("Background"),
             inheritedValue: elementBackgroundColor,
+            inheritedSlug: extractColorSlug(
+              inheritedValue?.elements?.[name]?.color?.background
+            ),
             setValue: setElementBackgroundColor,
             userValue: elementBackgroundUserColor
           },
@@ -63486,11 +63532,9 @@ var wp;
   }
   function styleToAttributes2(style) {
     const textColorValue = style?.color?.text;
-    const textColorSlug = textColorValue?.startsWith("var:preset|color|") ? textColorValue.substring("var:preset|color|".length) : void 0;
+    const textColorSlug = extractColorSlug(textColorValue);
     const backgroundColorValue = style?.color?.background;
-    const backgroundColorSlug = backgroundColorValue?.startsWith(
-      "var:preset|color|"
-    ) ? backgroundColorValue.substring("var:preset|color|".length) : void 0;
+    const backgroundColorSlug = extractColorSlug(backgroundColorValue);
     const gradientValue = style?.color?.gradient;
     const gradientSlug = gradientValue?.startsWith("var:preset|gradient|") ? gradientValue.substring("var:preset|gradient|".length) : void 0;
     const updatedStyle = { ...style };
