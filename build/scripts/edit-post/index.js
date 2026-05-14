@@ -3552,4 +3552,5 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if(wp.editPost&&typeof wp.editPost==='object'){wp.editPost=Object.assign({},wp.editPost);}
 //# sourceMappingURL=index.js.map

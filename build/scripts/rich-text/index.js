@@ -2912,4 +2912,5 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if(wp.richText&&typeof wp.richText==='object'){wp.richText=Object.assign({},wp.richText);}
 //# sourceMappingURL=index.js.map

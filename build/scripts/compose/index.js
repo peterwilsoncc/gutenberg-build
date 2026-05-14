@@ -2444,4 +2444,5 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if(wp.compose&&typeof wp.compose==='object'){wp.compose=Object.assign({},wp.compose);}
 //# sourceMappingURL=index.js.map

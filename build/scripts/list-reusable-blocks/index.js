@@ -366,4 +366,5 @@ var wp;
     );
   });
 })();
+if(wp.listReusableBlocks&&typeof wp.listReusableBlocks==='object'){wp.listReusableBlocks=Object.assign({},wp.listReusableBlocks);}
 //# sourceMappingURL=index.js.map

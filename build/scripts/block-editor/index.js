@@ -79833,4 +79833,5 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
+if(wp.blockEditor&&typeof wp.blockEditor==='object'){wp.blockEditor=Object.assign({},wp.blockEditor);}
 //# sourceMappingURL=index.js.map

@@ -522,5 +522,5 @@ var wp;
   var index_default = apiFetch;
   return __toCommonJS(index_exports);
 })();
-if (typeof wp.apiFetch === 'object' && wp.apiFetch.default) { wp.apiFetch = wp.apiFetch.default; }
+if (typeof wp.apiFetch === 'object' && wp.apiFetch.default) { wp.apiFetch = wp.apiFetch.default; }if(wp.apiFetch&&typeof wp.apiFetch==='object'){wp.apiFetch=Object.assign({},wp.apiFetch);}
 //# sourceMappingURL=index.js.map
