@@ -7043,6 +7043,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   padding: 6px 0;
   line-height: 20px;
   hyphens: auto;
+  word-break: break-word;
 }
 
 .editor-post-panel__row-control {
