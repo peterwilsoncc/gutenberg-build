@@ -44595,7 +44595,9 @@ This message will only show in development mode. It won't appear in production. 
           break;
         case "Space":
           if (tokenizeOnSpace) {
-            preventDefault = addCurrentToken();
+            preventDefault = addCurrentToken({
+              preventDefaultOnFailedValidation: false
+            });
           }
           break;
         case "Escape":
@@ -44649,7 +44651,35 @@ This message will only show in development mode. It won't appear in production. 
       const items = text.split(separator);
       const tokenValue = items[items.length - 1] || "";
       if (items.length > 1) {
-        addNewTokens(items.slice(0, -1));
+        const tokensToProcess = items.slice(0, -1);
+        const willFailValidation = (segment) => {
+          const transformed = saveTransform(segment);
+          return !!transformed && !valueContainsToken(transformed) && !__experimentalValidateInput(transformed);
+        };
+        const hasFailures = tokensToProcess.some(willFailValidation);
+        const addedTokens = addNewTokens(hasFailures ? items : tokensToProcess);
+        if (hasFailures) {
+          const rejected = items.filter((token2) => {
+            const transformed = saveTransform(token2);
+            if (!transformed) {
+              return false;
+            }
+            if (addedTokens.has(transformed)) {
+              return false;
+            }
+            if (valueContainsToken(transformed)) {
+              return false;
+            }
+            return !__experimentalValidateInput(transformed);
+          });
+          const usedSeparators = text.match(/[ ,\t]/g);
+          const separatorChar = usedSeparators?.[usedSeparators.length - 1] ?? (tokenizeOnSpace ? " " : ",");
+          const trailing = tokenValue === "" ? separatorChar : "";
+          const remaining = rejected.join(separatorChar) + trailing;
+          setIncompleteTokenValue(remaining);
+          onInputChange(remaining);
+          return;
+        }
       }
       setIncompleteTokenValue(tokenValue);
       onInputChange(tokenValue);
@@ -44740,30 +44770,33 @@ This message will only show in development mode. It won't appear in production. 
         moveInputToIndex(index2);
       }
     }
-    function addCurrentToken() {
+    function addCurrentToken({
+      preventDefaultOnFailedValidation = true
+    } = {}) {
       let preventDefault = false;
       const selectedSuggestion = getSelectedSuggestion();
       if (selectedSuggestion) {
         addNewToken(selectedSuggestion);
         preventDefault = true;
       } else if (inputHasValidValue()) {
-        addNewToken(incompleteTokenValue);
-        preventDefault = true;
+        const passedValidation = addNewToken(incompleteTokenValue);
+        preventDefault = passedValidation || preventDefaultOnFailedValidation;
       }
       return preventDefault;
     }
     function addNewTokens(tokens) {
-      const tokensToAdd = [...new Set(tokens.map(saveTransform).filter(Boolean).filter((token2) => !valueContainsToken(token2)))];
+      const tokensToAdd = [...new Set(tokens.map(saveTransform).filter(Boolean).filter((token2) => !valueContainsToken(token2)).filter((token2) => __experimentalValidateInput(token2)))];
       if (tokensToAdd.length > 0) {
         const newValue = [...value];
         newValue.splice(getIndexOfInput(), 0, ...tokensToAdd);
         onChange(newValue);
       }
+      return new Set(tokensToAdd);
     }
     function addNewToken(token2) {
       if (!__experimentalValidateInput(token2)) {
         (0, import_a11y6.speak)(messages.__experimentalInvalid, "assertive");
-        return;
+        return false;
       }
       addNewTokens([token2]);
       (0, import_a11y6.speak)(messages.added, "assertive");
@@ -44774,6 +44807,7 @@ This message will only show in development mode. It won't appear in production. 
       if (isActive && !tokenizeOnBlur) {
         focus4();
       }
+      return true;
     }
     function deleteToken(token2) {
       const newTokens = value.filter((item2) => {
