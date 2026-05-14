@@ -1753,47 +1753,53 @@ var wp;
   // packages/compose/build-module/hooks/use-media-query/index.mjs
   var import_element18 = __toESM(require_element(), 1);
   var perWindowCache = /* @__PURE__ */ new WeakMap();
-  function getMediaQueryList(view, query) {
-    if (!query) {
-      return null;
+  var EMPTY_SUBSCRIBER = {
+    subscribe: () => () => {
+    },
+    getValue: () => false
+  };
+  function getMQLSubscriber(view, query) {
+    if (!query || typeof view?.matchMedia !== "function") {
+      return EMPTY_SUBSCRIBER;
     }
-    const matchMediaCache = perWindowCache.get(view) ?? /* @__PURE__ */ new Map();
-    if (!perWindowCache.has(view)) {
-      perWindowCache.set(view, matchMediaCache);
+    let queryCache = perWindowCache.get(view);
+    if (!queryCache) {
+      queryCache = /* @__PURE__ */ new Map();
+      perWindowCache.set(view, queryCache);
     }
-    let match = matchMediaCache.get(query);
-    if (match) {
-      return match;
+    const cached = queryCache.get(query);
+    if (cached) {
+      return cached;
     }
-    if (typeof view?.matchMedia === "function") {
-      match = view.matchMedia(query);
-      matchMediaCache.set(query, match);
-      return match;
-    }
-    return null;
+    const mediaQueryList = view.matchMedia(query);
+    const listeners = /* @__PURE__ */ new Set();
+    const notify = () => {
+      for (const listener2 of listeners) {
+        listener2();
+      }
+    };
+    const subscriber = {
+      subscribe(onStoreChange) {
+        if (listeners.size === 0) {
+          mediaQueryList.addEventListener?.("change", notify);
+        }
+        listeners.add(onStoreChange);
+        return () => {
+          listeners.delete(onStoreChange);
+          if (listeners.size === 0) {
+            mediaQueryList.removeEventListener?.("change", notify);
+          }
+        };
+      },
+      getValue() {
+        return mediaQueryList.matches;
+      }
+    };
+    queryCache.set(query, subscriber);
+    return subscriber;
   }
   function useMediaQuery(query, view = window) {
-    const source = (0, import_element18.useMemo)(() => {
-      const mediaQueryList = getMediaQueryList(view, query);
-      return {
-        subscribe(onStoreChange) {
-          if (!mediaQueryList) {
-            return () => {
-            };
-          }
-          mediaQueryList.addEventListener?.("change", onStoreChange);
-          return () => {
-            mediaQueryList.removeEventListener?.(
-              "change",
-              onStoreChange
-            );
-          };
-        },
-        getValue() {
-          return mediaQueryList?.matches ?? false;
-        }
-      };
-    }, [view, query]);
+    const source = getMQLSubscriber(view, query);
     return (0, import_element18.useSyncExternalStore)(
       source.subscribe,
       source.getValue,
