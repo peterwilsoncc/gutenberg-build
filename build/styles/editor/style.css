@@ -5770,6 +5770,7 @@ div.dataviews-view-list {
   padding: 6px 0;
   line-height: 20px;
   hyphens: auto;
+  word-break: break-word;
 }
 
 .editor-post-panel__row-control {
