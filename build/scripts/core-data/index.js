@@ -417,8 +417,6 @@ var wp;
   var index_exports = {};
   __export(index_exports, {
     EntityProvider: () => EntityProvider,
-    SelectionDirection: () => SelectionDirection,
-    SelectionType: () => SelectionType,
     __experimentalFetchLinkSuggestions: () => fetchLinkSuggestions,
     __experimentalFetchUrlData: () => experimental_fetch_url_data_default,
     __experimentalUseEntityRecord: () => useDeprecatedEntityRecord,
@@ -1471,6 +1469,11 @@ var wp;
     SelectionType2["WholeBlock"] = "whole-block";
     return SelectionType2;
   })(SelectionType || {});
+  var SelectionDirection = /* @__PURE__ */ ((SelectionDirection2) => {
+    SelectionDirection2["Forward"] = "f";
+    SelectionDirection2["Backward"] = "b";
+    return SelectionDirection2;
+  })(SelectionDirection || {});
   function getSelectionState(selectionStart, selectionEnd, yDoc, options) {
     const { selectionDirection } = options ?? {};
     const ymap = getRootMap(yDoc, CRDT_RECORD_MAP_KEY);
@@ -1658,13 +1661,6 @@ var wp;
     const isAbsoluteOffsetEqual = cursorPosition1.absoluteOffset === cursorPosition2.absoluteOffset;
     return isRelativePositionEqual && isAbsoluteOffsetEqual;
   }
-
-  // packages/core-data/build-module/types.mjs
-  var SelectionDirection = /* @__PURE__ */ ((SelectionDirection2) => {
-    SelectionDirection2["Forward"] = "f";
-    SelectionDirection2["Backward"] = "b";
-    return SelectionDirection2;
-  })(SelectionDirection || {});
 
   // packages/core-data/build-module/awareness/post-editor-awareness.mjs
   var PostEditorAwareness = class extends BaseAwarenessState {
@@ -4074,7 +4070,6 @@ var wp;
     getReferenceByDistinctEdits: () => getReferenceByDistinctEdits,
     getRevision: () => getRevision,
     getRevisions: () => getRevisions,
-    getSyncConnectionStatus: () => getSyncConnectionStatus,
     getThemeSupports: () => getThemeSupports,
     getUndoEdit: () => getUndoEdit,
     getUserPatternCategories: () => getUserPatternCategories,
@@ -4108,6 +4103,7 @@ var wp;
     getNavigationFallbackId: () => getNavigationFallbackId,
     getPostsPageId: () => getPostsPageId,
     getRegisteredPostMeta: () => getRegisteredPostMeta,
+    getSyncConnectionStatus: () => getSyncConnectionStatus,
     getTemplateId: () => getTemplateId,
     getUndoManager: () => getUndoManager,
     getViewConfig: () => getViewConfig,
@@ -4316,6 +4312,19 @@ var wp;
       view_list: void 0,
       form: void 0
     };
+  }
+  function getSyncConnectionStatus(state) {
+    if (!state.syncConnectionStatuses) {
+      return void 0;
+    }
+    const PRIORITIZED_STATUSES = ["disconnected", "connecting", "connected"];
+    let coalesced;
+    for (const status of Object.values(state.syncConnectionStatuses)) {
+      if (!coalesced || PRIORITIZED_STATUSES.indexOf(status.status) < PRIORITIZED_STATUSES.indexOf(coalesced.status)) {
+        coalesced = status;
+      }
+    }
+    return coalesced;
   }
 
   // packages/core-data/build-module/selectors.mjs
@@ -4870,19 +4879,6 @@ var wp;
       ];
     }
   );
-  function getSyncConnectionStatus(state) {
-    if (!state.syncConnectionStatuses) {
-      return void 0;
-    }
-    const PRIORITIZED_STATUSES = ["disconnected", "connecting", "connected"];
-    let coalesced;
-    for (const status of Object.values(state.syncConnectionStatuses)) {
-      if (!coalesced || PRIORITIZED_STATUSES.indexOf(status.status) < PRIORITIZED_STATUSES.indexOf(coalesced.status)) {
-        coalesced = status;
-      }
-    }
-    return coalesced;
-  }
 
   // packages/core-data/build-module/actions.mjs
   var actions_exports = {};
@@ -4914,7 +4910,6 @@ var wp;
     redo: () => redo,
     saveEditedEntityRecord: () => saveEditedEntityRecord,
     saveEntityRecord: () => saveEntityRecord,
-    setSyncConnectionStatus: () => setSyncConnectionStatus,
     undo: () => undo
   });
   var import_es65 = __toESM(require_es6(), 1);
@@ -5705,23 +5700,6 @@ var wp;
       invalidateCache
     });
   };
-  function setSyncConnectionStatus(kind, name, key, status) {
-    if (!status) {
-      return {
-        type: "CLEAR_SYNC_CONNECTION_STATUS",
-        kind,
-        name,
-        key
-      };
-    }
-    return {
-      type: "SET_SYNC_CONNECTION_STATUS",
-      kind,
-      name,
-      key,
-      status
-    };
-  }
 
   // packages/core-data/build-module/private-actions.mjs
   var private_actions_exports = {};
@@ -5731,7 +5709,8 @@ var wp;
     receiveEditorSettings: () => receiveEditorSettings,
     receiveRegisteredPostMeta: () => receiveRegisteredPostMeta,
     receiveViewConfig: () => receiveViewConfig,
-    setCollaborationSupported: () => setCollaborationSupported
+    setCollaborationSupported: () => setCollaborationSupported,
+    setSyncConnectionStatus: () => setSyncConnectionStatus
   });
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   function receiveRegisteredPostMeta(postType, registeredPostMeta2) {
@@ -5830,6 +5809,23 @@ var wp;
       kind,
       name,
       config
+    };
+  }
+  function setSyncConnectionStatus(kind, name, key, status) {
+    if (!status) {
+      return {
+        type: "CLEAR_SYNC_CONNECTION_STATUS",
+        kind,
+        name,
+        key
+      };
+    }
+    return {
+      type: "SET_SYNC_CONNECTION_STATUS",
+      kind,
+      name,
+      key,
+      status
     };
   }
 
@@ -7993,8 +7989,7 @@ var wp;
   }
 
   // packages/core-data/build-module/private-apis.mjs
-  var privateApis = {};
-  lock(privateApis, {
+  var lockedApis = {
     useEntityRecordsWithPermissions,
     RECEIVE_INTERMEDIATE_RESULTS,
     retrySyncConnection,
@@ -8002,8 +7997,12 @@ var wp;
     useResolvedSelection,
     useOnCollaboratorJoin,
     useOnCollaboratorLeave,
-    useOnPostSave
-  });
+    useOnPostSave,
+    SelectionType,
+    SelectionDirection
+  };
+  var privateApis = {};
+  lock(privateApis, lockedApis);
 
   // packages/core-data/build-module/index.mjs
   var entitiesConfig2 = [

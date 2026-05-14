@@ -3200,7 +3200,6 @@ var wp;
     isBlockWithinSelection: () => isBlockWithinSelection,
     isCaretWithinFormattedText: () => isCaretWithinFormattedText,
     isCleanNewPost: () => isCleanNewPost,
-    isCollaborationEnabledForCurrentPost: () => isCollaborationEnabledForCurrentPost,
     isCurrentPostPending: () => isCurrentPostPending,
     isCurrentPostPublished: () => isCurrentPostPublished,
     isCurrentPostScheduled: () => isCurrentPostScheduled,
@@ -4508,21 +4507,6 @@ var wp;
   function isPublishSidebarOpened(state) {
     return state.publishSidebarActive;
   }
-  var isCollaborationEnabledForCurrentPost = (0, import_data3.createRegistrySelector)(
-    (select7) => (state) => {
-      if (!unlock(select7(import_core_data.store)).isCollaborationSupported()) {
-        return false;
-      }
-      const currentPostType = getCurrentPostType(state);
-      const entityConfig = select7(import_core_data.store).getEntityConfig(
-        "postType",
-        currentPostType
-      );
-      return Boolean(
-        entityConfig?.syncConfig && window._wpCollaborationEnabled
-      );
-    }
-  );
 
   // packages/editor/build-module/store/actions.mjs
   var actions_exports = {};
@@ -5377,6 +5361,7 @@ var wp;
     getShowStylebook: () => getShowStylebook,
     getStylesPath: () => getStylesPath,
     hasPostMetaChanges: () => hasPostMetaChanges,
+    isCollaborationEnabledForCurrentPost: () => isCollaborationEnabledForCurrentPost,
     isEntityReady: () => isEntityReady2,
     isNoteFocused: () => isNoteFocused,
     isRevisionsMode: () => isRevisionsMode,
@@ -5859,6 +5844,21 @@ var wp;
         return nextPageRevisions?.[0] ?? null;
       }
       return null;
+    }
+  );
+  var isCollaborationEnabledForCurrentPost = (0, import_data5.createRegistrySelector)(
+    (select7) => (state) => {
+      if (!unlock(select7(import_core_data4.store)).isCollaborationSupported()) {
+        return false;
+      }
+      const currentPostType = getCurrentPostType(state);
+      const entityConfig = select7(import_core_data4.store).getEntityConfig(
+        "postType",
+        currentPostType
+      );
+      return Boolean(
+        entityConfig?.syncConfig && window._wpCollaborationEnabled
+      );
     }
   );
 
@@ -71457,10 +71457,13 @@ If there's a particular need for this, please submit a feature request at https:
   function CollaborationContext() {
     const { isCollaborationSupported, syncConnectionStatus } = (0, import_data139.useSelect)(
       (select7) => {
-        const selectors = unlock(select7(import_core_data87.store));
+        const {
+          isCollaborationSupported: isSupported,
+          getSyncConnectionStatus
+        } = unlock(select7(import_core_data87.store));
         return {
-          isCollaborationSupported: selectors.isCollaborationSupported(),
-          syncConnectionStatus: selectors.getSyncConnectionStatus()
+          isCollaborationSupported: isSupported(),
+          syncConnectionStatus: getSyncConnectionStatus()
         };
       },
       []
@@ -71493,7 +71496,6 @@ If there's a particular need for this, please submit a feature request at https:
       previewLink
     } = (0, import_data139.useSelect)((select7) => {
       const {
-        isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2,
         isPostLocked: isPostLocked2,
         isPostLockTakeover: isPostLockTakeover2,
         getPostLockUser: getPostLockUser2,
@@ -71501,8 +71503,9 @@ If there's a particular need for this, please submit a feature request at https:
         getActivePostLock: getActivePostLock2,
         getEditedPostAttribute: getEditedPostAttribute2,
         getEditedPostPreviewLink: getEditedPostPreviewLink2,
-        getEditorSettings: getEditorSettings2
-      } = select7(store);
+        getEditorSettings: getEditorSettings2,
+        isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2
+      } = unlock(select7(store));
       const { getPostType } = select7(import_core_data87.store);
       return {
         isCollaborationEnabled: isCollaborationEnabledForCurrentPost2(),
@@ -77864,6 +77867,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
   var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data111.privateApis);
+  var { SelectionType } = unlock(import_core_data111.privateApis);
   function useBlockHighlighting(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
     const highlightedBlockIds = (0, import_element263.useRef)(/* @__PURE__ */ new Set());
     const userStates = useActiveCollaborators(
@@ -77886,7 +77890,7 @@ If there's a particular need for this, please submit a feature request at https:
       const currentHighlightedIds = highlightedBlockIds.current;
       const seen = /* @__PURE__ */ new Set();
       const blocksToHighlight = userStates.filter((userState) => {
-        const isWholeBlockSelected = userState.editorState?.selection?.type === import_core_data111.SelectionType.WholeBlock;
+        const isWholeBlockSelected = userState.editorState?.selection?.type === SelectionType.WholeBlock;
         return !userState.isMe && isWholeBlockSelected;
       }).map((userState) => {
         let localClientId;
@@ -78204,6 +78208,9 @@ If there's a particular need for this, please submit a feature request at https:
   var isNodeBefore = (a3, b3) => a3.compareDocumentPosition(b3) === Node.DOCUMENT_POSITION_FOLLOWING;
 
   // packages/editor/build-module/components/collaborators-overlay/compute-selection.mjs
+  var { SelectionDirection, SelectionType: SelectionType2 } = unlock(
+    import_core_data112.privateApis
+  );
   function resolveTargetElement(editorDocument, resolvedSelection) {
     if (!resolvedSelection.localClientId) {
       return null;
@@ -78220,10 +78227,10 @@ If there's a particular need for this, please submit a feature request at https:
     ) ?? blockElement;
   }
   function computeSelectionVisual(selection, start2, end, overlayContext) {
-    if (selection.type === import_core_data112.SelectionType.None || selection.type === import_core_data112.SelectionType.WholeBlock) {
+    if (selection.type === SelectionType2.None || selection.type === SelectionType2.WholeBlock) {
       return {};
     }
-    if (selection.type === import_core_data112.SelectionType.Cursor) {
+    if (selection.type === SelectionType2.Cursor) {
       return computeCursorOnly(start2, overlayContext);
     }
     if (!end) {
@@ -78252,11 +78259,11 @@ If there's a particular need for this, please submit a feature request at https:
     if (!start2.localClientId || !end.localClientId || start2.richTextOffset === null || end.richTextOffset === null) {
       return {};
     }
-    const isReverse = selection.selectionDirection === import_core_data112.SelectionDirection.Backward;
+    const isReverse = selection.selectionDirection === SelectionDirection.Backward;
     const activeEnd = isReverse ? start2 : end;
     let allRects;
     let activeEndBlock = null;
-    if (selection.type === import_core_data112.SelectionType.SelectionInOneBlock) {
+    if (selection.type === SelectionType2.SelectionInOneBlock) {
       const result = computeSingleBlockRects(start2, end, overlayContext);
       allRects = result.rects;
       activeEndBlock = result.blockElement;
@@ -78376,6 +78383,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
   var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data113.privateApis);
+  var { SelectionType: SelectionType3 } = unlock(import_core_data113.privateApis);
   function useRenderCursors(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
     const sortedUsers = useActiveCollaborators2(
       postId2 ?? null,
@@ -78412,7 +78420,7 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         const selection = user.editorState?.selection ?? {
-          type: import_core_data113.SelectionType.None
+          type: SelectionType3.None
         };
         let start2 = {
           richTextOffset: null,
@@ -78420,20 +78428,20 @@ If there's a particular need for this, please submit a feature request at https:
           attributeKey: null
         };
         let end;
-        if (selection.type === import_core_data113.SelectionType.Cursor) {
+        if (selection.type === SelectionType3.Cursor) {
           try {
             start2 = resolveSelection(selection);
           } catch {
             return;
           }
-        } else if (selection.type === import_core_data113.SelectionType.SelectionInOneBlock || selection.type === import_core_data113.SelectionType.SelectionInMultipleBlocks) {
+        } else if (selection.type === SelectionType3.SelectionInOneBlock || selection.type === SelectionType3.SelectionInMultipleBlocks) {
           try {
             start2 = resolveSelection({
-              type: import_core_data113.SelectionType.Cursor,
+              type: SelectionType3.Cursor,
               cursorPosition: selection.cursorStartPosition
             });
             end = resolveSelection({
-              type: import_core_data113.SelectionType.Cursor,
+              type: SelectionType3.Cursor,
               cursorPosition: selection.cursorEndPosition
             });
           } catch {
@@ -79681,13 +79689,15 @@ If there's a particular need for this, please submit a feature request at https:
     const [isManualRetryAvailable, setIsManualRetryAvailable] = (0, import_element273.useState)(false);
     const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data212.useSelect)(
       (selectFn) => {
-        const currentPostType = selectFn(store).getCurrentPostType();
+        const { getSyncConnectionStatus, getPostType } = unlock(
+          selectFn(import_core_data117.store)
+        );
+        const { getCurrentPostType: getCurrentPostType2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(selectFn(store));
+        const currentPostType = getCurrentPostType2();
         return {
-          connectionStatus: selectFn(import_core_data117.store).getSyncConnectionStatus() || null,
-          isCollaborationEnabled: selectFn(
-            store
-          ).isCollaborationEnabledForCurrentPost(),
-          postType: currentPostType ? selectFn(import_core_data117.store).getPostType(currentPostType) : null
+          connectionStatus: getSyncConnectionStatus() || null,
+          isCollaborationEnabled: isCollaborationEnabledForCurrentPost2(),
+          postType: currentPostType ? getPostType(currentPostType) : null
         };
       },
       []
@@ -80483,10 +80493,13 @@ If there's a particular need for this, please submit a feature request at https:
   function useCollaboratorNotifications(postId2, postType2) {
     const { postStatus, isCollaborationEnabled, showNotifications } = (0, import_data216.useSelect)(
       (select7) => {
-        const editorSel = select7(store);
+        const {
+          getCurrentPostAttribute: getCurrentPostAttribute2,
+          isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2
+        } = unlock(select7(store));
         return {
-          postStatus: editorSel.getCurrentPostAttribute("status"),
-          isCollaborationEnabled: editorSel.isCollaborationEnabledForCurrentPost(),
+          postStatus: getCurrentPostAttribute2("status"),
+          isCollaborationEnabled: isCollaborationEnabledForCurrentPost2(),
           showNotifications: select7(import_preferences23.store).get(
             "core",
             "showCollaborationNotifications"
@@ -85684,7 +85697,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isLargeViewport = (0, import_compose81.useViewportMatch)("medium");
     const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data268.useSelect)(
       (select7) => {
-        const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = select7(store);
+        const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select7(store));
         const { get } = select7(import_preferences36.store);
         const isRichEditingEnabled = getEditorSettings2().richEditingEnabled;
         const isDistractionFreeEnabled = get("core", "distractionFree");
