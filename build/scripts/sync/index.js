@@ -9288,6 +9288,8 @@ var wp;
   var MAX_ENCODED_UPDATE_SIZE_IN_BYTES = 1 * 1024 * 1024;
   var MAX_UPDATE_SIZE_IN_BYTES = Math.floor(MAX_ENCODED_UPDATE_SIZE_IN_BYTES / 4) * 3;
   var MAX_ROOMS_PER_REQUEST = 50;
+  var MAX_SYNC_REQUEST_BODY_SIZE_IN_BYTES = 15 * 1024 * 1024;
+  var MIN_SYNC_REQUEST_BODY_SIZE_LIMIT_IN_BYTES = 2 * 1024 * 1024;
   var POLLING_INTERVAL_IN_MS = (0, import_hooks.applyFilters)(
     "sync.pollingManager.pollingInterval",
     4e3
@@ -9360,6 +9362,12 @@ var wp;
       pause() {
         isPaused = true;
       },
+      peek() {
+        if (isPaused) {
+          return [];
+        }
+        return [...updates];
+      },
       restore(restoredUpdates) {
         const filtered = restoredUpdates.filter(
           (u) => u.type !== SyncUpdateType.COMPACTION
@@ -9369,11 +9377,23 @@ var wp;
         }
         updates.unshift(...filtered);
       },
+      restoreExact(restoredUpdates) {
+        if (0 === restoredUpdates.length) {
+          return;
+        }
+        updates.unshift(...restoredUpdates);
+      },
       resume() {
         isPaused = false;
       },
       size() {
         return updates.length;
+      },
+      take(count) {
+        if (isPaused || count <= 0) {
+          return [];
+        }
+        return updates.splice(0, count);
       }
     };
   }
@@ -9416,6 +9436,9 @@ var wp;
   var POLLING_MANAGER_ORIGIN = "polling-manager";
   function isForbiddenError(error) {
     return error?.data?.status === 403;
+  }
+  function isRequestBodyTooLargeError(error) {
+    return error?.data?.status === 413 && error?.code === "rest_sync_body_too_large";
   }
   function identifyForbiddenRoom(error, rooms) {
     const message = typeof error.message === "string" ? error.message : "";
@@ -9611,6 +9634,7 @@ var wp;
   var isUnloadPending = false;
   var pollInterval = POLLING_INTERVAL_IN_MS;
   var pollingTimeoutId = null;
+  var syncRequestBodySizeLimit = MAX_SYNC_REQUEST_BODY_SIZE_IN_BYTES;
   var roomOverflowOffset = 0;
   function handleBeforeUnload() {
     isUnloadPending = true;
@@ -9661,6 +9685,75 @@ var wp;
     }
     return overflowSlice;
   }
+  var textEncoder = new TextEncoder();
+  function getJsonByteLength(value) {
+    return textEncoder.encode(JSON.stringify(value)).byteLength;
+  }
+  function createPayloadRoom(state, updates = []) {
+    return {
+      after: state.endCursor ?? 0,
+      awareness: state.localAwarenessState,
+      client_id: state.clientId,
+      room: state.room,
+      updates
+    };
+  }
+  function getUpdatePayloadSizeDelta(existingUpdateCount, update) {
+    const commaSize = existingUpdateCount === 0 ? 0 : 1;
+    return commaSize + getJsonByteLength(update);
+  }
+  function buildPayloadForRequest(selectedRoomStates) {
+    const payload = { rooms: [] };
+    const roomsInRequest = [];
+    for (const state of selectedRoomStates) {
+      const room = createPayloadRoom(state);
+      const candidate = { rooms: [...payload.rooms, room] };
+      if (payload.rooms.length > 0 && getJsonByteLength(candidate) > syncRequestBodySizeLimit) {
+        break;
+      }
+      payload.rooms.push(room);
+      roomsInRequest.push(state);
+    }
+    const pendingUpdates = roomsInRequest.map(
+      (state) => state.updateQueue.peek()
+    );
+    const sentUpdateCounts = roomsInRequest.map(() => 0);
+    let payloadSize = getJsonByteLength(payload);
+    let addedUpdate = true;
+    while (addedUpdate) {
+      addedUpdate = false;
+      for (let i = 0; i < roomsInRequest.length; i++) {
+        const update = pendingUpdates[i][sentUpdateCounts[i]];
+        if (!update) {
+          continue;
+        }
+        const sizeDelta = getUpdatePayloadSizeDelta(
+          sentUpdateCounts[i],
+          update
+        );
+        if (payloadSize + sizeDelta > syncRequestBodySizeLimit) {
+          continue;
+        }
+        sentUpdateCounts[i]++;
+        payloadSize += sizeDelta;
+        addedUpdate = true;
+      }
+    }
+    for (let i = 0; i < roomsInRequest.length; i++) {
+      payload.rooms[i].updates = roomsInRequest[i].updateQueue.take(
+        sentUpdateCounts[i]
+      );
+    }
+    return { payload, roomsInRequest };
+  }
+  function restoreExactUpdates(payload) {
+    for (const room of payload.rooms) {
+      if (!roomStates.has(room.room) || room.updates.length === 0) {
+        continue;
+      }
+      roomStates.get(room.room).updateQueue.restoreExact(room.updates);
+    }
+  }
   function poll() {
     isPolling = true;
     pollingTimeoutId = null;
@@ -9670,16 +9763,9 @@ var wp;
         return;
       }
       isUnloadPending = false;
-      const roomsInRequest = selectRoomsForRequest();
-      const payload = {
-        rooms: roomsInRequest.map((state) => ({
-          after: state.endCursor ?? 0,
-          awareness: state.localAwarenessState,
-          client_id: state.clientId,
-          room: state.room,
-          updates: state.updateQueue.get()
-        }))
-      };
+      const { payload, roomsInRequest } = buildPayloadForRequest(
+        selectRoomsForRequest()
+      );
       roomsInRequest.forEach((state) => {
         state.onStatusChange({ status: "connecting" });
       });
@@ -9687,6 +9773,7 @@ var wp;
         const { rooms } = await postSyncUpdate(payload);
         consecutiveFailures = 0;
         isManualRetry = false;
+        syncRequestBodySizeLimit = MAX_SYNC_REQUEST_BODY_SIZE_IN_BYTES;
         roomsInRequest.forEach((state) => {
           if (roomStates.get(state.room) !== state) {
             return;
@@ -9764,6 +9851,29 @@ var wp;
           if (roomStates.size === 0) {
             isPolling = false;
             return;
+          }
+        } else if (isRequestBodyTooLargeError(error)) {
+          syncRequestBodySizeLimit = Math.max(
+            MIN_SYNC_REQUEST_BODY_SIZE_LIMIT_IN_BYTES,
+            Math.floor(syncRequestBodySizeLimit / 2)
+          );
+          pollInterval = hasCollaborators ? ERROR_RETRY_DELAYS_WITH_COLLABORATORS_MS[0] : ERROR_RETRY_DELAYS_SOLO_MS[0];
+          restoreExactUpdates(payload);
+          for (const room of payload.rooms) {
+            if (!roomStates.has(room.room)) {
+              continue;
+            }
+            roomStates.get(room.room).log(
+              "Sync request body too large, retrying with smaller batches",
+              {
+                error,
+                nextPoll: pollInterval,
+                syncRequestBodySizeLimit
+              },
+              "error",
+              true
+              // force
+            );
           }
         } else {
           consecutiveFailures++;
@@ -9922,6 +10032,7 @@ var wp;
       hasCheckedConnectionLimit = false;
       consecutiveFailures = 0;
       roomOverflowOffset = 0;
+      syncRequestBodySizeLimit = MAX_SYNC_REQUEST_BODY_SIZE_IN_BYTES;
     }
   }
   function retryNow() {
