@@ -47948,7 +47948,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n147 = __toESM(require_i18n(), 1);
   var import_block_editor21 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
-  var { StateControl } = unlock5(import_block_editor21.privateApis);
+  var { StateControl, StateControlBadges } = unlock5(import_block_editor21.privateApis);
   function ScreenHeader({
     title,
     description,
@@ -47981,17 +47981,28 @@ If there's a particular need for this, please submit a feature request at https:
               children: title
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
-            StateControl,
-            {
-              viewportStates,
-              pseudoStates,
-              viewportValue: selectedViewport,
-              pseudoStateValue: selectedPseudoState,
-              onChangeViewport,
-              onChangePseudoState
-            }
-          )
+          /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)(import_components106.__experimentalVStack, { spacing: 2, alignment: "right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+              StateControl,
+              {
+                viewportStates,
+                pseudoStates,
+                viewportValue: selectedViewport,
+                pseudoStateValue: selectedPseudoState,
+                onChangeViewport,
+                onChangePseudoState
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+              StateControlBadges,
+              {
+                viewportStates,
+                pseudoStates,
+                viewportValue: selectedViewport,
+                pseudoStateValue: selectedPseudoState
+              }
+            )
+          ] })
         ] }) })
       ] }),
       description && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(import_components106.__experimentalText, { className: "global-styles-ui-header__description", children: description })

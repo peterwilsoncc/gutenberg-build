@@ -13330,7 +13330,7 @@ var wp;
   var import_i18n17 = __toESM(require_i18n(), 1);
   var import_block_editor5 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
-  var { StateControl } = unlock2(import_block_editor5.privateApis);
+  var { StateControl, StateControlBadges } = unlock2(import_block_editor5.privateApis);
 
   // packages/global-styles-ui/build-module/screen-block-list.mjs
   var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
