@@ -3305,6 +3305,13 @@ return array(
 			'label' => array(
 				'type' => 'string',
 				'role' => 'content'
+			),
+			'opensInNewTab' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'description' => array(
+				'type' => 'string'
 			)
 		),
 		'usesContext' => array(
