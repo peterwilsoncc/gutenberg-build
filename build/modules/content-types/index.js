@@ -36769,7 +36769,7 @@ function PostTypePage({
 var import_components63 = __toESM(require_components(), 1);
 var import_core_data16 = __toESM(require_core_data(), 1);
 var import_element141 = __toESM(require_element(), 1);
-var import_i18n80 = __toESM(require_i18n(), 1);
+var import_i18n81 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate6, useSearch as useSearch2 } from "@wordpress/route";
 
 // packages/content-types/build-module/taxonomies/actions/activate.mjs
@@ -37034,7 +37034,10 @@ var BLANK_RECORD2 = {
     show_tagcloud: true,
     show_in_quick_edit: true,
     show_admin_column: false,
-    show_in_rest: true
+    show_in_rest: true,
+    sort: false,
+    default_term_enabled: false,
+    default_term: { name: "" }
   }
 };
 var STRING_LABEL_KEYS2 = [
@@ -37143,6 +37146,7 @@ function toFormData2(row) {
     config.labels,
     STRING_LABEL_KEYS2
   );
+  const defaultTermName = config.default_term?.name ?? "";
   const formConfig = {
     labels: { singular_name: "", ...labels },
     object_type: Array.isArray(row.object_type) ? row.object_type : [],
@@ -37156,7 +37160,10 @@ function toFormData2(row) {
     show_tagcloud: config.show_tagcloud,
     show_in_quick_edit: config.show_in_quick_edit,
     show_admin_column: config.show_admin_column,
-    show_in_rest: config.show_in_rest
+    show_in_rest: config.show_in_rest,
+    sort: !!config.sort,
+    default_term_enabled: defaultTermName !== "",
+    default_term: { name: defaultTermName }
   };
   return {
     id: row.id,
@@ -37174,6 +37181,8 @@ function serializeForSave2(data) {
     STRING_LABEL_KEYS2
   );
   const description = config.description.trim();
+  const defaultTermName = config.default_term.name.trim();
+  const includeDefaultTerm = config.default_term_enabled && defaultTermName !== "";
   return {
     ...data.id !== void 0 ? { id: data.id } : {},
     slug: data.slug,
@@ -37192,7 +37201,9 @@ function serializeForSave2(data) {
       show_in_quick_edit: config.show_in_quick_edit,
       show_admin_column: config.show_admin_column,
       show_in_rest: config.show_in_rest,
-      ...description !== "" ? { description } : {}
+      sort: config.sort,
+      ...description !== "" ? { description } : {},
+      ...includeDefaultTerm ? { default_term: { name: defaultTermName } } : {}
     }
   };
 }
@@ -37538,70 +37549,123 @@ var viewTermsAction = {
 };
 var view_terms_default = viewTermsAction;
 
-// packages/content-types/build-module/taxonomies/fields/labels.mjs
+// packages/content-types/build-module/taxonomies/fields/advanced.mjs
 var import_i18n76 = __toESM(require_i18n(), 1);
-var menuNameField2 = createLabelField("menu_name", (0, import_i18n76.__)("Menu name"), {
-  placeholder: (0, import_i18n76.__)("Categories"),
-  description: (0, import_i18n76.__)("Defaults to the plural label.")
+var sortField = createBooleanField("sort", (0, import_i18n76.__)("Sort terms"), {
+  description: (0, import_i18n76.__)(
+    "Whether terms in this taxonomy should be saved in the order they are assigned to an item."
+  )
 });
-var allItemsField2 = createLabelField("all_items", (0, import_i18n76.__)("All items"), {
-  placeholder: (0, import_i18n76.__)("All Categories")
+var defaultTermEnabledField = createBooleanField(
+  "default_term_enabled",
+  (0, import_i18n76.__)("Set a default term"),
+  {
+    description: (0, import_i18n76.__)(
+      'Default term to be used for the taxonomy, similar to how "Uncategorized" works for categories.'
+    )
+  }
+);
+var defaultTermNameField = {
+  id: "default_term_name",
+  label: (0, import_i18n76.__)("Default term name"),
+  type: "text",
+  description: (0, import_i18n76.__)(
+    "Once saved, updating the name creates a new term \u2014 the previous default term remains in the terms list. To change the term's slug or description, edit it from the terms list."
+  ),
+  getValue: ({ item }) => item.config.default_term.name,
+  setValue: ({ item, value }) => ({
+    config: {
+      ...item.config,
+      default_term: { name: String(value ?? "") }
+    }
+  }),
+  isValid: {
+    // `useFormValidity` does not skip invisible fields, so `required:
+    // true` would mark the form invalid whenever the toggle is off.
+    // Gate the requirement on the toggle via `custom` instead.
+    custom: (item) => {
+      if (!item.config.default_term_enabled) {
+        return null;
+      }
+      return item.config.default_term.name.trim() ? null : (0, import_i18n76.__)("A default term name is required.");
+    },
+    // Mirrors `wp_terms.name` column width (varchar(200)).
+    maxLength: 200
+  },
+  isVisible: (item) => item.config.default_term_enabled,
+  enableSorting: false,
+  filterBy: false
+};
+var advancedFormFields = [
+  "sort",
+  "default_term_enabled",
+  "default_term_name"
+];
+
+// packages/content-types/build-module/taxonomies/fields/labels.mjs
+var import_i18n77 = __toESM(require_i18n(), 1);
+var menuNameField2 = createLabelField("menu_name", (0, import_i18n77.__)("Menu name"), {
+  placeholder: (0, import_i18n77.__)("Categories"),
+  description: (0, import_i18n77.__)("Defaults to the plural label.")
 });
-var editItemField2 = createLabelField("edit_item", (0, import_i18n76.__)("Edit item"), {
-  placeholder: (0, import_i18n76.__)("Edit Category")
+var allItemsField2 = createLabelField("all_items", (0, import_i18n77.__)("All items"), {
+  placeholder: (0, import_i18n77.__)("All Categories")
 });
-var viewItemField2 = createLabelField("view_item", (0, import_i18n76.__)("View item"), {
-  placeholder: (0, import_i18n76.__)("View Category")
+var editItemField2 = createLabelField("edit_item", (0, import_i18n77.__)("Edit item"), {
+  placeholder: (0, import_i18n77.__)("Edit Category")
+});
+var viewItemField2 = createLabelField("view_item", (0, import_i18n77.__)("View item"), {
+  placeholder: (0, import_i18n77.__)("View Category")
 });
 var updateItemField = createLabelField(
   "update_item",
-  (0, import_i18n76.__)("Update item"),
-  { placeholder: (0, import_i18n76.__)("Update Category") }
+  (0, import_i18n77.__)("Update item"),
+  { placeholder: (0, import_i18n77.__)("Update Category") }
 );
 var addNewItemLabelField2 = createLabelField(
   "add_new_item",
-  (0, import_i18n76.__)("Add new item"),
-  { placeholder: (0, import_i18n76.__)("Add New Category") }
+  (0, import_i18n77.__)("Add new item"),
+  { placeholder: (0, import_i18n77.__)("Add New Category") }
 );
 var newItemNameField = createLabelField(
   "new_item_name",
-  (0, import_i18n76.__)("New item name"),
-  { placeholder: (0, import_i18n76.__)("New Category Name") }
+  (0, import_i18n77.__)("New item name"),
+  { placeholder: (0, import_i18n77.__)("New Category Name") }
 );
 var searchItemsField2 = createLabelField(
   "search_items",
-  (0, import_i18n76.__)("Search items"),
-  { placeholder: (0, import_i18n76.__)("Search Categories") }
+  (0, import_i18n77.__)("Search items"),
+  { placeholder: (0, import_i18n77.__)("Search Categories") }
 );
-var notFoundField2 = createLabelField("not_found", (0, import_i18n76.__)("Not found"), {
-  placeholder: (0, import_i18n76.__)("No categories found."),
-  description: (0, import_i18n76.__)(
+var notFoundField2 = createLabelField("not_found", (0, import_i18n77.__)("Not found"), {
+  placeholder: (0, import_i18n77.__)("No categories found."),
+  description: (0, import_i18n77.__)(
     "The text displayed when no terms are available in the term meta box and tag cloud."
   )
 });
 var backToItemsField = createLabelField(
   "back_to_items",
-  (0, import_i18n76.__)("Back to items"),
+  (0, import_i18n77.__)("Back to items"),
   {
-    placeholder: (0, import_i18n76.__)("\u2190 Back to Categories"),
-    description: (0, import_i18n76.__)("Label displayed after a term has been updated.")
+    placeholder: (0, import_i18n77.__)("\u2190 Back to Categories"),
+    description: (0, import_i18n77.__)("Label displayed after a term has been updated.")
   }
 );
 var parentItemField = createLabelField(
   "parent_item",
-  (0, import_i18n76.__)("Parent item"),
+  (0, import_i18n77.__)("Parent item"),
   {
-    placeholder: (0, import_i18n76.__)("Parent Category"),
-    description: (0, import_i18n76.__)("Not used on non-hierarchical taxonomies."),
+    placeholder: (0, import_i18n77.__)("Parent Category"),
+    description: (0, import_i18n77.__)("Not used on non-hierarchical taxonomies."),
     isVisible: (item) => item.config.hierarchical
   }
 );
 var popularItemsField = createLabelField(
   "popular_items",
-  (0, import_i18n76.__)("Popular items"),
+  (0, import_i18n77.__)("Popular items"),
   {
-    placeholder: (0, import_i18n76.__)("Popular Tags"),
-    description: (0, import_i18n76.__)(
+    placeholder: (0, import_i18n77.__)("Popular Tags"),
+    description: (0, import_i18n77.__)(
       "The popular items text. Not used on hierarchical taxonomies."
     ),
     isVisible: (item) => !item.config.hierarchical
@@ -37609,10 +37673,10 @@ var popularItemsField = createLabelField(
 );
 var separateItemsField = createLabelField(
   "separate_items_with_commas",
-  (0, import_i18n76.__)("Separate items with commas"),
+  (0, import_i18n77.__)("Separate items with commas"),
   {
-    placeholder: (0, import_i18n76.__)("Separate tags with commas"),
-    description: (0, import_i18n76.__)(
+    placeholder: (0, import_i18n77.__)("Separate tags with commas"),
+    description: (0, import_i18n77.__)(
       "Shown in the taxonomy meta box. Not used on hierarchical taxonomies."
     ),
     isVisible: (item) => !item.config.hierarchical
@@ -37620,19 +37684,19 @@ var separateItemsField = createLabelField(
 );
 var parentItemColonField2 = createLabelField(
   "parent_item_colon",
-  (0, import_i18n76.__)("Parent item with colon"),
+  (0, import_i18n77.__)("Parent item with colon"),
   {
-    placeholder: (0, import_i18n76.__)("Parent Category:"),
-    description: (0, import_i18n76.__)("Same as Parent item, with a colon at the end."),
+    placeholder: (0, import_i18n77.__)("Parent Category:"),
+    description: (0, import_i18n77.__)("Same as Parent item, with a colon at the end."),
     isVisible: (item) => item.config.hierarchical
   }
 );
 var addOrRemoveItemsField = createLabelField(
   "add_or_remove_items",
-  (0, import_i18n76.__)("Add or remove items"),
+  (0, import_i18n77.__)("Add or remove items"),
   {
-    placeholder: (0, import_i18n76.__)("Add or remove tags"),
-    description: (0, import_i18n76.__)(
+    placeholder: (0, import_i18n77.__)("Add or remove tags"),
+    description: (0, import_i18n77.__)(
       "Shown in the meta box when JavaScript is disabled. Not used on hierarchical taxonomies."
     ),
     isVisible: (item) => !item.config.hierarchical
@@ -37640,10 +37704,10 @@ var addOrRemoveItemsField = createLabelField(
 );
 var chooseFromMostUsedField = createLabelField(
   "choose_from_most_used",
-  (0, import_i18n76.__)("Choose from the most used"),
+  (0, import_i18n77.__)("Choose from the most used"),
   {
-    placeholder: (0, import_i18n76.__)("Choose from the most used tags"),
-    description: (0, import_i18n76.__)(
+    placeholder: (0, import_i18n77.__)("Choose from the most used tags"),
+    description: (0, import_i18n77.__)(
       "Shown in the taxonomy meta box. Not used on hierarchical taxonomies."
     ),
     isVisible: (item) => !item.config.hierarchical
@@ -37653,7 +37717,7 @@ var labelsActionsField2 = createLabelsActionsField(
   {
     labelKeys: STRING_LABEL_KEYS2,
     deriveLabels: deriveLabels2,
-    helpText: (0, import_i18n76.__)(
+    helpText: (0, import_i18n77.__)(
       "Override the text WordPress shows in admin lists, menus, and forms. Auto-fill replaces every label below with values derived from the current plural and singular names \u2014 including any you have already customized. Clearing removes all overrides so WordPress falls back to its defaults. If you rename the taxonomy after auto-filling, click Auto-fill again to keep them in sync."
     )
   }
@@ -37668,44 +37732,44 @@ var labelsFormFields = [
 ];
 
 // packages/content-types/build-module/taxonomies/fields/visibility.mjs
-var import_i18n77 = __toESM(require_i18n(), 1);
-var publicField2 = createBooleanField("public", (0, import_i18n77.__)("Public"), {
-  description: (0, import_i18n77.__)(
+var import_i18n78 = __toESM(require_i18n(), 1);
+var publicField2 = createBooleanField("public", (0, import_i18n78.__)("Public"), {
+  description: (0, import_i18n78.__)(
     "Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users."
   )
 });
 var showInRestField2 = createBooleanField(
   "show_in_rest",
-  (0, import_i18n77.__)("Show in REST API"),
+  (0, import_i18n78.__)("Show in REST API"),
   {
-    description: (0, import_i18n77.__)(
+    description: (0, import_i18n78.__)(
       "Required for the block editor. Turn off only for taxonomies that should not be exposed via REST."
     )
   }
 );
 var publiclyQueryableField = createBooleanField(
   "publicly_queryable",
-  (0, import_i18n77.__)("Publicly queryable"),
+  (0, import_i18n78.__)("Publicly queryable"),
   {
-    description: (0, import_i18n77.__)(
+    description: (0, import_i18n78.__)(
       "Whether front-end queries (e.g. ?taxonomy=\u2026&term=\u2026) can return terms from this taxonomy."
     )
   }
 );
 var showUiField = createBooleanField(
   "show_ui",
-  (0, import_i18n77.__)("Show admin UI"),
+  (0, import_i18n78.__)("Show admin UI"),
   {
-    description: (0, import_i18n77.__)(
+    description: (0, import_i18n78.__)(
       "Whether to generate a default admin interface for managing terms."
     )
   }
 );
 var showInMenuField = createBooleanField(
   "show_in_menu",
-  (0, import_i18n77.__)("Show in admin menu"),
+  (0, import_i18n78.__)("Show in admin menu"),
   {
-    description: (0, import_i18n77.__)(
+    description: (0, import_i18n78.__)(
       "Whether to show the taxonomy in the admin menu. Has no effect when Show admin UI is off; the value is preserved either way."
     ),
     // Hide when `show_ui` is off — `show_in_menu` is silently ignored by
@@ -37716,36 +37780,36 @@ var showInMenuField = createBooleanField(
 );
 var showInQuickEditField = createBooleanField(
   "show_in_quick_edit",
-  (0, import_i18n77.__)("Show in Quick Edit"),
+  (0, import_i18n78.__)("Show in Quick Edit"),
   {
-    description: (0, import_i18n77.__)(
+    description: (0, import_i18n78.__)(
       "Whether to show the taxonomy in the Quick/Bulk Edit panel."
     )
   }
 );
 var showAdminColumnField = createBooleanField(
   "show_admin_column",
-  (0, import_i18n77.__)("Show admin column"),
+  (0, import_i18n78.__)("Show admin column"),
   {
-    description: (0, import_i18n77.__)(
+    description: (0, import_i18n78.__)(
       "Whether to display a column for the taxonomy on the associated post type list tables."
     )
   }
 );
 var showInNavMenusField = createBooleanField(
   "show_in_nav_menus",
-  (0, import_i18n77.__)("Available in nav menus"),
+  (0, import_i18n78.__)("Available in nav menus"),
   {
-    description: (0, import_i18n77.__)(
+    description: (0, import_i18n78.__)(
       "Whether terms are selectable in the theme nav menu builder."
     )
   }
 );
 var showTagcloudField = createBooleanField(
   "show_tagcloud",
-  (0, import_i18n77.__)("Available in Tag Cloud widget"),
+  (0, import_i18n78.__)("Available in Tag Cloud widget"),
   {
-    description: (0, import_i18n77.__)(
+    description: (0, import_i18n78.__)(
       "Whether terms can be displayed in the Tag Cloud widget."
     )
   }
@@ -37764,14 +37828,14 @@ var visibilityFormFields = [
 
 // packages/content-types/build-module/taxonomies/actions/edit.mjs
 var import_element139 = __toESM(require_element(), 1);
-var import_i18n78 = __toESM(require_i18n(), 1);
+var import_i18n79 = __toESM(require_i18n(), 1);
 import { useNavigate as useNavigate5 } from "@wordpress/route";
 function useEditTaxonomyAction() {
   const navigate = useNavigate5();
   return (0, import_element139.useMemo)(
     () => ({
       id: "edit-taxonomy",
-      label: (0, import_i18n78.__)("Edit"),
+      label: (0, import_i18n79.__)("Edit"),
       callback: (items) => {
         const item = items[0];
         if (item?.id === void 0) {
@@ -37791,7 +37855,7 @@ var import_components62 = __toESM(require_components(), 1);
 var import_core_data15 = __toESM(require_core_data(), 1);
 var import_data20 = __toESM(require_data(), 1);
 var import_element140 = __toESM(require_element(), 1);
-var import_i18n79 = __toESM(require_i18n(), 1);
+var import_i18n80 = __toESM(require_i18n(), 1);
 var import_notices8 = __toESM(require_notices(), 1);
 var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
 function QuickEditTaxonomyModal({
@@ -37832,9 +37896,9 @@ function QuickEditTaxonomyModal({
         { throwOnError: true }
       );
       createSuccessNotice(
-        (0, import_i18n79.sprintf)(
+        (0, import_i18n80.sprintf)(
           /* translators: %s: taxonomy plural label. */
-          (0, import_i18n79.__)('"%s" taxonomy updated.'),
+          (0, import_i18n80.__)('"%s" taxonomy updated.'),
           data.title.raw
         ),
         { type: "snackbar" }
@@ -37847,7 +37911,7 @@ function QuickEditTaxonomyModal({
       closeModal?.();
     } catch (error2) {
       createErrorNotice(
-        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n79.__)("Failed to update taxonomy."),
+        error2?.message && error2?.code !== "unknown_error" ? error2.message : (0, import_i18n80.__)("Failed to update taxonomy."),
         { type: "snackbar" }
       );
     } finally {
@@ -37870,13 +37934,13 @@ function QuickEditTaxonomyModal({
             justify: "space-between",
             align: "center",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("h2", {}), children: (0, import_i18n79.__)("Quick edit taxonomy") }),
+              /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("h2", {}), children: (0, import_i18n80.__)("Quick edit taxonomy") }),
               /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
                 import_components62.Button,
                 {
                   size: "small",
                   icon: close_small_default,
-                  label: (0, import_i18n79.__)("Close"),
+                  label: (0, import_i18n80.__)("Close"),
                   onClick: closeModal
                 }
               )
@@ -37908,7 +37972,7 @@ function QuickEditTaxonomyModal({
                   __next40pxDefaultSize: true,
                   variant: "secondary",
                   onClick: closeModal,
-                  children: (0, import_i18n79.__)("Cancel")
+                  children: (0, import_i18n80.__)("Cancel")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
@@ -37920,7 +37984,7 @@ function QuickEditTaxonomyModal({
                   isBusy: isSaving,
                   disabled: isSaving || !isValid2,
                   accessibleWhenDisabled: true,
-                  children: (0, import_i18n79.__)("Done")
+                  children: (0, import_i18n80.__)("Done")
                 }
               )
             ]
@@ -37932,7 +37996,7 @@ function QuickEditTaxonomyModal({
 }
 var quickEditTaxonomyAction = {
   id: "quick-edit-taxonomy",
-  label: (0, import_i18n79.__)("Quick edit"),
+  label: (0, import_i18n80.__)("Quick edit"),
   icon: pencil_default,
   isPrimary: true,
   hideModalHeader: true,
@@ -38066,7 +38130,7 @@ function TaxonomiesList() {
           onClick: () => navigate({
             to: `${TAXONOMIES_PATH}/${NEW_ID}`
           }),
-          children: (0, import_i18n80.__)("Add taxonomy")
+          children: (0, import_i18n81.__)("Add taxonomy")
         }
       )
     }
@@ -38079,7 +38143,7 @@ var import_compose19 = __toESM(require_compose(), 1);
 var import_core_data17 = __toESM(require_core_data(), 1);
 var import_data21 = __toESM(require_data(), 1);
 var import_element142 = __toESM(require_element(), 1);
-var import_i18n81 = __toESM(require_i18n(), 1);
+var import_i18n82 = __toESM(require_i18n(), 1);
 var import_notices9 = __toESM(require_notices(), 1);
 import { useNavigate as useNavigate7, useParams as useParams2 } from "@wordpress/route";
 var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
@@ -38100,13 +38164,13 @@ function TaxonomyEdit() {
     [isAddMode, taxonomyId]
   );
   const initialData = !isAddMode && record ? toFormData2(record) : BLANK_RECORD2;
-  const title = isAddMode ? (0, import_i18n81.__)("Add taxonomy") : initialData.title.raw;
+  const title = isAddMode ? (0, import_i18n82.__)("Add taxonomy") : initialData.title.raw;
   const commonProps = { initialData, title };
   const taxonomyPageProps = isAddMode ? {
     ...commonProps,
     isAddMode: true,
-    breadcrumbLabel: (0, import_i18n81.__)("Add new"),
-    subTitle: (0, import_i18n81.__)(
+    breadcrumbLabel: (0, import_i18n82.__)("Add new"),
+    subTitle: (0, import_i18n82.__)(
       "Define a new taxonomy. Fill in the essentials under General; expand Labels to customize."
     ),
     onSaved: (saved) => navigate({
@@ -38116,7 +38180,7 @@ function TaxonomyEdit() {
     ...commonProps,
     isAddMode: false,
     breadcrumbLabel: title,
-    subTitle: (0, import_i18n81.__)(
+    subTitle: (0, import_i18n82.__)(
       "Edit this taxonomy. Expand the Labels section to adjust labels."
     )
   };
@@ -38172,7 +38236,11 @@ function TaxonomyPage({
       separateItemsField,
       parentItemColonField2,
       addOrRemoveItemsField,
-      chooseFromMostUsedField
+      chooseFromMostUsedField,
+      // Advanced
+      sortField,
+      defaultTermEnabledField,
+      defaultTermNameField
     ],
     [slugField, objectTypeField]
   );
@@ -38182,8 +38250,8 @@ function TaxonomyPage({
       fields: [
         {
           id: "general",
-          label: (0, import_i18n81.__)("General"),
-          description: (0, import_i18n81.__)(
+          label: (0, import_i18n82.__)("General"),
+          description: (0, import_i18n82.__)(
             "Core identity, post types, and activation."
           ),
           layout: {
@@ -38195,8 +38263,8 @@ function TaxonomyPage({
         },
         {
           id: "visibility",
-          label: (0, import_i18n81.__)("Visibility"),
-          description: (0, import_i18n81.__)(
+          label: (0, import_i18n82.__)("Visibility"),
+          description: (0, import_i18n82.__)(
             "Where this taxonomy appears: REST API, admin UI, and front-end surfaces."
           ),
           layout: {
@@ -38208,13 +38276,23 @@ function TaxonomyPage({
         },
         {
           id: "labels",
-          label: (0, import_i18n81.__)("Labels"),
+          label: (0, import_i18n82.__)("Labels"),
           layout: {
             type: "card",
             isCollapsible: true,
             isOpened: false
           },
           children: labelsFormFields
+        },
+        {
+          id: "advanced",
+          label: (0, import_i18n82.__)("Advanced"),
+          layout: {
+            type: "card",
+            isCollapsible: true,
+            isOpened: false
+          },
+          children: advancedFormFields
         }
       ]
     }),
@@ -38237,13 +38315,13 @@ function TaxonomyPage({
         serializeForSave2(data),
         { throwOnError: true }
       );
-      const successMessage = isAddMode ? (0, import_i18n81.sprintf)(
+      const successMessage = isAddMode ? (0, import_i18n82.sprintf)(
         /* translators: %s: taxonomy plural label. */
-        (0, import_i18n81.__)('"%s" taxonomy created.'),
+        (0, import_i18n82.__)('"%s" taxonomy created.'),
         data.title.raw
-      ) : (0, import_i18n81.sprintf)(
+      ) : (0, import_i18n82.sprintf)(
         /* translators: %s: taxonomy plural label. */
-        (0, import_i18n81.__)('"%s" taxonomy updated.'),
+        (0, import_i18n82.__)('"%s" taxonomy updated.'),
         data.title.raw
       );
       createSuccessNotice(successMessage, { type: "snackbar" });
@@ -38260,9 +38338,9 @@ function TaxonomyPage({
       if (error2?.message && error2?.code !== "unknown_error") {
         errorMessage = error2.message;
       } else if (isAddMode) {
-        errorMessage = (0, import_i18n81.__)("Failed to create taxonomy.");
+        errorMessage = (0, import_i18n82.__)("Failed to create taxonomy.");
       } else {
-        errorMessage = (0, import_i18n81.__)("Failed to update taxonomy.");
+        errorMessage = (0, import_i18n82.__)("Failed to update taxonomy.");
       }
       createErrorNotice(errorMessage, { type: "snackbar" });
     } finally {
@@ -38277,7 +38355,7 @@ function TaxonomyPage({
         breadcrumbs_default,
         {
           items: [
-            { label: (0, import_i18n81.__)("Taxonomies"), to: TAXONOMIES_PATH },
+            { label: (0, import_i18n82.__)("Taxonomies"), to: TAXONOMIES_PATH },
             { label: breadcrumbLabel }
           ]
         }
@@ -38294,7 +38372,7 @@ function TaxonomyPage({
           isBusy: isSaving,
           disabled: isSaving || !isValid2,
           accessibleWhenDisabled: true,
-          children: isAddMode ? (0, import_i18n81.__)("Create") : (0, import_i18n81.__)("Save")
+          children: isAddMode ? (0, import_i18n82.__)("Create") : (0, import_i18n82.__)("Save")
         }
       ),
       children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(
