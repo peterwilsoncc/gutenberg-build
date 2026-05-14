@@ -31107,7 +31107,15 @@ var wp;
                                 icon: symbol_default
                               }
                             ) }),
-                            /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("div", { className: "block-editor-block-patterns-list__item-title", children: pattern.title })
+                            /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
+                              Text,
+                              {
+                                render: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("div", {}),
+                                className: "block-editor-block-patterns-list__item-title",
+                                variant: "body-sm",
+                                children: pattern.title
+                              }
+                            )
                           ]
                         }
                       ),

@@ -1000,7 +1000,6 @@ iframe[name=editor-canvas] {
 }
 .block-editor-block-patterns-list__item .block-editor-block-patterns-list__item-title {
   flex-grow: 1;
-  font-size: 12px;
   text-align: left;
 }
 .block-editor-block-patterns-list__item .block-editor-block-preview__container {
