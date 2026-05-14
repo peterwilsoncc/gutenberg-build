@@ -34349,12 +34349,22 @@ var wp;
       if (!selectedElement) {
         return;
       }
-      const observer = new window.MutationObserver(
-        forceRecomputePopoverDimensions
-      );
+      let rafId;
+      const observer = new window.MutationObserver(() => {
+        if (rafId) {
+          return;
+        }
+        rafId = window.requestAnimationFrame(() => {
+          rafId = null;
+          forceRecomputePopoverDimensions();
+        });
+      });
       observer.observe(selectedElement, { attributes: true });
       return () => {
         observer.disconnect();
+        if (rafId) {
+          window.cancelAnimationFrame(rafId);
+        }
       };
     }, [selectedElement]);
     const popoverAnchor = (0, import_element98.useMemo)(() => {
