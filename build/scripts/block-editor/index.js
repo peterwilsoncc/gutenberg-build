@@ -16316,7 +16316,6 @@ var wp;
             label: (0, import_i18n12.__)("Wrapping"),
             hasValue: hasWrapValue,
             onDeselect: resetWrap,
-            isShownByDefault: true,
             panelId: clientId,
             children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
               FlexWrapControl,
