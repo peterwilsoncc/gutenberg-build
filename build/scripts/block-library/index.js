@@ -42057,7 +42057,7 @@ ${js}
   // packages/block-library/build-module/navigation-link/shared/controls.mjs
   var import_components92 = __toESM(require_components(), 1);
   var import_i18n139 = __toESM(require_i18n(), 1);
-  var import_dom9 = __toESM(require_dom(), 1);
+  var import_dom10 = __toESM(require_dom(), 1);
   var import_block_editor155 = __toESM(require_block_editor(), 1);
   var import_data81 = __toESM(require_data(), 1);
   var import_core_data47 = __toESM(require_core_data(), 1);
@@ -42066,6 +42066,8 @@ ${js}
   var import_element79 = __toESM(require_element(), 1);
   var import_data76 = __toESM(require_data(), 1);
   var import_block_editor150 = __toESM(require_block_editor(), 1);
+  var import_dom8 = __toESM(require_dom(), 1);
+  var import_escape_html2 = __toESM(require_escape_html(), 1);
 
   // packages/block-library/build-module/navigation-link/shared/update-attributes.mjs
   var import_escape_html = __toESM(require_escape_html(), 1);
@@ -42185,7 +42187,12 @@ ${js}
   };
 
   // packages/block-library/build-module/navigation-link/shared/use-handle-link-change.mjs
-  function useHandleLinkChange({ clientId, attributes: attributes2, setAttributes }) {
+  function useHandleLinkChange({
+    clientId,
+    attributes: attributes2,
+    setAttributes,
+    allowTextUpdate = false
+  }) {
     const { updateBlockAttributes } = (0, import_data76.useDispatch)(import_block_editor150.store);
     const { hasUrlBinding, createBinding, clearBinding } = useEntityBinding({
       clientId,
@@ -42202,7 +42209,11 @@ ${js}
           type: updatedLink.type,
           id: updatedLink.id
         };
-        if (!attributes2.label || attributes2.label === "") {
+        const currentText = attributes2.label ? (0, import_dom8.__unstableStripHTML)(attributes2.label) : "";
+        const updatedText = updatedLink.title ?? "";
+        const hasTextUpdate = allowTextUpdate && updatedLink.title !== void 0 && updatedText !== currentText;
+        const textUpdateAttributes = hasTextUpdate ? { label: (0, import_escape_html2.escapeHTML)(updatedText) } : {};
+        if (!attributes2.label || attributes2.label === "" || hasTextUpdate) {
           attrs.title = updatedLink.title;
         }
         const willBeCustomLink = !updatedLink.id && hasUrlBinding;
@@ -42212,7 +42223,8 @@ ${js}
             url: updatedLink.url,
             kind: "custom",
             type: "custom",
-            id: void 0
+            id: void 0,
+            ...textUpdateAttributes
           });
         } else {
           const { isEntityLink, attributes: updatedAttributes } = updateAttributes(attrs, setAttributes, attributes2);
@@ -42221,10 +42233,14 @@ ${js}
           } else {
             clearBinding();
           }
+          if (Object.keys(textUpdateAttributes).length) {
+            updateBlockAttributes(clientId, textUpdateAttributes);
+          }
         }
       },
       [
         attributes2,
+        allowTextUpdate,
         clientId,
         hasUrlBinding,
         createBinding,
@@ -42236,7 +42252,7 @@ ${js}
   }
 
   // packages/block-library/build-module/navigation-link/link-ui/index.mjs
-  var import_dom8 = __toESM(require_dom(), 1);
+  var import_dom9 = __toESM(require_dom(), 1);
   var import_components91 = __toESM(require_components(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
   var import_block_editor152 = __toESM(require_block_editor(), 1);
@@ -42551,7 +42567,7 @@ ${js}
       () => ({
         url,
         opensInNewTab,
-        title: label && (0, import_dom8.__unstableStripHTML)(label),
+        title: label && (0, import_dom9.__unstableStripHTML)(label),
         entityTitle: entityRecord?.title?.rendered || entityRecord?.name,
         kind,
         type,
@@ -42590,7 +42606,7 @@ ${js}
         if (shouldFocusPane?.current) {
           shouldFocusPane.current.focus();
         } else {
-          const tabbableElements = import_dom8.focus.tabbable.find(
+          const tabbableElements = import_dom9.focus.tabbable.find(
             linkControlWrapperRef.current
           );
           const nextFocusTarget = tabbableElements[0] || linkControlWrapperRef.current;
@@ -43058,7 +43074,7 @@ ${js}
                 {
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n139.__)("Text"),
-                  value: label ? (0, import_dom9.__unstableStripHTML)(label) : "",
+                  value: label ? (0, import_dom10.__unstableStripHTML)(label) : "",
                   onChange: (labelValue) => {
                     setAttributes({ label: labelValue });
                   },
@@ -45416,7 +45432,8 @@ ${js}
     const handleLinkChange = useHandleLinkChange({
       clientId,
       attributes: attributes2,
-      setAttributes
+      setAttributes,
+      allowTextUpdate: true
     });
     const [isInvalid, isDraft] = useIsInvalidLink(
       kind,
@@ -46087,15 +46104,15 @@ ${js}
     const { showSubmenuIcon, maxNestingLevel, submenuVisibility } = context;
     const blockEditingMode = (0, import_block_editor166.useBlockEditingMode)();
     const openSubmenusOnClick = blockEditingMode !== "default" ? true : submenuVisibility === "click";
-    const {
-      clearBinding,
-      createBinding,
-      hasUrlBinding,
-      isBoundEntityAvailable,
-      entityRecord
-    } = useEntityBinding({
+    const { hasUrlBinding, isBoundEntityAvailable, entityRecord } = useEntityBinding({
       clientId,
       attributes: attributes2
+    });
+    const handleLinkChange = useHandleLinkChange({
+      clientId,
+      attributes: attributes2,
+      setAttributes,
+      allowTextUpdate: true
     });
     const { __unstableMarkNextChangeAsNotPersistent, replaceBlock } = (0, import_data89.useDispatch)(import_block_editor166.store);
     const [isLinkOpen, setIsLinkOpen] = (0, import_element86.useState)(false);
@@ -46321,21 +46338,7 @@ ${js}
                 setAttributes({ url: "" });
                 (0, import_a11y4.speak)((0, import_i18n148.__)("Link removed."), "assertive");
               },
-              onChange: (updatedValue) => {
-                const {
-                  isEntityLink,
-                  attributes: updatedAttributes
-                } = updateAttributes(
-                  updatedValue,
-                  setAttributes,
-                  attributes2
-                );
-                if (isEntityLink) {
-                  createBinding(updatedAttributes);
-                } else {
-                  clearBinding();
-                }
-              }
+              onChange: handleLinkChange
             }
           )
         ] }),
@@ -47566,7 +47569,7 @@ ${js}
   var import_block_editor173 = __toESM(require_block_editor(), 1);
   var import_data94 = __toESM(require_data(), 1);
   var import_core_data54 = __toESM(require_core_data(), 1);
-  var import_dom10 = __toESM(require_dom(), 1);
+  var import_dom11 = __toESM(require_dom(), 1);
 
   // packages/block-library/build-module/navigation-link/icons.mjs
   var import_components102 = __toESM(require_components(), 1);
@@ -47632,7 +47635,7 @@ ${js}
                 className: "wp-block-navigation-item__content wp-block-navigation-submenu__toggle",
                 "aria-expanded": "false",
                 dangerouslySetInnerHTML: {
-                  __html: (0, import_dom10.safeHTML)(label)
+                  __html: (0, import_dom11.safeHTML)(label)
                 }
               }
             ),
@@ -47645,7 +47648,7 @@ ${js}
               }),
               href: link,
               dangerouslySetInnerHTML: {
-                __html: (0, import_dom10.safeHTML)(title)
+                __html: (0, import_dom11.safeHTML)(title)
               }
             }
           ),
@@ -49903,7 +49906,7 @@ ${js}
   var import_data98 = __toESM(require_data(), 1);
   var import_notices15 = __toESM(require_notices(), 1);
   var import_i18n161 = __toESM(require_i18n(), 1);
-  var import_dom11 = __toESM(require_dom(), 1);
+  var import_dom12 = __toESM(require_dom(), 1);
   var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES7 = ["audio"];
   var ALBUM_COVER_ALLOWED_MEDIA_TYPES = ["image"];
@@ -50003,7 +50006,7 @@ ${js}
           {
             __next40pxDefaultSize: true,
             label: (0, import_i18n161.__)("Artist"),
-            value: artist ? (0, import_dom11.__unstableStripHTML)(artist) : "",
+            value: artist ? (0, import_dom12.__unstableStripHTML)(artist) : "",
             onChange: (artistValue) => {
               setAttributes({ artist: artistValue });
             }
@@ -50014,7 +50017,7 @@ ${js}
           {
             __next40pxDefaultSize: true,
             label: (0, import_i18n161.__)("Album"),
-            value: album ? (0, import_dom11.__unstableStripHTML)(album) : "",
+            value: album ? (0, import_dom12.__unstableStripHTML)(album) : "",
             onChange: (albumValue) => {
               setAttributes({ album: albumValue });
             }
@@ -50025,7 +50028,7 @@ ${js}
           {
             __next40pxDefaultSize: true,
             label: (0, import_i18n161.__)("Title"),
-            value: title ? (0, import_dom11.__unstableStripHTML)(title) : "",
+            value: title ? (0, import_dom12.__unstableStripHTML)(title) : "",
             onChange: (titleValue) => {
               setAttributes({ title: titleValue });
             }
@@ -62701,7 +62704,7 @@ ${js}
   var import_components146 = __toESM(require_components(), 1);
   var import_compose53 = __toESM(require_compose(), 1);
   var import_i18n224 = __toESM(require_i18n(), 1);
-  var import_dom12 = __toESM(require_dom(), 1);
+  var import_dom13 = __toESM(require_dom(), 1);
 
   // packages/block-library/build-module/search/utils.mjs
   var PC_WIDTH_DEFAULT = 50;
@@ -62893,7 +62896,7 @@ ${js}
             type: "button",
             className: buttonClasses,
             style: buttonStyles,
-            "aria-label": buttonText ? (0, import_dom12.__unstableStripHTML)(buttonText) : (0, import_i18n224.__)("Search"),
+            "aria-label": buttonText ? (0, import_dom13.__unstableStripHTML)(buttonText) : (0, import_i18n224.__)("Search"),
             ref: buttonRef,
             children: /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(icon_default, { icon: search_default })
           }
@@ -69590,7 +69593,7 @@ ${js}
   // packages/block-library/build-module/table-of-contents/hooks.mjs
   var import_es6 = __toESM(require_es6(), 1);
   var import_data143 = __toESM(require_data(), 1);
-  var import_dom13 = __toESM(require_dom(), 1);
+  var import_dom14 = __toESM(require_dom(), 1);
   var import_element131 = __toESM(require_element(), 1);
   var import_url22 = __toESM(require_url(), 1);
   var import_block_editor263 = __toESM(require_block_editor(), 1);
@@ -69649,7 +69652,7 @@ ${js}
           const canBeLinked = typeof headingPageLink === "string" && typeof headingAttributes.anchor === "string" && headingAttributes.anchor !== "";
           latestHeadings.push({
             // Convert line breaks to spaces, and get rid of HTML tags in the headings.
-            content: (0, import_dom13.__unstableStripHTML)(
+            content: (0, import_dom14.__unstableStripHTML)(
               headingAttributes.content.replace(
                 /(<br *\/?>)+/g,
                 " "
