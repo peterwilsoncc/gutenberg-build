@@ -45349,6 +45349,7 @@ var wp;
   var import_i18n160 = __toESM(require_i18n(), 1);
   var import_components142 = __toESM(require_components(), 1);
   var import_data128 = __toESM(require_data(), 1);
+  var import_url13 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-last-revision/check.mjs
   var import_data127 = __toESM(require_data(), 1);
@@ -45372,21 +45373,31 @@ var wp;
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
   function usePostLastRevisionInfo() {
     return (0, import_data128.useSelect)((select6) => {
-      const { getCurrentPostLastRevisionId: getCurrentPostLastRevisionId2, getCurrentPostRevisionsCount: getCurrentPostRevisionsCount2 } = select6(store);
+      const {
+        getCurrentPostLastRevisionId: getCurrentPostLastRevisionId2,
+        getCurrentPostRevisionsCount: getCurrentPostRevisionsCount2,
+        getEditorSettings: getEditorSettings2
+      } = select6(store);
       return {
         lastRevisionId: getCurrentPostLastRevisionId2(),
-        revisionsCount: getCurrentPostRevisionsCount2()
+        revisionsCount: getCurrentPostRevisionsCount2(),
+        disableVisualRevisions: !!getEditorSettings2().disableVisualRevisions
       };
     }, []);
   }
   function PostLastRevision() {
-    const { lastRevisionId, revisionsCount } = usePostLastRevisionInfo();
+    const { lastRevisionId, revisionsCount, disableVisualRevisions } = usePostLastRevisionInfo();
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data128.useDispatch)(store));
+    const buttonProps = disableVisualRevisions ? {
+      href: (0, import_url13.addQueryArgs)("revision.php", {
+        revision: lastRevisionId
+      })
+    } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
     return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
       import_components142.Button,
       {
         __next40pxDefaultSize: true,
-        onClick: () => setCurrentRevisionId2(lastRevisionId),
+        ...buttonProps,
         className: "editor-post-last-revision__title",
         icon: backup_default,
         iconPosition: "right",
@@ -45399,12 +45410,17 @@ var wp;
     ) });
   }
   function PrivatePostLastRevision() {
-    const { lastRevisionId, revisionsCount } = usePostLastRevisionInfo();
+    const { lastRevisionId, revisionsCount, disableVisualRevisions } = usePostLastRevisionInfo();
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data128.useDispatch)(store));
+    const buttonProps = disableVisualRevisions ? {
+      href: (0, import_url13.addQueryArgs)("revision.php", {
+        revision: lastRevisionId
+      })
+    } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
     return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(post_panel_row_default, { label: (0, import_i18n160.__)("Revisions"), children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
       import_components142.Button,
       {
-        onClick: () => setCurrentRevisionId2(lastRevisionId),
+        ...buttonProps,
         className: "editor-private-post-last-revision__button",
         text: revisionsCount,
         "aria-label": (0, import_i18n160.sprintf)(
@@ -45431,7 +45447,7 @@ var wp;
   var import_i18n162 = __toESM(require_i18n(), 1);
   var import_components144 = __toESM(require_components(), 1);
   var import_data129 = __toESM(require_data(), 1);
-  var import_url13 = __toESM(require_url(), 1);
+  var import_url14 = __toESM(require_url(), 1);
   var import_element117 = __toESM(require_element(), 1);
   var import_hooks47 = __toESM(require_hooks(), 1);
   var import_compose28 = __toESM(require_compose(), 1);
@@ -45609,14 +45625,14 @@ var wp;
     }
     const userDisplayName = user.name;
     const userAvatar = user.avatar;
-    const unlockUrl = (0, import_url13.addQueryArgs)("post.php", {
+    const unlockUrl = (0, import_url14.addQueryArgs)("post.php", {
       "get-post-lock": "1",
       lockKey: true,
       post: postId2,
       action: "edit",
       _wpnonce: postLockUtils.nonce
     });
-    const allPostsUrl = (0, import_url13.addQueryArgs)("edit.php", {
+    const allPostsUrl = (0, import_url14.addQueryArgs)("edit.php", {
       post_type: postType2?.slug
     });
     const allPostsLabel = (0, import_i18n162.__)("Exit editor");
@@ -46159,7 +46175,7 @@ var wp;
   var import_i18n176 = __toESM(require_i18n(), 1);
   var import_components156 = __toESM(require_components(), 1);
   var import_data146 = __toESM(require_data(), 1);
-  var import_url15 = __toESM(require_url(), 1);
+  var import_url16 = __toESM(require_url(), 1);
   var import_core_data94 = __toESM(require_core_data(), 1);
   var import_html_entities22 = __toESM(require_html_entities(), 1);
 
@@ -47459,12 +47475,12 @@ var wp;
   var import_blob4 = __toESM(require_blob(), 1);
 
   // packages/editor/build-module/components/post-publish-panel/media-util.mjs
-  var import_url14 = __toESM(require_url(), 1);
+  var import_url15 = __toESM(require_url(), 1);
   function generateUniqueBasenames(urls) {
     const basenames = /* @__PURE__ */ new Set();
     return Object.fromEntries(
       urls.map((url) => {
-        const filename = (0, import_url14.getFilename)(url);
+        const filename = (0, import_url15.getFilename)(url);
         let basename = "";
         if (filename) {
           const parts = filename.split(".");
@@ -47712,7 +47728,7 @@ var wp;
         ]),
         siteIconUrl: siteData.site_icon_url,
         siteTitle: siteData.name,
-        siteHome: siteData.home && (0, import_url15.filterURLForDisplay)(siteData.home)
+        siteHome: siteData.home && (0, import_url16.filterURLForDisplay)(siteData.home)
       };
     }, []);
     let siteIcon = /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(import_components156.Icon, { className: "components-site-icon", size: "36px", icon: wordpress_default });
@@ -47808,7 +47824,7 @@ var wp;
   var import_i18n177 = __toESM(require_i18n(), 1);
   var import_element127 = __toESM(require_element(), 1);
   var import_data147 = __toESM(require_data(), 1);
-  var import_url16 = __toESM(require_url(), 1);
+  var import_url17 = __toESM(require_url(), 1);
   var import_html_entities23 = __toESM(require_html_entities(), 1);
   var import_compose34 = __toESM(require_compose(), 1);
   var import_core_data95 = __toESM(require_core_data(), 1);
@@ -47867,7 +47883,7 @@ var wp;
     const viewPostLabel = postType2?.labels?.view_item;
     const addNewPostLabel = postType2?.labels?.add_new_item;
     const link = post2.status === "future" ? getFuturePostUrl(post2) : post2.link;
-    const addLink = (0, import_url16.addQueryArgs)("post-new.php", {
+    const addLink = (0, import_url17.addQueryArgs)("post-new.php", {
       post_type: post2.type
     });
     const postLinkRef = (0, import_element127.useCallback)(
@@ -47904,7 +47920,7 @@ var wp;
                 (0, import_i18n177.__)("%s address"),
                 postLabel
               ),
-              value: (0, import_url16.safeDecodeURIComponent)(link),
+              value: (0, import_url17.safeDecodeURIComponent)(link),
               onFocus: (event) => event.target.select()
             }
           ),
@@ -49143,7 +49159,7 @@ var wp;
 
   // packages/editor/build-module/components/post-url/index.mjs
   var import_data167 = __toESM(require_data(), 1);
-  var import_url17 = __toESM(require_url(), 1);
+  var import_url18 = __toESM(require_url(), 1);
   var import_element139 = __toESM(require_element(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
   var import_i18n189 = __toESM(require_i18n(), 1);
@@ -49168,14 +49184,14 @@ var wp;
       const hasPublishAction = post2?._links?.["wp:action-publish"] ?? false;
       return {
         isEditable: select6(store).isPermalinkEditable() && hasPublishAction,
-        postSlug: (0, import_url17.safeDecodeURIComponent)(
+        postSlug: (0, import_url18.safeDecodeURIComponent)(
           select6(store).getEditedPostSlug()
         ),
         viewPostLabel: postType2?.labels.view_item,
         postLink: post2.link,
         permalinkPrefix: permalinkParts?.prefix,
         permalinkSuffix: permalinkParts?.suffix,
-        permalink: (0, import_url17.safeDecodeURIComponent)(
+        permalink: (0, import_url18.safeDecodeURIComponent)(
           select6(store).getPermalink()
         )
       };
@@ -49252,7 +49268,7 @@ var wp;
                 },
                 onBlur: (event) => {
                   editPost2({
-                    slug: (0, import_url17.cleanForSlug)(
+                    slug: (0, import_url18.cleanForSlug)(
                       event.target.value
                     )
                   });
@@ -49322,7 +49338,7 @@ var wp;
 
   // packages/editor/build-module/components/post-url/label.mjs
   var import_data169 = __toESM(require_data(), 1);
-  var import_url18 = __toESM(require_url(), 1);
+  var import_url19 = __toESM(require_url(), 1);
   function PostURLLabel() {
     return usePostURLLabel();
   }
@@ -49331,7 +49347,7 @@ var wp;
       (select6) => select6(store).getPermalink(),
       []
     );
-    return (0, import_url18.filterURLForDisplay)((0, import_url18.safeDecodeURIComponent)(postLink));
+    return (0, import_url19.filterURLForDisplay)((0, import_url19.safeDecodeURIComponent)(postLink));
   }
 
   // packages/editor/build-module/components/post-url/panel.mjs
@@ -49339,7 +49355,7 @@ var wp;
   var import_data170 = __toESM(require_data(), 1);
   var import_components169 = __toESM(require_components(), 1);
   var import_i18n190 = __toESM(require_i18n(), 1);
-  var import_url19 = __toESM(require_url(), 1);
+  var import_url20 = __toESM(require_url(), 1);
   var import_core_data104 = __toESM(require_core_data(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
   function PostURLPanel() {
@@ -49395,7 +49411,7 @@ var wp;
         slug: select6(store).getEditedPostSlug()
       };
     }, []);
-    const decodedSlug = (0, import_url19.safeDecodeURIComponent)(slug);
+    const decodedSlug = (0, import_url20.safeDecodeURIComponent)(slug);
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
       import_components169.Button,
       {
@@ -63116,7 +63132,7 @@ var wp;
   var import_components238 = __toESM(require_components(), 1);
   var import_data227 = __toESM(require_data(), 1);
   var import_i18n258 = __toESM(require_i18n(), 1);
-  var import_url22 = __toESM(require_url(), 1);
+  var import_url23 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-content-information/index.mjs
   var import_components231 = __toESM(require_components(), 1);
@@ -63656,7 +63672,7 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
           import_components238.ExternalLink,
           {
-            href: (0, import_url22.addQueryArgs)("revision.php", {
+            href: (0, import_url23.addQueryArgs)("revision.php", {
               revision: revisionId2
             }),
             children: (0, import_i18n258.__)(
