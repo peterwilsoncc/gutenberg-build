@@ -8063,6 +8063,7 @@ textarea.editor-post-text-editor::placeholder {
 }
 .editor-text-editor {
   position: relative;
+  isolation: isolate;
   width: 100%;
   background-color: #fff;
   flex-grow: 1;
