@@ -21231,6 +21231,17 @@ var import_i18n3 = __toESM(require_i18n(), 1);
 // packages/ui/build-module/icon-button/icon-button.mjs
 var import_element36 = __toESM(require_element(), 1);
 
+// packages/ui/build-module/tooltip/index.mjs
+var tooltip_exports = {};
+__export(tooltip_exports, {
+  Popup: () => Popup2,
+  Portal: () => Portal2,
+  Positioner: () => Positioner,
+  Provider: () => Provider,
+  Root: () => Root3,
+  Trigger: () => Trigger2
+});
+
 // packages/ui/build-module/tooltip/popup.mjs
 var import_element34 = __toESM(require_element(), 1);
 var import_theme2 = __toESM(require_theme(), 1);
@@ -27376,6 +27387,38 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
 // routes/dashboard/widget-dashboard/components/more-actions-dropdown/more-actions-dropdown.tsx
 var import_jsx_runtime136 = __toESM(require_jsx_runtime());
 var { Menu } = unlock2(import_components3.privateApis);
+function MoreActionsMenuItem({ item }) {
+  const showDisabledTooltip = item.disabled && item.disabledTooltip;
+  const menuItem = /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+    Menu.Item,
+    {
+      disabled: item.disabled,
+      onClick: item.onClick,
+      render: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Button4, { variant: "minimal", tone: "neutral" }),
+      children: item.label
+    }
+  );
+  if (!showDisabledTooltip) {
+    return menuItem;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+      tooltip_exports.Trigger,
+      {
+        render: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+          Menu.Item,
+          {
+            disabled: item.disabled,
+            onClick: item.onClick,
+            render: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Button4, { variant: "minimal", tone: "neutral" })
+          }
+        ),
+        children: item.label
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(tooltip_exports.Popup, { positioner: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(tooltip_exports.Positioner, { side: "bottom" }), children: item.disabledTooltip })
+  ] });
+}
 function MoreActionsDropdown({
   items
 }) {
@@ -27398,16 +27441,7 @@ function MoreActionsDropdown({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Menu.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Menu.Group, { children: items.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
-      Menu.Item,
-      {
-        disabled: item.disabled,
-        onClick: item.onClick,
-        render: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Button4, { variant: "minimal", tone: "neutral" }),
-        children: item.label
-      },
-      index2
-    )) }) })
+    /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Menu.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(tooltip_exports.Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Menu.Group, { children: items.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(MoreActionsMenuItem, { item }, index2)) }) }) })
   ] });
 }
 
@@ -27470,7 +27504,8 @@ function Actions3() {
     moreActionsItems.unshift({
       label: (0, import_i18n11.__)("Layout settings"),
       onClick: openLayoutSettings,
-      disabled: editMode
+      disabled: editMode,
+      disabledTooltip: (0, import_i18n11.__)("Disabled while editing widgets")
     });
   }
   if (!onEditChange) {
