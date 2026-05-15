@@ -52514,7 +52514,15 @@ ${js}
       [name123, attributes2]
     );
     const blockEditingMode = (0, import_block_editor192.useBlockEditingMode)();
-    let postDate2 = /* @__PURE__ */ (0, import_jsx_runtime369.jsx)("time", { dateTime: (0, import_date3.dateI18n)("c", datetime), ref: setPopoverAnchor, children: format3 === "human-diff" ? (0, import_date3.humanTimeDiff)(datetime) : (0, import_date3.dateI18n)(format3 || siteFormat, datetime) });
+    const validDatetime = datetime || /* @__PURE__ */ new Date();
+    let postDate2 = /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
+      "time",
+      {
+        dateTime: (0, import_date3.dateI18n)("c", validDatetime),
+        ref: setPopoverAnchor,
+        children: format3 === "human-diff" ? (0, import_date3.humanTimeDiff)(validDatetime) : (0, import_date3.dateI18n)(format3 || siteFormat, validDatetime)
+      }
+    );
     if (isLink && datetime) {
       postDate2 = /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
         "a",
