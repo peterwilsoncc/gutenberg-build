@@ -7467,12 +7467,10 @@ var wp;
       (resolve) => {
         const hasId = isEntity ? !!resource.id : !!id;
         const { canUser: canUser3 } = resolve(store);
-        const create3 = canUser3(
-          "create",
-          isEntity ? { kind: resource.kind, name: resource.name } : resource
-        );
+        const collectionResource = isEntity ? { kind: resource.kind, name: resource.name } : resource;
+        const create3 = canUser3("create", collectionResource);
         if (!hasId) {
-          const read2 = canUser3("read", resource);
+          const read2 = canUser3("read", collectionResource);
           const isResolving2 = create3.isResolving || read2.isResolving;
           const hasResolved2 = create3.hasResolved && read2.hasResolved;
           let status2 = Status.Idle;
