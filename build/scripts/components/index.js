@@ -43016,9 +43016,9 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle5("1c9cd2b9b9", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:#0000;padding:0;pointer-events:none;position:fixed;z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
+    registerStyle5("f8d1257e92", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:#0000;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
   }
-  var style_module_default4 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone" };
+  var style_module_default4 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone", "is-in-compat-slot": "_664ecd37377558df__is-in-compat-slot" };
   var dragImageClasses = [style_module_default4["invisible-drag-image"], "components-draggable__invisible-drag-image"].filter(Boolean);
   var cloneWrapperClasses = [style_module_default4.clone, "components-draggable__clone"].filter(Boolean);
   var bodyClass = "is-dragging-components-draggable";
@@ -43062,6 +43062,10 @@ This message will only show in development mode. It won't appear in production. 
         event.dataTransfer.setDragImage(dragImage, 0, 0);
       }
       cloneWrapper.classList.add(...cloneWrapperClasses);
+      const inSlotClass = style_module_default4["is-in-compat-slot"];
+      if (compatSlot && inSlotClass) {
+        cloneWrapper.classList.add(inSlotClass);
+      }
       if (cloneClassname) {
         cloneWrapper.classList.add(cloneClassname);
       }
