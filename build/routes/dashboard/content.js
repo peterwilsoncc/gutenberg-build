@@ -17638,10 +17638,7 @@ if (typeof process === "undefined" || true) {
 var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
 var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
 function resolveOwnerDocument() {
-  if (typeof document === "undefined") {
-    return null;
-  }
-  return document;
+  return typeof document === "undefined" ? null : document;
 }
 function isInWordPressEnvironment() {
   let topWp;
