@@ -1461,26 +1461,6 @@ input.components-combobox-control__input[type=text]:focus {
   z-index: 0;
 }
 
-body.is-dragging-components-draggable {
-  cursor: move; /* Fallback for IE/Edge < 14 */
-  cursor: grabbing !important;
-}
-
-.components-draggable__invisible-drag-image {
-  position: fixed;
-  right: -1000px;
-  height: 50px;
-  width: 50px;
-}
-
-.components-draggable__clone {
-  position: fixed;
-  padding: 0;
-  background: transparent;
-  pointer-events: none;
-  z-index: 1000000000;
-}
-
 .components-drop-zone {
   position: absolute;
   top: 0;

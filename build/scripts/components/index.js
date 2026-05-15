@@ -1836,6 +1836,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
+    }
+  });
+
   // package-external:@wordpress/escape-html
   var require_escape_html = __commonJS({
     "package-external:@wordpress/escape-html"(exports, module) {
@@ -1954,13 +1961,6 @@ var wp;
   var require_hooks = __commonJS({
     "package-external:@wordpress/hooks"(exports, module) {
       module.exports = window.wp.hooks;
-    }
-  });
-
-  // package-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "package-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
     }
   });
 
@@ -42798,11 +42798,231 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/draggable/index.mjs
   var import_compose52 = __toESM(require_compose(), 1);
   var import_element134 = __toESM(require_element(), 1);
+
+  // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+  var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
+  function getRuntime5() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument5(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash5(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE5}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE5) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle5(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime5();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash5(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE5, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument5(targetDocument) {
+    const runtime = getRuntime5();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle5(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle4(hash2, css3) {
+    const runtime = getRuntime5();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle5(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle4("3797de378a", "._11fc52b637ff8a7e__slot{isolation:isolate;left:0;position:fixed;top:0;z-index:1000000003}");
+  }
+  var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
+  var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+  function resolveOwnerDocument() {
+    if (typeof document === "undefined") {
+      return null;
+    }
+    return document;
+  }
+  function isInWordPressEnvironment() {
+    let topWp;
+    try {
+      topWp = window.top?.wp;
+    } catch {
+    }
+    const wp = topWp ?? window.wp;
+    return typeof wp?.components === "object" && wp.components !== null;
+  }
+  var cachedSlot = null;
+  function createSlot(ownerDocument) {
+    const element = ownerDocument.createElement("div");
+    element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+    if (wp_compat_overlay_slot_default.slot) {
+      element.classList.add(wp_compat_overlay_slot_default.slot);
+    }
+    ownerDocument.body.appendChild(element);
+    return element;
+  }
+  function getWpCompatOverlaySlot() {
+    if (typeof window === "undefined") {
+      return void 0;
+    }
+    if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
+      return void 0;
+    }
+    const ownerDocument = resolveOwnerDocument();
+    if (!ownerDocument || !ownerDocument.body) {
+      return void 0;
+    }
+    if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) {
+      return cachedSlot;
+    }
+    const existing = ownerDocument.querySelector(
+      `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
+    );
+    if (existing instanceof HTMLDivElement) {
+      cachedSlot = existing;
+      return existing;
+    }
+    if (cachedSlot?.isConnected) {
+      cachedSlot.remove();
+    }
+    cachedSlot = createSlot(ownerDocument);
+    return cachedSlot;
+  }
+
+  // packages/components/build-module/draggable/index.mjs
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
-  var dragImageClass = "components-draggable__invisible-drag-image";
-  var cloneWrapperClass = "components-draggable__clone";
-  var clonePadding = 0;
+  var STYLE_HASH_ATTRIBUTE6 = "data-wp-hash";
+  function getRuntime6() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument6(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash6(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE6}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE6) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle6(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime6();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash6(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE6, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument6(targetDocument) {
+    const runtime = getRuntime6();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle6(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle5(hash2, css3) {
+    const runtime = getRuntime6();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle6(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle5("1c9cd2b9b9", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:#0000;padding:0;pointer-events:none;position:fixed;z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
+  }
+  var style_module_default4 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone" };
+  var dragImageClasses = [style_module_default4["invisible-drag-image"], "components-draggable__invisible-drag-image"].filter(Boolean);
+  var cloneWrapperClasses = [style_module_default4.clone, "components-draggable__clone"].filter(Boolean);
   var bodyClass = "is-dragging-components-draggable";
+  var clonePadding = 0;
   function Draggable({
     children,
     onDragStart,
@@ -42829,17 +43049,19 @@ This message will only show in development mode. It won't appear in production. 
       const {
         ownerDocument
       } = event.target;
+      const slot = getWpCompatOverlaySlot();
+      const compatSlot = slot?.ownerDocument === ownerDocument ? slot : null;
       event.dataTransfer.setData(transferDataType, JSON.stringify(transferData));
       const cloneWrapper = ownerDocument.createElement("div");
       cloneWrapper.style.top = "0";
       cloneWrapper.style.left = "0";
       const dragImage = ownerDocument.createElement("div");
       if ("function" === typeof event.dataTransfer.setDragImage) {
-        dragImage.classList.add(dragImageClass);
+        dragImage.classList.add(...dragImageClasses);
         ownerDocument.body.appendChild(dragImage);
         event.dataTransfer.setDragImage(dragImage, 0, 0);
       }
-      cloneWrapper.classList.add(cloneWrapperClass);
+      cloneWrapper.classList.add(...cloneWrapperClasses);
       if (cloneClassname) {
         cloneWrapper.classList.add(cloneClassname);
       }
@@ -42852,7 +43074,7 @@ This message will only show in development mode. It won't appear in production. 
         const clonedDragComponent = ownerDocument.createElement("div");
         clonedDragComponent.innerHTML = dragComponentRef.current.innerHTML;
         cloneWrapper.appendChild(clonedDragComponent);
-        ownerDocument.body.appendChild(cloneWrapper);
+        (compatSlot ?? ownerDocument.body).appendChild(cloneWrapper);
       } else {
         const element = ownerDocument.getElementById(elementId);
         const elementRect = element.getBoundingClientRect();
@@ -42867,7 +43089,9 @@ This message will only show in development mode. It won't appear in production. 
         cloneWrapper.style.transform = `translate( ${x2}px, ${y3}px )`;
         Array.from(clone.querySelectorAll("iframe")).forEach((child) => child.parentNode?.removeChild(child));
         cloneWrapper.appendChild(clone);
-        if (appendToOwnerDocument) {
+        if (compatSlot) {
+          compatSlot.appendChild(cloneWrapper);
+        } else if (appendToOwnerDocument) {
           ownerDocument.body.appendChild(cloneWrapper);
         } else {
           elementWrapper?.appendChild(cloneWrapper);
