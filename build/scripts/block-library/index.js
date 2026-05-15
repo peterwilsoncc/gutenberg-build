@@ -31290,11 +31290,12 @@ ${js}
         }
       }
     },
-    migrate({ width, height, ...attributes2 }) {
+    migrate(attributes2) {
+      const { width, height } = attributes2;
       return {
         ...attributes2,
-        width: `${width}px`,
-        height: `${height}px`
+        width: typeof width === "number" ? `${width}px` : width,
+        height: typeof height === "number" ? `${height}px` : height
       };
     },
     save({ attributes: attributes2 }) {
@@ -31565,7 +31566,203 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("figure", { ...import_block_editor110.useBlockProps.save({ className: classes }), children: figure });
     }
   };
-  var deprecated_default22 = [v82, v73, v64, v54, v44, v35, v210, v120];
+  var v92 = {
+    attributes: {
+      blob: {
+        type: "string",
+        role: "local"
+      },
+      url: {
+        type: "string",
+        source: "attribute",
+        selector: "img",
+        attribute: "src",
+        role: "content"
+      },
+      alt: {
+        type: "string",
+        source: "attribute",
+        selector: "img",
+        attribute: "alt",
+        default: "",
+        role: "content"
+      },
+      caption: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "figcaption",
+        role: "content"
+      },
+      lightbox: {
+        type: "object",
+        enabled: {
+          type: "boolean"
+        }
+      },
+      title: {
+        type: "string",
+        source: "attribute",
+        selector: "img",
+        attribute: "title",
+        role: "content"
+      },
+      href: {
+        type: "string",
+        source: "attribute",
+        selector: "figure > a",
+        attribute: "href",
+        role: "content"
+      },
+      rel: {
+        type: "string",
+        source: "attribute",
+        selector: "figure > a",
+        attribute: "rel"
+      },
+      linkClass: {
+        type: "string",
+        source: "attribute",
+        selector: "figure > a",
+        attribute: "class"
+      },
+      id: {
+        type: "number",
+        role: "content"
+      },
+      width: {
+        type: "string"
+      },
+      height: {
+        type: "string"
+      },
+      aspectRatio: {
+        type: "string"
+      },
+      scale: {
+        type: "string"
+      },
+      focalPoint: {
+        type: "object"
+      },
+      sizeSlug: {
+        type: "string"
+      },
+      linkDestination: {
+        type: "string"
+      },
+      linkTarget: {
+        type: "string",
+        source: "attribute",
+        selector: "figure > a",
+        attribute: "target"
+      }
+    },
+    supports: {
+      interactivity: true,
+      align: ["left", "center", "right", "wide", "full"],
+      anchor: true,
+      color: {
+        text: false,
+        background: false
+      },
+      filter: {
+        duotone: true
+      },
+      spacing: {
+        margin: true
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        width: true,
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          width: true
+        }
+      },
+      shadow: {
+        __experimentalSkipSerialization: true
+      }
+    },
+    save({ attributes: attributes2 }) {
+      const {
+        url,
+        alt,
+        caption,
+        align,
+        href,
+        rel,
+        linkClass,
+        width,
+        height,
+        aspectRatio,
+        scale,
+        focalPoint,
+        id,
+        linkTarget,
+        sizeSlug,
+        title,
+        metadata: { bindings = {} } = {}
+      } = attributes2;
+      const newRel = !rel ? void 0 : rel;
+      const borderProps = (0, import_block_editor110.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const shadowProps = (0, import_block_editor110.__experimentalGetShadowClassesAndStyles)(attributes2);
+      const classes = clsx_default({
+        alignnone: "none" === align,
+        [`size-${sizeSlug}`]: sizeSlug,
+        "is-resized": width || height,
+        "has-custom-border": !!borderProps.className || borderProps.style && Object.keys(borderProps.style).length > 0
+      });
+      const imageClasses = clsx_default(borderProps.className, {
+        [`wp-image-${id}`]: !!id
+      });
+      const image = /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
+        "img",
+        {
+          src: url,
+          alt,
+          className: imageClasses || void 0,
+          style: {
+            ...borderProps.style,
+            ...shadowProps.style,
+            aspectRatio,
+            objectFit: scale,
+            objectPosition: focalPoint && scale ? mediaPosition2(focalPoint) : void 0,
+            width,
+            height
+          },
+          title
+        }
+      );
+      const displayCaption = !import_block_editor110.RichText.isEmpty(caption) || bindings.caption || bindings?.__default?.source === "core/pattern-overrides";
+      const figure = /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)(import_jsx_runtime277.Fragment, { children: [
+        href ? /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
+          "a",
+          {
+            className: linkClass,
+            href,
+            target: linkTarget,
+            rel: newRel,
+            children: image
+          }
+        ) : image,
+        displayCaption && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
+          import_block_editor110.RichText.Content,
+          {
+            className: (0, import_block_editor110.__experimentalGetElementClassName)(
+              "caption"
+            ),
+            tagName: "figcaption",
+            value: caption
+          }
+        )
+      ] });
+      return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("figure", { ...import_block_editor110.useBlockProps.save({ className: classes }), children: figure });
+    }
+  };
+  var deprecated_default22 = [v92, v82, v73, v64, v54, v44, v35, v210, v120];
 
   // packages/block-library/build-module/image/edit.mjs
   var import_blob13 = __toESM(require_blob(), 1);
@@ -32754,7 +32951,20 @@ ${js}
             ...resizeDelta ? {
               width: pixelSize.width + resizeDelta.width,
               height: pixelSize.height + resizeDelta.height
-            } : { width, height },
+            } : (() => {
+              const style2 = {};
+              if (width === "auto") {
+                style2.width = "auto";
+              } else if (width !== void 0 && width !== null) {
+                style2.width = typeof width === "number" ? `${width}px` : width;
+              }
+              if (height === "auto" || height === void 0 || height === null) {
+                style2.height = "auto";
+              } else {
+                style2.height = typeof height === "number" ? `${height}px` : height;
+              }
+              return style2;
+            })(),
             objectFit: scale,
             objectPosition: focalPoint && scale ? mediaPosition2(focalPoint) : void 0,
             ...borderProps.style,
@@ -33470,15 +33680,28 @@ ${js}
         src: url,
         alt,
         className: imageClasses || void 0,
-        style: {
-          ...borderProps.style,
-          ...shadowProps.style,
-          aspectRatio,
-          objectFit: scale,
-          objectPosition: focalPoint && scale ? mediaPosition2(focalPoint) : void 0,
-          width,
-          height
-        },
+        style: (() => {
+          const style2 = {
+            ...borderProps.style,
+            ...shadowProps.style,
+            aspectRatio,
+            objectFit: scale,
+            objectPosition: focalPoint && scale ? mediaPosition2(focalPoint) : void 0
+          };
+          if (width !== void 0 || height !== void 0) {
+            if (width === "auto") {
+              style2.width = "auto";
+            } else if (width !== void 0 && width !== null) {
+              style2.width = typeof width === "number" ? `${width}px` : width;
+            }
+            if (height === "auto" || height === void 0 || height === null) {
+              style2.height = "auto";
+            } else {
+              style2.height = typeof height === "number" ? `${height}px` : height;
+            }
+          }
+          return style2;
+        })(),
         title
       }
     );
