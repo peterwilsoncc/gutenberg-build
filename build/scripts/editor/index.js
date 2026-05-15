@@ -993,6 +993,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/keyboard-shortcuts
+  var require_keyboard_shortcuts = __commonJS({
+    "package-external:@wordpress/keyboard-shortcuts"(exports, module) {
+      module.exports = window.wp.keyboardShortcuts;
+    }
+  });
+
   // package-external:@wordpress/viewport
   var require_viewport = __commonJS({
     "package-external:@wordpress/viewport"(exports, module) {
@@ -1354,13 +1361,6 @@ var wp;
   var require_commands = __commonJS({
     "package-external:@wordpress/commands"(exports, module) {
       module.exports = window.wp.commands;
-    }
-  });
-
-  // package-external:@wordpress/keyboard-shortcuts
-  var require_keyboard_shortcuts = __commonJS({
-    "package-external:@wordpress/keyboard-shortcuts"(exports, module) {
-      module.exports = window.wp.keyboardShortcuts;
     }
   });
 
@@ -35095,6 +35095,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components92 = __toESM(require_components(), 1);
   var import_data43 = __toESM(require_data(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
+  var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 
   // packages/media-editor/build-module/components/media-editor/index.mjs
   var import_components91 = __toESM(require_components(), 1);
@@ -41253,6 +41254,9 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const portalElement = typeof document === "undefined" ? null : document.body;
+    const stopKeyDownPropagation = (event) => {
+      event.stopPropagation();
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
       media_editor_default,
       {
@@ -41281,17 +41285,24 @@ If there's a particular need for this, please submit a feature request at https:
           onKeyDown,
           shouldCloseOnClickOutside
         }) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-          import_components92.Modal,
+          import_keyboard_shortcuts.ShortcutProvider,
           {
-            className: "media-editor-modal",
-            title: (0, import_i18n128.__)("Edit media"),
-            size: "fill",
-            isDismissible: false,
-            shouldCloseOnClickOutside,
-            onKeyDown,
-            onRequestClose,
-            headerActions,
-            children
+            className: "media-editor-modal__shortcut-scope",
+            onKeyDown: stopKeyDownPropagation,
+            children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+              import_components92.Modal,
+              {
+                className: "media-editor-modal",
+                title: (0, import_i18n128.__)("Edit media"),
+                size: "fill",
+                isDismissible: false,
+                shouldCloseOnClickOutside,
+                onKeyDown,
+                onRequestClose,
+                headerActions,
+                children
+              }
+            )
           }
         )
       }
@@ -46004,7 +46015,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/keyboard-shortcut-help-modal/index.mjs
   var import_components94 = __toESM(require_components(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
-  var import_keyboard_shortcuts2 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts3 = __toESM(require_keyboard_shortcuts(), 1);
   var import_data59 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/keyboard-shortcut-help-modal/config.mjs
@@ -46127,7 +46138,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/keyboard-shortcut-help-modal/dynamic-shortcut.mjs
   var import_data58 = __toESM(require_data(), 1);
-  var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts2 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
   function DynamicShortcut({ name: name2 }) {
     const { keyCombination, description, aliases } = (0, import_data58.useSelect)(
@@ -46136,7 +46147,7 @@ If there's a particular need for this, please submit a feature request at https:
           getShortcutKeyCombination,
           getShortcutDescription,
           getShortcutAliases
-        } = select7(import_keyboard_shortcuts.store);
+        } = select7(import_keyboard_shortcuts2.store);
         return {
           keyCombination: getShortcutKeyCombination(name2),
           aliases: getShortcutAliases(name2),
@@ -46204,7 +46215,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) => {
     const categoryShortcuts = (0, import_data59.useSelect)(
       (select7) => {
-        return select7(import_keyboard_shortcuts2.store).getCategoryShortcuts(
+        return select7(import_keyboard_shortcuts3.store).getCategoryShortcuts(
           categoryName
         );
       },
@@ -46233,7 +46244,7 @@ If there's a particular need for this, please submit a feature request at https:
         openModal2(KEYBOARD_SHORTCUT_HELP_MODAL_NAME);
       }
     };
-    (0, import_keyboard_shortcuts2.useShortcut)("core/editor/keyboard-shortcuts", toggleModal);
+    (0, import_keyboard_shortcuts3.useShortcut)("core/editor/keyboard-shortcuts", toggleModal);
     if (!isModalActive2) {
       return null;
     }
@@ -46487,7 +46498,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/global-keyboard-shortcuts/index.mjs
-  var import_keyboard_shortcuts3 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts4 = __toESM(require_keyboard_shortcuts(), 1);
   var import_data61 = __toESM(require_data(), 1);
   var import_block_editor14 = __toESM(require_block_editor(), 1);
   function EditorKeyboardShortcuts() {
@@ -46512,7 +46523,7 @@ If there's a particular need for this, please submit a feature request at https:
       isListViewOpened: isListViewOpened2,
       getEditorMode: getEditorMode2
     } = (0, import_data61.useSelect)(store);
-    (0, import_keyboard_shortcuts3.useShortcut)(
+    (0, import_keyboard_shortcuts4.useShortcut)(
       "core/editor/toggle-mode",
       () => {
         switchEditorMode2(
@@ -46523,18 +46534,18 @@ If there's a particular need for this, please submit a feature request at https:
         isDisabled: isModeToggleDisabled
       }
     );
-    (0, import_keyboard_shortcuts3.useShortcut)("core/editor/toggle-distraction-free", () => {
+    (0, import_keyboard_shortcuts4.useShortcut)("core/editor/toggle-distraction-free", () => {
       toggleDistractionFree2();
     });
-    (0, import_keyboard_shortcuts3.useShortcut)("core/editor/undo", (event) => {
+    (0, import_keyboard_shortcuts4.useShortcut)("core/editor/undo", (event) => {
       undo2();
       event.preventDefault();
     });
-    (0, import_keyboard_shortcuts3.useShortcut)("core/editor/redo", (event) => {
+    (0, import_keyboard_shortcuts4.useShortcut)("core/editor/redo", (event) => {
       redo2();
       event.preventDefault();
     });
-    (0, import_keyboard_shortcuts3.useShortcut)("core/editor/save", (event) => {
+    (0, import_keyboard_shortcuts4.useShortcut)("core/editor/save", (event) => {
       event.preventDefault();
       if (isPostSavingLocked2()) {
         return;
@@ -46544,13 +46555,13 @@ If there's a particular need for this, please submit a feature request at https:
       }
       savePost2();
     });
-    (0, import_keyboard_shortcuts3.useShortcut)("core/editor/toggle-list-view", (event) => {
+    (0, import_keyboard_shortcuts4.useShortcut)("core/editor/toggle-list-view", (event) => {
       if (!isListViewOpened2()) {
         event.preventDefault();
         setIsListViewOpened2(true);
       }
     });
-    (0, import_keyboard_shortcuts3.useShortcut)("core/editor/toggle-sidebar", (event) => {
+    (0, import_keyboard_shortcuts4.useShortcut)("core/editor/toggle-sidebar", (event) => {
       event.preventDefault();
       const isEditorSidebarOpened = [
         "edit-post/document",
@@ -67798,11 +67809,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data97 = __toESM(require_data(), 1);
   var import_i18n199 = __toESM(require_i18n(), 1);
   var import_block_editor45 = __toESM(require_block_editor(), 1);
-  var import_keyboard_shortcuts4 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts5 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes13 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
   function EditorKeyboardShortcutsRegister() {
-    const { registerShortcut } = (0, import_data97.useDispatch)(import_keyboard_shortcuts4.store);
+    const { registerShortcut } = (0, import_data97.useDispatch)(import_keyboard_shortcuts5.store);
     (0, import_element200.useEffect)(() => {
       registerShortcut({
         name: "core/editor/toggle-mode",
@@ -76336,7 +76347,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor70 = __toESM(require_block_editor(), 1);
   var import_components237 = __toESM(require_components(), 1);
   var import_element256 = __toESM(require_element(), 1);
-  var import_keyboard_shortcuts5 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts6 = __toESM(require_keyboard_shortcuts(), 1);
   var import_preferences15 = __toESM(require_preferences(), 1);
   var import_jsx_runtime443 = __toESM(require_jsx_runtime(), 1);
   function DocumentTools({ className, disableBlockTools = false }) {
@@ -76357,7 +76368,7 @@ If there's a particular need for this, please submit a feature request at https:
         getInserterSidebarToggleRef: getInserterSidebarToggleRef2,
         getListViewToggleRef: getListViewToggleRef2
       } = unlock(select7(store));
-      const { getShortcutRepresentation } = select7(import_keyboard_shortcuts5.store);
+      const { getShortcutRepresentation } = select7(import_keyboard_shortcuts6.store);
       return {
         isInserterOpened: select7(store).isInserterOpened(),
         isListViewOpen: isListViewOpened2(),
@@ -76564,7 +76575,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n271 = __toESM(require_i18n(), 1);
   var import_components240 = __toESM(require_components(), 1);
   var import_data195 = __toESM(require_data(), 1);
-  var import_keyboard_shortcuts6 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime446 = __toESM(require_jsx_runtime(), 1);
   var MODES = [
     {
@@ -76580,7 +76591,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { shortcut, isRichEditingEnabled, isCodeEditingEnabled, mode } = (0, import_data195.useSelect)(
       (select7) => ({
         shortcut: select7(
-          import_keyboard_shortcuts6.store
+          import_keyboard_shortcuts7.store
         ).getShortcutRepresentation("core/editor/toggle-mode"),
         isRichEditingEnabled: select7(store).getEditorSettings().richEditingEnabled,
         isCodeEditingEnabled: select7(store).getEditorSettings().codeEditingEnabled,
@@ -77058,7 +77069,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data200 = __toESM(require_data(), 1);
   var import_block_editor72 = __toESM(require_block_editor(), 1);
   var import_preferences19 = __toESM(require_preferences(), 1);
-  var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes19 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
   var ZoomOutToggle = ({ disabled: disabled2 }) => {
@@ -77079,7 +77090,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data200.useDispatch)(import_block_editor72.store)
     );
     const { registerShortcut, unregisterShortcut } = (0, import_data200.useDispatch)(
-      import_keyboard_shortcuts7.store
+      import_keyboard_shortcuts8.store
     );
     (0, import_element258.useEffect)(() => {
       registerShortcut({
@@ -77097,7 +77108,7 @@ If there's a particular need for this, please submit a feature request at https:
         unregisterShortcut("core/editor/zoom");
       };
     }, [registerShortcut, unregisterShortcut]);
-    (0, import_keyboard_shortcuts7.useShortcut)(
+    (0, import_keyboard_shortcuts8.useShortcut)(
       "core/editor/zoom",
       () => {
         if (isZoomOut) {
@@ -79022,7 +79033,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_dom13 = __toESM(require_dom(), 1);
   var import_element269 = __toESM(require_element(), 1);
   var import_i18n282 = __toESM(require_i18n(), 1);
-  var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
 
   // packages/editor/build-module/components/list-view-sidebar/list-view-outline.mjs
@@ -79102,7 +79113,7 @@ If there's a particular need for this, please submit a feature request at https:
         handleSidebarFocus(tab);
       }
     }, [closeListView, tab]);
-    (0, import_keyboard_shortcuts8.useShortcut)("core/editor/toggle-list-view", handleToggleListViewShortcut);
+    (0, import_keyboard_shortcuts9.useShortcut)("core/editor/toggle-list-view", handleToggleListViewShortcut);
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
@@ -80727,14 +80738,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components258 = __toESM(require_components(), 1);
   var import_data218 = __toESM(require_data(), 1);
   var import_i18n291 = __toESM(require_i18n(), 1);
-  var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
   var import_element279 = __toESM(require_element(), 1);
   var import_jsx_runtime472 = __toESM(require_jsx_runtime(), 1);
   function TextEditor({ autoFocus = false }) {
     const { switchEditorMode: switchEditorMode2 } = (0, import_data218.useDispatch)(store);
     const { shortcut, isRichEditingEnabled } = (0, import_data218.useSelect)((select7) => {
       const { getEditorSettings: getEditorSettings2 } = select7(store);
-      const { getShortcutRepresentation } = select7(import_keyboard_shortcuts9.store);
+      const { getShortcutRepresentation } = select7(import_keyboard_shortcuts10.store);
       return {
         shortcut: getShortcutRepresentation("core/editor/toggle-mode"),
         isRichEditingEnabled: getEditorSettings2().richEditingEnabled
@@ -81702,7 +81713,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data254 = __toESM(require_data(), 1);
   var import_element301 = __toESM(require_element(), 1);
   var import_i18n316 = __toESM(require_i18n(), 1);
-  var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_components282 = __toESM(require_components(), 1);
 
   // packages/editor/build-module/components/pattern-overrides-panel/index.mjs
@@ -83455,7 +83466,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { tabName, keyboardShortcut, showSummary, postType: postType2 } = (0, import_data254.useSelect)(
       (select7) => {
         const shortcut = select7(
-          import_keyboard_shortcuts10.store
+          import_keyboard_shortcuts11.store
         ).getShortcutRepresentation("core/editor/toggle-sidebar");
         const sidebar = select7(store3).getActiveComplementaryArea("core");
         const _isEditorSidebarOpened = [
@@ -83518,7 +83529,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data261 = __toESM(require_data(), 1);
   var import_element309 = __toESM(require_element(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
-  var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor105 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
 
@@ -84864,7 +84875,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor103 = __toESM(require_block_editor(), 1);
   var import_data260 = __toESM(require_data(), 1);
   var import_blocks36 = __toESM(require_blocks(), 1);
-  var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
+  var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime514 = __toESM(require_jsx_runtime(), 1);
   var { NoteIconSlotFill } = unlock(import_block_editor103.privateApis);
   function NoteMenuItem({ clientId, onClick, isDistractionFree }) {
@@ -84875,7 +84886,7 @@ If there's a particular need for this, please submit a feature request at https:
       [clientId]
     );
     const shortcut = (0, import_data260.useSelect)(
-      (select7) => select7(import_keyboard_shortcuts11.store).getShortcutRepresentation(
+      (select7) => select7(import_keyboard_shortcuts12.store).getShortcutRepresentation(
         "core/editor/new-note"
       ),
       []
@@ -85069,7 +85080,7 @@ If there's a particular need for this, please submit a feature request at https:
         isApproved: false
       });
     }
-    (0, import_keyboard_shortcuts12.useShortcut)(
+    (0, import_keyboard_shortcuts13.useShortcut)(
       "core/editor/new-note",
       (event) => {
         event.preventDefault();

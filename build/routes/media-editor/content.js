@@ -299,6 +299,13 @@ var require_deprecated = __commonJS({
   }
 });
 
+// package-external:@wordpress/keyboard-shortcuts
+var require_keyboard_shortcuts = __commonJS({
+  "package-external:@wordpress/keyboard-shortcuts"(exports, module) {
+    module.exports = window.wp.keyboardShortcuts;
+  }
+});
+
 // package-external:@wordpress/notices
 var require_notices = __commonJS({
   "package-external:@wordpress/notices"(exports, module) {
@@ -11872,6 +11879,7 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 var import_components40 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
+var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
 var import_components39 = __toESM(require_components(), 1);
@@ -17965,6 +17973,9 @@ function MediaEditorModal({
     return null;
   }
   const portalElement = typeof document === "undefined" ? null : document.body;
+  const stopKeyDownPropagation = (event) => {
+    event.stopPropagation();
+  };
   return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     media_editor_default,
     {
@@ -17993,17 +18004,24 @@ function MediaEditorModal({
         onKeyDown,
         shouldCloseOnClickOutside
       }) => /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-        import_components40.Modal,
+        import_keyboard_shortcuts.ShortcutProvider,
         {
-          className: "media-editor-modal",
-          title: (0, import_i18n36.__)("Edit media"),
-          size: "fill",
-          isDismissible: false,
-          shouldCloseOnClickOutside,
-          onKeyDown,
-          onRequestClose,
-          headerActions,
-          children
+          className: "media-editor-modal__shortcut-scope",
+          onKeyDown: stopKeyDownPropagation,
+          children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+            import_components40.Modal,
+            {
+              className: "media-editor-modal",
+              title: (0, import_i18n36.__)("Edit media"),
+              size: "fill",
+              isDismissible: false,
+              shouldCloseOnClickOutside,
+              onKeyDown,
+              onRequestClose,
+              headerActions,
+              children
+            }
+          )
         }
       )
     }
