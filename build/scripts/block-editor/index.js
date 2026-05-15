@@ -61395,6 +61395,9 @@ var wp;
       onChange(newValue);
     };
     const showTextPanel = useHasTextPanel(settings2);
+    const showCaptionPanel = useHasCaptionPanel(settings2);
+    const showButtonPanel = useHasButtonPanel(settings2);
+    const showHeadingPanel = useHasHeadingPanel(settings2);
     const textColor = decodeValue(inheritedValue?.color?.text);
     const userTextColor = decodeValue(value?.color?.text);
     const hasTextColor = () => !!userTextColor;
@@ -61418,47 +61421,47 @@ var wp;
       {
         name: "caption",
         label: (0, import_i18n190.__)("Captions"),
-        showPanel: useHasCaptionPanel(settings2)
+        showPanel: showCaptionPanel
       },
       {
         name: "button",
         label: (0, import_i18n190.__)("Button"),
-        showPanel: useHasButtonPanel(settings2)
+        showPanel: showButtonPanel
       },
       {
         name: "heading",
         label: (0, import_i18n190.__)("Heading"),
-        showPanel: useHasHeadingPanel(settings2)
+        showPanel: showHeadingPanel
       },
       {
         name: "h1",
         label: (0, import_i18n190.__)("H1"),
-        showPanel: useHasHeadingPanel(settings2)
+        showPanel: showHeadingPanel
       },
       {
         name: "h2",
         label: (0, import_i18n190.__)("H2"),
-        showPanel: useHasHeadingPanel(settings2)
+        showPanel: showHeadingPanel
       },
       {
         name: "h3",
         label: (0, import_i18n190.__)("H3"),
-        showPanel: useHasHeadingPanel(settings2)
+        showPanel: showHeadingPanel
       },
       {
         name: "h4",
         label: (0, import_i18n190.__)("H4"),
-        showPanel: useHasHeadingPanel(settings2)
+        showPanel: showHeadingPanel
       },
       {
         name: "h5",
         label: (0, import_i18n190.__)("H5"),
-        showPanel: useHasHeadingPanel(settings2)
+        showPanel: showHeadingPanel
       },
       {
         name: "h6",
         label: (0, import_i18n190.__)("H6"),
-        showPanel: useHasHeadingPanel(settings2)
+        showPanel: showHeadingPanel
       }
     ];
     const resetAllFilter = (previousValue) => {
