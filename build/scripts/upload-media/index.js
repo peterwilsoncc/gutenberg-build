@@ -1971,19 +1971,6 @@ var wp;
       );
       const isHeic = HEIC_MIME_TYPES.includes(file.type);
       if (isImage && isVipsSupported) {
-        const { bigImageSizeThreshold } = settings;
-        if (bigImageSizeThreshold) {
-          operations.push([
-            OperationType.ResizeCrop,
-            {
-              resize: {
-                width: bigImageSizeThreshold,
-                height: bigImageSizeThreshold
-              },
-              isThresholdResize: true
-            }
-          ]);
-        }
         operations.push(
           OperationType.Upload,
           OperationType.ThumbnailGeneration,
