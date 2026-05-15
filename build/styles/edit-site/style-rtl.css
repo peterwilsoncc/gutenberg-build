@@ -950,7 +950,7 @@
   }
 }
 .dataviews-footer {
-  z-index: 2;
+  z-index: 1;
 }
 
 .dataviews-footer .is-refreshing {
@@ -1180,6 +1180,7 @@
   height: 100%;
   justify-content: flex-start;
   position: relative;
+  isolation: isolate;
 }
 
 .dataviews-view-grid .dataviews-view-grid__card .dataviews-view-grid__title-actions,
@@ -1999,6 +2000,7 @@ div.dataviews-view-list {
   height: 100%;
   justify-content: flex-start;
   position: relative;
+  isolation: isolate;
 }
 
 .dataviews-view-picker-grid .dataviews-view-picker-grid__card .dataviews-view-picker-grid__title-actions {
