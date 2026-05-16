@@ -70506,11 +70506,6 @@ ${js}
   var TABS_TEMPLATE = [["core/tab-list"], ["core/tab-panels"]];
   function Edit23({ clientId, attributes: attributes2, setAttributes }) {
     const { anchor, activeTabIndex, editorActiveTabIndex } = attributes2;
-    (0, import_element134.useEffect)(() => {
-      if (editorActiveTabIndex === void 0) {
-        setAttributes({ editorActiveTabIndex: activeTabIndex });
-      }
-    }, []);
     const { tabPanels, tabPanelsClientId, tabs, tabListClientId } = (0, import_data147.useSelect)(
       (select9) => {
         const { getBlocks } = select9(import_block_editor269.store);
