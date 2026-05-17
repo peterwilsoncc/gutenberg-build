@@ -41000,7 +41000,7 @@ function Inserter() {
   return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(dialog_exports.Root, { open: inserterOpen, onOpenChange: setInserterOpen, children: /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(
     dialog_exports.Popup,
     {
-      size: "large",
+      size: "full",
       portal: /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
         dialog_exports.Portal,
         {
