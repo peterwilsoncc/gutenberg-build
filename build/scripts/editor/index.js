@@ -36687,10 +36687,69 @@ If there's a particular need for this, please submit a feature request at https:
     return degrees * Math.PI / 180;
   }
 
+  // packages/media-editor/build-module/image-editor/core/math/sanitize.mjs
+  var MAX_SAFE_MAGNITUDE = 1e6;
+  function safeBoundedNumber(value, fallback) {
+    if (!Number.isFinite(value)) {
+      return fallback;
+    }
+    if (Math.abs(value) > MAX_SAFE_MAGNITUDE) {
+      return fallback;
+    }
+    return value;
+  }
+  function isSafeNumber(value) {
+    return Number.isFinite(value) && Math.abs(value) <= MAX_SAFE_MAGNITUDE;
+  }
+  function isValidSize(size) {
+    return Number.isFinite(size.width) && Number.isFinite(size.height) && size.width >= Number.EPSILON && size.height >= Number.EPSILON && size.width <= MAX_SAFE_MAGNITUDE && size.height <= MAX_SAFE_MAGNITUDE;
+  }
+  function sanitizeRect(rect) {
+    const x2 = safeBoundedNumber(rect.x, 0);
+    const y3 = safeBoundedNumber(rect.y, 0);
+    const width = safeBoundedNumber(rect.width, 0);
+    const height = safeBoundedNumber(rect.height, 0);
+    if (x2 === rect.x && y3 === rect.y && width === rect.width && height === rect.height) {
+      return rect;
+    }
+    return { x: x2, y: y3, width, height };
+  }
+  function sanitizeCropperState(state) {
+    const panX = safeBoundedNumber(state.pan.x, 0);
+    const panY = safeBoundedNumber(state.pan.y, 0);
+    const basePanX = safeBoundedNumber(state.basePan.x, 0);
+    const basePanY = safeBoundedNumber(state.basePan.y, 0);
+    const rotation = safeBoundedNumber(state.rotation, 0);
+    const baseRotation = safeBoundedNumber(state.baseRotation, 0);
+    const rawZoom = safeBoundedNumber(state.zoom, 1);
+    const zoom = rawZoom >= Number.EPSILON ? rawZoom : 1;
+    const rawBaseZoom = safeBoundedNumber(state.baseZoom, 1);
+    const baseZoom = rawBaseZoom >= Number.EPSILON ? rawBaseZoom : 1;
+    const cropRect = sanitizeRect(state.cropRect);
+    const panUnchanged = panX === state.pan.x && panY === state.pan.y;
+    const basePanUnchanged = basePanX === state.basePan.x && basePanY === state.basePan.y;
+    if (panUnchanged && basePanUnchanged && zoom === state.zoom && baseZoom === state.baseZoom && rotation === state.rotation && baseRotation === state.baseRotation && cropRect === state.cropRect) {
+      return state;
+    }
+    return {
+      ...state,
+      pan: panUnchanged ? state.pan : { x: panX, y: panY },
+      zoom,
+      rotation,
+      basePan: basePanUnchanged ? state.basePan : { x: basePanX, y: basePanY },
+      baseZoom,
+      baseRotation,
+      cropRect
+    };
+  }
+
   // packages/media-editor/build-module/image-editor/core/camera.mjs
   var _scratchMat = mat2d_exports.create();
   var _scratchVec = vec2_exports.create();
   function getRotatedBBox(width, height, rotation) {
+    if (!isSafeNumber(width) || !isSafeNumber(height) || !isSafeNumber(rotation) || width <= 0 || height <= 0) {
+      return { width: 0, height: 0 };
+    }
     const rad = degreesToRadians(rotation);
     const cosR = Math.abs(Math.cos(rad));
     const sinR = Math.abs(Math.sin(rad));
@@ -36700,18 +36759,25 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function getImageFit(containerSize, imageSize, rotation) {
-    if (containerSize.width === 0 || containerSize.height === 0 || imageSize.width === 0 || imageSize.height === 0) {
+    if (!isValidSize(containerSize) || !isValidSize(imageSize)) {
       return {
         elementSize: { width: 0, height: 0 },
         visualSize: { width: 0, height: 0 }
       };
     }
-    const snapRotation = Math.round(rotation / 90) * 90;
+    const safeRotation = safeBoundedNumber(rotation, 0);
+    const snapRotation = Math.round(safeRotation / 90) * 90;
     const naturalBBox = getRotatedBBox(
       imageSize.width,
       imageSize.height,
       snapRotation
     );
+    if (naturalBBox.width === 0 || naturalBBox.height === 0) {
+      return {
+        elementSize: { width: 0, height: 0 },
+        visualSize: { width: 0, height: 0 }
+      };
+    }
     const fitScale = Math.min(
       containerSize.width / naturalBBox.width,
       containerSize.height / naturalBBox.height
@@ -36726,15 +36792,19 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function createCamera(state, containerSize, imageSize) {
     const m2 = mat2d_exports.create();
-    if (containerSize.width === 0 || containerSize.height === 0 || imageSize.width === 0 || imageSize.height === 0) {
+    if (!isValidSize(containerSize) || !isValidSize(imageSize)) {
       return m2;
     }
-    const snapRotation = Math.round(state.rotation / 90) * 90;
+    const safeState = sanitizeCropperState(state);
+    const snapRotation = Math.round(safeState.rotation / 90) * 90;
     const naturalBBox = getRotatedBBox(
       imageSize.width,
       imageSize.height,
       snapRotation
     );
+    if (naturalBBox.width === 0 || naturalBBox.height === 0) {
+      return m2;
+    }
     const fitScale = Math.min(
       containerSize.width / naturalBBox.width,
       containerSize.height / naturalBBox.height
@@ -36750,13 +36820,16 @@ If there's a particular need for this, please submit a feature request at https:
       containerSize.width / 2,
       containerSize.height / 2
     ]);
-    mat2d_exports.translate(m2, m2, [state.pan.x * visualW, state.pan.y * visualH]);
-    mat2d_exports.scale(m2, m2, [
-      state.flip.horizontal ? -1 : 1,
-      state.flip.vertical ? -1 : 1
+    mat2d_exports.translate(m2, m2, [
+      safeState.pan.x * visualW,
+      safeState.pan.y * visualH
     ]);
-    mat2d_exports.rotate(m2, m2, degreesToRadians(state.rotation));
-    mat2d_exports.scale(m2, m2, [state.zoom, state.zoom]);
+    mat2d_exports.scale(m2, m2, [
+      safeState.flip.horizontal ? -1 : 1,
+      safeState.flip.vertical ? -1 : 1
+    ]);
+    mat2d_exports.rotate(m2, m2, degreesToRadians(safeState.rotation));
+    mat2d_exports.scale(m2, m2, [safeState.zoom, safeState.zoom]);
     mat2d_exports.translate(m2, m2, [-renderedW / 2, -renderedH / 2]);
     mat2d_exports.scale(m2, m2, [renderedW, renderedH]);
     return m2;
@@ -36798,10 +36871,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function createExportCamera(state, imageSize, outputSize) {
     const m2 = mat2d_exports.create();
-    const { rotation, flip, cropRect, zoom, pan } = state;
-    if (imageSize.width === 0 || imageSize.height === 0 || outputSize.width === 0 || outputSize.height === 0) {
+    if (!isValidSize(imageSize) || !isValidSize(outputSize)) {
       return m2;
     }
+    const { rotation, flip, cropRect, zoom, pan } = sanitizeCropperState(state);
     const snapRotation = Math.round(rotation / 90) * 90;
     const { width: rotW, height: rotH } = getRotatedBBox(
       imageSize.width,
@@ -36923,17 +36996,18 @@ If there's a particular need for this, please submit a feature request at https:
     return Math.max(1, zoomFromAlpha, zoomFromBeta);
   }
   function getImageCropBounds(state, elementSize, visualSize) {
-    if (elementSize.width === 0 || elementSize.height === 0 || visualSize.width === 0 || visualSize.height === 0) {
+    if (!isValidSize(elementSize) || !isValidSize(visualSize)) {
       return { minX: 0, minY: 0, maxX: 1, maxY: 1 };
     }
-    const tx = state.pan.x * visualSize.width;
-    const ty = state.pan.y * visualSize.height;
-    const rad = degreesToRadians(state.rotation);
+    const safeState = sanitizeCropperState(state);
+    const tx = safeState.pan.x * visualSize.width;
+    const ty = safeState.pan.y * visualSize.height;
+    const rad = degreesToRadians(safeState.rotation);
     const cos = Math.cos(rad);
     const sin = Math.sin(rad);
-    const sx = state.flip.horizontal ? -1 : 1;
-    const sy = state.flip.vertical ? -1 : 1;
-    const z = state.zoom;
+    const sx = safeState.flip.horizontal ? -1 : 1;
+    const sy = safeState.flip.vertical ? -1 : 1;
+    const z = safeState.zoom;
     const ma = sx * cos * z;
     const mb = sy * sin * z;
     const mc = -sx * sin * z;
@@ -36968,21 +37042,26 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function restrictCropRect(cropRect, zoom, rotation, imageAspectRatio) {
-    const aspectRatio = Math.max(imageAspectRatio, Number.EPSILON);
-    const snapRotation = Math.round(rotation / 90) * 90;
+    const safeRect = sanitizeRect(cropRect);
+    const zoomCandidate = safeBoundedNumber(zoom, 1);
+    const safeZoom = zoomCandidate >= Number.EPSILON ? zoomCandidate : 1;
+    const safeRotation = safeBoundedNumber(rotation, 0);
+    const safeAspect = safeBoundedNumber(imageAspectRatio, 1);
+    const aspectRatio = Math.max(safeAspect, Number.EPSILON);
+    const snapRotation = Math.round(safeRotation / 90) * 90;
     const { visualW, visualH } = getVisualDimensions(
       snapRotation,
       aspectRatio
     );
-    const { absC, absS } = getVisualDimensions(rotation, aspectRatio);
-    const W = cropRect.width;
-    const H2 = cropRect.height;
+    const { absC, absS } = getVisualDimensions(safeRotation, aspectRatio);
+    const W = safeRect.width;
+    const H2 = safeRect.height;
     const cropWPx = W * visualW;
     const cropHPx = H2 * visualH;
     const spanAlpha = cropWPx * absC + cropHPx * absS;
     const spanBeta = cropWPx * absS + cropHPx * absC;
-    const limitAlpha = aspectRatio * zoom;
-    const limitBeta = zoom;
+    const limitAlpha = aspectRatio * safeZoom;
+    const limitBeta = safeZoom;
     let t4 = 1;
     if (spanAlpha > 0) {
       t4 = Math.min(t4, limitAlpha / spanAlpha);
@@ -36991,12 +37070,12 @@ If there's a particular need for this, please submit a feature request at https:
       t4 = Math.min(t4, limitBeta / spanBeta);
     }
     if (t4 >= 1 - EPSILON2) {
-      return cropRect;
+      return safeRect;
     }
     const newW = W * t4;
     const newH = H2 * t4;
-    const centerX = cropRect.x + W / 2;
-    const centerY = cropRect.y + H2 / 2;
+    const centerX = safeRect.x + W / 2;
+    const centerY = safeRect.y + H2 / 2;
     let newX = centerX - newW / 2;
     let newY = centerY - newH / 2;
     newX = Math.max(0, Math.min(newX, 1 - newW));
@@ -37007,16 +37086,22 @@ If there's a particular need for this, please submit a feature request at https:
   var _scratchMat2 = mat2d_exports.create();
   var _scratchVec2 = vec2_exports.create();
   function restrictPanZoom(state, imageSize, cropRect) {
-    const aspectRatio = imageSize.width > 0 && imageSize.height > 0 ? imageSize.width / imageSize.height : 1;
-    const minZoom = getMinZoomForCover(state.rotation, aspectRatio, cropRect);
-    const zoom = Math.max(state.zoom, minZoom);
-    const candidateState = { ...state, zoom };
+    const safeState = sanitizeCropperState(state);
+    const safeCropRect = sanitizeRect(cropRect);
+    const aspectRatio = isValidSize(imageSize) ? imageSize.width / imageSize.height : 1;
+    const minZoom = getMinZoomForCover(
+      safeState.rotation,
+      aspectRatio,
+      safeCropRect
+    );
+    const zoom = Math.max(safeState.zoom, minZoom);
+    const candidateState = { ...safeState, zoom };
     const camera = createCamera(
       candidateState,
       CANONICAL_CONTAINER,
       imageSize
     );
-    const snapRotation = Math.round(state.rotation / 90) * 90;
+    const snapRotation = Math.round(safeState.rotation / 90) * 90;
     const baseCamera = createCamera(
       {
         ...candidateState,
@@ -37030,20 +37115,20 @@ If there's a particular need for this, please submit a feature request at https:
     const visibleBounds = getVisibleBounds(baseCamera);
     const stencilCorners = [
       [
-        visibleBounds.left + cropRect.x * visibleBounds.width,
-        visibleBounds.top + cropRect.y * visibleBounds.height
+        visibleBounds.left + safeCropRect.x * visibleBounds.width,
+        visibleBounds.top + safeCropRect.y * visibleBounds.height
       ],
       [
-        visibleBounds.left + (cropRect.x + cropRect.width) * visibleBounds.width,
-        visibleBounds.top + cropRect.y * visibleBounds.height
+        visibleBounds.left + (safeCropRect.x + safeCropRect.width) * visibleBounds.width,
+        visibleBounds.top + safeCropRect.y * visibleBounds.height
       ],
       [
-        visibleBounds.left + (cropRect.x + cropRect.width) * visibleBounds.width,
-        visibleBounds.top + (cropRect.y + cropRect.height) * visibleBounds.height
+        visibleBounds.left + (safeCropRect.x + safeCropRect.width) * visibleBounds.width,
+        visibleBounds.top + (safeCropRect.y + safeCropRect.height) * visibleBounds.height
       ],
       [
-        visibleBounds.left + cropRect.x * visibleBounds.width,
-        visibleBounds.top + (cropRect.y + cropRect.height) * visibleBounds.height
+        visibleBounds.left + safeCropRect.x * visibleBounds.width,
+        visibleBounds.top + (safeCropRect.y + safeCropRect.height) * visibleBounds.height
       ]
     ];
     mat2d_exports.invert(_scratchMat2, camera);
@@ -37068,7 +37153,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     if (minWx >= -EPSILON2 && maxWx <= 1 + EPSILON2 && minWy >= -EPSILON2 && maxWy <= 1 + EPSILON2) {
-      return { pan: state.pan, zoom };
+      return { pan: safeState.pan, zoom };
     }
     let dwx = 0;
     let dwy = 0;
@@ -37088,8 +37173,8 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const dsx = camera[0] * dwx + camera[2] * dwy;
     const dsy = camera[1] * dwx + camera[3] * dwy;
-    const newPanX = state.pan.x - (visibleBounds.width > 0 ? dsx / visibleBounds.width : 0);
-    const newPanY = state.pan.y - (visibleBounds.height > 0 ? dsy / visibleBounds.height : 0);
+    const newPanX = safeState.pan.x - (visibleBounds.width > 0 ? dsx / visibleBounds.width : 0);
+    const newPanY = safeState.pan.y - (visibleBounds.height > 0 ? dsy / visibleBounds.height : 0);
     return {
       pan: { x: newPanX, y: newPanY },
       zoom
@@ -38356,15 +38441,20 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element123 = __toESM(require_element(), 1);
 
   // packages/media-editor/build-module/image-editor/core/transform-style.mjs
+  var IDENTITY_MATRIX_STYLE = "matrix(1, 0, 0, 1, 0, 0)";
   function computeTransformStyle(state, imageSize) {
-    const translateX = state.pan.x * imageSize.width;
-    const translateY = state.pan.y * imageSize.height;
-    const rad = degreesToRadians(state.rotation);
+    if (!isValidSize(imageSize)) {
+      return IDENTITY_MATRIX_STYLE;
+    }
+    const safeState = sanitizeCropperState(state);
+    const translateX = safeState.pan.x * imageSize.width;
+    const translateY = safeState.pan.y * imageSize.height;
+    const rad = degreesToRadians(safeState.rotation);
     const cos = Math.cos(rad);
     const sin = Math.sin(rad);
-    const sx = state.flip.horizontal ? -1 : 1;
-    const sy = state.flip.vertical ? -1 : 1;
-    const z = state.zoom;
+    const sx = safeState.flip.horizontal ? -1 : 1;
+    const sy = safeState.flip.vertical ? -1 : 1;
+    const z = safeState.zoom;
     const a3 = sx * cos * z;
     const b3 = sy * sin * z;
     const c6 = -sx * sin * z;
@@ -39219,28 +39309,29 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/image-editor/core/source-region.mjs
   function getSourceRegion(state, imageSize) {
-    if (imageSize.width === 0 || imageSize.height === 0) {
+    const safeState = sanitizeCropperState(state);
+    if (!isValidSize(imageSize)) {
       return {
         x: 0,
         y: 0,
         width: 0,
         height: 0,
-        rotation: state.rotation,
-        flip: { ...state.flip },
-        zoom: state.zoom
+        rotation: safeState.rotation,
+        flip: { ...safeState.flip },
+        zoom: safeState.zoom
       };
     }
     const syntheticContainer = { width: 1e3, height: 1e3 };
-    const camera = createCamera(state, syntheticContainer, imageSize);
+    const camera = createCamera(safeState, syntheticContainer, imageSize);
     const inv = mat2d_exports.create();
     mat2d_exports.invert(inv, camera);
     const baseCamera = createCamera(
-      { ...state, pan: { x: 0, y: 0 }, zoom: 1 },
+      { ...safeState, pan: { x: 0, y: 0 }, zoom: 1 },
       syntheticContainer,
       imageSize
     );
     const visibleBounds = getVisibleBounds(baseCamera);
-    const cropRect = state.cropRect;
+    const cropRect = safeState.cropRect;
     const cropCenterScreenX = visibleBounds.left + (cropRect.x + cropRect.width / 2) * visibleBounds.width;
     const cropCenterScreenY = visibleBounds.top + (cropRect.y + cropRect.height / 2) * visibleBounds.height;
     const srcCenter = vec2_exports.create();
@@ -39249,22 +39340,22 @@ If there's a particular need for this, please submit a feature request at https:
       [cropCenterScreenX, cropCenterScreenY],
       inv
     );
-    const snapRotation = Math.round(state.rotation / 90) * 90;
+    const snapRotation = Math.round(safeState.rotation / 90) * 90;
     const { width: rotW, height: rotH } = getRotatedBBox(
       imageSize.width,
       imageSize.height,
       snapRotation
     );
-    const sourceW = cropRect.width * rotW / state.zoom;
-    const sourceH = cropRect.height * rotH / state.zoom;
+    const sourceW = cropRect.width * rotW / safeState.zoom;
+    const sourceH = cropRect.height * rotH / safeState.zoom;
     return {
       x: srcCenter[0] * imageSize.width - sourceW / 2,
       y: srcCenter[1] * imageSize.height - sourceH / 2,
       width: sourceW,
       height: sourceH,
-      rotation: state.rotation,
-      flip: { ...state.flip },
-      zoom: state.zoom
+      rotation: safeState.rotation,
+      flip: { ...safeState.flip },
+      zoom: safeState.zoom
     };
   }
 
