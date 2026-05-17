@@ -2396,14 +2396,21 @@ var wp;
       }
       const attachment = item.attachment;
       const { mediaFinalize } = select2.getSettings();
+      const updates = {};
       if (attachment?.id && mediaFinalize) {
         try {
-          await mediaFinalize(attachment.id, item.subSizes || []);
+          const updatedAttachment = await mediaFinalize(
+            attachment.id,
+            item.subSizes || []
+          );
+          if (updatedAttachment) {
+            updates.attachment = updatedAttachment;
+          }
         } catch (error) {
           console.warn("Media finalization failed:", error);
         }
       }
-      dispatch.finishOperation(id, {});
+      dispatch.finishOperation(id, updates);
     };
   }
   function revokeBlobUrls(id) {

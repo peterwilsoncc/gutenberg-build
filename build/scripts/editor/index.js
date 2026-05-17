@@ -41683,12 +41683,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/utils/media-finalize/index.mjs
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
+  var import_media_utils4 = __toESM(require_media_utils(), 1);
   async function mediaFinalize(id, subSizes = []) {
-    await (0, import_api_fetch4.default)({
+    const response = await (0, import_api_fetch4.default)({
       path: `/wp/v2/media/${id}/finalize`,
       method: "POST",
       data: { sub_sizes: subSizes }
     });
+    return response ? (0, import_media_utils4.transformAttachment)(response) : void 0;
   }
 
   // packages/editor/build-module/components/global-styles-provider/index.mjs
@@ -64619,7 +64621,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
 
   // packages/editor/build-module/components/global-styles/index.mjs
-  var import_media_utils4 = __toESM(require_media_utils(), 1);
+  var import_media_utils5 = __toESM(require_media_utils(), 1);
 
   // packages/editor/build-module/components/global-styles/block-link.mjs
   var import_data79 = __toESM(require_data(), 1);
@@ -64824,7 +64826,7 @@ If there's a particular need for this, please submit a feature request at https:
         kind: "postType",
         name: "attachment"
       });
-      return canUserUploadMedia ? import_media_utils4.uploadMedia : void 0;
+      return canUserUploadMedia ? import_media_utils5.uploadMedia : void 0;
     }, []);
     const serverCSS = (0, import_element188.useMemo)(() => {
       if (!styles) {
@@ -65889,7 +65891,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data90 = __toESM(require_data(), 1);
   var import_element194 = __toESM(require_element(), 1);
   var import_keycodes9 = __toESM(require_keycodes(), 1);
-  var import_media_utils5 = __toESM(require_media_utils(), 1);
+  var import_media_utils6 = __toESM(require_media_utils(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/style-book/constants.mjs
@@ -66824,7 +66826,7 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element194.useEffect)(() => {
       (0, import_data90.dispatch)(import_block_editor39.store).updateSettings({
         ...editorSettings2,
-        mediaUpload: canUserUploadMedia ? import_media_utils5.uploadMedia : void 0
+        mediaUpload: canUserUploadMedia ? import_media_utils6.uploadMedia : void 0
       });
     }, [editorSettings2, canUserUploadMedia]);
     const [internalPath, setInternalPath] = (0, import_element194.useState)("/");
@@ -75804,10 +75806,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element251 = __toESM(require_element(), 1);
   var import_hooks51 = __toESM(require_hooks(), 1);
   var import_deprecated13 = __toESM(require_deprecated(), 1);
-  var import_media_utils6 = __toESM(require_media_utils(), 1);
+  var import_media_utils7 = __toESM(require_media_utils(), 1);
   var import_jsx_runtime436 = __toESM(require_jsx_runtime(), 1);
   var { MediaUploadModal: MediaUploadModalComponent } = unlock(
-    import_media_utils6.privateApis
+    import_media_utils7.privateApis
   );
   var MediaUploadModalWrapper = class extends import_element251.Component {
     constructor(props) {
@@ -75875,7 +75877,7 @@ If there's a particular need for this, please submit a feature request at https:
       "editor.MediaUpload",
       "core/editor/components/media-upload",
       () => {
-        return import_media_utils6.MediaUpload;
+        return import_media_utils7.MediaUpload;
       }
     );
   }
