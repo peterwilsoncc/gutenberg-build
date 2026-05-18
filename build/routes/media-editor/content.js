@@ -12827,6 +12827,7 @@ var import_element58 = __toESM(require_element(), 1);
 // packages/media-editor/build-module/image-editor/core/constants.mjs
 var import_i18n27 = __toESM(require_i18n(), 1);
 var MIN_ZOOM = 1;
+var ABSOLUTE_MIN_ZOOM = 0.1;
 var MAX_ZOOM = 10;
 var MIN_CROP_PIXELS = 24;
 var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
@@ -13713,7 +13714,29 @@ function getMinZoomForCover(rotation, imageAspectRatio, cropRect) {
   const spanBeta = cropHalfW * absS + cropHalfH * absC;
   const zoomFromAlpha = 2 * spanAlpha / aspectRatio;
   const zoomFromBeta = 2 * spanBeta;
-  return Math.max(1, zoomFromAlpha, zoomFromBeta);
+  return Math.max(zoomFromAlpha, zoomFromBeta);
+}
+function getMinZoom(state) {
+  if (!state.image) {
+    return MIN_ZOOM;
+  }
+  const imageSize = {
+    width: state.image.naturalWidth,
+    height: state.image.naturalHeight
+  };
+  if (!isValidSize(imageSize)) {
+    return MIN_ZOOM;
+  }
+  const safeState = sanitizeCropperState(state);
+  const aspectRatio = imageSize.width / imageSize.height;
+  return Math.max(
+    ABSOLUTE_MIN_ZOOM,
+    getMinZoomForCover(
+      safeState.rotation,
+      aspectRatio,
+      safeState.cropRect
+    )
+  );
 }
 function getImageCropBounds(state, elementSize, visualSize) {
   if (!isValidSize(elementSize) || !isValidSize(visualSize)) {
@@ -13809,12 +13832,11 @@ function restrictPanZoom(state, imageSize, cropRect) {
   const safeState = sanitizeCropperState(state);
   const safeCropRect = sanitizeRect(cropRect);
   const aspectRatio = isValidSize(imageSize) ? imageSize.width / imageSize.height : 1;
-  const minZoom = getMinZoomForCover(
-    safeState.rotation,
-    aspectRatio,
-    safeCropRect
+  const minZoom = Math.max(
+    ABSOLUTE_MIN_ZOOM,
+    getMinZoomForCover(safeState.rotation, aspectRatio, safeCropRect)
   );
-  const zoom = Math.max(safeState.zoom, minZoom);
+  const zoom = Math.min(MAX_ZOOM, Math.max(safeState.zoom, minZoom));
   const candidateState = { ...safeState, zoom };
   const camera = createCamera(
     candidateState,
@@ -13906,6 +13928,12 @@ var STATE_EPSILON = 1e-6;
 function nearlyEqual(a2, b2) {
   return Math.abs(a2 - b2) < STATE_EPSILON;
 }
+function clampRequestedZoom(state, zoom) {
+  if (state.image) {
+    return Math.min(MAX_ZOOM, Math.max(ABSOLUTE_MIN_ZOOM, zoom));
+  }
+  return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
+}
 function operationToAction(state, op) {
   switch (op.type) {
     case "crop":
@@ -13991,7 +14019,7 @@ function cropperReducer(state, action) {
         })
       );
     case "SET_ZOOM": {
-      const z = Math.min(MAX_ZOOM, Math.max(1, action.payload));
+      const z = clampRequestedZoom(state, action.payload);
       return commitBase(
         enforceContainment({
           ...state,
@@ -14000,7 +14028,7 @@ function cropperReducer(state, action) {
       );
     }
     case "SET_ZOOM_AT_POINT": {
-      const z = Math.min(MAX_ZOOM, Math.max(1, action.payload.zoom));
+      const z = clampRequestedZoom(state, action.payload.zoom);
       return commitBase(
         enforceContainment({
           ...state,
@@ -14256,7 +14284,7 @@ function useCropperState(initialState) {
       const s2 = stateRef.current;
       const clampedZoom = Math.min(
         MAX_ZOOM,
-        Math.max(MIN_ZOOM, zoom)
+        Math.max(getMinZoom(s2), zoom)
       );
       if (clampedZoom === s2.zoom) {
         return;
@@ -16358,6 +16386,7 @@ function CropperInner({
     }
     return getImageCropBounds(state, elementSize, visualSize);
   }, [state, elementSize, visualSize]);
+  const effectiveMinZoom = minZoom !== void 0 ? minZoom : getMinZoom(state);
   const [isResizing, setIsResizing] = (0, import_element66.useState)(false);
   const isResizingRef = (0, import_element66.useRef)(false);
   const isSettlingRef = (0, import_element66.useRef)(false);
@@ -16371,7 +16400,7 @@ function CropperInner({
     isZooming,
     isPlacementActive: isInteractionPlacementActive
   } = useInteraction(state, controller, canvasSize, visualSize, {
-    minZoom,
+    minZoom: effectiveMinZoom,
     maxZoom,
     onGestureStart,
     onGestureEnd
@@ -17231,6 +17260,7 @@ function MediaEditorCropPanel({
 }) {
   const { state, setZoom } = useCropper();
   const zoomGestureHandlers = useCropGestureHandlers();
+  const minZoom = getMinZoom(state);
   return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(Stack, { direction: "column", gap: "md", children: [
     /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("h2", {}), children: (0, import_i18n32.__)("Crop options") }),
     /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
@@ -17263,16 +17293,16 @@ function MediaEditorCropPanel({
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: (0, import_i18n32.__)("Zoom"),
-        min: MIN_ZOOM,
+        min: minZoom,
         max: MAX_ZOOM,
         step: 0.1,
         value: state.zoom,
         onChange: (value) => {
           onPlacementControlInteraction?.();
-          setZoom(typeof value === "number" ? value : MIN_ZOOM);
+          setZoom(typeof value === "number" ? value : minZoom);
         },
         renderTooltipContent: (value) => {
-          const zoom = typeof value === "number" ? value : MIN_ZOOM;
+          const zoom = typeof value === "number" ? value : minZoom;
           return (0, import_i18n32.sprintf)(
             /* translators: %d: zoom level as a percentage. */
             (0, import_i18n32.__)("%d%%"),
