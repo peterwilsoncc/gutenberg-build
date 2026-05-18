@@ -37534,7 +37534,37 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const setZoom = (0, import_element121.useCallback)(
       (zoom) => {
-        dispatch7({ type: "SET_ZOOM", payload: zoom });
+        const s3 = stateRef.current;
+        const clampedZoom = Math.min(
+          MAX_ZOOM,
+          Math.max(MIN_ZOOM, zoom)
+        );
+        if (clampedZoom === s3.zoom) {
+          return;
+        }
+        const { cropRect } = s3;
+        const focalNormX = cropRect.x + cropRect.width / 2 - 0.5;
+        const focalNormY = cropRect.y + cropRect.height / 2 - 0.5;
+        const zoomRatio = 1 - clampedZoom / s3.zoom;
+        const newPanX = s3.pan.x + (focalNormX - s3.pan.x) * zoomRatio;
+        const newPanY = s3.pan.y + (focalNormY - s3.pan.y) * zoomRatio;
+        const imageSize = s3.image ? {
+          width: s3.image.naturalWidth,
+          height: s3.image.naturalHeight
+        } : { width: 1, height: 1 };
+        const { pan: clampedPan } = restrictPanZoom(
+          {
+            ...s3,
+            zoom: clampedZoom,
+            pan: { x: newPanX, y: newPanY }
+          },
+          imageSize,
+          s3.cropRect
+        );
+        dispatch7({
+          type: "SET_ZOOM_AT_POINT",
+          payload: { zoom: clampedZoom, pan: clampedPan }
+        });
       },
       [dispatch7]
     );

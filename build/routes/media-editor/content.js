@@ -14253,7 +14253,37 @@ function useCropperState(initialState) {
   );
   const setZoom = (0, import_element58.useCallback)(
     (zoom) => {
-      dispatch({ type: "SET_ZOOM", payload: zoom });
+      const s2 = stateRef.current;
+      const clampedZoom = Math.min(
+        MAX_ZOOM,
+        Math.max(MIN_ZOOM, zoom)
+      );
+      if (clampedZoom === s2.zoom) {
+        return;
+      }
+      const { cropRect } = s2;
+      const focalNormX = cropRect.x + cropRect.width / 2 - 0.5;
+      const focalNormY = cropRect.y + cropRect.height / 2 - 0.5;
+      const zoomRatio = 1 - clampedZoom / s2.zoom;
+      const newPanX = s2.pan.x + (focalNormX - s2.pan.x) * zoomRatio;
+      const newPanY = s2.pan.y + (focalNormY - s2.pan.y) * zoomRatio;
+      const imageSize = s2.image ? {
+        width: s2.image.naturalWidth,
+        height: s2.image.naturalHeight
+      } : { width: 1, height: 1 };
+      const { pan: clampedPan } = restrictPanZoom(
+        {
+          ...s2,
+          zoom: clampedZoom,
+          pan: { x: newPanX, y: newPanY }
+        },
+        imageSize,
+        s2.cropRect
+      );
+      dispatch({
+        type: "SET_ZOOM_AT_POINT",
+        payload: { zoom: clampedZoom, pan: clampedPan }
+      });
     },
     [dispatch]
   );
