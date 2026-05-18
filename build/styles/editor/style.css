@@ -5772,13 +5772,16 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   height: 32px;
   background: #f0f0f0;
   border-radius: 4px;
-  margin-right: 8px;
 }
 .editor-collaborators-presence:hover {
   background-color: #e0e0e0;
 }
 .editor-collaborators-presence:has(.is-pressed) {
   background-color: #e0e0e0;
+}
+
+.editor-header__center .editor-collaborators-presence {
+  margin-right: 8px;
 }
 
 .editor-collaborators-presence__button.editor-collaborators-presence__button.components-button {

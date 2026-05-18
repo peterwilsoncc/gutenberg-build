@@ -79076,6 +79076,13 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(DocumentBar, {})
         ] }) : void 0,
         settings: /* @__PURE__ */ (0, import_jsx_runtime460.jsxs)(import_jsx_runtime460.Fragment, { children: [
+          !hasCenter && !isTooNarrowForDocumentBar && /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
+            CollaboratorsPresence,
+            {
+              postType: postType2,
+              postId: postId2
+            }
+          ),
           !customSaveButton && !isPublishSidebarOpened2 && /*
           * This button isn't completely hidden by the publish sidebar.
           * We can't hide the whole toolbar when the publish sidebar is open because
