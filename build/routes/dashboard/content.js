@@ -86,7 +86,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-        useLayoutEffect13(
+        useLayoutEffect11(
           function() {
             inst.value = value;
             inst.getSnapshot = getSnapshot;
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React103 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState70 = React103.useState, useEffect62 = React103.useEffect, useLayoutEffect13 = React103.useLayoutEffect, useDebugValue2 = React103.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React103 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState70 = React103.useState, useEffect62 = React103.useEffect, useLayoutEffect11 = React103.useLayoutEffect, useDebugValue2 = React103.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React103.useSyncExternalStore ? React103.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -45624,9 +45624,9 @@ function registerStyle50(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle50("b9823e0798", "._5d1abcb332a18701__item{position:relative}._54de57c12d3ce67e__item-content{height:100%;position:relative}._81d4e1a6c979f1e4__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0);opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));pointer-events:none}@media (forced-colors:active){._81d4e1a6c979f1e4__is-dragging{outline-color:Highlight}}._2028fc095dbc5cb2__preview-overlay{background:#0000;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));border-radius:var(--wp-grid-placeholder-radius,0);inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:1}@media (forced-colors:active){._2028fc095dbc5cb2__preview-overlay{border-color:Highlight}}");
+  registerStyle50("a0c80d6287", "._5d1abcb332a18701__item{position:relative}._54de57c12d3ce67e__item-content{height:100%;position:relative}._3e086aa073b9bbd9__is-resizing{overflow:visible;z-index:1}._3e086aa073b9bbd9__is-resizing ._54de57c12d3ce67e__item-content{overflow:visible;position:relative;z-index:2}._81d4e1a6c979f1e4__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0);opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));pointer-events:none}@media (forced-colors:active){._81d4e1a6c979f1e4__is-dragging{outline-color:Highlight}}._2028fc095dbc5cb2__preview-overlay{background:#0000;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));border-radius:var(--wp-grid-placeholder-radius,0);box-sizing:border-box;inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:0}@media (forced-colors:active){._2028fc095dbc5cb2__preview-overlay{border-color:Highlight}}");
 }
-var grid_item_default = { "item": "_5d1abcb332a18701__item", "item-content": "_54de57c12d3ce67e__item-content", "is-dragging": "_81d4e1a6c979f1e4__is-dragging", "preview-overlay": "_2028fc095dbc5cb2__preview-overlay" };
+var grid_item_default = { "item": "_5d1abcb332a18701__item", "item-content": "_54de57c12d3ce67e__item-content", "is-resizing": "_3e086aa073b9bbd9__is-resizing", "is-dragging": "_81d4e1a6c979f1e4__is-dragging", "preview-overlay": "_2028fc095dbc5cb2__preview-overlay" };
 function getItemCursor(disabled2, interacting) {
   if (disabled2) {
     return "default";
@@ -45646,15 +45646,15 @@ function GridItem4({
   actionableArea = null,
   onResize,
   onResizeEnd,
+  resizeSnapPreview = null,
   renderResizeHandle
 }) {
-  const [previewDelta, setPreviewDelta] = (0, import_element166.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element166.useState)(
     null
   );
+  const [initialContentSize, setInitialContentSize] = (0, import_element166.useState)(null);
   const itemRef = (0, import_element166.useRef)(null);
-  const initialResizeRectRef = (0, import_element166.useRef)(null);
-  const initialResizeScrollRef = (0, import_element166.useRef)(null);
-  const lastResizeDeltaRef = (0, import_element166.useRef)(null);
+  const contentRef = (0, import_element166.useRef)(null);
   const {
     attributes,
     listeners,
@@ -45666,6 +45666,7 @@ function GridItem4({
     disabled: disabled2
   });
   const mergedRef = (0, import_compose24.useMergeRefs)([itemRef, setNodeRef]);
+  const contentMergedRef = (0, import_compose24.useMergeRefs)([contentRef]);
   const style = {
     gridColumnEnd: `span ${item.width === "full" ? maxColumns : Math.min(
       typeof item.width === "number" ? item.width : 1,
@@ -45673,82 +45674,35 @@ function GridItem4({
     )}`,
     gridRowEnd: `span ${item.height || 1}`
   };
+  const isResizing = resizeDelta !== null;
   const itemClassName = clsx_default(
     grid_item_default.item,
-    isDragging && grid_item_default["is-dragging"]
+    isDragging && grid_item_default["is-dragging"],
+    isResizing && grid_item_default["is-resizing"]
   );
   const handleResize = (delta) => {
     const clamped = {
       width: delta.width,
       height: verticalResizable ? delta.height : 0
     };
-    const node = itemRef.current;
-    if (node && !initialResizeRectRef.current) {
-      initialResizeRectRef.current = node.getBoundingClientRect();
-      const ownerWindow = node.ownerDocument.defaultView ?? window;
-      initialResizeScrollRef.current = {
-        x: ownerWindow.scrollX,
-        y: ownerWindow.scrollY
-      };
+    const contentNode = contentRef.current;
+    if (contentNode && !initialContentSize) {
+      const { width, height } = contentNode.getBoundingClientRect();
+      setInitialContentSize({ width, height });
     }
-    lastResizeDeltaRef.current = clamped;
+    setResizeDelta(clamped);
     onResize(item.key, clamped);
-    if (node && initialResizeRectRef.current && initialResizeScrollRef.current) {
-      const currentRect = node.getBoundingClientRect();
-      const ownerWindow = node.ownerDocument.defaultView ?? window;
-      const scrollDelta = {
-        x: ownerWindow.scrollX - initialResizeScrollRef.current.x,
-        y: ownerWindow.scrollY - initialResizeScrollRef.current.y
-      };
-      const offsetX = currentRect.right - initialResizeRectRef.current.right;
-      const offsetY = currentRect.bottom - initialResizeRectRef.current.bottom;
-      setPreviewDelta({
-        width: clamped.width - offsetX - scrollDelta.x,
-        height: verticalResizable ? clamped.height - offsetY - scrollDelta.y : 0
-      });
-    }
   };
-  (0, import_element166.useLayoutEffect)(() => {
-    const lastDelta = lastResizeDeltaRef.current;
-    const initialRect = initialResizeRectRef.current;
-    const initialScroll = initialResizeScrollRef.current;
-    const node = itemRef.current;
-    if (!lastDelta || !initialRect || !initialScroll || !node) {
-      return;
-    }
-    const currentRect = node.getBoundingClientRect();
-    const ownerWindow = node.ownerDocument.defaultView ?? window;
-    const scrollDelta = {
-      x: ownerWindow.scrollX - initialScroll.x,
-      y: ownerWindow.scrollY - initialScroll.y
-    };
-    const offsetX = currentRect.right - initialRect.right;
-    const offsetY = currentRect.bottom - initialRect.bottom;
-    const next = {
-      width: lastDelta.width - offsetX - scrollDelta.x,
-      height: verticalResizable ? lastDelta.height - offsetY - scrollDelta.y : 0
-    };
-    setPreviewDelta(
-      (prev) => next.width === prev?.width && next.height === prev?.height ? prev : next
-    );
-  }, [item.width, item.height, verticalResizable]);
   const handleResizeEnd = () => {
-    setPreviewDelta(null);
-    initialResizeRectRef.current = null;
-    initialResizeScrollRef.current = null;
-    lastResizeDeltaRef.current = null;
+    setResizeDelta(null);
+    setInitialContentSize(null);
     onResizeEnd();
   };
-  const previewOverlay = previewDelta ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
-    "div",
-    {
-      className: grid_item_default["preview-overlay"],
-      style: {
-        insetInlineEnd: -previewDelta.width,
-        bottom: -previewDelta.height
-      }
-    }
-  ) : null;
+  const continuousContentStyle = resizeDelta && initialContentSize ? {
+    width: initialContentSize.width + resizeDelta.width,
+    height: verticalResizable ? initialContentSize.height + resizeDelta.height : void 0
+  } : void 0;
+  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(SnapPreviewOverlay, { snap: resizeSnapPreview }) : null;
   return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)("div", { ref: mergedRef, className: itemClassName, style, children: [
     actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
       "div",
@@ -45766,37 +45720,47 @@ function GridItem4({
         ...listeners,
         style: {
           height: "100%",
-          // Keyboard activation needs `attributes` (tabIndex)
-          // and `listeners` (onKeyDown) on the same focused
-          // node; `setActivatorNodeRef` points dnd-kit's
-          // keyboard sensor here, the outer keeps `setNodeRef`
-          // for measurement.
-          //
-          // Cursor lives on this wrapper so `actionableArea`
-          // children (mounted outside it) keep their own;
-          // `undefined` during a gesture defers to the resize
-          // handle's document cursor lock.
           cursor: getItemCursor(disabled2, interacting)
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)("div", { className: grid_item_default["item-content"], children: [
-            children,
-            !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
-              ResizeHandleWrapper,
-              {
-                itemId: item.key,
-                verticalResizable,
-                onResize: handleResize,
-                onResizeEnd: handleResizeEnd,
-                renderResizeHandle
-              }
-            )
-          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
+            "div",
+            {
+              ref: contentMergedRef,
+              className: grid_item_default["item-content"],
+              style: continuousContentStyle,
+              children: [
+                children,
+                !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+                  ResizeHandleWrapper,
+                  {
+                    itemId: item.key,
+                    verticalResizable,
+                    onResize: handleResize,
+                    onResizeEnd: handleResizeEnd,
+                    renderResizeHandle
+                  }
+                )
+              ]
+            }
+          ),
           previewOverlay
         ]
       }
     )
   ] });
+}
+function SnapPreviewOverlay({ snap }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+    "div",
+    {
+      className: grid_item_default["preview-overlay"],
+      style: {
+        width: snap.widthPx,
+        height: snap.heightPx ?? "100%"
+      }
+    }
+  );
 }
 
 // packages/grid/build-module/shared/grid-overlay.mjs
@@ -45911,6 +45875,13 @@ function GridOverlay({
       children: Array.from({ length: columns }).map((_, i2) => /* @__PURE__ */ (0, import_jsx_runtime209.jsx)("div", { className: grid_overlay_default.column }, i2))
     }
   );
+}
+
+// packages/grid/build-module/shared/resize-snap.mjs
+function gridSpanToPixelSize(columnSpan, rowSpan, columnWidth, gapPx, rowHeightPx) {
+  const widthPx = columnSpan * columnWidth + (columnSpan - 1) * gapPx;
+  const heightPx = rowHeightPx === null ? null : rowSpan * rowHeightPx + (rowSpan - 1) * gapPx;
+  return { widthPx, heightPx };
 }
 
 // packages/grid/build-module/dashboard-grid/resolve-fill-widths.mjs
@@ -46184,6 +46155,7 @@ var DashboardGrid = (0, import_element167.forwardRef)(
     const [temporaryLayout, setTemporaryLayout] = (0, import_element167.useState)();
     const [activeId, setActiveId] = (0, import_element167.useState)(null);
     const [isResizing, setIsResizing] = (0, import_element167.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element167.useState)(null);
     const latestLayoutRef = (0, import_element167.useRef)();
     const lastReorderCursorRef = (0, import_element167.useRef)(null);
     const resizeBaselineRef = (0, import_element167.useRef)(null);
@@ -46313,6 +46285,7 @@ var DashboardGrid = (0, import_element167.forwardRef)(
       lastReorderCursorRef.current = null;
       resizeBaselineRef.current = null;
       setIsResizing(false);
+      setResizeSnapPreview(null);
       setTemporaryLayout(void 0);
     });
     const handleDragMove = (0, import_compose25.useEvent)((event) => {
@@ -46366,7 +46339,9 @@ var DashboardGrid = (0, import_element167.forwardRef)(
       latestLayoutRef.current = void 0;
       resizeBaselineRef.current = null;
       setIsResizing(false);
+      setResizeSnapPreview(null);
       if (!onChangeLayout || !latest) {
+        setTemporaryLayout(void 0);
         return;
       }
       onChangeLayout(latest);
@@ -46413,9 +46388,21 @@ var DashboardGrid = (0, import_element167.forwardRef)(
         1,
         baseline.height + relativeDelta.height
       );
-      const currentItem = activeLayout.find(
+      const rowHeightPx = typeof rowHeight === "number" ? rowHeight : null;
+      setResizeSnapPreview({
+        id,
+        snap: gridSpanToPixelSize(
+          newWidth,
+          newHeight,
+          columnWidth,
+          gapPx,
+          rowHeightPx
+        )
+      });
+      const pendingItem = latestLayoutRef.current?.find(
         (item) => item.key === id
       );
+      const currentItem = pendingItem ?? activeLayout.find((item) => item.key === id);
       if (currentItem && currentItem.width === newWidth && (currentItem.height ?? 1) === newHeight) {
         return;
       }
@@ -46423,7 +46410,6 @@ var DashboardGrid = (0, import_element167.forwardRef)(
         (item) => item.key === id ? { ...item, width: newWidth, height: newHeight } : item
       );
       latestLayoutRef.current = updatedLayout;
-      setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
     const activeClone = activeId ? childrenMap.get(activeId) : null;
@@ -46481,6 +46467,7 @@ var DashboardGrid = (0, import_element167.forwardRef)(
                     interacting: activeId !== null || isResizing,
                     onResize: handleResize,
                     onResizeEnd: persistTemporaryLayout,
+                    resizeSnapPreview: resizeSnapPreview?.id === id ? resizeSnapPreview.snap : null,
                     actionableArea: actionableAreaMap.get(id),
                     renderResizeHandle,
                     children: childrenMap.get(id)
@@ -46854,9 +46841,9 @@ function registerStyle53(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle53("7a01031d4f", "._0a62d9f1dff8c7d8__item{position:relative}._20c43fcd930d828a__item-content{height:100%;position:relative}.b7fc83c8b16e9ee5__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0);opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));pointer-events:none}@media (forced-colors:active){.b7fc83c8b16e9ee5__is-dragging{outline-color:Highlight}}.cd44faab32c27168__preview-overlay{background:#0000;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:1}@media (forced-colors:active){.cd44faab32c27168__preview-overlay{border-color:Highlight}}");
+  registerStyle53("0cbe3fcf85", "._0a62d9f1dff8c7d8__item{position:relative}._20c43fcd930d828a__item-content{height:100%;position:relative}._11928ee35f1a9519__is-resizing{overflow:visible;z-index:1}._11928ee35f1a9519__is-resizing ._20c43fcd930d828a__item-content{overflow:visible;position:relative;z-index:2}.b7fc83c8b16e9ee5__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0);opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));pointer-events:none}@media (forced-colors:active){.b7fc83c8b16e9ee5__is-dragging{outline-color:Highlight}}.cd44faab32c27168__preview-overlay{background:#0000;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));box-sizing:border-box;inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:0}@media (forced-colors:active){.cd44faab32c27168__preview-overlay{border-color:Highlight}}");
 }
-var lanes_item_default = { "item": "_0a62d9f1dff8c7d8__item", "item-content": "_20c43fcd930d828a__item-content", "is-dragging": "b7fc83c8b16e9ee5__is-dragging", "preview-overlay": "cd44faab32c27168__preview-overlay" };
+var lanes_item_default = { "item": "_0a62d9f1dff8c7d8__item", "item-content": "_20c43fcd930d828a__item-content", "is-resizing": "_11928ee35f1a9519__is-resizing", "is-dragging": "b7fc83c8b16e9ee5__is-dragging", "preview-overlay": "cd44faab32c27168__preview-overlay" };
 function getItemCursor2(disabled2, interacting) {
   if (disabled2) {
     return "default";
@@ -46875,15 +46862,15 @@ function LanesItem({
   actionableArea = null,
   onResize,
   onResizeEnd,
+  resizeSnapPreview = null,
   renderResizeHandle
 }) {
-  const [previewDelta, setPreviewDelta] = (0, import_element169.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element169.useState)(
     null
   );
+  const [initialContentSize, setInitialContentSize] = (0, import_element169.useState)(null);
   const itemRef = (0, import_element169.useRef)(null);
-  const initialResizeRectRef = (0, import_element169.useRef)(null);
-  const initialResizeScrollRef = (0, import_element169.useRef)(null);
-  const lastResizeDeltaRef = (0, import_element169.useRef)(null);
+  const contentRef = (0, import_element169.useRef)(null);
   const {
     attributes,
     listeners,
@@ -46895,86 +46882,42 @@ function LanesItem({
     disabled: disabled2
   });
   const mergedRef = (0, import_compose26.useMergeRefs)([itemRef, setNodeRef]);
+  const contentMergedRef = (0, import_compose26.useMergeRefs)([contentRef]);
   const style = {
     ...placementStyle,
-    // Without this, the item is stretched to its grid track
-    // (4px when no row span has been computed yet) and
-    // `getBoundingClientRect` reports the track size, not the
-    // content size. The hook would then place every tile at row
-    // 1 and they would all overlap. `start` lets the item size
-    // to its content for measurement, and stays a no-op once
-    // the hook has applied an explicit `grid-row-end: span N`
-    // that already matches the content height.
     alignSelf: "start"
   };
+  const isResizing = resizeDelta !== null;
   const itemClassName = clsx_default(
     lanes_item_default.item,
-    isDragging && lanes_item_default["is-dragging"]
+    isDragging && lanes_item_default["is-dragging"],
+    isResizing && lanes_item_default["is-resizing"]
   );
   const handleResize = (delta) => {
     const clamped = { width: delta.width, height: 0 };
-    const node = itemRef.current;
-    if (node && !initialResizeRectRef.current) {
-      initialResizeRectRef.current = node.getBoundingClientRect();
-      const ownerWindow = node.ownerDocument.defaultView ?? window;
-      initialResizeScrollRef.current = {
-        x: ownerWindow.scrollX,
-        y: ownerWindow.scrollY
-      };
+    const contentNode = contentRef.current;
+    if (contentNode && !initialContentSize) {
+      const { width, height } = contentNode.getBoundingClientRect();
+      setInitialContentSize({ width, height });
     }
-    lastResizeDeltaRef.current = clamped;
+    setResizeDelta(clamped);
     onResize(itemKey, clamped);
-    if (node && initialResizeRectRef.current && initialResizeScrollRef.current) {
-      const currentRect = node.getBoundingClientRect();
-      const ownerWindow = node.ownerDocument.defaultView ?? window;
-      const scrollDelta = {
-        x: ownerWindow.scrollX - initialResizeScrollRef.current.x,
-        y: ownerWindow.scrollY - initialResizeScrollRef.current.y
-      };
-      const offsetX = currentRect.right - initialResizeRectRef.current.right;
-      setPreviewDelta({
-        width: clamped.width - offsetX - scrollDelta.x,
-        height: 0
-      });
-    }
   };
-  (0, import_element169.useLayoutEffect)(() => {
-    const lastDelta = lastResizeDeltaRef.current;
-    const initialRect = initialResizeRectRef.current;
-    const initialScroll = initialResizeScrollRef.current;
-    const node = itemRef.current;
-    if (!lastDelta || !initialRect || !initialScroll || !node) {
-      return;
-    }
-    const currentRect = node.getBoundingClientRect();
-    const ownerWindow = node.ownerDocument.defaultView ?? window;
-    const scrollDelta = {
-      x: ownerWindow.scrollX - initialScroll.x,
-      y: ownerWindow.scrollY - initialScroll.y
-    };
-    const offsetX = currentRect.right - initialRect.right;
-    const next = {
-      width: lastDelta.width - offsetX - scrollDelta.x,
-      height: 0
-    };
-    setPreviewDelta(
-      (prev) => next.width === prev?.width && next.height === prev?.height ? prev : next
-    );
-  }, [placementStyle]);
   const handleResizeEnd = () => {
-    setPreviewDelta(null);
-    initialResizeRectRef.current = null;
-    initialResizeScrollRef.current = null;
-    lastResizeDeltaRef.current = null;
+    setResizeDelta(null);
+    setInitialContentSize(null);
     onResizeEnd();
   };
-  const previewOverlay = previewDelta ? /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
+  const continuousContentStyle = resizeDelta && initialContentSize ? {
+    width: initialContentSize.width + resizeDelta.width
+  } : void 0;
+  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
     "div",
     {
       className: lanes_item_default["preview-overlay"],
       style: {
-        insetInlineEnd: -previewDelta.width,
-        bottom: 0
+        width: resizeSnapPreview.widthPx,
+        height: resizeSnapPreview.heightPx ?? "100%"
       }
     }
   ) : null;
@@ -47002,32 +46945,30 @@ function LanesItem({
             ...listeners,
             style: {
               height: "100%",
-              // Keyboard activation needs `attributes` (tabIndex)
-              // and `listeners` (onKeyDown) on the same focused
-              // node; `setActivatorNodeRef` points dnd-kit's
-              // keyboard sensor here, the outer keeps `setNodeRef`
-              // for measurement.
-              //
-              // Cursor lives on this wrapper so `actionableArea`
-              // children (mounted outside it) keep their own;
-              // `undefined` during a gesture defers to the resize
-              // handle's document cursor lock.
               cursor: getItemCursor2(disabled2, interacting)
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)("div", { className: lanes_item_default["item-content"], children: [
-                children,
-                !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
-                  ResizeHandleWrapper,
-                  {
-                    itemId: itemKey,
-                    verticalResizable: false,
-                    onResize: handleResize,
-                    onResizeEnd: handleResizeEnd,
-                    renderResizeHandle
-                  }
-                )
-              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(
+                "div",
+                {
+                  ref: contentMergedRef,
+                  className: lanes_item_default["item-content"],
+                  style: continuousContentStyle,
+                  children: [
+                    children,
+                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
+                      ResizeHandleWrapper,
+                      {
+                        itemId: itemKey,
+                        verticalResizable: false,
+                        onResize: handleResize,
+                        onResizeEnd: handleResizeEnd,
+                        renderResizeHandle
+                      }
+                    )
+                  ]
+                }
+              ),
               previewOverlay
             ]
           }
@@ -47148,6 +47089,7 @@ var DashboardLanes = (0, import_element170.forwardRef)(
     const [temporaryLayout, setTemporaryLayout] = (0, import_element170.useState)();
     const [activeId, setActiveId] = (0, import_element170.useState)(null);
     const [isResizing, setIsResizing] = (0, import_element170.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element170.useState)(null);
     const latestLayoutRef = (0, import_element170.useRef)();
     const lastReorderCursorRef = (0, import_element170.useRef)(null);
     const resizeBaselineRef = (0, import_element170.useRef)(null);
@@ -47287,6 +47229,7 @@ var DashboardLanes = (0, import_element170.forwardRef)(
       lastReorderCursorRef.current = null;
       resizeBaselineRef.current = null;
       setIsResizing(false);
+      setResizeSnapPreview(null);
       setTemporaryLayout(void 0);
     });
     const handleDragMove = (0, import_compose27.useEvent)((event) => {
@@ -47344,6 +47287,7 @@ var DashboardLanes = (0, import_element170.forwardRef)(
       latestLayoutRef.current = void 0;
       resizeBaselineRef.current = null;
       setIsResizing(false);
+      setResizeSnapPreview(null);
       if (!onChangeLayout || !latest) {
         setTemporaryLayout(void 0);
         return;
@@ -47371,7 +47315,20 @@ var DashboardLanes = (0, import_element170.forwardRef)(
         1,
         Math.min(baseline + relativeDelta, effectiveColumns)
       );
-      const currentItem = layoutMap.get(id);
+      setResizeSnapPreview({
+        id,
+        snap: gridSpanToPixelSize(
+          newWidth,
+          1,
+          columnWidth,
+          gapPx,
+          null
+        )
+      });
+      const pendingItem = latestLayoutRef.current?.find(
+        (item) => item.key === id
+      );
+      const currentItem = pendingItem ?? layoutMap.get(id);
       if (currentItem && currentItem.width === newWidth) {
         return;
       }
@@ -47379,7 +47336,6 @@ var DashboardLanes = (0, import_element170.forwardRef)(
         (item) => item.key === id ? { ...item, width: newWidth } : item
       );
       latestLayoutRef.current = updatedLayout;
-      setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
     const interacting = activeId !== null || isResizing;
@@ -47443,6 +47399,7 @@ var DashboardLanes = (0, import_element170.forwardRef)(
                       interacting,
                       onResize: handleResize,
                       onResizeEnd: persistTemporaryLayout,
+                      resizeSnapPreview: resizeSnapPreview?.id === id ? resizeSnapPreview.snap : null,
                       actionableArea: actionableAreaMap.get(
                         id
                       ),
