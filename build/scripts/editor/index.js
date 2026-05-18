@@ -36109,6 +36109,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n119 = __toESM(require_i18n(), 1);
   var MIN_ZOOM = 1;
   var MAX_ZOOM = 10;
+  var MIN_CROP_PIXELS = 24;
   var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
   var DEFAULT_KEYBOARD_STEP = 0.01;
   var KEYBOARD_SHIFT_STEP_MULTIPLIER = 10;
@@ -37373,14 +37374,11 @@ If there's a particular need for this, please submit a feature request at https:
         if (rect.width === 0 || rect.height === 0 || !state.image) {
           return state;
         }
-        const normalizedRatio = rect.width / rect.height;
-        let newH = 1;
-        let newW = normalizedRatio;
-        if (newW > 1) {
-          newW = 1;
-          newH = 1 / normalizedRatio;
-        }
-        const s3 = newH / rect.height;
+        const fitScale = 1 / Math.max(rect.width, rect.height);
+        const zoomCap = state.zoom > 0 ? MAX_ZOOM / state.zoom : fitScale;
+        const s3 = Math.min(fitScale, zoomCap);
+        const newW = rect.width * s3;
+        const newH = rect.height * s3;
         const oldCx = rect.x + rect.width / 2;
         const oldCy = rect.y + rect.height / 2;
         return commitBase(
@@ -38562,8 +38560,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n121 = __toESM(require_i18n(), 1);
 
   // packages/media-editor/build-module/image-editor/core/stencil-math.mjs
-  var MIN_CROP_SIZE = 0.05;
-  function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds) {
+  var DEFAULT_MIN_CROP_SIZE = { width: 0.05, height: 0.05 };
+  function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
     const dx = imageSize.width > 0 ? (clientX - drag2.startX) / imageSize.width : 0;
     const dy = imageSize.height > 0 ? (clientY - drag2.startY) / imageSize.height : 0;
     const s3 = drag2.startRect;
@@ -38575,24 +38573,24 @@ If there's a particular need for this, please submit a feature request at https:
     if (handle === "n" || handle === "nw" || handle === "ne") {
       edgeTop = Math.max(
         bounds.minY,
-        Math.min(s3.y + dy, edgeBottom - MIN_CROP_SIZE)
+        Math.min(s3.y + dy, edgeBottom - minCropSize.height)
       );
     }
     if (handle === "s" || handle === "sw" || handle === "se") {
       edgeBottom = Math.max(
-        edgeTop + MIN_CROP_SIZE,
+        edgeTop + minCropSize.height,
         Math.min(s3.y + s3.height + dy, bounds.maxY)
       );
     }
     if (handle === "w" || handle === "nw" || handle === "sw") {
       edgeLeft = Math.max(
         bounds.minX,
-        Math.min(s3.x + dx, edgeRight - MIN_CROP_SIZE)
+        Math.min(s3.x + dx, edgeRight - minCropSize.width)
       );
     }
     if (handle === "e" || handle === "ne" || handle === "se") {
       edgeRight = Math.max(
-        edgeLeft + MIN_CROP_SIZE,
+        edgeLeft + minCropSize.width,
         Math.min(s3.x + s3.width + dx, bounds.maxX)
       );
     }
@@ -38603,7 +38601,7 @@ If there's a particular need for this, please submit a feature request at https:
       height: edgeBottom - edgeTop
     };
   }
-  function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio) {
+  function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio, minCropSize = DEFAULT_MIN_CROP_SIZE) {
     if (normalizedRatio <= 0 || imageSize.width <= 0 || imageSize.height <= 0) {
       return { ...drag2.startRect };
     }
@@ -38619,8 +38617,13 @@ If there's a particular need for this, please submit a feature request at https:
     const draggedY = (handle === "nw" || handle === "ne" ? s3.y : s3.y + s3.height) + dy;
     let distW = (draggedX - anchorX) * dirX;
     let distH = (draggedY - anchorY) * dirY;
-    distW = Math.max(distW, MIN_CROP_SIZE);
-    distH = Math.max(distH, MIN_CROP_SIZE);
+    const minDistW = Math.max(
+      minCropSize.width,
+      minCropSize.height * normalizedRatio
+    );
+    const minDistH = minDistW / normalizedRatio;
+    distW = Math.max(distW, minDistW);
+    distH = Math.max(distH, minDistH);
     const pixelDistW = distW * imageSize.width;
     const pixelDistH = distH * imageSize.height;
     const pixelRatio = normalizedRatio * imageSize.width / imageSize.height;
@@ -38639,13 +38642,13 @@ If there's a particular need for this, please submit a feature request at https:
       distH = maxH;
       distW = distH * normalizedRatio;
     }
-    distW = Math.max(distW, MIN_CROP_SIZE);
-    distH = Math.max(distH, MIN_CROP_SIZE);
+    distW = Math.max(distW, minDistW);
+    distH = Math.max(distH, minDistH);
     const newX = dirX > 0 ? anchorX : anchorX - distW;
     const newY = dirY > 0 ? anchorY : anchorY - distH;
     return { x: newX, y: newY, width: distW, height: distH };
   }
-  function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds) {
+  function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
     const s3 = drag2.startRect;
     const pixelW = s3.width * imageSize.width;
     const pixelH = s3.height * imageSize.height;
@@ -38655,7 +38658,8 @@ If there's a particular need for this, please submit a feature request at https:
         clientX,
         clientY,
         imageSize,
-        bounds
+        bounds,
+        minCropSize
       );
     }
     const normalizedRatio = s3.width / s3.height;
@@ -38667,7 +38671,8 @@ If there's a particular need for this, please submit a feature request at https:
         clientY,
         imageSize,
         bounds,
-        normalizedRatio
+        normalizedRatio,
+        minCropSize
       );
     }
     const free = computeFreeResizeRect(
@@ -38675,7 +38680,8 @@ If there's a particular need for this, please submit a feature request at https:
       clientX,
       clientY,
       imageSize,
-      bounds
+      bounds,
+      minCropSize
     );
     if (handle === "n" || handle === "s") {
       let newHeight2 = free.height;
@@ -38687,8 +38693,8 @@ If there's a particular need for this, please submit a feature request at https:
         newHeight2 = newWidth2 / normalizedRatio;
       }
       const minHeight = Math.max(
-        MIN_CROP_SIZE,
-        MIN_CROP_SIZE / normalizedRatio
+        minCropSize.height,
+        minCropSize.width / normalizedRatio
       );
       if (newHeight2 < minHeight) {
         newHeight2 = minHeight;
@@ -38710,7 +38716,10 @@ If there's a particular need for this, please submit a feature request at https:
       newHeight = maxHeight;
       newWidth = newHeight * normalizedRatio;
     }
-    const minWidth = Math.max(MIN_CROP_SIZE, MIN_CROP_SIZE * normalizedRatio);
+    const minWidth = Math.max(
+      minCropSize.width,
+      minCropSize.height * normalizedRatio
+    );
     if (newWidth < minWidth) {
       newWidth = minWidth;
       newHeight = newWidth / normalizedRatio;
@@ -38782,7 +38791,8 @@ If there's a particular need for this, please submit a feature request at https:
     freeformCrop = false,
     stencilTransition,
     cropBounds,
-    onEscape
+    onEscape,
+    minCropSize
   }) {
     const boundsMinX = cropBounds?.minX ?? 0;
     const boundsMinY = cropBounds?.minY ?? 0;
@@ -38898,8 +38908,15 @@ If there's a particular need for this, please submit a feature request at https:
       [cropRect, onResizeStart]
     );
     const computeFreeRect = (0, import_element125.useCallback)(
-      (drag2, clientX, clientY) => computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds),
-      [imageSize, bounds]
+      (drag2, clientX, clientY) => computeFreeResizeRect(
+        drag2,
+        clientX,
+        clientY,
+        imageSize,
+        bounds,
+        minCropSize
+      ),
+      [imageSize, bounds, minCropSize]
     );
     const computeLockedRect = (0, import_element125.useCallback)(
       (drag2, clientX, clientY) => computeLockedResizeRect(
@@ -38908,9 +38925,10 @@ If there's a particular need for this, please submit a feature request at https:
         clientY,
         imageSize,
         bounds,
-        normalizedRatio
+        normalizedRatio,
+        minCropSize
       ),
-      [imageSize, bounds, normalizedRatio]
+      [imageSize, bounds, normalizedRatio, minCropSize]
     );
     const computeShiftLockedRect = (0, import_element125.useCallback)(
       (drag2, clientX, clientY) => computeShiftLockedResizeRect(
@@ -38918,9 +38936,10 @@ If there's a particular need for this, please submit a feature request at https:
         clientX,
         clientY,
         imageSize,
-        bounds
+        bounds,
+        minCropSize
       ),
-      [imageSize, bounds]
+      [imageSize, bounds, minCropSize]
     );
     latestHandlersRef.current = {
       hasLockedRatio,
@@ -39544,6 +39563,24 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [canvasSize, naturalWidth, naturalHeight, state.rotation]
     );
+    const minCropSize = (0, import_element129.useMemo)(() => {
+      if (naturalWidth <= 0 || naturalHeight <= 0) {
+        return void 0;
+      }
+      const snapRotation = Math.round(state.rotation / 90) * 90;
+      const bbox = getRotatedBBox(
+        naturalWidth,
+        naturalHeight,
+        snapRotation
+      );
+      return {
+        width: Math.min(1, MIN_CROP_PIXELS * state.zoom / bbox.width),
+        height: Math.min(
+          1,
+          MIN_CROP_PIXELS * state.zoom / bbox.height
+        )
+      };
+    }, [naturalWidth, naturalHeight, state.rotation, state.zoom]);
     (0, import_element129.useEffect)(() => {
       if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
         return;
@@ -39851,7 +39888,8 @@ If there's a particular need for this, please submit a feature request at https:
                         aspectRatio,
                         freeformCrop,
                         stencilTransition: settleStencilTransition,
-                        cropBounds
+                        cropBounds,
+                        minCropSize
                       }
                     ),
                     (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(

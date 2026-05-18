@@ -12828,6 +12828,7 @@ var import_element58 = __toESM(require_element(), 1);
 var import_i18n27 = __toESM(require_i18n(), 1);
 var MIN_ZOOM = 1;
 var MAX_ZOOM = 10;
+var MIN_CROP_PIXELS = 24;
 var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
 var DEFAULT_KEYBOARD_STEP = 0.01;
 var KEYBOARD_SHIFT_STEP_MULTIPLIER = 10;
@@ -14092,14 +14093,11 @@ function cropperReducer(state, action) {
       if (rect.width === 0 || rect.height === 0 || !state.image) {
         return state;
       }
-      const normalizedRatio = rect.width / rect.height;
-      let newH = 1;
-      let newW = normalizedRatio;
-      if (newW > 1) {
-        newW = 1;
-        newH = 1 / normalizedRatio;
-      }
-      const s2 = newH / rect.height;
+      const fitScale = 1 / Math.max(rect.width, rect.height);
+      const zoomCap = state.zoom > 0 ? MAX_ZOOM / state.zoom : fitScale;
+      const s2 = Math.min(fitScale, zoomCap);
+      const newW = rect.width * s2;
+      const newH = rect.height * s2;
       const oldCx = rect.x + rect.width / 2;
       const oldCy = rect.y + rect.height / 2;
       return commitBase(
@@ -15281,8 +15279,8 @@ var import_element62 = __toESM(require_element(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/stencil-math.mjs
-var MIN_CROP_SIZE = 0.05;
-function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds) {
+var DEFAULT_MIN_CROP_SIZE = { width: 0.05, height: 0.05 };
+function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
   const dx = imageSize.width > 0 ? (clientX - drag2.startX) / imageSize.width : 0;
   const dy = imageSize.height > 0 ? (clientY - drag2.startY) / imageSize.height : 0;
   const s2 = drag2.startRect;
@@ -15294,24 +15292,24 @@ function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds) {
   if (handle === "n" || handle === "nw" || handle === "ne") {
     edgeTop = Math.max(
       bounds.minY,
-      Math.min(s2.y + dy, edgeBottom - MIN_CROP_SIZE)
+      Math.min(s2.y + dy, edgeBottom - minCropSize.height)
     );
   }
   if (handle === "s" || handle === "sw" || handle === "se") {
     edgeBottom = Math.max(
-      edgeTop + MIN_CROP_SIZE,
+      edgeTop + minCropSize.height,
       Math.min(s2.y + s2.height + dy, bounds.maxY)
     );
   }
   if (handle === "w" || handle === "nw" || handle === "sw") {
     edgeLeft = Math.max(
       bounds.minX,
-      Math.min(s2.x + dx, edgeRight - MIN_CROP_SIZE)
+      Math.min(s2.x + dx, edgeRight - minCropSize.width)
     );
   }
   if (handle === "e" || handle === "ne" || handle === "se") {
     edgeRight = Math.max(
-      edgeLeft + MIN_CROP_SIZE,
+      edgeLeft + minCropSize.width,
       Math.min(s2.x + s2.width + dx, bounds.maxX)
     );
   }
@@ -15322,7 +15320,7 @@ function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds) {
     height: edgeBottom - edgeTop
   };
 }
-function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio) {
+function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio, minCropSize = DEFAULT_MIN_CROP_SIZE) {
   if (normalizedRatio <= 0 || imageSize.width <= 0 || imageSize.height <= 0) {
     return { ...drag2.startRect };
   }
@@ -15338,8 +15336,13 @@ function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, nor
   const draggedY = (handle === "nw" || handle === "ne" ? s2.y : s2.y + s2.height) + dy;
   let distW = (draggedX - anchorX) * dirX;
   let distH = (draggedY - anchorY) * dirY;
-  distW = Math.max(distW, MIN_CROP_SIZE);
-  distH = Math.max(distH, MIN_CROP_SIZE);
+  const minDistW = Math.max(
+    minCropSize.width,
+    minCropSize.height * normalizedRatio
+  );
+  const minDistH = minDistW / normalizedRatio;
+  distW = Math.max(distW, minDistW);
+  distH = Math.max(distH, minDistH);
   const pixelDistW = distW * imageSize.width;
   const pixelDistH = distH * imageSize.height;
   const pixelRatio = normalizedRatio * imageSize.width / imageSize.height;
@@ -15358,13 +15361,13 @@ function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, nor
     distH = maxH;
     distW = distH * normalizedRatio;
   }
-  distW = Math.max(distW, MIN_CROP_SIZE);
-  distH = Math.max(distH, MIN_CROP_SIZE);
+  distW = Math.max(distW, minDistW);
+  distH = Math.max(distH, minDistH);
   const newX = dirX > 0 ? anchorX : anchorX - distW;
   const newY = dirY > 0 ? anchorY : anchorY - distH;
   return { x: newX, y: newY, width: distW, height: distH };
 }
-function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds) {
+function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
   const s2 = drag2.startRect;
   const pixelW = s2.width * imageSize.width;
   const pixelH = s2.height * imageSize.height;
@@ -15374,7 +15377,8 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
       clientX,
       clientY,
       imageSize,
-      bounds
+      bounds,
+      minCropSize
     );
   }
   const normalizedRatio = s2.width / s2.height;
@@ -15386,7 +15390,8 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
       clientY,
       imageSize,
       bounds,
-      normalizedRatio
+      normalizedRatio,
+      minCropSize
     );
   }
   const free = computeFreeResizeRect(
@@ -15394,7 +15399,8 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
     clientX,
     clientY,
     imageSize,
-    bounds
+    bounds,
+    minCropSize
   );
   if (handle === "n" || handle === "s") {
     let newHeight2 = free.height;
@@ -15406,8 +15412,8 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
       newHeight2 = newWidth2 / normalizedRatio;
     }
     const minHeight = Math.max(
-      MIN_CROP_SIZE,
-      MIN_CROP_SIZE / normalizedRatio
+      minCropSize.height,
+      minCropSize.width / normalizedRatio
     );
     if (newHeight2 < minHeight) {
       newHeight2 = minHeight;
@@ -15429,7 +15435,10 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
     newHeight = maxHeight;
     newWidth = newHeight * normalizedRatio;
   }
-  const minWidth = Math.max(MIN_CROP_SIZE, MIN_CROP_SIZE * normalizedRatio);
+  const minWidth = Math.max(
+    minCropSize.width,
+    minCropSize.height * normalizedRatio
+  );
   if (newWidth < minWidth) {
     newWidth = minWidth;
     newHeight = newWidth / normalizedRatio;
@@ -15501,7 +15510,8 @@ function RectangleStencil({
   freeformCrop = false,
   stencilTransition,
   cropBounds,
-  onEscape
+  onEscape,
+  minCropSize
 }) {
   const boundsMinX = cropBounds?.minX ?? 0;
   const boundsMinY = cropBounds?.minY ?? 0;
@@ -15617,8 +15627,15 @@ function RectangleStencil({
     [cropRect, onResizeStart]
   );
   const computeFreeRect = (0, import_element62.useCallback)(
-    (drag2, clientX, clientY) => computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds),
-    [imageSize, bounds]
+    (drag2, clientX, clientY) => computeFreeResizeRect(
+      drag2,
+      clientX,
+      clientY,
+      imageSize,
+      bounds,
+      minCropSize
+    ),
+    [imageSize, bounds, minCropSize]
   );
   const computeLockedRect = (0, import_element62.useCallback)(
     (drag2, clientX, clientY) => computeLockedResizeRect(
@@ -15627,9 +15644,10 @@ function RectangleStencil({
       clientY,
       imageSize,
       bounds,
-      normalizedRatio
+      normalizedRatio,
+      minCropSize
     ),
-    [imageSize, bounds, normalizedRatio]
+    [imageSize, bounds, normalizedRatio, minCropSize]
   );
   const computeShiftLockedRect = (0, import_element62.useCallback)(
     (drag2, clientX, clientY) => computeShiftLockedResizeRect(
@@ -15637,9 +15655,10 @@ function RectangleStencil({
       clientX,
       clientY,
       imageSize,
-      bounds
+      bounds,
+      minCropSize
     ),
-    [imageSize, bounds]
+    [imageSize, bounds, minCropSize]
   );
   latestHandlersRef.current = {
     hasLockedRatio,
@@ -16263,6 +16282,24 @@ function CropperInner({
     ),
     [canvasSize, naturalWidth, naturalHeight, state.rotation]
   );
+  const minCropSize = (0, import_element66.useMemo)(() => {
+    if (naturalWidth <= 0 || naturalHeight <= 0) {
+      return void 0;
+    }
+    const snapRotation = Math.round(state.rotation / 90) * 90;
+    const bbox = getRotatedBBox(
+      naturalWidth,
+      naturalHeight,
+      snapRotation
+    );
+    return {
+      width: Math.min(1, MIN_CROP_PIXELS * state.zoom / bbox.width),
+      height: Math.min(
+        1,
+        MIN_CROP_PIXELS * state.zoom / bbox.height
+      )
+    };
+  }, [naturalWidth, naturalHeight, state.rotation, state.zoom]);
   (0, import_element66.useEffect)(() => {
     if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
       return;
@@ -16570,7 +16607,8 @@ function CropperInner({
                       aspectRatio,
                       freeformCrop,
                       stencilTransition: settleStencilTransition,
-                      cropBounds
+                      cropBounds,
+                      minCropSize
                     }
                   ),
                   (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
