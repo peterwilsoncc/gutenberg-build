@@ -15698,7 +15698,13 @@ var wp;
         src: block_default_default
       };
     }
-    const renderedIcon = /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components9.Icon, { icon: icon && icon.src ? icon.src : icon, context });
+    const renderedIcon = /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+      import_components9.Icon,
+      {
+        icon: icon && icon.src ? icon.src : icon,
+        context
+      }
+    );
     const style = showColors ? {
       backgroundColor: icon && icon.background,
       color: icon && icon.foreground
@@ -25603,7 +25609,7 @@ var wp;
   var import_element36 = __toESM(require_element(), 1);
   var import_primitives116 = __toESM(require_primitives(), 1);
   var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
-  var Icon4 = (0, import_element36.forwardRef)(function Icon22({ icon, size = 24, ...restProps }, ref) {
+  var Icon = (0, import_element36.forwardRef)(function Icon2({ icon, size = 24, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
       import_primitives116.SVG,
       {
@@ -26244,7 +26250,7 @@ var wp;
                           focus_default["outset-ring--focus-parent-visible"]
                         ),
                         children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-                          Icon4,
+                          Icon,
                           {
                             icon: chevron_down_default,
                             className: style_default7["header-trigger"]

@@ -73661,7 +73661,14 @@ If there's a particular need for this, please submit a feature request at https:
         siteHome: siteData.home && (0, import_url19.filterURLForDisplay)(siteData.home)
       };
     }, []);
-    let siteIcon = /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_components217.Icon, { className: "components-site-icon", size: "36px", icon: wordpress_default });
+    let siteIcon = /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
+      import_components217.Icon,
+      {
+        className: "components-site-icon",
+        size: "36px",
+        icon: wordpress_default
+      }
+    );
     if (siteIconUrl) {
       siteIcon = /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
         "img",
@@ -81570,7 +81577,13 @@ If there's a particular need for this, please submit a feature request at https:
           className: "editor-post-card-panel__header",
           alignment: "flex-start",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(import_components262.Icon, { className: "editor-post-card-panel__icon", icon }),
+            /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
+              import_components262.Icon,
+              {
+                className: "editor-post-card-panel__icon",
+                icon
+              }
+            ),
             /* @__PURE__ */ (0, import_jsx_runtime478.jsxs)(
               import_components262.__experimentalText,
               {

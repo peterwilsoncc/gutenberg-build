@@ -1672,7 +1672,12 @@ function DrilldownItem({
           children: [
             wrapIcon(icon, shouldShowPlaceholder),
             /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_components7.FlexBlock, { children }),
-            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_components7.Icon, { icon: (0, import_i18n3.isRTL)() ? chevron_left_small_default : chevron_right_small_default })
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+              import_components7.Icon,
+              {
+                icon: (0, import_i18n3.isRTL)() ? chevron_left_small_default : chevron_right_small_default
+              }
+            )
           ]
         }
       )
