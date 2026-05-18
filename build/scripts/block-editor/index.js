@@ -61042,15 +61042,17 @@ var wp;
   var import_i18n190 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/utils/color-values.mjs
-  function extractColorSlug(rawValue) {
+  function extractPresetSlug(rawValue, type) {
     if (typeof rawValue !== "string") {
       return void 0;
     }
-    if (rawValue.startsWith("var:preset|color|")) {
-      return rawValue.slice("var:preset|color|".length);
+    const userPrefix = `var:preset|${type}|`;
+    if (rawValue.startsWith(userPrefix)) {
+      return rawValue.slice(userPrefix.length);
     }
+    const cssVarPrefix = `--wp--preset--${type}--`;
     const themeFormatMatch = rawValue.match(
-      /^var\(--wp--preset--color--([^)]+)\)$/
+      new RegExp(`^var\\(${cssVarPrefix}([^)]+)\\)$`)
     );
     return themeFormatMatch?.[1];
   }
@@ -61502,8 +61504,9 @@ var wp;
             key: "text",
             label: (0, import_i18n190.__)("Text"),
             inheritedValue: textColor,
-            inheritedSlug: extractColorSlug(
-              inheritedValue?.color?.text
+            inheritedSlug: extractPresetSlug(
+              inheritedValue?.color?.text,
+              "color"
             ),
             setValue: setTextColor,
             userValue: userTextColor
@@ -61524,8 +61527,9 @@ var wp;
             key: "background",
             label: (0, import_i18n190.__)("Color"),
             inheritedValue: backgroundColor,
-            inheritedSlug: extractColorSlug(
-              inheritedValue?.color?.background
+            inheritedSlug: extractPresetSlug(
+              inheritedValue?.color?.background,
+              "color"
             ),
             setValue: setBackgroundColor,
             userValue: userBackgroundColor
@@ -61552,8 +61556,9 @@ var wp;
             key: "link",
             label: (0, import_i18n190.__)("Default"),
             inheritedValue: linkColor,
-            inheritedSlug: extractColorSlug(
-              inheritedValue?.elements?.link?.color?.text
+            inheritedSlug: extractPresetSlug(
+              inheritedValue?.elements?.link?.color?.text,
+              "color"
             ),
             setValue: setLinkColor,
             userValue: userLinkColor
@@ -61562,8 +61567,9 @@ var wp;
             key: "hover",
             label: (0, import_i18n190.__)("Hover"),
             inheritedValue: hoverLinkColor,
-            inheritedSlug: extractColorSlug(
-              inheritedValue?.elements?.link?.[":hover"]?.color?.text
+            inheritedSlug: extractPresetSlug(
+              inheritedValue?.elements?.link?.[":hover"]?.color?.text,
+              "color"
             ),
             setValue: setHoverLinkColor,
             userValue: userHoverLinkColor
@@ -61658,8 +61664,9 @@ var wp;
             key: "text",
             label: (0, import_i18n190.__)("Text"),
             inheritedValue: elementTextColor,
-            inheritedSlug: extractColorSlug(
-              inheritedValue?.elements?.[name]?.color?.text
+            inheritedSlug: extractPresetSlug(
+              inheritedValue?.elements?.[name]?.color?.text,
+              "color"
             ),
             setValue: setElementTextColor,
             userValue: elementTextUserColor
@@ -61668,8 +61675,9 @@ var wp;
             key: "background",
             label: (0, import_i18n190.__)("Background"),
             inheritedValue: elementBackgroundColor,
-            inheritedSlug: extractColorSlug(
-              inheritedValue?.elements?.[name]?.color?.background
+            inheritedSlug: extractPresetSlug(
+              inheritedValue?.elements?.[name]?.color?.background,
+              "color"
             ),
             setValue: setElementBackgroundColor,
             userValue: elementBackgroundUserColor
@@ -63596,11 +63604,14 @@ var wp;
   }
   function styleToAttributes2(style) {
     const textColorValue = style?.color?.text;
-    const textColorSlug = extractColorSlug(textColorValue);
+    const textColorSlug = extractPresetSlug(textColorValue, "color");
     const backgroundColorValue = style?.color?.background;
-    const backgroundColorSlug = extractColorSlug(backgroundColorValue);
+    const backgroundColorSlug = extractPresetSlug(
+      backgroundColorValue,
+      "color"
+    );
     const gradientValue = style?.color?.gradient;
-    const gradientSlug = gradientValue?.startsWith("var:preset|gradient|") ? gradientValue.substring("var:preset|gradient|".length) : void 0;
+    const gradientSlug = extractPresetSlug(gradientValue, "gradient");
     const updatedStyle = { ...style };
     updatedStyle.color = {
       ...updatedStyle.color,
