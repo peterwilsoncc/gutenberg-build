@@ -3569,6 +3569,10 @@ return array(
 				'source' => 'attribute',
 				'selector' => 'figure > a',
 				'attribute' => 'target'
+			),
+			'isDecorative' => array(
+				'type' => 'boolean',
+				'default' => false
 			)
 		),
 		'supports' => array(

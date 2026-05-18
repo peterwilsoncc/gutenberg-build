@@ -32311,7 +32311,8 @@ ${js}
       linkTarget,
       sizeSlug,
       lightbox,
-      metadata
+      metadata,
+      isDecorative
     } = attributes2;
     const [imageElement, setImageElement] = (0, import_element47.useState)();
     const [resizeDelta, setResizeDelta] = (0, import_element47.useState)(null);
@@ -32458,7 +32459,8 @@ ${js}
     function onSetLightbox(enable) {
       if (enable && !lightboxSetting?.enabled) {
         setAttributes({
-          lightbox: { enabled: true }
+          lightbox: { enabled: true },
+          isDecorative: false
         });
       } else if (!enable && lightboxSetting?.enabled) {
         setAttributes({
@@ -32486,6 +32488,19 @@ ${js}
     }
     function updateAlt(newAlt) {
       setAttributes({ alt: newAlt });
+    }
+    function updateIsDecorative(value) {
+      setAttributes({
+        isDecorative: value || void 0,
+        ...value && {
+          alt: "",
+          caption: void 0,
+          href: void 0,
+          linkDestination: void 0,
+          linkTarget: void 0,
+          rel: void 0
+        }
+      });
     }
     const imperativeFocalPointPreview = (value) => {
       if (imageElement) {
@@ -32676,7 +32691,7 @@ ${js}
         metadata?.bindings
       ]
     );
-    const showUrlInput = isSingleSelected && !isEditingImage && !lockHrefControls && !lockUrlControls;
+    const showUrlInput = isSingleSelected && !isEditingImage && !lockHrefControls && !lockUrlControls && !isDecorative;
     const showCoverControls = isSingleSelected && canInsertCover && !isContentOnlyMode;
     const showBlockControls = showUrlInput || allowCrop || showCoverControls;
     const mediaReplaceFlow = isSingleSelected && !isEditingImage && !lockUrlControls && // For contentOnly mode, put this button in its own area so it has borders around it.
@@ -32758,7 +32773,10 @@ ${js}
         import_components58.__experimentalToolsPanel,
         {
           label: (0, import_i18n95.__)("Media"),
-          resetAll: () => onSelectImage(void 0),
+          resetAll: () => {
+            onSelectImage(void 0);
+            setAttributes({ isDecorative: false });
+          },
           dropdownMenuProps,
           children: [
             !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
@@ -32786,7 +32804,7 @@ ${js}
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
+            !isDecorative && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
               import_components58.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n95.__)("Alternative text"),
@@ -32800,26 +32818,41 @@ ${js}
                     value: alt || "",
                     onChange: updateAlt,
                     readOnly: lockAltControls,
-                    help: lockAltControls ? /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(import_jsx_runtime279.Fragment, { children: lockAltControlsMessage }) : /* @__PURE__ */ (0, import_jsx_runtime279.jsxs)(import_jsx_runtime279.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
-                        import_components58.ExternalLink,
-                        {
-                          href: (
-                            // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
-                            (0, import_i18n95.__)(
-                              "https://www.w3.org/WAI/tutorials/images/decision-tree/"
-                            )
-                          ),
-                          children: (0, import_i18n95.__)(
-                            "Describe the purpose of the image."
+                    help: lockAltControls ? /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(import_jsx_runtime279.Fragment, { children: lockAltControlsMessage }) : /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
+                      import_components58.ExternalLink,
+                      {
+                        href: (
+                          // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
+                          (0, import_i18n95.__)(
+                            "https://www.w3.org/WAI/tutorials/images/decision-tree/"
                           )
-                        }
-                      ),
-                      /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("br", {}),
-                      (0, import_i18n95.__)(
-                        "Leave empty if decorative."
-                      )
-                    ] })
+                        ),
+                        children: (0, import_i18n95.__)(
+                          "Describe the purpose of the image."
+                        )
+                      }
+                    )
+                  }
+                )
+              }
+            ),
+            !lockAltControls && !lightboxChecked && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
+              import_components58.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n95.__)("Mark as decorative"),
+                isShownByDefault: true,
+                hasValue: () => !!isDecorative,
+                onDeselect: () => setAttributes({ isDecorative: false }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
+                  import_components58.CheckboxControl,
+                  {
+                    __nextHasNoMarginBottom: true,
+                    label: (0, import_i18n95.__)("Mark as decorative"),
+                    checked: !!isDecorative,
+                    onChange: updateIsDecorative,
+                    help: (0, import_i18n95.__)(
+                      "Hidden from assistive technologies."
+                    )
                   }
                 )
               }
@@ -32907,7 +32940,15 @@ ${js}
     ] });
     const filename = (0, import_url11.getFilename)(url);
     let defaultedAlt;
-    if (alt) {
+    if (isDecorative) {
+      defaultedAlt = filename ? (0, import_i18n95.sprintf)(
+        /* translators: %s: file name */
+        (0, import_i18n95.__)(
+          "This image has been marked as decorative; its file name is %s"
+        ),
+        filename
+      ) : (0, import_i18n95.__)("This image has been marked as decorative.");
+    } else if (alt) {
       defaultedAlt = alt;
     } else if (filename) {
       defaultedAlt = (0, import_i18n95.sprintf)(
@@ -33097,7 +33138,7 @@ ${js}
       featuredImageControl,
       img,
       resizableBox,
-      /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
+      !isDecorative && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
         Caption,
         {
           attributes: attributes2,
@@ -33587,6 +33628,10 @@ ${js}
         source: "attribute",
         selector: "figure > a",
         attribute: "target"
+      },
+      isDecorative: {
+        type: "boolean",
+        default: false
       }
     },
     supports: {
@@ -33658,6 +33703,7 @@ ${js}
       linkTarget,
       sizeSlug,
       title,
+      isDecorative,
       metadata: { bindings = {} } = {}
     } = attributes2;
     const newRel = !rel ? void 0 : rel;
@@ -33702,7 +33748,8 @@ ${js}
           }
           return style2;
         })(),
-        title
+        title,
+        role: isDecorative ? "none" : void 0
       }
     );
     const displayCaption = !import_block_editor115.RichText.isEmpty(caption) || bindings.caption || bindings?.__default?.source === "core/pattern-overrides";
@@ -33984,23 +34031,42 @@ ${js}
           href: value.url,
           rel: value.rel,
           linkTarget: value.linkTarget
-        })
+        }),
+        isVisible: (item) => !item.isDecorative
       },
       {
         id: "caption",
         label: (0, import_i18n97.__)("Caption"),
         type: "text",
-        Edit: "rich-text"
+        Edit: "rich-text",
         // TODO: replace with custom component
+        isVisible: (item) => !item.isDecorative
       },
       {
         id: "alt",
         label: (0, import_i18n97.__)("Alt text"),
-        type: "text"
+        type: "text",
+        isVisible: (item) => !item.isDecorative
+      },
+      {
+        id: "isDecorative",
+        label: (0, import_i18n97.__)("Mark as decorative"),
+        type: "boolean",
+        setValue: ({ value }) => ({
+          isDecorative: value || void 0,
+          ...value && {
+            alt: "",
+            caption: void 0,
+            href: void 0,
+            linkDestination: void 0,
+            linkTarget: void 0,
+            rel: void 0
+          }
+        })
       }
     ];
     settings44[formKey8] = {
-      fields: ["image", "link", "caption", "alt"]
+      fields: ["image", "link", "caption", "alt", "isDecorative"]
     };
   }
   var init44 = () => initBlock({ name: name44, metadata: block_default44, settings: settings44 });
