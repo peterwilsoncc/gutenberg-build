@@ -71537,8 +71537,12 @@ If there's a particular need for this, please submit a feature request at https:
         className: "editor-private-post-last-revision__button",
         text: revisionsCount,
         "aria-label": (0, import_i18n229.sprintf)(
-          /* translators: %s: number of revisions. */
-          (0, import_i18n229.__)("Open revisions screen: %s revisions"),
+          /* translators: %d: number of revisions. */
+          (0, import_i18n229._n)(
+            "Open revisions screen: %d revision",
+            "Open revisions screen: %d revisions",
+            revisionsCount
+          ),
           revisionsCount
         ),
         variant: "tertiary",
