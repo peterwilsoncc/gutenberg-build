@@ -6227,10 +6227,13 @@ var wp;
                 if ("auto-draft" === status || !meta) {
                   return;
                 }
+                const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
                 dispatch3.saveEntityRecord(
                   kind,
                   name,
-                  editedRecord,
+                  {
+                    [entityIdKey]: editedRecord[entityIdKey]
+                  },
                   { __unstableSkipSyncUpdate: true }
                 );
               });
