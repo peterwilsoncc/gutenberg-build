@@ -28962,6 +28962,10 @@ This message will only show in development mode. It won't appear in production. 
       anchorRect,
       getAnchorRect,
       isAlternate,
+      // `onKeyDown` is forwarded to `useDialog` so the consumer's handler
+      // is merged with the close-on-Escape one (rather than being silently
+      // overridden by the spread of `dialogProps` further below).
+      onKeyDown,
       // Rest
       ...contentProps
     } = useContextSystem(props, "Popover");
@@ -29066,6 +29070,7 @@ This message will only show in development mode. It won't appear in production. 
     const [dialogRef, dialogProps] = (0, import_compose16.__experimentalUseDialog)({
       constrainTabbing,
       focusOnMount,
+      onKeyDown,
       __unstableOnClose: onDialogClose,
       // @ts-expect-error The __unstableOnClose property needs to be deprecated first (see https://github.com/WordPress/gutenberg/pull/27675)
       onClose: onDialogClose

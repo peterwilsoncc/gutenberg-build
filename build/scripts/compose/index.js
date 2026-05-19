@@ -67,13 +67,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/keycodes
-  var require_keycodes = __commonJS({
-    "package-external:@wordpress/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
-    }
-  });
-
   // node_modules/mousetrap/mousetrap.js
   var require_mousetrap = __commonJS({
     "node_modules/mousetrap/mousetrap.js"(exports, module) {
@@ -526,6 +519,13 @@ var wp;
           });
         }
       })(typeof window !== "undefined" ? window : null, typeof window !== "undefined" ? document : null);
+    }
+  });
+
+  // package-external:@wordpress/keycodes
+  var require_keycodes = __commonJS({
+    "package-external:@wordpress/keycodes"(exports, module) {
+      module.exports = window.wp.keycodes;
     }
   });
 
@@ -1293,7 +1293,6 @@ var wp;
 
   // packages/compose/build-module/hooks/use-dialog/index.mjs
   var import_element13 = __toESM(require_element(), 1);
-  var import_keycodes = __toESM(require_keycodes(), 1);
 
   // packages/compose/build-module/hooks/use-focus-on-mount/index.mjs
   var import_dom2 = __toESM(require_dom(), 1);
@@ -1512,27 +1511,23 @@ var wp;
         currentOptions.current.onClose();
       }
     });
-    const closeOnEscapeRef = (0, import_element13.useCallback)((node) => {
-      if (!node) {
-        return;
+    const onKeyDown = (0, import_element13.useCallback)((event) => {
+      currentOptions.current?.onKeyDown?.(event);
+      if (event.key === "Escape" && !event.defaultPrevented && currentOptions.current?.onClose) {
+        event.preventDefault();
+        event.stopPropagation();
+        currentOptions.current.onClose();
       }
-      node.addEventListener("keydown", (event) => {
-        if (event.keyCode === import_keycodes.ESCAPE && !event.defaultPrevented && currentOptions.current?.onClose) {
-          event.preventDefault();
-          event.stopPropagation();
-          currentOptions.current.onClose();
-        }
-      });
     }, []);
     return [
       useMergeRefs([
         constrainTabbing ? constrainedTabbingRef : null,
         options.focusOnMount !== false ? focusReturnRef : null,
-        options.focusOnMount !== false ? focusOnMountRef : null,
-        closeOnEscapeRef
+        options.focusOnMount !== false ? focusOnMountRef : null
       ]),
       {
         ...focusOutsideProps,
+        onKeyDown,
         tabIndex: -1
       }
     ];
@@ -1695,7 +1690,7 @@ var wp;
 
   // packages/compose/build-module/hooks/use-keyboard-shortcut/index.mjs
   var import_element17 = __toESM(require_element(), 1);
-  var import_keycodes2 = __toESM(require_keycodes(), 1);
+  var import_keycodes = __toESM(require_keycodes(), 1);
   function useKeyboardShortcut(shortcuts, callback, {
     bindGlobal = false,
     eventName = "keydown",
@@ -1729,7 +1724,7 @@ var wp;
         );
         const hasAlt = modifiers.has("alt");
         const hasShift = modifiers.has("shift");
-        if ((0, import_keycodes2.isAppleOS)() && (modifiers.size === 1 && hasAlt || modifiers.size === 2 && hasAlt && hasShift)) {
+        if ((0, import_keycodes.isAppleOS)() && (modifiers.size === 1 && hasAlt || modifiers.size === 2 && hasAlt && hasShift)) {
           throw new Error(
             `Cannot bind ${shortcut}. Alt and Shift+Alt modifiers are reserved for character input.`
           );
@@ -2300,7 +2295,7 @@ var wp;
   // packages/compose/build-module/hooks/use-fixed-window-list/index.mjs
   var import_element28 = __toESM(require_element(), 1);
   var import_dom3 = __toESM(require_dom(), 1);
-  var import_keycodes3 = __toESM(require_keycodes(), 1);
+  var import_keycodes2 = __toESM(require_keycodes(), 1);
   var DEFAULT_INIT_WINDOW_SIZE = 30;
   function useFixedWindowList(elementRef, itemHeight, totalItems, options) {
     const initWindowSize = options?.initWindowSize ?? DEFAULT_INIT_WINDOW_SIZE;
@@ -2387,20 +2382,20 @@ var wp;
       const scrollContainer = (0, import_dom3.getScrollContainer)(elementRef.current);
       const handleKeyDown = (event) => {
         switch (event.keyCode) {
-          case import_keycodes3.HOME: {
+          case import_keycodes2.HOME: {
             return scrollContainer?.scrollTo({ top: 0 });
           }
-          case import_keycodes3.END: {
+          case import_keycodes2.END: {
             return scrollContainer?.scrollTo({
               top: totalItems * itemHeight
             });
           }
-          case import_keycodes3.PAGEUP: {
+          case import_keycodes2.PAGEUP: {
             return scrollContainer?.scrollTo({
               top: scrollContainer.scrollTop - fixedListWindow.visibleItems * itemHeight
             });
           }
-          case import_keycodes3.PAGEDOWN: {
+          case import_keycodes2.PAGEDOWN: {
             return scrollContainer?.scrollTo({
               top: scrollContainer.scrollTop + fixedListWindow.visibleItems * itemHeight
             });
