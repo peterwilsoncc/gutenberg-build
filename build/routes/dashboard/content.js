@@ -86,7 +86,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-        useLayoutEffect11(
+        useLayoutEffect12(
           function() {
             inst.value = value;
             inst.getSnapshot = getSnapshot;
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React103 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState71 = React103.useState, useEffect63 = React103.useEffect, useLayoutEffect11 = React103.useLayoutEffect, useDebugValue2 = React103.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React103 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState71 = React103.useState, useEffect63 = React103.useEffect, useLayoutEffect12 = React103.useLayoutEffect, useDebugValue2 = React103.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React103.useSyncExternalStore ? React103.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,9 +148,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React103 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef79 = React103.useRef, useEffect63 = React103.useEffect, useMemo79 = React103.useMemo, useDebugValue2 = React103.useDebugValue;
+      var React103 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef80 = React103.useRef, useEffect63 = React103.useEffect, useMemo79 = React103.useMemo, useDebugValue2 = React103.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef79(null);
+        var instRef = useRef80(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -22134,7 +22134,7 @@ var page_default = Page;
 
 // routes/dashboard/stage.tsx
 var import_data9 = __toESM(require_data());
-var import_element175 = __toESM(require_element());
+var import_element176 = __toESM(require_element());
 var import_i18n64 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 
@@ -41123,7 +41123,7 @@ var WidgetChrome = (0, import_element164.forwardRef)(
 );
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
-var import_element173 = __toESM(require_element());
+var import_element174 = __toESM(require_element());
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react45 = __toESM(require_react());
@@ -45370,11 +45370,14 @@ function isAfter(a2, b2) {
 
 // packages/grid/build-module/dashboard-grid/index.mjs
 var import_compose25 = __toESM(require_compose(), 1);
-var import_element168 = __toESM(require_element(), 1);
+var import_element169 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
 var import_element166 = __toESM(require_element(), 1);
 var import_compose24 = __toESM(require_compose(), 1);
+
+// packages/grid/build-module/shared/grid-item-key.mjs
+var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 
 // packages/grid/build-module/shared/resize-handle.mjs
 var import_element165 = __toESM(require_element(), 1);
@@ -45711,52 +45714,61 @@ function GridItem4({
     height: verticalResizable ? initialContentSize.height + resizeDelta.height : void 0
   } : void 0;
   const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(SnapPreviewOverlay, { snap: resizeSnapPreview }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)("div", { ref: mergedRef, className: itemClassName, style, children: [
-    actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
-      "div",
-      {
-        style: { display: "contents" },
-        ...interacting ? { inert: "" } : {},
-        children: actionableArea
-      }
-    ) : null,
-    /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
-      "div",
-      {
-        ref: setActivatorNodeRef,
-        ...attributes,
-        ...listeners,
-        style: {
-          height: "100%",
-          cursor: getItemCursor(disabled2, interacting)
-        },
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
-            "div",
-            {
-              ref: contentMergedRef,
-              className: grid_item_default["item-content"],
-              style: continuousContentStyle,
-              children: [
-                children,
-                !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
-                  ResizeHandleWrapper,
-                  {
-                    itemId: item.key,
-                    verticalResizable,
-                    onResize: handleResize,
-                    onResizeEnd: handleResizeEnd,
-                    renderResizeHandle
-                  }
-                )
-              ]
-            }
-          ),
-          previewOverlay
-        ]
-      }
-    )
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
+    "div",
+    {
+      ref: mergedRef,
+      className: itemClassName,
+      style,
+      ...{ [GRID_ITEM_DATA_KEY]: item.key },
+      children: [
+        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+          "div",
+          {
+            style: { display: "contents" },
+            ...interacting ? { inert: "" } : {},
+            children: actionableArea
+          }
+        ) : null,
+        /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
+          "div",
+          {
+            ref: setActivatorNodeRef,
+            ...attributes,
+            ...listeners,
+            style: {
+              height: "100%",
+              cursor: getItemCursor(disabled2, interacting)
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
+                "div",
+                {
+                  ref: contentMergedRef,
+                  className: grid_item_default["item-content"],
+                  style: continuousContentStyle,
+                  children: [
+                    children,
+                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+                      ResizeHandleWrapper,
+                      {
+                        itemId: item.key,
+                        verticalResizable,
+                        onResize: handleResize,
+                        onResizeEnd: handleResizeEnd,
+                        renderResizeHandle
+                      }
+                    )
+                  ]
+                }
+              ),
+              previewOverlay
+            ]
+          }
+        )
+      ]
+    }
+  );
 }
 function SnapPreviewOverlay({ snap }) {
   return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
@@ -45918,6 +45930,116 @@ function gridSpanToPixelSize(columnSpan, rowSpan, columnWidth, gapPx, rowHeightP
   const widthPx = columnSpan * columnWidth + (columnSpan - 1) * gapPx;
   const heightPx = rowHeightPx === null ? null : rowSpan * rowHeightPx + (rowSpan - 1) * gapPx;
   return { widthPx, heightPx };
+}
+
+// packages/grid/build-module/shared/use-layout-shift-animation.mjs
+var import_element168 = __toESM(require_element(), 1);
+function queryGridItems(container) {
+  return Array.from(
+    container.querySelectorAll(`[${GRID_ITEM_DATA_KEY}]`)
+  );
+}
+function readItemKey(element) {
+  return element.getAttribute(GRID_ITEM_DATA_KEY);
+}
+function snapshotPositions(container) {
+  const positions = /* @__PURE__ */ new Map();
+  for (const element of queryGridItems(container)) {
+    const key2 = readItemKey(element);
+    if (!key2) {
+      continue;
+    }
+    const { left, top } = element.getBoundingClientRect();
+    positions.set(key2, { left, top });
+  }
+  return positions;
+}
+function clearLayoutShiftStyles(element) {
+  element.style.removeProperty("transform");
+  element.style.removeProperty("transition");
+}
+function playLayoutShift(element, deltaX, deltaY) {
+  if (deltaX === 0 && deltaY === 0) {
+    return;
+  }
+  element.style.transition = "none";
+  element.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+  void element.offsetHeight;
+  requestAnimationFrame(() => {
+    element.style.removeProperty("transition");
+    element.style.transform = "";
+    const onTransitionEnd = (event) => {
+      if (event.propertyName !== "transform") {
+        return;
+      }
+      element.removeEventListener("transitionend", onTransitionEnd);
+      clearLayoutShiftStyles(element);
+    };
+    element.addEventListener("transitionend", onTransitionEnd);
+  });
+}
+function useLayoutShiftAnimation({
+  container,
+  enabled,
+  layoutFingerprint,
+  excludeItemKey = null
+}) {
+  const snapshotBeforeChangeRef = (0, import_element168.useRef)(null);
+  const lastRenderedPositionsRef = (0, import_element168.useRef)(null);
+  const captureLayoutSnapshot = (0, import_element168.useCallback)(() => {
+    if (container) {
+      snapshotBeforeChangeRef.current = snapshotPositions(container);
+    }
+  }, [container]);
+  (0, import_element168.useLayoutEffect)(() => {
+    if (!container || !enabled) {
+      snapshotBeforeChangeRef.current = null;
+      lastRenderedPositionsRef.current = null;
+      if (container) {
+        for (const element of queryGridItems(container)) {
+          clearLayoutShiftStyles(element);
+        }
+      }
+      return;
+    }
+    const previous = snapshotBeforeChangeRef.current ?? lastRenderedPositionsRef.current;
+    snapshotBeforeChangeRef.current = null;
+    if (previous) {
+      for (const element of queryGridItems(container)) {
+        const key2 = readItemKey(element);
+        if (!key2 || key2 === excludeItemKey) {
+          continue;
+        }
+        const old = previous.get(key2);
+        if (!old) {
+          continue;
+        }
+        const { left, top } = element.getBoundingClientRect();
+        const deltaX = old.left - left;
+        const deltaY = old.top - top;
+        clearLayoutShiftStyles(element);
+        playLayoutShift(element, deltaX, deltaY);
+      }
+    }
+    lastRenderedPositionsRef.current = snapshotPositions(container);
+  }, [container, enabled, layoutFingerprint, excludeItemKey]);
+  return { captureLayoutSnapshot };
+}
+function getLayoutFingerprint(layout) {
+  return layout.map(
+    (item) => `${item.key}:${String(item.width ?? "")}:${item.height ?? 1}:${item.order ?? ""}:${item.lane ?? ""}`
+  ).join("|");
+}
+function getPlacementFingerprint(itemStyles) {
+  return [...itemStyles.entries()].sort(([a2], [b2]) => a2.localeCompare(b2)).map(([key2, style]) => {
+    const column = style.gridColumn ?? "";
+    const columnStart = style.gridColumnStart ?? "";
+    const rowStart = style.gridRowStart ?? "";
+    const rowEnd = style.gridRowEnd ?? "";
+    return `${key2}:${String(column)}:${String(
+      columnStart
+    )}:${String(rowStart)}:${String(rowEnd)}`;
+  }).join("|");
 }
 
 // packages/grid/build-module/dashboard-grid/resolve-fill-widths.mjs
@@ -46164,13 +46286,17 @@ function registerStyle52(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
+  registerStyle52("9e5573e51f", "._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:transform var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}@media (prefers-reduced-motion:reduce){._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:none}}");
+}
+var layout_shift_animation_default = { "layout-animating": "_2db63116caa90ae9__layout-animating" };
+if (typeof process === "undefined" || true) {
   registerStyle52("33840f3f33", "._960c435c33759f46__grid{display:grid;gap:var(--wpds-dimension-gap-md,12px);position:relative}._48e8cd4225dcb813__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{transform:none}}");
 }
 var grid_default2 = { "grid": "_960c435c33759f46__grid", "drag-preview-frame": "_48e8cd4225dcb813__drag-preview-frame" };
 var FALLBACK_GAP_PX = 12;
 var DEFAULT_COLUMNS = 6;
 var NO_SORT_STRATEGY = () => null;
-var DashboardGrid = (0, import_element168.forwardRef)(
+var DashboardGrid = (0, import_element169.forwardRef)(
   function DashboardGrid2(props, ref) {
     const {
       layout,
@@ -46188,18 +46314,22 @@ var DashboardGrid = (0, import_element168.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element168.useState)();
-    const [activeId, setActiveId] = (0, import_element168.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element168.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element168.useState)(null);
-    const latestLayoutRef = (0, import_element168.useRef)();
-    const lastReorderCursorRef = (0, import_element168.useRef)(null);
-    const resizeBaselineRef = (0, import_element168.useRef)(null);
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element169.useState)();
+    const [activeId, setActiveId] = (0, import_element169.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element169.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element169.useState)(null);
+    const latestLayoutRef = (0, import_element169.useRef)();
+    const lastReorderCursorRef = (0, import_element169.useRef)(null);
+    const resizeBaselineRef = (0, import_element169.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element169.useRef)(() => {
+    });
     const activeLayout = temporaryLayout ?? layout;
-    const rootRef = (0, import_element168.useRef)(null);
-    const [containerWidth, setContainerWidth] = (0, import_element168.useState)(0);
-    const [containerHeight, setContainerHeight] = (0, import_element168.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element168.useState)(FALLBACK_GAP_PX);
+    const [gridRoot, setGridRoot] = (0, import_element169.useState)(
+      null
+    );
+    const [containerWidth, setContainerWidth] = (0, import_element169.useState)(0);
+    const [containerHeight, setContainerHeight] = (0, import_element169.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element169.useState)(FALLBACK_GAP_PX);
     const resizeObserverRef = (0, import_compose25.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -46207,15 +46337,15 @@ var DashboardGrid = (0, import_element168.forwardRef)(
       }
     );
     const mergedGridRef = (0, import_compose25.useMergeRefs)([
-      rootRef,
+      setGridRoot,
       resizeObserverRef,
       ref
     ]);
-    (0, import_element168.useLayoutEffect)(() => {
-      if (!rootRef.current) {
+    (0, import_element169.useLayoutEffect)(() => {
+      if (!gridRoot) {
         return;
       }
-      const { width, height } = rootRef.current.getBoundingClientRect();
+      const { width, height } = gridRoot.getBoundingClientRect();
       if (width > 0) {
         setContainerWidth(width);
       }
@@ -46223,13 +46353,13 @@ var DashboardGrid = (0, import_element168.forwardRef)(
         setContainerHeight(height);
       }
       const parsed = Number.parseFloat(
-        window.getComputedStyle(rootRef.current).columnGap
+        window.getComputedStyle(gridRoot).columnGap
       );
       if (Number.isFinite(parsed) && parsed > 0) {
         setGapPx(parsed);
       }
-    }, []);
-    const effectiveColumns = (0, import_element168.useMemo)(() => {
+    }, [gridRoot]);
+    const effectiveColumns = (0, import_element169.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS;
       }
@@ -46241,30 +46371,23 @@ var DashboardGrid = (0, import_element168.forwardRef)(
       return columns !== void 0 ? Math.min(columns, maxFit) : maxFit;
     }, [minColumnWidth, gapPx, containerWidth, columns]);
     const columnWidth = (containerWidth - (effectiveColumns - 1) * gapPx) / effectiveColumns;
-    const layoutMap = (0, import_element168.useMemo)(() => {
+    const layoutMap = (0, import_element169.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeysSig = layout.map((item) => item.key).join("\0");
-    const layoutKeysRef = (0, import_element168.useRef)(null);
-    if (layoutKeysRef.current?.sig !== layoutKeysSig) {
-      layoutKeysRef.current = {
-        sig: layoutKeysSig,
-        set: new Set(layout.map((item) => item.key))
-      };
-    }
-    const layoutKeys = layoutKeysRef.current.set;
-    const sortedItems = activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
-      (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
-    ).map(({ item }) => item.key);
-    const itemsSig = sortedItems.join("\0");
-    const itemsRef = (0, import_element168.useRef)(null);
-    if (itemsRef.current?.sig !== itemsSig) {
-      itemsRef.current = { sig: itemsSig, arr: sortedItems };
-    }
-    const items = itemsRef.current.arr;
-    const resolvedItemMap = (0, import_element168.useMemo)(() => {
+    const layoutKeys = (0, import_element169.useMemo)(
+      () => new Set(layout.map((item) => item.key)),
+      [layout]
+    );
+    const sortedItems = (0, import_element169.useMemo)(
+      () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
+        (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
+      ).map(({ item }) => item.key),
+      [activeLayout]
+    );
+    const items = sortedItems;
+    const resolvedItemMap = (0, import_element169.useMemo)(() => {
       const fillWidths = resolveFillWidths(
         items,
         layoutMap,
@@ -46283,12 +46406,12 @@ var DashboardGrid = (0, import_element168.forwardRef)(
       }
       return map;
     }, [items, layoutMap, effectiveColumns]);
-    const [childrenMap, actionableAreaMap, remaining] = (0, import_element168.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining] = (0, import_element169.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
-      import_element168.Children.forEach(children, (child) => {
-        if (!(0, import_element168.isValidElement)(child)) {
+      import_element169.Children.forEach(children, (child) => {
+        if (!(0, import_element169.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -46299,7 +46422,7 @@ var DashboardGrid = (0, import_element168.forwardRef)(
             actionableMap.set(key2, actionableArea);
             childMap.set(
               key2,
-              (0, import_element168.cloneElement)(child, { actionableArea: void 0 })
+              (0, import_element169.cloneElement)(child, { actionableArea: void 0 })
             );
           } else {
             childMap.set(key2, child);
@@ -46372,6 +46495,7 @@ var DashboardGrid = (0, import_element168.forwardRef)(
         y: activeCenterY
       };
       latestLayoutRef.current = updatedLayout;
+      captureLayoutSnapshotRef.current();
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
@@ -46451,6 +46575,8 @@ var DashboardGrid = (0, import_element168.forwardRef)(
         (item) => item.key === id ? { ...item, width: newWidth, height: newHeight } : item
       );
       latestLayoutRef.current = updatedLayout;
+      captureLayoutSnapshotRef.current();
+      setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
     const activeClone = activeId ? childrenMap.get(activeId) : null;
@@ -46458,7 +46584,7 @@ var DashboardGrid = (0, import_element168.forwardRef)(
     const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime210.jsx)("div", { className: grid_default2["drag-preview-frame"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const overlayRowHeight = typeof rowHeight === "number" ? rowHeight : void 0;
-    const overlayRows = (0, import_element168.useMemo)(() => {
+    const overlayRows = (0, import_element169.useMemo)(() => {
       if (overlayRowHeight === void 0 || containerHeight <= 0) {
         return void 0;
       }
@@ -46468,7 +46594,7 @@ var DashboardGrid = (0, import_element168.forwardRef)(
         Math.floor((containerHeight + gapPx) / rowTile)
       );
     }, [overlayRowHeight, containerHeight, gapPx]);
-    const gridOverlay = (0, import_element168.useMemo)(
+    const gridOverlay = (0, import_element169.useMemo)(
       () => /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
         Overlay,
         {
@@ -46486,6 +46612,21 @@ var DashboardGrid = (0, import_element168.forwardRef)(
         overlayRows
       ]
     );
+    const layoutAnimating = editMode && (isResizing || temporaryLayout !== void 0);
+    const layoutFingerprint = (0, import_element169.useMemo)(
+      () => getLayoutFingerprint([...resolvedItemMap.values()]),
+      [resolvedItemMap]
+    );
+    const excludeLayoutAnimationKey = activeId ?? (isResizing ? resizeSnapPreview?.id : null);
+    const { captureLayoutSnapshot } = useLayoutShiftAnimation({
+      container: gridRoot,
+      enabled: layoutAnimating,
+      layoutFingerprint,
+      excludeItemKey: excludeLayoutAnimationKey
+    });
+    (0, import_element169.useLayoutEffect)(() => {
+      captureLayoutSnapshotRef.current = captureLayoutSnapshot;
+    }, [captureLayoutSnapshot]);
     return /* @__PURE__ */ (0, import_jsx_runtime210.jsxs)(
       DndContext,
       {
@@ -46504,7 +46645,11 @@ var DashboardGrid = (0, import_element168.forwardRef)(
             {
               ...divProps,
               ref: mergedGridRef,
-              className: clsx_default(grid_default2.grid, className),
+              className: clsx_default(
+                grid_default2.grid,
+                layoutAnimating && layout_shift_animation_default["layout-animating"],
+                className
+              ),
               "data-wp-dashboard-grid-resizing": isResizing || void 0,
               style: {
                 ...style,
@@ -46545,278 +46690,11 @@ var DashboardGrid = (0, import_element168.forwardRef)(
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
 var import_compose27 = __toESM(require_compose(), 1);
-var import_element171 = __toESM(require_element(), 1);
+var import_element172 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
 var import_element170 = __toESM(require_element(), 1);
 var import_compose26 = __toESM(require_compose(), 1);
-
-// packages/grid/build-module/dashboard-lanes/use-lane-placement.mjs
-var import_element169 = __toESM(require_element(), 1);
-
-// packages/grid/build-module/dashboard-lanes/lane-placement.mjs
-function clampSpan(span, lanes) {
-  if (!Number.isFinite(span)) {
-    return 1;
-  }
-  return Math.max(1, Math.min(Math.floor(span), lanes));
-}
-function clampLane(lane, span, lanes) {
-  if (!Number.isFinite(lane)) {
-    return 0;
-  }
-  return Math.max(0, Math.min(Math.floor(lane), lanes - span));
-}
-function maxBaselineAcross(laneBottoms, startLane, span) {
-  let maxBaseline = 0;
-  for (let i2 = startLane; i2 < startLane + span; i2++) {
-    if (laneBottoms[i2] > maxBaseline) {
-      maxBaseline = laneBottoms[i2];
-    }
-  }
-  return maxBaseline;
-}
-function computeLanePlacements(input) {
-  const lanes = Math.max(1, Math.floor(input.lanes));
-  const gap = Math.max(0, input.gap);
-  const tolerance = Math.max(0, input.flowTolerance);
-  const laneBottoms = new Array(lanes).fill(0);
-  const placements2 = /* @__PURE__ */ new Map();
-  const explicitItems = [];
-  const autoItems = [];
-  for (const item of input.items) {
-    if (item.lane !== void 0) {
-      explicitItems.push(item);
-    } else {
-      autoItems.push(item);
-    }
-  }
-  for (const item of explicitItems) {
-    const span = clampSpan(item.span, lanes);
-    const lane = clampLane(item.lane, span, lanes);
-    const baseline = maxBaselineAcross(laneBottoms, lane, span);
-    const top = baseline === 0 ? 0 : baseline + gap;
-    const height = Math.max(0, item.height);
-    placements2.set(item.key, { key: item.key, lane, top, span });
-    const newBottom = top + height;
-    for (let i2 = lane; i2 < lane + span; i2++) {
-      laneBottoms[i2] = newBottom;
-    }
-  }
-  for (const item of autoItems) {
-    const span = clampSpan(item.span, lanes);
-    let bestLane = 0;
-    let bestBaseline = Infinity;
-    for (let candidate = 0; candidate <= lanes - span; candidate++) {
-      const baseline = maxBaselineAcross(laneBottoms, candidate, span);
-      if (bestBaseline - baseline > tolerance) {
-        bestBaseline = baseline;
-        bestLane = candidate;
-      }
-    }
-    const top = bestBaseline === 0 ? 0 : bestBaseline + gap;
-    const height = Math.max(0, item.height);
-    placements2.set(item.key, {
-      key: item.key,
-      lane: bestLane,
-      top,
-      span
-    });
-    const newBottom = top + height;
-    for (let i2 = bestLane; i2 < bestLane + span; i2++) {
-      laneBottoms[i2] = newBottom;
-    }
-  }
-  let totalHeight = 0;
-  for (const bottom of laneBottoms) {
-    if (bottom > totalHeight) {
-      totalHeight = bottom;
-    }
-  }
-  return { placements: placements2, totalHeight };
-}
-
-// packages/grid/build-module/dashboard-lanes/use-lane-placement.mjs
-var LANES_DATA_KEY = "data-lanes-key";
-var DEFAULT_ROW_UNIT = 4;
-function supportsGridLanes() {
-  if (typeof CSS === "undefined" || !CSS.supports) {
-    return false;
-  }
-  return CSS.supports("display", "grid-lanes");
-}
-function clampSpan2(span) {
-  if (typeof span !== "number" || !Number.isFinite(span)) {
-    return 1;
-  }
-  return Math.max(1, Math.floor(span));
-}
-function useLanePlacement(container, input) {
-  const [isPolyfilled] = (0, import_element169.useState)(() => !supportsGridLanes());
-  const [itemStyles, setItemStyles] = (0, import_element169.useState)(() => /* @__PURE__ */ new Map());
-  const nativeStyles = (0, import_element169.useMemo)(() => {
-    const map = /* @__PURE__ */ new Map();
-    for (const item of input.items) {
-      map.set(item.key, {
-        gridColumn: `span ${clampSpan2(item.span)}`
-      });
-    }
-    return map;
-  }, [input.items]);
-  const itemsSignature = (0, import_element169.useMemo)(() => {
-    return input.items.map(
-      (item) => `${item.key}/${item.span ?? 1}/${item.lane ?? ""}`
-    ).join("\0");
-  }, [input.items]);
-  const { items, lanes, gap, flowTolerance, rowUnit } = input;
-  (0, import_element169.useLayoutEffect)(() => {
-    if (!isPolyfilled || !container) {
-      return;
-    }
-    if (typeof ResizeObserver === "undefined") {
-      return;
-    }
-    const heights = /* @__PURE__ */ new Map();
-    const observed = /* @__PURE__ */ new Set();
-    let cancelled = false;
-    let rafId2 = null;
-    const recompute = () => {
-      if (rafId2 !== null || cancelled) {
-        return;
-      }
-      rafId2 = requestAnimationFrame(() => {
-        rafId2 = null;
-        if (cancelled) {
-          return;
-        }
-        const itemsWithHeight = items.map((item) => ({
-          key: item.key,
-          span: clampSpan2(item.span),
-          lane: item.lane,
-          height: heights.get(item.key) ?? 0
-        }));
-        const result = computeLanePlacements({
-          items: itemsWithHeight,
-          lanes,
-          gap,
-          flowTolerance
-        });
-        const effectiveRowUnit = Math.max(
-          1,
-          rowUnit ?? DEFAULT_ROW_UNIT
-        );
-        const next = /* @__PURE__ */ new Map();
-        for (const item of items) {
-          const placement = result.placements.get(item.key);
-          if (!placement) {
-            continue;
-          }
-          const height = heights.get(item.key) ?? 0;
-          const rowStart = Math.floor(placement.top / effectiveRowUnit) + 1;
-          const rowSpan = Math.max(
-            1,
-            Math.ceil(height / effectiveRowUnit)
-          );
-          next.set(item.key, {
-            gridColumnStart: placement.lane + 1,
-            gridColumnEnd: `span ${placement.span}`,
-            gridRowStart: rowStart,
-            gridRowEnd: `span ${rowSpan}`
-          });
-        }
-        setItemStyles(next);
-      });
-    };
-    const resizeObserver = new ResizeObserver((entries) => {
-      let changed = false;
-      for (const entry of entries) {
-        const key2 = entry.target.getAttribute(
-          LANES_DATA_KEY
-        );
-        if (!key2) {
-          continue;
-        }
-        const newHeight = entry.contentRect.height;
-        if (heights.get(key2) !== newHeight) {
-          heights.set(key2, newHeight);
-          changed = true;
-        }
-      }
-      if (changed) {
-        recompute();
-      }
-    });
-    const refreshObserved = () => {
-      const current = container.querySelectorAll(
-        `[${LANES_DATA_KEY}]`
-      );
-      for (const element of current) {
-        if (!observed.has(element)) {
-          observed.add(element);
-          resizeObserver.observe(element);
-          const key2 = element.getAttribute(LANES_DATA_KEY);
-          if (key2) {
-            const rect = element.getBoundingClientRect();
-            heights.set(key2, rect.height);
-          }
-        }
-      }
-      for (const element of observed) {
-        if (!container.contains(element)) {
-          resizeObserver.unobserve(element);
-          observed.delete(element);
-        }
-      }
-    };
-    const mutationObserver = typeof MutationObserver !== "undefined" ? new MutationObserver(() => {
-      refreshObserved();
-      recompute();
-    }) : null;
-    if (mutationObserver) {
-      mutationObserver.observe(container, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: [LANES_DATA_KEY]
-      });
-    }
-    refreshObserved();
-    recompute();
-    return () => {
-      cancelled = true;
-      if (rafId2 !== null) {
-        cancelAnimationFrame(rafId2);
-      }
-      resizeObserver.disconnect();
-      mutationObserver?.disconnect();
-    };
-  }, [
-    container,
-    isPolyfilled,
-    lanes,
-    gap,
-    flowTolerance,
-    rowUnit,
-    // `items` is intentionally not a dep: the rAF closure reads
-    // from it, but the only fields that affect placement (keys,
-    // spans, explicit lanes) are captured by `itemsSignature`.
-    // Including the array identity would tear the effect down on
-    // every fresh reference from the parent and defeat the signature.
-    itemsSignature
-  ]);
-  if (!isPolyfilled) {
-    return { itemStyles: nativeStyles, isPolyfilled: false };
-  }
-  if (itemStyles.size === 0) {
-    return {
-      itemStyles: nativeStyles,
-      isPolyfilled: true
-    };
-  }
-  return { itemStyles, isPolyfilled: true };
-}
-
-// packages/grid/build-module/dashboard-lanes/lanes-item.mjs
 var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE53 = "data-wp-hash";
 function getRuntime53() {
@@ -46985,7 +46863,7 @@ function LanesItem({
       ref: mergedRef,
       className: itemClassName,
       style,
-      ...{ [LANES_DATA_KEY]: itemKey },
+      ...{ [GRID_ITEM_DATA_KEY]: itemKey },
       children: [
         actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
           "div",
@@ -47034,6 +46912,266 @@ function LanesItem({
       ]
     }
   );
+}
+
+// packages/grid/build-module/dashboard-lanes/use-lane-placement.mjs
+var import_element171 = __toESM(require_element(), 1);
+
+// packages/grid/build-module/dashboard-lanes/lane-placement.mjs
+function clampSpan(span, lanes) {
+  if (!Number.isFinite(span)) {
+    return 1;
+  }
+  return Math.max(1, Math.min(Math.floor(span), lanes));
+}
+function clampLane(lane, span, lanes) {
+  if (!Number.isFinite(lane)) {
+    return 0;
+  }
+  return Math.max(0, Math.min(Math.floor(lane), lanes - span));
+}
+function maxBaselineAcross(laneBottoms, startLane, span) {
+  let maxBaseline = 0;
+  for (let i2 = startLane; i2 < startLane + span; i2++) {
+    if (laneBottoms[i2] > maxBaseline) {
+      maxBaseline = laneBottoms[i2];
+    }
+  }
+  return maxBaseline;
+}
+function computeLanePlacements(input) {
+  const lanes = Math.max(1, Math.floor(input.lanes));
+  const gap = Math.max(0, input.gap);
+  const tolerance = Math.max(0, input.flowTolerance);
+  const laneBottoms = new Array(lanes).fill(0);
+  const placements2 = /* @__PURE__ */ new Map();
+  const explicitItems = [];
+  const autoItems = [];
+  for (const item of input.items) {
+    if (item.lane !== void 0) {
+      explicitItems.push(item);
+    } else {
+      autoItems.push(item);
+    }
+  }
+  for (const item of explicitItems) {
+    const span = clampSpan(item.span, lanes);
+    const lane = clampLane(item.lane, span, lanes);
+    const baseline = maxBaselineAcross(laneBottoms, lane, span);
+    const top = baseline === 0 ? 0 : baseline + gap;
+    const height = Math.max(0, item.height);
+    placements2.set(item.key, { key: item.key, lane, top, span });
+    const newBottom = top + height;
+    for (let i2 = lane; i2 < lane + span; i2++) {
+      laneBottoms[i2] = newBottom;
+    }
+  }
+  for (const item of autoItems) {
+    const span = clampSpan(item.span, lanes);
+    let bestLane = 0;
+    let bestBaseline = Infinity;
+    for (let candidate = 0; candidate <= lanes - span; candidate++) {
+      const baseline = maxBaselineAcross(laneBottoms, candidate, span);
+      if (bestBaseline - baseline > tolerance) {
+        bestBaseline = baseline;
+        bestLane = candidate;
+      }
+    }
+    const top = bestBaseline === 0 ? 0 : bestBaseline + gap;
+    const height = Math.max(0, item.height);
+    placements2.set(item.key, {
+      key: item.key,
+      lane: bestLane,
+      top,
+      span
+    });
+    const newBottom = top + height;
+    for (let i2 = bestLane; i2 < bestLane + span; i2++) {
+      laneBottoms[i2] = newBottom;
+    }
+  }
+  let totalHeight = 0;
+  for (const bottom of laneBottoms) {
+    if (bottom > totalHeight) {
+      totalHeight = bottom;
+    }
+  }
+  return { placements: placements2, totalHeight };
+}
+
+// packages/grid/build-module/dashboard-lanes/use-lane-placement.mjs
+var DEFAULT_ROW_UNIT = 4;
+function supportsGridLanes() {
+  if (typeof CSS === "undefined" || !CSS.supports) {
+    return false;
+  }
+  return CSS.supports("display", "grid-lanes");
+}
+function clampSpan2(span) {
+  if (typeof span !== "number" || !Number.isFinite(span)) {
+    return 1;
+  }
+  return Math.max(1, Math.floor(span));
+}
+function useLanePlacement(container, input) {
+  const [isPolyfilled] = (0, import_element171.useState)(() => !supportsGridLanes());
+  const [itemStyles, setItemStyles] = (0, import_element171.useState)(() => /* @__PURE__ */ new Map());
+  const nativeStyles = (0, import_element171.useMemo)(() => {
+    const map = /* @__PURE__ */ new Map();
+    for (const item of input.items) {
+      map.set(item.key, {
+        gridColumn: `span ${clampSpan2(item.span)}`
+      });
+    }
+    return map;
+  }, [input.items]);
+  const itemsSignature = (0, import_element171.useMemo)(() => {
+    return input.items.map(
+      (item) => `${item.key}/${item.span ?? 1}/${item.lane ?? ""}`
+    ).join("\0");
+  }, [input.items]);
+  const itemsForPlacement = (0, import_element171.useMemo)(() => input.items, [itemsSignature]);
+  const { lanes, gap, flowTolerance, rowUnit } = input;
+  (0, import_element171.useLayoutEffect)(() => {
+    if (!isPolyfilled || !container) {
+      return;
+    }
+    if (typeof ResizeObserver === "undefined") {
+      return;
+    }
+    const heights = /* @__PURE__ */ new Map();
+    const observed = /* @__PURE__ */ new Set();
+    let cancelled = false;
+    let rafId2 = null;
+    const recompute = () => {
+      if (rafId2 !== null || cancelled) {
+        return;
+      }
+      rafId2 = requestAnimationFrame(() => {
+        rafId2 = null;
+        if (cancelled) {
+          return;
+        }
+        const itemsWithHeight = itemsForPlacement.map((item) => ({
+          key: item.key,
+          span: clampSpan2(item.span),
+          lane: item.lane,
+          height: heights.get(item.key) ?? 0
+        }));
+        const result = computeLanePlacements({
+          items: itemsWithHeight,
+          lanes,
+          gap,
+          flowTolerance
+        });
+        const effectiveRowUnit = Math.max(
+          1,
+          rowUnit ?? DEFAULT_ROW_UNIT
+        );
+        const next = /* @__PURE__ */ new Map();
+        for (const item of itemsForPlacement) {
+          const placement = result.placements.get(item.key);
+          if (!placement) {
+            continue;
+          }
+          const height = heights.get(item.key) ?? 0;
+          const rowStart = Math.floor(placement.top / effectiveRowUnit) + 1;
+          const rowSpan = Math.max(
+            1,
+            Math.ceil(height / effectiveRowUnit)
+          );
+          next.set(item.key, {
+            gridColumnStart: placement.lane + 1,
+            gridColumnEnd: `span ${placement.span}`,
+            gridRowStart: rowStart,
+            gridRowEnd: `span ${rowSpan}`
+          });
+        }
+        setItemStyles(next);
+      });
+    };
+    const resizeObserver = new ResizeObserver((entries) => {
+      let changed = false;
+      for (const entry of entries) {
+        const key2 = entry.target.getAttribute(
+          GRID_ITEM_DATA_KEY
+        );
+        if (!key2) {
+          continue;
+        }
+        const newHeight = entry.contentRect.height;
+        if (heights.get(key2) !== newHeight) {
+          heights.set(key2, newHeight);
+          changed = true;
+        }
+      }
+      if (changed) {
+        recompute();
+      }
+    });
+    const refreshObserved = () => {
+      const current = container.querySelectorAll(
+        `[${GRID_ITEM_DATA_KEY}]`
+      );
+      for (const element of current) {
+        if (!observed.has(element)) {
+          observed.add(element);
+          resizeObserver.observe(element);
+          const key2 = element.getAttribute(GRID_ITEM_DATA_KEY);
+          if (key2) {
+            const rect = element.getBoundingClientRect();
+            heights.set(key2, rect.height);
+          }
+        }
+      }
+      for (const element of observed) {
+        if (!container.contains(element)) {
+          resizeObserver.unobserve(element);
+          observed.delete(element);
+        }
+      }
+    };
+    const mutationObserver = typeof MutationObserver !== "undefined" ? new MutationObserver(() => {
+      refreshObserved();
+      recompute();
+    }) : null;
+    if (mutationObserver) {
+      mutationObserver.observe(container, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: [GRID_ITEM_DATA_KEY]
+      });
+    }
+    refreshObserved();
+    recompute();
+    return () => {
+      cancelled = true;
+      if (rafId2 !== null) {
+        cancelAnimationFrame(rafId2);
+      }
+      resizeObserver.disconnect();
+      mutationObserver?.disconnect();
+    };
+  }, [
+    container,
+    isPolyfilled,
+    lanes,
+    gap,
+    flowTolerance,
+    rowUnit,
+    itemsForPlacement
+  ]);
+  if (!isPolyfilled) {
+    return { itemStyles: nativeStyles, isPolyfilled: false };
+  }
+  if (itemStyles.size === 0) {
+    return {
+      itemStyles: nativeStyles,
+      isPolyfilled: true
+    };
+  }
+  return { itemStyles, isPolyfilled: true };
 }
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
@@ -47119,13 +47257,17 @@ function registerStyle54(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
+  registerStyle54("9e5573e51f", "._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:transform var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}@media (prefers-reduced-motion:reduce){._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:none}}");
+}
+var layout_shift_animation_default2 = { "layout-animating": "_2db63116caa90ae9__layout-animating" };
+if (typeof process === "undefined" || true) {
   registerStyle54("28181692eb", "._8cc368bc6c2d79c6__lanes{column-gap:var(--wpds-dimension-gap-md,12px);display:grid-lanes;position:relative;row-gap:var(--wpds-dimension-gap-md,12px)}@supports not (display:grid-lanes){._8cc368bc6c2d79c6__lanes{display:grid;grid-auto-flow:dense;grid-auto-rows:var(--wp-grid-lane-row-unit,4px);row-gap:0}}._1bfa908a532e32a4__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame{transform:none}}");
 }
 var lanes_default = { "lanes": "_8cc368bc6c2d79c6__lanes", "drag-preview-frame": "_1bfa908a532e32a4__drag-preview-frame" };
 var FALLBACK_GAP_PX2 = 12;
 var DEFAULT_COLUMNS2 = 6;
 var NO_SORT_STRATEGY2 = () => null;
-var DashboardLanes = (0, import_element171.forwardRef)(
+var DashboardLanes = (0, import_element172.forwardRef)(
   function DashboardLanes2(props, ref) {
     const {
       layout,
@@ -47144,19 +47286,21 @@ var DashboardLanes = (0, import_element171.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element171.useState)();
-    const [activeId, setActiveId] = (0, import_element171.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element171.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element171.useState)(null);
-    const latestLayoutRef = (0, import_element171.useRef)();
-    const lastReorderCursorRef = (0, import_element171.useRef)(null);
-    const resizeBaselineRef = (0, import_element171.useRef)(null);
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element172.useState)();
+    const [activeId, setActiveId] = (0, import_element172.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element172.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element172.useState)(null);
+    const latestLayoutRef = (0, import_element172.useRef)();
+    const lastReorderCursorRef = (0, import_element172.useRef)(null);
+    const resizeBaselineRef = (0, import_element172.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element172.useRef)(() => {
+    });
     const activeLayout = temporaryLayout ?? layout;
-    const [container, setContainer] = (0, import_element171.useState)(
+    const [container, setContainer] = (0, import_element172.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element171.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element171.useState)(FALLBACK_GAP_PX2);
+    const [containerWidth, setContainerWidth] = (0, import_element172.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element172.useState)(FALLBACK_GAP_PX2);
     const resizeObserverRef = (0, import_compose27.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -47167,7 +47311,7 @@ var DashboardLanes = (0, import_element171.forwardRef)(
       resizeObserverRef,
       ref
     ]);
-    (0, import_element171.useLayoutEffect)(() => {
+    (0, import_element172.useLayoutEffect)(() => {
       if (!container) {
         return;
       }
@@ -47182,7 +47326,7 @@ var DashboardLanes = (0, import_element171.forwardRef)(
         setGapPx(parsed);
       }
     }, [container]);
-    const effectiveColumns = (0, import_element171.useMemo)(() => {
+    const effectiveColumns = (0, import_element172.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS2;
       }
@@ -47194,39 +47338,23 @@ var DashboardLanes = (0, import_element171.forwardRef)(
       return columns !== void 0 ? Math.min(columns, maxFit) : maxFit;
     }, [minColumnWidth, gapPx, containerWidth, columns]);
     const columnWidth = (containerWidth - (effectiveColumns - 1) * gapPx) / effectiveColumns;
-    const layoutMap = (0, import_element171.useMemo)(() => {
+    const layoutMap = (0, import_element172.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeysSig = (0, import_element171.useMemo)(
-      () => layout.map((item) => item.key).join("\0"),
+    const layoutKeys = (0, import_element172.useMemo)(
+      () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const layoutKeysRef = (0, import_element171.useRef)(null);
-    if (layoutKeysRef.current?.sig !== layoutKeysSig) {
-      layoutKeysRef.current = {
-        sig: layoutKeysSig,
-        set: new Set(layout.map((item) => item.key))
-      };
-    }
-    const layoutKeys = layoutKeysRef.current.set;
-    const sortedItems = (0, import_element171.useMemo)(
+    const sortedItems = (0, import_element172.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
-    const itemsSig = (0, import_element171.useMemo)(
-      () => sortedItems.join("\0"),
-      [sortedItems]
-    );
-    const itemsRef = (0, import_element171.useRef)(null);
-    if (itemsRef.current?.sig !== itemsSig) {
-      itemsRef.current = { sig: itemsSig, arr: sortedItems };
-    }
-    const items = itemsRef.current.arr;
-    const placementItems = (0, import_element171.useMemo)(() => {
+    const items = sortedItems;
+    const placementItems = (0, import_element172.useMemo)(() => {
       return items.map((key2) => {
         const item = layoutMap.get(key2);
         const width = item?.width;
@@ -47241,12 +47369,12 @@ var DashboardLanes = (0, import_element171.forwardRef)(
       flowTolerance,
       rowUnit
     });
-    const [childrenMap, actionableAreaMap, remaining] = (0, import_element171.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining] = (0, import_element172.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
-      import_element171.Children.forEach(children, (child) => {
-        if (!(0, import_element171.isValidElement)(child)) {
+      import_element172.Children.forEach(children, (child) => {
+        if (!(0, import_element172.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -47257,7 +47385,7 @@ var DashboardLanes = (0, import_element171.forwardRef)(
             actionableMap.set(key2, actionableArea);
             childMap.set(
               key2,
-              (0, import_element171.cloneElement)(
+              (0, import_element172.cloneElement)(
                 child,
                 { actionableArea: void 0 }
               )
@@ -47337,6 +47465,7 @@ var DashboardLanes = (0, import_element171.forwardRef)(
         y: activeCenterY
       };
       latestLayoutRef.current = updatedLayout;
+      captureLayoutSnapshotRef.current();
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
@@ -47394,6 +47523,8 @@ var DashboardLanes = (0, import_element171.forwardRef)(
         (item) => item.key === id ? { ...item, width: newWidth } : item
       );
       latestLayoutRef.current = updatedLayout;
+      captureLayoutSnapshotRef.current();
+      setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
     const interacting = activeId !== null || isResizing;
@@ -47401,10 +47532,26 @@ var DashboardLanes = (0, import_element171.forwardRef)(
     const DragPreview = renderDragPreview;
     const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("div", { className: lanes_default["drag-preview-frame"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
-    const gridOverlay = (0, import_element171.useMemo)(
+    const gridOverlay = (0, import_element172.useMemo)(
       () => /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
       [Overlay, editMode, effectiveColumns]
     );
+    const layoutAnimating = editMode && (isResizing || temporaryLayout !== void 0);
+    const layoutFingerprint = (0, import_element172.useMemo)(() => {
+      const layoutSig = getLayoutFingerprint(activeLayout);
+      const placementSig = getPlacementFingerprint(itemStyles);
+      return `${layoutSig}\0${placementSig}`;
+    }, [activeLayout, itemStyles]);
+    const excludeLayoutAnimationKey = activeId ?? (isResizing ? resizeSnapPreview?.id : null);
+    const { captureLayoutSnapshot } = useLayoutShiftAnimation({
+      container,
+      enabled: layoutAnimating,
+      layoutFingerprint,
+      excludeItemKey: excludeLayoutAnimationKey
+    });
+    (0, import_element172.useLayoutEffect)(() => {
+      captureLayoutSnapshotRef.current = captureLayoutSnapshot;
+    }, [captureLayoutSnapshot]);
     return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
       DndContext,
       {
@@ -47423,7 +47570,11 @@ var DashboardLanes = (0, import_element171.forwardRef)(
             {
               ...divProps,
               ref: mergedRootRef,
-              className: clsx_default(lanes_default.lanes, className),
+              className: clsx_default(
+                lanes_default.lanes,
+                layoutAnimating && layout_shift_animation_default2["layout-animating"],
+                className
+              ),
               style: {
                 ...style,
                 gridTemplateColumns: `repeat(${effectiveColumns}, minmax(0, 1fr))`,
@@ -47479,7 +47630,7 @@ var DashboardLanes = (0, import_element171.forwardRef)(
 );
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.tsx
-var import_element172 = __toESM(require_element());
+var import_element173 = __toESM(require_element());
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.module.css
 if (typeof process === "undefined" || true) {
@@ -47489,7 +47640,7 @@ var widget_resize_handle_default = { "handle": "_41552c4502ad12ed__handle", "res
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.tsx
 var import_jsx_runtime213 = __toESM(require_jsx_runtime());
-var WidgetResizeHandle = (0, import_element172.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element173.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
     return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
       "div",
@@ -47573,21 +47724,21 @@ function applyMasonryChange(widgets, masonryLayout) {
     };
   });
 }
-var Widgets = (0, import_element173.forwardRef)(
+var Widgets = (0, import_element174.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings } = useDashboardInternalContext();
     const isMasonry2 = gridSettings.model === "masonry";
-    const gridLayout = (0, import_element173.useMemo)(
+    const gridLayout = (0, import_element174.useMemo)(
       () => isMasonry2 ? toMasonryLayout(layout) : toGridLayout(layout),
       [layout, isMasonry2]
     );
-    const handleGridChange = (0, import_element173.useCallback)(
+    const handleGridChange = (0, import_element174.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element173.useCallback)(
+    const handleMasonryChange = (0, import_element174.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -47606,7 +47757,7 @@ var Widgets = (0, import_element173.forwardRef)(
       },
       widget.uuid
     ));
-    const renderDragPreview = (0, import_element173.useCallback)(
+    const renderDragPreview = (0, import_element174.useCallback)(
       ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
       []
     );
@@ -47713,7 +47864,7 @@ var WidgetDashboard = Object.assign(
 // routes/dashboard/widget-types/hooks/use-widget-types.ts
 var import_data8 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
-var import_element174 = __toESM(require_element());
+var import_element175 = __toESM(require_element());
 var import_i18n63 = __toESM(require_i18n());
 (0, import_data8.dispatch)(import_core_data.store).addEntities([
   {
@@ -47731,8 +47882,8 @@ function useWidgetTypes() {
     (select) => select(import_core_data.store).getEntityRecords("root", "widgetModule"),
     []
   );
-  const [widgetTypes, setWidgetTypes] = (0, import_element174.useState)([]);
-  (0, import_element174.useEffect)(() => {
+  const [widgetTypes, setWidgetTypes] = (0, import_element175.useState)([]);
+  (0, import_element175.useEffect)(() => {
     if (!records) {
       return;
     }
@@ -47788,7 +47939,7 @@ function Dashboard() {
   );
   const [gridSettings, setGridSettings] = useDashboardGridSettings();
   const widgetTypes = useWidgetTypes();
-  const [editMode, setEditMode] = (0, import_element175.useState)(false);
+  const [editMode, setEditMode] = (0, import_element176.useState)(false);
   const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices.store);
   const handleLayoutChange = (next) => {
     setLayout(next);
