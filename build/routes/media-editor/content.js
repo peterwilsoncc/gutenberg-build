@@ -11880,6 +11880,7 @@ var import_components40 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
+var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
 var import_components39 = __toESM(require_components(), 1);
@@ -17573,6 +17574,10 @@ function useSaveMediaEditor({
     try {
       let saved;
       const modifiers = getCropModifiers(cropper);
+      const previous = modifiers.length > 0 && media ? {
+        id,
+        url: media.source_url
+      } : void 0;
       if (modifiers.length > 0) {
         const pendingEdits = registry.select(import_core_data.store).getEntityRecordNonTransientEdits(
           "postType",
@@ -17616,7 +17621,8 @@ function useSaveMediaEditor({
         onSaved?.({
           id: next.id,
           url: next.source_url,
-          media: next
+          media: next,
+          previous
         });
       }
     } catch (error2) {
@@ -18158,6 +18164,7 @@ function MediaEditorModal({
     };
   }, []);
   const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data9.useDispatch)(store);
+  const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices3.store);
   if (!isModalOpen || !id) {
     return null;
   }
@@ -18176,7 +18183,7 @@ function MediaEditorModal({
       noticesClassName: "media-editor-modal__snackbar",
       noticesPortalElement: portalElement,
       onClose: closeMediaEditorModal2,
-      onSaved: ({ id: savedId, url }) => {
+      onSaved: ({ id: savedId, url, previous }) => {
         if (savedId && onUpdate) {
           const update2 = {
             id: savedId,
@@ -18185,6 +18192,22 @@ function MediaEditorModal({
           onUpdate(update2);
         }
         closeMediaEditorModal2();
+        if (previous && savedId !== previous.id && onUpdate) {
+          createSuccessNotice((0, import_i18n36.__)("Image edited."), {
+            type: "snackbar",
+            actions: [
+              {
+                label: (0, import_i18n36.__)("Undo"),
+                onClick: () => {
+                  onUpdate({
+                    id: previous.id,
+                    url: previous.url
+                  });
+                }
+              }
+            ]
+          });
+        }
       },
       renderFrame: ({
         children,

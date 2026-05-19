@@ -31982,12 +31982,22 @@ ${js}
       (select9) => select9(import_block_editor112.store).getSettings()[openMediaEditorModalKey],
       []
     );
-    const blockMetadataRef = (0, import_element46.useRef)({ alt, caption: caption?.toString() });
+    const blockAttributesRef = (0, import_element46.useRef)({
+      id,
+      url,
+      alt,
+      caption: caption?.toString()
+    });
     const mediaEditorMetadataBaselineRef = (0, import_element46.useRef)();
     const mediaEditorMetadataSyncRequestRef = (0, import_element46.useRef)(0);
     (0, import_element46.useEffect)(() => {
-      blockMetadataRef.current = { alt, caption: caption?.toString() };
-    }, [alt, caption]);
+      blockAttributesRef.current = {
+        id,
+        url,
+        alt,
+        caption: caption?.toString()
+      };
+    }, [alt, caption, id, url]);
     const getCachedAttachmentRecord = (0, import_element46.useCallback)(
       (attachmentId) => {
         const { getEditedEntityRecord, getEntityRecord } = registry.select(import_core_data23.store);
@@ -32051,33 +32061,40 @@ ${js}
         mediaEditorMetadataBaselineRef.current = void 0;
         const syncRequest = ++mediaEditorMetadataSyncRequestRef.current;
         const nextAttributes = {};
-        if (newId !== id) {
+        const currentBlockAttributes = blockAttributesRef.current;
+        if (newId !== currentBlockAttributes.id) {
           nextAttributes.id = newId;
-          nextAttributes.url = newUrl ?? url;
+          nextAttributes.url = newUrl ?? currentBlockAttributes.url;
+          blockAttributesRef.current = {
+            ...blockAttributesRef.current,
+            id: nextAttributes.id,
+            url: nextAttributes.url
+          };
         }
         if (originalAttachment) {
           const resolvedAttachment = await resolveFreshAttachmentRecord(newId);
           if (syncRequest !== mediaEditorMetadataSyncRequestRef.current) {
             return;
           }
+          const latestBlockAttributes = blockAttributesRef.current;
           const resolvedMetadataAttributes = getSyncedImageBlockAttributes(
-            blockMetadataRef.current,
+            latestBlockAttributes,
             originalAttachment,
             resolvedAttachment
           );
           if (Object.keys(resolvedMetadataAttributes).length) {
             Object.assign(nextAttributes, resolvedMetadataAttributes);
-            blockMetadataRef.current = {
-              ...blockMetadataRef.current,
-              ...resolvedMetadataAttributes
-            };
           }
         }
         if (Object.keys(nextAttributes).length) {
+          blockAttributesRef.current = {
+            ...blockAttributesRef.current,
+            ...nextAttributes
+          };
           setAttributes(nextAttributes);
         }
       },
-      [id, resolveFreshAttachmentRecord, setAttributes, url]
+      [resolveFreshAttachmentRecord, setAttributes]
     );
     const openImageMediaEditorModal = (0, import_element46.useCallback)(async () => {
       if (!id || !openMediaEditorModal) {
@@ -32085,7 +32102,7 @@ ${js}
       }
       const cachedAttachmentRecord = getCachedAttachmentRecord(id);
       const fallbackAttachmentRecord = getAttachmentFallbackForEmptyBlockMetadata(
-        blockMetadataRef.current
+        blockAttributesRef.current
       );
       const resolvedAttachmentRecord = hasKnownAttachmentMetadata(
         cachedAttachmentRecord
@@ -64076,7 +64093,7 @@ ${js}
       }
     }, [isSelected]);
     const handleMediaUpdate = ({ id: newId }) => {
-      if (typeof newId === "number" && newId !== logoId) {
+      if (typeof newId === "number") {
         setLogo(newId);
       }
     };
