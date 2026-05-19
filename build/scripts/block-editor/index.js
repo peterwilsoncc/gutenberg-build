@@ -40693,6 +40693,28 @@ var wp;
   // packages/global-styles-engine/build-module/utils/common.mjs
   var ROOT_BLOCK_SELECTOR = "body";
   var ROOT_CSS_PROPERTIES_SELECTOR = ":root";
+  function splitSelectorList(selector3) {
+    if (!selector3.includes(",")) {
+      return [selector3];
+    }
+    const selectors = [];
+    let currentSelector = "";
+    let parenthesesDepth = 0;
+    for (const char of selector3) {
+      if (char === "(") {
+        parenthesesDepth++;
+      } else if (char === ")" && parenthesesDepth > 0) {
+        parenthesesDepth--;
+      } else if (char === "," && parenthesesDepth === 0) {
+        selectors.push(currentSelector);
+        currentSelector = "";
+        continue;
+      }
+      currentSelector += char;
+    }
+    selectors.push(currentSelector);
+    return selectors;
+  }
   var PRESET_METADATA = [
     {
       path: ["color", "palette"],
@@ -40773,8 +40795,8 @@ var wp;
     if (!scope || !selector3) {
       return selector3;
     }
-    const scopes = scope.split(",");
-    const selectors = selector3.split(",");
+    const scopes = splitSelectorList(scope);
+    const selectors = splitSelectorList(selector3);
     const selectorsScoped = [];
     scopes.forEach((outer) => {
       selectors.forEach((inner) => {
@@ -40810,7 +40832,7 @@ var wp;
     if (!selector3.includes(",")) {
       return selector3 + toAppend;
     }
-    const selectors = selector3.split(",");
+    const selectors = splitSelectorList(selector3);
     const newSelectors = selectors.map((sel) => sel + toAppend);
     return newSelectors.join(",");
   }
@@ -40823,8 +40845,27 @@ var wp;
     const addVariationClass = (_match, group1, group2) => {
       return group1 + group2 + variationClass;
     };
-    const result = blockSelector.split(",").map((part) => part.replace(ancestorRegex, addVariationClass));
+    const result = splitSelectorList(blockSelector).map(
+      (part) => part.replace(ancestorRegex, addVariationClass)
+    );
     return result.join(",");
+  }
+  function getBlockStyleVariationFeatureSelector(variation, featureSelector) {
+    const variationClass = `.is-style-${variation}`;
+    const selectorParts = splitSelectorList(featureSelector).map(
+      (selector3) => {
+        const trimmedSelector = selector3.trim();
+        const prefix2 = `${variationClass} `;
+        if (trimmedSelector.startsWith(prefix2)) {
+          return trimmedSelector.slice(prefix2.length);
+        }
+        return trimmedSelector;
+      }
+    );
+    return getBlockStyleVariationSelector(
+      variation,
+      selectorParts.join(",")
+    );
   }
   function getResolvedRefValue(ruleValue, tree) {
     if (!ruleValue || !tree) {
@@ -41409,16 +41450,6 @@ var wp;
       ""
     );
   }
-  function concatFeatureVariationSelectorString(featureSelector, styleVariationSelector) {
-    const featureSelectors = featureSelector.split(",");
-    const combinedSelectors = [];
-    featureSelectors.forEach((selector3) => {
-      combinedSelectors.push(
-        `${styleVariationSelector.trim()}${selector3.trim()}`
-      );
-    });
-    return combinedSelectors.join(", ");
-  }
   var updateParagraphTextIndentSelector = (featureDeclarations, settings2, blockName) => {
     if (blockName !== "core/paragraph") {
       return featureDeclarations;
@@ -41730,7 +41761,8 @@ var wp;
       featureSelectors,
       name,
       elementName,
-      mediaQuery
+      mediaQuery,
+      variationName
     } = node;
     const pseudoSelectors = name ? VALID_BLOCK_PSEUDO_SELECTORS[name] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
     if (!pseudoSelectors.length) {
@@ -41749,7 +41781,8 @@ var wp;
           mediaQuery,
           featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
           name,
-          elementName
+          elementName,
+          variationName
         }
       ];
     });
@@ -41761,7 +41794,8 @@ var wp;
       featureSelectors,
       name,
       elementName,
-      isStyleVariation
+      isStyleVariation,
+      variationName
     } = node;
     if (!name && !elementName) {
       return [];
@@ -41780,42 +41814,11 @@ var wp;
             featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
             name,
             elementName,
-            isStyleVariation
+            isStyleVariation,
+            variationName
           }
         ];
       }
-    );
-  }
-  function getVariationFeatureSelectors(featureSelectors, styleVariationSelector) {
-    if (!featureSelectors || typeof featureSelectors === "string") {
-      return void 0;
-    }
-    return Object.fromEntries(
-      Object.entries(featureSelectors).map(([feature, selector3]) => {
-        if (typeof selector3 === "string") {
-          return [
-            feature,
-            concatFeatureVariationSelectorString(
-              selector3,
-              styleVariationSelector
-            )
-          ];
-        }
-        return [
-          feature,
-          Object.fromEntries(
-            Object.entries(selector3).map(
-              ([subfeature, subfeatureSelector]) => [
-                subfeature,
-                concatFeatureVariationSelectorString(
-                  subfeatureSelector,
-                  styleVariationSelector
-                )
-              ]
-            )
-          )
-        ];
-      })
     );
   }
   var getNodesWithStyles = (tree, blockSelectors) => {
@@ -41868,13 +41871,11 @@ var wp;
                 variationStyleNodesToAdd.push({
                   styles: variationStyles,
                   selector: variationSelector,
-                  featureSelectors: getVariationFeatureSelectors(
-                    blockSelector?.featureSelectors,
-                    variationSelector
-                  ),
+                  featureSelectors: blockSelector?.featureSelectors,
                   fallbackGapValue: blockSelector?.fallbackGapValue,
                   hasLayoutSupport: blockSelector?.hasLayoutSupport,
                   isStyleVariation: true,
+                  variationName,
                   layoutSelector: variationSelector + blockSelector.selector,
                   layoutHasBlockGapSupport: true,
                   name: blockName
@@ -42053,7 +42054,8 @@ var wp;
       layoutSelector,
       layoutHasBlockGapSupport,
       skipSelectorWrapper,
-      name
+      name,
+      variationName
     } = node;
     let ruleset = "";
     const effectiveSelector = selectorSuffix ? appendToSelector(selector3, selectorSuffix) : selector3;
@@ -42074,7 +42076,11 @@ var wp;
       Object.entries(featureDeclarations).forEach(
         ([featureSelector, declarations]) => {
           if (declarations.length) {
-            const selectorForRule = selectorSuffix ? appendToSelector(featureSelector, selectorSuffix) : featureSelector;
+            let selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
+              variationName,
+              featureSelector
+            ) : featureSelector;
+            selectorForRule = selectorSuffix ? appendToSelector(selectorForRule, selectorSuffix) : selectorForRule;
             const rules = declarations.join(";");
             ruleset += `:root :where(${selectorForRule}){${rules};}`;
           }

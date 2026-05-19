@@ -42054,6 +42054,28 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-engine/build-module/utils/common.mjs
   var ROOT_BLOCK_SELECTOR = "body";
   var ROOT_CSS_PROPERTIES_SELECTOR = ":root";
+  function splitSelectorList(selector2) {
+    if (!selector2.includes(",")) {
+      return [selector2];
+    }
+    const selectors = [];
+    let currentSelector = "";
+    let parenthesesDepth = 0;
+    for (const char of selector2) {
+      if (char === "(") {
+        parenthesesDepth++;
+      } else if (char === ")" && parenthesesDepth > 0) {
+        parenthesesDepth--;
+      } else if (char === "," && parenthesesDepth === 0) {
+        selectors.push(currentSelector);
+        currentSelector = "";
+        continue;
+      }
+      currentSelector += char;
+    }
+    selectors.push(currentSelector);
+    return selectors;
+  }
   var PRESET_METADATA = [
     {
       path: ["color", "palette"],
@@ -42134,8 +42156,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!scope || !selector2) {
       return selector2;
     }
-    const scopes = scope.split(",");
-    const selectors = selector2.split(",");
+    const scopes = splitSelectorList(scope);
+    const selectors = splitSelectorList(selector2);
     const selectorsScoped = [];
     scopes.forEach((outer) => {
       selectors.forEach((inner) => {
@@ -42171,7 +42193,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!selector2.includes(",")) {
       return selector2 + toAppend;
     }
-    const selectors = selector2.split(",");
+    const selectors = splitSelectorList(selector2);
     const newSelectors = selectors.map((sel) => sel + toAppend);
     return newSelectors.join(",");
   }
@@ -42184,8 +42206,27 @@ If there's a particular need for this, please submit a feature request at https:
     const addVariationClass = (_match, group1, group2) => {
       return group1 + group2 + variationClass;
     };
-    const result = blockSelector.split(",").map((part) => part.replace(ancestorRegex, addVariationClass));
+    const result = splitSelectorList(blockSelector).map(
+      (part) => part.replace(ancestorRegex, addVariationClass)
+    );
     return result.join(",");
+  }
+  function getBlockStyleVariationFeatureSelector(variation, featureSelector) {
+    const variationClass = `.is-style-${variation}`;
+    const selectorParts = splitSelectorList(featureSelector).map(
+      (selector2) => {
+        const trimmedSelector = selector2.trim();
+        const prefix2 = `${variationClass} `;
+        if (trimmedSelector.startsWith(prefix2)) {
+          return trimmedSelector.slice(prefix2.length);
+        }
+        return trimmedSelector;
+      }
+    );
+    return getBlockStyleVariationSelector(
+      variation,
+      selectorParts.join(",")
+    );
   }
   function getResolvedRefValue(ruleValue, tree) {
     if (!ruleValue || !tree) {
@@ -43140,16 +43181,6 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return result;
   }
-  function concatFeatureVariationSelectorString(featureSelector, styleVariationSelector) {
-    const featureSelectors = featureSelector.split(",");
-    const combinedSelectors = [];
-    featureSelectors.forEach((selector2) => {
-      combinedSelectors.push(
-        `${styleVariationSelector.trim()}${selector2.trim()}`
-      );
-    });
-    return combinedSelectors.join(", ");
-  }
   var updateParagraphTextIndentSelector = (featureDeclarations, settings, blockName) => {
     if (blockName !== "core/paragraph") {
       return featureDeclarations;
@@ -43461,7 +43492,8 @@ If there's a particular need for this, please submit a feature request at https:
       featureSelectors,
       name: name2,
       elementName,
-      mediaQuery
+      mediaQuery,
+      variationName
     } = node;
     const pseudoSelectors = name2 ? VALID_BLOCK_PSEUDO_SELECTORS[name2] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
     if (!pseudoSelectors.length) {
@@ -43480,7 +43512,8 @@ If there's a particular need for this, please submit a feature request at https:
           mediaQuery,
           featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
           name: name2,
-          elementName
+          elementName,
+          variationName
         }
       ];
     });
@@ -43492,7 +43525,8 @@ If there's a particular need for this, please submit a feature request at https:
       featureSelectors,
       name: name2,
       elementName,
-      isStyleVariation
+      isStyleVariation,
+      variationName
     } = node;
     if (!name2 && !elementName) {
       return [];
@@ -43511,42 +43545,11 @@ If there's a particular need for this, please submit a feature request at https:
             featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
             name: name2,
             elementName,
-            isStyleVariation
+            isStyleVariation,
+            variationName
           }
         ];
       }
-    );
-  }
-  function getVariationFeatureSelectors(featureSelectors, styleVariationSelector) {
-    if (!featureSelectors || typeof featureSelectors === "string") {
-      return void 0;
-    }
-    return Object.fromEntries(
-      Object.entries(featureSelectors).map(([feature, selector2]) => {
-        if (typeof selector2 === "string") {
-          return [
-            feature,
-            concatFeatureVariationSelectorString(
-              selector2,
-              styleVariationSelector
-            )
-          ];
-        }
-        return [
-          feature,
-          Object.fromEntries(
-            Object.entries(selector2).map(
-              ([subfeature, subfeatureSelector]) => [
-                subfeature,
-                concatFeatureVariationSelectorString(
-                  subfeatureSelector,
-                  styleVariationSelector
-                )
-              ]
-            )
-          )
-        ];
-      })
     );
   }
   var getNodesWithStyles = (tree, blockSelectors) => {
@@ -43599,13 +43602,11 @@ If there's a particular need for this, please submit a feature request at https:
                 variationStyleNodesToAdd.push({
                   styles: variationStyles,
                   selector: variationSelector,
-                  featureSelectors: getVariationFeatureSelectors(
-                    blockSelector?.featureSelectors,
-                    variationSelector
-                  ),
+                  featureSelectors: blockSelector?.featureSelectors,
                   fallbackGapValue: blockSelector?.fallbackGapValue,
                   hasLayoutSupport: blockSelector?.hasLayoutSupport,
                   isStyleVariation: true,
+                  variationName,
                   layoutSelector: variationSelector + blockSelector.selector,
                   layoutHasBlockGapSupport: true,
                   name: blockName
@@ -43869,7 +43870,8 @@ If there's a particular need for this, please submit a feature request at https:
       layoutSelector,
       layoutHasBlockGapSupport,
       skipSelectorWrapper,
-      name: name2
+      name: name2,
+      variationName
     } = node;
     let ruleset = "";
     const effectiveSelector = selectorSuffix ? appendToSelector(selector2, selectorSuffix) : selector2;
@@ -43890,7 +43892,11 @@ If there's a particular need for this, please submit a feature request at https:
       Object.entries(featureDeclarations).forEach(
         ([featureSelector, declarations]) => {
           if (declarations.length) {
-            const selectorForRule = selectorSuffix ? appendToSelector(featureSelector, selectorSuffix) : featureSelector;
+            let selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
+              variationName,
+              featureSelector
+            ) : featureSelector;
+            selectorForRule = selectorSuffix ? appendToSelector(selectorForRule, selectorSuffix) : selectorForRule;
             const rules = declarations.join(";");
             ruleset += `:root :where(${selectorForRule}){${rules};}`;
           }
