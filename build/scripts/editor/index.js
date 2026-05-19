@@ -20890,6 +20890,14 @@ var wp;
         "aria-setsize": paginationInfo2.totalItems || void 0,
         "aria-posinset": posinset,
         role: infiniteScrollEnabled ? "article" : "option",
+        onMouseDown: (event) => {
+          if (event.button !== 0) {
+            return;
+          }
+          event.currentTarget.parentElement?.focus({
+            preventScroll: true
+          });
+        },
         onClick: () => {
           if (isSelected2) {
             onChangeSelection(
