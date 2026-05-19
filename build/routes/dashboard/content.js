@@ -45470,6 +45470,14 @@ if (typeof process === "undefined" || true) {
   registerStyle49("9ee34907fd", '._4da787f72dc00d8b__resize-handle{border-block-end:12px solid var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:12px solid #0000;bottom:0;cursor:nwse-resize;height:0;inset-inline-end:0;position:absolute;width:0;z-index:1}._885412b44a137da0__is-horizontal-only{align-items:center;background:#0000;border-style:none;bottom:auto;cursor:ew-resize;display:flex;height:40px;justify-content:center;top:50%;transform:translateY(-50%);width:16px}._885412b44a137da0__is-horizontal-only:before{background-color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-radius:2px;content:"";height:24px;width:4px}@media (forced-colors:active){._885412b44a137da0__is-horizontal-only:before{background-color:Highlight}}');
 }
 var resize_handle_default = { "resize-handle": "_4da787f72dc00d8b__resize-handle", "is-horizontal-only": "_885412b44a137da0__is-horizontal-only" };
+function lockDocumentCursorWhileActive(getDocument2, cursor) {
+  const root = getDocument2().documentElement;
+  const previous = root.style.cursor;
+  root.style.cursor = cursor;
+  return () => {
+    root.style.cursor = previous;
+  };
+}
 function ResizeHandle({
   itemId,
   verticalResizable = true,
@@ -45479,19 +45487,20 @@ function ResizeHandle({
     id: "draggable",
     data: { itemId }
   });
-  const nodeRef = (0, import_element165.useRef)(null);
-  const mergedRef = (0, import_compose23.useMergeRefs)([nodeRef, setNodeRef]);
+  const ownerDocumentRef = (0, import_element165.useRef)(null);
+  const setOwnerDocumentRef = (0, import_element165.useCallback)((node) => {
+    ownerDocumentRef.current = node?.ownerDocument ?? null;
+  }, []);
+  const mergedRef = (0, import_compose23.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
   (0, import_element165.useEffect)(() => {
     if (!isDragging) {
       return;
     }
     const cursor = verticalResizable ? "nwse-resize" : "ew-resize";
-    const root = (nodeRef.current?.ownerDocument ?? document).documentElement;
-    const previous = root.style.cursor;
-    root.style.cursor = cursor;
-    return () => {
-      root.style.cursor = previous;
-    };
+    return lockDocumentCursorWhileActive(
+      () => ownerDocumentRef.current ?? document,
+      cursor
+    );
   }, [isDragging, verticalResizable]);
   if (renderResizeHandle) {
     const RenderResizeHandle = renderResizeHandle;
