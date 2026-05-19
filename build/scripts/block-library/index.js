@@ -12019,7 +12019,7 @@ var wp;
       )
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(import_block_editor28.Warning, { actions, children: (0, import_i18n21.__)(
-      "The Classic block is being phased out. Convert this content to blocks for the best editing experience, or move it to a Custom HTML block to preserve the markup as-is."
+      "The Classic block is being phased out. Convert this content to blocks for the best editing experience, or move it to a Custom HTML block to preserve the original markup."
     ) });
   }
 
