@@ -41046,9 +41046,9 @@ function WidgetContextProvider({
 
 // routes/dashboard/widget-dashboard/components/widget-chrome/widget-chrome.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("a89e624f79", "._22b961782d58cf14__widgetChrome{height:100%}._2e38cde45383ef41__widgetChromeHeaderIcon{color:var(--wpds-color-fg-content-neutral-weak,#707070);display:inline-flex}._65ccc0ffeadb15bf__widgetChromeContent{flex:1}.d86427717f1c6168__loading{height:100%}");
+  registerStyle48("ba37a82f4b", "._22b961782d58cf14__widgetChrome{height:100%}._2e38cde45383ef41__widgetChromeHeaderIcon{color:var(--wpds-color-fg-content-neutral-weak,#707070);display:inline-flex}._65ccc0ffeadb15bf__widgetChromeContent{flex:1;height:100%;padding-bottom:0;padding-top:0}._4b945d60dc39d743__widgetChromeContentFullBleed,.d86427717f1c6168__loading{height:100%}");
 }
-var widget_chrome_default = { "widgetChrome": "_22b961782d58cf14__widgetChrome", "widgetChromeHeaderIcon": "_2e38cde45383ef41__widgetChromeHeaderIcon", "widgetChromeContent": "_65ccc0ffeadb15bf__widgetChromeContent", "loading": "d86427717f1c6168__loading" };
+var widget_chrome_default = { "widgetChrome": "_22b961782d58cf14__widgetChrome", "widgetChromeHeaderIcon": "_2e38cde45383ef41__widgetChromeHeaderIcon", "widgetChromeContent": "_65ccc0ffeadb15bf__widgetChromeContent", "widgetChromeContentFullBleed": "_4b945d60dc39d743__widgetChromeContentFullBleed", "loading": "d86427717f1c6168__loading" };
 
 // routes/dashboard/widget-dashboard/components/widget-chrome/widget-chrome.tsx
 var import_jsx_runtime206 = __toESM(require_jsx_runtime());
@@ -41099,6 +41099,9 @@ var WidgetChrome = (0, import_element164.forwardRef)(
     if (!widgetType) {
       return null;
     }
+    const isFullBleed = widgetType.presentation === "full-bleed";
+    const header = /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Header8, { titleId, widgetType });
+    const body = /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_element164.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(WidgetRender, { widget, widgetType }) }) });
     return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
       card_exports.Root,
       {
@@ -41108,14 +41111,14 @@ var WidgetChrome = (0, import_element164.forwardRef)(
         "aria-labelledby": widgetType.title ? titleId : void 0,
         ...editMode ? { inert: "" } : {},
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Header8, { titleId, widgetType }),
-          /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_element164.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
-            WidgetRender,
+          isFullBleed ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(VisuallyHidden, { children: header }) : header,
+          /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: isFullBleed ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+            card_exports.FullBleed,
             {
-              widget,
-              widgetType
+              className: widget_chrome_default.widgetChromeContentFullBleed,
+              children: body
             }
-          ) }) }) })
+          ) : body })
         ]
       }
     ) });
@@ -47904,7 +47907,8 @@ function useWidgetTypes() {
           return {
             ...module.default,
             name: record.name,
-            renderModule: record.render_module ?? ""
+            renderModule: record.render_module ?? "",
+            ...record.presentation ? { presentation: record.presentation } : {}
           };
         } catch {
           return null;
