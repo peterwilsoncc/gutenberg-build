@@ -29046,6 +29046,13 @@ This message will only show in development mode. It won't appear in production. 
           if (!isBlurFromThisPopover && !("relatedTarget" in event && event.relatedTarget) && ownerDocument?.activeElement === ownerDocument?.body) {
             return;
           }
+          const relatedTarget = "relatedTarget" in event ? event.relatedTarget : null;
+          if (relatedTarget instanceof Element && relatedTarget.closest("[data-wp-compat-overlay-slot]")) {
+            return;
+          }
+          if (floatingElement && ownerDocument?.activeElement instanceof Element && floatingElement.contains(ownerDocument.activeElement)) {
+            return;
+          }
           if (onFocusOutside) {
             onFocusOutside(event);
           } else if (onClose) {
