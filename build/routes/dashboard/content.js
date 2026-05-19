@@ -45879,7 +45879,7 @@ function registerStyle51(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle51("ad77f0e896", "._9d372b1b567c1c15__overlay{display:grid;gap:var(--wpds-dimension-gap-md,12px);inset:0;opacity:0;pointer-events:none;position:absolute;visibility:hidden}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{opacity:1;visibility:visible}@media not (prefers-reduced-motion){._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active .d8e6ee9623aadacf__row,._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active:not(._1cee1202cb622c6b__has-rows) ._04ff499ab60b4891__column{animation:_2d68e980e4534716__grid-overlay-tile-in var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)) both;animation-delay:calc(var(--wp-grid-overlay-wave-delay-step, 28ms)*(var(--wp-grid-overlay-column-index, 0) + var(--wp-grid-overlay-row-index, 0)));opacity:0;transform:scale(.64)}@keyframes _2d68e980e4534716__grid-overlay-tile-in{to{opacity:1;transform:scale(1)}}._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear var(--wpds-motion-duration-sm,.1s)}._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active) ._04ff499ab60b4891__column,._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active) .d8e6ee9623aadacf__row{animation:none;transform:none}}@media (prefers-reduced-motion:reduce){._9d372b1b567c1c15__overlay{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear var(--wpds-motion-duration-sm,.1s)}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear 0s}}._04ff499ab60b4891__column{display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-md,12px);min-width:0}.d8e6ee9623aadacf__row{background-color:var(--wp-grid-overlay-tile-bg,var(--wpds-color-bg-surface-neutral-weak,#f4f4f4));border-radius:var(--wpds-border-radius-lg,8px);box-sizing:border-box;flex:0 0 var(--wp-grid-overlay-row-height);height:var(--wp-grid-overlay-row-height)}");
+  registerStyle51("1883fed125", "._9d372b1b567c1c15__overlay{display:grid;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));inset:0;opacity:0;pointer-events:none;position:absolute;visibility:hidden}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{opacity:1;visibility:visible}@media not (prefers-reduced-motion){._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active .d8e6ee9623aadacf__row,._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active:not(._1cee1202cb622c6b__has-rows) ._04ff499ab60b4891__column{animation:_2d68e980e4534716__grid-overlay-tile-in var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)) both;animation-delay:calc(var(--wp-grid-overlay-wave-delay-step, 28ms)*(var(--wp-grid-overlay-column-index, 0) + var(--wp-grid-overlay-row-index, 0)));opacity:0;transform:scale(.64)}@keyframes _2d68e980e4534716__grid-overlay-tile-in{to{opacity:1;transform:scale(1)}}._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear var(--wpds-motion-duration-sm,.1s)}._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active) ._04ff499ab60b4891__column,._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active) .d8e6ee9623aadacf__row{animation:none;transform:none}}@media (prefers-reduced-motion:reduce){._9d372b1b567c1c15__overlay{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear var(--wpds-motion-duration-sm,.1s)}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear 0s}}._04ff499ab60b4891__column{display:flex;flex-direction:column;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));min-width:0}.d8e6ee9623aadacf__row{background-color:var(--wp-grid-overlay-tile-bg,var(--wpds-color-bg-surface-neutral-weak,#f4f4f4));border-radius:var(--wpds-border-radius-lg,8px);box-sizing:border-box;flex:0 0 var(--wp-grid-overlay-row-height);height:var(--wp-grid-overlay-row-height)}");
 }
 var grid_overlay_default = { "overlay": "_9d372b1b567c1c15__overlay", "is-active": "acb42ab28bd5e371__is-active", "row": "d8e6ee9623aadacf__row", "has-rows": "_1cee1202cb622c6b__has-rows", "column": "_04ff499ab60b4891__column", "grid-overlay-tile-in": "_2d68e980e4534716__grid-overlay-tile-in" };
 function GridOverlay({
@@ -46302,10 +46302,10 @@ if (typeof process === "undefined" || true) {
 }
 var layout_shift_animation_default = { "layout-animating": "_2db63116caa90ae9__layout-animating" };
 if (typeof process === "undefined" || true) {
-  registerStyle52("33840f3f33", "._960c435c33759f46__grid{display:grid;gap:var(--wpds-dimension-gap-md,12px);position:relative}._48e8cd4225dcb813__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{transform:none}}");
+  registerStyle52("a52561d996", "._960c435c33759f46__grid{display:grid;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));position:relative}._48e8cd4225dcb813__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{transform:none}}");
 }
 var grid_default2 = { "grid": "_960c435c33759f46__grid", "drag-preview-frame": "_48e8cd4225dcb813__drag-preview-frame" };
-var FALLBACK_GAP_PX = 12;
+var FALLBACK_GAP_PX = 24;
 var DEFAULT_COLUMNS = 6;
 var NO_SORT_STRATEGY = () => null;
 var DashboardGrid = (0, import_element169.forwardRef)(
@@ -47273,10 +47273,10 @@ if (typeof process === "undefined" || true) {
 }
 var layout_shift_animation_default2 = { "layout-animating": "_2db63116caa90ae9__layout-animating" };
 if (typeof process === "undefined" || true) {
-  registerStyle54("28181692eb", "._8cc368bc6c2d79c6__lanes{column-gap:var(--wpds-dimension-gap-md,12px);display:grid-lanes;position:relative;row-gap:var(--wpds-dimension-gap-md,12px)}@supports not (display:grid-lanes){._8cc368bc6c2d79c6__lanes{display:grid;grid-auto-flow:dense;grid-auto-rows:var(--wp-grid-lane-row-unit,4px);row-gap:0}}._1bfa908a532e32a4__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame{transform:none}}");
+  registerStyle54("de2f2e1f29", "._8cc368bc6c2d79c6__lanes{column-gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));display:grid-lanes;position:relative;row-gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px))}@supports not (display:grid-lanes){._8cc368bc6c2d79c6__lanes{display:grid;grid-auto-flow:dense;grid-auto-rows:var(--wp-grid-lane-row-unit,4px);row-gap:0}}._1bfa908a532e32a4__drag-preview-frame{cursor:grabbing;height:100%;pointer-events:none;transform:scale(var(--wp-grid-drag-preview-scale,1.05))}@media (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame{transform:none}}");
 }
 var lanes_default = { "lanes": "_8cc368bc6c2d79c6__lanes", "drag-preview-frame": "_1bfa908a532e32a4__drag-preview-frame" };
-var FALLBACK_GAP_PX2 = 12;
+var FALLBACK_GAP_PX2 = 24;
 var DEFAULT_COLUMNS2 = 6;
 var NO_SORT_STRATEGY2 = () => null;
 var DashboardLanes = (0, import_element172.forwardRef)(
@@ -47940,7 +47940,7 @@ function useWidgetTypes() {
 
 // routes/dashboard/stage.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("5a63b052df", "._2381d7918cf57baa__dashboard-widgets-container{margin:var(--wpds-dimension-padding-md,12px)}");
+  registerStyle48("cca5f80fb8", "._2381d7918cf57baa__dashboard-widgets-container{margin:var(--wpds-dimension-padding-2xl,24px)}");
 }
 var stage_default = { "dashboard-widgets-container": "_2381d7918cf57baa__dashboard-widgets-container" };
 
