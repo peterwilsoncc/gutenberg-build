@@ -9175,6 +9175,7 @@ var wp;
     ConnectionErrorCode2["CONNECTION_EXPIRED"] = "connection-expired";
     ConnectionErrorCode2["CONNECTION_LIMIT_EXCEEDED"] = "connection-limit-exceeded";
     ConnectionErrorCode2["DOCUMENT_SIZE_LIMIT_EXCEEDED"] = "document-size-limit-exceeded";
+    ConnectionErrorCode2["PROTOCOL_MISMATCH"] = "protocol-mismatch";
     ConnectionErrorCode2["UNKNOWN_ERROR"] = "unknown-error";
     return ConnectionErrorCode2;
   })(ConnectionErrorCode || {});
@@ -9439,6 +9440,9 @@ var wp;
   }
   function isRequestBodyTooLargeError(error) {
     return error?.data?.status === 413 && error?.code === "rest_sync_body_too_large";
+  }
+  function isProtocolMismatchError(error) {
+    return error?.code === "rest_sync_protocol_mismatch";
   }
   function identifyForbiddenRoom(error, rooms) {
     const message = typeof error.message === "string" ? error.message : "";
@@ -9875,6 +9879,22 @@ var wp;
               // force
             );
           }
+        } else if (isProtocolMismatchError(error)) {
+          const affectedRooms = [...roomStates.entries()];
+          for (const [, state] of affectedRooms) {
+            state.onStatusChange({
+              status: "disconnected",
+              error: new ConnectionError(
+                ConnectionErrorCode.PROTOCOL_MISMATCH,
+                "Protocol mismatch between client and server"
+              )
+            });
+          }
+          for (const [room] of affectedRooms) {
+            unregisterRoom(room, { sendDisconnectSignal: false });
+          }
+          isPolling = false;
+          return;
         } else {
           consecutiveFailures++;
           const retrySchedule = hasCollaborators ? ERROR_RETRY_DELAYS_WITH_COLLABORATORS_MS : ERROR_RETRY_DELAYS_SOLO_MS;

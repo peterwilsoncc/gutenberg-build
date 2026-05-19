@@ -71646,6 +71646,7 @@ If there's a particular need for this, please submit a feature request at https:
   var CONNECTION_EXPIRED = "connection-expired";
   var CONNECTION_LIMIT_EXCEEDED = "connection-limit-exceeded";
   var DOCUMENT_SIZE_LIMIT_EXCEEDED = "document-size-limit-exceeded";
+  var PROTOCOL_MISMATCH = "protocol-mismatch";
   var UNKNOWN_ERROR = "unknown-error";
   var ERROR_MESSAGES = {
     [AUTHENTICATION_FAILED]: {
@@ -71664,6 +71665,12 @@ If there's a particular need for this, please submit a feature request at https:
       title: (0, import_i18n230.__)("Too many editors connected"),
       description: (0, import_i18n230.__)(
         "Real-time collaboration has reached its connection limit. Try again later or contact your site administrator."
+      )
+    },
+    [PROTOCOL_MISMATCH]: {
+      title: (0, import_i18n230.__)("Protocol update"),
+      description: (0, import_i18n230.__)(
+        "Real-time collaboration has been updated. Please refresh the page to continue editing."
       )
     },
     // DOCUMENT_SIZE_LIMIT_EXCEEDED is not included here because it results in
@@ -80007,7 +80014,8 @@ If there's a particular need for this, please submit a feature request at https:
         setShowModal(true);
       }
     }, [connectionStatus, canRetry]);
-    if (!isCollaborationEnabled || !hasInitialized || !showModal) {
+    const isProtocolMismatch = connectionStatus?.status === "disconnected" && "error" in connectionStatus && connectionStatus.error?.code === PROTOCOL_MISMATCH;
+    if (!isCollaborationEnabled || !hasInitialized && !isProtocolMismatch || !showModal) {
       return null;
     }
     const error2 = connectionStatus && "error" in connectionStatus ? connectionStatus?.error : void 0;
