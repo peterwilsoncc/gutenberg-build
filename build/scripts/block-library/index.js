@@ -13214,16 +13214,11 @@ var wp;
     ] });
   }
   function Placeholder4({ clientId, name: name123, setAttributes }) {
-    const { blockType, defaultVariation, variations: variations18 } = (0, import_data17.useSelect)(
+    const { blockType, variations: variations18 } = (0, import_data17.useSelect)(
       (select9) => {
-        const {
-          getBlockVariations: getBlockVariations4,
-          getBlockType: getBlockType5,
-          getDefaultBlockVariation
-        } = select9(import_blocks18.store);
+        const { getBlockVariations: getBlockVariations4, getBlockType: getBlockType5 } = select9(import_blocks18.store);
         return {
           blockType: getBlockType5(name123),
-          defaultVariation: getDefaultBlockVariation(name123, "block"),
           variations: getBlockVariations4(name123, "block")
         };
       },
@@ -13238,7 +13233,7 @@ var wp;
         label: blockType?.title,
         variations: variations18,
         instructions: (0, import_i18n27.__)("Divide into columns. Select a layout:"),
-        onSelect: (nextVariation = defaultVariation) => {
+        onSelect: (nextVariation) => {
           if (nextVariation.attributes) {
             setAttributes(nextVariation.attributes);
           }
@@ -13251,8 +13246,7 @@ var wp;
               true
             );
           }
-        },
-        allowSkip: true
+        }
       }
     ) });
   }
