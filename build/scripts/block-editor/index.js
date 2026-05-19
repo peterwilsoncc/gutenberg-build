@@ -27321,6 +27321,7 @@ var wp;
         mediaUpload: settings2.mediaUpload,
         mediaSideload: settings2.mediaSideload,
         mediaFinalize: settings2.mediaFinalize,
+        mediaDelete: settings2.mediaDelete,
         maxUploadFileSize: settings2.maxUploadFileSize,
         allowedMimeTypes: settings2.allowedMimeTypes,
         allImageSizes: settings2.allImageSizes,

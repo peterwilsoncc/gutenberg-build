@@ -5326,7 +5326,7 @@ var wp;
   var import_block_editor37 = __toESM(require_block_editor(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
   var import_url13 = __toESM(require_url(), 1);
-  var import_api_fetch6 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch7 = __toESM(require_api_fetch(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_date17 = __toESM(require_date(), 1);
@@ -41765,6 +41765,15 @@ If there's a particular need for this, please submit a feature request at https:
     return response ? (0, import_media_utils4.transformAttachment)(response) : void 0;
   }
 
+  // packages/editor/build-module/utils/media-delete/index.mjs
+  var import_api_fetch5 = __toESM(require_api_fetch(), 1);
+  async function mediaDelete(id) {
+    await (0, import_api_fetch5.default)({
+      path: `/wp/v2/media/${id}?force=true`,
+      method: "DELETE"
+    });
+  }
+
   // packages/editor/build-module/components/global-styles-provider/index.mjs
   var import_block_editor6 = __toESM(require_block_editor(), 1);
   var import_core_data31 = __toESM(require_core_data(), 1);
@@ -44688,6 +44697,7 @@ If there's a particular need for this, please submit a feature request at https:
         [mediaUploadOnSuccessKey]: hasUploadPermissions ? mediaUploadOnSuccess : void 0,
         mediaSideload: hasUploadPermissions ? media_sideload_default : void 0,
         mediaFinalize: hasUploadPermissions ? mediaFinalize : void 0,
+        mediaDelete: hasUploadPermissions ? mediaDelete : void 0,
         __experimentalBlockPatterns: blockPatterns,
         [selectBlockPatternsKey]: (select7) => {
           const { hasFinishedResolution, getBlockPatternsForPostType } = unlock(select7(import_core_data32.store));
@@ -49313,7 +49323,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n153 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/font-library/api.mjs
-  var import_api_fetch5 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch6 = __toESM(require_api_fetch(), 1);
   var import_core_data44 = __toESM(require_core_data(), 1);
   var FONT_FAMILIES_URL = "/wp/v2/font-families";
   function invalidateFontFamilyCache(registry) {
@@ -49333,7 +49343,7 @@ If there's a particular need for this, please submit a feature request at https:
       method: "POST",
       body: data
     };
-    const response = await (0, import_api_fetch5.default)(config2);
+    const response = await (0, import_api_fetch6.default)(config2);
     invalidateFontFamilyCache(registry);
     return {
       id: response.id,
@@ -49347,7 +49357,7 @@ If there's a particular need for this, please submit a feature request at https:
       method: "POST",
       body: data
     };
-    const response = await (0, import_api_fetch5.default)(config2);
+    const response = await (0, import_api_fetch6.default)(config2);
     invalidateFontFamilyCache(registry);
     return {
       id: response.id,
@@ -65366,7 +65376,7 @@ If there's a particular need for this, please submit a feature request at https:
         `${templateEntityConfig.baseURL}/${template2.id}`,
         { context: "edit", source: template2.origin }
       );
-      const fileTemplate = await (0, import_api_fetch6.default)({ path: fileTemplatePath });
+      const fileTemplate = await (0, import_api_fetch7.default)({ path: fileTemplatePath });
       if (!fileTemplate) {
         registry.dispatch(import_notices20.store).createErrorNotice(
           (0, import_i18n190.__)(
@@ -65741,7 +65751,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_hooks50 = __toESM(require_hooks(), 1);
 
   // packages/editor/build-module/components/autocompleters/link.mjs
-  var import_api_fetch7 = __toESM(require_api_fetch(), 1);
+  var import_api_fetch8 = __toESM(require_api_fetch(), 1);
   var import_url14 = __toESM(require_url(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
@@ -65752,7 +65762,7 @@ If there's a particular need for this, please submit a feature request at https:
     triggerPrefix: "[[",
     isDebounced: true,
     async options(filterValue) {
-      const options = await (0, import_api_fetch7.default)({
+      const options = await (0, import_api_fetch8.default)({
         path: (0, import_url14.addQueryArgs)("/wp/v2/search", {
           per_page: SHOWN_SUGGESTIONS,
           search: filterValue,
