@@ -2924,6 +2924,10 @@ var wp;
         changes.blocks
       );
     }
+    if (changes.blocks && !changes.content) {
+      const capturedBlocks = changes.blocks;
+      changes.content = () => (0, import_blocks3.__unstableSerializeAndClean)(capturedBlocks);
+    }
     if ("object" === typeof changes.meta) {
       changes.meta = {
         ...editedRecord.meta,
