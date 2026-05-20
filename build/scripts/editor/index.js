@@ -5318,7 +5318,8 @@ var wp;
     setStylesPath: () => setStylesPath,
     showBlockTypes: () => showBlockTypes,
     unregisterEntityAction: () => unregisterEntityAction,
-    unregisterEntityField: () => unregisterEntityField
+    unregisterEntityField: () => unregisterEntityField,
+    updateDeviceTypeForViewportState: () => updateDeviceTypeForViewportState
   });
   var import_core_data56 = __toESM(require_core_data(), 1);
   var import_i18n190 = __toESM(require_i18n(), 1);
@@ -44518,6 +44519,7 @@ If there's a particular need for this, please submit a feature request at https:
     getMediaSelectKey,
     isIsolatedEditorKey,
     deviceTypeKey,
+    onViewportStateChangeKey,
     isNavigationOverlayContextKey,
     isNavigationPostEditorKey,
     mediaUploadOnSuccessKey,
@@ -44641,6 +44643,9 @@ If there's a particular need for this, please submit a feature request at https:
       [settingsBlockPatternCategories, restBlockPatternCategories]
     );
     const { undo: undo2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data48.useDispatch)(store);
+    const { updateDeviceTypeForViewportState: updateDeviceTypeForViewportState2 } = unlock(
+      (0, import_data48.useDispatch)(store)
+    );
     const { editMediaEntity } = unlock((0, import_data48.useDispatch)(import_core_data32.store));
     const { saveEntityRecord } = (0, import_data48.useDispatch)(import_core_data32.store);
     const { openMediaEditorModal: openMediaEditorModal2 } = (0, import_data48.useDispatch)(mediaEditorStore);
@@ -44741,6 +44746,7 @@ If there's a particular need for this, please submit a feature request at https:
         // don't treat template parts as contentOnly sections.
         disableContentOnlyForTemplateParts: renderingMode2 === "template-locked",
         ...deviceType2 ? { [deviceTypeKey]: deviceType2 } : {},
+        [onViewportStateChangeKey]: updateDeviceTypeForViewportState2,
         [isNavigationOverlayContextKey]: isNavigationOverlayContext
       };
       if (isRevisionsMode2) {
@@ -44775,7 +44781,7 @@ If there's a particular need for this, please submit a feature request at https:
       renderingMode2,
       editMediaEntity,
       openMediaEditorModal2,
-      settings.onNavigateToEntityRecord,
+      updateDeviceTypeForViewportState2,
       deviceType2,
       allImageSizes,
       bigImageSizeThreshold,
@@ -65228,6 +65234,19 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/editor/build-module/store/private-actions.mjs
+  var DEVICE_TYPE_BY_VIEWPORT_STATE = {
+    mobile: "Mobile",
+    tablet: "Tablet"
+  };
+  var updateDeviceTypeForViewportState = ({ viewport = "default", showStateOnCanvas = true } = {}) => ({ dispatch: dispatch7, registry }) => {
+    if (!showStateOnCanvas) {
+      return;
+    }
+    dispatch7.setDeviceType(
+      DEVICE_TYPE_BY_VIEWPORT_STATE[viewport] ?? "Desktop"
+    );
+    unlock(registry.dispatch(import_block_editor37.store)).resetZoomLevel();
+  };
   function setCurrentTemplateId(id) {
     return {
       type: "SET_CURRENT_TEMPLATE_ID",
