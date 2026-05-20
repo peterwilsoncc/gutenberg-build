@@ -508,4 +508,5 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if(wp.preferencesPersistence&&typeof wp.preferencesPersistence==='object'){wp.preferencesPersistence=Object.assign({},wp.preferencesPersistence);}
 //# sourceMappingURL=index.js.map

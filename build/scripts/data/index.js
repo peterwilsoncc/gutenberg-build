@@ -2494,4 +2494,5 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
+if(wp.data&&typeof wp.data==='object'){wp.data=Object.assign({},wp.data);}
 //# sourceMappingURL=index.js.map

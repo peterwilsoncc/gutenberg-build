@@ -155,4 +155,5 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if(wp.undoManager&&typeof wp.undoManager==='object'){wp.undoManager=Object.assign({},wp.undoManager);}
 //# sourceMappingURL=index.js.map
