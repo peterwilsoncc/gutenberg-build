@@ -63,4 +63,5 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
+if(wp.escapeHtml&&typeof wp.escapeHtml==='object'){wp.escapeHtml=Object.assign({},wp.escapeHtml);}
 //# sourceMappingURL=index.js.map

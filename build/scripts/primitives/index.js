@@ -124,4 +124,5 @@ var wp;
   var View = "div";
   return __toCommonJS(index_exports);
 })();
+if(wp.primitives&&typeof wp.primitives==='object'){wp.primitives=Object.assign({},wp.primitives);}
 //# sourceMappingURL=index.js.map

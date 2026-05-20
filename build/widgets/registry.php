@@ -8,9 +8,10 @@
 
 return array(
 	array(
-		'name'       => 'core/hello-world',
-		'dir_name'   => 'hello-world',
-		'has_render' => true,
-		'has_widget' => true,
+		'name'         => 'core/hello-world',
+		'dir_name'     => 'hello-world',
+		'has_render'   => true,
+		'has_widget'   => true,
+		'presentation' => 'full-bleed',
 	)
 );

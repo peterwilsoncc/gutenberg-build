@@ -113,4 +113,5 @@ var wp;
   };
   return __toCommonJS(index_exports);
 })();
+if(wp.dataControls&&typeof wp.dataControls==='object'){wp.dataControls=Object.assign({},wp.dataControls);}
 //# sourceMappingURL=index.js.map

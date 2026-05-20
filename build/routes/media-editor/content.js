@@ -299,10 +299,10 @@ var require_deprecated = __commonJS({
   }
 });
 
-// package-external:@wordpress/api-fetch
-var require_api_fetch = __commonJS({
-  "package-external:@wordpress/api-fetch"(exports, module) {
-    module.exports = window.wp.apiFetch;
+// package-external:@wordpress/keyboard-shortcuts
+var require_keyboard_shortcuts = __commonJS({
+  "package-external:@wordpress/keyboard-shortcuts"(exports, module) {
+    module.exports = window.wp.keyboardShortcuts;
   }
 });
 
@@ -331,6 +331,13 @@ var require_preferences = __commonJS({
 var require_plugins = __commonJS({
   "package-external:@wordpress/plugins"(exports, module) {
     module.exports = window.wp.plugins;
+  }
+});
+
+// package-external:@wordpress/api-fetch
+var require_api_fetch = __commonJS({
+  "package-external:@wordpress/api-fetch"(exports, module) {
+    module.exports = window.wp.apiFetch;
   }
 });
 
@@ -2583,7 +2590,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle3("14f5e9ddeb", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}}");
+  registerStyle3("7bb6e0116a", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}");
 }
 var style_default3 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
 var Root = (0, import_element4.forwardRef)(function Card({ render: render4, ...restProps }, ref) {
@@ -2680,7 +2687,7 @@ function registerStyle4(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle4("14f5e9ddeb", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}}");
+  registerStyle4("7bb6e0116a", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}");
 }
 var style_default4 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
 var Header = (0, import_element5.forwardRef)(
@@ -2778,7 +2785,7 @@ function registerStyle5(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle5("14f5e9ddeb", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}}");
+  registerStyle5("7bb6e0116a", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}");
 }
 var style_default5 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
 var Content = (0, import_element6.forwardRef)(
@@ -2876,7 +2883,7 @@ function registerStyle6(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle6("14f5e9ddeb", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}}");
+  registerStyle6("7bb6e0116a", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}");
 }
 var style_default6 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
 var FullBleed = (0, import_element7.forwardRef)(
@@ -4211,11 +4218,11 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/media-editor/stage.tsx
-var import_core_data2 = __toESM(require_core_data());
-var import_data9 = __toESM(require_data());
+var import_core_data3 = __toESM(require_core_data());
+var import_data10 = __toESM(require_data());
 var import_editor = __toESM(require_editor());
 var import_html_entities = __toESM(require_html_entities());
-var import_i18n36 = __toESM(require_i18n());
+var import_i18n37 = __toESM(require_i18n());
 
 // packages/media-editor/build-module/components/media-editor-provider/index.mjs
 var import_element21 = __toESM(require_element(), 1);
@@ -11712,16 +11719,54 @@ function DataForm({
 }
 
 // packages/media-editor/build-module/components/media-form/index.mjs
-var import_components27 = __toESM(require_components(), 1);
+var import_components28 = __toESM(require_components(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
+var import_element54 = __toESM(require_element(), 1);
+
+// packages/media-editor/build-module/components/media-form/sidebar-datetime-view.mjs
+var import_date10 = __toESM(require_date(), 1);
+var import_components27 = __toESM(require_components(), 1);
 var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+function SidebarDatetimeView({
+  item,
+  field
+}) {
+  const value = field.getValue({ item });
+  if (!value) {
+    return null;
+  }
+  const settings = (0, import_date10.getSettings)();
+  const dateOnly = (0, import_date10.dateI18n)(settings.formats.date, (0, import_date10.getDate)(value));
+  const fullDatetime = (0, import_date10.dateI18n)(
+    settings.formats.datetimeAbbreviated,
+    (0, import_date10.getDate)(value)
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components27.Tooltip, { text: fullDatetime, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+    "time",
+    {
+      dateTime: value,
+      "aria-label": fullDatetime,
+      tabIndex: -1,
+      children: dateOnly
+    }
+  ) });
+}
+
+// packages/media-editor/build-module/components/media-form/index.mjs
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 function MediaForm({
   form: formOverrides,
   header
 }) {
   const { media, fields, onChange } = useMediaEditorContext();
+  const formFields = (0, import_element54.useMemo)(
+    () => fields.map(
+      (field) => field.type === "datetime" && field.readOnly ? { ...field, render: SidebarDatetimeView } : field
+    ),
+    [fields]
+  );
   if (!media || !onChange) {
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components27.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components28.Spinner, {}) });
   }
   const defaultForm = {
     layout: {
@@ -11743,14 +11788,14 @@ function MediaForm({
     })
   };
   const form = formOverrides || defaultForm;
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_components27.__experimentalVStack, { spacing: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("h2", {}), children: (0, import_i18n24.__)("Media details") }),
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_components28.__experimentalVStack, { spacing: 4, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("h2", {}), children: (0, import_i18n24.__)("Media details") }),
     header,
-    /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
       DataForm,
       {
         data: media,
-        fields,
+        fields: formFields,
         form,
         onChange
       }
@@ -11839,32 +11884,33 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 (0, import_data.register)(store);
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_components39 = __toESM(require_components(), 1);
-var import_data8 = __toESM(require_data(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_components40 = __toESM(require_components(), 1);
+var import_data9 = __toESM(require_data(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
+var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
+var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_api_fetch = __toESM(require_api_fetch(), 1);
-var import_components38 = __toESM(require_components(), 1);
-var import_data7 = __toESM(require_data(), 1);
-var import_core_data = __toESM(require_core_data(), 1);
-var import_element69 = __toESM(require_element(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_components39 = __toESM(require_components(), 1);
+var import_data8 = __toESM(require_data(), 1);
+var import_core_data2 = __toESM(require_core_data(), 1);
+var import_element74 = __toESM(require_element(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 var import_keycodes3 = __toESM(require_keycodes(), 1);
-var import_notices = __toESM(require_notices(), 1);
+var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_components32 = __toESM(require_components(), 1);
+var import_components33 = __toESM(require_components(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
-var import_element55 = __toESM(require_element(), 1);
+var import_element56 = __toESM(require_element(), 1);
 var import_viewport = __toESM(require_viewport(), 1);
 var import_preferences3 = __toESM(require_preferences(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 var import_plugins2 = __toESM(require_plugins(), 1);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_components28 = __toESM(require_components(), 1);
+var import_components29 = __toESM(require_components(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_plugins = __toESM(require_plugins(), 1);
 
@@ -12134,7 +12180,7 @@ var store2 = (0, import_data4.createReduxStore)(STORE_NAME2, {
 (0, import_data4.register)(store2);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 function roleSupportsCheckedState(role) {
   return [
     "checkbox",
@@ -12147,7 +12193,7 @@ function roleSupportsCheckedState(role) {
   ].includes(role);
 }
 function ComplementaryAreaToggle({
-  as = import_components28.Button,
+  as = import_components29.Button,
   scope,
   identifier: identifierProp,
   icon: iconProp,
@@ -12165,7 +12211,7 @@ function ComplementaryAreaToggle({
     [identifier, scope]
   );
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data5.useDispatch)(store2);
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
     ComponentToUse,
     {
       icon: selectedIcon && isSelected ? selectedIcon : icon,
@@ -12185,14 +12231,14 @@ function ComplementaryAreaToggle({
 }
 
 // packages/interface/build-module/components/complementary-area-header/index.mjs
-var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
 var ComplementaryAreaHeader = ({
   children,
   className,
   toggleButtonProps
 }) => {
-  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
-  return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(
+  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(
     "div",
     {
       className: clsx_default(
@@ -12211,33 +12257,33 @@ var ComplementaryAreaHeader = ({
 var complementary_area_header_default = ComplementaryAreaHeader;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_components30 = __toESM(require_components(), 1);
+var import_components31 = __toESM(require_components(), 1);
 
 // packages/interface/build-module/components/action-item/index.mjs
-var import_components29 = __toESM(require_components(), 1);
-var import_element54 = __toESM(require_element(), 1);
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var import_components30 = __toESM(require_components(), 1);
+var import_element55 = __toESM(require_element(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 var noop2 = () => {
 };
 function ActionItemSlot({
   name,
-  as: Component = import_components29.MenuGroup,
+  as: Component = import_components30.MenuGroup,
   fillProps = {},
   bubblesVirtually,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
-    import_components29.Slot,
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+    import_components30.Slot,
     {
       name,
       bubblesVirtually,
       fillProps,
       children: (fills) => {
-        if (!import_element54.Children.toArray(fills).length) {
+        if (!import_element55.Children.toArray(fills).length) {
           return null;
         }
         const initializedByPlugins = [];
-        import_element54.Children.forEach(
+        import_element55.Children.forEach(
           fills,
           ({
             props: { __unstableExplicitMenuItem, __unstableTarget }
@@ -12247,7 +12293,7 @@ function ActionItemSlot({
             }
           }
         );
-        const children = import_element54.Children.map(fills, (child) => {
+        const children = import_element55.Children.map(fills, (child) => {
           if (!child.props.__unstableExplicitMenuItem && initializedByPlugins.includes(
             child.props.__unstableTarget
           )) {
@@ -12255,14 +12301,14 @@ function ActionItemSlot({
           }
           return child;
         });
-        return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(Component, { ...props, children });
+        return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(Component, { ...props, children });
       }
     }
   );
 }
-function ActionItem({ name, as: Component = import_components29.Button, onClick, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components29.Fill, { name, children: ({ onClick: fpOnClick }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+function ActionItem({ name, as: Component = import_components30.Button, onClick, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components30.Fill, { name, children: ({ onClick: fpOnClick }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
       Component,
       {
         onClick: onClick || fpOnClick ? (...args) => {
@@ -12278,7 +12324,7 @@ ActionItem.Slot = ActionItemSlot;
 var action_item_default = ActionItem;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 var PluginsMenuItem = ({
   // Menu item is marked with unstable prop for backward compatibility.
   // They are removed so they don't leak to DOM elements.
@@ -12286,18 +12332,18 @@ var PluginsMenuItem = ({
   __unstableExplicitMenuItem,
   __unstableTarget,
   ...restProps
-}) => /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components30.MenuItem, { ...restProps });
+}) => /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components31.MenuItem, { ...restProps });
 function ComplementaryAreaMoreMenuItem({
   scope,
   target,
   __unstableExplicitMenuItem,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
     ComplementaryAreaToggle,
     {
       as: (toggleProps) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
           action_item_default,
           {
             __unstableExplicitMenuItem,
@@ -12318,13 +12364,13 @@ function ComplementaryAreaMoreMenuItem({
 }
 
 // packages/interface/build-module/components/pinned-items/index.mjs
-var import_components31 = __toESM(require_components(), 1);
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+var import_components32 = __toESM(require_components(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 function PinnedItems({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components31.Fill, { name: `PinnedItems/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components32.Fill, { name: `PinnedItems/${scope}`, ...props });
 }
 function PinnedItemsSlot({ scope, className, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components31.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components32.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
     "div",
     {
       className: clsx_default(
@@ -12339,10 +12385,10 @@ PinnedItems.Slot = PinnedItemsSlot;
 var pinned_items_default = PinnedItems;
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION = 0.3;
 function ComplementaryAreaSlot({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components32.Slot, { name: `ComplementaryArea/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components33.Slot, { name: `ComplementaryArea/${scope}`, ...props });
 }
 var SIDEBAR_WIDTH = 280;
 var variants = {
@@ -12362,8 +12408,8 @@ function ComplementaryAreaFill({
   const isMobileViewport = (0, import_compose4.useViewportMatch)("medium", "<");
   const previousActiveArea = (0, import_compose4.usePrevious)(activeArea);
   const previousIsActive = (0, import_compose4.usePrevious)(isActive);
-  const [, setState] = (0, import_element55.useState)({});
-  (0, import_element55.useEffect)(() => {
+  const [, setState] = (0, import_element56.useState)({});
+  (0, import_element56.useEffect)(() => {
     setState({});
   }, [isActive]);
   const transition = {
@@ -12371,8 +12417,8 @@ function ComplementaryAreaFill({
     duration: disableMotion || isMobileViewport || !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea ? 0 : ANIMATION_DURATION,
     ease: [0.6, 0, 0.4, 1]
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components32.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components32.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
-    import_components32.__unstableMotion.div,
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components33.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+    import_components33.__unstableMotion.div,
     {
       variants,
       initial: "closed",
@@ -12380,7 +12426,7 @@ function ComplementaryAreaFill({
       exit: "closed",
       transition,
       className: "interface-complementary-area__fill",
-      children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
         "div",
         {
           id,
@@ -12395,10 +12441,10 @@ function ComplementaryAreaFill({
   ) }) });
 }
 function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
-  const previousIsSmallRef = (0, import_element55.useRef)(false);
-  const shouldOpenWhenNotSmallRef = (0, import_element55.useRef)(false);
+  const previousIsSmallRef = (0, import_element56.useRef)(false);
+  const shouldOpenWhenNotSmallRef = (0, import_element56.useRef)(false);
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data6.useDispatch)(store2);
-  (0, import_element55.useEffect)(() => {
+  (0, import_element56.useEffect)(() => {
     if (isActive && isSmall && !previousIsSmallRef.current) {
       disableComplementaryArea2(scope);
       shouldOpenWhenNotSmallRef.current = true;
@@ -12450,7 +12496,7 @@ function ComplementaryArea({
   const context = (0, import_plugins2.usePluginContext)();
   const icon = iconProp || context.icon;
   const identifier = identifierProp || `${context.name}/${name}`;
-  const [isReady, setIsReady] = (0, import_element55.useState)(false);
+  const [isReady, setIsReady] = (0, import_element56.useState)(false);
   const {
     isLoading,
     isActive,
@@ -12494,7 +12540,7 @@ function ComplementaryArea({
     pinItem: pinItem2,
     unpinItem: unpinItem2
   } = (0, import_data6.useDispatch)(store2);
-  (0, import_element55.useEffect)(() => {
+  (0, import_element56.useEffect)(() => {
     if (isActiveByDefault && activeArea === void 0 && !isSmall) {
       enableComplementaryArea2(scope, identifier);
     } else if (activeArea === void 0 && isSmall) {
@@ -12513,8 +12559,8 @@ function ComplementaryArea({
   if (!isReady) {
     return;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(import_jsx_runtime86.Fragment, { children: [
-    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
       ComplementaryAreaToggle,
       {
         scope,
@@ -12530,7 +12576,7 @@ function ComplementaryArea({
         shortcut: toggleShortcut
       }
     ) }),
-    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
       ComplementaryAreaMoreMenuItem,
       {
         target: name,
@@ -12540,7 +12586,7 @@ function ComplementaryArea({
         children: title
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(
       ComplementaryAreaFill,
       {
         activeArea,
@@ -12549,7 +12595,7 @@ function ComplementaryArea({
         scope,
         id: identifier.replace("/", ":"),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
             complementary_area_header_default,
             {
               className: headerClassName,
@@ -12562,10 +12608,10 @@ function ComplementaryArea({
                 scope,
                 identifier
               },
-              children: header || /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(import_jsx_runtime86.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime86.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
-                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
-                  import_components32.Button,
+              children: header || /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
+                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+                  import_components33.Button,
                   {
                     className: "interface-complementary-area__pin-unpin-item",
                     icon: isPinned ? star_filled_default : star_empty_default,
@@ -12582,7 +12628,7 @@ function ComplementaryArea({
               ] })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components32.Panel, { className: panelClassName, children })
+          /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components33.Panel, { className: panelClassName, children })
         ]
       }
     )
@@ -12592,11 +12638,11 @@ ComplementaryArea.Slot = ComplementaryAreaSlot;
 var complementary_area_default = ComplementaryArea;
 
 // packages/interface/build-module/components/interface-skeleton/index.mjs
-var import_element56 = __toESM(require_element(), 1);
-var import_components33 = __toESM(require_components(), 1);
+var import_element57 = __toESM(require_element(), 1);
+var import_components34 = __toESM(require_components(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION2 = 0.25;
 var commonTransition = {
   type: "tween",
@@ -12604,7 +12650,7 @@ var commonTransition = {
   ease: [0.6, 0, 0.4, 1]
 };
 function useHTMLClass(className) {
-  (0, import_element56.useEffect)(() => {
+  (0, import_element57.useEffect)(() => {
     const element = document && document.querySelector(`html:not(.${className})`);
     if (!element) {
       return;
@@ -12677,7 +12723,7 @@ function InterfaceSkeleton({
     footer: (0, import_i18n26.__)("Footer")
   };
   const mergedLabels = { ...defaultLabels, ...labels };
-  return /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(
     "div",
     {
       ref,
@@ -12687,11 +12733,11 @@ function InterfaceSkeleton({
         !!footer && "has-footer"
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components34.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
             navigable_region_default,
             {
-              as: import_components33.__unstableMotion.div,
+              as: import_components34.__unstableMotion.div,
               className: "interface-interface-skeleton__header",
               ariaLabel: mergedLabels.header,
               initial: isDistractionFree && !isMobileViewport ? "distractionFreeHidden" : "hidden",
@@ -12703,14 +12749,14 @@ function InterfaceSkeleton({
               children: header
             }
           ) }),
-          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
-          /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
+          /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components34.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__secondary-sidebar",
                 ariaLabel: mergedLabels.secondarySidebar,
-                as: import_components33.__unstableMotion.div,
+                as: import_components34.__unstableMotion.div,
                 initial: "closed",
                 animate: "open",
                 exit: "closed",
@@ -12719,8 +12765,8 @@ function InterfaceSkeleton({
                   closed: { width: 0 }
                 },
                 transition: defaultTransition,
-                children: /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(
-                  import_components33.__unstableMotion.div,
+                children: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(
+                  import_components34.__unstableMotion.div,
                   {
                     style: {
                       position: "absolute",
@@ -12741,7 +12787,7 @@ function InterfaceSkeleton({
                 )
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__content",
@@ -12749,7 +12795,7 @@ function InterfaceSkeleton({
                 children: content
               }
             ),
-            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__sidebar",
@@ -12757,7 +12803,7 @@ function InterfaceSkeleton({
                 children: sidebar
               }
             ),
-            !!actions && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+            !!actions && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__actions",
@@ -12767,7 +12813,7 @@ function InterfaceSkeleton({
             )
           ] })
         ] }),
-        !!footer && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+        !!footer && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
           navigable_region_default,
           {
             className: "interface-interface-skeleton__footer",
@@ -12779,15 +12825,20 @@ function InterfaceSkeleton({
     }
   );
 }
-var interface_skeleton_default = (0, import_element56.forwardRef)(InterfaceSkeleton);
+var interface_skeleton_default = (0, import_element57.forwardRef)(InterfaceSkeleton);
+
+// packages/media-editor/build-module/components/media-editor-canvas/index.mjs
+var import_element68 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-cropper-state.mjs
-var import_element57 = __toESM(require_element(), 1);
+var import_element58 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
 var import_i18n27 = __toESM(require_i18n(), 1);
 var MIN_ZOOM = 1;
+var ABSOLUTE_MIN_ZOOM = 0.1;
 var MAX_ZOOM = 10;
+var MIN_CROP_PIXELS = 24;
 var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
 var DEFAULT_KEYBOARD_STEP = 0.01;
 var KEYBOARD_SHIFT_STEP_MULTIPLIER = 10;
@@ -13366,10 +13417,69 @@ function degreesToRadians(degrees) {
   return degrees * Math.PI / 180;
 }
 
+// packages/media-editor/build-module/image-editor/core/math/sanitize.mjs
+var MAX_SAFE_MAGNITUDE = 1e6;
+function safeBoundedNumber(value, fallback) {
+  if (!Number.isFinite(value)) {
+    return fallback;
+  }
+  if (Math.abs(value) > MAX_SAFE_MAGNITUDE) {
+    return fallback;
+  }
+  return value;
+}
+function isSafeNumber(value) {
+  return Number.isFinite(value) && Math.abs(value) <= MAX_SAFE_MAGNITUDE;
+}
+function isValidSize(size) {
+  return Number.isFinite(size.width) && Number.isFinite(size.height) && size.width >= Number.EPSILON && size.height >= Number.EPSILON && size.width <= MAX_SAFE_MAGNITUDE && size.height <= MAX_SAFE_MAGNITUDE;
+}
+function sanitizeRect(rect) {
+  const x2 = safeBoundedNumber(rect.x, 0);
+  const y2 = safeBoundedNumber(rect.y, 0);
+  const width = safeBoundedNumber(rect.width, 0);
+  const height = safeBoundedNumber(rect.height, 0);
+  if (x2 === rect.x && y2 === rect.y && width === rect.width && height === rect.height) {
+    return rect;
+  }
+  return { x: x2, y: y2, width, height };
+}
+function sanitizeCropperState(state) {
+  const panX = safeBoundedNumber(state.pan.x, 0);
+  const panY = safeBoundedNumber(state.pan.y, 0);
+  const basePanX = safeBoundedNumber(state.basePan.x, 0);
+  const basePanY = safeBoundedNumber(state.basePan.y, 0);
+  const rotation = safeBoundedNumber(state.rotation, 0);
+  const baseRotation = safeBoundedNumber(state.baseRotation, 0);
+  const rawZoom = safeBoundedNumber(state.zoom, 1);
+  const zoom = rawZoom >= Number.EPSILON ? rawZoom : 1;
+  const rawBaseZoom = safeBoundedNumber(state.baseZoom, 1);
+  const baseZoom = rawBaseZoom >= Number.EPSILON ? rawBaseZoom : 1;
+  const cropRect = sanitizeRect(state.cropRect);
+  const panUnchanged = panX === state.pan.x && panY === state.pan.y;
+  const basePanUnchanged = basePanX === state.basePan.x && basePanY === state.basePan.y;
+  if (panUnchanged && basePanUnchanged && zoom === state.zoom && baseZoom === state.baseZoom && rotation === state.rotation && baseRotation === state.baseRotation && cropRect === state.cropRect) {
+    return state;
+  }
+  return {
+    ...state,
+    pan: panUnchanged ? state.pan : { x: panX, y: panY },
+    zoom,
+    rotation,
+    basePan: basePanUnchanged ? state.basePan : { x: basePanX, y: basePanY },
+    baseZoom,
+    baseRotation,
+    cropRect
+  };
+}
+
 // packages/media-editor/build-module/image-editor/core/camera.mjs
 var _scratchMat = mat2d_exports.create();
 var _scratchVec = vec2_exports.create();
 function getRotatedBBox(width, height, rotation) {
+  if (!isSafeNumber(width) || !isSafeNumber(height) || !isSafeNumber(rotation) || width <= 0 || height <= 0) {
+    return { width: 0, height: 0 };
+  }
   const rad = degreesToRadians(rotation);
   const cosR = Math.abs(Math.cos(rad));
   const sinR = Math.abs(Math.sin(rad));
@@ -13379,18 +13489,25 @@ function getRotatedBBox(width, height, rotation) {
   };
 }
 function getImageFit(containerSize, imageSize, rotation) {
-  if (containerSize.width === 0 || containerSize.height === 0 || imageSize.width === 0 || imageSize.height === 0) {
+  if (!isValidSize(containerSize) || !isValidSize(imageSize)) {
     return {
       elementSize: { width: 0, height: 0 },
       visualSize: { width: 0, height: 0 }
     };
   }
-  const snapRotation = Math.round(rotation / 90) * 90;
+  const safeRotation = safeBoundedNumber(rotation, 0);
+  const snapRotation = Math.round(safeRotation / 90) * 90;
   const naturalBBox = getRotatedBBox(
     imageSize.width,
     imageSize.height,
     snapRotation
   );
+  if (naturalBBox.width === 0 || naturalBBox.height === 0) {
+    return {
+      elementSize: { width: 0, height: 0 },
+      visualSize: { width: 0, height: 0 }
+    };
+  }
   const fitScale = Math.min(
     containerSize.width / naturalBBox.width,
     containerSize.height / naturalBBox.height
@@ -13405,15 +13522,19 @@ function getImageFit(containerSize, imageSize, rotation) {
 }
 function createCamera(state, containerSize, imageSize) {
   const m2 = mat2d_exports.create();
-  if (containerSize.width === 0 || containerSize.height === 0 || imageSize.width === 0 || imageSize.height === 0) {
+  if (!isValidSize(containerSize) || !isValidSize(imageSize)) {
     return m2;
   }
-  const snapRotation = Math.round(state.rotation / 90) * 90;
+  const safeState = sanitizeCropperState(state);
+  const snapRotation = Math.round(safeState.rotation / 90) * 90;
   const naturalBBox = getRotatedBBox(
     imageSize.width,
     imageSize.height,
     snapRotation
   );
+  if (naturalBBox.width === 0 || naturalBBox.height === 0) {
+    return m2;
+  }
   const fitScale = Math.min(
     containerSize.width / naturalBBox.width,
     containerSize.height / naturalBBox.height
@@ -13429,13 +13550,16 @@ function createCamera(state, containerSize, imageSize) {
     containerSize.width / 2,
     containerSize.height / 2
   ]);
-  mat2d_exports.translate(m2, m2, [state.pan.x * visualW, state.pan.y * visualH]);
-  mat2d_exports.scale(m2, m2, [
-    state.flip.horizontal ? -1 : 1,
-    state.flip.vertical ? -1 : 1
+  mat2d_exports.translate(m2, m2, [
+    safeState.pan.x * visualW,
+    safeState.pan.y * visualH
   ]);
-  mat2d_exports.rotate(m2, m2, degreesToRadians(state.rotation));
-  mat2d_exports.scale(m2, m2, [state.zoom, state.zoom]);
+  mat2d_exports.scale(m2, m2, [
+    safeState.flip.horizontal ? -1 : 1,
+    safeState.flip.vertical ? -1 : 1
+  ]);
+  mat2d_exports.rotate(m2, m2, degreesToRadians(safeState.rotation));
+  mat2d_exports.scale(m2, m2, [safeState.zoom, safeState.zoom]);
   mat2d_exports.translate(m2, m2, [-renderedW / 2, -renderedH / 2]);
   mat2d_exports.scale(m2, m2, [renderedW, renderedH]);
   return m2;
@@ -13477,10 +13601,10 @@ function getVisibleBounds(camera) {
 }
 function createExportCamera(state, imageSize, outputSize) {
   const m2 = mat2d_exports.create();
-  const { rotation, flip, cropRect, zoom, pan } = state;
-  if (imageSize.width === 0 || imageSize.height === 0 || outputSize.width === 0 || outputSize.height === 0) {
+  if (!isValidSize(imageSize) || !isValidSize(outputSize)) {
     return m2;
   }
+  const { rotation, flip, cropRect, zoom, pan } = sanitizeCropperState(state);
   const snapRotation = Math.round(rotation / 90) * 90;
   const { width: rotW, height: rotH } = getRotatedBBox(
     imageSize.width,
@@ -13599,20 +13723,43 @@ function getMinZoomForCover(rotation, imageAspectRatio, cropRect) {
   const spanBeta = cropHalfW * absS + cropHalfH * absC;
   const zoomFromAlpha = 2 * spanAlpha / aspectRatio;
   const zoomFromBeta = 2 * spanBeta;
-  return Math.max(1, zoomFromAlpha, zoomFromBeta);
+  return Math.max(zoomFromAlpha, zoomFromBeta);
+}
+function getMinZoom(state) {
+  if (!state.image) {
+    return MIN_ZOOM;
+  }
+  const imageSize = {
+    width: state.image.naturalWidth,
+    height: state.image.naturalHeight
+  };
+  if (!isValidSize(imageSize)) {
+    return MIN_ZOOM;
+  }
+  const safeState = sanitizeCropperState(state);
+  const aspectRatio = imageSize.width / imageSize.height;
+  return Math.max(
+    ABSOLUTE_MIN_ZOOM,
+    getMinZoomForCover(
+      safeState.rotation,
+      aspectRatio,
+      safeState.cropRect
+    )
+  );
 }
 function getImageCropBounds(state, elementSize, visualSize) {
-  if (elementSize.width === 0 || elementSize.height === 0 || visualSize.width === 0 || visualSize.height === 0) {
+  if (!isValidSize(elementSize) || !isValidSize(visualSize)) {
     return { minX: 0, minY: 0, maxX: 1, maxY: 1 };
   }
-  const tx = state.pan.x * visualSize.width;
-  const ty = state.pan.y * visualSize.height;
-  const rad = degreesToRadians(state.rotation);
+  const safeState = sanitizeCropperState(state);
+  const tx = safeState.pan.x * visualSize.width;
+  const ty = safeState.pan.y * visualSize.height;
+  const rad = degreesToRadians(safeState.rotation);
   const cos = Math.cos(rad);
   const sin = Math.sin(rad);
-  const sx = state.flip.horizontal ? -1 : 1;
-  const sy = state.flip.vertical ? -1 : 1;
-  const z = state.zoom;
+  const sx = safeState.flip.horizontal ? -1 : 1;
+  const sy = safeState.flip.vertical ? -1 : 1;
+  const z = safeState.zoom;
   const ma = sx * cos * z;
   const mb = sy * sin * z;
   const mc = -sx * sin * z;
@@ -13647,21 +13794,26 @@ function getImageCropBounds(state, elementSize, visualSize) {
   };
 }
 function restrictCropRect(cropRect, zoom, rotation, imageAspectRatio) {
-  const aspectRatio = Math.max(imageAspectRatio, Number.EPSILON);
-  const snapRotation = Math.round(rotation / 90) * 90;
+  const safeRect = sanitizeRect(cropRect);
+  const zoomCandidate = safeBoundedNumber(zoom, 1);
+  const safeZoom = zoomCandidate >= Number.EPSILON ? zoomCandidate : 1;
+  const safeRotation = safeBoundedNumber(rotation, 0);
+  const safeAspect = safeBoundedNumber(imageAspectRatio, 1);
+  const aspectRatio = Math.max(safeAspect, Number.EPSILON);
+  const snapRotation = Math.round(safeRotation / 90) * 90;
   const { visualW, visualH } = getVisualDimensions(
     snapRotation,
     aspectRatio
   );
-  const { absC, absS } = getVisualDimensions(rotation, aspectRatio);
-  const W = cropRect.width;
-  const H2 = cropRect.height;
+  const { absC, absS } = getVisualDimensions(safeRotation, aspectRatio);
+  const W = safeRect.width;
+  const H2 = safeRect.height;
   const cropWPx = W * visualW;
   const cropHPx = H2 * visualH;
   const spanAlpha = cropWPx * absC + cropHPx * absS;
   const spanBeta = cropWPx * absS + cropHPx * absC;
-  const limitAlpha = aspectRatio * zoom;
-  const limitBeta = zoom;
+  const limitAlpha = aspectRatio * safeZoom;
+  const limitBeta = safeZoom;
   let t2 = 1;
   if (spanAlpha > 0) {
     t2 = Math.min(t2, limitAlpha / spanAlpha);
@@ -13670,12 +13822,12 @@ function restrictCropRect(cropRect, zoom, rotation, imageAspectRatio) {
     t2 = Math.min(t2, limitBeta / spanBeta);
   }
   if (t2 >= 1 - EPSILON2) {
-    return cropRect;
+    return safeRect;
   }
   const newW = W * t2;
   const newH = H2 * t2;
-  const centerX = cropRect.x + W / 2;
-  const centerY = cropRect.y + H2 / 2;
+  const centerX = safeRect.x + W / 2;
+  const centerY = safeRect.y + H2 / 2;
   let newX = centerX - newW / 2;
   let newY = centerY - newH / 2;
   newX = Math.max(0, Math.min(newX, 1 - newW));
@@ -13686,16 +13838,21 @@ var CANONICAL_CONTAINER = { width: 1e3, height: 1e3 };
 var _scratchMat2 = mat2d_exports.create();
 var _scratchVec2 = vec2_exports.create();
 function restrictPanZoom(state, imageSize, cropRect) {
-  const aspectRatio = imageSize.width > 0 && imageSize.height > 0 ? imageSize.width / imageSize.height : 1;
-  const minZoom = getMinZoomForCover(state.rotation, aspectRatio, cropRect);
-  const zoom = Math.max(state.zoom, minZoom);
-  const candidateState = { ...state, zoom };
+  const safeState = sanitizeCropperState(state);
+  const safeCropRect = sanitizeRect(cropRect);
+  const aspectRatio = isValidSize(imageSize) ? imageSize.width / imageSize.height : 1;
+  const minZoom = Math.max(
+    ABSOLUTE_MIN_ZOOM,
+    getMinZoomForCover(safeState.rotation, aspectRatio, safeCropRect)
+  );
+  const zoom = Math.min(MAX_ZOOM, Math.max(safeState.zoom, minZoom));
+  const candidateState = { ...safeState, zoom };
   const camera = createCamera(
     candidateState,
     CANONICAL_CONTAINER,
     imageSize
   );
-  const snapRotation = Math.round(state.rotation / 90) * 90;
+  const snapRotation = Math.round(safeState.rotation / 90) * 90;
   const baseCamera = createCamera(
     {
       ...candidateState,
@@ -13709,20 +13866,20 @@ function restrictPanZoom(state, imageSize, cropRect) {
   const visibleBounds = getVisibleBounds(baseCamera);
   const stencilCorners = [
     [
-      visibleBounds.left + cropRect.x * visibleBounds.width,
-      visibleBounds.top + cropRect.y * visibleBounds.height
+      visibleBounds.left + safeCropRect.x * visibleBounds.width,
+      visibleBounds.top + safeCropRect.y * visibleBounds.height
     ],
     [
-      visibleBounds.left + (cropRect.x + cropRect.width) * visibleBounds.width,
-      visibleBounds.top + cropRect.y * visibleBounds.height
+      visibleBounds.left + (safeCropRect.x + safeCropRect.width) * visibleBounds.width,
+      visibleBounds.top + safeCropRect.y * visibleBounds.height
     ],
     [
-      visibleBounds.left + (cropRect.x + cropRect.width) * visibleBounds.width,
-      visibleBounds.top + (cropRect.y + cropRect.height) * visibleBounds.height
+      visibleBounds.left + (safeCropRect.x + safeCropRect.width) * visibleBounds.width,
+      visibleBounds.top + (safeCropRect.y + safeCropRect.height) * visibleBounds.height
     ],
     [
-      visibleBounds.left + cropRect.x * visibleBounds.width,
-      visibleBounds.top + (cropRect.y + cropRect.height) * visibleBounds.height
+      visibleBounds.left + safeCropRect.x * visibleBounds.width,
+      visibleBounds.top + (safeCropRect.y + safeCropRect.height) * visibleBounds.height
     ]
   ];
   mat2d_exports.invert(_scratchMat2, camera);
@@ -13747,7 +13904,7 @@ function restrictPanZoom(state, imageSize, cropRect) {
     }
   }
   if (minWx >= -EPSILON2 && maxWx <= 1 + EPSILON2 && minWy >= -EPSILON2 && maxWy <= 1 + EPSILON2) {
-    return { pan: state.pan, zoom };
+    return { pan: safeState.pan, zoom };
   }
   let dwx = 0;
   let dwy = 0;
@@ -13767,8 +13924,8 @@ function restrictPanZoom(state, imageSize, cropRect) {
   }
   const dsx = camera[0] * dwx + camera[2] * dwy;
   const dsy = camera[1] * dwx + camera[3] * dwy;
-  const newPanX = state.pan.x - (visibleBounds.width > 0 ? dsx / visibleBounds.width : 0);
-  const newPanY = state.pan.y - (visibleBounds.height > 0 ? dsy / visibleBounds.height : 0);
+  const newPanX = safeState.pan.x - (visibleBounds.width > 0 ? dsx / visibleBounds.width : 0);
+  const newPanY = safeState.pan.y - (visibleBounds.height > 0 ? dsy / visibleBounds.height : 0);
   return {
     pan: { x: newPanX, y: newPanY },
     zoom
@@ -13779,6 +13936,12 @@ function restrictPanZoom(state, imageSize, cropRect) {
 var STATE_EPSILON = 1e-6;
 function nearlyEqual(a2, b2) {
   return Math.abs(a2 - b2) < STATE_EPSILON;
+}
+function clampRequestedZoom(state, zoom) {
+  if (state.image) {
+    return Math.min(MAX_ZOOM, Math.max(ABSOLUTE_MIN_ZOOM, zoom));
+  }
+  return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
 }
 function operationToAction(state, op) {
   switch (op.type) {
@@ -13865,7 +14028,7 @@ function cropperReducer(state, action) {
         })
       );
     case "SET_ZOOM": {
-      const z = Math.min(MAX_ZOOM, Math.max(1, action.payload));
+      const z = clampRequestedZoom(state, action.payload);
       return commitBase(
         enforceContainment({
           ...state,
@@ -13874,7 +14037,7 @@ function cropperReducer(state, action) {
       );
     }
     case "SET_ZOOM_AT_POINT": {
-      const z = Math.min(MAX_ZOOM, Math.max(1, action.payload.zoom));
+      const z = clampRequestedZoom(state, action.payload.zoom);
       return commitBase(
         enforceContainment({
           ...state,
@@ -13967,14 +14130,11 @@ function cropperReducer(state, action) {
       if (rect.width === 0 || rect.height === 0 || !state.image) {
         return state;
       }
-      const normalizedRatio = rect.width / rect.height;
-      let newH = 1;
-      let newW = normalizedRatio;
-      if (newW > 1) {
-        newW = 1;
-        newH = 1 / normalizedRatio;
-      }
-      const s2 = newH / rect.height;
+      const fitScale = 1 / Math.max(rect.width, rect.height);
+      const zoomCap = state.zoom > 0 ? MAX_ZOOM / state.zoom : fitScale;
+      const s2 = Math.min(fitScale, zoomCap);
+      const newW = rect.width * s2;
+      const newH = rect.height * s2;
       const oldCx = rect.x + rect.width / 2;
       const oldCy = rect.y + rect.height / 2;
       return commitBase(
@@ -14025,24 +14185,24 @@ function areHistoryStatesEqual(a2, b2) {
   return aImage?.src === bImage?.src && aImage?.naturalWidth === bImage?.naturalWidth && aImage?.naturalHeight === bImage?.naturalHeight && nearlyEqual2(a2.pan.x, b2.pan.x) && nearlyEqual2(a2.pan.y, b2.pan.y) && nearlyEqual2(a2.zoom, b2.zoom) && nearlyEqual2(a2.rotation, b2.rotation) && a2.flip.horizontal === b2.flip.horizontal && a2.flip.vertical === b2.flip.vertical && nearlyEqual2(a2.cropRect.x, b2.cropRect.x) && nearlyEqual2(a2.cropRect.y, b2.cropRect.y) && nearlyEqual2(a2.cropRect.width, b2.cropRect.width) && nearlyEqual2(a2.cropRect.height, b2.cropRect.height);
 }
 function useCropperState(initialState) {
-  const [state, dispatch] = (0, import_element57.useReducer)(
+  const [state, dispatch] = (0, import_element58.useReducer)(
     cropperReducer,
     initialState,
     (init) => enforceContainment({ ...DEFAULT_STATE2, ...init })
   );
-  const initialRef = (0, import_element57.useRef)(
+  const initialRef = (0, import_element58.useRef)(
     enforceContainment({ ...DEFAULT_STATE2, ...initialState })
   );
-  const stateRef = (0, import_element57.useRef)(state);
+  const stateRef = (0, import_element58.useRef)(state);
   stateRef.current = state;
-  const historyRef = (0, import_element57.useRef)([]);
-  const redoStackRef = (0, import_element57.useRef)([]);
-  const [hasUndo, setHasUndo] = (0, import_element57.useState)(false);
-  const [hasRedo, setHasRedo] = (0, import_element57.useState)(false);
-  const lastCommittedStateRef = (0, import_element57.useRef)(state);
-  const debounceTimerRef = (0, import_element57.useRef)();
-  const suppressDebounceRef = (0, import_element57.useRef)(false);
-  const pushToHistory = (0, import_element57.useCallback)((entry) => {
+  const historyRef = (0, import_element58.useRef)([]);
+  const redoStackRef = (0, import_element58.useRef)([]);
+  const [hasUndo, setHasUndo] = (0, import_element58.useState)(false);
+  const [hasRedo, setHasRedo] = (0, import_element58.useState)(false);
+  const lastCommittedStateRef = (0, import_element58.useRef)(state);
+  const debounceTimerRef = (0, import_element58.useRef)();
+  const suppressDebounceRef = (0, import_element58.useRef)(false);
+  const pushToHistory = (0, import_element58.useCallback)((entry) => {
     const target = entry ?? stateRef.current;
     const previousEntry = historyRef.current[historyRef.current.length - 1];
     if (previousEntry && areHistoryStatesEqual(previousEntry, target)) {
@@ -14053,7 +14213,7 @@ function useCropperState(initialState) {
     setHasUndo(true);
     setHasRedo(false);
   }, []);
-  (0, import_element57.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     if (suppressDebounceRef.current) {
       suppressDebounceRef.current = false;
       lastCommittedStateRef.current = stateRef.current;
@@ -14076,7 +14236,7 @@ function useCropperState(initialState) {
     }, HISTORY_DEBOUNCE_MS);
     return () => clearTimeout(debounceTimerRef.current);
   }, [state, pushToHistory]);
-  const commitHistory = (0, import_element57.useCallback)(() => {
+  const commitHistory = (0, import_element58.useCallback)(() => {
     clearTimeout(debounceTimerRef.current);
     const snapshot = lastCommittedStateRef.current;
     if (snapshot !== null && !areHistoryStatesEqual(snapshot, stateRef.current)) {
@@ -14084,7 +14244,7 @@ function useCropperState(initialState) {
     }
     lastCommittedStateRef.current = stateRef.current;
   }, [pushToHistory]);
-  const undo = (0, import_element57.useCallback)(() => {
+  const undo = (0, import_element58.useCallback)(() => {
     commitHistory();
     const prev = historyRef.current[historyRef.current.length - 1];
     if (!prev) {
@@ -14097,7 +14257,7 @@ function useCropperState(initialState) {
     setHasRedo(true);
     dispatch({ type: "RESET", payload: prev });
   }, [dispatch, commitHistory]);
-  const redo = (0, import_element57.useCallback)(() => {
+  const redo = (0, import_element58.useCallback)(() => {
     commitHistory();
     const next = redoStackRef.current[0];
     if (!next) {
@@ -14110,7 +14270,7 @@ function useCropperState(initialState) {
     setHasRedo(redoStackRef.current.length > 0);
     dispatch({ type: "RESET", payload: next });
   }, [dispatch, commitHistory]);
-  const setImage = (0, import_element57.useCallback)(
+  const setImage = (0, import_element58.useCallback)(
     (image) => {
       clearTimeout(debounceTimerRef.current);
       suppressDebounceRef.current = true;
@@ -14122,19 +14282,49 @@ function useCropperState(initialState) {
     },
     [dispatch]
   );
-  const setPan = (0, import_element57.useCallback)(
+  const setPan = (0, import_element58.useCallback)(
     (pan) => {
       dispatch({ type: "SET_PAN", payload: pan });
     },
     [dispatch]
   );
-  const setZoom = (0, import_element57.useCallback)(
+  const setZoom = (0, import_element58.useCallback)(
     (zoom) => {
-      dispatch({ type: "SET_ZOOM", payload: zoom });
+      const s2 = stateRef.current;
+      const clampedZoom = Math.min(
+        MAX_ZOOM,
+        Math.max(getMinZoom(s2), zoom)
+      );
+      if (clampedZoom === s2.zoom) {
+        return;
+      }
+      const { cropRect } = s2;
+      const focalNormX = cropRect.x + cropRect.width / 2 - 0.5;
+      const focalNormY = cropRect.y + cropRect.height / 2 - 0.5;
+      const zoomRatio = 1 - clampedZoom / s2.zoom;
+      const newPanX = s2.pan.x + (focalNormX - s2.pan.x) * zoomRatio;
+      const newPanY = s2.pan.y + (focalNormY - s2.pan.y) * zoomRatio;
+      const imageSize = s2.image ? {
+        width: s2.image.naturalWidth,
+        height: s2.image.naturalHeight
+      } : { width: 1, height: 1 };
+      const { pan: clampedPan } = restrictPanZoom(
+        {
+          ...s2,
+          zoom: clampedZoom,
+          pan: { x: newPanX, y: newPanY }
+        },
+        imageSize,
+        s2.cropRect
+      );
+      dispatch({
+        type: "SET_ZOOM_AT_POINT",
+        payload: { zoom: clampedZoom, pan: clampedPan }
+      });
     },
     [dispatch]
   );
-  const setZoomAtPoint = (0, import_element57.useCallback)(
+  const setZoomAtPoint = (0, import_element58.useCallback)(
     (zoom, pan) => {
       dispatch({
         type: "SET_ZOOM_AT_POINT",
@@ -14143,13 +14333,13 @@ function useCropperState(initialState) {
     },
     [dispatch]
   );
-  const setRotation = (0, import_element57.useCallback)(
+  const setRotation = (0, import_element58.useCallback)(
     (rotation) => {
       dispatch({ type: "SET_ROTATION", payload: rotation });
     },
     [dispatch]
   );
-  const setFlip = (0, import_element57.useCallback)(
+  const setFlip = (0, import_element58.useCallback)(
     (flip) => {
       commitHistory();
       pushToHistory();
@@ -14158,7 +14348,7 @@ function useCropperState(initialState) {
     },
     [dispatch, pushToHistory, commitHistory]
   );
-  const toggleFlip = (0, import_element57.useCallback)(
+  const toggleFlip = (0, import_element58.useCallback)(
     (direction) => {
       setFlip({
         ...stateRef.current.flip,
@@ -14167,7 +14357,7 @@ function useCropperState(initialState) {
     },
     [setFlip]
   );
-  const snapRotate90 = (0, import_element57.useCallback)(
+  const snapRotate90 = (0, import_element58.useCallback)(
     (direction) => {
       commitHistory();
       pushToHistory();
@@ -14179,18 +14369,18 @@ function useCropperState(initialState) {
     },
     [dispatch, pushToHistory, commitHistory]
   );
-  const setCropRect = (0, import_element57.useCallback)(
+  const setCropRect = (0, import_element58.useCallback)(
     (rect) => {
       dispatch({ type: "SET_CROP_RECT", payload: rect });
     },
     [dispatch]
   );
-  const settleCrop = (0, import_element57.useCallback)(() => {
+  const settleCrop = (0, import_element58.useCallback)(() => {
     commitHistory();
     suppressDebounceRef.current = true;
     dispatch({ type: "SETTLE_CROP" });
   }, [dispatch, commitHistory]);
-  const applyOperation = (0, import_element57.useCallback)(
+  const applyOperation = (0, import_element58.useCallback)(
     (op) => {
       commitHistory();
       pushToHistory();
@@ -14199,7 +14389,7 @@ function useCropperState(initialState) {
     },
     [dispatch, pushToHistory, commitHistory]
   );
-  const reset = (0, import_element57.useCallback)(
+  const reset = (0, import_element58.useCallback)(
     (resetState) => {
       commitHistory();
       const nextInitialState = enforceContainment({
@@ -14217,7 +14407,7 @@ function useCropperState(initialState) {
     [dispatch, pushToHistory, commitHistory]
   );
   const isDirty = isStateDirty(state, initialRef.current);
-  const getCroppedImage = (0, import_element57.useCallback)(
+  const getCroppedImage = (0, import_element58.useCallback)(
     (mimeType, quality) => {
       if (!state.image) {
         return Promise.reject(
@@ -14259,11 +14449,11 @@ function useCropperState(initialState) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_element64 = __toESM(require_element(), 1);
+var import_element66 = __toESM(require_element(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-interaction.mjs
-var import_element58 = __toESM(require_element(), 1);
+var import_element59 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/interaction-controller.mjs
 var DOUBLE_TAP_TIME = 300;
@@ -14904,30 +15094,30 @@ function isHandledKeyboardZoom(event) {
   }
 }
 function useInteraction(state, actions, containerSize, imageSize, options) {
-  const [isDragging, setIsDragging] = (0, import_element58.useState)(false);
-  const [isZooming, setIsZooming] = (0, import_element58.useState)(false);
-  const [isGestureActive, setIsGestureActive] = (0, import_element58.useState)(false);
-  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element58.useState)(false);
-  const keyboardInteractionTimerRef = (0, import_element58.useRef)();
-  const isKeyboardGestureActiveRef = (0, import_element58.useRef)(false);
-  const stateRef = (0, import_element58.useRef)(state);
+  const [isDragging, setIsDragging] = (0, import_element59.useState)(false);
+  const [isZooming, setIsZooming] = (0, import_element59.useState)(false);
+  const [isGestureActive, setIsGestureActive] = (0, import_element59.useState)(false);
+  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element59.useState)(false);
+  const keyboardInteractionTimerRef = (0, import_element59.useRef)();
+  const isKeyboardGestureActiveRef = (0, import_element59.useRef)(false);
+  const stateRef = (0, import_element59.useRef)(state);
   stateRef.current = state;
-  const containerSizeRef = (0, import_element58.useRef)(containerSize);
+  const containerSizeRef = (0, import_element59.useRef)(containerSize);
   containerSizeRef.current = containerSize;
-  const imageSizeRef = (0, import_element58.useRef)(imageSize);
+  const imageSizeRef = (0, import_element59.useRef)(imageSize);
   imageSizeRef.current = imageSize;
-  const optionsRef = (0, import_element58.useRef)(options);
+  const optionsRef = (0, import_element59.useRef)(options);
   optionsRef.current = options;
-  const actionsRef = (0, import_element58.useRef)(actions);
+  const actionsRef = (0, import_element59.useRef)(actions);
   actionsRef.current = actions;
-  const controllerRef = (0, import_element58.useRef)(null);
-  const startPlacementGesture = (0, import_element58.useCallback)(() => {
+  const controllerRef = (0, import_element59.useRef)(null);
+  const startPlacementGesture = (0, import_element59.useCallback)(() => {
     setIsGestureActive(true);
   }, []);
-  const stopPlacementGesture = (0, import_element58.useCallback)(() => {
+  const stopPlacementGesture = (0, import_element59.useCallback)(() => {
     setIsGestureActive(false);
   }, []);
-  const signalKeyboardGesture = (0, import_element58.useCallback)(() => {
+  const signalKeyboardGesture = (0, import_element59.useCallback)(() => {
     if (!isKeyboardGestureActiveRef.current) {
       isKeyboardGestureActiveRef.current = true;
       optionsRef.current?.onGestureStart?.();
@@ -14939,12 +15129,12 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       optionsRef.current?.onGestureEnd?.();
     }, KEYBOARD_INTERACTION_IDLE_MS);
   }, []);
-  (0, import_element58.useEffect)(() => {
+  (0, import_element59.useEffect)(() => {
     return () => {
       clearTimeout(keyboardInteractionTimerRef.current);
     };
   }, []);
-  (0, import_element58.useEffect)(() => {
+  (0, import_element59.useEffect)(() => {
     const controller = new InteractionController({
       getState: () => stateRef.current,
       actions: {
@@ -14990,11 +15180,11 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       controllerRef.current = null;
     };
   }, [startPlacementGesture, stopPlacementGesture]);
-  const onPointerDown = (0, import_element58.useCallback)((e2) => {
+  const onPointerDown = (0, import_element59.useCallback)((e2) => {
     const el = e2.currentTarget;
     controllerRef.current?.handlePointerDown(e2.nativeEvent, el);
   }, []);
-  const onTouchStart = (0, import_element58.useCallback)((e2) => {
+  const onTouchStart = (0, import_element59.useCallback)((e2) => {
     const el = e2.currentTarget;
     const rect = el.getBoundingClientRect();
     controllerRef.current?.handleTouchStart(
@@ -15003,7 +15193,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       el.ownerDocument
     );
   }, []);
-  const onKeyDown = (0, import_element58.useCallback)(
+  const onKeyDown = (0, import_element59.useCallback)(
     (e2) => {
       if (isHandledKeyboardPan(e2.nativeEvent)) {
         setIsKeyboardPanning(true);
@@ -15015,7 +15205,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
     },
     [signalKeyboardGesture]
   );
-  const onWheelNative = (0, import_element58.useCallback)((e2) => {
+  const onWheelNative = (0, import_element59.useCallback)((e2) => {
     controllerRef.current?.handleWheel(e2);
   }, []);
   return {
@@ -15032,18 +15222,23 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
-var import_element59 = __toESM(require_element(), 1);
+var import_element60 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/transform-style.mjs
+var IDENTITY_MATRIX_STYLE = "matrix(1, 0, 0, 1, 0, 0)";
 function computeTransformStyle(state, imageSize) {
-  const translateX = state.pan.x * imageSize.width;
-  const translateY = state.pan.y * imageSize.height;
-  const rad = degreesToRadians(state.rotation);
+  if (!isValidSize(imageSize)) {
+    return IDENTITY_MATRIX_STYLE;
+  }
+  const safeState = sanitizeCropperState(state);
+  const translateX = safeState.pan.x * imageSize.width;
+  const translateY = safeState.pan.y * imageSize.height;
+  const rad = degreesToRadians(safeState.rotation);
   const cos = Math.cos(rad);
   const sin = Math.sin(rad);
-  const sx = state.flip.horizontal ? -1 : 1;
-  const sy = state.flip.vertical ? -1 : 1;
-  const z = state.zoom;
+  const sx = safeState.flip.horizontal ? -1 : 1;
+  const sy = safeState.flip.vertical ? -1 : 1;
+  const z = safeState.zoom;
   const a2 = sx * cos * z;
   const b2 = sy * sin * z;
   const c2 = -sx * sin * z;
@@ -15053,14 +15248,14 @@ function computeTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
 function useTransformStyle(state, imageSize) {
-  return (0, import_element59.useMemo)(
+  return (0, import_element60.useMemo)(
     () => computeTransformStyle(state, imageSize),
     [state, imageSize]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-var import_element60 = __toESM(require_element(), 1);
+var import_element61 = __toESM(require_element(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
 var ARIA_DEBOUNCE_MS = 300;
 function buildFlipAnnouncement(state) {
@@ -15113,15 +15308,15 @@ function buildAnnouncement(state, previousState) {
   return parts.join(", ");
 }
 function useAriaAnnouncer(state) {
-  const [ariaMessage, setAriaMessage] = (0, import_element60.useState)("");
-  const timerRef = (0, import_element60.useRef)();
-  const prevMessageRef = (0, import_element60.useRef)("");
-  const prevStateRef = (0, import_element60.useRef)(null);
-  const latestStateRef = (0, import_element60.useRef)(state);
-  (0, import_element60.useLayoutEffect)(() => {
+  const [ariaMessage, setAriaMessage] = (0, import_element61.useState)("");
+  const timerRef = (0, import_element61.useRef)();
+  const prevMessageRef = (0, import_element61.useRef)("");
+  const prevStateRef = (0, import_element61.useRef)(null);
+  const latestStateRef = (0, import_element61.useRef)(state);
+  (0, import_element61.useLayoutEffect)(() => {
     latestStateRef.current = state;
   }, [state]);
-  (0, import_element60.useEffect)(() => {
+  (0, import_element61.useEffect)(() => {
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       const current = latestStateRef.current;
@@ -15147,12 +15342,12 @@ function useAriaAnnouncer(state) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_element61 = __toESM(require_element(), 1);
+var import_element62 = __toESM(require_element(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/stencil-math.mjs
-var MIN_CROP_SIZE = 0.05;
-function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds) {
+var DEFAULT_MIN_CROP_SIZE = { width: 0.05, height: 0.05 };
+function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
   const dx = imageSize.width > 0 ? (clientX - drag2.startX) / imageSize.width : 0;
   const dy = imageSize.height > 0 ? (clientY - drag2.startY) / imageSize.height : 0;
   const s2 = drag2.startRect;
@@ -15164,24 +15359,24 @@ function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds) {
   if (handle === "n" || handle === "nw" || handle === "ne") {
     edgeTop = Math.max(
       bounds.minY,
-      Math.min(s2.y + dy, edgeBottom - MIN_CROP_SIZE)
+      Math.min(s2.y + dy, edgeBottom - minCropSize.height)
     );
   }
   if (handle === "s" || handle === "sw" || handle === "se") {
     edgeBottom = Math.max(
-      edgeTop + MIN_CROP_SIZE,
+      edgeTop + minCropSize.height,
       Math.min(s2.y + s2.height + dy, bounds.maxY)
     );
   }
   if (handle === "w" || handle === "nw" || handle === "sw") {
     edgeLeft = Math.max(
       bounds.minX,
-      Math.min(s2.x + dx, edgeRight - MIN_CROP_SIZE)
+      Math.min(s2.x + dx, edgeRight - minCropSize.width)
     );
   }
   if (handle === "e" || handle === "ne" || handle === "se") {
     edgeRight = Math.max(
-      edgeLeft + MIN_CROP_SIZE,
+      edgeLeft + minCropSize.width,
       Math.min(s2.x + s2.width + dx, bounds.maxX)
     );
   }
@@ -15192,7 +15387,7 @@ function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds) {
     height: edgeBottom - edgeTop
   };
 }
-function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio) {
+function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio, minCropSize = DEFAULT_MIN_CROP_SIZE) {
   if (normalizedRatio <= 0 || imageSize.width <= 0 || imageSize.height <= 0) {
     return { ...drag2.startRect };
   }
@@ -15208,8 +15403,13 @@ function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, nor
   const draggedY = (handle === "nw" || handle === "ne" ? s2.y : s2.y + s2.height) + dy;
   let distW = (draggedX - anchorX) * dirX;
   let distH = (draggedY - anchorY) * dirY;
-  distW = Math.max(distW, MIN_CROP_SIZE);
-  distH = Math.max(distH, MIN_CROP_SIZE);
+  const minDistW = Math.max(
+    minCropSize.width,
+    minCropSize.height * normalizedRatio
+  );
+  const minDistH = minDistW / normalizedRatio;
+  distW = Math.max(distW, minDistW);
+  distH = Math.max(distH, minDistH);
   const pixelDistW = distW * imageSize.width;
   const pixelDistH = distH * imageSize.height;
   const pixelRatio = normalizedRatio * imageSize.width / imageSize.height;
@@ -15228,13 +15428,13 @@ function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, nor
     distH = maxH;
     distW = distH * normalizedRatio;
   }
-  distW = Math.max(distW, MIN_CROP_SIZE);
-  distH = Math.max(distH, MIN_CROP_SIZE);
+  distW = Math.max(distW, minDistW);
+  distH = Math.max(distH, minDistH);
   const newX = dirX > 0 ? anchorX : anchorX - distW;
   const newY = dirY > 0 ? anchorY : anchorY - distH;
   return { x: newX, y: newY, width: distW, height: distH };
 }
-function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds) {
+function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
   const s2 = drag2.startRect;
   const pixelW = s2.width * imageSize.width;
   const pixelH = s2.height * imageSize.height;
@@ -15244,7 +15444,8 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
       clientX,
       clientY,
       imageSize,
-      bounds
+      bounds,
+      minCropSize
     );
   }
   const normalizedRatio = s2.width / s2.height;
@@ -15256,7 +15457,8 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
       clientY,
       imageSize,
       bounds,
-      normalizedRatio
+      normalizedRatio,
+      minCropSize
     );
   }
   const free = computeFreeResizeRect(
@@ -15264,7 +15466,8 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
     clientX,
     clientY,
     imageSize,
-    bounds
+    bounds,
+    minCropSize
   );
   if (handle === "n" || handle === "s") {
     let newHeight2 = free.height;
@@ -15276,8 +15479,8 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
       newHeight2 = newWidth2 / normalizedRatio;
     }
     const minHeight = Math.max(
-      MIN_CROP_SIZE,
-      MIN_CROP_SIZE / normalizedRatio
+      minCropSize.height,
+      minCropSize.width / normalizedRatio
     );
     if (newHeight2 < minHeight) {
       newHeight2 = minHeight;
@@ -15299,7 +15502,10 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
     newHeight = maxHeight;
     newWidth = newHeight * normalizedRatio;
   }
-  const minWidth = Math.max(MIN_CROP_SIZE, MIN_CROP_SIZE * normalizedRatio);
+  const minWidth = Math.max(
+    minCropSize.width,
+    minCropSize.height * normalizedRatio
+  );
   if (newWidth < minWidth) {
     newWidth = minWidth;
     newHeight = newWidth / normalizedRatio;
@@ -15327,7 +15533,7 @@ var VISUALLY_HIDDEN_STYLE = {
 };
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 var CORNER_POSITIONS = ["nw", "ne", "se", "sw"];
 var ALL_POSITIONS = [
   "nw",
@@ -15371,13 +15577,14 @@ function RectangleStencil({
   freeformCrop = false,
   stencilTransition,
   cropBounds,
-  onEscape
+  onEscape,
+  minCropSize
 }) {
   const boundsMinX = cropBounds?.minX ?? 0;
   const boundsMinY = cropBounds?.minY ?? 0;
   const boundsMaxX = cropBounds?.maxX ?? 1;
   const boundsMaxY = cropBounds?.maxY ?? 1;
-  const bounds = (0, import_element61.useMemo)(
+  const bounds = (0, import_element62.useMemo)(
     () => ({
       minX: boundsMinX,
       minY: boundsMinY,
@@ -15386,18 +15593,18 @@ function RectangleStencil({
     }),
     [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
   );
-  const keyboardSettleTimerRef = (0, import_element61.useRef)();
-  const keyboardResizeActiveRef = (0, import_element61.useRef)(false);
-  const resizeHandleDescriptionId = (0, import_element61.useId)();
+  const keyboardSettleTimerRef = (0, import_element62.useRef)();
+  const keyboardResizeActiveRef = (0, import_element62.useRef)(false);
+  const resizeHandleDescriptionId = (0, import_element62.useId)();
   const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
-  (0, import_element61.useEffect)(() => {
+  (0, import_element62.useEffect)(() => {
     return () => {
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
     };
   }, []);
-  const latestHandlersRef = (0, import_element61.useRef)(null);
-  const normalizedRatio = (0, import_element61.useMemo)(() => {
+  const latestHandlersRef = (0, import_element62.useRef)(null);
+  const normalizedRatio = (0, import_element62.useMemo)(() => {
     if (!hasLockedRatio || imageSize.width === 0) {
       return 0;
     }
@@ -15409,7 +15616,7 @@ function RectangleStencil({
   const top = offsetY + cropRect.y * imageSize.height;
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
-  const handlePointerDown = (0, import_element61.useCallback)(
+  const handlePointerDown = (0, import_element62.useCallback)(
     (handle, event) => {
       if (event.button !== 0) {
         return;
@@ -15480,36 +15687,45 @@ function RectangleStencil({
       el.addEventListener("pointermove", onMove);
       el.addEventListener("pointerup", onEnd);
       el.addEventListener("lostpointercapture", onEnd);
-      onResizeStart?.();
+      onResizeStart?.(handle);
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
     },
     [cropRect, onResizeStart]
   );
-  const computeFreeRect = (0, import_element61.useCallback)(
-    (drag2, clientX, clientY) => computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds),
-    [imageSize, bounds]
+  const computeFreeRect = (0, import_element62.useCallback)(
+    (drag2, clientX, clientY) => computeFreeResizeRect(
+      drag2,
+      clientX,
+      clientY,
+      imageSize,
+      bounds,
+      minCropSize
+    ),
+    [imageSize, bounds, minCropSize]
   );
-  const computeLockedRect = (0, import_element61.useCallback)(
+  const computeLockedRect = (0, import_element62.useCallback)(
     (drag2, clientX, clientY) => computeLockedResizeRect(
       drag2,
       clientX,
       clientY,
       imageSize,
       bounds,
-      normalizedRatio
+      normalizedRatio,
+      minCropSize
     ),
-    [imageSize, bounds, normalizedRatio]
+    [imageSize, bounds, normalizedRatio, minCropSize]
   );
-  const computeShiftLockedRect = (0, import_element61.useCallback)(
+  const computeShiftLockedRect = (0, import_element62.useCallback)(
     (drag2, clientX, clientY) => computeShiftLockedResizeRect(
       drag2,
       clientX,
       clientY,
       imageSize,
-      bounds
+      bounds,
+      minCropSize
     ),
-    [imageSize, bounds]
+    [imageSize, bounds, minCropSize]
   );
   latestHandlersRef.current = {
     hasLockedRatio,
@@ -15519,7 +15735,7 @@ function RectangleStencil({
     onCropChange,
     onResizeEnd
   };
-  const handleKeyDown = (0, import_element61.useCallback)(
+  const handleKeyDown = (0, import_element62.useCallback)(
     (handle, event) => {
       const key = event.key;
       if (key === "Escape") {
@@ -15535,7 +15751,7 @@ function RectangleStencil({
       event.stopPropagation();
       if (!keyboardResizeActiveRef.current) {
         keyboardResizeActiveRef.current = true;
-        onResizeStart?.();
+        onResizeStart?.(handle);
       }
       const scheduleKeyboardResizeEnd = () => {
         clearTimeout(keyboardSettleTimerRef.current);
@@ -15604,7 +15820,7 @@ function RectangleStencil({
     return null;
   }
   const handles = hasLockedRatio ? CORNER_POSITIONS : ALL_POSITIONS;
-  return /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__stencil",
@@ -15616,7 +15832,7 @@ function RectangleStencil({
         transition: stencilTransition
       },
       children: [
-        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
           "div",
           {
             id: resizeHandleDescriptionId,
@@ -15626,7 +15842,7 @@ function RectangleStencil({
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__stencil-rect",
@@ -15638,7 +15854,7 @@ function RectangleStencil({
             }
           }
         ),
-        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
           "button",
           {
             type: "button",
@@ -15657,7 +15873,7 @@ function RectangleStencil({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimming-overlay.mjs
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 function DimmingOverlay({
   cropRect,
   containerSize,
@@ -15674,7 +15890,7 @@ function DimmingOverlay({
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
   const composedTransition = transition ? `${transition}, box-shadow 0.15s ease` : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
     "div",
     {
       className: "wp-media-editor-image-editor__dimming",
@@ -15690,7 +15906,7 @@ function DimmingOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/grid-overlay.mjs
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 function GridOverlay({
   cropRect,
   containerSize,
@@ -15707,7 +15923,7 @@ function GridOverlay({
   const height = cropRect.height * imageSize.height;
   const thirdW = width / 3;
   const thirdH = height / 3;
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__grid",
@@ -15719,28 +15935,28 @@ function GridOverlay({
         height
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH * 2 }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
             style: { left: thirdW }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
@@ -15752,11 +15968,207 @@ function GridOverlay({
   );
 }
 
-// packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
+// packages/media-editor/build-module/image-editor/react/components/overlays/dimensions-overlay.mjs
 var import_element63 = __toESM(require_element(), 1);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var HANDLE_GAP_PX = 12;
+var TRANSLATE_PERCENT = {
+  before: "-100%",
+  center: "-50%",
+  after: "0"
+};
+var GAP_DIRECTION = {
+  before: -1,
+  center: 0,
+  after: 1
+};
+var OPPOSITE_SIDE = {
+  before: "after",
+  center: "center",
+  after: "before"
+};
+function preferredAnchor(handle) {
+  let x2 = "center";
+  if (handle.includes("w")) {
+    x2 = "before";
+  } else if (handle.includes("e")) {
+    x2 = "after";
+  }
+  let y2 = "center";
+  if (handle.includes("n")) {
+    y2 = "before";
+  } else if (handle.includes("s")) {
+    y2 = "after";
+  }
+  return { x: x2, y: y2 };
+}
+function sideStart(side, handlePos, length2) {
+  if (side === "before") {
+    return handlePos - HANDLE_GAP_PX - length2;
+  }
+  if (side === "after") {
+    return handlePos + HANDLE_GAP_PX;
+  }
+  return handlePos - length2 / 2;
+}
+function fittingSide(preferred, handlePos, length2, containerLength) {
+  const fits = (side) => {
+    const start = sideStart(side, handlePos, length2);
+    return start >= 0 && start + length2 <= containerLength;
+  };
+  if (fits(preferred)) {
+    return preferred;
+  }
+  const opposite = OPPOSITE_SIDE[preferred];
+  if (opposite !== preferred && fits(opposite)) {
+    return opposite;
+  }
+  if (preferred !== "center" && fits("center")) {
+    return "center";
+  }
+  const overflow = (side) => {
+    const start = sideStart(side, handlePos, length2);
+    return Math.max(0, -start) + Math.max(0, start + length2 - containerLength);
+  };
+  const candidates = [preferred, opposite, "center"];
+  return candidates.reduce(
+    (best, side) => overflow(side) < overflow(best) ? side : best
+  );
+}
+function DimensionsOverlay({
+  cropRect,
+  containerSize,
+  imageSize,
+  activeHandle,
+  outputWidth,
+  outputHeight
+}) {
+  const tooltipRef = (0, import_element63.useRef)(null);
+  const [tooltipSize, setTooltipSize] = (0, import_element63.useState)(null);
+  (0, import_element63.useLayoutEffect)(() => {
+    if (!tooltipRef.current) {
+      return;
+    }
+    const rect = tooltipRef.current.getBoundingClientRect();
+    setTooltipSize((prev) => {
+      if (prev && prev.width === rect.width && prev.height === rect.height) {
+        return prev;
+      }
+      return { width: rect.width, height: rect.height };
+    });
+  }, [outputWidth, outputHeight]);
+  if (!activeHandle || containerSize.width === 0 || containerSize.height === 0) {
+    return null;
+  }
+  const offsetX = (containerSize.width - imageSize.width) / 2;
+  const offsetY = (containerSize.height - imageSize.height) / 2;
+  const left = offsetX + cropRect.x * imageSize.width;
+  const top = offsetY + cropRect.y * imageSize.height;
+  const width = cropRect.width * imageSize.width;
+  const height = cropRect.height * imageSize.height;
+  let handleX = left + width / 2;
+  if (activeHandle.includes("w")) {
+    handleX = left;
+  } else if (activeHandle.includes("e")) {
+    handleX = left + width;
+  }
+  let handleY = top + height / 2;
+  if (activeHandle.includes("n")) {
+    handleY = top;
+  } else if (activeHandle.includes("s")) {
+    handleY = top + height;
+  }
+  const preferred = preferredAnchor(activeHandle);
+  const anchor = tooltipSize ? {
+    x: fittingSide(
+      preferred.x,
+      handleX,
+      tooltipSize.width,
+      containerSize.width
+    ),
+    y: fittingSide(
+      preferred.y,
+      handleY,
+      tooltipSize.height,
+      containerSize.height
+    )
+  } : preferred;
+  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+    "div",
+    {
+      ref: tooltipRef,
+      className: "wp-media-editor-image-editor__dimensions-tooltip",
+      "data-testid": "cropper-dimensions-tooltip",
+      style: {
+        left: handleX + GAP_DIRECTION[anchor.x] * HANDLE_GAP_PX,
+        top: handleY + GAP_DIRECTION[anchor.y] * HANDLE_GAP_PX,
+        transform: `translate(${TRANSLATE_PERCENT[anchor.x]}, ${TRANSLATE_PERCENT[anchor.y]})`
+      },
+      "aria-hidden": "true",
+      children: `W: ${Math.round(outputWidth)}px H: ${Math.round(
+        outputHeight
+      )}px`
+    }
+  );
+}
+
+// packages/media-editor/build-module/image-editor/core/source-region.mjs
+function getSourceRegion(state, imageSize) {
+  const safeState = sanitizeCropperState(state);
+  if (!isValidSize(imageSize)) {
+    return {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      rotation: safeState.rotation,
+      flip: { ...safeState.flip },
+      zoom: safeState.zoom
+    };
+  }
+  const syntheticContainer = { width: 1e3, height: 1e3 };
+  const camera = createCamera(safeState, syntheticContainer, imageSize);
+  const inv = mat2d_exports.create();
+  mat2d_exports.invert(inv, camera);
+  const baseCamera = createCamera(
+    { ...safeState, pan: { x: 0, y: 0 }, zoom: 1 },
+    syntheticContainer,
+    imageSize
+  );
+  const visibleBounds = getVisibleBounds(baseCamera);
+  const cropRect = safeState.cropRect;
+  const cropCenterScreenX = visibleBounds.left + (cropRect.x + cropRect.width / 2) * visibleBounds.width;
+  const cropCenterScreenY = visibleBounds.top + (cropRect.y + cropRect.height / 2) * visibleBounds.height;
+  const srcCenter = vec2_exports.create();
+  vec2_exports.transformMat2d(
+    srcCenter,
+    [cropCenterScreenX, cropCenterScreenY],
+    inv
+  );
+  const snapRotation = Math.round(safeState.rotation / 90) * 90;
+  const { width: rotW, height: rotH } = getRotatedBBox(
+    imageSize.width,
+    imageSize.height,
+    snapRotation
+  );
+  const sourceW = cropRect.width * rotW / safeState.zoom;
+  const sourceH = cropRect.height * rotH / safeState.zoom;
+  return {
+    x: srcCenter[0] * imageSize.width - sourceW / 2,
+    y: srcCenter[1] * imageSize.height - sourceH / 2,
+    width: sourceW,
+    height: sourceH,
+    rotation: safeState.rotation,
+    flip: { ...safeState.flip },
+    zoom: safeState.zoom
+  };
+}
+
+// packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
+var import_element65 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
-var import_element62 = __toESM(require_element(), 1);
+var import_element64 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/viewport-state.mjs
 var DEFAULT_VIEWPORT_STATE = {
@@ -15780,36 +16192,36 @@ function viewportReducer(state, action) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
 function useViewportState() {
-  const [viewport, dispatch] = (0, import_element62.useReducer)(
+  const [viewport, dispatch] = (0, import_element64.useReducer)(
     viewportReducer,
     DEFAULT_VIEWPORT_STATE
   );
-  const setViewportZoom = (0, import_element62.useCallback)((zoom) => {
+  const setViewportZoom = (0, import_element64.useCallback)((zoom) => {
     dispatch({ type: "SET_VIEWPORT_ZOOM", payload: zoom });
   }, []);
-  const setViewportPan = (0, import_element62.useCallback)((pan) => {
+  const setViewportPan = (0, import_element64.useCallback)((pan) => {
     dispatch({ type: "SET_VIEWPORT_PAN", payload: pan });
   }, []);
-  const resetViewport = (0, import_element62.useCallback)(() => {
+  const resetViewport = (0, import_element64.useCallback)(() => {
     dispatch({ type: "RESET_VIEWPORT" });
   }, []);
-  return (0, import_element62.useMemo)(
+  return (0, import_element64.useMemo)(
     () => ({ viewport, setViewportZoom, setViewportPan, resetViewport }),
     [viewport, setViewportZoom, setViewportPan, resetViewport]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
-var ViewportContext = (0, import_element63.createContext)(null);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+var ViewportContext = (0, import_element65.createContext)(null);
 function ViewportProvider({
   children
 }) {
   const viewportState = useViewportState();
-  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(ViewportContext.Provider, { value: viewportState, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(ViewportContext.Provider, { value: viewportState, children });
 }
 function useViewport() {
-  const context = (0, import_element63.useContext)(ViewportContext);
+  const context = (0, import_element65.useContext)(ViewportContext);
   if (!context) {
     throw new Error(
       "useViewport must be used within a ViewportProvider."
@@ -15819,7 +16231,7 @@ function useViewport() {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 var CROP_RECT_EPSILON = 1e-6;
 function computeInscribedRect(aspectRatio, visualSize) {
   let w2 = 1;
@@ -15846,6 +16258,7 @@ function CropperInner({
   showGrid = false,
   isPlacementActive = false,
   showDimming = true,
+  showDimensions = true,
   minZoom,
   maxZoom,
   aspectRatio,
@@ -15863,40 +16276,45 @@ function CropperInner({
     setViewportPan,
     resetViewport
   } = useViewport();
-  const canvasRef = (0, import_element64.useRef)(null);
-  const cropAreaDescriptionId = (0, import_element64.useId)();
-  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element64.useState)(focusOnMount);
-  const [isFocusVisible, setIsFocusVisible] = (0, import_element64.useState)(false);
-  const [canvasSize, setCanvasSize] = (0, import_element64.useState)({
+  const canvasRef = (0, import_element66.useRef)(null);
+  const cropAreaDescriptionId = (0, import_element66.useId)();
+  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element66.useState)(focusOnMount);
+  const [isFocusVisible, setIsFocusVisible] = (0, import_element66.useState)(false);
+  const [canvasSize, setCanvasSize] = (0, import_element66.useState)({
     width: 0,
     height: 0
   });
-  (0, import_element64.useLayoutEffect)(() => {
+  (0, import_element66.useLayoutEffect)(() => {
     if (focusOnMount) {
       canvasRef.current?.focus({ preventScroll: true });
     }
   }, [focusOnMount]);
-  const handleCropAreaFocus = (0, import_element64.useCallback)(
+  const handleCropAreaFocus = (0, import_element66.useCallback)(
     (event) => {
-      if (event.target === event.currentTarget) {
+      const target = event.target;
+      if (target === event.currentTarget) {
         setIsCropAreaFocused(true);
-        if (event.relatedTarget !== null && event.currentTarget.matches(":focus-visible")) {
-          setIsFocusVisible(true);
-        }
+      }
+      if (event.relatedTarget !== null && target.matches(":focus-visible")) {
+        setIsFocusVisible(true);
       }
     },
     []
   );
-  const handleCropAreaBlur = (0, import_element64.useCallback)(
+  const handleCropAreaBlur = (0, import_element66.useCallback)(
     (event) => {
       if (event.target === event.currentTarget) {
         setIsCropAreaFocused(false);
+      }
+      if (!event.currentTarget.contains(
+        event.relatedTarget
+      )) {
         setIsFocusVisible(false);
       }
     },
     []
   );
-  (0, import_element64.useEffect)(() => {
+  (0, import_element66.useEffect)(() => {
     const element = canvasRef.current;
     if (!element) {
       return;
@@ -15917,13 +16335,13 @@ function CropperInner({
       observer.disconnect();
     };
   }, []);
-  (0, import_element64.useEffect)(() => {
+  (0, import_element66.useEffect)(() => {
     onStateChange?.(state);
   }, [state, onStateChange]);
   const ariaMessage = useAriaAnnouncer(state);
   const naturalWidth = state.image?.naturalWidth ?? 0;
   const naturalHeight = state.image?.naturalHeight ?? 0;
-  const { elementSize, visualSize } = (0, import_element64.useMemo)(
+  const { elementSize, visualSize } = (0, import_element66.useMemo)(
     () => getImageFit(
       canvasSize,
       { width: naturalWidth, height: naturalHeight },
@@ -15931,7 +16349,25 @@ function CropperInner({
     ),
     [canvasSize, naturalWidth, naturalHeight, state.rotation]
   );
-  (0, import_element64.useEffect)(() => {
+  const minCropSize = (0, import_element66.useMemo)(() => {
+    if (naturalWidth <= 0 || naturalHeight <= 0) {
+      return void 0;
+    }
+    const snapRotation = Math.round(state.rotation / 90) * 90;
+    const bbox = getRotatedBBox(
+      naturalWidth,
+      naturalHeight,
+      snapRotation
+    );
+    return {
+      width: Math.min(1, MIN_CROP_PIXELS * state.zoom / bbox.width),
+      height: Math.min(
+        1,
+        MIN_CROP_PIXELS * state.zoom / bbox.height
+      )
+    };
+  }, [naturalWidth, naturalHeight, state.rotation, state.zoom]);
+  (0, import_element66.useEffect)(() => {
     if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
       return;
     }
@@ -15942,8 +16378,8 @@ function CropperInner({
     }
     setCropRect(rect);
   }, [freeformCrop, aspectRatio, visualSize, setCropRect, state.cropRect]);
-  const prevAspectRatioRef = (0, import_element64.useRef)(aspectRatio);
-  (0, import_element64.useEffect)(() => {
+  const prevAspectRatioRef = (0, import_element66.useRef)(aspectRatio);
+  (0, import_element66.useEffect)(() => {
     if (prevAspectRatioRef.current === aspectRatio) {
       return;
     }
@@ -15953,15 +16389,19 @@ function CropperInner({
     }
     setCropRect(computeInscribedRect(aspectRatio, visualSize));
   }, [aspectRatio, freeformCrop, visualSize, setCropRect]);
-  const cropBounds = (0, import_element64.useMemo)(() => {
+  const cropBounds = (0, import_element66.useMemo)(() => {
     if (!state.image || elementSize.width === 0) {
       return void 0;
     }
     return getImageCropBounds(state, elementSize, visualSize);
   }, [state, elementSize, visualSize]);
-  const [isResizing, setIsResizing] = (0, import_element64.useState)(false);
-  const isResizingRef = (0, import_element64.useRef)(false);
-  const isSettlingRef = (0, import_element64.useRef)(false);
+  const effectiveMinZoom = minZoom !== void 0 ? minZoom : getMinZoom(state);
+  const [isResizing, setIsResizing] = (0, import_element66.useState)(false);
+  const isResizingRef = (0, import_element66.useRef)(false);
+  const isSettlingRef = (0, import_element66.useRef)(false);
+  const [activeHandle, setActiveHandle] = (0, import_element66.useState)(
+    null
+  );
   const {
     handlers,
     onWheelNative,
@@ -15969,25 +16409,27 @@ function CropperInner({
     isZooming,
     isPlacementActive: isInteractionPlacementActive
   } = useInteraction(state, controller, canvasSize, visualSize, {
-    minZoom,
+    minZoom: effectiveMinZoom,
     maxZoom,
     onGestureStart,
     onGestureEnd
   });
   const canvasHandlers = {
     ...handlers,
+    onPointerDownCapture: () => {
+      setIsFocusVisible(false);
+    },
+    onKeyDownCapture: (event) => {
+      if (!["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
+        setIsFocusVisible(true);
+      }
+    },
     onPointerDown: (event) => {
       handlers.onPointerDown?.(event);
       setIsFocusVisible(false);
-    },
-    onKeyDown: (event) => {
-      if (event.target === event.currentTarget && !["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
-        setIsFocusVisible(true);
-      }
-      handlers.onKeyDown?.(event);
     }
   };
-  (0, import_element64.useEffect)(() => {
+  (0, import_element66.useEffect)(() => {
     const el = canvasRef.current;
     if (!el) {
       return;
@@ -16007,7 +16449,7 @@ function CropperInner({
     };
   }, [onWheelNative]);
   const transformString = useTransformStyle(state, visualSize);
-  const handleImageLoad = (0, import_element64.useCallback)(
+  const handleImageLoad = (0, import_element66.useCallback)(
     (event) => {
       const img = event.currentTarget;
       const size = {
@@ -16023,7 +16465,7 @@ function CropperInner({
     },
     [src, setImage, onImageLoaded]
   );
-  const handleCropChange = (0, import_element64.useCallback)(
+  const handleCropChange = (0, import_element66.useCallback)(
     (rect) => {
       setCropRect(rect);
       if (isResizingRef.current && visualSize.width > 0 && visualSize.height > 0) {
@@ -16053,31 +16495,46 @@ function CropperInner({
     },
     [setCropRect, setViewportPan, canvasSize, visualSize]
   );
-  const [settling, setSettling] = (0, import_element64.useState)(false);
-  const settleTimerRef = (0, import_element64.useRef)();
-  (0, import_element64.useEffect)(() => {
+  const [settling, setSettling] = (0, import_element66.useState)(false);
+  const settleTimerRef = (0, import_element66.useRef)();
+  (0, import_element66.useEffect)(() => {
     return () => {
       clearTimeout(settleTimerRef.current);
     };
   }, []);
   const isInteractiveGrid = showGrid === "interactive";
   const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
-  const handleEscape = (0, import_element64.useCallback)(() => {
+  const outputSize = (0, import_element66.useMemo)(() => {
+    if (!showDimensions || !activeHandle || !state.image) {
+      return null;
+    }
+    const region = getSourceRegion(state, {
+      width: state.image.naturalWidth,
+      height: state.image.naturalHeight
+    });
+    return { width: region.width, height: region.height };
+  }, [showDimensions, activeHandle, state]);
+  const handleEscape = (0, import_element66.useCallback)(() => {
     setIsFocusVisible(true);
     canvasRef.current?.focus({ preventScroll: true });
   }, []);
-  const handleResizeStart = (0, import_element64.useCallback)(() => {
-    isResizingRef.current = true;
-    setIsResizing(true);
-    clearTimeout(settleTimerRef.current);
-    isSettlingRef.current = false;
-    setSettling(false);
-    resetViewport();
-    onGestureStart?.();
-  }, [onGestureStart, resetViewport]);
-  const handleResizeEnd = (0, import_element64.useCallback)(() => {
+  const handleResizeStart = (0, import_element66.useCallback)(
+    (handle) => {
+      isResizingRef.current = true;
+      setIsResizing(true);
+      setActiveHandle(handle ?? null);
+      clearTimeout(settleTimerRef.current);
+      isSettlingRef.current = false;
+      setSettling(false);
+      resetViewport();
+      onGestureStart?.();
+    },
+    [onGestureStart, resetViewport]
+  );
+  const handleResizeEnd = (0, import_element66.useCallback)(() => {
     isResizingRef.current = false;
     setIsResizing(false);
+    setActiveHandle(null);
     isSettlingRef.current = true;
     setSettling(true);
     resetViewport();
@@ -16096,7 +16553,7 @@ function CropperInner({
     imageTransition = "transform 150ms linear";
   }
   const settleStencilTransition = settling ? "left 200ms ease-out, top 200ms ease-out, width 200ms ease-out, height 200ms ease-out" : void 0;
-  const imageStyle = (0, import_element64.useMemo)(() => {
+  const imageStyle = (0, import_element66.useMemo)(() => {
     if (elementSize.width === 0 || elementSize.height === 0) {
       return {};
     }
@@ -16125,7 +16582,7 @@ function CropperInner({
   } else if (settling) {
     stageStyle = { transition: settleTransition, willChange };
   }
-  const setContainerRef = (0, import_element64.useCallback)(
+  const setContainerRef = (0, import_element66.useCallback)(
     (element) => {
       if (typeof ref === "function") {
         ref(element);
@@ -16135,7 +16592,7 @@ function CropperInner({
     },
     [ref]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
     "div",
     {
       ref: setContainerRef,
@@ -16144,7 +16601,7 @@ function CropperInner({
         isDragging && "wp-media-editor-image-editor--dragging",
         className
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(
         "div",
         {
           ref: canvasRef,
@@ -16153,9 +16610,12 @@ function CropperInner({
             isInteractiveGrid && "wp-media-editor-image-editor__canvas--grid-interactive",
             showInteractiveGrid && "wp-media-editor-image-editor__canvas--show-grid",
             settling && "wp-media-editor-image-editor__canvas--settling",
-            // Show the keyboard focus outline only when the canvas
-            // itself (not a child handle) has keyboard focus.
-            isFocusVisible && isCropAreaFocused && "wp-media-editor-image-editor__canvas--focus-visible"
+            // Marks the cropper as in keyboard-interaction mode.
+            // CSS uses :focus on the canvas to show the stencil
+            // outline and :focus on a handle to show its ring,
+            // so the class applies whenever any cropper element
+            // has keyboard focus.
+            isFocusVisible && "wp-media-editor-image-editor__canvas--focus-visible"
           ),
           tabIndex: 0,
           role: "group",
@@ -16165,7 +16625,7 @@ function CropperInner({
           onBlur: handleCropAreaBlur,
           ...canvasHandlers,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
               "div",
               {
                 id: cropAreaDescriptionId,
@@ -16175,14 +16635,14 @@ function CropperInner({
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(
               "div",
               {
                 className: "wp-media-editor-image-editor__stage",
                 "data-testid": "cropper-stage",
                 style: stageStyle,
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                     "img",
                     {
                       className: "wp-media-editor-image-editor__image",
@@ -16193,7 +16653,7 @@ function CropperInner({
                       draggable: false
                     }
                   ),
-                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                     DimmingOverlay,
                     {
                       cropRect: state.cropRect,
@@ -16202,7 +16662,7 @@ function CropperInner({
                       transition: settleStencilTransition
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                     StencilComponent,
                     {
                       cropRect: state.cropRect,
@@ -16215,21 +16675,33 @@ function CropperInner({
                       aspectRatio,
                       freeformCrop,
                       stencilTransition: settleStencilTransition,
-                      cropBounds
+                      cropBounds,
+                      minCropSize
                     }
                   ),
-                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
                     GridOverlay,
                     {
                       cropRect: state.cropRect,
                       containerSize: canvasSize,
                       imageSize: visualSize
                     }
+                  ),
+                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+                    DimensionsOverlay,
+                    {
+                      cropRect: state.cropRect,
+                      containerSize: canvasSize,
+                      imageSize: visualSize,
+                      activeHandle,
+                      outputWidth: outputSize.width,
+                      outputHeight: outputSize.height
+                    }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
               "div",
               {
                 "aria-live": "polite",
@@ -16245,26 +16717,26 @@ function CropperInner({
     }
   );
 }
-var CropperInnerWithRef = (0, import_element64.forwardRef)(
+var CropperInnerWithRef = (0, import_element66.forwardRef)(
   CropperInner
 );
-var Cropper = (0, import_element64.forwardRef)(
-  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(CropperInnerWithRef, { ...props, ref }) })
+var Cropper = (0, import_element66.forwardRef)(
+  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(CropperInnerWithRef, { ...props, ref }) })
 );
 
 // packages/media-editor/build-module/image-editor/react/components/cropper-provider.mjs
-var import_element65 = __toESM(require_element(), 1);
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var CropperContext = (0, import_element65.createContext)(null);
+var import_element67 = __toESM(require_element(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var CropperContext = (0, import_element67.createContext)(null);
 function CropperProvider({
   initialState,
   children
 }) {
   const cropperReturn = useCropperState(initialState);
-  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(CropperContext.Provider, { value: cropperReturn, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(CropperContext.Provider, { value: cropperReturn, children });
 }
 function useCropper() {
-  const context = (0, import_element65.useContext)(CropperContext);
+  const context = (0, import_element67.useContext)(CropperContext);
   if (!context) {
     throw new Error("useCropper must be used within a CropperProvider.");
   }
@@ -16272,7 +16744,7 @@ function useCropper() {
 }
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCanvas({
   aspectRatio,
   freeformCrop,
@@ -16283,12 +16755,20 @@ function MediaEditorCanvas({
 }) {
   const { media } = useMediaEditorContext();
   const controller = useCropper();
+  const handleGestureStart = (0, import_element68.useCallback)(() => {
+    onGestureStart?.();
+    controller.commitHistory();
+  }, [controller, onGestureStart]);
+  const handleGestureEnd = (0, import_element68.useCallback)(() => {
+    controller.commitHistory();
+    onGestureEnd?.();
+  }, [controller, onGestureEnd]);
   const mediaUrl = media?.source_url;
   const mediaType = getMediaTypeFromMimeType(media?.mime_type);
   if (!mediaUrl || mediaType.type !== "image") {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
     Cropper,
     {
       src: mediaUrl,
@@ -16298,20 +16778,14 @@ function MediaEditorCanvas({
       focusOnMount,
       showGrid: "interactive",
       isPlacementActive,
-      onGestureStart: () => {
-        onGestureStart?.();
-        controller.commitHistory();
-      },
-      onGestureEnd: () => {
-        controller.commitHistory();
-        onGestureEnd?.();
-      }
+      onGestureStart: handleGestureStart,
+      onGestureEnd: handleGestureEnd
     }
   ) });
 }
 
 // packages/media-editor/build-module/components/media-editor-toolbar/index.mjs
-var import_components35 = __toESM(require_components(), 1);
+var import_components36 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 
@@ -16328,10 +16802,10 @@ function useCropGestureHandlers(options = {}) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_element67 = __toESM(require_element(), 1);
+var import_element70 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/components/rotation-ruler/use-ruler-drag.mjs
-var import_element66 = __toESM(require_element(), 1);
+var import_element69 = __toESM(require_element(), 1);
 function pxToValueDelta(deltaPx, pixelsPerStep, step) {
   return -deltaPx / pixelsPerStep * step;
 }
@@ -16358,7 +16832,7 @@ function useRulerDrag(options) {
     disabled: disabled2,
     onPointerDownStart
   } = options;
-  const latestRef = (0, import_element66.useRef)({
+  const latestRef = (0, import_element69.useRef)({
     value,
     startX: 0,
     startValue: 0,
@@ -16368,10 +16842,10 @@ function useRulerDrag(options) {
     capturePointerId: 0,
     windowPointerUp: null
   });
-  (0, import_element66.useEffect)(() => {
+  (0, import_element69.useEffect)(() => {
     latestRef.current.value = value;
   }, [value]);
-  const endDrag = (0, import_element66.useCallback)(() => {
+  const endDrag = (0, import_element69.useCallback)(() => {
     const state = latestRef.current;
     if (!state.dragging) {
       return;
@@ -16392,8 +16866,8 @@ function useRulerDrag(options) {
       state.windowPointerUp = null;
     }
   }, []);
-  (0, import_element66.useEffect)(() => endDrag, [endDrag]);
-  const onPointerDown = (0, import_element66.useCallback)(
+  (0, import_element69.useEffect)(() => endDrag, [endDrag]);
+  const onPointerDown = (0, import_element69.useCallback)(
     (event) => {
       if (disabled2 || event.button !== 0) {
         return;
@@ -16414,7 +16888,7 @@ function useRulerDrag(options) {
     },
     [disabled2, onPointerDownStart, endDrag, step]
   );
-  const onPointerMove = (0, import_element66.useCallback)(
+  const onPointerMove = (0, import_element69.useCallback)(
     (event) => {
       const state = latestRef.current;
       if (!state.dragging) {
@@ -16451,7 +16925,7 @@ function useRulerDrag(options) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 var STRIP_HEIGHT = 32;
 var LABEL_BASELINE_Y = 11;
 var MAJOR_INTERVAL = 15;
@@ -16459,7 +16933,7 @@ var TICK_HEIGHT_MINOR = 4;
 var TICK_HEIGHT_MID = 8;
 var TICK_HEIGHT_MAJOR = 14;
 function useTicks(min2, max2) {
-  return (0, import_element67.useMemo)(() => {
+  return (0, import_element70.useMemo)(() => {
     const out = [];
     for (let v2 = Math.ceil(min2); v2 <= Math.floor(max2); v2 += 1) {
       let kind = "minor";
@@ -16494,8 +16968,8 @@ function RotationRuler(props) {
     id,
     disabled: disabled2 = false
   } = props;
-  const inputRef = (0, import_element67.useRef)(null);
-  const generatedId = (0, import_element67.useId)();
+  const inputRef = (0, import_element70.useRef)(null);
+  const generatedId = (0, import_element70.useId)();
   const inputId = id ?? generatedId;
   const dragHandlers = useRulerDrag({
     value,
@@ -16527,7 +17001,7 @@ function RotationRuler(props) {
   const display = `${formatValue(value)}${unit}`;
   const ticks = useTicks(min2, max2);
   const pxPerUnit = pixelsPerStep / step;
-  const stripStyle = (0, import_element67.useMemo)(() => {
+  const stripStyle = (0, import_element70.useMemo)(() => {
     const offset = -value * pxPerUnit;
     return {
       transform: `translateX(calc(-50% + ${offset}px))`
@@ -16537,7 +17011,7 @@ function RotationRuler(props) {
   const onMajor = Math.abs(value - closestMajor) < 0.01;
   const activeText = onMajor ? `${closestMajor}${unit}` : display;
   const majorTicks = ticks.filter((tick) => tick.kind === "major");
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
     "div",
     {
       className: clsx_default("rotation-ruler", className),
@@ -16545,7 +17019,7 @@ function RotationRuler(props) {
       "data-disabled": disabled2 || void 0,
       ...dragHandlers,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
           "input",
           {
             ref: inputRef,
@@ -16565,7 +17039,7 @@ function RotationRuler(props) {
             onKeyDown: handleKeyDown
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
           "svg",
           {
             className: "rotation-ruler__ticks",
@@ -16575,7 +17049,7 @@ function RotationRuler(props) {
             viewBox: `${min2 * pxPerUnit} 0 ${(max2 - min2) * pxPerUnit} ${STRIP_HEIGHT}`,
             preserveAspectRatio: "xMidYMid meet",
             children: [
-              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                 "line",
                 {
                   x1: tick.value * pxPerUnit,
@@ -16586,7 +17060,7 @@ function RotationRuler(props) {
                 },
                 tick.value
               )),
-              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
                 "text",
                 {
                   x: tick.value * pxPerUnit,
@@ -16603,15 +17077,15 @@ function RotationRuler(props) {
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: activeText }),
-        /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
+        /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: activeText }),
+        /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
       ]
     }
   );
 }
 
 // packages/media-editor/build-module/components/media-editor-toolbar/index.mjs
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorToolbar({
   onReset,
   onPlacementControlInteraction,
@@ -16661,7 +17135,7 @@ function MediaEditorToolbar({
     onPlacementControlInteraction?.();
     setRotation(baseAngle + clamped * visualDir);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
     Stack,
     {
       className: "media-editor-toolbar",
@@ -16671,13 +17145,13 @@ function MediaEditorToolbar({
       gap: "sm",
       wrap: "wrap",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
           "div",
           {
             role: "presentation",
             className: "media-editor-toolbar__rotation-slider",
             ...rotationGestureHandlers,
-            children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
               RotationRuler,
               {
                 label: (0, import_i18n31.__)("Fine rotation"),
@@ -16689,9 +17163,9 @@ function MediaEditorToolbar({
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)("div", { className: "media-editor-toolbar__action-cluster", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-            import_components35.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)("div", { className: "media-editor-toolbar__action-cluster", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+            import_components36.Button,
             {
               size: "compact",
               icon: rotate_left_default,
@@ -16700,8 +17174,8 @@ function MediaEditorToolbar({
               onClick: () => snapRotate90(-1)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-            import_components35.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+            import_components36.Button,
             {
               size: "compact",
               icon: rotate_right_default,
@@ -16710,8 +17184,8 @@ function MediaEditorToolbar({
               onClick: () => snapRotate90(1)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-            import_components35.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+            import_components36.Button,
             {
               size: "compact",
               icon: flip_horizontal_default,
@@ -16724,8 +17198,8 @@ function MediaEditorToolbar({
               })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-            import_components35.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+            import_components36.Button,
             {
               size: "compact",
               icon: flip_vertical_default,
@@ -16738,8 +17212,8 @@ function MediaEditorToolbar({
               })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-            import_components35.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+            import_components36.Button,
             {
               size: "compact",
               icon: undo_default,
@@ -16751,8 +17225,8 @@ function MediaEditorToolbar({
               onClick: handleUndo
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-            import_components35.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+            import_components36.Button,
             {
               size: "compact",
               icon: redo_default,
@@ -16764,8 +17238,8 @@ function MediaEditorToolbar({
               onClick: handleRedo
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-            import_components35.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+            import_components36.Button,
             {
               size: "compact",
               variant: "tertiary",
@@ -16782,60 +17256,38 @@ function MediaEditorToolbar({
 }
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
-var import_components36 = __toESM(require_components(), 1);
+var import_components37 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
-function resolveAspectRatio(value, imageAspectRatio) {
-  const num = parseFloat(value);
-  if (num === 0) {
-    return void 0;
-  }
-  if (num === ORIGINAL_ASPECT_RATIO && imageAspectRatio) {
-    return imageAspectRatio;
-  }
-  if (num > 0) {
-    return num;
-  }
-  return void 0;
-}
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
   freeformCrop,
   onFreeformChange,
   onPlacementControlInteraction,
-  aspectRatioPresets
+  aspectRatioOptions
 }) {
   const { state, setZoom } = useCropper();
   const zoomGestureHandlers = useCropGestureHandlers();
-  const aspectRatioOptions = [
-    ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
-    ...aspectRatioPresets ?? DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value > 0)
-  ];
-  const handleAspectRatioChange = (value) => {
-    onAspectRatioChange(value);
-    if (value === "0" && !freeformCrop) {
-      onFreeformChange(true);
-    }
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(Stack, { direction: "column", gap: "md", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("h2", {}), children: (0, import_i18n32.__)("Crop options") }),
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
-      import_components36.SelectControl,
+  const minZoom = getMinZoom(state);
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(Stack, { direction: "column", gap: "md", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("h2", {}), children: (0, import_i18n32.__)("Crop options") }),
+    /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+      import_components37.SelectControl,
       {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: (0, import_i18n32.__)("Aspect ratio"),
         value: aspectRatioValue,
-        onChange: handleAspectRatioChange,
+        onChange: onAspectRatioChange,
         options: aspectRatioOptions.map((preset) => ({
           label: preset.label,
           value: preset.value.toString()
         }))
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
-      import_components36.ToggleControl,
+    /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+      import_components37.ToggleControl,
       {
         __nextHasNoMarginBottom: true,
         label: (0, import_i18n32.__)("Resize crop area"),
@@ -16844,22 +17296,22 @@ function MediaEditorCropPanel({
         onChange: onFreeformChange
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
-      import_components36.RangeControl,
+    /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+      import_components37.RangeControl,
       {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: (0, import_i18n32.__)("Zoom"),
-        min: MIN_ZOOM,
+        min: minZoom,
         max: MAX_ZOOM,
         step: 0.1,
         value: state.zoom,
         onChange: (value) => {
           onPlacementControlInteraction?.();
-          setZoom(typeof value === "number" ? value : MIN_ZOOM);
+          setZoom(typeof value === "number" ? value : minZoom);
         },
         renderTooltipContent: (value) => {
-          const zoom = typeof value === "number" ? value : MIN_ZOOM;
+          const zoom = typeof value === "number" ? value : minZoom;
           return (0, import_i18n32.sprintf)(
             /* translators: %d: zoom level as a percentage. */
             (0, import_i18n32.__)("%d%%"),
@@ -16871,74 +17323,12 @@ function MediaEditorCropPanel({
   ] });
 }
 
-// packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
-var CROP_TOLERANCE = 0.1;
-function buildModifiers(state, imageSize) {
-  const modifiers = [];
-  if (imageSize.width === 0 || imageSize.height === 0) {
-    return modifiers;
-  }
-  const { cropRect, pan, zoom, flip } = state;
-  const hasFlipH = flip.horizontal;
-  const hasFlipV = flip.vertical;
-  if (hasFlipH || hasFlipV) {
-    modifiers.push({
-      type: "flip",
-      args: { flip: { horizontal: hasFlipH, vertical: hasFlipV } }
-    });
-  }
-  const rawAngle = (state.rotation % 360 + 360) % 360;
-  const singleAxisFlip = hasFlipH !== hasFlipV;
-  const signedAngle2 = singleAxisFlip ? (360 - rawAngle) % 360 : rawAngle;
-  if (signedAngle2 !== 0) {
-    modifiers.push({ type: "rotate", args: { angle: signedAngle2 } });
-  }
-  const snapRotation = Math.round(state.rotation / 90) * 90;
-  const { width: snapW, height: snapH } = getRotatedBBox(
-    imageSize.width,
-    imageSize.height,
-    snapRotation
-  );
-  const { width: fullW, height: fullH } = getRotatedBBox(
-    imageSize.width,
-    imageSize.height,
-    state.rotation
-  );
-  const imgLeft = 0.5 + pan.x - zoom / 2;
-  const imgTop = 0.5 + pan.y - zoom / 2;
-  const snapX = (cropRect.x - imgLeft) / zoom * snapW;
-  const snapY = (cropRect.y - imgTop) / zoom * snapH;
-  const widthPx = cropRect.width / zoom * snapW;
-  const heightPx = cropRect.height / zoom * snapH;
-  const offsetX = (fullW - snapW) / 2;
-  const offsetY = (fullH - snapH) / 2;
-  const fullX = snapX + offsetX;
-  const fullY = snapY + offsetY;
-  const leftPct = fullX / fullW * 100;
-  const topPct = fullY / fullH * 100;
-  const widthPct = widthPx / fullW * 100;
-  const heightPct = heightPx / fullH * 100;
-  const coversFullFrame = leftPct <= CROP_TOLERANCE && topPct <= CROP_TOLERANCE && widthPct >= 100 - CROP_TOLERANCE && heightPct >= 100 - CROP_TOLERANCE;
-  if (!coversFullFrame) {
-    modifiers.push({
-      type: "crop",
-      args: {
-        left: leftPct,
-        top: topPct,
-        width: widthPct,
-        height: heightPct
-      }
-    });
-  }
-  return modifiers;
-}
-
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
-var import_components37 = __toESM(require_components(), 1);
-var import_element68 = __toESM(require_element(), 1);
+var import_components38 = __toESM(require_components(), 1);
+var import_element71 = __toESM(require_element(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
     description: (0, import_i18n33.__)("Undo"),
@@ -17012,13 +17402,13 @@ function KeyCombinationDisplay({
   } else {
     label = charString;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
     "kbd",
     {
       className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
       "aria-label": label,
       children: keys.map(
-        (key, index) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_element68.Fragment, { children: key }, index) : /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+        (key, index) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_element71.Fragment, { children: key }, index) : /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
           "kbd",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
@@ -17033,28 +17423,28 @@ function KeyCombinationDisplay({
 function MediaEditorKeyboardShortcutsModal({
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
-    import_components37.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(
+    import_components38.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
       title: (0, import_i18n33.__)("Keyboard shortcuts"),
       onRequestClose: onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n33.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n33.__)(
           "These shortcuts work when the image editor has focus."
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
           "ul",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-list",
             role: "list",
-            children: SHORTCUTS.map(({ description, keyCombination }, index) => /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
+            children: SHORTCUTS.map(({ description, keyCombination }, index) => /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(
               "li",
               {
                 className: "media-editor-keyboard-shortcuts-modal__shortcut",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
-                  /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
+                  /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
                     KeyCombinationDisplay,
                     {
                       keyCombination
@@ -17071,8 +17461,77 @@ function MediaEditorKeyboardShortcutsModal({
   );
 }
 
-// packages/media-editor/build-module/components/media-editor/index.mjs
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+// packages/media-editor/build-module/components/media-editor/use-save-media-editor.mjs
+var import_api_fetch = __toESM(require_api_fetch(), 1);
+var import_data7 = __toESM(require_data(), 1);
+var import_core_data = __toESM(require_core_data(), 1);
+var import_element72 = __toESM(require_element(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
+var import_notices = __toESM(require_notices(), 1);
+
+// packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
+var CROP_TOLERANCE = 0.1;
+function buildModifiers(state, imageSize) {
+  const modifiers = [];
+  if (imageSize.width === 0 || imageSize.height === 0) {
+    return modifiers;
+  }
+  const { cropRect, pan, zoom, flip } = state;
+  const hasFlipH = flip.horizontal;
+  const hasFlipV = flip.vertical;
+  if (hasFlipH || hasFlipV) {
+    modifiers.push({
+      type: "flip",
+      args: { flip: { horizontal: hasFlipH, vertical: hasFlipV } }
+    });
+  }
+  const rawAngle = (state.rotation % 360 + 360) % 360;
+  const singleAxisFlip = hasFlipH !== hasFlipV;
+  const signedAngle2 = singleAxisFlip ? (360 - rawAngle) % 360 : rawAngle;
+  if (signedAngle2 !== 0) {
+    modifiers.push({ type: "rotate", args: { angle: signedAngle2 } });
+  }
+  const snapRotation = Math.round(state.rotation / 90) * 90;
+  const { width: snapW, height: snapH } = getRotatedBBox(
+    imageSize.width,
+    imageSize.height,
+    snapRotation
+  );
+  const { width: fullW, height: fullH } = getRotatedBBox(
+    imageSize.width,
+    imageSize.height,
+    state.rotation
+  );
+  const imgLeft = 0.5 + pan.x - zoom / 2;
+  const imgTop = 0.5 + pan.y - zoom / 2;
+  const snapX = (cropRect.x - imgLeft) / zoom * snapW;
+  const snapY = (cropRect.y - imgTop) / zoom * snapH;
+  const widthPx = cropRect.width / zoom * snapW;
+  const heightPx = cropRect.height / zoom * snapH;
+  const offsetX = (fullW - snapW) / 2;
+  const offsetY = (fullH - snapH) / 2;
+  const fullX = snapX + offsetX;
+  const fullY = snapY + offsetY;
+  const leftPct = fullX / fullW * 100;
+  const topPct = fullY / fullH * 100;
+  const widthPct = widthPx / fullW * 100;
+  const heightPct = heightPx / fullH * 100;
+  const coversFullFrame = leftPct <= CROP_TOLERANCE && topPct <= CROP_TOLERANCE && widthPct >= 100 - CROP_TOLERANCE && heightPct >= 100 - CROP_TOLERANCE;
+  if (!coversFullFrame) {
+    modifiers.push({
+      type: "crop",
+      args: {
+        left: leftPct,
+        top: topPct,
+        width: widthPct,
+        height: heightPct
+      }
+    });
+  }
+  return modifiers;
+}
+
+// packages/media-editor/build-module/components/media-editor/use-save-media-editor.mjs
 var METADATA_EDIT_KEYS = [
   "title",
   "caption",
@@ -17080,305 +17539,60 @@ var METADATA_EDIT_KEYS = [
   "alt_text",
   "post"
 ];
-var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
-var NOTICES_CONTEXT = "media-editor";
-var PLACEMENT_CONTROL_IDLE_MS = 300;
-var { Tabs } = unlock2(import_components38.privateApis);
-function MediaEditorSidebar({ tabs }) {
-  const tabsContextValue = (0, import_element69.useContext)(Tabs.Context);
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-    complementary_area_default,
-    {
-      scope: "media-editor",
-      identifier: "media-editor/details",
-      title: (0, import_i18n34.__)("Details"),
-      icon: drawer_right_default,
-      isActiveByDefault: true,
-      className: "media-editor__sidebar",
-      panelClassName: "media-editor__sidebar-panel",
-      headerClassName: "media-editor__sidebar-header",
-      header: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-        Tabs.TabPanel,
-        {
-          tabId: tab.id,
-          focusable: false,
-          children: tab.panel
-        },
-        tab.id
-      )) })
-    }
-  );
+var MEDIA_EDITOR_NOTICES_CONTEXT = "media-editor";
+function getCropModifiers(cropper) {
+  if (!cropper.isDirty || !cropper.state.image) {
+    return [];
+  }
+  return buildModifiers(cropper.state, {
+    width: cropper.state.image.naturalWidth,
+    height: cropper.state.image.naturalHeight
+  });
 }
-function HeaderActions({
-  isSaving,
-  hasMedia,
-  hasChanges,
-  isImage,
-  showCloseButton = false,
-  onCancel,
-  onSave
-}) {
-  const saveDisabled = isSaving || !hasMedia || !hasChanges;
-  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element69.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
-    import_components38.Flex,
-    {
-      className: "media-editor__header-actions",
-      justify: "flex-end",
-      expanded: false,
-      gap: 2,
-      children: [
-        isImage && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.Button,
-          {
-            size: "compact",
-            icon: keyboard_default,
-            label: (0, import_i18n34.__)("Keyboard shortcuts"),
-            onClick: () => setIsShortcutsModalOpen(true)
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.Button,
-          {
-            size: "compact",
-            variant: "tertiary",
-            onClick: onCancel,
-            disabled: isSaving,
-            accessibleWhenDisabled: true,
-            children: (0, import_i18n34.__)("Cancel")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.Button,
-          {
-            size: "compact",
-            variant: "primary",
-            onClick: onSave,
-            isBusy: isSaving,
-            disabled: saveDisabled,
-            accessibleWhenDisabled: true,
-            children: (0, import_i18n34.__)("Save")
-          }
-        ),
-        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.Button,
-          {
-            size: "compact",
-            icon: close_default,
-            label: (0, import_i18n34.__)("Close"),
-            onClick: onCancel,
-            disabled: isSaving,
-            accessibleWhenDisabled: true
-          }
-        ),
-        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          MediaEditorKeyboardShortcutsModal,
-          {
-            onClose: () => setIsShortcutsModalOpen(false)
-          }
-        )
-      ]
+function getMetadataEdits(pendingEdits, media) {
+  const metadataEdits = {};
+  for (const key of METADATA_EDIT_KEYS) {
+    if (pendingEdits && key in pendingEdits) {
+      metadataEdits[key] = pendingEdits[key];
     }
-  );
+  }
+  if (!("post" in metadataEdits) && media?.post !== void 0) {
+    metadataEdits.post = media.post;
+  }
+  return metadataEdits;
 }
-function MediaEditorContent({
-  fields = [],
+function useSaveMediaEditor({
+  cropper,
   id,
-  aspectRatioPresets,
-  onClose,
-  onSaved,
-  renderFrame,
-  noticesClassName = "media-editor__snackbar",
-  noticesPortalElement,
-  showCloseButton = false,
-  shouldCloseOnEsc = false
+  isImage,
+  media,
+  onSaved
 }) {
-  const cropper = useCropper();
-  const { media, hasEdits } = (0, import_data7.useSelect)(
-    (select) => {
-      const {
-        getEditedEntityRecord,
-        getEntityRecord,
-        hasEditsForEntityRecord
-      } = select(import_core_data.store);
-      getEntityRecord(
-        "postType",
-        "attachment",
-        id,
-        ATTACHMENT_EMBED_QUERY
-      );
-      return {
-        media: getEditedEntityRecord(
-          "postType",
-          "attachment",
-          id
-        ),
-        hasEdits: hasEditsForEntityRecord(
-          "postType",
-          "attachment",
-          id
-        )
-      };
-    },
-    [id]
-  );
-  const hasChanges = cropper.isDirty || hasEdits;
   const registry = (0, import_data7.useRegistry)();
   const {
     clearEntityRecordEdits,
-    editEntityRecord,
-    invalidateResolution,
     receiveEntityRecords,
     saveEditedEntityRecord
   } = (0, import_data7.useDispatch)(import_core_data.store);
   const { createErrorNotice, removeAllNotices } = (0, import_data7.useDispatch)(import_notices.store);
-  const [isSaving, setIsSaving] = (0, import_element69.useState)(false);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element69.useState)(false);
-  const [isPlacementActive, setIsPlacementActive] = (0, import_element69.useState)(false);
-  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element69.useState)(false);
-  const placementControlTimerRef = (0, import_element69.useRef)();
-  const [aspectRatioValue, setAspectRatioValue] = (0, import_element69.useState)("0");
-  const [freeformCrop, setFreeformCrop] = (0, import_element69.useState)(true);
-  const signalPlacementControlInteraction = (0, import_element69.useCallback)(() => {
-    setIsPlacementActive(true);
-    clearTimeout(placementControlTimerRef.current);
-    placementControlTimerRef.current = setTimeout(() => {
-      setIsPlacementActive(false);
-    }, PLACEMENT_CONTROL_IDLE_MS);
-  }, []);
-  const handleCanvasGestureStart = (0, import_element69.useCallback)(() => {
-    setIsCanvasGestureActive(true);
-  }, []);
-  const handleCanvasGestureEnd = (0, import_element69.useCallback)(() => {
-    setIsCanvasGestureActive(false);
-  }, []);
-  const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
-  (0, import_element69.useEffect)(() => {
-    return () => {
-      clearTimeout(placementControlTimerRef.current);
-    };
-  }, []);
-  (0, import_element69.useEffect)(() => {
-    setAspectRatioValue("0");
-    setFreeformCrop(true);
-    setIsPlacementActive(false);
-    setIsCanvasGestureActive(false);
-  }, [id]);
-  (0, import_element69.useEffect)(() => {
-    invalidateResolution("getEntityRecord", [
-      "postType",
-      "attachment",
-      id,
-      ATTACHMENT_EMBED_QUERY
-    ]);
-  }, [id, invalidateResolution]);
-  const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
-  const isImage = !!media && mediaType === "image";
-  const imageAspectRatio = (0, import_element69.useMemo)(() => {
-    if (!isImage) {
-      return null;
-    }
-    const naturalWidth = Number(media?.media_details?.width);
-    const naturalHeight = Number(media?.media_details?.height);
-    if (Number.isFinite(naturalWidth) && Number.isFinite(naturalHeight) && naturalHeight > 0) {
-      return naturalWidth / naturalHeight;
-    }
-    return null;
-  }, [isImage, media]);
-  const tabs = (0, import_element69.useMemo)(() => {
-    const detailsTab = {
-      id: "details",
-      title: (0, import_i18n34.__)("Details"),
-      panel: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-        Stack,
-        {
-          className: "media-editor__panel",
-          direction: "column",
-          gap: "lg",
-          children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(MediaForm, {})
-        }
-      )
-    };
-    if (!isImage) {
-      return [detailsTab];
-    }
-    return [
-      {
-        id: "crop",
-        title: (0, import_i18n34.__)("Crop"),
-        panel: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          Stack,
-          {
-            className: "media-editor__panel",
-            direction: "column",
-            gap: "lg",
-            children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-              MediaEditorCropPanel,
-              {
-                aspectRatioValue,
-                onAspectRatioChange: setAspectRatioValue,
-                freeformCrop,
-                onFreeformChange: setFreeformCrop,
-                onPlacementControlInteraction: signalPlacementControlInteraction,
-                aspectRatioPresets
-              }
-            )
-          }
-        )
-      },
-      detailsTab
-    ];
-  }, [
-    isImage,
-    aspectRatioValue,
-    freeformCrop,
-    aspectRatioPresets,
-    signalPlacementControlInteraction
-  ]);
-  const handleChange = (updates) => {
-    editEntityRecord("postType", "attachment", id, updates);
-  };
-  const discardAndClose = () => {
-    removeAllNotices("snackbar", NOTICES_CONTEXT);
-    clearEntityRecordEdits("postType", "attachment", id);
-    onClose?.();
-  };
-  const handleRequestClose = () => {
-    if (isSaving) {
-      return;
-    }
-    if (hasChanges) {
-      setIsDiscardDialogOpen(true);
-      return;
-    }
-    discardAndClose();
-  };
-  const handleSave = async () => {
-    removeAllNotices("snackbar", NOTICES_CONTEXT);
+  const [isSaving, setIsSaving] = (0, import_element72.useState)(false);
+  const save = (0, import_element72.useCallback)(async () => {
+    removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
     setIsSaving(true);
     try {
       let saved;
-      const modifiers = cropper.isDirty && cropper.state.image ? buildModifiers(cropper.state, {
-        width: cropper.state.image.naturalWidth,
-        height: cropper.state.image.naturalHeight
-      }) : [];
+      const modifiers = getCropModifiers(cropper);
+      const previous = modifiers.length > 0 && media ? {
+        id,
+        url: media.source_url
+      } : void 0;
       if (modifiers.length > 0) {
         const pendingEdits = registry.select(import_core_data.store).getEntityRecordNonTransientEdits(
           "postType",
           "attachment",
           id
         );
-        const metadataEdits = {};
-        for (const key of METADATA_EDIT_KEYS) {
-          if (pendingEdits && key in pendingEdits) {
-            metadataEdits[key] = pendingEdits[key];
-          }
-        }
-        if (!("post" in metadataEdits) && media?.post !== void 0) {
-          metadataEdits.post = media.post;
-        }
+        const metadataEdits = getMetadataEdits(pendingEdits, media);
         saved = await (0, import_api_fetch.default)({
           path: `/wp/v2/media/${id}/edit`,
           method: "POST",
@@ -17415,7 +17629,8 @@ function MediaEditorContent({
         onSaved?.({
           id: next.id,
           url: next.source_url,
-          media: next
+          media: next,
+          previous
         });
       }
     } catch (error2) {
@@ -17430,11 +17645,390 @@ function MediaEditorContent({
           (0, import_i18n34.__)("Could not save media. %s"),
           message2
         ),
-        { type: "snackbar", context: NOTICES_CONTEXT }
+        {
+          type: "snackbar",
+          context: MEDIA_EDITOR_NOTICES_CONTEXT
+        }
       );
     } finally {
       setIsSaving(false);
     }
+  }, [
+    clearEntityRecordEdits,
+    createErrorNotice,
+    cropper,
+    id,
+    isImage,
+    media,
+    onSaved,
+    receiveEntityRecords,
+    registry,
+    removeAllNotices,
+    saveEditedEntityRecord
+  ]);
+  return { isSaving, save };
+}
+
+// packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
+var import_element73 = __toESM(require_element(), 1);
+var FREE_ASPECT_RATIO_VALUE = "0";
+var DEFAULT_FREEFORM_CROP = true;
+function resolveAspectRatio(value, imageAspectRatio) {
+  const num = parseFloat(value);
+  if (num === 0) {
+    return void 0;
+  }
+  if (num === ORIGINAL_ASPECT_RATIO && imageAspectRatio) {
+    return imageAspectRatio;
+  }
+  if (num > 0) {
+    return num;
+  }
+  return void 0;
+}
+function getAspectRatioOptions(aspectRatioPresets) {
+  return [
+    ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
+    ...aspectRatioPresets ?? DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value > 0)
+  ];
+}
+function getImageAspectRatio(media, isImage) {
+  if (!isImage) {
+    return null;
+  }
+  const naturalWidth = Number(media?.media_details?.width);
+  const naturalHeight = Number(media?.media_details?.height);
+  if (Number.isFinite(naturalWidth) && Number.isFinite(naturalHeight) && naturalHeight > 0) {
+    return naturalWidth / naturalHeight;
+  }
+  return null;
+}
+function useCropOptions({
+  id,
+  isImage,
+  media,
+  aspectRatioPresets
+}) {
+  const [aspectRatioValue, setAspectRatioValueState] = (0, import_element73.useState)(
+    FREE_ASPECT_RATIO_VALUE
+  );
+  const [freeformCrop, setFreeformCrop] = (0, import_element73.useState)(DEFAULT_FREEFORM_CROP);
+  const previousIdRef = (0, import_element73.useRef)(id);
+  const aspectRatioOptions = (0, import_element73.useMemo)(
+    () => getAspectRatioOptions(aspectRatioPresets),
+    [aspectRatioPresets]
+  );
+  const imageAspectRatio = (0, import_element73.useMemo)(
+    () => getImageAspectRatio(media, isImage),
+    [isImage, media]
+  );
+  const resolvedAspectRatio = (0, import_element73.useMemo)(
+    () => resolveAspectRatio(aspectRatioValue, imageAspectRatio),
+    [aspectRatioValue, imageAspectRatio]
+  );
+  const resetCropOptions = (0, import_element73.useCallback)(() => {
+    setAspectRatioValueState(FREE_ASPECT_RATIO_VALUE);
+    setFreeformCrop(DEFAULT_FREEFORM_CROP);
+  }, []);
+  const setAspectRatioValue = (0, import_element73.useCallback)((value) => {
+    setAspectRatioValueState(value);
+    if (value === FREE_ASPECT_RATIO_VALUE) {
+      setFreeformCrop(true);
+    }
+  }, []);
+  (0, import_element73.useEffect)(() => {
+    if (previousIdRef.current === id) {
+      return;
+    }
+    previousIdRef.current = id;
+    resetCropOptions();
+  }, [id, resetCropOptions]);
+  return {
+    aspectRatioValue,
+    setAspectRatioValue,
+    aspectRatioOptions,
+    freeformCrop,
+    setFreeformCrop,
+    resolvedAspectRatio,
+    resetCropOptions
+  };
+}
+
+// packages/media-editor/build-module/components/media-editor/index.mjs
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
+var PLACEMENT_CONTROL_IDLE_MS = 300;
+var { Tabs } = unlock2(import_components39.privateApis);
+function MediaEditorSidebar({ tabs }) {
+  const tabsContextValue = (0, import_element74.useContext)(Tabs.Context);
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+    complementary_area_default,
+    {
+      scope: "media-editor",
+      identifier: "media-editor/details",
+      title: (0, import_i18n35.__)("Details"),
+      icon: drawer_right_default,
+      isActiveByDefault: true,
+      className: "media-editor__sidebar",
+      panelClassName: "media-editor__sidebar-panel",
+      headerClassName: "media-editor__sidebar-header",
+      header: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
+      children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+        Tabs.TabPanel,
+        {
+          tabId: tab.id,
+          focusable: false,
+          children: tab.panel
+        },
+        tab.id
+      )) })
+    }
+  );
+}
+function HeaderActions({
+  isSaving,
+  hasMedia,
+  hasChanges,
+  isImage,
+  showCloseButton = false,
+  onCancel,
+  onSave
+}) {
+  const saveDisabled = isSaving || !hasMedia || !hasChanges;
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element74.useState)(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(
+    import_components39.Flex,
+    {
+      className: "media-editor__header-actions",
+      justify: "flex-end",
+      expanded: false,
+      gap: 2,
+      children: [
+        isImage && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          import_components39.Button,
+          {
+            size: "compact",
+            icon: keyboard_default,
+            label: (0, import_i18n35.__)("Keyboard shortcuts"),
+            onClick: () => setIsShortcutsModalOpen(true)
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
+        /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          import_components39.Button,
+          {
+            size: "compact",
+            variant: "tertiary",
+            onClick: onCancel,
+            disabled: isSaving,
+            accessibleWhenDisabled: true,
+            children: (0, import_i18n35.__)("Cancel")
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          import_components39.Button,
+          {
+            size: "compact",
+            variant: "primary",
+            onClick: onSave,
+            isBusy: isSaving,
+            disabled: saveDisabled,
+            accessibleWhenDisabled: true,
+            children: (0, import_i18n35.__)("Save")
+          }
+        ),
+        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          import_components39.Button,
+          {
+            size: "compact",
+            icon: close_default,
+            label: (0, import_i18n35.__)("Close"),
+            onClick: onCancel,
+            disabled: isSaving,
+            accessibleWhenDisabled: true
+          }
+        ),
+        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          MediaEditorKeyboardShortcutsModal,
+          {
+            onClose: () => setIsShortcutsModalOpen(false)
+          }
+        )
+      ]
+    }
+  );
+}
+function MediaEditorContent({
+  fields = [],
+  id,
+  aspectRatioPresets,
+  onClose,
+  onSaved,
+  renderFrame,
+  noticesClassName = "media-editor__snackbar",
+  noticesPortalElement,
+  showCloseButton = false,
+  shouldCloseOnEsc = false
+}) {
+  const cropper = useCropper();
+  const { media, hasEdits } = (0, import_data8.useSelect)(
+    (select) => {
+      const {
+        getEditedEntityRecord,
+        getEntityRecord,
+        hasEditsForEntityRecord
+      } = select(import_core_data2.store);
+      getEntityRecord(
+        "postType",
+        "attachment",
+        id,
+        ATTACHMENT_EMBED_QUERY
+      );
+      return {
+        media: getEditedEntityRecord(
+          "postType",
+          "attachment",
+          id
+        ),
+        hasEdits: hasEditsForEntityRecord(
+          "postType",
+          "attachment",
+          id
+        )
+      };
+    },
+    [id]
+  );
+  const hasChanges = cropper.isDirty || hasEdits;
+  const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data8.useDispatch)(import_core_data2.store);
+  const { removeAllNotices } = (0, import_data8.useDispatch)(import_notices2.store);
+  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element74.useState)(false);
+  const [isPlacementActive, setIsPlacementActive] = (0, import_element74.useState)(false);
+  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element74.useState)(false);
+  const placementControlTimerRef = (0, import_element74.useRef)();
+  const signalPlacementControlInteraction = (0, import_element74.useCallback)(() => {
+    setIsPlacementActive(true);
+    clearTimeout(placementControlTimerRef.current);
+    placementControlTimerRef.current = setTimeout(() => {
+      setIsPlacementActive(false);
+    }, PLACEMENT_CONTROL_IDLE_MS);
+  }, []);
+  const handleCanvasGestureStart = (0, import_element74.useCallback)(() => {
+    setIsCanvasGestureActive(true);
+  }, []);
+  const handleCanvasGestureEnd = (0, import_element74.useCallback)(() => {
+    setIsCanvasGestureActive(false);
+  }, []);
+  const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
+  (0, import_element74.useEffect)(() => {
+    return () => {
+      clearTimeout(placementControlTimerRef.current);
+    };
+  }, []);
+  (0, import_element74.useEffect)(() => {
+    setIsPlacementActive(false);
+    setIsCanvasGestureActive(false);
+  }, [id]);
+  (0, import_element74.useEffect)(() => {
+    invalidateResolution("getEntityRecord", [
+      "postType",
+      "attachment",
+      id,
+      ATTACHMENT_EMBED_QUERY
+    ]);
+  }, [id, invalidateResolution]);
+  const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
+  const isImage = !!media && mediaType === "image";
+  const {
+    aspectRatioValue,
+    setAspectRatioValue,
+    aspectRatioOptions,
+    freeformCrop,
+    setFreeformCrop,
+    resolvedAspectRatio,
+    resetCropOptions
+  } = useCropOptions({
+    id,
+    isImage,
+    media,
+    aspectRatioPresets
+  });
+  const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
+    cropper,
+    id,
+    isImage,
+    media,
+    onSaved
+  });
+  const tabs = (0, import_element74.useMemo)(() => {
+    const detailsTab = {
+      id: "details",
+      title: (0, import_i18n35.__)("Details"),
+      panel: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+        Stack,
+        {
+          className: "media-editor__panel",
+          direction: "column",
+          gap: "lg",
+          children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(MediaForm, {})
+        }
+      )
+    };
+    if (!isImage) {
+      return [detailsTab];
+    }
+    return [
+      {
+        id: "crop",
+        title: (0, import_i18n35.__)("Crop"),
+        panel: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          Stack,
+          {
+            className: "media-editor__panel",
+            direction: "column",
+            gap: "lg",
+            children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+              MediaEditorCropPanel,
+              {
+                aspectRatioValue,
+                onAspectRatioChange: setAspectRatioValue,
+                freeformCrop,
+                onFreeformChange: setFreeformCrop,
+                onPlacementControlInteraction: signalPlacementControlInteraction,
+                aspectRatioOptions
+              }
+            )
+          }
+        )
+      },
+      detailsTab
+    ];
+  }, [
+    isImage,
+    aspectRatioValue,
+    setAspectRatioValue,
+    freeformCrop,
+    setFreeformCrop,
+    aspectRatioOptions,
+    signalPlacementControlInteraction
+  ]);
+  const handleChange = (updates) => {
+    editEntityRecord("postType", "attachment", id, updates);
+  };
+  const discardAndClose = () => {
+    removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
+    clearEntityRecordEdits("postType", "attachment", id);
+    onClose?.();
+  };
+  const handleRequestClose = () => {
+    if (isSaving) {
+      return;
+    }
+    if (hasChanges) {
+      setIsDiscardDialogOpen(true);
+      return;
+    }
+    discardAndClose();
   };
   const handleKeyDown = (event) => {
     const isUndoShortcut = import_keycodes3.isKeyboardEvent.primary(event, "z");
@@ -17468,83 +18062,77 @@ function MediaEditorContent({
       }
     }
   };
-  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-    import_notices.SnackbarNotices,
+  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+    import_notices2.SnackbarNotices,
     {
       className: noticesClassName,
-      context: NOTICES_CONTEXT
+      context: MEDIA_EDITOR_NOTICES_CONTEXT
     }
   );
-  const children = /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
+  const children = /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(
     MediaEditorProvider,
     {
       value: media ?? void 0,
       onChange: handleChange,
       settings: { fields },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components38.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(import_jsx_runtime99.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(MediaEditorSidebar, { tabs }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components39.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(import_jsx_runtime101.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(MediaEditorSidebar, { tabs }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
             interface_skeleton_default,
             {
               className: "media-editor__skeleton",
               labels: {
-                body: isImage ? (0, import_i18n34.__)("Image editor") : (0, import_i18n34.__)("Media preview"),
-                sidebar: (0, import_i18n34.__)("Media details"),
-                footer: (0, import_i18n34.__)("Image editing tools")
+                body: isImage ? (0, import_i18n35.__)("Image editor") : (0, import_i18n35.__)("Media preview"),
+                sidebar: (0, import_i18n35.__)("Media details"),
+                footer: (0, import_i18n35.__)("Image editing tools")
               },
-              content: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { className: "media-editor__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+              content: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("div", { className: "media-editor__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
                 MediaEditorCanvas,
                 {
-                  aspectRatio: resolveAspectRatio(
-                    aspectRatioValue,
-                    imageAspectRatio
-                  ),
+                  aspectRatio: resolvedAspectRatio,
                   freeformCrop,
                   focusOnMount: true,
                   isPlacementActive,
                   onGestureStart: handleCanvasGestureStart,
                   onGestureEnd: handleCanvasGestureEnd
                 }
-              ) : /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(MediaPreview, {}) }),
-              footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+              ) : /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(MediaPreview, {}) }),
+              footer: isImage ? /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
                 MediaEditorToolbar,
                 {
-                  onReset: () => {
-                    setAspectRatioValue("0");
-                    setFreeformCrop(true);
-                  },
+                  onReset: resetCropOptions,
                   onPlacementControlInteraction: signalPlacementControlInteraction,
                   isUndoRedoDisabled: isCropInteractionActive
                 }
               ) : void 0,
-              sidebar: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+              sidebar: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
             }
           )
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components38.__experimentalConfirmDialog,
+        /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          import_components39.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
-            confirmButtonText: (0, import_i18n34.__)("Discard"),
-            cancelButtonText: (0, import_i18n34.__)("Keep editing"),
+            confirmButtonText: (0, import_i18n35.__)("Discard"),
+            cancelButtonText: (0, import_i18n35.__)("Keep editing"),
             onCancel: () => setIsDiscardDialogOpen(false),
             onConfirm: () => {
               setIsDiscardDialogOpen(false);
               discardAndClose();
             },
-            children: (0, import_i18n34.__)(
+            children: (0, import_i18n35.__)(
               "Are you sure you want to discard your unsaved changes?"
             )
           }
         ),
-        noticesPortalElement ? (0, import_element69.createPortal)(snackbar, noticesPortalElement) : snackbar
+        noticesPortalElement ? (0, import_element74.createPortal)(snackbar, noticesPortalElement) : snackbar
       ]
     }
   );
   return renderFrame({
     children,
-    headerActions: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+    headerActions: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
       HeaderActions,
       {
         isSaving,
@@ -17553,7 +18141,7 @@ function MediaEditorContent({
         isImage,
         showCloseButton,
         onCancel: handleRequestClose,
-        onSave: handleSave
+        onSave: saveMediaEditor
       }
     ),
     onRequestClose: handleRequestClose,
@@ -17565,17 +18153,17 @@ function MediaEditorContent({
   });
 }
 function MediaEditor(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(CropperProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(MediaEditorContent, { ...props }) }, props.id);
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(CropperProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(MediaEditorContent, { ...props }) }, props.id);
 }
 var media_editor_default = MediaEditor;
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorModal({
   fields = [],
   aspectRatioPresets
 }) {
-  const { isModalOpen, id, onUpdate } = (0, import_data8.useSelect)((select) => {
+  const { isModalOpen, id, onUpdate } = (0, import_data9.useSelect)((select) => {
     const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2 } = select(store);
     return {
       isModalOpen: isOpen2(),
@@ -17583,12 +18171,16 @@ function MediaEditorModal({
       onUpdate: getOnUpdate2()
     };
   }, []);
-  const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data8.useDispatch)(store);
+  const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data9.useDispatch)(store);
+  const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices3.store);
   if (!isModalOpen || !id) {
     return null;
   }
   const portalElement = typeof document === "undefined" ? null : document.body;
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+  const stopKeyDownPropagation = (event) => {
+    event.stopPropagation();
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     media_editor_default,
     {
       id,
@@ -17599,7 +18191,7 @@ function MediaEditorModal({
       noticesClassName: "media-editor-modal__snackbar",
       noticesPortalElement: portalElement,
       onClose: closeMediaEditorModal2,
-      onSaved: ({ id: savedId, url }) => {
+      onSaved: ({ id: savedId, url, previous }) => {
         if (savedId && onUpdate) {
           const update2 = {
             id: savedId,
@@ -17608,6 +18200,22 @@ function MediaEditorModal({
           onUpdate(update2);
         }
         closeMediaEditorModal2();
+        if (previous && savedId !== previous.id && onUpdate) {
+          createSuccessNotice((0, import_i18n36.__)("Image edited."), {
+            type: "snackbar",
+            actions: [
+              {
+                label: (0, import_i18n36.__)("Undo"),
+                onClick: () => {
+                  onUpdate({
+                    id: previous.id,
+                    url: previous.url
+                  });
+                }
+              }
+            ]
+          });
+        }
       },
       renderFrame: ({
         children,
@@ -17615,18 +18223,25 @@ function MediaEditorModal({
         onRequestClose,
         onKeyDown,
         shouldCloseOnClickOutside
-      }) => /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-        import_components39.Modal,
+      }) => /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+        import_keyboard_shortcuts.ShortcutProvider,
         {
-          className: "media-editor-modal",
-          title: (0, import_i18n35.__)("Edit media"),
-          size: "fill",
-          isDismissible: false,
-          shouldCloseOnClickOutside,
-          onKeyDown,
-          onRequestClose,
-          headerActions,
-          children
+          className: "media-editor-modal__shortcut-scope",
+          onKeyDown: stopKeyDownPropagation,
+          children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+            import_components40.Modal,
+            {
+              className: "media-editor-modal",
+              title: (0, import_i18n36.__)("Edit media"),
+              size: "fill",
+              isDismissible: false,
+              shouldCloseOnClickOutside,
+              onKeyDown,
+              onRequestClose,
+              headerActions,
+              children
+            }
+          )
         }
       )
     }
@@ -17652,10 +18267,10 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis4.__dangerousOptIn
 );
 
 // routes/media-editor/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='36e93c9e8a']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='88622b0a98']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "36e93c9e8a");
-  style.appendChild(document.createTextNode('.media-editor-preview{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:32px;position:relative}.media-editor-preview__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-preview--loading{height:100%;width:100%}.media-editor-preview--image img{height:auto;max-height:100%;max-width:100%;object-fit:contain;opacity:0;width:auto}@keyframes __wp-base-styles-fade-in{0%{opacity:0}to{opacity:1}}@media not (prefers-reduced-motion){.media-editor-preview--image img.loaded{animation:__wp-base-styles-fade-in .08s linear 0s;animation-fill-mode:forwards}}.media-editor-preview--video video{height:auto;max-height:100%;max-width:100%;object-fit:contain;width:auto}.media-editor-preview--audio audio{max-width:100%}.media-editor-preview--file{text-align:center}.media-editor-preview__file-info{background:#f0f0f0;border-radius:2px;padding:24px}.media-editor-preview__file-name{font-weight:600;margin-bottom:8px}.media-editor-preview__mime-type{color:#757575;font-size:.9em;margin-bottom:16px}.media-editor-preview__download-link{display:inline-block;margin-top:8px}.media-editor-preview--empty,.media-editor-preview--error{color:#757575;text-align:center}.media-editor-preview__url{color:#949494;font-size:.9em;margin-top:8px;word-break:break-all}.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;-webkit-user-select:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:22px;position:absolute}.wp-media-editor-image-editor__canvas:focus{outline:none}.wp-media-editor-image-editor__stage{inset:0;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid{opacity:0;transition:none}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute;transition:border-color .15s ease,box-shadow .15s ease}.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__stencil-rect{border-color:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));box-shadow:0 0 0 1px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__handle:focus-visible{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:#0000;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}.media-editor{display:flex;flex:1;flex-direction:column;height:100%;min-height:0}.media-editor .media-editor__loading{align-items:center;display:flex;height:100%;justify-content:center}.media-editor .interface-interface-skeleton{bottom:auto;flex:1;flex-direction:column;height:100%;left:auto;max-height:none;position:relative;right:auto;top:auto}.media-editor .interface-interface-skeleton__editor{flex:1;min-width:0}.media-editor .interface-interface-skeleton__footer{display:flex;position:relative}.media-editor .interface-interface-skeleton.has-footer .interface-interface-skeleton__body{padding-bottom:0}.media-editor .media-editor__canvas{align-items:center;background:#f0f0f0;display:flex;height:100%;justify-content:center;overflow:auto}.media-editor .media-editor__canvas .media-editor-preview{height:100%}.media-editor .media-editor__canvas img,.media-editor .media-editor__canvas video{max-height:100%;max-width:100%;object-fit:contain}.media-editor .media-editor__sidebar{box-sizing:border-box}.media-editor .media-editor__sidebar *,.media-editor .media-editor__sidebar :after,.media-editor .media-editor__sidebar :before{box-sizing:inherit}.media-editor .media-editor__panel{padding:16px}.media-editor .components-panel__header.media-editor__sidebar-header{padding-left:0;padding-right:8px}.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{padding:0}@media (min-width:782px){.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{display:flex}}.media-editor__snackbar{bottom:24px;box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal.components-modal__frame .components-modal__content{display:flex;flex-direction:column;margin-bottom:0;min-height:0;padding:0}.media-editor-modal.components-modal__frame .components-modal__children-container{display:flex;flex:1;flex-direction:column;min-height:0}.media-editor-modal,.media-editor-modal__snackbar{display:flex;flex-direction:column}.media-editor-modal__snackbar{bottom:24px;box-sizing:border-box;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor-modal__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal__snackbar{z-index:1000001}.media-editor-canvas{height:100%;position:relative;width:100%}.media-editor-toolbar{padding:8px 16px;width:100%}.media-editor-toolbar__rotation-slider{flex:1 1 280px;max-width:360px;min-width:0}.media-editor-toolbar__action-cluster{align-items:center;display:flex;flex-wrap:nowrap;gap:8px}@media (min-width:782px){.media-editor-toolbar__action-cluster{border-left:1px solid #ddd;padding-left:12px}}@media (max-width:781px){.media-editor-toolbar__rotation-slider{flex-basis:100%;max-width:none}.media-editor-toolbar__action-cluster{flex-basis:100%;justify-content:center}}.media-editor-keyboard-shortcuts-modal{min-width:280px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__note{color:#757575;font-size:13px;margin:0 0 16px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-list{list-style:none;margin:0;padding:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut{align-items:baseline;border-top:1px solid #ddd;display:flex;margin-bottom:0;padding:.6rem 0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut:last-child{border-bottom:1px solid #ddd}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-description{flex:1;margin:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term{background:none;font-weight:600;margin:0 0 0 1rem;padding:0;text-align:right}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key{border-radius:8%;margin:0 .2rem;padding:.25rem .5rem}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child{margin:0 0 0 .2rem}.rotation-ruler{box-sizing:border-box;color:#1e1e1e;container-type:inline-size;cursor:ew-resize;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:32px;min-width:180px;padding:0 8px;position:relative;touch-action:none;-webkit-user-select:none;user-select:none}.rotation-ruler[data-disabled]{cursor:default;opacity:.5;pointer-events:none}.rotation-ruler:has(.rotation-ruler__input:focus-visible){border-radius:4px;outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:2px}.rotation-ruler__input{clip:rect(0 0 0 0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.rotation-ruler__pointer{border-bottom:9px solid var(--wp-admin-theme-color,#3858e9);border-left:6px solid #0000;border-right:6px solid #0000;bottom:0;height:0;left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);width:0}.rotation-ruler__strip{inset:0;mask-image:linear-gradient(90deg,#0000 0,#000 8px,#000 calc(100% - 8px),#0000);-webkit-mask-image:linear-gradient(90deg,#0000 0,#000 8px,#000 calc(100% - 8px),#0000);overflow:hidden;position:absolute}.rotation-ruler__ticks{display:block;left:50%;overflow:visible;position:absolute;top:0}.rotation-ruler__tick{stroke:currentColor;stroke-width:1}.rotation-ruler__tick--minor{opacity:.35}.rotation-ruler__tick--mid{opacity:.6}.rotation-ruler__tick--major{opacity:1}.rotation-ruler__label{fill:currentColor;font-size:10px;font-weight:400;opacity:.45}.rotation-ruler__active-label{background:linear-gradient(90deg,#0000 0,#fff 12px,#fff calc(100% - 12px),#0000);color:#1e1e1e;font-size:12px;font-weight:600;height:14px;left:50%;line-height:14px;padding:0 12px;pointer-events:none;position:absolute;top:0;transform:translateX(-50%)}@container (max-width: 220px){.rotation-ruler__tick--minor{opacity:0}}@media (prefers-reduced-motion:reduce){.rotation-ruler__ticks{transition:none}}.media-editor-route__content{display:flex;flex:1;min-height:0;overflow:hidden}'));
+  style.setAttribute("data-wp-hash", "88622b0a98");
+  style.appendChild(document.createTextNode('.media-editor-preview{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:32px;position:relative}.media-editor-preview__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-preview--loading{height:100%;width:100%}.media-editor-preview--image img{height:auto;max-height:100%;max-width:100%;object-fit:contain;opacity:0;width:auto}@keyframes __wp-base-styles-fade-in{0%{opacity:0}to{opacity:1}}@media not (prefers-reduced-motion){.media-editor-preview--image img.loaded{animation:__wp-base-styles-fade-in .08s linear 0s;animation-fill-mode:forwards}}.media-editor-preview--video video{height:auto;max-height:100%;max-width:100%;object-fit:contain;width:auto}.media-editor-preview--audio audio{max-width:100%}.media-editor-preview--file{text-align:center}.media-editor-preview__file-info{background:#f0f0f0;border-radius:2px;padding:24px}.media-editor-preview__file-name{font-weight:600;margin-bottom:8px}.media-editor-preview__mime-type{color:#757575;font-size:.9em;margin-bottom:16px}.media-editor-preview__download-link{display:inline-block;margin-top:8px}.media-editor-preview--empty,.media-editor-preview--error{color:#757575;text-align:center}.media-editor-preview__url{color:#949494;font-size:.9em;margin-top:8px;word-break:break-all}.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;-webkit-user-select:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:22px;position:absolute}.wp-media-editor-image-editor__canvas:focus{outline:none}.wp-media-editor-image-editor__stage{inset:0;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid{opacity:0;transition:none}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__dimensions-tooltip{background:#fff;box-shadow:0 0 0 1px #0000000f,0 1px 2px #00000014;color:#1e1e1e;font-size:11px;font-variant-numeric:tabular-nums;line-height:1.4;padding:2px 6px;pointer-events:none;position:absolute;white-space:nowrap;z-index:2}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute;transition:border-color .15s ease,box-shadow .15s ease}.wp-media-editor-image-editor__canvas--focus-visible:focus .wp-media-editor-image-editor__stencil-rect{border-color:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));box-shadow:0 0 0 1px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__handle:focus{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:#0000;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}.media-editor{display:flex;flex:1;flex-direction:column;height:100%;min-height:0}.media-editor .media-editor__loading{align-items:center;display:flex;height:100%;justify-content:center}.media-editor .interface-interface-skeleton{bottom:auto;flex:1;flex-direction:column;height:100%;left:auto;max-height:none;position:relative;right:auto;top:auto}.media-editor .interface-interface-skeleton__editor{flex:1;min-width:0}.media-editor .interface-interface-skeleton__footer{display:flex;position:relative}.media-editor .interface-interface-skeleton.has-footer .interface-interface-skeleton__body{padding-bottom:0}.media-editor .media-editor__canvas{align-items:center;background:#f0f0f0;display:flex;height:100%;justify-content:center;overflow:auto}.media-editor .media-editor__canvas .media-editor-preview{height:100%}.media-editor .media-editor__canvas img,.media-editor .media-editor__canvas video{max-height:100%;max-width:100%;object-fit:contain}.media-editor .media-editor__sidebar{box-sizing:border-box}.media-editor .media-editor__sidebar *,.media-editor .media-editor__sidebar :after,.media-editor .media-editor__sidebar :before{box-sizing:inherit}.media-editor .media-editor__panel{padding:16px}.media-editor .components-panel__header.media-editor__sidebar-header{padding-left:0;padding-right:8px}.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{padding:0}@media (min-width:782px){.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{display:flex}}.media-editor__snackbar{bottom:24px;box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal.components-modal__frame .components-modal__content{display:flex;flex-direction:column;margin-bottom:0;min-height:0;padding:0}.media-editor-modal.components-modal__frame .components-modal__children-container{display:flex;flex:1;flex-direction:column;min-height:0}.media-editor-modal,.media-editor-modal__snackbar{display:flex;flex-direction:column}.media-editor-modal__snackbar{bottom:24px;box-sizing:border-box;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor-modal__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal__snackbar{z-index:1000001}.media-editor-canvas{height:100%;position:relative;width:100%}.media-editor-toolbar{padding:8px 16px;width:100%}.media-editor-toolbar__rotation-slider{flex:1 1 280px;max-width:360px;min-width:0}.media-editor-toolbar__action-cluster{align-items:center;display:flex;flex-wrap:nowrap;gap:8px}@media (min-width:782px){.media-editor-toolbar__action-cluster{border-left:1px solid #ddd;padding-left:12px}}@media (max-width:781px){.media-editor-toolbar__rotation-slider{flex-basis:100%;max-width:none}.media-editor-toolbar__action-cluster{flex-basis:100%;justify-content:center}}.media-editor-keyboard-shortcuts-modal{min-width:280px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__note{color:#757575;font-size:13px;margin:0 0 16px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-list{list-style:none;margin:0;padding:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut{align-items:baseline;border-top:1px solid #ddd;display:flex;margin-bottom:0;padding:.6rem 0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut:last-child{border-bottom:1px solid #ddd}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-description{flex:1;margin:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term{background:none;font-weight:600;margin:0 0 0 1rem;padding:0;text-align:right}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key{border-radius:8%;margin:0 .2rem;padding:.25rem .5rem}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child{margin:0 0 0 .2rem}.rotation-ruler{box-sizing:border-box;color:#1e1e1e;container-type:inline-size;cursor:ew-resize;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:32px;min-width:180px;padding:0 8px;position:relative;touch-action:none;-webkit-user-select:none;user-select:none}.rotation-ruler[data-disabled]{cursor:default;opacity:.5;pointer-events:none}.rotation-ruler:has(.rotation-ruler__input:focus-visible){border-radius:4px;outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:2px}.rotation-ruler__input{clip:rect(0 0 0 0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.rotation-ruler__pointer{border-bottom:9px solid var(--wp-admin-theme-color,#3858e9);border-left:6px solid #0000;border-right:6px solid #0000;bottom:0;height:0;left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);width:0}.rotation-ruler__strip{inset:0;mask-image:linear-gradient(90deg,#0000 0,#000 8px,#000 calc(100% - 8px),#0000);-webkit-mask-image:linear-gradient(90deg,#0000 0,#000 8px,#000 calc(100% - 8px),#0000);overflow:hidden;position:absolute}.rotation-ruler__ticks{display:block;left:50%;overflow:visible;position:absolute;top:0}.rotation-ruler__tick{stroke:currentColor;stroke-width:1}.rotation-ruler__tick--minor{opacity:.35}.rotation-ruler__tick--mid{opacity:.6}.rotation-ruler__tick--major{opacity:1}.rotation-ruler__label{fill:currentColor;font-size:10px;font-weight:400;opacity:.45}.rotation-ruler__active-label{background:linear-gradient(90deg,#0000 0,#fff 12px,#fff calc(100% - 12px),#0000);color:#1e1e1e;font-size:12px;font-weight:600;height:14px;left:50%;line-height:14px;padding:0 12px;pointer-events:none;position:absolute;top:0;transform:translateX(-50%)}@container (max-width: 220px){.rotation-ruler__tick--minor{opacity:0}}@media (prefers-reduced-motion:reduce){.rotation-ruler__ticks{transition:none}}.media-editor-route__content{display:flex;flex:1;min-height:0;overflow:hidden}'));
   document.head.appendChild(style);
 }
 
@@ -17670,7 +18285,7 @@ function isMediaEditorAdminPage() {
 }
 function getMediaTitle(media) {
   const title = typeof media?.title === "string" ? media.title : media?.title?.rendered || media?.title?.raw;
-  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n36.__)("Edit media");
+  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n37.__)("Edit media");
 }
 function MediaEditorRoute() {
   const { id } = useParams({ from: "/media-editor/$id" });
@@ -17678,8 +18293,8 @@ function MediaEditorRoute() {
   const navigate = useNavigate();
   const fields = usePostFields({ postType: "attachment" });
   const isStandaloneAdminPage = isMediaEditorAdminPage();
-  const media = (0, import_data9.useSelect)(
-    (select) => select(import_core_data2.store).getEditedEntityRecord(
+  const media = (0, import_data10.useSelect)(
+    (select) => select(import_core_data3.store).getEditedEntityRecord(
       "postType",
       "attachment",
       attachmentId
@@ -17719,7 +18334,7 @@ function MediaEditorRoute() {
             {
               items: isStandaloneAdminPage ? [{ label: title }] : [
                 {
-                  label: (0, import_i18n36.__)("Media"),
+                  label: (0, import_i18n37.__)("Media"),
                   to: MEDIA_LIST_PATH
                 },
                 { label: title }

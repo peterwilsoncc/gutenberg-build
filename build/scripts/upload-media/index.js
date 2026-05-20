@@ -1971,19 +1971,6 @@ var wp;
       );
       const isHeic = HEIC_MIME_TYPES.includes(file.type);
       if (isImage && isVipsSupported) {
-        const { bigImageSizeThreshold } = settings;
-        if (bigImageSizeThreshold) {
-          operations.push([
-            OperationType.ResizeCrop,
-            {
-              resize: {
-                width: bigImageSizeThreshold,
-                height: bigImageSizeThreshold
-              },
-              isThresholdResize: true
-            }
-          ]);
-        }
         operations.push(
           OperationType.Upload,
           OperationType.ThumbnailGeneration,
@@ -2409,14 +2396,21 @@ var wp;
       }
       const attachment = item.attachment;
       const { mediaFinalize } = select2.getSettings();
+      const updates = {};
       if (attachment?.id && mediaFinalize) {
         try {
-          await mediaFinalize(attachment.id, item.subSizes || []);
+          const updatedAttachment = await mediaFinalize(
+            attachment.id,
+            item.subSizes || []
+          );
+          if (updatedAttachment) {
+            updates.attachment = updatedAttachment;
+          }
         } catch (error) {
           console.warn("Media finalization failed:", error);
         }
       }
-      dispatch.finishOperation(id, {});
+      dispatch.finishOperation(id, updates);
     };
   }
   function revokeBlobUrls(id) {
@@ -2523,4 +2517,5 @@ var wp;
   var provider_default = MediaUploadProvider;
   return __toCommonJS(index_exports);
 })();
+if(wp.uploadMedia&&typeof wp.uploadMedia==='object'){wp.uploadMedia=Object.assign({},wp.uploadMedia);}
 //# sourceMappingURL=index.js.map
