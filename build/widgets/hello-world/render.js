@@ -741,6 +741,94 @@ var Stack = (0, import_element2.forwardRef)(function Stack2({ direction, gap, al
   return element;
 });
 
+// packages/style-runtime/src/index.ts
+var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
+function getRuntime3() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument3(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash3(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE3}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE3) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle3(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime3();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash3(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE3, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument3(targetDocument) {
+  const runtime = getRuntime3();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle3(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle3(hash, css) {
+  const runtime = getRuntime3();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle3(targetDocument, hash, css);
+  }
+}
+
+// widgets/hello-world/style.module.css
+if (typeof process === "undefined" || true) {
+  registerStyle3("e03e80d16c", "._6e9c47f7f67ffa0d__root{background-color:var(--wpds-color-bg-surface-brand,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 9%,#fff));color:var(--wpds-color-fg-interactive-brand,var(--wp-admin-theme-color,#3858e9));height:100%;padding:var(--wpds-dimension-padding-2xl,24px)}");
+}
+var style_default3 = { "root": "_6e9c47f7f67ffa0d__root" };
+
 // widgets/hello-world/render.tsx
 function HelloWorld() {
   return /* @__PURE__ */ React.createElement(
@@ -748,12 +836,7 @@ function HelloWorld() {
     {
       align: "center",
       justify: "center",
-      style: {
-        height: "100%",
-        padding: "var(--wpds-dimension-padding-2xl)",
-        backgroundColor: "var(--wpds-color-bg-surface-brand)",
-        color: "var(--wpds-color-fg-interactive-brand)"
-      }
+      className: clsx_default(style_default3.root)
     },
     /* @__PURE__ */ React.createElement(Text, { variant: "heading-2xl" }, "Hello World")
   );
