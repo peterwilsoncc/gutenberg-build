@@ -34968,7 +34968,15 @@ If there's a particular need for this, please submit a feature request at https:
       settings.formats.datetimeAbbreviated,
       (0, import_date15.getDate)(value)
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_components79.Tooltip, { text: fullDatetime, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("time", { dateTime: value, children: dateOnly }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_components79.Tooltip, { text: fullDatetime, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
+      "time",
+      {
+        dateTime: value,
+        "aria-label": fullDatetime,
+        tabIndex: -1,
+        children: dateOnly
+      }
+    ) });
   }
 
   // packages/media-editor/build-module/components/media-form/index.mjs
