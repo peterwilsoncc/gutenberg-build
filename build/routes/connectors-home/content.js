@@ -9021,7 +9021,7 @@ function registerStyle5(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle5("3797de378a", "._11fc52b637ff8a7e__slot{isolation:isolate;left:0;position:fixed;top:0;z-index:1000000003}");
+  registerStyle5("45eb1fe20f", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui-utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}");
 }
 var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
 var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
