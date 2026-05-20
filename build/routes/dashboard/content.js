@@ -41110,7 +41110,9 @@ var WidgetChrome = (0, import_element164.forwardRef)(
     if (!widgetType) {
       return null;
     }
-    const isFullBleed = widgetType.presentation === "full-bleed";
+    const { presentation } = widgetType;
+    const isHeaderHidden = presentation === "full-bleed";
+    const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
     const header = /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Header8, { titleId, widgetType });
     const body = /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(import_element164.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(WidgetRender, { widget, widgetType }) }) });
     return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
@@ -41122,8 +41124,8 @@ var WidgetChrome = (0, import_element164.forwardRef)(
         "aria-labelledby": widgetType.title ? titleId : void 0,
         ...editMode ? { inert: "" } : {},
         children: [
-          isFullBleed ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(VisuallyHidden, { children: header }) : header,
-          /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: isFullBleed ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+          isHeaderHidden ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(VisuallyHidden, { children: header }) : header,
+          /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: isBodyBleeding ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
             card_exports.FullBleed,
             {
               className: widget_chrome_default.widgetChromeContentFullBleed,
