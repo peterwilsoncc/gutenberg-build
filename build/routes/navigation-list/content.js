@@ -4377,7 +4377,7 @@ var GridItem = (0, import_element18.forwardRef)(
               isCompact: true
             }
           ) }),
-          showTitle && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "dataviews-view-grid__title-actions", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "dataviews-view-grid__title", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
             ItemClickWrapper,
             {
               item,
@@ -6263,14 +6263,6 @@ function TableRow2({
       "aria-setsize": paginationInfo.totalItems || void 0,
       "aria-posinset": posinset,
       role: infiniteScrollEnabled ? "article" : "option",
-      onMouseDown: (event) => {
-        if (event.button !== 0) {
-          return;
-        }
-        event.currentTarget.parentElement?.focus({
-          preventScroll: true
-        });
-      },
       onClick: () => {
         if (isSelected2) {
           onChangeSelection(

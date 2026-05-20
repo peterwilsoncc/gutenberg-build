@@ -41,7 +41,6 @@ function gutenberg_register_widget_types() {
 			array(
 				'render_module' => $widget['render_module'] ?? null,
 				'widget_module' => $widget['widget_module'] ?? null,
-				'presentation'  => $widget['presentation'] ?? null,
 			)
 		);
 	}

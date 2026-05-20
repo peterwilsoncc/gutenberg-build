@@ -1996,5 +1996,4 @@ var wp;
   );
   return __toCommonJS(index_exports);
 })();
-if(wp.blockDirectory&&typeof wp.blockDirectory==='object'){wp.blockDirectory=Object.assign({},wp.blockDirectory);}
 //# sourceMappingURL=index.js.map

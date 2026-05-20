@@ -4335,5 +4335,4 @@ var wp;
   });
   return __toCommonJS(index_exports);
 })();
-if(wp.theme&&typeof wp.theme==='object'){wp.theme=Object.assign({},wp.theme);}
 //# sourceMappingURL=index.js.map

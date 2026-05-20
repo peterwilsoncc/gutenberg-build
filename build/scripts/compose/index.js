@@ -67,6 +67,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/keycodes
+  var require_keycodes = __commonJS({
+    "package-external:@wordpress/keycodes"(exports, module) {
+      module.exports = window.wp.keycodes;
+    }
+  });
+
   // node_modules/mousetrap/mousetrap.js
   var require_mousetrap = __commonJS({
     "node_modules/mousetrap/mousetrap.js"(exports, module) {
@@ -519,13 +526,6 @@ var wp;
           });
         }
       })(typeof window !== "undefined" ? window : null, typeof window !== "undefined" ? document : null);
-    }
-  });
-
-  // package-external:@wordpress/keycodes
-  var require_keycodes = __commonJS({
-    "package-external:@wordpress/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
     }
   });
 
@@ -1192,10 +1192,11 @@ var wp;
       return false;
     }
   }
-  function restoreFocus(trigger) {
+  function clearSelection(trigger) {
     if ("focus" in trigger && typeof trigger.focus === "function") {
       trigger.focus();
     }
+    trigger.ownerDocument?.defaultView?.getSelection()?.removeAllRanges();
   }
   function useUpdatedRef(value) {
     const ref = (0, import_element7.useRef)(value);
@@ -1212,10 +1213,11 @@ var wp;
       const handleClick = async () => {
         const textToCopy = typeof textRef.current === "function" ? textRef.current() : textRef.current || "";
         const success = await copyToClipboard(textToCopy, node);
+        if (!isActive) {
+          return;
+        }
         if (success) {
-          if (isActive) {
-            restoreFocus(node);
-          }
+          clearSelection(node);
           if (onSuccessRef.current) {
             onSuccessRef.current();
           }
@@ -1266,7 +1268,7 @@ var wp;
           return;
         }
         if (success) {
-          restoreFocus(trigger);
+          clearSelection(trigger);
           if (timeout) {
             setHasCopied(true);
             clearTimeout(timeoutId);
@@ -1293,6 +1295,7 @@ var wp;
 
   // packages/compose/build-module/hooks/use-dialog/index.mjs
   var import_element13 = __toESM(require_element(), 1);
+  var import_keycodes = __toESM(require_keycodes(), 1);
 
   // packages/compose/build-module/hooks/use-focus-on-mount/index.mjs
   var import_dom2 = __toESM(require_dom(), 1);
@@ -1511,23 +1514,27 @@ var wp;
         currentOptions.current.onClose();
       }
     });
-    const onKeyDown = (0, import_element13.useCallback)((event) => {
-      currentOptions.current?.onKeyDown?.(event);
-      if (event.key === "Escape" && !event.defaultPrevented && currentOptions.current?.onClose) {
-        event.preventDefault();
-        event.stopPropagation();
-        currentOptions.current.onClose();
+    const closeOnEscapeRef = (0, import_element13.useCallback)((node) => {
+      if (!node) {
+        return;
       }
+      node.addEventListener("keydown", (event) => {
+        if (event.keyCode === import_keycodes.ESCAPE && !event.defaultPrevented && currentOptions.current?.onClose) {
+          event.preventDefault();
+          event.stopPropagation();
+          currentOptions.current.onClose();
+        }
+      });
     }, []);
     return [
       useMergeRefs([
         constrainTabbing ? constrainedTabbingRef : null,
         options.focusOnMount !== false ? focusReturnRef : null,
-        options.focusOnMount !== false ? focusOnMountRef : null
+        options.focusOnMount !== false ? focusOnMountRef : null,
+        closeOnEscapeRef
       ]),
       {
         ...focusOutsideProps,
-        onKeyDown,
         tabIndex: -1
       }
     ];
@@ -1690,7 +1697,7 @@ var wp;
 
   // packages/compose/build-module/hooks/use-keyboard-shortcut/index.mjs
   var import_element17 = __toESM(require_element(), 1);
-  var import_keycodes = __toESM(require_keycodes(), 1);
+  var import_keycodes2 = __toESM(require_keycodes(), 1);
   function useKeyboardShortcut(shortcuts, callback, {
     bindGlobal = false,
     eventName = "keydown",
@@ -1724,7 +1731,7 @@ var wp;
         );
         const hasAlt = modifiers.has("alt");
         const hasShift = modifiers.has("shift");
-        if ((0, import_keycodes.isAppleOS)() && (modifiers.size === 1 && hasAlt || modifiers.size === 2 && hasAlt && hasShift)) {
+        if ((0, import_keycodes2.isAppleOS)() && (modifiers.size === 1 && hasAlt || modifiers.size === 2 && hasAlt && hasShift)) {
           throw new Error(
             `Cannot bind ${shortcut}. Alt and Shift+Alt modifiers are reserved for character input.`
           );
@@ -1746,53 +1753,47 @@ var wp;
   // packages/compose/build-module/hooks/use-media-query/index.mjs
   var import_element18 = __toESM(require_element(), 1);
   var perWindowCache = /* @__PURE__ */ new WeakMap();
-  var EMPTY_SUBSCRIBER = {
-    subscribe: () => () => {
-    },
-    getValue: () => false
-  };
-  function getMQLSubscriber(view, query) {
-    if (!query || typeof view?.matchMedia !== "function") {
-      return EMPTY_SUBSCRIBER;
+  function getMediaQueryList(view, query) {
+    if (!query) {
+      return null;
     }
-    let queryCache = perWindowCache.get(view);
-    if (!queryCache) {
-      queryCache = /* @__PURE__ */ new Map();
-      perWindowCache.set(view, queryCache);
+    const matchMediaCache = perWindowCache.get(view) ?? /* @__PURE__ */ new Map();
+    if (!perWindowCache.has(view)) {
+      perWindowCache.set(view, matchMediaCache);
     }
-    const cached = queryCache.get(query);
-    if (cached) {
-      return cached;
+    let match = matchMediaCache.get(query);
+    if (match) {
+      return match;
     }
-    const mediaQueryList = view.matchMedia(query);
-    const listeners = /* @__PURE__ */ new Set();
-    const notify = () => {
-      for (const listener2 of listeners) {
-        listener2();
-      }
-    };
-    const subscriber = {
-      subscribe(onStoreChange) {
-        if (listeners.size === 0) {
-          mediaQueryList.addEventListener?.("change", notify);
-        }
-        listeners.add(onStoreChange);
-        return () => {
-          listeners.delete(onStoreChange);
-          if (listeners.size === 0) {
-            mediaQueryList.removeEventListener?.("change", notify);
-          }
-        };
-      },
-      getValue() {
-        return mediaQueryList.matches;
-      }
-    };
-    queryCache.set(query, subscriber);
-    return subscriber;
+    if (typeof view?.matchMedia === "function") {
+      match = view.matchMedia(query);
+      matchMediaCache.set(query, match);
+      return match;
+    }
+    return null;
   }
   function useMediaQuery(query, view = window) {
-    const source = getMQLSubscriber(view, query);
+    const source = (0, import_element18.useMemo)(() => {
+      const mediaQueryList = getMediaQueryList(view, query);
+      return {
+        subscribe(onStoreChange) {
+          if (!mediaQueryList) {
+            return () => {
+            };
+          }
+          mediaQueryList.addEventListener?.("change", onStoreChange);
+          return () => {
+            mediaQueryList.removeEventListener?.(
+              "change",
+              onStoreChange
+            );
+          };
+        },
+        getValue() {
+          return mediaQueryList?.matches ?? false;
+        }
+      };
+    }, [view, query]);
     return (0, import_element18.useSyncExternalStore)(
       source.subscribe,
       source.getValue,
@@ -2295,7 +2296,7 @@ var wp;
   // packages/compose/build-module/hooks/use-fixed-window-list/index.mjs
   var import_element28 = __toESM(require_element(), 1);
   var import_dom3 = __toESM(require_dom(), 1);
-  var import_keycodes2 = __toESM(require_keycodes(), 1);
+  var import_keycodes3 = __toESM(require_keycodes(), 1);
   var DEFAULT_INIT_WINDOW_SIZE = 30;
   function useFixedWindowList(elementRef, itemHeight, totalItems, options) {
     const initWindowSize = options?.initWindowSize ?? DEFAULT_INIT_WINDOW_SIZE;
@@ -2382,20 +2383,20 @@ var wp;
       const scrollContainer = (0, import_dom3.getScrollContainer)(elementRef.current);
       const handleKeyDown = (event) => {
         switch (event.keyCode) {
-          case import_keycodes2.HOME: {
+          case import_keycodes3.HOME: {
             return scrollContainer?.scrollTo({ top: 0 });
           }
-          case import_keycodes2.END: {
+          case import_keycodes3.END: {
             return scrollContainer?.scrollTo({
               top: totalItems * itemHeight
             });
           }
-          case import_keycodes2.PAGEUP: {
+          case import_keycodes3.PAGEUP: {
             return scrollContainer?.scrollTo({
               top: scrollContainer.scrollTop - fixedListWindow.visibleItems * itemHeight
             });
           }
-          case import_keycodes2.PAGEDOWN: {
+          case import_keycodes3.PAGEDOWN: {
             return scrollContainer?.scrollTo({
               top: scrollContainer.scrollTop + fixedListWindow.visibleItems * itemHeight
             });
@@ -2437,5 +2438,4 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if(wp.compose&&typeof wp.compose==='object'){wp.compose=Object.assign({},wp.compose);}
 //# sourceMappingURL=index.js.map

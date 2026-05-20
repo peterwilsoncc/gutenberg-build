@@ -1529,5 +1529,4 @@ var wp;
   });
   return require_parser();
 })();
-if(wp.blockSerializationSpecParser&&typeof wp.blockSerializationSpecParser==='object'){wp.blockSerializationSpecParser=Object.assign({},wp.blockSerializationSpecParser);}
 //# sourceMappingURL=index.js.map

@@ -435,28 +435,6 @@ function getTypographyFontSizeValue(preset, settings) {
 // packages/global-styles-engine/build-module/utils/common.mjs
 var ROOT_BLOCK_SELECTOR = "body";
 var ROOT_CSS_PROPERTIES_SELECTOR = ":root";
-function splitSelectorList(selector) {
-  if (!selector.includes(",")) {
-    return [selector];
-  }
-  const selectors = [];
-  let currentSelector = "";
-  let parenthesesDepth = 0;
-  for (const char of selector) {
-    if (char === "(") {
-      parenthesesDepth++;
-    } else if (char === ")" && parenthesesDepth > 0) {
-      parenthesesDepth--;
-    } else if (char === "," && parenthesesDepth === 0) {
-      selectors.push(currentSelector);
-      currentSelector = "";
-      continue;
-    }
-    currentSelector += char;
-  }
-  selectors.push(currentSelector);
-  return selectors;
-}
 var PRESET_METADATA = [
   {
     path: ["color", "palette"],
@@ -537,8 +515,8 @@ function scopeSelector(scope, selector) {
   if (!scope || !selector) {
     return selector;
   }
-  const scopes = splitSelectorList(scope);
-  const selectors = splitSelectorList(selector);
+  const scopes = scope.split(",");
+  const selectors = selector.split(",");
   const selectorsScoped = [];
   scopes.forEach((outer) => {
     selectors.forEach((inner) => {
@@ -574,7 +552,7 @@ function appendToSelector(selector, toAppend) {
   if (!selector.includes(",")) {
     return selector + toAppend;
   }
-  const selectors = splitSelectorList(selector);
+  const selectors = selector.split(",");
   const newSelectors = selectors.map((sel) => sel + toAppend);
   return newSelectors.join(",");
 }
@@ -587,27 +565,8 @@ function getBlockStyleVariationSelector(variation, blockSelector) {
   const addVariationClass = (_match, group1, group2) => {
     return group1 + group2 + variationClass;
   };
-  const result = splitSelectorList(blockSelector).map(
-    (part) => part.replace(ancestorRegex, addVariationClass)
-  );
+  const result = blockSelector.split(",").map((part) => part.replace(ancestorRegex, addVariationClass));
   return result.join(",");
-}
-function getBlockStyleVariationFeatureSelector(variation, featureSelector) {
-  const variationClass = `.is-style-${variation}`;
-  const selectorParts = splitSelectorList(featureSelector).map(
-    (selector) => {
-      const trimmedSelector = selector.trim();
-      const prefix = `${variationClass} `;
-      if (trimmedSelector.startsWith(prefix)) {
-        return trimmedSelector.slice(prefix.length);
-      }
-      return trimmedSelector;
-    }
-  );
-  return getBlockStyleVariationSelector(
-    variation,
-    selectorParts.join(",")
-  );
 }
 function getResolvedRefValue(ruleValue, tree) {
   if (!ruleValue || !tree) {
@@ -1272,6 +1231,16 @@ function flattenTree(input = {}, prefix, token) {
   });
   return result;
 }
+function concatFeatureVariationSelectorString(featureSelector, styleVariationSelector) {
+  const featureSelectors = featureSelector.split(",");
+  const combinedSelectors = [];
+  featureSelectors.forEach((selector) => {
+    combinedSelectors.push(
+      `${styleVariationSelector.trim()}${selector.trim()}`
+    );
+  });
+  return combinedSelectors.join(", ");
+}
 var updateParagraphTextIndentSelector = (featureDeclarations, settings, blockName) => {
   if (blockName !== "core/paragraph") {
     return featureDeclarations;
@@ -1583,8 +1552,7 @@ function getPseudoStyleNodes(node) {
     featureSelectors,
     name,
     elementName,
-    mediaQuery,
-    variationName
+    mediaQuery
   } = node;
   const pseudoSelectors = name ? VALID_BLOCK_PSEUDO_SELECTORS[name] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
   if (!pseudoSelectors.length) {
@@ -1603,8 +1571,7 @@ function getPseudoStyleNodes(node) {
         mediaQuery,
         featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
         name,
-        elementName,
-        variationName
+        elementName
       }
     ];
   });
@@ -1616,8 +1583,7 @@ function getResponsiveStyleNodes(node) {
     featureSelectors,
     name,
     elementName,
-    isStyleVariation,
-    variationName
+    isStyleVariation
   } = node;
   if (!name && !elementName) {
     return [];
@@ -1636,11 +1602,42 @@ function getResponsiveStyleNodes(node) {
           featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
           name,
           elementName,
-          isStyleVariation,
-          variationName
+          isStyleVariation
         }
       ];
     }
+  );
+}
+function getVariationFeatureSelectors(featureSelectors, styleVariationSelector) {
+  if (!featureSelectors || typeof featureSelectors === "string") {
+    return void 0;
+  }
+  return Object.fromEntries(
+    Object.entries(featureSelectors).map(([feature, selector]) => {
+      if (typeof selector === "string") {
+        return [
+          feature,
+          concatFeatureVariationSelectorString(
+            selector,
+            styleVariationSelector
+          )
+        ];
+      }
+      return [
+        feature,
+        Object.fromEntries(
+          Object.entries(selector).map(
+            ([subfeature, subfeatureSelector]) => [
+              subfeature,
+              concatFeatureVariationSelectorString(
+                subfeatureSelector,
+                styleVariationSelector
+              )
+            ]
+          )
+        )
+      ];
+    })
   );
 }
 var getNodesWithStyles = (tree, blockSelectors) => {
@@ -1693,11 +1690,13 @@ var getNodesWithStyles = (tree, blockSelectors) => {
               variationStyleNodesToAdd.push({
                 styles: variationStyles,
                 selector: variationSelector,
-                featureSelectors: blockSelector?.featureSelectors,
+                featureSelectors: getVariationFeatureSelectors(
+                  blockSelector?.featureSelectors,
+                  variationSelector
+                ),
                 fallbackGapValue: blockSelector?.fallbackGapValue,
                 hasLayoutSupport: blockSelector?.hasLayoutSupport,
                 isStyleVariation: true,
-                variationName,
                 layoutSelector: variationSelector + blockSelector.selector,
                 layoutHasBlockGapSupport: true,
                 name: blockName
@@ -1961,8 +1960,7 @@ function renderStylesNode(node, {
     layoutSelector,
     layoutHasBlockGapSupport,
     skipSelectorWrapper,
-    name,
-    variationName
+    name
   } = node;
   let ruleset = "";
   const effectiveSelector = selectorSuffix ? appendToSelector(selector, selectorSuffix) : selector;
@@ -1983,11 +1981,7 @@ function renderStylesNode(node, {
     Object.entries(featureDeclarations).forEach(
       ([featureSelector, declarations]) => {
         if (declarations.length) {
-          let selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
-            variationName,
-            featureSelector
-          ) : featureSelector;
-          selectorForRule = selectorSuffix ? appendToSelector(selectorForRule, selectorSuffix) : selectorForRule;
+          const selectorForRule = selectorSuffix ? appendToSelector(featureSelector, selectorSuffix) : featureSelector;
           const rules = declarations.join(";");
           ruleset += `:root :where(${selectorForRule}){${rules};}`;
         }

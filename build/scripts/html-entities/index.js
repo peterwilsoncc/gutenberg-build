@@ -43,5 +43,4 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if(wp.htmlEntities&&typeof wp.htmlEntities==='object'){wp.htmlEntities=Object.assign({},wp.htmlEntities);}
 //# sourceMappingURL=index.js.map
