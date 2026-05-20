@@ -17881,9 +17881,9 @@ var wp;
         const {
           getAllBlockBindingsSources,
           getBlockBindingsSourceFieldsList,
-          getBlockType: getBlockType29
+          getBlockType: getBlockType30
         } = unlock(select3(import_blocks14.store));
-        const _attribute = getBlockType29(blockName).attributes?.[attribute];
+        const _attribute = getBlockType30(blockName).attributes?.[attribute];
         if (_attribute?.enum) {
           return {};
         }
@@ -18083,9 +18083,9 @@ var wp;
           return null;
         }
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select3(store);
-        const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks15.store);
+        const { getBlockType: getBlockType30, getActiveBlockVariation } = select3(import_blocks15.store);
         const blockName = getBlockName2(clientId);
-        const blockType = getBlockType29(blockName);
+        const blockType = getBlockType30(blockName);
         if (!blockType) {
           return null;
         }
@@ -28617,7 +28617,7 @@ var wp;
   var import_notices4 = __toESM(require_notices(), 1);
   function useNotifyCopy() {
     const { getBlockName: getBlockName2 } = (0, import_data44.useSelect)(store);
-    const { getBlockType: getBlockType29 } = (0, import_data44.useSelect)(import_blocks26.store);
+    const { getBlockType: getBlockType30 } = (0, import_data44.useSelect)(import_blocks26.store);
     const { createSuccessNotice } = (0, import_data44.useDispatch)(import_notices4.store);
     return (0, import_element60.useCallback)(
       (eventType, selectedBlockClientIds) => {
@@ -28626,7 +28626,7 @@ var wp;
           notice = (0, import_i18n34.__)("Styles copied to clipboard.");
         } else if (selectedBlockClientIds.length === 1) {
           const clientId = selectedBlockClientIds[0];
-          const title = getBlockType29(getBlockName2(clientId))?.title;
+          const title = getBlockType30(getBlockName2(clientId))?.title;
           if (eventType === "copy") {
             notice = (0, import_i18n34.sprintf)(
               // Translators: %s: Name of the block being copied, e.g. "Paragraph".
@@ -28665,7 +28665,7 @@ var wp;
           type: "snackbar"
         });
       },
-      [createSuccessNotice, getBlockName2, getBlockType29]
+      [createSuccessNotice, getBlockName2, getBlockType30]
     );
   }
 
@@ -33892,7 +33892,7 @@ var wp;
           getDirectInsertBlock: getDirectInsertBlock2,
           getBlockListSettings: getBlockListSettings2
         } = select3(store);
-        const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType29 } = select3(import_blocks38.store);
+        const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType30 } = select3(import_blocks38.store);
         rootClientId = rootClientId || getBlockRootClientId2(clientId) || void 0;
         const allowedBlocks = getAllowedBlocks2(rootClientId);
         const directInsertBlock = shouldDirectInsert && getDirectInsertBlock2(rootClientId);
@@ -33903,7 +33903,7 @@ var wp;
         if (!blockToInsert && hasSingleBlockType && defaultBlock?.name === allowedBlockType.name) {
           blockToInsert = defaultBlock;
         }
-        const defaultBlockType = directInsertBlock ? getBlockType29(directInsertBlock.name) : null;
+        const defaultBlockType = directInsertBlock ? getBlockType30(directInsertBlock.name) : null;
         const appenderLabel = getAppenderLabel(
           directInsertBlock,
           defaultBlockType
@@ -35648,7 +35648,7 @@ var wp;
       "replace"
     ];
   }
-  function isDropTargetValid(getBlockType29, allowedBlocks, draggedBlockNames, targetBlockName) {
+  function isDropTargetValid(getBlockType30, allowedBlocks, draggedBlockNames, targetBlockName) {
     let areBlocksAllowed = true;
     if (allowedBlocks) {
       const allowedBlockNames = allowedBlocks?.map(({ name }) => name);
@@ -35657,7 +35657,7 @@ var wp;
       );
     }
     const draggedBlockTypes = draggedBlockNames.map(
-      (name) => getBlockType29(name)
+      (name) => getBlockType30(name)
     );
     const targetMatchesDraggedBlockParents = draggedBlockTypes.every(
       (block) => {
@@ -35689,7 +35689,7 @@ var wp;
       index: null,
       operation: "insert"
     });
-    const { getBlockType: getBlockType29, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data73.useSelect)(import_blocks43.store);
+    const { getBlockType: getBlockType30, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data73.useSelect)(import_blocks43.store);
     const {
       canInsertBlockType: canInsertBlockType2,
       getBlockListSettings: getBlockListSettings2,
@@ -35743,7 +35743,7 @@ var wp;
             draggedBlockClientIds
           );
           const isBlockDroppingAllowed = isDropTargetValid(
-            getBlockType29,
+            getBlockType30,
             allowedBlocks,
             draggedBlockNames,
             targetBlockName
@@ -35850,7 +35850,7 @@ var wp;
           targetRootClientId,
           getBlockNamesByClientId2,
           getDraggedBlockClientIds2,
-          getBlockType29,
+          getBlockType30,
           getSectionRootClientId2,
           isZoomOut2,
           getBlocks2,
@@ -36010,7 +36010,7 @@ var wp;
             isDropZoneDisabled: isZoomOut2() && sectionRootClientId !== ""
           };
         }
-        const { hasBlockSupport: hasBlockSupport48, getBlockType: getBlockType29 } = select3(import_blocks44.store);
+        const { hasBlockSupport: hasBlockSupport48, getBlockType: getBlockType30 } = select3(import_blocks44.store);
         const blockName = getBlockName2(clientId);
         const blockEditingMode = getBlockEditingMode2(clientId);
         const parentClientId2 = getBlockRootClientId2(clientId);
@@ -36027,7 +36027,7 @@ var wp;
             false
           ),
           name: blockName,
-          blockType: getBlockType29(blockName),
+          blockType: getBlockType30(blockName),
           parentLock: getTemplateLock2(parentClientId2),
           parentClientId: parentClientId2,
           isDropZoneDisabled: _isDropZoneDisabled,
@@ -37046,9 +37046,9 @@ var wp;
           getBlockAttributes: getBlockAttributes3,
           __experimentalGetParsedPattern: __experimentalGetParsedPattern2
         } = select3(store);
-        const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks46.store);
+        const { getBlockType: getBlockType30, getActiveBlockVariation } = select3(import_blocks46.store);
         const blockName = getBlockName2(clientId);
-        const blockType = getBlockType29(blockName);
+        const blockType = getBlockType30(blockName);
         if (!blockType) {
           return null;
         }
@@ -37588,7 +37588,7 @@ var wp;
       isDraggable,
       icon,
       visibleInserter,
-      getBlockType: getBlockType29
+      getBlockType: getBlockType30
     } = (0, import_data84.useSelect)(
       (select3) => {
         const {
@@ -37650,14 +37650,14 @@ var wp;
           ])[0];
           const rootAllowedBlocks = getAllowedBlocks2(targetRootClientId);
           dropTargetValid = isDropTargetValid(
-            getBlockType29,
+            getBlockType30,
             rootAllowedBlocks,
             draggedBlockNames,
             targetRootBlockName
           );
         } else {
           dropTargetValid = isDropTargetValid(
-            getBlockType29,
+            getBlockType30,
             allowedBlocks,
             draggedBlockNames,
             targetBlockName
@@ -37685,7 +37685,7 @@ var wp;
       getAllowedBlocks2,
       getBlockNamesByClientId2,
       getBlockRootClientId2,
-      getBlockType29,
+      getBlockType30,
       visibleInserter
     ]);
     if (!isDraggable) {
@@ -38929,7 +38929,7 @@ var wp;
           isUngroupable: isUngroupable2,
           isGroupable: isGroupable2
         } = select3(store);
-        const { getGroupingBlockName, getBlockType: getBlockType29 } = select3(import_blocks54.store);
+        const { getGroupingBlockName, getBlockType: getBlockType30 } = select3(import_blocks54.store);
         const clientIds = selectedClientIds?.length ? selectedClientIds : getSelectedBlockClientIds2();
         const blocksSelection = getBlocksByClientId2(clientIds);
         const [firstSelectedBlock] = blocksSelection;
@@ -38940,7 +38940,7 @@ var wp;
           isUngroupable: _isUngroupable,
           blocksSelection,
           groupingBlockName: getGroupingBlockName(),
-          onUngroup: _isUngroupable && getBlockType29(firstSelectedBlock.name)?.transforms?.ungroup
+          onUngroup: _isUngroupable && getBlockType30(firstSelectedBlock.name)?.transforms?.ungroup
         };
       },
       [selectedClientIds]
@@ -46433,7 +46433,7 @@ var wp;
       hasMultiSelection: hasMultiSelection2,
       hasSelectedBlock: hasSelectedBlock2
     } = (0, import_data129.useSelect)(store);
-    const { getBlockType: getBlockType29 } = (0, import_data129.useSelect)(import_blocks79.store);
+    const { getBlockType: getBlockType30 } = (0, import_data129.useSelect)(import_blocks79.store);
     const updateBlockSelection = (0, import_element158.useCallback)(
       async (event, clientId, destinationClientId, focusPosition) => {
         if (!event?.shiftKey && event?.keyCode !== import_keycodes16.ESCAPE) {
@@ -46487,7 +46487,7 @@ var wp;
         );
         let label;
         if (selectionDiff.length === 1) {
-          const title = getBlockType29(
+          const title = getBlockType30(
             getBlockName2(selectionDiff[0])
           )?.title;
           if (title) {
@@ -46511,7 +46511,7 @@ var wp;
       [
         clearSelectedBlock2,
         getBlockName2,
-        getBlockType29,
+        getBlockType30,
         getBlockParents2,
         getBlockSelectionStart2,
         getSelectedBlockClientIds2,
@@ -75805,36 +75805,31 @@ var wp;
 
   // packages/block-editor/build-module/hooks/state-utils.mjs
   var import_blocks115 = __toESM(require_blocks(), 1);
-  function getRelativeRootSelector(rootSelector) {
-    const match2 = rootSelector.trim().match(/^[^ >+~]+[ >+~](.*)$/);
-    if (!match2) {
-      return null;
+  function buildScopedBlockSelector(baseSelector, blockSelector, suffix = "") {
+    if (typeof blockSelector !== "string" || !blockSelector) {
+      return splitSelectorList(baseSelector).map((selector3) => `${selector3.trim()}${suffix}`).join(", ");
     }
-    const rest = match2[1].trim();
-    return rest || null;
-  }
-  function buildRootStyleStateSelector(baseSelector, name) {
-    const rootSelector = (0, import_blocks115.getBlockType)(name)?.selectors?.root;
-    if (rootSelector) {
-      const relativeSelector = getRelativeRootSelector(rootSelector);
-      if (relativeSelector) {
-        return scopeSelector(baseSelector, relativeSelector);
+    const baseSelectors = splitSelectorList(baseSelector).filter(
+      (selector3) => selector3.trim()
+    );
+    const selectors = splitSelectorList(blockSelector).filter(
+      (selector3) => selector3.trim()
+    );
+    if (!selectors.length) {
+      return baseSelectors.map((selector3) => `${selector3.trim()}${suffix}`).join(", ");
+    }
+    return selectors.map((selector3) => {
+      selector3 = selector3.trim();
+      const match2 = selector3.match(/^([.#]?[-_a-zA-Z0-9]+|\[[^\]]+\])/);
+      if (match2) {
+        return baseSelectors.map(
+          (base) => `${base.trim()}${selector3.slice(
+            match2[0].length
+          )}${suffix}`
+        ).join(", ");
       }
-    }
-    return baseSelector;
-  }
-  function buildPseudoStyleStateSelector(baseSelector, name, state) {
-    return `${buildRootStyleStateSelector(baseSelector, name)}${state}`;
-  }
-  function buildCanvasStateSelector(clientId, name) {
-    const rootSelector = (0, import_blocks115.getBlockType)(name)?.selectors?.root;
-    if (rootSelector) {
-      const relativeSelector = getRelativeRootSelector(rootSelector);
-      if (relativeSelector) {
-        return `[data-block="${clientId}"] ${relativeSelector}`;
-      }
-    }
-    return `[data-block="${clientId}"]`;
+      return baseSelectors.map((base) => `${base.trim()}${suffix}`).join(", ");
+    }).join(", ");
   }
 
   // packages/block-editor/build-module/hooks/style.mjs
@@ -75892,6 +75887,79 @@ var wp;
     const fallbackCSS = fallbackBorderStyles ? (0, import_style_engine4.compileCSS)(fallbackBorderStyles, { selector: selector3 }) : void 0;
     return [importantCSS, fallbackCSS].filter(Boolean).join("\n");
   }
+  function isPlainObject2(value) {
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+  function mergeStyleObjects(target = {}, source = {}) {
+    const merged = { ...target };
+    Object.entries(source).forEach(([key, value]) => {
+      merged[key] = isPlainObject2(value) && isPlainObject2(merged[key]) ? mergeStyleObjects(merged[key], value) : value;
+    });
+    return merged;
+  }
+  function addStyleGroup(groups3, selector3, style) {
+    const key = selector3 || "";
+    const existing = groups3.get(key) || { selector: selector3, style: {} };
+    groups3.set(key, {
+      selector: selector3,
+      style: mergeStyleObjects(existing.style, style)
+    });
+  }
+  function getStateStyleGroups(stateStyles, name) {
+    const blockSelectors = (0, import_blocks116.getBlockType)(name)?.selectors || {};
+    const groups3 = /* @__PURE__ */ new Map();
+    Object.entries(stateStyles || {}).forEach(
+      ([feature, featureStyles]) => {
+        const featureSelectors = blockSelectors[feature];
+        if (typeof featureSelectors === "string") {
+          addStyleGroup(groups3, featureSelectors, {
+            [feature]: featureStyles
+          });
+          return;
+        }
+        if (isPlainObject2(featureSelectors) && isPlainObject2(featureStyles)) {
+          const remainingStyles = { ...featureStyles };
+          Object.entries(featureSelectors).forEach(
+            ([subfeature, subfeatureSelector]) => {
+              if (subfeature === "root" || typeof subfeatureSelector !== "string" || !Object.hasOwn(featureStyles, subfeature)) {
+                return;
+              }
+              addStyleGroup(groups3, subfeatureSelector, {
+                [feature]: {
+                  [subfeature]: featureStyles[subfeature]
+                }
+              });
+              delete remainingStyles[subfeature];
+            }
+          );
+          if (Object.keys(remainingStyles).length) {
+            addStyleGroup(
+              groups3,
+              featureSelectors.root || blockSelectors.root,
+              {
+                [feature]: remainingStyles
+              }
+            );
+          }
+          return;
+        }
+        addStyleGroup(groups3, blockSelectors.root, {
+          [feature]: featureStyles
+        });
+      }
+    );
+    return Array.from(groups3.values());
+  }
+  function getBlockStateStylesCSS(stateStyles, options) {
+    const { name, baseSelector, state = "" } = options;
+    const rules = getStateStyleGroups(stateStyles, name).map(
+      ({ selector: blockSelector, style }) => getStateStylesCSS(
+        style,
+        buildScopedBlockSelector(baseSelector, blockSelector, state)
+      )
+    ).filter(Boolean);
+    return rules.length ? rules.join("\n") : void 0;
+  }
   function getRootStateStyles(stateStyles, nestedKeys) {
     if (!stateStyles) {
       return stateStyles;
@@ -75911,12 +75979,11 @@ var wp;
     validPseudoStates.forEach((pseudoState) => {
       const stateStyles = style?.[pseudoState];
       if (stateStyles) {
-        const selector3 = buildPseudoStyleStateSelector(
-          baseSelector,
+        const css = getBlockStateStylesCSS(stateStyles, {
           name,
-          pseudoState
-        );
-        const css = getStateStylesCSS(stateStyles, selector3);
+          baseSelector,
+          state: pseudoState
+        });
         if (css) {
           cssRules.push(css);
         }
@@ -75935,9 +76002,12 @@ var wp;
           return;
         }
         const viewportCSSRules = [];
-        const rootCSS = getStateStylesCSS(
+        const rootCSS = getBlockStateStylesCSS(
           getRootStateStyles(viewportStyles, nestedStateKeys),
-          buildRootStyleStateSelector(baseSelector, name)
+          {
+            name,
+            baseSelector
+          }
         );
         if (rootCSS) {
           viewportCSSRules.push(rootCSS);
@@ -76123,8 +76193,10 @@ var wp;
       } else {
         return void 0;
       }
-      const selector3 = buildCanvasStateSelector(clientId, name);
-      return getStateStylesCSS(stateValue, selector3);
+      return getBlockStateStylesCSS(stateValue, {
+        name,
+        baseSelector: `[data-block="${clientId}"]`
+      });
     }, [
       showStateOnCanvas,
       isPseudoSelectorState,
