@@ -1440,7 +1440,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment116 = REACT_FRAGMENT_TYPE;
+          var Fragment115 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1499,7 +1499,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment116;
+          exports.Fragment = Fragment115;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -16616,7 +16616,10 @@ var wp;
     if (!fileName) {
       return "";
     }
-    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_components27.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_components27.__experimentalTruncate, { limit: TRUNCATE_LENGTH, ellipsizeMode: "tail", children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_jsx_runtime135.Fragment, { children: fileName });
+    if (fileName.length <= TRUNCATE_LENGTH) {
+      return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("span", { className: "dataviews-media-field__filename", children: fileName });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_components27.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("span", { className: "dataviews-media-field__filename", tabIndex: -1, children: fileName }) });
   }
 
   // packages/media-fields/build-module/filename/index.mjs
