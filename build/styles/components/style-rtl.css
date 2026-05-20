@@ -2523,55 +2523,62 @@ input.components-combobox-control__input[type=text]:focus {
 }
 
 .components-notice {
-  display: flex;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
-  background-color: #fff;
-  border-right: 4px solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
-  padding: 8px 12px;
-  align-items: center;
-  color: #1e1e1e;
-}
-.components-notice.is-dismissible {
-  position: relative;
-}
-.components-notice.is-dismissible .components-notice__content {
-  margin-left: 25px;
+  --wp-components-notice-background-color: var(--wpds-color-bg-surface-info-weak, #f3f9ff);
+  --wp-components-notice-border-color: var(--wpds-color-stroke-surface-info, #9fbcdc);
+  --wp-components-notice-text-color: var(--wpds-color-fg-content-info, #001b4f);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  padding: var(--wpds-dimension-padding-md, 12px);
+  border: var(--wpds-border-width-xs, 1px) solid var(--wp-components-notice-border-color);
+  border-radius: var(--wpds-border-radius-lg, 8px);
+  background-color: var(--wp-components-notice-background-color);
+  color: var(--wp-components-notice-text-color);
+  font-family: var(--wpds-typography-font-family-body, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
+  font-size: var(--wpds-typography-font-size-md, 13px);
+  line-height: var(--wpds-typography-line-height-sm, 20px);
 }
 .components-notice.is-success {
-  border-right-color: #4ab866;
-  background-color: rgb(238.8392857143, 248.6607142857, 241.3392857143);
+  --wp-components-notice-background-color: var(--wpds-color-bg-surface-success-weak, #ebffed);
+  --wp-components-notice-border-color: var(--wpds-color-stroke-surface-success, #8ac894);
+  --wp-components-notice-text-color: var(--wpds-color-fg-content-success, #002900);
 }
 .components-notice.is-warning {
-  border-right-color: #f0b849;
-  background-color: rgb(253.5913705584, 248.3324873096, 237.9086294416);
+  --wp-components-notice-background-color: var(--wpds-color-bg-surface-warning-weak, #fff7e1);
+  --wp-components-notice-border-color: var(--wpds-color-stroke-surface-warning, #d0b481);
+  --wp-components-notice-text-color: var(--wpds-color-fg-content-warning, #2e1900);
 }
 .components-notice.is-error {
-  border-right-color: #cc1818;
-  background-color: rgb(244.1052631579, 162.3947368421, 162.3947368421);
+  --wp-components-notice-background-color: var(--wpds-color-bg-surface-error-weak, #fff6f5);
+  --wp-components-notice-border-color: var(--wpds-color-stroke-surface-error, #daa39b);
+  --wp-components-notice-text-color: var(--wpds-color-fg-content-error, #470000);
 }
 
 .components-notice__content {
-  flex-grow: 1;
-  margin-top: 4px;
-  margin-bottom: 4px;
+  grid-column: 1;
+  grid-row: 1;
+  padding-block: calc((24px - 1lh) / 2);
 }
 
 .components-notice__actions {
+  grid-column: 1;
+  grid-row: 2;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  margin-top: 12px;
+  gap: var(--wpds-dimension-gap-md, 12px);
+  margin-top: var(--wpds-dimension-gap-sm, 8px);
 }
 
 .components-notice__dismiss {
-  color: #757575;
-  align-self: flex-start;
-  flex-shrink: 0;
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--wpds-color-fg-interactive-neutral, #1e1e1e);
+  margin-inline-start: var(--wpds-dimension-gap-xs, 4px);
 }
 .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):not(.is-secondary):hover, .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):not(.is-secondary):active, .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):focus {
-  color: #1e1e1e;
+  color: var(--wpds-color-fg-interactive-neutral-active, #1e1e1e);
   background-color: transparent;
 }
 .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):not(.is-secondary):hover {
@@ -2579,13 +2586,11 @@ input.components-combobox-control__input[type=text]:focus {
 }
 
 .components-notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wpds-dimension-gap-md, 12px);
   max-width: 100vw;
   box-sizing: border-box;
-}
-.components-notice-list .components-notice__content {
-  margin-top: 12px;
-  margin-bottom: 12px;
-  line-height: 2;
 }
 
 .components-panel {

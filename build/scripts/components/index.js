@@ -47694,9 +47694,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onDismiss = noop20
   }) {
     useSpokenMessage(spokenMessage, politeness);
-    const classes = clsx_default(className2, "components-notice", "is-" + status, {
-      "is-dismissible": isDismissible
-    });
+    const classes = clsx_default(className2, "components-notice", "is-" + status);
     if (__unstableHTML && typeof children === "string") {
       children = /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_element173.RawHTML, {
         children
@@ -47710,43 +47708,43 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       className: classes,
       children: [/* @__PURE__ */ (0, import_jsx_runtime246.jsx)(component_default2, {
         children: getStatusLabel(status)
-      }), /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("div", {
         className: "components-notice__content",
-        children: [children, actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("div", {
-          className: "components-notice__actions",
-          children: actions.map(({
-            className: buttonCustomClasses,
-            label,
-            isPrimary,
-            variant,
-            noDefaultClasses = false,
+        children
+      }), actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("div", {
+        className: "components-notice__actions",
+        children: actions.map(({
+          className: buttonCustomClasses,
+          label,
+          isPrimary,
+          variant,
+          noDefaultClasses = false,
+          onClick,
+          url,
+          disabled
+        }, index2) => {
+          let computedVariant = variant;
+          if (variant !== "primary" && !noDefaultClasses) {
+            computedVariant = !url ? "secondary" : "link";
+          }
+          if (typeof computedVariant === "undefined" && isPrimary) {
+            computedVariant = "primary";
+          }
+          return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(button_default, {
+            size: "compact",
+            href: url,
+            variant: computedVariant,
             onClick,
-            url,
-            disabled
-          }, index2) => {
-            let computedVariant = variant;
-            if (variant !== "primary" && !noDefaultClasses) {
-              computedVariant = !url ? "secondary" : "link";
-            }
-            if (typeof computedVariant === "undefined" && isPrimary) {
-              computedVariant = "primary";
-            }
-            return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(button_default, {
-              __next40pxDefaultSize: true,
-              href: url,
-              variant: computedVariant,
-              onClick,
-              disabled,
-              accessibleWhenDisabled: true,
-              className: clsx_default("components-notice__action", buttonCustomClasses),
-              children: label
-            }, index2);
-          })
-        })]
+            disabled,
+            accessibleWhenDisabled: true,
+            className: clsx_default("components-notice__action", buttonCustomClasses),
+            children: label
+          }, index2);
+        })
       }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(button_default, {
         size: "small",
         className: "components-notice__dismiss",
-        icon: close_default,
+        icon: close_small_default,
         label: (0, import_i18n69.__)("Close"),
         onClick: onDismissNotice
       })]
