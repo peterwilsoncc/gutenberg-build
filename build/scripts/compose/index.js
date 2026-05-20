@@ -32,6 +32,13 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
+    }
+  });
+
   // vendor-external:react/jsx-runtime
   var require_jsx_runtime = __commonJS({
     "vendor-external:react/jsx-runtime"(exports, module) {
@@ -564,6 +571,7 @@ var wp;
     ifCondition: () => if_condition_default,
     observableMap: () => observableMap,
     pipe: () => pipe_default,
+    privateApis: () => privateApis,
     pure: () => pure_default,
     throttle: () => throttle,
     useAsyncList: () => use_async_list_default,
@@ -838,6 +846,104 @@ var wp;
       }
     };
   }
+
+  // packages/compose/build-module/lock-unlock.mjs
+  var import_private_apis = __toESM(require_private_apis(), 1);
+  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/compose"
+  );
+
+  // packages/compose/build-module/utils/subscribe-delegated-listener/index.mjs
+  var registries = /* @__PURE__ */ new WeakMap();
+  function getRoot(target) {
+    if (target.nodeType === 9) {
+      return target;
+    }
+    if (target.window === target) {
+      return target;
+    }
+    return target.ownerDocument;
+  }
+  function subscribeDelegatedListener(target, eventType, callback, capture = false) {
+    const root = getRoot(target);
+    const isWindow = root.window === root;
+    let perRoot = registries.get(root);
+    if (!perRoot) {
+      perRoot = /* @__PURE__ */ new Map();
+      registries.set(root, perRoot);
+    }
+    const key = capture ? `${eventType}:capture` : eventType;
+    let perEvent = perRoot.get(key);
+    if (!perEvent) {
+      perEvent = /* @__PURE__ */ new WeakMap();
+      perRoot.set(key, perEvent);
+      const subscribers = perEvent;
+      root.addEventListener(
+        eventType,
+        (event) => {
+          if (isWindow) {
+            const set2 = subscribers.get(root);
+            if (set2) {
+              for (const cb of set2) {
+                cb(event);
+              }
+            }
+            return;
+          }
+          if (capture) {
+            const path = [];
+            let current = event.target;
+            while (current) {
+              path.push(current);
+              if (current === root) {
+                break;
+              }
+              current = current.parentNode;
+            }
+            for (let i = path.length - 1; i >= 0; i--) {
+              const set2 = subscribers.get(path[i]);
+              if (set2) {
+                for (const cb of set2) {
+                  cb(event);
+                }
+              }
+            }
+          } else {
+            let current = event.target;
+            while (current) {
+              const set2 = subscribers.get(current);
+              if (set2) {
+                for (const cb of set2) {
+                  cb(event);
+                }
+              }
+              if (current === root) {
+                break;
+              }
+              current = current.parentNode;
+            }
+          }
+        },
+        capture
+      );
+    }
+    let set = perEvent.get(target);
+    if (!set) {
+      set = /* @__PURE__ */ new Set();
+      perEvent.set(target, set);
+    }
+    set.add(callback);
+    return () => {
+      set.delete(callback);
+    };
+  }
+
+  // packages/compose/build-module/private-apis.mjs
+  var privateApis = {};
+  lock(privateApis, {
+    subscribeDelegatedListener
+  });
 
   // packages/compose/build-module/higher-order/pipe.mjs
   var basePipe = (reverse = false) => (...funcs) => (...args) => {

@@ -9615,6 +9615,7 @@ var wp;
   // packages/block-library/build-module/button/edit.mjs
   var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl } = unlock(import_block_editor21.privateApis);
+  var { subscribeDelegatedListener } = unlock(import_compose8.privateApis);
   var LINK_SETTINGS = [
     ...import_block_editor21.LinkControl.DEFAULT_LINK_SETTINGS,
     {
@@ -9665,10 +9666,12 @@ var wp;
         );
         selectionChange(middle.clientId);
       }
-      element.addEventListener("keydown", onKeyDown);
-      return () => {
-        element.removeEventListener("keydown", onKeyDown);
-      };
+      return subscribeDelegatedListener(
+        element,
+        "keydown",
+        onKeyDown,
+        true
+      );
     }, []);
   }
   function ButtonEdit(props) {
@@ -36647,6 +36650,7 @@ ${js}
   var import_keycodes2 = __toESM(require_keycodes(), 1);
   var import_data53 = __toESM(require_data(), 1);
   var import_block_editor127 = __toESM(require_block_editor(), 1);
+  var { subscribeDelegatedListener: subscribeDelegatedListener2 } = unlock(import_compose27.privateApis);
   function useEnter2(props) {
     const { replaceBlocks, selectionChange } = (0, import_data53.useDispatch)(import_block_editor127.store);
     const { getBlock, getBlockRootClientId, getBlockIndex, getBlockName } = (0, import_data53.useSelect)(import_block_editor127.store);
@@ -36701,10 +36705,12 @@ ${js}
         );
         selectionChange(middle.clientId);
       }
-      element.addEventListener("keydown", onKeyDown);
-      return () => {
-        element.removeEventListener("keydown", onKeyDown);
-      };
+      return subscribeDelegatedListener2(
+        element,
+        "keydown",
+        onKeyDown,
+        true
+      );
     }, []);
   }
 
@@ -36713,6 +36719,7 @@ ${js}
   var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_block_editor128 = __toESM(require_block_editor(), 1);
   var import_data54 = __toESM(require_data(), 1);
+  var { subscribeDelegatedListener: subscribeDelegatedListener3 } = unlock(import_compose28.privateApis);
   function useSpace(clientId) {
     const { getSelectionStart, getSelectionEnd, getBlockIndex } = (0, import_data54.useSelect)(import_block_editor128.store);
     const indentListItem = useIndentListItem(clientId);
@@ -36741,10 +36748,12 @@ ${js}
             }
           }
         }
-        element.addEventListener("keydown", onKeyDown);
-        return () => {
-          element.removeEventListener("keydown", onKeyDown);
-        };
+        return subscribeDelegatedListener3(
+          element,
+          "keydown",
+          onKeyDown,
+          true
+        );
       },
       [clientId, indentListItem]
     );
@@ -48402,6 +48411,7 @@ ${js}
   var import_data95 = __toESM(require_data(), 1);
   var import_block_editor175 = __toESM(require_block_editor(), 1);
   var import_blocks73 = __toESM(require_blocks(), 1);
+  var { subscribeDelegatedListener: subscribeDelegatedListener4 } = unlock(import_compose40.privateApis);
   function useOnEnter(props) {
     const { batch } = (0, import_data95.useRegistry)();
     const { moveBlocksToPosition, replaceBlocks, selectionChange } = (0, import_data95.useDispatch)(import_block_editor175.store);
@@ -48478,10 +48488,12 @@ ${js}
           selectionChange(middle.clientId);
         });
       }
-      element.addEventListener("keydown", onKeyDown);
-      return () => {
-        element.removeEventListener("keydown", onKeyDown);
-      };
+      return subscribeDelegatedListener4(
+        element,
+        "keydown",
+        onKeyDown,
+        true
+      );
     }, []);
   }
 

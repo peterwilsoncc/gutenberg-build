@@ -34,6 +34,7 @@ var wp;
     "@wordpress/blocks",
     "@wordpress/boot",
     "@wordpress/commands",
+    "@wordpress/compose",
     "@wordpress/connectors",
     "@wordpress/workflows",
     "@wordpress/components",

@@ -1300,6 +1300,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
+    }
+  });
+
   // node_modules/gradient-parser/build/node.js
   var require_node = __commonJS({
     "node_modules/gradient-parser/build/node.js"(exports) {
@@ -1833,13 +1840,6 @@ var wp;
   var require_date = __commonJS({
     "package-external:@wordpress/date"(exports, module) {
       module.exports = window.wp.date;
-    }
-  });
-
-  // package-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "package-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
     }
   });
 
@@ -29455,8 +29455,18 @@ This message will only show in development mode. It won't appear in production. 
   };
   var get_node_text_default = getNodeText;
 
+  // packages/components/build-module/lock-unlock.mjs
+  var import_private_apis = __toESM(require_private_apis(), 1);
+  var {
+    lock,
+    unlock
+  } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/components");
+
   // packages/components/build-module/autocomplete/index.mjs
   var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+  var {
+    subscribeDelegatedListener
+  } = unlock(import_compose18.privateApis);
   var EMPTY_FILTERED_OPTIONS = [];
   var AUTOCOMPLETE_HOOK_REFERENCE = {};
   function getCompletionObject(completion) {
@@ -29722,10 +29732,7 @@ This message will only show in development mode. It won't appear in production. 
       function _onKeyDown(event) {
         onKeyDownRef.current?.(event);
       }
-      element.addEventListener("keydown", _onKeyDown);
-      return () => {
-        element.removeEventListener("keydown", _onKeyDown);
-      };
+      return subscribeDelegatedListener(element, "keydown", _onKeyDown, true);
     }, [])]);
     const didUserInput = record.text !== previousRecord?.text;
     if (!didUserInput) {
@@ -53459,13 +53466,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       displayName: "Tabs.Context"
     })
   });
-
-  // packages/components/build-module/lock-unlock.mjs
-  var import_private_apis = __toESM(require_private_apis(), 1);
-  var {
-    lock,
-    unlock
-  } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/components");
 
   // packages/components/build-module/badge/index.mjs
   var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
