@@ -36,5 +36,5 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if (typeof wp.domReady === 'object' && wp.domReady.default) { wp.domReady = wp.domReady.default; }if(wp.domReady&&typeof wp.domReady==='object'){wp.domReady=Object.assign({},wp.domReady);}
+if (typeof wp.domReady === 'object' && wp.domReady.default) { wp.domReady = wp.domReady.default; }
 //# sourceMappingURL=index.js.map

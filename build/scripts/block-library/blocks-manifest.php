@@ -3305,13 +3305,6 @@ return array(
 			'label' => array(
 				'type' => 'string',
 				'role' => 'content'
-			),
-			'opensInNewTab' => array(
-				'type' => 'boolean',
-				'default' => false
-			),
-			'description' => array(
-				'type' => 'string'
 			)
 		),
 		'usesContext' => array(
@@ -3569,10 +3562,6 @@ return array(
 				'source' => 'attribute',
 				'selector' => 'figure > a',
 				'attribute' => 'target'
-			),
-			'isDecorative' => array(
-				'type' => 'boolean',
-				'default' => false
 			)
 		),
 		'supports' => array(

@@ -70,5 +70,4 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if(wp.blob&&typeof wp.blob==='object'){wp.blob=Object.assign({},wp.blob);}
 //# sourceMappingURL=index.js.map
