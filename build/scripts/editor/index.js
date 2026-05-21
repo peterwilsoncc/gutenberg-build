@@ -50542,7 +50542,7 @@ If there's a particular need for this, please submit a feature request at https:
       ).length;
       return (0, import_i18n155.sprintf)(
         /* translators: 1: Active font variants, 2: Total font variants. */
-        (0, import_i18n155.__)("%1$d/%2$d variants active"),
+        (0, import_i18n155.__)("%1$d of %2$d active"),
         variantsActive,
         variantsInstalled
       );
