@@ -15,6 +15,13 @@ return array(
 		'presentation' => 'full-bleed',
 	),
 	array(
+		'name'         => 'core/quick-draft',
+		'dir_name'     => 'quick-draft',
+		'has_render'   => true,
+		'has_widget'   => true,
+		'presentation' => null,
+	),
+	array(
 		'name'         => 'core/welcome',
 		'dir_name'     => 'welcome',
 		'has_render'   => true,

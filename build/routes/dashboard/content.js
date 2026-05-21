@@ -41082,9 +41082,9 @@ function WidgetContextProvider({
 
 // routes/dashboard/widget-dashboard/components/widget-chrome/widget-chrome.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("a484065df7", "._22b961782d58cf14__widgetChrome{height:100%}._2e38cde45383ef41__widgetChromeHeaderIcon{color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:inline-flex}._65ccc0ffeadb15bf__widgetChromeContent{flex:1;height:100%;overflow-y:auto;padding-bottom:0;padding-top:0}._4b945d60dc39d743__widgetChromeContentFullBleed{height:100%;overflow-y:auto}.d86427717f1c6168__loading{height:100%}");
+  registerStyle48("ac697288b6", "._22b961782d58cf14__widgetChrome{height:100%}._2e38cde45383ef41__widgetChromeHeaderIcon{color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:inline-flex}._65ccc0ffeadb15bf__widgetChromeContent{flex:1;height:100%;overflow-y:auto}._132a15281d3a4a3c__widgetChromeContentBleed{padding-block:0}.d8613f533b0e359e__widgetChromeBleedScroll{height:100%;overflow-y:auto}.d86427717f1c6168__loading{height:100%}");
 }
-var widget_chrome_default = { "widgetChrome": "_22b961782d58cf14__widgetChrome", "widgetChromeHeaderIcon": "_2e38cde45383ef41__widgetChromeHeaderIcon", "widgetChromeContent": "_65ccc0ffeadb15bf__widgetChromeContent", "widgetChromeContentFullBleed": "_4b945d60dc39d743__widgetChromeContentFullBleed", "loading": "d86427717f1c6168__loading" };
+var widget_chrome_default = { "widgetChrome": "_22b961782d58cf14__widgetChrome", "widgetChromeHeaderIcon": "_2e38cde45383ef41__widgetChromeHeaderIcon", "widgetChromeContent": "_65ccc0ffeadb15bf__widgetChromeContent", "widgetChromeContentBleed": "_132a15281d3a4a3c__widgetChromeContentBleed", "widgetChromeBleedScroll": "d8613f533b0e359e__widgetChromeBleedScroll", "loading": "d86427717f1c6168__loading" };
 
 // routes/dashboard/widget-dashboard/components/widget-chrome/widget-chrome.tsx
 var import_jsx_runtime208 = __toESM(require_jsx_runtime());
@@ -41150,13 +41150,22 @@ var WidgetChrome = (0, import_element164.forwardRef)(
         ...editMode ? { inert: "" } : {},
         children: [
           isHeaderHidden ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(VisuallyHidden, { children: header }) : header,
-          /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: isBodyBleeding ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
-            card_exports.FullBleed,
+          /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+            card_exports.Content,
             {
-              className: widget_chrome_default.widgetChromeContentFullBleed,
-              children: body
+              className: clsx_default(
+                widget_chrome_default.widgetChromeContent,
+                isBodyBleeding && widget_chrome_default.widgetChromeContentBleed
+              ),
+              children: isBodyBleeding ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+                card_exports.FullBleed,
+                {
+                  className: widget_chrome_default.widgetChromeBleedScroll,
+                  children: body
+                }
+              ) : body
             }
-          ) : body })
+          )
         ]
       }
     ) });
