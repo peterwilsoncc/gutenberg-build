@@ -119,10 +119,10 @@ function clsx() {
 var clsx_default = clsx;
 
 // node_modules/@base-ui/utils/esm/useRefWithInit.js
-var React2 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React2.useRef(UNINITIALIZED);
+  const ref = React.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
@@ -145,7 +145,7 @@ function warn(...messages) {
 }
 
 // node_modules/@base-ui/react/esm/internals/useRenderElement.js
-var React5 = __toESM(require_react(), 1);
+var React4 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/useMergedRefs.js
 function useMergedRefs(a, b, c, d) {
@@ -237,18 +237,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
-var React4 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/reactVersion.js
-var React3 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React3.version, 10);
+var React2 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React2.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React4.isValidElement(element)) {
+  if (!/* @__PURE__ */ React3.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -533,15 +533,15 @@ function evaluateRenderProp(element, render, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React5.Children.toArray(render);
+      const children = React4.Children.toArray(render);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React5.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React4.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React5.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React4.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -578,7 +578,7 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React5.createElement(Tag, props);
+  return /* @__PURE__ */ React4.createElement(Tag, props);
 }
 
 // node_modules/@base-ui/react/esm/use-render/useRender.js
@@ -1062,6 +1062,7 @@ if (typeof process === "undefined" || true) {
 var header_background_default = { "root": "_2dc6908d13f9b567__root" };
 
 // widgets/welcome/components/header-background/header-background.tsx
+var import_jsx_runtime6 = __toESM(require_jsx_runtime());
 function HeaderBackground() {
   const idBase = (0, import_element5.useId)();
   const clipId = `${idBase}-clip`;
@@ -1071,7 +1072,7 @@ function HeaderBackground() {
   const lineIds = [1, 2, 3, 4, 5].map(
     (index) => `${idBase}-line-${index}`
   );
-  return /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
     import_primitives5.SVG,
     {
       className: header_background_default.root,
@@ -1080,260 +1081,296 @@ function HeaderBackground() {
       viewBox: "0 0 1232 240",
       xmlns: "http://www.w3.org/2000/svg",
       "aria-hidden": "true",
-      focusable: "false"
-    },
-    /* @__PURE__ */ React.createElement(import_primitives5.G, { clipPath: `url(#${clipId})` }, /* @__PURE__ */ React.createElement(import_primitives5.Path, { fill: "var(--banner-bg)", d: "M0 0h1232v240H0z" }), /* @__PURE__ */ React.createElement(
-      "ellipse",
-      {
-        cx: "616",
-        cy: "232",
-        fill: `url(#${radialId})`,
-        opacity: ".05",
-        rx: "1497",
-        ry: "249"
-      }
-    ), /* @__PURE__ */ React.createElement(
-      "mask",
-      {
-        id: maskId,
-        width: "1000",
-        height: "400",
-        x: "232",
-        y: "20",
-        maskUnits: "userSpaceOnUse",
-        style: { maskType: "alpha" }
-      },
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Path,
-        {
-          fill: `url(#${fadeId})`,
-          d: "M0 0h1000v400H0z",
-          transform: "translate(232 20)"
-        }
-      )
-    ), /* @__PURE__ */ React.createElement(import_primitives5.G, { strokeWidth: "2", mask: `url(#${maskId})` }, /* @__PURE__ */ React.createElement(
-      import_primitives5.Path,
-      {
-        stroke: `url(#${lineIds[0]})`,
-        d: "M387 20v1635"
-      }
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.Path,
-      {
-        stroke: `url(#${lineIds[1]})`,
-        d: "M559.5 20v1635"
-      }
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.Path,
-      {
-        stroke: `url(#${lineIds[2]})`,
-        d: "M732 20v1635"
-      }
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.Path,
-      {
-        stroke: `url(#${lineIds[3]})`,
-        d: "M904.5 20v1635"
-      }
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.Path,
-      {
-        stroke: `url(#${lineIds[4]})`,
-        d: "M1077 20v1635"
-      }
-    ))),
-    /* @__PURE__ */ React.createElement(import_primitives5.Defs, null, /* @__PURE__ */ React.createElement(
-      import_primitives5.LinearGradient,
-      {
-        id: lineIds[0],
-        x1: "387.5",
-        x2: "387.5",
-        y1: "20",
-        y2: "1655",
-        gradientUnits: "userSpaceOnUse"
-      },
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          stopColor: "var(--banner-line-brand)",
-          stopOpacity: "0"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-brand)" }),
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-brand)" }),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: "1",
-          stopColor: "var(--banner-line-brand)",
-          stopOpacity: "0"
-        }
-      )
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.LinearGradient,
-      {
-        id: lineIds[1],
-        x1: "560",
-        x2: "560",
-        y1: "20",
-        y2: "1655",
-        gradientUnits: "userSpaceOnUse"
-      },
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          stopColor: "var(--banner-line-caution)",
-          stopOpacity: "0"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: ".297",
-          stopColor: "var(--banner-line-caution)"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: ".734",
-          stopColor: "var(--banner-line-caution)"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: "1",
-          stopColor: "var(--banner-line-caution)",
-          stopOpacity: "0"
-        }
-      )
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.LinearGradient,
-      {
-        id: lineIds[2],
-        x1: "732.5",
-        x2: "732.5",
-        y1: "20",
-        y2: "1655",
-        gradientUnits: "userSpaceOnUse"
-      },
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          stopColor: "var(--banner-line-success)",
-          stopOpacity: "0"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: ".297",
-          stopColor: "var(--banner-line-success)"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: ".693",
-          stopColor: "var(--banner-line-success)"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: "1",
-          stopColor: "var(--banner-line-success)",
-          stopOpacity: "0"
-        }
-      )
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.LinearGradient,
-      {
-        id: lineIds[3],
-        x1: "905",
-        x2: "905",
-        y1: "20",
-        y2: "1655",
-        gradientUnits: "userSpaceOnUse"
-      },
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          stopColor: "var(--banner-line-error)",
-          stopOpacity: "0"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-error)" }),
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-error)" }),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: "1",
-          stopColor: "var(--banner-line-error)",
-          stopOpacity: "0"
-        }
-      )
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.LinearGradient,
-      {
-        id: lineIds[4],
-        x1: "1077.5",
-        x2: "1077.5",
-        y1: "20",
-        y2: "1655",
-        gradientUnits: "userSpaceOnUse"
-      },
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { stopColor: "var(--banner-line-info)", stopOpacity: "0" }),
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-info)" }),
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-info)" }),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: "1",
-          stopColor: "var(--banner-line-info)",
-          stopOpacity: "0"
-        }
-      )
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.RadialGradient,
-      {
-        id: radialId,
-        cx: "0",
-        cy: "0",
-        r: "1",
-        gradientTransform: "matrix(0 249 -1497 0 616 232)",
-        gradientUnits: "userSpaceOnUse"
-      },
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { stopColor: "var(--banner-line-brand)" }),
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: "1",
-          stopColor: "var(--banner-bg)",
-          stopOpacity: "0"
-        }
-      )
-    ), /* @__PURE__ */ React.createElement(
-      import_primitives5.RadialGradient,
-      {
-        id: fadeId,
-        cx: "0",
-        cy: "0",
-        r: "1",
-        gradientTransform: "matrix(0 765 -1912.5 0 500 -110)",
-        gradientUnits: "userSpaceOnUse"
-      },
-      /* @__PURE__ */ React.createElement(
-        import_primitives5.Stop,
-        {
-          offset: ".161",
-          stopColor: "var(--banner-bg)",
-          stopOpacity: "0"
-        }
-      ),
-      /* @__PURE__ */ React.createElement(import_primitives5.Stop, { offset: ".682", stopColor: "var(--banner-bg)" })
-    ), /* @__PURE__ */ React.createElement("clipPath", { id: clipId }, /* @__PURE__ */ React.createElement(import_primitives5.Path, { fill: "var(--banner-fg)", d: "M0 0h1232v240H0z" })))
+      focusable: "false",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_primitives5.G, { clipPath: `url(#${clipId})`, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Path, { fill: "var(--banner-bg)", d: "M0 0h1232v240H0z" }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            "ellipse",
+            {
+              cx: "616",
+              cy: "232",
+              fill: `url(#${radialId})`,
+              opacity: ".05",
+              rx: "1497",
+              ry: "249"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            "mask",
+            {
+              id: maskId,
+              width: "1000",
+              height: "400",
+              x: "232",
+              y: "20",
+              maskUnits: "userSpaceOnUse",
+              style: { maskType: "alpha" },
+              children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                import_primitives5.Path,
+                {
+                  fill: `url(#${fadeId})`,
+                  d: "M0 0h1000v400H0z",
+                  transform: "translate(232 20)"
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_primitives5.G, { strokeWidth: "2", mask: `url(#${maskId})`, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Path,
+              {
+                stroke: `url(#${lineIds[0]})`,
+                d: "M387 20v1635"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Path,
+              {
+                stroke: `url(#${lineIds[1]})`,
+                d: "M559.5 20v1635"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Path,
+              {
+                stroke: `url(#${lineIds[2]})`,
+                d: "M732 20v1635"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Path,
+              {
+                stroke: `url(#${lineIds[3]})`,
+                d: "M904.5 20v1635"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Path,
+              {
+                stroke: `url(#${lineIds[4]})`,
+                d: "M1077 20v1635"
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_primitives5.Defs, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+            import_primitives5.LinearGradient,
+            {
+              id: lineIds[0],
+              x1: "387.5",
+              x2: "387.5",
+              y1: "20",
+              y2: "1655",
+              gradientUnits: "userSpaceOnUse",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    stopColor: "var(--banner-line-brand)",
+                    stopOpacity: "0"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-brand)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-brand)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: "1",
+                    stopColor: "var(--banner-line-brand)",
+                    stopOpacity: "0"
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+            import_primitives5.LinearGradient,
+            {
+              id: lineIds[1],
+              x1: "560",
+              x2: "560",
+              y1: "20",
+              y2: "1655",
+              gradientUnits: "userSpaceOnUse",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    stopColor: "var(--banner-line-caution)",
+                    stopOpacity: "0"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: ".297",
+                    stopColor: "var(--banner-line-caution)"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: ".734",
+                    stopColor: "var(--banner-line-caution)"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: "1",
+                    stopColor: "var(--banner-line-caution)",
+                    stopOpacity: "0"
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+            import_primitives5.LinearGradient,
+            {
+              id: lineIds[2],
+              x1: "732.5",
+              x2: "732.5",
+              y1: "20",
+              y2: "1655",
+              gradientUnits: "userSpaceOnUse",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    stopColor: "var(--banner-line-success)",
+                    stopOpacity: "0"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: ".297",
+                    stopColor: "var(--banner-line-success)"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: ".693",
+                    stopColor: "var(--banner-line-success)"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: "1",
+                    stopColor: "var(--banner-line-success)",
+                    stopOpacity: "0"
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+            import_primitives5.LinearGradient,
+            {
+              id: lineIds[3],
+              x1: "905",
+              x2: "905",
+              y1: "20",
+              y2: "1655",
+              gradientUnits: "userSpaceOnUse",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    stopColor: "var(--banner-line-error)",
+                    stopOpacity: "0"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-error)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-error)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: "1",
+                    stopColor: "var(--banner-line-error)",
+                    stopOpacity: "0"
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+            import_primitives5.LinearGradient,
+            {
+              id: lineIds[4],
+              x1: "1077.5",
+              x2: "1077.5",
+              y1: "20",
+              y2: "1655",
+              gradientUnits: "userSpaceOnUse",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { stopColor: "var(--banner-line-info)", stopOpacity: "0" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-info)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-info)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: "1",
+                    stopColor: "var(--banner-line-info)",
+                    stopOpacity: "0"
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+            import_primitives5.RadialGradient,
+            {
+              id: radialId,
+              cx: "0",
+              cy: "0",
+              r: "1",
+              gradientTransform: "matrix(0 249 -1497 0 616 232)",
+              gradientUnits: "userSpaceOnUse",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { stopColor: "var(--banner-line-brand)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: "1",
+                    stopColor: "var(--banner-bg)",
+                    stopOpacity: "0"
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+            import_primitives5.RadialGradient,
+            {
+              id: fadeId,
+              cx: "0",
+              cy: "0",
+              r: "1",
+              gradientTransform: "matrix(0 765 -1912.5 0 500 -110)",
+              gradientUnits: "userSpaceOnUse",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  import_primitives5.Stop,
+                  {
+                    offset: ".161",
+                    stopColor: "var(--banner-bg)",
+                    stopOpacity: "0"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".682", stopColor: "var(--banner-bg)" })
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("clipPath", { id: clipId, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Path, { fill: "var(--banner-fg)", d: "M0 0h1232v240H0z" }) })
+        ] })
+      ]
+    }
   );
 }
 
@@ -1344,6 +1381,7 @@ if (typeof process === "undefined" || true) {
 var banner_default = { "banner": "b895e30353489bf2__banner", "bannerContent": "_4e4405b6dd233bb1__bannerContent", "bannerLink": "_97b3d6d6e1182c1e__bannerLink", "wide": "_90addec1dadabb6c__wide", "tiny": "_0a74f5cedafbd02c__tiny" };
 
 // widgets/welcome/components/banner/banner.tsx
+var import_jsx_runtime7 = __toESM(require_jsx_runtime());
 var DISPLAY_VERSION = "7.1";
 function Banner({ isWide = false, isTiny = false }) {
   const className = clsx_default(
@@ -1351,28 +1389,33 @@ function Banner({ isWide = false, isTiny = false }) {
     isWide && banner_default.wide,
     isTiny && banner_default.tiny
   );
-  return /* @__PURE__ */ React.createElement(Stack, { className, direction: "column", justify: "center" }, /* @__PURE__ */ React.createElement(HeaderBackground, null), /* @__PURE__ */ React.createElement(
-    Stack,
-    {
-      className: banner_default.bannerContent,
-      gap: "sm",
-      direction: "column"
-    },
-    /* @__PURE__ */ React.createElement(Text, { variant: "heading-2xl" }, (0, import_i18n2.__)("Welcome to WordPress!")),
-    /* @__PURE__ */ React.createElement(Text, { variant: "heading-lg" }, /* @__PURE__ */ React.createElement(
-      Link,
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(Stack, { className, direction: "column", justify: "center", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(HeaderBackground, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+      Stack,
       {
-        className: banner_default.bannerLink,
-        href: "/wp-admin/about.php",
-        variant: "unstyled"
-      },
-      (0, import_i18n2.sprintf)(
-        /* translators: %s: Current WordPress version. */
-        (0, import_i18n2.__)("Learn more about the %s version."),
-        DISPLAY_VERSION
-      )
-    ))
-  ));
+        className: banner_default.bannerContent,
+        gap: "sm",
+        direction: "column",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Text, { variant: "heading-2xl", children: (0, import_i18n2.__)("Welcome to WordPress!") }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Text, { variant: "heading-lg", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+            Link,
+            {
+              className: banner_default.bannerLink,
+              href: "/wp-admin/about.php",
+              variant: "unstyled",
+              children: (0, import_i18n2.sprintf)(
+                /* translators: %s: Current WordPress version. */
+                (0, import_i18n2.__)("Learn more about the %s version."),
+                DISPLAY_VERSION
+              )
+            }
+          ) })
+        ]
+      }
+    )
+  ] });
 }
 
 // widgets/welcome/components/feature-highlight/feature-highlight.module.css
@@ -1382,6 +1425,7 @@ if (typeof process === "undefined" || true) {
 var feature_highlight_default = { "iconBox": "ec4cdaa2ef617aad__iconBox" };
 
 // widgets/welcome/components/feature-highlight/feature-highlight.tsx
+var import_jsx_runtime8 = __toESM(require_jsx_runtime());
 function FeatureHighlight({
   icon,
   title,
@@ -1389,16 +1433,23 @@ function FeatureHighlight({
   ctaUrl,
   ctaLabel
 }) {
-  return /* @__PURE__ */ React.createElement(Stack, { direction: "row", gap: "lg", align: "start" }, /* @__PURE__ */ React.createElement(
-    Stack,
-    {
-      className: feature_highlight_default.iconBox,
-      direction: "column",
-      align: "center",
-      justify: "center"
-    },
-    /* @__PURE__ */ React.createElement(Icon, { icon })
-  ), /* @__PURE__ */ React.createElement(Stack, { direction: "column", gap: "sm" }, /* @__PURE__ */ React.createElement(Text, { variant: "heading-md", render: /* @__PURE__ */ React.createElement("h3", null) }, title), /* @__PURE__ */ React.createElement(Text, { render: /* @__PURE__ */ React.createElement("p", null) }, description), /* @__PURE__ */ React.createElement(Link, { href: ctaUrl }, ctaLabel)));
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(Stack, { direction: "row", gap: "lg", align: "start", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+      Stack,
+      {
+        className: feature_highlight_default.iconBox,
+        direction: "column",
+        align: "center",
+        justify: "center",
+        children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Icon, { icon })
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(Stack, { direction: "column", gap: "sm", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Text, { variant: "heading-md", render: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", {}), children: title }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", {}), children: description }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Link, { href: ctaUrl, children: ctaLabel })
+    ] })
+  ] });
 }
 
 // widgets/welcome/style.module.css
@@ -1408,6 +1459,7 @@ if (typeof process === "undefined" || true) {
 var style_default4 = { "root": "_2f6622b092c712f3__root", "columns": "d2e844d428fd4410__columns", "wide": "ef55980dda15d462__wide" };
 
 // widgets/welcome/render.tsx
+var import_jsx_runtime9 = __toESM(require_jsx_runtime());
 var ROW_LAYOUT_MIN_WIDTH = 800;
 var ROW_LAYOUT_MAX_HEIGHT = 390;
 var TINY_LAYOUT_MAX_SIZE = 120;
@@ -1461,29 +1513,35 @@ function WelcomeBanner() {
     ctaUrl: "/wp-admin/site-editor.php?p=%2Fstyles",
     ctaLabel: (0, import_i18n3.__)("Edit styles")
   };
-  return /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
     Stack,
     {
       ref: setRef,
       className: `${style_default4.root}${isWide ? ` ${style_default4.wide}` : ""}`,
       direction: isWide ? "row" : "column",
-      gap: "lg"
-    },
-    /* @__PURE__ */ React.createElement(Banner, { isWide, isTiny }),
-    !isTiny && /* @__PURE__ */ React.createElement(Stack, { className: style_default4.columns }, /* @__PURE__ */ React.createElement(
-      FeatureHighlight,
-      {
-        icon: pencil_default,
-        title: (0, import_i18n3.__)(
-          "Author rich content with blocks and patterns"
-        ),
-        description: (0, import_i18n3.__)(
-          "Block patterns are pre-configured block layouts. Use them to get inspired or create new pages in a flash."
-        ),
-        ctaUrl: "/wp-admin/post-new.php?post_type=page",
-        ctaLabel: (0, import_i18n3.__)("Add a new page")
-      }
-    ), /* @__PURE__ */ React.createElement(FeatureHighlight, { ...customizeFeature }), /* @__PURE__ */ React.createElement(FeatureHighlight, { ...stylesFeature }))
+      gap: "lg",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Banner, { isWide, isTiny }),
+        !isTiny && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Stack, { className: style_default4.columns, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+            FeatureHighlight,
+            {
+              icon: pencil_default,
+              title: (0, import_i18n3.__)(
+                "Author rich content with blocks and patterns"
+              ),
+              description: (0, import_i18n3.__)(
+                "Block patterns are pre-configured block layouts. Use them to get inspired or create new pages in a flash."
+              ),
+              ctaUrl: "/wp-admin/post-new.php?post_type=page",
+              ctaLabel: (0, import_i18n3.__)("Add a new page")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(FeatureHighlight, { ...customizeFeature }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(FeatureHighlight, { ...stylesFeature })
+        ] })
+      ]
+    }
   );
 }
 export {

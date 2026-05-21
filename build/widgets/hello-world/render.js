@@ -38,6 +38,13 @@ var require_react = __commonJS({
   }
 });
 
+// vendor-external:react/jsx-runtime
+var require_jsx_runtime = __commonJS({
+  "vendor-external:react/jsx-runtime"(exports, module) {
+    module.exports = window.ReactJSXRuntime;
+  }
+});
+
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
   var t, f, n = "";
@@ -55,10 +62,10 @@ function clsx() {
 var clsx_default = clsx;
 
 // node_modules/@base-ui/utils/esm/useRefWithInit.js
-var React2 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React2.useRef(UNINITIALIZED);
+  const ref = React.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
@@ -81,7 +88,7 @@ function warn(...messages) {
 }
 
 // node_modules/@base-ui/react/esm/internals/useRenderElement.js
-var React5 = __toESM(require_react(), 1);
+var React4 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/useMergedRefs.js
 function useMergedRefs(a, b, c, d) {
@@ -173,18 +180,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
-var React4 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/esm/reactVersion.js
-var React3 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React3.version, 10);
+var React2 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React2.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/esm/getReactElementRef.js
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React4.isValidElement(element)) {
+  if (!/* @__PURE__ */ React3.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -469,15 +476,15 @@ function evaluateRenderProp(element, render, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React5.Children.toArray(render);
+      const children = React4.Children.toArray(render);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React5.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React4.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React5.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React4.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -514,7 +521,7 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React5.createElement(Tag, props);
+  return /* @__PURE__ */ React4.createElement(Tag, props);
 }
 
 // node_modules/@base-ui/react/esm/use-render/useRender.js
@@ -830,15 +837,16 @@ if (typeof process === "undefined" || true) {
 var style_default3 = { "root": "_6e9c47f7f67ffa0d__root" };
 
 // widgets/hello-world/render.tsx
+var import_jsx_runtime = __toESM(require_jsx_runtime());
 function HelloWorld() {
-  return /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
     Stack,
     {
       align: "center",
       justify: "center",
-      className: clsx_default(style_default3.root)
-    },
-    /* @__PURE__ */ React.createElement(Text, { variant: "heading-2xl" }, "Hello World")
+      className: clsx_default(style_default3.root),
+      children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, { variant: "heading-2xl", children: "Hello World" })
+    }
   );
 }
 export {
