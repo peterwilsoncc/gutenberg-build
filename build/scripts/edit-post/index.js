@@ -87,6 +87,20 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/core-data
+  var require_core_data = __commonJS({
+    "package-external:@wordpress/core-data"(exports, module) {
+      module.exports = window.wp.coreData;
+    }
+  });
+
+  // package-external:@wordpress/api-fetch
+  var require_api_fetch = __commonJS({
+    "package-external:@wordpress/api-fetch"(exports, module) {
+      module.exports = window.wp.apiFetch;
+    }
+  });
+
   // package-external:@wordpress/i18n
   var require_i18n = __commonJS({
     "package-external:@wordpress/i18n"(exports, module) {
@@ -185,24 +199,10 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/core-data
-  var require_core_data = __commonJS({
-    "package-external:@wordpress/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
-    }
-  });
-
   // package-external:@wordpress/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@wordpress/keyboard-shortcuts"(exports, module) {
       module.exports = window.wp.keyboardShortcuts;
-    }
-  });
-
-  // package-external:@wordpress/api-fetch
-  var require_api_fetch = __commonJS({
-    "package-external:@wordpress/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
     }
   });
 
@@ -246,6 +246,8 @@ var wp;
   var import_preferences11 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
   var import_editor20 = __toESM(require_editor(), 1);
+  var import_core_data9 = __toESM(require_core_data(), 1);
+  var import_api_fetch2 = __toESM(require_api_fetch(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
   function r(e) {
@@ -3484,6 +3486,9 @@ var wp;
     BackButton: __experimentalMainDashboardButton,
     registerCoreBlockBindingsSources
   } = unlock(import_editor20.privateApis);
+  var { enablePreloadMultiUse, clearPreloadedData } = unlock(
+    import_api_fetch2.default.privateApis
+  );
   function initializeEditor(id, postType, postId, settings, initialEdits) {
     const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
     const target = document.getElementById(id);
@@ -3553,18 +3558,96 @@ var wp;
     }
     window.addEventListener("dragover", (e) => e.preventDefault(), false);
     window.addEventListener("drop", (e) => e.preventDefault(), false);
-    root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_element14.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-        layout_default,
-        {
-          settings,
-          postId,
-          postType,
-          initialEdits
-        }
-      ) })
-    );
+    enablePreloadMultiUse();
+    const preloadedResolutions = preloadResolutions(postType, postId);
+    preloadedResolutions.finally(() => {
+      clearPreloadedData();
+      root.render(
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_element14.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+          layout_default,
+          {
+            settings,
+            postId,
+            postType,
+            initialEdits
+          }
+        ) })
+      );
+    });
     return root;
+  }
+  async function preloadResolutions(postType, postId) {
+    const core = (0, import_data26.resolveSelect)(import_core_data9.store);
+    const coreSelect = (0, import_data26.select)(import_core_data9.store);
+    try {
+      await Promise.all([
+        core.getCurrentUser(),
+        core.getEntitiesConfig("postType"),
+        core.getEntitiesConfig("taxonomy"),
+        core.getEntitiesConfig("root"),
+        core.getCurrentTheme(),
+        // Forward-resolver alias of `getCurrentTheme` with its own
+        // resolution metadata, so it needs a separate kick.
+        core.getThemeSupports(),
+        core.getBlockPatternCategories(),
+        core.__experimentalGetCurrentGlobalStylesId(),
+        core.__experimentalGetCurrentThemeBaseGlobalStyles(),
+        core.__experimentalGetCurrentThemeGlobalStylesVariations(),
+        core.getEntityRecord("root", "__unstableBase"),
+        core.getEntityRecord("root", "site"),
+        core.canUser("read", { kind: "root", name: "site" }),
+        core.canUser("create", { kind: "postType", name: "attachment" }),
+        core.canUser("create", { kind: "postType", name: "page" }),
+        core.canUser("create", { kind: "postType", name: "wp_block" }),
+        core.canUser("create", {
+          kind: "postType",
+          name: "wp_template"
+        }),
+        // Per-post resolvers. `getPostType` and `getEditedEntityRecord`
+        // are shorthand/forward-resolver aliases with their own
+        // resolution metadata, so they need separate kicks.
+        ...postType && postId ? [
+          core.getPostType(postType),
+          core.getEntityRecord("postType", postType, postId),
+          core.getEditedEntityRecord(
+            "postType",
+            postType,
+            postId
+          ),
+          core.getAutosaves(postType, postId)
+        ] : []
+      ]);
+      const tasks = [];
+      const globalStylesId = coreSelect.__experimentalGetCurrentGlobalStylesId();
+      if (globalStylesId) {
+        tasks.push(
+          core.getEntityRecord("root", "globalStyles", globalStylesId),
+          core.canUser("read", {
+            kind: "root",
+            name: "globalStyles",
+            id: globalStylesId
+          })
+        );
+      }
+      if (postType && postId) {
+        const post = coreSelect.getEntityRecord(
+          "postType",
+          postType,
+          postId
+        );
+        if (post) {
+          let slug = "page" === postType ? "page" : "single-" + postType;
+          if (post.slug) {
+            slug += "-" + post.slug;
+          }
+          tasks.push(core.getDefaultTemplateId({ slug }));
+        }
+      }
+      if (tasks.length) {
+        await Promise.all(tasks);
+      }
+    } catch {
+    }
   }
   function reinitializeEditor() {
     (0, import_deprecated4.default)("wp.editPost.reinitializeEditor", {

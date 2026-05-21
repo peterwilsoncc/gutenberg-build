@@ -46233,9 +46233,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function StartPageOptions() {
     const [isOpen2, setIsOpen] = (0, import_element147.useState)(false);
-    const { isEditedPostDirty: isEditedPostDirty2, isEditedPostEmpty: isEditedPostEmpty2 } = (0, import_data57.useSelect)(store);
+    const { isEditedPostEmpty: isEditedPostEmpty2 } = (0, import_data57.useSelect)(store);
+    const { getEntityRecordNonTransientEdits } = (0, import_data57.useSelect)(import_core_data36.store);
     const { isModalActive: isModalActive2 } = (0, import_data57.useSelect)(store3);
-    const { enabled, postId: postId2 } = (0, import_data57.useSelect)((select7) => {
+    const { enabled, postType: postType2, postId: postId2 } = (0, import_data57.useSelect)((select7) => {
       const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select7(store);
       const choosePatternModalEnabled = select7(import_preferences9.store).get(
         "core",
@@ -46243,12 +46244,20 @@ If there's a particular need for this, please submit a feature request at https:
       );
       const currentPostType = getCurrentPostType2();
       return {
+        postType: currentPostType,
         postId: getCurrentPostId2(),
         enabled: choosePatternModalEnabled && ATTACHMENT_POST_TYPE !== currentPostType && TEMPLATE_POST_TYPE !== currentPostType && TEMPLATE_PART_POST_TYPE !== currentPostType
       };
     }, []);
     (0, import_element147.useEffect)(() => {
-      const isFreshPage = !isEditedPostDirty2() && isEditedPostEmpty2();
+      const hasEdits = Object.keys(
+        getEntityRecordNonTransientEdits(
+          "postType",
+          postType2,
+          postId2
+        ) ?? {}
+      ).length > 0;
+      const isFreshPage = !hasEdits && isEditedPostEmpty2();
       const isPreferencesModalActive = isModalActive2("editor/preferences");
       if (!enabled || !isFreshPage || isPreferencesModalActive) {
         return;
@@ -46256,8 +46265,9 @@ If there's a particular need for this, please submit a feature request at https:
       setIsOpen(true);
     }, [
       enabled,
+      postType2,
       postId2,
-      isEditedPostDirty2,
+      getEntityRecordNonTransientEdits,
       isEditedPostEmpty2,
       isModalActive2
     ]);
@@ -46714,17 +46724,19 @@ If there's a particular need for this, please submit a feature request at https:
         const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select7(store);
         const _postType = getCurrentPostType2();
         const _postId = getCurrentPostId2();
-        const { getEditedEntityRecord, hasEditsForEntityRecord } = select7(import_core_data37.store);
+        const { getEditedEntityRecord, getEntityRecordNonTransientEdits } = select7(import_core_data37.store);
         const templateRecord = getEditedEntityRecord(
           "postType",
           _postType,
           _postId
         );
-        const hasEdits = hasEditsForEntityRecord(
-          "postType",
-          _postType,
-          _postId
-        );
+        const hasEdits = Object.keys(
+          getEntityRecordNonTransientEdits(
+            "postType",
+            _postType,
+            _postId
+          ) ?? {}
+        ).length > 0;
         return {
           shouldOpenModal: !hasEdits && "" === templateRecord.content && TEMPLATE_POST_TYPE === _postType,
           slug: templateRecord.slug,
