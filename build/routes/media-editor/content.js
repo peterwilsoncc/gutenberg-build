@@ -11894,7 +11894,7 @@ var import_notices3 = __toESM(require_notices(), 1);
 var import_components39 = __toESM(require_components(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
-var import_element74 = __toESM(require_element(), 1);
+var import_element75 = __toESM(require_element(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_keycodes3 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
@@ -12829,9 +12829,6 @@ var interface_skeleton_default = (0, import_element57.forwardRef)(InterfaceSkele
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
 var import_element68 = __toESM(require_element(), 1);
-
-// packages/media-editor/build-module/image-editor/react/hooks/use-cropper-state.mjs
-var import_element58 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
 var import_i18n27 = __toESM(require_i18n(), 1);
@@ -13937,6 +13934,11 @@ var STATE_EPSILON = 1e-6;
 function nearlyEqual(a2, b2) {
   return Math.abs(a2 - b2) < STATE_EPSILON;
 }
+function areCropperStatesEqual(a2, b2) {
+  const aImage = a2.image;
+  const bImage = b2.image;
+  return aImage?.src === bImage?.src && aImage?.naturalWidth === bImage?.naturalWidth && aImage?.naturalHeight === bImage?.naturalHeight && nearlyEqual(a2.pan.x, b2.pan.x) && nearlyEqual(a2.pan.y, b2.pan.y) && nearlyEqual(a2.zoom, b2.zoom) && nearlyEqual(a2.rotation, b2.rotation) && a2.flip.horizontal === b2.flip.horizontal && a2.flip.vertical === b2.flip.vertical && nearlyEqual(a2.cropRect.x, b2.cropRect.x) && nearlyEqual(a2.cropRect.y, b2.cropRect.y) && nearlyEqual(a2.cropRect.width, b2.cropRect.width) && nearlyEqual(a2.cropRect.height, b2.cropRect.height);
+}
 function clampRequestedZoom(state, zoom) {
   if (state.image) {
     return Math.min(MAX_ZOOM, Math.max(ABSOLUTE_MIN_ZOOM, zoom));
@@ -14169,291 +14171,109 @@ function cropperReducer(state, action) {
       );
   }
 }
-function isStateDirty(current, initial) {
-  return !nearlyEqual(current.pan.x, initial.pan.x) || !nearlyEqual(current.pan.y, initial.pan.y) || !nearlyEqual(current.zoom, initial.zoom) || !nearlyEqual(current.rotation, initial.rotation) || current.flip.horizontal !== initial.flip.horizontal || current.flip.vertical !== initial.flip.vertical || !nearlyEqual(current.cropRect.x, initial.cropRect.x) || !nearlyEqual(current.cropRect.y, initial.cropRect.y) || !nearlyEqual(current.cropRect.width, initial.cropRect.width) || !nearlyEqual(current.cropRect.height, initial.cropRect.height);
+
+// packages/media-editor/build-module/image-editor/core/setter-helpers.mjs
+function buildFocalPointZoomAction(state, requestedZoom) {
+  const clampedZoom = Math.min(
+    MAX_ZOOM,
+    Math.max(getMinZoom(state), requestedZoom)
+  );
+  if (clampedZoom === state.zoom) {
+    return null;
+  }
+  const { cropRect } = state;
+  const focalNormX = cropRect.x + cropRect.width / 2 - 0.5;
+  const focalNormY = cropRect.y + cropRect.height / 2 - 0.5;
+  const zoomRatio = 1 - clampedZoom / state.zoom;
+  const newPanX = state.pan.x + (focalNormX - state.pan.x) * zoomRatio;
+  const newPanY = state.pan.y + (focalNormY - state.pan.y) * zoomRatio;
+  const imageSize = state.image ? {
+    width: state.image.naturalWidth,
+    height: state.image.naturalHeight
+  } : { width: 1, height: 1 };
+  const { pan: clampedPan } = restrictPanZoom(
+    {
+      ...state,
+      zoom: clampedZoom,
+      pan: { x: newPanX, y: newPanY }
+    },
+    imageSize,
+    state.cropRect
+  );
+  return {
+    type: "SET_ZOOM_AT_POINT",
+    payload: { zoom: clampedZoom, pan: clampedPan }
+  };
 }
 
-// packages/media-editor/build-module/image-editor/react/hooks/use-cropper-state.mjs
-var HISTORY_DEBOUNCE_MS = 300;
-var HISTORY_EPSILON = 1e-6;
-function nearlyEqual2(a2, b2) {
-  return Math.abs(a2 - b2) < HISTORY_EPSILON;
-}
-function areHistoryStatesEqual(a2, b2) {
-  const aImage = a2.image;
-  const bImage = b2.image;
-  return aImage?.src === bImage?.src && aImage?.naturalWidth === bImage?.naturalWidth && aImage?.naturalHeight === bImage?.naturalHeight && nearlyEqual2(a2.pan.x, b2.pan.x) && nearlyEqual2(a2.pan.y, b2.pan.y) && nearlyEqual2(a2.zoom, b2.zoom) && nearlyEqual2(a2.rotation, b2.rotation) && a2.flip.horizontal === b2.flip.horizontal && a2.flip.vertical === b2.flip.vertical && nearlyEqual2(a2.cropRect.x, b2.cropRect.x) && nearlyEqual2(a2.cropRect.y, b2.cropRect.y) && nearlyEqual2(a2.cropRect.width, b2.cropRect.width) && nearlyEqual2(a2.cropRect.height, b2.cropRect.height);
-}
-function useCropperState(initialState) {
-  const [state, dispatch] = (0, import_element58.useReducer)(
-    cropperReducer,
-    initialState,
-    (init) => enforceContainment({ ...DEFAULT_STATE2, ...init })
-  );
-  const initialRef = (0, import_element58.useRef)(
-    enforceContainment({ ...DEFAULT_STATE2, ...initialState })
-  );
-  const stateRef = (0, import_element58.useRef)(state);
-  stateRef.current = state;
-  const historyRef = (0, import_element58.useRef)([]);
-  const redoStackRef = (0, import_element58.useRef)([]);
-  const [hasUndo, setHasUndo] = (0, import_element58.useState)(false);
-  const [hasRedo, setHasRedo] = (0, import_element58.useState)(false);
-  const lastCommittedStateRef = (0, import_element58.useRef)(state);
-  const debounceTimerRef = (0, import_element58.useRef)();
-  const suppressDebounceRef = (0, import_element58.useRef)(false);
-  const pushToHistory = (0, import_element58.useCallback)((entry) => {
-    const target = entry ?? stateRef.current;
-    const previousEntry = historyRef.current[historyRef.current.length - 1];
-    if (previousEntry && areHistoryStatesEqual(previousEntry, target)) {
-      return;
-    }
-    historyRef.current = [...historyRef.current, target];
-    redoStackRef.current = [];
-    setHasUndo(true);
-    setHasRedo(false);
-  }, []);
-  (0, import_element58.useEffect)(() => {
-    if (suppressDebounceRef.current) {
-      suppressDebounceRef.current = false;
-      lastCommittedStateRef.current = stateRef.current;
-      return;
-    }
-    if (lastCommittedStateRef.current !== null && areHistoryStatesEqual(
-      lastCommittedStateRef.current,
-      stateRef.current
-    )) {
-      lastCommittedStateRef.current = stateRef.current;
-      return;
-    }
-    clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(() => {
-      const snapshot = lastCommittedStateRef.current;
-      if (snapshot !== null && !areHistoryStatesEqual(snapshot, stateRef.current)) {
-        pushToHistory(snapshot);
+// packages/media-editor/build-module/image-editor/react/hooks/build-cropper-setters.mjs
+function buildCropperSetters(dispatchCropperAction, getCropperState) {
+  return {
+    setPan: (pan) => dispatchCropperAction({ type: "SET_PAN", payload: pan }),
+    setZoom: (zoom) => {
+      const action = buildFocalPointZoomAction(getCropperState(), zoom);
+      if (action) {
+        dispatchCropperAction(action);
       }
-      lastCommittedStateRef.current = stateRef.current;
-    }, HISTORY_DEBOUNCE_MS);
-    return () => clearTimeout(debounceTimerRef.current);
-  }, [state, pushToHistory]);
-  const commitHistory = (0, import_element58.useCallback)(() => {
-    clearTimeout(debounceTimerRef.current);
-    const snapshot = lastCommittedStateRef.current;
-    if (snapshot !== null && !areHistoryStatesEqual(snapshot, stateRef.current)) {
-      pushToHistory(snapshot);
-    }
-    lastCommittedStateRef.current = stateRef.current;
-  }, [pushToHistory]);
-  const undo = (0, import_element58.useCallback)(() => {
-    commitHistory();
-    const prev = historyRef.current[historyRef.current.length - 1];
-    if (!prev) {
-      return;
-    }
-    redoStackRef.current = [stateRef.current, ...redoStackRef.current];
-    historyRef.current = historyRef.current.slice(0, -1);
-    suppressDebounceRef.current = true;
-    setHasUndo(historyRef.current.length > 0);
-    setHasRedo(true);
-    dispatch({ type: "RESET", payload: prev });
-  }, [dispatch, commitHistory]);
-  const redo = (0, import_element58.useCallback)(() => {
-    commitHistory();
-    const next = redoStackRef.current[0];
-    if (!next) {
-      return;
-    }
-    historyRef.current = [...historyRef.current, stateRef.current];
-    redoStackRef.current = redoStackRef.current.slice(1);
-    suppressDebounceRef.current = true;
-    setHasUndo(true);
-    setHasRedo(redoStackRef.current.length > 0);
-    dispatch({ type: "RESET", payload: next });
-  }, [dispatch, commitHistory]);
-  const setImage = (0, import_element58.useCallback)(
-    (image) => {
-      clearTimeout(debounceTimerRef.current);
-      suppressDebounceRef.current = true;
-      dispatch({ type: "SET_IMAGE", payload: image });
-      initialRef.current = enforceContainment({
-        ...initialRef.current,
-        image
+    },
+    setZoomAtPoint: (zoom, pan) => dispatchCropperAction({
+      type: "SET_ZOOM_AT_POINT",
+      payload: { zoom, pan }
+    }),
+    setRotation: (rotation) => dispatchCropperAction({
+      type: "SET_ROTATION",
+      payload: rotation
+    }),
+    setFlip: (flip) => dispatchCropperAction({ type: "SET_FLIP", payload: flip }),
+    toggleFlip: (direction) => {
+      const { flip } = getCropperState();
+      dispatchCropperAction({
+        type: "SET_FLIP",
+        payload: { ...flip, [direction]: !flip[direction] }
       });
     },
-    [dispatch]
-  );
-  const setPan = (0, import_element58.useCallback)(
-    (pan) => {
-      dispatch({ type: "SET_PAN", payload: pan });
-    },
-    [dispatch]
-  );
-  const setZoom = (0, import_element58.useCallback)(
-    (zoom) => {
-      const s2 = stateRef.current;
-      const clampedZoom = Math.min(
-        MAX_ZOOM,
-        Math.max(getMinZoom(s2), zoom)
-      );
-      if (clampedZoom === s2.zoom) {
-        return;
-      }
-      const { cropRect } = s2;
-      const focalNormX = cropRect.x + cropRect.width / 2 - 0.5;
-      const focalNormY = cropRect.y + cropRect.height / 2 - 0.5;
-      const zoomRatio = 1 - clampedZoom / s2.zoom;
-      const newPanX = s2.pan.x + (focalNormX - s2.pan.x) * zoomRatio;
-      const newPanY = s2.pan.y + (focalNormY - s2.pan.y) * zoomRatio;
-      const imageSize = s2.image ? {
-        width: s2.image.naturalWidth,
-        height: s2.image.naturalHeight
-      } : { width: 1, height: 1 };
-      const { pan: clampedPan } = restrictPanZoom(
-        {
-          ...s2,
-          zoom: clampedZoom,
-          pan: { x: newPanX, y: newPanY }
-        },
-        imageSize,
-        s2.cropRect
-      );
-      dispatch({
-        type: "SET_ZOOM_AT_POINT",
-        payload: { zoom: clampedZoom, pan: clampedPan }
-      });
-    },
-    [dispatch]
-  );
-  const setZoomAtPoint = (0, import_element58.useCallback)(
-    (zoom, pan) => {
-      dispatch({
-        type: "SET_ZOOM_AT_POINT",
-        payload: { zoom, pan }
-      });
-    },
-    [dispatch]
-  );
-  const setRotation = (0, import_element58.useCallback)(
-    (rotation) => {
-      dispatch({ type: "SET_ROTATION", payload: rotation });
-    },
-    [dispatch]
-  );
-  const setFlip = (0, import_element58.useCallback)(
-    (flip) => {
-      commitHistory();
-      pushToHistory();
-      suppressDebounceRef.current = true;
-      dispatch({ type: "SET_FLIP", payload: flip });
-    },
-    [dispatch, pushToHistory, commitHistory]
-  );
-  const toggleFlip = (0, import_element58.useCallback)(
-    (direction) => {
-      setFlip({
-        ...stateRef.current.flip,
-        [direction]: !stateRef.current.flip[direction]
-      });
-    },
-    [setFlip]
-  );
-  const snapRotate90 = (0, import_element58.useCallback)(
-    (direction) => {
-      commitHistory();
-      pushToHistory();
-      suppressDebounceRef.current = true;
-      dispatch({
-        type: "SNAP_ROTATE_90",
-        payload: { direction }
-      });
-    },
-    [dispatch, pushToHistory, commitHistory]
-  );
-  const setCropRect = (0, import_element58.useCallback)(
-    (rect) => {
-      dispatch({ type: "SET_CROP_RECT", payload: rect });
-    },
-    [dispatch]
-  );
-  const settleCrop = (0, import_element58.useCallback)(() => {
-    commitHistory();
-    suppressDebounceRef.current = true;
-    dispatch({ type: "SETTLE_CROP" });
-  }, [dispatch, commitHistory]);
-  const applyOperation = (0, import_element58.useCallback)(
-    (op) => {
-      commitHistory();
-      pushToHistory();
-      suppressDebounceRef.current = true;
-      dispatch({ type: "APPLY_OPERATION", payload: op });
-    },
-    [dispatch, pushToHistory, commitHistory]
-  );
-  const reset = (0, import_element58.useCallback)(
-    (resetState) => {
-      commitHistory();
-      const nextInitialState = enforceContainment({
-        ...DEFAULT_STATE2,
-        image: stateRef.current.image,
-        ...resetState
-      });
-      if (!areHistoryStatesEqual(stateRef.current, nextInitialState)) {
-        pushToHistory();
-      }
-      suppressDebounceRef.current = true;
-      dispatch({ type: "RESET", payload: resetState });
-      initialRef.current = nextInitialState;
-    },
-    [dispatch, pushToHistory, commitHistory]
-  );
-  const isDirty = isStateDirty(state, initialRef.current);
-  const getCroppedImage = (0, import_element58.useCallback)(
-    (mimeType, quality) => {
-      if (!state.image) {
-        return Promise.reject(
-          new Error("No image loaded \u2014 call setImage first.")
-        );
-      }
-      return exportCroppedImage(
-        state.image.src,
-        state,
-        mimeType,
-        quality
-      );
-    },
-    [state]
-  );
-  const controller = {
-    state,
-    setImage,
-    setPan,
-    setZoom,
-    setZoomAtPoint,
-    setRotation,
-    setFlip,
-    toggleFlip,
-    snapRotate90,
-    setCropRect,
-    settleCrop,
-    applyOperation,
-    reset,
-    isDirty,
-    getCroppedImage,
-    hasUndo,
-    hasRedo,
-    undo,
-    redo,
-    commitHistory
+    snapRotate90: (direction) => dispatchCropperAction({
+      type: "SNAP_ROTATE_90",
+      payload: { direction }
+    }),
+    setCropRect: (rect) => dispatchCropperAction({
+      type: "SET_CROP_RECT",
+      payload: rect
+    }),
+    settleCrop: () => dispatchCropperAction({ type: "SETTLE_CROP" }),
+    applyOperation: (op) => dispatchCropperAction({
+      type: "APPLY_OPERATION",
+      payload: op
+    })
   };
-  return controller;
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_element66 = __toESM(require_element(), 1);
+var import_element65 = __toESM(require_element(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 
+// packages/media-editor/build-module/image-editor/core/crop-rect.mjs
+function computeInscribedRect(aspectRatio, visualSize) {
+  let w2 = 1;
+  let h2 = 1;
+  if (aspectRatio && aspectRatio > 0 && visualSize.width > 0) {
+    const normalizedRatio = aspectRatio * visualSize.height / visualSize.width;
+    if (normalizedRatio <= 1) {
+      w2 = normalizedRatio;
+    } else {
+      h2 = 1 / normalizedRatio;
+    }
+  }
+  return {
+    x: (1 - w2) / 2,
+    y: (1 - h2) / 2,
+    width: w2,
+    height: h2
+  };
+}
+
 // packages/media-editor/build-module/image-editor/react/hooks/use-interaction.mjs
-var import_element59 = __toESM(require_element(), 1);
+var import_element58 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/interaction-controller.mjs
 var DOUBLE_TAP_TIME = 300;
@@ -15094,30 +14914,30 @@ function isHandledKeyboardZoom(event) {
   }
 }
 function useInteraction(state, actions, containerSize, imageSize, options) {
-  const [isDragging, setIsDragging] = (0, import_element59.useState)(false);
-  const [isZooming, setIsZooming] = (0, import_element59.useState)(false);
-  const [isGestureActive, setIsGestureActive] = (0, import_element59.useState)(false);
-  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element59.useState)(false);
-  const keyboardInteractionTimerRef = (0, import_element59.useRef)();
-  const isKeyboardGestureActiveRef = (0, import_element59.useRef)(false);
-  const stateRef = (0, import_element59.useRef)(state);
+  const [isDragging, setIsDragging] = (0, import_element58.useState)(false);
+  const [isZooming, setIsZooming] = (0, import_element58.useState)(false);
+  const [isGestureActive, setIsGestureActive] = (0, import_element58.useState)(false);
+  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element58.useState)(false);
+  const keyboardInteractionTimerRef = (0, import_element58.useRef)();
+  const isKeyboardGestureActiveRef = (0, import_element58.useRef)(false);
+  const stateRef = (0, import_element58.useRef)(state);
   stateRef.current = state;
-  const containerSizeRef = (0, import_element59.useRef)(containerSize);
+  const containerSizeRef = (0, import_element58.useRef)(containerSize);
   containerSizeRef.current = containerSize;
-  const imageSizeRef = (0, import_element59.useRef)(imageSize);
+  const imageSizeRef = (0, import_element58.useRef)(imageSize);
   imageSizeRef.current = imageSize;
-  const optionsRef = (0, import_element59.useRef)(options);
+  const optionsRef = (0, import_element58.useRef)(options);
   optionsRef.current = options;
-  const actionsRef = (0, import_element59.useRef)(actions);
+  const actionsRef = (0, import_element58.useRef)(actions);
   actionsRef.current = actions;
-  const controllerRef = (0, import_element59.useRef)(null);
-  const startPlacementGesture = (0, import_element59.useCallback)(() => {
+  const controllerRef = (0, import_element58.useRef)(null);
+  const startPlacementGesture = (0, import_element58.useCallback)(() => {
     setIsGestureActive(true);
   }, []);
-  const stopPlacementGesture = (0, import_element59.useCallback)(() => {
+  const stopPlacementGesture = (0, import_element58.useCallback)(() => {
     setIsGestureActive(false);
   }, []);
-  const signalKeyboardGesture = (0, import_element59.useCallback)(() => {
+  const signalKeyboardGesture = (0, import_element58.useCallback)(() => {
     if (!isKeyboardGestureActiveRef.current) {
       isKeyboardGestureActiveRef.current = true;
       optionsRef.current?.onGestureStart?.();
@@ -15129,12 +14949,12 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       optionsRef.current?.onGestureEnd?.();
     }, KEYBOARD_INTERACTION_IDLE_MS);
   }, []);
-  (0, import_element59.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     return () => {
       clearTimeout(keyboardInteractionTimerRef.current);
     };
   }, []);
-  (0, import_element59.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     const controller = new InteractionController({
       getState: () => stateRef.current,
       actions: {
@@ -15180,11 +15000,11 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       controllerRef.current = null;
     };
   }, [startPlacementGesture, stopPlacementGesture]);
-  const onPointerDown = (0, import_element59.useCallback)((e2) => {
+  const onPointerDown = (0, import_element58.useCallback)((e2) => {
     const el = e2.currentTarget;
     controllerRef.current?.handlePointerDown(e2.nativeEvent, el);
   }, []);
-  const onTouchStart = (0, import_element59.useCallback)((e2) => {
+  const onTouchStart = (0, import_element58.useCallback)((e2) => {
     const el = e2.currentTarget;
     const rect = el.getBoundingClientRect();
     controllerRef.current?.handleTouchStart(
@@ -15193,7 +15013,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       el.ownerDocument
     );
   }, []);
-  const onKeyDown = (0, import_element59.useCallback)(
+  const onKeyDown = (0, import_element58.useCallback)(
     (e2) => {
       if (isHandledKeyboardPan(e2.nativeEvent)) {
         setIsKeyboardPanning(true);
@@ -15205,7 +15025,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
     },
     [signalKeyboardGesture]
   );
-  const onWheelNative = (0, import_element59.useCallback)((e2) => {
+  const onWheelNative = (0, import_element58.useCallback)((e2) => {
     controllerRef.current?.handleWheel(e2);
   }, []);
   return {
@@ -15222,7 +15042,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
-var import_element60 = __toESM(require_element(), 1);
+var import_element59 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/transform-style.mjs
 var IDENTITY_MATRIX_STYLE = "matrix(1, 0, 0, 1, 0, 0)";
@@ -15248,14 +15068,14 @@ function computeTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
 function useTransformStyle(state, imageSize) {
-  return (0, import_element60.useMemo)(
+  return (0, import_element59.useMemo)(
     () => computeTransformStyle(state, imageSize),
     [state, imageSize]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-var import_element61 = __toESM(require_element(), 1);
+var import_element60 = __toESM(require_element(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
 var ARIA_DEBOUNCE_MS = 300;
 function buildFlipAnnouncement(state) {
@@ -15308,15 +15128,15 @@ function buildAnnouncement(state, previousState) {
   return parts.join(", ");
 }
 function useAriaAnnouncer(state) {
-  const [ariaMessage, setAriaMessage] = (0, import_element61.useState)("");
-  const timerRef = (0, import_element61.useRef)();
-  const prevMessageRef = (0, import_element61.useRef)("");
-  const prevStateRef = (0, import_element61.useRef)(null);
-  const latestStateRef = (0, import_element61.useRef)(state);
-  (0, import_element61.useLayoutEffect)(() => {
+  const [ariaMessage, setAriaMessage] = (0, import_element60.useState)("");
+  const timerRef = (0, import_element60.useRef)();
+  const prevMessageRef = (0, import_element60.useRef)("");
+  const prevStateRef = (0, import_element60.useRef)(null);
+  const latestStateRef = (0, import_element60.useRef)(state);
+  (0, import_element60.useLayoutEffect)(() => {
     latestStateRef.current = state;
   }, [state]);
-  (0, import_element61.useEffect)(() => {
+  (0, import_element60.useEffect)(() => {
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       const current = latestStateRef.current;
@@ -15342,7 +15162,7 @@ function useAriaAnnouncer(state) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_element62 = __toESM(require_element(), 1);
+var import_element61 = __toESM(require_element(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/stencil-math.mjs
@@ -15584,7 +15404,7 @@ function RectangleStencil({
   const boundsMinY = cropBounds?.minY ?? 0;
   const boundsMaxX = cropBounds?.maxX ?? 1;
   const boundsMaxY = cropBounds?.maxY ?? 1;
-  const bounds = (0, import_element62.useMemo)(
+  const bounds = (0, import_element61.useMemo)(
     () => ({
       minX: boundsMinX,
       minY: boundsMinY,
@@ -15593,18 +15413,18 @@ function RectangleStencil({
     }),
     [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
   );
-  const keyboardSettleTimerRef = (0, import_element62.useRef)();
-  const keyboardResizeActiveRef = (0, import_element62.useRef)(false);
-  const resizeHandleDescriptionId = (0, import_element62.useId)();
+  const keyboardSettleTimerRef = (0, import_element61.useRef)();
+  const keyboardResizeActiveRef = (0, import_element61.useRef)(false);
+  const resizeHandleDescriptionId = (0, import_element61.useId)();
   const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
-  (0, import_element62.useEffect)(() => {
+  (0, import_element61.useEffect)(() => {
     return () => {
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
     };
   }, []);
-  const latestHandlersRef = (0, import_element62.useRef)(null);
-  const normalizedRatio = (0, import_element62.useMemo)(() => {
+  const latestHandlersRef = (0, import_element61.useRef)(null);
+  const normalizedRatio = (0, import_element61.useMemo)(() => {
     if (!hasLockedRatio || imageSize.width === 0) {
       return 0;
     }
@@ -15616,7 +15436,7 @@ function RectangleStencil({
   const top = offsetY + cropRect.y * imageSize.height;
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
-  const handlePointerDown = (0, import_element62.useCallback)(
+  const handlePointerDown = (0, import_element61.useCallback)(
     (handle, event) => {
       if (event.button !== 0) {
         return;
@@ -15693,7 +15513,7 @@ function RectangleStencil({
     },
     [cropRect, onResizeStart]
   );
-  const computeFreeRect = (0, import_element62.useCallback)(
+  const computeFreeRect = (0, import_element61.useCallback)(
     (drag2, clientX, clientY) => computeFreeResizeRect(
       drag2,
       clientX,
@@ -15704,7 +15524,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, minCropSize]
   );
-  const computeLockedRect = (0, import_element62.useCallback)(
+  const computeLockedRect = (0, import_element61.useCallback)(
     (drag2, clientX, clientY) => computeLockedResizeRect(
       drag2,
       clientX,
@@ -15716,7 +15536,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, normalizedRatio, minCropSize]
   );
-  const computeShiftLockedRect = (0, import_element62.useCallback)(
+  const computeShiftLockedRect = (0, import_element61.useCallback)(
     (drag2, clientX, clientY) => computeShiftLockedResizeRect(
       drag2,
       clientX,
@@ -15735,7 +15555,7 @@ function RectangleStencil({
     onCropChange,
     onResizeEnd
   };
-  const handleKeyDown = (0, import_element62.useCallback)(
+  const handleKeyDown = (0, import_element61.useCallback)(
     (handle, event) => {
       const key = event.key;
       if (key === "Escape") {
@@ -15969,7 +15789,7 @@ function GridOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimensions-overlay.mjs
-var import_element63 = __toESM(require_element(), 1);
+var import_element62 = __toESM(require_element(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 var HANDLE_GAP_PX = 12;
 var TRANSLATE_PERCENT = {
@@ -16043,9 +15863,9 @@ function DimensionsOverlay({
   outputWidth,
   outputHeight
 }) {
-  const tooltipRef = (0, import_element63.useRef)(null);
-  const [tooltipSize, setTooltipSize] = (0, import_element63.useState)(null);
-  (0, import_element63.useLayoutEffect)(() => {
+  const tooltipRef = (0, import_element62.useRef)(null);
+  const [tooltipSize, setTooltipSize] = (0, import_element62.useState)(null);
+  (0, import_element62.useLayoutEffect)(() => {
     if (!tooltipRef.current) {
       return;
     }
@@ -16165,10 +15985,10 @@ function getSourceRegion(state, imageSize) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_element65 = __toESM(require_element(), 1);
+var import_element64 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
-var import_element64 = __toESM(require_element(), 1);
+var import_element63 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/viewport-state.mjs
 var DEFAULT_VIEWPORT_STATE = {
@@ -16192,20 +16012,20 @@ function viewportReducer(state, action) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
 function useViewportState() {
-  const [viewport, dispatch] = (0, import_element64.useReducer)(
+  const [viewport, dispatch] = (0, import_element63.useReducer)(
     viewportReducer,
     DEFAULT_VIEWPORT_STATE
   );
-  const setViewportZoom = (0, import_element64.useCallback)((zoom) => {
+  const setViewportZoom = (0, import_element63.useCallback)((zoom) => {
     dispatch({ type: "SET_VIEWPORT_ZOOM", payload: zoom });
   }, []);
-  const setViewportPan = (0, import_element64.useCallback)((pan) => {
+  const setViewportPan = (0, import_element63.useCallback)((pan) => {
     dispatch({ type: "SET_VIEWPORT_PAN", payload: pan });
   }, []);
-  const resetViewport = (0, import_element64.useCallback)(() => {
+  const resetViewport = (0, import_element63.useCallback)(() => {
     dispatch({ type: "RESET_VIEWPORT" });
   }, []);
-  return (0, import_element64.useMemo)(
+  return (0, import_element63.useMemo)(
     () => ({ viewport, setViewportZoom, setViewportPan, resetViewport }),
     [viewport, setViewportZoom, setViewportPan, resetViewport]
   );
@@ -16213,7 +16033,7 @@ function useViewportState() {
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var ViewportContext = (0, import_element65.createContext)(null);
+var ViewportContext = (0, import_element64.createContext)(null);
 function ViewportProvider({
   children
 }) {
@@ -16221,7 +16041,7 @@ function ViewportProvider({
   return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(ViewportContext.Provider, { value: viewportState, children });
 }
 function useViewport() {
-  const context = (0, import_element65.useContext)(ViewportContext);
+  const context = (0, import_element64.useContext)(ViewportContext);
   if (!context) {
     throw new Error(
       "useViewport must be used within a ViewportProvider."
@@ -16233,24 +16053,6 @@ function useViewport() {
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
 var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 var CROP_RECT_EPSILON = 1e-6;
-function computeInscribedRect(aspectRatio, visualSize) {
-  let w2 = 1;
-  let h2 = 1;
-  if (aspectRatio && aspectRatio > 0 && visualSize.width > 0) {
-    const normalizedRatio = aspectRatio * visualSize.height / visualSize.width;
-    if (normalizedRatio <= 1) {
-      w2 = normalizedRatio;
-    } else {
-      h2 = 1 / normalizedRatio;
-    }
-  }
-  return {
-    x: (1 - w2) / 2,
-    y: (1 - h2) / 2,
-    width: w2,
-    height: h2
-  };
-}
 function CropperInner({
   src,
   controller,
@@ -16270,26 +16072,33 @@ function CropperInner({
   onGestureEnd,
   className
 }, ref) {
-  const { state, setImage, setCropRect, settleCrop } = controller;
+  const {
+    state,
+    setImage,
+    setCropRect,
+    settleCrop,
+    setVisualSize,
+    adjustCropRectForViewport
+  } = controller;
   const {
     viewport: viewportState,
     setViewportPan,
     resetViewport
   } = useViewport();
-  const canvasRef = (0, import_element66.useRef)(null);
-  const cropAreaDescriptionId = (0, import_element66.useId)();
-  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element66.useState)(focusOnMount);
-  const [isFocusVisible, setIsFocusVisible] = (0, import_element66.useState)(false);
-  const [canvasSize, setCanvasSize] = (0, import_element66.useState)({
+  const canvasRef = (0, import_element65.useRef)(null);
+  const cropAreaDescriptionId = (0, import_element65.useId)();
+  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element65.useState)(focusOnMount);
+  const [isFocusVisible, setIsFocusVisible] = (0, import_element65.useState)(false);
+  const [canvasSize, setCanvasSize] = (0, import_element65.useState)({
     width: 0,
     height: 0
   });
-  (0, import_element66.useLayoutEffect)(() => {
+  (0, import_element65.useLayoutEffect)(() => {
     if (focusOnMount) {
       canvasRef.current?.focus({ preventScroll: true });
     }
   }, [focusOnMount]);
-  const handleCropAreaFocus = (0, import_element66.useCallback)(
+  const handleCropAreaFocus = (0, import_element65.useCallback)(
     (event) => {
       const target = event.target;
       if (target === event.currentTarget) {
@@ -16301,7 +16110,7 @@ function CropperInner({
     },
     []
   );
-  const handleCropAreaBlur = (0, import_element66.useCallback)(
+  const handleCropAreaBlur = (0, import_element65.useCallback)(
     (event) => {
       if (event.target === event.currentTarget) {
         setIsCropAreaFocused(false);
@@ -16314,7 +16123,7 @@ function CropperInner({
     },
     []
   );
-  (0, import_element66.useEffect)(() => {
+  (0, import_element65.useEffect)(() => {
     const element = canvasRef.current;
     if (!element) {
       return;
@@ -16335,13 +16144,13 @@ function CropperInner({
       observer.disconnect();
     };
   }, []);
-  (0, import_element66.useEffect)(() => {
+  (0, import_element65.useEffect)(() => {
     onStateChange?.(state);
   }, [state, onStateChange]);
   const ariaMessage = useAriaAnnouncer(state);
   const naturalWidth = state.image?.naturalWidth ?? 0;
   const naturalHeight = state.image?.naturalHeight ?? 0;
-  const { elementSize, visualSize } = (0, import_element66.useMemo)(
+  const { elementSize, visualSize } = (0, import_element65.useMemo)(
     () => getImageFit(
       canvasSize,
       { width: naturalWidth, height: naturalHeight },
@@ -16349,7 +16158,7 @@ function CropperInner({
     ),
     [canvasSize, naturalWidth, naturalHeight, state.rotation]
   );
-  const minCropSize = (0, import_element66.useMemo)(() => {
+  const minCropSize = (0, import_element65.useMemo)(() => {
     if (naturalWidth <= 0 || naturalHeight <= 0) {
       return void 0;
     }
@@ -16367,7 +16176,10 @@ function CropperInner({
       )
     };
   }, [naturalWidth, naturalHeight, state.rotation, state.zoom]);
-  (0, import_element66.useEffect)(() => {
+  (0, import_element65.useEffect)(() => {
+    setVisualSize(visualSize);
+  }, [visualSize, setVisualSize]);
+  (0, import_element65.useEffect)(() => {
     if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
       return;
     }
@@ -16376,10 +16188,16 @@ function CropperInner({
     if (Math.abs(current.x - rect.x) < CROP_RECT_EPSILON && Math.abs(current.y - rect.y) < CROP_RECT_EPSILON && Math.abs(current.width - rect.width) < CROP_RECT_EPSILON && Math.abs(current.height - rect.height) < CROP_RECT_EPSILON) {
       return;
     }
-    setCropRect(rect);
-  }, [freeformCrop, aspectRatio, visualSize, setCropRect, state.cropRect]);
-  const prevAspectRatioRef = (0, import_element66.useRef)(aspectRatio);
-  (0, import_element66.useEffect)(() => {
+    adjustCropRectForViewport(rect);
+  }, [
+    freeformCrop,
+    aspectRatio,
+    visualSize,
+    adjustCropRectForViewport,
+    state.cropRect
+  ]);
+  const prevAspectRatioRef = (0, import_element65.useRef)(aspectRatio);
+  (0, import_element65.useEffect)(() => {
     if (prevAspectRatioRef.current === aspectRatio) {
       return;
     }
@@ -16387,19 +16205,30 @@ function CropperInner({
     if (!freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
       return;
     }
-    setCropRect(computeInscribedRect(aspectRatio, visualSize));
-  }, [aspectRatio, freeformCrop, visualSize, setCropRect]);
-  const cropBounds = (0, import_element66.useMemo)(() => {
+    const rect = computeInscribedRect(aspectRatio, visualSize);
+    const current = state.cropRect;
+    if (Math.abs(current.x - rect.x) < CROP_RECT_EPSILON && Math.abs(current.y - rect.y) < CROP_RECT_EPSILON && Math.abs(current.width - rect.width) < CROP_RECT_EPSILON && Math.abs(current.height - rect.height) < CROP_RECT_EPSILON) {
+      return;
+    }
+    adjustCropRectForViewport(rect);
+  }, [
+    aspectRatio,
+    freeformCrop,
+    visualSize,
+    adjustCropRectForViewport,
+    state.cropRect
+  ]);
+  const cropBounds = (0, import_element65.useMemo)(() => {
     if (!state.image || elementSize.width === 0) {
       return void 0;
     }
     return getImageCropBounds(state, elementSize, visualSize);
   }, [state, elementSize, visualSize]);
   const effectiveMinZoom = minZoom !== void 0 ? minZoom : getMinZoom(state);
-  const [isResizing, setIsResizing] = (0, import_element66.useState)(false);
-  const isResizingRef = (0, import_element66.useRef)(false);
-  const isSettlingRef = (0, import_element66.useRef)(false);
-  const [activeHandle, setActiveHandle] = (0, import_element66.useState)(
+  const [isResizing, setIsResizing] = (0, import_element65.useState)(false);
+  const isResizingRef = (0, import_element65.useRef)(false);
+  const isSettlingRef = (0, import_element65.useRef)(false);
+  const [activeHandle, setActiveHandle] = (0, import_element65.useState)(
     null
   );
   const {
@@ -16429,7 +16258,7 @@ function CropperInner({
       setIsFocusVisible(false);
     }
   };
-  (0, import_element66.useEffect)(() => {
+  (0, import_element65.useEffect)(() => {
     const el = canvasRef.current;
     if (!el) {
       return;
@@ -16449,7 +16278,7 @@ function CropperInner({
     };
   }, [onWheelNative]);
   const transformString = useTransformStyle(state, visualSize);
-  const handleImageLoad = (0, import_element66.useCallback)(
+  const handleImageLoad = (0, import_element65.useCallback)(
     (event) => {
       const img = event.currentTarget;
       const size = {
@@ -16465,7 +16294,7 @@ function CropperInner({
     },
     [src, setImage, onImageLoaded]
   );
-  const handleCropChange = (0, import_element66.useCallback)(
+  const handleCropChange = (0, import_element65.useCallback)(
     (rect) => {
       setCropRect(rect);
       if (isResizingRef.current && visualSize.width > 0 && visualSize.height > 0) {
@@ -16495,16 +16324,16 @@ function CropperInner({
     },
     [setCropRect, setViewportPan, canvasSize, visualSize]
   );
-  const [settling, setSettling] = (0, import_element66.useState)(false);
-  const settleTimerRef = (0, import_element66.useRef)();
-  (0, import_element66.useEffect)(() => {
+  const [settling, setSettling] = (0, import_element65.useState)(false);
+  const settleTimerRef = (0, import_element65.useRef)();
+  (0, import_element65.useEffect)(() => {
     return () => {
       clearTimeout(settleTimerRef.current);
     };
   }, []);
   const isInteractiveGrid = showGrid === "interactive";
   const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
-  const outputSize = (0, import_element66.useMemo)(() => {
+  const outputSize = (0, import_element65.useMemo)(() => {
     if (!showDimensions || !activeHandle || !state.image) {
       return null;
     }
@@ -16514,11 +16343,11 @@ function CropperInner({
     });
     return { width: region.width, height: region.height };
   }, [showDimensions, activeHandle, state]);
-  const handleEscape = (0, import_element66.useCallback)(() => {
+  const handleEscape = (0, import_element65.useCallback)(() => {
     setIsFocusVisible(true);
     canvasRef.current?.focus({ preventScroll: true });
   }, []);
-  const handleResizeStart = (0, import_element66.useCallback)(
+  const handleResizeStart = (0, import_element65.useCallback)(
     (handle) => {
       isResizingRef.current = true;
       setIsResizing(true);
@@ -16531,7 +16360,7 @@ function CropperInner({
     },
     [onGestureStart, resetViewport]
   );
-  const handleResizeEnd = (0, import_element66.useCallback)(() => {
+  const handleResizeEnd = (0, import_element65.useCallback)(() => {
     isResizingRef.current = false;
     setIsResizing(false);
     setActiveHandle(null);
@@ -16553,7 +16382,7 @@ function CropperInner({
     imageTransition = "transform 150ms linear";
   }
   const settleStencilTransition = settling ? "left 200ms ease-out, top 200ms ease-out, width 200ms ease-out, height 200ms ease-out" : void 0;
-  const imageStyle = (0, import_element66.useMemo)(() => {
+  const imageStyle = (0, import_element65.useMemo)(() => {
     if (elementSize.width === 0 || elementSize.height === 0) {
       return {};
     }
@@ -16582,7 +16411,7 @@ function CropperInner({
   } else if (settling) {
     stageStyle = { transition: settleTransition, willChange };
   }
-  const setContainerRef = (0, import_element66.useCallback)(
+  const setContainerRef = (0, import_element65.useCallback)(
     (element) => {
       if (typeof ref === "function") {
         ref(element);
@@ -16717,28 +16546,391 @@ function CropperInner({
     }
   );
 }
-var CropperInnerWithRef = (0, import_element66.forwardRef)(
+var CropperInnerWithRef = (0, import_element65.forwardRef)(
   CropperInner
 );
-var Cropper = (0, import_element66.forwardRef)(
+var Cropper = (0, import_element65.forwardRef)(
   (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(CropperInnerWithRef, { ...props, ref }) })
 );
 
-// packages/media-editor/build-module/image-editor/react/components/cropper-provider.mjs
+// packages/media-editor/build-module/state/use-media-editor-state.mjs
+var import_element66 = __toESM(require_element(), 1);
+
+// packages/media-editor/build-module/state/types.mjs
+var DEFAULT_CROP_OPTIONS = {
+  aspectRatioValue: "0",
+  freeformCrop: true
+};
+
+// packages/media-editor/build-module/state/composite-reducer.mjs
+function mediaEditorReducer(state, action) {
+  switch (action.type) {
+    case "CROPPER": {
+      const nextCropper = cropperReducer(state.cropper, action.action);
+      if (nextCropper === state.cropper) {
+        return state;
+      }
+      return { ...state, cropper: nextCropper };
+    }
+    case "SET_ASPECT_RATIO_VALUE": {
+      const { presetKey, resolved, visualSize } = action.payload;
+      const shouldReshape = resolved !== void 0 && resolved > 0 && visualSize.width > 0 && visualSize.height > 0;
+      const nextCropOptions = {
+        ...state.cropOptions,
+        aspectRatioValue: presetKey
+      };
+      if (!shouldReshape) {
+        if (state.cropOptions.aspectRatioValue === presetKey) {
+          return state;
+        }
+        return { ...state, cropOptions: nextCropOptions };
+      }
+      const newCropRect = computeInscribedRect(resolved, visualSize);
+      const nextCropper = cropperReducer(state.cropper, {
+        type: "SET_CROP_RECT",
+        payload: newCropRect
+      });
+      return {
+        cropper: nextCropper,
+        cropOptions: nextCropOptions
+      };
+    }
+    case "SET_FREEFORM_CROP": {
+      if (state.cropOptions.freeformCrop === action.payload) {
+        return state;
+      }
+      return {
+        ...state,
+        cropOptions: {
+          ...state.cropOptions,
+          freeformCrop: action.payload
+        }
+      };
+    }
+    case "RESET_CROP_OPTIONS": {
+      if (state.cropOptions.aspectRatioValue === DEFAULT_CROP_OPTIONS.aspectRatioValue && state.cropOptions.freeformCrop === DEFAULT_CROP_OPTIONS.freeformCrop) {
+        return state;
+      }
+      return {
+        ...state,
+        cropOptions: { ...DEFAULT_CROP_OPTIONS }
+      };
+    }
+    case "RESTORE_SNAPSHOT":
+      return action.payload;
+    case "VIEWPORT_ADJUST_CROP_RECT": {
+      const nextCropper = cropperReducer(state.cropper, {
+        type: "SET_CROP_RECT",
+        payload: action.payload
+      });
+      if (nextCropper === state.cropper) {
+        return state;
+      }
+      return { ...state, cropper: nextCropper };
+    }
+  }
+}
+function areMediaEditorStatesEqual(a2, b2) {
+  if (a2 === b2) {
+    return true;
+  }
+  return areCropperStatesEqual(a2.cropper, b2.cropper) && a2.cropOptions.aspectRatioValue === b2.cropOptions.aspectRatioValue && a2.cropOptions.freeformCrop === b2.cropOptions.freeformCrop;
+}
+function buildInitialMediaEditorState(initialCropper, initialOptions) {
+  return {
+    cropper: initialCropper,
+    cropOptions: { ...DEFAULT_CROP_OPTIONS, ...initialOptions }
+  };
+}
+
+// packages/media-editor/build-module/state/use-media-editor-state.mjs
+function resolveAspectRatio(presetKey, cropperImage) {
+  const num = parseFloat(presetKey);
+  if (num === 0 || Number.isNaN(num)) {
+    return void 0;
+  }
+  if (num === ORIGINAL_ASPECT_RATIO) {
+    if (cropperImage && cropperImage.naturalWidth > 0 && cropperImage.naturalHeight > 0) {
+      return cropperImage.naturalWidth / cropperImage.naturalHeight;
+    }
+    return void 0;
+  }
+  if (num > 0) {
+    return num;
+  }
+  return void 0;
+}
+function areCropperImagesEqual(a2, b2) {
+  return a2?.src === b2?.src && a2?.naturalWidth === b2?.naturalWidth && a2?.naturalHeight === b2?.naturalHeight;
+}
+function useMediaEditorState(initialState) {
+  const [state, dispatch] = (0, import_element66.useReducer)(
+    mediaEditorReducer,
+    null,
+    () => buildInitialMediaEditorState(
+      enforceContainment({
+        ...DEFAULT_STATE2,
+        ...initialState?.cropper
+      }),
+      initialState?.cropOptions
+    )
+  );
+  const [initialBaseline, setInitialBaseline] = (0, import_element66.useState)(() => state);
+  const stateRef = (0, import_element66.useRef)(state);
+  const visualSizeRef = (0, import_element66.useRef)({ width: 0, height: 0 });
+  const historyRef = (0, import_element66.useRef)([]);
+  const redoStackRef = (0, import_element66.useRef)([]);
+  const [hasUndo, setHasUndo] = (0, import_element66.useState)(false);
+  const [hasRedo, setHasRedo] = (0, import_element66.useState)(false);
+  const isGestureOpenRef = (0, import_element66.useRef)(false);
+  const gestureSnapshotRef = (0, import_element66.useRef)(null);
+  const pushSnapshot = (0, import_element66.useCallback)((snapshot) => {
+    const last = historyRef.current[historyRef.current.length - 1];
+    if (last && areMediaEditorStatesEqual(last, snapshot)) {
+      return;
+    }
+    historyRef.current = [...historyRef.current, snapshot];
+    redoStackRef.current = [];
+    setHasUndo(true);
+    setHasRedo(false);
+  }, []);
+  const dispatchWithHistory = (0, import_element66.useCallback)(
+    (action, recordHistory = true) => {
+      const preState = stateRef.current;
+      const postState = mediaEditorReducer(preState, action);
+      if (recordHistory) {
+        if (!areMediaEditorStatesEqual(preState, postState)) {
+          if (isGestureOpenRef.current) {
+            if (gestureSnapshotRef.current === null) {
+              gestureSnapshotRef.current = preState;
+            }
+          } else {
+            pushSnapshot(preState);
+          }
+        }
+      }
+      stateRef.current = postState;
+      dispatch(action);
+    },
+    [pushSnapshot]
+  );
+  const beginGesture = (0, import_element66.useCallback)(() => {
+    if (isGestureOpenRef.current) {
+      return;
+    }
+    isGestureOpenRef.current = true;
+    gestureSnapshotRef.current = null;
+  }, []);
+  const endGesture = (0, import_element66.useCallback)(() => {
+    const snapshot = gestureSnapshotRef.current;
+    if (snapshot && !areMediaEditorStatesEqual(snapshot, stateRef.current)) {
+      pushSnapshot(snapshot);
+    }
+    gestureSnapshotRef.current = null;
+    isGestureOpenRef.current = false;
+  }, [pushSnapshot]);
+  const dispatchCropperAction = (0, import_element66.useCallback)(
+    (action) => {
+      dispatchWithHistory({ type: "CROPPER", action });
+    },
+    [dispatchWithHistory]
+  );
+  const cropperSetters = (0, import_element66.useMemo)(
+    () => buildCropperSetters(
+      dispatchCropperAction,
+      () => stateRef.current.cropper
+    ),
+    [dispatchCropperAction]
+  );
+  const setImage = (0, import_element66.useCallback)((image) => {
+    if (areCropperImagesEqual(stateRef.current.cropper.image, image)) {
+      return;
+    }
+    const action = {
+      type: "CROPPER",
+      action: { type: "SET_IMAGE", payload: image }
+    };
+    const next = mediaEditorReducer(stateRef.current, action);
+    stateRef.current = next;
+    dispatch(action);
+    setInitialBaseline(next);
+    isGestureOpenRef.current = false;
+    gestureSnapshotRef.current = null;
+    historyRef.current = [];
+    redoStackRef.current = [];
+    setHasUndo(false);
+    setHasRedo(false);
+  }, []);
+  const reset = (0, import_element66.useCallback)(
+    (resetState) => {
+      dispatchWithHistory({
+        type: "CROPPER",
+        action: { type: "RESET", payload: resetState }
+      });
+    },
+    [dispatchWithHistory]
+  );
+  const setAspectRatioValue = (0, import_element66.useCallback)(
+    (presetKey) => {
+      const resolved = resolveAspectRatio(
+        presetKey,
+        stateRef.current.cropper.image
+      );
+      dispatchWithHistory({
+        type: "SET_ASPECT_RATIO_VALUE",
+        payload: {
+          presetKey,
+          resolved,
+          visualSize: visualSizeRef.current
+        }
+      });
+    },
+    [dispatchWithHistory]
+  );
+  const setFreeformCrop = (0, import_element66.useCallback)(
+    (value) => {
+      dispatchWithHistory({
+        type: "SET_FREEFORM_CROP",
+        payload: value
+      });
+    },
+    [dispatchWithHistory]
+  );
+  const resetCropOptions = (0, import_element66.useCallback)(() => {
+    dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
+  }, [dispatchWithHistory]);
+  const undo = (0, import_element66.useCallback)(() => {
+    endGesture();
+    const prev = historyRef.current[historyRef.current.length - 1];
+    if (!prev) {
+      return;
+    }
+    redoStackRef.current = [stateRef.current, ...redoStackRef.current];
+    historyRef.current = historyRef.current.slice(0, -1);
+    setHasUndo(historyRef.current.length > 0);
+    setHasRedo(true);
+    stateRef.current = prev;
+    dispatch({ type: "RESTORE_SNAPSHOT", payload: prev });
+  }, [endGesture]);
+  const redo = (0, import_element66.useCallback)(() => {
+    endGesture();
+    const next = redoStackRef.current[0];
+    if (!next) {
+      return;
+    }
+    historyRef.current = [...historyRef.current, stateRef.current];
+    redoStackRef.current = redoStackRef.current.slice(1);
+    setHasUndo(true);
+    setHasRedo(redoStackRef.current.length > 0);
+    stateRef.current = next;
+    dispatch({ type: "RESTORE_SNAPSHOT", payload: next });
+  }, [endGesture]);
+  const setVisualSize = (0, import_element66.useCallback)((size) => {
+    visualSizeRef.current = size;
+  }, []);
+  const adjustCropRectForViewport = (0, import_element66.useCallback)(
+    (rect) => {
+      dispatchWithHistory(
+        { type: "VIEWPORT_ADJUST_CROP_RECT", payload: rect },
+        false
+      );
+    },
+    [dispatchWithHistory]
+  );
+  const isDirty = !areMediaEditorStatesEqual(state, initialBaseline);
+  const isCropperDirty = !areCropperStatesEqual(
+    state.cropper,
+    initialBaseline.cropper
+  );
+  const getCroppedImage = (0, import_element66.useCallback)(
+    (mimeType, quality) => {
+      if (!state.cropper.image) {
+        return Promise.reject(
+          new Error("No image loaded \u2014 call setImage first.")
+        );
+      }
+      return exportCroppedImage(
+        state.cropper.image.src,
+        state.cropper,
+        mimeType,
+        quality
+      );
+    },
+    [state.cropper]
+  );
+  const controller = (0, import_element66.useMemo)(
+    () => ({
+      // CropperController surface (state is the cropper slice so a
+      // <Cropper> takes this controller as-is).
+      ...cropperSetters,
+      state: state.cropper,
+      setImage,
+      reset,
+      isDirty,
+      getCroppedImage,
+      // Composite extensions
+      cropOptions: state.cropOptions,
+      setAspectRatioValue,
+      setFreeformCrop,
+      resetCropOptions,
+      isCropperDirty,
+      hasUndo,
+      hasRedo,
+      undo,
+      redo,
+      beginGesture,
+      endGesture,
+      setVisualSize,
+      adjustCropRectForViewport
+    }),
+    [
+      cropperSetters,
+      state.cropper,
+      setImage,
+      reset,
+      isDirty,
+      getCroppedImage,
+      state.cropOptions,
+      setAspectRatioValue,
+      setFreeformCrop,
+      resetCropOptions,
+      isCropperDirty,
+      hasUndo,
+      hasRedo,
+      undo,
+      redo,
+      beginGesture,
+      endGesture,
+      setVisualSize,
+      adjustCropRectForViewport
+    ]
+  );
+  return controller;
+}
+
+// packages/media-editor/build-module/state/media-editor-state-provider.mjs
 var import_element67 = __toESM(require_element(), 1);
 var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
-var CropperContext = (0, import_element67.createContext)(null);
-function CropperProvider({
-  initialState,
+var MediaEditorStateContext = (0, import_element67.createContext)(
+  null
+);
+function MediaEditorStateProvider({
+  initialCropperState,
+  initialCropOptions,
   children
 }) {
-  const cropperReturn = useCropperState(initialState);
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(CropperContext.Provider, { value: cropperReturn, children });
+  const controller = useMediaEditorState({
+    cropper: initialCropperState,
+    cropOptions: initialCropOptions
+  });
+  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
 }
-function useCropper() {
-  const context = (0, import_element67.useContext)(CropperContext);
+function useMediaEditor() {
+  const context = (0, import_element67.useContext)(MediaEditorStateContext);
   if (!context) {
-    throw new Error("useCropper must be used within a CropperProvider.");
+    throw new Error(
+      "useMediaEditor must be used within a MediaEditorStateProvider."
+    );
   }
   return context;
 }
@@ -16746,25 +16938,42 @@ function useCropper() {
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
 var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCanvas({
-  aspectRatio,
-  freeformCrop,
   focusOnMount,
   isPlacementActive = false,
   onGestureStart,
   onGestureEnd
 }) {
   const { media } = useMediaEditorContext();
-  const controller = useCropper();
+  const controller = useMediaEditor();
+  const { aspectRatioValue, freeformCrop } = controller.cropOptions;
+  const cropperImage = controller.state.image;
+  const { beginGesture, endGesture, setImage } = controller;
+  const aspectRatio = (0, import_element68.useMemo)(
+    () => resolveAspectRatio(aspectRatioValue, cropperImage),
+    [aspectRatioValue, cropperImage]
+  );
   const handleGestureStart = (0, import_element68.useCallback)(() => {
+    beginGesture();
     onGestureStart?.();
-    controller.commitHistory();
-  }, [controller, onGestureStart]);
+  }, [beginGesture, onGestureStart]);
   const handleGestureEnd = (0, import_element68.useCallback)(() => {
-    controller.commitHistory();
+    endGesture();
     onGestureEnd?.();
-  }, [controller, onGestureEnd]);
+  }, [endGesture, onGestureEnd]);
   const mediaUrl = media?.source_url;
   const mediaType = getMediaTypeFromMimeType(media?.mime_type);
+  const mediaWidth = Number(media?.media_details?.width);
+  const mediaHeight = Number(media?.media_details?.height);
+  (0, import_element68.useEffect)(() => {
+    if (cropperImage || !mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
+      return;
+    }
+    setImage({
+      src: mediaUrl,
+      naturalWidth: mediaWidth,
+      naturalHeight: mediaHeight
+    });
+  }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setImage]);
   if (!mediaUrl || mediaType.type !== "image") {
     return null;
   }
@@ -16790,22 +16999,59 @@ var import_i18n31 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 
 // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
+var import_element69 = __toESM(require_element(), 1);
 var CROP_CONTROL_ATTR = "data-crop-control";
+var KEYBOARD_GESTURE_IDLE_MS = 300;
 function useCropGestureHandlers(options = {}) {
   const { commitOnKeyUp = true } = options;
-  const { commitHistory } = useCropper();
+  const { beginGesture, endGesture } = useMediaEditor();
+  const keyboardTimerRef = (0, import_element69.useRef)();
+  const clearKeyboardTimer = (0, import_element69.useCallback)(() => {
+    clearTimeout(keyboardTimerRef.current);
+  }, []);
+  const scheduleKeyboardEnd = (0, import_element69.useCallback)(() => {
+    clearKeyboardTimer();
+    keyboardTimerRef.current = setTimeout(() => {
+      endGesture();
+    }, KEYBOARD_GESTURE_IDLE_MS);
+  }, [clearKeyboardTimer, endGesture]);
+  (0, import_element69.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
+  const handlePointerDownCapture = (0, import_element69.useCallback)(() => {
+    clearKeyboardTimer();
+    beginGesture();
+  }, [beginGesture, clearKeyboardTimer]);
+  const handlePointerEnd = (0, import_element69.useCallback)(() => {
+    clearKeyboardTimer();
+    endGesture();
+  }, [clearKeyboardTimer, endGesture]);
+  const handleKeyDownCapture = (0, import_element69.useCallback)(() => {
+    beginGesture();
+    if (!commitOnKeyUp) {
+      scheduleKeyboardEnd();
+    }
+  }, [beginGesture, commitOnKeyUp, scheduleKeyboardEnd]);
+  const handleKeyUp = (0, import_element69.useCallback)(() => {
+    if (commitOnKeyUp) {
+      endGesture();
+      return;
+    }
+    scheduleKeyboardEnd();
+  }, [commitOnKeyUp, endGesture, scheduleKeyboardEnd]);
   return {
     [CROP_CONTROL_ATTR]: true,
-    onPointerUp: commitHistory,
-    ...commitOnKeyUp ? { onKeyUp: commitHistory } : {}
+    onPointerDownCapture: handlePointerDownCapture,
+    onPointerUp: handlePointerEnd,
+    onPointerCancel: handlePointerEnd,
+    onKeyDownCapture: handleKeyDownCapture,
+    onKeyUp: handleKeyUp
   };
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_element70 = __toESM(require_element(), 1);
+var import_element71 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/components/rotation-ruler/use-ruler-drag.mjs
-var import_element69 = __toESM(require_element(), 1);
+var import_element70 = __toESM(require_element(), 1);
 function pxToValueDelta(deltaPx, pixelsPerStep, step) {
   return -deltaPx / pixelsPerStep * step;
 }
@@ -16832,7 +17078,7 @@ function useRulerDrag(options) {
     disabled: disabled2,
     onPointerDownStart
   } = options;
-  const latestRef = (0, import_element69.useRef)({
+  const latestRef = (0, import_element70.useRef)({
     value,
     startX: 0,
     startValue: 0,
@@ -16842,10 +17088,10 @@ function useRulerDrag(options) {
     capturePointerId: 0,
     windowPointerUp: null
   });
-  (0, import_element69.useEffect)(() => {
+  (0, import_element70.useEffect)(() => {
     latestRef.current.value = value;
   }, [value]);
-  const endDrag = (0, import_element69.useCallback)(() => {
+  const endDrag = (0, import_element70.useCallback)(() => {
     const state = latestRef.current;
     if (!state.dragging) {
       return;
@@ -16866,8 +17112,8 @@ function useRulerDrag(options) {
       state.windowPointerUp = null;
     }
   }, []);
-  (0, import_element69.useEffect)(() => endDrag, [endDrag]);
-  const onPointerDown = (0, import_element69.useCallback)(
+  (0, import_element70.useEffect)(() => endDrag, [endDrag]);
+  const onPointerDown = (0, import_element70.useCallback)(
     (event) => {
       if (disabled2 || event.button !== 0) {
         return;
@@ -16888,7 +17134,7 @@ function useRulerDrag(options) {
     },
     [disabled2, onPointerDownStart, endDrag, step]
   );
-  const onPointerMove = (0, import_element69.useCallback)(
+  const onPointerMove = (0, import_element70.useCallback)(
     (event) => {
       const state = latestRef.current;
       if (!state.dragging) {
@@ -16933,7 +17179,7 @@ var TICK_HEIGHT_MINOR = 4;
 var TICK_HEIGHT_MID = 8;
 var TICK_HEIGHT_MAJOR = 14;
 function useTicks(min2, max2) {
-  return (0, import_element70.useMemo)(() => {
+  return (0, import_element71.useMemo)(() => {
     const out = [];
     for (let v2 = Math.ceil(min2); v2 <= Math.floor(max2); v2 += 1) {
       let kind = "minor";
@@ -16968,8 +17214,8 @@ function RotationRuler(props) {
     id,
     disabled: disabled2 = false
   } = props;
-  const inputRef = (0, import_element70.useRef)(null);
-  const generatedId = (0, import_element70.useId)();
+  const inputRef = (0, import_element71.useRef)(null);
+  const generatedId = (0, import_element71.useId)();
   const inputId = id ?? generatedId;
   const dragHandlers = useRulerDrag({
     value,
@@ -17001,7 +17247,7 @@ function RotationRuler(props) {
   const display = `${formatValue(value)}${unit}`;
   const ticks = useTicks(min2, max2);
   const pxPerUnit = pixelsPerStep / step;
-  const stripStyle = (0, import_element70.useMemo)(() => {
+  const stripStyle = (0, import_element71.useMemo)(() => {
     const offset = -value * pxPerUnit;
     return {
       transform: `translateX(calc(-50% + ${offset}px))`
@@ -17101,14 +17347,18 @@ function MediaEditorToolbar({
     hasUndo,
     hasRedo,
     undo: undoCrop,
-    redo: redoCrop
-  } = useCropper();
+    redo: redoCrop,
+    beginGesture,
+    endGesture
+  } = useMediaEditor();
   const rotationGestureHandlers = useCropGestureHandlers({
     commitOnKeyUp: false
   });
   const handleReset = () => {
+    beginGesture();
     reset();
     onReset?.();
+    endGesture();
   };
   const handleUndo = () => {
     if (isUndoRedoDisabled) {
@@ -17267,62 +17517,75 @@ function MediaEditorCropPanel({
   onPlacementControlInteraction,
   aspectRatioOptions
 }) {
-  const { state, setZoom } = useCropper();
+  const { state, setZoom } = useMediaEditor();
   const zoomGestureHandlers = useCropGestureHandlers();
   const minZoom = getMinZoom(state);
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(Stack, { direction: "column", gap: "md", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("h2", {}), children: (0, import_i18n32.__)("Crop options") }),
-    /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-      import_components37.SelectControl,
+  return (
+    // Tag the whole panel as a crop-control region so the modal's
+    // Cmd+Z handler doesn't mistake the SelectControl / ToggleControl
+    // inputs for metadata fields (which would suppress undo).
+    /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
+      Stack,
       {
-        __next40pxDefaultSize: true,
-        label: (0, import_i18n32.__)("Aspect ratio"),
-        value: aspectRatioValue,
-        onChange: onAspectRatioChange,
-        options: aspectRatioOptions.map((preset) => ({
-          label: preset.label,
-          value: preset.value.toString()
-        }))
+        direction: "column",
+        gap: "md",
+        ...{ [CROP_CONTROL_ATTR]: true },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("h2", {}), children: (0, import_i18n32.__)("Crop options") }),
+          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+            import_components37.SelectControl,
+            {
+              __next40pxDefaultSize: true,
+              label: (0, import_i18n32.__)("Aspect ratio"),
+              value: aspectRatioValue,
+              onChange: onAspectRatioChange,
+              options: aspectRatioOptions.map((preset) => ({
+                label: preset.label,
+                value: preset.value.toString()
+              }))
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+            import_components37.ToggleControl,
+            {
+              label: (0, import_i18n32.__)("Resize crop area"),
+              help: (0, import_i18n32.__)("Show handles to adjust the crop box."),
+              checked: freeformCrop,
+              onChange: onFreeformChange
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+            import_components37.RangeControl,
+            {
+              __next40pxDefaultSize: true,
+              label: (0, import_i18n32.__)("Zoom"),
+              min: minZoom,
+              max: MAX_ZOOM,
+              step: 0.1,
+              value: state.zoom,
+              onChange: (value) => {
+                onPlacementControlInteraction?.();
+                setZoom(typeof value === "number" ? value : minZoom);
+              },
+              renderTooltipContent: (value) => {
+                const zoom = typeof value === "number" ? value : minZoom;
+                return (0, import_i18n32.sprintf)(
+                  /* translators: %d: zoom level as a percentage. */
+                  (0, import_i18n32.__)("%d%%"),
+                  Math.round(zoom * 100)
+                );
+              }
+            }
+          ) })
+        ]
       }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-      import_components37.ToggleControl,
-      {
-        label: (0, import_i18n32.__)("Resize crop area"),
-        help: (0, import_i18n32.__)("Show handles to adjust the crop box."),
-        checked: freeformCrop,
-        onChange: onFreeformChange
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-      import_components37.RangeControl,
-      {
-        __next40pxDefaultSize: true,
-        label: (0, import_i18n32.__)("Zoom"),
-        min: minZoom,
-        max: MAX_ZOOM,
-        step: 0.1,
-        value: state.zoom,
-        onChange: (value) => {
-          onPlacementControlInteraction?.();
-          setZoom(typeof value === "number" ? value : minZoom);
-        },
-        renderTooltipContent: (value) => {
-          const zoom = typeof value === "number" ? value : minZoom;
-          return (0, import_i18n32.sprintf)(
-            /* translators: %d: zoom level as a percentage. */
-            (0, import_i18n32.__)("%d%%"),
-            Math.round(zoom * 100)
-          );
-        }
-      }
-    ) })
-  ] });
+    )
+  );
 }
 
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
 var import_components38 = __toESM(require_components(), 1);
-var import_element71 = __toESM(require_element(), 1);
+var import_element72 = __toESM(require_element(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
@@ -17405,7 +17668,7 @@ function KeyCombinationDisplay({
       className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
       "aria-label": label,
       children: keys.map(
-        (key, index) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_element71.Fragment, { children: key }, index) : /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+        (key, index) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_element72.Fragment, { children: key }, index) : /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
           "kbd",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
@@ -17462,7 +17725,7 @@ function MediaEditorKeyboardShortcutsModal({
 var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
-var import_element72 = __toESM(require_element(), 1);
+var import_element73 = __toESM(require_element(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 
@@ -17538,7 +17801,7 @@ var METADATA_EDIT_KEYS = [
 ];
 var MEDIA_EDITOR_NOTICES_CONTEXT = "media-editor";
 function getCropModifiers(cropper) {
-  if (!cropper.isDirty || !cropper.state.image) {
+  if (!cropper.isCropperDirty || !cropper.state.image) {
     return [];
   }
   return buildModifiers(cropper.state, {
@@ -17572,8 +17835,8 @@ function useSaveMediaEditor({
     saveEditedEntityRecord
   } = (0, import_data7.useDispatch)(import_core_data.store);
   const { createErrorNotice, removeAllNotices } = (0, import_data7.useDispatch)(import_notices.store);
-  const [isSaving, setIsSaving] = (0, import_element72.useState)(false);
-  const save = (0, import_element72.useCallback)(async () => {
+  const [isSaving, setIsSaving] = (0, import_element73.useState)(false);
+  const save = (0, import_element73.useCallback)(async () => {
     removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
     setIsSaving(true);
     try {
@@ -17667,87 +17930,57 @@ function useSaveMediaEditor({
 }
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
-var import_element73 = __toESM(require_element(), 1);
+var import_element74 = __toESM(require_element(), 1);
 var FREE_ASPECT_RATIO_VALUE = "0";
-var DEFAULT_FREEFORM_CROP = true;
-function resolveAspectRatio(value, imageAspectRatio) {
-  const num = parseFloat(value);
-  if (num === 0) {
-    return void 0;
-  }
-  if (num === ORIGINAL_ASPECT_RATIO && imageAspectRatio) {
-    return imageAspectRatio;
-  }
-  if (num > 0) {
-    return num;
-  }
-  return void 0;
-}
 function getAspectRatioOptions(aspectRatioPresets) {
   return [
     ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
     ...aspectRatioPresets ?? DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value > 0)
   ];
 }
-function getImageAspectRatio(media, isImage) {
-  if (!isImage) {
-    return null;
-  }
-  const naturalWidth = Number(media?.media_details?.width);
-  const naturalHeight = Number(media?.media_details?.height);
-  if (Number.isFinite(naturalWidth) && Number.isFinite(naturalHeight) && naturalHeight > 0) {
-    return naturalWidth / naturalHeight;
-  }
-  return null;
-}
 function useCropOptions({
-  id,
-  isImage,
-  media,
   aspectRatioPresets
-}) {
-  const [aspectRatioValue, setAspectRatioValueState] = (0, import_element73.useState)(
-    FREE_ASPECT_RATIO_VALUE
-  );
-  const [freeformCrop, setFreeformCrop] = (0, import_element73.useState)(DEFAULT_FREEFORM_CROP);
-  const previousIdRef = (0, import_element73.useRef)(id);
-  const aspectRatioOptions = (0, import_element73.useMemo)(
+} = {}) {
+  const controller = useMediaEditor();
+  const { aspectRatioValue, freeformCrop } = controller.cropOptions;
+  const cropperImage = controller.state.image;
+  const aspectRatioOptions = (0, import_element74.useMemo)(
     () => getAspectRatioOptions(aspectRatioPresets),
     [aspectRatioPresets]
   );
-  const imageAspectRatio = (0, import_element73.useMemo)(
-    () => getImageAspectRatio(media, isImage),
-    [isImage, media]
+  const resolvedAspectRatio = (0, import_element74.useMemo)(
+    () => resolveAspectRatio(aspectRatioValue, cropperImage),
+    [aspectRatioValue, cropperImage]
   );
-  const resolvedAspectRatio = (0, import_element73.useMemo)(
-    () => resolveAspectRatio(aspectRatioValue, imageAspectRatio),
-    [aspectRatioValue, imageAspectRatio]
-  );
-  const resetCropOptions = (0, import_element73.useCallback)(() => {
-    setAspectRatioValueState(FREE_ASPECT_RATIO_VALUE);
-    setFreeformCrop(DEFAULT_FREEFORM_CROP);
-  }, []);
-  const setAspectRatioValue = (0, import_element73.useCallback)((value) => {
-    setAspectRatioValueState(value);
-    if (value === FREE_ASPECT_RATIO_VALUE) {
+  const { beginGesture, endGesture, setAspectRatioValue, setFreeformCrop } = controller;
+  const setAspectRatioValueWithFreeformSync = (0, import_element74.useCallback)(
+    (value) => {
+      const shouldReenableFreeform = value === FREE_ASPECT_RATIO_VALUE && !freeformCrop;
+      if (!shouldReenableFreeform) {
+        setAspectRatioValue(value);
+        return;
+      }
+      beginGesture();
+      setAspectRatioValue(value);
       setFreeformCrop(true);
-    }
-  }, []);
-  (0, import_element73.useEffect)(() => {
-    if (previousIdRef.current === id) {
-      return;
-    }
-    previousIdRef.current = id;
-    resetCropOptions();
-  }, [id, resetCropOptions]);
+      endGesture();
+    },
+    [
+      freeformCrop,
+      beginGesture,
+      endGesture,
+      setAspectRatioValue,
+      setFreeformCrop
+    ]
+  );
   return {
     aspectRatioValue,
-    setAspectRatioValue,
+    setAspectRatioValue: setAspectRatioValueWithFreeformSync,
     aspectRatioOptions,
     freeformCrop,
-    setFreeformCrop,
+    setFreeformCrop: controller.setFreeformCrop,
     resolvedAspectRatio,
-    resetCropOptions
+    resetCropOptions: controller.resetCropOptions
   };
 }
 
@@ -17757,7 +17990,7 @@ var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var PLACEMENT_CONTROL_IDLE_MS = 300;
 var { Tabs } = unlock2(import_components39.privateApis);
 function MediaEditorSidebar({ tabs }) {
-  const tabsContextValue = (0, import_element74.useContext)(Tabs.Context);
+  const tabsContextValue = (0, import_element75.useContext)(Tabs.Context);
   return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
     complementary_area_default,
     {
@@ -17792,7 +18025,7 @@ function HeaderActions({
   onSave
 }) {
   const saveDisabled = isSaving || !hasMedia || !hasChanges;
-  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element74.useState)(false);
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element75.useState)(false);
   return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(
     import_components39.Flex,
     {
@@ -17867,7 +18100,7 @@ function MediaEditorContent({
   showCloseButton = false,
   shouldCloseOnEsc = false
 }) {
-  const cropper = useCropper();
+  const cropper = useMediaEditor();
   const { media, hasEdits } = (0, import_data8.useSelect)(
     (select) => {
       const {
@@ -17896,37 +18129,37 @@ function MediaEditorContent({
     },
     [id]
   );
-  const hasChanges = cropper.isDirty || hasEdits;
+  const hasChanges = cropper.isCropperDirty || hasEdits;
   const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data8.useDispatch)(import_core_data2.store);
   const { removeAllNotices } = (0, import_data8.useDispatch)(import_notices2.store);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element74.useState)(false);
-  const [isPlacementActive, setIsPlacementActive] = (0, import_element74.useState)(false);
-  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element74.useState)(false);
-  const placementControlTimerRef = (0, import_element74.useRef)();
-  const signalPlacementControlInteraction = (0, import_element74.useCallback)(() => {
+  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element75.useState)(false);
+  const [isPlacementActive, setIsPlacementActive] = (0, import_element75.useState)(false);
+  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element75.useState)(false);
+  const placementControlTimerRef = (0, import_element75.useRef)();
+  const signalPlacementControlInteraction = (0, import_element75.useCallback)(() => {
     setIsPlacementActive(true);
     clearTimeout(placementControlTimerRef.current);
     placementControlTimerRef.current = setTimeout(() => {
       setIsPlacementActive(false);
     }, PLACEMENT_CONTROL_IDLE_MS);
   }, []);
-  const handleCanvasGestureStart = (0, import_element74.useCallback)(() => {
+  const handleCanvasGestureStart = (0, import_element75.useCallback)(() => {
     setIsCanvasGestureActive(true);
   }, []);
-  const handleCanvasGestureEnd = (0, import_element74.useCallback)(() => {
+  const handleCanvasGestureEnd = (0, import_element75.useCallback)(() => {
     setIsCanvasGestureActive(false);
   }, []);
   const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
-  (0, import_element74.useEffect)(() => {
+  (0, import_element75.useEffect)(() => {
     return () => {
       clearTimeout(placementControlTimerRef.current);
     };
   }, []);
-  (0, import_element74.useEffect)(() => {
+  (0, import_element75.useEffect)(() => {
     setIsPlacementActive(false);
     setIsCanvasGestureActive(false);
   }, [id]);
-  (0, import_element74.useEffect)(() => {
+  (0, import_element75.useEffect)(() => {
     invalidateResolution("getEntityRecord", [
       "postType",
       "attachment",
@@ -17942,12 +18175,8 @@ function MediaEditorContent({
     aspectRatioOptions,
     freeformCrop,
     setFreeformCrop,
-    resolvedAspectRatio,
     resetCropOptions
   } = useCropOptions({
-    id,
-    isImage,
-    media,
     aspectRatioPresets
   });
   const { isSaving, save: saveMediaEditor } = useSaveMediaEditor({
@@ -17957,7 +18186,7 @@ function MediaEditorContent({
     media,
     onSaved
   });
-  const tabs = (0, import_element74.useMemo)(() => {
+  const tabs = (0, import_element75.useMemo)(() => {
     const detailsTab = {
       id: "details",
       title: (0, import_i18n35.__)("Details"),
@@ -18087,8 +18316,6 @@ function MediaEditorContent({
               content: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("div", { className: "media-editor__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
                 MediaEditorCanvas,
                 {
-                  aspectRatio: resolvedAspectRatio,
-                  freeformCrop,
                   focusOnMount: true,
                   isPlacementActive,
                   onGestureStart: handleCanvasGestureStart,
@@ -18123,7 +18350,7 @@ function MediaEditorContent({
             )
           }
         ),
-        noticesPortalElement ? (0, import_element74.createPortal)(snackbar, noticesPortalElement) : snackbar
+        noticesPortalElement ? (0, import_element75.createPortal)(snackbar, noticesPortalElement) : snackbar
       ]
     }
   );
@@ -18150,7 +18377,7 @@ function MediaEditorContent({
   });
 }
 function MediaEditor(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(CropperProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(MediaEditorContent, { ...props }) }, props.id);
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(MediaEditorContent, { ...props }) }, props.id);
 }
 var media_editor_default = MediaEditor;
 
