@@ -22816,7 +22816,8 @@ function GuidelineAccordionForm({ slug }) {
       type: "submit",
       disabled: loading || !draft,
       accessibleWhenDisabled: true,
-      isBusy: loading
+      isBusy: loading,
+      __next40pxDefaultSize: true
     },
     (0, import_i18n50.__)("Save guidelines")
   ), /* @__PURE__ */ React.createElement(
@@ -22827,7 +22828,8 @@ function GuidelineAccordionForm({ slug }) {
       disabled: loading || !value,
       accessibleWhenDisabled: true,
       isBusy: loading,
-      onClick: handleClearClick
+      onClick: handleClearClick,
+      __next40pxDefaultSize: true
     },
     (0, import_i18n50.__)("Clear guidelines")
   ))), /* @__PURE__ */ React.createElement(
@@ -23014,7 +23016,8 @@ function BlockGuidelineModal({
           onClick: () => setShowRemoveConfirmation(true),
           disabled: isSaving,
           accessibleWhenDisabled: true,
-          type: "button"
+          type: "button",
+          __next40pxDefaultSize: true
         },
         (0, import_i18n51.__)("Remove")
       ),
@@ -23025,7 +23028,8 @@ function BlockGuidelineModal({
           onClick: () => handleSave(guidelineText),
           disabled: !canSubmit || isSaving,
           isBusy: isSaving,
-          accessibleWhenDisabled: true
+          accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true
         },
         submitButtonLabel
       )
@@ -23216,7 +23220,15 @@ function BlockGuidelines() {
       }
     },
     /* @__PURE__ */ React.createElement(import_components55.__experimentalVStack, { spacing: 4 }, shouldShowDataViewControls && /* @__PURE__ */ React.createElement(dataviews_default.Search, { label: (0, import_i18n52.__)("Search blocks") }), /* @__PURE__ */ React.createElement(dataviews_default.Layout, null), shouldShowDataViewControls && /* @__PURE__ */ React.createElement(dataviews_default.Footer, null))
-  ), /* @__PURE__ */ React.createElement(import_components55.__experimentalHStack, null, /* @__PURE__ */ React.createElement(import_components55.Button, { variant: "primary", onClick: openModal }, (0, import_i18n52.__)("Add guidelines"))), isOpen && /* @__PURE__ */ React.createElement(
+  ), /* @__PURE__ */ React.createElement(import_components55.__experimentalHStack, null, /* @__PURE__ */ React.createElement(
+    import_components55.Button,
+    {
+      variant: "primary",
+      onClick: openModal,
+      __next40pxDefaultSize: true
+    },
+    (0, import_i18n52.__)("Add guidelines")
+  )), isOpen && /* @__PURE__ */ React.createElement(
     BlockGuidelineModal,
     {
       closeModal,
@@ -23299,7 +23311,8 @@ function ActionItem({
       "aria-describedby": descriptionId,
       onClick,
       isBusy,
-      disabled: disabled2
+      disabled: disabled2,
+      accessibleWhenDisabled: true
     },
     buttonLabel
   ));
@@ -23629,7 +23642,8 @@ function RevisionHistory() {
         import_components58.Button,
         {
           variant: "tertiary",
-          onClick: () => setRevisionToRestore(null)
+          onClick: () => setRevisionToRestore(null),
+          __next40pxDefaultSize: true
         },
         (0, import_i18n54.__)("Cancel")
       ),
@@ -23640,6 +23654,7 @@ function RevisionHistory() {
           onClick: handleRestore,
           isBusy: isRestoring,
           disabled: isRestoring,
+          accessibleWhenDisabled: true,
           __next40pxDefaultSize: true
         },
         (0, import_i18n54.__)("Restore")

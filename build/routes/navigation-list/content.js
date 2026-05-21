@@ -18302,7 +18302,8 @@ var AddNavigationModal = ({
           onChange: setMenuTitle,
           label: (0, import_i18n44.__)("Name"),
           placeholder: (0, import_i18n44.__)("Enter menu name"),
-          disabled: isBusy
+          disabled: isBusy,
+          __next40pxDefaultSize: true
         }
       ), /* @__PURE__ */ React.createElement(import_components46.__experimentalHStack, { justify: "right", spacing: 2 }, /* @__PURE__ */ React.createElement(
         import_components46.Button,
@@ -18310,7 +18311,8 @@ var AddNavigationModal = ({
           variant: "tertiary",
           onClick: closeModal,
           disabled: isBusy,
-          accessibleWhenDisabled: true
+          accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true
         },
         (0, import_i18n44.__)("Cancel")
       ), /* @__PURE__ */ React.createElement(
@@ -18320,7 +18322,8 @@ var AddNavigationModal = ({
           type: "submit",
           "aria-busy": isBusy,
           disabled: isBusy || !menuTitle?.trim(),
-          accessibleWhenDisabled: true
+          accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true
         },
         (0, import_i18n44.__)("Create Menu")
       )))

@@ -11734,7 +11734,15 @@ function ConnectorsPage() {
         /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { alignment: "center", spacing: 2 }, /* @__PURE__ */ React.createElement(import_components4.__experimentalHeading, { level: 2, size: 15, weight: 600 }, (0, import_i18n7.__)("No connectors yet")), /* @__PURE__ */ React.createElement(import_components4.__experimentalText, { size: 12 }, (0, import_i18n7.__)(
           "Connectors appear here when you install plugins that use external services. Each plugin registers the API keys it needs, and you manage them all in one place."
         ))),
-        /* @__PURE__ */ React.createElement(import_components4.Button, { variant: "secondary", href: "plugin-install.php" }, (0, import_i18n7.__)("Learn more"))
+        /* @__PURE__ */ React.createElement(
+          import_components4.Button,
+          {
+            variant: "secondary",
+            href: "plugin-install.php",
+            __next40pxDefaultSize: true
+          },
+          (0, import_i18n7.__)("Learn more")
+        )
       ) : /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { spacing: 3 }, /* @__PURE__ */ React.createElement(AiPluginCallout, null), /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { spacing: 3, role: "list" }, connectors.map(
         (connector) => {
           if (connector.render) {
