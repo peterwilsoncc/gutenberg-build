@@ -7358,13 +7358,13 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   transition: opacity 0.1s ease;
 }
 .revision-diff-markers .revision-diff-marker.is-added {
-  background: #00a32a;
+  background: #008a20;
 }
 .revision-diff-markers .revision-diff-marker.is-removed {
-  background: repeating-linear-gradient(-45deg, #d63638, #d63638 3px, rgba(214, 54, 56, 0.45) 3px, rgba(214, 54, 56, 0.45) 6px);
+  background: repeating-linear-gradient(-45deg, #d63638, #d63638 6px, rgba(214, 54, 56, 0.45) 6px, rgba(214, 54, 56, 0.45) 8px);
 }
 .revision-diff-markers .revision-diff-marker.is-modified {
-  background: repeating-linear-gradient(45deg, #dba617, #dba617 3px, rgba(219, 166, 23, 0.45) 3px, rgba(219, 166, 23, 0.45) 6px);
+  background: repeating-linear-gradient(45deg, #9a7000, #9a7000 6px, rgba(154, 112, 0, 0.45) 6px, rgba(154, 112, 0, 0.45) 8px);
 }
 .revision-diff-markers .revision-diff-marker:hover {
   opacity: 0.7;
