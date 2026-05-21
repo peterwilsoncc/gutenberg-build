@@ -856,18 +856,10 @@ var wp;
 
   // packages/compose/build-module/utils/subscribe-delegated-listener/index.mjs
   var registries = /* @__PURE__ */ new WeakMap();
-  function getRoot(target) {
-    if (target.nodeType === 9) {
-      return target;
-    }
-    if (target.window === target) {
-      return target;
-    }
-    return target.ownerDocument;
-  }
   function subscribeDelegatedListener(target, eventType, callback, capture = false) {
-    const root = getRoot(target);
-    const isWindow = root.window === root;
+    const ownerDoc = target.ownerDocument;
+    const root = ownerDoc ?? target;
+    const isWindow = ownerDoc === void 0;
     let perRoot = registries.get(root);
     if (!perRoot) {
       perRoot = /* @__PURE__ */ new Map();
