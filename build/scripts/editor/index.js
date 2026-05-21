@@ -40569,7 +40569,6 @@ If there's a particular need for this, please submit a feature request at https:
         import_components89.SelectControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n124.__)("Aspect ratio"),
           value: aspectRatioValue,
           onChange: onAspectRatioChange,
@@ -40582,7 +40581,6 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
         import_components89.ToggleControl,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n124.__)("Resize crop area"),
           help: (0, import_i18n124.__)("Show handles to adjust the crop box."),
           checked: freeformCrop,
@@ -40593,7 +40591,6 @@ If there's a particular need for this, please submit a feature request at https:
         import_components89.RangeControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n124.__)("Zoom"),
           min: minZoom,
           max: MAX_ZOOM,

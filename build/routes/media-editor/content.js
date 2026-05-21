@@ -17276,7 +17276,6 @@ function MediaEditorCropPanel({
       import_components37.SelectControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n32.__)("Aspect ratio"),
         value: aspectRatioValue,
         onChange: onAspectRatioChange,
@@ -17289,7 +17288,6 @@ function MediaEditorCropPanel({
     /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
       import_components37.ToggleControl,
       {
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n32.__)("Resize crop area"),
         help: (0, import_i18n32.__)("Show handles to adjust the crop box."),
         checked: freeformCrop,
@@ -17300,7 +17298,6 @@ function MediaEditorCropPanel({
       import_components37.RangeControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n32.__)("Zoom"),
         min: minZoom,
         max: MAX_ZOOM,
