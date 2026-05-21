@@ -1016,7 +1016,7 @@ var wp;
   var import_data90 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element181 = __toESM(require_element(), 1);
-  var import_editor47 = __toESM(require_editor(), 1);
+  var import_editor46 = __toESM(require_editor(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
 
@@ -17592,12 +17592,12 @@ var wp;
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__150) {
+            } catch (__149) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__150) {
+            } catch (__149) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
@@ -25461,8 +25461,6 @@ var wp;
       postType2 = "page";
     } else if (name2 === "post-item" || name2 === "posts") {
       postType2 = "post";
-    } else if (name2 === "attachment-item") {
-      postType2 = ATTACHMENT_POST_TYPE;
     }
     return postType2;
   }
@@ -51803,31 +51801,11 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/attachment-item.mjs
-  var import_i18n159 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
-  var attachmentItemRoute = {
-    name: "attachment-item",
-    path: "/attachment/:postId",
-    areas: {
-      sidebar: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-        SidebarNavigationScreen,
-        {
-          title: (0, import_i18n159.__)("Media"),
-          backPath: "/",
-          content: null
-        }
-      ),
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(EditSiteEditor, {}),
-      preview: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(EditSiteEditor, {})
-    }
-  };
-
   // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
-  var import_i18n160 = __toESM(require_i18n(), 1);
-  var import_editor45 = __toESM(require_editor(), 1);
-  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
-  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor45.privateApis);
+  var import_i18n159 = __toESM(require_i18n(), 1);
+  var import_editor44 = __toESM(require_editor(), 1);
+  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
+  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor44.privateApis);
   var stylebookRoute = {
     name: "stylebook",
     path: "/stylebook",
@@ -51836,19 +51814,19 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isThemeDataLoaded(siteData)) {
           return null;
         }
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n160.__)("Styles"),
+            title: (0, import_i18n159.__)("Styles"),
             backPath: "/",
-            description: (0, import_i18n160.__)(
+            description: (0, import_i18n159.__)(
               `Preview your website's visual identity: colors, typography, and blocks.`
             )
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(SidebarNavigationScreenUnsupported, {});
+        ) : /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       preview({ siteData }) {
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
           StyleBookPreview2,
           {
             isStatic: true,
@@ -51857,7 +51835,7 @@ If there's a particular need for this, please submit a feature request at https:
         ) : void 0;
       },
       mobile({ siteData }) {
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
           StyleBookPreview2,
           {
             isStatic: true,
@@ -51869,11 +51847,11 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/notfound.mjs
-  var import_i18n161 = __toESM(require_i18n(), 1);
+  var import_i18n160 = __toESM(require_i18n(), 1);
   var import_components160 = __toESM(require_components(), 1);
-  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   function NotFoundError() {
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components160.Notice, { status: "error", isDismissible: false, children: (0, import_i18n161.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_components160.Notice, { status: "error", isDismissible: false, children: (0, import_i18n160.__)(
       "The requested page could not be found. Please check the URL."
     ) });
   }
@@ -51881,20 +51859,19 @@ If there's a particular need for this, please submit a feature request at https:
     name: "notfound",
     path: "*",
     areas: {
-      sidebar: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(SidebarNavigationScreenMain, {}),
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+      sidebar: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(SidebarNavigationScreenMain, {}),
+      mobile: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
         SidebarNavigationScreenMain,
         {
-          customDescription: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(NotFoundError, {})
+          customDescription: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(NotFoundError, {})
         }
       ),
-      content: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components160.__experimentalSpacer, { padding: 2, children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(NotFoundError, {}) })
+      content: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_components160.__experimentalSpacer, { padding: 2, children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(NotFoundError, {}) })
     }
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/index.mjs
   var routes2 = [
-    ...window?.__experimentalMediaEditor ? [attachmentItemRoute] : [],
     pageItemRoute,
     pagesRoute,
     templateItemRoute,
@@ -51921,12 +51898,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/app/index.mjs
-  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   var { RouterProvider } = unlock(import_router42.privateApis);
   function AppLayout() {
     useCommonCommands();
     useSetCommandContext();
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(LayoutWithGlobalStylesProvider, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(LayoutWithGlobalStylesProvider, {});
   }
   function App() {
     useRegisterSiteEditorRoutes();
@@ -51956,23 +51933,23 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [currentTheme, editorSettings]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
       RouterProvider,
       {
         routes: routes3,
         pathArg: "p",
         beforeNavigate,
         matchResolverArgs: matchResolverArgsValue,
-        children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(AppLayout, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(AppLayout, {})
       }
     );
   }
 
   // packages/edit-site/build-module/deprecated.mjs
-  var import_editor46 = __toESM(require_editor(), 1);
+  var import_editor45 = __toESM(require_editor(), 1);
   var import_url27 = __toESM(require_url(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var isSiteEditor = (0, import_url27.getPath)(window.location.href)?.includes(
     "site-editor.php"
   );
@@ -51987,26 +51964,26 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     deprecateSlot("PluginMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_editor46.PluginMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(import_editor45.PluginMoreMenuItem, { ...props });
   }
   function PluginSidebar(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebar");
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_editor46.PluginSidebar, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(import_editor45.PluginSidebar, { ...props });
   }
   function PluginSidebarMoreMenuItem(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebarMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_editor46.PluginSidebarMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(import_editor45.PluginSidebarMoreMenuItem, { ...props });
   }
 
   // packages/edit-site/build-module/index.mjs
-  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
-  var { registerCoreBlockBindingsSources } = unlock(import_editor47.privateApis);
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
+  var { registerCoreBlockBindingsSources } = unlock(import_editor46.privateApis);
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
     const root = (0, import_element181.createRoot)(target);
@@ -52056,7 +52033,7 @@ If there's a particular need for this, please submit a feature request at https:
     window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
     window.addEventListener("drop", (e2) => e2.preventDefault(), false);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_element181.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_element181.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(App, {}) })
     );
     return root;
   }
