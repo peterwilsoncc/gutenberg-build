@@ -48101,12 +48101,6 @@ function useWidgetTypes() {
   return widgetTypes;
 }
 
-// routes/dashboard/stage.module.css
-if (typeof process === "undefined" || true) {
-  registerStyle48("cca5f80fb8", "._2381d7918cf57baa__dashboard-widgets-container{margin:var(--wpds-dimension-padding-2xl,24px)}");
-}
-var stage_default = { "dashboard-widgets-container": "_2381d7918cf57baa__dashboard-widgets-container" };
-
 // routes/dashboard/stage.tsx
 var import_jsx_runtime219 = __toESM(require_jsx_runtime());
 function Dashboard() {
@@ -48134,15 +48128,16 @@ function Dashboard() {
       onGridSettingsChange: setGridSettings,
       editMode,
       onEditChange: setEditMode,
-      children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(
         page_default,
         {
           title: (0, import_i18n65.__)("Dashboard"),
           actions: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(WidgetDashboard.Actions, {}),
-          children: /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("div", { className: stage_default["dashboard-widgets-container"], children: [
+          hasPadding: true,
+          children: [
             /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(WidgetDashboard.NoWidgetsState, {}),
             /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(WidgetDashboard.Widgets, {})
-          ] })
+          ]
         }
       )
     }
