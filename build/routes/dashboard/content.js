@@ -47769,7 +47769,7 @@ var import_i18n62 = __toESM(require_i18n());
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-chrome-actionable-area.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("5b9b5f5fec", "._93948b5db58100af__widgetChromeActionableArea{background:var(--wpds-color-bg-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);inset-inline-end:var(--wpds-dimension-padding-md,12px);padding:var(--wpds-dimension-padding-xs,4px);position:absolute;top:var(--wpds-dimension-padding-md,12px);z-index:1}");
+  registerStyle48("412a634422", "._93948b5db58100af__widgetChromeActionableArea{background:var(--wpds-color-bg-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003);inset-inline-end:var(--wpds-dimension-padding-md,12px);padding:var(--wpds-dimension-padding-xs,4px);position:absolute;top:var(--wpds-dimension-padding-md,12px);z-index:1}");
 }
 var widget_chrome_actionable_area_default = { "widgetChromeActionableArea": "_93948b5db58100af__widgetChromeActionableArea" };
 
