@@ -48857,9 +48857,15 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components108 = __toESM(require_components(), 1);
   var import_element162 = __toESM(require_element(), 1);
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
+  var PREVIEW_WIDTH_BY_VIEWPORT = {
+    default: 783,
+    tablet: 600,
+    mobile: 480
+  };
   var BlockPreviewPanel = ({
     name: name2,
     variation = "",
+    selectedViewport = "default",
     selectedState = "default",
     stateStyles
   }) => {
@@ -48884,14 +48890,17 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return generatePreviewStateStyles(stateStyles, name2);
     }, [selectedState, stateStyles, name2]);
-    const viewportWidth = blockExample?.viewportWidth ?? 500;
+    if (!blockExample) {
+      return null;
+    }
+    const viewportWidth = PREVIEW_WIDTH_BY_VIEWPORT[selectedViewport] ?? blockExample.viewportWidth ?? 500;
+    const normalizedViewportWidth = blockExample.viewportWidth ?? 500;
+    const previewScale = Math.max(viewportWidth / normalizedViewportWidth, 1);
+    const previewPadding = 24 * previewScale;
     const previewHeight = 144;
     const sidebarWidth = 235;
     const scale3 = sidebarWidth / viewportWidth;
     const minHeight = scale3 !== 0 && scale3 < 1 && previewHeight ? previewHeight / scale3 : previewHeight;
-    if (!blockExample) {
-      return null;
-    }
     return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_components108.__experimentalSpacer, { marginX: 4, marginBottom: 4, children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
       "div",
       {
@@ -48909,12 +48918,15 @@ If there's a particular need for this, please submit a feature request at https:
                 {
                   css: `
 								body{
-									padding: 24px;
+									padding: ${previewPadding}px;
 									min-height:${Math.round(minHeight)}px;
 									display:flex;
-									align-items:center;
 								}
-								.is-root-container { width: 100%; }
+								.is-root-container {
+									width: ${100 / previewScale}%;
+									transform: scale(${previewScale});
+									transform-origin: top left;
+								}
 								${stateCSS}
 							`
                 }
@@ -49167,8 +49179,9 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: name2,
           variation,
+          selectedViewport,
           selectedState: hasSelectedState ? stateParam : "default",
-          stateStyles: hasSelectedState ? style : void 0
+          stateStyles: hasSelectedState ? inheritedStyle : void 0
         }
       ),
       hasVariationsPanel && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { className: "global-styles-ui-screen-variations", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_components110.__experimentalVStack, { spacing: 3, children: [
