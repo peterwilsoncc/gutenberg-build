@@ -6273,15 +6273,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex: 1;
 }
 
-.editor-global-styles-sidebar .components-navigation__menu-title-heading {
-  font-size: 15.6px;
-  font-weight: 499;
-}
-
-.editor-global-styles-sidebar .components-navigation__item > button span {
-  font-weight: 499;
-}
-
 .editor-global-styles-sidebar .block-editor-panel-color-gradient-settings {
   border: 0;
 }
