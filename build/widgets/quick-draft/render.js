@@ -30937,7 +30937,6 @@ function QuickDraftContentField({
   return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(Stack, { direction: "column", className: quick_draft_content_field_default.root, children: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
     import_components51.TextareaControl,
     {
-      __nextHasNoMarginBottom: true,
       label: field.label,
       hideLabelFromVision,
       value: value ?? "",

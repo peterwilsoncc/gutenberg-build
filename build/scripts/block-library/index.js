@@ -32860,7 +32860,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
                   import_components58.CheckboxControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n95.__)("Mark as decorative"),
                     checked: !!isDecorative,
                     onChange: updateIsDecorative,
@@ -54084,7 +54083,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
                   import_components113.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n176.__)("Make image a link"),
                     onChange: () => setAttributes({ isLink: !isLink }),
                     checked: isLink
