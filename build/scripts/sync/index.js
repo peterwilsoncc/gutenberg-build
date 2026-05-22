@@ -10588,12 +10588,17 @@ var wp;
       const recordMap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
       const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
       const now = Date.now();
+      let hasObserversAttached = false;
+      let isEntityUnloaded = false;
       const unload = () => {
         log("loadEntity", "unloading", entityId);
-        providerResults.forEach((result) => result.destroy());
+        isEntityUnloaded = true;
+        providerResults?.forEach((result) => result.destroy());
         handlers.onStatusChange(null);
-        recordMap.unobserveDeep(onRecordUpdate);
-        stateMap.unobserve(onStateMapUpdate);
+        if (hasObserversAttached) {
+          recordMap.unobserveDeep(onRecordUpdate);
+          stateMap.unobserve(onStateMapUpdate);
+        }
         ydoc.destroy();
         entityStates.delete(entityId);
       };
@@ -10629,6 +10634,7 @@ var wp;
         addUndoMeta,
         restoreUndoMeta
       });
+      let providerResults;
       const entityState = {
         awareness,
         handlers,
@@ -10640,7 +10646,7 @@ var wp;
       };
       entityStates.set(entityId, entityState);
       log("loadEntity", "connecting", entityId);
-      const providerResults = await Promise.all(
+      providerResults = await Promise.all(
         providerCreators2.map(async (create7) => {
           const provider = await create7({
             objectType,
@@ -10652,10 +10658,16 @@ var wp;
           return provider;
         })
       );
+      if (isEntityUnloaded) {
+        log("loadEntity", "unloaded during connect, aborting", entityId);
+        providerResults.forEach((result) => result.destroy());
+        return;
+      }
       initializeYjsDoc(ydoc);
       internal.applyPersistedCrdtDoc(objectType, objectId, record);
       recordMap.observeDeep(onRecordUpdate);
       stateMap.observe(onStateMapUpdate);
+      hasObserversAttached = true;
     }
     async function loadCollection(syncConfig, objectType, handlers) {
       const providerCreators2 = getProviderCreators();
@@ -10676,11 +10688,16 @@ var wp;
       const ydoc = createYjsDoc({ collection: true, objectType });
       const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
       const now = Date.now();
+      let hasObserversAttached = false;
+      let isCollectionUnloaded = false;
       const unload = () => {
         log("loadCollection", "unloading", entityId);
-        providerResults.forEach((result) => result.destroy());
+        isCollectionUnloaded = true;
+        providerResults?.forEach((result) => result.destroy());
         handlers.onStatusChange(null);
-        stateMap.unobserve(onStateMapUpdate);
+        if (hasObserversAttached) {
+          stateMap.unobserve(onStateMapUpdate);
+        }
         ydoc.destroy();
         collectionStates.delete(objectType);
       };
@@ -10701,6 +10718,7 @@ var wp;
         });
       };
       const awareness = syncConfig.createAwareness?.(ydoc);
+      let providerResults;
       const collectionState = {
         awareness,
         handlers,
@@ -10710,7 +10728,7 @@ var wp;
       };
       collectionStates.set(objectType, collectionState);
       log("loadCollection", "connecting", entityId);
-      const providerResults = await Promise.all(
+      providerResults = await Promise.all(
         providerCreators2.map(async (create7) => {
           const provider = await create7({
             awareness,
@@ -10722,7 +10740,17 @@ var wp;
           return provider;
         })
       );
+      if (isCollectionUnloaded) {
+        log(
+          "loadCollection",
+          "unloaded during connect, aborting",
+          entityId
+        );
+        providerResults.forEach((result) => result.destroy());
+        return;
+      }
       stateMap.observe(onStateMapUpdate);
+      hasObserversAttached = true;
       initializeYjsDoc(ydoc);
     }
     function unloadEntity(objectType, objectId) {
@@ -10730,6 +10758,17 @@ var wp;
       log("unloadEntity", "unloading", entityId);
       entityStates.get(entityId)?.unload();
       updateCRDTDoc(objectType, null, {}, origin, { isSave: true });
+    }
+    function unloadAll() {
+      log("unloadAll", "unloading all entities", "all");
+      for (const [, entityState] of [...entityStates]) {
+        entityState.unload();
+      }
+      entityStates.clear();
+      for (const [, collectionState] of [...collectionStates]) {
+        collectionState.unload();
+      }
+      collectionStates.clear();
     }
     function getAwareness(objectType, objectId) {
       const entityId = getEntityId(objectType, objectId);
@@ -10858,6 +10897,7 @@ var wp;
         return undoManager;
       },
       unload: debugWrap(unloadEntity),
+      unloadAll: debugWrap(unloadAll),
       update: debugWrap(yieldToEventLoop(updateCRDTDoc))
     };
   }

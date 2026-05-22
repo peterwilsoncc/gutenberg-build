@@ -1343,6 +1343,9 @@ var wp;
     syncManager = createSyncManager();
     return syncManager;
   }
+  function hasSyncManager() {
+    return Boolean(syncManager);
+  }
 
   // packages/core-data/build-module/utils/crdt-utils.mjs
   function getRootMap(doc, key) {
@@ -5806,6 +5809,9 @@ var wp;
   }
   var setCollaborationSupported = (supported) => ({ dispatch: dispatch3 }) => {
     dispatch3({ type: "SET_COLLABORATION_SUPPORTED", supported });
+    if (!supported && hasSyncManager()) {
+      getSyncManager().unloadAll();
+    }
   };
   function receiveViewConfig(kind, name, config) {
     return {
