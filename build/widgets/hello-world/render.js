@@ -838,14 +838,14 @@ var style_default3 = { "root": "_6e9c47f7f67ffa0d__root" };
 
 // widgets/hello-world/render.tsx
 var import_jsx_runtime = __toESM(require_jsx_runtime());
-function HelloWorld() {
+function HelloWorld({ attributes }) {
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
     Stack,
     {
       align: "center",
       justify: "center",
       className: clsx_default(style_default3.root),
-      children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, { variant: "heading-2xl", children: "Hello World" })
+      children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, { variant: "heading-2xl", children: attributes?.message || "Hello World" })
     }
   );
 }

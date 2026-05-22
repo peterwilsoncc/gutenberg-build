@@ -47,7 +47,19 @@ var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primi
 var widget_default = {
   name: "core/hello-world",
   title: "Hello World",
-  icon: wordpress_default
+  icon: wordpress_default,
+  attributes: [
+    {
+      id: "message",
+      label: "Message",
+      type: "text"
+    }
+  ],
+  example: {
+    attributes: {
+      message: "Hello World"
+    }
+  }
 };
 export {
   widget_default as default
