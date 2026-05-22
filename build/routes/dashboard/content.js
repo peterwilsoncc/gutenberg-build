@@ -18147,7 +18147,7 @@ var IconButton = (0, import_element43.forwardRef)(
     // Prevent accidental forwarding of `children`
     children: _children,
     disabled: disabled2,
-    focusableWhenDisabled,
+    focusableWhenDisabled = true,
     icon,
     size: size4,
     shortcut,
