@@ -26,7 +26,7 @@ return array(
 		'dir_name'     => 'quick-draft',
 		'has_render'   => true,
 		'has_widget'   => true,
-		'presentation' => null,
+		'presentation' => 'content-bleed',
 	),
 	array(
 		'name'         => 'core/welcome',
