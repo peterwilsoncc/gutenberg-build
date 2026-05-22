@@ -74950,8 +74950,7 @@ If there's a particular need for this, please submit a feature request at https:
         postType: select7(store).getCurrentPostType(),
         taxonomies: select7(import_core_data100.store).getEntityRecords(
           "root",
-          "taxonomy",
-          { per_page: -1 }
+          "taxonomy"
         )
       };
     }, []);
@@ -74980,8 +74979,7 @@ If there's a particular need for this, please submit a feature request at https:
       const postType2 = select7(store).getCurrentPostType();
       const taxonomies = select7(import_core_data101.store).getEntityRecords(
         "root",
-        "taxonomy",
-        { per_page: -1 }
+        "taxonomy"
       );
       return taxonomies?.some(
         (taxonomy) => taxonomy.types.includes(postType2)
