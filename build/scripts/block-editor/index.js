@@ -8013,6 +8013,9 @@ var wp;
   var globalStylesLinksDataKey = /* @__PURE__ */ Symbol("globalStylesLinks");
   var selectBlockPatternsKey = /* @__PURE__ */ Symbol("selectBlockPatternsKey");
   var reusableBlocksSelectKey = /* @__PURE__ */ Symbol("reusableBlocksSelect");
+  var userPatternCategoriesSelectKey = /* @__PURE__ */ Symbol(
+    "userPatternCategoriesSelect"
+  );
   var sectionRootClientIdKey = /* @__PURE__ */ Symbol("sectionRootClientIdKey");
   var mediaEditKey = /* @__PURE__ */ Symbol("mediaEditKey");
   var getMediaSelectKey = /* @__PURE__ */ Symbol("getMediaSelect");
@@ -11204,7 +11207,9 @@ var wp;
           }
           return mapUserPattern(
             block,
-            state.settings.__experimentalUserPatternCategories
+            state.settings[userPatternCategoriesSelectKey]?.(
+              select3
+            ) ?? state.settings.__experimentalUserPatternCategories
           );
         }
         return [
@@ -11228,7 +11233,9 @@ var wp;
         ...unlock(select3(STORE_NAME)).getReusableBlocks().map(
           (userPattern) => mapUserPattern(
             userPattern,
-            state.settings.__experimentalUserPatternCategories
+            state.settings[userPatternCategoriesSelectKey]?.(
+              select3
+            ) ?? state.settings.__experimentalUserPatternCategories
           )
         ),
         // This setting is left for back compat.
@@ -11632,7 +11639,7 @@ var wp;
   var getAllPatternsDependants = (select3) => (state) => {
     return [
       state.settings.__experimentalBlockPatterns,
-      state.settings.__experimentalUserPatternCategories,
+      state.settings[userPatternCategoriesSelectKey]?.(select3) ?? state.settings.__experimentalUserPatternCategories,
       state.settings.__experimentalReusableBlocks,
       state.settings[selectBlockPatternsKey]?.(select3),
       state.blockPatterns,
@@ -38980,17 +38987,15 @@ var wp;
         const { getSettings: getSettings7, __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2 } = unlock(
           select3(store)
         );
-        const {
-          __experimentalUserPatternCategories,
-          __experimentalBlockPatternCategories
-        } = getSettings7();
+        const settings2 = getSettings7();
+        const userPatternCategoriesSelect = settings2[userPatternCategoriesSelectKey];
         return {
           patterns: __experimentalGetAllowedPatterns2(
             rootClientId,
             options
           ),
-          userPatternCategories: __experimentalUserPatternCategories,
-          patternCategories: __experimentalBlockPatternCategories
+          userPatternCategories: userPatternCategoriesSelect ? userPatternCategoriesSelect(select3) : settings2.__experimentalUserPatternCategories,
+          patternCategories: settings2.__experimentalBlockPatternCategories
         };
       },
       [rootClientId, options]
@@ -87736,6 +87741,7 @@ var wp;
     PrivateRichText,
     PrivateInserterLibrary,
     reusableBlocksSelectKey,
+    userPatternCategoriesSelectKey,
     PrivateBlockPopover,
     PrivatePublishDateTimePicker,
     useSpacingSizes,

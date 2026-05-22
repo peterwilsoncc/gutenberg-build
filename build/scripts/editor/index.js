@@ -44681,6 +44681,9 @@ If there's a particular need for this, please submit a feature request at https:
       [RECEIVE_INTERMEDIATE_RESULTS2]: true
     });
   }
+  function __experimentalUserPatternCategoriesSelect(select7) {
+    return select7(import_core_data32.store).getUserPatternCategories();
+  }
   var BLOCK_EDITOR_SETTINGS = [
     "__experimentalBlockBindingsSupportedAttributes",
     "__experimentalBlockDirectory",
@@ -44738,6 +44741,7 @@ If there's a particular need for this, please submit a feature request at https:
     globalStylesLinksDataKey,
     selectBlockPatternsKey,
     reusableBlocksSelectKey,
+    userPatternCategoriesSelectKey,
     sectionRootClientIdKey,
     mediaEditKey,
     getMediaSelectKey,
@@ -44766,7 +44770,6 @@ If there's a particular need for this, please submit a feature request at https:
       userCanCreatePages,
       pageOnFront,
       pageForPosts,
-      userPatternCategories,
       restBlockPatternCategories,
       sectionRootClientId,
       deviceType: deviceType2,
@@ -44778,7 +44781,6 @@ If there's a particular need for this, please submit a feature request at https:
           canUser,
           getRawEntityRecord,
           getEntityRecord,
-          getUserPatternCategories,
           getBlockPatternCategories
         } = select7(import_core_data32.store);
         const { get } = select7(import_preferences7.store);
@@ -44828,7 +44830,6 @@ If there's a particular need for this, please submit a feature request at https:
           }),
           pageOnFront: siteSettings?.page_on_front,
           pageForPosts: siteSettings?.page_for_posts,
-          userPatternCategories: getUserPatternCategories(),
           restBlockPatternCategories: getBlockPatternCategories(),
           sectionRootClientId: getSectionRootBlock(),
           deviceType: getDeviceType2(),
@@ -44934,8 +44935,8 @@ If there's a particular need for this, please submit a feature request at https:
           return hasFinishedResolution("getBlockPatterns") ? patterns2 : void 0;
         },
         [reusableBlocksSelectKey]: __experimentalReusableBlocksSelect,
+        [userPatternCategoriesSelectKey]: __experimentalUserPatternCategoriesSelect,
         __experimentalBlockPatternCategories: blockPatternCategories,
-        __experimentalUserPatternCategories: userPatternCategories,
         __experimentalFetchLinkSuggestions: (search, searchOptions) => (0, import_core_data32.__experimentalFetchLinkSuggestions)(search, searchOptions, settings),
         inserterMediaCategories: media_categories_default,
         __experimentalFetchRichUrlData: import_core_data32.__experimentalFetchUrlData,
@@ -44988,7 +44989,6 @@ If there's a particular need for this, please submit a feature request at https:
       keepCaretInsideBlock,
       settings,
       hasUploadPermissions,
-      userPatternCategories,
       blockPatterns,
       blockPatternCategories,
       canUseUnfilteredHTML,
