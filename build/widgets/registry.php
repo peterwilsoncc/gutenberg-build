@@ -29,6 +29,13 @@ return array(
 		'presentation' => 'content-bleed',
 	),
 	array(
+		'name'         => 'core/site-preview',
+		'dir_name'     => 'site-preview',
+		'has_render'   => true,
+		'has_widget'   => true,
+		'presentation' => 'full-bleed',
+	),
+	array(
 		'name'         => 'core/welcome',
 		'dir_name'     => 'welcome',
 		'has_render'   => true,
