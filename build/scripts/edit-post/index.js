@@ -3562,6 +3562,20 @@ var wp;
     const preloadedResolutions = preloadResolutions(postType, postId);
     preloadedResolutions.finally(() => {
       clearPreloadedData();
+      if (postType && postId) {
+        const post = (0, import_data26.select)(import_core_data9.store).getEntityRecord(
+          "postType",
+          postType,
+          postId
+        );
+        if (post) {
+          (0, import_data26.dispatch)(import_editor20.store).setupEditor(
+            post,
+            initialEdits,
+            settings.template
+          );
+        }
+      }
       root.render(
         /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_element14.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
           layout_default,

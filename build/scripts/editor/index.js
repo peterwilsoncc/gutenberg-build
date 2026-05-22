@@ -47486,6 +47486,7 @@ If there's a particular need for this, please submit a feature request at https:
         setRenderingMode: setRenderingMode2
       } = unlock((0, import_data66.useDispatch)(store));
       const { editEntityRecord } = (0, import_data66.useDispatch)(import_core_data40.store);
+      const registry = (0, import_data66.useRegistry)();
       const onChangeSelection = (0, import_element155.useCallback)(
         (newSelection) => {
           editEntityRecord(
@@ -47504,7 +47505,9 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         updatePostLock2(settings.postLock);
-        setupEditor2(post2, initialEdits, settings.template);
+        if (!registry.select(store).__unstableIsEditorReady()) {
+          setupEditor2(post2, initialEdits, settings.template);
+        }
         if (settings.autosave) {
           createWarningNotice(
             (0, import_i18n141.__)(
