@@ -8,6 +8,13 @@
 
 return array(
 	array(
+		'name'         => 'core/activity',
+		'dir_name'     => 'activity',
+		'has_render'   => true,
+		'has_widget'   => true,
+		'presentation' => 'content-bleed',
+	),
+	array(
 		'name'         => 'core/hello-world',
 		'dir_name'     => 'hello-world',
 		'has_render'   => true,
