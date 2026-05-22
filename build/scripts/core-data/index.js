@@ -2307,6 +2307,9 @@ var wp;
               );
               break;
             }
+            case "clientId": {
+              break;
+            }
             default:
               if (!(0, import_es62.default)(
                 incomingYBlock[incomingBlockProperty],
@@ -2771,7 +2774,18 @@ var wp;
       }
       switch (key) {
         case "blocks": {
-          if (!newValue) {
+          const newCursorPosition = parseCursorSelection(
+            changes.selection
+          );
+          const rawContent = getRawValue(changes.content);
+          if (!newValue && typeof rawContent === "string") {
+            mergeContentWithoutBlocks(
+              ymap,
+              rawContent,
+              newCursorPosition
+            );
+            break;
+          } else if (!newValue) {
             ymap.set(key, void 0);
             break;
           }
@@ -2780,9 +2794,6 @@ var wp;
             currentBlocks = new import_sync13.Y.Array();
             ymap.set(key, currentBlocks);
           }
-          const newCursorPosition = parseCursorSelection(
-            changes.selection
-          );
           mergeCrdtBlocks(currentBlocks, newValue, newCursorPosition);
           break;
         }
@@ -2847,6 +2858,18 @@ var wp;
         updateSelectionHistory(ydoc, selection);
       }, 0);
     }
+  }
+  function mergeContentWithoutBlocks(ymap, rawContent, cursorPosition) {
+    let currentBlocks = ymap.get("blocks");
+    if (!(currentBlocks instanceof import_sync13.Y.Array)) {
+      currentBlocks = new import_sync13.Y.Array();
+      ymap.set("blocks", currentBlocks);
+    }
+    mergeCrdtBlocks(
+      currentBlocks,
+      (0, import_blocks3.parse)(rawContent),
+      cursorPosition
+    );
   }
   function parseCursorSelection(selection) {
     const selectionStart = selection?.selectionStart;
