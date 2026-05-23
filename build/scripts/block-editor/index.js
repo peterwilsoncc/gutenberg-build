@@ -36743,7 +36743,10 @@ var wp;
     }, [iframeDocument]);
     const previousIsZoomedOut = (0, import_element74.useRef)(false);
     (0, import_element74.useEffect)(() => {
-      const trigger = iframeDocument && previousIsZoomedOut.current !== isZoomedOut;
+      if (!iframeDocument) {
+        return;
+      }
+      const trigger = previousIsZoomedOut.current !== isZoomedOut;
       previousIsZoomedOut.current = isZoomedOut;
       if (!trigger) {
         return;
