@@ -29,6 +29,13 @@ return array(
 		'presentation' => 'content-bleed',
 	),
 	array(
+		'name'         => 'core/site-health',
+		'dir_name'     => 'site-health',
+		'has_render'   => true,
+		'has_widget'   => true,
+		'presentation' => 'framed',
+	),
+	array(
 		'name'         => 'core/site-preview',
 		'dir_name'     => 'site-preview',
 		'has_render'   => true,
