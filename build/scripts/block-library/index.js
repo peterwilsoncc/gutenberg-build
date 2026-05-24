@@ -29786,7 +29786,6 @@ ${js}
   var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
   var { Tabs } = unlock(import_components50.privateApis);
   function HTMLEditModal({
-    isOpen,
     onRequestClose,
     content,
     setAttributes
@@ -29804,9 +29803,6 @@ ${js}
       };
     }, []);
     const hasRestrictedContent = !canUserUseUnfilteredHTML && (css.trim() || js.trim());
-    if (!isOpen) {
-      return null;
-    }
     const handleUpdate = () => {
       setAttributes({
         content: serializeContent({
@@ -30013,10 +30009,9 @@ ${js}
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
+        isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
           HTMLEditModal,
           {
-            isOpen: isModalOpen,
             onRequestClose: () => setIsModalOpen(false),
             content: attributes2.content,
             setAttributes
@@ -30044,10 +30039,9 @@ ${js}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(HTMLEditPreview, { content: attributes2.content, isSelected }),
-      /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
+      isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
         HTMLEditModal,
         {
-          isOpen: isModalOpen,
           onRequestClose: () => setIsModalOpen(false),
           content: attributes2.content,
           setAttributes
