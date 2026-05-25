@@ -66001,7 +66001,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/editor/build-module/hooks/default-autocompleters.mjs
-  var import_hooks51 = __toESM(require_hooks(), 1);
+  var import_hooks52 = __toESM(require_hooks(), 1);
 
   // packages/editor/build-module/components/autocompleters/link.mjs
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
@@ -67490,11 +67490,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/styles-canvas/style-book.mjs
   var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
-  function StylesCanvasStyleBook({ path, onPathChange }, ref) {
+  function StyleBookWithNavigation({
+    path,
+    onPathChange,
+    userConfig,
+    forwardedRef
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
       style_book_default,
       {
-        ref,
+        ref: forwardedRef,
+        path,
+        userConfig,
         isSelected: (blockName) => (
           // Match '/blocks/core%2Fbutton' and
           // '/blocks/core%2Fbutton/typography', but not
@@ -67516,6 +67523,54 @@ If there's a particular need for this, please submit a feature request at https:
           }
           onPathChange?.("/blocks/" + encodeURIComponent(blockName));
         }
+      }
+    );
+  }
+  function StylesCanvasRevisionStyleBook({ path, onPathChange, forwardedRef }) {
+    const { user: userConfig } = useGlobalStyles();
+    const { revisions, isLoading } = useGlobalStylesRevisions();
+    const revisionId2 = (0, import_element196.useMemo)(() => {
+      const match3 = path?.match(/^\/revisions\/(.+)$/);
+      return match3 ? match3[1] : null;
+    }, [path]);
+    const selectedRevision = (0, import_element196.useMemo)(() => {
+      if (!revisionId2 || !revisions.length) {
+        return null;
+      }
+      return revisions.find(
+        (revision) => String(revision.id) === String(revisionId2)
+      );
+    }, [revisionId2, revisions]);
+    if (isLoading) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+      StyleBookWithNavigation,
+      {
+        forwardedRef,
+        path,
+        onPathChange,
+        userConfig: selectedRevision || userConfig
+      }
+    );
+  }
+  function StylesCanvasStyleBook({ path, onPathChange }, ref) {
+    if (path?.startsWith("/revisions")) {
+      return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+        StylesCanvasRevisionStyleBook,
+        {
+          forwardedRef: ref,
+          path,
+          onPathChange
+        }
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+      StyleBookWithNavigation,
+      {
+        forwardedRef: ref,
+        path,
+        onPathChange
       }
     );
   }
@@ -69009,7 +69064,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components173 = __toESM(require_components(), 1);
   var import_data106 = __toESM(require_data(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
-  var import_hooks42 = __toESM(require_hooks(), 1);
+  var import_hooks43 = __toESM(require_hooks(), 1);
   var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
   function getContent() {
     try {
@@ -69029,7 +69084,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }
     componentDidCatch(error2) {
-      (0, import_hooks42.doAction)("editor.ErrorBoundary.errorLogged", error2);
+      (0, import_hooks43.doAction)("editor.ErrorBoundary.errorLogged", error2);
     }
     static getDerivedStateFromError(error2) {
       return { error: error2 };
@@ -71395,7 +71450,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-featured-image/index.mjs
   var import_i18n226 = __toESM(require_i18n(), 1);
-  var import_hooks48 = __toESM(require_hooks(), 1);
+  var import_hooks49 = __toESM(require_hooks(), 1);
   var import_components200 = __toESM(require_components(), 1);
   var import_blob3 = __toESM(require_blob(), 1);
   var import_element224 = __toESM(require_element(), 1);
@@ -71446,7 +71501,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!media) {
       return {};
     }
-    const defaultSize = (0, import_hooks48.applyFilters)(
+    const defaultSize = (0, import_hooks49.applyFilters)(
       "editor.PostFeaturedImage.imageSize",
       "large",
       media.id,
@@ -71459,7 +71514,7 @@ If there's a particular need for this, please submit a feature request at https:
         mediaSourceUrl: media.media_details.sizes[defaultSize].source_url
       };
     }
-    const fallbackSize = (0, import_hooks48.applyFilters)(
+    const fallbackSize = (0, import_hooks49.applyFilters)(
       "editor.PostFeaturedImage.imageSize",
       "thumbnail",
       media.id,
@@ -71944,7 +71999,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data140 = __toESM(require_data(), 1);
   var import_url17 = __toESM(require_url(), 1);
   var import_element225 = __toESM(require_element(), 1);
-  var import_hooks49 = __toESM(require_hooks(), 1);
+  var import_hooks50 = __toESM(require_hooks(), 1);
   var import_compose43 = __toESM(require_compose(), 1);
   var import_core_data87 = __toESM(require_core_data(), 1);
 
@@ -72113,12 +72168,12 @@ If there's a particular need for this, please submit a feature request at https:
           xhr.send(data);
         }
       }
-      (0, import_hooks49.addAction)("heartbeat.send", hookName, sendPostLock);
-      (0, import_hooks49.addAction)("heartbeat.tick", hookName, receivePostLock);
+      (0, import_hooks50.addAction)("heartbeat.send", hookName, sendPostLock);
+      (0, import_hooks50.addAction)("heartbeat.tick", hookName, receivePostLock);
       window.addEventListener("beforeunload", releasePostLock);
       return () => {
-        (0, import_hooks49.removeAction)("heartbeat.send", hookName);
-        (0, import_hooks49.removeAction)("heartbeat.tick", hookName);
+        (0, import_hooks50.removeAction)("heartbeat.send", hookName);
+        (0, import_hooks50.removeAction)("heartbeat.tick", hookName);
         window.removeEventListener("beforeunload", releasePostLock);
       };
     }, []);
@@ -72286,7 +72341,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components207 = __toESM(require_components(), 1);
   var import_i18n233 = __toESM(require_i18n(), 1);
   var import_data143 = __toESM(require_data(), 1);
-  var import_hooks50 = __toESM(require_hooks(), 1);
+  var import_hooks51 = __toESM(require_hooks(), 1);
   var import_core_data88 = __toESM(require_core_data(), 1);
   var import_jsx_runtime403 = __toESM(require_jsx_runtime(), 1);
   function writeInterstitialMessage(targetDocument) {
@@ -72367,7 +72422,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		</style>
 	`;
-    markup = (0, import_hooks50.applyFilters)("editor.PostPreview.interstitialMarkup", markup);
+    markup = (0, import_hooks51.applyFilters)("editor.PostPreview.interstitialMarkup", markup);
     targetDocument.write(markup);
     targetDocument.title = (0, import_i18n233.__)("Generating preview\u2026");
     targetDocument.close();
@@ -76141,7 +76196,7 @@ If there's a particular need for this, please submit a feature request at https:
     completers.push({ ...link_default2 }, { ...user_default });
     return completers;
   }
-  (0, import_hooks51.addFilter)(
+  (0, import_hooks52.addFilter)(
     "editor.Autocomplete.completers",
     "editor/autocompleters/set-default-completers",
     setDefaultCompleters
@@ -76149,7 +76204,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/hooks/media-upload.mjs
   var import_element252 = __toESM(require_element(), 1);
-  var import_hooks52 = __toESM(require_hooks(), 1);
+  var import_hooks53 = __toESM(require_hooks(), 1);
   var import_deprecated13 = __toESM(require_deprecated(), 1);
   var import_media_utils7 = __toESM(require_media_utils(), 1);
   var import_jsx_runtime436 = __toESM(require_jsx_runtime(), 1);
@@ -76205,7 +76260,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   if (window.__experimentalDataViewsMediaModal) {
-    (0, import_hooks52.addFilter)(
+    (0, import_hooks53.addFilter)(
       "editor.MediaUpload",
       "core/editor/components/media-upload",
       () => {
@@ -76218,7 +76273,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   } else {
-    (0, import_hooks52.addFilter)(
+    (0, import_hooks53.addFilter)(
       "editor.MediaUpload",
       "core/editor/components/media-upload",
       () => {
@@ -76228,7 +76283,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/hooks/pattern-overrides.mjs
-  var import_hooks53 = __toESM(require_hooks(), 1);
+  var import_hooks54 = __toESM(require_hooks(), 1);
   var import_patterns8 = __toESM(require_patterns(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
   var import_block_editor66 = __toESM(require_block_editor(), 1);
@@ -76286,14 +76341,14 @@ If there's a particular need for this, please submit a feature request at https:
       shouldShowResetOverridesControl && /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(ResetOverridesControl, { ...props })
     ] });
   }
-  (0, import_hooks53.addFilter)(
+  (0, import_hooks54.addFilter)(
     "editor.BlockEdit",
     "core/editor/with-pattern-override-controls",
     withPatternOverrideControls
   );
 
   // packages/editor/build-module/hooks/navigation-link-view-button.mjs
-  var import_hooks54 = __toESM(require_hooks(), 1);
+  var import_hooks55 = __toESM(require_hooks(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
   var import_element253 = __toESM(require_element(), 1);
   var import_i18n265 = __toESM(require_i18n(), 1);
@@ -76340,14 +76395,14 @@ If there's a particular need for this, please submit a feature request at https:
     },
     "withNavigationViewButton"
   );
-  (0, import_hooks54.addFilter)(
+  (0, import_hooks55.addFilter)(
     "editor.BlockEdit",
     "core/editor/with-navigation-view-button",
     withNavigationViewButton
   );
 
   // packages/editor/build-module/hooks/template-part-navigation-edit-button.mjs
-  var import_hooks55 = __toESM(require_hooks(), 1);
+  var import_hooks56 = __toESM(require_hooks(), 1);
   var import_compose58 = __toESM(require_compose(), 1);
   var import_element254 = __toESM(require_element(), 1);
   var import_i18n266 = __toESM(require_i18n(), 1);
@@ -76436,14 +76491,14 @@ If there's a particular need for this, please submit a feature request at https:
     },
     "withTemplatePartNavigationEditButton"
   );
-  (0, import_hooks55.addFilter)(
+  (0, import_hooks56.addFilter)(
     "editor.BlockEdit",
     "core/editor/with-template-part-navigation-edit-button",
     withTemplatePartNavigationEditButton
   );
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/index.mjs
-  var import_hooks56 = __toESM(require_hooks(), 1);
+  var import_hooks57 = __toESM(require_hooks(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
   var import_block_editor69 = __toESM(require_block_editor(), 1);
   var import_components234 = __toESM(require_components(), 1);
@@ -76755,7 +76810,7 @@ If there's a particular need for this, please submit a feature request at https:
       props.isSelected && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(PushChangesToGlobalStyles, { ...props })
     ] })
   );
-  (0, import_hooks56.addFilter)(
+  (0, import_hooks57.addFilter)(
     "editor.BlockEdit",
     "core/editor/push-changes-to-global-styles",
     withPushChangesToGlobalStyles
@@ -79932,7 +79987,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor85 = __toESM(require_block_editor(), 1);
   var import_data216 = __toESM(require_data(), 1);
   var import_element277 = __toESM(require_element(), 1);
-  var import_hooks59 = __toESM(require_hooks(), 1);
+  var import_hooks60 = __toESM(require_hooks(), 1);
 
   // packages/editor/build-module/components/visual-editor/index.mjs
   var import_block_editor83 = __toESM(require_block_editor(), 1);
@@ -80199,7 +80254,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data117 = __toESM(require_core_data(), 1);
   var import_block_editor82 = __toESM(require_block_editor(), 1);
   var import_components254 = __toESM(require_components(), 1);
-  var import_hooks58 = __toESM(require_hooks(), 1);
+  var import_hooks59 = __toESM(require_hooks(), 1);
   var import_element274 = __toESM(require_element(), 1);
   var import_i18n286 = __toESM(require_i18n(), 1);
 
@@ -80317,7 +80372,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const error2 = connectionStatus && "error" in connectionStatus ? connectionStatus?.error : void 0;
-    if (!canRetry && (0, import_hooks58.applyFilters)(
+    if (!canRetry && (0, import_hooks59.applyFilters)(
       "editor.isSyncConnectionErrorHandled",
       false,
       error2?.code
@@ -81015,7 +81070,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   var FILTER_NAME = "editor/revisions-canvas/withRevisionDiffClasses";
-  (0, import_hooks59.addFilter)("editor.BlockListBlock", FILTER_NAME, withRevisionDiffClasses);
+  (0, import_hooks60.addFilter)("editor.BlockListBlock", FILTER_NAME, withRevisionDiffClasses);
   function DiffStyleOverrides({ showDiff }) {
     usePrivateStyleOverride({
       css: showDiff ? REVISION_DIFF_STYLES : ""
