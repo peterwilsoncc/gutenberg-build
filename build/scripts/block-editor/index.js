@@ -79846,10 +79846,22 @@ var wp;
   var import_components249 = __toESM(require_components(), 1);
   var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
   function getLabelContent(showError, errorMessage, fieldLabel) {
-    return showError ? /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(import_components249.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(import_components249.Icon, { icon: error_default, size: 16 }),
-      fieldLabel
-    ] }) }) : fieldLabel;
+    return showError ? /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(tooltip_exports.Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(
+        tooltip_exports.Trigger,
+        {
+          render: /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(import_components249.Icon, { icon: error_default, size: 16 }),
+            /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(VisuallyHidden, { children: [
+              errorMessage,
+              ": "
+            ] }),
+            fieldLabel
+          ] })
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(tooltip_exports.Popup, { children: errorMessage })
+    ] }) : fieldLabel;
   }
   var get_label_content_default = getLabelContent;
 
@@ -79950,7 +79962,23 @@ var wp;
         onKeyDown: !disabled2 ? handleKeyDown : void 0,
         children: [
           labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("span", { className: labelClassName, children: labelContent }),
-          labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_components250.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_components250.Icon, { icon: error_default, size: 16 }) }) }),
+          labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime454.jsxs)(tooltip_exports.Root, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(
+              tooltip_exports.Trigger,
+              {
+                render: /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(
+                  "span",
+                  {
+                    className: "dataforms-layouts-panel__field-label-error-content",
+                    role: "img",
+                    "aria-label": errorMessage,
+                    children: /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_components250.Icon, { icon: error_default, size: 16 })
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(tooltip_exports.Popup, { children: errorMessage })
+          ] }),
           /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(
             "span",
             {

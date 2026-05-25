@@ -11265,6 +11265,17 @@ var Stack = (0, import_element27.forwardRef)(function Stack2({ direction, gap, a
 // packages/ui/build-module/icon-button/icon-button.mjs
 var import_element32 = __toESM(require_element(), 1);
 
+// packages/ui/build-module/tooltip/index.mjs
+var tooltip_exports = {};
+__export(tooltip_exports, {
+  Popup: () => Popup,
+  Portal: () => Portal,
+  Positioner: () => Positioner,
+  Provider: () => Provider,
+  Root: () => Root4,
+  Trigger: () => Trigger2
+});
+
 // packages/ui/build-module/tooltip/popup.mjs
 var import_element30 = __toESM(require_element(), 1);
 var import_theme = __toESM(require_theme(), 1);
@@ -14796,7 +14807,15 @@ var GridItem = (0, import_element53.forwardRef)(
                       style: { height: "auto" },
                       direction: "row",
                       children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(import_jsx_runtime75.Fragment, { children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components8.Tooltip, { text: field.label, children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components8.FlexItem, { className: "dataviews-view-grid__field-name", children: field.header }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(tooltip_exports.Root, { children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+                            tooltip_exports.Trigger,
+                            {
+                              render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components8.FlexItem, { className: "dataviews-view-grid__field-name", children: field.header })
+                            }
+                          ),
+                          /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(tooltip_exports.Popup, { children: field.label })
+                        ] }),
                         /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
                           import_components8.FlexItem,
                           {
@@ -23910,6 +23929,7 @@ function Filter({
   const isLocked = filterInView?.isLocked;
   const hasValues = !isLocked && filterInView?.value !== void 0;
   const canResetOrRemove = !isLocked && (!isPrimary || hasValues);
+  const resetOrRemoveLabel = isPrimary ? (0, import_i18n26.__)("Reset") : (0, import_i18n26.__)("Remove");
   return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
     import_components20.Dropdown,
     {
@@ -23920,86 +23940,91 @@ function Filter({
         toggleRef.current?.focus();
       },
       renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)("div", { className: "dataviews-filters__summary-chip-container", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components20.Tooltip,
-          {
-            text: (0, import_i18n26.sprintf)(
-              /* translators: 1: Filter name. */
-              (0, import_i18n26.__)("Filter by: %1$s"),
-              filter.name.toLowerCase()
-            ),
-            placement: "top",
-            children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-              "div",
-              {
-                className: clsx_default(
-                  "dataviews-filters__summary-chip",
-                  {
-                    "has-reset": canResetOrRemove,
-                    "has-values": hasValues,
-                    "is-not-clickable": isLocked
-                  }
-                ),
-                role: "button",
-                tabIndex: isLocked ? -1 : 0,
-                onClick: () => {
-                  if (!isLocked) {
-                    onToggle();
-                  }
-                },
-                onKeyDown: (event) => {
-                  if (!isLocked && [ENTER, SPACE].includes(event.key)) {
-                    onToggle();
-                    event.preventDefault();
-                  }
-                },
-                "aria-disabled": isLocked,
-                "aria-pressed": isOpen,
-                "aria-expanded": isOpen,
-                ref: toggleRef,
-                children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-                  FilterText,
-                  {
-                    activeElements,
-                    filterInView,
-                    filter
-                  }
-                )
-              }
-            )
-          }
-        ),
-        canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components20.Tooltip,
-          {
-            text: isPrimary ? (0, import_i18n26.__)("Reset") : (0, import_i18n26.__)("Remove"),
-            placement: "top",
-            children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-              "button",
-              {
-                className: clsx_default(
-                  "dataviews-filters__summary-chip-remove",
-                  { "has-values": hasValues }
-                ),
-                onClick: () => {
-                  onChangeView({
-                    ...view,
-                    page: 1,
-                    filters: view.filters?.filter(
-                      (_filter) => _filter.field !== filter.field
-                    )
-                  });
-                  if (!isPrimary) {
-                    addFilterRef.current?.focus();
-                  } else {
-                    toggleRef.current?.focus();
-                  }
-                },
-                children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components20.Icon, { icon: close_small_default })
-              }
-            )
-          }
-        )
+        /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+            tooltip_exports.Trigger,
+            {
+              render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+                "div",
+                {
+                  className: clsx_default(
+                    "dataviews-filters__summary-chip",
+                    {
+                      "has-reset": canResetOrRemove,
+                      "has-values": hasValues,
+                      "is-not-clickable": isLocked
+                    }
+                  ),
+                  role: "button",
+                  tabIndex: isLocked ? -1 : 0,
+                  onClick: () => {
+                    if (!isLocked) {
+                      onToggle();
+                    }
+                  },
+                  onKeyDown: (event) => {
+                    if (!isLocked && [ENTER, SPACE].includes(
+                      event.key
+                    )) {
+                      onToggle();
+                      event.preventDefault();
+                    }
+                  },
+                  "aria-disabled": isLocked,
+                  "aria-pressed": isOpen,
+                  "aria-expanded": isOpen,
+                  ref: toggleRef,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+                    FilterText,
+                    {
+                      activeElements,
+                      filterInView,
+                      filter
+                    }
+                  )
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(tooltip_exports.Popup, { children: (0, import_i18n26.sprintf)(
+            /* translators: 1: Filter name. */
+            (0, import_i18n26.__)("Filter by: %1$s"),
+            filter.name.toLowerCase()
+          ) })
+        ] }),
+        canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+            tooltip_exports.Trigger,
+            {
+              render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+                "button",
+                {
+                  className: clsx_default(
+                    "dataviews-filters__summary-chip-remove",
+                    { "has-values": hasValues }
+                  ),
+                  "aria-label": resetOrRemoveLabel,
+                  onClick: () => {
+                    onChangeView({
+                      ...view,
+                      page: 1,
+                      filters: view.filters?.filter(
+                        (_filter) => _filter.field !== filter.field
+                      )
+                    });
+                    if (!isPrimary) {
+                      addFilterRef.current?.focus();
+                    } else {
+                      toggleRef.current?.focus();
+                    }
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components20.Icon, { icon: close_small_default })
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(tooltip_exports.Popup, { children: resetOrRemoveLabel })
+        ] })
       ] }),
       renderContent: () => {
         return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(Stack, { direction: "column", justify: "flex-start", children: [
@@ -28801,10 +28826,22 @@ var get_label_classname_default = getLabelClassName;
 var import_components46 = __toESM(require_components(), 1);
 var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components46.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components46.Icon, { icon: error_default, size: 16 }),
-    fieldLabel
-  ] }) }) : fieldLabel;
+  return showError ? /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+      tooltip_exports.Trigger,
+      {
+        render: /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components46.Icon, { icon: error_default, size: 16 }),
+          /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(VisuallyHidden, { children: [
+            errorMessage,
+            ": "
+          ] }),
+          fieldLabel
+        ] })
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(tooltip_exports.Popup, { children: errorMessage })
+  ] }) : fieldLabel;
 }
 var get_label_content_default = getLabelContent;
 
@@ -28905,7 +28942,23 @@ function SummaryButton({
       onKeyDown: !disabled2 ? handleKeyDown : void 0,
       children: [
         labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components47.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components47.Icon, { icon: error_default, size: 16 }) }) }),
+        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+            tooltip_exports.Trigger,
+            {
+              render: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+                "span",
+                {
+                  className: "dataforms-layouts-panel__field-label-error-content",
+                  role: "img",
+                  "aria-label": errorMessage,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components47.Icon, { icon: error_default, size: 16 })
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(tooltip_exports.Popup, { children: errorMessage })
+        ] }),
         /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
           "span",
           {
