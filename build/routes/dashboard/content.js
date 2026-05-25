@@ -41641,7 +41641,7 @@ function WidgetSettings() {
 
 // routes/dashboard/widget-dashboard/components/widget-toolbar/widget-toolbar.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("5ea414324e", "._067564f92a835c12__widgetToolbar{border-radius:var(--wpds-border-radius-md,4px);inset-block-start:var(--wpds-dimension-padding-md,12px);inset-inline-end:var(--wpds-dimension-padding-md,12px);padding:var(--wpds-dimension-padding-xs,4px);position:absolute;z-index:1}");
+  registerStyle48("35ffd01a9a", "._067564f92a835c12__widgetToolbar{border-radius:var(--wpds-border-radius-md,4px);inset-block-start:var(--wpds-dimension-padding-sm,8px);inset-inline-end:var(--wpds-dimension-padding-sm,8px);padding:var(--wpds-dimension-padding-xs,4px);position:absolute;z-index:1}");
 }
 var widget_toolbar_default = { "widgetToolbar": "_067564f92a835c12__widgetToolbar" };
 
@@ -41656,7 +41656,7 @@ function WidgetToolbar({
     {
       direction: "row",
       align: "center",
-      gap: "sm",
+      gap: "xs",
       className: clsx_default(widget_toolbar_default.widgetToolbar, className),
       children
     }
