@@ -18513,9 +18513,9 @@ function registerStyle11(hash, css) {
 
 // widgets/activity/style.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle11("44c44c816c", "._784d2967c5e53514__loading{height:100%}");
+  registerStyle11("4aa3daa799", "._784d2967c5e53514__loading{height:100%}._21768f83511c9ec9__list{max-height:420px}");
 }
-var style_default11 = { "loading": "_784d2967c5e53514__loading" };
+var style_default11 = { "loading": "_784d2967c5e53514__loading", "list": "_21768f83511c9ec9__list" };
 
 // widgets/activity/render.tsx
 var import_jsx_runtime101 = __toESM(require_jsx_runtime());
@@ -18745,7 +18745,7 @@ function Activity({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Stack, { direction: "column", className: style_default11.list, children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
     dataviews_default,
     {
       data: shownData,
@@ -18768,7 +18768,7 @@ function Activity({
       isItemClickable: (item) => !!item.link,
       children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(dataviews_default.Layout, {})
     }
-  );
+  ) });
 }
 export {
   Activity as default

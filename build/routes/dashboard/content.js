@@ -22203,6 +22203,7 @@ function useDashboardLayout(dashboardName) {
 }
 
 // routes/dashboard/hooks/use-dashboard-grid-settings/use-dashboard-grid-settings.ts
+var import_es6 = __toESM(require_es6());
 var import_data2 = __toESM(require_data());
 var import_preferences2 = __toESM(require_preferences());
 var SCOPE2 = "core/dashboard";
@@ -22220,16 +22221,20 @@ function useDashboardGridSettings() {
   );
   const { set: set3 } = (0, import_data2.useDispatch)(import_preferences2.store);
   function setSettings(next) {
+    if ((0, import_es6.default)(next, DEFAULT_GRID_SETTINGS)) {
+      void set3(SCOPE2, KEY2, null);
+      return;
+    }
     void set3(SCOPE2, KEY2, next);
   }
   function resetSettings() {
-    void set3(SCOPE2, KEY2, DEFAULT_GRID_SETTINGS);
+    void set3(SCOPE2, KEY2, null);
   }
   return [settings, setSettings, resetSettings];
 }
 
 // routes/dashboard/widget-dashboard/context/dashboard-context.tsx
-var import_es6 = __toESM(require_es6());
+var import_es62 = __toESM(require_es6());
 var import_element87 = __toESM(require_element());
 
 // routes/dashboard/widget-dashboard/utils/migrate-layout/migrate-layout.ts
@@ -22326,6 +22331,7 @@ function computeGridModelChange({
 // routes/dashboard/widget-dashboard/context/dashboard-context.tsx
 var import_jsx_runtime116 = __toESM(require_jsx_runtime());
 var DEFAULT_GRID = {
+  model: "grid",
   columns: 12,
   minColumnWidth: 140,
   rowHeight: 140
@@ -22385,14 +22391,14 @@ function WidgetDashboardProvider({
     setStagingGridSettings(committedGridSettings);
   }, [committedGridSettings]);
   const hasLayoutChanges = (0, import_element87.useMemo)(
-    () => !(0, import_es6.default)(
+    () => !(0, import_es62.default)(
       canonicalize(committedLayout),
       canonicalize(stagingLayout)
     ),
     [committedLayout, stagingLayout]
   );
   const hasGridSettingsChanges = (0, import_element87.useMemo)(
-    () => !(0, import_es6.default)(committedGridSettings, stagingGridSettings),
+    () => !(0, import_es62.default)(committedGridSettings, stagingGridSettings),
     [committedGridSettings, stagingGridSettings]
   );
   const hasUncommittedChanges = hasLayoutChanges || hasGridSettingsChanges;
@@ -31328,7 +31334,7 @@ function SearchWidget(props) {
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
-var import_es62 = __toESM(require_es6(), 1);
+var import_es63 = __toESM(require_es6(), 1);
 var import_compose15 = __toESM(require_compose(), 1);
 var import_element113 = __toESM(require_element(), 1);
 var import_components20 = __toESM(require_components(), 1);
@@ -31377,7 +31383,7 @@ function InputWidget({
       return;
     }
     const nextValue = field.getValue({ item: updatedData });
-    if ((0, import_es62.default)(nextValue, currentValue)) {
+    if ((0, import_es63.default)(nextValue, currentValue)) {
       return;
     }
     onChangeView({
@@ -38750,7 +38756,7 @@ function SummaryButton({
 
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
-var import_es63 = __toESM(require_es6(), 1);
+var import_es64 = __toESM(require_es6(), 1);
 var import_element147 = __toESM(require_element(), 1);
 var import_i18n52 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
@@ -39194,7 +39200,7 @@ function useFormValidity(item, fields3, form2) {
     const untouchedFields = [];
     formFieldsToValidate.forEach((formField) => {
       const value = getFormFieldValue(formField, item);
-      if (previousValuesRef.current.hasOwnProperty(formField.id) && (0, import_es63.default)(
+      if (previousValuesRef.current.hasOwnProperty(formField.id) && (0, import_es64.default)(
         previousValuesRef.current[formField.id],
         value
       )) {
@@ -39228,7 +39234,7 @@ function useFormValidity(item, fields3, form2) {
       if (Object.keys(validity).length === 0) {
         validity = void 0;
       }
-      const areEqual = (0, import_es63.default)(existingFormValidity, validity);
+      const areEqual = (0, import_es64.default)(existingFormValidity, validity);
       if (areEqual) {
         return existingFormValidity;
       }
@@ -41372,7 +41378,7 @@ function WidgetContextProvider({
 
 // routes/dashboard/widget-dashboard/components/widget-chrome/widget-chrome.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("c6f3b3188c", "._22b961782d58cf14__widgetChrome{contain:layout;height:100%}._22b961782d58cf14__widgetChrome:has(._65ccc0ffeadb15bf__widgetChromeContent :focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._2e38cde45383ef41__widgetChromeHeaderIcon{color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:inline-flex}._65ccc0ffeadb15bf__widgetChromeContent{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._132a15281d3a4a3c__widgetChromeContentBleed{padding-block:0}.d8613f533b0e359e__widgetChromeBleedScroll{height:100%;overflow-y:auto}.d86427717f1c6168__loading{height:100%}");
+  registerStyle48("210d1457fc", "._22b961782d58cf14__widgetChrome{contain:layout;height:100%}._22b961782d58cf14__widgetChrome:has(._65ccc0ffeadb15bf__widgetChromeContent :focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._2e38cde45383ef41__widgetChromeHeaderIcon{color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:inline-flex}._65ccc0ffeadb15bf__widgetChromeContent{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._132a15281d3a4a3c__widgetChromeContentBleed{padding-block:0}.d8613f533b0e359e__widgetChromeBleedScroll{height:100%;margin-block-end:0;overflow-y:auto}.d86427717f1c6168__loading{height:100%}");
 }
 var widget_chrome_default = { "widgetChrome": "_22b961782d58cf14__widgetChrome", "widgetChromeContent": "_65ccc0ffeadb15bf__widgetChromeContent", "widgetChromeHeaderIcon": "_2e38cde45383ef41__widgetChromeHeaderIcon", "widgetChromeContentBleed": "_132a15281d3a4a3c__widgetChromeContentBleed", "widgetChromeBleedScroll": "d8613f533b0e359e__widgetChromeBleedScroll", "loading": "d86427717f1c6168__loading" };
 

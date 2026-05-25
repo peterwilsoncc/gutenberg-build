@@ -24,13 +24,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// package-external:@wordpress/compose
-var require_compose = __commonJS({
-  "package-external:@wordpress/compose"(exports, module) {
-    module.exports = window.wp.compose;
-  }
-});
-
 // package-external:@wordpress/core-data
 var require_core_data = __commonJS({
   "package-external:@wordpress/core-data"(exports, module) {
@@ -45,17 +38,17 @@ var require_data = __commonJS({
   }
 });
 
-// package-external:@wordpress/element
-var require_element = __commonJS({
-  "package-external:@wordpress/element"(exports, module) {
-    module.exports = window.wp.element;
-  }
-});
-
 // package-external:@wordpress/i18n
 var require_i18n = __commonJS({
   "package-external:@wordpress/i18n"(exports, module) {
     module.exports = window.wp.i18n;
+  }
+});
+
+// package-external:@wordpress/element
+var require_element = __commonJS({
+  "package-external:@wordpress/element"(exports, module) {
+    module.exports = window.wp.element;
   }
 });
 
@@ -81,10 +74,8 @@ var require_react = __commonJS({
 });
 
 // widgets/welcome/render.tsx
-var import_compose = __toESM(require_compose());
 var import_core_data = __toESM(require_core_data());
 var import_data = __toESM(require_data());
-var import_element6 = __toESM(require_element());
 var import_i18n3 = __toESM(require_i18n());
 
 // packages/icons/build-module/library/layout.mjs
@@ -1328,20 +1319,15 @@ function HeaderBackground({ version: version2 }) {
 
 // widgets/welcome/components/banner/banner.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle4("9c23d6149f", ".b895e30353489bf2__banner{--banner-bg:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--banner-fg:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0);--banner-accent-brand:var(--wpds-color-bg-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--banner-accent-warm:color-mix(in srgb,var(--wpds-color-stroke-surface-warning,#d0b481) 60%,var(--wpds-color-bg-surface-neutral-strong,#fff));--banner-accent-dark:var(--wpds-color-fg-content-neutral,#1e1e1e);--banner-glint:color-mix(in srgb,var(--banner-fg) 80%,var(--banner-accent-warm));background-color:var(--banner-bg);background-image:linear-gradient(108deg,var(--banner-bg) 0,var(--banner-bg) 26%,var(--banner-accent-brand) 66%,var(--banner-accent-warm) 100%);color:var(--banner-fg);flex-grow:1;max-height:300px;min-height:120px;overflow:hidden;padding:var(--wpds-dimension-padding-3xl,32px);position:relative}._4e4405b6dd233bb1__bannerContent{position:relative;z-index:1}._97b3d6d6e1182c1e__bannerLink{color:inherit;text-decoration:underline;text-underline-offset:.2em}@container (max-width: 420px){.b895e30353489bf2__banner{min-block-size:180px;padding:var(--wpds-dimension-padding-lg,16px)}}@container (max-height: 320px){.b895e30353489bf2__banner{min-block-size:140px;padding:var(--wpds-dimension-padding-lg,16px)}}.b895e30353489bf2__banner._90addec1dadabb6c__wide{flex:0 0 35%;max-height:none;min-block-size:0;min-height:0;min-inline-size:280px}.b895e30353489bf2__banner._0a74f5cedafbd02c__tiny{min-block-size:0;min-height:0;padding:var(--wpds-dimension-padding-md,12px)}");
+  registerStyle4("6f5ef9fec9", ".b895e30353489bf2__banner{--banner-bg:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--banner-fg:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0);--banner-accent-brand:var(--wpds-color-bg-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--banner-accent-warm:color-mix(in srgb,var(--wpds-color-stroke-surface-warning,#d0b481) 60%,var(--wpds-color-bg-surface-neutral-strong,#fff));--banner-accent-dark:var(--wpds-color-fg-content-neutral,#1e1e1e);--banner-glint:color-mix(in srgb,var(--banner-fg) 80%,var(--banner-accent-warm));background-color:var(--banner-bg);background-image:linear-gradient(108deg,var(--banner-bg) 0,var(--banner-bg) 26%,var(--banner-accent-brand) 66%,var(--banner-accent-warm) 100%);color:var(--banner-fg);min-height:clamp(180px,20cqi,320px);overflow:hidden;padding:var(--wpds-dimension-padding-3xl,32px);position:relative}._4e4405b6dd233bb1__bannerContent{position:relative;z-index:1}._97b3d6d6e1182c1e__bannerLink{color:inherit;text-decoration:underline;text-underline-offset:.2em}@container (max-width: 420px){.b895e30353489bf2__banner{padding:var(--wpds-dimension-padding-lg,16px)}}");
 }
-var banner_default = { "banner": "b895e30353489bf2__banner", "bannerContent": "_4e4405b6dd233bb1__bannerContent", "bannerLink": "_97b3d6d6e1182c1e__bannerLink", "wide": "_90addec1dadabb6c__wide", "tiny": "_0a74f5cedafbd02c__tiny" };
+var banner_default = { "banner": "b895e30353489bf2__banner", "bannerContent": "_4e4405b6dd233bb1__bannerContent", "bannerLink": "_97b3d6d6e1182c1e__bannerLink" };
 
 // widgets/welcome/components/banner/banner.tsx
 var import_jsx_runtime7 = __toESM(require_jsx_runtime());
 var DISPLAY_VERSION = "7.1";
-function Banner({ isWide = false, isTiny = false }) {
-  const className = clsx_default(
-    banner_default.banner,
-    isWide && banner_default.wide,
-    isTiny && banner_default.tiny
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(Stack, { className, direction: "column", justify: "center", children: [
+function Banner() {
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(Stack, { className: banner_default.banner, direction: "column", justify: "center", children: [
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(HeaderBackground, { version: DISPLAY_VERSION }),
     /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
       Stack,
@@ -1406,31 +1392,17 @@ function FeatureHighlight({
 
 // widgets/welcome/style.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle4("57cc72cbfa", "._2f6622b092c712f3__root{container-type:size;height:100%}.d2e844d428fd4410__columns{align-items:center;display:grid;flex:1;gap:var(--wpds-dimension-gap-2xl,32px);grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:0 var(--wpds-dimension-padding-2xl,24px) var(--wpds-dimension-padding-2xl,24px);padding:0 var(--wpds-dimension-padding-2xl,24px) var(--wpds-dimension-padding-2xl,24px)}@container (max-width: 420px){.d2e844d428fd4410__columns{margin:0;padding:var(--wpds-dimension-padding-lg,16px)}}@container (max-height: 320px){.d2e844d428fd4410__columns{margin:0;padding:var(--wpds-dimension-padding-lg,16px)}}.ef55980dda15d462__wide .d2e844d428fd4410__columns{margin:0;padding:var(--wpds-dimension-padding-2xl,24px)}");
+  registerStyle4("65df814a93", "._2f6622b092c712f3__root{container-type:inline-size;min-height:100%}.d2e844d428fd4410__columns{align-items:center;display:grid;flex:1;gap:var(--wpds-dimension-gap-2xl,32px);grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:0 var(--wpds-dimension-padding-2xl,24px) var(--wpds-dimension-padding-2xl,24px);padding:0 var(--wpds-dimension-padding-2xl,24px) var(--wpds-dimension-padding-2xl,24px)}@container (max-width: 420px){.d2e844d428fd4410__columns{margin:0;padding:var(--wpds-dimension-padding-lg,16px)}}");
 }
-var style_default4 = { "root": "_2f6622b092c712f3__root", "columns": "d2e844d428fd4410__columns", "wide": "ef55980dda15d462__wide" };
+var style_default4 = { "root": "_2f6622b092c712f3__root", "columns": "d2e844d428fd4410__columns" };
 
 // widgets/welcome/render.tsx
 var import_jsx_runtime9 = __toESM(require_jsx_runtime());
-var ROW_LAYOUT_MIN_WIDTH = 800;
-var ROW_LAYOUT_MAX_HEIGHT = 390;
-var TINY_LAYOUT_MAX_SIZE = 120;
 function WelcomeBanner() {
-  const [isWide, setIsWide] = (0, import_element6.useState)(false);
-  const [isTiny, setIsTiny] = (0, import_element6.useState)(false);
   const isClassicTheme = (0, import_data.useSelect)(
     (select) => select(import_core_data.store).getCurrentTheme()?.is_block_theme === false,
     []
   );
-  const setRef = (0, import_compose.useResizeObserver)(([entry]) => {
-    const { width, height } = entry.contentRect;
-    setIsWide(
-      width >= ROW_LAYOUT_MIN_WIDTH && height <= ROW_LAYOUT_MAX_HEIGHT
-    );
-    setIsTiny(
-      width < TINY_LAYOUT_MAX_SIZE && height < TINY_LAYOUT_MAX_SIZE
-    );
-  });
   const customizeFeature = isClassicTheme ? {
     icon: layout_default,
     title: (0, import_i18n3.__)("Start customizing"),
@@ -1465,36 +1437,27 @@ function WelcomeBanner() {
     ctaUrl: "/wp-admin/site-editor.php?p=%2Fstyles",
     ctaLabel: (0, import_i18n3.__)("Edit styles")
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
-    Stack,
-    {
-      ref: setRef,
-      className: `${style_default4.root}${isWide ? ` ${style_default4.wide}` : ""}`,
-      direction: isWide ? "row" : "column",
-      gap: "lg",
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Banner, { isWide, isTiny }),
-        !isTiny && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Stack, { className: style_default4.columns, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-            FeatureHighlight,
-            {
-              icon: pencil_default,
-              title: (0, import_i18n3.__)(
-                "Author rich content with blocks and patterns"
-              ),
-              description: (0, import_i18n3.__)(
-                "Block patterns are pre-configured block layouts. Use them to get inspired or create new pages in a flash."
-              ),
-              ctaUrl: "/wp-admin/post-new.php?post_type=page",
-              ctaLabel: (0, import_i18n3.__)("Add a new page")
-            }
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Stack, { className: style_default4.root, direction: "column", gap: "lg", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Banner, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Stack, { className: style_default4.columns, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        FeatureHighlight,
+        {
+          icon: pencil_default,
+          title: (0, import_i18n3.__)(
+            "Author rich content with blocks and patterns"
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(FeatureHighlight, { ...customizeFeature }),
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(FeatureHighlight, { ...stylesFeature })
-        ] })
-      ]
-    }
-  );
+          description: (0, import_i18n3.__)(
+            "Block patterns are pre-configured block layouts. Use them to get inspired or create new pages in a flash."
+          ),
+          ctaUrl: "/wp-admin/post-new.php?post_type=page",
+          ctaLabel: (0, import_i18n3.__)("Add a new page")
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(FeatureHighlight, { ...customizeFeature }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(FeatureHighlight, { ...stylesFeature })
+    ] })
+  ] });
 }
 export {
   WelcomeBanner as default
