@@ -267,6 +267,13 @@ var require_notices = __commonJS({
   }
 });
 
+// package-external:@wordpress/viewport
+var require_viewport = __commonJS({
+  "package-external:@wordpress/viewport"(exports, module) {
+    module.exports = window.wp.viewport;
+  }
+});
+
 // package-external:@wordpress/api-fetch
 var require_api_fetch = __commonJS({
   "package-external:@wordpress/api-fetch"(exports, module) {
@@ -22165,10 +22172,11 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/dashboard/stage.tsx
-var import_data9 = __toESM(require_data());
+var import_data10 = __toESM(require_data());
 var import_element181 = __toESM(require_element());
 var import_i18n69 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
+var import_viewport2 = __toESM(require_viewport());
 
 // routes/dashboard/hooks/use-dashboard-layout/use-dashboard-layout.ts
 var import_api_fetch = __toESM(require_api_fetch());
@@ -22538,8 +22546,10 @@ function WidgetDashboardUIProvider({ children }) {
 }
 
 // routes/dashboard/widget-dashboard/components/actions/actions.tsx
+var import_data8 = __toESM(require_data());
 var import_element158 = __toESM(require_element());
 var import_i18n58 = __toESM(require_i18n());
+var import_viewport = __toESM(require_viewport());
 
 // packages/style-runtime/src/index.ts
 var STYLE_HASH_ATTRIBUTE48 = "data-wp-hash";
@@ -22625,7 +22635,7 @@ function registerStyle48(hash, css) {
 
 // routes/dashboard/widget-dashboard/components/actions/actions.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("ec8d6c8c1e", ".a6e8ada13acc9f11__editActionsExit,.aa9a2b8bca16d3d4__editActionsEnter{align-items:center;display:inline-flex;gap:var(--wp--preset--spacing--20);transform-origin:right center}.d75534e71f4a967a__editActionsDivider{align-self:center;background-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);flex-shrink:0;height:16px;width:1px}@media not (prefers-reduced-motion){.a6e8ada13acc9f11__editActionsExit,.aa9a2b8bca16d3d4__editActionsEnter{will-change:opacity,transform}.aa9a2b8bca16d3d4__editActionsEnter{animation:_6ad9417d3c8378ea__actions-slide-in var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)) forwards}.a6e8ada13acc9f11__editActionsExit{animation:ca863286783f6f27__actions-fold-out var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}@keyframes _6ad9417d3c8378ea__actions-slide-in{0%{opacity:0;transform:translateX(12px) scaleX(.92)}to{opacity:1;transform:translateX(0) scaleX(1)}}@keyframes ca863286783f6f27__actions-fold-out{0%{opacity:1;transform:translateX(0) scaleX(1)}to{opacity:0;transform:translateX(12px) scaleX(.92)}}}");
+  registerStyle48("0a2cf0e1e5", ".a6e8ada13acc9f11__editActionsExit,.aa9a2b8bca16d3d4__editActionsEnter{align-items:center;display:inline-flex;gap:var(--wp--preset--spacing--20);transform-origin:right center}.d75534e71f4a967a__editActionsDivider{align-self:center;background-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);flex-shrink:0;height:calc(var(--wpds-dimension-base, 4px)*4);width:1px}@media not (prefers-reduced-motion){.a6e8ada13acc9f11__editActionsExit,.aa9a2b8bca16d3d4__editActionsEnter{will-change:opacity,transform}.aa9a2b8bca16d3d4__editActionsEnter{animation:_6ad9417d3c8378ea__actions-slide-in var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)) forwards}.a6e8ada13acc9f11__editActionsExit{animation:ca863286783f6f27__actions-fold-out var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}@keyframes _6ad9417d3c8378ea__actions-slide-in{0%{opacity:0;transform:translateX(12px) scaleX(.92)}to{opacity:1;transform:translateX(0) scaleX(1)}}@keyframes ca863286783f6f27__actions-fold-out{0%{opacity:1;transform:translateX(0) scaleX(1)}to{opacity:0;transform:translateX(12px) scaleX(.92)}}}");
 }
 var actions_default = { "editActionsEnter": "aa9a2b8bca16d3d4__editActionsEnter", "editActionsExit": "a6e8ada13acc9f11__editActionsExit", "editActionsDivider": "d75534e71f4a967a__editActionsDivider", "actions-slide-in": "_6ad9417d3c8378ea__actions-slide-in", "actions-fold-out": "ca863286783f6f27__actions-fold-out" };
 
@@ -40824,6 +40834,10 @@ function Actions3() {
     resetDialogOpen,
     setResetDialogOpen
   } = useDashboardUIContext();
+  const isMobileViewport = (0, import_data8.useSelect)(
+    (select) => select(import_viewport.store).isViewportMatch("< small"),
+    []
+  );
   const handleEditMode = (0, import_element158.useCallback)(() => {
     onEditChange?.(!editMode);
   }, [editMode, onEditChange]);
@@ -40873,7 +40887,7 @@ function Actions3() {
               size: "compact",
               onClick: insert,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Button4.Icon, { icon: plus_default }),
+                !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Button4.Icon, { icon: plus_default }),
                 (0, import_i18n58.__)("Add widget")
               ]
             }
@@ -48974,11 +48988,11 @@ var WidgetDashboard = Object.assign(
 );
 
 // routes/dashboard/widget-types/hooks/use-widget-types.ts
-var import_data8 = __toESM(require_data());
+var import_data9 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_element180 = __toESM(require_element());
 var import_i18n68 = __toESM(require_i18n());
-(0, import_data8.dispatch)(import_core_data.store).addEntities([
+(0, import_data9.dispatch)(import_core_data.store).addEntities([
   {
     name: "widgetModule",
     kind: "root",
@@ -48990,7 +49004,7 @@ var import_i18n68 = __toESM(require_i18n());
   }
 ]);
 function useWidgetTypes() {
-  const records = (0, import_data8.useSelect)(
+  const records = (0, import_data9.useSelect)(
     (select) => select(import_core_data.store).getEntityRecords("root", "widgetModule"),
     []
   );
@@ -49047,13 +49061,20 @@ function Dashboard() {
   const [gridSettings, setGridSettings] = useDashboardGridSettings();
   const widgetTypes = useWidgetTypes();
   const [editMode, setEditMode] = (0, import_element181.useState)(false);
-  const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices.store);
+  const isMobileViewport = (0, import_data10.useSelect)(
+    (select) => select(import_viewport2.store).isViewportMatch("< small"),
+    []
+  );
+  const customizeDashboardLabel = (0, import_i18n69.__)("Customize Dashboard");
+  const dashboardLabel = (0, import_i18n69.__)("Dashboard");
+  const { createSuccessNotice } = (0, import_data10.useDispatch)(import_notices.store);
   const handleLayoutChange = (next) => {
     setLayout(next);
     void createSuccessNotice((0, import_i18n69.__)("Dashboard saved."), {
       type: "snackbar"
     });
   };
+  const pageTitle = editMode ? customizeDashboardLabel : dashboardLabel;
   return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
     WidgetDashboard,
     {
@@ -49068,7 +49089,8 @@ function Dashboard() {
       children: /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
         page_default,
         {
-          title: editMode ? (0, import_i18n69.__)("Customize Dashboard") : (0, import_i18n69.__)("Dashboard"),
+          title: editMode && isMobileViewport ? void 0 : pageTitle,
+          ariaLabel: pageTitle,
           actions: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(WidgetDashboard.Actions, {}),
           hasPadding: true,
           children: [
