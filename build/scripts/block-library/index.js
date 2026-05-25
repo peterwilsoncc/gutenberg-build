@@ -33808,7 +33808,7 @@ ${js}
   }
   var imageSchema = {
     img: {
-      attributes: ["src", "alt", "title"],
+      attributes: ["src", "alt", "title", "width", "height"],
       classes: [
         "alignleft",
         "aligncenter",
@@ -33818,6 +33818,9 @@ ${js}
       ]
     }
   };
+  function parsePixelDimension(value) {
+    return value && /^\d+$/.test(value) ? `${value}px` : void 0;
+  }
   var schema = ({ phrasingContentSchema }) => ({
     figure: {
       require: ["img"],
@@ -33841,7 +33844,8 @@ ${js}
         isMatch: (node) => node.nodeName === "FIGURE" && !!node.querySelector("img"),
         schema,
         transform: (node) => {
-          const className = node.className + " " + node.querySelector("img").className;
+          const img = node.querySelector("img");
+          const className = node.className + " " + img.className;
           const alignMatches = /(?:^|\s)align(left|center|right)(?:$|\s)/.exec(
             className
           );
@@ -33856,6 +33860,12 @@ ${js}
           const href = anchorElement && anchorElement.href ? anchorElement.href : void 0;
           const rel = anchorElement && anchorElement.rel ? anchorElement.rel : void 0;
           const linkClass = anchorElement && anchorElement.className ? anchorElement.className : void 0;
+          const width = parsePixelDimension(
+            img.getAttribute("width")
+          );
+          const height = parsePixelDimension(
+            img.getAttribute("height")
+          );
           const attributes2 = (0, import_blocks39.getBlockAttributes)(
             "core/image",
             node.outerHTML,
@@ -33866,7 +33876,9 @@ ${js}
               href,
               rel,
               linkClass,
-              anchor
+              anchor,
+              width,
+              height
             }
           );
           if ((0, import_blob14.isBlobURL)(attributes2.url)) {
