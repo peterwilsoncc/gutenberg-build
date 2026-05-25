@@ -22,6 +22,13 @@ return array(
 		'presentation' => 'full-bleed',
 	),
 	array(
+		'name'         => 'core/news',
+		'dir_name'     => 'news',
+		'has_render'   => true,
+		'has_widget'   => true,
+		'presentation' => 'content-bleed',
+	),
+	array(
 		'name'         => 'core/quick-draft',
 		'dir_name'     => 'quick-draft',
 		'has_render'   => true,
