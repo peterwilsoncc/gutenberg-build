@@ -1057,318 +1057,191 @@ function registerStyle4(hash, css) {
 
 // widgets/welcome/components/header-background/header-background.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle4("080b795c57", "._2dc6908d13f9b567__root{block-size:100%;inline-size:100%;inset:0;position:absolute;z-index:0}");
+  registerStyle4("576586e385", "._2dc6908d13f9b567__root{block-size:100%;inline-size:100%;inset:0;pointer-events:none;position:absolute;z-index:0}");
 }
 var header_background_default = { "root": "_2dc6908d13f9b567__root" };
 
 // widgets/welcome/components/header-background/header-background.tsx
 var import_jsx_runtime6 = __toESM(require_jsx_runtime());
-function HeaderBackground() {
+var GLYPH_HEIGHT = 200;
+var GLYPHS = {
+  "0": {
+    advance: 150,
+    strokes: [{ d: "M76 30 a48 82 0 1 0 0 164 a48 82 0 1 0 0 -164 Z" }]
+  },
+  "1": { advance: 110, strokes: [{ d: "M30 56 L74 22 L74 202" }] },
+  "2": {
+    advance: 150,
+    strokes: [
+      { d: "M34 66 A44 40 0 1 1 120 70 C120 112 38 152 30 196 L124 196" }
+    ]
+  },
+  "3": {
+    advance: 150,
+    strokes: [{ d: "M34 54 A42 36 0 1 1 80 102 A50 48 0 1 1 30 174" }]
+  },
+  "4": { advance: 150, strokes: [{ d: "M106 196 V40 L28 138 H128" }] },
+  "5": {
+    advance: 150,
+    strokes: [{ d: "M114 40 H58 L57 104 H74 A46 48 0 1 1 50 186" }]
+  },
+  "6": {
+    advance: 150,
+    strokes: [
+      {
+        d: "M28 143 a46 46 0 1 0 92 0 a46 46 0 1 0 -92 0",
+        vec: [-39, 156, 78, 39],
+        stops: "ring"
+      },
+      { d: "M117 34 L42 110", vec: [97, -18, -56, 135] }
+    ]
+  },
+  "7": { advance: 150, strokes: [{ d: "M30 24 H128 L64 202" }] },
+  "8": {
+    advance: 150,
+    strokes: [
+      {
+        d: "M76 26 a38 38 0 1 0 0 76 a38 38 0 1 0 0 -76",
+        vec: [120, 16, 30, 200]
+      },
+      {
+        d: "M76 106 a46 46 0 1 0 0 92 a46 46 0 1 0 0 -92",
+        vec: [120, 16, 30, 200]
+      }
+    ]
+  },
+  "9": {
+    advance: 150,
+    strokes: [
+      {
+        d: "M30 82 a46 46 0 1 0 92 0 a46 46 0 1 0 -92 0",
+        vec: [190, 69, 73, 186],
+        stops: "ring"
+      },
+      { d: "M33 190 L109 115", vec: [54, 243, 207, 90] }
+    ]
+  },
+  ".": { advance: 80, circles: [{ cx: 40, cy: 178, r: 26 }] }
+};
+var VIEW_WIDTH = 1e3;
+var VIEW_HEIGHT = 300;
+var RIGHT_MARGIN = 40;
+var GLYPH_GAP = 2;
+var GLYPH_TOP = (VIEW_HEIGHT - GLYPH_HEIGHT) / 2;
+var STOP_SETS = {
+  // Ring of the 6/9: light at the bottom, near-black where the stem lands.
+  ring: [
+    ["var(--banner-accent-warm)", 0],
+    ["var(--banner-accent-brand)", 0.665],
+    ["var(--banner-accent-dark)", 1]
+  ],
+  // Stems and plain digits: near-black to light along the stroke.
+  linear: [
+    ["var(--banner-accent-dark)", 0],
+    ["var(--banner-accent-brand)", 0.5],
+    ["var(--banner-accent-warm)", 1]
+  ]
+};
+function HeaderBackground({ version: version2 }) {
   const idBase = (0, import_element5.useId)();
-  const clipId = `${idBase}-clip`;
-  const maskId = `${idBase}-mask`;
-  const radialId = `${idBase}-radial`;
-  const fadeId = `${idBase}-fade`;
-  const lineIds = [1, 2, 3, 4, 5].map(
-    (index) => `${idBase}-line-${index}`
-  );
+  const placed = [];
+  let cursor = VIEW_WIDTH - RIGHT_MARGIN;
+  const chars = Array.from(version2);
+  for (let i = chars.length - 1; i >= 0; i--) {
+    const char = chars[i];
+    if (!char) {
+      continue;
+    }
+    const glyph = GLYPHS[char];
+    if (!glyph) {
+      continue;
+    }
+    const x = cursor - glyph.advance;
+    placed.unshift({ key: `${i}-${char}`, x, char, glyph });
+    cursor = x - GLYPH_GAP;
+  }
+  const strokeId = (glyphIndex, strokeIndex) => `${idBase}-${glyphIndex}-${strokeIndex}`;
   return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
     import_primitives5.SVG,
     {
       className: header_background_default.root,
-      preserveAspectRatio: "xMidYMin slice",
+      preserveAspectRatio: "xMaxYMid slice",
       fill: "none",
-      viewBox: "0 0 1232 240",
+      viewBox: `0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`,
       xmlns: "http://www.w3.org/2000/svg",
-      "aria-hidden": "true",
-      focusable: "false",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_primitives5.G, { clipPath: `url(#${clipId})`, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Path, { fill: "var(--banner-bg)", d: "M0 0h1232v240H0z" }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-            "ellipse",
-            {
-              cx: "616",
-              cy: "232",
-              fill: `url(#${radialId})`,
-              opacity: ".05",
-              rx: "1497",
-              ry: "249"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-            "mask",
-            {
-              id: maskId,
-              width: "1000",
-              height: "400",
-              x: "232",
-              y: "20",
-              maskUnits: "userSpaceOnUse",
-              style: { maskType: "alpha" },
-              children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                import_primitives5.Path,
-                {
-                  fill: `url(#${fadeId})`,
-                  d: "M0 0h1000v400H0z",
-                  transform: "translate(232 20)"
-                }
-              )
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_primitives5.G, { strokeWidth: "2", mask: `url(#${maskId})`, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-              import_primitives5.Path,
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          import_primitives5.G,
+          {
+            fill: "none",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            strokeWidth: "44",
+            children: placed.map(({ key, x, char, glyph }, glyphIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+              import_primitives5.G,
               {
-                stroke: `url(#${lineIds[0]})`,
-                d: "M387 20v1635"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-              import_primitives5.Path,
+                "data-glyph": char,
+                transform: `translate(${x} ${GLYPH_TOP})`,
+                children: [
+                  glyph.strokes?.map((stroke, strokeIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                    import_primitives5.Path,
+                    {
+                      d: stroke.d,
+                      stroke: `url(#${strokeId(
+                        glyphIndex,
+                        strokeIndex
+                      )})`
+                    },
+                    strokeIndex
+                  )),
+                  glyph.circles?.map((circle, circleIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                    import_primitives5.Circle,
+                    {
+                      cx: circle.cx,
+                      cy: circle.cy,
+                      r: circle.r,
+                      fill: "var(--banner-accent-brand)"
+                    },
+                    circleIndex
+                  ))
+                ]
+              },
+              key
+            ))
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Defs, { children: placed.flatMap(
+          ({ glyph }, glyphIndex) => (glyph.strokes ?? []).map((stroke, strokeIndex) => {
+            const [x1, y1, x2, y2] = stroke.vec ?? [
+              glyph.advance * 0.8,
+              6,
+              glyph.advance * 0.15,
+              196
+            ];
+            return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.LinearGradient,
               {
-                stroke: `url(#${lineIds[1]})`,
-                d: "M559.5 20v1635"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-              import_primitives5.Path,
-              {
-                stroke: `url(#${lineIds[2]})`,
-                d: "M732 20v1635"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-              import_primitives5.Path,
-              {
-                stroke: `url(#${lineIds[3]})`,
-                d: "M904.5 20v1635"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-              import_primitives5.Path,
-              {
-                stroke: `url(#${lineIds[4]})`,
-                d: "M1077 20v1635"
-              }
-            )
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_primitives5.Defs, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-            import_primitives5.LinearGradient,
-            {
-              id: lineIds[0],
-              x1: "387.5",
-              x2: "387.5",
-              y1: "20",
-              y2: "1655",
-              gradientUnits: "userSpaceOnUse",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    stopColor: "var(--banner-line-brand)",
-                    stopOpacity: "0"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-brand)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-brand)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: "1",
-                    stopColor: "var(--banner-line-brand)",
-                    stopOpacity: "0"
-                  }
+                id: strokeId(glyphIndex, strokeIndex),
+                gradientUnits: "userSpaceOnUse",
+                x1,
+                y1,
+                x2,
+                y2,
+                children: STOP_SETS[stroke.stops ?? "linear"].map(
+                  ([color, offset]) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                    import_primitives5.Stop,
+                    {
+                      offset,
+                      stopColor: color
+                    },
+                    offset
+                  )
                 )
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-            import_primitives5.LinearGradient,
-            {
-              id: lineIds[1],
-              x1: "560",
-              x2: "560",
-              y1: "20",
-              y2: "1655",
-              gradientUnits: "userSpaceOnUse",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    stopColor: "var(--banner-line-caution)",
-                    stopOpacity: "0"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: ".297",
-                    stopColor: "var(--banner-line-caution)"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: ".734",
-                    stopColor: "var(--banner-line-caution)"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: "1",
-                    stopColor: "var(--banner-line-caution)",
-                    stopOpacity: "0"
-                  }
-                )
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-            import_primitives5.LinearGradient,
-            {
-              id: lineIds[2],
-              x1: "732.5",
-              x2: "732.5",
-              y1: "20",
-              y2: "1655",
-              gradientUnits: "userSpaceOnUse",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    stopColor: "var(--banner-line-success)",
-                    stopOpacity: "0"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: ".297",
-                    stopColor: "var(--banner-line-success)"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: ".693",
-                    stopColor: "var(--banner-line-success)"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: "1",
-                    stopColor: "var(--banner-line-success)",
-                    stopOpacity: "0"
-                  }
-                )
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-            import_primitives5.LinearGradient,
-            {
-              id: lineIds[3],
-              x1: "905",
-              x2: "905",
-              y1: "20",
-              y2: "1655",
-              gradientUnits: "userSpaceOnUse",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    stopColor: "var(--banner-line-error)",
-                    stopOpacity: "0"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-error)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-error)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: "1",
-                    stopColor: "var(--banner-line-error)",
-                    stopOpacity: "0"
-                  }
-                )
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-            import_primitives5.LinearGradient,
-            {
-              id: lineIds[4],
-              x1: "1077.5",
-              x2: "1077.5",
-              y1: "20",
-              y2: "1655",
-              gradientUnits: "userSpaceOnUse",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { stopColor: "var(--banner-line-info)", stopOpacity: "0" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".297", stopColor: "var(--banner-line-info)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".734", stopColor: "var(--banner-line-info)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: "1",
-                    stopColor: "var(--banner-line-info)",
-                    stopOpacity: "0"
-                  }
-                )
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-            import_primitives5.RadialGradient,
-            {
-              id: radialId,
-              cx: "0",
-              cy: "0",
-              r: "1",
-              gradientTransform: "matrix(0 249 -1497 0 616 232)",
-              gradientUnits: "userSpaceOnUse",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { stopColor: "var(--banner-line-brand)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: "1",
-                    stopColor: "var(--banner-bg)",
-                    stopOpacity: "0"
-                  }
-                )
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-            import_primitives5.RadialGradient,
-            {
-              id: fadeId,
-              cx: "0",
-              cy: "0",
-              r: "1",
-              gradientTransform: "matrix(0 765 -1912.5 0 500 -110)",
-              gradientUnits: "userSpaceOnUse",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                  import_primitives5.Stop,
-                  {
-                    offset: ".161",
-                    stopColor: "var(--banner-bg)",
-                    stopOpacity: "0"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Stop, { offset: ".682", stopColor: "var(--banner-bg)" })
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("clipPath", { id: clipId, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Path, { fill: "var(--banner-fg)", d: "M0 0h1232v240H0z" }) })
-        ] })
+              },
+              `${glyphIndex}-${strokeIndex}`
+            );
+          })
+        ) })
       ]
     }
   );
@@ -1376,7 +1249,7 @@ function HeaderBackground() {
 
 // widgets/welcome/components/banner/banner.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle4("f6531afa6a", ".b895e30353489bf2__banner{--banner-bg:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--banner-fg:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0);--banner-line-brand:var(--wpds-color-bg-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--banner-line-caution:var(--wpds-color-bg-surface-caution-weak,#fff9ca);--banner-line-success:var(--wpds-color-bg-surface-success,#c6f7cd);--banner-line-error:color-mix(in srgb,var(--wpds-color-fg-interactive-error,#cc1818) 30%,var(--banner-bg));--banner-line-info:color-mix(in srgb,var(--wpds-color-bg-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9)) 60%,var(--banner-bg));background-color:var(--banner-bg);color:var(--banner-fg);flex-grow:1;max-height:300px;min-height:120px;padding:var(--wpds-dimension-padding-3xl,32px);position:relative}._4e4405b6dd233bb1__bannerContent{position:relative;z-index:1}._97b3d6d6e1182c1e__bannerLink{color:inherit;text-decoration:underline;text-underline-offset:.2em}@container (max-width: 420px){.b895e30353489bf2__banner{min-block-size:180px;padding:var(--wpds-dimension-padding-lg,16px)}}@container (max-height: 320px){.b895e30353489bf2__banner{min-block-size:140px;padding:var(--wpds-dimension-padding-lg,16px)}}.b895e30353489bf2__banner._90addec1dadabb6c__wide{flex:0 0 35%;max-height:none;min-block-size:0;min-height:0;min-inline-size:280px}.b895e30353489bf2__banner._0a74f5cedafbd02c__tiny{min-block-size:0;min-height:0;padding:var(--wpds-dimension-padding-md,12px)}");
+  registerStyle4("7379bbc6de", ".b895e30353489bf2__banner{--banner-bg:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--banner-fg:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0);--banner-accent-brand:var(--wpds-color-bg-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--banner-accent-warm:color-mix(in srgb,var(--wpds-color-stroke-surface-warning,#d0b481) 60%,var(--wpds-color-bg-surface-neutral-strong,#fff));--banner-accent-dark:var(--wpds-color-fg-content-neutral,#1e1e1e);background-color:var(--banner-bg);background-image:linear-gradient(108deg,var(--banner-bg) 0,var(--banner-bg) 26%,var(--banner-accent-brand) 66%,var(--banner-accent-warm) 100%);color:var(--banner-fg);flex-grow:1;max-height:300px;min-height:120px;overflow:hidden;padding:var(--wpds-dimension-padding-3xl,32px);position:relative}._4e4405b6dd233bb1__bannerContent{position:relative;z-index:1}._97b3d6d6e1182c1e__bannerLink{color:inherit;text-decoration:underline;text-underline-offset:.2em}@container (max-width: 420px){.b895e30353489bf2__banner{min-block-size:180px;padding:var(--wpds-dimension-padding-lg,16px)}}@container (max-height: 320px){.b895e30353489bf2__banner{min-block-size:140px;padding:var(--wpds-dimension-padding-lg,16px)}}.b895e30353489bf2__banner._90addec1dadabb6c__wide{flex:0 0 35%;max-height:none;min-block-size:0;min-height:0;min-inline-size:280px}.b895e30353489bf2__banner._0a74f5cedafbd02c__tiny{min-block-size:0;min-height:0;padding:var(--wpds-dimension-padding-md,12px)}");
 }
 var banner_default = { "banner": "b895e30353489bf2__banner", "bannerContent": "_4e4405b6dd233bb1__bannerContent", "bannerLink": "_97b3d6d6e1182c1e__bannerLink", "wide": "_90addec1dadabb6c__wide", "tiny": "_0a74f5cedafbd02c__tiny" };
 
@@ -1390,7 +1263,7 @@ function Banner({ isWide = false, isTiny = false }) {
     isTiny && banner_default.tiny
   );
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(Stack, { className, direction: "column", justify: "center", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(HeaderBackground, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(HeaderBackground, { version: DISPLAY_VERSION }),
     /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
       Stack,
       {
