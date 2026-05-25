@@ -1057,9 +1057,9 @@ function registerStyle4(hash, css) {
 
 // widgets/welcome/components/header-background/header-background.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle4("576586e385", "._2dc6908d13f9b567__root{block-size:100%;inline-size:100%;inset:0;pointer-events:none;position:absolute;z-index:0}");
+  registerStyle4("7554282f0a", "._2dc6908d13f9b567__root{block-size:100%;inline-size:100%;inset:0;pointer-events:none;position:absolute;z-index:0}.ce013c8671de98ad__glint{transform:translateX(-360px)}@media not (prefers-reduced-motion){.ce013c8671de98ad__glint{animation:eaaa6cd949ed5785__welcomeVersionGlint 10s var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)) 3s 3}}@keyframes eaaa6cd949ed5785__welcomeVersionGlint{0%{transform:translateX(-360px)}50%{transform:translateX(1040px)}to{transform:translateX(1040px)}}");
 }
-var header_background_default = { "root": "_2dc6908d13f9b567__root" };
+var header_background_default = { "root": "_2dc6908d13f9b567__root", "glint": "ce013c8671de98ad__glint", "welcomeVersionGlint": "eaaa6cd949ed5785__welcomeVersionGlint" };
 
 // widgets/welcome/components/header-background/header-background.tsx
 var import_jsx_runtime6 = __toESM(require_jsx_runtime());
@@ -1144,6 +1144,8 @@ var STOP_SETS = {
 };
 function HeaderBackground({ version: version2 }) {
   const idBase = (0, import_element5.useId)();
+  const maskId = `${idBase}-glint-mask`;
+  const glintId = `${idBase}-glint`;
   const placed = [];
   let cursor = VIEW_WIDTH - RIGHT_MARGIN;
   const chars = Array.from(version2);
@@ -1161,6 +1163,37 @@ function HeaderBackground({ version: version2 }) {
     cursor = x - GLYPH_GAP;
   }
   const strokeId = (glyphIndex, strokeIndex) => `${idBase}-${glyphIndex}-${strokeIndex}`;
+  const renderGlyphs = (forMask) => placed.map(({ key, x, char, glyph }, glyphIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+    import_primitives5.G,
+    {
+      "data-glyph": char,
+      transform: `translate(${x} ${GLYPH_TOP})`,
+      children: [
+        glyph.strokes?.map((stroke, strokeIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          import_primitives5.Path,
+          {
+            d: stroke.d,
+            stroke: forMask ? "white" : `url(#${strokeId(
+              glyphIndex,
+              strokeIndex
+            )})`
+          },
+          strokeIndex
+        )),
+        glyph.circles?.map((circle, circleIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          import_primitives5.Circle,
+          {
+            cx: circle.cx,
+            cy: circle.cy,
+            r: circle.r,
+            fill: forMask ? "white" : "var(--banner-accent-brand)"
+          },
+          circleIndex
+        ))
+      ]
+    },
+    key
+  ));
   return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
     import_primitives5.SVG,
     {
@@ -1177,71 +1210,117 @@ function HeaderBackground({ version: version2 }) {
             strokeLinecap: "round",
             strokeLinejoin: "round",
             strokeWidth: "44",
-            children: placed.map(({ key, x, char, glyph }, glyphIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-              import_primitives5.G,
-              {
-                "data-glyph": char,
-                transform: `translate(${x} ${GLYPH_TOP})`,
-                children: [
-                  glyph.strokes?.map((stroke, strokeIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                    import_primitives5.Path,
-                    {
-                      d: stroke.d,
-                      stroke: `url(#${strokeId(
-                        glyphIndex,
-                        strokeIndex
-                      )})`
-                    },
-                    strokeIndex
-                  )),
-                  glyph.circles?.map((circle, circleIndex) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                    import_primitives5.Circle,
-                    {
-                      cx: circle.cx,
-                      cy: circle.cy,
-                      r: circle.r,
-                      fill: "var(--banner-accent-brand)"
-                    },
-                    circleIndex
-                  ))
-                ]
-              },
-              key
-            ))
+            children: renderGlyphs(false)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.Defs, { children: placed.flatMap(
-          ({ glyph }, glyphIndex) => (glyph.strokes ?? []).map((stroke, strokeIndex) => {
-            const [x1, y1, x2, y2] = stroke.vec ?? [
-              glyph.advance * 0.8,
-              6,
-              glyph.advance * 0.15,
-              196
-            ];
-            return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-              import_primitives5.LinearGradient,
-              {
-                id: strokeId(glyphIndex, strokeIndex),
-                gradientUnits: "userSpaceOnUse",
-                x1,
-                y1,
-                x2,
-                y2,
-                children: STOP_SETS[stroke.stops ?? "linear"].map(
-                  ([color, offset]) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                    import_primitives5.Stop,
-                    {
-                      offset,
-                      stopColor: color
-                    },
-                    offset
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives5.G, { mask: `url(#${maskId})`, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          import_primitives5.Rect,
+          {
+            className: header_background_default.glint,
+            x: "0",
+            y: "0",
+            width: "300",
+            height: VIEW_HEIGHT,
+            fill: `url(#${glintId})`
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_primitives5.Defs, { children: [
+          placed.flatMap(
+            ({ glyph }, glyphIndex) => (glyph.strokes ?? []).map((stroke, strokeIndex) => {
+              const [x1, y1, x2, y2] = stroke.vec ?? [
+                glyph.advance * 0.8,
+                6,
+                glyph.advance * 0.15,
+                196
+              ];
+              return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                import_primitives5.LinearGradient,
+                {
+                  id: strokeId(glyphIndex, strokeIndex),
+                  gradientUnits: "userSpaceOnUse",
+                  x1,
+                  y1,
+                  x2,
+                  y2,
+                  children: STOP_SETS[stroke.stops ?? "linear"].map(
+                    ([color, offset]) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                      import_primitives5.Stop,
+                      {
+                        offset,
+                        stopColor: color
+                      },
+                      offset
+                    )
                   )
-                )
-              },
-              `${glyphIndex}-${strokeIndex}`
-            );
-          })
-        ) })
+                },
+                `${glyphIndex}-${strokeIndex}`
+              );
+            })
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_primitives5.LinearGradient, { id: glintId, x1: "0", y1: "0", x2: "1", y2: "0.55", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Stop,
+              {
+                offset: "0",
+                stopColor: "var(--banner-glint)",
+                stopOpacity: "0"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Stop,
+              {
+                offset: "0.4",
+                stopColor: "var(--banner-glint)",
+                stopOpacity: "0"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Stop,
+              {
+                offset: "0.5",
+                stopColor: "var(--banner-glint)",
+                stopOpacity: "0.65"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Stop,
+              {
+                offset: "0.6",
+                stopColor: "var(--banner-glint)",
+                stopOpacity: "0"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              import_primitives5.Stop,
+              {
+                offset: "1",
+                stopColor: "var(--banner-glint)",
+                stopOpacity: "0"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            "mask",
+            {
+              id: maskId,
+              maskUnits: "userSpaceOnUse",
+              x: "0",
+              y: "0",
+              width: VIEW_WIDTH,
+              height: VIEW_HEIGHT,
+              children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                import_primitives5.G,
+                {
+                  fill: "none",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeWidth: "44",
+                  children: renderGlyphs(true)
+                }
+              )
+            }
+          )
+        ] })
       ]
     }
   );
@@ -1249,7 +1328,7 @@ function HeaderBackground({ version: version2 }) {
 
 // widgets/welcome/components/banner/banner.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle4("7379bbc6de", ".b895e30353489bf2__banner{--banner-bg:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--banner-fg:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0);--banner-accent-brand:var(--wpds-color-bg-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--banner-accent-warm:color-mix(in srgb,var(--wpds-color-stroke-surface-warning,#d0b481) 60%,var(--wpds-color-bg-surface-neutral-strong,#fff));--banner-accent-dark:var(--wpds-color-fg-content-neutral,#1e1e1e);background-color:var(--banner-bg);background-image:linear-gradient(108deg,var(--banner-bg) 0,var(--banner-bg) 26%,var(--banner-accent-brand) 66%,var(--banner-accent-warm) 100%);color:var(--banner-fg);flex-grow:1;max-height:300px;min-height:120px;overflow:hidden;padding:var(--wpds-dimension-padding-3xl,32px);position:relative}._4e4405b6dd233bb1__bannerContent{position:relative;z-index:1}._97b3d6d6e1182c1e__bannerLink{color:inherit;text-decoration:underline;text-underline-offset:.2em}@container (max-width: 420px){.b895e30353489bf2__banner{min-block-size:180px;padding:var(--wpds-dimension-padding-lg,16px)}}@container (max-height: 320px){.b895e30353489bf2__banner{min-block-size:140px;padding:var(--wpds-dimension-padding-lg,16px)}}.b895e30353489bf2__banner._90addec1dadabb6c__wide{flex:0 0 35%;max-height:none;min-block-size:0;min-height:0;min-inline-size:280px}.b895e30353489bf2__banner._0a74f5cedafbd02c__tiny{min-block-size:0;min-height:0;padding:var(--wpds-dimension-padding-md,12px)}");
+  registerStyle4("9c23d6149f", ".b895e30353489bf2__banner{--banner-bg:var(--wpds-color-bg-interactive-neutral-strong,#2d2d2d);--banner-fg:var(--wpds-color-fg-interactive-neutral-strong,#f0f0f0);--banner-accent-brand:var(--wpds-color-bg-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--banner-accent-warm:color-mix(in srgb,var(--wpds-color-stroke-surface-warning,#d0b481) 60%,var(--wpds-color-bg-surface-neutral-strong,#fff));--banner-accent-dark:var(--wpds-color-fg-content-neutral,#1e1e1e);--banner-glint:color-mix(in srgb,var(--banner-fg) 80%,var(--banner-accent-warm));background-color:var(--banner-bg);background-image:linear-gradient(108deg,var(--banner-bg) 0,var(--banner-bg) 26%,var(--banner-accent-brand) 66%,var(--banner-accent-warm) 100%);color:var(--banner-fg);flex-grow:1;max-height:300px;min-height:120px;overflow:hidden;padding:var(--wpds-dimension-padding-3xl,32px);position:relative}._4e4405b6dd233bb1__bannerContent{position:relative;z-index:1}._97b3d6d6e1182c1e__bannerLink{color:inherit;text-decoration:underline;text-underline-offset:.2em}@container (max-width: 420px){.b895e30353489bf2__banner{min-block-size:180px;padding:var(--wpds-dimension-padding-lg,16px)}}@container (max-height: 320px){.b895e30353489bf2__banner{min-block-size:140px;padding:var(--wpds-dimension-padding-lg,16px)}}.b895e30353489bf2__banner._90addec1dadabb6c__wide{flex:0 0 35%;max-height:none;min-block-size:0;min-height:0;min-inline-size:280px}.b895e30353489bf2__banner._0a74f5cedafbd02c__tiny{min-block-size:0;min-height:0;padding:var(--wpds-dimension-padding-md,12px)}");
 }
 var banner_default = { "banner": "b895e30353489bf2__banner", "bannerContent": "_4e4405b6dd233bb1__bannerContent", "bannerLink": "_97b3d6d6e1182c1e__bannerLink", "wide": "_90addec1dadabb6c__wide", "tiny": "_0a74f5cedafbd02c__tiny" };
 
