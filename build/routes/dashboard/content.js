@@ -22209,9 +22209,9 @@ var SCOPE2 = "core/dashboard";
 var KEY2 = "dashboardGridSettings";
 var DEFAULT_GRID_SETTINGS = {
   model: "grid",
-  columns: 6,
-  minColumnWidth: 350,
-  rowHeight: 200
+  columns: 12,
+  minColumnWidth: 140,
+  rowHeight: 140
 };
 function useDashboardGridSettings() {
   const settings = (0, import_data2.useSelect)(
@@ -22326,9 +22326,9 @@ function computeGridModelChange({
 // routes/dashboard/widget-dashboard/context/dashboard-context.tsx
 var import_jsx_runtime116 = __toESM(require_jsx_runtime());
 var DEFAULT_GRID = {
-  columns: 6,
-  minColumnWidth: 350,
-  rowHeight: 200
+  columns: 12,
+  minColumnWidth: 140,
+  rowHeight: 140
 };
 function resolveGridSettings(settings) {
   return {
