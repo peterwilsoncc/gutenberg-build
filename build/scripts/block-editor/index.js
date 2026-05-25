@@ -16634,49 +16634,62 @@ var wp;
     },
     getLayoutStyle: function getLayoutStyle({
       selector: selector3,
-      layout,
+      layout = {},
+      viewportOverrides,
       style,
       blockName,
       hasBlockGapSupport,
       globalBlockGapValue,
       layoutDefinitions = LAYOUT_DEFINITIONS
     }) {
-      const { orientation = "horizontal" } = layout;
+      const hasViewportOverrides = viewportOverrides !== void 0;
+      const effectiveLayout = hasViewportOverrides ? { ...layout, ...viewportOverrides } : layout;
+      const hasViewportOverride = (key) => Object.hasOwn(viewportOverrides || {}, key);
+      const { orientation = "horizontal" } = effectiveLayout;
       let fallbackGapValue = "0.5em";
       if (globalBlockGapValue) {
         const gapBox = getGapBoxControlValueFromStyle(globalBlockGapValue);
         fallbackGapValue = getSpacingPresetCssVar(gapBox?.left) || getSpacingPresetCssVar(gapBox?.top) || "0.5em";
       }
       const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue(style?.spacing?.blockGap, fallbackGapValue) : void 0;
-      const justifyContent = justifyContentMap[layout.justifyContent];
-      const flexWrap = flexWrapOptions.includes(layout.flexWrap) ? layout.flexWrap : "wrap";
-      const verticalAlignment = verticalAlignmentMap[layout.verticalAlignment];
-      const alignItems = alignItemsMap[layout.justifyContent] || alignItemsMap.left;
+      const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
+      const justifyContent = justifyContentMap[effectiveLayout.justifyContent];
+      const flexWrap = flexWrapOptions.includes(effectiveLayout.flexWrap) ? effectiveLayout.flexWrap : "wrap";
+      const verticalAlignment = verticalAlignmentMap[effectiveLayout.verticalAlignment];
+      const alignItems = alignItemsMap[effectiveLayout.justifyContent] || alignItemsMap.left;
       let output = "";
       const rules = [];
-      if (flexWrap && flexWrap !== "wrap") {
+      const shouldOutputFlexWrap = !hasViewportOverrides || hasViewportOverride("flexWrap");
+      const shouldOutputFlexOrientation = !hasViewportOverrides || hasViewportOverride("orientation");
+      const shouldOutputFlexJustification = !hasViewportOverrides || hasViewportOverride("justifyContent") || hasViewportOverride("orientation");
+      const shouldOutputFlexAlignment = !hasViewportOverrides || hasViewportOverride("verticalAlignment") || hasViewportOverride("orientation");
+      if (shouldOutputFlexWrap && flexWrap && flexWrap !== "wrap") {
         rules.push(`flex-wrap: ${flexWrap}`);
       }
       if (orientation === "horizontal") {
-        if (verticalAlignment) {
+        if (shouldOutputFlexAlignment && verticalAlignment) {
           rules.push(`align-items: ${verticalAlignment}`);
         }
-        if (justifyContent) {
+        if (shouldOutputFlexJustification && justifyContent) {
           rules.push(`justify-content: ${justifyContent}`);
         }
       } else {
-        if (verticalAlignment) {
+        if (shouldOutputFlexAlignment && verticalAlignment) {
           rules.push(`justify-content: ${verticalAlignment}`);
         }
-        rules.push("flex-direction: column");
-        rules.push(`align-items: ${alignItems}`);
+        if (shouldOutputFlexOrientation) {
+          rules.push("flex-direction: column");
+        }
+        if (shouldOutputFlexJustification) {
+          rules.push(`align-items: ${alignItems}`);
+        }
       }
       if (rules.length) {
         output = `${appendSelectors(selector3)} {
 				${rules.join("; ")};
 			}`;
       }
-      if (hasBlockGapSupport && blockGapValue) {
+      if (hasBlockGapSupport && hasBlockGapOverride && blockGapValue) {
         output += getBlockGapCSS(
           selector3,
           layoutDefinitions,
@@ -17135,13 +17148,19 @@ var wp;
     getLayoutStyle: function getLayoutStyle3({
       selector: selector3,
       layout = {},
+      viewportOverrides,
       style,
       blockName,
       hasBlockGapSupport,
       layoutDefinitions = LAYOUT_DEFINITIONS
     }) {
-      const { contentSize, wideSize, justifyContent } = layout;
+      const hasViewportOverrides = viewportOverrides !== void 0;
+      const effectiveLayout = hasViewportOverrides ? { ...layout, ...viewportOverrides } : layout;
+      const hasViewportOverride = (key) => Object.hasOwn(viewportOverrides || {}, key);
+      const { contentSize, wideSize, justifyContent } = effectiveLayout;
       const blockGapStyleValue = getGapCSSValue(style?.spacing?.blockGap);
+      const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
+      const hasBlockSpacingOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "padding");
       let blockGapValue = "";
       if (!shouldSkipSerialization(blockName, "spacing", "blockGap")) {
         if (blockGapStyleValue?.top) {
@@ -17152,14 +17171,23 @@ var wp;
       }
       const marginLeft = justifyContent === "left" ? "0 !important" : "auto !important";
       const marginRight = justifyContent === "right" ? "0 !important" : "auto !important";
-      let output = !!contentSize || !!wideSize ? `
-					${appendSelectors(
+      const hasJustificationOverride = hasViewportOverrides && hasViewportOverride("justifyContent");
+      const shouldOutputConstrainedSizes = !hasViewportOverrides || hasViewportOverride("contentSize") || hasViewportOverride("wideSize");
+      const constrainedSizeDeclarations = [
+        `max-width: ${contentSize ?? wideSize}`
+      ];
+      if (!hasViewportOverrides || hasJustificationOverride) {
+        constrainedSizeDeclarations.push(
+          `margin-left: ${marginLeft}`,
+          `margin-right: ${marginRight}`
+        );
+      }
+      let output = shouldOutputConstrainedSizes && (!!contentSize || !!wideSize) ? `
+						${appendSelectors(
         selector3,
         "> :where(:not(.alignleft):not(.alignright):not(.alignfull))"
       )} {
-						max-width: ${contentSize ?? wideSize};
-						margin-left: ${marginLeft};
-						margin-right: ${marginRight};
+						${constrainedSizeDeclarations.join("; ")};
 					}
 					${appendSelectors(selector3, "> .alignwide")}  {
 						max-width: ${wideSize ?? contentSize};
@@ -17167,21 +17195,29 @@ var wp;
 					${appendSelectors(selector3, "> .alignfull")} {
 						max-width: none;
 					}
-				` : "";
-      if (justifyContent === "left") {
+					` : "";
+      if (hasJustificationOverride && !shouldOutputConstrainedSizes) {
         output += `${appendSelectors(
           selector3,
           "> :where(:not(.alignleft):not(.alignright):not(.alignfull))"
         )}
+				{ margin-left: ${marginLeft}; margin-right: ${marginRight}; }`;
+      } else if (!hasViewportOverrides) {
+        if (justifyContent === "left") {
+          output += `${appendSelectors(
+            selector3,
+            "> :where(:not(.alignleft):not(.alignright):not(.alignfull))"
+          )}
 			{ margin-left: ${marginLeft}; }`;
-      } else if (justifyContent === "right") {
-        output += `${appendSelectors(
-          selector3,
-          "> :where(:not(.alignleft):not(.alignright):not(.alignfull))"
-        )}
+        } else if (justifyContent === "right") {
+          output += `${appendSelectors(
+            selector3,
+            "> :where(:not(.alignleft):not(.alignright):not(.alignfull))"
+          )}
 			{ margin-right: ${marginRight}; }`;
+        }
       }
-      if (style?.spacing?.padding) {
+      if (hasBlockSpacingOverride && style?.spacing?.padding) {
         const paddingValues = (0, import_style_engine.getCSSRules)(style);
         paddingValues.forEach((rule) => {
           if (rule.key === "paddingRight") {
@@ -17201,7 +17237,7 @@ var wp;
           }
         });
       }
-      if (hasBlockGapSupport && blockGapValue) {
+      if (hasBlockGapSupport && hasBlockGapOverride && blockGapValue) {
         output += getBlockGapCSS(
           selector3,
           layoutDefinitions,
@@ -17403,18 +17439,22 @@ var wp;
     },
     getLayoutStyle: function getLayoutStyle4({
       selector: selector3,
-      layout,
+      layout = {},
+      viewportOverrides,
       style,
       blockName,
       hasBlockGapSupport,
       globalBlockGapValue,
       layoutDefinitions = LAYOUT_DEFINITIONS
     }) {
+      const hasViewportOverrides = viewportOverrides !== void 0;
+      const effectiveLayout = hasViewportOverrides ? { ...layout, ...viewportOverrides } : layout;
+      const hasViewportOverride = (key) => Object.hasOwn(viewportOverrides || {}, key);
       const {
         minimumColumnWidth = null,
         columnCount = null,
         rowCount = null
-      } = layout;
+      } = effectiveLayout;
       if (true) {
         if (minimumColumnWidth && typeof minimumColumnWidth !== "string") {
           throw new Error("minimumColumnWidth must be a string");
@@ -17432,36 +17472,39 @@ var wp;
         fallbackGapValue = getSpacingPresetCssVar(gapBox?.left) || getSpacingPresetCssVar(gapBox?.top) || "1.2rem";
       }
       const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue(style?.spacing?.blockGap, fallbackGapValue) : void 0;
+      const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
       let output = "";
       const rules = [];
-      if (minimumColumnWidth && columnCount > 0) {
+      const shouldOutputGridColumns = !hasViewportOverrides || hasViewportOverride("minimumColumnWidth") || hasViewportOverride("columnCount") || hasBlockGapOverride && minimumColumnWidth && columnCount > 0;
+      const shouldOutputGridRows = (!hasViewportOverrides || hasViewportOverride("rowCount")) && columnCount && rowCount;
+      if (shouldOutputGridColumns && minimumColumnWidth && columnCount > 0) {
         let blockGapToUse = blockGapValue || fallbackGapValue;
         if (blockGapToUse === "0" || blockGapToUse === 0) {
           blockGapToUse = "0px";
         }
         const maxValue = `max(min( ${minimumColumnWidth}, 100%), ( 100% - (${blockGapToUse}*${columnCount - 1}) ) / ${columnCount})`;
         rules.push(
-          `grid-template-columns: repeat(auto-fill, minmax(${maxValue}, 1fr))`,
-          `container-type: inline-size`
+          `grid-template-columns: repeat(auto-fill, minmax(${maxValue}, 1fr))`
         );
-        if (rowCount) {
-          rules.push(
-            `grid-template-rows: repeat(${rowCount}, minmax(1rem, auto))`
-          );
-        }
-      } else if (columnCount) {
+      } else if (shouldOutputGridColumns && columnCount) {
         rules.push(
           `grid-template-columns: repeat(${columnCount}, minmax(0, 1fr))`
         );
-        if (rowCount) {
-          rules.push(
-            `grid-template-rows: repeat(${rowCount}, minmax(1rem, auto))`
-          );
-        }
-      } else {
+      } else if (shouldOutputGridColumns) {
         rules.push(
-          `grid-template-columns: repeat(auto-fill, minmax(min(${minimumColumnWidth || "12rem"}, 100%), 1fr))`,
-          "container-type: inline-size"
+          `grid-template-columns: repeat(auto-fill, minmax(min(${minimumColumnWidth || "12rem"}, 100%), 1fr))`
+        );
+      }
+      if (shouldOutputGridColumns) {
+        const baseHasContainerType = !layout?.columnCount || layout?.columnCount && layout?.minimumColumnWidth;
+        const needsContainerType = !columnCount || minimumColumnWidth;
+        if (needsContainerType && (!hasViewportOverrides || !baseHasContainerType)) {
+          rules.push("container-type: inline-size");
+        }
+      }
+      if (shouldOutputGridRows) {
+        rules.push(
+          `grid-template-rows: repeat(${rowCount}, minmax(1rem, auto))`
         );
       }
       if (rules.length) {
@@ -17469,7 +17512,7 @@ var wp;
           "; "
         )}; }`;
       }
-      if (hasBlockGapSupport && blockGapValue) {
+      if (hasBlockGapSupport && hasBlockGapOverride && blockGapValue) {
         output += getBlockGapCSS(
           selector3,
           layoutDefinitions,
@@ -67554,7 +67597,7 @@ var wp;
     return settings2?.dimensions?.aspectRatio;
   }
   function hasChildLayout(settings2, styleState = DEFAULT_BLOCK_STYLE_STATE2) {
-    if (!isDefaultBlockStyleState(styleState)) {
+    if (hasPseudoBlockStyleState(styleState)) {
       return false;
     }
     const {
@@ -67878,6 +67921,7 @@ var wp;
       onChange({
         ...value,
         layout: {
+          ...value?.layout,
           ...newChildLayout
         }
       });
@@ -72085,8 +72129,9 @@ var wp;
       showAdvancedControls && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(advanced_controls_panel_default, {}) })
     ] });
   }
-  function StyleStateInspectorSlots({ blockName }) {
+  function StyleStateInspectorSlots({ blockName, selectedBlockStyleState: selectedBlockStyleState2 }) {
     const borderPanelLabel = useBorderPanelLabel({ blockName });
+    const showLayoutControls = hasViewportBlockStyleState(selectedBlockStyleState2) && !hasPseudoBlockStyleState(selectedBlockStyleState2);
     return /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(import_jsx_runtime409.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
         inspector_controls_default.Slot,
@@ -72109,6 +72154,13 @@ var wp;
         {
           group: "typography",
           label: (0, import_i18n201.__)("Typography")
+        }
+      ),
+      showLayoutControls && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+        inspector_controls_default.Slot,
+        {
+          group: "layout",
+          label: (0, import_i18n201.__)("Layout")
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
@@ -72410,7 +72462,13 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(EditContents, { clientId: renderedBlockClientId }),
       /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(block_variation_transforms_default, { blockClientId: renderedBlockClientId }),
       /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(BlockInspectorPreTabsSlot, {}),
-      isBlockStyleStateSelected && !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(StyleStateInspectorSlots, { blockName }),
+      isBlockStyleStateSelected && !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+        StyleStateInspectorSlots,
+        {
+          blockName,
+          selectedBlockStyleState: selectedBlockStyleState2
+        }
+      ),
       !isBlockStyleStateSelected && hasMultipleTabs && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(import_jsx_runtime409.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
         InspectorControlsTabs,
         {
@@ -84332,6 +84390,18 @@ var wp;
   var import_jsx_runtime482 = __toESM(require_jsx_runtime(), 1);
   var VARIATION_PREFIX2 = "is-style-";
   var layoutBlockSupportKey = "layout";
+  var RESPONSIVE_BREAKPOINTS3 = {
+    mobile: "@media (width <= 480px)",
+    tablet: "@media (480px < width <= 782px)"
+  };
+  var CHILD_LAYOUT_KEYS = [
+    "selfStretch",
+    "flexSize",
+    "columnStart",
+    "columnSpan",
+    "rowStart",
+    "rowSpan"
+  ];
   var { kebabCase: kebabCase6 } = unlock(import_components266.privateApis);
   function getDefaultLayout(layoutBlockSupport = {}, blockVariation) {
     const defaultBlockLayout = layoutBlockSupport?.default;
@@ -84341,6 +84411,30 @@ var wp;
     return cleanEmptyObject({
       ...getDefaultLayout(layoutBlockSupport, blockVariation)
     });
+  }
+  function getLayoutStateOverrides(layout = {}, baseLayout = {}, existingLayout = {}) {
+    const overrides = {};
+    const childLayoutValues = Object.fromEntries(
+      CHILD_LAYOUT_KEYS.filter(
+        (key) => Object.hasOwn(existingLayout || {}, key)
+      ).map((key) => [key, existingLayout[key]])
+    );
+    Object.entries(layout || {}).forEach(([key, value]) => {
+      if (!CHILD_LAYOUT_KEYS.includes(key) && value !== baseLayout?.[key]) {
+        overrides[key] = value;
+      }
+    });
+    return cleanEmptyObject({
+      ...childLayoutValues,
+      ...overrides
+    });
+  }
+  function getLayoutContainerValues(layout = {}) {
+    return Object.fromEntries(
+      Object.entries(layout || {}).filter(
+        ([key]) => !CHILD_LAYOUT_KEYS.includes(key)
+      )
+    );
   }
   function hasLayoutBlockSupport(blockName) {
     return (0, import_blocks120.hasBlockSupport)(blockName, "layout") || (0, import_blocks120.hasBlockSupport)(blockName, "__experimentalLayout");
@@ -84398,17 +84492,52 @@ var wp;
       hasBlockGapSupport
     });
   }
+  function getResponsiveLayoutStyles({
+    attributes = {},
+    blockName,
+    selector: selector3,
+    layout = {},
+    hasBlockGapSupport,
+    globalBlockGapValue
+  }) {
+    return Object.entries(RESPONSIVE_BREAKPOINTS3).map(([viewport, mediaQuery]) => {
+      const viewportStyle = attributes?.style?.[viewport];
+      const viewportLayout = getLayoutContainerValues(
+        viewportStyle?.layout
+      );
+      const hasViewportLayout = Object.keys(viewportLayout).length > 0;
+      const hasViewportBlockGap = viewportStyle?.spacing && Object.hasOwn(viewportStyle.spacing, "blockGap");
+      const hasViewportPadding = viewportStyle?.spacing && Object.hasOwn(viewportStyle.spacing, "padding");
+      if (!hasViewportLayout && !hasViewportBlockGap && !hasViewportPadding) {
+        return "";
+      }
+      const layoutType = getLayoutType(layout?.type || "default");
+      const viewportCSS = layoutType?.getLayoutStyle?.({
+        blockName,
+        selector: selector3,
+        layout,
+        viewportOverrides: viewportLayout,
+        style: viewportStyle,
+        hasBlockGapSupport,
+        globalBlockGapValue
+      });
+      return viewportCSS ? `${mediaQuery}{${viewportCSS}}` : "";
+    }).filter(Boolean).join("");
+  }
   function LayoutPanelPure({
     layout,
+    style,
     setAttributes,
     name: blockName,
     clientId
   }) {
     const settings2 = useBlockSettings(blockName);
     const { layout: layoutSettings } = settings2;
-    const { themeSupportsLayout, activeBlockVariation } = (0, import_data187.useSelect)(
+    const { themeSupportsLayout, activeBlockVariation, selectedState } = (0, import_data187.useSelect)(
       (select3) => {
-        const { getBlockAttributes: getBlockAttributes3, getSettings: getSettings7 } = select3(store);
+        const blockEditorSelect = select3(store);
+        const { getBlockAttributes: getBlockAttributes3, getSettings: getSettings7 } = blockEditorSelect;
+        const { getSelectedBlockStyleState: getSelectedBlockStyleState2 } = unlock(blockEditorSelect);
         return {
           activeBlockVariation: select3(
             import_blocks120.store
@@ -84417,15 +84546,35 @@ var wp;
             getBlockAttributes3(clientId) || {},
             "block"
           ),
-          themeSupportsLayout: getSettings7().supportsLayout
+          themeSupportsLayout: getSettings7().supportsLayout,
+          selectedState: getSelectedBlockStyleState2?.(clientId) ?? DEFAULT_BLOCK_STYLE_STATE2
         };
       },
       [blockName, clientId]
     );
     const blockEditingMode = useBlockEditingMode();
+    const isViewportLayoutState = hasViewportBlockStyleState(selectedState) && !hasPseudoBlockStyleState(selectedState);
     const resetLayoutFilter = (0, import_element299.useCallback)(
       (...resetArgs) => {
+        const attributes = resetArgs[0] || {};
         const context = resetArgs[1] || {};
+        if (isViewportLayoutState) {
+          const existingStateStyle = getStyleForState(
+            attributes.style ?? style,
+            selectedState
+          ) || {};
+          const nextStateStyle = cleanEmptyObject({
+            ...existingStateStyle,
+            layout: void 0
+          });
+          return {
+            style: setStyleForState(
+              attributes.style ?? style,
+              selectedState,
+              nextStateStyle
+            )
+          };
+        }
         const resetBlockName = context.name || blockName;
         const resetLayoutBlockSupport = (0, import_blocks120.getBlockSupport)(
           resetBlockName,
@@ -84439,7 +84588,13 @@ var wp;
           )
         };
       },
-      [blockName, activeBlockVariation]
+      [
+        blockName,
+        activeBlockVariation,
+        isViewportLayoutState,
+        selectedState,
+        style
+      ]
     );
     if (blockEditingMode !== "default") {
       return null;
@@ -84462,36 +84617,53 @@ var wp;
     if (!allowEditing) {
       return null;
     }
+    const baseLayout = layout || defaultBlockLayout || {};
+    const stateStyle = isViewportLayoutState ? getStyleForState(style, selectedState) : void 0;
+    const stateLayout = stateStyle?.layout;
+    const usedLayout = isViewportLayoutState ? cleanEmptyObject({
+      ...baseLayout,
+      ...stateLayout
+    }) || {} : baseLayout;
+    const resetLayoutDefaults = isViewportLayoutState ? baseLayout : getResetLayout(layoutBlockSupport, activeBlockVariation);
     const blockSupportAndLayout = {
       ...layoutBlockSupport,
-      ...layout
+      ...usedLayout
     };
     const { type, default: { type: defaultType = "default" } = {} } = blockSupportAndLayout;
     const blockLayoutType = type || defaultType;
     const showInheritToggle = !!(allowInheriting && (!blockLayoutType || blockLayoutType === "default" || blockLayoutType === "constrained" || blockSupportAndLayout.inherit));
-    const usedLayout = layout || defaultBlockLayout || {};
     const { inherit = false, contentSize = null } = usedLayout;
     if ((blockLayoutType === "default" || blockLayoutType === "constrained") && !themeSupportsLayout) {
       return null;
     }
-    const defaultLayout2 = cleanEmptyObject({
-      ...getDefaultLayout(layoutBlockSupport, activeBlockVariation)
-    });
-    const resetLayoutDefaults = getResetLayout(
-      layoutBlockSupport,
-      activeBlockVariation
-    );
     const layoutType = getLayoutType(blockLayoutType);
     const constrainedType = getLayoutType("constrained");
     const displayControlsForLegacyLayouts = !usedLayout.type && (contentSize || inherit);
     const hasContentSizeOrLegacySettings = !!inherit || !!contentSize;
-    const onChangeType = (newType) => setAttributes({ layout: { type: newType } });
-    const onChangeLayout = (newLayout) => setAttributes({ layout: cleanEmptyObject(newLayout) });
-    const resetLayout = () => setAttributes({ layout: defaultLayout2 });
-    const resetInheritToggle = () => setAttributes({ layout: { type: "default" } });
+    const showLayoutTypeSwitcher = isDefaultBlockStyleState(selectedState) && !inherit && allowSwitching;
+    const onChangeLayout = (newLayout) => {
+      if (isViewportLayoutState) {
+        const nextStateStyle = cleanEmptyObject({
+          ...stateStyle,
+          layout: getLayoutStateOverrides(
+            cleanEmptyObject(newLayout),
+            baseLayout,
+            stateStyle?.layout
+          )
+        });
+        setAttributes({
+          style: setStyleForState(style, selectedState, nextStateStyle)
+        });
+        return;
+      }
+      setAttributes({ layout: cleanEmptyObject(newLayout) });
+    };
+    const onChangeType = (newType) => onChangeLayout({ type: newType });
+    const resetLayout = () => onChangeLayout(resetLayoutDefaults);
+    const resetInheritToggle = () => onChangeLayout({ type: "default" });
     const isUsingContentWidth = () => layoutType?.name === "constrained" || hasContentSizeOrLegacySettings;
-    const hasInheritToggleValue = () => layout?.type === "constrained";
-    const hasLayoutTypeValue = () => (usedLayout?.type ?? "default") !== (defaultLayout2?.type ?? "default");
+    const hasInheritToggleValue = () => isViewportLayoutState ? (usedLayout?.type ?? "default") !== (resetLayoutDefaults?.type ?? "default") : layout?.type === "constrained";
+    const hasLayoutTypeValue = () => (usedLayout?.type ?? "default") !== (resetLayoutDefaults?.type ?? "default");
     return /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(import_jsx_runtime482.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(
         inspector_controls_default,
@@ -84512,10 +84684,8 @@ var wp;
                   {
                     label: (0, import_i18n237.__)("Inner blocks use content width"),
                     checked: isUsingContentWidth(),
-                    onChange: () => setAttributes({
-                      layout: {
-                        type: isUsingContentWidth() ? "default" : "constrained"
-                      }
+                    onChange: () => onChangeLayout({
+                      type: isUsingContentWidth() ? "default" : "constrained"
                     }),
                     help: isUsingContentWidth() ? (0, import_i18n237.__)(
                       "Nested blocks use content width with options for full and wide widths."
@@ -84526,7 +84696,7 @@ var wp;
                 )
               }
             ),
-            !inherit && allowSwitching && /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
+            showLayoutTypeSwitcher && /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
               import_components266.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n237.__)("Layout type"),
@@ -84585,7 +84755,7 @@ var wp;
   var layout_default2 = {
     shareWithChildBlocks: true,
     edit: LayoutPanelPure,
-    attributeKeys: ["layout"],
+    attributeKeys: ["layout", "style"],
     hasSupport(name) {
       return hasLayoutBlockSupport(name);
     }
@@ -84644,7 +84814,7 @@ var wp;
     const selector3 = `.${selectorPrefix}${id}`;
     const hasBlockGapSupport = blockGapSupport !== null;
     const fullLayoutType = getLayoutType(usedLayout?.type || "default");
-    const css = fullLayoutType?.getLayoutStyle?.({
+    const baseLayoutCSS = fullLayoutType?.getLayoutStyle?.({
       blockName: name,
       selector: selector3,
       layout: usedLayout,
@@ -84652,6 +84822,15 @@ var wp;
       hasBlockGapSupport,
       globalBlockGapValue
     });
+    const responsiveLayoutCSS = getResponsiveLayoutStyles({
+      attributes,
+      blockName: name,
+      selector: selector3,
+      layout: usedLayout,
+      hasBlockGapSupport,
+      globalBlockGapValue
+    });
+    const css = [baseLayoutCSS, responsiveLayoutCSS].filter(Boolean).join("");
     const layoutClassNames = clsx_default(
       {
         [`${selectorPrefix}${id}`]: !!css
@@ -85788,11 +85967,28 @@ var wp;
   // packages/block-editor/build-module/hooks/layout-child.mjs
   var import_jsx_runtime486 = __toESM(require_jsx_runtime(), 1);
   var LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
-  function useBlockPropsChildLayoutStyles({ style }) {
-    const shouldRenderChildLayoutStyles = (0, import_data191.useSelect)((select3) => {
-      return !select3(store).getSettings().disableLayoutStyles;
-    });
-    const layout = style?.layout ?? {};
+  var RESPONSIVE_BREAKPOINTS4 = {
+    mobile: "@media (width <= 480px)",
+    tablet: "@media (480px < width <= 782px)"
+  };
+  function serializeRule({ selector: selector3, declarations }) {
+    return `${selector3} {
+		${Object.entries(declarations).map(([property, value]) => `${property}: ${value}`).join("; ")};
+	}`;
+  }
+  function getChildLayoutStyleRules({
+    selector: selector3,
+    layout = {},
+    viewportOverrides,
+    parentLayout = {},
+    includeContainerQuery = true
+  }) {
+    const hasViewportOverrides = viewportOverrides !== void 0;
+    const effectiveLayout = hasViewportOverrides ? {
+      ...layout,
+      ...viewportOverrides
+    } : layout;
+    const hasViewportOverride = (key) => Object.hasOwn(viewportOverrides || {}, key);
     const {
       selfStretch,
       flexSize,
@@ -85800,62 +85996,40 @@ var wp;
       rowStart,
       columnSpan,
       rowSpan
-    } = layout;
-    const parentLayout = useLayout() || {};
+    } = effectiveLayout;
     const { columnCount, minimumColumnWidth } = parentLayout;
-    const id = (0, import_compose111.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
-    const selector3 = `.wp-container-content-${id}`;
-    if (true) {
-      if (columnStart && typeof columnStart !== "number") {
-        throw new Error("columnStart must be a number");
-      }
-      if (rowStart && typeof rowStart !== "number") {
-        throw new Error("rowStart must be a number");
-      }
-      if (columnSpan && typeof columnSpan !== "number") {
-        throw new Error("columnSpan must be a number");
-      }
-      if (rowSpan && typeof rowSpan !== "number") {
-        throw new Error("rowSpan must be a number");
+    const rules = [];
+    const declarations = {};
+    if (!hasViewportOverrides || hasViewportOverride("selfStretch") || hasViewportOverride("flexSize")) {
+      if (selfStretch === "fixed" && flexSize) {
+        declarations["flex-basis"] = flexSize;
+        declarations["box-sizing"] = "border-box";
+      } else if (selfStretch === "fill") {
+        declarations["flex-grow"] = "1";
       }
     }
-    let css = "";
-    if (shouldRenderChildLayoutStyles) {
-      if (selfStretch === "fixed" && flexSize) {
-        css = `${selector3} {
-				flex-basis: ${flexSize};
-				box-sizing: border-box;
-			}`;
-      } else if (selfStretch === "fill") {
-        css = `${selector3} {
-				flex-grow: 1;
-			}`;
-      } else if (columnStart && columnSpan) {
-        css = `${selector3} {
-				grid-column: ${columnStart} / span ${columnSpan};
-			}`;
+    if (!hasViewportOverrides || hasViewportOverride("columnStart") || hasViewportOverride("columnSpan")) {
+      if (columnStart && columnSpan) {
+        declarations["grid-column"] = `${columnStart} / span ${columnSpan}`;
       } else if (columnStart) {
-        css = `${selector3} {
-				grid-column: ${columnStart};
-			}`;
+        declarations["grid-column"] = `${columnStart}`;
       } else if (columnSpan) {
-        css = `${selector3} {
-				grid-column: span ${columnSpan};
-			}`;
+        declarations["grid-column"] = `span ${columnSpan}`;
       }
+    }
+    if (!hasViewportOverrides || hasViewportOverride("rowStart") || hasViewportOverride("rowSpan")) {
       if (rowStart && rowSpan) {
-        css += `${selector3} {
-				grid-row: ${rowStart} / span ${rowSpan};
-			}`;
+        declarations["grid-row"] = `${rowStart} / span ${rowSpan}`;
       } else if (rowStart) {
-        css += `${selector3} {
-				grid-row: ${rowStart};
-			}`;
+        declarations["grid-row"] = `${rowStart}`;
       } else if (rowSpan) {
-        css += `${selector3} {
-				grid-row: span ${rowSpan};
-			}`;
+        declarations["grid-row"] = `span ${rowSpan}`;
       }
+    }
+    if (Object.keys(declarations).length) {
+      rules.push({ selector: selector3, declarations });
+    }
+    if (includeContainerQuery && !hasViewportOverrides) {
       if ((columnSpan || columnStart) && (minimumColumnWidth || !columnCount)) {
         let parentColumnValue = parseFloat(minimumColumnWidth);
         if (isNaN(parentColumnValue)) {
@@ -85880,16 +86054,98 @@ var wp;
         const containerQueryValue = numColsToBreakAt * parentColumnValue + (numColsToBreakAt - 1) * defaultGapValue;
         const minimumContainerQueryValue = parentColumnValue * 2 + defaultGapValue - 1;
         const gridColumnValue = columnSpan && columnSpan > 1 ? "1/-1" : "auto";
-        css += `@container (max-width: ${Math.max(
-          containerQueryValue,
-          minimumContainerQueryValue
-        )}${parentColumnUnit}) {
-				${selector3} {
-					grid-column: ${gridColumnValue};
-					grid-row: auto;
-				}
-			}`;
+        rules.push({
+          rulesGroup: `@container (max-width: ${Math.max(
+            containerQueryValue,
+            minimumContainerQueryValue
+          )}${parentColumnUnit})`,
+          selector: selector3,
+          declarations: {
+            "grid-column": gridColumnValue,
+            "grid-row": "auto"
+          }
+        });
       }
+    }
+    return rules;
+  }
+  function getChildLayoutStyles({
+    selector: selector3,
+    layout = {},
+    parentLayout = {},
+    includeContainerQuery = true
+  }) {
+    return getChildLayoutStyleRules({
+      selector: selector3,
+      layout,
+      parentLayout,
+      includeContainerQuery
+    }).map((rule) => {
+      const serializedRule = serializeRule(rule);
+      return rule.rulesGroup ? `${rule.rulesGroup} {
+				${serializedRule}
+			}` : serializedRule;
+    }).join("");
+  }
+  function getResponsiveChildLayoutStyles({
+    style = {},
+    selector: selector3,
+    parentLayout = {}
+  }) {
+    const baseLayout = style?.layout ?? {};
+    return Object.entries(RESPONSIVE_BREAKPOINTS4).map(([viewport, mediaQuery]) => {
+      const viewportLayout = style?.[viewport]?.layout;
+      if (!viewportLayout || !Object.keys(viewportLayout).length) {
+        return "";
+      }
+      const viewportRules = getChildLayoutStyleRules({
+        selector: selector3,
+        layout: baseLayout,
+        viewportOverrides: viewportLayout,
+        parentLayout,
+        includeContainerQuery: false
+      });
+      const css = viewportRules.map(serializeRule).join("");
+      return css ? `${mediaQuery}{${css}}` : "";
+    }).filter(Boolean).join("");
+  }
+  function useBlockPropsChildLayoutStyles({ style }) {
+    const shouldRenderChildLayoutStyles = (0, import_data191.useSelect)((select3) => {
+      return !select3(store).getSettings().disableLayoutStyles;
+    });
+    const layout = style?.layout ?? {};
+    const { columnStart, rowStart, columnSpan, rowSpan } = layout;
+    const parentLayout = useLayout() || {};
+    const id = (0, import_compose111.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
+    const selector3 = `.wp-container-content-${id}`;
+    if (true) {
+      if (columnStart && typeof columnStart !== "number") {
+        throw new Error("columnStart must be a number");
+      }
+      if (rowStart && typeof rowStart !== "number") {
+        throw new Error("rowStart must be a number");
+      }
+      if (columnSpan && typeof columnSpan !== "number") {
+        throw new Error("columnSpan must be a number");
+      }
+      if (rowSpan && typeof rowSpan !== "number") {
+        throw new Error("rowSpan must be a number");
+      }
+    }
+    let css = "";
+    if (shouldRenderChildLayoutStyles) {
+      css = [
+        getChildLayoutStyles({
+          selector: selector3,
+          layout,
+          parentLayout
+        }),
+        getResponsiveChildLayoutStyles({
+          style,
+          selector: selector3,
+          parentLayout
+        })
+      ].join("");
     }
     useStyleOverride({ css });
     if (!css) {
