@@ -31185,7 +31185,8 @@ function GuidelinesPage() {
       "li",
       {
         key: item.slug,
-        className: "guidelines__list-item"
+        className: "guidelines__list-item",
+        "data-slug": item.slug
       },
       /* @__PURE__ */ React.createElement(
         GuidelineAccordion,
