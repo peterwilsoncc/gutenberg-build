@@ -48294,8 +48294,7 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
               import_components89.ToggleControl,
               {
-                label: (0, import_i18n124.__)("Resize crop area"),
-                help: (0, import_i18n124.__)("Show handles to adjust the crop box."),
+                label: (0, import_i18n124.__)("Show resize handles"),
                 checked: freeformCrop,
                 onChange: onFreeformChange
               }

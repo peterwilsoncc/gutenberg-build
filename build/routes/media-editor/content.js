@@ -25062,8 +25062,7 @@ function MediaEditorCropPanel({
           /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
             import_components37.ToggleControl,
             {
-              label: (0, import_i18n32.__)("Resize crop area"),
-              help: (0, import_i18n32.__)("Show handles to adjust the crop box."),
+              label: (0, import_i18n32.__)("Show resize handles"),
               checked: freeformCrop,
               onChange: onFreeformChange
             }
