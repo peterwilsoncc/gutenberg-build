@@ -38798,8 +38798,8 @@ var wp;
     onHover,
     onClickPattern,
     orientation,
-    label = (0, import_i18n44.__)("Block patterns"),
     category,
+    label = (0, import_i18n44.__)("Patterns"),
     showTitlesAsTooltip,
     pagingProps
   }, ref) {
@@ -39107,7 +39107,7 @@ var wp;
         createSuccessNotice(
           (0, import_i18n46.sprintf)(
             /* translators: %s: block pattern title. */
-            (0, import_i18n46.__)('Block pattern "%s" inserted.'),
+            (0, import_i18n46.__)('Pattern "%s" inserted.'),
             pattern.title
           ),
           {
@@ -40642,7 +40642,7 @@ var wp;
     const patternsUI = !!filteredBlockPatterns.length && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
       panel_default,
       {
-        title: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(VisuallyHidden, { children: (0, import_i18n58.__)("Block patterns") }),
+        title: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(VisuallyHidden, { children: (0, import_i18n58.__)("Patterns") }),
         children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("div", { className: "block-editor-inserter__quick-inserter-patterns", children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
           block_patterns_list_default,
           {
