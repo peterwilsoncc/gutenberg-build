@@ -48001,7 +48001,9 @@ If there's a particular need for this, please submit a feature request at https:
     }, [value, pxPerUnit]);
     const closestMajor = Math.round(value / MAJOR_INTERVAL) * MAJOR_INTERVAL;
     const onMajor = Math.abs(value - closestMajor) < 0.01;
-    const activeText = onMajor ? `${closestMajor}${unit}` : display;
+    const numberText = onMajor ? `${closestMajor}` : formatValue(value);
+    const isNegative = numberText.startsWith("-");
+    const digits = isNegative ? numberText.slice(1) : numberText;
     const majorTicks = ticks.filter((tick) => tick.kind === "major");
     return /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)(
       "div",
@@ -48069,7 +48071,11 @@ If there's a particular need for this, please submit a feature request at https:
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: activeText }),
+          /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
+            isNegative && /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
+            digits,
+            /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
+          ] }) }),
           /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
         ]
       }
