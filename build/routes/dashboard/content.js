@@ -41273,7 +41273,7 @@ var WidgetRender = WidgetRenderImpl;
 
 // routes/dashboard/widget-dashboard/components/widget-picker/widget-picker.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("47c23c38d2", "._32fba4d898ff4e12__preview{height:125%;overflow:hidden;padding:0;transform:scale(.8);transform-origin:top left;width:125%}");
+  registerStyle48("2aafbc3440", "._32fba4d898ff4e12__preview{height:125%;overflow:hidden;padding:0;pointer-events:none;transform:scale(.8);transform-origin:top left;user-select:none;width:125%}");
 }
 var widget_picker_default = { "preview": "_32fba4d898ff4e12__preview" };
 
