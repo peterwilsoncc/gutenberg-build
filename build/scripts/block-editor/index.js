@@ -69647,43 +69647,44 @@ var wp;
     }
     return true;
   }
+  function getMarkupValidationError(css) {
+    return validateCSS(css) ? null : (0, import_i18n193.__)("The custom CSS is invalid. Do not use <> markup.");
+  }
+  function getCSSValidationError(css) {
+    if (!css) {
+      return null;
+    }
+    const markupError = getMarkupValidationError(css);
+    if (markupError) {
+      return markupError;
+    }
+    const [transformed] = transform_styles_default(
+      [{ css }],
+      ".for-validation-only"
+    );
+    return transformed === null ? (0, import_i18n193.__)("There is an error with your CSS structure.") : null;
+  }
   function AdvancedPanel({
     value,
     onChange,
     inheritedValue = value,
     help
   }) {
-    const [cssError, setCSSError] = (0, import_element236.useState)(null);
     const customCSS = inheritedValue?.css;
+    const [cssError, setCSSError] = (0, import_element236.useState)(
+      () => getCSSValidationError(customCSS)
+    );
     function handleOnChange(newValue) {
       onChange({
         ...value,
         css: newValue
       });
-      if (!validateCSS(newValue)) {
-        setCSSError(
-          (0, import_i18n193.__)("The custom CSS is invalid. Do not use <> markup.")
-        );
-        return;
-      }
-      if (cssError) {
-        setCSSError(null);
-      }
+      setCSSError(getMarkupValidationError(newValue));
     }
     function handleOnBlur(event) {
-      const cssValue = event?.target?.value;
-      if (!cssValue || !validateCSS(cssValue)) {
-        return;
-      }
-      const [transformed] = transform_styles_default(
-        [{ css: cssValue }],
-        ".for-validation-only"
-      );
-      setCSSError(
-        transformed === null ? (0, import_i18n193.__)("There is an error with your CSS structure.") : null
-      );
+      setCSSError(getCSSValidationError(event?.target?.value));
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(import_components207.__experimentalVStack, { spacing: 3, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(Stack, { direction: "column", gap: "md", children: [
       cssError && /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(import_components207.Notice, { status: "error", onRemove: () => setCSSError(null), children: cssError }),
       /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
         import_components207.TextareaControl,
