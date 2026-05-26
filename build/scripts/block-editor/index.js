@@ -72463,7 +72463,12 @@ var wp;
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(ViewportVisibilityInfo, { clientId: renderedBlockClientId }),
       /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(EditContents, { clientId: renderedBlockClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(block_variation_transforms_default, { blockClientId: renderedBlockClientId }),
+      !isBlockStyleStateSelected && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+        block_variation_transforms_default,
+        {
+          blockClientId: renderedBlockClientId
+        }
+      ),
       /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(BlockInspectorPreTabsSlot, {}),
       isBlockStyleStateSelected && !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
         StyleStateInspectorSlots,
