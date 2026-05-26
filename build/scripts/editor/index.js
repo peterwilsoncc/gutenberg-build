@@ -2845,7 +2845,7 @@ var wp;
     registerEntityField: () => registerEntityField2,
     store: () => store,
     storeConfig: () => storeConfig,
-    transformStyles: () => import_block_editor110.transformStyles,
+    transformStyles: () => import_block_editor112.transformStyles,
     unregisterEntityAction: () => unregisterEntityAction2,
     unregisterEntityField: () => unregisterEntityField2,
     useEntitiesSavedStatesIsDirty: () => useIsDirty,
@@ -3363,12 +3363,15 @@ var wp;
   var import_element = __toESM(require_element(), 1);
   var icon_default = (0, import_element.forwardRef)(
     ({ icon, size: size4 = 24, ...props }, ref) => {
-      return (0, import_element.cloneElement)(icon, {
-        width: size4,
-        height: size4,
-        ...props,
-        ref
-      });
+      return (0, import_element.cloneElement)(
+        icon,
+        {
+          width: size4,
+          height: size4,
+          ...props,
+          ref
+        }
+      );
     }
   );
 
@@ -16111,7 +16114,10 @@ var wp;
   // packages/ui/build-module/utils/render-slot-with-children.mjs
   var import_element28 = __toESM(require_element(), 1);
   function renderSlotWithChildren(slot, defaultSlot, children) {
-    return (0, import_element28.cloneElement)(slot ?? defaultSlot, { children });
+    return (0, import_element28.cloneElement)(
+      slot ?? defaultSlot,
+      { children }
+    );
   }
 
   // packages/ui/build-module/lock-unlock.mjs
@@ -20166,9 +20172,7 @@ var wp;
       },
       [value]
     );
-    const stableAttachmentsRef = (0, import_element36.useRef)(
-      null
-    );
+    const stableAttachmentsRef = (0, import_element36.useRef)(null);
     if (attachments !== null) {
       stableAttachmentsRef.current = attachments;
     }
@@ -45658,7 +45662,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [isZooming, setIsZooming] = (0, import_element133.useState)(false);
     const [isGestureActive, setIsGestureActive] = (0, import_element133.useState)(false);
     const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element133.useState)(false);
-    const keyboardInteractionTimerRef = (0, import_element133.useRef)();
+    const keyboardInteractionTimerRef = (0, import_element133.useRef)(void 0);
     const isKeyboardGestureActiveRef = (0, import_element133.useRef)(false);
     const stateRef = (0, import_element133.useRef)(state);
     stateRef.current = state;
@@ -45869,7 +45873,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useAriaAnnouncer(state) {
     const [ariaMessage, setAriaMessage] = (0, import_element135.useState)("");
-    const timerRef = (0, import_element135.useRef)();
+    const timerRef = (0, import_element135.useRef)(
+      void 0
+    );
     const prevMessageRef = (0, import_element135.useRef)("");
     const prevStateRef = (0, import_element135.useRef)(null);
     const latestStateRef = (0, import_element135.useRef)(state);
@@ -46153,7 +46159,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
     );
-    const keyboardSettleTimerRef = (0, import_element136.useRef)();
+    const keyboardSettleTimerRef = (0, import_element136.useRef)(void 0);
     const keyboardResizeActiveRef = (0, import_element136.useRef)(false);
     const resizeHandleDescriptionId = (0, import_element136.useId)();
     const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
@@ -47065,7 +47071,7 @@ If there's a particular need for this, please submit a feature request at https:
       [setCropRect, setViewportPan, canvasSize, visualSize]
     );
     const [settling, setSettling] = (0, import_element140.useState)(false);
-    const settleTimerRef = (0, import_element140.useRef)();
+    const settleTimerRef = (0, import_element140.useRef)(void 0);
     (0, import_element140.useEffect)(() => {
       return () => {
         clearTimeout(settleTimerRef.current);
@@ -47745,7 +47751,7 @@ If there's a particular need for this, please submit a feature request at https:
   function useCropGestureHandlers(options = {}) {
     const { commitOnKeyUp = true } = options;
     const { beginGesture, endGesture } = useMediaEditor();
-    const keyboardTimerRef = (0, import_element144.useRef)();
+    const keyboardTimerRef = (0, import_element144.useRef)(void 0);
     const clearKeyboardTimer = (0, import_element144.useCallback)(() => {
       clearTimeout(keyboardTimerRef.current);
     }, []);
@@ -48875,7 +48881,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element150.useState)(false);
     const [isPlacementActive, setIsPlacementActive] = (0, import_element150.useState)(false);
     const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element150.useState)(false);
-    const placementControlTimerRef = (0, import_element150.useRef)();
+    const placementControlTimerRef = (0, import_element150.useRef)(void 0);
     const signalPlacementControlInteraction = (0, import_element150.useCallback)(() => {
       setIsPlacementActive(true);
       clearTimeout(placementControlTimerRef.current);
@@ -84153,24 +84159,24 @@ If there's a particular need for this, please submit a feature request at https:
   var back_button_default = BackButton;
 
   // packages/editor/build-module/components/editor/index.mjs
-  var import_data263 = __toESM(require_data(), 1);
+  var import_data264 = __toESM(require_data(), 1);
   var import_core_data140 = __toESM(require_core_data(), 1);
   var import_components291 = __toESM(require_components(), 1);
   var import_i18n330 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/editor-interface/index.mjs
-  var import_data219 = __toESM(require_data(), 1);
+  var import_data220 = __toESM(require_data(), 1);
   var import_i18n292 = __toESM(require_i18n(), 1);
   var import_preferences24 = __toESM(require_preferences(), 1);
-  var import_block_editor85 = __toESM(require_block_editor(), 1);
+  var import_block_editor87 = __toESM(require_block_editor(), 1);
   var import_compose75 = __toESM(require_compose(), 1);
   var import_element292 = __toESM(require_element(), 1);
   var import_html_entities28 = __toESM(require_html_entities(), 1);
   var import_notices32 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/header/index.mjs
-  var import_block_editor74 = __toESM(require_block_editor(), 1);
-  var import_data202 = __toESM(require_data(), 1);
+  var import_block_editor76 = __toESM(require_block_editor(), 1);
+  var import_data203 = __toESM(require_data(), 1);
   var import_compose65 = __toESM(require_compose(), 1);
   var import_preferences21 = __toESM(require_preferences(), 1);
   var import_element279 = __toESM(require_element(), 1);
@@ -85516,7 +85522,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collaborators-overlay/index.mjs
-  var import_block_editor73 = __toESM(require_block_editor(), 1);
+  var import_block_editor75 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
   var import_compose64 = __toESM(require_compose(), 1);
@@ -85788,7 +85794,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
+  var import_block_editor73 = __toESM(require_block_editor(), 1);
   var import_core_data110 = __toESM(require_core_data(), 1);
+  var import_data201 = __toESM(require_data(), 1);
   var import_element275 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/use-debounced-recompute.mjs
@@ -85829,6 +85837,10 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const [recomputeToken, rerenderHighlightsAfterDelay] = useDebouncedRecompute(delayMs);
+    const blockClientIds = (0, import_data201.useSelect)(
+      (select7) => select7(import_block_editor73.store).getClientIdsWithDescendants(),
+      []
+    );
     (0, import_element275.useEffect)(() => {
       if (!blockEditorDocument) {
         setHighlights([]);
@@ -85932,7 +85944,8 @@ If there's a particular need for this, please submit a feature request at https:
       blockEditorDocument,
       overlayElement,
       recomputeToken,
-      resolveSelection
+      resolveSelection,
+      blockClientIds
     ]);
     return { highlights, rerenderHighlightsAfterDelay };
   }
@@ -85941,8 +85954,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
+  var import_block_editor74 = __toESM(require_block_editor(), 1);
   var import_core_data112 = __toESM(require_core_data(), 1);
-  var import_data201 = __toESM(require_data(), 1);
+  var import_data202 = __toESM(require_data(), 1);
   var import_element276 = __toESM(require_element(), 1);
   var import_preferences20 = __toESM(require_preferences(), 1);
 
@@ -86340,8 +86354,12 @@ If there's a particular need for this, please submit a feature request at https:
       postId2 ?? null,
       postType2 ?? null
     );
-    const showOwnCursor = (0, import_data201.useSelect)(
+    const showOwnCursor = (0, import_data202.useSelect)(
       (select7) => select7(import_preferences20.store).get("core", "showCollaborationCursor"),
+      []
+    );
+    const blockClientIds = (0, import_data202.useSelect)(
+      (select7) => select7(import_block_editor74.store).getClientIdsWithDescendants(),
       []
     );
     const [cursorPositions, setCursorPositions] = (0, import_element276.useState)(
@@ -86427,7 +86445,8 @@ If there's a particular need for this, please submit a feature request at https:
       overlayElement,
       sortedUsers,
       showOwnCursor,
-      recomputeToken
+      recomputeToken,
+      blockClientIds
     ]);
     return { cursors: cursorPositions, rerenderCursorsAfterDelay };
   }
@@ -86585,7 +86604,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collaborators-overlay/index.mjs
   var import_jsx_runtime474 = __toESM(require_jsx_runtime(), 1);
-  var { BlockCanvasCover } = unlock(import_block_editor73.privateApis);
+  var { BlockCanvasCover } = unlock(import_block_editor75.privateApis);
   function CollaboratorsOverlay({
     postId: postId2,
     postType: postType2,
@@ -86726,7 +86745,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasBlockSelection,
       hasSectionRootClientId,
       isStylesCanvasActive
-    } = (0, import_data202.useSelect)((select7) => {
+    } = (0, import_data203.useSelect)((select7) => {
       const { get: getPreference } = select7(import_preferences21.store);
       const {
         getEditorMode: getEditorMode2,
@@ -86738,7 +86757,7 @@ If there's a particular need for this, please submit a feature request at https:
         select7(store)
       );
       const { getBlockSelectionStart: getBlockSelectionStart2, getSectionRootClientId } = unlock(
-        select7(import_block_editor74.store)
+        select7(import_block_editor76.store)
       );
       return {
         postId: getCurrentPostId2(),
@@ -86838,14 +86857,14 @@ If there's a particular need for this, please submit a feature request at https:
   var header_default2 = Header5;
 
   // packages/editor/build-module/components/inserter-sidebar/index.mjs
-  var import_data203 = __toESM(require_data(), 1);
-  var import_block_editor75 = __toESM(require_block_editor(), 1);
+  var import_data204 = __toESM(require_data(), 1);
+  var import_block_editor77 = __toESM(require_block_editor(), 1);
   var import_compose66 = __toESM(require_compose(), 1);
   var import_element280 = __toESM(require_element(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime477 = __toESM(require_jsx_runtime(), 1);
-  var { PrivateInserterLibrary } = unlock(import_block_editor75.privateApis);
+  var { PrivateInserterLibrary } = unlock(import_block_editor77.privateApis);
   function InserterSidebar() {
     const {
       blockSectionRootClientId,
@@ -86853,13 +86872,13 @@ If there's a particular need for this, please submit a feature request at https:
       inserter,
       showMostUsedBlocks,
       sidebarIsOpened
-    } = (0, import_data203.useSelect)((select7) => {
+    } = (0, import_data204.useSelect)((select7) => {
       const {
         getInserterSidebarToggleRef: getInserterSidebarToggleRef2,
         getInserter: getInserter2,
         isPublishSidebarOpened: isPublishSidebarOpened2
       } = unlock(select7(store));
-      const { getBlockRootClientId: getBlockRootClientId2, isZoomOut, getSectionRootClientId } = unlock(select7(import_block_editor75.store));
+      const { getBlockRootClientId: getBlockRootClientId2, isZoomOut, getSectionRootClientId } = unlock(select7(import_block_editor77.store));
       const { get } = select7(import_preferences22.store);
       const { getActiveComplementaryArea: getActiveComplementaryArea2 } = select7(store3);
       const getBlockSectionRootClientId = () => {
@@ -86879,8 +86898,8 @@ If there's a particular need for this, please submit a feature request at https:
         sidebarIsOpened: !!(getActiveComplementaryArea2("core") || isPublishSidebarOpened2())
       };
     }, []);
-    const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data203.useDispatch)(store);
-    const { disableComplementaryArea: disableComplementaryArea2 } = (0, import_data203.useDispatch)(store3);
+    const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data204.useDispatch)(store);
+    const { disableComplementaryArea: disableComplementaryArea2 } = (0, import_data204.useDispatch)(store3);
     const isMobileViewport = (0, import_compose66.useViewportMatch)("medium", "<");
     const libraryRef = (0, import_element280.useRef)();
     const closeInserterSidebar = (0, import_element280.useCallback)(() => {
@@ -86920,9 +86939,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/list-view-sidebar/index.mjs
-  var import_block_editor76 = __toESM(require_block_editor(), 1);
+  var import_block_editor78 = __toESM(require_block_editor(), 1);
   var import_compose67 = __toESM(require_compose(), 1);
-  var import_data204 = __toESM(require_data(), 1);
+  var import_data205 = __toESM(require_data(), 1);
   var import_dom32 = __toESM(require_dom(), 1);
   var import_element281 = __toESM(require_element(), 1);
   var import_i18n282 = __toESM(require_i18n(), 1);
@@ -86955,10 +86974,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/list-view-sidebar/index.mjs
   var import_jsx_runtime479 = __toESM(require_jsx_runtime(), 1);
-  var { TabbedSidebar } = unlock(import_block_editor76.privateApis);
+  var { TabbedSidebar } = unlock(import_block_editor78.privateApis);
   function ListViewSidebar() {
-    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data204.useDispatch)(store);
-    const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data204.useSelect)(store));
+    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data205.useDispatch)(store);
+    const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data205.useSelect)(store));
     const focusOnMountRef = (0, import_compose67.useFocusOnMount)("firstElement");
     const closeListView = (0, import_element281.useCallback)(() => {
       setIsListViewOpened2(false);
@@ -87023,7 +87042,7 @@ If there's a particular need for this, please submit a feature request at https:
                   name: "list-view",
                   title: (0, import_i18n282._x)("List View", "Post overview"),
                   panel: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)("div", { className: "editor-list-view-sidebar__list-view-container", children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)("div", { className: "editor-list-view-sidebar__list-view-panel-content", children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
-                    import_block_editor76.__experimentalListView,
+                    import_block_editor78.__experimentalListView,
                     {
                       dropZoneElement
                     }
@@ -87049,12 +87068,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-header.mjs
-  var import_data206 = __toESM(require_data(), 1);
+  var import_data207 = __toESM(require_data(), 1);
   var import_components252 = __toESM(require_components(), 1);
   var import_i18n284 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-slider.mjs
-  var import_data205 = __toESM(require_data(), 1);
+  var import_data206 = __toESM(require_data(), 1);
   var import_components251 = __toESM(require_components(), 1);
   var import_core_data114 = __toESM(require_core_data(), 1);
   var import_i18n283 = __toESM(require_i18n(), 1);
@@ -87069,7 +87088,7 @@ If there's a particular need for this, please submit a feature request at https:
       revisionKey,
       revisionPage: revisionPage2,
       totalRevisions
-    } = (0, import_data205.useSelect)((select7) => {
+    } = (0, import_data206.useSelect)((select7) => {
       const {
         getCurrentRevisionId: getCurrentRevisionId2,
         getRevisionPage: getRevisionPage2,
@@ -87096,7 +87115,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { setCurrentRevisionId: setCurrentRevisionId2, setRevisionPage: setRevisionPage2 } = unlock(
-      (0, import_data205.useDispatch)(store)
+      (0, import_data206.useDispatch)(store)
     );
     const isLoading = !rawRevisions;
     const totalPages = Math.ceil(totalRevisions / perPage) || 1;
@@ -87209,7 +87228,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-revisions-preview/revisions-header.mjs
   var import_jsx_runtime481 = __toESM(require_jsx_runtime(), 1);
   function RevisionsHeader({ showDiff, onToggleDiff }) {
-    const { currentRevisionId, sidebarIsOpened } = (0, import_data206.useSelect)((select7) => {
+    const { currentRevisionId, sidebarIsOpened } = (0, import_data207.useSelect)((select7) => {
       return {
         currentRevisionId: unlock(
           select7(store)
@@ -87220,9 +87239,9 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { setCurrentRevisionId: setCurrentRevisionId2, restoreRevision: restoreRevision2 } = unlock(
-      (0, import_data206.useDispatch)(store)
+      (0, import_data207.useDispatch)(store)
     );
-    const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data206.useDispatch)(store3);
+    const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data207.useDispatch)(store3);
     const canRestore = !!currentRevisionId;
     const handleRestore = () => {
       if (currentRevisionId) {
@@ -87300,35 +87319,35 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-canvas.mjs
   var import_components255 = __toESM(require_components(), 1);
-  var import_block_editor84 = __toESM(require_block_editor(), 1);
-  var import_data215 = __toESM(require_data(), 1);
+  var import_block_editor86 = __toESM(require_block_editor(), 1);
+  var import_data216 = __toESM(require_data(), 1);
   var import_element288 = __toESM(require_element(), 1);
   var import_hooks60 = __toESM(require_hooks(), 1);
 
   // packages/editor/build-module/components/visual-editor/index.mjs
-  var import_block_editor82 = __toESM(require_block_editor(), 1);
+  var import_block_editor84 = __toESM(require_block_editor(), 1);
   var import_element286 = __toESM(require_element(), 1);
-  var import_data213 = __toESM(require_data(), 1);
+  var import_data214 = __toESM(require_data(), 1);
   var import_blocks32 = __toESM(require_blocks(), 1);
   var import_core_data117 = __toESM(require_core_data(), 1);
   var import_compose73 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
-  var import_data207 = __toESM(require_data(), 1);
+  var import_data208 = __toESM(require_data(), 1);
   var import_core_data115 = __toESM(require_core_data(), 1);
   var import_element283 = __toESM(require_element(), 1);
   var import_i18n285 = __toESM(require_i18n(), 1);
   var import_components253 = __toESM(require_components(), 1);
   var import_jsx_runtime482 = __toESM(require_jsx_runtime(), 1);
   function EditTemplateBlocksNotification({ contentRef }) {
-    const { onNavigateToEntityRecord, templateId: templateId2 } = (0, import_data207.useSelect)((select7) => {
+    const { onNavigateToEntityRecord, templateId: templateId2 } = (0, import_data208.useSelect)((select7) => {
       const { getEditorSettings: getEditorSettings2, getCurrentTemplateId: getCurrentTemplateId2 } = select7(store);
       return {
         onNavigateToEntityRecord: getEditorSettings2().onNavigateToEntityRecord,
         templateId: getCurrentTemplateId2()
       };
     }, []);
-    const canEditTemplate = (0, import_data207.useSelect)(
+    const canEditTemplate = (0, import_data208.useSelect)(
       (select7) => !!select7(import_core_data115.store).canUser("create", {
         kind: "postType",
         name: "wp_template"
@@ -87381,8 +87400,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.mjs
   var import_compose68 = __toESM(require_compose(), 1);
-  var import_data208 = __toESM(require_data(), 1);
-  var import_block_editor77 = __toESM(require_block_editor(), 1);
+  var import_data209 = __toESM(require_data(), 1);
+  var import_block_editor79 = __toESM(require_block_editor(), 1);
   var DISTANCE_THRESHOLD = 500;
   function clamp2(value, min3, max3) {
     return Math.min(Math.max(value, min3), max3);
@@ -87396,9 +87415,9 @@ If there's a particular need for this, please submit a feature request at https:
     isEnabled = true
   } = {}) {
     const { getEnabledClientIdsTree, getBlockName: getBlockName2, getBlockOrder: getBlockOrder2 } = unlock(
-      (0, import_data208.useSelect)(import_block_editor77.store)
+      (0, import_data209.useSelect)(import_block_editor79.store)
     );
-    const { selectBlock: selectBlock2 } = (0, import_data208.useDispatch)(import_block_editor77.store);
+    const { selectBlock: selectBlock2 } = (0, import_data209.useDispatch)(import_block_editor79.store);
     return (0, import_compose68.useRefEffect)(
       (element) => {
         if (!isEnabled) {
@@ -87451,12 +87470,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/visual-editor/use-zoom-out-mode-exit.mjs
-  var import_data209 = __toESM(require_data(), 1);
+  var import_data210 = __toESM(require_data(), 1);
   var import_compose69 = __toESM(require_compose(), 1);
-  var import_block_editor78 = __toESM(require_block_editor(), 1);
+  var import_block_editor80 = __toESM(require_block_editor(), 1);
   function useZoomOutModeExit() {
-    const { getSettings: getSettings12, isZoomOut } = unlock((0, import_data209.useSelect)(import_block_editor78.store));
-    const { resetZoomLevel } = unlock((0, import_data209.useDispatch)(import_block_editor78.store));
+    const { getSettings: getSettings12, isZoomOut } = unlock((0, import_data210.useSelect)(import_block_editor80.store));
+    const { resetZoomLevel } = unlock((0, import_data210.useDispatch)(import_block_editor80.store));
     return (0, import_compose69.useRefEffect)(
       (node) => {
         function onDoubleClick(event) {
@@ -87482,13 +87501,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/visual-editor/use-padding-appender.mjs
-  var import_data210 = __toESM(require_data(), 1);
+  var import_data211 = __toESM(require_data(), 1);
   var import_compose70 = __toESM(require_compose(), 1);
-  var import_block_editor79 = __toESM(require_block_editor(), 1);
+  var import_block_editor81 = __toESM(require_block_editor(), 1);
   var import_blocks30 = __toESM(require_blocks(), 1);
   var CSS2 = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
   function usePaddingAppender(enabled) {
-    const registry = (0, import_data210.useRegistry)();
+    const registry = (0, import_data211.useRegistry)();
     const effect = (0, import_compose70.useRefEffect)(
       (node) => {
         function onMouseDown(event) {
@@ -87507,10 +87526,10 @@ If there's a particular need for this, please submit a feature request at https:
             return;
           }
           event.preventDefault();
-          const blockOrder = registry.select(import_block_editor79.store).getBlockOrder("");
+          const blockOrder = registry.select(import_block_editor81.store).getBlockOrder("");
           const lastBlockClientId = blockOrder[blockOrder.length - 1];
-          const lastBlock = registry.select(import_block_editor79.store).getBlock(lastBlockClientId);
-          const { selectBlock: selectBlock2, insertDefaultBlock: insertDefaultBlock2 } = registry.dispatch(import_block_editor79.store);
+          const lastBlock = registry.select(import_block_editor81.store).getBlock(lastBlockClientId);
+          const { selectBlock: selectBlock2, insertDefaultBlock: insertDefaultBlock2 } = registry.dispatch(import_block_editor81.store);
           if (lastBlock && (0, import_blocks30.isUnmodifiedDefaultBlock)(lastBlock)) {
             selectBlock2(lastBlockClientId);
           } else {
@@ -87529,15 +87548,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/visual-editor/use-edit-content-only-section-exit.mjs
-  var import_data211 = __toESM(require_data(), 1);
+  var import_data212 = __toESM(require_data(), 1);
   var import_compose71 = __toESM(require_compose(), 1);
-  var import_block_editor80 = __toESM(require_block_editor(), 1);
+  var import_block_editor82 = __toESM(require_block_editor(), 1);
   function useEditContentOnlySectionExit() {
     const { getEditedContentOnlySection } = unlock(
-      (0, import_data211.useSelect)(import_block_editor80.store)
+      (0, import_data212.useSelect)(import_block_editor82.store)
     );
     const { stopEditingContentOnlySection } = unlock(
-      (0, import_data211.useDispatch)(import_block_editor80.store)
+      (0, import_data212.useDispatch)(import_block_editor82.store)
     );
     return (0, import_compose71.useRefEffect)(
       (node) => {
@@ -87564,11 +87583,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
-  var import_data212 = __toESM(require_data(), 1);
+  var import_data213 = __toESM(require_data(), 1);
   var import_compose72 = __toESM(require_compose(), 1);
   var import_blocks31 = __toESM(require_blocks(), 1);
   var import_core_data116 = __toESM(require_core_data(), 1);
-  var import_block_editor81 = __toESM(require_block_editor(), 1);
+  var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_components254 = __toESM(require_components(), 1);
   var import_hooks59 = __toESM(require_hooks(), 1);
   var import_element285 = __toESM(require_element(), 1);
@@ -87632,14 +87651,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_jsx_runtime483 = __toESM(require_jsx_runtime(), 1);
-  var { BlockCanvasCover: BlockCanvasCover2 } = unlock(import_block_editor81.privateApis);
+  var { BlockCanvasCover: BlockCanvasCover2 } = unlock(import_block_editor83.privateApis);
   var { retrySyncConnection } = unlock(import_core_data116.privateApis);
   var INITIAL_DISCONNECTED_DEBOUNCE_MS = 2e4;
   function SyncConnectionErrorModal() {
     const [hasInitialized, setHasInitialized] = (0, import_element285.useState)(false);
     const [showModal, setShowModal] = (0, import_element285.useState)(false);
     const [isManualRetryAvailable, setIsManualRetryAvailable] = (0, import_element285.useState)(false);
-    const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data212.useSelect)(
+    const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data213.useSelect)(
       (selectFn) => {
         const { getSyncConnectionStatus, getPostType } = unlock(
           selectFn(import_core_data116.store)
@@ -87656,7 +87675,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { onManualRetry, secondsRemaining } = useRetryCountdown(connectionStatus);
     const copyButtonRef = (0, import_compose72.useCopyToClipboard)(() => {
-      const blocks = (0, import_data212.select)(import_block_editor81.store).getBlocks();
+      const blocks = (0, import_data213.select)(import_block_editor83.store).getBlocks();
       return (0, import_blocks31.serialize)(blocks);
     });
     (0, import_element285.useEffect)(() => {
@@ -87785,7 +87804,7 @@ If there's a particular need for this, please submit a feature request at https:
     useLayoutStyles,
     ExperimentalBlockCanvas: BlockCanvas,
     useFlashEditableBlocks
-  } = unlock(import_block_editor82.privateApis);
+  } = unlock(import_block_editor84.privateApis);
   function getPostContentAttributes(blocks) {
     for (let i3 = 0; i3 < blocks.length; i3++) {
       if (blocks[i3].name === "core/post-content") {
@@ -87830,7 +87849,7 @@ If there's a particular need for this, please submit a feature request at https:
       postType: postType2,
       isPreview,
       styles
-    } = (0, import_data213.useSelect)((select7) => {
+    } = (0, import_data214.useSelect)((select7) => {
       const {
         getCurrentPostId: getCurrentPostId2,
         getCurrentPostType: getCurrentPostType2,
@@ -87873,15 +87892,15 @@ If there's a particular need for this, please submit a feature request at https:
         styles: editorSettings2.styles
       };
     }, []);
-    const { isCleanNewPost: isCleanNewPost2 } = (0, import_data213.useSelect)(store);
+    const { isCleanNewPost: isCleanNewPost2 } = (0, import_data214.useSelect)(store);
     const {
       hasRootPaddingAwareAlignments,
       themeHasDisabledLayoutStyles,
       themeSupportsLayout,
       isZoomedOut
-    } = (0, import_data213.useSelect)((select7) => {
+    } = (0, import_data214.useSelect)((select7) => {
       const { getSettings: getSettings12, isZoomOut: _isZoomOut } = unlock(
-        select7(import_block_editor82.store)
+        select7(import_block_editor84.store)
       );
       const _settings = getSettings12();
       return {
@@ -87892,8 +87911,8 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const localRef = (0, import_element286.useRef)();
-    const deviceStyles = (0, import_block_editor82.__experimentalUseResizeCanvas)(deviceType2);
-    const [globalLayoutSettings] = (0, import_block_editor82.useSettings)("layout");
+    const deviceStyles = (0, import_block_editor84.__experimentalUseResizeCanvas)(deviceType2);
+    const [globalLayoutSettings] = (0, import_block_editor84.useSettings)("layout");
     const fallbackLayout = (0, import_element286.useMemo)(() => {
       if (renderingMode2 !== "post-only" || isDesignPostType) {
         return { type: "default" };
@@ -87960,7 +87979,7 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     const blockListLayout = postContentAttributes ? postContentLayout : fallbackLayout;
     const postEditorLayout = blockListLayout?.type === "default" && !hasPostContentAtRootLevel ? fallbackLayout : blockListLayout;
-    const observeTypingRef = (0, import_block_editor82.__unstableUseTypingObserver)();
+    const observeTypingRef = (0, import_block_editor84.__unstableUseTypingObserver)();
     const titleRef = (0, import_element286.useRef)();
     (0, import_element286.useEffect)(() => {
       if (!autoFocus || !isCleanNewPost2()) {
@@ -88003,7 +88022,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ];
     }, [styles, enableResizing, isNavigationPreview, paddingStyle]);
-    const typewriterRef = (0, import_block_editor82.__unstableUseTypewriter)();
+    const typewriterRef = (0, import_block_editor84.__unstableUseTypewriter)();
     contentRef = (0, import_compose73.useMergeRefs)([
       localRef,
       contentRef,
@@ -88096,13 +88115,13 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(
-                  import_block_editor82.RecursionProvider,
+                  import_block_editor84.RecursionProvider,
                   {
                     blockName: wrapperBlockName,
                     uniqueId: wrapperUniqueId,
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
-                        import_block_editor82.BlockList,
+                        import_block_editor84.BlockList,
                         {
                           className: clsx_default(
                             "is-" + deviceType2.toLowerCase() + "-preview",
@@ -88195,11 +88214,11 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-revisions-preview/diff-markers.mjs
   var import_element287 = __toESM(require_element(), 1);
   var import_compose74 = __toESM(require_compose(), 1);
-  var import_data214 = __toESM(require_data(), 1);
-  var import_block_editor83 = __toESM(require_block_editor(), 1);
+  var import_data215 = __toESM(require_data(), 1);
+  var import_block_editor85 = __toESM(require_block_editor(), 1);
   var import_i18n288 = __toESM(require_i18n(), 1);
   var import_jsx_runtime485 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElementRef } = unlock(import_block_editor83.privateApis);
+  var { useBlockElementRef } = unlock(import_block_editor85.privateApis);
   function collectDiffBlocks(blocks) {
     const result = [];
     for (const block of blocks) {
@@ -88275,8 +88294,8 @@ If there's a particular need for this, please submit a feature request at https:
   function useDiffMarkers() {
     const [isMounted, setIsMounted] = (0, import_element287.useState)(false);
     const subscribersRef = (0, import_element287.useRef)(/* @__PURE__ */ new Set());
-    const blocks = (0, import_data214.useSelect)(
-      (select7) => select7(import_block_editor83.store).getBlocks(),
+    const blocks = (0, import_data215.useSelect)(
+      (select7) => select7(import_block_editor85.store).getBlocks(),
       []
     );
     const diffBlocks = (0, import_element287.useMemo)(() => collectDiffBlocks(blocks), [blocks]);
@@ -88320,7 +88339,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-canvas.mjs
   var import_jsx_runtime486 = __toESM(require_jsx_runtime(), 1);
-  var { usePrivateStyleOverride } = unlock(import_block_editor84.privateApis);
+  var { usePrivateStyleOverride } = unlock(import_block_editor86.privateApis);
   var REVISION_REMOVED_FILTER_SVG = `
 <svg
 	xmlns="http://www.w3.org/2000/svg"
@@ -88418,7 +88437,7 @@ If there's a particular need for this, please submit a feature request at https:
         unregisterDiffFormatTypes();
       };
     }, []);
-    const { revision, showDiff } = (0, import_data215.useSelect)((select7) => {
+    const { revision, showDiff } = (0, import_data216.useSelect)((select7) => {
       const { getCurrentRevision: getCurrentRevision2, isShowingRevisionDiff: isShowingRevisionDiff2 } = unlock(
         select7(store)
       );
@@ -88434,7 +88453,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collaborators-presence/use-collaborator-notifications.mjs
-  var import_data216 = __toESM(require_data(), 1);
+  var import_data217 = __toESM(require_data(), 1);
   var import_element289 = __toESM(require_element(), 1);
   var import_i18n289 = __toESM(require_i18n(), 1);
   var import_notices31 = __toESM(require_notices(), 1);
@@ -88457,7 +88476,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_i18n289.sprintf)((0, import_i18n289.__)("Draft saved by %s."), name2);
   }
   function useCollaboratorNotifications(postId2, postType2) {
-    const { postStatus, isCollaborationEnabled, showNotifications } = (0, import_data216.useSelect)(
+    const { postStatus, isCollaborationEnabled, showNotifications } = (0, import_data217.useSelect)(
       (select7) => {
         const {
           getCurrentPostAttribute: getCurrentPostAttribute2,
@@ -88474,7 +88493,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const { createNotice } = (0, import_data216.useDispatch)(import_notices31.store);
+    const { createNotice } = (0, import_data217.useDispatch)(import_notices31.store);
     const shouldSubscribe = isCollaborationEnabled && showNotifications;
     const effectivePostId = shouldSubscribe ? postId2 : null;
     const effectivePostType = shouldSubscribe ? postType2 : null;
@@ -88553,7 +88572,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/save-publish-panels/index.mjs
-  var import_data217 = __toESM(require_data(), 1);
+  var import_data218 = __toESM(require_data(), 1);
   var import_components256 = __toESM(require_components(), 1);
   var import_i18n290 = __toESM(require_i18n(), 1);
   var import_element290 = __toESM(require_element(), 1);
@@ -88565,13 +88584,13 @@ If there's a particular need for this, please submit a feature request at https:
     isEntitiesSavedStatesOpen,
     forceIsDirtyPublishPanel
   }) {
-    const { closePublishSidebar: closePublishSidebar2, togglePublishSidebar: togglePublishSidebar2 } = (0, import_data217.useDispatch)(store);
+    const { closePublishSidebar: closePublishSidebar2, togglePublishSidebar: togglePublishSidebar2 } = (0, import_data218.useDispatch)(store);
     const {
       publishSidebarOpened,
       isPublishable,
       isDirty,
       hasOtherEntitiesChanges
-    } = (0, import_data217.useSelect)((select7) => {
+    } = (0, import_data218.useSelect)((select7) => {
       const {
         isPublishSidebarOpened: isPublishSidebarOpened2,
         isEditedPostPublishable: isEditedPostPublishable2,
@@ -88643,14 +88662,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/text-editor/index.mjs
   var import_components257 = __toESM(require_components(), 1);
-  var import_data218 = __toESM(require_data(), 1);
+  var import_data219 = __toESM(require_data(), 1);
   var import_i18n291 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
   var import_element291 = __toESM(require_element(), 1);
   var import_jsx_runtime488 = __toESM(require_jsx_runtime(), 1);
   function TextEditor({ autoFocus = false }) {
-    const { switchEditorMode: switchEditorMode2 } = (0, import_data218.useDispatch)(store);
-    const { shortcut, isRichEditingEnabled } = (0, import_data218.useSelect)((select7) => {
+    const { switchEditorMode: switchEditorMode2 } = (0, import_data219.useDispatch)(store);
+    const { shortcut, isRichEditingEnabled } = (0, import_data219.useSelect)((select7) => {
       const { getEditorSettings: getEditorSettings2 } = select7(store);
       const { getShortcutRepresentation } = select7(import_keyboard_shortcuts10.store);
       return {
@@ -88701,8 +88720,8 @@ If there's a particular need for this, please submit a feature request at https:
     footer: (0, import_i18n292.__)("Editor footer")
   };
   function Notices() {
-    const isValidTemplate2 = (0, import_data219.useSelect)((select7) => {
-      return select7(import_block_editor85.store).isValidTemplate();
+    const isValidTemplate2 = (0, import_data220.useSelect)((select7) => {
+      return select7(import_block_editor87.store).isValidTemplate();
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
       import_notices32.InlineNotices,
@@ -88740,7 +88759,7 @@ If there's a particular need for this, please submit a feature request at https:
       showStylebook: showStylebook2,
       isRevisionsMode: isRevisionsMode2,
       showDiff
-    } = (0, import_data219.useSelect)((select7) => {
+    } = (0, import_data220.useSelect)((select7) => {
       const { get } = select7(import_preferences24.store);
       const {
         getEditorSettings: getEditorSettings2,
@@ -88778,7 +88797,7 @@ If there's a particular need for this, please submit a feature request at https:
         showDiff: isShowingRevisionDiff2()
       };
     }, []);
-    const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data219.useDispatch)(store));
+    const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data220.useDispatch)(store));
     useCollaboratorNotifications(postId2, postType2);
     const isLargeViewport = (0, import_compose75.useViewportMatch)("medium");
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n292.__)("Document Overview") : (0, import_i18n292.__)("Block Library");
@@ -88846,7 +88865,7 @@ If there's a particular need for this, please submit a feature request at https:
                 autoFocus
               }
             ),
-            !isPreviewMode && !isLargeViewport && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_block_editor85.BlockToolbar, { hideDragHandle: true }),
+            !isPreviewMode && !isLargeViewport && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_block_editor87.BlockToolbar, { hideDragHandle: true }),
             (isPreviewMode || mode === "visual") && /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
               visual_editor_default,
               {
@@ -88867,7 +88886,7 @@ If there's a particular need for this, please submit a feature request at https:
           ] })
         ] }),
         footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
-          import_block_editor85.BlockBreadcrumb,
+          import_block_editor87.BlockBreadcrumb,
           {
             rootLabelText: postTypeLabel ? (0, import_html_entities28.decodeEntities)(postTypeLabel) : void 0
           }
@@ -88886,20 +88905,20 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/sidebar/index.mjs
-  var import_block_editor97 = __toESM(require_block_editor(), 1);
-  var import_data252 = __toESM(require_data(), 1);
+  var import_block_editor99 = __toESM(require_block_editor(), 1);
+  var import_data253 = __toESM(require_data(), 1);
   var import_element312 = __toESM(require_element(), 1);
   var import_i18n316 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_components281 = __toESM(require_components(), 1);
 
   // packages/editor/build-module/components/pattern-overrides-panel/index.mjs
-  var import_data220 = __toESM(require_data(), 1);
+  var import_data221 = __toESM(require_data(), 1);
   var import_patterns9 = __toESM(require_patterns(), 1);
   var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
   var { OverridesPanel } = unlock(import_patterns9.privateApis);
   function PatternOverridesPanel() {
-    const supportsPatternOverridesPanel = (0, import_data220.useSelect)(
+    const supportsPatternOverridesPanel = (0, import_data221.useSelect)(
       (select7) => select7(store).getCurrentPostType() === "wp_block",
       []
     );
@@ -88911,26 +88930,26 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/sidebar/post-summary.mjs
   var import_components270 = __toESM(require_components(), 1);
-  var import_data236 = __toESM(require_data(), 1);
+  var import_data237 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/sidebar/dataform-post-summary.mjs
   var import_i18n297 = __toESM(require_i18n(), 1);
-  var import_data229 = __toESM(require_data(), 1);
+  var import_data230 = __toESM(require_data(), 1);
   var import_core_data125 = __toESM(require_core_data(), 1);
   var import_components263 = __toESM(require_components(), 1);
   var import_element299 = __toESM(require_element(), 1);
 
   // packages/views/build-module/use-view.mjs
   var import_element293 = __toESM(require_element(), 1);
-  var import_data221 = __toESM(require_data(), 1);
+  var import_data222 = __toESM(require_data(), 1);
   var import_preferences25 = __toESM(require_preferences(), 1);
 
   // packages/views/build-module/load-view.mjs
-  var import_data222 = __toESM(require_data(), 1);
+  var import_data223 = __toESM(require_data(), 1);
   var import_preferences26 = __toESM(require_preferences(), 1);
 
   // packages/views/build-module/use-view-config.mjs
-  var import_data223 = __toESM(require_data(), 1);
+  var import_data224 = __toESM(require_data(), 1);
   var import_core_data119 = __toESM(require_core_data(), 1);
 
   // packages/views/build-module/lock-unlock.mjs
@@ -88945,7 +88964,7 @@ If there's a particular need for this, please submit a feature request at https:
     kind,
     name: name2
   }) {
-    return (0, import_data223.useSelect)(
+    return (0, import_data224.useSelect)(
       (select7) => {
         return unlock7(select7(import_core_data119.store)).getViewConfig(kind, name2);
       },
@@ -88956,20 +88975,20 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_components261 = __toESM(require_components(), 1);
   var import_core_data124 = __toESM(require_core_data(), 1);
-  var import_data228 = __toESM(require_data(), 1);
+  var import_data229 = __toESM(require_data(), 1);
   var import_element298 = __toESM(require_element(), 1);
   var import_i18n296 = __toESM(require_i18n(), 1);
   var import_dom33 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/post-actions/index.mjs
-  var import_data227 = __toESM(require_data(), 1);
+  var import_data228 = __toESM(require_data(), 1);
   var import_element297 = __toESM(require_element(), 1);
   var import_i18n295 = __toESM(require_i18n(), 1);
   var import_components260 = __toESM(require_components(), 1);
   var import_core_data123 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/actions.mjs
-  var import_data226 = __toESM(require_data(), 1);
+  var import_data227 = __toESM(require_data(), 1);
   var import_element296 = __toESM(require_element(), 1);
   var import_core_data122 = __toESM(require_core_data(), 1);
 
@@ -88977,7 +88996,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n293 = __toESM(require_i18n(), 1);
   var import_element294 = __toESM(require_element(), 1);
   var import_components258 = __toESM(require_components(), 1);
-  var import_data224 = __toESM(require_data(), 1);
+  var import_data225 = __toESM(require_data(), 1);
   var import_core_data120 = __toESM(require_core_data(), 1);
   var import_notices33 = __toESM(require_notices(), 1);
 
@@ -89001,7 +89020,7 @@ If there's a particular need for this, please submit a feature request at https:
   var SetAsHomepageModal = ({ items, closeModal: closeModal2 }) => {
     const [item] = items;
     const pageTitle = getItemTitle2(item);
-    const { showOnFront, currentHomePage, isSaving } = (0, import_data224.useSelect)(
+    const { showOnFront, currentHomePage, isSaving } = (0, import_data225.useSelect)(
       (select7) => {
         const { getEntityRecord, isSavingEntityRecord } = select7(import_core_data120.store);
         const siteSettings = getEntityRecord("root", "site");
@@ -89017,8 +89036,8 @@ If there's a particular need for this, please submit a feature request at https:
         };
       }
     );
-    const { saveEntityRecord } = (0, import_data224.useDispatch)(import_core_data120.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data224.useDispatch)(import_notices33.store);
+    const { saveEntityRecord } = (0, import_data225.useDispatch)(import_core_data120.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data225.useDispatch)(import_notices33.store);
     async function onSetPageAsHomepage(event) {
       event.preventDefault();
       try {
@@ -89086,7 +89105,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] }) });
   };
   var useSetAsHomepageAction = () => {
-    const { pageOnFront, pageForPosts } = (0, import_data224.useSelect)((select7) => {
+    const { pageOnFront, pageForPosts } = (0, import_data225.useSelect)((select7) => {
       const { getEntityRecord, canUser } = select7(import_core_data120.store);
       const siteSettings = canUser("read", {
         kind: "root",
@@ -89127,14 +89146,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n294 = __toESM(require_i18n(), 1);
   var import_element295 = __toESM(require_element(), 1);
   var import_components259 = __toESM(require_components(), 1);
-  var import_data225 = __toESM(require_data(), 1);
+  var import_data226 = __toESM(require_data(), 1);
   var import_core_data121 = __toESM(require_core_data(), 1);
   var import_notices34 = __toESM(require_notices(), 1);
   var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
   var SetAsPostsPageModal = ({ items, closeModal: closeModal2 }) => {
     const [item] = items;
     const pageTitle = getItemTitle2(item);
-    const { currentPostsPage, isPageForPostsSet, isSaving } = (0, import_data225.useSelect)(
+    const { currentPostsPage, isPageForPostsSet, isSaving } = (0, import_data226.useSelect)(
       (select7) => {
         const { getEntityRecord, isSavingEntityRecord } = select7(import_core_data121.store);
         const siteSettings = getEntityRecord("root", "site");
@@ -89150,8 +89169,8 @@ If there's a particular need for this, please submit a feature request at https:
         };
       }
     );
-    const { saveEntityRecord } = (0, import_data225.useDispatch)(import_core_data121.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data225.useDispatch)(import_notices34.store);
+    const { saveEntityRecord } = (0, import_data226.useDispatch)(import_core_data121.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data226.useDispatch)(import_notices34.store);
     async function onSetPageAsPostsPage(event) {
       event.preventDefault();
       try {
@@ -89212,7 +89231,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] }) });
   };
   var useSetAsPostsPageAction = () => {
-    const { pageOnFront, pageForPosts } = (0, import_data225.useSelect)((select7) => {
+    const { pageOnFront, pageForPosts } = (0, import_data226.useSelect)((select7) => {
       const { getEntityRecord, canUser } = select7(import_core_data121.store);
       const siteSettings = canUser("read", {
         kind: "root",
@@ -89252,7 +89271,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-actions/actions.mjs
   var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
   function usePostActions({ postType: postType2, onActionPerformed, context }) {
-    const { defaultActions } = (0, import_data226.useSelect)(
+    const { defaultActions } = (0, import_data227.useSelect)(
       (select7) => {
         const { getEntityActions: getEntityActions3 } = unlock(select7(store));
         return {
@@ -89261,7 +89280,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [postType2]
     );
-    const shouldShowHomepageActions = (0, import_data226.useSelect)(
+    const shouldShowHomepageActions = (0, import_data227.useSelect)(
       (select7) => {
         if (postType2 !== "page") {
           return false;
@@ -89294,7 +89313,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const setAsHomepageAction = useSetAsHomepageAction();
     const setAsPostsPageAction = useSetAsPostsPageAction();
-    const { registerPostTypeSchema: registerPostTypeSchema2 } = unlock((0, import_data226.useDispatch)(store));
+    const { registerPostTypeSchema: registerPostTypeSchema2 } = unlock((0, import_data227.useDispatch)(store));
     (0, import_element296.useEffect)(() => {
       registerPostTypeSchema2(postType2);
     }, [registerPostTypeSchema2, postType2]);
@@ -89375,7 +89394,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { Menu: Menu10, kebabCase: kebabCase5 } = unlock(import_components260.privateApis);
   function PostActions({ postType: postType2, postId: postId2, onActionPerformed }) {
     const [activeModalAction, setActiveModalAction] = (0, import_element297.useState)(null);
-    const { item, permissions } = (0, import_data227.useSelect)(
+    const { item, permissions } = (0, import_data228.useSelect)(
       (select7) => {
         const { getEditedEntityRecord, getEntityRecordPermissions } = unlock(select7(import_core_data123.store));
         return {
@@ -89461,7 +89480,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ActionsDropdownMenuGroup({ actions: actions2, items, setActiveModalAction }) {
-    const registry = (0, import_data227.useRegistry)();
+    const registry = (0, import_data228.useRegistry)();
     return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(Menu10.Group, { children: actions2.map((action) => {
       return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
         DropdownMenuItemTrigger,
@@ -89495,7 +89514,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => Array.isArray(postId2) ? postId2 : [postId2],
       [postId2]
     );
-    const { postTitle, icon, labels } = (0, import_data228.useSelect)(
+    const { postTitle, icon, labels } = (0, import_data229.useSelect)(
       (select7) => {
         const { getEditedEntityRecord, getCurrentTheme, getPostType } = select7(import_core_data124.store);
         const {
@@ -89623,7 +89642,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_FORM = { layout: { type: "panel" }, fields: [] };
   function DataFormPostSummary({ onActionPerformed }) {
-    const { postType: postType2, postId: postId2 } = (0, import_data229.useSelect)((select7) => {
+    const { postType: postType2, postId: postId2 } = (0, import_data230.useSelect)((select7) => {
       const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select7(store);
       return {
         postType: getCurrentPostType2(),
@@ -89635,7 +89654,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: postType2
     });
     const form = formConfig ?? EMPTY_FORM;
-    const record = (0, import_data229.useSelect)(
+    const record = (0, import_data230.useSelect)(
       (select7) => {
         if (!postType2 || !postId2) {
           return null;
@@ -89649,7 +89668,7 @@ If there's a particular need for this, please submit a feature request at https:
       [postType2, postId2]
     );
     const templatePanelMode = usePostTemplatePanelMode();
-    const availableTemplates = (0, import_data229.useSelect)((select7) => {
+    const availableTemplates = (0, import_data230.useSelect)((select7) => {
       if (select7(import_core_data125.store).getCurrentTheme()?.is_block_theme) {
         return null;
       }
@@ -89664,7 +89683,7 @@ If there's a particular need for this, please submit a feature request at https:
         available_templates: availableTemplates
       };
     }, [record, availableTemplates]);
-    const { editEntityRecord } = (0, import_data229.useDispatch)(import_core_data125.store);
+    const { editEntityRecord } = (0, import_data230.useDispatch)(import_core_data125.store);
     const _fields = post_fields_default({ postType: postType2 });
     const fields3 = (0, import_element299.useMemo)(
       () => _fields?.map((field) => {
@@ -89726,7 +89745,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-content-information/index.mjs
   var import_components264 = __toESM(require_components(), 1);
-  var import_data230 = __toESM(require_data(), 1);
+  var import_data231 = __toESM(require_data(), 1);
   var import_i18n298 = __toESM(require_i18n(), 1);
   var import_wordcount5 = __toESM(require_wordcount(), 1);
   var import_element300 = __toESM(require_element(), 1);
@@ -89734,7 +89753,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
   var AVERAGE_READING_RATE3 = 189;
   function PostContentInformation() {
-    const postContent = (0, import_data230.useSelect)((select7) => {
+    const postContent = (0, import_data231.useSelect)((select7) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select7(store);
       const { canUser } = select7(import_core_data126.store);
       const { getEntityRecord } = select7(import_core_data126.store);
@@ -89783,12 +89802,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-format/panel.mjs
   var import_components265 = __toESM(require_components(), 1);
   var import_i18n299 = __toESM(require_i18n(), 1);
-  var import_data231 = __toESM(require_data(), 1);
+  var import_data232 = __toESM(require_data(), 1);
   var import_element301 = __toESM(require_element(), 1);
-  var import_block_editor86 = __toESM(require_block_editor(), 1);
+  var import_block_editor88 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
   function PostFormat2() {
-    const { postFormat } = (0, import_data231.useSelect)((select7) => {
+    const { postFormat } = (0, import_data232.useSelect)((select7) => {
       const { getEditedPostAttribute: getEditedPostAttribute2 } = select7(store);
       const _postFormat = getEditedPostAttribute2("format");
       return {
@@ -89833,7 +89852,7 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)("div", { className: "editor-post-format__dialog-content", children: [
           /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
-            import_block_editor86.__experimentalInspectorPopoverHeader,
+            import_block_editor88.__experimentalInspectorPopoverHeader,
             {
               title: (0, import_i18n299.__)("Format"),
               onClose
@@ -89848,12 +89867,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-last-edited-panel/index.mjs
   var import_components266 = __toESM(require_components(), 1);
-  var import_data232 = __toESM(require_data(), 1);
+  var import_data233 = __toESM(require_data(), 1);
   var import_i18n300 = __toESM(require_i18n(), 1);
   var import_date21 = __toESM(require_date(), 1);
   var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
   function PostLastEditedPanel() {
-    const modified = (0, import_data232.useSelect)(
+    const modified = (0, import_data233.useSelect)(
       (select7) => select7(store).getEditedPostAttribute("modified"),
       []
     );
@@ -89870,17 +89889,17 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/blog-title/index.mjs
   var import_i18n301 = __toESM(require_i18n(), 1);
   var import_compose76 = __toESM(require_compose(), 1);
-  var import_data233 = __toESM(require_data(), 1);
+  var import_data234 = __toESM(require_data(), 1);
   var import_core_data127 = __toESM(require_core_data(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
   var import_components267 = __toESM(require_components(), 1);
   var import_element302 = __toESM(require_element(), 1);
-  var import_block_editor87 = __toESM(require_block_editor(), 1);
+  var import_block_editor89 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT5 = {};
   function BlogTitle() {
-    const { editEntityRecord } = (0, import_data233.useDispatch)(import_core_data127.store);
-    const { postsPageTitle, postsPageId, isTemplate: isTemplate2, postSlug } = (0, import_data233.useSelect)(
+    const { editEntityRecord } = (0, import_data234.useDispatch)(import_core_data127.store);
+    const { postsPageTitle, postsPageId, isTemplate: isTemplate2, postSlug } = (0, import_data234.useSelect)(
       (select7) => {
         const { getEntityRecord, getEditedEntityRecord, canUser } = select7(import_core_data127.store);
         const siteSettings = canUser("read", {
@@ -89946,7 +89965,7 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime501.jsxs)(import_jsx_runtime501.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
-            import_block_editor87.__experimentalInspectorPopoverHeader,
+            import_block_editor89.__experimentalInspectorPopoverHeader,
             {
               title: (0, import_i18n301.__)("Blog title"),
               onClose
@@ -89973,15 +89992,15 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/posts-per-page/index.mjs
   var import_i18n302 = __toESM(require_i18n(), 1);
-  var import_data234 = __toESM(require_data(), 1);
+  var import_data235 = __toESM(require_data(), 1);
   var import_core_data128 = __toESM(require_core_data(), 1);
   var import_components268 = __toESM(require_components(), 1);
   var import_element303 = __toESM(require_element(), 1);
-  var import_block_editor88 = __toESM(require_block_editor(), 1);
+  var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
   function PostsPerPage() {
-    const { editEntityRecord } = (0, import_data234.useDispatch)(import_core_data128.store);
-    const { postsPerPage, isTemplate: isTemplate2, postSlug } = (0, import_data234.useSelect)((select7) => {
+    const { editEntityRecord } = (0, import_data235.useDispatch)(import_core_data128.store);
+    const { postsPerPage, isTemplate: isTemplate2, postSlug } = (0, import_data235.useSelect)((select7) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select7(store);
       const { getEditedEntityRecord, canUser } = select7(import_core_data128.store);
       const siteSettings = canUser("read", {
@@ -90033,7 +90052,7 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime502.jsxs)(import_jsx_runtime502.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(
-            import_block_editor88.__experimentalInspectorPopoverHeader,
+            import_block_editor90.__experimentalInspectorPopoverHeader,
             {
               title: (0, import_i18n302.__)("Posts per page"),
               onClose
@@ -90063,11 +90082,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/site-discussion/index.mjs
   var import_i18n303 = __toESM(require_i18n(), 1);
-  var import_data235 = __toESM(require_data(), 1);
+  var import_data236 = __toESM(require_data(), 1);
   var import_core_data129 = __toESM(require_core_data(), 1);
   var import_components269 = __toESM(require_components(), 1);
   var import_element304 = __toESM(require_element(), 1);
-  var import_block_editor89 = __toESM(require_block_editor(), 1);
+  var import_block_editor91 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
   var COMMENT_OPTIONS2 = [
     {
@@ -90085,8 +90104,8 @@ If there's a particular need for this, please submit a feature request at https:
     }
   ];
   function SiteDiscussion() {
-    const { editEntityRecord } = (0, import_data235.useDispatch)(import_core_data129.store);
-    const { allowCommentsOnNewPosts, isTemplate: isTemplate2, postSlug } = (0, import_data235.useSelect)(
+    const { editEntityRecord } = (0, import_data236.useDispatch)(import_core_data129.store);
+    const { allowCommentsOnNewPosts, isTemplate: isTemplate2, postSlug } = (0, import_data236.useSelect)(
       (select7) => {
         const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select7(store);
         const { getEditedEntityRecord, canUser } = select7(import_core_data129.store);
@@ -90141,7 +90160,7 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_jsx_runtime503.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-            import_block_editor89.__experimentalInspectorPopoverHeader,
+            import_block_editor91.__experimentalInspectorPopoverHeader,
             {
               title: (0, import_i18n303.__)("Discussion"),
               onClose
@@ -90172,7 +90191,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
   var PANEL_NAME5 = "post-status";
   function PostSummary({ onActionPerformed }) {
-    const postType2 = (0, import_data236.useSelect)(
+    const postType2 = (0, import_data237.useSelect)(
       (select7) => select7(store).getCurrentPostType(),
       []
     );
@@ -90182,7 +90201,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(ClassicPostSummary, { onActionPerformed });
   }
   function ClassicPostSummary({ onActionPerformed }) {
-    const { isRemovedPostStatusPanel, postType: postType2, postId: postId2 } = (0, import_data236.useSelect)(
+    const { isRemovedPostStatusPanel, postType: postType2, postId: postId2 } = (0, import_data237.useSelect)(
       (select7) => {
         const {
           isEditorPanelRemoved: isEditorPanelRemoved2,
@@ -90240,19 +90259,19 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/sidebar/post-revision-summary.mjs
-  var import_data240 = __toESM(require_data(), 1);
+  var import_data241 = __toESM(require_data(), 1);
   var import_components273 = __toESM(require_components(), 1);
   var import_i18n307 = __toESM(require_i18n(), 1);
   var import_url24 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/revision-author-panel/index.mjs
-  var import_data237 = __toESM(require_data(), 1);
+  var import_data238 = __toESM(require_data(), 1);
   var import_core_data130 = __toESM(require_core_data(), 1);
   var import_html_entities31 = __toESM(require_html_entities(), 1);
   var import_i18n304 = __toESM(require_i18n(), 1);
   var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
   function RevisionAuthorPanel() {
-    const authorName = (0, import_data237.useSelect)((select7) => {
+    const authorName = (0, import_data238.useSelect)((select7) => {
       const { getCurrentRevision: getCurrentRevision2 } = unlock(select7(store));
       const revision = getCurrentRevision2();
       if (!revision?.author) {
@@ -90269,12 +90288,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/revision-created-panel/index.mjs
   var import_components271 = __toESM(require_components(), 1);
-  var import_data238 = __toESM(require_data(), 1);
+  var import_data239 = __toESM(require_data(), 1);
   var import_i18n305 = __toESM(require_i18n(), 1);
   var import_date22 = __toESM(require_date(), 1);
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
   function RevisionCreatedPanel() {
-    const date = (0, import_data238.useSelect)((select7) => {
+    const date = (0, import_data239.useSelect)((select7) => {
       const { getCurrentRevision: getCurrentRevision2 } = unlock(select7(store));
       return getCurrentRevision2()?.date;
     }, []);
@@ -90290,7 +90309,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/revision-fields-diff/index.mjs
   var import_word2 = __toESM(require_word(), 1);
-  var import_data239 = __toESM(require_data(), 1);
+  var import_data240 = __toESM(require_data(), 1);
   var import_element305 = __toESM(require_element(), 1);
   var import_i18n306 = __toESM(require_i18n(), 1);
 
@@ -90339,7 +90358,7 @@ If there's a particular need for this, please submit a feature request at https:
     return String(value);
   }
   function RevisionFieldsDiffPanel() {
-    const { revision, previousRevision } = (0, import_data239.useSelect)((select7) => {
+    const { revision, previousRevision } = (0, import_data240.useSelect)((select7) => {
       const { getCurrentRevision: getCurrentRevision2, getPreviousRevision: getPreviousRevision2 } = unlock(
         select7(store)
       );
@@ -90385,7 +90404,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/sidebar/post-revision-summary.mjs
   var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
   function PostRevisionSummary() {
-    const { revisionId: revisionId2, postId: postId2, postContent } = (0, import_data240.useSelect)((select7) => {
+    const { revisionId: revisionId2, postId: postId2, postContent } = (0, import_data241.useSelect)((select7) => {
       const { getCurrentRevisionId: getCurrentRevisionId2, getCurrentRevision: getCurrentRevision2, getCurrentPostId: getCurrentPostId2 } = unlock(select7(store));
       const _revisionId = getCurrentRevisionId2();
       return {
@@ -90420,15 +90439,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-transform-panel/index.mjs
-  var import_data242 = __toESM(require_data(), 1);
+  var import_data243 = __toESM(require_data(), 1);
   var import_core_data132 = __toESM(require_core_data(), 1);
   var import_components274 = __toESM(require_components(), 1);
   var import_i18n308 = __toESM(require_i18n(), 1);
-  var import_block_editor90 = __toESM(require_block_editor(), 1);
+  var import_block_editor92 = __toESM(require_block_editor(), 1);
   var import_blocks34 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/components/post-transform-panel/hooks.mjs
-  var import_data241 = __toESM(require_data(), 1);
+  var import_data242 = __toESM(require_data(), 1);
   var import_element306 = __toESM(require_element(), 1);
   var import_core_data131 = __toESM(require_core_data(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
@@ -90477,7 +90496,7 @@ If there's a particular need for this, please submit a feature request at https:
     }));
   }
   function useAvailablePatterns({ area, name: name2, slug }) {
-    const { blockPatterns, restBlockPatterns, currentThemeStylesheet } = (0, import_data241.useSelect)((select7) => {
+    const { blockPatterns, restBlockPatterns, currentThemeStylesheet } = (0, import_data242.useSelect)((select7) => {
       const { getEditorSettings: getEditorSettings2 } = select7(store);
       const settings = getEditorSettings2();
       return {
@@ -90514,7 +90533,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-      import_block_editor90.__experimentalBlockPatternsList,
+      import_block_editor92.__experimentalBlockPatternsList,
       {
         label: (0, import_i18n308.__)("Templates"),
         blockPatterns: availableTemplates,
@@ -90524,7 +90543,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function PostTransform() {
-    const { area, name: name2, slug, postType: postType2, postId: postId2 } = (0, import_data242.useSelect)((select7) => {
+    const { area, name: name2, slug, postType: postType2, postId: postId2 } = (0, import_data243.useSelect)((select7) => {
       const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select7(store);
       const { getEditedEntityRecord } = select7(import_core_data132.store);
       const type = getCurrentPostType2();
@@ -90538,7 +90557,7 @@ If there's a particular need for this, please submit a feature request at https:
         postId: id
       };
     }, []);
-    const { editEntityRecord } = (0, import_data242.useDispatch)(import_core_data132.store);
+    const { editEntityRecord } = (0, import_data243.useDispatch)(import_core_data132.store);
     const availablePatterns = useAvailablePatterns({ area, name: name2, slug });
     const onTemplateSelect = async (selectedTemplate) => {
       await editEntityRecord("postType", postType2, postId2, {
@@ -90565,7 +90584,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function PostTransformPanel() {
-    const { postType: postType2 } = (0, import_data242.useSelect)((select7) => {
+    const { postType: postType2 } = (0, import_data243.useSelect)((select7) => {
       const { getCurrentPostType: getCurrentPostType2 } = select7(store);
       return {
         postType: getCurrentPostType2()
@@ -90580,13 +90599,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/sidebar/header.mjs
   var import_components275 = __toESM(require_components(), 1);
   var import_i18n309 = __toESM(require_i18n(), 1);
-  var import_data243 = __toESM(require_data(), 1);
+  var import_data244 = __toESM(require_data(), 1);
   var import_element307 = __toESM(require_element(), 1);
   var import_html_entities32 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime511 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs5 } = unlock(import_components275.privateApis);
   var SidebarHeader = (_, ref) => {
-    const { postTypeLabel, isRevisionsMode: isRevisionsMode2 } = (0, import_data243.useSelect)((select7) => {
+    const { postTypeLabel, isRevisionsMode: isRevisionsMode2 } = (0, import_data244.useSelect)((select7) => {
       const { getPostTypeLabel: getPostTypeLabel2 } = select7(store);
       const { isRevisionsMode: _isRevisionsMode } = unlock(
         select7(store)
@@ -90626,12 +90645,12 @@ If there's a particular need for this, please submit a feature request at https:
   var header_default3 = (0, import_element307.forwardRef)(SidebarHeader);
 
   // packages/editor/build-module/components/template-actions-panel/index.mjs
-  var import_data246 = __toESM(require_data(), 1);
+  var import_data247 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/template-actions-panel/block-theme-content.mjs
-  var import_data244 = __toESM(require_data(), 1);
+  var import_data245 = __toESM(require_data(), 1);
   var import_core_data133 = __toESM(require_core_data(), 1);
-  var import_block_editor91 = __toESM(require_block_editor(), 1);
+  var import_block_editor93 = __toESM(require_block_editor(), 1);
   var import_components276 = __toESM(require_components(), 1);
   var import_element308 = __toESM(require_element(), 1);
   var import_i18n310 = __toESM(require_i18n(), 1);
@@ -90640,7 +90659,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_preferences27 = __toESM(require_preferences(), 1);
   var import_jsx_runtime512 = __toESM(require_jsx_runtime(), 1);
   function TemplateActionsPanelContent() {
-    const templateId2 = (0, import_data244.useSelect)(
+    const templateId2 = (0, import_data245.useSelect)(
       (select7) => select7(store).getCurrentTemplateId(),
       []
     );
@@ -90653,7 +90672,7 @@ If there's a particular need for this, please submit a feature request at https:
       canCreateTemplate,
       hasGoBack,
       getEditorSettings: getEditorSettings2
-    } = (0, import_data244.useSelect)((select7) => {
+    } = (0, import_data245.useSelect)((select7) => {
       const { getEditorSettings: _getEditorSettings } = select7(store);
       const editorSettings2 = _getEditorSettings();
       return {
@@ -90668,8 +90687,8 @@ If there's a particular need for this, please submit a feature request at https:
         getEditorSettings: _getEditorSettings
       };
     }, []);
-    const { get: getPreference } = (0, import_data244.useSelect)(import_preferences27.store);
-    const { createSuccessNotice } = (0, import_data244.useDispatch)(import_notices35.store);
+    const { get: getPreference } = (0, import_data245.useSelect)(import_preferences27.store);
+    const { createSuccessNotice } = (0, import_data245.useDispatch)(import_notices35.store);
     const { editedRecord: template2, hasResolved } = (0, import_core_data133.useEntityRecord)(
       "postType",
       "wp_template",
@@ -90698,7 +90717,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     const templateName = (0, import_html_entities33.decodeEntities)(template2.title);
-    const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_block_editor91.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_block_editor91.BlockPreview, { blocks }) });
+    const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_block_editor93.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_block_editor93.BlockPreview, { blocks }) });
     const renderPreview = () => {
       if (!previewContent) {
         return null;
@@ -90787,9 +90806,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/template-actions-panel/classic-theme-content.mjs
-  var import_data245 = __toESM(require_data(), 1);
+  var import_data246 = __toESM(require_data(), 1);
   var import_core_data134 = __toESM(require_core_data(), 1);
-  var import_block_editor92 = __toESM(require_block_editor(), 1);
+  var import_block_editor94 = __toESM(require_block_editor(), 1);
   var import_components277 = __toESM(require_components(), 1);
   var import_element309 = __toESM(require_element(), 1);
   var import_i18n311 = __toESM(require_i18n(), 1);
@@ -90798,7 +90817,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_preferences28 = __toESM(require_preferences(), 1);
   var import_jsx_runtime513 = __toESM(require_jsx_runtime(), 1);
   function ClassicThemeContent() {
-    const templateId2 = (0, import_data245.useSelect)(
+    const templateId2 = (0, import_data246.useSelect)(
       (select7) => select7(store).getCurrentTemplateId(),
       []
     );
@@ -90808,7 +90827,7 @@ If there's a particular need for this, please submit a feature request at https:
       canCreateTemplate,
       hasGoBack,
       getEditorSettings: getEditorSettings2
-    } = (0, import_data245.useSelect)((select7) => {
+    } = (0, import_data246.useSelect)((select7) => {
       const { getEditorSettings: _getEditorSettings } = select7(store);
       const editorSettings2 = _getEditorSettings();
       return {
@@ -90823,8 +90842,8 @@ If there's a particular need for this, please submit a feature request at https:
         getEditorSettings: _getEditorSettings
       };
     }, []);
-    const { get: getPreference } = (0, import_data245.useSelect)(import_preferences28.store);
-    const { createSuccessNotice } = (0, import_data245.useDispatch)(import_notices36.store);
+    const { get: getPreference } = (0, import_data246.useSelect)(import_preferences28.store);
+    const { createSuccessNotice } = (0, import_data246.useDispatch)(import_notices36.store);
     const { editedRecord: template2 } = (0, import_core_data134.useEntityRecord)(
       "postType",
       "wp_template",
@@ -90853,7 +90872,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     const templateName = template2 ? (0, import_html_entities34.decodeEntities)(template2.title) : void 0;
-    const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor92.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor92.BlockPreview, { blocks }) });
+    const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor94.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor94.BlockPreview, { blocks }) });
     return /* @__PURE__ */ (0, import_jsx_runtime513.jsxs)(import_jsx_runtime513.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
         import_components277.PanelBody,
@@ -90912,7 +90931,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/template-actions-panel/index.mjs
   var import_jsx_runtime514 = __toESM(require_jsx_runtime(), 1);
   function TemplateActionsPanel() {
-    const postType2 = (0, import_data246.useSelect)(
+    const postType2 = (0, import_data247.useSelect)(
       (select7) => select7(store).getCurrentPostType(),
       []
     );
@@ -90930,16 +90949,16 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/template-content-panel/index.mjs
-  var import_data247 = __toESM(require_data(), 1);
-  var import_block_editor93 = __toESM(require_block_editor(), 1);
+  var import_data248 = __toESM(require_data(), 1);
+  var import_block_editor95 = __toESM(require_block_editor(), 1);
   var import_components278 = __toESM(require_components(), 1);
   var import_i18n312 = __toESM(require_i18n(), 1);
   var import_jsx_runtime515 = __toESM(require_jsx_runtime(), 1);
-  var { BlockQuickNavigation } = unlock(import_block_editor93.privateApis);
+  var { BlockQuickNavigation } = unlock(import_block_editor95.privateApis);
   var TEMPLATE_PART_BLOCK = "core/template-part";
   function TemplateContentPanelInner({ postType: postType2 }) {
     const postContentBlockTypes = usePostContentBlockTypes();
-    const clientIds = (0, import_data247.useSelect)(
+    const clientIds = (0, import_data248.useSelect)(
       (select7) => {
         const { getPostBlocksByName: getPostBlocksByName2 } = unlock(select7(store));
         return getPostBlocksByName2(
@@ -90948,7 +90967,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [postType2, postContentBlockTypes]
     );
-    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data247.useDispatch)(store3);
+    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data248.useDispatch)(store3);
     if (clientIds.length === 0) {
       return null;
     }
@@ -90963,7 +90982,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) });
   }
   function TemplateContentPanel() {
-    const { postType: postType2, renderingMode: renderingMode2 } = (0, import_data247.useSelect)((select7) => {
+    const { postType: postType2, renderingMode: renderingMode2 } = (0, import_data248.useSelect)((select7) => {
       const { getCurrentPostType: getCurrentPostType2, getRenderingMode: getRenderingMode2 } = unlock(
         select7(store)
       );
@@ -90979,16 +90998,16 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/template-part-content-panel/index.mjs
-  var import_data248 = __toESM(require_data(), 1);
+  var import_data249 = __toESM(require_data(), 1);
   var import_element310 = __toESM(require_element(), 1);
   var import_blocks35 = __toESM(require_blocks(), 1);
-  var import_block_editor94 = __toESM(require_block_editor(), 1);
+  var import_block_editor96 = __toESM(require_block_editor(), 1);
   var import_components279 = __toESM(require_components(), 1);
   var import_i18n313 = __toESM(require_i18n(), 1);
   var import_jsx_runtime516 = __toESM(require_jsx_runtime(), 1);
-  var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor94.privateApis);
+  var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor96.privateApis);
   function TemplatePartContentPanelInner() {
-    const blockTypes = (0, import_data248.useSelect)((select7) => {
+    const blockTypes = (0, import_data249.useSelect)((select7) => {
       const { getBlockTypes: getBlockTypes6 } = select7(import_blocks35.store);
       return getBlockTypes6();
     }, []);
@@ -90997,9 +91016,9 @@ If there's a particular need for this, please submit a feature request at https:
         return blockType.category === "theme";
       }).map(({ name: name2 }) => name2);
     }, [blockTypes]);
-    const themeBlocks = (0, import_data248.useSelect)(
+    const themeBlocks = (0, import_data249.useSelect)(
       (select7) => {
-        const { getBlocksByName } = select7(import_block_editor94.store);
+        const { getBlocksByName } = select7(import_block_editor96.store);
         return getBlocksByName(themeBlockNames);
       },
       [themeBlockNames]
@@ -91010,7 +91029,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_components279.PanelBody, { title: (0, import_i18n313.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(BlockQuickNavigation2, { clientIds: themeBlocks }) });
   }
   function TemplatePartContentPanel() {
-    const postType2 = (0, import_data248.useSelect)((select7) => {
+    const postType2 = (0, import_data249.useSelect)((select7) => {
       const { getCurrentPostType: getCurrentPostType2 } = select7(store);
       return getCurrentPostType2();
     }, []);
@@ -91024,7 +91043,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components280 = __toESM(require_components(), 1);
   var import_core_data135 = __toESM(require_core_data(), 1);
   var import_date23 = __toESM(require_date(), 1);
-  var import_data249 = __toESM(require_data(), 1);
+  var import_data250 = __toESM(require_data(), 1);
   var import_i18n314 = __toESM(require_i18n(), 1);
   var import_jsx_runtime517 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge5 } = unlock(import_components280.privateApis);
@@ -91067,14 +91086,14 @@ If there's a particular need for this, please submit a feature request at https:
     author_default
   ];
   function PostRevisionsPanelContent() {
-    const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data249.useDispatch)(store));
+    const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data250.useDispatch)(store));
     const {
       revisionsCount,
       revisions,
       revisionKey,
       isLoading,
       lastRevisionId
-    } = (0, import_data249.useSelect)((select7) => {
+    } = (0, import_data250.useSelect)((select7) => {
       const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select7(store);
       const { getCurrentPostRevisionsCount: getCurrentPostRevisionsCount2, getCurrentPostLastRevisionId: getCurrentPostLastRevisionId2 } = select7(store);
       const { getRevisions, getEntityConfig, isResolving } = select7(import_core_data135.store);
@@ -91144,7 +91163,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function PostRevisionsPanel() {
-    const disableVisualRevisions = (0, import_data249.useSelect)(
+    const disableVisualRevisions = (0, import_data250.useSelect)(
       (select7) => !!select7(store).getEditorSettings().disableVisualRevisions,
       []
     );
@@ -91155,13 +91174,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/revision-block-diff/index.mjs
-  var import_block_editor95 = __toESM(require_block_editor(), 1);
-  var import_data250 = __toESM(require_data(), 1);
+  var import_block_editor97 = __toESM(require_block_editor(), 1);
+  var import_data251 = __toESM(require_data(), 1);
   var import_i18n315 = __toESM(require_i18n(), 1);
   var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
   function RevisionBlockDiffPanel() {
-    const { block } = (0, import_data250.useSelect)((select7) => {
-      const { getSelectedBlock: getSelectedBlock2 } = select7(import_block_editor95.store);
+    const { block } = (0, import_data251.useSelect)((select7) => {
+      const { getSelectedBlock: getSelectedBlock2 } = select7(import_block_editor97.store);
       return {
         block: getSelectedBlock2()
       };
@@ -91181,19 +91200,19 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/provider/use-auto-switch-editor-sidebars.mjs
-  var import_data251 = __toESM(require_data(), 1);
+  var import_data252 = __toESM(require_data(), 1);
   var import_element311 = __toESM(require_element(), 1);
-  var import_block_editor96 = __toESM(require_block_editor(), 1);
+  var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_preferences29 = __toESM(require_preferences(), 1);
   function useAutoSwitchEditorSidebars() {
-    const { hasBlockSelection } = (0, import_data251.useSelect)((select7) => {
+    const { hasBlockSelection } = (0, import_data252.useSelect)((select7) => {
       return {
-        hasBlockSelection: !!select7(import_block_editor96.store).getBlockSelectionStart()
+        hasBlockSelection: !!select7(import_block_editor98.store).getBlockSelectionStart()
       };
     }, []);
-    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data251.useSelect)(store3);
-    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data251.useDispatch)(store3);
-    const { get: getPreference } = (0, import_data251.useSelect)(import_preferences29.store);
+    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data252.useSelect)(store3);
+    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data252.useDispatch)(store3);
+    const { get: getPreference } = (0, import_data252.useSelect)(import_preferences29.store);
     (0, import_element311.useEffect)(() => {
       const activeGeneralSidebar = getActiveComplementaryArea2("core");
       const isEditorSidebarOpened = [
@@ -91234,7 +91253,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) => {
     const tabListRef = (0, import_element312.useRef)(null);
     const tabsContextValue = (0, import_element312.useContext)(Tabs6.Context);
-    const isRevisionsMode2 = (0, import_data252.useSelect)((select7) => {
+    const isRevisionsMode2 = (0, import_data253.useSelect)((select7) => {
       return unlock(select7(store)).isRevisionsMode();
     });
     (0, import_element312.useEffect)(() => {
@@ -91298,7 +91317,7 @@ If there's a particular need for this, please submit a feature request at https:
         children: /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(Tabs6.Context.Provider, { value: tabsContextValue, children: [
           /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(Tabs6.TabPanel, { tabId: sidebars.document, focusable: false, children: tabContent }),
           /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(Tabs6.TabPanel, { tabId: sidebars.block, focusable: false, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(import_block_editor97.BlockInspector, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(import_block_editor99.BlockInspector, {}),
             isRevisionsMode2 && /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(RevisionBlockDiffPanel, {})
           ] })
         ] })
@@ -91307,7 +91326,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var Sidebar = ({ extraPanels, onActionPerformed }) => {
     use_auto_switch_editor_sidebars_default();
-    const { tabName, keyboardShortcut, showSummary, postType: postType2 } = (0, import_data252.useSelect)(
+    const { tabName, keyboardShortcut, showSummary, postType: postType2 } = (0, import_data253.useSelect)(
       (select7) => {
         const shortcut = select7(
           import_keyboard_shortcuts11.store
@@ -91320,7 +91339,7 @@ If there's a particular need for this, please submit a feature request at https:
         let _tabName = sidebar;
         if (!_isEditorSidebarOpened) {
           _tabName = !!select7(
-            import_block_editor97.store
+            import_block_editor99.store
           ).getBlockSelectionStart() ? sidebars.block : sidebars.document;
         }
         const _postType = select7(store).getCurrentPostType();
@@ -91337,7 +91356,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data252.useDispatch)(store3);
+    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data253.useDispatch)(store3);
     const onTabSelect = (0, import_element312.useCallback)(
       (newSelectedTabId) => {
         if (!!newSelectedTabId) {
@@ -91370,11 +91389,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n326 = __toESM(require_i18n(), 1);
-  var import_data259 = __toESM(require_data(), 1);
+  var import_data260 = __toESM(require_data(), 1);
   var import_element320 = __toESM(require_element(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_block_editor105 = __toESM(require_block_editor(), 1);
+  var import_block_editor107 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/constants.mjs
@@ -91385,23 +91404,23 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
   var import_element318 = __toESM(require_element(), 1);
   var import_i18n323 = __toESM(require_i18n(), 1);
-  var import_data257 = __toESM(require_data(), 1);
-  var import_block_editor102 = __toESM(require_block_editor(), 1);
+  var import_data258 = __toESM(require_data(), 1);
+  var import_block_editor104 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_element316 = __toESM(require_element(), 1);
   var import_components285 = __toESM(require_components(), 1);
   var import_compose78 = __toESM(require_compose(), 1);
   var import_i18n321 = __toESM(require_i18n(), 1);
-  var import_data255 = __toESM(require_data(), 1);
+  var import_data256 = __toESM(require_data(), 1);
   var import_dom34 = __toESM(require_dom(), 1);
-  var import_block_editor100 = __toESM(require_block_editor(), 1);
+  var import_block_editor102 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n319 = __toESM(require_i18n(), 1);
   var import_element314 = __toESM(require_element(), 1);
-  var import_data254 = __toESM(require_data(), 1);
-  var import_block_editor99 = __toESM(require_block_editor(), 1);
+  var import_data255 = __toESM(require_data(), 1);
+  var import_block_editor101 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-card.mjs
   var import_components282 = __toESM(require_components(), 1);
@@ -91410,8 +91429,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n317 = __toESM(require_i18n(), 1);
   var import_date24 = __toESM(require_date(), 1);
   var import_core_data136 = __toESM(require_core_data(), 1);
-  var import_data253 = __toESM(require_data(), 1);
-  var import_block_editor98 = __toESM(require_block_editor(), 1);
+  var import_data254 = __toESM(require_data(), 1);
+  var import_block_editor100 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime520 = __toESM(require_jsx_runtime(), 1);
   function NoteByline({ avatar, name: name2, date, userId }) {
     const hasAvatar = !!avatar;
@@ -91421,7 +91440,7 @@ If there's a particular need for this, please submit a feature request at https:
       currentUserName,
       currentUserId,
       dateFormat = dateSettings.formats.date
-    } = (0, import_data253.useSelect)(
+    } = (0, import_data254.useSelect)(
       (select7) => {
         const { canUser, getCurrentUser, getEntityRecord } = select7(import_core_data136.store);
         const siteSettings = canUser("read", {
@@ -91433,7 +91452,7 @@ If there's a particular need for this, please submit a feature request at https:
             dateFormat: siteSettings?.date_format
           };
         }
-        const { getSettings: getSettings12 } = select7(import_block_editor98.store);
+        const { getSettings: getSettings12 } = select7(import_block_editor100.store);
         const { __experimentalDiscussionSettings } = getSettings12();
         const defaultAvatar = __experimentalDiscussionSettings?.avatarURL;
         const userData = getCurrentUser();
@@ -91621,21 +91640,21 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElement } = unlock(import_block_editor99.privateApis);
+  var { useBlockElement } = unlock(import_block_editor101.privateApis);
   function AddNote({ onSubmit, sidebarRef, floating }) {
-    const { clientId } = (0, import_data254.useSelect)((select7) => {
-      const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor99.store);
+    const { clientId } = (0, import_data255.useSelect)((select7) => {
+      const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor101.store);
       return {
         clientId: getSelectedBlockClientId2()
       };
     }, []);
-    const selectedNote2 = (0, import_data254.useSelect)(
+    const selectedNote2 = (0, import_data255.useSelect)(
       (select7) => unlock(select7(store)).getSelectedNote(),
       []
     );
     const blockElement = useBlockElement(clientId);
-    const { toggleBlockSpotlight } = unlock((0, import_data254.useDispatch)(import_block_editor99.store));
-    const { selectNote: selectNote2 } = unlock((0, import_data254.useDispatch)(store));
+    const { toggleBlockSpotlight } = unlock((0, import_data255.useDispatch)(import_block_editor101.store));
+    const { selectNote: selectNote2 } = unlock((0, import_data255.useDispatch)(store));
     const isSubmittingRef = (0, import_element314.useRef)(false);
     const unselectNote = () => {
       selectNote2(void 0);
@@ -91853,7 +91872,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_jsx_runtime526 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor100.privateApis);
+  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor102.privateApis);
   function NoteThread({
     note,
     onEditNote,
@@ -91866,9 +91885,9 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const isFloating = !!floating;
     const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
-      (0, import_data255.useDispatch)(import_block_editor100.store)
+      (0, import_data256.useDispatch)(import_block_editor102.store)
     );
-    const { selectNote: selectNote2 } = unlock((0, import_data255.useDispatch)(store));
+    const { selectNote: selectNote2 } = unlock((0, import_data256.useDispatch)(store));
     const relatedBlockElement = useBlockElement2(note.blockClientId);
     const debouncedToggleBlockHighlight = (0, import_compose78.useDebounce)(
       toggleBlockHighlight,
@@ -92131,8 +92150,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n322 = __toESM(require_i18n(), 1);
   var import_element317 = __toESM(require_element(), 1);
   var import_core_data137 = __toESM(require_core_data(), 1);
-  var import_data256 = __toESM(require_data(), 1);
-  var import_block_editor101 = __toESM(require_block_editor(), 1);
+  var import_data257 = __toESM(require_data(), 1);
+  var import_block_editor103 = __toESM(require_block_editor(), 1);
   var import_notices37 = __toESM(require_notices(), 1);
   var import_dom35 = __toESM(require_dom(), 1);
   var import_html_entities35 = __toESM(require_html_entities(), 1);
@@ -92216,7 +92235,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
-  var { cleanEmptyObject: cleanEmptyObject3 } = unlock(import_block_editor101.privateApis);
+  var { cleanEmptyObject: cleanEmptyObject3 } = unlock(import_block_editor103.privateApis);
   function useNoteThreads(postId2) {
     const queryArgs = {
       post: postId2,
@@ -92230,9 +92249,9 @@ If there's a particular need for this, please submit a feature request at https:
       queryArgs,
       { enabled: !!postId2 && typeof postId2 === "number" }
     );
-    const { getBlockAttributes: getBlockAttributes2 } = (0, import_data256.useSelect)(import_block_editor101.store);
-    const { clientIds } = (0, import_data256.useSelect)((select7) => {
-      const { getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select7(import_block_editor101.store);
+    const { getBlockAttributes: getBlockAttributes2 } = (0, import_data257.useSelect)(import_block_editor103.store);
+    const { clientIds } = (0, import_data257.useSelect)((select7) => {
+      const { getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select7(import_block_editor103.store);
       return {
         clientIds: getClientIdsWithDescendants2()
       };
@@ -92303,11 +92322,11 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useNoteActions() {
-    const { createNotice } = (0, import_data256.useDispatch)(import_notices37.store);
-    const { saveEntityRecord, deleteEntityRecord } = (0, import_data256.useDispatch)(import_core_data137.store);
-    const { getCurrentPostId: getCurrentPostId2 } = (0, import_data256.useSelect)(store);
-    const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = (0, import_data256.useSelect)(import_block_editor101.store);
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data256.useDispatch)(import_block_editor101.store);
+    const { createNotice } = (0, import_data257.useDispatch)(import_notices37.store);
+    const { saveEntityRecord, deleteEntityRecord } = (0, import_data257.useDispatch)(import_core_data137.store);
+    const { getCurrentPostId: getCurrentPostId2 } = (0, import_data257.useSelect)(store);
+    const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = (0, import_data257.useSelect)(import_block_editor103.store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data257.useDispatch)(import_block_editor103.store);
     const onError = (error2) => {
       const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities35.decodeEntities)(error2.message) : (0, import_i18n322.__)("An error occurred while performing an update.");
       createNotice("error", errorMessage, {
@@ -92442,7 +92461,7 @@ If there's a particular need for this, please submit a feature request at https:
     return { onCreate, onEdit, onDelete };
   }
   function useEnableFloatingSidebar(enabled = false) {
-    const registry = (0, import_data256.useRegistry)();
+    const registry = (0, import_data257.useRegistry)();
     (0, import_element317.useEffect)(() => {
       if (!enabled) {
         return;
@@ -92513,24 +92532,24 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
   var import_jsx_runtime527 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElement: useBlockElement3 } = unlock(import_block_editor102.privateApis);
+  var { useBlockElement: useBlockElement3 } = unlock(import_block_editor104.privateApis);
   function Notes({ notes, sidebarRef, isFloating = false, styles }) {
     const {
       onCreate: onAddReply,
       onEdit: onEditNote,
       onDelete
     } = useNoteActions();
-    const { selectNote: selectNote2 } = unlock((0, import_data257.useDispatch)(store));
+    const { selectNote: selectNote2 } = unlock((0, import_data258.useDispatch)(store));
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
-      (0, import_data257.useDispatch)(import_block_editor102.store)
+      (0, import_data258.useDispatch)(import_block_editor104.store)
     );
-    const { noteId, selectedBlockClientId, orderedBlockIds } = (0, import_data257.useSelect)(
+    const { noteId, selectedBlockClientId, orderedBlockIds } = (0, import_data258.useSelect)(
       (select7) => {
         const {
           getBlockAttributes: getBlockAttributes2,
           getSelectedBlockClientId: getSelectedBlockClientId2,
           getClientIdsWithDescendants: getClientIdsWithDescendants2
-        } = select7(import_block_editor102.store);
+        } = select7(import_block_editor104.store);
         const clientId = getSelectedBlockClientId2();
         return {
           noteId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
@@ -92540,7 +92559,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const { selectedNote: selectedNote2, noteFocused } = (0, import_data257.useSelect)((select7) => {
+    const { selectedNote: selectedNote2, noteFocused } = (0, import_data258.useSelect)((select7) => {
       const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
         select7(store)
       );
@@ -92723,20 +92742,20 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/add-note-menu-item.mjs
   var import_components286 = __toESM(require_components(), 1);
   var import_i18n324 = __toESM(require_i18n(), 1);
-  var import_block_editor103 = __toESM(require_block_editor(), 1);
-  var import_data258 = __toESM(require_data(), 1);
+  var import_block_editor105 = __toESM(require_block_editor(), 1);
+  var import_data259 = __toESM(require_data(), 1);
   var import_blocks36 = __toESM(require_blocks(), 1);
   var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime528 = __toESM(require_jsx_runtime(), 1);
-  var { NoteIconSlotFill } = unlock(import_block_editor103.privateApis);
+  var { NoteIconSlotFill } = unlock(import_block_editor105.privateApis);
   function NoteMenuItem({ clientId, onClick, isDistractionFree }) {
-    const block = (0, import_data258.useSelect)(
+    const block = (0, import_data259.useSelect)(
       (select7) => {
-        return select7(import_block_editor103.store).getBlock(clientId);
+        return select7(import_block_editor105.store).getBlock(clientId);
       },
       [clientId]
     );
-    const shortcut = (0, import_data258.useSelect)(
+    const shortcut = (0, import_data259.useSelect)(
       (select7) => select7(import_keyboard_shortcuts12.store).getShortcutRepresentation(
         "core/editor/new-note"
       ),
@@ -92782,9 +92801,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components287 = __toESM(require_components(), 1);
   var import_i18n325 = __toESM(require_i18n(), 1);
   var import_element319 = __toESM(require_element(), 1);
-  var import_block_editor104 = __toESM(require_block_editor(), 1);
+  var import_block_editor106 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime529 = __toESM(require_jsx_runtime(), 1);
-  var { NoteIconToolbarSlotFill } = unlock(import_block_editor104.privateApis);
+  var { NoteIconToolbarSlotFill } = unlock(import_block_editor106.privateApis);
   function NoteAvatarIndicator({ onClick, note }) {
     const threadParticipants = (0, import_element319.useMemo)(() => {
       if (!note) {
@@ -92854,16 +92873,16 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
   function NotesSidebar({ postId: postId2 }) {
-    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data259.useSelect)(store3);
-    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data259.useDispatch)(store3);
+    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data260.useSelect)(store3);
+    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data260.useDispatch)(store3);
     const { toggleBlockSpotlight, selectBlock: selectBlock2 } = unlock(
-      (0, import_data259.useDispatch)(import_block_editor105.store)
+      (0, import_data260.useDispatch)(import_block_editor107.store)
     );
-    const { selectNote: selectNote2 } = unlock((0, import_data259.useDispatch)(store));
+    const { selectNote: selectNote2 } = unlock((0, import_data260.useDispatch)(store));
     const isLargeViewport = (0, import_compose79.useViewportMatch)("medium");
     const sidebarRef = (0, import_element320.useRef)(null);
-    const { clientId, noteId, isClassicBlock } = (0, import_data259.useSelect)((select7) => {
-      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select7(import_block_editor105.store);
+    const { clientId, noteId, isClassicBlock } = (0, import_data260.useSelect)((select7) => {
+      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select7(import_block_editor107.store);
       const _clientId = getSelectedBlockClientId2();
       return {
         clientId: _clientId,
@@ -92872,13 +92891,13 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const blockNoteIds = getNoteIdsFromMetadata({ noteId });
-    const { isDistractionFree } = (0, import_data259.useSelect)((select7) => {
+    const { isDistractionFree } = (0, import_data260.useSelect)((select7) => {
       const { get } = select7(import_preferences30.store);
       return {
         isDistractionFree: get("core", "distractionFree")
       };
     }, []);
-    const selectedNote2 = (0, import_data259.useSelect)(
+    const selectedNote2 = (0, import_data260.useSelect)(
       (select7) => unlock(select7(store)).getSelectedNote(),
       []
     );
@@ -92997,7 +93016,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   function NotesSidebarContainer() {
-    const { postId: postId2, editorMode, revisionsMode } = (0, import_data259.useSelect)((select7) => {
+    const { postId: postId2, editorMode, revisionsMode } = (0, import_data260.useSelect)((select7) => {
       const { getCurrentPostId: getCurrentPostId2, getEditorMode: getEditorMode2, isRevisionsMode: isRevisionsMode2 } = unlock(
         select7(store)
       );
@@ -93019,7 +93038,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
   var import_components290 = __toESM(require_components(), 1);
   var import_i18n329 = __toESM(require_i18n(), 1);
-  var import_data262 = __toESM(require_data(), 1);
+  var import_data263 = __toESM(require_data(), 1);
   var import_element321 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
@@ -93027,7 +93046,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/global-styles/menu.mjs
   var import_components288 = __toESM(require_components(), 1);
-  var import_data260 = __toESM(require_data(), 1);
+  var import_data261 = __toESM(require_data(), 1);
   var import_i18n327 = __toESM(require_i18n(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
   var import_core_data138 = __toESM(require_core_data(), 1);
@@ -93041,8 +93060,8 @@ If there's a particular need for this, please submit a feature request at https:
     const onReset = () => {
       setUser({ styles: {}, settings: {} });
     };
-    const { toggle } = (0, import_data260.useDispatch)(import_preferences31.store);
-    const { canEditCSS } = (0, import_data260.useSelect)((select7) => {
+    const { toggle } = (0, import_data261.useDispatch)(import_preferences31.store);
+    const { canEditCSS } = (0, import_data261.useSelect)((select7) => {
       const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select7(import_core_data138.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
@@ -93136,7 +93155,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
-  var import_data261 = __toESM(require_data(), 1);
+  var import_data262 = __toESM(require_data(), 1);
   var import_components289 = __toESM(require_components(), 1);
   var import_i18n328 = __toESM(require_i18n(), 1);
   var import_preferences32 = __toESM(require_preferences(), 1);
@@ -93159,8 +93178,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_jsx_runtime534 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideStyles() {
-    const { toggle } = (0, import_data261.useDispatch)(import_preferences32.store);
-    const { isActive, isStylesOpen } = (0, import_data261.useSelect)((select7) => {
+    const { toggle } = (0, import_data262.useDispatch)(import_preferences32.store);
+    const { isActive, isStylesOpen } = (0, import_data262.useSelect)((select7) => {
       const sidebar = select7(store3).getActiveComplementaryArea("core");
       return {
         isActive: !!select7(import_preferences32.store).get(
@@ -93272,7 +93291,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasRevisions,
       activeComplementaryArea,
       editorSettings: editorSettings2
-    } = (0, import_data262.useSelect)((select7) => {
+    } = (0, import_data263.useSelect)((select7) => {
       const { getActiveComplementaryArea: getActiveComplementaryArea2 } = select7(store3);
       const { getStylesPath: getStylesPath2, getShowStylebook: getShowStylebook2 } = unlock(
         select7(store)
@@ -93296,7 +93315,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
-      (0, import_data262.useDispatch)(store)
+      (0, import_data263.useDispatch)(store)
     );
     const isMobileViewport = (0, import_compose80.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
@@ -93312,7 +93331,7 @@ If there's a particular need for this, please submit a feature request at https:
         resetStylesNavigation2();
       }
     }, [shouldResetNavigation, resetStylesNavigation2]);
-    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data262.useDispatch)(store);
+    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data263.useDispatch)(store);
     const toggleRevisions = () => {
       setIsListViewOpened2(false);
       if (isRevisionsOpened || isRevisionsStyleBookOpened) {
@@ -93423,7 +93442,7 @@ If there's a particular need for this, please submit a feature request at https:
       error: error2,
       isBlockTheme,
       showGlobalStyles
-    } = (0, import_data263.useSelect)(
+    } = (0, import_data264.useSelect)(
       (select7) => {
         const {
           getEntityRecord,
@@ -93504,20 +93523,20 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n332 = __toESM(require_i18n(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_data266 = __toESM(require_data(), 1);
+  var import_data267 = __toESM(require_data(), 1);
   var import_element323 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
-  var import_data264 = __toESM(require_data(), 1);
+  var import_data265 = __toESM(require_data(), 1);
   var import_preferences34 = __toESM(require_preferences(), 1);
   var import_jsx_runtime537 = __toESM(require_jsx_runtime(), 1);
   var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences34.privateApis);
   function EnablePublishSidebarOption(props) {
-    const isChecked = (0, import_data264.useSelect)((select7) => {
+    const isChecked = (0, import_data265.useSelect)((select7) => {
       return select7(store).isPublishSidebarEnabled();
     }, []);
-    const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data264.useDispatch)(store);
+    const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data265.useDispatch)(store);
     return /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
       PreferenceBaseOption2,
       {
@@ -93529,25 +93548,25 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/block-visibility/index.mjs
-  var import_data265 = __toESM(require_data(), 1);
+  var import_data266 = __toESM(require_data(), 1);
   var import_preferences35 = __toESM(require_preferences(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
   var import_element322 = __toESM(require_element(), 1);
   var import_components292 = __toESM(require_components(), 1);
   var import_i18n331 = __toESM(require_i18n(), 1);
-  var import_block_editor106 = __toESM(require_block_editor(), 1);
+  var import_block_editor108 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
-  var { BlockManager } = unlock(import_block_editor106.privateApis);
+  var { BlockManager } = unlock(import_block_editor108.privateApis);
   var EMPTY_ARRAY15 = [];
   function BlockVisibility() {
     const { showBlockTypes: showBlockTypes2, hideBlockTypes: hideBlockTypes2 } = unlock(
-      (0, import_data265.useDispatch)(store)
+      (0, import_data266.useDispatch)(store)
     );
     const {
       blockTypes,
       allowedBlockTypes: _allowedBlockTypes,
       hiddenBlockTypes: _hiddenBlockTypes
-    } = (0, import_data265.useSelect)((select7) => {
+    } = (0, import_data266.useSelect)((select7) => {
       return {
         blockTypes: select7(import_blocks37.store).getBlockTypes(),
         allowedBlockTypes: select7(store).getEditorSettings().allowedBlockTypes,
@@ -93636,10 +93655,10 @@ If there's a particular need for this, please submit a feature request at https:
     PreferenceToggleControl
   } = unlock(import_preferences36.privateApis);
   function EditorPreferencesModal({ extraSections = {} }) {
-    const isActive = (0, import_data266.useSelect)((select7) => {
+    const isActive = (0, import_data267.useSelect)((select7) => {
       return select7(store3).isModalActive("editor/preferences");
     }, []);
-    const { closeModal: closeModal2 } = (0, import_data266.useDispatch)(store3);
+    const { closeModal: closeModal2 } = (0, import_data267.useDispatch)(store3);
     if (!isActive) {
       return null;
     }
@@ -93647,7 +93666,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function PreferencesModalContents({ extraSections = {} }) {
     const isLargeViewport = (0, import_compose81.useViewportMatch)("medium");
-    const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data266.useSelect)(
+    const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data267.useSelect)(
       (select7) => {
         const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select7(store));
         const { get } = select7(import_preferences36.store);
@@ -93660,8 +93679,8 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [isLargeViewport]
     );
-    const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data266.useDispatch)(store);
-    const { set: setPreference } = (0, import_data266.useDispatch)(import_preferences36.store);
+    const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data267.useDispatch)(store);
+    const { set: setPreference } = (0, import_data267.useDispatch)(import_preferences36.store);
     const sections = (0, import_element323.useMemo)(
       () => [
         {
@@ -94018,13 +94037,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks38 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/bindings/pattern-overrides.mjs
-  var import_block_editor107 = __toESM(require_block_editor(), 1);
+  var import_block_editor109 = __toESM(require_block_editor(), 1);
   var CONTENT = "content";
   var pattern_overrides_default = {
     name: "core/pattern-overrides",
     getValues({ select: select7, clientId, context, bindings }) {
       const patternOverridesContent = context["pattern/overrides"];
-      const { getBlockAttributes: getBlockAttributes2 } = select7(import_block_editor107.store);
+      const { getBlockAttributes: getBlockAttributes2 } = select7(import_block_editor109.store);
       const currentBlockAttributes = getBlockAttributes2(clientId);
       const overridesValues = {};
       for (const attributeName of Object.keys(bindings)) {
@@ -94039,7 +94058,7 @@ If there's a particular need for this, please submit a feature request at https:
       return overridesValues;
     },
     setValues({ select: select7, dispatch: dispatch7, clientId, bindings }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockParentsByBlockName, getBlocks: getBlocks2 } = select7(import_block_editor107.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockParentsByBlockName, getBlocks: getBlocks2 } = select7(import_block_editor109.store);
       const currentBlockAttributes = getBlockAttributes2(clientId);
       const blockName = currentBlockAttributes?.metadata?.name;
       if (!blockName) {
@@ -94061,7 +94080,7 @@ If there's a particular need for this, please submit a feature request at https:
         const syncBlocksWithSameName = (blocks) => {
           for (const block of blocks) {
             if (block.attributes?.metadata?.name === blockName) {
-              dispatch7(import_block_editor107.store).updateBlockAttributes(
+              dispatch7(import_block_editor109.store).updateBlockAttributes(
                 block.clientId,
                 attributes
               );
@@ -94073,7 +94092,7 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const currentBindingValue = getBlockAttributes2(patternClientId)?.[CONTENT];
-      dispatch7(import_block_editor107.store).updateBlockAttributes(patternClientId, {
+      dispatch7(import_block_editor109.store).updateBlockAttributes(patternClientId, {
         [CONTENT]: {
           ...currentBindingValue,
           [blockName]: {
@@ -94095,7 +94114,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/bindings/post-data.mjs
   var import_i18n333 = __toESM(require_i18n(), 1);
   var import_core_data141 = __toESM(require_core_data(), 1);
-  var import_block_editor108 = __toESM(require_block_editor(), 1);
+  var import_block_editor110 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES = [
     "core/navigation-link",
     "core/navigation-submenu"
@@ -94120,7 +94139,7 @@ If there's a particular need for this, please submit a feature request at https:
   var post_data_default = {
     name: "core/post-data",
     getValues({ select: select7, context, bindings, clientId }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select7(import_block_editor108.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select7(import_block_editor110.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
       let postId2, postType2;
@@ -94154,7 +94173,7 @@ If there's a particular need for this, please submit a feature request at https:
       return newValues;
     },
     setValues({ dispatch: dispatch7, context, bindings, clientId, select: select7 }) {
-      const { getBlockName: getBlockName2 } = select7(import_block_editor108.store);
+      const { getBlockName: getBlockName2 } = select7(import_block_editor110.store);
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
         return false;
@@ -94171,7 +94190,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     },
     canUserEditValue({ select: select7, context }) {
-      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor108.store);
+      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor110.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
@@ -94194,7 +94213,7 @@ If there's a particular need for this, please submit a feature request at https:
       return true;
     },
     getFieldsList({ context, select: select7 }) {
-      const selectedBlock = select7(import_block_editor108.store).getSelectedBlock();
+      const selectedBlock = select7(import_block_editor110.store).getSelectedBlock();
       if (selectedBlock?.name !== "core/post-date") {
         return [];
       }
@@ -94311,7 +94330,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/bindings/term-data.mjs
   var import_i18n334 = __toESM(require_i18n(), 1);
   var import_core_data143 = __toESM(require_core_data(), 1);
-  var import_block_editor109 = __toESM(require_block_editor(), 1);
+  var import_block_editor111 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES2 = [
     "core/navigation-link",
     "core/navigation-submenu"
@@ -94358,7 +94377,7 @@ If there's a particular need for this, please submit a feature request at https:
     usesContext: ["taxonomy", "termId", "termData"],
     getValues({ select: select7, context, bindings, clientId }) {
       const { getEntityRecord } = select7(import_core_data143.store);
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select7(import_block_editor109.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select7(import_block_editor111.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
       let termDataValues;
@@ -94403,7 +94422,7 @@ If there's a particular need for this, please submit a feature request at https:
       return false;
     },
     canUserEditValue({ select: select7, context }) {
-      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor109.store);
+      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor111.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
@@ -94418,7 +94437,7 @@ If there's a particular need for this, please submit a feature request at https:
       return false;
     },
     getFieldsList({ context, select: select7 }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor109.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select7(import_block_editor111.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
@@ -94478,10 +94497,10 @@ If there's a particular need for this, please submit a feature request at https:
   });
 
   // packages/editor/build-module/dataviews/api.mjs
-  var import_data267 = __toESM(require_data(), 1);
+  var import_data268 = __toESM(require_data(), 1);
   function registerEntityAction2(kind, name2, config2) {
     const { registerEntityAction: _registerEntityAction } = unlock(
-      (0, import_data267.dispatch)(store)
+      (0, import_data268.dispatch)(store)
     );
     if (true) {
       _registerEntityAction(kind, name2, config2);
@@ -94489,7 +94508,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function unregisterEntityAction2(kind, name2, actionId) {
     const { unregisterEntityAction: _unregisterEntityAction } = unlock(
-      (0, import_data267.dispatch)(store)
+      (0, import_data268.dispatch)(store)
     );
     if (true) {
       _unregisterEntityAction(kind, name2, actionId);
@@ -94497,7 +94516,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function registerEntityField2(kind, name2, config2) {
     const { registerEntityField: _registerEntityField } = unlock(
-      (0, import_data267.dispatch)(store)
+      (0, import_data268.dispatch)(store)
     );
     if (true) {
       _registerEntityField(kind, name2, config2);
@@ -94505,7 +94524,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function unregisterEntityField2(kind, name2, fieldId) {
     const { unregisterEntityField: _unregisterEntityField } = unlock(
-      (0, import_data267.dispatch)(store)
+      (0, import_data268.dispatch)(store)
     );
     if (true) {
       _unregisterEntityField(kind, name2, fieldId);
@@ -94513,7 +94532,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/index.mjs
-  var import_block_editor110 = __toESM(require_block_editor(), 1);
+  var import_block_editor112 = __toESM(require_block_editor(), 1);
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:

@@ -10179,12 +10179,15 @@ var wp;
   var import_element5 = __toESM(require_element(), 1);
   var icon_default = (0, import_element5.forwardRef)(
     ({ icon, size: size4 = 24, ...props }, ref) => {
-      return (0, import_element5.cloneElement)(icon, {
-        width: size4,
-        height: size4,
-        ...props,
-        ref
-      });
+      return (0, import_element5.cloneElement)(
+        icon,
+        {
+          width: size4,
+          height: size4,
+          ...props,
+          ref
+        }
+      );
     }
   );
 
@@ -23088,7 +23091,7 @@ var wp;
       "data-block": clientId,
       "data-type": name,
       "data-title": blockTitle,
-      inert: isSubtreeDisabled ? "true" : void 0,
+      inert: isSubtreeDisabled ? true : void 0,
       className: clsx_default(
         "block-editor-block-list__block",
         {
@@ -33557,7 +33560,10 @@ var wp;
   // packages/ui/build-module/utils/render-slot-with-children.mjs
   var import_element57 = __toESM(require_element(), 1);
   function renderSlotWithChildren(slot, defaultSlot, children) {
-    return (0, import_element57.cloneElement)(slot ?? defaultSlot, { children });
+    return (0, import_element57.cloneElement)(
+      slot ?? defaultSlot,
+      { children }
+    );
   }
 
   // packages/ui/build-module/lock-unlock.mjs
@@ -36976,9 +36982,6 @@ var wp;
 		${resolvedAssets.styles ?? ""}
 		${resolvedAssets.scripts ?? ""}
 	</head>
-	<body>
-		<script>document.currentScript.parentElement.remove()<\/script>
-	</body>
 </html>`;
     src = URL.createObjectURL(new Blob([html], { type: "text/html" }));
     iframeSrcCache.set(resolvedAssets, src);
@@ -39973,7 +39976,7 @@ var wp;
         src: media.previewUrl || mediaSrc,
         alt,
         controls: mediaType === "audio" ? true : void 0,
-        inert: "true",
+        inert: true,
         onError: ({ currentTarget }) => {
           if (currentTarget.src === media.previewUrl) {
             currentTarget.src = mediaSrc;

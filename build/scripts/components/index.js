@@ -22837,7 +22837,8 @@ If there's a particular need for this, please submit a feature request at https:
         render: children
       }) : children;
     }
-    function addDescribedById(element) {
+    function addDescribedById(el) {
+      const element = el;
       return describedById && mounted && element.props["aria-describedby"] === void 0 && element.props["aria-label"] !== text ? (0, import_element14.cloneElement)(element, {
         "aria-describedby": describedById
       }) : element;
@@ -23975,12 +23976,15 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element22 = __toESM(require_element(), 1);
   var icon_default2 = (0, import_element22.forwardRef)(
     ({ icon, size: size3 = 24, ...props }, ref) => {
-      return (0, import_element22.cloneElement)(icon, {
-        width: size3,
-        height: size3,
-        ...props,
-        ref
-      });
+      return (0, import_element22.cloneElement)(
+        icon,
+        {
+          width: size3,
+          height: size3,
+          ...props,
+          ref
+        }
+      );
     }
   );
 
@@ -24936,42 +24940,39 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [__next40pxDefaultSize, size3]);
-    return (
-      // @ts-expect-error The `direction` prop from Flex (FlexDirection) conflicts with legacy SVGAttributes `direction` (string) that come from React intrinsic prop definitions.
-      /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(Root, {
-        ...restProps,
-        ...getUIFlexProps(labelPosition),
-        className: className2,
-        gap: 2,
-        ref,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Label2, {
-          className: "components-input-control__label",
-          hideLabelFromVision,
-          labelPosition,
-          htmlFor: id3,
-          children: label
-        }), /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(Container, {
-          __unstableInputWidth,
-          className: "components-input-control__container",
-          disabled,
-          hideLabel,
-          labelPosition,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(ContextSystemProvider, {
-            value: prefixSuffixContextValue,
-            children: [prefix2 && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Prefix, {
-              className: "components-input-control__prefix",
-              children: prefix2
-            }), children, suffix && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Suffix, {
-              className: "components-input-control__suffix",
-              children: suffix
-            })]
-          }), /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(backdrop_default, {
-            disabled,
-            isBorderless
+    return /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(Root, {
+      ...restProps,
+      ...getUIFlexProps(labelPosition),
+      className: className2,
+      gap: 2,
+      ref,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Label2, {
+        className: "components-input-control__label",
+        hideLabelFromVision,
+        labelPosition,
+        htmlFor: id3,
+        children: label
+      }), /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(Container, {
+        __unstableInputWidth,
+        className: "components-input-control__container",
+        disabled,
+        hideLabel,
+        labelPosition,
+        children: [/* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(ContextSystemProvider, {
+          value: prefixSuffixContextValue,
+          children: [prefix2 && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Prefix, {
+            className: "components-input-control__prefix",
+            children: prefix2
+          }), children, suffix && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Suffix, {
+            className: "components-input-control__suffix",
+            children: suffix
           })]
+        }), /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(backdrop_default, {
+          disabled,
+          isBorderless
         })]
-      })
-    );
+      })]
+    });
   }
   var input_base_default = contextConnect(InputBase, "InputBase");
 
@@ -33662,6 +33663,8 @@ This message will only show in development mode. It won't appear in production. 
       resetButtonWrapperClassName,
       size: size3,
       __unstablePopoverProps,
+      onToggle: onToggleProp,
+      // Remove from `otherProps` to avoid type errors (native HTML `onToggle` vs `Dropdown` `onToggle`).
       ...otherProps
     } = useBorderControlDropdown(props);
     const {
@@ -33690,40 +33693,38 @@ This message will only show in development mode. It won't appear in production. 
         })
       })
     });
-    const renderContent = () => /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_jsx_runtime146.Fragment, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(dropdown_content_wrapper_default, {
-        paddingSize: "medium",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(component_default18, {
-          className: popoverControlsClassName,
-          spacing: 6,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime146.jsx)(color_palette_default, {
-            className: popoverContentClassName,
-            value: color2,
-            onChange: onColorChange,
-            colors,
-            disableCustomColors,
-            __experimentalIsRenderedInSidebar,
-            clearable: false,
-            enableAlpha
-          }), enableStyle && isStyleSettable && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(component_default16, {
-            label: (0, import_i18n22.__)("Style"),
-            value: style2,
-            onChange: onStyleChange
-          })]
-        }), /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", {
-          className: resetButtonWrapperClassName,
-          children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(button_default, {
-            variant: "tertiary",
-            onClick: () => {
-              onReset();
-            },
-            disabled: !enableResetButton,
-            accessibleWhenDisabled: true,
-            __next40pxDefaultSize: true,
-            children: (0, import_i18n22.__)("Reset")
-          })
+    const renderContent = () => /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(dropdown_content_wrapper_default, {
+      paddingSize: "medium",
+      children: [/* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(component_default18, {
+        className: popoverControlsClassName,
+        spacing: 6,
+        children: [/* @__PURE__ */ (0, import_jsx_runtime146.jsx)(color_palette_default, {
+          className: popoverContentClassName,
+          value: color2,
+          onChange: onColorChange,
+          colors,
+          disableCustomColors,
+          __experimentalIsRenderedInSidebar,
+          clearable: false,
+          enableAlpha
+        }), enableStyle && isStyleSettable && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(component_default16, {
+          label: (0, import_i18n22.__)("Style"),
+          value: style2,
+          onChange: onStyleChange
         })]
-      })
+      }), /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", {
+        className: resetButtonWrapperClassName,
+        children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(button_default, {
+          variant: "tertiary",
+          onClick: () => {
+            onReset();
+          },
+          disabled: !enableResetButton,
+          accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true,
+          children: (0, import_i18n22.__)("Reset")
+        })
+      })]
     });
     return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(dropdown_default, {
       renderToggle,
@@ -42745,7 +42746,7 @@ This message will only show in development mode. It won't appear in production. 
       value: isDisabled,
       children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)("div", {
         // @ts-ignore Reason: inert is a recent HTML attribute
-        inert: isDisabled ? "true" : void 0,
+        inert: isDisabled ? true : void 0,
         className: isDisabled ? cx3(disabledStyles3, className2, "components-disabled") : void 0,
         ...props,
         children
@@ -48717,13 +48718,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (naturalWidth && naturalHeight) {
       aspectRatio2 = `${naturalWidth} / ${naturalHeight}`;
     }
+    const ch = children;
     return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(TagName59, {
       className: "components-responsive-wrapper",
       children: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)("div", {
-        children: (0, import_element173.cloneElement)(children, {
-          className: clsx_default("components-responsive-wrapper__content", children.props.className),
+        children: (0, import_element173.cloneElement)(ch, {
+          className: clsx_default("components-responsive-wrapper__content", ch.props.className),
           style: {
-            ...children.props.style,
+            ...ch.props.style,
             aspectRatio: aspectRatio2
           }
         })
@@ -51433,7 +51435,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_compose81 = __toESM(require_compose(), 1);
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
   var with_notices_default = (0, import_compose81.createHigherOrderComponent)((OriginalComponent) => {
-    function Component8(props, ref) {
+    return function Component8(props) {
       const [noticeList, setNoticeList] = (0, import_element208.useState)([]);
       const noticeOperations = (0, import_element208.useMemo)(() => {
         const createNotice = (notice) => {
@@ -51469,22 +51471,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           onRemove: noticeOperations.removeNotice
         })
       };
-      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(OriginalComponent, {
-        ...propsOut,
-        ref
-      }) : /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(OriginalComponent, {
+      return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(OriginalComponent, {
         ...propsOut
       });
-    }
-    let isForwardRef;
-    const {
-      render
-    } = OriginalComponent;
-    if (typeof render === "function") {
-      isForwardRef = true;
-      return (0, import_element208.forwardRef)(Component8);
-    }
-    return Component8;
+    };
   }, "withNotices");
 
   // packages/components/build-module/higher-order/with-spoken-messages/index.mjs

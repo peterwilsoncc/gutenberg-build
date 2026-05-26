@@ -16799,7 +16799,10 @@ var import_theme = __toESM(require_theme(), 1);
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 var import_element32 = __toESM(require_element(), 1);
 function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element32.cloneElement)(slot ?? defaultSlot, { children });
+  return (0, import_element32.cloneElement)(
+    slot ?? defaultSlot,
+    { children }
+  );
 }
 
 // packages/ui/build-module/utils/use-deprioritized-initial-focus.mjs
@@ -41289,7 +41292,7 @@ function WidgetPreview({ item }) {
     () => createDashboardWidget(item, item.example?.attributes),
     [item]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)("div", { className: widget_picker_default.preview, ...{ inert: "" }, children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(import_element163.Suspense, { fallback: null, children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(WidgetRender, { widget: exampleWidget, widgetType: item }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)("div", { className: widget_picker_default.preview, inert: true, children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(import_element163.Suspense, { fallback: null, children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(WidgetRender, { widget: exampleWidget, widgetType: item }) }) });
 }
 var fields2 = [
   {
@@ -41485,7 +41488,7 @@ var WidgetChrome = (0, import_element166.forwardRef)(
         ref,
         className: clsx_default(widget_chrome_default.widgetChrome, className),
         "aria-labelledby": widgetType.title ? titleId : void 0,
-        ...editMode ? { inert: "" } : {},
+        inert: editMode || void 0,
         children: [
           isHeaderHidden ? /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(VisuallyHidden, { children: header }) : header,
           /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
@@ -46435,7 +46438,7 @@ function GridItem4({
               "div",
               {
                 style: { display: "contents" },
-                ...dragging ? { inert: "" } : {},
+                inert: dragging || void 0,
                 children: actionableArea
               }
             )
@@ -47324,7 +47327,9 @@ var DashboardGrid = (0, import_element174.forwardRef)(
     const [activeId, setActiveId] = (0, import_element174.useState)(null);
     const [isResizing, setIsResizing] = (0, import_element174.useState)(false);
     const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element174.useState)(null);
-    const latestLayoutRef = (0, import_element174.useRef)();
+    const latestLayoutRef = (0, import_element174.useRef)(
+      void 0
+    );
     const lastReorderCursorRef = (0, import_element174.useRef)(null);
     const resizeBaselineRef = (0, import_element174.useRef)(null);
     const captureLayoutSnapshotRef = (0, import_element174.useRef)(() => {
@@ -47439,8 +47444,9 @@ var DashboardGrid = (0, import_element174.forwardRef)(
           rest.push(child);
           return;
         }
-        const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element174.cloneElement)(child, {
+        const typedChild = child;
+        const { actionableArea } = typedChild.props;
+        const stripped = actionableArea !== void 0 ? (0, import_element174.cloneElement)(typedChild, {
           actionableArea: void 0
         }) : child;
         byKey.set(key2, stripped);
@@ -47934,7 +47940,7 @@ function LanesItem({
               "div",
               {
                 style: { display: "contents" },
-                ...dragging ? { inert: "" } : {},
+                inert: dragging || void 0,
                 children: actionableArea
               }
             )
@@ -48361,7 +48367,7 @@ var DashboardLanes = (0, import_element177.forwardRef)(
     const [activeId, setActiveId] = (0, import_element177.useState)(null);
     const [isResizing, setIsResizing] = (0, import_element177.useState)(false);
     const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element177.useState)(null);
-    const latestLayoutRef = (0, import_element177.useRef)();
+    const latestLayoutRef = (0, import_element177.useRef)(void 0);
     const lastReorderCursorRef = (0, import_element177.useRef)(null);
     const resizeBaselineRef = (0, import_element177.useRef)(null);
     const captureLayoutSnapshotRef = (0, import_element177.useRef)(() => {
