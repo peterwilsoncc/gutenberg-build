@@ -696,6 +696,14 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   color: #fff;
   background: var(--wp-admin-theme-color);
 }
+@media not (prefers-reduced-motion) {
+  .block-editor-default-block-appender .block-editor-inserter__toggle.components-button.has-icon svg {
+    transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s;
+  }
+}
+.block-editor-default-block-appender .block-editor-inserter__toggle.components-button.has-icon.is-pressed svg {
+  transform: rotate(45deg);
+}
 
 .block-editor-default-block-appender .block-editor-inserter {
   position: absolute;
@@ -743,6 +751,16 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
 .block-editor-block-list__block .block-list-appender .block-list-appender__toggle:hover {
   color: #fff;
   background: var(--wp-admin-theme-color);
+}
+@media not (prefers-reduced-motion) {
+  .block-editor-block-list__block .block-list-appender .block-editor-inserter__toggle.components-button.has-icon svg,
+  .block-editor-block-list__block .block-list-appender .block-list-appender__toggle svg {
+    transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s;
+  }
+}
+.block-editor-block-list__block .block-list-appender .block-editor-inserter__toggle.components-button.has-icon.is-pressed svg,
+.block-editor-block-list__block .block-list-appender .block-list-appender__toggle.is-pressed svg {
+  transform: rotate(45deg);
 }
 .block-editor-block-list__block .block-list-appender .block-editor-inserter__toggle.components-button.has-icon,
 .block-editor-block-list__block .block-list-appender .block-list-appender__toggle {

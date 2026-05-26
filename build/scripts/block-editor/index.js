@@ -41297,6 +41297,7 @@ var wp;
         className: "block-editor-inserter__toggle",
         "aria-haspopup": !hasSingleBlockType ? "true" : false,
         "aria-expanded": !hasSingleBlockType ? isOpen : false,
+        isPressed: !hasSingleBlockType && isOpen,
         disabled: disabled2,
         ...rest
       }

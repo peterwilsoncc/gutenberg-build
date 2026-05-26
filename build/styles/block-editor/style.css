@@ -419,6 +419,16 @@ iframe[name=editor-canvas] {
   color: #fff;
   background: var(--wp-admin-theme-color);
 }
+@media not (prefers-reduced-motion) {
+  .block-editor-block-list__empty-block-inserter .block-editor-inserter__toggle.components-button.has-icon svg,
+  .block-editor-block-list__insertion-point-inserter .block-editor-inserter__toggle.components-button.has-icon svg {
+    transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s;
+  }
+}
+.block-editor-block-list__empty-block-inserter .block-editor-inserter__toggle.components-button.has-icon.is-pressed svg,
+.block-editor-block-list__insertion-point-inserter .block-editor-inserter__toggle.components-button.has-icon.is-pressed svg {
+  transform: rotate(45deg);
+}
 
 .block-editor-block-list__insertion-point-inserter .block-editor-inserter__toggle.components-button.has-icon {
   background: var(--wp-admin-theme-color);
