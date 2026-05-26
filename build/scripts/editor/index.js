@@ -20909,7 +20909,8 @@ var wp;
           ...!!fieldValue && {
             // Perform a search by relevance when the field is changed.
             search: fieldValue,
-            orderby: "relevance"
+            orderby: "relevance",
+            search_columns: ["post_title"]
           }
         };
         return {
@@ -76809,6 +76810,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (!!fieldValue) {
           query.search = fieldValue;
           query.orderby = "relevance";
+          query.search_columns = ["post_title"];
         }
         const parentPost = pageId ? getEntityRecord("postType", postTypeSlug, pageId) : null;
         return {
