@@ -973,8 +973,13 @@ var wp;
   // packages/compose/build-module/higher-order/pure/index.mjs
   var import_is_shallow_equal = __toESM(require_is_shallow_equal(), 1);
   var import_element = __toESM(require_element(), 1);
+  var import_deprecated = __toESM(require_deprecated(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   var pure = createHigherOrderComponent(function(WrappedComponent) {
+    (0, import_deprecated.default)("wp.compose.pure", {
+      since: "7.1",
+      alternative: "Use `memo` or `PureComponent` instead"
+    });
     if (WrappedComponent.prototype instanceof import_element.Component) {
       return class extends WrappedComponent {
         shouldComponentUpdate(nextProps, nextState) {
@@ -995,7 +1000,7 @@ var wp;
 
   // packages/compose/build-module/higher-order/with-global-events/index.mjs
   var import_element2 = __toESM(require_element(), 1);
-  var import_deprecated = __toESM(require_deprecated(), 1);
+  var import_deprecated2 = __toESM(require_deprecated(), 1);
 
   // packages/compose/build-module/higher-order/with-global-events/listener.mjs
   var Listener = class {
@@ -1036,7 +1041,7 @@ var wp;
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var listener = new listener_default();
   function withGlobalEvents(eventTypesToHandlers) {
-    (0, import_deprecated.default)("wp.compose.withGlobalEvents", {
+    (0, import_deprecated2.default)("wp.compose.withGlobalEvents", {
       since: "5.7",
       alternative: "useEffect"
     });
@@ -1171,10 +1176,10 @@ var wp;
 
   // packages/compose/build-module/higher-order/with-state/index.mjs
   var import_element5 = __toESM(require_element(), 1);
-  var import_deprecated2 = __toESM(require_deprecated(), 1);
+  var import_deprecated3 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   function withState(initialState = {}) {
-    (0, import_deprecated2.default)("wp.compose.withState", {
+    (0, import_deprecated3.default)("wp.compose.withState", {
       since: "5.8",
       alternative: "wp.element.useState"
     });
@@ -1257,7 +1262,7 @@ var wp;
 
   // packages/compose/build-module/hooks/use-copy-on-click/index.mjs
   var import_element8 = __toESM(require_element(), 1);
-  var import_deprecated3 = __toESM(require_deprecated(), 1);
+  var import_deprecated4 = __toESM(require_deprecated(), 1);
 
   // packages/compose/build-module/hooks/use-copy-to-clipboard/index.mjs
   var import_element7 = __toESM(require_element(), 1);
@@ -1329,7 +1334,7 @@ var wp;
 
   // packages/compose/build-module/hooks/use-copy-on-click/index.mjs
   function useCopyOnClick(ref, text, timeout = 4e3) {
-    (0, import_deprecated3.default)("wp.compose.useCopyOnClick", {
+    (0, import_deprecated4.default)("wp.compose.useCopyOnClick", {
       since: "5.8",
       alternative: "wp.compose.useCopyToClipboard"
     });
