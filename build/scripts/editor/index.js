@@ -90675,6 +90675,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element308 = __toESM(require_element(), 1);
   var import_i18n310 = __toESM(require_i18n(), 1);
   var import_html_entities33 = __toESM(require_html_entities(), 1);
+  var import_keycodes22 = __toESM(require_keycodes(), 1);
   var import_notices35 = __toESM(require_notices(), 1);
   var import_preferences27 = __toESM(require_preferences(), 1);
   var import_jsx_runtime512 = __toESM(require_jsx_runtime(), 1);
@@ -90756,7 +90757,12 @@ If there's a particular need for this, please submit a feature request at https:
                   tabIndex: 0,
                   "aria-label": tooltipText,
                   onClick: () => setIsSwapModalOpen(true),
-                  onKeyPress: () => setIsSwapModalOpen(true),
+                  onKeyDown: (event) => {
+                    if (event.keyCode === import_keycodes22.ENTER || event.keyCode === import_keycodes22.SPACE) {
+                      event.preventDefault();
+                      setIsSwapModalOpen(true);
+                    }
+                  },
                   children: previewContent
                 }
               )
@@ -91565,7 +91571,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components283 = __toESM(require_components(), 1);
   var import_i18n318 = __toESM(require_i18n(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
-  var import_keycodes22 = __toESM(require_keycodes(), 1);
+  var import_keycodes23 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
   function NoteForm({ onSubmit, onCancel, note, labels }) {
     const [inputComment, setInputComment] = (0, import_element313.useState)(
@@ -91596,7 +91602,7 @@ If there's a particular need for this, please submit a feature request at https:
               rows: 1,
               maxRows: 20,
               onKeyDown: (event) => {
-                if (import_keycodes22.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
+                if (import_keycodes23.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
                   event.target.parentNode.requestSubmit();
                 }
                 if (event.key === "Escape") {
