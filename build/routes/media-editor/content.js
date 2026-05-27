@@ -19231,13 +19231,12 @@ function DataForm({
 }
 
 // packages/media-editor/build-module/components/media-form/index.mjs
-var import_components28 = __toESM(require_components(), 1);
+var import_components27 = __toESM(require_components(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
 var import_element66 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/components/media-form/sidebar-datetime-view.mjs
 var import_date10 = __toESM(require_date(), 1);
-var import_components27 = __toESM(require_components(), 1);
 var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function SidebarDatetimeView({
   item,
@@ -19253,15 +19252,15 @@ function SidebarDatetimeView({
     settings.formats.datetimeAbbreviated,
     (0, import_date10.getDate)(value)
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(import_components27.Tooltip, { text: fullDatetime, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-    "time",
-    {
-      dateTime: value,
-      "aria-label": fullDatetime,
-      tabIndex: -1,
-      children: dateOnly
-    }
-  ) });
+  return /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+      tooltip_exports.Trigger,
+      {
+        render: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("time", { dateTime: value, "aria-label": fullDatetime, children: dateOnly })
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(tooltip_exports.Popup, { children: fullDatetime })
+  ] });
 }
 
 // packages/media-editor/build-module/components/media-form/index.mjs
@@ -19278,7 +19277,7 @@ function MediaForm({
     [fields]
   );
   if (!media || !onChange) {
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components28.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components27.Spinner, {}) });
   }
   const defaultForm = {
     layout: {
@@ -19300,7 +19299,7 @@ function MediaForm({
     })
   };
   const form = formOverrides || defaultForm;
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components28.__experimentalVStack, { spacing: 4, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components27.__experimentalVStack, { spacing: 4, children: [
     /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("h2", {}), children: (0, import_i18n24.__)("Media details") }),
     header,
     /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
@@ -19396,14 +19395,14 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 (0, import_data.register)(store);
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_components40 = __toESM(require_components(), 1);
+var import_components39 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_components39 = __toESM(require_components(), 1);
+var import_components38 = __toESM(require_components(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 var import_element87 = __toESM(require_element(), 1);
@@ -19412,7 +19411,7 @@ var import_keycodes3 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_components33 = __toESM(require_components(), 1);
+var import_components32 = __toESM(require_components(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
 var import_element68 = __toESM(require_element(), 1);
@@ -19422,7 +19421,7 @@ var import_compose4 = __toESM(require_compose(), 1);
 var import_plugins2 = __toESM(require_plugins(), 1);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_components29 = __toESM(require_components(), 1);
+var import_components28 = __toESM(require_components(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_plugins = __toESM(require_plugins(), 1);
 
@@ -19705,7 +19704,7 @@ function roleSupportsCheckedState(role) {
   ].includes(role);
 }
 function ComplementaryAreaToggle({
-  as = import_components29.Button,
+  as = import_components28.Button,
   scope,
   identifier: identifierProp,
   icon: iconProp,
@@ -19769,23 +19768,23 @@ var ComplementaryAreaHeader = ({
 var complementary_area_header_default = ComplementaryAreaHeader;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_components31 = __toESM(require_components(), 1);
+var import_components30 = __toESM(require_components(), 1);
 
 // packages/interface/build-module/components/action-item/index.mjs
-var import_components30 = __toESM(require_components(), 1);
+var import_components29 = __toESM(require_components(), 1);
 var import_element67 = __toESM(require_element(), 1);
 var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 var noop4 = () => {
 };
 function ActionItemSlot({
   name,
-  as: Component = import_components30.MenuGroup,
+  as: Component = import_components29.MenuGroup,
   fillProps = {},
   bubblesVirtually,
   ...props
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-    import_components30.Slot,
+    import_components29.Slot,
     {
       name,
       bubblesVirtually,
@@ -19818,8 +19817,8 @@ function ActionItemSlot({
     }
   );
 }
-function ActionItem({ name, as: Component = import_components30.Button, onClick, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components30.Fill, { name, children: ({ onClick: fpOnClick }) => {
+function ActionItem({ name, as: Component = import_components29.Button, onClick, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components29.Fill, { name, children: ({ onClick: fpOnClick }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
       Component,
       {
@@ -19844,7 +19843,7 @@ var PluginsMenuItem = ({
   __unstableExplicitMenuItem,
   __unstableTarget,
   ...restProps
-}) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components31.MenuItem, { ...restProps });
+}) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components30.MenuItem, { ...restProps });
 function ComplementaryAreaMoreMenuItem({
   scope,
   target,
@@ -19876,13 +19875,13 @@ function ComplementaryAreaMoreMenuItem({
 }
 
 // packages/interface/build-module/components/pinned-items/index.mjs
-var import_components32 = __toESM(require_components(), 1);
+var import_components31 = __toESM(require_components(), 1);
 var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 function PinnedItems({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components32.Fill, { name: `PinnedItems/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components31.Fill, { name: `PinnedItems/${scope}`, ...props });
 }
 function PinnedItemsSlot({ scope, className, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components32.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components31.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     "div",
     {
       className: clsx_default(
@@ -19900,7 +19899,7 @@ var pinned_items_default = PinnedItems;
 var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION = 0.3;
 function ComplementaryAreaSlot({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.Slot, { name: `ComplementaryArea/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components32.Slot, { name: `ComplementaryArea/${scope}`, ...props });
 }
 var SIDEBAR_WIDTH = 280;
 var variants = {
@@ -19929,8 +19928,8 @@ function ComplementaryAreaFill({
     duration: disableMotion || isMobileViewport || !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea ? 0 : ANIMATION_DURATION,
     ease: [0.6, 0, 0.4, 1]
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-    import_components33.__unstableMotion.div,
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components32.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components32.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+    import_components32.__unstableMotion.div,
     {
       variants,
       initial: "closed",
@@ -20123,7 +20122,7 @@ function ComplementaryArea({
               children: header || /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_jsx_runtime103.Fragment, { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime103.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
                 isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-                  import_components33.Button,
+                  import_components32.Button,
                   {
                     className: "interface-complementary-area__pin-unpin-item",
                     icon: isPinned ? star_filled_default : star_empty_default,
@@ -20140,7 +20139,7 @@ function ComplementaryArea({
               ] })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.Panel, { className: panelClassName, children })
+          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components32.Panel, { className: panelClassName, children })
         ]
       }
     )
@@ -20151,7 +20150,7 @@ var complementary_area_default = ComplementaryArea;
 
 // packages/interface/build-module/components/interface-skeleton/index.mjs
 var import_element69 = __toESM(require_element(), 1);
-var import_components34 = __toESM(require_components(), 1);
+var import_components33 = __toESM(require_components(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
 var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
@@ -20246,10 +20245,10 @@ function InterfaceSkeleton({
       ),
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components34.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
             navigable_region_default,
             {
-              as: import_components34.__unstableMotion.div,
+              as: import_components33.__unstableMotion.div,
               className: "interface-interface-skeleton__header",
               ariaLabel: mergedLabels.header,
               initial: isDistractionFree && !isMobileViewport ? "distractionFreeHidden" : "hidden",
@@ -20263,12 +20262,12 @@ function InterfaceSkeleton({
           ) }),
           isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
           /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components34.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__secondary-sidebar",
                 ariaLabel: mergedLabels.secondarySidebar,
-                as: import_components34.__unstableMotion.div,
+                as: import_components33.__unstableMotion.div,
                 initial: "closed",
                 animate: "open",
                 exit: "closed",
@@ -20278,7 +20277,7 @@ function InterfaceSkeleton({
                 },
                 transition: defaultTransition,
                 children: /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(
-                  import_components34.__unstableMotion.div,
+                  import_components33.__unstableMotion.div,
                   {
                     style: {
                       position: "absolute",
@@ -24508,7 +24507,7 @@ function MediaEditorCanvas({
 }
 
 // packages/media-editor/build-module/components/media-editor-toolbar/index.mjs
-var import_components36 = __toESM(require_components(), 1);
+var import_components35 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 
@@ -24935,7 +24934,7 @@ function MediaEditorToolbar({
         ),
         /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)("div", { className: "media-editor-toolbar__action-cluster", children: [
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-            import_components36.Button,
+            import_components35.Button,
             {
               size: "compact",
               icon: rotate_left_default,
@@ -24945,7 +24944,7 @@ function MediaEditorToolbar({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-            import_components36.Button,
+            import_components35.Button,
             {
               size: "compact",
               icon: rotate_right_default,
@@ -24955,7 +24954,7 @@ function MediaEditorToolbar({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-            import_components36.Button,
+            import_components35.Button,
             {
               size: "compact",
               icon: flip_horizontal_default,
@@ -24969,7 +24968,7 @@ function MediaEditorToolbar({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-            import_components36.Button,
+            import_components35.Button,
             {
               size: "compact",
               icon: flip_vertical_default,
@@ -24983,7 +24982,7 @@ function MediaEditorToolbar({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-            import_components36.Button,
+            import_components35.Button,
             {
               size: "compact",
               icon: undo_default,
@@ -24996,7 +24995,7 @@ function MediaEditorToolbar({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-            import_components36.Button,
+            import_components35.Button,
             {
               size: "compact",
               icon: redo_default,
@@ -25009,7 +25008,7 @@ function MediaEditorToolbar({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-            import_components36.Button,
+            import_components35.Button,
             {
               size: "compact",
               variant: "tertiary",
@@ -25026,7 +25025,7 @@ function MediaEditorToolbar({
 }
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
-var import_components37 = __toESM(require_components(), 1);
+var import_components36 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCropPanel({
@@ -25053,7 +25052,7 @@ function MediaEditorCropPanel({
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("h2", {}), children: (0, import_i18n32.__)("Crop options") }),
           /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
-            import_components37.SelectControl,
+            import_components36.SelectControl,
             {
               __next40pxDefaultSize: true,
               label: (0, import_i18n32.__)("Aspect ratio"),
@@ -25066,7 +25065,7 @@ function MediaEditorCropPanel({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
-            import_components37.ToggleControl,
+            import_components36.ToggleControl,
             {
               label: (0, import_i18n32.__)("Show resize handles"),
               checked: freeformCrop,
@@ -25074,7 +25073,7 @@ function MediaEditorCropPanel({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
-            import_components37.RangeControl,
+            import_components36.RangeControl,
             {
               __next40pxDefaultSize: true,
               label: (0, import_i18n32.__)("Zoom"),
@@ -25103,7 +25102,7 @@ function MediaEditorCropPanel({
 }
 
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
-var import_components38 = __toESM(require_components(), 1);
+var import_components37 = __toESM(require_components(), 1);
 var import_element84 = __toESM(require_element(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
@@ -25203,7 +25202,7 @@ function MediaEditorKeyboardShortcutsModal({
   onClose
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
-    import_components38.Modal,
+    import_components37.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
       title: (0, import_i18n33.__)("Keyboard shortcuts"),
@@ -25507,7 +25506,7 @@ function useCropOptions({
 var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var PLACEMENT_CONTROL_IDLE_MS = 300;
-var { Tabs } = unlock3(import_components39.privateApis);
+var { Tabs } = unlock3(import_components38.privateApis);
 function MediaEditorSidebar({ tabs }) {
   const tabsContextValue = (0, import_element87.useContext)(Tabs.Context);
   return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
@@ -25546,7 +25545,7 @@ function HeaderActions({
   const saveDisabled = isSaving || !hasMedia || !hasChanges;
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element87.useState)(false);
   return /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
-    import_components39.Flex,
+    import_components38.Flex,
     {
       className: "media-editor__header-actions",
       justify: "flex-end",
@@ -25554,7 +25553,7 @@ function HeaderActions({
       gap: 2,
       children: [
         isImage && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-          import_components39.Button,
+          import_components38.Button,
           {
             size: "compact",
             icon: keyboard_default,
@@ -25564,7 +25563,7 @@ function HeaderActions({
         ),
         /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
         /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-          import_components39.Button,
+          import_components38.Button,
           {
             size: "compact",
             variant: "tertiary",
@@ -25575,7 +25574,7 @@ function HeaderActions({
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-          import_components39.Button,
+          import_components38.Button,
           {
             size: "compact",
             variant: "primary",
@@ -25587,7 +25586,7 @@ function HeaderActions({
           }
         ),
         showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-          import_components39.Button,
+          import_components38.Button,
           {
             size: "compact",
             icon: close_default,
@@ -25821,7 +25820,7 @@ function MediaEditorContent({
       onChange: handleChange,
       settings: { fields },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components39.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(import_jsx_runtime117.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components38.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(import_jsx_runtime117.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(MediaEditorSidebar, { tabs }) }),
           /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
             interface_skeleton_default,
@@ -25854,7 +25853,7 @@ function MediaEditorContent({
           )
         ] }) }),
         /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-          import_components39.__experimentalConfirmDialog,
+          import_components38.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
             confirmButtonText: (0, import_i18n35.__)("Discard"),
@@ -25972,7 +25971,7 @@ function MediaEditorModal({
           className: "media-editor-modal__shortcut-scope",
           onKeyDown: stopKeyDownPropagation,
           children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-            import_components40.Modal,
+            import_components39.Modal,
             {
               className: "media-editor-modal",
               title: (0, import_i18n36.__)("Edit media"),
