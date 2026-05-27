@@ -52782,7 +52782,8 @@ var wp;
     onDragEnd,
     draggable,
     isExpanded,
-    ariaDescribedBy
+    ariaDescribedBy,
+    visibilityLabel
   }, ref) {
     const blockInformation = useBlockDisplayInformation(clientId);
     const blockTitle = useBlockDisplayTitle({
@@ -52790,21 +52791,16 @@ var wp;
       context: "list-view"
     });
     const { isLocked } = useBlockLock(clientId);
-    const { hasPatternName, blockVisibility: blockVisibility2 } = (0, import_data126.useSelect)(
+    const hasPatternName = (0, import_data126.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = unlock(select3(store));
-        const attributes = getBlockAttributes3(clientId);
-        return {
-          hasPatternName: !!attributes?.metadata?.patternName,
-          blockVisibility: attributes?.metadata?.blockVisibility
-        };
+        return !!getBlockAttributes3(clientId)?.metadata?.patternName;
       },
       [clientId]
     );
     const shouldShowLockIcon = isLocked;
     const isSticky = blockInformation?.positionType === "sticky";
     const images = useListViewImages({ clientId, isExpanded });
-    const visibilityLabel = getBlockVisibilityLabel(blockVisibility2);
     const onDragStartHandler = (event) => {
       event.dataTransfer.clearData();
       onDragStart?.(event);
@@ -52874,9 +52870,12 @@ var wp;
                     ))
                   }
                 ) : null,
-                !!visibilityLabel && // TODO: `visibilityLabel` is not exposed to
-                // assistive technology — the trigger is
-                // `aria-hidden`, so the label is sighted-hover-only.
+                !!visibilityLabel && // The tooltip below is a sighted-hover affordance for
+                // the (decorative) visibility icon. The same
+                // `visibilityLabel` is exposed to assistive technology
+                // via the row's `aria-describedby`, which references the
+                // hidden `AriaReferencedText` rendered by the parent
+                // `ListViewBlock`.
                 /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(tooltip_exports.Root, { children: [
                   /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
                     tooltip_exports.Trigger,
@@ -53492,7 +53491,8 @@ var wp;
                     onFocus,
                     isExpanded: canEditBlock2 ? isExpanded : void 0,
                     selectedClientIds,
-                    ariaDescribedBy: descriptionId
+                    ariaDescribedBy: descriptionId,
+                    visibilityLabel: blockVisibilityDescription
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(AriaReferencedText, { id: descriptionId, children: [
