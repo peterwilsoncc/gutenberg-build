@@ -15,6 +15,13 @@ return array(
 		'presentation' => 'content-bleed',
 	),
 	array(
+		'name'         => 'core/hello-dolly',
+		'dir_name'     => 'hello-dolly',
+		'has_render'   => true,
+		'has_widget'   => true,
+		'presentation' => 'full-bleed',
+	),
+	array(
 		'name'         => 'core/hello-world',
 		'dir_name'     => 'hello-world',
 		'has_render'   => true,
