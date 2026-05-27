@@ -25028,6 +25028,14 @@ function MediaEditorToolbar({
 var import_components36 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+var ZOOM_PERCENTAGE_SCALE = 100;
+var MAX_ZOOM_PERCENTAGE = MAX_ZOOM * ZOOM_PERCENTAGE_SCALE;
+function getZoomPercentageForDisplay(zoom) {
+  return Math.round(zoom * ZOOM_PERCENTAGE_SCALE);
+}
+function getMinZoomPercentageForDisplay(zoom) {
+  return Math.ceil(zoom * ZOOM_PERCENTAGE_SCALE);
+}
 function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
@@ -25039,6 +25047,8 @@ function MediaEditorCropPanel({
   const { state, setZoom } = useMediaEditor();
   const zoomGestureHandlers = useCropGestureHandlers();
   const minZoom = getMinZoom(state);
+  const zoomPercentage = getZoomPercentageForDisplay(state.zoom);
+  const minZoomPercentage = getMinZoomPercentageForDisplay(minZoom);
   return (
     // Tag the whole panel as a crop-control region so the modal's
     // Cmd+Z handler doesn't mistake the SelectControl / ToggleControl
@@ -25076,21 +25086,24 @@ function MediaEditorCropPanel({
             import_components36.RangeControl,
             {
               __next40pxDefaultSize: true,
-              label: (0, import_i18n32.__)("Zoom"),
-              min: minZoom,
-              max: MAX_ZOOM,
-              step: 0.1,
-              value: state.zoom,
+              label: (0, import_i18n32.__)("Zoom (%)"),
+              min: minZoomPercentage,
+              max: MAX_ZOOM_PERCENTAGE,
+              step: 1,
+              shiftStep: 10,
+              value: zoomPercentage,
               onChange: (value) => {
                 onPlacementControlInteraction?.();
-                setZoom(typeof value === "number" ? value : minZoom);
+                setZoom(
+                  typeof value === "number" ? value / ZOOM_PERCENTAGE_SCALE : minZoom
+                );
               },
               renderTooltipContent: (value) => {
-                const zoom = typeof value === "number" ? value : minZoom;
+                const percentage = typeof value === "number" ? value : minZoomPercentage;
                 return (0, import_i18n32.sprintf)(
                   /* translators: %d: zoom level as a percentage. */
                   (0, import_i18n32.__)("%d%%"),
-                  Math.round(zoom * 100)
+                  Math.round(percentage)
                 );
               }
             }
