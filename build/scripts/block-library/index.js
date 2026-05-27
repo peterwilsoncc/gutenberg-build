@@ -36809,7 +36809,7 @@ ${js}
       getBlockName,
       getBlock
     } = (0, import_data55.useSelect)(import_block_editor129.store);
-    const { mergeBlocks, moveBlocksToPosition, removeBlock } = (0, import_data55.useDispatch)(import_block_editor129.store);
+    const { mergeBlocks, moveBlocksToPosition, removeBlock, insertBlocks } = (0, import_data55.useDispatch)(import_block_editor129.store);
     const outdentListItem = useOutdentListItem();
     function getTrailingId(id) {
       const order = getBlockOrder(id);
@@ -36828,24 +36828,6 @@ ${js}
         return;
       }
       return parentListItemId;
-    }
-    function _getNextId(id) {
-      const next2 = getNextBlockClientId(id);
-      if (next2) {
-        return next2;
-      }
-      const parentListItemId = getParentListItemId(id);
-      if (!parentListItemId) {
-        return;
-      }
-      return _getNextId(parentListItemId);
-    }
-    function getNextId(id) {
-      const order = getBlockOrder(id);
-      if (!order.length) {
-        return _getNextId(id);
-      }
-      return getBlockOrder(order[0])[0];
     }
     return (forward) => {
       function mergeWithNested(clientIdA, clientIdB) {
@@ -36870,12 +36852,53 @@ ${js}
         });
       }
       if (forward) {
-        const nextBlockClientId = getNextId(clientId);
-        if (!nextBlockClientId) {
-          onMerge(forward);
-          return;
+        const innerListId = getBlockOrder(clientId)[0];
+        let nextBlockClientId;
+        let listItemId = clientId;
+        if (innerListId) {
+          nextBlockClientId = getBlockOrder(innerListId)[0];
+        } else {
+          while (!(nextBlockClientId = getNextBlockClientId(listItemId))) {
+            const parentLi = getParentListItemId(listItemId);
+            if (!parentLi) {
+              break;
+            }
+            listItemId = parentLi;
+          }
         }
-        if (getParentListItemId(nextBlockClientId)) {
+        if (!nextBlockClientId) {
+          const outerListId = getBlockRootClientId(listItemId);
+          const followingBlockId = getNextBlockClientId(outerListId);
+          if (followingBlockId) {
+            if (getBlockName(followingBlockId) === "core/list") {
+              registry.batch(() => {
+                moveBlocksToPosition(
+                  getBlockOrder(followingBlockId),
+                  followingBlockId,
+                  outerListId
+                );
+                removeBlock(followingBlockId, false);
+              });
+            } else {
+              const transformed = (0, import_blocks47.switchToBlockType)(
+                getBlock(followingBlockId),
+                "core/list"
+              );
+              const newInnerBlocks = transformed?.[0]?.innerBlocks;
+              if (newInnerBlocks?.length) {
+                registry.batch(() => {
+                  insertBlocks(
+                    newInnerBlocks,
+                    void 0,
+                    outerListId,
+                    false
+                  );
+                  removeBlock(followingBlockId, false);
+                });
+              }
+            }
+          }
+        } else if (getParentListItemId(nextBlockClientId)) {
           outdentListItem(nextBlockClientId);
         } else {
           mergeWithNested(clientId, nextBlockClientId);
