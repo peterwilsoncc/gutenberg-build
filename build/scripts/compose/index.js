@@ -1855,7 +1855,7 @@ var wp;
     getValue: () => false
   };
   function getMQLSubscriber(view, query) {
-    if (!query || typeof view?.matchMedia !== "function") {
+    if (!view || !query || typeof view.matchMedia !== "function") {
       return EMPTY_SUBSCRIBER;
     }
     let queryCache = perWindowCache.get(view);
@@ -1894,7 +1894,7 @@ var wp;
     queryCache.set(query, subscriber);
     return subscriber;
   }
-  function useMediaQuery(query, view = window) {
+  function useMediaQuery(query, view = typeof window !== "undefined" ? window : void 0) {
     const source = getMQLSubscriber(view, query);
     return (0, import_element18.useSyncExternalStore)(
       source.subscribe,
@@ -2019,7 +2019,7 @@ var wp;
     null
   );
   ViewportMatchWidthContext.displayName = "ViewportMatchWidthContext";
-  var useViewportMatch = (breakpoint, operator = ">=", view = window) => {
+  var useViewportMatch = (breakpoint, operator = ">=", view = typeof window !== "undefined" ? window : void 0) => {
     const simulatedWidth = (0, import_element21.useContext)(ViewportMatchWidthContext);
     const mediaQuery = !simulatedWidth && `(${CONDITIONS[operator]}: ${BREAKPOINTS[breakpoint]}px)`;
     const mediaQueryResult = useMediaQuery(mediaQuery || void 0, view);
