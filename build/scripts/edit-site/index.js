@@ -58853,7 +58853,6 @@ If there's a particular need for this, please submit a feature request at https:
             {
               postType: postType2,
               postId,
-              onClose: closeModal,
               hideActions: true
             }
           ) }),
