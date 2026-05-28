@@ -48151,6 +48151,7 @@ ${js}
     {
       supports: {
         className: false,
+        color: true,
         typography: {
           fontSize: true
         }
