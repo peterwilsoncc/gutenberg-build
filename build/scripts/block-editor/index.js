@@ -10827,6 +10827,8 @@ var wp;
     getBlockSettings: () => getBlockSettings,
     getBlockStyles: () => getBlockStyles,
     getBlockWithoutAttributes: () => getBlockWithoutAttributes,
+    getClientIdWithClientIdsTree: () => getClientIdWithClientIdsTree,
+    getClientIdsTree: () => getClientIdsTree,
     getClosestAllowedInsertionPoint: () => getClosestAllowedInsertionPoint,
     getClosestAllowedInsertionPointForPattern: () => getClosestAllowedInsertionPointForPattern,
     getContentLockingParent: () => getContentLockingParent,
@@ -11076,6 +11078,25 @@ var wp;
     const isRootBlockMain = getSectionRootClientId(state) === rootClientId;
     return isRootBlockMain || isContainerContentBlock && isBlockContentBlock;
   }
+  function getClientIdWithClientIdsTreeUnmemoized(state, clientId) {
+    return {
+      clientId,
+      innerBlocks: getClientIdsTreeUnmemoized(state, clientId)
+    };
+  }
+  function getClientIdsTreeUnmemoized(state, rootClientId = "") {
+    return getBlockOrder(state, rootClientId).map(
+      (clientId) => getClientIdWithClientIdsTreeUnmemoized(state, clientId)
+    );
+  }
+  var getClientIdWithClientIdsTree = (0, import_data3.createSelector)(
+    getClientIdWithClientIdsTreeUnmemoized,
+    (state) => [state.blocks.order]
+  );
+  var getClientIdsTree = (0, import_data3.createSelector)(
+    getClientIdsTreeUnmemoized,
+    (state) => [state.blocks.order]
+  );
   function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
     const blockOrder = getBlockOrder(state, rootClientId);
     const result = [];
@@ -11755,37 +11776,26 @@ var wp;
     const treeKey = !rootClientId || !areInnerBlocksControlled(state, rootClientId) ? rootClientId || "" : "controlled||" + rootClientId;
     return state.blocks.tree.get(treeKey)?.innerBlocks || EMPTY_ARRAY2;
   }
-  var __unstableGetClientIdWithClientIdsTree = (0, import_data4.createSelector)(
-    (state, clientId) => {
-      (0, import_deprecated2.default)(
-        "wp.data.select( 'core/block-editor' ).__unstableGetClientIdWithClientIdsTree",
-        {
-          since: "6.3",
-          version: "6.5"
-        }
-      );
-      return {
-        clientId,
-        innerBlocks: __unstableGetClientIdsTree(state, clientId)
-      };
-    },
-    (state) => [state.blocks.order]
-  );
-  var __unstableGetClientIdsTree = (0, import_data4.createSelector)(
-    (state, rootClientId = "") => {
-      (0, import_deprecated2.default)(
-        "wp.data.select( 'core/block-editor' ).__unstableGetClientIdsTree",
-        {
-          since: "6.3",
-          version: "6.5"
-        }
-      );
-      return getBlockOrder(state, rootClientId).map(
-        (clientId) => __unstableGetClientIdWithClientIdsTree(state, clientId)
-      );
-    },
-    (state) => [state.blocks.order]
-  );
+  function __unstableGetClientIdWithClientIdsTree(state, clientId) {
+    (0, import_deprecated2.default)(
+      "wp.data.select( 'core/block-editor' ).__unstableGetClientIdWithClientIdsTree",
+      {
+        since: "6.3",
+        version: "6.5"
+      }
+    );
+    return getClientIdWithClientIdsTree(state, clientId);
+  }
+  function __unstableGetClientIdsTree(state, rootClientId) {
+    (0, import_deprecated2.default)(
+      "wp.data.select( 'core/block-editor' ).__unstableGetClientIdsTree",
+      {
+        since: "6.3",
+        version: "6.5"
+      }
+    );
+    return getClientIdsTree(state, rootClientId);
+  }
   var getClientIdsOfDescendants = (0, import_data4.createSelector)(
     (state, rootIds) => {
       rootIds = Array.isArray(rootIds) ? [...rootIds] : [rootIds];
