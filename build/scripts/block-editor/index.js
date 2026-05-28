@@ -82900,7 +82900,17 @@ var wp;
     fontSize,
     style
   }) {
+    const hasSelectedStyleState2 = (0, import_data182.useSelect)(
+      (select3) => {
+        const { hasSelectedStyleState: hasSelectedBlockStyleState } = unlock(select3(store));
+        return hasSelectedBlockStyleState(clientId);
+      },
+      [clientId]
+    );
     if (!(0, import_blocks112.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
+      return null;
+    }
+    if (hasSelectedStyleState2) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
