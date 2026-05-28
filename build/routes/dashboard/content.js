@@ -41487,7 +41487,7 @@ function Inserter() {
   ) });
 }
 
-// routes/dashboard/widget-dashboard/components/widget-chrome/widget-chrome.tsx
+// routes/dashboard/widget-dashboard/components/dashboard-widget-chrome/dashboard-widget-chrome.tsx
 var import_components54 = __toESM(require_components());
 var import_element167 = __toESM(require_element());
 var import_i18n63 = __toESM(require_i18n());
@@ -41503,13 +41503,13 @@ function WidgetContextProvider({
   return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(WidgetContext.Provider, { value, children });
 }
 
-// routes/dashboard/widget-dashboard/components/widget-chrome/widget-chrome.module.css
+// routes/dashboard/widget-dashboard/components/dashboard-widget-chrome/dashboard-widget-chrome.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle48("95e83d6c73", "._22b961782d58cf14__widgetChrome{contain:layout;height:100%}._22b961782d58cf14__widgetChrome:has(._65ccc0ffeadb15bf__widgetChromeContent :focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._2e38cde45383ef41__widgetChromeHeaderIcon{color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:inline-flex}._65ccc0ffeadb15bf__widgetChromeContent{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._132a15281d3a4a3c__widgetChromeContentBleed{padding-block:0}.d8613f533b0e359e__widgetChromeBleedScroll{height:100%;margin-block-end:0;overflow-y:auto}._4c1cd671dc18c89c__unavailable,.d86427717f1c6168__loading{height:100%}");
+  registerStyle48("1637f69c2a", ".fe90e6e991b52583__widgetChrome{contain:layout;height:100%}.fe90e6e991b52583__widgetChrome:has(.f7692e51d966c099__widgetChromeContent :focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._36d6a4c5f0178c88__widgetChromeHeaderIcon{color:var(--wpds-color-fg-content-neutral,#1e1e1e);display:inline-flex}.f7692e51d966c099__widgetChromeContent{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._274834c37a0ddb9f__widgetChromeContentBleed{padding-block:0}.df55b2216f979172__widgetChromeBleedScroll{height:100%;margin-block-end:0;overflow-y:auto}._0381915ec2e5f637__unavailable,.a48a7d6a8112c3e8__loading{height:100%}");
 }
-var widget_chrome_default = { "widgetChrome": "_22b961782d58cf14__widgetChrome", "widgetChromeContent": "_65ccc0ffeadb15bf__widgetChromeContent", "widgetChromeHeaderIcon": "_2e38cde45383ef41__widgetChromeHeaderIcon", "widgetChromeContentBleed": "_132a15281d3a4a3c__widgetChromeContentBleed", "widgetChromeBleedScroll": "d8613f533b0e359e__widgetChromeBleedScroll", "loading": "d86427717f1c6168__loading", "unavailable": "_4c1cd671dc18c89c__unavailable" };
+var dashboard_widget_chrome_default = { "widgetChrome": "fe90e6e991b52583__widgetChrome", "widgetChromeContent": "f7692e51d966c099__widgetChromeContent", "widgetChromeHeaderIcon": "_36d6a4c5f0178c88__widgetChromeHeaderIcon", "widgetChromeContentBleed": "_274834c37a0ddb9f__widgetChromeContentBleed", "widgetChromeBleedScroll": "df55b2216f979172__widgetChromeBleedScroll", "loading": "a48a7d6a8112c3e8__loading", "unavailable": "_0381915ec2e5f637__unavailable" };
 
-// routes/dashboard/widget-dashboard/components/widget-chrome/widget-chrome.tsx
+// routes/dashboard/widget-dashboard/components/dashboard-widget-chrome/dashboard-widget-chrome.tsx
 var import_jsx_runtime212 = __toESM(require_jsx_runtime());
 var WidgetErrorBoundary = class extends import_element167.Component {
   state = { hasError: false };
@@ -41524,26 +41524,26 @@ var WidgetErrorBoundary = class extends import_element167.Component {
   }
 };
 function LoadingOverlay() {
-  return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Stack, { justify: "center", align: "center", className: widget_chrome_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components54.Spinner, {}) });
+  return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Stack, { justify: "center", align: "center", className: dashboard_widget_chrome_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components54.Spinner, {}) });
 }
 function UnavailableWidget({ widgetTypeName }) {
   return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
       "span",
       {
-        className: widget_chrome_default.widgetChromeHeaderIcon,
+        className: dashboard_widget_chrome_default.widgetChromeHeaderIcon,
         "aria-hidden": "true",
         children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Icon, { icon: plugins_default })
       }
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(card_exports.Content, { className: dashboard_widget_chrome_default.widgetChromeContent, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
       Stack,
       {
         direction: "column",
         justify: "center",
         align: "center",
         gap: "md",
-        className: widget_chrome_default.unavailable,
+        className: dashboard_widget_chrome_default.unavailable,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Text, { children: (0, import_i18n63.__)("Widget is no longer available.") }),
           /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("code", {}), children: widgetTypeName })
@@ -41560,7 +41560,7 @@ function Header8({ titleId, widgetType }) {
     widgetType.icon && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
       "span",
       {
-        className: widget_chrome_default.widgetChromeHeaderIcon,
+        className: dashboard_widget_chrome_default.widgetChromeHeaderIcon,
         "aria-hidden": "true",
         children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Icon, { icon: widgetType.icon })
       }
@@ -41568,86 +41568,78 @@ function Header8({ titleId, widgetType }) {
     /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(card_exports.Title, { id: titleId, render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("h3", {}), children: widgetType.title })
   ] }) });
 }
-var WidgetChrome = (0, import_element167.forwardRef)(
-  function WidgetChrome2({ widget, index: index2, className }, ref) {
-    const { widgetTypes, isResolvingWidgetTypes, editMode } = useDashboardInternalContext();
-    const widgetType = widgetTypes.find((t2) => t2.name === widget.type);
-    const titleId = (0, import_element167.useId)();
-    const contextValue = (0, import_element167.useMemo)(
-      () => ({
-        uuid: widget.uuid,
-        name: widget.type,
-        index: index2
-      }),
-      [widget.uuid, widget.type, index2]
-    );
-    if (!widgetType) {
-      if (isResolvingWidgetTypes) {
-        return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-          card_exports.Root,
-          {
-            render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("section", {}),
-            ref,
-            className: clsx_default(widget_chrome_default.widgetChrome, className),
-            "aria-busy": "true",
-            "aria-label": (0, import_i18n63.__)("Loading"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-              card_exports.Content,
-              {
-                className: widget_chrome_default.widgetChromeContent,
-                children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(LoadingOverlay, {})
-              }
-            )
-          }
-        ) });
-      }
+var DashboardWidgetChrome = (0, import_element167.forwardRef)(function DashboardWidgetChrome2({ widget, index: index2, className }, ref) {
+  const { widgetTypes, isResolvingWidgetTypes, editMode } = useDashboardInternalContext();
+  const widgetType = widgetTypes.find((t2) => t2.name === widget.type);
+  const titleId = (0, import_element167.useId)();
+  const contextValue = (0, import_element167.useMemo)(
+    () => ({
+      uuid: widget.uuid,
+      name: widget.type,
+      index: index2
+    }),
+    [widget.uuid, widget.type, index2]
+  );
+  if (!widgetType) {
+    if (isResolvingWidgetTypes) {
       return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
         card_exports.Root,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("section", {}),
           ref,
-          className: clsx_default(widget_chrome_default.widgetChrome, className),
-          "aria-label": (0, import_i18n63.__)("Missing widget"),
-          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
+          className: clsx_default(dashboard_widget_chrome_default.widgetChrome, className),
+          "aria-busy": "true",
+          "aria-label": (0, import_i18n63.__)("Loading"),
+          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(card_exports.Content, { className: dashboard_widget_chrome_default.widgetChromeContent, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(LoadingOverlay, {}) })
         }
       ) });
     }
-    const { presentation } = widgetType;
-    const isHeaderHidden = presentation === "full-bleed";
-    const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
-    const header = /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Header8, { titleId, widgetType });
-    const body = /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_element167.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetRender, { widget, widgetType }) }) });
-    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
       card_exports.Root,
       {
         render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("section", {}),
         ref,
-        className: clsx_default(widget_chrome_default.widgetChrome, className),
-        "aria-labelledby": widgetType.title ? titleId : void 0,
-        inert: editMode || void 0,
-        children: [
-          isHeaderHidden ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(VisuallyHidden, { children: header }) : header,
-          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-            card_exports.Content,
-            {
-              className: clsx_default(
-                widget_chrome_default.widgetChromeContent,
-                isBodyBleeding && widget_chrome_default.widgetChromeContentBleed
-              ),
-              children: isBodyBleeding ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-                card_exports.FullBleed,
-                {
-                  className: widget_chrome_default.widgetChromeBleedScroll,
-                  children: body
-                }
-              ) : body
-            }
-          )
-        ]
+        className: clsx_default(dashboard_widget_chrome_default.widgetChrome, className),
+        "aria-label": (0, import_i18n63.__)("Missing widget"),
+        children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
       }
     ) });
   }
-);
+  const { presentation } = widgetType;
+  const isHeaderHidden = presentation === "full-bleed";
+  const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
+  const header = /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Header8, { titleId, widgetType });
+  const body = /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_element167.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetRender, { widget, widgetType }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+    card_exports.Root,
+    {
+      render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("section", {}),
+      ref,
+      className: clsx_default(dashboard_widget_chrome_default.widgetChrome, className),
+      "aria-labelledby": widgetType.title ? titleId : void 0,
+      inert: editMode || void 0,
+      children: [
+        isHeaderHidden ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(VisuallyHidden, { children: header }) : header,
+        /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+          card_exports.Content,
+          {
+            className: clsx_default(
+              dashboard_widget_chrome_default.widgetChromeContent,
+              isBodyBleeding && dashboard_widget_chrome_default.widgetChromeContentBleed
+            ),
+            children: isBodyBleeding ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+              card_exports.FullBleed,
+              {
+                className: dashboard_widget_chrome_default.widgetChromeBleedScroll,
+                children: body
+              }
+            ) : body
+          }
+        )
+      ]
+    }
+  ) });
+});
 
 // routes/dashboard/widget-dashboard/components/widget-settings/widget-settings.tsx
 var import_element168 = __toESM(require_element());
@@ -49107,7 +49099,7 @@ var Widgets = (0, import_element180.forwardRef)(
         );
       }
       return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
-        WidgetChrome,
+        DashboardWidgetChrome,
         {
           widget,
           index: index2,
@@ -49223,7 +49215,7 @@ var WidgetDashboard = Object.assign(
       }
     );
   },
-  { Actions: Actions3, Widgets, WidgetChrome, NoWidgetsState }
+  { Actions: Actions3, Widgets, WidgetChrome: DashboardWidgetChrome, NoWidgetsState }
 );
 
 // routes/dashboard/stage.tsx
