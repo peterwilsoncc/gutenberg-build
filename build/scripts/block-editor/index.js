@@ -69705,21 +69705,29 @@ var wp;
     function handleOnBlur(event) {
       setCSSError(getCSSValidationError(event?.target?.value));
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(Stack, { direction: "column", gap: "md", children: [
-      cssError && /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(import_components207.Notice, { status: "error", onRemove: () => setCSSError(null), children: cssError }),
-      /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
-        import_components207.TextareaControl,
-        {
-          label: (0, import_i18n193.__)("Additional CSS"),
-          value: customCSS,
-          onChange: (newValue) => handleOnChange(newValue),
-          onBlur: handleOnBlur,
-          className: "block-editor-global-styles-advanced-panel__custom-css-input",
-          spellCheck: false,
-          help
-        }
-      )
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(
+      Stack,
+      {
+        direction: "column",
+        gap: "md",
+        className: "block-editor-global-styles-advanced-panel",
+        children: [
+          cssError && /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(import_components207.Notice, { status: "error", onRemove: () => setCSSError(null), children: cssError }),
+          /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+            import_components207.TextareaControl,
+            {
+              label: (0, import_i18n193.__)("Additional CSS"),
+              value: customCSS,
+              onChange: (newValue) => handleOnChange(newValue),
+              onBlur: handleOnBlur,
+              className: "block-editor-global-styles-advanced-panel__custom-css-input",
+              spellCheck: false,
+              help
+            }
+          )
+        ]
+      }
+    );
   }
 
   // packages/block-editor/build-module/components/global-styles/background-panel.mjs
