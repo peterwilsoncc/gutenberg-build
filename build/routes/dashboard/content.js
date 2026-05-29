@@ -22436,7 +22436,9 @@ function WidgetDashboardProvider({
   );
   const cancel = (0, import_element87.useCallback)(
     (options) => {
-      setStagingLayout(committedLayout);
+      if (options?.revertLayout !== false) {
+        setStagingLayout(committedLayout);
+      }
       setStagingGridSettings(committedGridSettings);
       if (options?.exitEditMode !== false) {
         onEditChange?.(false);
@@ -40708,7 +40710,7 @@ function LayoutSettings({
     [gridSettings, layout, onGridSettingsChange, onLayoutChange]
   );
   const handleCancel = (0, import_element157.useCallback)(() => {
-    cancelStaging({ exitEditMode: false });
+    cancelStaging({ exitEditMode: false, revertLayout: false });
     onOpenChange(false);
   }, [cancelStaging, onOpenChange]);
   const handleSave = (0, import_element157.useCallback)(() => {
@@ -40718,7 +40720,7 @@ function LayoutSettings({
   const handleOpenChange = (0, import_element157.useCallback)(
     (nextOpen) => {
       if (!nextOpen && open) {
-        cancelStaging({ exitEditMode: false });
+        cancelStaging({ exitEditMode: false, revertLayout: false });
       }
       onOpenChange(nextOpen);
     },
@@ -40730,8 +40732,6 @@ function LayoutSettings({
       open,
       onOpenChange: handleOpenChange,
       swipeDirection: "right",
-      modal: false,
-      disablePointerDismissal: true,
       children: /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(drawer_exports.Popup, { size: "medium", style: { marginTop: "32px" }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(drawer_exports.Header, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(drawer_exports.Title, { children: (0, import_i18n56.__)("Layout settings") }),
@@ -40913,6 +40913,11 @@ function Actions3() {
   const openLayoutSettings = (0, import_element158.useCallback)(() => {
     setLayoutSettingsOpen(true);
   }, [setLayoutSettingsOpen]);
+  (0, import_element158.useEffect)(() => {
+    if (!editMode && layoutSettingsOpen) {
+      setLayoutSettingsOpen(false);
+    }
+  }, [editMode, layoutSettingsOpen, setLayoutSettingsOpen]);
   const moreActionsItems = [
     {
       label: (0, import_i18n58.__)("Reset to default"),
@@ -40920,14 +40925,6 @@ function Actions3() {
       disabled: !onLayoutReset
     }
   ];
-  if (canEditGridSettings) {
-    moreActionsItems.unshift({
-      label: (0, import_i18n58.__)("Layout settings"),
-      onClick: openLayoutSettings,
-      disabled: editMode,
-      disabledTooltip: (0, import_i18n58.__)("Disabled while editing widgets")
-    });
-  }
   if (!onEditChange) {
     return null;
   }
@@ -40949,6 +40946,19 @@ function Actions3() {
               children: [
                 !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Button4.Icon, { icon: plus_default }),
                 (0, import_i18n58.__)("Add widget")
+              ]
+            }
+          ),
+          canEditGridSettings && /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
+            Button4,
+            {
+              variant: "minimal",
+              tone: "brand",
+              size: "compact",
+              onClick: openLayoutSettings,
+              children: [
+                !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Button4.Icon, { icon: layout_default }),
+                (0, import_i18n58.__)("Layout settings")
               ]
             }
           ),
