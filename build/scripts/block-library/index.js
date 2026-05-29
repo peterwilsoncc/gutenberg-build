@@ -4659,10 +4659,10 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(import_primitives148.Path, { d: "M12.574 4a.75.75 0 0 1 .53.22l6.723 6.724a2.315 2.315 0 0 1 0 3.264l-.532-.528.531.53-5.61 5.611a2.31 2.31 0 0 1-3.276.001l-6.72-6.716a.75.75 0 0 1-.22-.53V4.75A.75.75 0 0 1 4.75 4h7.824ZM5.5 5.5v6.764l6.501 6.497a.817.817 0 0 0 .889.178.816.816 0 0 0 .264-.178l5.61-5.61a.816.816 0 0 0-.001-1.149l-6.5-6.502H5.5Z" })
   ] });
 
-  // packages/icons/build-module/library/time-to-read.mjs
+  // packages/icons/build-module/library/time.mjs
   var import_primitives149 = __toESM(require_primitives(), 1);
   var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
-  var time_to_read_default = /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(import_primitives149.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(import_primitives149.Path, { d: "M12 3c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm0 16.5c-4.1 0-7.5-3.4-7.5-7.5S7.9 4.5 12 4.5s7.5 3.4 7.5 7.5-3.4 7.5-7.5 7.5zM12 7l-1 5c0 .3.2.6.4.8l4.2 2.8-2.7-4.1L12 7z" }) });
+  var time_default = /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(import_primitives149.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(import_primitives149.Path, { d: "M12 3c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm0 16.5c-4.1 0-7.5-3.4-7.5-7.5S7.9 4.5 12 4.5s7.5 3.4 7.5 7.5-3.4 7.5-7.5 7.5zM12 7l-1 5c0 .3.2.6.4.8l4.2 2.8-2.7-4.1L12 7z" }) });
 
   // packages/icons/build-module/library/title.mjs
   var import_primitives150 = __toESM(require_primitives(), 1);
@@ -55729,7 +55729,7 @@ ${js}
       },
       scope: ["inserter", "transform"],
       isActive: (blockAttributes8) => blockAttributes8?.displayMode === "time",
-      icon: time_to_read_default,
+      icon: time_default,
       isDefault: true
     },
     {
@@ -55811,7 +55811,7 @@ ${js}
   // packages/block-library/build-module/post-time-to-read/index.mjs
   var { name: name80 } = block_default79;
   var settings79 = {
-    icon: time_to_read_default,
+    icon: time_default,
     edit: edit_default29,
     variations: variations_default12,
     example: {},
