@@ -253,6 +253,13 @@ var require_components = __commonJS({
   }
 });
 
+// package-external:@wordpress/core-data
+var require_core_data = __commonJS({
+  "package-external:@wordpress/core-data"(exports, module) {
+    module.exports = window.wp.coreData;
+  }
+});
+
 // package-external:@wordpress/data
 var require_data = __commonJS({
   "package-external:@wordpress/data"(exports, module) {
@@ -961,13 +968,6 @@ var require_deprecated = __commonJS({
 var require_commands = __commonJS({
   "package-external:@wordpress/commands"(exports, module) {
     module.exports = window.wp.commands;
-  }
-});
-
-// package-external:@wordpress/core-data
-var require_core_data = __commonJS({
-  "package-external:@wordpress/core-data"(exports, module) {
-    module.exports = window.wp.coreData;
   }
 });
 
@@ -22180,6 +22180,7 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/dashboard/stage.tsx
+var import_core_data2 = __toESM(require_core_data());
 var import_data10 = __toESM(require_data());
 var import_element181 = __toESM(require_element());
 var import_i18n69 = __toESM(require_i18n());
@@ -49231,8 +49232,23 @@ function Dashboard() {
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
   );
-  const customizeDashboardLabel = (0, import_i18n69.__)("Customize Dashboard");
-  const dashboardLabel = (0, import_i18n69.__)("Dashboard");
+  const greetingName = (0, import_data10.useSelect)((select) => {
+    const user = select(import_core_data2.store).getCurrentUser();
+    if (!user) {
+      return void 0;
+    }
+    const displayName = user.name?.trim();
+    if (displayName) {
+      return displayName;
+    }
+    if ("username" in user && typeof user.username === "string") {
+      const username = user.username.trim();
+      if (username) {
+        return username;
+      }
+    }
+    return user.slug;
+  }, []);
   const { createSuccessNotice } = (0, import_data10.useDispatch)(import_notices.store);
   const handleLayoutChange = (next) => {
     setLayout(next);
@@ -49240,7 +49256,16 @@ function Dashboard() {
       type: "snackbar"
     });
   };
-  const pageTitle = editMode ? customizeDashboardLabel : dashboardLabel;
+  let pageTitle = (0, import_i18n69.__)("Dashboard");
+  if (editMode) {
+    pageTitle = (0, import_i18n69.__)("Customize Dashboard");
+  } else if (greetingName) {
+    pageTitle = (0, import_i18n69.sprintf)(
+      /* translators: %s: current user's display name. */
+      (0, import_i18n69.__)("Howdy, %s"),
+      greetingName
+    );
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
     WidgetDashboard,
     {
