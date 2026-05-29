@@ -9291,15 +9291,22 @@ var wp;
   var MAX_ROOMS_PER_REQUEST = 50;
   var MAX_SYNC_REQUEST_BODY_SIZE_IN_BYTES = 15 * 1024 * 1024;
   var MIN_SYNC_REQUEST_BODY_SIZE_LIMIT_IN_BYTES = 2 * 1024 * 1024;
-  var POLLING_INTERVAL_IN_MS = (0, import_hooks.applyFilters)(
+  var DEFAULT_POLLING_INTERVAL_IN_MS = 4e3;
+  var DEFAULT_POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = 1e3;
+  function getFilteredPollingInterval(hookName, defaultInterval) {
+    const filteredInterval = (0, import_hooks.applyFilters)(hookName, defaultInterval);
+    if (typeof filteredInterval !== "number" || !Number.isFinite(filteredInterval) || filteredInterval <= 0) {
+      return defaultInterval;
+    }
+    return Math.min(filteredInterval, defaultInterval);
+  }
+  var POLLING_INTERVAL_IN_MS = getFilteredPollingInterval(
     "sync.pollingManager.pollingInterval",
-    4e3
-    // 4 seconds
+    DEFAULT_POLLING_INTERVAL_IN_MS
   );
-  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = (0, import_hooks.applyFilters)(
+  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = getFilteredPollingInterval(
     "sync.pollingManager.pollingIntervalWithCollaborators",
-    1e3
-    // 1 second
+    DEFAULT_POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS
   );
   var POLLING_INTERVAL_BACKGROUND_TAB_IN_MS = 25 * 1e3;
 
