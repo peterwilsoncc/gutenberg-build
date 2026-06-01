@@ -258,7 +258,9 @@ function gutenberg_options_connectors_wp_admin_render_page() {
 	<style>
 		/* Critical styles to prevent layout shifts - inlined for immediate application */
 
+		/* Background colors */
 		#wpwrap {
+			background: var(--wpds-color-fg-content-neutral, #1e1e1e);
 			overflow-y: auto;
 		}
 		body {
