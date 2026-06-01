@@ -84197,7 +84197,7 @@ If there's a particular need for this, please submit a feature request at https:
   var back_button_default = BackButton;
 
   // packages/editor/build-module/components/editor/index.mjs
-  var import_data264 = __toESM(require_data(), 1);
+  var import_data265 = __toESM(require_data(), 1);
   var import_core_data140 = __toESM(require_core_data(), 1);
   var import_components287 = __toESM(require_components(), 1);
   var import_i18n331 = __toESM(require_i18n(), 1);
@@ -91420,7 +91420,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n327 = __toESM(require_i18n(), 1);
-  var import_data260 = __toESM(require_data(), 1);
+  var import_data261 = __toESM(require_data(), 1);
   var import_element319 = __toESM(require_element(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
@@ -92833,46 +92833,68 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n326 = __toESM(require_i18n(), 1);
   var import_element318 = __toESM(require_element(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
+  var import_data260 = __toESM(require_data(), 1);
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
   var { NoteIconToolbarSlotFill } = unlock(import_block_editor104.privateApis);
+  function ThreadParticipants({ participants }) {
+    const defaultAvatar = (0, import_data260.useSelect)((select7) => {
+      const { getSettings: getSettings12 } = select7(import_block_editor104.store);
+      const { __experimentalDiscussionSettings } = getSettings12();
+      return __experimentalDiscussionSettings?.avatarURL;
+    }, []);
+    const maxAvatars = 3;
+    const isOverflow = participants.length > maxAvatars;
+    const visibleParticipants = isOverflow ? participants.slice(0, maxAvatars - 1) : participants;
+    const overflowCount = Math.max(
+      0,
+      participants.length - visibleParticipants.length
+    );
+    const threadHasMoreParticipants = participants.length > 100;
+    const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0, import_i18n326.__)("100+") : (0, import_i18n326.sprintf)(
+      // translators: %s: Number of participants.
+      (0, import_i18n326.__)("+%s"),
+      overflowCount
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime530.jsxs)(Stack, { direction: "row", align: "center", gap: "xs", children: [
+      visibleParticipants.map((participant) => /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
+        "img",
+        {
+          src: participant.avatar || defaultAvatar,
+          alt: participant.name,
+          className: "editor-note-indicator__avatar",
+          style: {
+            borderColor: getAvatarBorderColor(participant.id)
+          }
+        },
+        participant.id
+      )),
+      overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)("span", { className: "editor-note-indicator__overflow", children: overflowText })
+    ] });
+  }
   function NoteAvatarIndicator({ onClick, note }) {
     const threadParticipants = (0, import_element318.useMemo)(() => {
       if (!note) {
         return [];
       }
       const participantsMap = /* @__PURE__ */ new Map();
-      const allNotes = [note, ...note.reply];
-      allNotes.sort((a3, b3) => new Date(a3.date) - new Date(b3.date));
-      allNotes.forEach((entry) => {
-        if (entry.author_name && entry.author_avatar_urls) {
-          if (!participantsMap.has(entry.author)) {
-            participantsMap.set(entry.author, {
-              name: entry.author_name,
-              avatar: entry.author_avatar_urls?.["48"] || entry.author_avatar_urls?.["96"],
-              id: entry.author,
-              date: entry.date
-            });
-          }
+      const allNotes = [note, ...note.reply].sort(
+        (a3, b3) => new Date(a3.date) - new Date(b3.date)
+      );
+      for (const entry of allNotes) {
+        if (!entry.author_name || participantsMap.has(entry.author)) {
+          continue;
         }
-      });
+        participantsMap.set(entry.author, {
+          id: entry.author,
+          name: entry.author_name,
+          avatar: entry.author_avatar_urls?.["48"] || entry.author_avatar_urls?.["96"]
+        });
+      }
       return Array.from(participantsMap.values());
     }, [note]);
     if (!threadParticipants.length) {
       return null;
     }
-    const maxAvatars = 3;
-    const isOverflow = threadParticipants.length > maxAvatars;
-    const visibleParticipants = isOverflow ? threadParticipants.slice(0, maxAvatars - 1) : threadParticipants;
-    const overflowCount = Math.max(
-      0,
-      threadParticipants.length - visibleParticipants.length
-    );
-    const threadHasMoreParticipants = threadParticipants.length > 100;
-    const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0, import_i18n326.__)("100+") : (0, import_i18n326.sprintf)(
-      // translators: %s: Number of participants.
-      (0, import_i18n326.__)("+%s"),
-      overflowCount
-    );
     return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(NoteIconToolbarSlotFill.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
       import_components283.ToolbarButton,
       {
@@ -92880,23 +92902,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: (0, import_i18n326.__)("View notes"),
         onClick: () => onClick(),
         showTooltip: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime530.jsxs)(Stack, { direction: "row", align: "center", gap: "xs", children: [
-          visibleParticipants.map((participant) => /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
-            "img",
-            {
-              src: participant.avatar,
-              alt: participant.name,
-              className: "editor-note-indicator__avatar",
-              style: {
-                borderColor: getAvatarBorderColor(
-                  participant.id
-                )
-              }
-            },
-            participant.id
-          )),
-          overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)("span", { className: "editor-note-indicator__overflow", children: overflowText })
-        ] })
+        children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(ThreadParticipants, { participants: threadParticipants })
       }
     ) });
   }
@@ -92904,15 +92910,15 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_jsx_runtime531 = __toESM(require_jsx_runtime(), 1);
   function NotesSidebar({ postId: postId2 }) {
-    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data260.useSelect)(store3);
-    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data260.useDispatch)(store3);
+    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data261.useSelect)(store3);
+    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data261.useDispatch)(store3);
     const { toggleBlockSpotlight, selectBlock: selectBlock2 } = unlock(
-      (0, import_data260.useDispatch)(import_block_editor105.store)
+      (0, import_data261.useDispatch)(import_block_editor105.store)
     );
-    const { selectNote: selectNote2 } = unlock((0, import_data260.useDispatch)(store));
+    const { selectNote: selectNote2 } = unlock((0, import_data261.useDispatch)(store));
     const isLargeViewport = (0, import_compose79.useViewportMatch)("medium");
     const sidebarRef = (0, import_element319.useRef)(null);
-    const { clientId, noteId, isClassicBlock } = (0, import_data260.useSelect)((select7) => {
+    const { clientId, noteId, isClassicBlock } = (0, import_data261.useSelect)((select7) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select7(import_block_editor105.store);
       const _clientId = getSelectedBlockClientId2();
       return {
@@ -92922,13 +92928,13 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const blockNoteIds = getNoteIdsFromMetadata({ noteId });
-    const { isDistractionFree } = (0, import_data260.useSelect)((select7) => {
+    const { isDistractionFree } = (0, import_data261.useSelect)((select7) => {
       const { get } = select7(import_preferences30.store);
       return {
         isDistractionFree: get("core", "distractionFree")
       };
     }, []);
-    const selectedNote2 = (0, import_data260.useSelect)(
+    const selectedNote2 = (0, import_data261.useSelect)(
       (select7) => unlock(select7(store)).getSelectedNote(),
       []
     );
@@ -93047,7 +93053,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   function NotesSidebarContainer() {
-    const { postId: postId2, editorMode, revisionsMode } = (0, import_data260.useSelect)((select7) => {
+    const { postId: postId2, editorMode, revisionsMode } = (0, import_data261.useSelect)((select7) => {
       const { getCurrentPostId: getCurrentPostId2, getEditorMode: getEditorMode2, isRevisionsMode: isRevisionsMode2 } = unlock(
         select7(store)
       );
@@ -93069,7 +93075,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
   var import_components286 = __toESM(require_components(), 1);
   var import_i18n330 = __toESM(require_i18n(), 1);
-  var import_data263 = __toESM(require_data(), 1);
+  var import_data264 = __toESM(require_data(), 1);
   var import_element320 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
@@ -93077,7 +93083,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/global-styles/menu.mjs
   var import_components284 = __toESM(require_components(), 1);
-  var import_data261 = __toESM(require_data(), 1);
+  var import_data262 = __toESM(require_data(), 1);
   var import_i18n328 = __toESM(require_i18n(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
   var import_core_data138 = __toESM(require_core_data(), 1);
@@ -93091,8 +93097,8 @@ If there's a particular need for this, please submit a feature request at https:
     const onReset = () => {
       setUser({ styles: {}, settings: {} });
     };
-    const { toggle } = (0, import_data261.useDispatch)(import_preferences31.store);
-    const { canEditCSS } = (0, import_data261.useSelect)((select7) => {
+    const { toggle } = (0, import_data262.useDispatch)(import_preferences31.store);
+    const { canEditCSS } = (0, import_data262.useSelect)((select7) => {
       const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select7(import_core_data138.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
@@ -93186,7 +93192,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
-  var import_data262 = __toESM(require_data(), 1);
+  var import_data263 = __toESM(require_data(), 1);
   var import_components285 = __toESM(require_components(), 1);
   var import_i18n329 = __toESM(require_i18n(), 1);
   var import_preferences32 = __toESM(require_preferences(), 1);
@@ -93209,8 +93215,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_jsx_runtime535 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideStyles() {
-    const { toggle } = (0, import_data262.useDispatch)(import_preferences32.store);
-    const { isActive, isStylesOpen } = (0, import_data262.useSelect)((select7) => {
+    const { toggle } = (0, import_data263.useDispatch)(import_preferences32.store);
+    const { isActive, isStylesOpen } = (0, import_data263.useSelect)((select7) => {
       const sidebar = select7(store3).getActiveComplementaryArea("core");
       return {
         isActive: !!select7(import_preferences32.store).get(
@@ -93322,7 +93328,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasRevisions,
       activeComplementaryArea,
       editorSettings: editorSettings2
-    } = (0, import_data263.useSelect)((select7) => {
+    } = (0, import_data264.useSelect)((select7) => {
       const { getActiveComplementaryArea: getActiveComplementaryArea2 } = select7(store3);
       const { getStylesPath: getStylesPath2, getShowStylebook: getShowStylebook2 } = unlock(
         select7(store)
@@ -93346,7 +93352,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
-      (0, import_data263.useDispatch)(store)
+      (0, import_data264.useDispatch)(store)
     );
     const isMobileViewport = (0, import_compose80.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
@@ -93362,7 +93368,7 @@ If there's a particular need for this, please submit a feature request at https:
         resetStylesNavigation2();
       }
     }, [shouldResetNavigation, resetStylesNavigation2]);
-    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data263.useDispatch)(store);
+    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data264.useDispatch)(store);
     const toggleRevisions = () => {
       setIsListViewOpened2(false);
       if (isRevisionsOpened || isRevisionsStyleBookOpened) {
@@ -93473,7 +93479,7 @@ If there's a particular need for this, please submit a feature request at https:
       error: error2,
       isBlockTheme,
       showGlobalStyles
-    } = (0, import_data264.useSelect)(
+    } = (0, import_data265.useSelect)(
       (select7) => {
         const {
           getEntityRecord,
@@ -93554,20 +93560,20 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n333 = __toESM(require_i18n(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_data267 = __toESM(require_data(), 1);
+  var import_data268 = __toESM(require_data(), 1);
   var import_element322 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
-  var import_data265 = __toESM(require_data(), 1);
+  var import_data266 = __toESM(require_data(), 1);
   var import_preferences34 = __toESM(require_preferences(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
   var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences34.privateApis);
   function EnablePublishSidebarOption(props) {
-    const isChecked = (0, import_data265.useSelect)((select7) => {
+    const isChecked = (0, import_data266.useSelect)((select7) => {
       return select7(store).isPublishSidebarEnabled();
     }, []);
-    const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data265.useDispatch)(store);
+    const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data266.useDispatch)(store);
     return /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
       PreferenceBaseOption2,
       {
@@ -93579,7 +93585,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/block-visibility/index.mjs
-  var import_data266 = __toESM(require_data(), 1);
+  var import_data267 = __toESM(require_data(), 1);
   var import_preferences35 = __toESM(require_preferences(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
   var import_element321 = __toESM(require_element(), 1);
@@ -93591,13 +93597,13 @@ If there's a particular need for this, please submit a feature request at https:
   var EMPTY_ARRAY15 = [];
   function BlockVisibility() {
     const { showBlockTypes: showBlockTypes2, hideBlockTypes: hideBlockTypes2 } = unlock(
-      (0, import_data266.useDispatch)(store)
+      (0, import_data267.useDispatch)(store)
     );
     const {
       blockTypes,
       allowedBlockTypes: _allowedBlockTypes,
       hiddenBlockTypes: _hiddenBlockTypes
-    } = (0, import_data266.useSelect)((select7) => {
+    } = (0, import_data267.useSelect)((select7) => {
       return {
         blockTypes: select7(import_blocks37.store).getBlockTypes(),
         allowedBlockTypes: select7(store).getEditorSettings().allowedBlockTypes,
@@ -93686,10 +93692,10 @@ If there's a particular need for this, please submit a feature request at https:
     PreferenceToggleControl
   } = unlock(import_preferences36.privateApis);
   function EditorPreferencesModal({ extraSections = {} }) {
-    const isActive = (0, import_data267.useSelect)((select7) => {
+    const isActive = (0, import_data268.useSelect)((select7) => {
       return select7(store3).isModalActive("editor/preferences");
     }, []);
-    const { closeModal: closeModal2 } = (0, import_data267.useDispatch)(store3);
+    const { closeModal: closeModal2 } = (0, import_data268.useDispatch)(store3);
     if (!isActive) {
       return null;
     }
@@ -93697,7 +93703,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function PreferencesModalContents({ extraSections = {} }) {
     const isLargeViewport = (0, import_compose81.useViewportMatch)("medium");
-    const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data267.useSelect)(
+    const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data268.useSelect)(
       (select7) => {
         const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select7(store));
         const { get } = select7(import_preferences36.store);
@@ -93710,8 +93716,8 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [isLargeViewport]
     );
-    const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data267.useDispatch)(store);
-    const { set: setPreference } = (0, import_data267.useDispatch)(import_preferences36.store);
+    const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data268.useDispatch)(store);
+    const { set: setPreference } = (0, import_data268.useDispatch)(import_preferences36.store);
     const sections = (0, import_element322.useMemo)(
       () => [
         {
@@ -94528,10 +94534,10 @@ If there's a particular need for this, please submit a feature request at https:
   });
 
   // packages/editor/build-module/dataviews/api.mjs
-  var import_data268 = __toESM(require_data(), 1);
+  var import_data269 = __toESM(require_data(), 1);
   function registerEntityAction2(kind, name2, config2) {
     const { registerEntityAction: _registerEntityAction } = unlock(
-      (0, import_data268.dispatch)(store)
+      (0, import_data269.dispatch)(store)
     );
     if (true) {
       _registerEntityAction(kind, name2, config2);
@@ -94539,7 +94545,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function unregisterEntityAction2(kind, name2, actionId) {
     const { unregisterEntityAction: _unregisterEntityAction } = unlock(
-      (0, import_data268.dispatch)(store)
+      (0, import_data269.dispatch)(store)
     );
     if (true) {
       _unregisterEntityAction(kind, name2, actionId);
@@ -94547,7 +94553,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function registerEntityField2(kind, name2, config2) {
     const { registerEntityField: _registerEntityField } = unlock(
-      (0, import_data268.dispatch)(store)
+      (0, import_data269.dispatch)(store)
     );
     if (true) {
       _registerEntityField(kind, name2, config2);
@@ -94555,7 +94561,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function unregisterEntityField2(kind, name2, fieldId) {
     const { unregisterEntityField: _unregisterEntityField } = unlock(
-      (0, import_data268.dispatch)(store)
+      (0, import_data269.dispatch)(store)
     );
     if (true) {
       _unregisterEntityField(kind, name2, fieldId);
