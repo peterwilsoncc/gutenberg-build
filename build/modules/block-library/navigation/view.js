@@ -208,7 +208,8 @@ var { state, actions } = store(
         const ctx = getContext();
         const { ref } = getElement();
         ctx.previousFocus = ref;
-        if (ref.querySelector(".wp-block-navigation__hamburger-line")) {
+        ctx.morphStartRect = null;
+        if (ctx.overlayMenuIconAnimation !== false && ref.querySelector(".wp-block-navigation__hamburger-line")) {
           const rect = ref.getBoundingClientRect();
           ctx.morphStartRect = {
             top: rect.top,

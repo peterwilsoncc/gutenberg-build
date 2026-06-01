@@ -4440,6 +4440,10 @@ return array(
 				'type' => 'boolean',
 				'default' => true
 			),
+			'overlayMenuIconAnimation' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
 			'__unstableLocation' => array(
 				'type' => 'string'
 			),
