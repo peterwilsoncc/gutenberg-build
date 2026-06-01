@@ -333,14 +333,14 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React63 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore4 = shim.useSyncExternalStore, useRef101 = React63.useRef, useEffect106 = React63.useEffect, useMemo142 = React63.useMemo, useDebugValue2 = React63.useDebugValue;
+        var React63 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore4 = shim.useSyncExternalStore, useRef101 = React63.useRef, useEffect106 = React63.useEffect, useMemo143 = React63.useMemo, useDebugValue2 = React63.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual2) {
           var instRef = useRef101(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo142(
+          instRef = useMemo143(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -54906,6 +54906,21 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
+  function getFontFamiliesKey(fontFamilies) {
+    if (!fontFamilies) {
+      return "";
+    }
+    const normalized = {};
+    for (const source of Object.keys(fontFamilies).sort()) {
+      normalized[source] = (fontFamilies[source] ?? []).map((family) => ({
+        slug: family.slug,
+        fontFace: (family.fontFace ?? []).map(
+          (face) => `${face.fontStyle}-${face.fontWeight}`
+        ).sort()
+      })).sort((a3, b3) => a3.slug.localeCompare(b3.slug));
+    }
+    return JSON.stringify(normalized);
+  }
   function InstalledFonts() {
     const {
       baseCustomFonts,
@@ -54930,7 +54945,14 @@ If there's a particular need for this, please submit a feature request at https:
       "globalStyles",
       globalStylesId
     );
-    const fontFamiliesHasChanges = !!globalStyles?.edits?.settings?.typography?.fontFamilies;
+    const editedFontFamilies = globalStyles?.edits?.settings?.typography?.fontFamilies;
+    const savedFontFamilies = globalStyles?.record?.settings?.typography?.fontFamilies;
+    const fontFamiliesHasChanges = (0, import_element163.useMemo)(() => {
+      if (editedFontFamilies === void 0) {
+        return false;
+      }
+      return getFontFamiliesKey(editedFontFamilies) !== getFontFamiliesKey(savedFontFamilies);
+    }, [editedFontFamilies, savedFontFamilies]);
     const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f3) => setUIValuesNeeded(f3, { source: "theme" })).sort((a3, b3) => a3.name.localeCompare(b3.name)) : [];
     const themeFontsSlugs = new Set(themeFonts.map((f3) => f3.slug));
     const baseThemeFonts = baseFontFamilies?.theme ? themeFonts.concat(

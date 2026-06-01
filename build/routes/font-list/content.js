@@ -154,14 +154,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React49 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef21 = React49.useRef, useEffect19 = React49.useEffect, useMemo29 = React49.useMemo, useDebugValue2 = React49.useDebugValue;
+      var React49 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef21 = React49.useRef, useEffect19 = React49.useEffect, useMemo30 = React49.useMemo, useDebugValue2 = React49.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef21(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo29(
+        instRef = useMemo30(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -12227,6 +12227,21 @@ function sortFontFaces(faces) {
 
 // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
 var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+function getFontFamiliesKey(fontFamilies) {
+  if (!fontFamilies) {
+    return "";
+  }
+  const normalized = {};
+  for (const source of Object.keys(fontFamilies).sort()) {
+    normalized[source] = (fontFamilies[source] ?? []).map((family) => ({
+      slug: family.slug,
+      fontFace: (family.fontFace ?? []).map(
+        (face) => `${face.fontStyle}-${face.fontWeight}`
+      ).sort()
+    })).sort((a2, b2) => a2.slug.localeCompare(b2.slug));
+  }
+  return JSON.stringify(normalized);
+}
 function InstalledFonts() {
   const {
     baseCustomFonts,
@@ -12251,7 +12266,14 @@ function InstalledFonts() {
     "globalStyles",
     globalStylesId
   );
-  const fontFamiliesHasChanges = !!globalStyles?.edits?.settings?.typography?.fontFamilies;
+  const editedFontFamilies = globalStyles?.edits?.settings?.typography?.fontFamilies;
+  const savedFontFamilies = globalStyles?.record?.settings?.typography?.fontFamilies;
+  const fontFamiliesHasChanges = (0, import_element29.useMemo)(() => {
+    if (editedFontFamilies === void 0) {
+      return false;
+    }
+    return getFontFamiliesKey(editedFontFamilies) !== getFontFamiliesKey(savedFontFamilies);
+  }, [editedFontFamilies, savedFontFamilies]);
   const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f2) => setUIValuesNeeded(f2, { source: "theme" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
   const themeFontsSlugs = new Set(themeFonts.map((f2) => f2.slug));
   const baseThemeFonts = baseFontFamilies?.theme ? themeFonts.concat(
