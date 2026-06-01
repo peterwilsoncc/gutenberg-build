@@ -24073,8 +24073,7 @@ var import_element78 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/state/types.mjs
 var DEFAULT_CROP_OPTIONS = {
-  aspectRatioValue: "0",
-  freeformCrop: true
+  aspectRatioValue: "0"
 };
 
 // packages/media-editor/build-module/state/composite-reducer.mjs
@@ -24110,20 +24109,8 @@ function mediaEditorReducer(state, action) {
         cropOptions: nextCropOptions
       };
     }
-    case "SET_FREEFORM_CROP": {
-      if (state.cropOptions.freeformCrop === action.payload) {
-        return state;
-      }
-      return {
-        ...state,
-        cropOptions: {
-          ...state.cropOptions,
-          freeformCrop: action.payload
-        }
-      };
-    }
     case "RESET_CROP_OPTIONS": {
-      if (state.cropOptions.aspectRatioValue === DEFAULT_CROP_OPTIONS.aspectRatioValue && state.cropOptions.freeformCrop === DEFAULT_CROP_OPTIONS.freeformCrop) {
+      if (state.cropOptions.aspectRatioValue === DEFAULT_CROP_OPTIONS.aspectRatioValue) {
         return state;
       }
       return {
@@ -24149,7 +24136,7 @@ function areMediaEditorStatesEqual(a2, b2) {
   if (a2 === b2) {
     return true;
   }
-  return areCropperStatesEqual(a2.cropper, b2.cropper) && a2.cropOptions.aspectRatioValue === b2.cropOptions.aspectRatioValue && a2.cropOptions.freeformCrop === b2.cropOptions.freeformCrop;
+  return areCropperStatesEqual(a2.cropper, b2.cropper) && a2.cropOptions.aspectRatioValue === b2.cropOptions.aspectRatioValue;
 }
 function buildInitialMediaEditorState(initialCropper, initialOptions) {
   return {
@@ -24302,15 +24289,6 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const setFreeformCrop = (0, import_element78.useCallback)(
-    (value) => {
-      dispatchWithHistory({
-        type: "SET_FREEFORM_CROP",
-        payload: value
-      });
-    },
-    [dispatchWithHistory]
-  );
   const resetCropOptions = (0, import_element78.useCallback)(() => {
     dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
   }, [dispatchWithHistory]);
@@ -24386,7 +24364,6 @@ function useMediaEditorState(initialState) {
       // Composite extensions
       cropOptions: state.cropOptions,
       setAspectRatioValue,
-      setFreeformCrop,
       resetCropOptions,
       isCropperDirty,
       hasUndo,
@@ -24407,7 +24384,6 @@ function useMediaEditorState(initialState) {
       getCroppedImage,
       state.cropOptions,
       setAspectRatioValue,
-      setFreeformCrop,
       resetCropOptions,
       isCropperDirty,
       hasUndo,
@@ -24460,7 +24436,7 @@ function MediaEditorCanvas({
 }) {
   const { media } = useMediaEditorContext();
   const controller = useMediaEditor();
-  const { aspectRatioValue, freeformCrop } = controller.cropOptions;
+  const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
   const { beginGesture, endGesture, setImage } = controller;
   const aspectRatio = (0, import_element80.useMemo)(
@@ -24498,7 +24474,7 @@ function MediaEditorCanvas({
       src: mediaUrl,
       controller,
       aspectRatio,
-      freeformCrop,
+      freeformCrop: true,
       focusOnMount,
       showGrid: "interactive",
       isPlacementActive,
@@ -24964,8 +24940,6 @@ function getMinZoomPercentageForDisplay(zoom) {
 function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
-  freeformCrop,
-  onFreeformChange,
   onPlacementControlInteraction,
   aspectRatioOptions
 }) {
@@ -24976,13 +24950,13 @@ function MediaEditorCropPanel({
   const minZoomPercentage = getMinZoomPercentageForDisplay(minZoom);
   return (
     // Tag the whole panel as a crop-control region so the modal's
-    // Cmd+Z handler doesn't mistake the SelectControl / ToggleControl
-    // inputs for metadata fields (which would suppress undo).
+    // Cmd+Z handler doesn't mistake the SelectControl input for a
+    // metadata field (which would suppress undo).
     /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
       Stack,
       {
         direction: "column",
-        gap: "md",
+        gap: "xl",
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("h2", {}), children: (0, import_i18n33.__)("Crop options") }),
@@ -24997,14 +24971,6 @@ function MediaEditorCropPanel({
                 label: preset.label,
                 value: preset.value.toString()
               }))
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-            import_components37.ToggleControl,
-            {
-              label: (0, import_i18n33.__)("Show resize handles"),
-              checked: freeformCrop,
-              onChange: onFreeformChange
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
@@ -25387,7 +25353,6 @@ function useSaveMediaEditor({
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
 var import_element86 = __toESM(require_element(), 1);
-var FREE_ASPECT_RATIO_VALUE = "0";
 function getAspectRatioOptions(aspectRatioPresets) {
   return [
     ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
@@ -25398,7 +25363,7 @@ function useCropOptions({
   aspectRatioPresets
 } = {}) {
   const controller = useMediaEditor();
-  const { aspectRatioValue, freeformCrop } = controller.cropOptions;
+  const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
   const aspectRatioOptions = (0, import_element86.useMemo)(
     () => getAspectRatioOptions(aspectRatioPresets),
@@ -25408,33 +25373,10 @@ function useCropOptions({
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
-  const { beginGesture, endGesture, setAspectRatioValue, setFreeformCrop } = controller;
-  const setAspectRatioValueWithFreeformSync = (0, import_element86.useCallback)(
-    (value) => {
-      const shouldReenableFreeform = value === FREE_ASPECT_RATIO_VALUE && !freeformCrop;
-      if (!shouldReenableFreeform) {
-        setAspectRatioValue(value);
-        return;
-      }
-      beginGesture();
-      setAspectRatioValue(value);
-      setFreeformCrop(true);
-      endGesture();
-    },
-    [
-      freeformCrop,
-      beginGesture,
-      endGesture,
-      setAspectRatioValue,
-      setFreeformCrop
-    ]
-  );
   return {
     aspectRatioValue,
-    setAspectRatioValue: setAspectRatioValueWithFreeformSync,
+    setAspectRatioValue: controller.setAspectRatioValue,
     aspectRatioOptions,
-    freeformCrop,
-    setFreeformCrop: controller.setFreeformCrop,
     resolvedAspectRatio,
     resetCropOptions: controller.resetCropOptions
   };
@@ -25733,8 +25675,6 @@ function MediaEditorContent({
     aspectRatioValue,
     setAspectRatioValue,
     aspectRatioOptions,
-    freeformCrop,
-    setFreeformCrop,
     resetCropOptions
   } = useCropOptions({
     aspectRatioPresets
@@ -25778,8 +25718,6 @@ function MediaEditorContent({
               {
                 aspectRatioValue,
                 onAspectRatioChange: setAspectRatioValue,
-                freeformCrop,
-                onFreeformChange: setFreeformCrop,
                 onPlacementControlInteraction: signalPlacementControlInteraction,
                 aspectRatioOptions
               }
@@ -25793,8 +25731,6 @@ function MediaEditorContent({
     isImage,
     aspectRatioValue,
     setAspectRatioValue,
-    freeformCrop,
-    setFreeformCrop,
     aspectRatioOptions,
     signalPlacementControlInteraction
   ]);

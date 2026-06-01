@@ -47305,8 +47305,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/state/types.mjs
   var DEFAULT_CROP_OPTIONS = {
-    aspectRatioValue: "0",
-    freeformCrop: true
+    aspectRatioValue: "0"
   };
 
   // packages/media-editor/build-module/state/composite-reducer.mjs
@@ -47342,20 +47341,8 @@ If there's a particular need for this, please submit a feature request at https:
           cropOptions: nextCropOptions
         };
       }
-      case "SET_FREEFORM_CROP": {
-        if (state.cropOptions.freeformCrop === action.payload) {
-          return state;
-        }
-        return {
-          ...state,
-          cropOptions: {
-            ...state.cropOptions,
-            freeformCrop: action.payload
-          }
-        };
-      }
       case "RESET_CROP_OPTIONS": {
-        if (state.cropOptions.aspectRatioValue === DEFAULT_CROP_OPTIONS.aspectRatioValue && state.cropOptions.freeformCrop === DEFAULT_CROP_OPTIONS.freeformCrop) {
+        if (state.cropOptions.aspectRatioValue === DEFAULT_CROP_OPTIONS.aspectRatioValue) {
           return state;
         }
         return {
@@ -47381,7 +47368,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (a3 === b3) {
       return true;
     }
-    return areCropperStatesEqual(a3.cropper, b3.cropper) && a3.cropOptions.aspectRatioValue === b3.cropOptions.aspectRatioValue && a3.cropOptions.freeformCrop === b3.cropOptions.freeformCrop;
+    return areCropperStatesEqual(a3.cropper, b3.cropper) && a3.cropOptions.aspectRatioValue === b3.cropOptions.aspectRatioValue;
   }
   function buildInitialMediaEditorState(initialCropper, initialOptions) {
     return {
@@ -47534,15 +47521,6 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [dispatchWithHistory]
     );
-    const setFreeformCrop = (0, import_element141.useCallback)(
-      (value) => {
-        dispatchWithHistory({
-          type: "SET_FREEFORM_CROP",
-          payload: value
-        });
-      },
-      [dispatchWithHistory]
-    );
     const resetCropOptions = (0, import_element141.useCallback)(() => {
       dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
     }, [dispatchWithHistory]);
@@ -47618,7 +47596,6 @@ If there's a particular need for this, please submit a feature request at https:
         // Composite extensions
         cropOptions: state.cropOptions,
         setAspectRatioValue,
-        setFreeformCrop,
         resetCropOptions,
         isCropperDirty,
         hasUndo,
@@ -47639,7 +47616,6 @@ If there's a particular need for this, please submit a feature request at https:
         getCroppedImage,
         state.cropOptions,
         setAspectRatioValue,
-        setFreeformCrop,
         resetCropOptions,
         isCropperDirty,
         hasUndo,
@@ -47692,7 +47668,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { media } = useMediaEditorContext();
     const controller = useMediaEditor();
-    const { aspectRatioValue, freeformCrop } = controller.cropOptions;
+    const { aspectRatioValue } = controller.cropOptions;
     const cropperImage = controller.state.image;
     const { beginGesture, endGesture, setImage } = controller;
     const aspectRatio = (0, import_element143.useMemo)(
@@ -47730,7 +47706,7 @@ If there's a particular need for this, please submit a feature request at https:
         src: mediaUrl,
         controller,
         aspectRatio,
-        freeformCrop,
+        freeformCrop: true,
         focusOnMount,
         showGrid: "interactive",
         isPlacementActive,
@@ -48196,8 +48172,6 @@ If there's a particular need for this, please submit a feature request at https:
   function MediaEditorCropPanel({
     aspectRatioValue,
     onAspectRatioChange,
-    freeformCrop,
-    onFreeformChange,
     onPlacementControlInteraction,
     aspectRatioOptions
   }) {
@@ -48208,13 +48182,13 @@ If there's a particular need for this, please submit a feature request at https:
     const minZoomPercentage = getMinZoomPercentageForDisplay(minZoom);
     return (
       // Tag the whole panel as a crop-control region so the modal's
-      // Cmd+Z handler doesn't mistake the SelectControl / ToggleControl
-      // inputs for metadata fields (which would suppress undo).
+      // Cmd+Z handler doesn't mistake the SelectControl input for a
+      // metadata field (which would suppress undo).
       /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)(
         Stack,
         {
           direction: "column",
-          gap: "md",
+          gap: "xl",
           ...{ [CROP_CONTROL_ATTR]: true },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("h2", {}), children: (0, import_i18n125.__)("Crop options") }),
@@ -48229,14 +48203,6 @@ If there's a particular need for this, please submit a feature request at https:
                   label: preset.label,
                   value: preset.value.toString()
                 }))
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
-              import_components89.ToggleControl,
-              {
-                label: (0, import_i18n125.__)("Show resize handles"),
-                checked: freeformCrop,
-                onChange: onFreeformChange
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
@@ -48619,7 +48585,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
   var import_element149 = __toESM(require_element(), 1);
-  var FREE_ASPECT_RATIO_VALUE = "0";
   function getAspectRatioOptions(aspectRatioPresets) {
     return [
       ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
@@ -48630,7 +48595,7 @@ If there's a particular need for this, please submit a feature request at https:
     aspectRatioPresets
   } = {}) {
     const controller = useMediaEditor();
-    const { aspectRatioValue, freeformCrop } = controller.cropOptions;
+    const { aspectRatioValue } = controller.cropOptions;
     const cropperImage = controller.state.image;
     const aspectRatioOptions = (0, import_element149.useMemo)(
       () => getAspectRatioOptions(aspectRatioPresets),
@@ -48640,33 +48605,10 @@ If there's a particular need for this, please submit a feature request at https:
       () => resolveAspectRatio(aspectRatioValue, cropperImage),
       [aspectRatioValue, cropperImage]
     );
-    const { beginGesture, endGesture, setAspectRatioValue, setFreeformCrop } = controller;
-    const setAspectRatioValueWithFreeformSync = (0, import_element149.useCallback)(
-      (value) => {
-        const shouldReenableFreeform = value === FREE_ASPECT_RATIO_VALUE && !freeformCrop;
-        if (!shouldReenableFreeform) {
-          setAspectRatioValue(value);
-          return;
-        }
-        beginGesture();
-        setAspectRatioValue(value);
-        setFreeformCrop(true);
-        endGesture();
-      },
-      [
-        freeformCrop,
-        beginGesture,
-        endGesture,
-        setAspectRatioValue,
-        setFreeformCrop
-      ]
-    );
     return {
       aspectRatioValue,
-      setAspectRatioValue: setAspectRatioValueWithFreeformSync,
+      setAspectRatioValue: controller.setAspectRatioValue,
       aspectRatioOptions,
-      freeformCrop,
-      setFreeformCrop: controller.setFreeformCrop,
       resolvedAspectRatio,
       resetCropOptions: controller.resetCropOptions
     };
@@ -48965,8 +48907,6 @@ If there's a particular need for this, please submit a feature request at https:
       aspectRatioValue,
       setAspectRatioValue,
       aspectRatioOptions,
-      freeformCrop,
-      setFreeformCrop,
       resetCropOptions
     } = useCropOptions({
       aspectRatioPresets
@@ -49010,8 +48950,6 @@ If there's a particular need for this, please submit a feature request at https:
                 {
                   aspectRatioValue,
                   onAspectRatioChange: setAspectRatioValue,
-                  freeformCrop,
-                  onFreeformChange: setFreeformCrop,
                   onPlacementControlInteraction: signalPlacementControlInteraction,
                   aspectRatioOptions
                 }
@@ -49025,8 +48963,6 @@ If there's a particular need for this, please submit a feature request at https:
       isImage,
       aspectRatioValue,
       setAspectRatioValue,
-      freeformCrop,
-      setFreeformCrop,
       aspectRatioOptions,
       signalPlacementControlInteraction
     ]);
