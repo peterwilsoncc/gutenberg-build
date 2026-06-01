@@ -45,10 +45,7 @@ function animatePhantomLines(phantom, toMorphed) {
     const endTransform = toMorphed ? MORPH_LINE_TRANSFORM[i] : MORPH_LINE_IDENTITY;
     line.style.transform = startTransform;
     line.animate(
-      [
-        { transform: startTransform },
-        { transform: endTransform }
-      ],
+      [{ transform: startTransform }, { transform: endTransform }],
       {
         duration: MORPH_DURATION,
         easing: MORPH_EASING,
@@ -95,7 +92,7 @@ function runOpenMorphAnimation(nav, hamburgerBtn, closeBtn, startRect) {
   if (!shouldAnimateMorph()) {
     return;
   }
-  requestAnimationFrame(() => {
+  window.requestAnimationFrame(() => {
     const endRect = closeBtn.getBoundingClientRect();
     closeBtn.style.opacity = "0";
     const phantom = createMorphPhantom(hamburgerBtn, false);
@@ -211,9 +208,7 @@ var { state, actions } = store(
         const ctx = getContext();
         const { ref } = getElement();
         ctx.previousFocus = ref;
-        if (ref.querySelector(
-          ".wp-block-navigation__hamburger-line"
-        )) {
+        if (ref.querySelector(".wp-block-navigation__hamburger-line")) {
           const rect = ref.getBoundingClientRect();
           ctx.morphStartRect = {
             top: rect.top,
