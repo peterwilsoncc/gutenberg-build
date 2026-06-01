@@ -30,6 +30,32 @@ document.addEventListener("click", () => {
 });
 var MORPH_DURATION = 350;
 var MORPH_EASING = "cubic-bezier(0.4, 0, 0.2, 1)";
+var MORPH_LINE_TRANSFORM = [
+  "translateY(3.75px) rotate(45deg) scaleX(1.24)",
+  "translateY(-3.75px) rotate(-45deg) scaleX(1.24)"
+];
+var MORPH_LINE_IDENTITY = "translateY(0) rotate(0) scaleX(1)";
+function animatePhantomLines(phantom, toMorphed) {
+  const lines = phantom.querySelectorAll(
+    ".wp-block-navigation__hamburger-line"
+  );
+  lines.forEach((line, i) => {
+    line.animate(
+      toMorphed ? [
+        { transform: MORPH_LINE_IDENTITY },
+        { transform: MORPH_LINE_TRANSFORM[i] }
+      ] : [
+        { transform: MORPH_LINE_TRANSFORM[i] },
+        { transform: MORPH_LINE_IDENTITY }
+      ],
+      {
+        duration: MORPH_DURATION,
+        easing: MORPH_EASING,
+        fill: "forwards"
+      }
+    );
+  });
+}
 var activeMorphAnimations = /* @__PURE__ */ new WeakMap();
 function shouldAnimateMorph() {
   return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -76,32 +102,30 @@ function runOpenMorphAnimation(nav, hamburgerBtn, closeBtn, startRect) {
     phantom.style.left = startRect.left + "px";
     const dx = endRect.left + (endRect.width - startRect.width) / 2 - startRect.left;
     const dy = endRect.top + (endRect.height - startRect.height) / 2 - startRect.top;
-    requestAnimationFrame(() => {
-      phantom.classList.add("is-morphed");
-      const animation = phantom.animate(
-        [
-          { transform: "translate(0, 0)" },
-          {
-            transform: `translate(${dx}px, ${dy}px)`
-          }
-        ],
+    animatePhantomLines(phantom, true);
+    const animation = phantom.animate(
+      [
+        { transform: "translate(0, 0)" },
         {
-          duration: MORPH_DURATION,
-          easing: MORPH_EASING,
-          fill: "forwards"
+          transform: `translate(${dx}px, ${dy}px)`
         }
-      );
-      activeMorphAnimations.set(nav, {
-        animation,
-        phantom,
-        closeBtn
-      });
-      animation.onfinish = () => {
-        phantom.remove();
-        closeBtn.style.visibility = "";
-        activeMorphAnimations.delete(nav);
-      };
+      ],
+      {
+        duration: MORPH_DURATION,
+        easing: MORPH_EASING,
+        fill: "forwards"
+      }
+    );
+    activeMorphAnimations.set(nav, {
+      animation,
+      phantom,
+      closeBtn
     });
+    animation.onfinish = () => {
+      phantom.remove();
+      closeBtn.style.visibility = "";
+      activeMorphAnimations.delete(nav);
+    };
   });
 }
 function runCloseMorphAnimation(nav, hamburgerBtn, closeBtn, hamburgerRect, onComplete) {
@@ -112,31 +136,29 @@ function runCloseMorphAnimation(nav, hamburgerBtn, closeBtn, hamburgerRect, onCo
   }
   const closeRect = closeBtn.getBoundingClientRect();
   closeBtn.style.visibility = "hidden";
-  const phantom = createMorphPhantom(hamburgerBtn, true);
+  const phantom = createMorphPhantom(hamburgerBtn, false);
   phantom.style.top = closeRect.top + "px";
   phantom.style.left = closeRect.left + "px";
   const dx = hamburgerRect.left + (hamburgerRect.width - closeRect.width) / 2 - closeRect.left;
   const dy = hamburgerRect.top + (hamburgerRect.height - closeRect.height) / 2 - closeRect.top;
-  requestAnimationFrame(() => {
-    phantom.classList.remove("is-morphed");
-    const animation = phantom.animate(
-      [
-        { transform: "translate(0, 0)" },
-        { transform: `translate(${dx}px, ${dy}px)` }
-      ],
-      {
-        duration: MORPH_DURATION,
-        easing: MORPH_EASING,
-        fill: "forwards"
-      }
-    );
-    activeMorphAnimations.set(nav, { animation, phantom, closeBtn });
-    animation.onfinish = () => {
-      phantom.remove();
-      activeMorphAnimations.delete(nav);
-      onComplete();
-    };
-  });
+  animatePhantomLines(phantom, false);
+  const animation = phantom.animate(
+    [
+      { transform: "translate(0, 0)" },
+      { transform: `translate(${dx}px, ${dy}px)` }
+    ],
+    {
+      duration: MORPH_DURATION,
+      easing: MORPH_EASING,
+      fill: "forwards"
+    }
+  );
+  activeMorphAnimations.set(nav, { animation, phantom, closeBtn });
+  animation.onfinish = () => {
+    phantom.remove();
+    activeMorphAnimations.delete(nav);
+    onComplete();
+  };
 }
 var { state, actions } = store(
   "core/navigation",
