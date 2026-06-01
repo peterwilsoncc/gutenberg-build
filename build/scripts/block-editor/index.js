@@ -12726,6 +12726,18 @@ var wp;
       // Deprecated.
     };
   };
+  var buildBlockVariationItem = (state, item) => (variation) => {
+    const variationId = `${item.id}/${variation.name}`;
+    const { time, count = 0 } = getInsertUsage(state, variationId) || {};
+    return {
+      ...item,
+      id: variationId,
+      icon: variation.icon || item.icon,
+      title: variation.title || item.title,
+      frecency: calculateFrecency(time, count),
+      variationName: variation.name
+    };
+  };
   var getInserterItems = (0, import_data4.createRegistrySelector)(
     (select3) => (0, import_data4.createSelector)(
       (state, rootClientId = null, options = DEFAULT_INSERTER_OPTIONS) => {
@@ -12860,14 +12872,31 @@ var wp;
         const possibleTransforms = (0, import_blocks6.getPossibleBlockTransformations)(
           normalizedBlocks
         ).reduce((accumulator, block) => {
-          if (itemsByName[block?.name]) {
-            accumulator.push(itemsByName[block.name]);
+          const item = itemsByName[block?.name];
+          if (!item) {
+            return accumulator;
           }
+          const { variationName } = block;
+          if (!variationName) {
+            accumulator.push(item);
+            return accumulator;
+          }
+          const variation = (0, import_blocks6.getBlockVariations)(
+            item.name,
+            "transform"
+          )?.find(({ name }) => name === variationName);
+          if (!variation) {
+            accumulator.push(item);
+            return accumulator;
+          }
+          accumulator.push(
+            buildBlockVariationItem(state, item)(variation)
+          );
           return accumulator;
         }, []);
         return orderBy(
           possibleTransforms,
-          (block) => itemsByName[block.name].frecency,
+          (block) => block.frecency,
           "desc"
         );
       },
@@ -50497,7 +50526,7 @@ var wp;
     onSelectVariation,
     blocks: blocks2
   }) => {
-    const [hoveredTransformItemName, setHoveredTransformItemName] = (0, import_element148.useState)();
+    const [hoveredTransformItem, setHoveredTransformItem] = (0, import_element148.useState)();
     const { priorityTextTransformations, restTransformations } = useGroupedTransforms(possibleBlockTransformations);
     const hasBothContentTransformations = priorityTextTransformations.length && restTransformations.length;
     const restTransformItems = !!restTransformations.length && /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
@@ -50505,17 +50534,18 @@ var wp;
       {
         restTransformations,
         onSelect,
-        setHoveredTransformItemName
+        setHoveredTransformItem
       }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(import_jsx_runtime271.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(import_components106.MenuGroup, { label: (0, import_i18n91.__)("Transform to"), className, children: [
-        hoveredTransformItemName && /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
+        hoveredTransformItem && /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
           PreviewBlockPopover,
           {
             blocks: (0, import_blocks69.switchToBlockType)(
               blocks2,
-              hoveredTransformItemName
+              hoveredTransformItem.name,
+              hoveredTransformItem.variationName
             )
           }
         ),
@@ -50532,9 +50562,9 @@ var wp;
           {
             item,
             onSelect,
-            setHoveredTransformItemName
+            setHoveredTransformItem
           },
-          item.name
+          item.id || item.name
         )),
         !hasBothContentTransformations && restTransformItems
       ] }),
@@ -50544,22 +50574,22 @@ var wp;
   function RestTransformationItems({
     restTransformations,
     onSelect,
-    setHoveredTransformItemName
+    setHoveredTransformItem
   }) {
     return restTransformations.map((item) => /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
       BlockTransformationItem,
       {
         item,
         onSelect,
-        setHoveredTransformItemName
+        setHoveredTransformItem
       },
-      item.name
+      item.id || item.name
     ));
   }
   function BlockTransformationItem({
     item,
     onSelect,
-    setHoveredTransformItemName
+    setHoveredTransformItem
   }) {
     const { name, icon, title, isDisabled } = item;
     return /* @__PURE__ */ (0, import_jsx_runtime271.jsxs)(
@@ -50568,13 +50598,13 @@ var wp;
         className: (0, import_blocks69.getBlockMenuDefaultClassName)(name),
         onClick: (event) => {
           event.preventDefault();
-          onSelect(name);
+          onSelect(name, item.variationName);
         },
         disabled: isDisabled,
-        onMouseLeave: () => setHoveredTransformItemName(null),
-        onMouseEnter: () => setHoveredTransformItemName(name),
-        onFocus: () => setHoveredTransformItemName(name),
-        onBlur: () => setHoveredTransformItemName(null),
+        onMouseLeave: () => setHoveredTransformItem(null),
+        onMouseEnter: () => setHoveredTransformItem(item),
+        onFocus: () => setHoveredTransformItem(item),
+        onBlur: () => setHoveredTransformItem(null),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(block_icon_default, { icon, showColors: true }),
           title
@@ -50955,8 +50985,8 @@ var wp;
         );
       }
     }
-    function onBlockTransform(name) {
-      const newBlocks = (0, import_blocks72.switchToBlockType)(blocks2, name);
+    function onBlockTransform(name, variationName) {
+      const newBlocks = (0, import_blocks72.switchToBlockType)(blocks2, name, variationName);
       replaceBlocks2(clientIds, newBlocks);
       selectForMultipleBlocks(newBlocks);
     }
@@ -51007,8 +51037,8 @@ var wp;
           possibleBlockTransformations,
           possibleBlockVariationTransformations: blockVariationTransformations,
           blocks: blocks2,
-          onSelect: (name) => {
-            onBlockTransform(name);
+          onSelect: (name, variationName) => {
+            onBlockTransform(name, variationName);
             onClose();
           },
           onSelectVariation: (name) => {
@@ -52049,8 +52079,8 @@ var wp;
         );
       }
     }
-    function onBlockTransform(name) {
-      const newBlocks = (0, import_blocks77.switchToBlockType)(blocks2, name);
+    function onBlockTransform(name, variationName) {
+      const newBlocks = (0, import_blocks77.switchToBlockType)(blocks2, name, variationName);
       replaceBlocks2(clientIds, newBlocks);
       selectForMultipleBlocks(newBlocks);
     }
@@ -52060,18 +52090,18 @@ var wp;
     }
     const commands = possibleBlockTransformations.map(
       (transformation) => {
-        const { name, title, icon } = transformation;
+        const { id, name, title, icon, variationName } = transformation;
         const blockIcon = !icon?.src || icon?.src === "block-default" ? {
           src: block_default_default
         } : icon;
         return {
-          name: "core/block-editor/transform-to-" + name.replace("/", "-"),
+          name: "core/block-editor/transform-to-" + (id || name).replace(/\//g, "-"),
           /* translators: %s: Block or block variation name. */
           label: (0, import_i18n101.sprintf)((0, import_i18n101.__)("Transform to %s"), title),
           icon: blockIcon?.src,
           category: "command",
           callback: ({ close }) => {
-            onBlockTransform(name);
+            onBlockTransform(name, variationName);
             close();
           }
         };

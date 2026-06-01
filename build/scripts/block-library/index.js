@@ -13501,8 +13501,50 @@ var wp;
   // packages/block-library/build-module/columns/transforms.mjs
   var import_blocks19 = __toESM(require_blocks(), 1);
   var MAXIMUM_SELECTED_BLOCKS = 6;
+  var getColumnBlocksFromGrid = (innerBlocks, columnCount) => {
+    const columnWidth = +(100 / columnCount).toFixed(2);
+    const innerBlocksTemplate = Array.from(
+      { length: columnCount },
+      (_, columnIndex) => [
+        "core/column",
+        { width: `${columnWidth}%` },
+        innerBlocks.filter(
+          (_innerBlock, blockIndex) => blockIndex % columnCount === columnIndex
+        )
+      ]
+    );
+    return (0, import_blocks19.createBlocksFromInnerBlocksTemplate)(innerBlocksTemplate);
+  };
+  var getGridInnerBlocks = (innerBlocks) => innerBlocks.flatMap((column) => {
+    const columnInnerBlocks = column.innerBlocks || [];
+    if (columnInnerBlocks.length > 1) {
+      return [
+        (0, import_blocks19.createBlock)(
+          "core/group",
+          { layout: { type: "constrained" } },
+          columnInnerBlocks
+        )
+      ];
+    }
+    return columnInnerBlocks;
+  });
   var transforms5 = {
     from: [
+      {
+        type: "block",
+        blocks: ["core/group"],
+        priority: 1,
+        transform: (attributes2, innerBlocks) => {
+          const { layout, ...rest } = attributes2;
+          const { columnCount } = layout;
+          return (0, import_blocks19.createBlock)(
+            "core/columns",
+            rest,
+            getColumnBlocksFromGrid(innerBlocks, columnCount)
+          );
+        },
+        isMatch: ({ layout }) => layout?.type === "grid" && Number.isInteger(layout?.columnCount) && layout.columnCount > 0
+      },
       {
         type: "block",
         isMultiBlock: true,
@@ -13583,6 +13625,29 @@ var wp;
               verticalAlignment
             },
             (0, import_blocks19.createBlocksFromInnerBlocksTemplate)(innerBlocksTemplate)
+          );
+        }
+      }
+    ],
+    to: [
+      {
+        type: "block",
+        blocks: ["core/group"],
+        variationName: "group-grid",
+        transform: (attributes2, innerBlocks) => {
+          const columnCount = innerBlocks.length;
+          return (0, import_blocks19.createBlock)(
+            "core/group",
+            {
+              ...attributes2,
+              isStackedOnMobile: void 0,
+              verticalAlignment: void 0,
+              layout: {
+                type: "grid",
+                ...columnCount && { columnCount }
+              }
+            },
+            getGridInnerBlocks(innerBlocks)
           );
         }
       }
@@ -27637,6 +27702,13 @@ ${url}
     }
     return ids.split(",").map((id) => parseInt(id, 10));
   };
+  var cloneInnerBlocks = (innerBlocks) => innerBlocks.map(
+    (innerBlock) => (0, import_blocks31.createBlock)(
+      innerBlock.name,
+      innerBlock.attributes,
+      cloneInnerBlocks(innerBlock.innerBlocks || [])
+    )
+  );
   function updateThirdPartyTransformToGallery(block) {
     if (block.name === "core/gallery" && block.attributes?.images.length > 0) {
       const innerBlocks = block.attributes.images.map(
@@ -27814,6 +27886,41 @@ ${url}
             );
           }
           return (0, import_blocks31.createBlock)("core/image", { align });
+        }
+      },
+      {
+        type: "block",
+        blocks: ["core/group"],
+        variationName: "group-grid",
+        transform: (attributes2, innerBlocks) => {
+          const {
+            allowResize,
+            aspectRatio,
+            caption,
+            columns,
+            fixedHeight,
+            ids,
+            imageCrop,
+            images,
+            linkTarget,
+            linkTo,
+            navigationButtonType,
+            randomOrder,
+            shortCodeTransforms,
+            sizeSlug,
+            ...rest
+          } = attributes2;
+          return (0, import_blocks31.createBlock)(
+            "core/group",
+            {
+              ...rest,
+              layout: {
+                type: "grid",
+                columnCount: columns ?? defaultColumnsNumber(innerBlocks.length)
+              }
+            },
+            cloneInnerBlocks(innerBlocks)
+          );
         }
       }
     ]
