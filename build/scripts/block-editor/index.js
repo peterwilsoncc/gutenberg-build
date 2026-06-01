@@ -67178,7 +67178,8 @@ var wp;
     onChange,
     parentLayout,
     isShownByDefault,
-    panelId
+    panelId,
+    showGridSpanDefaults = true
   }) {
     const {
       type: parentType,
@@ -67204,7 +67205,8 @@ var wp;
           onChange,
           parentLayout,
           isShownByDefault,
-          panelId
+          panelId,
+          showGridSpanDefaults
         }
       );
     }
@@ -67339,7 +67341,8 @@ var wp;
     onChange,
     parentLayout,
     isShownByDefault,
-    panelId
+    panelId,
+    showGridSpanDefaults
   }) {
     const { columnStart, rowStart, columnSpan, rowSpan } = childLayout;
     const { columnCount, rowCount } = parentLayout ?? {};
@@ -67367,6 +67370,8 @@ var wp;
     };
     const maxColumnSpan = columnCount ? columnCount - (columnStart ?? 1) + 1 : void 0;
     const maxRowSpan = window.__experimentalEnableGridInteractivity && rowCount ? rowCount - (rowStart ?? 1) + 1 : void 0;
+    const columnSpanValue = columnSpan ?? (showGridSpanDefaults ? 1 : void 0);
+    const rowSpanValue = rowSpan ?? (showGridSpanDefaults ? 1 : void 0);
     return /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(import_jsx_runtime386.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(
         import_components199.Flex,
@@ -67394,7 +67399,7 @@ var wp;
                     columnSpan: constrainedValue
                   });
                 },
-                value: columnSpan ?? 1,
+                value: columnSpanValue,
                 min: 1,
                 max: maxColumnSpan
               }
@@ -67415,7 +67420,7 @@ var wp;
                     rowSpan: constrainedValue
                   });
                 },
-                value: rowSpan ?? 1,
+                value: rowSpanValue,
                 min: 1,
                 max: maxRowSpan
               }
@@ -68153,6 +68158,7 @@ var wp;
               onChange: setChildLayout,
               parentLayout: settings2?.parentLayout,
               panelId,
+              showGridSpanDefaults: !hasViewportBlockStyleState(styleState),
               isShownByDefault: defaultControls.childLayout ?? DEFAULT_CONTROLS4.childLayout
             }
           ),
