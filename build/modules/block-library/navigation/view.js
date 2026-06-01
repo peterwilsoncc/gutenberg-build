@@ -28,6 +28,116 @@ function getFocusableElements(ref) {
 }
 document.addEventListener("click", () => {
 });
+var MORPH_DURATION = 350;
+var MORPH_EASING = "cubic-bezier(0.4, 0, 0.2, 1)";
+var activeMorphAnimations = /* @__PURE__ */ new WeakMap();
+function shouldAnimateMorph() {
+  return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function cleanupMorphAnimation(nav) {
+  const morph = activeMorphAnimations.get(nav);
+  if (morph) {
+    morph.animation?.cancel();
+    morph.phantom?.remove();
+    if (morph.closeBtn) {
+      morph.closeBtn.style.visibility = "";
+    }
+    activeMorphAnimations.delete(nav);
+  }
+}
+function createMorphPhantom(hamburgerBtn, isMorphed) {
+  const phantom = hamburgerBtn.cloneNode(true);
+  phantom.removeAttribute("data-wp-on--click");
+  phantom.removeAttribute("data-wp-on--keydown");
+  phantom.setAttribute("aria-hidden", "true");
+  phantom.setAttribute("tabindex", "-1");
+  phantom.classList.add("wp-block-navigation__morph-phantom");
+  phantom.style.position = "fixed";
+  phantom.style.zIndex = "100001";
+  phantom.style.pointerEvents = "none";
+  phantom.style.margin = "0";
+  phantom.style.color = window.getComputedStyle(hamburgerBtn).color;
+  if (isMorphed) {
+    phantom.classList.add("is-morphed");
+  }
+  document.body.appendChild(phantom);
+  return phantom;
+}
+function runOpenMorphAnimation(nav, hamburgerBtn, closeBtn, startRect) {
+  cleanupMorphAnimation(nav);
+  if (!shouldAnimateMorph()) {
+    return;
+  }
+  requestAnimationFrame(() => {
+    const endRect = closeBtn.getBoundingClientRect();
+    closeBtn.style.visibility = "hidden";
+    const phantom = createMorphPhantom(hamburgerBtn, false);
+    phantom.style.top = startRect.top + "px";
+    phantom.style.left = startRect.left + "px";
+    const dx = endRect.left + (endRect.width - startRect.width) / 2 - startRect.left;
+    const dy = endRect.top + (endRect.height - startRect.height) / 2 - startRect.top;
+    requestAnimationFrame(() => {
+      phantom.classList.add("is-morphed");
+      const animation = phantom.animate(
+        [
+          { transform: "translate(0, 0)" },
+          {
+            transform: `translate(${dx}px, ${dy}px)`
+          }
+        ],
+        {
+          duration: MORPH_DURATION,
+          easing: MORPH_EASING,
+          fill: "forwards"
+        }
+      );
+      activeMorphAnimations.set(nav, {
+        animation,
+        phantom,
+        closeBtn
+      });
+      animation.onfinish = () => {
+        phantom.remove();
+        closeBtn.style.visibility = "";
+        activeMorphAnimations.delete(nav);
+      };
+    });
+  });
+}
+function runCloseMorphAnimation(nav, hamburgerBtn, closeBtn, hamburgerRect, onComplete) {
+  cleanupMorphAnimation(nav);
+  if (!shouldAnimateMorph()) {
+    onComplete();
+    return;
+  }
+  const closeRect = closeBtn.getBoundingClientRect();
+  closeBtn.style.visibility = "hidden";
+  const phantom = createMorphPhantom(hamburgerBtn, true);
+  phantom.style.top = closeRect.top + "px";
+  phantom.style.left = closeRect.left + "px";
+  const dx = hamburgerRect.left + (hamburgerRect.width - closeRect.width) / 2 - closeRect.left;
+  const dy = hamburgerRect.top + (hamburgerRect.height - closeRect.height) / 2 - closeRect.top;
+  requestAnimationFrame(() => {
+    phantom.classList.remove("is-morphed");
+    const animation = phantom.animate(
+      [
+        { transform: "translate(0, 0)" },
+        { transform: `translate(${dx}px, ${dy}px)` }
+      ],
+      {
+        duration: MORPH_DURATION,
+        easing: MORPH_EASING,
+        fill: "forwards"
+      }
+    );
+    activeMorphAnimations.set(nav, { animation, phantom, closeBtn });
+    animation.onfinish = () => {
+      phantom.remove();
+      activeMorphAnimations.delete(nav);
+      onComplete();
+    };
+  });
+}
 var { state, actions } = store(
   "core/navigation",
   {
@@ -77,9 +187,45 @@ var { state, actions } = store(
         const ctx = getContext();
         const { ref } = getElement();
         ctx.previousFocus = ref;
+        if (ref.querySelector(
+          ".wp-block-navigation__hamburger-line"
+        )) {
+          const rect = ref.getBoundingClientRect();
+          ctx.morphStartRect = {
+            top: rect.top,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height
+          };
+        }
         actions.openMenu("click");
       },
       closeMenuOnClick() {
+        const ctx = getContext();
+        const { ref } = getElement();
+        if (ctx.morphStartRect && ref.classList.contains(
+          "wp-block-navigation-overlay-close"
+        )) {
+          const nav = ref.closest(".wp-block-navigation");
+          const hamburgerBtn = nav?.querySelector(
+            ".wp-block-navigation__responsive-container-open"
+          );
+          if (nav && hamburgerBtn && hamburgerBtn.querySelector(
+            ".wp-block-navigation__hamburger-line"
+          )) {
+            runCloseMorphAnimation(
+              nav,
+              hamburgerBtn,
+              ref,
+              ctx.morphStartRect,
+              () => {
+                actions.closeMenu("click");
+                actions.closeMenu("focus");
+              }
+            );
+            return;
+          }
+        }
         actions.closeMenu("click");
         actions.closeMenu("focus");
       },
@@ -162,6 +308,28 @@ var { state, actions } = store(
           ctx.modal = ref;
           ctx.firstFocusableElement = focusableElements[0];
           ctx.lastFocusableElement = focusableElements[focusableElements.length - 1];
+          if (ctx.morphStartRect) {
+            const nav = ref.closest(".wp-block-navigation");
+            const hamburgerBtn = nav?.querySelector(
+              ".wp-block-navigation__responsive-container-open"
+            );
+            const closeBtn = ref.querySelector(
+              ".wp-block-navigation-overlay-close"
+            );
+            if (nav && hamburgerBtn && closeBtn) {
+              runOpenMorphAnimation(
+                nav,
+                hamburgerBtn,
+                closeBtn,
+                ctx.morphStartRect
+              );
+            }
+          }
+        } else if (ctx.type === "overlay") {
+          const nav = ref.closest(".wp-block-navigation");
+          if (nav) {
+            cleanupMorphAnimation(nav);
+          }
         }
       },
       focusFirstElement() {
