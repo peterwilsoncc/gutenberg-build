@@ -3762,7 +3762,7 @@ var wp;
   // packages/icons/build-module/library/square.mjs
   var import_primitives76 = __toESM(require_primitives(), 1);
   var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
-  var square_default = /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives76.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives76.Path, { d: "M5.75 12.75V18.25H11.25M12.75 5.75H18.25V11.25", strokeLinecap: "square", vectorEffect: "non-scaling-stroke" }) });
+  var square_default = /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives76.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives76.Path, { fill: "none", d: "M5.75 12.75V18.25H11.25M12.75 5.75H18.25V11.25", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "square" }) });
 
   // packages/icons/build-module/library/star-empty.mjs
   var import_primitives77 = __toESM(require_primitives(), 1);
