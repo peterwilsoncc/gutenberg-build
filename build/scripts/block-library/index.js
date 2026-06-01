@@ -39882,10 +39882,6 @@ ${js}
         type: "boolean",
         default: true
       },
-      overlayMenuIconAnimation: {
-        type: "boolean",
-        default: true
-      },
       __unstableLocation: {
         type: "string"
       },
@@ -41627,7 +41623,6 @@ ${js}
     setOverlayMenuPreview,
     hasIcon,
     icon: icon4,
-    overlayMenuIconAnimation,
     overlayMenuPreviewClasses,
     overlayMenuPreviewId,
     isResponsive,
@@ -41654,17 +41649,6 @@ ${js}
           setAttributes,
           overlayMenuPreviewClasses,
           overlayMenuPreviewId
-        }
-      ),
-      overlayMenu !== "never" && hasIcon && icon4 === "handle" && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
-        import_components84.ToggleControl,
-        {
-          __nextHasNoMarginBottom: true,
-          checked: overlayMenuIconAnimation,
-          label: (0, import_i18n128.__)("Animate menu icon"),
-          onChange: (value) => setAttributes({
-            overlayMenuIconAnimation: value
-          })
         }
       ),
       overlayMenu !== "never" && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
@@ -44284,8 +44268,7 @@ ${js}
         flexWrap = "wrap"
       } = {},
       hasIcon,
-      icon: icon4 = "handle",
-      overlayMenuIconAnimation = true
+      icon: icon4 = "handle"
     } = attributes2;
     const ref = attributes2.ref;
     const setRef = (0, import_element84.useCallback)(
@@ -44643,8 +44626,7 @@ ${js}
               submenuVisibility: "hover",
               overlayMenu: "mobile",
               hasIcon: true,
-              icon: "handle",
-              overlayMenuIconAnimation: true
+              icon: "handle"
             });
           },
           dropdownMenuProps,
@@ -44754,7 +44736,6 @@ ${js}
           setOverlayMenuPreview,
           hasIcon,
           icon: icon4,
-          overlayMenuIconAnimation,
           overlayMenuPreviewClasses,
           overlayMenuPreviewId,
           isResponsive,
