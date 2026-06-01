@@ -203,9 +203,11 @@ var { state, actions } = store(
       closeMenuOnClick() {
         const ctx = getContext();
         const { ref } = getElement();
-        if (ctx.morphStartRect && ref.classList.contains(
+        if (ctx.morphStartRect && (ref.classList.contains(
           "wp-block-navigation-overlay-close"
-        )) {
+        ) || ref.classList.contains(
+          "wp-block-navigation__responsive-container-close"
+        ))) {
           const nav = ref.closest(".wp-block-navigation");
           const hamburgerBtn = nav?.querySelector(
             ".wp-block-navigation__responsive-container-open"
@@ -314,9 +316,15 @@ var { state, actions } = store(
               ".wp-block-navigation__responsive-container-open"
             );
             const closeBtn = ref.querySelector(
-              ".wp-block-navigation-overlay-close"
+              ".wp-block-navigation-overlay-close, .wp-block-navigation__responsive-container-close"
             );
             if (nav && hamburgerBtn && closeBtn) {
+              ref.style.animation = "none";
+              ref.style.transform = "none";
+              closeBtn.style.position = "fixed";
+              closeBtn.style.top = ctx.morphStartRect.top + "px";
+              closeBtn.style.left = ctx.morphStartRect.left + "px";
+              closeBtn.style.right = "auto";
               runOpenMorphAnimation(
                 nav,
                 hamburgerBtn,
