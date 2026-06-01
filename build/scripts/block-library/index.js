@@ -18744,8 +18744,19 @@ var wp;
     } = currentSettings;
     const sizeSlug = attributes2.sizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
     const { gradientValue, setGradient } = (0, import_block_editor63.__experimentalUseGradient)();
-    const { getSettings: getSettings2 } = (0, import_data27.useSelect)(import_block_editor63.store);
-    const imageSizes = getSettings2()?.imageSizes;
+    const { imageSizes, hasSelectedStyleState } = (0, import_data27.useSelect)(
+      (select9) => {
+        const {
+          getSettings: getSettings2,
+          hasSelectedStyleState: hasSelectedBlockStyleState
+        } = unlock(select9(import_block_editor63.store));
+        return {
+          imageSizes: getSettings2()?.imageSizes,
+          hasSelectedStyleState: hasSelectedBlockStyleState(clientId)
+        };
+      },
+      [clientId]
+    );
     const image = (0, import_data27.useSelect)(
       (select9) => id && isImageBackground ? select9(import_core_data15.store).getEntityRecord(
         "postType",
@@ -18983,7 +18994,7 @@ var wp;
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(import_block_editor63.InspectorControls, { group: "dimensions", children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
+      !hasSelectedStyleState && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(import_block_editor63.InspectorControls, { group: "dimensions", children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
         import_components32.__experimentalToolsPanelItem,
         {
           className: "single-column",
@@ -32639,12 +32650,14 @@ ${js}
       lockAltControlsMessage,
       lockTitleControls = false,
       lockTitleControlsMessage,
-      hideCaptionControls = false
+      hideCaptionControls = false,
+      hasSelectedStyleState = false
     } = (0, import_data46.useSelect)(
       (select9) => {
         if (!isSingleSelected) {
           return {};
         }
+        const { hasSelectedStyleState: hasSelectedBlockStyleState } = unlock(select9(import_block_editor113.store));
         const {
           url: urlBinding,
           alt: altBinding,
@@ -32662,6 +32675,7 @@ ${js}
           titleBinding?.source
         );
         return {
+          hasSelectedStyleState: hasSelectedBlockStyleState(clientId),
           lockUrlControls: !!urlBinding && !urlBindingSource?.canUserEditValue?.({
             select: select9,
             context,
@@ -32697,6 +32711,7 @@ ${js}
       },
       [
         arePatternOverridesEnabled,
+        clientId,
         context,
         isSingleSelected,
         metadata?.bindings
@@ -32870,7 +32885,7 @@ ${js}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime279.jsxs)(
+      !hasSelectedStyleState && /* @__PURE__ */ (0, import_jsx_runtime279.jsxs)(
         import_block_editor113.InspectorControls,
         {
           group: "dimensions",
@@ -53970,9 +53985,10 @@ ${js}
       const imageId = imageOpener?.groups?.attrs && JSON.parse(imageOpener.groups.attrs)?.id;
       return imageId;
     }, [storedFeaturedImage, useFirstImageFromPost, postContent]);
-    const { media, postType, postPermalink } = (0, import_data106.useSelect)(
+    const { media, postType, postPermalink, hasSelectedStyleState } = (0, import_data106.useSelect)(
       (select9) => {
         const { getEntityRecord, getPostType, getEditedEntityRecord } = select9(import_core_data62.store);
+        const { hasSelectedStyleState: hasSelectedBlockStyleState } = unlock(select9(import_block_editor197.store));
         return {
           media: featuredImage && getEntityRecord("postType", "attachment", featuredImage, {
             context: "view"
@@ -53982,10 +53998,11 @@ ${js}
             "postType",
             postTypeSlug,
             postId
-          )?.link
+          )?.link,
+          hasSelectedStyleState: hasSelectedBlockStyleState(clientId)
         };
       },
-      [featuredImage, postTypeSlug, postId]
+      [clientId, featuredImage, postTypeSlug, postId]
     );
     const mediaUrl = media?.media_details?.sizes?.[sizeSlug]?.source_url || media?.source_url;
     const blockProps = (0, import_block_editor197.useBlockProps)({
@@ -54053,7 +54070,7 @@ ${js}
           clientId
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor197.InspectorControls, { group: "dimensions", children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
+      !hasSelectedStyleState && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor197.InspectorControls, { group: "dimensions", children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
         dimension_controls_default,
         {
           clientId,

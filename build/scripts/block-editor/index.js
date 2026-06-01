@@ -10852,6 +10852,7 @@ var wp;
     getZoomLevel: () => getZoomLevel,
     hasAllowedPatterns: () => hasAllowedPatterns,
     hasBlockSpotlight: () => hasBlockSpotlight2,
+    hasSelectedStyleState: () => hasSelectedStyleState,
     isBlockHiddenAnywhere: () => isBlockHiddenAnywhere,
     isBlockHiddenAtViewport: () => isBlockHiddenAtViewport,
     isBlockHiddenEverywhere: () => isBlockHiddenEverywhere,
@@ -11497,6 +11498,10 @@ var wp;
       return DEFAULT_BLOCK_STYLE_STATE;
     }
     return state.selectedBlockStyleState.value ?? DEFAULT_BLOCK_STYLE_STATE;
+  }
+  function hasSelectedStyleState(state, clientId) {
+    const selectedState = getSelectedBlockStyleState(state, clientId);
+    return selectedState.viewport !== DEFAULT_BLOCK_STYLE_STATE.viewport || selectedState.pseudo !== DEFAULT_BLOCK_STYLE_STATE.pseudo;
   }
   function isSelectedBlockStyleStateShownOnCanvas(state, clientId) {
     if (state.selectedBlockStyleState?.clientId !== clientId) {
@@ -67568,7 +67573,7 @@ var wp;
   var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
   var AXIAL_SIDES = ["horizontal", "vertical"];
   function useHasDimensionsPanel(settings2, styleState = DEFAULT_BLOCK_STYLE_STATE2) {
-    return import_element231.Platform.OS === "web" && (hasContentSize(settings2) || hasWideSize(settings2) || hasPadding(settings2) || hasMargin(settings2) || hasGap(settings2) || hasHeight(settings2) || hasMinHeight(settings2) || hasMinWidth(settings2) || hasWidth(settings2) || hasAspectRatio(settings2) || hasChildLayout(settings2, styleState));
+    return import_element231.Platform.OS === "web" && (hasContentSize(settings2) || hasWideSize(settings2) || hasPadding(settings2) || hasMargin(settings2) || hasGap(settings2) || hasHeight(settings2) || hasMinHeight(settings2) || hasMinWidth(settings2) || hasWidth(settings2) || hasAspectRatio(settings2, styleState) || hasChildLayout(settings2, styleState));
   }
   function hasContentSize(settings2) {
     return settings2?.layout?.contentSize;
@@ -67597,8 +67602,8 @@ var wp;
   function hasWidth(settings2) {
     return settings2?.dimensions?.width;
   }
-  function hasAspectRatio(settings2) {
-    return settings2?.dimensions?.aspectRatio;
+  function hasAspectRatio(settings2, styleState = DEFAULT_BLOCK_STYLE_STATE2) {
+    return isDefaultBlockStyleState(styleState) && settings2?.dimensions?.aspectRatio;
   }
   function hasChildLayout(settings2, styleState = DEFAULT_BLOCK_STYLE_STATE2) {
     if (hasPseudoBlockStyleState(styleState)) {
@@ -67904,7 +67909,7 @@ var wp;
       setWidthValue(void 0);
     };
     const hasWidthValue = () => !!value?.dimensions?.width;
-    const showAspectRatioControl = hasAspectRatio(settings2);
+    const showAspectRatioControl = hasAspectRatio(settings2, styleState);
     const aspectRatioValue = decodeValue(
       inheritedValue?.dimensions?.aspectRatio
     );
