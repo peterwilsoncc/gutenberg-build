@@ -34,19 +34,19 @@ var MORPH_LINE_TRANSFORM = [
   "translateY(3.75px) rotate(45deg) scaleX(1.24)",
   "translateY(-3.75px) rotate(-45deg) scaleX(1.24)"
 ];
-var MORPH_LINE_IDENTITY = "translateY(0) rotate(0) scaleX(1)";
+var MORPH_LINE_IDENTITY = "translateY(0px) rotate(0deg) scaleX(1)";
 function animatePhantomLines(phantom, toMorphed) {
   const lines = phantom.querySelectorAll(
     ".wp-block-navigation__hamburger-line"
   );
   lines.forEach((line, i) => {
+    const startTransform = toMorphed ? MORPH_LINE_IDENTITY : MORPH_LINE_TRANSFORM[i];
+    const endTransform = toMorphed ? MORPH_LINE_TRANSFORM[i] : MORPH_LINE_IDENTITY;
+    line.style.transform = startTransform;
     line.animate(
-      toMorphed ? [
-        { transform: MORPH_LINE_IDENTITY },
-        { transform: MORPH_LINE_TRANSFORM[i] }
-      ] : [
-        { transform: MORPH_LINE_TRANSFORM[i] },
-        { transform: MORPH_LINE_IDENTITY }
+      [
+        { transform: startTransform },
+        { transform: endTransform }
       ],
       {
         duration: MORPH_DURATION,
@@ -66,7 +66,7 @@ function cleanupMorphAnimation(nav) {
     morph.animation?.cancel();
     morph.phantom?.remove();
     if (morph.closeBtn) {
-      morph.closeBtn.style.visibility = "";
+      morph.closeBtn.style.opacity = "";
     }
     activeMorphAnimations.delete(nav);
   }
@@ -96,7 +96,7 @@ function runOpenMorphAnimation(nav, hamburgerBtn, closeBtn, startRect) {
   }
   requestAnimationFrame(() => {
     const endRect = closeBtn.getBoundingClientRect();
-    closeBtn.style.visibility = "hidden";
+    closeBtn.style.opacity = "0";
     const phantom = createMorphPhantom(hamburgerBtn, false);
     phantom.style.top = startRect.top + "px";
     phantom.style.left = startRect.left + "px";
@@ -123,7 +123,7 @@ function runOpenMorphAnimation(nav, hamburgerBtn, closeBtn, startRect) {
     });
     animation.onfinish = () => {
       phantom.remove();
-      closeBtn.style.visibility = "";
+      closeBtn.style.opacity = "";
       activeMorphAnimations.delete(nav);
     };
   });
@@ -135,7 +135,7 @@ function runCloseMorphAnimation(nav, hamburgerBtn, closeBtn, hamburgerRect, onCo
     return;
   }
   const closeRect = closeBtn.getBoundingClientRect();
-  closeBtn.style.visibility = "hidden";
+  closeBtn.style.opacity = "0";
   const phantom = createMorphPhantom(hamburgerBtn, false);
   phantom.style.top = closeRect.top + "px";
   phantom.style.left = closeRect.left + "px";
