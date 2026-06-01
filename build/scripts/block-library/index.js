@@ -49105,14 +49105,6 @@ ${js}
         padding: true
       }
     },
-    styles: [
-      { name: "bars", label: "Bars", isDefault: true },
-      { name: "mirror", label: "Mirror" },
-      { name: "line", label: "Line" },
-      { name: "blocks", label: "Blocks" },
-      { name: "dots", label: "Dots" },
-      { name: "seekbar", label: "Seekbar" }
-    ],
     editorStyle: "wp-block-playlist-editor",
     style: "wp-block-playlist"
   };
@@ -49784,14 +49776,13 @@ ${js}
     waveformColor,
     progressColor,
     buttonColor,
-    height = DEFAULT_WAVEFORM_HEIGHT,
-    waveformStyle = "bars"
+    height = DEFAULT_WAVEFORM_HEIGHT
   }) {
     const container = document.createElement("div");
     container.setAttribute("data-waveform-player", "");
     container.setAttribute("data-url", url);
     container.setAttribute("data-height", String(height));
-    container.setAttribute("data-waveform-style", waveformStyle);
+    container.setAttribute("data-waveform-style", "bars");
     container.setAttribute("data-waveform-color", waveformColor);
     container.setAttribute("data-progress-color", progressColor);
     container.setAttribute("data-button-color", buttonColor);
@@ -49839,7 +49830,7 @@ ${js}
     }
     console.error("Playlist play error:", error);
   }
-  function initWaveformPlayer(element, { src, title, artist, image, autoPlay, onEnded, labels, visualizationStyle }) {
+  function initWaveformPlayer(element, { src, title, artist, image, autoPlay, onEnded, labels }) {
     const { textColor, waveformColor, progressColor } = getWaveformColors(element);
     const container = createWaveformContainer({
       url: src,
@@ -49848,8 +49839,7 @@ ${js}
       artwork: image,
       waveformColor,
       progressColor,
-      buttonColor: textColor,
-      waveformStyle: visualizationStyle
+      buttonColor: textColor
     });
     element.appendChild(container);
     const instance = new lt(container);
@@ -49890,14 +49880,7 @@ ${js}
 
   // packages/block-library/build-module/utils/waveform-player.mjs
   var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
-  function WaveformPlayer({
-    src,
-    title,
-    artist,
-    image,
-    visualizationStyle,
-    onEnded
-  }) {
+  function WaveformPlayer({ src, title, artist, image, onEnded }) {
     const onEndedRef = (0, import_element93.useRef)(onEnded);
     onEndedRef.current = onEnded;
     const ref = (0, import_compose42.useRefEffect)(
@@ -49916,7 +49899,6 @@ ${js}
             title,
             artist,
             image,
-            visualizationStyle,
             onEnded: () => onEndedRef.current?.()
           });
           playerDestroy = destroy;
@@ -49928,7 +49910,7 @@ ${js}
           playerDestroy?.();
         };
       },
-      [src, title, artist, image, visualizationStyle]
+      [src, title, artist, image]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)("div", { ref, className: "wp-block-playlist__waveform-player" });
   }
@@ -49970,7 +49952,6 @@ ${js}
       showArtists,
       currentTrack
     } = attributes2;
-    const visualizationStyle = attributes2.className?.match(/is-style-(\w+)/)?.[1] || "bars";
     const blockProps = (0, import_block_editor179.useBlockProps)();
     const { replaceInnerBlocks, __unstableMarkNextChangeAsNotPersistent } = (0, import_data98.useDispatch)(import_block_editor179.store);
     const { createErrorNotice } = (0, import_data98.useDispatch)(import_notices14.store);
@@ -50271,7 +50252,6 @@ ${js}
             title: currentTrackData?.title,
             artist: currentTrackData?.artist,
             image: currentTrackData?.image,
-            visualizationStyle,
             onEnded: onTrackEnded
           }
         ) }),

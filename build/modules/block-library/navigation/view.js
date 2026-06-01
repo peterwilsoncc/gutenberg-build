@@ -157,6 +157,7 @@ function runCloseMorphAnimation(nav, hamburgerBtn, closeBtn, hamburgerRect, onCo
   activeMorphAnimations.set(nav, { animation, phantom, closeBtn });
   animation.onfinish = () => {
     phantom.remove();
+    closeBtn.style.opacity = "";
     activeMorphAnimations.delete(nav);
     onComplete();
   };
