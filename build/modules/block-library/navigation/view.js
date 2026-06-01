@@ -345,10 +345,6 @@ var { state, actions } = store(
             if (nav && hamburgerBtn && closeBtn) {
               ref.style.animation = "none";
               ref.style.transform = "none";
-              closeBtn.style.position = "fixed";
-              closeBtn.style.top = ctx.morphStartRect.top + "px";
-              closeBtn.style.left = ctx.morphStartRect.left + "px";
-              closeBtn.style.right = "auto";
               runOpenMorphAnimation(
                 nav,
                 hamburgerBtn,
