@@ -19329,16 +19329,18 @@ var import_data = __toESM(require_data(), 1);
 var DEFAULT_STATE = {
   isOpen: false,
   id: null,
-  onUpdate: null
+  onUpdate: null,
+  onClose: null
 };
 function reducer(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case "OPEN_MEDIA_EDITOR_MODAL": {
-      const { id, onUpdate } = action;
+      const { id, onUpdate, onClose } = action;
       return {
         isOpen: true,
         id,
-        onUpdate
+        onUpdate,
+        onClose
       };
     }
     case "CLOSE_MEDIA_EDITOR_MODAL":
@@ -19355,12 +19357,14 @@ __export(actions_exports, {
 });
 function openMediaEditorModal({
   id,
-  onUpdate
+  onUpdate,
+  onClose
 }) {
   return {
     type: "OPEN_MEDIA_EDITOR_MODAL",
     id,
-    onUpdate: onUpdate ?? null
+    onUpdate: onUpdate ?? null,
+    onClose: onClose ?? null
   };
 }
 function closeMediaEditorModal() {
@@ -19371,6 +19375,7 @@ function closeMediaEditorModal() {
 var selectors_exports = {};
 __export(selectors_exports, {
   getId: () => getId,
+  getOnClose: () => getOnClose,
   getOnUpdate: () => getOnUpdate,
   isOpen: () => isOpen
 });
@@ -19382,6 +19387,9 @@ function getId(state) {
 }
 function getOnUpdate(state) {
   return state.onUpdate;
+}
+function getOnClose(state) {
+  return state.onClose;
 }
 
 // packages/media-editor/build-module/store/constants.mjs
@@ -25926,12 +25934,13 @@ function MediaEditorModal({
   fields = [],
   aspectRatioPresets
 }) {
-  const { isModalOpen, id, onUpdate } = (0, import_data9.useSelect)((select) => {
-    const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2 } = select(store);
+  const { isModalOpen, id, onUpdate, onClose } = (0, import_data9.useSelect)((select) => {
+    const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2, getOnClose: getOnClose2 } = select(store);
     return {
       isModalOpen: isOpen2(),
       id: getId2(),
-      onUpdate: getOnUpdate2()
+      onUpdate: getOnUpdate2(),
+      onClose: getOnClose2()
     };
   }, []);
   const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data9.useDispatch)(store);
@@ -25943,6 +25952,10 @@ function MediaEditorModal({
   const stopKeyDownPropagation = (event) => {
     event.stopPropagation();
   };
+  const handleClose = () => {
+    closeMediaEditorModal2();
+    onClose?.();
+  };
   return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
     media_editor_default,
     {
@@ -25953,7 +25966,7 @@ function MediaEditorModal({
       shouldCloseOnEsc: true,
       noticesClassName: "media-editor-modal__snackbar",
       noticesPortalElement: portalElement,
-      onClose: closeMediaEditorModal2,
+      onClose: handleClose,
       onSaved: ({ id: savedId, url, previous }) => {
         if (savedId && onUpdate) {
           const update2 = {
@@ -25962,7 +25975,7 @@ function MediaEditorModal({
           };
           onUpdate(update2);
         }
-        closeMediaEditorModal2();
+        handleClose();
         if (previous && savedId !== previous.id && onUpdate) {
           createSuccessNotice((0, import_i18n37.__)("Image edited."), {
             type: "snackbar",

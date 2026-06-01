@@ -42496,16 +42496,18 @@ If there's a particular need for this, please submit a feature request at https:
   var DEFAULT_STATE = {
     isOpen: false,
     id: null,
-    onUpdate: null
+    onUpdate: null,
+    onClose: null
   };
   function reducer(state = DEFAULT_STATE, action) {
     switch (action.type) {
       case "OPEN_MEDIA_EDITOR_MODAL": {
-        const { id, onUpdate } = action;
+        const { id, onUpdate, onClose } = action;
         return {
           isOpen: true,
           id,
-          onUpdate
+          onUpdate,
+          onClose
         };
       }
       case "CLOSE_MEDIA_EDITOR_MODAL":
@@ -42522,12 +42524,14 @@ If there's a particular need for this, please submit a feature request at https:
   });
   function openMediaEditorModal({
     id,
-    onUpdate
+    onUpdate,
+    onClose
   }) {
     return {
       type: "OPEN_MEDIA_EDITOR_MODAL",
       id,
-      onUpdate: onUpdate ?? null
+      onUpdate: onUpdate ?? null,
+      onClose: onClose ?? null
     };
   }
   function closeMediaEditorModal() {
@@ -42538,6 +42542,7 @@ If there's a particular need for this, please submit a feature request at https:
   var selectors_exports2 = {};
   __export(selectors_exports2, {
     getId: () => getId,
+    getOnClose: () => getOnClose,
     getOnUpdate: () => getOnUpdate,
     isOpen: () => isOpen
   });
@@ -42549,6 +42554,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function getOnUpdate(state) {
     return state.onUpdate;
+  }
+  function getOnClose(state) {
+    return state.onClose;
   }
 
   // packages/media-editor/build-module/store/constants.mjs
@@ -49158,12 +49166,13 @@ If there's a particular need for this, please submit a feature request at https:
     fields: fields3 = [],
     aspectRatioPresets
   }) {
-    const { isModalOpen, id, onUpdate } = (0, import_data43.useSelect)((select7) => {
-      const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2 } = select7(store2);
+    const { isModalOpen, id, onUpdate, onClose } = (0, import_data43.useSelect)((select7) => {
+      const { isOpen: isOpen2, getId: getId2, getOnUpdate: getOnUpdate2, getOnClose: getOnClose2 } = select7(store2);
       return {
         isModalOpen: isOpen2(),
         id: getId2(),
-        onUpdate: getOnUpdate2()
+        onUpdate: getOnUpdate2(),
+        onClose: getOnClose2()
       };
     }, []);
     const { closeMediaEditorModal: closeMediaEditorModal2 } = (0, import_data43.useDispatch)(store2);
@@ -49175,6 +49184,10 @@ If there's a particular need for this, please submit a feature request at https:
     const stopKeyDownPropagation = (event) => {
       event.stopPropagation();
     };
+    const handleClose = () => {
+      closeMediaEditorModal2();
+      onClose?.();
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
       media_editor_default,
       {
@@ -49185,7 +49198,7 @@ If there's a particular need for this, please submit a feature request at https:
         shouldCloseOnEsc: true,
         noticesClassName: "media-editor-modal__snackbar",
         noticesPortalElement: portalElement,
-        onClose: closeMediaEditorModal2,
+        onClose: handleClose,
         onSaved: ({ id: savedId, url, previous }) => {
           if (savedId && onUpdate) {
             const update4 = {
@@ -49194,7 +49207,7 @@ If there's a particular need for this, please submit a feature request at https:
             };
             onUpdate(update4);
           }
-          closeMediaEditorModal2();
+          handleClose();
           if (previous && savedId !== previous.id && onUpdate) {
             createSuccessNotice((0, import_i18n129.__)("Image edited."), {
               type: "snackbar",
@@ -69899,7 +69912,7 @@ If there's a particular need for this, please submit a feature request at https:
           );
         },
         [mediaEditKey]: hasUploadPermissions ? editMediaEntity : void 0,
-        [openMediaEditorModalKey]: ({ id, onUpdate }) => openMediaEditorModal2({ id, onUpdate }),
+        [openMediaEditorModalKey]: ({ id, onUpdate, onClose }) => openMediaEditorModal2({ id, onUpdate, onClose }),
         mediaUpload: hasUploadPermissions ? mediaUpload : void 0,
         [mediaUploadOnSuccessKey]: hasUploadPermissions ? mediaUploadOnSuccess : void 0,
         mediaSideload: hasUploadPermissions ? media_sideload_default : void 0,

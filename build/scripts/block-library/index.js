@@ -31986,7 +31986,11 @@ ${js}
     const hasKnownCaption = getImageBlockMetadataFromAttachment(attachment).caption !== void 0;
     return hasKnownAlt && hasKnownCaption;
   }
-  function useOpenImageMediaEditorModal({ attributes: attributes2, setAttributes }) {
+  function useOpenImageMediaEditorModal({
+    attributes: attributes2,
+    setAttributes,
+    onClose
+  }) {
     const { id, url, alt, caption } = attributes2;
     const registry = (0, import_data45.useRegistry)();
     const openMediaEditorModal = (0, import_data45.useSelect)(
@@ -32121,12 +32125,14 @@ ${js}
       mediaEditorMetadataBaselineRef.current = resolvedAttachmentRecord || (hasKnownAttachmentMetadata(cachedAttachmentRecord) ? cachedAttachmentRecord : fallbackAttachmentRecord) || cachedAttachmentRecord;
       openMediaEditorModal({
         id,
-        onUpdate: handleMediaUpdate
+        onUpdate: handleMediaUpdate,
+        onClose
       });
     }, [
       getCachedAttachmentRecord,
       handleMediaUpdate,
       id,
+      onClose,
       openMediaEditorModal,
       resolveAttachmentRecord
     ]);
@@ -32401,9 +32407,15 @@ ${js}
       [clientId]
     );
     const { getBlock, getSettings: getSettings2 } = (0, import_data46.useSelect)(import_block_editor113.store);
+    const cropButtonRef = (0, import_element47.useRef)();
+    const handleMediaEditorModalClose = (0, import_element47.useCallback)(
+      () => cropButtonRef.current?.focus(),
+      []
+    );
     const openImageMediaEditorModal = useOpenImageMediaEditorModal({
       attributes: attributes2,
-      setAttributes
+      setAttributes,
+      onClose: handleMediaEditorModalClose
     });
     const {
       replaceBlocks,
@@ -32758,6 +32770,7 @@ ${js}
         allowCrop && /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
           import_components58.ToolbarButton,
           {
+            ref: cropButtonRef,
             onClick: openImageMediaEditorModal ? openImageMediaEditorModal : () => setIsEditingImage(true),
             "aria-haspopup": openImageMediaEditorModal ? "dialog" : void 0,
             icon: crop_default,
@@ -64094,6 +64107,7 @@ ${js}
     const isResizable = !isWideAligned && isLargeViewport;
     const [{ naturalWidth, naturalHeight }, setNaturalSize] = (0, import_element124.useState)({});
     const [isEditingImage, setIsEditingImage] = (0, import_element124.useState)(false);
+    const cropButtonRef = (0, import_element124.useRef)();
     const { toggleSelection } = (0, import_data131.useDispatch)(import_block_editor239.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor239.useBlockEditingMode)();
@@ -64369,9 +64383,11 @@ ${js}
       canEditImage && !isEditingImage && shouldShowCropAndDimensions && /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_block_editor239.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
         import_components149.ToolbarButton,
         {
+          ref: cropButtonRef,
           onClick: openMediaEditorModal && logoId ? () => openMediaEditorModal({
             id: logoId,
-            onUpdate: handleMediaUpdate
+            onUpdate: handleMediaUpdate,
+            onClose: () => cropButtonRef.current?.focus()
           }) : () => setIsEditingImage(true),
           "aria-haspopup": openMediaEditorModal && logoId ? "dialog" : void 0,
           icon: crop_default,
