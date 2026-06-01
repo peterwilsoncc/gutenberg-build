@@ -18797,6 +18797,7 @@ var wp;
       styleOfRef[property] = mediaPosition(value);
     };
     const colorGradientSettings = (0, import_block_editor63.__experimentalUseMultipleOriginColorsAndGradients)();
+    const showOverlayControls = colorGradientSettings.hasColorsOrGradients && !hasSelectedStyleState;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(import_jsx_runtime221.Fragment, { children: [
       (!!url || useFeaturedImage) && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(import_block_editor63.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(
@@ -18939,7 +18940,7 @@ var wp;
           ]
         }
       ) }),
-      colorGradientSettings.hasColorsOrGradients && /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(import_block_editor63.InspectorControls, { group: "color", children: [
+      showOverlayControls && /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(import_block_editor63.InspectorControls, { group: "color", children: [
         /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
           import_block_editor63.__experimentalColorGradientSettingsDropdown,
           {
