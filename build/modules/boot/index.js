@@ -10025,7 +10025,7 @@ function Navigation() {
       animationDirection: animationDirection || void 0,
       navigationKey,
       onNavigate: handleNavigate,
-      content: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_jsx_runtime40.Fragment, { children: items.map((item) => {
+      content: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { role: "list", children: items.map((item) => {
         if (item.parent_type === "dropdown") {
           return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
             DropdownItem,
