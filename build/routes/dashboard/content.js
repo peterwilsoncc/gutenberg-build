@@ -41296,6 +41296,50 @@ function DashboardCommands() {
 var import_element165 = __toESM(require_element());
 var import_i18n62 = __toESM(require_i18n());
 
+// node_modules/uuid/dist/stringify.js
+var byteToHex = [];
+for (let i2 = 0; i2 < 256; ++i2) {
+  byteToHex.push((i2 + 256).toString(16).slice(1));
+}
+function unsafeStringify(arr, offset4 = 0) {
+  return (byteToHex[arr[offset4 + 0]] + byteToHex[arr[offset4 + 1]] + byteToHex[arr[offset4 + 2]] + byteToHex[arr[offset4 + 3]] + "-" + byteToHex[arr[offset4 + 4]] + byteToHex[arr[offset4 + 5]] + "-" + byteToHex[arr[offset4 + 6]] + byteToHex[arr[offset4 + 7]] + "-" + byteToHex[arr[offset4 + 8]] + byteToHex[arr[offset4 + 9]] + "-" + byteToHex[arr[offset4 + 10]] + byteToHex[arr[offset4 + 11]] + byteToHex[arr[offset4 + 12]] + byteToHex[arr[offset4 + 13]] + byteToHex[arr[offset4 + 14]] + byteToHex[arr[offset4 + 15]]).toLowerCase();
+}
+
+// node_modules/uuid/dist/rng.js
+var rnds8 = new Uint8Array(16);
+function rng() {
+  return crypto.getRandomValues(rnds8);
+}
+
+// node_modules/uuid/dist/v4.js
+function v4(options, buf, offset4) {
+  if (!buf && !options && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return _v4(options, buf, offset4);
+}
+function _v4(options, buf, offset4) {
+  options = options || {};
+  const rnds = options.random ?? options.rng?.() ?? rng();
+  if (rnds.length < 16) {
+    throw new Error("Random bytes length must be >= 16");
+  }
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  if (buf) {
+    offset4 = offset4 || 0;
+    if (offset4 < 0 || offset4 + 16 > buf.length) {
+      throw new RangeError(`UUID byte range ${offset4}:${offset4 + 15} is out of buffer bounds`);
+    }
+    for (let i2 = 0; i2 < 16; ++i2) {
+      buf[offset4 + i2] = rnds[i2];
+    }
+    return buf;
+  }
+  return unsafeStringify(rnds);
+}
+var v4_default = v4;
+
 // routes/dashboard/widget-dashboard/utils/create-dashboard-widget/create-dashboard-widget.ts
 var DEFAULT_PLACEMENT = {
   width: 1,
@@ -41304,7 +41348,7 @@ var DEFAULT_PLACEMENT = {
 };
 function createDashboardWidget(widgetType, initialAttributes) {
   return {
-    uuid: crypto.randomUUID(),
+    uuid: v4_default(),
     type: widgetType.name,
     attributes: initialAttributes ?? widgetType.example?.attributes,
     placement: DEFAULT_PLACEMENT
