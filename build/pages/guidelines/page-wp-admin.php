@@ -134,7 +134,9 @@ function gutenberg_guidelines_wp_admin_enqueue_scripts( $hook_suffix ) {
 	// Load build constants
 	$build_constants = require __DIR__ . '/../../constants.php';
 
-	// Fire init action for extensions to register routes and menu items
+	/**
+	 * Fires when the guidelines admin page is initialized so extensions can register routes and menu items.
+	 */
 	do_action( 'guidelines-wp-admin_init' );
 
 	// Preload REST API data
