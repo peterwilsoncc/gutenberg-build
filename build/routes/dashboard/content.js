@@ -22299,19 +22299,67 @@ function useDashboardLayout(dashboardName) {
 var import_es6 = __toESM(require_es6());
 var import_data2 = __toESM(require_data());
 var import_preferences2 = __toESM(require_preferences());
+
+// routes/dashboard/widget-dashboard/utils/row-height-presets/row-height-presets.ts
+var ROW_HEIGHT_PRESETS = {
+  small: 200,
+  medium: 300,
+  large: 400
+};
+var DEFAULT_ROW_HEIGHT = ROW_HEIGHT_PRESETS.medium;
+var PRESET_ENTRIES = Object.entries(ROW_HEIGHT_PRESETS);
+function rowHeightToPreset(rowHeight) {
+  let closest = "medium";
+  let minDistance = Infinity;
+  for (const [preset, value] of PRESET_ENTRIES) {
+    const distance = Math.abs(rowHeight - value);
+    if (distance < minDistance) {
+      minDistance = distance;
+      closest = preset;
+    }
+  }
+  return closest;
+}
+function presetToRowHeight(preset) {
+  return ROW_HEIGHT_PRESETS[preset];
+}
+function snapRowHeight(rowHeight) {
+  return presetToRowHeight(rowHeightToPreset(rowHeight));
+}
+
+// routes/dashboard/widget-dashboard/utils/normalize-grid-settings/normalize-grid-settings.ts
+function normalizeGridSettings(settings, defaultRowHeight) {
+  if ((settings.model ?? "grid") === "masonry") {
+    return settings;
+  }
+  const rowHeight = settings.rowHeight;
+  const resolved = typeof rowHeight === "number" ? snapRowHeight(rowHeight) : defaultRowHeight;
+  if (rowHeight === resolved) {
+    return settings;
+  }
+  return {
+    ...settings,
+    rowHeight: resolved
+  };
+}
+
+// routes/dashboard/hooks/use-dashboard-grid-settings/use-dashboard-grid-settings.ts
 var SCOPE2 = "core/dashboard";
 var KEY2 = "dashboardGridSettings";
 var DEFAULT_GRID_SETTINGS = {
   model: "grid",
   columns: 12,
   minColumnWidth: 140,
-  rowHeight: 140
+  rowHeight: DEFAULT_ROW_HEIGHT
 };
 function useDashboardGridSettings() {
-  const settings = (0, import_data2.useSelect)(
-    (select) => select(import_preferences2.store).get(SCOPE2, KEY2) ?? DEFAULT_GRID_SETTINGS,
-    []
-  );
+  const settings = (0, import_data2.useSelect)((select) => {
+    const stored = select(import_preferences2.store).get(SCOPE2, KEY2);
+    return normalizeGridSettings(
+      stored ?? DEFAULT_GRID_SETTINGS,
+      DEFAULT_ROW_HEIGHT
+    );
+  }, []);
   const { set: set3 } = (0, import_data2.useDispatch)(import_preferences2.store);
   function setSettings(next) {
     if ((0, import_es6.default)(next, DEFAULT_GRID_SETTINGS)) {
@@ -22427,12 +22475,13 @@ var DEFAULT_GRID = {
   model: "grid",
   columns: 12,
   minColumnWidth: 140,
-  rowHeight: 140
+  rowHeight: DEFAULT_ROW_HEIGHT
 };
 function resolveGridSettings(settings) {
+  const normalized = normalizeGridSettings(settings, DEFAULT_ROW_HEIGHT);
   return {
-    ...settings,
-    columns: settings.columns ?? DEFAULT_GRID.columns
+    ...normalized,
+    columns: normalized.columns ?? DEFAULT_GRID.columns
   };
 }
 var DEFAULT_RESOLVE_WIDGET_MODULE = (moduleId) => import(
@@ -22480,9 +22529,13 @@ function WidgetDashboardProvider({
   (0, import_element87.useEffect)(() => {
     setStagingLayout(committedLayout);
   }, [committedLayout]);
-  const [stagingGridSettings, setStagingGridSettings] = (0, import_element87.useState)(committedGridSettings);
+  const [stagingGridSettings, setStagingGridSettings] = (0, import_element87.useState)(
+    () => normalizeGridSettings(committedGridSettings, DEFAULT_ROW_HEIGHT)
+  );
   (0, import_element87.useEffect)(() => {
-    setStagingGridSettings(committedGridSettings);
+    setStagingGridSettings(
+      normalizeGridSettings(committedGridSettings, DEFAULT_ROW_HEIGHT)
+    );
   }, [committedGridSettings]);
   const hasLayoutChanges = (0, import_element87.useMemo)(
     () => !(0, import_es62.default)(
@@ -22502,7 +22555,12 @@ function WidgetDashboardProvider({
         onLayoutChange(canonicalize(stagingLayout));
       }
       if (hasGridSettingsChanges) {
-        onGridSettingsChange?.(stagingGridSettings);
+        onGridSettingsChange?.(
+          normalizeGridSettings(
+            stagingGridSettings,
+            DEFAULT_ROW_HEIGHT
+          )
+        );
       }
       if (options?.exitEditMode !== false) {
         onEditChange?.(false);
@@ -22543,7 +22601,9 @@ function WidgetDashboardProvider({
       setStagingLayout(next.layout);
       setStagingGridSettings(next.gridSettings);
       onLayoutChange(canonicalize(next.layout));
-      onGridSettingsChange?.(next.gridSettings);
+      onGridSettingsChange?.(
+        normalizeGridSettings(next.gridSettings, DEFAULT_ROW_HEIGHT)
+      );
       onEditChange?.(false);
     },
     [
@@ -40621,22 +40681,11 @@ function LayoutModelEditField({
 var import_jsx_runtime205 = __toESM(require_jsx_runtime());
 var DEFAULT_FIXED_COLUMNS2 = 6;
 var DEFAULT_MIN_COLUMN_WIDTH = 350;
-var DEFAULT_ROW_HEIGHT = 200;
-var ROW_HEIGHT_AUTO = "auto";
 function getModel(item) {
   return item.model ?? "grid";
 }
 function isMasonry(item) {
   return getModel(item) === "masonry";
-}
-function getRowHeight(item) {
-  if (isMasonry(item)) {
-    return void 0;
-  }
-  return item.rowHeight;
-}
-function isAutoRowHeight(item) {
-  return getRowHeight(item) === ROW_HEIGHT_AUTO;
 }
 function StepperIntegerEdit({
   data,
@@ -40723,29 +40772,27 @@ var fields = [
     isVisible: (item) => item.minColumnWidth !== 0
   },
   {
-    id: "autoRowHeight",
-    type: "boolean",
-    Edit: "toggle",
-    label: (0, import_i18n56.__)("Auto-fit row height to content"),
-    getValue: ({ item }) => isAutoRowHeight(item),
+    id: "rowHeight",
+    type: "text",
+    Edit: "toggleGroup",
+    label: (0, import_i18n56.__)("Row height"),
+    description: (0, import_i18n56.__)("Height of each grid row."),
+    elements: [
+      { value: "small", label: (0, import_i18n56.__)("Small") },
+      { value: "medium", label: (0, import_i18n56.__)("Medium") },
+      { value: "large", label: (0, import_i18n56.__)("Large") }
+    ],
+    getValue: ({ item }) => {
+      const rowHeight = item.rowHeight;
+      if (typeof rowHeight !== "number") {
+        return "medium";
+      }
+      return rowHeightToPreset(rowHeight);
+    },
     setValue: ({ value }) => ({
-      rowHeight: value ? ROW_HEIGHT_AUTO : DEFAULT_ROW_HEIGHT
+      rowHeight: presetToRowHeight(value)
     }),
     isVisible: (item) => !isMasonry(item)
-  },
-  {
-    id: "rowHeight",
-    type: "integer",
-    Edit: StepperIntegerEdit,
-    label: (0, import_i18n56.__)("Row height (px)"),
-    description: (0, import_i18n56.__)("Height of each row in the standard grid."),
-    isValid: { min: 100 },
-    getValue: ({ item }) => {
-      const rh = getRowHeight(item);
-      return typeof rh === "number" ? rh : void 0;
-    },
-    isVisible: (item) => !isMasonry(item),
-    isDisabled: ({ item }) => isAutoRowHeight(item)
   }
 ];
 var form = {
@@ -40755,7 +40802,6 @@ var form = {
     "columns",
     "adaptiveColumns",
     "minColumnWidth",
-    "autoRowHeight",
     "rowHeight"
   ]
 };
