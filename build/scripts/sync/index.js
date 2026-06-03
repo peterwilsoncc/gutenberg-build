@@ -12067,5 +12067,4 @@ var wp;
   var YJS_VERSION = "13";
   return __toCommonJS(index_exports);
 })();
-if(wp.sync&&typeof wp.sync==='object'){wp.sync=Object.assign({},wp.sync);}
 //# sourceMappingURL=index.js.map

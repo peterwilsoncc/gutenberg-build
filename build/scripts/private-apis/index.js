@@ -112,5 +112,4 @@ var wp;
   var __private = /* @__PURE__ */ Symbol("Private API ID");
   return __toCommonJS(index_exports);
 })();
-if(wp.privateApis&&typeof wp.privateApis==='object'){wp.privateApis=Object.assign({},wp.privateApis);}
 //# sourceMappingURL=index.js.map

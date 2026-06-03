@@ -286,5 +286,4 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if(wp.notices&&typeof wp.notices==='object'){wp.notices=Object.assign({},wp.notices);}
 //# sourceMappingURL=index.js.map

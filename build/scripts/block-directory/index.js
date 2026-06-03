@@ -10004,5 +10004,4 @@ use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.developme
    * LICENSE file in the root directory of this source tree.
    *)
 */
-if(wp.blockDirectory&&typeof wp.blockDirectory==='object'){wp.blockDirectory=Object.assign({},wp.blockDirectory);}
 //# sourceMappingURL=index.js.map

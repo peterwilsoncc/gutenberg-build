@@ -11682,5 +11682,4 @@ use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.developme
    * LICENSE file in the root directory of this source tree.
    *)
 */
-if(wp.editPost&&typeof wp.editPost==='object'){wp.editPost=Object.assign({},wp.editPost);}
 //# sourceMappingURL=index.js.map

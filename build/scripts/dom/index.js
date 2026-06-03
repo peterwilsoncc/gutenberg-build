@@ -1084,5 +1084,4 @@ var wp;
   var focus = { focusable: focusable_exports, tabbable: tabbable_exports };
   return __toCommonJS(index_exports);
 })();
-if(wp.dom&&typeof wp.dom==='object'){wp.dom=Object.assign({},wp.dom);}
 //# sourceMappingURL=index.js.map
