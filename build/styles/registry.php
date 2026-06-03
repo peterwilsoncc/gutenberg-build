@@ -80,7 +80,7 @@ return array(
 	array(
 		'handle' => 'wp-nux',
 		'path' => 'nux/style',
-		'dependencies' => array(),
+		'dependencies' => array('wp-components'),
 	),
 	array(
 		'handle' => 'wp-patterns',

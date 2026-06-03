@@ -5166,33 +5166,6 @@ return array(
 				'padding' => true
 			)
 		),
-		'styles' => array(
-			array(
-				'name' => 'bars',
-				'label' => 'Bars',
-				'isDefault' => true
-			),
-			array(
-				'name' => 'mirror',
-				'label' => 'Mirror'
-			),
-			array(
-				'name' => 'line',
-				'label' => 'Line'
-			),
-			array(
-				'name' => 'blocks',
-				'label' => 'Blocks'
-			),
-			array(
-				'name' => 'dots',
-				'label' => 'Dots'
-			),
-			array(
-				'name' => 'seekbar',
-				'label' => 'Seekbar'
-			)
-		),
 		'editorStyle' => 'wp-block-playlist-editor',
 		'style' => 'wp-block-playlist'
 	),

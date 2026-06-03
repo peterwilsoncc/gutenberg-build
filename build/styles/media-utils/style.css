@@ -135,9 +135,7 @@
   overflow: hidden;
 }
 
-.dataviews-view-table .dataviews-media-field__filename,
-.dataviews-view-grid .dataviews-media-field__filename,
-.dataviews-view-list .dataviews-media-field__filename {
+.dataviews-media-field__filename {
   display: inline-block;
   max-inline-size: 15ch;
   overflow: hidden;

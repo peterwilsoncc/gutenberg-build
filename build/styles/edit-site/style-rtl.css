@@ -3989,24 +3989,25 @@ button.font-library__upload-area {
   margin: 16px;
 }
 
-.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel {
+.global-styles-ui-screen-css .components-v-stack {
   flex: 1 1 auto;
 }
 
-.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input {
+.global-styles-ui-screen-css .components-v-stack .block-editor-global-styles-advanced-panel__custom-css-input {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
 }
 
-.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input .components-base-control__field {
+.global-styles-ui-screen-css .components-v-stack .block-editor-global-styles-advanced-panel__custom-css-input .components-base-control__field {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
 }
 
-.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input textarea {
+.global-styles-ui-screen-css .components-v-stack .block-editor-global-styles-advanced-panel__custom-css-input .components-base-control__field .components-textarea-control__input {
   flex: 1 1 auto;
+  direction: ltr;
 }
 
 .global-styles-ui-screen-css-help-link {

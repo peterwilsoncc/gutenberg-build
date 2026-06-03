@@ -134,9 +134,7 @@ function gutenberg_site_editor_v2_wp_admin_enqueue_scripts( $hook_suffix ) {
 	// Load build constants
 	$build_constants = require __DIR__ . '/../../constants.php';
 
-	/**
-	 * Fires when the site-editor-v2 admin page is initialized so extensions can register routes and menu items.
-	 */
+	// Fire init action for extensions to register routes and menu items
 	do_action( 'site-editor-v2-wp-admin_init' );
 
 	// Preload REST API data
@@ -260,7 +258,9 @@ function gutenberg_site_editor_v2_wp_admin_render_page() {
 	<style>
 		/* Critical styles to prevent layout shifts - inlined for immediate application */
 
+		/* Background colors */
 		#wpwrap {
+			background: var(--wpds-color-fg-content-neutral, #1e1e1e);
 			overflow-y: auto;
 		}
 		body {

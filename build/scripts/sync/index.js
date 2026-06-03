@@ -9291,22 +9291,15 @@ var wp;
   var MAX_ROOMS_PER_REQUEST = 50;
   var MAX_SYNC_REQUEST_BODY_SIZE_IN_BYTES = 15 * 1024 * 1024;
   var MIN_SYNC_REQUEST_BODY_SIZE_LIMIT_IN_BYTES = 2 * 1024 * 1024;
-  var DEFAULT_POLLING_INTERVAL_IN_MS = 4e3;
-  var DEFAULT_POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = 1e3;
-  function getFilteredPollingInterval(hookName, defaultInterval) {
-    const filteredInterval = (0, import_hooks.applyFilters)(hookName, defaultInterval);
-    if (typeof filteredInterval !== "number" || !Number.isFinite(filteredInterval) || filteredInterval <= 0) {
-      return defaultInterval;
-    }
-    return Math.min(filteredInterval, defaultInterval);
-  }
-  var POLLING_INTERVAL_IN_MS = getFilteredPollingInterval(
+  var POLLING_INTERVAL_IN_MS = (0, import_hooks.applyFilters)(
     "sync.pollingManager.pollingInterval",
-    DEFAULT_POLLING_INTERVAL_IN_MS
+    4e3
+    // 4 seconds
   );
-  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = getFilteredPollingInterval(
+  var POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS = (0, import_hooks.applyFilters)(
     "sync.pollingManager.pollingIntervalWithCollaborators",
-    DEFAULT_POLLING_INTERVAL_WITH_COLLABORATORS_IN_MS
+    1e3
+    // 1 second
   );
   var POLLING_INTERVAL_BACKGROUND_TAB_IN_MS = 25 * 1e3;
 
@@ -9451,30 +9444,35 @@ var wp;
   function isProtocolMismatchError(error) {
     return error?.code === "rest_sync_protocol_mismatch";
   }
+  function identifyForbiddenRoom(error, rooms) {
+    const message = typeof error.message === "string" ? error.message : "";
+    const sortedRooms = [...rooms].sort((a, b) => b.length - a.length);
+    for (const room of sortedRooms) {
+      if (message.includes(room)) {
+        return room;
+      }
+    }
+    return null;
+  }
   function handleForbiddenError(error, requestedRooms) {
-    const requestedRoomNames = new Set(
-      requestedRooms.map((room) => room.room)
+    const forbiddenRoom = identifyForbiddenRoom(
+      error,
+      requestedRooms.map((r) => r.room)
     );
-    const forbiddenRooms = Array.isArray(error.data.rooms) ? error.data.rooms.filter((room) => requestedRoomNames.has(room)) : [];
-    if (forbiddenRooms.length > 0) {
-      for (const room of forbiddenRooms) {
-        const state = roomStates.get(room);
-        if (state) {
-          state.log(
-            "Permission denied, unregistering room",
-            { error },
-            "error",
-            true
-            // force
-          );
-          unregisterRoom(room, { sendDisconnectSignal: false });
-        }
+    if (forbiddenRoom) {
+      const state = roomStates.get(forbiddenRoom);
+      if (state) {
+        state.log(
+          "Permission denied, unregistering room",
+          { error },
+          "error",
+          true
+          // force
+        );
+        unregisterRoom(forbiddenRoom, { sendDisconnectSignal: false });
       }
       for (const room of requestedRooms) {
-        if (forbiddenRooms.includes(room.room)) {
-          continue;
-        }
-        if (!roomStates.has(room.room)) {
+        if (room.room === forbiddenRoom || !roomStates.has(room.room)) {
           continue;
         }
         const remainingState = roomStates.get(room.room);
