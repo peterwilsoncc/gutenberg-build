@@ -49,6 +49,13 @@ var require_core_data = __commonJS({
   }
 });
 
+// package-external:@wordpress/components
+var require_components = __commonJS({
+  "package-external:@wordpress/components"(exports, module) {
+    module.exports = window.wp.components;
+  }
+});
+
 // package-external:@wordpress/i18n
 var require_i18n = __commonJS({
   "package-external:@wordpress/i18n"(exports, module) {
@@ -56,10 +63,10 @@ var require_i18n = __commonJS({
   }
 });
 
-// vendor-external:react
-var require_react = __commonJS({
-  "vendor-external:react"(exports, module) {
-    module.exports = window.React;
+// package-external:@wordpress/primitives
+var require_primitives = __commonJS({
+  "package-external:@wordpress/primitives"(exports, module) {
+    module.exports = window.wp.primitives;
   }
 });
 
@@ -67,6 +74,13 @@ var require_react = __commonJS({
 var require_jsx_runtime = __commonJS({
   "vendor-external:react/jsx-runtime"(exports, module) {
     module.exports = window.ReactJSXRuntime;
+  }
+});
+
+// vendor-external:react
+var require_react = __commonJS({
+  "vendor-external:react"(exports, module) {
+    module.exports = window.React;
   }
 });
 
@@ -162,9 +176,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React121 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef67 = React121.useRef, useEffect43 = React121.useEffect, useMemo59 = React121.useMemo, useDebugValue2 = React121.useDebugValue;
+      var React121 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef68 = React121.useRef, useEffect43 = React121.useEffect, useMemo59 = React121.useMemo, useDebugValue2 = React121.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef67(null);
+        var instRef = useRef68(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -232,13 +246,6 @@ var require_with_selector = __commonJS({
   }
 });
 
-// package-external:@wordpress/primitives
-var require_primitives = __commonJS({
-  "package-external:@wordpress/primitives"(exports, module) {
-    module.exports = window.wp.primitives;
-  }
-});
-
 // package-external:@wordpress/compose
 var require_compose = __commonJS({
   "package-external:@wordpress/compose"(exports, module) {
@@ -257,13 +264,6 @@ var require_theme = __commonJS({
 var require_private_apis = __commonJS({
   "package-external:@wordpress/private-apis"(exports, module) {
     module.exports = window.wp.privateApis;
-  }
-});
-
-// package-external:@wordpress/components
-var require_components = __commonJS({
-  "package-external:@wordpress/components"(exports, module) {
-    module.exports = window.wp.components;
   }
 });
 
@@ -827,10 +827,146 @@ var require_warning = __commonJS({
 });
 
 // widgets/events/render.tsx
-var import_element111 = __toESM(require_element());
+var import_element112 = __toESM(require_element());
 var import_data6 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
+var import_components45 = __toESM(require_components());
 var import_i18n49 = __toESM(require_i18n());
+
+// packages/icons/build-module/library/arrow-down.mjs
+var import_primitives = __toESM(require_primitives(), 1);
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var arrow_down_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "m16.5 13.5-3.7 3.7V4h-1.5v13.2l-3.8-3.7-1 1 5.5 5.6 5.5-5.6z" }) });
+
+// packages/icons/build-module/library/arrow-left.mjs
+var import_primitives2 = __toESM(require_primitives(), 1);
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var arrow_left_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.Path, { d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z" }) });
+
+// packages/icons/build-module/library/arrow-right.mjs
+var import_primitives3 = __toESM(require_primitives(), 1);
+var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
+
+// packages/icons/build-module/library/arrow-up.mjs
+var import_primitives4 = __toESM(require_primitives(), 1);
+var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+var arrow_up_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.Path, { d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z" }) });
+
+// packages/icons/build-module/library/block-table.mjs
+var import_primitives5 = __toESM(require_primitives(), 1);
+var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
+
+// packages/icons/build-module/library/calendar.mjs
+var import_primitives6 = __toESM(require_primitives(), 1);
+var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+var calendar_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z" }) });
+
+// packages/icons/build-module/library/category.mjs
+var import_primitives7 = __toESM(require_primitives(), 1);
+var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+var category_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M6 5.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM4 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm11-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM13 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2V6zm5 8.5h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zM15 13a2 2 0 00-2 2v3a2 2 0 002 2h3a2 2 0 002-2v-3a2 2 0 00-2-2h-3zm-9 1.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM4 15a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3z" }) });
+
+// packages/icons/build-module/library/check.mjs
+var import_primitives8 = __toESM(require_primitives(), 1);
+var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+var check_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
+
+// packages/icons/build-module/library/close-small.mjs
+var import_primitives9 = __toESM(require_primitives(), 1);
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
+
+// packages/icons/build-module/library/cog.mjs
+var import_primitives10 = __toESM(require_primitives(), 1);
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var cog_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M10.289 4.836A1 1 0 0111.275 4h1.306a1 1 0 01.987.836l.244 1.466c.787.26 1.503.679 2.108 1.218l1.393-.522a1 1 0 011.216.437l.653 1.13a1 1 0 01-.23 1.273l-1.148.944a6.025 6.025 0 010 2.435l1.149.946a1 1 0 01.23 1.272l-.653 1.13a1 1 0 01-1.216.437l-1.394-.522c-.605.54-1.32.958-2.108 1.218l-.244 1.466a1 1 0 01-.987.836h-1.306a1 1 0 01-.986-.836l-.244-1.466a5.995 5.995 0 01-2.108-1.218l-1.394.522a1 1 0 01-1.217-.436l-.653-1.131a1 1 0 01.23-1.272l1.149-.946a6.026 6.026 0 010-2.435l-1.148-.944a1 1 0 01-.23-1.272l.653-1.131a1 1 0 011.217-.437l1.393.522a5.994 5.994 0 012.108-1.218l.244-1.466zM14.929 12a3 3 0 11-6 0 3 3 0 016 0z" }) });
+
+// packages/icons/build-module/library/envelope.mjs
+var import_primitives11 = __toESM(require_primitives(), 1);
+var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+var envelope_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm2-.5h14c.3 0 .5.2.5.5v1L12 13.5 4.5 7.9V7c0-.3.2-.5.5-.5Zm-.5 3.3V17c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V9.8L12 15.4 4.5 9.8Z" }) });
+
+// packages/icons/build-module/library/error.mjs
+var import_primitives12 = __toESM(require_primitives(), 1);
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+var error_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z" }) });
+
+// packages/icons/build-module/library/format-list-bullets-rtl.mjs
+var import_primitives13 = __toESM(require_primitives(), 1);
+var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var format_list_bullets_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.Path, { d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }) });
+
+// packages/icons/build-module/library/format-list-bullets.mjs
+var import_primitives14 = __toESM(require_primitives(), 1);
+var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var format_list_bullets_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
+
+// packages/icons/build-module/library/funnel.mjs
+var import_primitives15 = __toESM(require_primitives(), 1);
+var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var funnel_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.Path, { d: "M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z" }) });
+
+// packages/icons/build-module/library/link.mjs
+var import_primitives16 = __toESM(require_primitives(), 1);
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var link_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
+
+// packages/icons/build-module/library/map-marker.mjs
+var import_primitives17 = __toESM(require_primitives(), 1);
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+var map_marker_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.Path, { d: "M12 9c-.8 0-1.5.7-1.5 1.5S11.2 12 12 12s1.5-.7 1.5-1.5S12.8 9 12 9zm0-5c-3.6 0-6.5 2.8-6.5 6.2 0 .8.3 1.8.9 3.1.5 1.1 1.2 2.3 2 3.6.7 1 3 3.8 3.2 3.9l.4.5.4-.5c.2-.2 2.6-2.9 3.2-3.9.8-1.2 1.5-2.5 2-3.6.6-1.3.9-2.3.9-3.1C18.5 6.8 15.6 4 12 4zm4.3 8.7c-.5 1-1.1 2.2-1.9 3.4-.5.7-1.7 2.2-2.4 3-.7-.8-1.9-2.3-2.4-3-.8-1.2-1.4-2.3-1.9-3.3-.6-1.4-.7-2.2-.7-2.5 0-2.6 2.2-4.7 5-4.7s5 2.1 5 4.7c0 .2-.1 1-.7 2.4z" }) });
+
+// packages/icons/build-module/library/mobile.mjs
+var import_primitives18 = __toESM(require_primitives(), 1);
+var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
+
+// packages/icons/build-module/library/more-vertical.mjs
+var import_primitives19 = __toESM(require_primitives(), 1);
+var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives19.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
+
+// packages/icons/build-module/library/next.mjs
+var import_primitives20 = __toESM(require_primitives(), 1);
+var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var next_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives20.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
+
+// packages/icons/build-module/library/people.mjs
+var import_primitives21 = __toESM(require_primitives(), 1);
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+var people_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives21.Path, { fillRule: "evenodd", d: "M15.5 9.5a1 1 0 100-2 1 1 0 000 2zm0 1.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zm-2.25 6v-2a2.75 2.75 0 00-2.75-2.75h-4A2.75 2.75 0 003.75 15v2h1.5v-2c0-.69.56-1.25 1.25-1.25h4c.69 0 1.25.56 1.25 1.25v2h1.5zm7-2v2h-1.5v-2c0-.69-.56-1.25-1.25-1.25H15v-1.5h2.5A2.75 2.75 0 0120.25 15zM9.5 8.5a1 1 0 11-2 0 1 1 0 012 0zm1.5 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" }) });
+
+// packages/icons/build-module/library/previous.mjs
+var import_primitives22 = __toESM(require_primitives(), 1);
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+var previous_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives22.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
+
+// packages/icons/build-module/library/scheduled.mjs
+var import_primitives23 = __toESM(require_primitives(), 1);
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var scheduled_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives23.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9 1V8h-1.5v3.5h-2V13H13Z" }) });
+
+// packages/icons/build-module/library/search.mjs
+var import_primitives24 = __toESM(require_primitives(), 1);
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var search_default = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives24.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
+
+// packages/icons/build-module/library/seen.mjs
+var import_primitives25 = __toESM(require_primitives(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var seen_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives25.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
+
+// packages/icons/build-module/library/unseen.mjs
+var import_primitives26 = __toESM(require_primitives(), 1);
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives26.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
+
+// packages/icons/build-module/library/wordpress.mjs
+var import_primitives27 = __toESM(require_primitives(), 1);
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "-2 -2 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives27.Path, { d: "M20 10c0-5.51-4.49-10-10-10C4.48 0 0 4.49 0 10c0 5.52 4.48 10 10 10 5.51 0 10-4.48 10-10zM7.78 15.37L4.37 6.22c.55-.02 1.17-.08 1.17-.08.5-.06.44-1.13-.06-1.11 0 0-1.45.11-2.37.11-.18 0-.37 0-.58-.01C4.12 2.69 6.87 1.11 10 1.11c2.33 0 4.45.87 6.05 2.34-.68-.11-1.65.39-1.65 1.58 0 .74.45 1.36.9 2.1.35.61.55 1.36.55 2.46 0 1.49-1.4 5-1.4 5l-3.03-8.37c.54-.02.82-.17.82-.17.5-.05.44-1.25-.06-1.22 0 0-1.44.12-2.38.12-.87 0-2.33-.12-2.33-.12-.5-.03-.56 1.2-.06 1.22l.92.08 1.26 3.41zM17.41 10c.24-.64.74-1.87.43-4.25.7 1.29 1.05 2.71 1.05 4.25 0 3.29-1.73 6.24-4.4 7.78.97-2.59 1.94-5.2 2.92-7.78zM6.1 18.09C3.12 16.65 1.11 13.53 1.11 10c0-1.3.23-2.48.72-3.59C3.25 10.3 4.67 14.2 6.1 18.09zm4.03-6.63l2.58 6.98c-.86.29-1.76.45-2.71.45-.79 0-1.57-.11-2.29-.33.81-2.38 1.62-4.74 2.42-7.1z" }) });
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e2) {
@@ -1022,7 +1158,7 @@ function useCompositeListContext() {
 }
 
 // node_modules/@base-ui/react/esm/internals/composite/list/CompositeList.js
-var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 function CompositeList(props) {
   const {
     children,
@@ -1128,7 +1264,7 @@ function CompositeList(props) {
     labelsRef,
     nextIndexRef
   }), [register2, unregister, subscribeMapChange, elementsRef, labelsRef, nextIndexRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CompositeListContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(CompositeListContext.Provider, {
     value: contextValue,
     children
   });
@@ -3627,7 +3763,7 @@ function isClickLikeOpenEvent(openEventType, interactedInside) {
 }
 
 // node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 var FloatingDelayGroupContext = /* @__PURE__ */ React21.createContext({
   hasProvider: false,
   timeoutMs: 0,
@@ -3657,7 +3793,7 @@ function FloatingDelayGroup(props) {
   const currentIdRef = React21.useRef(null);
   const currentContextRef = React21.useRef(null);
   const timeout = useTimeout();
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(FloatingDelayGroupContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(FloatingDelayGroupContext.Provider, {
     value: React21.useMemo(() => ({
       hasProvider: true,
       delayRef,
@@ -3814,7 +3950,7 @@ var visuallyHiddenInput = {
 };
 
 // node_modules/@base-ui/react/esm/utils/FocusGuard.js
-var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 var FocusGuard = /* @__PURE__ */ React22.forwardRef(function FocusGuard2(props, ref) {
   const [role, setRole] = React22.useState();
   useIsoLayoutEffect(() => {
@@ -3827,7 +3963,7 @@ var FocusGuard = /* @__PURE__ */ React22.forwardRef(function FocusGuard2(props, 
     // Role is only for VoiceOver
     role
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", {
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", {
     ...props,
     ref,
     style: visuallyHidden,
@@ -4055,7 +4191,7 @@ var ownerVisuallyHidden = {
 };
 
 // node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
-var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
 var PortalContext = /* @__PURE__ */ React23.createContext(null);
 if (true) PortalContext.displayName = "PortalContext";
 var usePortalContext = () => React23.useContext(PortalContext);
@@ -4180,10 +4316,10 @@ var FloatingPortal = /* @__PURE__ */ React23.forwardRef(function FloatingPortal2
     portalNode,
     setFocusManagerState
   }), [portalNode]);
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(React23.Fragment, {
-    children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(PortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(React23.Fragment, {
+    children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(PortalContext.Provider, {
       value: portalContextValue,
-      children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(FocusGuard, {
+      children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(FocusGuard, {
         "data-type": "outside",
         ref: beforeOutsideRef,
         onFocus: (event) => {
@@ -4195,10 +4331,10 @@ var FloatingPortal = /* @__PURE__ */ React23.forwardRef(function FloatingPortal2
             prevTabbable?.focus();
           }
         }
-      }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", {
+      }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", {
         "aria-owns": portalNode.id,
         style: ownerVisuallyHidden
-      }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(FocusGuard, {
+      }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(FocusGuard, {
         "data-type": "outside",
         ref: afterOutsideRef,
         onFocus: (event) => {
@@ -4242,7 +4378,7 @@ function createEventEmitter() {
 }
 
 // node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
-var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
 var FloatingNodeContext = /* @__PURE__ */ React24.createContext(null);
 if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
 var FloatingTreeContext = /* @__PURE__ */ React24.createContext(null);
@@ -4254,7 +4390,7 @@ var useFloatingTree = (externalTree) => {
 };
 
 // node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingFocusManager.js
-var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
 function getEventType(event, lastInteractionType) {
   const win = getWindow(getTarget(event));
   if (event instanceof win.KeyboardEvent) {
@@ -4661,8 +4797,8 @@ function FloatingFocusManager(props) {
     };
   }, [disabled2, floatingFocusElement, orderRef]);
   const shouldRenderGuards = !disabled2 && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React25.Fragment, {
-    children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(FocusGuard, {
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(React25.Fragment, {
+    children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(FocusGuard, {
       "data-type": "inside",
       ref: mergedBeforeGuardRef,
       onFocus: (event) => {
@@ -4679,7 +4815,7 @@ function FloatingFocusManager(props) {
           }
         }
       }
-    }), children, shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(FocusGuard, {
+    }), children, shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(FocusGuard, {
       "data-type": "inside",
       ref: mergedAfterGuardRef,
       onFocus: (event) => {
@@ -9619,7 +9755,7 @@ function inertValue(value) {
 
 // node_modules/@base-ui/react/esm/utils/InternalBackdrop.js
 var React44 = __toESM(require_react(), 1);
-var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
 var InternalBackdrop = /* @__PURE__ */ React44.forwardRef(function InternalBackdrop2(props, ref) {
   const {
     cutout,
@@ -9630,7 +9766,7 @@ var InternalBackdrop = /* @__PURE__ */ React44.forwardRef(function InternalBackd
     const rect = cutout.getBoundingClientRect();
     clipPath = `polygon(0% 0%,100% 0%,100% 100%,0% 100%,0% 0%,${rect.left}px ${rect.top}px,${rect.left}px ${rect.bottom}px,${rect.right}px ${rect.bottom}px,${rect.right}px ${rect.top}px,${rect.left}px ${rect.top}px)`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", {
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", {
     ref,
     role: "presentation",
     "data-base-ui-inert": "",
@@ -9768,7 +9904,7 @@ function serializeValue(value) {
 }
 
 // node_modules/@base-ui/react/esm/internals/resolveValueLabel.js
-var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
 function isGroupedItems(items) {
   return items != null && items.length > 0 && typeof items[0] === "object" && items[0] != null && "items" in items[0];
 }
@@ -10220,7 +10356,7 @@ var INITIAL_LAST_HIGHLIGHT = {
 };
 
 // node_modules/@base-ui/react/esm/combobox/root/AriaCombobox.js
-var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
 function AriaCombobox(props) {
   const {
     id: idProp,
@@ -11061,7 +11197,7 @@ function AriaCombobox(props) {
     }
     return selectedValue.map((value) => {
       const currentSerializedValue = stringifyAsValue(value, itemToStringValue);
-      return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("input", {
+      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("input", {
         type: "hidden",
         form,
         name,
@@ -11069,8 +11205,8 @@ function AriaCombobox(props) {
       }, currentSerializedValue);
     });
   }, [multiple, selectedValue, form, name, itemToStringValue]);
-  const children = /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(React53.Fragment, {
-    children: [props.children, /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("input", {
+  const children = /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(React53.Fragment, {
+    children: [props.children, /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("input", {
       ...validation.getInputValidationProps({
         // Move focus when the hidden input is focused.
         onFocus() {
@@ -11141,13 +11277,13 @@ function AriaCombobox(props) {
       suppressHydrationWarning: true
     }), hiddenInputs]
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(ComboboxRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ComboboxRootContext.Provider, {
     value: store,
-    children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(ComboboxFloatingContext.Provider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ComboboxFloatingContext.Provider, {
       value: floatingRootContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(ComboboxDerivedItemsContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ComboboxDerivedItemsContext.Provider, {
         value: itemsContextValue,
-        children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(ComboboxInputValueContext.Provider, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ComboboxInputValueContext.Provider, {
           value: inputValue,
           children
         })
@@ -11157,7 +11293,7 @@ function AriaCombobox(props) {
 }
 
 // node_modules/@base-ui/react/esm/autocomplete/root/AutocompleteRoot.js
-var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
 function AutocompleteRoot(props) {
   const {
     openOnInputClick = false,
@@ -11227,7 +11363,7 @@ function AutocompleteRoot(props) {
       setInlineInputValue("");
     }
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(AriaCombobox, {
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(AriaCombobox, {
     ...other,
     itemToStringLabel: itemToStringValue,
     openOnInputClick,
@@ -11244,7 +11380,7 @@ function AutocompleteRoot(props) {
 
 // node_modules/@base-ui/react/esm/autocomplete/value/AutocompleteValue.js
 var React55 = __toESM(require_react(), 1);
-var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
 function AutocompleteValue(props) {
   const {
     children
@@ -11258,7 +11394,7 @@ function AutocompleteValue(props) {
   } else {
     returnValue = inputValue;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(React55.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(React55.Fragment, {
     children: returnValue
   });
 }
@@ -11538,7 +11674,7 @@ function useComboboxPositionerContext(optional) {
 
 // node_modules/@base-ui/react/esm/combobox/utils/ComboboxInternalDismissButton.js
 var React59 = __toESM(require_react(), 1);
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 var ComboboxInternalDismissButton = /* @__PURE__ */ React59.forwardRef(function ComboboxInternalDismissButton2(_, forwardedRef) {
   const store = useComboboxRootContext();
   const {
@@ -11554,7 +11690,7 @@ var ComboboxInternalDismissButton = /* @__PURE__ */ React59.forwardRef(function 
   const dismissProps = getButtonProps({
     onClick: handleDismiss
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", {
     ref: mergedRef,
     ...dismissProps,
     "aria-label": "Dismiss",
@@ -11565,7 +11701,7 @@ var ComboboxInternalDismissButton = /* @__PURE__ */ React59.forwardRef(function 
 if (true) ComboboxInternalDismissButton.displayName = "ComboboxInternalDismissButton";
 
 // node_modules/@base-ui/react/esm/combobox/input/ComboboxInput.js
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
 var ComboboxInput = /* @__PURE__ */ React60.forwardRef(function ComboboxInput2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -11906,8 +12042,8 @@ var ComboboxInput = /* @__PURE__ */ React60.forwardRef(function ComboboxInput2(c
     }, validationProps],
     stateAttributesMapping: triggerStateAttributesMapping
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(React60.Fragment, {
-    children: [open && focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ComboboxInternalDismissButton, {
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(React60.Fragment, {
+    children: [open && focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(ComboboxInternalDismissButton, {
       ref: store.state.startDismissRef
     }), element]
   });
@@ -12127,7 +12263,7 @@ var React65 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/esm/combobox/collection/GroupCollectionContext.js
 var React64 = __toESM(require_react(), 1);
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
 var GroupCollectionContext = /* @__PURE__ */ React64.createContext(null);
 if (true) GroupCollectionContext.displayName = "GroupCollectionContext";
 function useGroupCollectionContext() {
@@ -12141,14 +12277,14 @@ function GroupCollectionProvider(props) {
   const contextValue = React64.useMemo(() => ({
     items
   }), [items]);
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(GroupCollectionContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(GroupCollectionContext.Provider, {
     value: contextValue,
     children
   });
 }
 
 // node_modules/@base-ui/react/esm/combobox/collection/ComboboxCollection.js
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 function ComboboxCollection(props) {
   const {
     children
@@ -12161,13 +12297,13 @@ function ComboboxCollection(props) {
   if (!itemsToRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(React65.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(React65.Fragment, {
     children: itemsToRender.map(children)
   });
 }
 
 // node_modules/@base-ui/react/esm/combobox/list/ComboboxList.js
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
 var ComboboxList = /* @__PURE__ */ React66.forwardRef(function ComboboxList2(componentProps, forwardedRef) {
   var _ComboboxCollection;
   const {
@@ -12198,7 +12334,7 @@ var ComboboxList = /* @__PURE__ */ React66.forwardRef(function ComboboxList2(com
   });
   const resolvedChildren = React66.useMemo(() => {
     if (typeof children === "function") {
-      return _ComboboxCollection || (_ComboboxCollection = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ComboboxCollection, {
+      return _ComboboxCollection || (_ComboboxCollection = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(ComboboxCollection, {
         children
       }));
     }
@@ -12247,7 +12383,7 @@ var ComboboxList = /* @__PURE__ */ React66.forwardRef(function ComboboxList2(com
   if (virtualized) {
     return element;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(CompositeList, {
+  return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(CompositeList, {
     elementsRef: store.state.listRef,
     labelsRef: hasItems ? void 0 : store.state.labelsRef,
     children: element
@@ -12344,7 +12480,7 @@ function useComboboxPortalContext() {
 }
 
 // node_modules/@base-ui/react/esm/combobox/portal/ComboboxPortal.js
-var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
 var ComboboxPortal = /* @__PURE__ */ React70.forwardRef(function ComboboxPortal2(props, forwardedRef) {
   const {
     keepMounted = false,
@@ -12357,9 +12493,9 @@ var ComboboxPortal = /* @__PURE__ */ React70.forwardRef(function ComboboxPortal2
   if (!shouldRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ComboboxPortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ComboboxPortalContext.Provider, {
     value: keepMounted,
-    children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(FloatingPortal, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(FloatingPortal, {
       ref: forwardedRef,
       ...portalProps
     })
@@ -12981,7 +13117,7 @@ function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, refer
 }
 
 // node_modules/@base-ui/react/esm/combobox/positioner/ComboboxPositioner.js
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
 var ComboboxPositioner = /* @__PURE__ */ React74.forwardRef(function ComboboxPositioner2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -13059,9 +13195,9 @@ var ComboboxPositioner = /* @__PURE__ */ React74.forwardRef(function ComboboxPos
     hidden: !mounted,
     inert: !open
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(ComboboxPositionerContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(ComboboxPositionerContext.Provider, {
     value: positioning,
-    children: [mounted && modal && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(InternalBackdrop, {
+    children: [mounted && modal && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(InternalBackdrop, {
       inert: inertValue(!open),
       cutout: inputGroupElement ?? inputElement ?? triggerElement
     }), element]
@@ -13071,7 +13207,7 @@ if (true) ComboboxPositioner.displayName = "ComboboxPositioner";
 
 // node_modules/@base-ui/react/esm/combobox/popup/ComboboxPopup.js
 var React75 = __toESM(require_react(), 1);
-var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
 var stateAttributesMapping3 = {
   ...popupStateMapping,
   ...transitionStatusMapping
@@ -13140,7 +13276,7 @@ var ComboboxPopup = /* @__PURE__ */ React75.forwardRef(function ComboboxPopup2(c
     resolvedFinalFocus = inputInsidePopup ? void 0 : false;
   }
   const focusManagerModal = !inputInsidePopup || modal;
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(FloatingFocusManager, {
+  return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(FloatingFocusManager, {
     context: floatingRootContext,
     disabled: !mounted,
     modal: focusManagerModal,
@@ -13148,8 +13284,8 @@ var ComboboxPopup = /* @__PURE__ */ React75.forwardRef(function ComboboxPopup2(c
     initialFocus: resolvedInitialFocus,
     returnFocus: resolvedFinalFocus,
     getInsideElements: () => [store.state.startDismissRef.current, store.state.endDismissRef.current],
-    children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(React75.Fragment, {
-      children: [element, focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(ComboboxInternalDismissButton, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(React75.Fragment, {
+      children: [element, focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(ComboboxInternalDismissButton, {
         ref: store.state.endDismissRef
       })]
     })
@@ -13210,7 +13346,7 @@ function useComboboxGroupContext() {
 }
 
 // node_modules/@base-ui/react/esm/combobox/group/ComboboxGroup.js
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 var ComboboxGroup = /* @__PURE__ */ React78.forwardRef(function ComboboxGroup2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -13232,12 +13368,12 @@ var ComboboxGroup = /* @__PURE__ */ React78.forwardRef(function ComboboxGroup2(c
       "aria-labelledby": labelId
     }, elementProps]
   });
-  const wrappedElement = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ComboboxGroupContext.Provider, {
+  const wrappedElement = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(ComboboxGroupContext.Provider, {
     value: contextValue,
     children: element
   });
   if (items) {
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(GroupCollectionProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(GroupCollectionProvider, {
       items,
       children: wrappedElement
     });
@@ -13294,7 +13430,7 @@ function useComboboxRowContext() {
 }
 
 // node_modules/@base-ui/react/esm/combobox/item/ComboboxItem.js
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 var ComboboxItem = /* @__PURE__ */ React82.memo(/* @__PURE__ */ React82.forwardRef(function ComboboxItem2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -13442,7 +13578,7 @@ var ComboboxItem = /* @__PURE__ */ React82.memo(/* @__PURE__ */ React82.forwardR
     selected,
     textRef
   }), [selected, textRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ComboboxItemContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(ComboboxItemContext.Provider, {
     value: contextValue,
     children: element
   });
@@ -13454,7 +13590,7 @@ var AutocompleteItem = ComboboxItem;
 
 // node_modules/@base-ui/react/esm/combobox/row/ComboboxRow.js
 var React83 = __toESM(require_react(), 1);
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 var ComboboxRow = /* @__PURE__ */ React83.forwardRef(function ComboboxRow2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -13468,7 +13604,7 @@ var ComboboxRow = /* @__PURE__ */ React83.forwardRef(function ComboboxRow2(compo
       role: "row"
     }, elementProps]
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(ComboboxRowContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ComboboxRowContext.Provider, {
     value: true,
     children: element
   });
@@ -13862,7 +13998,7 @@ function setPositionerCssSize(positionerElement, size4) {
 }
 
 // node_modules/@base-ui/react/esm/utils/usePopupViewport.js
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
 function usePopupViewport(parameters) {
   const {
     store,
@@ -13942,14 +14078,14 @@ function usePopupViewport(parameters) {
   const isTransitioning = previousContentNode != null;
   let childrenToRender;
   if (!isTransitioning) {
-    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", {
+    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", {
       "data-current": true,
       ref: currentContainerRef,
       children
     }, currentContentKey);
   } else {
-    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(React91.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", {
+    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(React91.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", {
         "data-previous": true,
         inert: inertValue(true),
         ref: previousContainerRef,
@@ -13961,7 +14097,7 @@ function usePopupViewport(parameters) {
           position: "absolute"
         },
         "data-ending-style": showStartingStyleAttribute ? void 0 : ""
-      }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", {
+      }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", {
         "data-current": true,
         ref: currentContainerRef,
         "data-starting-style": showStartingStyleAttribute ? "" : void 0,
@@ -14083,7 +14219,7 @@ function useFieldsetRootContext(optional = false) {
 
 // node_modules/@base-ui/react/esm/internals/labelable-provider/LabelableProvider.js
 var React93 = __toESM(require_react(), 1);
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 var LabelableProvider = function LabelableProvider2(props) {
   const defaultId = useBaseUiId();
   const initialControlId = props.controlId === void 0 ? defaultId : props.controlId;
@@ -14131,7 +14267,7 @@ var LabelableProvider = function LabelableProvider2(props) {
     setMessageIds,
     getDescriptionProps
   }), [controlId, registerControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(LabelableContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(LabelableContext.Provider, {
     value: contextValue,
     children: props.children
   });
@@ -14478,7 +14614,7 @@ function useFieldControlRegistration(params) {
 }
 
 // node_modules/@base-ui/react/esm/field/root/FieldRoot.js
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 var FieldRootInner = /* @__PURE__ */ React96.forwardRef(function FieldRootInner2(componentProps, forwardedRef) {
   const {
     errors,
@@ -14601,15 +14737,15 @@ var FieldRootInner = /* @__PURE__ */ React96.forwardRef(function FieldRootInner2
     props: elementProps,
     stateAttributesMapping: fieldValidityMapping
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(FieldRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(FieldRootContext.Provider, {
     value: contextValue,
     children: element
   });
 });
 if (true) FieldRootInner.displayName = "FieldRootInner";
 var FieldRoot = /* @__PURE__ */ React96.forwardRef(function FieldRoot2(componentProps, forwardedRef) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(LabelableProvider, {
-    children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(FieldRootInner, {
+  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(LabelableProvider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(FieldRootInner, {
       ...componentProps,
       ref: forwardedRef
     })
@@ -14668,7 +14804,7 @@ if (true) FieldLabel.displayName = "FieldLabel";
 
 // node_modules/@base-ui/react/esm/field/error/FieldError.js
 var React98 = __toESM(require_react(), 1);
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 var stateAttributesMapping4 = {
   ...fieldValidityMapping,
   ...transitionStatusMapping
@@ -14721,8 +14857,8 @@ var FieldError = /* @__PURE__ */ React98.forwardRef(function FieldError2(compone
   const errorRef = React98.useRef(null);
   const [lastRenderedMessage, setLastRenderedMessage] = React98.useState(null);
   const [lastRenderedMessageKey, setLastRenderedMessageKey] = React98.useState(null);
-  const clientErrorMessage = validityData.errors.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("ul", {
-    children: validityData.errors.map((message2) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("li", {
+  const clientErrorMessage = validityData.errors.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("ul", {
+    children: validityData.errors.map((message2) => /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("li", {
       children: message2
     }, message2))
   }) : validityData.error;
@@ -14917,7 +15053,7 @@ if (true) FieldControl.displayName = "FieldControl";
 
 // node_modules/@base-ui/react/esm/field/validity/FieldValidity.js
 var React101 = __toESM(require_react(), 1);
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 var FieldValidity = function FieldValidity2(props) {
   const {
     children
@@ -14938,7 +15074,7 @@ var FieldValidity = function FieldValidity2(props) {
       transitionStatus
     };
   }, [combinedFieldValidityData, transitionStatus]);
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(React101.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(React101.Fragment, {
     children: children(fieldValidityState)
   });
 };
@@ -14946,7 +15082,7 @@ if (true) FieldValidity.displayName = "FieldValidity";
 
 // node_modules/@base-ui/react/esm/field/item/FieldItem.js
 var React102 = __toESM(require_react(), 1);
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var FieldItem = /* @__PURE__ */ React102.forwardRef(function FieldItem2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -14973,9 +15109,9 @@ var FieldItem = /* @__PURE__ */ React102.forwardRef(function FieldItem2(componen
     props: elementProps,
     stateAttributesMapping: fieldValidityMapping
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(LabelableProvider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(LabelableProvider, {
     controlId,
-    children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(FieldItemContext.Provider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(FieldItemContext.Provider, {
       value: fieldItemContext,
       children: element
     })
@@ -14985,9 +15121,9 @@ if (true) FieldItem.displayName = "FieldItem";
 
 // node_modules/@base-ui/react/esm/input/Input.js
 var React103 = __toESM(require_react(), 1);
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
 var Input = /* @__PURE__ */ React103.forwardRef(function Input2(props, forwardedRef) {
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(index_parts_exports2.Control, {
+  return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(index_parts_exports2.Control, {
     ref: forwardedRef,
     ...props
   });
@@ -14997,7 +15133,7 @@ if (true) Input.displayName = "Input";
 // node_modules/@base-ui/react/esm/utils/FloatingPortalLite.js
 var React104 = __toESM(require_react(), 1);
 var ReactDOM8 = __toESM(require_react_dom(), 1);
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
 var FloatingPortalLite = /* @__PURE__ */ React104.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
   const {
     children,
@@ -15019,7 +15155,7 @@ var FloatingPortalLite = /* @__PURE__ */ React104.forwardRef(function FloatingPo
   if (!portalSubtree && !portalNode) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(React104.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(React104.Fragment, {
     children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM8.createPortal(children, portalNode)]
   });
 });
@@ -15149,7 +15285,7 @@ function createInitialState() {
 }
 
 // node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
     disabled: disabled2 = false,
@@ -15253,7 +15389,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     inactiveTriggerProps,
     popupProps
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(TooltipRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(TooltipRootContext.Provider, {
     value: store,
     children: typeof children === "function" ? children({
       payload
@@ -15402,7 +15538,7 @@ function useTooltipPortalContext() {
 }
 
 // node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
 var TooltipPortal = /* @__PURE__ */ React111.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
     keepMounted = false,
@@ -15414,9 +15550,9 @@ var TooltipPortal = /* @__PURE__ */ React111.forwardRef(function TooltipPortal2(
   if (!shouldRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(TooltipPortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(TooltipPortalContext.Provider, {
     value: keepMounted,
-    children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(FloatingPortalLite, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(FloatingPortalLite, {
       ref: forwardedRef,
       ...portalProps
     })
@@ -15440,7 +15576,7 @@ function useTooltipPositionerContext() {
 }
 
 // node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 var TooltipPositioner = /* @__PURE__ */ React113.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -15503,7 +15639,7 @@ var TooltipPositioner = /* @__PURE__ */ React113.forwardRef(function TooltipPosi
     hidden: !mounted,
     inert: !open || trackCursorAxis === "both" || disableHoverablePopup
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(TooltipPositionerContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(TooltipPositionerContext.Provider, {
     value: positioning,
     children: element
   });
@@ -15606,7 +15742,7 @@ if (true) TooltipArrow.displayName = "TooltipArrow";
 
 // node_modules/@base-ui/react/esm/tooltip/provider/TooltipProvider.js
 var React116 = __toESM(require_react(), 1);
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
   const {
     delay,
@@ -15621,9 +15757,9 @@ var TooltipProvider = function TooltipProvider2(props) {
     open: delay,
     close: closeDelay
   }), [delay, closeDelay]);
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(TooltipProviderContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(TooltipProviderContext.Provider, {
     value: contextValue,
-    children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(FloatingDelayGroup, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(FloatingDelayGroup, {
       delay: delayValue,
       timeoutMs: timeout,
       children: props.children
@@ -15841,7 +15977,7 @@ var Text = (0, import_element14.forwardRef)(function Text2({ variant = "body-md"
 // packages/ui/build-module/button/button.mjs
 var import_element15 = __toESM(require_element(), 1);
 var import_i18n = __toESM(require_i18n(), 1);
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
 import { speak } from "@wordpress/a11y";
 var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
 function getRuntime2() {
@@ -15968,7 +16104,7 @@ var Button3 = (0, import_element15.forwardRef)(
         speak(loadingAnnouncement);
       }
     }, [loading, loadingAnnouncement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
       Button,
       {
         ref,
@@ -15987,11 +16123,11 @@ var import_element17 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/icon/icon.mjs
 var import_element16 = __toESM(require_element(), 1);
-var import_primitives = __toESM(require_primitives(), 1);
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var import_primitives28 = __toESM(require_primitives(), 1);
+var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 var Icon = (0, import_element16.forwardRef)(function Icon2({ icon, size: size4 = 24, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
-    import_primitives.SVG,
+  return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+    import_primitives28.SVG,
     {
       ref,
       fill: "currentColor",
@@ -16004,7 +16140,7 @@ var Icon = (0, import_element16.forwardRef)(function Icon2({ icon, size: size4 =
 });
 
 // packages/ui/build-module/button/icon.mjs
-var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
 function getRuntime3() {
   const globalScope = globalThis;
@@ -16091,7 +16227,7 @@ if (typeof process === "undefined" || true) {
 var style_default3 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
 var ButtonIcon = (0, import_element17.forwardRef)(
   function ButtonIcon2({ className, icon, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
       Icon,
       {
         ref,
@@ -16113,141 +16249,6 @@ var Button4 = Object.assign(Button3, {
    */
   Icon: ButtonIcon
 });
-
-// packages/icons/build-module/library/arrow-down.mjs
-var import_primitives2 = __toESM(require_primitives(), 1);
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
-var arrow_down_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives2.Path, { d: "m16.5 13.5-3.7 3.7V4h-1.5v13.2l-3.8-3.7-1 1 5.5 5.6 5.5-5.6z" }) });
-
-// packages/icons/build-module/library/arrow-left.mjs
-var import_primitives3 = __toESM(require_primitives(), 1);
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
-var arrow_left_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives3.Path, { d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z" }) });
-
-// packages/icons/build-module/library/arrow-right.mjs
-var import_primitives4 = __toESM(require_primitives(), 1);
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
-var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives4.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
-
-// packages/icons/build-module/library/arrow-up.mjs
-var import_primitives5 = __toESM(require_primitives(), 1);
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
-var arrow_up_default = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives5.Path, { d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z" }) });
-
-// packages/icons/build-module/library/block-table.mjs
-var import_primitives6 = __toESM(require_primitives(), 1);
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
-var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives6.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
-
-// packages/icons/build-module/library/calendar.mjs
-var import_primitives7 = __toESM(require_primitives(), 1);
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
-var calendar_default = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives7.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z" }) });
-
-// packages/icons/build-module/library/category.mjs
-var import_primitives8 = __toESM(require_primitives(), 1);
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
-var category_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives8.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M6 5.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM4 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm11-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM13 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2V6zm5 8.5h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zM15 13a2 2 0 00-2 2v3a2 2 0 002 2h3a2 2 0 002-2v-3a2 2 0 00-2-2h-3zm-9 1.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM4 15a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3z" }) });
-
-// packages/icons/build-module/library/check.mjs
-var import_primitives9 = __toESM(require_primitives(), 1);
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
-var check_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives9.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
-
-// packages/icons/build-module/library/close-small.mjs
-var import_primitives10 = __toESM(require_primitives(), 1);
-var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
-var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives10.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
-
-// packages/icons/build-module/library/cog.mjs
-var import_primitives11 = __toESM(require_primitives(), 1);
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
-var cog_default = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives11.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M10.289 4.836A1 1 0 0111.275 4h1.306a1 1 0 01.987.836l.244 1.466c.787.26 1.503.679 2.108 1.218l1.393-.522a1 1 0 011.216.437l.653 1.13a1 1 0 01-.23 1.273l-1.148.944a6.025 6.025 0 010 2.435l1.149.946a1 1 0 01.23 1.272l-.653 1.13a1 1 0 01-1.216.437l-1.394-.522c-.605.54-1.32.958-2.108 1.218l-.244 1.466a1 1 0 01-.987.836h-1.306a1 1 0 01-.986-.836l-.244-1.466a5.995 5.995 0 01-2.108-1.218l-1.394.522a1 1 0 01-1.217-.436l-.653-1.131a1 1 0 01.23-1.272l1.149-.946a6.026 6.026 0 010-2.435l-1.148-.944a1 1 0 01-.23-1.272l.653-1.131a1 1 0 011.217-.437l1.393.522a5.994 5.994 0 012.108-1.218l.244-1.466zM14.929 12a3 3 0 11-6 0 3 3 0 016 0z" }) });
-
-// packages/icons/build-module/library/envelope.mjs
-var import_primitives12 = __toESM(require_primitives(), 1);
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
-var envelope_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives12.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm2-.5h14c.3 0 .5.2.5.5v1L12 13.5 4.5 7.9V7c0-.3.2-.5.5-.5Zm-.5 3.3V17c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V9.8L12 15.4 4.5 9.8Z" }) });
-
-// packages/icons/build-module/library/error.mjs
-var import_primitives13 = __toESM(require_primitives(), 1);
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
-var error_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives13.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z" }) });
-
-// packages/icons/build-module/library/format-list-bullets-rtl.mjs
-var import_primitives14 = __toESM(require_primitives(), 1);
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
-var format_list_bullets_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives14.Path, { d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }) });
-
-// packages/icons/build-module/library/format-list-bullets.mjs
-var import_primitives15 = __toESM(require_primitives(), 1);
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
-var format_list_bullets_default = /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives15.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
-
-// packages/icons/build-module/library/funnel.mjs
-var import_primitives16 = __toESM(require_primitives(), 1);
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
-var funnel_default = /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives16.Path, { d: "M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z" }) });
-
-// packages/icons/build-module/library/link.mjs
-var import_primitives17 = __toESM(require_primitives(), 1);
-var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
-var link_default = /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives17.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
-
-// packages/icons/build-module/library/map-marker.mjs
-var import_primitives18 = __toESM(require_primitives(), 1);
-var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
-var map_marker_default = /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives18.Path, { d: "M12 9c-.8 0-1.5.7-1.5 1.5S11.2 12 12 12s1.5-.7 1.5-1.5S12.8 9 12 9zm0-5c-3.6 0-6.5 2.8-6.5 6.2 0 .8.3 1.8.9 3.1.5 1.1 1.2 2.3 2 3.6.7 1 3 3.8 3.2 3.9l.4.5.4-.5c.2-.2 2.6-2.9 3.2-3.9.8-1.2 1.5-2.5 2-3.6.6-1.3.9-2.3.9-3.1C18.5 6.8 15.6 4 12 4zm4.3 8.7c-.5 1-1.1 2.2-1.9 3.4-.5.7-1.7 2.2-2.4 3-.7-.8-1.9-2.3-2.4-3-.8-1.2-1.4-2.3-1.9-3.3-.6-1.4-.7-2.2-.7-2.5 0-2.6 2.2-4.7 5-4.7s5 2.1 5 4.7c0 .2-.1 1-.7 2.4z" }) });
-
-// packages/icons/build-module/library/mobile.mjs
-var import_primitives19 = __toESM(require_primitives(), 1);
-var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
-var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives19.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
-
-// packages/icons/build-module/library/more-vertical.mjs
-var import_primitives20 = __toESM(require_primitives(), 1);
-var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
-var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives20.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
-
-// packages/icons/build-module/library/next.mjs
-var import_primitives21 = __toESM(require_primitives(), 1);
-var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var next_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives21.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
-
-// packages/icons/build-module/library/people.mjs
-var import_primitives22 = __toESM(require_primitives(), 1);
-var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-var people_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives22.Path, { fillRule: "evenodd", d: "M15.5 9.5a1 1 0 100-2 1 1 0 000 2zm0 1.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zm-2.25 6v-2a2.75 2.75 0 00-2.75-2.75h-4A2.75 2.75 0 003.75 15v2h1.5v-2c0-.69.56-1.25 1.25-1.25h4c.69 0 1.25.56 1.25 1.25v2h1.5zm7-2v2h-1.5v-2c0-.69-.56-1.25-1.25-1.25H15v-1.5h2.5A2.75 2.75 0 0120.25 15zM9.5 8.5a1 1 0 11-2 0 1 1 0 012 0zm1.5 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" }) });
-
-// packages/icons/build-module/library/previous.mjs
-var import_primitives23 = __toESM(require_primitives(), 1);
-var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-var previous_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives23.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
-
-// packages/icons/build-module/library/scheduled.mjs
-var import_primitives24 = __toESM(require_primitives(), 1);
-var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
-var scheduled_default = /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives24.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9 1V8h-1.5v3.5h-2V13H13Z" }) });
-
-// packages/icons/build-module/library/search.mjs
-var import_primitives25 = __toESM(require_primitives(), 1);
-var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
-var search_default = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives25.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
-
-// packages/icons/build-module/library/seen.mjs
-var import_primitives26 = __toESM(require_primitives(), 1);
-var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
-var seen_default = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives26.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
-
-// packages/icons/build-module/library/unseen.mjs
-var import_primitives27 = __toESM(require_primitives(), 1);
-var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
-var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives27.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
-
-// packages/icons/build-module/library/wordpress.mjs
-var import_primitives28 = __toESM(require_primitives(), 1);
-var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
-var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "-2 -2 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives28.Path, { d: "M20 10c0-5.51-4.49-10-10-10C4.48 0 0 4.49 0 10c0 5.52 4.48 10 10 10 5.51 0 10-4.48 10-10zM7.78 15.37L4.37 6.22c.55-.02 1.17-.08 1.17-.08.5-.06.44-1.13-.06-1.11 0 0-1.45.11-2.37.11-.18 0-.37 0-.58-.01C4.12 2.69 6.87 1.11 10 1.11c2.33 0 4.45.87 6.05 2.34-.68-.11-1.65.39-1.65 1.58 0 .74.45 1.36.9 2.1.35.61.55 1.36.55 2.46 0 1.49-1.4 5-1.4 5l-3.03-8.37c.54-.02.82-.17.82-.17.5-.05.44-1.25-.06-1.22 0 0-1.44.12-2.38.12-.87 0-2.33-.12-2.33-.12-.5-.03-.56 1.2-.06 1.22l.92.08 1.26 3.41zM17.41 10c.24-.64.74-1.87.43-4.25.7 1.29 1.05 2.71 1.05 4.25 0 3.29-1.73 6.24-4.4 7.78.97-2.59 1.94-5.2 2.92-7.78zM6.1 18.09C3.12 16.65 1.11 13.53 1.11 10c0-1.3.23-2.48.72-3.59C3.25 10.3 4.67 14.2 6.1 18.09zm4.03-6.63l2.58 6.98c-.86.29-1.76.45-2.71.45-.79 0-1.57-.11-2.29-.33.81-2.38 1.62-4.74 2.42-7.1z" }) });
 
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 var import_element18 = __toESM(require_element(), 1);
@@ -35346,9 +35347,9 @@ function registerStyle30(hash, css) {
 
 // widgets/events/components/events-list/events-list.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle30("888a6d46f1", ".fae84950ff6b687a__root{flex:1;min-height:0;min-width:0;overflow:auto}.f2470afe387696bb__eventIcon{background-color:var(--wpds-color-bg-track-neutral-weak,#e4e4e4);color:var(--wpds-color-fg-content-neutral-weak,#707070);height:100%}.e97858c521f8ff5d__titleLink{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._767c9a42070266bb__meta{color:var(--wpds-color-fg-content-neutral-weak,#707070)}.a8c460f12aae4f63__emptyState{margin-block:var(--wpds-dimension-padding-2xl,24px)}");
+  registerStyle30("2956254f7b", ".b193ea4f98c12441__listArea,.fae84950ff6b687a__root{flex:1;min-height:0;min-width:0;overflow:hidden}.f2470afe387696bb__eventIcon{background-color:var(--wpds-color-bg-track-neutral-weak,#e4e4e4);color:var(--wpds-color-fg-content-neutral-weak,#707070);height:100%}.e97858c521f8ff5d__titleLink{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._767c9a42070266bb__meta{color:var(--wpds-color-fg-content-neutral-weak,#707070)}.a8c460f12aae4f63__emptyState{margin-block:var(--wpds-dimension-padding-2xl,24px)}.b0e50a045a1f92c2__eventNone{color:var(--wpds-color-fg-content-neutral-weak,#707070);flex-shrink:0;padding-block:var(--wpds-dimension-padding-md,12px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}");
 }
-var events_list_default = { "root": "fae84950ff6b687a__root", "eventIcon": "f2470afe387696bb__eventIcon", "titleLink": "e97858c521f8ff5d__titleLink", "meta": "_767c9a42070266bb__meta", "emptyState": "a8c460f12aae4f63__emptyState" };
+var events_list_default = { "root": "fae84950ff6b687a__root", "listArea": "b193ea4f98c12441__listArea", "eventIcon": "f2470afe387696bb__eventIcon", "titleLink": "e97858c521f8ff5d__titleLink", "meta": "_767c9a42070266bb__meta", "emptyState": "a8c460f12aae4f63__emptyState", "eventNone": "b0e50a045a1f92c2__eventNone" };
 
 // widgets/events/components/events-list/events-list.tsx
 var import_jsx_runtime168 = __toESM(require_jsx_runtime());
@@ -35501,6 +35502,7 @@ function EventMeta({ item }) {
 function EventsList({
   events,
   showEmptyState,
+  location,
   isLoading = false
 }) {
   const [view, setView] = (0, import_element109.useState)(INITIAL_VIEW);
@@ -35534,9 +35536,16 @@ function EventsList({
   const organizeUrl = (0, import_i18n47.__)(
     "https://make.wordpress.org/community/organize-event-landing-page/"
   );
+  const locationLabel = location?.trim();
+  const emptyTitle = () => {
+    if (locationLabel) {
+      return (0, import_i18n47.sprintf)((0, import_i18n47.__)("No events near %s"), locationLabel);
+    }
+    return (0, import_i18n47.__)("No events near you");
+  };
   const empty = showEmptyState ? /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Stack, { align: "center", justify: "center", className: events_list_default.emptyState, children: /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(empty_state_exports.Root, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(empty_state_exports.Icon, { icon: calendar_default }),
-    /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(empty_state_exports.Title, { children: (0, import_i18n47.__)("No events near you") }),
+    /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(empty_state_exports.Title, { children: emptyTitle() }),
     /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(empty_state_exports.Description, { children: (0, import_element109.createInterpolateElement)(
       (0, import_i18n47.__)("<a>Help organize the next one!</a>"),
       {
@@ -35544,22 +35553,38 @@ function EventsList({
       }
     ) })
   ] }) }) : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)("div", { className: events_list_default.root, children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
-    dataviews_default,
-    {
-      data: items,
-      fields,
-      view,
-      onChangeView: setView,
-      getItemId: (item) => item.id,
-      isLoading,
-      paginationInfo: { totalItems: items.length, totalPages: 1 },
-      defaultLayouts: DEFAULT_LAYOUTS2,
-      empty,
-      children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(dataviews_default.Layout, {})
-    }
-  ) });
+  return /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(Stack, { className: events_list_default.root, direction: "column", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Stack, { className: events_list_default.listArea, direction: "column", children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+      dataviews_default,
+      {
+        data: items,
+        fields,
+        view,
+        onChangeView: setView,
+        getItemId: (item) => item.id,
+        isLoading,
+        paginationInfo: {
+          totalItems: items.length,
+          totalPages: 1
+        },
+        defaultLayouts: DEFAULT_LAYOUTS2,
+        empty,
+        children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(dataviews_default.Layout, {})
+      }
+    ) }),
+    events.length > 0 && events.length <= 2 && /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Text, { variant: "body-sm", className: events_list_default.eventNone, children: (0, import_element109.createInterpolateElement)(
+      (0, import_i18n47.__)(
+        "Want more events? <a>Help organize the next one!</a>"
+      ),
+      {
+        a: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Link, { href: organizeUrl, openInNewTab: true })
+      }
+    ) })
+  ] });
 }
+
+// widgets/events/components/location-setting-control/location-setting-control.tsx
+var import_element111 = __toESM(require_element());
 
 // widgets/events/components/location-picker/location-picker.tsx
 var import_element110 = __toESM(require_element());
@@ -35567,28 +35592,72 @@ var import_i18n48 = __toESM(require_i18n());
 
 // widgets/events/components/location-picker/location-picker.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle30("8a6ab1f164", "._5580f17ac5c0602c__locationPicker{margin-block-end:var(--wpds-dimension-padding-md,12px);max-width:calc(var(--wpds-dimension-base, 4px)*100);padding-inline:var(--wpds-dimension-padding-2xl,24px)}._6c0e74a3d3d754d1__locationInput{flex:1;min-inline-size:calc(var(--wpds-dimension-base, 4px)*30)}");
+  registerStyle30("46af197bf6", "._6c0e74a3d3d754d1__locationInput{flex:1;min-inline-size:calc(var(--wpds-dimension-base, 4px)*30)}");
 }
-var location_picker_default = { "locationPicker": "_5580f17ac5c0602c__locationPicker", "locationInput": "_6c0e74a3d3d754d1__locationInput" };
+var location_picker_default = { "locationInput": "_6c0e74a3d3d754d1__locationInput" };
 
 // widgets/events/components/location-picker/location-picker.tsx
 var import_jsx_runtime169 = __toESM(require_jsx_runtime());
+var DRAFT_DEBOUNCE_MS = 300;
 function LocationPicker({
-  hidden,
-  onSubmit,
-  showCancel,
-  onCancel,
-  seedInput = ""
+  onSubmit = () => {
+  },
+  seedInput = "",
+  hideLabelFromVision = true,
+  selectButton = true,
+  onChange
 }) {
   const locationInputId = (0, import_element110.useId)();
   const [locationInput, setLocationInput] = (0, import_element110.useState)(seedInput);
   const [locationOptions, setLocationOptions] = (0, import_element110.useState)([]);
   const [isLocatingCity, setIsLocatingCity] = (0, import_element110.useState)(false);
+  const draftTimeoutRef = (0, import_element110.useRef)(
+    null
+  );
   (0, import_element110.useEffect)(() => {
-    if (showCancel && seedInput) {
+    if (!selectButton || seedInput) {
       setLocationInput(seedInput);
     }
-  }, [showCancel, seedInput]);
+  }, [selectButton, seedInput]);
+  const clearDraftTimeout = (0, import_element110.useCallback)(() => {
+    if (draftTimeoutRef.current) {
+      clearTimeout(draftTimeoutRef.current);
+      draftTimeoutRef.current = null;
+    }
+  }, []);
+  const tryPublishDraft = (0, import_element110.useCallback)(() => {
+    if (selectButton || !onChange) {
+      return;
+    }
+    const draft = locationInput.trim();
+    const saved = seedInput.trim();
+    if (draft === saved) {
+      return;
+    }
+    onChange(locationInput);
+  }, [selectButton, locationInput, onChange, seedInput]);
+  const scheduleDraftPublish = (0, import_element110.useCallback)(() => {
+    if (selectButton || !onChange) {
+      return;
+    }
+    clearDraftTimeout();
+    draftTimeoutRef.current = setTimeout(() => {
+      draftTimeoutRef.current = null;
+      tryPublishDraft();
+    }, DRAFT_DEBOUNCE_MS);
+  }, [clearDraftTimeout, selectButton, onChange, tryPublishDraft]);
+  (0, import_element110.useEffect)(() => {
+    if (selectButton || !onChange) {
+      clearDraftTimeout();
+      return;
+    }
+    scheduleDraftPublish();
+    return clearDraftTimeout;
+  }, [clearDraftTimeout, selectButton, onChange, scheduleDraftPublish]);
+  const flushDraftPublish = (0, import_element110.useCallback)(() => {
+    clearDraftTimeout();
+    tryPublishDraft();
+  }, [clearDraftTimeout, tryPublishDraft]);
   const fillCityFromGeolocation = async () => {
     if (!navigator.geolocation || isLocatingCity) {
       return;
@@ -35668,15 +35737,14 @@ function LocationPicker({
       controller.abort();
     };
   }, [locationInput]);
-  if (hidden) {
-    return null;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { className: location_picker_default.locationPicker, children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
     "form",
     {
       onSubmit: (e2) => {
         e2.preventDefault();
-        onSubmit(locationInput);
+        if (selectButton) {
+          onSubmit(locationInput);
+        }
       },
       children: /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(Stack, { direction: "row", align: "start", wrap: "wrap", gap: "sm", children: [
         /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(
@@ -35696,13 +35764,14 @@ function LocationPicker({
                     {
                       autoComplete: "off",
                       label: (0, import_i18n48.__)("City"),
-                      hideLabelFromVision: true,
+                      hideLabelFromVision,
                       size: "compact",
                       description: (0, import_i18n48.__)(
                         "Select a city to view upcoming events."
                       ),
                       onValueChange: () => {
                       },
+                      onBlur: !selectButton ? flushDraftPublish : void 0,
                       suffix: /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
                         /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(autocomplete_exports.Clear, {}),
                         /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
@@ -35735,7 +35804,7 @@ function LocationPicker({
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+        selectButton && /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
           Button4,
           {
             variant: "outline",
@@ -35744,87 +35813,71 @@ function LocationPicker({
             disabled: !locationInput.trim(),
             children: (0, import_i18n48.__)("Select")
           }
-        ),
-        showCancel && /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
-          Button4,
-          {
-            size: "compact",
-            tone: "neutral",
-            variant: "minimal",
-            onClick: onCancel,
-            children: (0, import_i18n48.__)("Cancel")
-          }
         )
       ] })
     }
-  ) });
+  );
 }
 
-// widgets/events/render.module.css
-if (typeof process === "undefined" || true) {
-  registerStyle30("d518a14a7c", "._5e849e4bd7508b38__locationSummary{padding-block-end:var(--wpds-dimension-padding-md,12px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}.d99ab0910e32f064__footer{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);padding-block:var(--wpds-dimension-padding-lg,16px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}");
-}
-var render_default = { "locationSummary": "_5e849e4bd7508b38__locationSummary", "footer": "d99ab0910e32f064__footer" };
+// widgets/events/components/location-setting-control/location-setting-control.tsx
+var import_jsx_runtime170 = __toESM(require_jsx_runtime());
 
 // widgets/events/style.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle30("0c252a9d8c", "._3f3b10c530ce00e7__eventNone{padding-block:var(--wpds-dimension-padding-sm,8px)}._3f3b10c530ce00e7__eventNone,._8035a0c4b6216adf__statusText{color:var(--wpds-color-fg-content-neutral-weak,#707070);padding-inline:var(--wpds-dimension-padding-2xl,24px)}._8035a0c4b6216adf__statusText{margin:0}");
+  registerStyle30("d8377fe3fc", "._8eae235c5e84e11a__container{block-size:100%;min-height:200px}.a8467f8a7e71416b__locationPickerInWidget{flex-grow:1;padding:var(--wpds-dimension-padding-2xl,24px)}.dc172eb76cf854ff__footer{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#e4e4e4);padding-block:var(--wpds-dimension-padding-lg,16px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}.ade19735a03e752d__footerLocation{margin-inline-start:auto}._424d657e76911af4__locationSummary,._8035a0c4b6216adf__statusText{color:var(--wpds-color-fg-content-neutral-weak,#707070)}._8035a0c4b6216adf__statusText{margin:0;padding-inline:var(--wpds-dimension-padding-2xl,24px)}");
 }
-var style_default20 = { "eventNone": "_3f3b10c530ce00e7__eventNone", "statusText": "_8035a0c4b6216adf__statusText" };
+var style_default20 = { "container": "_8eae235c5e84e11a__container", "locationPickerInWidget": "a8467f8a7e71416b__locationPickerInWidget", "footer": "dc172eb76cf854ff__footer", "footerLocation": "ade19735a03e752d__footerLocation", "locationSummary": "_424d657e76911af4__locationSummary", "statusText": "_8035a0c4b6216adf__statusText" };
 
 // widgets/events/render.tsx
-var import_jsx_runtime170 = __toESM(require_jsx_runtime());
+var import_jsx_runtime171 = __toESM(require_jsx_runtime());
 var EVENTS_API = "https://api.wordpress.org/events/1.0/";
 function EventsListSection({
   events,
   loading,
   error: error2,
-  showEmptyState
+  showEmptyState,
+  location
 }) {
   if (error2) {
-    return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("p", { className: style_default20.statusText, children: (0, import_i18n49.__)("An error occurred. Please try again.") });
+    return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)("p", { className: style_default20.statusText, children: (0, import_i18n49.__)("An error occurred. Please try again.") });
   }
-  const organizeUrl = (0, import_i18n49.__)(
-    "https://make.wordpress.org/community/organize-event-landing-page/"
+  return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+    EventsList,
+    {
+      events,
+      showEmptyState,
+      location,
+      isLoading: loading
+    }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)(import_jsx_runtime170.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
-      EventsList,
-      {
-        events,
-        showEmptyState,
-        isLoading: loading
-      }
-    ),
-    events.length > 0 && events.length <= 2 && /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(Text, { variant: "body-sm", className: style_default20.eventNone, children: (0, import_element111.createInterpolateElement)(
-      (0, import_i18n49.__)(
-        "Want more events? <a>Help organize the next one!</a>"
-      ),
-      {
-        a: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(Link, { href: organizeUrl, openInNewTab: true })
-      }
-    ) })
-  ] });
 }
-function WordPressEvents() {
+function WordPressEvents({
+  attributes = {},
+  setAttributes
+}) {
   const userLocale = (0, import_data6.useSelect)(
     (select) => select(import_core_data.store).getCurrentUser()?.locale ?? "en_US",
     []
   );
-  const [activeLocation, setActiveLocation] = (0, import_element111.useState)("");
-  const [locationLabel, setLocationLabel] = (0, import_element111.useState)("");
-  const [isEditingLocation, setIsEditingLocation] = (0, import_element111.useState)(false);
-  const [events, setEvents] = (0, import_element111.useState)([]);
-  const [eventsLoading, setEventsLoading] = (0, import_element111.useState)(false);
-  const [eventsError, setEventsError] = (0, import_element111.useState)(false);
+  const persistedLocation = typeof attributes.location === "string" ? attributes.location.trim() : "";
+  const [activeLocation, setActiveLocation] = (0, import_element112.useState)(persistedLocation);
+  const [locationLabel, setLocationLabel] = (0, import_element112.useState)("");
+  (0, import_element112.useEffect)(() => {
+    setActiveLocation(persistedLocation);
+  }, [persistedLocation]);
+  const [events, setEvents] = (0, import_element112.useState)([]);
+  const [eventsLoading, setEventsLoading] = (0, import_element112.useState)(false);
+  const [eventsError, setEventsError] = (0, import_element112.useState)(false);
   const hasSelectedLocation = Boolean(activeLocation.trim());
-  (0, import_element111.useEffect)(() => {
+  (0, import_element112.useEffect)(() => {
     if (!hasSelectedLocation) {
+      setLocationLabel("");
       return;
     }
     const controller = new AbortController();
     setEventsLoading(true);
     setEventsError(false);
+    setLocationLabel("");
     const params = new URLSearchParams({
       number: "5",
       locale: userLocale,
@@ -35844,62 +35897,109 @@ function WordPressEvents() {
     });
     return () => controller.abort();
   }, [activeLocation, hasSelectedLocation, userLocale]);
-  return /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)(import_jsx_runtime170.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
-      LocationPicker,
-      {
-        hidden: Boolean(locationLabel) && !isEditingLocation,
-        onSubmit: (location) => {
-          setActiveLocation(location);
-          setIsEditingLocation(false);
-        },
-        showCancel: isEditingLocation,
-        onCancel: () => setIsEditingLocation(false),
-        seedInput: activeLocation
-      }
-    ),
-    locationLabel && !isEditingLocation && /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)("div", { className: render_default.locationSummary, children: [
-      (0, import_element111.createInterpolateElement)(
-        (0, import_i18n49.sprintf)(
-          /* translators: %s: city name */
-          (0, import_i18n49.__)("Upcoming events near <strong>%s</strong>."),
-          locationLabel
+  return /* @__PURE__ */ (0, import_jsx_runtime171.jsxs)(
+    Stack,
+    {
+      direction: "column",
+      justify: "space-between",
+      className: style_default20.container,
+      children: [
+        !hasSelectedLocation && /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+          Stack,
+          {
+            className: style_default20.locationPickerInWidget,
+            direction: "column",
+            align: "center",
+            justify: "center",
+            children: /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+              LocationPicker,
+              {
+                onSubmit: (location) => {
+                  const next = location.trim();
+                  setActiveLocation(next);
+                  setAttributes?.({ location: next });
+                },
+                seedInput: activeLocation,
+                hideLabelFromVision: true
+              }
+            )
+          }
         ),
-        {
-          strong: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("strong", {})
-        }
-      ),
-      " ",
-      /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(Link, { onClick: () => setIsEditingLocation(true), children: (0, import_i18n49.__)("Change") })
-    ] }),
-    hasSelectedLocation && /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
-      EventsListSection,
-      {
-        events,
-        loading: eventsLoading,
-        error: eventsError,
-        showEmptyState: true
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("div", { className: render_default.footer, children: /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
-        Link,
-        {
-          href: "https://make.wordpress.org/community/meetups-landing-page",
-          openInNewTab: true,
-          children: (0, import_i18n49.__)("Meetups")
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
-        Link,
-        {
-          href: "https://central.wordcamp.org/schedule/",
-          openInNewTab: true,
-          children: (0, import_i18n49.__)("WordCamps")
-        }
-      )
-    ] }) })
-  ] });
+        hasSelectedLocation && eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+          Stack,
+          {
+            className: style_default20.locationPickerInWidget,
+            direction: "column",
+            align: "center",
+            justify: "center",
+            children: /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(import_components45.Spinner, {})
+          }
+        ),
+        hasSelectedLocation && !eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+          EventsListSection,
+          {
+            events,
+            loading: eventsLoading,
+            error: eventsError,
+            showEmptyState: true,
+            location: locationLabel || activeLocation
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime171.jsx)("div", { className: style_default20.footer, children: /* @__PURE__ */ (0, import_jsx_runtime171.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", wrap: "wrap", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+            Link,
+            {
+              href: "https://make.wordpress.org/community/meetups-landing-page",
+              openInNewTab: true,
+              children: (0, import_i18n49.__)("Meetups")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+            Link,
+            {
+              href: "https://central.wordcamp.org/schedule/",
+              openInNewTab: true,
+              children: (0, import_i18n49.__)("WordCamps")
+            }
+          ),
+          locationLabel && /* @__PURE__ */ (0, import_jsx_runtime171.jsx)("div", { className: style_default20.footerLocation, children: /* @__PURE__ */ (0, import_jsx_runtime171.jsxs)(tooltip_exports.Root, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+              tooltip_exports.Trigger,
+              {
+                "aria-label": (0, import_i18n49.__)("Change from settings."),
+                render: /* @__PURE__ */ (0, import_jsx_runtime171.jsxs)(
+                  Stack,
+                  {
+                    direction: "row",
+                    align: "center",
+                    gap: "xs",
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+                        Icon,
+                        {
+                          icon: map_marker_default,
+                          size: 16
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
+                        Text,
+                        {
+                          variant: "body-sm",
+                          className: style_default20.locationSummary,
+                          children: locationLabel
+                        }
+                      )
+                    ]
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(tooltip_exports.Popup, { children: (0, import_i18n49.__)("Change from settings.") })
+          ] }) })
+        ] }) })
+      ]
+    }
+  );
 }
 export {
   WordPressEvents as default
