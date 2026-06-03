@@ -26586,7 +26586,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/date_added/index.mjs
   var import_i18n56 = __toESM(require_i18n(), 1);
-  var import_date10 = __toESM(require_date(), 1);
   var dateAddedField = {
     id: "date",
     type: "datetime",
@@ -26594,25 +26593,18 @@ If there's a particular need for this, please submit a feature request at https:
     filterBy: {
       operators: ["before", "after"]
     },
-    format: {
-      datetime: (0, import_date10.getSettings)().formats.datetimeAbbreviated
-    },
     readOnly: true
   };
   var date_added_default = dateAddedField;
 
   // packages/media-fields/build-module/date_modified/index.mjs
   var import_i18n57 = __toESM(require_i18n(), 1);
-  var import_date11 = __toESM(require_date(), 1);
   var dateModifiedField = {
     id: "modified",
     type: "datetime",
     label: (0, import_i18n57.__)("Date modified"),
     filterBy: {
       operators: ["before", "after"]
-    },
-    format: {
-      datetime: (0, import_date11.getSettings)().formats.datetimeAbbreviated
     },
     readOnly: true
   };

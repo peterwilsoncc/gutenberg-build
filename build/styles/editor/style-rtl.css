@@ -4983,6 +4983,10 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   margin-inline: auto;
 }
 
+.media-editor-form .dataforms-layouts-panel__field-control {
+  text-wrap: pretty;
+}
+
 .media-editor-modal.components-modal__frame .components-modal__content {
   padding: 0;
   margin-bottom: 0;
