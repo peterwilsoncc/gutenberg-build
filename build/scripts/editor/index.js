@@ -48620,6 +48620,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: "media-editor__sidebar",
         panelClassName: "media-editor__sidebar-panel",
         headerClassName: "media-editor__sidebar-header",
+        closeLabel: (0, import_i18n128.__)("Close media panel"),
         header: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
         children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
           Tabs.TabPanel,
