@@ -8283,21 +8283,29 @@ var wp;
   };
   function withPersistentBlockChange(reducer3) {
     let lastAction;
-    let markNextChangeAsNotPersistent = false;
+    let nextHistoryMode;
     return (state, action) => {
       const nextState = reducer3(state, action);
-      const wasMarkedAsNotPersistent = markNextChangeAsNotPersistent;
-      markNextChangeAsNotPersistent = action.type === "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT";
-      const isExplicitPersistentChange = action.type === "MARK_LAST_CHANGE_AS_PERSISTENT" || wasMarkedAsNotPersistent;
+      const pendingHistoryMode = nextHistoryMode;
+      nextHistoryMode = action.type === "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT" ? action.history ?? "merge" : void 0;
+      const isExplicitPersistentChange = action.type === "MARK_LAST_CHANGE_AS_PERSISTENT" || pendingHistoryMode;
       if (state === nextState && !isExplicitPersistentChange) {
         if (state.isPersistentChange !== void 0) {
           return state;
         }
         return { ...nextState, isPersistentChange: true };
       }
-      const isPersistentChange = isExplicitPersistentChange ? !wasMarkedAsNotPersistent : !isUpdatingSameBlockAttribute(action, lastAction);
+      const isPersistentChange = isExplicitPersistentChange ? !pendingHistoryMode : !isUpdatingSameBlockAttribute(action, lastAction);
       lastAction = action;
-      return { ...nextState, isPersistentChange };
+      if (pendingHistoryMode === "ignore") {
+        return {
+          ...nextState,
+          isPersistentChange,
+          lastBlockChangeHistoryMode: "ignore"
+        };
+      }
+      const { lastBlockChangeHistoryMode, ...blockChange } = nextState;
+      return { ...blockChange, isPersistentChange };
     };
   }
   function withIgnoredBlockChange(reducer3) {
@@ -10073,6 +10081,7 @@ var wp;
     __unstableGetClientIdWithClientIdsTree: () => __unstableGetClientIdWithClientIdsTree,
     __unstableGetClientIdsTree: () => __unstableGetClientIdsTree,
     __unstableGetContentLockingParent: () => __unstableGetContentLockingParent,
+    __unstableGetLastBlockChangeHistoryMode: () => __unstableGetLastBlockChangeHistoryMode,
     __unstableGetSelectedBlocksWithPartialSelection: () => __unstableGetSelectedBlocksWithPartialSelection,
     __unstableGetTemporarilyEditingAsBlocks: () => __unstableGetTemporarilyEditingAsBlocks,
     __unstableGetVisibleBlocks: () => __unstableGetVisibleBlocks,
@@ -13104,6 +13113,12 @@ var wp;
   function isLastBlockChangePersistent(state) {
     return state.blocks.isPersistentChange;
   }
+  function __unstableGetLastBlockChangeHistoryMode(state) {
+    if (state.blocks.lastBlockChangeHistoryMode) {
+      return state.blocks.lastBlockChangeHistoryMode;
+    }
+    return state.blocks.isPersistentChange === false ? "merge" : "persistent";
+  }
   var __experimentalGetBlockListSettingsForBlocks = (0, import_data4.createSelector)(
     (state, clientIds = []) => {
       const blockListSettingsForBlocks = {};
@@ -14601,8 +14616,10 @@ var wp;
   function __unstableMarkLastChangeAsPersistent() {
     return { type: "MARK_LAST_CHANGE_AS_PERSISTENT" };
   }
-  function __unstableMarkNextChangeAsNotPersistent() {
-    return { type: "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT" };
+  function __unstableMarkNextChangeAsNotPersistent({
+    history = "merge"
+  } = {}) {
+    return { type: "MARK_NEXT_CHANGE_AS_NOT_PERSISTENT", history };
   }
   var __unstableMarkAutomaticChange = () => ({ dispatch }) => {
     dispatch({ type: "MARK_AUTOMATIC_CHANGE" });
@@ -34634,12 +34651,14 @@ var wp;
       const {
         getSelectedBlocksInitialCaretPosition: getSelectedBlocksInitialCaretPosition2,
         isLastBlockChangePersistent: isLastBlockChangePersistent2,
+        __unstableGetLastBlockChangeHistoryMode: __unstableGetLastBlockChangeHistoryMode2,
         __unstableIsLastBlockChangeIgnored: __unstableIsLastBlockChangeIgnored2,
         areInnerBlocksControlled: areInnerBlocksControlled2,
         getBlockParents: getBlockParents2
       } = registry.select(store);
       let blocks2 = getBlocks2(clientId);
       let isPersistent = isLastBlockChangePersistent2();
+      let blockHistoryMode = __unstableGetLastBlockChangeHistoryMode2();
       let previousAreBlocksDifferent = false;
       let prevSelectionStart = getSelectionStart2();
       let prevSelectionEnd = getSelectionEnd2();
@@ -34649,12 +34668,14 @@ var wp;
           return;
         }
         const newIsPersistent = isLastBlockChangePersistent2();
+        const newBlockHistoryMode = __unstableGetLastBlockChangeHistoryMode2();
         const newBlocks = getBlocks2(clientId);
         const areBlocksDifferent = newBlocks !== blocks2;
         blocks2 = newBlocks;
         if (areBlocksDifferent && (pendingChangesRef.current.incoming || __unstableIsLastBlockChangeIgnored2())) {
           pendingChangesRef.current.incoming = null;
           isPersistent = newIsPersistent;
+          blockHistoryMode = newBlockHistoryMode;
           return;
         }
         const didPersistenceChange = previousAreBlocksDifferent && !areBlocksDifferent && newIsPersistent && !isPersistent;
@@ -34670,6 +34691,7 @@ var wp;
           registry.batch(() => {
             if (blocksChanged) {
               isPersistent = newIsPersistent;
+              blockHistoryMode = newBlockHistoryMode;
               const blocksForParent = clientId ? restoreExternalIds(blocks2, idMappingRef.current) : blocks2;
               const selectionInfo = {
                 selectionStart: newSelectionStart,
@@ -34684,9 +34706,13 @@ var wp;
                 blocksForParent
               );
               const updateParent = isPersistent ? onChangeRef.current : onInputRef.current;
-              updateParent(blocksForParent, {
+              const updateOptions = {
                 selection: selectionForParent
-              });
+              };
+              if (blockHistoryMode === "ignore") {
+                updateOptions.undoIgnore = true;
+              }
+              updateParent(blocksForParent, updateOptions);
             }
             if (selectionChanged && !blocksChanged && newSelectionStart?.clientId && !isRestoringSelectionRef.current) {
               const isOurs = clientId ? idMappingRef.current.internalToExternal.has(
@@ -42724,7 +42750,9 @@ var wp;
           template2
         );
         if (!(0, import_es64.default)(nextBlocks, currentInnerBlocks)) {
-          __unstableMarkNextChangeAsNotPersistent2();
+          __unstableMarkNextChangeAsNotPersistent2({
+            history: "ignore"
+          });
           replaceInnerBlocks2(
             clientId,
             nextBlocks,

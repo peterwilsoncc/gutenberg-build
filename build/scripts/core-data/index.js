@@ -3863,6 +3863,16 @@ var wp;
   function undoManager(state = (0, import_undo_manager.createUndoManager)()) {
     return state;
   }
+  function syncUndoManagerState(state = { hasRedo: false, hasUndo: false }, action) {
+    switch (action.type) {
+      case "SYNC_UNDO_MANAGER_CHANGE":
+        return {
+          hasRedo: action.hasRedo,
+          hasUndo: action.hasUndo
+        };
+    }
+    return state;
+  }
   function editsReference(state = {}, action) {
     switch (action.type) {
       case "EDIT_ENTITY_RECORD":
@@ -4030,6 +4040,7 @@ var wp;
     themeGlobalStyleRevisions,
     entities,
     editsReference,
+    syncUndoManagerState,
     undoManager,
     embedPreviews,
     userPermissions,
@@ -4715,9 +4726,15 @@ var wp;
     return void 0;
   }
   function hasUndo(state) {
+    if (getSyncManager()?.undoManager) {
+      return state.syncUndoManagerState.hasUndo;
+    }
     return getUndoManager(state).hasUndo();
   }
   function hasRedo(state) {
+    if (getSyncManager()?.undoManager) {
+      return state.syncUndoManagerState.hasRedo;
+    }
     return getUndoManager(state).hasRedo();
   }
   function getCurrentTheme(state) {
@@ -5720,6 +5737,7 @@ var wp;
   // packages/core-data/build-module/private-actions.mjs
   var private_actions_exports = {};
   __export(private_actions_exports, {
+    __unstableNotifySyncUndoManagerChange: () => __unstableNotifySyncUndoManagerChange,
     editMediaEntity: () => editMediaEntity,
     receiveEditorAssets: () => receiveEditorAssets,
     receiveEditorSettings: () => receiveEditorSettings,
@@ -5828,6 +5846,12 @@ var wp;
       kind,
       name,
       config
+    };
+  }
+  function __unstableNotifySyncUndoManagerChange(state) {
+    return {
+      type: "SYNC_UNDO_MANAGER_CHANGE",
+      ...state
     };
   }
   function setSyncConnectionStatus(kind, name, key, status) {
@@ -6261,6 +6285,11 @@ var wp;
                   selectionHistory
                 );
               }
+            },
+            onUndoStackChange: (undoState) => {
+              dispatch3.__unstableNotifySyncUndoManagerChange(
+                undoState
+              );
             },
             restoreUndoMeta: (ydoc, meta) => {
               const selectionHistory = meta.get("selectionHistory");
