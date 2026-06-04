@@ -117,6 +117,7 @@ var wp;
     Type2["Cancel"] = "CANCEL_ITEM";
     Type2["Remove"] = "REMOVE_ITEM";
     Type2["RetryItem"] = "RETRY_ITEM";
+    Type2["ScheduleRetry"] = "SCHEDULE_RETRY";
     Type2["PauseItem"] = "PAUSE_ITEM";
     Type2["ResumeItem"] = "RESUME_ITEM";
     Type2["PauseQueue"] = "PAUSE_QUEUE";
@@ -135,6 +136,7 @@ var wp;
     ItemStatus2["Queued"] = "QUEUED";
     ItemStatus2["Processing"] = "PROCESSING";
     ItemStatus2["Paused"] = "PAUSED";
+    ItemStatus2["PendingRetry"] = "PENDING_RETRY";
     ItemStatus2["Uploaded"] = "UPLOADED";
     ItemStatus2["Error"] = "ERROR";
     return ItemStatus2;
@@ -154,6 +156,13 @@ var wp;
   var STORE_NAME = "core/upload-media";
   var DEFAULT_MAX_CONCURRENT_UPLOADS = 5;
   var DEFAULT_MAX_CONCURRENT_IMAGE_PROCESSING = 2;
+  var DEFAULT_RETRY_SETTINGS = {
+    maxRetryAttempts: 3,
+    initialRetryDelayMs: 1e3,
+    maxRetryDelayMs: 3e4,
+    backoffMultiplier: 2,
+    retryJitter: 0.1
+  };
   var CLIENT_SIDE_SUPPORTED_MIME_TYPES = [
     "image/jpeg",
     "image/png",
@@ -176,7 +185,8 @@ var wp;
     settings: {
       mediaUpload: noop,
       maxConcurrentUploads: DEFAULT_MAX_CONCURRENT_UPLOADS,
-      maxConcurrentImageProcessing: DEFAULT_MAX_CONCURRENT_IMAGE_PROCESSING
+      maxConcurrentImageProcessing: DEFAULT_MAX_CONCURRENT_IMAGE_PROCESSING,
+      retry: { ...DEFAULT_RETRY_SETTINGS }
     }
   };
   function reducer(state = DEFAULT_STATE, action = { type: Type.Unknown }) {
@@ -236,7 +246,21 @@ var wp;
               ...item,
               status: ItemStatus.Processing,
               error: void 0,
-              retryCount: (item.retryCount ?? 0) + 1
+              retryCount: (item.retryCount ?? 0) + 1,
+              abortController: new AbortController()
+            } : item
+          )
+        };
+      case Type.ScheduleRetry:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              status: ItemStatus.PendingRetry,
+              error: action.error,
+              retryCount: action.retryCount,
+              nextRetryTimestamp: action.nextRetryTimestamp
             } : item
           )
         };
@@ -453,7 +477,9 @@ var wp;
   __export(actions_exports, {
     addItems: () => addItems,
     cancelItem: () => cancelItem,
-    retryItem: () => retryItem
+    executeRetry: () => executeRetry,
+    retryItem: () => retryItem,
+    scheduleRetry: () => scheduleRetry
   });
 
   // node_modules/uuid/dist/stringify.js
@@ -502,6 +528,45 @@ var wp;
 
   // packages/upload-media/build-module/store/actions.mjs
   var import_i18n5 = __toESM(require_i18n(), 1);
+
+  // packages/upload-media/build-module/store/utils/retry.mjs
+  function calculateRetryDelay(options) {
+    const { attempt, initialDelay, maxDelay, multiplier, jitter } = options;
+    const exponentialDelay = initialDelay * Math.pow(multiplier, attempt - 1);
+    const cappedDelay = Math.min(exponentialDelay, maxDelay);
+    const jitterFactor = 1 + (Math.random() * 2 - 1) * jitter;
+    return Math.floor(cappedDelay * jitterFactor);
+  }
+  var RETRYABLE_MESSAGE_PATTERNS = [
+    /network/i,
+    /timeout/i,
+    /ECONNRESET/i,
+    /fetch failed/i,
+    /connection/i,
+    /socket/i,
+    /ETIMEDOUT/i,
+    /ENOTFOUND/i,
+    /Could not get a valid response/i,
+    /Failed to fetch/i,
+    /Load failed/i
+  ];
+  function shouldRetryError(error, retryCount, maxRetries) {
+    if (retryCount >= maxRetries) {
+      return false;
+    }
+    const message = typeof error === "string" ? error : error?.message || "";
+    return RETRYABLE_MESSAGE_PATTERNS.some(
+      (pattern) => pattern.test(message)
+    );
+  }
+  var retryTimers = /* @__PURE__ */ new Map();
+  function clearRetryTimer(id) {
+    const pendingTimer = retryTimers.get(id);
+    if (pendingTimer !== void 0) {
+      clearTimeout(pendingTimer);
+      retryTimers.delete(id);
+    }
+  }
 
   // packages/upload-media/build-module/image-file.mjs
   var ImageFile = class extends File {
@@ -847,6 +912,19 @@ var wp;
       if (!item) {
         return;
       }
+      clearRetryTimer(id);
+      if (!silent && error && !item.parentId && !item.attachment?.id) {
+        const settings = select2.getSettings();
+        const retrySettings = settings.retry;
+        if (retrySettings) {
+          const retryCount = item.retryCount ?? 0;
+          const maxRetries = retrySettings.maxRetryAttempts;
+          if (shouldRetryError(error, retryCount, maxRetries)) {
+            dispatch.scheduleRetry(id, error);
+            return;
+          }
+        }
+      }
       item.abortController?.abort();
       await vipsCancelOperations(id);
       if (!silent) {
@@ -919,6 +997,55 @@ var wp;
         return;
       }
       if (!item.error) {
+        return;
+      }
+      dispatch({
+        type: Type.RetryItem,
+        id
+      });
+      dispatch.processItem(id);
+    };
+  }
+  function scheduleRetry(id, error) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      const settings = select2.getSettings();
+      const retrySettings = settings.retry;
+      if (!retrySettings) {
+        return;
+      }
+      const currentRetryCount = item.retryCount ?? 0;
+      const delay = calculateRetryDelay({
+        attempt: currentRetryCount + 1,
+        initialDelay: retrySettings.initialRetryDelayMs,
+        maxDelay: retrySettings.maxRetryDelayMs,
+        multiplier: retrySettings.backoffMultiplier,
+        jitter: retrySettings.retryJitter
+      });
+      const timerId = setTimeout(() => {
+        retryTimers.delete(id);
+        dispatch.executeRetry(id);
+      }, delay);
+      retryTimers.set(id, timerId);
+      dispatch({
+        type: Type.ScheduleRetry,
+        id,
+        error,
+        retryCount: currentRetryCount,
+        nextRetryTimestamp: Date.now() + delay
+      });
+    };
+  }
+  function executeRetry(id) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item || item.status !== ItemStatus.PendingRetry) {
+        return;
+      }
+      if (select2.isPaused()) {
         return;
       }
       dispatch({
@@ -1928,7 +2055,11 @@ var wp;
         type: Type.ResumeQueue
       });
       for (const item of select2.getAllItems()) {
-        dispatch.processItem(item.id);
+        if (item.status === ItemStatus.PendingRetry) {
+          dispatch.executeRetry(item.id);
+        } else {
+          dispatch.processItem(item.id);
+        }
       }
     };
   }
@@ -1946,6 +2077,7 @@ var wp;
       if (!item) {
         return;
       }
+      clearRetryTimer(id);
       dispatch({
         type: Type.Remove,
         id
