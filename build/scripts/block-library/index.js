@@ -46565,7 +46565,8 @@ ${js}
   var ALLOWED_BLOCKS = [
     "core/navigation-link",
     "core/navigation-submenu",
-    "core/page-list"
+    "core/page-list",
+    "core/loginout"
   ];
   function NavigationSubmenuEdit({
     attributes: attributes2,
