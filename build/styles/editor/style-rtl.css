@@ -4844,10 +4844,10 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 /**
- * Typography
+ * Breakpoints & Media Queries
  */
 /**
- * Breakpoints & Media Queries
+ * Typography
  */
 /**
 *  Converts a hex value into the rgb equivalent.
@@ -4965,6 +4965,15 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 @media (min-width: 782px) {
   .media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon {
     display: flex;
+  }
+}
+@media (max-width: 781px) {
+  .media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill) {
+    width: 100%;
+  }
+  .media-editor .interface-complementary-area__fill,
+  .media-editor .interface-complementary-area {
+    width: 100% !important;
   }
 }
 .media-editor__snackbar {
