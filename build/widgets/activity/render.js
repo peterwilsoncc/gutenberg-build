@@ -853,15 +853,12 @@ var import_components45 = __toESM(require_components());
 var import_element = __toESM(require_element(), 1);
 var icon_default = (0, import_element.forwardRef)(
   ({ icon, size: size4 = 24, ...props }, ref) => {
-    return (0, import_element.cloneElement)(
-      icon,
-      {
-        width: size4,
-        height: size4,
-        ...props,
-        ref
-      }
-    );
+    return (0, import_element.cloneElement)(icon, {
+      width: size4,
+      height: size4,
+      ...props,
+      ref
+    });
   }
 );
 
@@ -8964,10 +8961,7 @@ var Icon = (0, import_element10.forwardRef)(function Icon2({ icon, size: size4 =
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 var import_element11 = __toESM(require_element(), 1);
 function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element11.cloneElement)(
-    slot ?? defaultSlot,
-    { children }
-  );
+  return (0, import_element11.cloneElement)(slot ?? defaultSlot, { children });
 }
 
 // packages/ui/build-module/lock-unlock.mjs

@@ -2383,11 +2383,20 @@ var wp;
   // packages/data/build-module/components/with-select/index.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var withSelect = (mapSelectToProps) => (0, import_compose2.createHigherOrderComponent)(
-    (WrappedComponent) => (0, import_element6.memo)(function WithSelect(ownProps) {
-      const mapSelect = (select3, registry) => mapSelectToProps(select3, ownProps, registry);
-      const mergeProps = useSelect(mapSelect);
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WrappedComponent, { ...ownProps, ...mergeProps });
-    }),
+    (WrappedComponent) => (0, import_element6.memo)(
+      (0, import_element6.forwardRef)(function WithSelect(ownProps, ref) {
+        const mapSelect = (select3, registry) => mapSelectToProps(select3, ownProps, registry);
+        const mergeProps = useSelect(mapSelect);
+        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          WrappedComponent,
+          {
+            ref,
+            ...ownProps,
+            ...mergeProps
+          }
+        );
+      })
+    ),
     "withSelect"
   );
   var with_select_default = withSelect;

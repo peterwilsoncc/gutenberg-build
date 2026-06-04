@@ -60,17 +60,9 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/deprecated
-  var require_deprecated = __commonJS({
-    "package-external:@wordpress/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
-    }
-  });
-
   // packages/element/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
-    Activity: () => import_react.Activity,
     Children: () => import_react.Children,
     Component: () => import_react.Component,
     Fragment: () => import_react.Fragment,
@@ -87,41 +79,30 @@ var wp;
     createPortal: () => import_react_dom.createPortal,
     createRef: () => import_react.createRef,
     createRoot: () => import_client.createRoot,
-    findDOMNode: () => findDOMNode2,
+    findDOMNode: () => import_react_dom.findDOMNode,
     flushSync: () => import_react_dom.flushSync,
     forwardRef: () => import_react.forwardRef,
-    hydrate: () => hydrate2,
+    hydrate: () => import_react_dom.hydrate,
     hydrateRoot: () => import_client.hydrateRoot,
     isEmptyElement: () => isEmptyElement,
     isValidElement: () => import_react.isValidElement,
     lazy: () => import_react.lazy,
     memo: () => import_react.memo,
-    preconnect: () => import_react_dom.preconnect,
-    prefetchDNS: () => import_react_dom.prefetchDNS,
-    preinit: () => import_react_dom.preinit,
-    preinitModule: () => import_react_dom.preinitModule,
-    preload: () => import_react_dom.preload,
-    preloadModule: () => import_react_dom.preloadModule,
-    render: () => render2,
+    render: () => import_react_dom.render,
     renderToString: () => serialize_default,
     startTransition: () => import_react.startTransition,
     switchChildrenNodeName: () => switchChildrenNodeName,
-    unmountComponentAtNode: () => unmountComponentAtNode2,
-    use: () => import_react.use,
-    useActionState: () => import_react.useActionState,
+    unmountComponentAtNode: () => import_react_dom.unmountComponentAtNode,
     useCallback: () => import_react.useCallback,
     useContext: () => import_react.useContext,
     useDebugValue: () => import_react.useDebugValue,
     useDeferredValue: () => import_react.useDeferredValue,
     useEffect: () => import_react.useEffect,
-    useEffectEvent: () => import_react.useEffectEvent,
-    useFormStatus: () => import_react_dom.useFormStatus,
     useId: () => import_react.useId,
     useImperativeHandle: () => import_react.useImperativeHandle,
     useInsertionEffect: () => import_react.useInsertionEffect,
     useLayoutEffect: () => import_react.useLayoutEffect,
     useMemo: () => import_react.useMemo,
-    useOptimistic: () => import_react.useOptimistic,
     useReducer: () => import_react.useReducer,
     useRef: () => import_react.useRef,
     useState: () => import_react.useState,
@@ -841,9 +822,7 @@ var wp;
         return renderChildren(props.children, props.value, legacyContext);
       case Consumer.$$typeof:
         return renderElement(
-          props.children(
-            context || type._currentValue || type._context._currentValue
-          ),
+          props.children(context || type._currentValue),
           context,
           legacyContext
         );
@@ -949,141 +928,6 @@ var wp;
     return result;
   }
   var serialize_default = renderElement;
-
-  // packages/element/build-module/react-polyfill.mjs
-  var import_deprecated = __toESM(require_deprecated(), 1);
-
-  // packages/element/build-module/react-polyfill-base.mjs
-  var import_react_dom2 = __toESM(require_react_dom(), 1);
-  var import_client2 = __toESM(require_client(), 1);
-  var internalsKey = "_reactInternals";
-  var HostComponent = 5;
-  var HostText = 6;
-  function findCurrentFiber(fiber) {
-    if (!fiber.alternate) {
-      return fiber;
-    }
-    let node = fiber;
-    while (node.return) {
-      node = node.return;
-    }
-    if (node.stateNode.current === node) {
-      return fiber;
-    }
-    return fiber.alternate;
-  }
-  function findHostFiber(fiber) {
-    const current = findCurrentFiber(fiber);
-    if (!current) {
-      return null;
-    }
-    return findHostFiberImpl(current);
-  }
-  function findHostFiberImpl(fiber) {
-    if (fiber.tag === HostComponent || fiber.tag === HostText) {
-      return fiber;
-    }
-    let child = fiber.child;
-    while (child) {
-      const hostFiber = findHostFiberImpl(child);
-      if (hostFiber) {
-        return hostFiber;
-      }
-      child = child.sibling;
-    }
-    return null;
-  }
-  function findDOMNode(instance) {
-    if (instance === null || instance === void 0) {
-      return null;
-    }
-    if (instance.nodeType !== void 0) {
-      return instance;
-    }
-    const fiber = instance[internalsKey];
-    if (fiber === void 0) {
-      if (typeof instance.render === "function") {
-        throw new Error("Unable to find node on an unmounted component.");
-      }
-      const keys = Object.keys(instance).join(",");
-      throw new Error(
-        `Argument appears to not be a ReactComponent. Keys: ${keys}`
-      );
-    }
-    const hostFiber = findHostFiber(fiber);
-    return hostFiber?.stateNode ?? null;
-  }
-  var roots = /* @__PURE__ */ new WeakMap();
-  function render(element, container, callback) {
-    let root = roots.get(container);
-    if (!root) {
-      root = (0, import_client2.createRoot)(container);
-      roots.set(container, root);
-    }
-    (0, import_react_dom2.flushSync)(() => {
-      root.render(element);
-    });
-    if (typeof callback === "function") {
-      callback();
-    }
-  }
-  function hydrate(element, container, callback) {
-    let root = roots.get(container);
-    if (!root) {
-      root = (0, import_client2.hydrateRoot)(container, element);
-      roots.set(container, root);
-    } else {
-      root.render(element);
-    }
-    if (typeof callback === "function") {
-      callback();
-    }
-  }
-  function unmountComponentAtNode(container) {
-    const root = roots.get(container);
-    if (!root) {
-      return false;
-    }
-    (0, import_react_dom2.flushSync)(() => {
-      root.unmount();
-    });
-    roots.delete(container);
-    return true;
-  }
-
-  // packages/element/build-module/react-polyfill.mjs
-  function findDOMNode2(instance) {
-    (0, import_deprecated.default)("wp.element.findDOMNode", {
-      since: "7.1",
-      alternative: "DOM refs",
-      link: "https://react.dev/reference/react-dom/findDOMNode"
-    });
-    return findDOMNode(instance);
-  }
-  function render2(element, container, callback) {
-    (0, import_deprecated.default)("wp.element.render", {
-      since: "6.2",
-      alternative: "wp.element.createRoot",
-      link: "https://react.dev/reference/react-dom/client/createRoot"
-    });
-    render(element, container, callback);
-  }
-  function hydrate2(element, container, callback) {
-    (0, import_deprecated.default)("wp.element.hydrate", {
-      since: "6.2",
-      alternative: "wp.element.hydrateRoot",
-      link: "https://react.dev/reference/react-dom/client/hydrateRoot"
-    });
-    hydrate(element, container, callback);
-  }
-  function unmountComponentAtNode2(container) {
-    (0, import_deprecated.default)("wp.element.unmountComponentAtNode", {
-      since: "6.2",
-      alternative: "root.unmount()",
-      link: "https://react.dev/reference/react-dom/client/createRoot#root-unmount"
-    });
-    return unmountComponentAtNode(container);
-  }
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:

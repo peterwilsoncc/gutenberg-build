@@ -8767,15 +8767,12 @@ var wp;
   var import_element9 = __toESM(require_element(), 1);
   var icon_default = (0, import_element9.forwardRef)(
     ({ icon, size: size4 = 24, ...props }, ref) => {
-      return (0, import_element9.cloneElement)(
-        icon,
-        {
-          width: size4,
-          height: size4,
-          ...props,
-          ref
-        }
-      );
+      return (0, import_element9.cloneElement)(icon, {
+        width: size4,
+        height: size4,
+        ...props,
+        ref
+      });
     }
   );
 
@@ -8797,10 +8794,7 @@ var wp;
   // packages/ui/build-module/utils/render-slot-with-children.mjs
   var import_element10 = __toESM(require_element(), 1);
   function renderSlotWithChildren(slot, defaultSlot, children) {
-    return (0, import_element10.cloneElement)(
-      slot ?? defaultSlot,
-      { children }
-    );
+    return (0, import_element10.cloneElement)(slot ?? defaultSlot, { children });
   }
 
   // packages/ui/build-module/lock-unlock.mjs

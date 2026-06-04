@@ -9351,10 +9351,7 @@ var verse_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primiti
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 var import_element10 = __toESM(require_element(), 1);
 function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element10.cloneElement)(
-    slot ?? defaultSlot,
-    { children }
-  );
+  return (0, import_element10.cloneElement)(slot ?? defaultSlot, { children });
 }
 
 // packages/ui/build-module/lock-unlock.mjs

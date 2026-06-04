@@ -11217,10 +11217,7 @@ var Content2 = (0, import_element24.forwardRef)(
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 var import_element25 = __toESM(require_element(), 1);
 function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element25.cloneElement)(
-    slot ?? defaultSlot,
-    { children }
-  );
+  return (0, import_element25.cloneElement)(slot ?? defaultSlot, { children });
 }
 
 // packages/ui/build-module/lock-unlock.mjs
