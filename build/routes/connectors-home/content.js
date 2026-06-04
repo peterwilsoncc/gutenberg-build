@@ -8808,10 +8808,7 @@ var published_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_pri
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 var import_element13 = __toESM(require_element(), 1);
 function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element13.cloneElement)(
-    slot ?? defaultSlot,
-    { children }
-  );
+  return (0, import_element13.cloneElement)(slot ?? defaultSlot, { children });
 }
 
 // packages/ui/build-module/lock-unlock.mjs

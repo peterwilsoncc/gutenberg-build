@@ -13446,10 +13446,7 @@ var Content2 = (0, import_element28.forwardRef)(
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 var import_element29 = __toESM(require_element(), 1);
 function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element29.cloneElement)(
-    slot ?? defaultSlot,
-    { children }
-  );
+  return (0, import_element29.cloneElement)(slot ?? defaultSlot, { children });
 }
 
 // packages/ui/build-module/utils/use-deprioritized-initial-focus.mjs

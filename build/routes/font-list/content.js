@@ -904,15 +904,12 @@ var Text = (0, import_element.forwardRef)(function Text2({ variant = "body-md", 
 var import_element2 = __toESM(require_element(), 1);
 var icon_default = (0, import_element2.forwardRef)(
   ({ icon, size = 24, ...props }, ref) => {
-    return (0, import_element2.cloneElement)(
-      icon,
-      {
-        width: size,
-        height: size,
-        ...props,
-        ref
-      }
-    );
+    return (0, import_element2.cloneElement)(icon, {
+      width: size,
+      height: size,
+      ...props,
+      ref
+    });
   }
 );
 

@@ -3363,15 +3363,12 @@ var wp;
   var import_element = __toESM(require_element(), 1);
   var icon_default = (0, import_element.forwardRef)(
     ({ icon, size: size4 = 24, ...props }, ref) => {
-      return (0, import_element.cloneElement)(
-        icon,
-        {
-          width: size4,
-          height: size4,
-          ...props,
-          ref
-        }
-      );
+      return (0, import_element.cloneElement)(icon, {
+        width: size4,
+        height: size4,
+        ...props,
+        ref
+      });
     }
   );
 
@@ -16114,10 +16111,7 @@ var wp;
   // packages/ui/build-module/utils/render-slot-with-children.mjs
   var import_element28 = __toESM(require_element(), 1);
   function renderSlotWithChildren(slot, defaultSlot, children) {
-    return (0, import_element28.cloneElement)(
-      slot ?? defaultSlot,
-      { children }
-    );
+    return (0, import_element28.cloneElement)(slot ?? defaultSlot, { children });
   }
 
   // packages/ui/build-module/lock-unlock.mjs
@@ -20172,7 +20166,9 @@ var wp;
       },
       [value]
     );
-    const stableAttachmentsRef = (0, import_element36.useRef)(null);
+    const stableAttachmentsRef = (0, import_element36.useRef)(
+      null
+    );
     if (attachments !== null) {
       stableAttachmentsRef.current = attachments;
     }
@@ -45671,7 +45667,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [isZooming, setIsZooming] = (0, import_element133.useState)(false);
     const [isGestureActive, setIsGestureActive] = (0, import_element133.useState)(false);
     const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element133.useState)(false);
-    const keyboardInteractionTimerRef = (0, import_element133.useRef)(void 0);
+    const keyboardInteractionTimerRef = (0, import_element133.useRef)();
     const isKeyboardGestureActiveRef = (0, import_element133.useRef)(false);
     const stateRef = (0, import_element133.useRef)(state);
     stateRef.current = state;
@@ -45882,9 +45878,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useAriaAnnouncer(state) {
     const [ariaMessage, setAriaMessage] = (0, import_element135.useState)("");
-    const timerRef = (0, import_element135.useRef)(
-      void 0
-    );
+    const timerRef = (0, import_element135.useRef)();
     const prevMessageRef = (0, import_element135.useRef)("");
     const prevStateRef = (0, import_element135.useRef)(null);
     const latestStateRef = (0, import_element135.useRef)(state);
@@ -46168,7 +46162,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
     );
-    const keyboardSettleTimerRef = (0, import_element136.useRef)(void 0);
+    const keyboardSettleTimerRef = (0, import_element136.useRef)();
     const keyboardResizeActiveRef = (0, import_element136.useRef)(false);
     const resizeHandleDescriptionId = (0, import_element136.useId)();
     const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
@@ -47080,7 +47074,7 @@ If there's a particular need for this, please submit a feature request at https:
       [setCropRect, setViewportPan, canvasSize, visualSize]
     );
     const [settling, setSettling] = (0, import_element140.useState)(false);
-    const settleTimerRef = (0, import_element140.useRef)(void 0);
+    const settleTimerRef = (0, import_element140.useRef)();
     (0, import_element140.useEffect)(() => {
       return () => {
         clearTimeout(settleTimerRef.current);
@@ -47734,7 +47728,7 @@ If there's a particular need for this, please submit a feature request at https:
   function useCropGestureHandlers(options = {}) {
     const { commitOnKeyUp = true } = options;
     const { beginGesture, endGesture } = useMediaEditor();
-    const keyboardTimerRef = (0, import_element144.useRef)(void 0);
+    const keyboardTimerRef = (0, import_element144.useRef)();
     const clearKeyboardTimer = (0, import_element144.useCallback)(() => {
       clearTimeout(keyboardTimerRef.current);
     }, []);
@@ -48877,7 +48871,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element150.useState)(false);
     const [isPlacementActive, setIsPlacementActive] = (0, import_element150.useState)(false);
     const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element150.useState)(false);
-    const placementControlTimerRef = (0, import_element150.useRef)(void 0);
+    const placementControlTimerRef = (0, import_element150.useRef)();
     const signalPlacementControlInteraction = (0, import_element150.useCallback)(() => {
       setIsPlacementActive(true);
       clearTimeout(placementControlTimerRef.current);

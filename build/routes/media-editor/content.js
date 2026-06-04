@@ -10435,10 +10435,7 @@ var Content2 = (0, import_element23.forwardRef)(
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 var import_element24 = __toESM(require_element(), 1);
 function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element24.cloneElement)(
-    slot ?? defaultSlot,
-    { children }
-  );
+  return (0, import_element24.cloneElement)(slot ?? defaultSlot, { children });
 }
 
 // packages/ui/build-module/lock-unlock.mjs
@@ -22439,7 +22436,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
   const [isZooming, setIsZooming] = (0, import_element70.useState)(false);
   const [isGestureActive, setIsGestureActive] = (0, import_element70.useState)(false);
   const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element70.useState)(false);
-  const keyboardInteractionTimerRef = (0, import_element70.useRef)(void 0);
+  const keyboardInteractionTimerRef = (0, import_element70.useRef)();
   const isKeyboardGestureActiveRef = (0, import_element70.useRef)(false);
   const stateRef = (0, import_element70.useRef)(state);
   stateRef.current = state;
@@ -22650,9 +22647,7 @@ function buildAnnouncement(state, previousState) {
 }
 function useAriaAnnouncer(state) {
   const [ariaMessage, setAriaMessage] = (0, import_element72.useState)("");
-  const timerRef = (0, import_element72.useRef)(
-    void 0
-  );
+  const timerRef = (0, import_element72.useRef)();
   const prevMessageRef = (0, import_element72.useRef)("");
   const prevStateRef = (0, import_element72.useRef)(null);
   const latestStateRef = (0, import_element72.useRef)(state);
@@ -22936,7 +22931,7 @@ function RectangleStencil({
     }),
     [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
   );
-  const keyboardSettleTimerRef = (0, import_element73.useRef)(void 0);
+  const keyboardSettleTimerRef = (0, import_element73.useRef)();
   const keyboardResizeActiveRef = (0, import_element73.useRef)(false);
   const resizeHandleDescriptionId = (0, import_element73.useId)();
   const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
@@ -23848,7 +23843,7 @@ function CropperInner({
     [setCropRect, setViewportPan, canvasSize, visualSize]
   );
   const [settling, setSettling] = (0, import_element77.useState)(false);
-  const settleTimerRef = (0, import_element77.useRef)(void 0);
+  const settleTimerRef = (0, import_element77.useRef)();
   (0, import_element77.useEffect)(() => {
     return () => {
       clearTimeout(settleTimerRef.current);
@@ -24502,7 +24497,7 @@ var KEYBOARD_GESTURE_IDLE_MS = 300;
 function useCropGestureHandlers(options = {}) {
   const { commitOnKeyUp = true } = options;
   const { beginGesture, endGesture } = useMediaEditor();
-  const keyboardTimerRef = (0, import_element81.useRef)(void 0);
+  const keyboardTimerRef = (0, import_element81.useRef)();
   const clearKeyboardTimer = (0, import_element81.useCallback)(() => {
     clearTimeout(keyboardTimerRef.current);
   }, []);
@@ -25645,7 +25640,7 @@ function MediaEditorContent({
   const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element87.useState)(false);
   const [isPlacementActive, setIsPlacementActive] = (0, import_element87.useState)(false);
   const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element87.useState)(false);
-  const placementControlTimerRef = (0, import_element87.useRef)(void 0);
+  const placementControlTimerRef = (0, import_element87.useRef)();
   const signalPlacementControlInteraction = (0, import_element87.useCallback)(() => {
     setIsPlacementActive(true);
     clearTimeout(placementControlTimerRef.current);

@@ -3865,15 +3865,12 @@ var wp;
   var import_element = __toESM(require_element(), 1);
   var icon_default = (0, import_element.forwardRef)(
     ({ icon: icon4, size = 24, ...props }, ref) => {
-      return (0, import_element.cloneElement)(
-        icon4,
-        {
-          width: size,
-          height: size,
-          ...props,
-          ref
-        }
-      );
+      return (0, import_element.cloneElement)(icon4, {
+        width: size,
+        height: size,
+        ...props,
+        ref
+      });
     }
   );
 
@@ -13928,7 +13925,7 @@ var wp;
       (select9) => select9(import_block_editor42.store).getSettings().__experimentalDiscussionSettings?.avatarURL,
       []
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)("div", { className: "wp-block-comments__legacy-placeholder", inert: true, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)("div", { className: "wp-block-comments__legacy-placeholder", inert: "true", children: [
       /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("h3", {
         /* translators: %s: Post title. */
         children: (0, import_i18n32.sprintf)((0, import_i18n32.__)("One response to %s"), postTitle)
