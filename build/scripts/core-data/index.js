@@ -364,17 +364,17 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/rich-text
-  var require_rich_text = __commonJS({
-    "package-external:@wordpress/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
-    }
-  });
-
   // package-external:@wordpress/private-apis
   var require_private_apis = __commonJS({
     "package-external:@wordpress/private-apis"(exports, module) {
       module.exports = window.wp.privateApis;
+    }
+  });
+
+  // package-external:@wordpress/rich-text
+  var require_rich_text = __commonJS({
+    "package-external:@wordpress/rich-text"(exports, module) {
+      module.exports = window.wp.richText;
     }
   });
 
@@ -1230,6 +1230,15 @@ var wp;
   var import_data2 = __toESM(require_data(), 1);
   var import_sync2 = __toESM(require_sync(), 1);
   var import_block_editor = __toESM(require_block_editor(), 1);
+
+  // packages/core-data/build-module/lock-unlock.mjs
+  var import_private_apis = __toESM(require_private_apis(), 1);
+  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/core-data"
+  );
+
+  // packages/core-data/build-module/awareness/block-lookup.mjs
   function getContainingBlockYMap(yType) {
     let current = yType;
     while (current) {
@@ -1269,13 +1278,10 @@ var wp;
     }
     return path;
   }
-  function resolveBlockClientIdByPath(path) {
+  function resolveBlockClientIdByPath(path, blocks) {
     if (path.length === 0) {
       return null;
     }
-    const { getBlocks } = (0, import_data2.select)(import_block_editor.store);
-    const postContentBlocks = getPostContentBlocks(getBlocks(), getBlocks);
-    let blocks = postContentBlocks;
     for (let i = 0; i < path.length; i++) {
       const block = blocks[path[i]];
       if (!block) {
@@ -1288,26 +1294,14 @@ var wp;
     }
     return null;
   }
-  function getPostContentBlocks(rootBlocks, getBlocks) {
-    const postContentBlock = findBlockByName(rootBlocks, "core/post-content");
-    if (postContentBlock) {
-      return getBlocks(postContentBlock.clientId);
-    }
-    return rootBlocks;
-  }
-  function findBlockByName(blocks, name) {
-    for (const block of blocks) {
-      if (block.name === name) {
-        return block;
-      }
-      if (block.innerBlocks?.length) {
-        const found = findBlockByName(block.innerBlocks, name);
-        if (found) {
-          return found;
-        }
-      }
-    }
-    return null;
+  function usePostContentBlocks() {
+    return (0, import_data2.useSelect)((select4) => {
+      const { getBlocksByName, getClientIdsTree } = unlock(
+        select4(import_block_editor.store)
+      );
+      const [postContentClientId] = getBlocksByName("core/post-content");
+      return getClientIdsTree(postContentClientId ?? "");
+    }, []);
   }
 
   // packages/core-data/build-module/utils/crdt-utils.mjs
@@ -1316,15 +1310,6 @@ var wp;
 
   // packages/core-data/build-module/sync.mjs
   var import_sync3 = __toESM(require_sync(), 1);
-
-  // packages/core-data/build-module/lock-unlock.mjs
-  var import_private_apis = __toESM(require_private_apis(), 1);
-  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/core-data"
-  );
-
-  // packages/core-data/build-module/sync.mjs
   var {
     ConnectionErrorCode,
     createSyncManager,
@@ -1794,9 +1779,10 @@ var wp;
      * clientIds (e.g. in "Show Template" mode where blocks are cloned).
      *
      * @param selection - The selection state.
+     * @param blocks    - The tree of block-editor store post content blocks.
      * @return The rich-text offset and block client ID, or nulls if not resolvable.
      */
-    convertSelectionStateToAbsolute(selection) {
+    convertSelectionStateToAbsolute(selection, blocks) {
       if (selection.type === SelectionType.None) {
         return {
           richTextOffset: null,
@@ -1815,7 +1801,7 @@ var wp;
           const block = parentArray.get(absolutePos.index);
           if (block instanceof import_sync8.Y.Map) {
             const path2 = getBlockPathInYdoc(block);
-            localClientId2 = path2 ? resolveBlockClientIdByPath(path2) : null;
+            localClientId2 = path2 ? resolveBlockClientIdByPath(path2, blocks) : null;
           }
         }
         return {
@@ -1838,7 +1824,7 @@ var wp;
       }
       const yType = getContainingBlockYMap(absolutePosition.type);
       const path = yType ? getBlockPathInYdoc(yType) : null;
-      const localClientId = path ? resolveBlockClientIdByPath(path) : null;
+      const localClientId = path ? resolveBlockClientIdByPath(path, blocks) : null;
       return {
         richTextOffset: htmlIndexToRichTextOffset(
           absolutePosition.type.toString(),
@@ -3023,7 +3009,7 @@ var wp;
       baseURL: "/",
       baseURLParams: {
         // Please also change the preload path when changing this.
-        // @see lib/compat/wordpress-7.0/preload.php
+        // @see lib/compat/wordpress-7.1/preload.php
         _fields: [
           "description",
           "gmt_offset",
@@ -4179,24 +4165,24 @@ var wp;
     return state.navigationFallbackId;
   }
   var getBlockPatternsForPostType = (0, import_data8.createRegistrySelector)(
-    (select5) => (0, import_data8.createSelector)(
-      (state, postType) => select5(STORE_NAME).getBlockPatterns().filter(
+    (select4) => (0, import_data8.createSelector)(
+      (state, postType) => select4(STORE_NAME).getBlockPatterns().filter(
         ({ postTypes }) => !postTypes || Array.isArray(postTypes) && postTypes.includes(postType)
       ),
-      () => [select5(STORE_NAME).getBlockPatterns()]
+      () => [select4(STORE_NAME).getBlockPatterns()]
     )
   );
   var getEntityRecordsPermissions = (0, import_data8.createRegistrySelector)(
-    (select5) => (0, import_data8.createSelector)(
+    (select4) => (0, import_data8.createSelector)(
       (state, kind, name, ids) => {
         const normalizedIds = Array.isArray(ids) ? ids : [ids];
         return normalizedIds.map((id) => ({
-          delete: select5(STORE_NAME).canUser("delete", {
+          delete: select4(STORE_NAME).canUser("delete", {
             kind,
             name,
             id
           }),
-          update: select5(STORE_NAME).canUser("update", {
+          update: select4(STORE_NAME).canUser("update", {
             kind,
             name,
             id
@@ -4223,9 +4209,9 @@ var wp;
     return value.toString();
   }
   var getHomePage = (0, import_data8.createRegistrySelector)(
-    (select5) => (0, import_data8.createSelector)(
+    (select4) => (0, import_data8.createSelector)(
       () => {
-        const siteData = select5(STORE_NAME).getEntityRecord(
+        const siteData = select4(STORE_NAME).getEntityRecord(
           "root",
           "__unstableBase"
         );
@@ -4236,7 +4222,7 @@ var wp;
         if (homepageId) {
           return { postType: "page", postId: homepageId };
         }
-        const frontPageTemplateId = select5(
+        const frontPageTemplateId = select4(
           STORE_NAME
         ).getDefaultTemplateId({
           slug: "front-page"
@@ -4263,21 +4249,21 @@ var wp;
       ]
     )
   );
-  var getPostsPageId = (0, import_data8.createRegistrySelector)((select5) => () => {
-    const siteData = select5(STORE_NAME).getEntityRecord(
+  var getPostsPageId = (0, import_data8.createRegistrySelector)((select4) => () => {
+    const siteData = select4(STORE_NAME).getEntityRecord(
       "root",
       "__unstableBase"
     );
     return siteData?.show_on_front === "page" ? normalizePageId(siteData.page_for_posts) : null;
   });
   var getTemplateId = (0, import_data8.createRegistrySelector)(
-    (select5) => (state, postType, postId) => {
-      const homepage = unlock(select5(STORE_NAME)).getHomePage();
+    (select4) => (state, postType, postId) => {
+      const homepage = unlock(select4(STORE_NAME)).getHomePage();
       if (!homepage) {
         return;
       }
       if (postType === "page" && postType === homepage?.postType && postId.toString() === homepage?.postId) {
-        const templates = select5(STORE_NAME).getEntityRecords(
+        const templates = select4(STORE_NAME).getEntityRecords(
           "postType",
           "wp_template",
           {
@@ -4292,7 +4278,7 @@ var wp;
           return id;
         }
       }
-      const editedEntity = select5(STORE_NAME).getEditedEntityRecord(
+      const editedEntity = select4(STORE_NAME).getEditedEntityRecord(
         "postType",
         postType,
         postId
@@ -4300,15 +4286,15 @@ var wp;
       if (!editedEntity) {
         return;
       }
-      const postsPageId = unlock(select5(STORE_NAME)).getPostsPageId();
+      const postsPageId = unlock(select4(STORE_NAME)).getPostsPageId();
       if (postType === "page" && postsPageId === postId.toString()) {
-        return select5(STORE_NAME).getDefaultTemplateId({
+        return select4(STORE_NAME).getDefaultTemplateId({
           slug: "home"
         });
       }
       const currentTemplateSlug = editedEntity.template;
       if (currentTemplateSlug) {
-        const currentTemplate = select5(STORE_NAME).getEntityRecords("postType", "wp_template", {
+        const currentTemplate = select4(STORE_NAME).getEntityRecords("postType", "wp_template", {
           per_page: -1
         })?.find(({ slug }) => slug === currentTemplateSlug);
         if (currentTemplate) {
@@ -4321,7 +4307,7 @@ var wp;
       } else {
         slugToCheck = postType === "page" ? "page" : `single-${postType}`;
       }
-      return select5(STORE_NAME).getDefaultTemplateId({
+      return select4(STORE_NAME).getDefaultTemplateId({
         slug: slugToCheck
       });
     }
@@ -4360,8 +4346,8 @@ var wp;
   // packages/core-data/build-module/selectors.mjs
   var EMPTY_OBJECT2 = {};
   var isRequestingEmbedPreview = (0, import_data9.createRegistrySelector)(
-    (select5) => (state, url) => {
-      return select5(STORE_NAME).isResolving("getEmbedPreview", [
+    (select4) => (state, url) => {
+      return select4(STORE_NAME).isResolving("getEmbedPreview", [
         url
       ]);
     }
@@ -4788,8 +4774,8 @@ var wp;
     );
   }
   var hasFetchedAutosaves = (0, import_data9.createRegistrySelector)(
-    (select5) => (state, postType, postId) => {
-      return select5(STORE_NAME).hasFinishedResolution("getAutosaves", [
+    (select4) => (state, postType, postId) => {
+      return select4(STORE_NAME).hasFinishedResolution("getAutosaves", [
         postType,
         postId
       ]);
@@ -5285,17 +5271,17 @@ var wp;
       dispatch3.__unstableReleaseStoreLock(lock2);
     }
   };
-  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select: select5, dispatch: dispatch3 }) => {
+  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select: select4, dispatch: dispatch3 }) => {
     logEntityDeprecation(kind, name, "editEntityRecord");
-    const entityConfig = select5.getEntityConfig(kind, name);
+    const entityConfig = select4.getEntityConfig(kind, name);
     if (!entityConfig) {
       throw new Error(
         `The entity being edited (${kind}, ${name}) does not have a loaded config.`
       );
     }
     const { mergedEdits = {} } = entityConfig;
-    const record = select5.getRawEntityRecord(kind, name, recordId);
-    const editedRecord = select5.getEditedEntityRecord(
+    const record = select4.getRawEntityRecord(kind, name, recordId);
+    const editedRecord = select4.getEditedEntityRecord(
       kind,
       name,
       recordId
@@ -5331,7 +5317,7 @@ var wp;
       );
     }
     if (!options.undoIgnore) {
-      select5.getUndoManager().addRecord(
+      select4.getUndoManager().addRecord(
         [
           {
             id: { kind, name, recordId },
@@ -5352,15 +5338,15 @@ var wp;
       ...edit
     });
   };
-  var clearEntityRecordEdits = (kind, name, recordId) => ({ select: select5, dispatch: dispatch3 }) => {
-    const entityConfig = select5.getEntityConfig(kind, name);
+  var clearEntityRecordEdits = (kind, name, recordId) => ({ select: select4, dispatch: dispatch3 }) => {
+    const entityConfig = select4.getEntityConfig(kind, name);
     logEntityDeprecation(kind, name, "clearEntityRecordEdits");
     if (!entityConfig) {
       throw new Error(
         `The entity being edited (${kind}, ${name}) does not have a loaded config.`
       );
     }
-    const currentEdits = select5.getEntityRecordEdits(
+    const currentEdits = select4.getEntityRecordEdits(
       kind,
       name,
       recordId
@@ -5383,8 +5369,8 @@ var wp;
       edits: clearedEdits
     });
   };
-  var undo = () => ({ select: select5, dispatch: dispatch3 }) => {
-    const undoRecord = select5.getUndoManager().undo();
+  var undo = () => ({ select: select4, dispatch: dispatch3 }) => {
+    const undoRecord = select4.getUndoManager().undo();
     if (!undoRecord) {
       return;
     }
@@ -5393,8 +5379,8 @@ var wp;
       record: undoRecord
     });
   };
-  var redo = () => ({ select: select5, dispatch: dispatch3 }) => {
-    const redoRecord = select5.getUndoManager().redo();
+  var redo = () => ({ select: select4, dispatch: dispatch3 }) => {
+    const redoRecord = select4.getUndoManager().redo();
     if (!redoRecord) {
       return;
     }
@@ -5403,10 +5389,10 @@ var wp;
       record: redoRecord
     });
   };
-  var __unstableCreateUndoLevel = () => ({ select: select5 }) => {
-    select5.getUndoManager().addRecord();
+  var __unstableCreateUndoLevel = () => ({ select: select4 }) => {
+    select4.getUndoManager().addRecord();
   };
-  var saveEntityRecord = (kind, name, record, options = {}) => async ({ select: select5, resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
+  var saveEntityRecord = (kind, name, record, options = {}) => async ({ select: select4, resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
     const {
       isAutosave = false,
       __unstableFetch = import_api_fetch3.default,
@@ -5433,7 +5419,7 @@ var wp;
       for (const [key, value] of Object.entries(record)) {
         if (typeof value === "function") {
           const evaluatedValue = value(
-            select5.getEditedEntityRecord(kind, name, recordId)
+            select4.getEditedEntityRecord(kind, name, recordId)
           );
           dispatch3.editEntityRecord(
             kind,
@@ -5463,7 +5449,7 @@ var wp;
       }
       try {
         const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
-        const persistedRecord = !isNewRecord ? select5.getRawEntityRecord(kind, name, recordId) : {};
+        const persistedRecord = !isNewRecord ? select4.getRawEntityRecord(kind, name, recordId) : {};
         if (isAutosave) {
           const merged = { ...persistedRecord, ...record };
           const data = [
@@ -5617,9 +5603,9 @@ var wp;
     ]);
     return results;
   };
-  var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select: select5, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select: select4, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     logEntityDeprecation(kind, name, "saveEditedEntityRecord");
-    if (!select5.hasEditsForEntityRecord(kind, name, recordId)) {
+    if (!select4.hasEditsForEntityRecord(kind, name, recordId)) {
       return;
     }
     const configs = await resolveSelect2.getEntitiesConfig(kind);
@@ -5630,7 +5616,7 @@ var wp;
       return;
     }
     const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
-    const edits = select5.getEntityRecordNonTransientEdits(
+    const edits = select4.getEntityRecordNonTransientEdits(
       kind,
       name,
       recordId
@@ -5638,16 +5624,16 @@ var wp;
     const record = { [entityIdKey]: recordId, ...edits };
     return await dispatch3.saveEntityRecord(kind, name, record, options);
   };
-  var __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({ select: select5, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({ select: select4, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     logEntityDeprecation(
       kind,
       name,
       "__experimentalSaveSpecifiedEntityEdits"
     );
-    if (!select5.hasEditsForEntityRecord(kind, name, recordId)) {
+    if (!select4.hasEditsForEntityRecord(kind, name, recordId)) {
       return;
     }
-    const edits = select5.getEntityRecordNonTransientEdits(
+    const edits = select4.getEntityRecordNonTransientEdits(
       kind,
       name,
       recordId
@@ -6120,7 +6106,7 @@ var wp;
     const currentUser2 = await (0, import_api_fetch8.default)({ path: "/wp/v2/users/me" });
     dispatch3.receiveCurrentUser(currentUser2);
   };
-  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select5, dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
+  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select4, dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
     const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -6146,7 +6132,7 @@ var wp;
         };
       }
       if (query !== void 0 && query._fields) {
-        const hasRecord = select5.hasEntityRecord(
+        const hasRecord = select4.hasEntityRecord(
           kind,
           name,
           key,
@@ -6696,7 +6682,7 @@ var wp;
       patternCategories: mappedPatternCategories
     });
   };
-  var getNavigationFallbackId2 = () => async ({ dispatch: dispatch3, select: select5, registry }) => {
+  var getNavigationFallbackId2 = () => async ({ dispatch: dispatch3, select: select4, registry }) => {
     const fallback = await (0, import_api_fetch8.default)({
       path: (0, import_url6.addQueryArgs)("/wp-block-editor/v1/navigation-fallback", {
         _embed: true
@@ -6708,7 +6694,7 @@ var wp;
       if (!record) {
         return;
       }
-      const existingFallbackEntityRecord = select5.getEntityRecord(
+      const existingFallbackEntityRecord = select4.getEntityRecord(
         "postType",
         "wp_navigation",
         fallback.id
@@ -6841,7 +6827,7 @@ var wp;
     }
   };
   getRevisions2.shouldInvalidate = (action, kind, name, recordKey) => action.type === "SAVE_ENTITY_RECORD_FINISH" && name === action.name && kind === action.kind && !action.error && recordKey === action.recordId;
-  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ select: select5, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ select: select4, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -6874,7 +6860,7 @@ var wp;
       { exclusive: false }
     );
     try {
-      if (select5.hasRevision(kind, name, recordKey, revisionKey, query)) {
+      if (select4.hasRevision(kind, name, recordKey, revisionKey, query)) {
         return;
       }
       const path = (0, import_url6.addQueryArgs)(
@@ -7263,8 +7249,8 @@ var wp;
     "getCachedResolvers"
   ];
   function useQuerySelect(mapQuerySelect, deps) {
-    return (0, import_data10.useSelect)((select5, registry) => {
-      const resolve = (store2) => enrichSelectors(select5(store2));
+    return (0, import_data10.useSelect)((select4, registry) => {
+      const resolve = (store2) => enrichSelectors(select4(store2));
       return mapQuerySelect(resolve, registry);
     }, deps);
   }
@@ -7324,7 +7310,7 @@ var wp;
       [editEntityRecord2, kind, name, recordId, saveEditedEntityRecord2]
     );
     const { editedRecord, hasEdits, edits } = (0, import_data11.useSelect)(
-      (select5) => {
+      (select4) => {
         if (!options.enabled) {
           return {
             editedRecord: EMPTY_OBJECT3,
@@ -7333,17 +7319,17 @@ var wp;
           };
         }
         return {
-          editedRecord: select5(store).getEditedEntityRecord(
+          editedRecord: select4(store).getEditedEntityRecord(
             kind,
             name,
             recordId
           ),
-          hasEdits: select5(store).hasEditsForEntityRecord(
+          hasEdits: select4(store).hasEditsForEntityRecord(
             kind,
             name,
             recordId
           ),
-          edits: select5(store).getEntityRecordNonTransientEdits(
+          edits: select4(store).getEntityRecordNonTransientEdits(
             kind,
             name,
             recordId
@@ -7401,7 +7387,7 @@ var wp;
       [kind, name, queryAsString, options.enabled]
     );
     const { totalItems, totalPages } = (0, import_data12.useSelect)(
-      (select5) => {
+      (select4) => {
         if (!options.enabled) {
           return {
             totalItems: null,
@@ -7409,12 +7395,12 @@ var wp;
           };
         }
         return {
-          totalItems: select5(store).getEntityRecordsTotalItems(
+          totalItems: select4(store).getEntityRecordsTotalItems(
             kind,
             name,
             queryArgs
           ),
-          totalPages: select5(store).getEntityRecordsTotalPages(
+          totalPages: select4(store).getEntityRecordsTotalPages(
             kind,
             name,
             queryArgs
@@ -7439,7 +7425,7 @@ var wp;
   }
   function useEntityRecordsWithPermissions(kind, name, queryArgs = {}, options = { enabled: true }) {
     const entityConfig = (0, import_data12.useSelect)(
-      (select5) => select5(store).getEntityConfig(kind, name),
+      (select4) => select4(store).getEntityConfig(kind, name),
       [kind, name]
     );
     const { records: data, ...ret } = useEntityRecords(
@@ -7469,9 +7455,9 @@ var wp;
       [data, entityConfig?.key]
     );
     const permissions = (0, import_data12.useSelect)(
-      (select5) => {
+      (select4) => {
         const { getEntityRecordsPermissions: getEntityRecordsPermissions2 } = unlock(
-          select5(store)
+          select4(store)
         );
         return getEntityRecordsPermissions2(kind, name, ids);
       },
@@ -7709,11 +7695,11 @@ var wp;
     const providerId = useEntityId(kind, name);
     const id = _id ?? providerId;
     const { content, editedBlocks, meta } = (0, import_data13.useSelect)(
-      (select5) => {
+      (select4) => {
         if (!id) {
           return {};
         }
-        const { getEditedEntityRecord: getEditedEntityRecord3 } = select5(STORE_NAME);
+        const { getEditedEntityRecord: getEditedEntityRecord3 } = select4(STORE_NAME);
         const editedRecord = getEditedEntityRecord3(kind, name, id);
         return {
           editedBlocks: editedRecord.blocks,
@@ -7798,9 +7784,9 @@ var wp;
     const context = (0, import_element7.useContext)(EntityContext);
     const revisionId = context?.revisionId;
     const { value, fullValue } = (0, import_data14.useSelect)(
-      (select5) => {
+      (select4) => {
         if (revisionId) {
-          const revisions = select5(STORE_NAME).getRevisions(
+          const revisions = select4(STORE_NAME).getRevisions(
             kind,
             name,
             id,
@@ -7810,7 +7796,7 @@ var wp;
               _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
             }
           );
-          const entityConfig = select5(STORE_NAME).getEntityConfig(
+          const entityConfig = select4(STORE_NAME).getEntityConfig(
             kind,
             name
           );
@@ -7823,7 +7809,7 @@ var wp;
             fullValue: revision[prop]
           } : {};
         }
-        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select5(STORE_NAME);
+        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select4(STORE_NAME);
         const record = getEntityRecord3(kind, name, id);
         const editedRecord = getEditedEntityRecord3(kind, name, id);
         return record && editedRecord ? {
@@ -7870,7 +7856,7 @@ var wp;
     const activeCollaborators = newState ?? awareness.getCurrentState();
     return {
       activeCollaborators,
-      resolveSelection: (selection) => awareness.convertSelectionStateToAbsolute(selection),
+      resolveSelection: (selection, blocks) => awareness.convertSelectionStateToAbsolute(selection, blocks),
       getDebugData: () => awareness.getDebugData(),
       isCurrentCollaboratorDisconnected: activeCollaborators.find((collaborator) => collaborator.isMe)?.isConnected === false
     };
@@ -7907,7 +7893,12 @@ var wp;
     return usePostEditorAwarenessState(postId, postType).activeCollaborators;
   }
   function useResolvedSelection(postId, postType) {
-    return usePostEditorAwarenessState(postId, postType).resolveSelection;
+    const blocks = usePostContentBlocks();
+    const awarenessState = usePostEditorAwarenessState(postId, postType);
+    return (0, import_element8.useCallback)(
+      (selection) => awarenessState.resolveSelection(selection, blocks),
+      [blocks, awarenessState]
+    );
   }
   function useLastPostSave(postId, postType) {
     const [lastSave, setLastSave] = (0, import_element8.useState)(null);

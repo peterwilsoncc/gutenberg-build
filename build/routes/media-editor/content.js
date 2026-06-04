@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React59 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef41 = React59.useRef, useEffect32 = React59.useEffect, useMemo43 = React59.useMemo, useDebugValue2 = React59.useDebugValue;
+      var React59 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef41 = React59.useRef, useEffect32 = React59.useEffect, useMemo42 = React59.useMemo, useDebugValue2 = React59.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef41(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo43(
+        instRef = useMemo42(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -19228,63 +19228,32 @@ function DataForm({
 }
 
 // packages/media-editor/build-module/components/media-form/index.mjs
-var import_components28 = __toESM(require_components(), 1);
-var import_i18n24 = __toESM(require_i18n(), 1);
-var import_element66 = __toESM(require_element(), 1);
-
-// packages/media-editor/build-module/components/media-form/sidebar-datetime-view.mjs
-var import_date10 = __toESM(require_date(), 1);
 var import_components27 = __toESM(require_components(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
 var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
-function SidebarDatetimeView({
-  item,
-  field
-}) {
-  const value = field.getValue({ item });
-  if (!value) {
-    return null;
-  }
-  const settings = (0, import_date10.getSettings)();
-  const dateOnly = (0, import_date10.dateI18n)(settings.formats.date, (0, import_date10.getDate)(value));
-  const fullDatetime = (0, import_date10.dateI18n)(
-    settings.formats.datetimeAbbreviated,
-    (0, import_date10.getDate)(value)
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(import_components27.Tooltip, { text: fullDatetime, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
-    "time",
-    {
-      dateTime: value,
-      "aria-label": fullDatetime,
-      tabIndex: -1,
-      children: dateOnly
-    }
-  ) });
-}
-
-// packages/media-editor/build-module/components/media-form/index.mjs
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 function MediaForm({
   form: formOverrides,
   header
 }) {
   const { media, fields, onChange } = useMediaEditorContext();
-  const formFields = (0, import_element66.useMemo)(
-    () => fields.map(
-      (field) => field.type === "datetime" && field.readOnly ? { ...field, render: SidebarDatetimeView } : field
-    ),
-    [fields]
-  );
   if (!media || !onChange) {
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components28.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(import_components27.Spinner, {}) });
   }
+  const regularFieldIds = ["title", "alt_text", "caption", "description"];
+  const sortedFields = [
+    ...fields.filter(
+      (field) => regularFieldIds.includes(field.id)
+    ),
+    ...fields.filter(
+      (field) => !regularFieldIds.includes(field.id)
+    )
+  ];
   const defaultForm = {
     layout: {
       type: "panel"
     },
-    fields: fields.map((field) => {
-      if (["title", "alt_text", "caption", "description"].includes(
-        field.id
-      )) {
+    fields: sortedFields.map((field) => {
+      if (regularFieldIds.includes(field.id)) {
         return {
           id: field.id,
           layout: {
@@ -19297,14 +19266,14 @@ function MediaForm({
     })
   };
   const form = formOverrides || defaultForm;
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components28.__experimentalVStack, { spacing: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("h2", {}), children: (0, import_i18n24.__)("Media details") }),
+  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(import_components27.__experimentalVStack, { spacing: 4, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("h2", {}), children: (0, import_i18n24.__)("Media details") }),
     header,
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       DataForm,
       {
         data: media,
-        fields: formFields,
+        fields,
         form,
         onChange
       }
@@ -19401,34 +19370,34 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 (0, import_data.register)(store);
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_components40 = __toESM(require_components(), 1);
+var import_components39 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_i18n37 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_components39 = __toESM(require_components(), 1);
+var import_components38 = __toESM(require_components(), 1);
 var import_compose6 = __toESM(require_compose(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
-var import_element87 = __toESM(require_element(), 1);
+var import_element86 = __toESM(require_element(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_components33 = __toESM(require_components(), 1);
+var import_components32 = __toESM(require_components(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
-var import_element68 = __toESM(require_element(), 1);
+var import_element67 = __toESM(require_element(), 1);
 var import_viewport = __toESM(require_viewport(), 1);
 var import_preferences3 = __toESM(require_preferences(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 var import_plugins2 = __toESM(require_plugins(), 1);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_components29 = __toESM(require_components(), 1);
+var import_components28 = __toESM(require_components(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_plugins = __toESM(require_plugins(), 1);
 
@@ -19698,7 +19667,7 @@ var store2 = (0, import_data4.createReduxStore)(STORE_NAME2, {
 (0, import_data4.register)(store2);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 function roleSupportsCheckedState(role) {
   return [
     "checkbox",
@@ -19711,7 +19680,7 @@ function roleSupportsCheckedState(role) {
   ].includes(role);
 }
 function ComplementaryAreaToggle({
-  as = import_components29.Button,
+  as = import_components28.Button,
   scope,
   identifier: identifierProp,
   icon: iconProp,
@@ -19729,7 +19698,7 @@ function ComplementaryAreaToggle({
     [identifier, scope]
   );
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data5.useDispatch)(store2);
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
     ComponentToUse,
     {
       icon: selectedIcon && isSelected ? selectedIcon : icon,
@@ -19749,14 +19718,14 @@ function ComplementaryAreaToggle({
 }
 
 // packages/interface/build-module/components/complementary-area-header/index.mjs
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 var ComplementaryAreaHeader = ({
   children,
   className,
   toggleButtonProps
 }) => {
-  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
+  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
     "div",
     {
       className: clsx_default(
@@ -19775,33 +19744,33 @@ var ComplementaryAreaHeader = ({
 var complementary_area_header_default = ComplementaryAreaHeader;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_components31 = __toESM(require_components(), 1);
+var import_components30 = __toESM(require_components(), 1);
 
 // packages/interface/build-module/components/action-item/index.mjs
-var import_components30 = __toESM(require_components(), 1);
-var import_element67 = __toESM(require_element(), 1);
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_components29 = __toESM(require_components(), 1);
+var import_element66 = __toESM(require_element(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 var noop4 = () => {
 };
 function ActionItemSlot({
   name,
-  as: Component = import_components30.MenuGroup,
+  as: Component = import_components29.MenuGroup,
   fillProps = {},
   bubblesVirtually,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-    import_components30.Slot,
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+    import_components29.Slot,
     {
       name,
       bubblesVirtually,
       fillProps,
       children: (fills) => {
-        if (!import_element67.Children.toArray(fills).length) {
+        if (!import_element66.Children.toArray(fills).length) {
           return null;
         }
         const initializedByPlugins = [];
-        import_element67.Children.forEach(
+        import_element66.Children.forEach(
           fills,
           ({
             props: { __unstableExplicitMenuItem, __unstableTarget }
@@ -19811,7 +19780,7 @@ function ActionItemSlot({
             }
           }
         );
-        const children = import_element67.Children.map(fills, (child) => {
+        const children = import_element66.Children.map(fills, (child) => {
           if (!child.props.__unstableExplicitMenuItem && initializedByPlugins.includes(
             child.props.__unstableTarget
           )) {
@@ -19819,14 +19788,14 @@ function ActionItemSlot({
           }
           return child;
         });
-        return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(Component, { ...props, children });
+        return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Component, { ...props, children });
       }
     }
   );
 }
-function ActionItem({ name, as: Component = import_components30.Button, onClick, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components30.Fill, { name, children: ({ onClick: fpOnClick }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+function ActionItem({ name, as: Component = import_components29.Button, onClick, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components29.Fill, { name, children: ({ onClick: fpOnClick }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
       Component,
       {
         onClick: onClick || fpOnClick ? (...args) => {
@@ -19842,7 +19811,7 @@ ActionItem.Slot = ActionItemSlot;
 var action_item_default = ActionItem;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 var PluginsMenuItem = ({
   // Menu item is marked with unstable prop for backward compatibility.
   // They are removed so they don't leak to DOM elements.
@@ -19850,18 +19819,18 @@ var PluginsMenuItem = ({
   __unstableExplicitMenuItem,
   __unstableTarget,
   ...restProps
-}) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components31.MenuItem, { ...restProps });
+}) => /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components30.MenuItem, { ...restProps });
 function ComplementaryAreaMoreMenuItem({
   scope,
   target,
   __unstableExplicitMenuItem,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
     ComplementaryAreaToggle,
     {
       as: (toggleProps) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
           action_item_default,
           {
             __unstableExplicitMenuItem,
@@ -19882,13 +19851,13 @@ function ComplementaryAreaMoreMenuItem({
 }
 
 // packages/interface/build-module/components/pinned-items/index.mjs
-var import_components32 = __toESM(require_components(), 1);
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_components31 = __toESM(require_components(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 function PinnedItems({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components32.Fill, { name: `PinnedItems/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components31.Fill, { name: `PinnedItems/${scope}`, ...props });
 }
 function PinnedItemsSlot({ scope, className, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components32.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components31.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
     "div",
     {
       className: clsx_default(
@@ -19903,10 +19872,10 @@ PinnedItems.Slot = PinnedItemsSlot;
 var pinned_items_default = PinnedItems;
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION = 0.3;
 function ComplementaryAreaSlot({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.Slot, { name: `ComplementaryArea/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components32.Slot, { name: `ComplementaryArea/${scope}`, ...props });
 }
 var SIDEBAR_WIDTH = 280;
 var variants = {
@@ -19926,8 +19895,8 @@ function ComplementaryAreaFill({
   const isMobileViewport = (0, import_compose4.useViewportMatch)("medium", "<");
   const previousActiveArea = (0, import_compose4.usePrevious)(activeArea);
   const previousIsActive = (0, import_compose4.usePrevious)(isActive);
-  const [, setState] = (0, import_element68.useState)({});
-  (0, import_element68.useEffect)(() => {
+  const [, setState] = (0, import_element67.useState)({});
+  (0, import_element67.useEffect)(() => {
     setState({});
   }, [isActive]);
   const transition = {
@@ -19935,8 +19904,8 @@ function ComplementaryAreaFill({
     duration: disableMotion || isMobileViewport || !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea ? 0 : ANIMATION_DURATION,
     ease: [0.6, 0, 0.4, 1]
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-    import_components33.__unstableMotion.div,
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components32.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components32.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    import_components32.__unstableMotion.div,
     {
       variants,
       initial: "closed",
@@ -19944,7 +19913,7 @@ function ComplementaryAreaFill({
       exit: "closed",
       transition,
       className: "interface-complementary-area__fill",
-      children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
         "div",
         {
           id,
@@ -19959,10 +19928,10 @@ function ComplementaryAreaFill({
   ) }) });
 }
 function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
-  const previousIsSmallRef = (0, import_element68.useRef)(false);
-  const shouldOpenWhenNotSmallRef = (0, import_element68.useRef)(false);
+  const previousIsSmallRef = (0, import_element67.useRef)(false);
+  const shouldOpenWhenNotSmallRef = (0, import_element67.useRef)(false);
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data6.useDispatch)(store2);
-  (0, import_element68.useEffect)(() => {
+  (0, import_element67.useEffect)(() => {
     if (isActive && isSmall && !previousIsSmallRef.current) {
       disableComplementaryArea2(scope);
       shouldOpenWhenNotSmallRef.current = true;
@@ -20014,7 +19983,7 @@ function ComplementaryArea({
   const context = (0, import_plugins2.usePluginContext)();
   const icon = iconProp || context.icon;
   const identifier = identifierProp || `${context.name}/${name}`;
-  const [isReady, setIsReady] = (0, import_element68.useState)(false);
+  const [isReady, setIsReady] = (0, import_element67.useState)(false);
   const {
     isLoading,
     isActive,
@@ -20058,7 +20027,7 @@ function ComplementaryArea({
     pinItem: pinItem2,
     unpinItem: unpinItem2
   } = (0, import_data6.useDispatch)(store2);
-  (0, import_element68.useEffect)(() => {
+  (0, import_element67.useEffect)(() => {
     if (isActiveByDefault && activeArea === void 0 && !isSmall) {
       enableComplementaryArea2(scope, identifier);
     } else if (activeArea === void 0 && isSmall) {
@@ -20077,8 +20046,8 @@ function ComplementaryArea({
   if (!isReady) {
     return;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_jsx_runtime103.Fragment, { children: [
-    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(import_jsx_runtime102.Fragment, { children: [
+    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
       ComplementaryAreaToggle,
       {
         scope,
@@ -20094,7 +20063,7 @@ function ComplementaryArea({
         shortcut: toggleShortcut
       }
     ) }),
-    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
       ComplementaryAreaMoreMenuItem,
       {
         target: name,
@@ -20104,7 +20073,7 @@ function ComplementaryArea({
         children: title
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(
       ComplementaryAreaFill,
       {
         activeArea,
@@ -20113,7 +20082,7 @@ function ComplementaryArea({
         scope,
         id: identifier.replace("/", ":"),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
             complementary_area_header_default,
             {
               className: headerClassName,
@@ -20126,10 +20095,10 @@ function ComplementaryArea({
                 scope,
                 identifier
               },
-              children: header || /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_jsx_runtime103.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime103.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
-                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-                  import_components33.Button,
+              children: header || /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(import_jsx_runtime102.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
+                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+                  import_components32.Button,
                   {
                     className: "interface-complementary-area__pin-unpin-item",
                     icon: isPinned ? star_filled_default : star_empty_default,
@@ -20146,7 +20115,7 @@ function ComplementaryArea({
               ] })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.Panel, { className: panelClassName, children })
+          /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components32.Panel, { className: panelClassName, children })
         ]
       }
     )
@@ -20156,11 +20125,11 @@ ComplementaryArea.Slot = ComplementaryAreaSlot;
 var complementary_area_default = ComplementaryArea;
 
 // packages/interface/build-module/components/interface-skeleton/index.mjs
-var import_element69 = __toESM(require_element(), 1);
-var import_components34 = __toESM(require_components(), 1);
+var import_element68 = __toESM(require_element(), 1);
+var import_components33 = __toESM(require_components(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
-var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION2 = 0.25;
 var commonTransition = {
   type: "tween",
@@ -20168,7 +20137,7 @@ var commonTransition = {
   ease: [0.6, 0, 0.4, 1]
 };
 function useHTMLClass(className) {
-  (0, import_element69.useEffect)(() => {
+  (0, import_element68.useEffect)(() => {
     const element = document && document.querySelector(`html:not(.${className})`);
     if (!element) {
       return;
@@ -20241,7 +20210,7 @@ function InterfaceSkeleton({
     footer: (0, import_i18n26.__)("Footer")
   };
   const mergedLabels = { ...defaultLabels, ...labels };
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(
     "div",
     {
       ref,
@@ -20251,11 +20220,11 @@ function InterfaceSkeleton({
         !!footer && "has-footer"
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components34.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
             navigable_region_default,
             {
-              as: import_components34.__unstableMotion.div,
+              as: import_components33.__unstableMotion.div,
               className: "interface-interface-skeleton__header",
               ariaLabel: mergedLabels.header,
               initial: isDistractionFree && !isMobileViewport ? "distractionFreeHidden" : "hidden",
@@ -20267,14 +20236,14 @@ function InterfaceSkeleton({
               children: header
             }
           ) }),
-          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
-          /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components34.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
+          /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__secondary-sidebar",
                 ariaLabel: mergedLabels.secondarySidebar,
-                as: import_components34.__unstableMotion.div,
+                as: import_components33.__unstableMotion.div,
                 initial: "closed",
                 animate: "open",
                 exit: "closed",
@@ -20283,8 +20252,8 @@ function InterfaceSkeleton({
                   closed: { width: 0 }
                 },
                 transition: defaultTransition,
-                children: /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(
-                  import_components34.__unstableMotion.div,
+                children: /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(
+                  import_components33.__unstableMotion.div,
                   {
                     style: {
                       position: "absolute",
@@ -20305,7 +20274,7 @@ function InterfaceSkeleton({
                 )
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__content",
@@ -20313,7 +20282,7 @@ function InterfaceSkeleton({
                 children: content
               }
             ),
-            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__sidebar",
@@ -20321,7 +20290,7 @@ function InterfaceSkeleton({
                 children: sidebar
               }
             ),
-            !!actions && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+            !!actions && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__actions",
@@ -20331,7 +20300,7 @@ function InterfaceSkeleton({
             )
           ] })
         ] }),
-        !!footer && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+        !!footer && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
           navigable_region_default,
           {
             className: "interface-interface-skeleton__footer",
@@ -20343,10 +20312,10 @@ function InterfaceSkeleton({
     }
   );
 }
-var interface_skeleton_default = (0, import_element69.forwardRef)(InterfaceSkeleton);
+var interface_skeleton_default = (0, import_element68.forwardRef)(InterfaceSkeleton);
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_element80 = __toESM(require_element(), 1);
+var import_element79 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
 var import_i18n27 = __toESM(require_i18n(), 1);
@@ -21767,7 +21736,7 @@ function buildCropperSetters(dispatchCropperAction, getCropperState) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_element77 = __toESM(require_element(), 1);
+var import_element76 = __toESM(require_element(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
@@ -21791,7 +21760,7 @@ function computeInscribedRect(aspectRatio, visualSize) {
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-interaction.mjs
-var import_element70 = __toESM(require_element(), 1);
+var import_element69 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/interaction-controller.mjs
 var DOUBLE_TAP_TIME = 300;
@@ -22432,30 +22401,30 @@ function isHandledKeyboardZoom(event) {
   }
 }
 function useInteraction(state, actions, containerSize, imageSize, options) {
-  const [isDragging, setIsDragging] = (0, import_element70.useState)(false);
-  const [isZooming, setIsZooming] = (0, import_element70.useState)(false);
-  const [isGestureActive, setIsGestureActive] = (0, import_element70.useState)(false);
-  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element70.useState)(false);
-  const keyboardInteractionTimerRef = (0, import_element70.useRef)();
-  const isKeyboardGestureActiveRef = (0, import_element70.useRef)(false);
-  const stateRef = (0, import_element70.useRef)(state);
+  const [isDragging, setIsDragging] = (0, import_element69.useState)(false);
+  const [isZooming, setIsZooming] = (0, import_element69.useState)(false);
+  const [isGestureActive, setIsGestureActive] = (0, import_element69.useState)(false);
+  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element69.useState)(false);
+  const keyboardInteractionTimerRef = (0, import_element69.useRef)();
+  const isKeyboardGestureActiveRef = (0, import_element69.useRef)(false);
+  const stateRef = (0, import_element69.useRef)(state);
   stateRef.current = state;
-  const containerSizeRef = (0, import_element70.useRef)(containerSize);
+  const containerSizeRef = (0, import_element69.useRef)(containerSize);
   containerSizeRef.current = containerSize;
-  const imageSizeRef = (0, import_element70.useRef)(imageSize);
+  const imageSizeRef = (0, import_element69.useRef)(imageSize);
   imageSizeRef.current = imageSize;
-  const optionsRef = (0, import_element70.useRef)(options);
+  const optionsRef = (0, import_element69.useRef)(options);
   optionsRef.current = options;
-  const actionsRef = (0, import_element70.useRef)(actions);
+  const actionsRef = (0, import_element69.useRef)(actions);
   actionsRef.current = actions;
-  const controllerRef = (0, import_element70.useRef)(null);
-  const startPlacementGesture = (0, import_element70.useCallback)(() => {
+  const controllerRef = (0, import_element69.useRef)(null);
+  const startPlacementGesture = (0, import_element69.useCallback)(() => {
     setIsGestureActive(true);
   }, []);
-  const stopPlacementGesture = (0, import_element70.useCallback)(() => {
+  const stopPlacementGesture = (0, import_element69.useCallback)(() => {
     setIsGestureActive(false);
   }, []);
-  const signalKeyboardGesture = (0, import_element70.useCallback)(() => {
+  const signalKeyboardGesture = (0, import_element69.useCallback)(() => {
     if (!isKeyboardGestureActiveRef.current) {
       isKeyboardGestureActiveRef.current = true;
       optionsRef.current?.onGestureStart?.();
@@ -22467,12 +22436,12 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       optionsRef.current?.onGestureEnd?.();
     }, KEYBOARD_INTERACTION_IDLE_MS);
   }, []);
-  (0, import_element70.useEffect)(() => {
+  (0, import_element69.useEffect)(() => {
     return () => {
       clearTimeout(keyboardInteractionTimerRef.current);
     };
   }, []);
-  (0, import_element70.useEffect)(() => {
+  (0, import_element69.useEffect)(() => {
     const controller = new InteractionController({
       getState: () => stateRef.current,
       actions: {
@@ -22518,11 +22487,11 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       controllerRef.current = null;
     };
   }, [startPlacementGesture, stopPlacementGesture]);
-  const onPointerDown = (0, import_element70.useCallback)((e2) => {
+  const onPointerDown = (0, import_element69.useCallback)((e2) => {
     const el = e2.currentTarget;
     controllerRef.current?.handlePointerDown(e2.nativeEvent, el);
   }, []);
-  const onTouchStart = (0, import_element70.useCallback)((e2) => {
+  const onTouchStart = (0, import_element69.useCallback)((e2) => {
     const el = e2.currentTarget;
     const rect = el.getBoundingClientRect();
     controllerRef.current?.handleTouchStart(
@@ -22531,7 +22500,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       el.ownerDocument
     );
   }, []);
-  const onKeyDown = (0, import_element70.useCallback)(
+  const onKeyDown = (0, import_element69.useCallback)(
     (e2) => {
       if (isHandledKeyboardPan(e2.nativeEvent)) {
         setIsKeyboardPanning(true);
@@ -22543,7 +22512,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
     },
     [signalKeyboardGesture]
   );
-  const onWheelNative = (0, import_element70.useCallback)((e2) => {
+  const onWheelNative = (0, import_element69.useCallback)((e2) => {
     controllerRef.current?.handleWheel(e2);
   }, []);
   return {
@@ -22560,7 +22529,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
-var import_element71 = __toESM(require_element(), 1);
+var import_element70 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/transform-style.mjs
 var IDENTITY_MATRIX_STYLE = "matrix(1, 0, 0, 1, 0, 0)";
@@ -22586,14 +22555,14 @@ function computeTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
 function useTransformStyle(state, imageSize) {
-  return (0, import_element71.useMemo)(
+  return (0, import_element70.useMemo)(
     () => computeTransformStyle(state, imageSize),
     [state, imageSize]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-var import_element72 = __toESM(require_element(), 1);
+var import_element71 = __toESM(require_element(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
 var ARIA_DEBOUNCE_MS = 300;
 function buildFlipAnnouncement(state) {
@@ -22646,15 +22615,15 @@ function buildAnnouncement(state, previousState) {
   return parts.join(", ");
 }
 function useAriaAnnouncer(state) {
-  const [ariaMessage, setAriaMessage] = (0, import_element72.useState)("");
-  const timerRef = (0, import_element72.useRef)();
-  const prevMessageRef = (0, import_element72.useRef)("");
-  const prevStateRef = (0, import_element72.useRef)(null);
-  const latestStateRef = (0, import_element72.useRef)(state);
-  (0, import_element72.useLayoutEffect)(() => {
+  const [ariaMessage, setAriaMessage] = (0, import_element71.useState)("");
+  const timerRef = (0, import_element71.useRef)();
+  const prevMessageRef = (0, import_element71.useRef)("");
+  const prevStateRef = (0, import_element71.useRef)(null);
+  const latestStateRef = (0, import_element71.useRef)(state);
+  (0, import_element71.useLayoutEffect)(() => {
     latestStateRef.current = state;
   }, [state]);
-  (0, import_element72.useEffect)(() => {
+  (0, import_element71.useEffect)(() => {
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       const current = latestStateRef.current;
@@ -22680,7 +22649,7 @@ function useAriaAnnouncer(state) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_element73 = __toESM(require_element(), 1);
+var import_element72 = __toESM(require_element(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/stencil-math.mjs
@@ -22871,7 +22840,7 @@ var VISUALLY_HIDDEN_STYLE = {
 };
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 var CORNER_POSITIONS = ["nw", "ne", "se", "sw"];
 var ALL_POSITIONS = [
   "nw",
@@ -22922,7 +22891,7 @@ function RectangleStencil({
   const boundsMinY = cropBounds?.minY ?? 0;
   const boundsMaxX = cropBounds?.maxX ?? 1;
   const boundsMaxY = cropBounds?.maxY ?? 1;
-  const bounds = (0, import_element73.useMemo)(
+  const bounds = (0, import_element72.useMemo)(
     () => ({
       minX: boundsMinX,
       minY: boundsMinY,
@@ -22931,18 +22900,18 @@ function RectangleStencil({
     }),
     [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
   );
-  const keyboardSettleTimerRef = (0, import_element73.useRef)();
-  const keyboardResizeActiveRef = (0, import_element73.useRef)(false);
-  const resizeHandleDescriptionId = (0, import_element73.useId)();
+  const keyboardSettleTimerRef = (0, import_element72.useRef)();
+  const keyboardResizeActiveRef = (0, import_element72.useRef)(false);
+  const resizeHandleDescriptionId = (0, import_element72.useId)();
   const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
-  (0, import_element73.useEffect)(() => {
+  (0, import_element72.useEffect)(() => {
     return () => {
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
     };
   }, []);
-  const latestHandlersRef = (0, import_element73.useRef)(null);
-  const normalizedRatio = (0, import_element73.useMemo)(() => {
+  const latestHandlersRef = (0, import_element72.useRef)(null);
+  const normalizedRatio = (0, import_element72.useMemo)(() => {
     if (!hasLockedRatio || imageSize.width === 0) {
       return 0;
     }
@@ -22954,7 +22923,7 @@ function RectangleStencil({
   const top = offsetY + cropRect.y * imageSize.height;
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
-  const handlePointerDown = (0, import_element73.useCallback)(
+  const handlePointerDown = (0, import_element72.useCallback)(
     (handle, event) => {
       if (event.button !== 0) {
         return;
@@ -23031,7 +23000,7 @@ function RectangleStencil({
     },
     [cropRect, onResizeStart]
   );
-  const computeFreeRect = (0, import_element73.useCallback)(
+  const computeFreeRect = (0, import_element72.useCallback)(
     (drag2, clientX, clientY) => computeFreeResizeRect(
       drag2,
       clientX,
@@ -23042,7 +23011,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, minCropSize]
   );
-  const computeLockedRect = (0, import_element73.useCallback)(
+  const computeLockedRect = (0, import_element72.useCallback)(
     (drag2, clientX, clientY) => computeLockedResizeRect(
       drag2,
       clientX,
@@ -23054,7 +23023,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, normalizedRatio, minCropSize]
   );
-  const computeShiftLockedRect = (0, import_element73.useCallback)(
+  const computeShiftLockedRect = (0, import_element72.useCallback)(
     (drag2, clientX, clientY) => computeShiftLockedResizeRect(
       drag2,
       clientX,
@@ -23073,7 +23042,7 @@ function RectangleStencil({
     onCropChange,
     onResizeEnd
   };
-  const handleKeyDown = (0, import_element73.useCallback)(
+  const handleKeyDown = (0, import_element72.useCallback)(
     (handle, event) => {
       const key = event.key;
       if (key === "Escape") {
@@ -23158,7 +23127,7 @@ function RectangleStencil({
     return null;
   }
   const handles = hasLockedRatio ? CORNER_POSITIONS : ALL_POSITIONS;
-  return /* @__PURE__ */ (0, import_jsx_runtime105.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__stencil",
@@ -23170,7 +23139,7 @@ function RectangleStencil({
         transition: stencilTransition
       },
       children: [
-        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
           "div",
           {
             id: resizeHandleDescriptionId,
@@ -23180,7 +23149,7 @@ function RectangleStencil({
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__stencil-rect",
@@ -23192,7 +23161,7 @@ function RectangleStencil({
             }
           }
         ),
-        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
           "button",
           {
             type: "button",
@@ -23211,7 +23180,7 @@ function RectangleStencil({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimming-overlay.mjs
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 function DimmingOverlay({
   cropRect,
   containerSize,
@@ -23228,7 +23197,7 @@ function DimmingOverlay({
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
   const composedTransition = transition ? `${transition}, box-shadow 0.15s ease` : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
     "div",
     {
       className: "wp-media-editor-image-editor__dimming",
@@ -23244,7 +23213,7 @@ function DimmingOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/grid-overlay.mjs
-var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 function GridOverlay({
   cropRect,
   containerSize,
@@ -23261,7 +23230,7 @@ function GridOverlay({
   const height = cropRect.height * imageSize.height;
   const thirdW = width / 3;
   const thirdH = height / 3;
-  return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__grid",
@@ -23273,28 +23242,28 @@ function GridOverlay({
         height
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH * 2 }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
             style: { left: thirdW }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
@@ -23307,8 +23276,8 @@ function GridOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimensions-overlay.mjs
-var import_element74 = __toESM(require_element(), 1);
-var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
+var import_element73 = __toESM(require_element(), 1);
+var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 var HANDLE_GAP_PX = 12;
 var TRANSLATE_PERCENT = {
   before: "-100%",
@@ -23381,9 +23350,9 @@ function DimensionsOverlay({
   outputWidth,
   outputHeight
 }) {
-  const tooltipRef = (0, import_element74.useRef)(null);
-  const [tooltipSize, setTooltipSize] = (0, import_element74.useState)(null);
-  (0, import_element74.useLayoutEffect)(() => {
+  const tooltipRef = (0, import_element73.useRef)(null);
+  const [tooltipSize, setTooltipSize] = (0, import_element73.useState)(null);
+  (0, import_element73.useLayoutEffect)(() => {
     if (!tooltipRef.current) {
       return;
     }
@@ -23431,7 +23400,7 @@ function DimensionsOverlay({
       containerSize.height
     )
   } : preferred;
-  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     "div",
     {
       ref: tooltipRef,
@@ -23503,10 +23472,10 @@ function getSourceRegion(state, imageSize) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_element76 = __toESM(require_element(), 1);
+var import_element75 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
-var import_element75 = __toESM(require_element(), 1);
+var import_element74 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/viewport-state.mjs
 var DEFAULT_VIEWPORT_STATE = {
@@ -23530,36 +23499,36 @@ function viewportReducer(state, action) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
 function useViewportState() {
-  const [viewport, dispatch] = (0, import_element75.useReducer)(
+  const [viewport, dispatch] = (0, import_element74.useReducer)(
     viewportReducer,
     DEFAULT_VIEWPORT_STATE
   );
-  const setViewportZoom = (0, import_element75.useCallback)((zoom) => {
+  const setViewportZoom = (0, import_element74.useCallback)((zoom) => {
     dispatch({ type: "SET_VIEWPORT_ZOOM", payload: zoom });
   }, []);
-  const setViewportPan = (0, import_element75.useCallback)((pan) => {
+  const setViewportPan = (0, import_element74.useCallback)((pan) => {
     dispatch({ type: "SET_VIEWPORT_PAN", payload: pan });
   }, []);
-  const resetViewport = (0, import_element75.useCallback)(() => {
+  const resetViewport = (0, import_element74.useCallback)(() => {
     dispatch({ type: "RESET_VIEWPORT" });
   }, []);
-  return (0, import_element75.useMemo)(
+  return (0, import_element74.useMemo)(
     () => ({ viewport, setViewportZoom, setViewportPan, resetViewport }),
     [viewport, setViewportZoom, setViewportPan, resetViewport]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
-var ViewportContext = (0, import_element76.createContext)(null);
+var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
+var ViewportContext = (0, import_element75.createContext)(null);
 function ViewportProvider({
   children
 }) {
   const viewportState = useViewportState();
-  return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(ViewportContext.Provider, { value: viewportState, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(ViewportContext.Provider, { value: viewportState, children });
 }
 function useViewport() {
-  const context = (0, import_element76.useContext)(ViewportContext);
+  const context = (0, import_element75.useContext)(ViewportContext);
   if (!context) {
     throw new Error(
       "useViewport must be used within a ViewportProvider."
@@ -23569,7 +23538,7 @@ function useViewport() {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 var CROP_RECT_EPSILON = 1e-6;
 function CropperInner({
   src,
@@ -23603,20 +23572,20 @@ function CropperInner({
     setViewportPan,
     resetViewport
   } = useViewport();
-  const canvasRef = (0, import_element77.useRef)(null);
-  const cropAreaDescriptionId = (0, import_element77.useId)();
-  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element77.useState)(focusOnMount);
-  const [isFocusVisible, setIsFocusVisible] = (0, import_element77.useState)(false);
-  const [canvasSize, setCanvasSize] = (0, import_element77.useState)({
+  const canvasRef = (0, import_element76.useRef)(null);
+  const cropAreaDescriptionId = (0, import_element76.useId)();
+  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element76.useState)(focusOnMount);
+  const [isFocusVisible, setIsFocusVisible] = (0, import_element76.useState)(false);
+  const [canvasSize, setCanvasSize] = (0, import_element76.useState)({
     width: 0,
     height: 0
   });
-  (0, import_element77.useLayoutEffect)(() => {
+  (0, import_element76.useLayoutEffect)(() => {
     if (focusOnMount) {
       canvasRef.current?.focus({ preventScroll: true });
     }
   }, [focusOnMount]);
-  const handleCropAreaFocus = (0, import_element77.useCallback)(
+  const handleCropAreaFocus = (0, import_element76.useCallback)(
     (event) => {
       const target = event.target;
       if (target === event.currentTarget) {
@@ -23628,7 +23597,7 @@ function CropperInner({
     },
     []
   );
-  const handleCropAreaBlur = (0, import_element77.useCallback)(
+  const handleCropAreaBlur = (0, import_element76.useCallback)(
     (event) => {
       if (event.target === event.currentTarget) {
         setIsCropAreaFocused(false);
@@ -23641,7 +23610,7 @@ function CropperInner({
     },
     []
   );
-  (0, import_element77.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     const element = canvasRef.current;
     if (!element) {
       return;
@@ -23662,13 +23631,13 @@ function CropperInner({
       observer.disconnect();
     };
   }, []);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     onStateChange?.(state);
   }, [state, onStateChange]);
   const ariaMessage = useAriaAnnouncer(state);
   const naturalWidth = state.image?.naturalWidth ?? 0;
   const naturalHeight = state.image?.naturalHeight ?? 0;
-  const { elementSize, visualSize } = (0, import_element77.useMemo)(
+  const { elementSize, visualSize } = (0, import_element76.useMemo)(
     () => getImageFit(
       canvasSize,
       { width: naturalWidth, height: naturalHeight },
@@ -23676,7 +23645,7 @@ function CropperInner({
     ),
     [canvasSize, naturalWidth, naturalHeight, state.rotation]
   );
-  const minCropSize = (0, import_element77.useMemo)(() => {
+  const minCropSize = (0, import_element76.useMemo)(() => {
     if (naturalWidth <= 0 || naturalHeight <= 0) {
       return void 0;
     }
@@ -23694,10 +23663,10 @@ function CropperInner({
       )
     };
   }, [naturalWidth, naturalHeight, state.rotation, state.zoom]);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     setVisualSize(visualSize);
   }, [visualSize, setVisualSize]);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
       return;
     }
@@ -23714,8 +23683,8 @@ function CropperInner({
     adjustCropRectForViewport,
     state.cropRect
   ]);
-  const prevAspectRatioRef = (0, import_element77.useRef)(aspectRatio);
-  (0, import_element77.useEffect)(() => {
+  const prevAspectRatioRef = (0, import_element76.useRef)(aspectRatio);
+  (0, import_element76.useEffect)(() => {
     if (prevAspectRatioRef.current === aspectRatio) {
       return;
     }
@@ -23736,17 +23705,17 @@ function CropperInner({
     adjustCropRectForViewport,
     state.cropRect
   ]);
-  const cropBounds = (0, import_element77.useMemo)(() => {
+  const cropBounds = (0, import_element76.useMemo)(() => {
     if (!state.image || elementSize.width === 0) {
       return void 0;
     }
     return getImageCropBounds(state, elementSize, visualSize);
   }, [state, elementSize, visualSize]);
   const effectiveMinZoom = minZoom !== void 0 ? minZoom : getMinZoom(state);
-  const [isResizing, setIsResizing] = (0, import_element77.useState)(false);
-  const isResizingRef = (0, import_element77.useRef)(false);
-  const isSettlingRef = (0, import_element77.useRef)(false);
-  const [activeHandle, setActiveHandle] = (0, import_element77.useState)(
+  const [isResizing, setIsResizing] = (0, import_element76.useState)(false);
+  const isResizingRef = (0, import_element76.useRef)(false);
+  const isSettlingRef = (0, import_element76.useRef)(false);
+  const [activeHandle, setActiveHandle] = (0, import_element76.useState)(
     null
   );
   const {
@@ -23776,7 +23745,7 @@ function CropperInner({
       setIsFocusVisible(false);
     }
   };
-  (0, import_element77.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     const el = canvasRef.current;
     if (!el) {
       return;
@@ -23796,7 +23765,7 @@ function CropperInner({
     };
   }, [onWheelNative]);
   const transformString = useTransformStyle(state, visualSize);
-  const handleImageLoad = (0, import_element77.useCallback)(
+  const handleImageLoad = (0, import_element76.useCallback)(
     (event) => {
       const img = event.currentTarget;
       const size4 = {
@@ -23812,7 +23781,7 @@ function CropperInner({
     },
     [src, setImage, onImageLoaded]
   );
-  const handleCropChange = (0, import_element77.useCallback)(
+  const handleCropChange = (0, import_element76.useCallback)(
     (rect) => {
       setCropRect(rect);
       if (isResizingRef.current && visualSize.width > 0 && visualSize.height > 0) {
@@ -23842,16 +23811,16 @@ function CropperInner({
     },
     [setCropRect, setViewportPan, canvasSize, visualSize]
   );
-  const [settling, setSettling] = (0, import_element77.useState)(false);
-  const settleTimerRef = (0, import_element77.useRef)();
-  (0, import_element77.useEffect)(() => {
+  const [settling, setSettling] = (0, import_element76.useState)(false);
+  const settleTimerRef = (0, import_element76.useRef)();
+  (0, import_element76.useEffect)(() => {
     return () => {
       clearTimeout(settleTimerRef.current);
     };
   }, []);
   const isInteractiveGrid = showGrid === "interactive";
   const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
-  const outputSize = (0, import_element77.useMemo)(() => {
+  const outputSize = (0, import_element76.useMemo)(() => {
     if (!showDimensions || !activeHandle || !state.image) {
       return null;
     }
@@ -23861,11 +23830,11 @@ function CropperInner({
     });
     return { width: region.width, height: region.height };
   }, [showDimensions, activeHandle, state]);
-  const handleEscape = (0, import_element77.useCallback)(() => {
+  const handleEscape = (0, import_element76.useCallback)(() => {
     setIsFocusVisible(true);
     canvasRef.current?.focus({ preventScroll: true });
   }, []);
-  const handleResizeStart = (0, import_element77.useCallback)(
+  const handleResizeStart = (0, import_element76.useCallback)(
     (handle) => {
       isResizingRef.current = true;
       setIsResizing(true);
@@ -23878,7 +23847,7 @@ function CropperInner({
     },
     [onGestureStart, resetViewport]
   );
-  const handleResizeEnd = (0, import_element77.useCallback)(() => {
+  const handleResizeEnd = (0, import_element76.useCallback)(() => {
     isResizingRef.current = false;
     setIsResizing(false);
     setActiveHandle(null);
@@ -23900,7 +23869,7 @@ function CropperInner({
     imageTransition = "transform 150ms linear";
   }
   const settleStencilTransition = settling ? "left 200ms ease-out, top 200ms ease-out, width 200ms ease-out, height 200ms ease-out" : void 0;
-  const imageStyle = (0, import_element77.useMemo)(() => {
+  const imageStyle = (0, import_element76.useMemo)(() => {
     if (elementSize.width === 0 || elementSize.height === 0) {
       return {};
     }
@@ -23929,7 +23898,7 @@ function CropperInner({
   } else if (settling) {
     stageStyle = { transition: settleTransition, willChange };
   }
-  const setContainerRef = (0, import_element77.useCallback)(
+  const setContainerRef = (0, import_element76.useCallback)(
     (element) => {
       if (typeof ref === "function") {
         ref(element);
@@ -23939,7 +23908,7 @@ function CropperInner({
     },
     [ref]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
     "div",
     {
       ref: setContainerRef,
@@ -23948,7 +23917,7 @@ function CropperInner({
         isDragging && "wp-media-editor-image-editor--dragging",
         className
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(
         "div",
         {
           ref: canvasRef,
@@ -23972,7 +23941,7 @@ function CropperInner({
           onBlur: handleCropAreaBlur,
           ...canvasHandlers,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
               "div",
               {
                 id: cropAreaDescriptionId,
@@ -23982,14 +23951,14 @@ function CropperInner({
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(
               "div",
               {
                 className: "wp-media-editor-image-editor__stage",
                 "data-testid": "cropper-stage",
                 style: stageStyle,
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
                     "img",
                     {
                       className: "wp-media-editor-image-editor__image",
@@ -24000,7 +23969,7 @@ function CropperInner({
                       draggable: false
                     }
                   ),
-                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
                     DimmingOverlay,
                     {
                       cropRect: state.cropRect,
@@ -24009,7 +23978,7 @@ function CropperInner({
                       transition: settleStencilTransition
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
                     StencilComponent,
                     {
                       cropRect: state.cropRect,
@@ -24026,7 +23995,7 @@ function CropperInner({
                       minCropSize
                     }
                   ),
-                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
                     GridOverlay,
                     {
                       cropRect: state.cropRect,
@@ -24034,7 +24003,7 @@ function CropperInner({
                       imageSize: visualSize
                     }
                   ),
-                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
                     DimensionsOverlay,
                     {
                       cropRect: state.cropRect,
@@ -24048,7 +24017,7 @@ function CropperInner({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
               "div",
               {
                 "aria-live": "polite",
@@ -24064,15 +24033,15 @@ function CropperInner({
     }
   );
 }
-var CropperInnerWithRef = (0, import_element77.forwardRef)(
+var CropperInnerWithRef = (0, import_element76.forwardRef)(
   CropperInner
 );
-var Cropper = (0, import_element77.forwardRef)(
-  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(CropperInnerWithRef, { ...props, ref }) })
+var Cropper = (0, import_element76.forwardRef)(
+  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(CropperInnerWithRef, { ...props, ref }) })
 );
 
 // packages/media-editor/build-module/state/use-media-editor-state.mjs
-var import_element78 = __toESM(require_element(), 1);
+var import_element77 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/state/types.mjs
 var DEFAULT_CROP_OPTIONS = {
@@ -24169,7 +24138,7 @@ function areCropperImagesEqual(a2, b2) {
   return a2?.src === b2?.src && a2?.naturalWidth === b2?.naturalWidth && a2?.naturalHeight === b2?.naturalHeight;
 }
 function useMediaEditorState(initialState) {
-  const [state, dispatch] = (0, import_element78.useReducer)(
+  const [state, dispatch] = (0, import_element77.useReducer)(
     mediaEditorReducer,
     null,
     () => buildInitialMediaEditorState(
@@ -24180,16 +24149,16 @@ function useMediaEditorState(initialState) {
       initialState?.cropOptions
     )
   );
-  const [initialBaseline, setInitialBaseline] = (0, import_element78.useState)(() => state);
-  const stateRef = (0, import_element78.useRef)(state);
-  const visualSizeRef = (0, import_element78.useRef)({ width: 0, height: 0 });
-  const historyRef = (0, import_element78.useRef)([]);
-  const redoStackRef = (0, import_element78.useRef)([]);
-  const [hasUndo, setHasUndo] = (0, import_element78.useState)(false);
-  const [hasRedo, setHasRedo] = (0, import_element78.useState)(false);
-  const isGestureOpenRef = (0, import_element78.useRef)(false);
-  const gestureSnapshotRef = (0, import_element78.useRef)(null);
-  const pushSnapshot = (0, import_element78.useCallback)((snapshot) => {
+  const [initialBaseline, setInitialBaseline] = (0, import_element77.useState)(() => state);
+  const stateRef = (0, import_element77.useRef)(state);
+  const visualSizeRef = (0, import_element77.useRef)({ width: 0, height: 0 });
+  const historyRef = (0, import_element77.useRef)([]);
+  const redoStackRef = (0, import_element77.useRef)([]);
+  const [hasUndo, setHasUndo] = (0, import_element77.useState)(false);
+  const [hasRedo, setHasRedo] = (0, import_element77.useState)(false);
+  const isGestureOpenRef = (0, import_element77.useRef)(false);
+  const gestureSnapshotRef = (0, import_element77.useRef)(null);
+  const pushSnapshot = (0, import_element77.useCallback)((snapshot) => {
     const last = historyRef.current[historyRef.current.length - 1];
     if (last && areMediaEditorStatesEqual(last, snapshot)) {
       return;
@@ -24199,7 +24168,7 @@ function useMediaEditorState(initialState) {
     setHasUndo(true);
     setHasRedo(false);
   }, []);
-  const dispatchWithHistory = (0, import_element78.useCallback)(
+  const dispatchWithHistory = (0, import_element77.useCallback)(
     (action, recordHistory = true) => {
       const preState = stateRef.current;
       const postState = mediaEditorReducer(preState, action);
@@ -24219,14 +24188,14 @@ function useMediaEditorState(initialState) {
     },
     [pushSnapshot]
   );
-  const beginGesture = (0, import_element78.useCallback)(() => {
+  const beginGesture = (0, import_element77.useCallback)(() => {
     if (isGestureOpenRef.current) {
       return;
     }
     isGestureOpenRef.current = true;
     gestureSnapshotRef.current = null;
   }, []);
-  const endGesture = (0, import_element78.useCallback)(() => {
+  const endGesture = (0, import_element77.useCallback)(() => {
     const snapshot = gestureSnapshotRef.current;
     if (snapshot && !areMediaEditorStatesEqual(snapshot, stateRef.current)) {
       pushSnapshot(snapshot);
@@ -24234,20 +24203,20 @@ function useMediaEditorState(initialState) {
     gestureSnapshotRef.current = null;
     isGestureOpenRef.current = false;
   }, [pushSnapshot]);
-  const dispatchCropperAction = (0, import_element78.useCallback)(
+  const dispatchCropperAction = (0, import_element77.useCallback)(
     (action) => {
       dispatchWithHistory({ type: "CROPPER", action });
     },
     [dispatchWithHistory]
   );
-  const cropperSetters = (0, import_element78.useMemo)(
+  const cropperSetters = (0, import_element77.useMemo)(
     () => buildCropperSetters(
       dispatchCropperAction,
       () => stateRef.current.cropper
     ),
     [dispatchCropperAction]
   );
-  const setImage = (0, import_element78.useCallback)((image) => {
+  const setImage = (0, import_element77.useCallback)((image) => {
     if (areCropperImagesEqual(stateRef.current.cropper.image, image)) {
       return;
     }
@@ -24266,7 +24235,7 @@ function useMediaEditorState(initialState) {
     setHasUndo(false);
     setHasRedo(false);
   }, []);
-  const reset = (0, import_element78.useCallback)(
+  const reset = (0, import_element77.useCallback)(
     (resetState) => {
       dispatchWithHistory({
         type: "CROPPER",
@@ -24275,7 +24244,7 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const setAspectRatioValue = (0, import_element78.useCallback)(
+  const setAspectRatioValue = (0, import_element77.useCallback)(
     (presetKey) => {
       const resolved = resolveAspectRatio(
         presetKey,
@@ -24292,10 +24261,10 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const resetCropOptions = (0, import_element78.useCallback)(() => {
+  const resetCropOptions = (0, import_element77.useCallback)(() => {
     dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
   }, [dispatchWithHistory]);
-  const undo = (0, import_element78.useCallback)(() => {
+  const undo = (0, import_element77.useCallback)(() => {
     endGesture();
     const prev = historyRef.current[historyRef.current.length - 1];
     if (!prev) {
@@ -24308,7 +24277,7 @@ function useMediaEditorState(initialState) {
     stateRef.current = prev;
     dispatch({ type: "RESTORE_SNAPSHOT", payload: prev });
   }, [endGesture]);
-  const redo = (0, import_element78.useCallback)(() => {
+  const redo = (0, import_element77.useCallback)(() => {
     endGesture();
     const next = redoStackRef.current[0];
     if (!next) {
@@ -24321,10 +24290,10 @@ function useMediaEditorState(initialState) {
     stateRef.current = next;
     dispatch({ type: "RESTORE_SNAPSHOT", payload: next });
   }, [endGesture]);
-  const setVisualSize = (0, import_element78.useCallback)((size4) => {
+  const setVisualSize = (0, import_element77.useCallback)((size4) => {
     visualSizeRef.current = size4;
   }, []);
-  const adjustCropRectForViewport = (0, import_element78.useCallback)(
+  const adjustCropRectForViewport = (0, import_element77.useCallback)(
     (rect) => {
       dispatchWithHistory(
         { type: "VIEWPORT_ADJUST_CROP_RECT", payload: rect },
@@ -24338,7 +24307,7 @@ function useMediaEditorState(initialState) {
     state.cropper,
     initialBaseline.cropper
   );
-  const getCroppedImage = (0, import_element78.useCallback)(
+  const getCroppedImage = (0, import_element77.useCallback)(
     (mimeType, quality) => {
       if (!state.cropper.image) {
         return Promise.reject(
@@ -24354,7 +24323,7 @@ function useMediaEditorState(initialState) {
     },
     [state.cropper]
   );
-  const controller = (0, import_element78.useMemo)(
+  const controller = (0, import_element77.useMemo)(
     () => ({
       // CropperController surface (state is the cropper slice so a
       // <Cropper> takes this controller as-is).
@@ -24403,9 +24372,9 @@ function useMediaEditorState(initialState) {
 }
 
 // packages/media-editor/build-module/state/media-editor-state-provider.mjs
-var import_element79 = __toESM(require_element(), 1);
-var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
-var MediaEditorStateContext = (0, import_element79.createContext)(
+var import_element78 = __toESM(require_element(), 1);
+var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+var MediaEditorStateContext = (0, import_element78.createContext)(
   null
 );
 function MediaEditorStateProvider({
@@ -24417,10 +24386,10 @@ function MediaEditorStateProvider({
     cropper: initialCropperState,
     cropOptions: initialCropOptions
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
 }
 function useMediaEditor() {
-  const context = (0, import_element79.useContext)(MediaEditorStateContext);
+  const context = (0, import_element78.useContext)(MediaEditorStateContext);
   if (!context) {
     throw new Error(
       "useMediaEditor must be used within a MediaEditorStateProvider."
@@ -24430,7 +24399,7 @@ function useMediaEditor() {
 }
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCanvas({
   focusOnMount,
   isPlacementActive = false,
@@ -24442,15 +24411,15 @@ function MediaEditorCanvas({
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
   const { beginGesture, endGesture, setImage } = controller;
-  const aspectRatio = (0, import_element80.useMemo)(
+  const aspectRatio = (0, import_element79.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
-  const handleGestureStart = (0, import_element80.useCallback)(() => {
+  const handleGestureStart = (0, import_element79.useCallback)(() => {
     beginGesture();
     onGestureStart?.();
   }, [beginGesture, onGestureStart]);
-  const handleGestureEnd = (0, import_element80.useCallback)(() => {
+  const handleGestureEnd = (0, import_element79.useCallback)(() => {
     endGesture();
     onGestureEnd?.();
   }, [endGesture, onGestureEnd]);
@@ -24458,7 +24427,7 @@ function MediaEditorCanvas({
   const mediaType = getMediaTypeFromMimeType(media?.mime_type);
   const mediaWidth = Number(media?.media_details?.width);
   const mediaHeight = Number(media?.media_details?.height);
-  (0, import_element80.useEffect)(() => {
+  (0, import_element79.useEffect)(() => {
     if (cropperImage || !mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
       return;
     }
@@ -24471,7 +24440,7 @@ function MediaEditorCanvas({
   if (!mediaUrl || mediaType.type !== "image") {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
     Cropper,
     {
       src: mediaUrl,
@@ -24491,38 +24460,38 @@ function MediaEditorCanvas({
 var import_i18n31 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
-var import_element81 = __toESM(require_element(), 1);
+var import_element80 = __toESM(require_element(), 1);
 var CROP_CONTROL_ATTR = "data-crop-control";
 var KEYBOARD_GESTURE_IDLE_MS = 300;
 function useCropGestureHandlers(options = {}) {
   const { commitOnKeyUp = true } = options;
   const { beginGesture, endGesture } = useMediaEditor();
-  const keyboardTimerRef = (0, import_element81.useRef)();
-  const clearKeyboardTimer = (0, import_element81.useCallback)(() => {
+  const keyboardTimerRef = (0, import_element80.useRef)();
+  const clearKeyboardTimer = (0, import_element80.useCallback)(() => {
     clearTimeout(keyboardTimerRef.current);
   }, []);
-  const scheduleKeyboardEnd = (0, import_element81.useCallback)(() => {
+  const scheduleKeyboardEnd = (0, import_element80.useCallback)(() => {
     clearKeyboardTimer();
     keyboardTimerRef.current = setTimeout(() => {
       endGesture();
     }, KEYBOARD_GESTURE_IDLE_MS);
   }, [clearKeyboardTimer, endGesture]);
-  (0, import_element81.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
-  const handlePointerDownCapture = (0, import_element81.useCallback)(() => {
+  (0, import_element80.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
+  const handlePointerDownCapture = (0, import_element80.useCallback)(() => {
     clearKeyboardTimer();
     beginGesture();
   }, [beginGesture, clearKeyboardTimer]);
-  const handlePointerEnd = (0, import_element81.useCallback)(() => {
+  const handlePointerEnd = (0, import_element80.useCallback)(() => {
     clearKeyboardTimer();
     endGesture();
   }, [clearKeyboardTimer, endGesture]);
-  const handleKeyDownCapture = (0, import_element81.useCallback)(() => {
+  const handleKeyDownCapture = (0, import_element80.useCallback)(() => {
     beginGesture();
     if (!commitOnKeyUp) {
       scheduleKeyboardEnd();
     }
   }, [beginGesture, commitOnKeyUp, scheduleKeyboardEnd]);
-  const handleKeyUp = (0, import_element81.useCallback)(() => {
+  const handleKeyUp = (0, import_element80.useCallback)(() => {
     if (commitOnKeyUp) {
       endGesture();
       return;
@@ -24540,10 +24509,10 @@ function useCropGestureHandlers(options = {}) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_element83 = __toESM(require_element(), 1);
+var import_element82 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/components/rotation-ruler/use-ruler-drag.mjs
-var import_element82 = __toESM(require_element(), 1);
+var import_element81 = __toESM(require_element(), 1);
 function pxToValueDelta(deltaPx, pixelsPerStep, step) {
   return -deltaPx / pixelsPerStep * step;
 }
@@ -24570,7 +24539,7 @@ function useRulerDrag(options) {
     disabled: disabled2,
     onPointerDownStart
   } = options;
-  const latestRef = (0, import_element82.useRef)({
+  const latestRef = (0, import_element81.useRef)({
     value,
     startX: 0,
     startValue: 0,
@@ -24580,10 +24549,10 @@ function useRulerDrag(options) {
     capturePointerId: 0,
     windowPointerUp: null
   });
-  (0, import_element82.useEffect)(() => {
+  (0, import_element81.useEffect)(() => {
     latestRef.current.value = value;
   }, [value]);
-  const endDrag = (0, import_element82.useCallback)(() => {
+  const endDrag = (0, import_element81.useCallback)(() => {
     const state = latestRef.current;
     if (!state.dragging) {
       return;
@@ -24604,8 +24573,8 @@ function useRulerDrag(options) {
       state.windowPointerUp = null;
     }
   }, []);
-  (0, import_element82.useEffect)(() => endDrag, [endDrag]);
-  const onPointerDown = (0, import_element82.useCallback)(
+  (0, import_element81.useEffect)(() => endDrag, [endDrag]);
+  const onPointerDown = (0, import_element81.useCallback)(
     (event) => {
       if (disabled2 || event.button !== 0) {
         return;
@@ -24626,7 +24595,7 @@ function useRulerDrag(options) {
     },
     [disabled2, onPointerDownStart, endDrag, step]
   );
-  const onPointerMove = (0, import_element82.useCallback)(
+  const onPointerMove = (0, import_element81.useCallback)(
     (event) => {
       const state = latestRef.current;
       if (!state.dragging) {
@@ -24663,7 +24632,7 @@ function useRulerDrag(options) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 var STRIP_HEIGHT = 32;
 var LABEL_BASELINE_Y = 11;
 var MAJOR_INTERVAL = 15;
@@ -24671,7 +24640,7 @@ var TICK_HEIGHT_MINOR = 4;
 var TICK_HEIGHT_MID = 8;
 var TICK_HEIGHT_MAJOR = 14;
 function useTicks(min3, max3) {
-  return (0, import_element83.useMemo)(() => {
+  return (0, import_element82.useMemo)(() => {
     const out = [];
     for (let v2 = Math.ceil(min3); v2 <= Math.floor(max3); v2 += 1) {
       let kind = "minor";
@@ -24706,8 +24675,8 @@ function RotationRuler(props) {
     id,
     disabled: disabled2 = false
   } = props;
-  const inputRef = (0, import_element83.useRef)(null);
-  const generatedId = (0, import_element83.useId)();
+  const inputRef = (0, import_element82.useRef)(null);
+  const generatedId = (0, import_element82.useId)();
   const inputId = id ?? generatedId;
   const dragHandlers = useRulerDrag({
     value,
@@ -24739,7 +24708,7 @@ function RotationRuler(props) {
   const display = `${formatValue(value)}${unit}`;
   const ticks = useTicks(min3, max3);
   const pxPerUnit = pixelsPerStep / step;
-  const stripStyle = (0, import_element83.useMemo)(() => {
+  const stripStyle = (0, import_element82.useMemo)(() => {
     const offset4 = -value * pxPerUnit;
     return {
       transform: `translateX(calc(-50% + ${offset4}px))`
@@ -24751,7 +24720,7 @@ function RotationRuler(props) {
   const isNegative = numberText.startsWith("-");
   const digits = isNegative ? numberText.slice(1) : numberText;
   const majorTicks = ticks.filter((tick) => tick.kind === "major");
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(
     "div",
     {
       className: clsx_default("rotation-ruler", className),
@@ -24759,7 +24728,7 @@ function RotationRuler(props) {
       "data-disabled": disabled2 || void 0,
       ...dragHandlers,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
           "input",
           {
             ref: inputRef,
@@ -24779,7 +24748,7 @@ function RotationRuler(props) {
             onKeyDown: handleKeyDown
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime112.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(
           "svg",
           {
             className: "rotation-ruler__ticks",
@@ -24789,7 +24758,7 @@ function RotationRuler(props) {
             viewBox: `${min3 * pxPerUnit} 0 ${(max3 - min3) * pxPerUnit} ${STRIP_HEIGHT}`,
             preserveAspectRatio: "xMidYMid meet",
             children: [
-              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
                 "line",
                 {
                   x1: tick.value * pxPerUnit,
@@ -24800,7 +24769,7 @@ function RotationRuler(props) {
                 },
                 tick.value
               )),
-              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(
+              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(
                 "text",
                 {
                   x: tick.value * pxPerUnit,
@@ -24817,19 +24786,19 @@ function RotationRuler(props) {
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
-          isNegative && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime112.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
+          isNegative && /* @__PURE__ */ (0, import_jsx_runtime112.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
           digits,
-          /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
+          /* @__PURE__ */ (0, import_jsx_runtime112.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
+        /* @__PURE__ */ (0, import_jsx_runtime112.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
       ]
     }
   );
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorFineRotation({
   onPlacementControlInteraction
 }) {
@@ -24850,13 +24819,13 @@ function MediaEditorFineRotation({
     onPlacementControlInteraction?.();
     setRotation(baseAngle + clamped * visualDir);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
     "div",
     {
       role: "presentation",
       className: "media-editor-fine-rotation",
       ...rotationGestureHandlers,
-      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
         RotationRuler,
         {
           label: (0, import_i18n31.__)("Fine rotation"),
@@ -24871,14 +24840,16 @@ function MediaEditorFineRotation({
 }
 
 // packages/media-editor/build-module/components/media-editor-transform-controls/index.mjs
-var import_components36 = __toESM(require_components(), 1);
+var import_components35 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
-var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
-function MediaEditorTransformControls() {
+var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+function MediaEditorTransformControls({
+  withLabels = false
+}) {
   const { state, setFlip, snapRotate90 } = useMediaEditor();
-  return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)("div", { className: "media-editor-transform-controls", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
-      import_components36.Button,
+  const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_jsx_runtime114.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+      import_components35.Button,
       {
         size: "compact",
         icon: rotate_left_default,
@@ -24887,8 +24858,8 @@ function MediaEditorTransformControls() {
         onClick: () => snapRotate90(-1)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
-      import_components36.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+      import_components35.Button,
       {
         size: "compact",
         icon: rotate_right_default,
@@ -24896,9 +24867,11 @@ function MediaEditorTransformControls() {
         showTooltip: true,
         onClick: () => snapRotate90(1)
       }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
-      import_components36.Button,
+    )
+  ] });
+  const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_jsx_runtime114.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+      import_components35.Button,
       {
         size: "compact",
         icon: flip_horizontal_default,
@@ -24911,8 +24884,8 @@ function MediaEditorTransformControls() {
         })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
-      import_components36.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+      import_components35.Button,
       {
         size: "compact",
         icon: flip_vertical_default,
@@ -24926,12 +24899,58 @@ function MediaEditorTransformControls() {
       }
     )
   ] });
+  if (withLabels) {
+    return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)("div", { className: "media-editor-transform-controls is-stacked", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(
+        "div",
+        {
+          className: "media-editor-transform-controls__group",
+          role: "group",
+          "aria-label": (0, import_i18n32.__)("Rotate"),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+              "span",
+              {
+                className: "media-editor-transform-controls__label",
+                "aria-hidden": "true",
+                children: (0, import_i18n32.__)("Rotate")
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "media-editor-transform-controls__buttons", children: rotateButtons })
+          ]
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(
+        "div",
+        {
+          className: "media-editor-transform-controls__group",
+          role: "group",
+          "aria-label": (0, import_i18n32.__)("Flip"),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+              "span",
+              {
+                className: "media-editor-transform-controls__label",
+                "aria-hidden": "true",
+                children: (0, import_i18n32.__)("Flip")
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "media-editor-transform-controls__buttons", children: flipButtons })
+          ]
+        }
+      )
+    ] });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)("div", { className: "media-editor-transform-controls", children: [
+    rotateButtons,
+    flipButtons
+  ] });
 }
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
-var import_components37 = __toESM(require_components(), 1);
+var import_components36 = __toESM(require_components(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
-var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 var ZOOM_PERCENTAGE_SCALE = 100;
 var MAX_ZOOM_PERCENTAGE = MAX_ZOOM * ZOOM_PERCENTAGE_SCALE;
 function getZoomPercentageForDisplay(zoom) {
@@ -24944,7 +24963,8 @@ function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
   onPlacementControlInteraction,
-  aspectRatioOptions
+  aspectRatioOptions,
+  showTransformControls = false
 }) {
   const { state, setZoom } = useMediaEditor();
   const zoomGestureHandlers = useCropGestureHandlers();
@@ -24955,16 +24975,17 @@ function MediaEditorCropPanel({
     // Tag the whole panel as a crop-control region so the modal's
     // Cmd+Z handler doesn't mistake the SelectControl input for a
     // metadata field (which would suppress undo).
-    /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(
       Stack,
       {
         direction: "column",
         gap: "xl",
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("h2", {}), children: (0, import_i18n33.__)("Crop options") }),
-          /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-            import_components37.SelectControl,
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("h2", {}), children: (0, import_i18n33.__)("Crop options") }),
+          showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(MediaEditorTransformControls, { withLabels: true }),
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+            import_components36.SelectControl,
             {
               __next40pxDefaultSize: true,
               label: (0, import_i18n33.__)("Aspect ratio"),
@@ -24976,8 +24997,8 @@ function MediaEditorCropPanel({
               }))
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-            import_components37.RangeControl,
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { role: "presentation", ...zoomGestureHandlers, children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+            import_components36.RangeControl,
             {
               __next40pxDefaultSize: true,
               label: (0, import_i18n33.__)("Zoom (%)"),
@@ -25009,11 +25030,11 @@ function MediaEditorCropPanel({
 }
 
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
-var import_components38 = __toESM(require_components(), 1);
-var import_element84 = __toESM(require_element(), 1);
+var import_components37 = __toESM(require_components(), 1);
+var import_element83 = __toESM(require_element(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
-var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
     description: (0, import_i18n34.__)("Undo"),
@@ -25087,13 +25108,13 @@ function KeyCombinationDisplay({
   } else {
     label = charString;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
     "kbd",
     {
       className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
       "aria-label": label,
       children: keys.map(
-        (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_element84.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+        (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_element83.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
           "kbd",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
@@ -25108,28 +25129,28 @@ function KeyCombinationDisplay({
 function MediaEditorKeyboardShortcutsModal({
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
-    import_components38.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
+    import_components37.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
       title: (0, import_i18n34.__)("Keyboard shortcuts"),
       onRequestClose: onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n34.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n34.__)(
           "These shortcuts work when the image editor has focus."
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
           "ul",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-list",
             role: "list",
-            children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
+            children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
               "li",
               {
                 className: "media-editor-keyboard-shortcuts-modal__shortcut",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
-                  /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
+                  /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
                     KeyCombinationDisplay,
                     {
                       keyCombination
@@ -25150,7 +25171,7 @@ function MediaEditorKeyboardShortcutsModal({
 var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
-var import_element85 = __toESM(require_element(), 1);
+var import_element84 = __toESM(require_element(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 
@@ -25260,8 +25281,8 @@ function useSaveMediaEditor({
     saveEditedEntityRecord
   } = (0, import_data7.useDispatch)(import_core_data.store);
   const { createErrorNotice, removeAllNotices } = (0, import_data7.useDispatch)(import_notices.store);
-  const [isSaving, setIsSaving] = (0, import_element85.useState)(false);
-  const save = (0, import_element85.useCallback)(async () => {
+  const [isSaving, setIsSaving] = (0, import_element84.useState)(false);
+  const save = (0, import_element84.useCallback)(async () => {
     removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
     setIsSaving(true);
     try {
@@ -25355,7 +25376,7 @@ function useSaveMediaEditor({
 }
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
-var import_element86 = __toESM(require_element(), 1);
+var import_element85 = __toESM(require_element(), 1);
 function getAspectRatioOptions(aspectRatioPresets) {
   return [
     ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
@@ -25368,11 +25389,11 @@ function useCropOptions({
   const controller = useMediaEditor();
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
-  const aspectRatioOptions = (0, import_element86.useMemo)(
+  const aspectRatioOptions = (0, import_element85.useMemo)(
     () => getAspectRatioOptions(aspectRatioPresets),
     [aspectRatioPresets]
   );
-  const resolvedAspectRatio = (0, import_element86.useMemo)(
+  const resolvedAspectRatio = (0, import_element85.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
@@ -25386,13 +25407,13 @@ function useCropOptions({
 }
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var PLACEMENT_CONTROL_IDLE_MS = 300;
-var { Tabs } = unlock3(import_components39.privateApis);
+var { Tabs } = unlock3(import_components38.privateApis);
 function MediaEditorSidebar({ tabs }) {
-  const tabsContextValue = (0, import_element87.useContext)(Tabs.Context);
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  const tabsContextValue = (0, import_element86.useContext)(Tabs.Context);
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     complementary_area_default,
     {
       scope: "media-editor",
@@ -25403,8 +25424,9 @@ function MediaEditorSidebar({ tabs }) {
       className: "media-editor__sidebar",
       panelClassName: "media-editor__sidebar-panel",
       headerClassName: "media-editor__sidebar-header",
-      header: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+      closeLabel: (0, import_i18n36.__)("Close media panel"),
+      header: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
+      children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
         Tabs.TabPanel,
         {
           tabId: tab.id,
@@ -25422,17 +25444,17 @@ function HeaderActions({
   showCloseButton = false,
   onCancel
 }) {
-  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element87.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(
-    import_components39.Flex,
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element86.useState)(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
+    import_components38.Flex,
     {
       className: "media-editor__header-actions",
       justify: "flex-end",
       expanded: false,
       gap: 2,
       children: [
-        isImage && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-          import_components39.Button,
+        isImage && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components38.Button,
           {
             size: "compact",
             icon: keyboard_default,
@@ -25440,9 +25462,9 @@ function HeaderActions({
             onClick: () => setIsShortcutsModalOpen(true)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
-        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
+        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components38.Button,
           {
             size: "compact",
             icon: close_default,
@@ -25452,7 +25474,7 @@ function HeaderActions({
             accessibleWhenDisabled: true
           }
         ),
-        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
           MediaEditorKeyboardShortcutsModal,
           {
             onClose: () => setIsShortcutsModalOpen(false)
@@ -25494,15 +25516,26 @@ function HistoryActions({
     onReset();
     endGesture();
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(
-    import_components39.Flex,
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
+    import_components38.Flex,
     {
       className: "media-editor__history-actions",
       expanded: false,
       gap: 2,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components38.Button,
+          {
+            size: "compact",
+            variant: "tertiary",
+            disabled: !isDirty,
+            accessibleWhenDisabled: true,
+            onClick: handleReset,
+            children: (0, import_i18n36.__)("Reset")
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components38.Button,
           {
             size: "compact",
             icon: undo_default,
@@ -25514,8 +25547,8 @@ function HistoryActions({
             onClick: handleUndo
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components38.Button,
           {
             size: "compact",
             icon: redo_default,
@@ -25525,17 +25558,6 @@ function HistoryActions({
             disabled: isUndoRedoDisabled || !hasRedo,
             accessibleWhenDisabled: true,
             onClick: handleRedo
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-          import_components39.Button,
-          {
-            size: "compact",
-            variant: "tertiary",
-            disabled: !isDirty,
-            accessibleWhenDisabled: true,
-            onClick: handleReset,
-            children: (0, import_i18n36.__)("Reset")
           }
         )
       ]
@@ -25550,16 +25572,16 @@ function FooterActions({
   onSave
 }) {
   const saveDisabled = isSaving || !hasMedia || !hasChanges;
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(
-    import_components39.Flex,
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
+    import_components38.Flex,
     {
       className: "media-editor__footer-actions",
       justify: "flex-end",
       expanded: false,
       gap: 2,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components38.Button,
           {
             __next40pxDefaultSize: true,
             variant: "tertiary",
@@ -25569,8 +25591,8 @@ function FooterActions({
             children: (0, import_i18n36.__)("Cancel")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components38.Button,
           {
             __next40pxDefaultSize: true,
             variant: "primary",
@@ -25598,14 +25620,8 @@ function MediaEditorContent({
   shouldCloseOnEsc = false
 }) {
   const cropper = useMediaEditor();
-  const isWideViewport = (0, import_compose6.useViewportMatch)("xlarge");
-  const isMediumViewport = (0, import_compose6.useViewportMatch)("medium");
-  let footerLayout = "narrow";
-  if (isWideViewport) {
-    footerLayout = "wide";
-  } else if (isMediumViewport) {
-    footerLayout = "medium";
-  }
+  const isPanelLayout = (0, import_compose6.useViewportMatch)("medium");
+  const footerLayout = isPanelLayout ? "wide" : "narrow";
   const { media, hasEdits } = (0, import_data8.useSelect)(
     (select) => {
       const {
@@ -25637,34 +25653,34 @@ function MediaEditorContent({
   const hasChanges = cropper.isCropperDirty || hasEdits;
   const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data8.useDispatch)(import_core_data2.store);
   const { removeAllNotices } = (0, import_data8.useDispatch)(import_notices2.store);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element87.useState)(false);
-  const [isPlacementActive, setIsPlacementActive] = (0, import_element87.useState)(false);
-  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element87.useState)(false);
-  const placementControlTimerRef = (0, import_element87.useRef)();
-  const signalPlacementControlInteraction = (0, import_element87.useCallback)(() => {
+  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element86.useState)(false);
+  const [isPlacementActive, setIsPlacementActive] = (0, import_element86.useState)(false);
+  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element86.useState)(false);
+  const placementControlTimerRef = (0, import_element86.useRef)();
+  const signalPlacementControlInteraction = (0, import_element86.useCallback)(() => {
     setIsPlacementActive(true);
     clearTimeout(placementControlTimerRef.current);
     placementControlTimerRef.current = setTimeout(() => {
       setIsPlacementActive(false);
     }, PLACEMENT_CONTROL_IDLE_MS);
   }, []);
-  const handleCanvasGestureStart = (0, import_element87.useCallback)(() => {
+  const handleCanvasGestureStart = (0, import_element86.useCallback)(() => {
     setIsCanvasGestureActive(true);
   }, []);
-  const handleCanvasGestureEnd = (0, import_element87.useCallback)(() => {
+  const handleCanvasGestureEnd = (0, import_element86.useCallback)(() => {
     setIsCanvasGestureActive(false);
   }, []);
   const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
-  (0, import_element87.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     return () => {
       clearTimeout(placementControlTimerRef.current);
     };
   }, []);
-  (0, import_element87.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     setIsPlacementActive(false);
     setIsCanvasGestureActive(false);
   }, [id]);
-  (0, import_element87.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     invalidateResolution("getEntityRecord", [
       "postType",
       "attachment",
@@ -25689,17 +25705,17 @@ function MediaEditorContent({
     media,
     onSaved
   });
-  const tabs = (0, import_element87.useMemo)(() => {
+  const tabs = (0, import_element86.useMemo)(() => {
     const detailsTab = {
       id: "details",
       title: (0, import_i18n36.__)("Details"),
-      panel: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+      panel: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
         Stack,
         {
           className: "media-editor__panel",
           direction: "column",
           gap: "lg",
-          children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(MediaForm, {})
+          children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(MediaForm, {})
         }
       )
     };
@@ -25710,19 +25726,20 @@ function MediaEditorContent({
       {
         id: "crop",
         title: (0, import_i18n36.__)("Crop"),
-        panel: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+        panel: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
           Stack,
           {
             className: "media-editor__panel",
             direction: "column",
             gap: "lg",
-            children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
               MediaEditorCropPanel,
               {
                 aspectRatioValue,
                 onAspectRatioChange: setAspectRatioValue,
                 onPlacementControlInteraction: signalPlacementControlInteraction,
-                aspectRatioOptions
+                aspectRatioOptions,
+                showTransformControls: isPanelLayout
               }
             )
           }
@@ -25735,7 +25752,8 @@ function MediaEditorContent({
     aspectRatioValue,
     setAspectRatioValue,
     aspectRatioOptions,
-    signalPlacementControlInteraction
+    signalPlacementControlInteraction,
+    isPanelLayout
   ]);
   const handleChange = (updates) => {
     editEntityRecord("postType", "attachment", id, updates);
@@ -25787,23 +25805,29 @@ function MediaEditorContent({
       }
     }
   };
-  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     import_notices2.SnackbarNotices,
     {
       className: noticesClassName,
       context: MEDIA_EDITOR_NOTICES_CONTEXT
     }
   );
-  const children = /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(
+  const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+    MediaEditorFineRotation,
+    {
+      onPlacementControlInteraction: signalPlacementControlInteraction
+    }
+  ) : null;
+  const children = /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
     MediaEditorProvider,
     {
       value: media ?? void 0,
       onChange: handleChange,
       settings: { fields },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_components39.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(import_jsx_runtime118.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(MediaEditorSidebar, { tabs }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components38.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(import_jsx_runtime117.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(MediaEditorSidebar, { tabs }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
             interface_skeleton_default,
             {
               className: "media-editor__skeleton",
@@ -25811,21 +25835,24 @@ function MediaEditorContent({
                 body: isImage ? (0, import_i18n36.__)("Image editor") : (0, import_i18n36.__)("Media preview"),
                 sidebar: (0, import_i18n36.__)("Media details")
               },
-              content: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("div", { className: "media-editor__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-                MediaEditorCanvas,
-                {
-                  focusOnMount: true,
-                  isPlacementActive,
-                  onGestureStart: handleCanvasGestureStart,
-                  onGestureEnd: handleCanvasGestureEnd
-                }
-              ) : /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(MediaPreview, {}) }),
-              sidebar: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+              content: /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("div", { className: "media-editor__content", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+                  MediaEditorCanvas,
+                  {
+                    focusOnMount: true,
+                    isPlacementActive,
+                    onGestureStart: handleCanvasGestureStart,
+                    onGestureEnd: handleCanvasGestureEnd
+                  }
+                ) : /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(MediaPreview, {}) }),
+                isImage && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
+              ] }),
+              sidebar: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
             }
           )
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-          import_components39.__experimentalConfirmDialog,
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components38.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
             confirmButtonText: (0, import_i18n36.__)("Discard"),
@@ -25840,25 +25867,19 @@ function MediaEditorContent({
             )
           }
         ),
-        noticesPortalElement ? (0, import_element87.createPortal)(snackbar, noticesPortalElement) : snackbar
+        noticesPortalElement ? (0, import_element86.createPortal)(snackbar, noticesPortalElement) : snackbar
       ]
     }
   );
-  const history = isImage ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  const history = isImage ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     HistoryActions,
     {
       isUndoRedoDisabled: isCropInteractionActive,
       onReset: resetCropOptions
     }
   ) : null;
-  const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-    MediaEditorFineRotation,
-    {
-      onPlacementControlInteraction: signalPlacementControlInteraction
-    }
-  ) : null;
-  const transform = isImage ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(MediaEditorTransformControls, {}) : null;
-  const actions = /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  const transform = isImage ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(MediaEditorTransformControls, {}) : null;
+  const actions = /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     FooterActions,
     {
       isSaving,
@@ -25870,28 +25891,14 @@ function MediaEditorContent({
   );
   let footerActions;
   if (footerLayout === "wide") {
-    footerActions = /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(import_jsx_runtime118.Fragment, { children: [
+    footerActions = /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(import_jsx_runtime117.Fragment, { children: [
       history,
-      isImage && /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)("div", { className: "media-editor-modal__footer-toolbar", children: [
-        ruler,
-        transform
-      ] }),
       actions
     ] });
-  } else if (footerLayout === "medium") {
-    footerActions = /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(import_jsx_runtime118.Fragment, { children: [
-      ruler,
-      /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
-        history,
-        transform,
-        actions
-      ] })
-    ] });
   } else {
-    footerActions = /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(import_jsx_runtime118.Fragment, { children: [
-      ruler,
+    footerActions = /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(import_jsx_runtime117.Fragment, { children: [
       transform,
-      /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
         history,
         actions
       ] })
@@ -25899,7 +25906,7 @@ function MediaEditorContent({
   }
   return renderFrame({
     children,
-    headerActions: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+    headerActions: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
       HeaderActions,
       {
         isSaving,
@@ -25919,12 +25926,12 @@ function MediaEditorContent({
   });
 }
 function MediaEditor(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(MediaEditorContent, { ...props }) }, props.id);
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(MediaEditorContent, { ...props }) }, props.id);
 }
 var media_editor_default = MediaEditor;
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorModal({
   fields = [],
   aspectRatioPresets
@@ -25951,7 +25958,7 @@ function MediaEditorModal({
     closeMediaEditorModal2();
     onClose?.();
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     media_editor_default,
     {
       id,
@@ -25996,13 +26003,13 @@ function MediaEditorModal({
         onRequestClose,
         onKeyDown,
         shouldCloseOnClickOutside
-      }) => /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+      }) => /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
         import_keyboard_shortcuts.ShortcutProvider,
         {
           className: "media-editor-modal__shortcut-scope",
           onKeyDown: stopKeyDownPropagation,
-          children: /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(
-            import_components40.Modal,
+          children: /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(
+            import_components39.Modal,
             {
               className: "media-editor-modal",
               title: (0, import_i18n37.__)("Edit media"),
@@ -26014,7 +26021,7 @@ function MediaEditorModal({
               headerActions,
               children: [
                 children,
-                /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
                   "div",
                   {
                     className: `media-editor-modal__footer is-${footerLayout}`,
@@ -26051,10 +26058,10 @@ var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptIn
 );
 
 // routes/media-editor/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='dbfa5da8e5']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='133e3075c2']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "dbfa5da8e5");
-  style.appendChild(document.createTextNode('.media-editor-preview{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:32px;position:relative}.media-editor-preview__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-preview--loading{height:100%;width:100%}.media-editor-preview--image img{height:auto;max-height:100%;max-width:100%;object-fit:contain;opacity:0;width:auto}@keyframes __wp-base-styles-fade-in{0%{opacity:0}to{opacity:1}}@media not (prefers-reduced-motion){.media-editor-preview--image img.loaded{animation:__wp-base-styles-fade-in .08s linear 0s;animation-fill-mode:forwards}}.media-editor-preview--video video{height:auto;max-height:100%;max-width:100%;object-fit:contain;width:auto}.media-editor-preview--audio audio{max-width:100%}.media-editor-preview--file{text-align:center}.media-editor-preview__file-info{background:#f0f0f0;border-radius:2px;padding:24px}.media-editor-preview__file-name{font-weight:600;margin-bottom:8px}.media-editor-preview__mime-type{color:#757575;font-size:.9em;margin-bottom:16px}.media-editor-preview__download-link{display:inline-block;margin-top:8px}.media-editor-preview--empty,.media-editor-preview--error{color:#757575;text-align:center}.media-editor-preview__url{color:#949494;font-size:.9em;margin-top:8px;word-break:break-all}.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;-webkit-user-select:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:22px;position:absolute}.wp-media-editor-image-editor__canvas:focus{outline:none}.wp-media-editor-image-editor__stage{inset:0;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #000000b3;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #00000080}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid{opacity:0;transition:none}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__dimensions-tooltip{background:#fff;box-shadow:0 0 0 1px #0000000f,0 1px 2px #00000014;color:#1e1e1e;font-size:11px;font-variant-numeric:tabular-nums;line-height:1.4;padding:2px 6px;pointer-events:none;position:absolute;white-space:nowrap;z-index:2}.wp-media-editor-image-editor__stencil-rect{border:1px solid #ffffffb3;box-sizing:border-box;pointer-events:none;position:absolute;transition:border-color .15s ease,box-shadow .15s ease}.wp-media-editor-image-editor__canvas--focus-visible:focus .wp-media-editor-image-editor__stencil-rect{border-color:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));box-shadow:0 0 0 1px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle{appearance:none;background:#fff9;border:1px solid #ffffffe6;border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__handle:focus{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:#0000;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}.media-editor{display:flex;flex:1;flex-direction:column;height:100%;min-height:0}.media-editor .media-editor__loading{align-items:center;display:flex;height:100%;justify-content:center}.media-editor .interface-interface-skeleton{bottom:auto;flex:1;flex-direction:column;height:100%;left:auto;max-height:none;position:relative;right:auto;top:auto}.media-editor .interface-interface-skeleton__editor{flex:1;min-width:0}.media-editor .media-editor__canvas{align-items:center;background:#f0f0f0;display:flex;height:100%;justify-content:center;overflow:auto}.media-editor .media-editor__canvas .media-editor-preview{height:100%}.media-editor .media-editor__canvas img,.media-editor .media-editor__canvas video{max-height:100%;max-width:100%;object-fit:contain}.media-editor .media-editor__sidebar{box-sizing:border-box}.media-editor .media-editor__sidebar *,.media-editor .media-editor__sidebar :after,.media-editor .media-editor__sidebar :before{box-sizing:inherit}.media-editor .media-editor__panel{padding:16px}.media-editor .components-panel__header.media-editor__sidebar-header{padding-left:0;padding-right:8px}.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{padding:0}@media (min-width:782px){.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{display:flex}}.media-editor__snackbar{bottom:24px;box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal.components-modal__frame .components-modal__content{display:flex;flex-direction:column;margin-bottom:0;min-height:0;padding:0}.media-editor-modal.components-modal__frame .components-modal__children-container{display:flex;flex:1;flex-direction:column;min-height:0}.media-editor-modal.components-modal__frame .media-editor-modal__footer{background:#fff;border-top:1px solid #ddd;display:flex;flex-shrink:0;gap:16px;padding:8px 24px}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide{align-items:center;flex-direction:row}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor-modal__footer-toolbar{align-items:center;display:flex;flex:1 1 0;gap:8px;justify-content:center;min-width:0}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor-fine-rotation{flex:1 1 280px;max-width:360px;min-width:0}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor-transform-controls{border-left:1px solid #ddd;padding-left:12px}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__footer-actions{margin-left:auto}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-medium,.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow{flex-direction:column}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow>.media-editor-transform-controls{align-self:center}.media-editor-modal__footer-row{align-items:center;display:flex;flex-wrap:wrap;gap:16px}.media-editor-modal__footer-row .media-editor-transform-controls,.media-editor-modal__footer-row .media-editor__footer-actions{margin-left:auto}.media-editor-modal,.media-editor-modal__snackbar{display:flex;flex-direction:column}.media-editor-modal__snackbar{bottom:24px;box-sizing:border-box;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor-modal__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal__snackbar{z-index:1000001}.media-editor-canvas{height:100%;position:relative;width:100%}.media-editor-transform-controls{align-items:center;display:flex;flex-wrap:nowrap;gap:8px}.media-editor-keyboard-shortcuts-modal{min-width:280px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__note{color:#757575;font-size:13px;margin:0 0 16px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-list{list-style:none;margin:0;padding:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut{align-items:baseline;border-top:1px solid #ddd;display:flex;margin-bottom:0;padding:.6rem 0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut:last-child{border-bottom:1px solid #ddd}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-description{flex:1;margin:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term{background:none;font-weight:600;margin:0 0 0 1rem;padding:0;text-align:right}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key{border-radius:8%;margin:0 .2rem;padding:.25rem .5rem}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child{margin:0 0 0 .2rem}.rotation-ruler{box-sizing:border-box;color:#1e1e1e;container-type:inline-size;cursor:ew-resize;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:32px;min-width:180px;padding:0 8px;position:relative;touch-action:none;-webkit-user-select:none;user-select:none}.rotation-ruler[data-disabled]{cursor:default;opacity:.5;pointer-events:none}.rotation-ruler:has(.rotation-ruler__input:focus-visible){border-radius:4px;outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:2px}.rotation-ruler__input{clip:rect(0 0 0 0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.rotation-ruler__pointer{background:var(--wp-admin-theme-color,#3858e9);border-radius:1px;bottom:0;height:18px;left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);width:2px}.rotation-ruler__strip{inset:0;mask-image:linear-gradient(90deg,#0000 0,#000 8px,#000 calc(100% - 8px),#0000);-webkit-mask-image:linear-gradient(90deg,#0000 0,#000 8px,#000 calc(100% - 8px),#0000);overflow:hidden;position:absolute}.rotation-ruler__ticks{display:block;left:50%;overflow:visible;position:absolute;top:0}.rotation-ruler__tick{stroke:currentColor;stroke-width:1}.rotation-ruler__tick--minor{opacity:.35}.rotation-ruler__tick--mid{opacity:.6}.rotation-ruler__tick--major{opacity:1}.rotation-ruler__label{fill:currentColor;font-size:10px;font-weight:400;opacity:.45}.rotation-ruler__active-label{color:#1e1e1e;font-size:12px;font-weight:600;height:14px;left:50%;line-height:14px;pointer-events:none;position:absolute;top:0;transform:translateX(-50%)}.rotation-ruler__active-label:before{background:linear-gradient(90deg,#0000 0,#fff 12px,#fff calc(100% - 12px),#0000);content:"";height:100%;left:50%;position:absolute;top:0;transform:translateX(-50%);width:60px}.rotation-ruler__active-label-number{display:inline-block;position:relative}.rotation-ruler__active-label-sign{position:absolute;right:100%;top:0}.rotation-ruler__active-label-unit{left:100%;position:absolute;top:0}@container (max-width: 220px){.rotation-ruler__tick--minor{opacity:0}}@media (prefers-reduced-motion:reduce){.rotation-ruler__ticks{transition:none}}.media-editor-route__content{display:flex;flex:1;min-height:0;overflow:hidden}'));
+  style.setAttribute("data-wp-hash", "133e3075c2");
+  style.appendChild(document.createTextNode('.media-editor-preview{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:32px;position:relative}.media-editor-preview__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-preview--loading{height:100%;width:100%}.media-editor-preview--image img{height:auto;max-height:100%;max-width:100%;object-fit:contain;opacity:0;width:auto}@keyframes __wp-base-styles-fade-in{0%{opacity:0}to{opacity:1}}@media not (prefers-reduced-motion){.media-editor-preview--image img.loaded{animation:__wp-base-styles-fade-in .08s linear 0s;animation-fill-mode:forwards}}.media-editor-preview--video video{height:auto;max-height:100%;max-width:100%;object-fit:contain;width:auto}.media-editor-preview--audio audio{max-width:100%}.media-editor-preview--file{text-align:center}.media-editor-preview__file-info{background:#f0f0f0;border-radius:2px;padding:24px}.media-editor-preview__file-name{font-weight:600;margin-bottom:8px}.media-editor-preview__mime-type{color:#757575;font-size:.9em;margin-bottom:16px}.media-editor-preview__download-link{display:inline-block;margin-top:8px}.media-editor-preview--empty,.media-editor-preview--error{color:#757575;text-align:center}.media-editor-preview__url{color:#949494;font-size:.9em;margin-top:8px;word-break:break-all}.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;-webkit-user-select:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:24px;position:absolute}.wp-media-editor-image-editor__canvas:focus{outline:none}.wp-media-editor-image-editor__stage{inset:0;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #e0e0e099;pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px #e0e0e066}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid{opacity:0;transition:none}.wp-media-editor-image-editor__grid-line{background:#fff6;position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__dimensions-tooltip{background:#fff;box-shadow:0 0 0 1px #0000000f,0 1px 2px #00000014;color:#1e1e1e;font-size:11px;font-variant-numeric:tabular-nums;line-height:1.4;padding:2px 6px;pointer-events:none;position:absolute;white-space:nowrap;z-index:2}.wp-media-editor-image-editor__stencil-rect{border:1px solid #1e1e1e;box-sizing:border-box;pointer-events:none;position:absolute;transition:border-color .15s ease,box-shadow .15s ease}.wp-media-editor-image-editor__canvas--focus-visible:focus .wp-media-editor-image-editor__stencil-rect{border-color:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));box-shadow:0 0 0 1px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle{appearance:none;background:#fff;border:1px solid var(--wp-admin-theme-color,#007cba);border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__handle:focus{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:#0000;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}.media-editor{display:flex;flex:1;flex-direction:column;height:100%;min-height:0}.media-editor .media-editor__loading{align-items:center;display:flex;height:100%;justify-content:center}.media-editor .interface-interface-skeleton{bottom:auto;flex:1;flex-direction:column;height:100%;left:auto;max-height:none;position:relative;right:auto;top:auto}.media-editor .interface-interface-skeleton__editor{flex:1;min-width:0}.media-editor .media-editor__content{border-radius:8px;display:flex;flex:1;flex-direction:column;margin:0 24px;min-height:0;overflow:hidden}.media-editor .media-editor__canvas-toolbar{background:#e0e0e0;display:flex;flex-shrink:0;justify-content:center;padding:8px 16px}.media-editor .media-editor__canvas-toolbar .media-editor-fine-rotation{flex:0 1 360px;min-width:0}.media-editor .media-editor__canvas-area{align-items:center;background:#e0e0e0;display:flex;flex:1;justify-content:center;min-height:0;overflow:auto}.media-editor .media-editor__canvas-area .media-editor-preview{height:100%}.media-editor .media-editor__canvas-area img,.media-editor .media-editor__canvas-area video{max-height:100%;max-width:100%;object-fit:contain}.media-editor .media-editor__sidebar{box-sizing:border-box}.media-editor .media-editor__sidebar *,.media-editor .media-editor__sidebar :after,.media-editor .media-editor__sidebar :before{box-sizing:inherit}@media (min-width:782px){.media-editor .media-editor__sidebar{padding-left:8px}}.media-editor .interface-interface-skeleton__sidebar{border-top:0;box-shadow:none;outline:1px solid #0000}.media-editor .media-editor__panel{padding:16px}@media (min-width:782px){.media-editor .media-editor__panel{padding:16px 24px 0 0}}.media-editor .components-panel__header.media-editor__sidebar-header{padding-left:0;padding-right:8px}.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{padding:0}@media (min-width:782px){.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{display:flex}}@media (max-width:781px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){width:100%}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:100%!important}}.media-editor__snackbar{bottom:24px;box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor__snackbar .components-snackbar{margin-inline:auto}.media-editor-form .dataforms-layouts-panel__field-control{text-wrap:pretty}.media-editor-modal.components-modal__frame .components-modal__content{display:flex;flex-direction:column;margin-bottom:0;min-height:0;padding:0}.media-editor-modal.components-modal__frame .components-modal__children-container{display:flex;flex:1;flex-direction:column;min-height:0}.media-editor-modal.components-modal__frame .media-editor-modal__footer{background:#fff;display:flex;flex-shrink:0;gap:16px;padding:16px 32px 24px}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide{align-items:center;flex-direction:row}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__footer-actions{margin-left:auto}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow{flex-direction:column}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow>.media-editor-transform-controls{align-self:center}.media-editor-modal__footer-row{align-items:center;display:flex;flex-wrap:wrap;gap:16px}.media-editor-modal__footer-row .media-editor-transform-controls,.media-editor-modal__footer-row .media-editor__footer-actions{margin-left:auto}.media-editor__history-actions .components-button.has-icon:not([aria-disabled=true]){color:var(--wp-admin-theme-color)}.media-editor-modal,.media-editor-modal__snackbar{display:flex;flex-direction:column}.media-editor-modal__snackbar{bottom:24px;box-sizing:border-box;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor-modal__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal__snackbar{z-index:1000001}.media-editor-canvas{height:100%;position:relative;width:100%}.media-editor-transform-controls{align-items:center;display:flex;flex-wrap:nowrap;gap:8px}.media-editor-transform-controls.is-stacked{align-items:flex-start;flex-direction:row;gap:24px}.media-editor-transform-controls__group{display:flex;flex-direction:column;gap:4px}.media-editor-transform-controls__label{font-size:11px;font-weight:500;line-height:1.4;text-transform:uppercase}.media-editor-transform-controls__buttons{display:flex;gap:8px;padding-inline:2px 0}.media-editor-keyboard-shortcuts-modal{min-width:280px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__note{color:#757575;font-size:13px;margin:0 0 16px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-list{list-style:none;margin:0;padding:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut{align-items:baseline;border-top:1px solid #ddd;display:flex;margin-bottom:0;padding:.6rem 0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut:last-child{border-bottom:1px solid #ddd}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-description{flex:1;margin:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term{background:none;font-weight:600;margin:0 0 0 1rem;padding:0;text-align:right}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key{border-radius:8%;margin:0 .2rem;padding:.25rem .5rem}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child{margin:0 0 0 .2rem}.rotation-ruler{box-sizing:border-box;color:#1e1e1e;container-type:inline-size;cursor:ew-resize;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:32px;min-width:180px;padding:0 8px;position:relative;touch-action:none;-webkit-user-select:none;user-select:none}.rotation-ruler[data-disabled]{cursor:default;opacity:.5;pointer-events:none}.rotation-ruler:has(.rotation-ruler__input:focus-visible){border-radius:4px;outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:2px}.rotation-ruler__input{clip:rect(0 0 0 0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.rotation-ruler__pointer{background:var(--wp-admin-theme-color,#3858e9);border-radius:1px;bottom:0;height:18px;left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);width:2px}.rotation-ruler__strip{inset:0;mask-image:linear-gradient(90deg,#0000 0,#000 8px,#000 calc(100% - 8px),#0000);-webkit-mask-image:linear-gradient(90deg,#0000 0,#000 8px,#000 calc(100% - 8px),#0000);overflow:hidden;position:absolute}.rotation-ruler__ticks{display:block;left:50%;overflow:visible;position:absolute;top:0}.rotation-ruler__tick{stroke:currentColor;stroke-width:1}.rotation-ruler__tick--minor{opacity:.35}.rotation-ruler__tick--mid{opacity:.6}.rotation-ruler__tick--major{opacity:1}.rotation-ruler__label{fill:currentColor;font-size:10px;font-weight:400;opacity:.45}.rotation-ruler__active-label{color:#1e1e1e;font-size:12px;font-weight:600;height:14px;left:50%;line-height:14px;pointer-events:none;position:absolute;top:0;transform:translateX(-50%)}.rotation-ruler__active-label:before{background:linear-gradient(90deg,#0000 0,#e0e0e0 12px,#e0e0e0 calc(100% - 12px),#0000);content:"";height:100%;left:50%;position:absolute;top:0;transform:translateX(-50%);width:60px}.rotation-ruler__active-label-number{display:inline-block;position:relative}.rotation-ruler__active-label-sign{position:absolute;right:100%;top:0}.rotation-ruler__active-label-unit{left:100%;position:absolute;top:0}@container (max-width: 220px){.rotation-ruler__tick--minor{opacity:0}}@media (prefers-reduced-motion:reduce){.rotation-ruler__ticks{transition:none}}.media-editor-route__content{display:flex;flex:1;min-height:0;overflow:hidden}'));
   document.head.appendChild(style);
 }
 
