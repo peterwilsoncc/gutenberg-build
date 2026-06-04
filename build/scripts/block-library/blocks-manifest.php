@@ -5129,6 +5129,10 @@ return array(
 				'type' => 'boolean',
 				'default' => true
 			),
+			'showTrackLength' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
 			'caption' => array(
 				'type' => 'string'
 			)

@@ -49066,6 +49066,10 @@ ${js}
         type: "boolean",
         default: true
       },
+      showTrackLength: {
+        type: "boolean",
+        default: true
+      },
       caption: {
         type: "string"
       }
@@ -49991,6 +49995,7 @@ ${js}
       showNumbers,
       showImages,
       showArtists,
+      showTrackLength,
       currentTrack
     } = attributes2;
     const waveformStyle = attributes2.className?.match(/is-style-([\w-]+)/)?.[1] || "bars";
@@ -50179,6 +50184,7 @@ ${js}
               showTracklist: true,
               showArtists: true,
               showNumbers: true,
+              showTrackLength: true,
               showImages: true,
               order: "asc"
             });
@@ -50242,6 +50248,27 @@ ${js}
                     }
                   )
                 }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+                import_components104.__experimentalToolsPanelItem,
+                {
+                  label: (0, import_i18n160.__)("Show track length in Tracklist"),
+                  isShownByDefault: true,
+                  hasValue: () => showTrackLength !== true,
+                  onDeselect: () => setAttributes({ showTrackLength: true }),
+                  children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+                    import_components104.ToggleControl,
+                    {
+                      label: (0, import_i18n160.__)(
+                        "Show track length in Tracklist"
+                      ),
+                      onChange: toggleAttribute(
+                        "showTrackLength"
+                      ),
+                      checked: showTrackLength
+                    }
+                  )
+                }
               )
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
@@ -50302,7 +50329,8 @@ ${js}
           "ol",
           {
             className: clsx_default("wp-block-playlist__tracklist", {
-              "wp-block-playlist__tracklist-show-numbers": showNumbers
+              "wp-block-playlist__tracklist-show-numbers": showNumbers,
+              "wp-block-playlist__tracklist-length-is-hidden": !showTrackLength
             }),
             children: innerBlocksProps.children
           }
@@ -50328,7 +50356,13 @@ ${js}
   var import_block_editor180 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
   function saveWithInnerBlocks2({ attributes: attributes2 }) {
-    const { caption, showNumbers, showTracklist, showArtists } = attributes2;
+    const {
+      caption,
+      showNumbers,
+      showTracklist,
+      showArtists,
+      showTrackLength
+    } = attributes2;
     const blockProps = import_block_editor180.useBlockProps.save();
     const innerBlocksProps = import_block_editor180.useInnerBlocksProps.save(blockProps);
     return /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)("figure", { ...innerBlocksProps, children: [
@@ -50338,6 +50372,7 @@ ${js}
           className: clsx_default("wp-block-playlist__tracklist", {
             "wp-block-playlist__tracklist-is-hidden": !showTracklist,
             "wp-block-playlist__tracklist-artist-is-hidden": !showArtists,
+            "wp-block-playlist__tracklist-length-is-hidden": !showTrackLength,
             "wp-block-playlist__tracklist-show-numbers": showNumbers
           }),
           children: innerBlocksProps.children
