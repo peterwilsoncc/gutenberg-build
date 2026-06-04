@@ -82,11 +82,11 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState73({
+        cachedValue = useState74({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-        useLayoutEffect13(
+        useLayoutEffect14(
           function() {
             inst.value = value;
             inst.getSnapshot = getSnapshot;
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React104 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState73 = React104.useState, useEffect65 = React104.useEffect, useLayoutEffect13 = React104.useLayoutEffect, useDebugValue2 = React104.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React104 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState74 = React104.useState, useEffect65 = React104.useEffect, useLayoutEffect14 = React104.useLayoutEffect, useDebugValue2 = React104.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React104.useSyncExternalStore ? React104.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef82 = React104.useRef, useEffect65 = React104.useEffect, useMemo81 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
+      var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef82 = React104.useRef, useEffect65 = React104.useEffect, useMemo82 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef82(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo81(
+        instRef = useMemo82(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -22263,7 +22263,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data2 = __toESM(require_core_data());
 var import_data10 = __toESM(require_data());
-var import_element181 = __toESM(require_element());
+var import_element182 = __toESM(require_element());
 var import_i18n69 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
@@ -22296,6 +22296,9 @@ function useDashboardLayout(dashboardName) {
 var import_es6 = __toESM(require_es6());
 var import_data2 = __toESM(require_data());
 var import_preferences2 = __toESM(require_preferences());
+
+// routes/dashboard/widget-dashboard/types.ts
+var WIDGET_DASHBOARD_COLUMN_COUNT = 4;
 
 // routes/dashboard/widget-dashboard/utils/row-height-presets/row-height-presets.ts
 var ROW_HEIGHT_PRESETS = {
@@ -22345,8 +22348,7 @@ var SCOPE2 = "core/dashboard";
 var KEY2 = "dashboardGridSettings";
 var DEFAULT_GRID_SETTINGS = {
   model: "grid",
-  columns: 12,
-  minColumnWidth: 140,
+  columns: WIDGET_DASHBOARD_COLUMN_COUNT,
   rowHeight: DEFAULT_ROW_HEIGHT
 };
 function useDashboardGridSettings() {
@@ -22442,7 +22444,6 @@ function migrateLayout(widgets, from, to, context = {}) {
 }
 
 // routes/dashboard/widget-dashboard/utils/grid-model-change/grid-model-change.ts
-var DEFAULT_FIXED_COLUMNS = 6;
 function getGridModel(settings) {
   return settings.model ?? "grid";
 }
@@ -22457,7 +22458,7 @@ function computeGridModelChange({
   }
   return {
     layout: migrateLayout(layout, currentModel, targetModel, {
-      columns: gridSettings.columns ?? DEFAULT_FIXED_COLUMNS
+      columns: WIDGET_DASHBOARD_COLUMN_COUNT
     }),
     gridSettings: {
       ...gridSettings,
@@ -22470,15 +22471,14 @@ function computeGridModelChange({
 var import_jsx_runtime117 = __toESM(require_jsx_runtime());
 var DEFAULT_GRID = {
   model: "grid",
-  columns: 12,
-  minColumnWidth: 140,
+  columns: WIDGET_DASHBOARD_COLUMN_COUNT,
   rowHeight: DEFAULT_ROW_HEIGHT
 };
 function resolveGridSettings(settings) {
   const normalized = normalizeGridSettings(settings, DEFAULT_ROW_HEIGHT);
   return {
     ...normalized,
-    columns: normalized.columns ?? DEFAULT_GRID.columns
+    columns: WIDGET_DASHBOARD_COLUMN_COUNT
   };
 }
 var DEFAULT_RESOLVE_WIDGET_MODULE = (moduleId) => import(
@@ -22799,9 +22799,6 @@ if (typeof process === "undefined" || true) {
   registerStyle49("0a2cf0e1e5", ".a6e8ada13acc9f11__editActionsExit,.aa9a2b8bca16d3d4__editActionsEnter{align-items:center;display:inline-flex;gap:var(--wp--preset--spacing--20);transform-origin:right center}.d75534e71f4a967a__editActionsDivider{align-self:center;background-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);flex-shrink:0;height:calc(var(--wpds-dimension-base, 4px)*4);width:1px}@media not (prefers-reduced-motion){.a6e8ada13acc9f11__editActionsExit,.aa9a2b8bca16d3d4__editActionsEnter{will-change:opacity,transform}.aa9a2b8bca16d3d4__editActionsEnter{animation:_6ad9417d3c8378ea__actions-slide-in var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-expressive,cubic-bezier(.25,0,0,1)) forwards}.a6e8ada13acc9f11__editActionsExit{animation:ca863286783f6f27__actions-fold-out var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}@keyframes _6ad9417d3c8378ea__actions-slide-in{0%{opacity:0;transform:translateX(12px) scaleX(.92)}to{opacity:1;transform:translateX(0) scaleX(1)}}@keyframes ca863286783f6f27__actions-fold-out{0%{opacity:1;transform:translateX(0) scaleX(1)}to{opacity:0;transform:translateX(12px) scaleX(.92)}}}");
 }
 var actions_default = { "editActionsEnter": "aa9a2b8bca16d3d4__editActionsEnter", "editActionsExit": "a6e8ada13acc9f11__editActionsExit", "editActionsDivider": "d75534e71f4a967a__editActionsDivider", "actions-slide-in": "_6ad9417d3c8378ea__actions-slide-in", "actions-fold-out": "ca863286783f6f27__actions-fold-out" };
-
-// routes/dashboard/widget-dashboard/components/layout-settings/layout-settings.tsx
-var import_components52 = __toESM(require_components());
 
 // packages/dataviews/build-module/components/dataviews-context/index.mjs
 var import_element89 = __toESM(require_element(), 1);
@@ -40676,42 +40673,11 @@ function LayoutModelEditField({
 
 // routes/dashboard/widget-dashboard/components/layout-settings/layout-settings.tsx
 var import_jsx_runtime205 = __toESM(require_jsx_runtime());
-var DEFAULT_FIXED_COLUMNS2 = 6;
-var DEFAULT_MIN_COLUMN_WIDTH = 350;
 function getModel(item) {
   return item.model ?? "grid";
 }
 function isMasonry(item) {
   return getModel(item) === "masonry";
-}
-function StepperIntegerEdit({
-  data,
-  field,
-  onChange
-}) {
-  const { label, description, getValue, setValue, isValid: isValid2 } = field;
-  const value = getValue({ item: data });
-  const disabled2 = field.isDisabled({ item: data, field });
-  const min2 = typeof isValid2.min?.constraint === "number" ? isValid2.min.constraint : void 0;
-  const max2 = typeof isValid2.max?.constraint === "number" ? isValid2.max.constraint : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
-    import_components52.__experimentalNumberControl,
-    {
-      __next40pxDefaultSize: true,
-      label,
-      help: description,
-      value: value ?? "",
-      min: min2,
-      max: max2,
-      step: 1,
-      spinControls: "custom",
-      disabled: disabled2,
-      onChange: (next) => {
-        const parsed = next === "" || next === void 0 ? void 0 : Number(next);
-        onChange(setValue({ item: data, value: parsed }));
-      }
-    }
-  );
 }
 var fields = [
   {
@@ -40727,46 +40693,6 @@ var fields = [
       { value: "masonry", label: (0, import_i18n56.__)("Masonry") }
     ],
     getValue: ({ item }) => getModel(item)
-  },
-  {
-    id: "columns",
-    type: "integer",
-    Edit: StepperIntegerEdit,
-    label: (0, import_i18n56.__)("Columns"),
-    description: (0, import_i18n56.__)(
-      "How many columns to show when the dashboard has enough space."
-    ),
-    isValid: { min: 1, max: 12 }
-  },
-  {
-    id: "adaptiveColumns",
-    type: "boolean",
-    Edit: "toggle",
-    label: (0, import_i18n56.__)("Adjust on narrow screens"),
-    description: (0, import_i18n56.__)(
-      "Show fewer columns when the dashboard gets too narrow to keep tiles readable."
-    ),
-    getValue: ({ item }) => item.minColumnWidth !== 0,
-    setValue: ({ item, value }) => {
-      if (!value) {
-        return { minColumnWidth: 0 };
-      }
-      const previous = item.minColumnWidth;
-      return {
-        minColumnWidth: previous && previous > 0 ? previous : DEFAULT_MIN_COLUMN_WIDTH
-      };
-    }
-  },
-  {
-    id: "minColumnWidth",
-    type: "integer",
-    Edit: StepperIntegerEdit,
-    label: (0, import_i18n56.__)("Minimum tile width"),
-    description: (0, import_i18n56.__)(
-      "The smallest tile width before a column is removed."
-    ),
-    isValid: { min: 48, max: 600 },
-    isVisible: (item) => item.minColumnWidth !== 0
   },
   {
     id: "rowHeight",
@@ -40794,13 +40720,7 @@ var fields = [
 ];
 var form = {
   layout: { type: "regular", labelPosition: "top" },
-  fields: [
-    "model",
-    "columns",
-    "adaptiveColumns",
-    "minColumnWidth",
-    "rowHeight"
-  ]
+  fields: ["model", "rowHeight"]
 };
 function LayoutSettings({
   open,
@@ -40825,7 +40745,7 @@ function LayoutSettings({
           layout,
           currentModel,
           nextModel,
-          { columns: gridSettings.columns ?? DEFAULT_FIXED_COLUMNS2 }
+          { columns: WIDGET_DASHBOARD_COLUMN_COUNT }
         );
         onLayoutChange(migrated);
       }
@@ -40913,7 +40833,7 @@ function LayoutSettings({
 }
 
 // routes/dashboard/widget-dashboard/components/more-actions-dropdown/more-actions-dropdown.tsx
-var import_components53 = __toESM(require_components());
+var import_components52 = __toESM(require_components());
 var import_i18n57 = __toESM(require_i18n());
 
 // routes/dashboard/lock-unlock.ts
@@ -40925,7 +40845,7 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptIn
 
 // routes/dashboard/widget-dashboard/components/more-actions-dropdown/more-actions-dropdown.tsx
 var import_jsx_runtime206 = __toESM(require_jsx_runtime());
-var { Menu: Menu6 } = unlock3(import_components53.privateApis);
+var { Menu: Menu6 } = unlock3(import_components52.privateApis);
 function MoreActionsMenuItem({ item }) {
   const showDisabledTooltip = item.disabled && item.disabledTooltip;
   const menuItem = /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
@@ -41696,7 +41616,7 @@ function Inserter() {
 }
 
 // routes/dashboard/widget-dashboard/components/dashboard-widget-chrome/dashboard-widget-chrome.tsx
-var import_components54 = __toESM(require_components());
+var import_components53 = __toESM(require_components());
 var import_element167 = __toESM(require_element());
 var import_i18n63 = __toESM(require_i18n());
 
@@ -41732,7 +41652,7 @@ var WidgetErrorBoundary = class extends import_element167.Component {
   }
 };
 function LoadingOverlay() {
-  return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Stack, { justify: "center", align: "center", className: dashboard_widget_chrome_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components54.Spinner, {}) });
+  return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Stack, { justify: "center", align: "center", className: dashboard_widget_chrome_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components53.Spinner, {}) });
 }
 function UnavailableWidget({ widgetTypeName }) {
   return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
@@ -42131,7 +42051,7 @@ function WidgetSettingsToolbar({
 }
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
-var import_element180 = __toESM(require_element());
+var import_element181 = __toESM(require_element());
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react45 = __toESM(require_react());
@@ -49083,8 +49003,58 @@ var DashboardLanes = (0, import_element178.forwardRef)(
   }
 );
 
+// routes/dashboard/widget-dashboard/hooks/use-dashboard-container-column-count.ts
+var import_compose28 = __toESM(require_compose());
+var import_element179 = __toESM(require_element());
+
+// routes/dashboard/widget-dashboard/utils/resolve-dashboard-column-count/resolve-dashboard-column-count.ts
+var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN = 600;
+var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_TWO_COLUMNS = 960;
+function resolveDashboardColumnCount(containerWidth) {
+  if (containerWidth <= 0) {
+    return WIDGET_DASHBOARD_COLUMN_COUNT;
+  }
+  if (containerWidth < WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN) {
+    return 1;
+  }
+  if (containerWidth < WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_TWO_COLUMNS) {
+    return 2;
+  }
+  return WIDGET_DASHBOARD_COLUMN_COUNT;
+}
+
+// routes/dashboard/widget-dashboard/hooks/use-dashboard-container-column-count.ts
+function useDashboardContainerColumnCount(forwardedRef) {
+  const [container, setContainer] = (0, import_element179.useState)(
+    null
+  );
+  const [containerWidth, setContainerWidth] = (0, import_element179.useState)(0);
+  const resizeObserverRef = (0, import_compose28.useResizeObserver)(([{ contentRect }]) => {
+    setContainerWidth(contentRect.width);
+  });
+  const containerRef = (0, import_compose28.useMergeRefs)([
+    setContainer,
+    resizeObserverRef,
+    forwardedRef
+  ]);
+  (0, import_element179.useLayoutEffect)(() => {
+    if (!container) {
+      return;
+    }
+    const { width } = container.getBoundingClientRect();
+    if (width > 0) {
+      setContainerWidth(width);
+    }
+  }, [container]);
+  const columnCount = (0, import_element179.useMemo)(
+    () => resolveDashboardColumnCount(containerWidth),
+    [containerWidth]
+  );
+  return { containerRef, columnCount };
+}
+
 // routes/dashboard/widget-dashboard/components/widgets/widget-layout-toolbar.tsx
-var import_components55 = __toESM(require_components());
+var import_components54 = __toESM(require_components());
 var import_i18n67 = __toESM(require_i18n());
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-layout-toolbar.module.css
@@ -49095,7 +49065,7 @@ var widget_layout_toolbar_default = { "widgetLayoutToolbar": "_64fb135a680c4ffd_
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-layout-toolbar.tsx
 var import_jsx_runtime224 = __toESM(require_jsx_runtime());
-var { Menu: Menu7 } = unlock3(import_components55.privateApis);
+var { Menu: Menu7 } = unlock3(import_components54.privateApis);
 function WidgetLayoutToolbar({
   widget
 }) {
@@ -49175,7 +49145,7 @@ function WidgetLayoutToolbar({
 }
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.tsx
-var import_element179 = __toESM(require_element());
+var import_element180 = __toESM(require_element());
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.module.css
 if (typeof process === "undefined" || true) {
@@ -49185,7 +49155,7 @@ var widget_resize_handle_default = { "handle": "_41552c4502ad12ed__handle", "res
 
 // routes/dashboard/widget-dashboard/components/widgets/widget-resize-handle.tsx
 var import_jsx_runtime225 = __toESM(require_jsx_runtime());
-var WidgetResizeHandle = (0, import_element179.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element180.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
     return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
       "div",
@@ -49218,13 +49188,12 @@ var WidgetResizeHandle = (0, import_element179.forwardRef)(function WidgetResize
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle49("7be094ccea", "._561eb2c5c7cbcb6b__grid{--wp-grid-placeholder-radius:var(--wpds-border-radius-lg,8px);--wp-grid-drag-preview-radius:var(--wpds-border-radius-lg,8px);width:100%}._8fa4ad5c2e86a6b9__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}._8a257ea80aac989e__tileEditMode{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._8a257ea80aac989e__tileEditMode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._48e2b8516636ed6b__dragPreview{height:100%}._48e2b8516636ed6b__dragPreview ._8fa4ad5c2e86a6b9__tile{box-shadow:none}");
+  registerStyle49("fd44cf780f", "._561eb2c5c7cbcb6b__grid{--wp-grid-placeholder-radius:var(--wpds-border-radius-lg,8px);--wp-grid-drag-preview-radius:var(--wpds-border-radius-lg,8px);container-name:widget-dashboard;container-type:inline-size;width:100%}._8fa4ad5c2e86a6b9__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}._8a257ea80aac989e__tileEditMode{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._8a257ea80aac989e__tileEditMode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus-brand,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._48e2b8516636ed6b__dragPreview{height:100%}._48e2b8516636ed6b__dragPreview ._8fa4ad5c2e86a6b9__tile{box-shadow:none}");
 }
 var widgets_default = { "grid": "_561eb2c5c7cbcb6b__grid", "tile": "_8fa4ad5c2e86a6b9__tile", "tileEditMode": "_8a257ea80aac989e__tileEditMode", "dragPreview": "_48e2b8516636ed6b__dragPreview" };
 
 // routes/dashboard/widget-dashboard/components/widgets/widgets.tsx
 var import_jsx_runtime226 = __toESM(require_jsx_runtime());
-var DASHBOARD_MIN_COLUMN_WIDTH = 350;
 function toGridLayout(widgets) {
   return widgets.map((w2) => ({
     key: w2.uuid,
@@ -49269,22 +49238,22 @@ function applyMasonryChange(widgets, masonryLayout) {
     };
   });
 }
-var Widgets = (0, import_element180.forwardRef)(
+var Widgets = (0, import_element181.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings, widgetTypes } = useDashboardInternalContext();
+    const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
     const isMasonry2 = gridSettings.model === "masonry";
-    const minColumnWidth = gridSettings.minColumnWidth ?? DASHBOARD_MIN_COLUMN_WIDTH;
-    const gridLayout = (0, import_element180.useMemo)(
+    const gridLayout = (0, import_element181.useMemo)(
       () => isMasonry2 ? toMasonryLayout(layout) : toGridLayout(layout),
       [layout, isMasonry2]
     );
-    const handleGridChange = (0, import_element180.useCallback)(
+    const handleGridChange = (0, import_element181.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element180.useCallback)(
+    const handleMasonryChange = (0, import_element181.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -49322,7 +49291,7 @@ var Widgets = (0, import_element180.forwardRef)(
         widget.uuid
       );
     });
-    const renderDragPreview = (0, import_element180.useCallback)(
+    const renderDragPreview = (0, import_element181.useCallback)(
       ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
       []
     );
@@ -49335,8 +49304,7 @@ var Widgets = (0, import_element180.forwardRef)(
       DashboardLanes,
       {
         layout: gridLayout,
-        columns: gridSettings.columns,
-        minColumnWidth,
+        columns: columnCount,
         flowTolerance: gridSettings.flowTolerance,
         onChangeLayout: handleMasonryChange,
         ...sharedRenderProps,
@@ -49346,15 +49314,21 @@ var Widgets = (0, import_element180.forwardRef)(
       DashboardGrid,
       {
         layout: gridLayout,
-        columns: gridSettings.columns,
-        minColumnWidth,
+        columns: columnCount,
         rowHeight: gridSettings.rowHeight,
         onChangeLayout: handleGridChange,
         ...sharedRenderProps,
         children
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { ref, className: clsx_default(widgets_default.grid, className), children: surface });
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+      "div",
+      {
+        ref: containerRef,
+        className: clsx_default(widgets_default.grid, className),
+        children: surface
+      }
+    );
   }
 );
 
@@ -49437,7 +49411,7 @@ function Dashboard() {
   );
   const [gridSettings, setGridSettings] = useDashboardGridSettings();
   const [widgetTypes, isResolving] = useWidgetTypes();
-  const [editMode, setEditMode] = (0, import_element181.useState)(false);
+  const [editMode, setEditMode] = (0, import_element182.useState)(false);
   const isMobileViewport = (0, import_data10.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
