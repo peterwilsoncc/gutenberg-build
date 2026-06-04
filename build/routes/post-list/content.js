@@ -30344,7 +30344,6 @@ function QuickEditModal({
       {
         postType,
         postId,
-        onClose: closeModal,
         hideActions: true
       }
     )),

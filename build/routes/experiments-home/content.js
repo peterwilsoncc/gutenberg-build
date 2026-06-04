@@ -18666,10 +18666,10 @@ var import_i18n21 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 
 // routes/experiments-home/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b010998a76']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='0dca74c247']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "b010998a76");
-  style.appendChild(document.createTextNode(".experiments-page__form{margin:0 auto;max-width:680px;padding:24px}"));
+  style.setAttribute("data-wp-hash", "0dca74c247");
+  style.appendChild(document.createTextNode(".experiments-page__form{box-sizing:border-box;margin:0 auto;max-width:680px;padding:24px;width:100%}"));
   document.head.appendChild(style);
 }
 

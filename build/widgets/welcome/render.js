@@ -1448,7 +1448,7 @@ function WelcomeBanner() {
             "Author rich content with blocks and patterns"
           ),
           description: (0, import_i18n3.__)(
-            "Block patterns are pre-configured block layouts. Use them to get inspired or create new pages in a flash."
+            "Patterns are pre-configured block layouts. Use them to get inspired or create new pages in a flash."
           ),
           ctaUrl: "/wp-admin/post-new.php?post_type=page",
           ctaLabel: (0, import_i18n3.__)("Add a new page")

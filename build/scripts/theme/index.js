@@ -4273,8 +4273,7 @@ var wp;
     children,
     color = {},
     cursor,
-    isRoot = false,
-    density
+    isRoot = false
   }) => {
     const instanceId = (0, import_element3.useId)();
     const { themeProviderStyles, resolvedSettings } = useThemeProviderStyles({
@@ -4297,7 +4296,6 @@ var wp;
         {
           "data-wpds-theme-provider-id": instanceId,
           "data-wpds-root-provider": isRoot,
-          "data-wpds-density": density,
           className: style_default.root,
           children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeContext.Provider, { value: contextValue, children })
         }

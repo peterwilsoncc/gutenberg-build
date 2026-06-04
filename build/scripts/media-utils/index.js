@@ -1632,7 +1632,7 @@ var wp;
   var import_i18n66 = __toESM(require_i18n(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
   var import_data13 = __toESM(require_data(), 1);
-  var import_components53 = __toESM(require_components(), 1);
+  var import_components52 = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/arrow-down.mjs
   var import_primitives = __toESM(require_primitives(), 1);
@@ -26586,7 +26586,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/date_added/index.mjs
   var import_i18n56 = __toESM(require_i18n(), 1);
-  var import_date10 = __toESM(require_date(), 1);
   var dateAddedField = {
     id: "date",
     type: "datetime",
@@ -26594,25 +26593,18 @@ If there's a particular need for this, please submit a feature request at https:
     filterBy: {
       operators: ["before", "after"]
     },
-    format: {
-      datetime: (0, import_date10.getSettings)().formats.datetimeAbbreviated
-    },
     readOnly: true
   };
   var date_added_default = dateAddedField;
 
   // packages/media-fields/build-module/date_modified/index.mjs
   var import_i18n57 = __toESM(require_i18n(), 1);
-  var import_date11 = __toESM(require_date(), 1);
   var dateModifiedField = {
     id: "modified",
     type: "datetime",
     label: (0, import_i18n57.__)("Date modified"),
     filterBy: {
       operators: ["before", "after"]
-    },
-    format: {
-      datetime: (0, import_date11.getSettings)().formats.datetimeAbbreviated
     },
     readOnly: true
   };
@@ -26649,7 +26641,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url4 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/filename/view.mjs
-  var import_components50 = __toESM(require_components(), 1);
   var import_element75 = __toESM(require_element(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
@@ -26667,7 +26658,15 @@ If there's a particular need for this, please submit a feature request at https:
     if (fileName.length <= TRUNCATE_LENGTH) {
       return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("span", { className: "dataviews-media-field__filename", children: fileName });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components50.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("span", { className: "dataviews-media-field__filename", tabIndex: -1, children: fileName }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(tooltip_exports.Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+        tooltip_exports.Trigger,
+        {
+          render: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("span", { className: "dataviews-media-field__filename", children: fileName })
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(tooltip_exports.Popup, { children: fileName })
+    ] });
   }
 
   // packages/media-fields/build-module/filename/index.mjs
@@ -26776,7 +26775,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-fields/build-module/media_thumbnail/view.mjs
   var import_data11 = __toESM(require_data(), 1);
   var import_core_data4 = __toESM(require_core_data(), 1);
-  var import_components51 = __toESM(require_components(), 1);
+  var import_components50 = __toESM(require_components(), 1);
   var import_element76 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
 
@@ -26846,7 +26845,7 @@ If there's a particular need for this, please submit a feature request at https:
     filename
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
-      import_components51.__experimentalVStack,
+      import_components50.__experimentalVStack,
       {
         justify: "center",
         alignment: "center",
@@ -26854,14 +26853,14 @@ If there's a particular need for this, please submit a feature request at https:
         spacing: 0,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-            import_components51.Icon,
+            import_components50.Icon,
             {
               className: "dataviews-media-field__media-thumbnail--icon",
               icon: getMediaTypeFromMimeType(item.mime_type).icon,
               size: 24
             }
           ),
-          !!filename && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components51.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
+          !!filename && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components50.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
         ]
       }
     ) });
@@ -26984,7 +26983,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-utils/build-module/components/media-upload-modal/upload-status-popover.mjs
   var import_element77 = __toESM(require_element(), 1);
   var import_i18n65 = __toESM(require_i18n(), 1);
-  var import_components52 = __toESM(require_components(), 1);
+  var import_components51 = __toESM(require_components(), 1);
   var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
   function UploadStatusPopover({
     uploadingFiles,
@@ -27038,9 +27037,9 @@ If there's a particular need for this, please submit a feature request at https:
       popoverHeading = (0, import_i18n65.__)("Upload complete");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)("div", { className: "media-upload-modal__upload-status", children: [
-      isUploading && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components52.Spinner, {}),
+      isUploading && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components51.Spinner, {}),
       /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
-        import_components52.Button,
+        import_components51.Button,
         {
           className: "media-upload-modal__upload-status__trigger",
           size: "compact",
@@ -27053,7 +27052,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       isOpen && /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(
-        import_components52.Popover,
+        import_components51.Popover,
         {
           className: "media-upload-modal__upload-status__popover",
           placement: "top-start",
@@ -27075,8 +27074,8 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 className: "media-upload-modal__upload-status__item",
                 children: [
-                  file.status === "uploading" && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components52.Spinner, {}),
-                  file.status === "uploaded" && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components52.Icon, { icon: check_default, size: 16 }),
+                  file.status === "uploading" && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components51.Spinner, {}),
+                  file.status === "uploaded" && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components51.Icon, { icon: check_default, size: 16 }),
                   (file.status === "uploading" || file.status === "uploaded") && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
                     "span",
                     {
@@ -27086,7 +27085,7 @@ If there's a particular need for this, please submit a feature request at https:
                     }
                   ),
                   file.status === "error" && /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(
-                    import_components52.Notice,
+                    import_components51.Notice,
                     {
                       status: "error",
                       isDismissible: !!onDismissError,
@@ -27543,7 +27542,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(
-      import_components53.Modal,
+      import_components52.Modal,
       {
         title,
         onRequestClose: handleModalClose,
@@ -27552,14 +27551,14 @@ If there's a particular need for this, please submit a feature request at https:
         overlayClassName: "media-upload-modal",
         size: "fill",
         headerActions: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
-          import_components53.FormFileUpload,
+          import_components52.FormFileUpload,
           {
             accept: acceptTypes,
             multiple: true,
             onChange: handleFileSelect,
             __next40pxDefaultSize: true,
             render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
-              import_components53.Button,
+              import_components52.Button,
               {
                 onClick: openFileDialog,
                 icon: upload_default,
@@ -27571,7 +27570,7 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
-            import_components53.DropZone,
+            import_components52.DropZone,
             {
               onFilesDrop: (files) => {
                 let filteredFiles = files;
