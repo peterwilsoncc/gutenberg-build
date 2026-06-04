@@ -2183,7 +2183,7 @@ var wp;
       )
     );
   }
-  function mergeCrdtBlocks(yblocks, incomingBlocks, attributeCursor) {
+  function mergeCrdtBlocks(yblocks, incomingBlocks, attributeCursor, options = {}) {
     if (!serializableBlocksCache.has(incomingBlocks)) {
       serializableBlocksCache.set(
         incomingBlocks,
@@ -2289,11 +2289,21 @@ var wp;
               mergeCrdtBlocks(
                 yInnerBlocks,
                 incomingBlockPropertyValue ?? [],
-                attributeCursor
+                attributeCursor,
+                options
               );
               break;
             }
             case "clientId": {
+              if (options.preserveClientIds) {
+                break;
+              }
+              if (incomingBlockPropertyValue !== localYBlock.get(incomingBlockProperty)) {
+                localYBlock.set(
+                  incomingBlockProperty,
+                  incomingBlockPropertyValue
+                );
+              }
               break;
             }
             default:
@@ -2854,7 +2864,8 @@ var wp;
     mergeCrdtBlocks(
       currentBlocks,
       (0, import_blocks3.parse)(rawContent),
-      cursorPosition
+      cursorPosition,
+      { preserveClientIds: true }
     );
   }
   function parseCursorSelection(selection) {
@@ -3245,7 +3256,7 @@ var wp;
     if (persistedRecord) {
       const objectType = `postType/${name}`;
       const objectId = persistedRecord.id;
-      const serializedDoc = await getSyncManager()?.createPersistedCRDTDoc(
+      const serializedDoc = getSyncManager()?.createPersistedCRDTDoc(
         objectType,
         objectId
       );

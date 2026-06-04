@@ -9209,13 +9209,6 @@ var wp;
   function passThru(fn) {
     return ((...args2) => fn(...args2));
   }
-  function yieldToEventLoop(fn) {
-    return function(...args2) {
-      setTimeout(() => {
-        fn.apply(this, args2);
-      }, 0);
-    };
-  }
 
   // packages/sync/build-module/providers/index.mjs
   var import_hooks3 = __toESM(require_hooks(), 1);
@@ -10896,13 +10889,12 @@ var wp;
       });
       handlers.editRecord(changes);
     }
-    async function createPersistedCRDTDoc(objectType, objectId) {
+    function createPersistedCRDTDoc(objectType, objectId) {
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
       if (!entityState?.ydoc) {
         return null;
       }
-      await new Promise((resolve) => setTimeout(resolve, 0));
       return serializeCrdtDoc(entityState.ydoc);
     }
     const internal = {
@@ -10920,7 +10912,7 @@ var wp;
       },
       unload: debugWrap(unloadEntity),
       unloadAll: debugWrap(unloadAll),
-      update: debugWrap(yieldToEventLoop(updateCRDTDoc))
+      update: debugWrap(updateCRDTDoc)
     };
   }
 
