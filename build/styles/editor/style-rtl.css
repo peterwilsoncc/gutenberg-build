@@ -1234,24 +1234,25 @@ button.font-library__upload-area {
   margin: 16px;
 }
 
-.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel {
+.global-styles-ui-screen-css .components-v-stack {
   flex: 1 1 auto;
 }
 
-.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input {
+.global-styles-ui-screen-css .components-v-stack .block-editor-global-styles-advanced-panel__custom-css-input {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
 }
 
-.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input .components-base-control__field {
+.global-styles-ui-screen-css .components-v-stack .block-editor-global-styles-advanced-panel__custom-css-input .components-base-control__field {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
 }
 
-.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input textarea {
+.global-styles-ui-screen-css .components-v-stack .block-editor-global-styles-advanced-panel__custom-css-input .components-base-control__field .components-textarea-control__input {
   flex: 1 1 auto;
+  direction: ltr;
 }
 
 .global-styles-ui-screen-css-help-link {
@@ -4641,7 +4642,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 .wp-media-editor-image-editor__canvas {
   position: absolute;
-  inset: 24px;
+  inset: 22px;
 }
 
 .wp-media-editor-image-editor__canvas:focus {
@@ -4673,16 +4674,15 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 .wp-media-editor-image-editor__dimming {
   position: absolute;
   pointer-events: none;
-  /* Large shadow spread washes everything outside the crop area
-     toward the canvas grey ($gray-200). Slightly stronger at rest
-     for clear crop framing, lighter during drag so the user can see
-     where they're panning. */
-  box-shadow: 0 0 0 9999px rgba(224, 224, 224, 0.6);
+  /* Large shadow spread dims everything outside the crop area.
+     Darker at rest for clear crop framing, lighter during drag
+     so the user can see where they're panning. */
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
   transition: box-shadow 0.15s ease;
 }
 
 .wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming {
-  box-shadow: 0 0 0 9999px rgba(224, 224, 224, 0.4);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
 }
 
 .wp-media-editor-image-editor__grid {
@@ -4740,7 +4740,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 .wp-media-editor-image-editor__stencil-rect {
   position: absolute;
-  border: 1px solid #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.7);
   box-sizing: border-box;
   pointer-events: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -4760,8 +4760,8 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   position: absolute;
   width: 12px;
   height: 12px;
-  background: #fff;
-  border: 1px solid var(--wp-admin-theme-color, #007cba);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 50%;
   box-sizing: border-box;
   pointer-events: auto;
@@ -4845,10 +4845,10 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 /**
- * Breakpoints & Media Queries
+ * Typography
  */
 /**
- * Typography
+ * Breakpoints & Media Queries
  */
 /**
 *  Converts a hex value into the rgb equivalent.
@@ -4920,45 +4920,21 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex: 1;
 }
 
-.media-editor .media-editor__content {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  min-height: 0;
-  margin: 0 24px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.media-editor .media-editor__canvas-toolbar {
-  display: flex;
-  flex-shrink: 0;
-  justify-content: center;
-  background: #e0e0e0;
-  padding: 8px 16px;
-}
-
-.media-editor .media-editor__canvas-toolbar .media-editor-fine-rotation {
-  flex: 0 1 360px;
-  min-width: 0;
-}
-
-.media-editor .media-editor__canvas-area {
+.media-editor .media-editor__canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e0e0e0;
+  background: #f0f0f0;
   overflow: auto;
-  flex: 1;
-  min-height: 0;
-}
-
-.media-editor .media-editor__canvas-area .media-editor-preview {
   height: 100%;
 }
 
-.media-editor .media-editor__canvas-area img,
-.media-editor .media-editor__canvas-area video {
+.media-editor .media-editor__canvas .media-editor-preview {
+  height: 100%;
+}
+
+.media-editor .media-editor__canvas img,
+.media-editor .media-editor__canvas video {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
@@ -4974,26 +4950,10 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   box-sizing: inherit;
 }
 
-@media (min-width: 782px) {
-  .media-editor .media-editor__sidebar {
-    padding-right: 8px;
-  }
-}
-.media-editor .interface-interface-skeleton__sidebar {
-  border-top: 0;
-  box-shadow: none;
-  outline: 1px solid transparent;
-}
-
 .media-editor .media-editor__panel {
   padding: 16px;
 }
 
-@media (min-width: 782px) {
-  .media-editor .media-editor__panel {
-    padding: 16px 0 0 24px;
-  }
-}
 .media-editor .components-panel__header.media-editor__sidebar-header {
   padding-right: 0;
   padding-left: 8px;
@@ -5006,15 +4966,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 @media (min-width: 782px) {
   .media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon {
     display: flex;
-  }
-}
-@media (max-width: 781px) {
-  .media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill) {
-    width: 100%;
-  }
-  .media-editor .interface-complementary-area__fill,
-  .media-editor .interface-complementary-area {
-    width: 100% !important;
   }
 }
 .media-editor__snackbar {
@@ -5031,10 +4982,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 .media-editor__snackbar .components-snackbar {
   margin-inline: auto;
-}
-
-.media-editor-form .dataforms-layouts-panel__field-control {
-  text-wrap: pretty;
 }
 
 .media-editor-modal.components-modal__frame .components-modal__content {
@@ -5056,7 +5003,8 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex-shrink: 0;
   display: flex;
   gap: 16px;
-  padding: 16px 32px 24px;
+  padding: 8px 24px;
+  border-top: 1px solid #ddd;
   background: #fff;
 }
 
@@ -5065,11 +5013,31 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   align-items: center;
 }
 
+.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor-modal__footer-toolbar {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor-fine-rotation {
+  flex: 1 1 280px;
+  min-width: 0;
+  max-width: 360px;
+}
+
+.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor-transform-controls {
+  border-right: 1px solid #ddd;
+  padding-right: 12px;
+}
+
 .media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__footer-actions {
   margin-right: auto;
 }
 
-.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow {
+.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-medium, .media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow {
   flex-direction: column;
 }
 
@@ -5087,10 +5055,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 .media-editor-modal__footer-row .media-editor-transform-controls,
 .media-editor-modal__footer-row .media-editor__footer-actions {
   margin-right: auto;
-}
-
-.media-editor__history-actions .components-button.has-icon:not([aria-disabled=true]) {
-  color: var(--wp-admin-theme-color);
 }
 
 .media-editor-modal {
@@ -5129,31 +5093,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex-wrap: nowrap;
   align-items: center;
   gap: 8px;
-}
-
-.media-editor-transform-controls.is-stacked {
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 24px;
-}
-
-.media-editor-transform-controls__group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.media-editor-transform-controls__label {
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.media-editor-transform-controls__buttons {
-  display: flex;
-  gap: 8px;
-  padding-inline: 2px 0;
 }
 
 .media-editor-keyboard-shortcuts-modal {
@@ -5268,7 +5207,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 .rotation-ruler__ticks {
   position: absolute;
-  left: 50%;
+  right: 50%;
   top: 0;
   display: block;
   overflow: visible;
@@ -5319,7 +5258,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   width: 60px;
   height: 100%;
   transform: translateX(50%);
-  background: linear-gradient(to left, transparent 0, #e0e0e0 12px, #e0e0e0 calc(100% - 12px), transparent 100%);
+  background: linear-gradient(to left, transparent 0, #fff 12px, #fff calc(100% - 12px), transparent 100%);
 }
 
 .rotation-ruler__active-label-number {

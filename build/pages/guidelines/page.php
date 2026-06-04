@@ -134,9 +134,7 @@ function gutenberg_guidelines_render_page() {
 		wp_dequeue_style( $style );
 	}
 
-	/**
-	 * Fires when the guidelines page is initialized so extensions can register routes and menu items.
-	 */
+	// Fire init action for extensions to register routes and menu items
 	do_action( 'guidelines_init' );
 
 	// Enqueue command palette assets for boot-based pages
@@ -269,10 +267,18 @@ function gutenberg_guidelines_render_page() {
 	print_admin_styles();
 	print_head_scripts();
 
-	/** This action is documented in wp-admin/admin-header.php */
+	/**
+	 * Fires in head section for a specific admin page.
+	 *
+	 * @since 2.1.0
+	 */
 	do_action( "admin_head-{$hook_suffix}" ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-	/** This action is documented in wp-admin/admin-header.php */
+	/**
+	 * Fires in head section for all admin pages.
+	 *
+	 * @since 2.1.0
+	 */
 	do_action( 'admin_head' );
 	// END see wp-admin/admin-header.php
 	?>
@@ -282,7 +288,11 @@ function gutenberg_guidelines_render_page() {
 	<?php
 	// BEGIN see wp-admin/admin-footer.php
 
-	/** This action is documented in wp-admin/admin-footer.php */
+	/**
+	 * Prints scripts or data before the default footer scripts.
+	 *
+	 * @since 1.2.0
+	 */
 	do_action( 'admin_footer', '' );
 
 	// Print import map first so it's available for inline scripts
@@ -292,7 +302,11 @@ function gutenberg_guidelines_render_page() {
 	wp_script_modules()->print_script_module_preloads();
 	wp_script_modules()->print_script_module_data();
 
-	/** This action is documented in wp-admin/admin-footer.php */
+	/**
+	 * Prints scripts or data after the default footer scripts.
+	 *
+	 * @since 2.8.0
+	 */
 	do_action( "admin_footer-{$hook_suffix}" ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 	// END see wp-admin/admin-footer.php
 	?>
