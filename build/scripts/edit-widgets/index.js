@@ -4670,5 +4670,4 @@ var wp;
   };
   return __toCommonJS(index_exports);
 })();
-if(wp.editWidgets&&typeof wp.editWidgets==='object'){wp.editWidgets=Object.assign({},wp.editWidgets);}
 //# sourceMappingURL=index.js.map

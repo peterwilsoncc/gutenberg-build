@@ -48,5 +48,5 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if (typeof wp.warning === 'object' && wp.warning.default) { wp.warning = wp.warning.default; }if(wp.warning&&typeof wp.warning==='object'){wp.warning=Object.assign({},wp.warning);}
+if (typeof wp.warning === 'object' && wp.warning.default) { wp.warning = wp.warning.default; }
 //# sourceMappingURL=index.js.map

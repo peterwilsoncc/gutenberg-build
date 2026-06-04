@@ -1,8 +1,37 @@
 var ReactDOM = (() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __esm = (fn, res) => function __init() {
+    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+  };
   var __commonJS = (cb, mod) => function __require() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // react-external:react
   var require_react = __commonJS({
@@ -16901,7 +16930,7 @@ var ReactDOM = (() => {
             resource.state.loading |= Inserted;
           }
         }
-        function FiberRootNode(containerInfo, tag, hydrate, identifierPrefix, onUncaughtError, onCaughtError, onRecoverableError, onDefaultTransitionIndicator, formState) {
+        function FiberRootNode(containerInfo, tag, hydrate2, identifierPrefix, onUncaughtError, onCaughtError, onRecoverableError, onDefaultTransitionIndicator, formState) {
           this.tag = 1;
           this.containerInfo = containerInfo;
           this.pingCache = this.current = this.pendingChildren = null;
@@ -16924,13 +16953,13 @@ var ReactDOM = (() => {
           this.memoizedUpdaters = /* @__PURE__ */ new Set();
           containerInfo = this.pendingUpdatersLaneMap = [];
           for (tag = 0; 31 > tag; tag++) containerInfo.push(/* @__PURE__ */ new Set());
-          this._debugRootType = hydrate ? "hydrateRoot()" : "createRoot()";
+          this._debugRootType = hydrate2 ? "hydrateRoot()" : "createRoot()";
         }
-        function createFiberRoot(containerInfo, tag, hydrate, initialChildren, hydrationCallbacks, isStrictMode, identifierPrefix, formState, onUncaughtError, onCaughtError, onRecoverableError, onDefaultTransitionIndicator) {
+        function createFiberRoot(containerInfo, tag, hydrate2, initialChildren, hydrationCallbacks, isStrictMode, identifierPrefix, formState, onUncaughtError, onCaughtError, onRecoverableError, onDefaultTransitionIndicator) {
           containerInfo = new FiberRootNode(
             containerInfo,
             tag,
-            hydrate,
+            hydrate2,
             identifierPrefix,
             onUncaughtError,
             onCaughtError,
@@ -16950,7 +16979,7 @@ var ReactDOM = (() => {
           retainCache(tag);
           isStrictMode.memoizedState = {
             element: initialChildren,
-            isDehydrated: hydrate,
+            isDehydrated: hydrate2,
             cache: tag
           };
           initializeUpdateQueue(isStrictMode);
@@ -20451,12 +20480,124 @@ var ReactDOM = (() => {
     }
   });
 
+  // packages/element/src/react-polyfill-base.ts
+  var react_polyfill_base_exports = {};
+  __export(react_polyfill_base_exports, {
+    findDOMNode: () => findDOMNode,
+    hydrate: () => hydrate,
+    render: () => render,
+    unmountComponentAtNode: () => unmountComponentAtNode
+  });
+  function findCurrentFiber(fiber) {
+    if (!fiber.alternate) {
+      return fiber;
+    }
+    let node = fiber;
+    while (node.return) {
+      node = node.return;
+    }
+    if (node.stateNode.current === node) {
+      return fiber;
+    }
+    return fiber.alternate;
+  }
+  function findHostFiber(fiber) {
+    const current = findCurrentFiber(fiber);
+    if (!current) {
+      return null;
+    }
+    return findHostFiberImpl(current);
+  }
+  function findHostFiberImpl(fiber) {
+    if (fiber.tag === HostComponent || fiber.tag === HostText) {
+      return fiber;
+    }
+    let child = fiber.child;
+    while (child) {
+      const hostFiber = findHostFiberImpl(child);
+      if (hostFiber) {
+        return hostFiber;
+      }
+      child = child.sibling;
+    }
+    return null;
+  }
+  function findDOMNode(instance) {
+    if (instance === null || instance === void 0) {
+      return null;
+    }
+    if (instance.nodeType !== void 0) {
+      return instance;
+    }
+    const fiber = instance[internalsKey];
+    if (fiber === void 0) {
+      if (typeof instance.render === "function") {
+        throw new Error("Unable to find node on an unmounted component.");
+      }
+      const keys = Object.keys(instance).join(",");
+      throw new Error(
+        `Argument appears to not be a ReactComponent. Keys: ${keys}`
+      );
+    }
+    const hostFiber = findHostFiber(fiber);
+    return hostFiber?.stateNode ?? null;
+  }
+  function render(element, container, callback) {
+    let root = roots.get(container);
+    if (!root) {
+      root = (0, import_client.createRoot)(container);
+      roots.set(container, root);
+    }
+    (0, import_react_dom.flushSync)(() => {
+      root.render(element);
+    });
+    if (typeof callback === "function") {
+      callback();
+    }
+  }
+  function hydrate(element, container, callback) {
+    let root = roots.get(container);
+    if (!root) {
+      root = (0, import_client.hydrateRoot)(container, element);
+      roots.set(container, root);
+    } else {
+      root.render(element);
+    }
+    if (typeof callback === "function") {
+      callback();
+    }
+  }
+  function unmountComponentAtNode(container) {
+    const root = roots.get(container);
+    if (!root) {
+      return false;
+    }
+    (0, import_react_dom.flushSync)(() => {
+      root.unmount();
+    });
+    roots.delete(container);
+    return true;
+  }
+  var import_react_dom, import_client, internalsKey, HostComponent, HostText, roots;
+  var init_react_polyfill_base = __esm({
+    "packages/element/src/react-polyfill-base.ts"() {
+      "use strict";
+      import_react_dom = __toESM(require_react_dom());
+      import_client = __toESM(require_client());
+      internalsKey = "_reactInternals";
+      HostComponent = 5;
+      HostText = 6;
+      roots = /* @__PURE__ */ new WeakMap();
+    }
+  });
+
   // <stdin>
   var require_stdin = __commonJS({
     "<stdin>"(exports, module) {
       module.exports = {
         ...require_react_dom(),
-        ...require_client()
+        ...require_client(),
+        ...(init_react_polyfill_base(), __toCommonJS(react_polyfill_base_exports))
       };
     }
   });

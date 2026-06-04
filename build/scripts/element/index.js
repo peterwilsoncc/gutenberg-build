@@ -87,9 +87,10 @@ var wp;
     createPortal: () => import_react_dom.createPortal,
     createRef: () => import_react.createRef,
     createRoot: () => import_client.createRoot,
-    findDOMNode: () => findDOMNode,
+    findDOMNode: () => findDOMNode2,
     flushSync: () => import_react_dom.flushSync,
     forwardRef: () => import_react.forwardRef,
+    hydrate: () => hydrate2,
     hydrateRoot: () => import_client.hydrateRoot,
     isEmptyElement: () => isEmptyElement,
     isValidElement: () => import_react.isValidElement,
@@ -101,9 +102,11 @@ var wp;
     preinitModule: () => import_react_dom.preinitModule,
     preload: () => import_react_dom.preload,
     preloadModule: () => import_react_dom.preloadModule,
+    render: () => render2,
     renderToString: () => serialize_default,
     startTransition: () => import_react.startTransition,
     switchChildrenNodeName: () => switchChildrenNodeName,
+    unmountComponentAtNode: () => unmountComponentAtNode2,
     use: () => import_react.use,
     useActionState: () => import_react.useActionState,
     useCallback: () => import_react.useCallback,
@@ -947,8 +950,12 @@ var wp;
   }
   var serialize_default = renderElement;
 
-  // packages/element/build-module/find-dom-node.mjs
+  // packages/element/build-module/react-polyfill.mjs
   var import_deprecated = __toESM(require_deprecated(), 1);
+
+  // packages/element/build-module/react-polyfill-base.mjs
+  var import_react_dom2 = __toESM(require_react_dom(), 1);
+  var import_client2 = __toESM(require_client(), 1);
   var internalsKey = "_reactInternals";
   var HostComponent = 5;
   var HostText = 6;
@@ -987,11 +994,6 @@ var wp;
     return null;
   }
   function findDOMNode(instance) {
-    (0, import_deprecated.default)("wp.element.findDOMNode", {
-      since: "7.1",
-      alternative: "DOM refs",
-      link: "https://react.dev/reference/react-dom/findDOMNode"
-    });
     if (instance === null || instance === void 0) {
       return null;
     }
@@ -1011,6 +1013,77 @@ var wp;
     const hostFiber = findHostFiber(fiber);
     return hostFiber?.stateNode ?? null;
   }
+  var roots = /* @__PURE__ */ new WeakMap();
+  function render(element, container, callback) {
+    let root = roots.get(container);
+    if (!root) {
+      root = (0, import_client2.createRoot)(container);
+      roots.set(container, root);
+    }
+    (0, import_react_dom2.flushSync)(() => {
+      root.render(element);
+    });
+    if (typeof callback === "function") {
+      callback();
+    }
+  }
+  function hydrate(element, container, callback) {
+    let root = roots.get(container);
+    if (!root) {
+      root = (0, import_client2.hydrateRoot)(container, element);
+      roots.set(container, root);
+    } else {
+      root.render(element);
+    }
+    if (typeof callback === "function") {
+      callback();
+    }
+  }
+  function unmountComponentAtNode(container) {
+    const root = roots.get(container);
+    if (!root) {
+      return false;
+    }
+    (0, import_react_dom2.flushSync)(() => {
+      root.unmount();
+    });
+    roots.delete(container);
+    return true;
+  }
+
+  // packages/element/build-module/react-polyfill.mjs
+  function findDOMNode2(instance) {
+    (0, import_deprecated.default)("wp.element.findDOMNode", {
+      since: "7.1",
+      alternative: "DOM refs",
+      link: "https://react.dev/reference/react-dom/findDOMNode"
+    });
+    return findDOMNode(instance);
+  }
+  function render2(element, container, callback) {
+    (0, import_deprecated.default)("wp.element.render", {
+      since: "6.2",
+      alternative: "wp.element.createRoot",
+      link: "https://react.dev/reference/react-dom/client/createRoot"
+    });
+    render(element, container, callback);
+  }
+  function hydrate2(element, container, callback) {
+    (0, import_deprecated.default)("wp.element.hydrate", {
+      since: "6.2",
+      alternative: "wp.element.hydrateRoot",
+      link: "https://react.dev/reference/react-dom/client/hydrateRoot"
+    });
+    hydrate(element, container, callback);
+  }
+  function unmountComponentAtNode2(container) {
+    (0, import_deprecated.default)("wp.element.unmountComponentAtNode", {
+      since: "6.2",
+      alternative: "root.unmount()",
+      link: "https://react.dev/reference/react-dom/client/createRoot#root-unmount"
+    });
+    return unmountComponentAtNode(container);
+  }
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
@@ -1023,5 +1096,4 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
-if(wp.element&&typeof wp.element==='object'){wp.element=Object.assign({},wp.element);}
 //# sourceMappingURL=index.js.map

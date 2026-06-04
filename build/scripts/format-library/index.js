@@ -2598,5 +2598,4 @@ var wp;
     ({ name: name16, ...settings }) => (0, import_rich_text18.registerFormatType)(name16, settings)
   );
 })();
-if(wp.formatLibrary&&typeof wp.formatLibrary==='object'){wp.formatLibrary=Object.assign({},wp.formatLibrary);}
 //# sourceMappingURL=index.js.map

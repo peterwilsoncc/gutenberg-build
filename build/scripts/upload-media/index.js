@@ -2586,5 +2586,4 @@ var wp;
   var provider_default = MediaUploadProvider;
   return __toCommonJS(index_exports);
 })();
-if(wp.uploadMedia&&typeof wp.uploadMedia==='object'){wp.uploadMedia=Object.assign({},wp.uploadMedia);}
 //# sourceMappingURL=index.js.map

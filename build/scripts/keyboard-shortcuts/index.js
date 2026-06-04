@@ -301,5 +301,4 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if(wp.keyboardShortcuts&&typeof wp.keyboardShortcuts==='object'){wp.keyboardShortcuts=Object.assign({},wp.keyboardShortcuts);}
 //# sourceMappingURL=index.js.map

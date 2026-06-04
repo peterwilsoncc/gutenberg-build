@@ -8129,5 +8129,4 @@ var wp;
   (0, import_data15.register)(store);
   return __toCommonJS(index_exports);
 })();
-if(wp.coreData&&typeof wp.coreData==='object'){wp.coreData=Object.assign({},wp.coreData);}
 //# sourceMappingURL=index.js.map

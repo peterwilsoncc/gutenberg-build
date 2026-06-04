@@ -1,4 +1,3 @@
-"use strict";
 var React = (() => {
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __commonJS = (cb, mod) => function __require() {
@@ -980,6 +979,7 @@ var React = (() => {
   // node_modules/react/index.js
   var require_react = __commonJS({
     "node_modules/react/index.js"(exports, module) {
+      "use strict";
       if (false) {
         module.exports = null;
       } else {
@@ -987,7 +987,17 @@ var React = (() => {
       }
     }
   });
-  return require_react();
+
+  // <stdin>
+  var require_stdin = __commonJS({
+    "<stdin>"(exports, module) {
+      module.exports = {
+        ...require_react(),
+        __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: { ReactCurrentOwner: { current: null } }
+      };
+    }
+  });
+  return require_stdin();
 })();
 /*! Bundled license information:
 

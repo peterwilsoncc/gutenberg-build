@@ -4092,5 +4092,4 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   }
   return __toCommonJS(index_exports);
 })();
-if(wp.commands&&typeof wp.commands==='object'){wp.commands=Object.assign({},wp.commands);}
 //# sourceMappingURL=index.js.map

@@ -76269,5 +76269,4 @@ ${js}
 fast-average-color/dist/index.esm.js:
   (*! Fast Average Color | © 2022 Denis Seleznev | MIT License | https://github.com/fast-average-color/fast-average-color *)
 */
-if(wp.blockLibrary&&typeof wp.blockLibrary==='object'){wp.blockLibrary=Object.assign({},wp.blockLibrary);}
 //# sourceMappingURL=index.js.map

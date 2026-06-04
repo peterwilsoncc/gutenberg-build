@@ -94655,5 +94655,4 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
-if(wp.editor&&typeof wp.editor==='object'){wp.editor=Object.assign({},wp.editor);}
 //# sourceMappingURL=index.js.map
