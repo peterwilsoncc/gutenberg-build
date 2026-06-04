@@ -162,7 +162,7 @@ function gutenberg_media_editor_render_page() {
 		wp_register_script( 'media-editor-prerequisites', '', $asset['dependencies'], $asset['version'], true );
 
 		// Add inline script to initialize the app
-		$init_modules = [];
+		$init_modules = ["@wordpress/edit-site-init"];
 		wp_add_inline_script(
 			'media-editor-prerequisites',
 			sprintf(
@@ -193,7 +193,7 @@ function gutenberg_media_editor_render_page() {
 		);
 
 		// Add init modules as static dependencies
-			// No init modules configured
+			$boot_dependencies[] = array( 'import' => 'static', 'id' => '@wordpress/edit-site-init' );
 
 		// Add all registered routes as dependencies
 		foreach ( $routes as $route ) {
