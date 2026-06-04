@@ -1526,7 +1526,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment117 = REACT_FRAGMENT_TYPE;
+          var Fragment118 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal2 = REACT_PORTAL_TYPE;
@@ -1585,7 +1585,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment117;
+          exports.Fragment = Fragment118;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal2;
@@ -48091,9 +48091,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components85 = __toESM(require_components(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
-  function MediaEditorTransformControls() {
+  function MediaEditorTransformControls({
+    withLabels = false
+  }) {
     const { state, setFlip, snapRotate90 } = useMediaEditor();
-    return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)("div", { className: "media-editor-transform-controls", children: [
+    const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(import_jsx_runtime258.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
         import_components85.Button,
         {
@@ -48113,7 +48115,9 @@ If there's a particular need for this, please submit a feature request at https:
           showTooltip: true,
           onClick: () => snapRotate90(1)
         }
-      ),
+      )
+    ] });
+    const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(import_jsx_runtime258.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
         import_components85.Button,
         {
@@ -48143,6 +48147,52 @@ If there's a particular need for this, please submit a feature request at https:
         }
       )
     ] });
+    if (withLabels) {
+      return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)("div", { className: "media-editor-transform-controls is-stacked", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(
+          "div",
+          {
+            className: "media-editor-transform-controls__group",
+            role: "group",
+            "aria-label": (0, import_i18n124.__)("Rotate"),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
+                "span",
+                {
+                  className: "media-editor-transform-controls__label",
+                  "aria-hidden": "true",
+                  children: (0, import_i18n124.__)("Rotate")
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime258.jsx)("div", { className: "media-editor-transform-controls__buttons", children: rotateButtons })
+            ]
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(
+          "div",
+          {
+            className: "media-editor-transform-controls__group",
+            role: "group",
+            "aria-label": (0, import_i18n124.__)("Flip"),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
+                "span",
+                {
+                  className: "media-editor-transform-controls__label",
+                  "aria-hidden": "true",
+                  children: (0, import_i18n124.__)("Flip")
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime258.jsx)("div", { className: "media-editor-transform-controls__buttons", children: flipButtons })
+            ]
+          }
+        )
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)("div", { className: "media-editor-transform-controls", children: [
+      rotateButtons,
+      flipButtons
+    ] });
   }
 
   // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
@@ -48161,7 +48211,8 @@ If there's a particular need for this, please submit a feature request at https:
     aspectRatioValue,
     onAspectRatioChange,
     onPlacementControlInteraction,
-    aspectRatioOptions
+    aspectRatioOptions,
+    showTransformControls = false
   }) {
     const { state, setZoom } = useMediaEditor();
     const zoomGestureHandlers = useCropGestureHandlers();
@@ -48180,6 +48231,7 @@ If there's a particular need for this, please submit a feature request at https:
           ...{ [CROP_CONTROL_ATTR]: true },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("h2", {}), children: (0, import_i18n125.__)("Crop options") }),
+            showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(MediaEditorTransformControls, { withLabels: true }),
             /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
               import_components86.SelectControl,
               {
@@ -48723,6 +48775,17 @@ If there's a particular need for this, please submit a feature request at https:
             import_components88.Button,
             {
               size: "compact",
+              variant: "tertiary",
+              disabled: !isDirty,
+              accessibleWhenDisabled: true,
+              onClick: handleReset,
+              children: (0, import_i18n128.__)("Reset")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
+            import_components88.Button,
+            {
+              size: "compact",
               icon: undo_default,
               label: (0, import_i18n128.__)("Undo"),
               showTooltip: true,
@@ -48743,17 +48806,6 @@ If there's a particular need for this, please submit a feature request at https:
               disabled: isUndoRedoDisabled || !hasRedo,
               accessibleWhenDisabled: true,
               onClick: handleRedo
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
-            import_components88.Button,
-            {
-              size: "compact",
-              variant: "tertiary",
-              disabled: !isDirty,
-              accessibleWhenDisabled: true,
-              onClick: handleReset,
-              children: (0, import_i18n128.__)("Reset")
             }
           )
         ]
@@ -48816,14 +48868,8 @@ If there's a particular need for this, please submit a feature request at https:
     shouldCloseOnEsc = false
   }) {
     const cropper = useMediaEditor();
-    const isWideViewport = (0, import_compose23.useViewportMatch)("xlarge");
-    const isMediumViewport = (0, import_compose23.useViewportMatch)("medium");
-    let footerLayout = "narrow";
-    if (isWideViewport) {
-      footerLayout = "wide";
-    } else if (isMediumViewport) {
-      footerLayout = "medium";
-    }
+    const isPanelLayout = (0, import_compose23.useViewportMatch)("medium");
+    const footerLayout = isPanelLayout ? "wide" : "narrow";
     const { media, hasEdits } = (0, import_data42.useSelect)(
       (select7) => {
         const {
@@ -48940,7 +48986,8 @@ If there's a particular need for this, please submit a feature request at https:
                   aspectRatioValue,
                   onAspectRatioChange: setAspectRatioValue,
                   onPlacementControlInteraction: signalPlacementControlInteraction,
-                  aspectRatioOptions
+                  aspectRatioOptions,
+                  showTransformControls: isPanelLayout
                 }
               )
             }
@@ -48953,7 +49000,8 @@ If there's a particular need for this, please submit a feature request at https:
       aspectRatioValue,
       setAspectRatioValue,
       aspectRatioOptions,
-      signalPlacementControlInteraction
+      signalPlacementControlInteraction,
+      isPanelLayout
     ]);
     const handleChange = (updates) => {
       editEntityRecord("postType", "attachment", id, updates);
@@ -49012,6 +49060,12 @@ If there's a particular need for this, please submit a feature request at https:
         context: MEDIA_EDITOR_NOTICES_CONTEXT
       }
     );
+    const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
+      MediaEditorFineRotation,
+      {
+        onPlacementControlInteraction: signalPlacementControlInteraction
+      }
+    ) : null;
     const children = /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)(
       MediaEditorProvider,
       {
@@ -49029,15 +49083,18 @@ If there's a particular need for this, please submit a feature request at https:
                   body: isImage ? (0, import_i18n128.__)("Image editor") : (0, import_i18n128.__)("Media preview"),
                   sidebar: (0, import_i18n128.__)("Media details")
                 },
-                content: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("div", { className: "media-editor__canvas", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
-                  MediaEditorCanvas,
-                  {
-                    focusOnMount: true,
-                    isPlacementActive,
-                    onGestureStart: handleCanvasGestureStart,
-                    onGestureEnd: handleCanvasGestureEnd
-                  }
-                ) : /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(MediaPreview2, {}) }),
+                content: /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", { className: "media-editor__content", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
+                    MediaEditorCanvas,
+                    {
+                      focusOnMount: true,
+                      isPlacementActive,
+                      onGestureStart: handleCanvasGestureStart,
+                      onGestureEnd: handleCanvasGestureEnd
+                    }
+                  ) : /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(MediaPreview2, {}) }),
+                  isImage && /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
+                ] }),
                 sidebar: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
               }
             )
@@ -49069,12 +49126,6 @@ If there's a particular need for this, please submit a feature request at https:
         onReset: resetCropOptions
       }
     ) : null;
-    const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
-      MediaEditorFineRotation,
-      {
-        onPlacementControlInteraction: signalPlacementControlInteraction
-      }
-    ) : null;
     const transform = isImage ? /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(MediaEditorTransformControls, {}) : null;
     const actions2 = /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
       FooterActions,
@@ -49090,24 +49141,10 @@ If there's a particular need for this, please submit a feature request at https:
     if (footerLayout === "wide") {
       footerActions = /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)(import_jsx_runtime261.Fragment, { children: [
         history,
-        isImage && /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", { className: "media-editor-modal__footer-toolbar", children: [
-          ruler,
-          transform
-        ] }),
         actions2
-      ] });
-    } else if (footerLayout === "medium") {
-      footerActions = /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)(import_jsx_runtime261.Fragment, { children: [
-        ruler,
-        /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
-          history,
-          transform,
-          actions2
-        ] })
       ] });
     } else {
       footerActions = /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)(import_jsx_runtime261.Fragment, { children: [
-        ruler,
         transform,
         /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
           history,
