@@ -17581,9 +17581,9 @@ if (typeof process === "undefined" || true) {
 }
 var overlay_chrome_default = { "header": "f1c50237c4787636__header", "footer": "_579f95efdec92a66__footer", "title": "_5371cc08aad82574__title", "content": "_766d9011d37ce2d9__content" };
 if (typeof process === "undefined" || true) {
-  registerStyle12("ea48258a83", "@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{.dbff6618234a2a93__error-message{align-self:flex-end;color:var(--wpds-color-fg-content-error,#470000)}._66cf5fe0c6a030bd__footer-column{align-items:stretch;flex-direction:column;gap:var(--wpds-dimension-gap-md,12px);justify-content:flex-start}}@layer wp-ui-compositions{._2ddc2fc9155a1dad__irreversible-action{--wp-ui-button-background-color:var(--wpds-color-bg-interactive-error-strong,#cc1818);--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-error-strong-active,#b90000);--wp-ui-button-foreground-color:var(--wpds-color-fg-interactive-error-strong,#f2efef);--wp-ui-button-foreground-color-active:var(--wpds-color-fg-interactive-error-strong-active,#f2efef)}}");
+  registerStyle12("59eb509a85", "@layer wp-ui-components{.f1c50237c4787636__header{min-height:32px;padding-block:var(--wpds-dimension-padding-2xl,24px) var(--wpds-dimension-gap-lg,16px)}._579f95efdec92a66__footer,.f1c50237c4787636__header{align-items:center;display:flex;gap:var(--wpds-dimension-gap-sm,8px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}._579f95efdec92a66__footer{justify-content:flex-end;padding-block:var(--wpds-dimension-gap-lg,16px) var(--wpds-dimension-padding-2xl,24px)}._5371cc08aad82574__title{--_gcd-heading-color:var(--wpds-color-fg-content-neutral,#1e1e1e);--_gcd-heading-margin:0 auto 0 0;color:var(--wpds-color-fg-content-neutral,#1e1e1e);margin-inline-end:auto;&:dir(rtl){--_gcd-heading-margin:0 0 0 auto}}._766d9011d37ce2d9__content{flex:1 1 auto;min-block-size:0;overflow-block:auto;overflow-inline:hidden;padding:var(--wpds-dimension-padding-2xl,24px);&:focus-visible{outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}}.f1c50237c4787636__header:has(~._766d9011d37ce2d9__content){border-block-end:1px solid transparent;padding-block-end:calc(var(--wpds-dimension-gap-lg, 16px) - 1px)}.f1c50237c4787636__header~._766d9011d37ce2d9__content{padding-block-start:0}._766d9011d37ce2d9__content~._579f95efdec92a66__footer{border-block-start:1px solid transparent;padding-block-start:calc(var(--wpds-dimension-gap-lg, 16px) - 1px)}._766d9011d37ce2d9__content:has(~._579f95efdec92a66__footer){padding-block-end:0}._766d9011d37ce2d9__content>.f1c50237c4787636__header,._766d9011d37ce2d9__content>[data-drawer-content]>.f1c50237c4787636__header{padding-inline:0}._766d9011d37ce2d9__content>.f1c50237c4787636__header:first-child,._766d9011d37ce2d9__content>[data-drawer-content]>.f1c50237c4787636__header:first-child{padding-block-start:0}._766d9011d37ce2d9__content>._579f95efdec92a66__footer,._766d9011d37ce2d9__content>[data-drawer-content]>._579f95efdec92a66__footer{padding-inline:0}._766d9011d37ce2d9__content>._579f95efdec92a66__footer:last-child,._766d9011d37ce2d9__content>[data-drawer-content]>._579f95efdec92a66__footer:last-child{padding-block-end:0}.f1c50237c4787636__header:has(~[data-wp-ui-overlay-scroll-container][data-wp-ui-overlay-scrolled-from-top]){border-block-end-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}[data-wp-ui-overlay-scroll-container][data-wp-ui-overlay-scrolled-from-bottom]~._579f95efdec92a66__footer{border-block-start-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}[data-wp-ui-overlay-modal] [data-wp-ui-overlay-scroll-container]{overscroll-behavior:contain}.dbff6618234a2a93__error-message{align-self:flex-end;color:var(--wpds-color-fg-content-error,#470000)}}@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-compositions{._66cf5fe0c6a030bd__footer-column{align-items:stretch;flex-direction:column;gap:var(--wpds-dimension-gap-md,12px);justify-content:flex-start}._2ddc2fc9155a1dad__irreversible-action{--wp-ui-button-background-color:var(--wpds-color-bg-interactive-error-strong,#cc1818);--wp-ui-button-background-color-active:var(--wpds-color-bg-interactive-error-strong-active,#b90000);--wp-ui-button-foreground-color:var(--wpds-color-fg-interactive-error-strong,#f2efef);--wp-ui-button-foreground-color-active:var(--wpds-color-fg-interactive-error-strong-active,#f2efef)}}");
 }
-var style_default22 = { "error-message": "dbff6618234a2a93__error-message", "footer-column": "_66cf5fe0c6a030bd__footer-column", "irreversible-action": "_2ddc2fc9155a1dad__irreversible-action" };
+var style_default22 = { "error-message": "dbff6618234a2a93__error-message", "footer-column": "_66cf5fe0c6a030bd__footer-column _579f95efdec92a66__footer", "irreversible-action": "_2ddc2fc9155a1dad__irreversible-action" };
 var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
 var Popup = (0, import_element38.forwardRef)(
   function AlertDialogPopup({
@@ -17621,54 +17621,45 @@ var Popup = (0, import_element38.forwardRef)(
         children: title
       }
     ) });
-    const footerElement = /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
-      "div",
-      {
-        className: clsx_default(
-          overlay_chrome_default.footer,
-          style_default22["footer-column"]
-        ),
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
-            Stack,
-            {
-              direction: "row",
-              gap: "sm",
-              justify: "flex-end",
-              align: "center",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
-                  index_parts_exports.Close,
-                  {
-                    render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Button4, { variant: "minimal" }),
-                    disabled: buttonsDisabled,
-                    children: cancelButtonText
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
-                  Button4,
-                  {
-                    className: confirmClassName,
-                    onClick: confirm,
-                    loading: showSpinner || void 0,
-                    disabled: buttonsDisabled,
-                    children: confirmButtonText
-                  }
-                )
-              ]
-            }
-          ),
-          errorMessage && /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
-            Text,
-            {
-              variant: "body-sm",
-              className: style_default22["error-message"],
-              children: errorMessage
-            }
-          )
-        ]
-      }
-    );
+    const footerElement = /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("div", { className: style_default22["footer-column"], children: [
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
+        Stack,
+        {
+          direction: "row",
+          gap: "sm",
+          justify: "flex-end",
+          align: "center",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+              index_parts_exports.Close,
+              {
+                render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Button4, { variant: "minimal" }),
+                disabled: buttonsDisabled,
+                children: cancelButtonText
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+              Button4,
+              {
+                className: confirmClassName,
+                onClick: confirm,
+                loading: showSpinner || void 0,
+                disabled: buttonsDisabled,
+                children: confirmButtonText
+              }
+            )
+          ]
+        }
+      ),
+      errorMessage && /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+        Text,
+        {
+          variant: "body-sm",
+          className: style_default22["error-message"],
+          children: errorMessage
+        }
+      )
+    ] });
     const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(import_jsx_runtime73.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(index_parts_exports.Backdrop, { className: style_default12.backdrop }),
       /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
