@@ -133,14 +133,17 @@ function error(...messages) {
   }
 }
 
-// node_modules/@base-ui/utils/esm/useStableCallback.js
-var React2 = __toESM(require_react(), 1);
+// node_modules/@base-ui/utils/esm/safeReact.js
+var React = __toESM(require_react(), 1);
+var SafeReact = {
+  ...React
+};
 
 // node_modules/@base-ui/utils/esm/useRefWithInit.js
-var React = __toESM(require_react(), 1);
+var React2 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React.useRef(UNINITIALIZED);
+  const ref = React2.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
@@ -148,11 +151,11 @@ function useRefWithInit(init, initArg) {
 }
 
 // node_modules/@base-ui/utils/esm/useStableCallback.js
-var useInsertionEffect = React2[`useInsertionEffect${Math.random().toFixed(1)}`.slice(0, -3)];
+var useInsertionEffect = SafeReact.useInsertionEffect;
 var useSafeInsertionEffect = (
   // React 17 doesn't have useInsertionEffect.
   useInsertionEffect && // Preact replaces useInsertionEffect with useLayoutEffect and fires too late.
-  useInsertionEffect !== React2.useLayoutEffect ? useInsertionEffect : (fn) => fn()
+  useInsertionEffect !== SafeReact.useLayoutEffect ? useInsertionEffect : (fn) => fn()
 );
 function useStableCallback(callback) {
   const stable = useRefWithInit(createStableCallback).current;
@@ -638,14 +641,8 @@ function renderTag(Tag, props) {
   return /* @__PURE__ */ React6.createElement(Tag, props);
 }
 
-// node_modules/@base-ui/utils/esm/safeReact.js
-var React7 = __toESM(require_react(), 1);
-var SafeReact = {
-  ...React7
-};
-
 // node_modules/@base-ui/react/esm/internals/use-button/useButton.js
-var React10 = __toESM(require_react(), 1);
+var React9 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
 function hasWindow() {
@@ -663,11 +660,11 @@ function isHTMLElement(value) {
 }
 
 // node_modules/@base-ui/react/esm/internals/composite/root/CompositeRootContext.js
-var React8 = __toESM(require_react(), 1);
-var CompositeRootContext = /* @__PURE__ */ React8.createContext(void 0);
+var React7 = __toESM(require_react(), 1);
+var CompositeRootContext = /* @__PURE__ */ React7.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
 function useCompositeRootContext(optional = false) {
-  const context = React8.useContext(CompositeRootContext);
+  const context = React7.useContext(CompositeRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
   }
@@ -675,7 +672,7 @@ function useCompositeRootContext(optional = false) {
 }
 
 // node_modules/@base-ui/react/esm/utils/useFocusableWhenDisabled.js
-var React9 = __toESM(require_react(), 1);
+var React8 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
     focusableWhenDisabled,
@@ -686,7 +683,7 @@ function useFocusableWhenDisabled(parameters) {
   } = parameters;
   const isFocusableComposite = composite && focusableWhenDisabled !== false;
   const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-  const props = React9.useMemo(() => {
+  const props = React8.useMemo(() => {
     const additionalProps = {
       // allow Tabbing away from focusableWhenDisabled elements
       onKeyDown(event) {
@@ -723,7 +720,7 @@ function useButton(parameters = {}) {
     native: isNativeButton = true,
     composite: compositeProp
   } = parameters;
-  const elementRef = React10.useRef(null);
+  const elementRef = React9.useRef(null);
   const compositeRootContext = useCompositeRootContext(true);
   const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
   const {
@@ -736,7 +733,7 @@ function useButton(parameters = {}) {
     isNativeButton
   });
   if (true) {
-    React10.useEffect(() => {
+    React9.useEffect(() => {
       if (!elementRef.current) {
         return;
       }
@@ -754,7 +751,7 @@ function useButton(parameters = {}) {
       }
     }, [isNativeButton]);
   }
-  const updateDisabled = React10.useCallback(() => {
+  const updateDisabled = React9.useCallback(() => {
     const element = elementRef.current;
     if (!isButtonElement(element)) {
       return;
@@ -764,7 +761,7 @@ function useButton(parameters = {}) {
     }
   }, [disabled, focusableWhenDisabledProps.disabled, isCompositeItem]);
   useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-  const getButtonProps = React10.useCallback((externalProps = {}) => {
+  const getButtonProps = React9.useCallback((externalProps = {}) => {
     const {
       onClick: externalOnClick,
       onMouseDown: externalOnMouseDown,
@@ -773,9 +770,7 @@ function useButton(parameters = {}) {
       onPointerDown: externalOnPointerDown,
       ...otherExternalProps
     } = externalProps;
-    const type = isNativeButton ? "button" : void 0;
     return mergeProps({
-      type,
       onClick(event) {
         if (disabled) {
           event.preventDefault();
@@ -853,9 +848,11 @@ function useButton(parameters = {}) {
         }
         externalOnPointerDown?.(event);
       }
-    }, !isNativeButton ? {
+    }, isNativeButton ? {
+      type: "button"
+    } : {
       role: "button"
-    } : void 0, focusableWhenDisabledProps, otherExternalProps);
+    }, focusableWhenDisabledProps, otherExternalProps);
   }, [disabled, focusableWhenDisabledProps, isCompositeItem, isNativeButton]);
   const buttonRef = useStableCallback((element) => {
     elementRef.current = element;
@@ -874,8 +871,8 @@ function isValidLinkElement(elem) {
 }
 
 // node_modules/@base-ui/react/esm/button/Button.js
-var React11 = __toESM(require_react(), 1);
-var Button = /* @__PURE__ */ React11.forwardRef(function Button2(componentProps, forwardedRef) {
+var React10 = __toESM(require_react(), 1);
+var Button = /* @__PURE__ */ React10.forwardRef(function Button2(componentProps, forwardedRef) {
   const {
     render,
     className,
