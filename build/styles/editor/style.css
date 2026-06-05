@@ -4976,7 +4976,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   box-sizing: inherit;
 }
 
-@media (min-width: 782px) {
+@media (min-width: 600px) {
   .media-editor .media-editor__sidebar {
     padding-left: 8px;
   }
@@ -4991,7 +4991,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   padding: 16px;
 }
 
-@media (min-width: 782px) {
+@media (min-width: 600px) {
   .media-editor .media-editor__panel {
     padding: 16px 24px 0 0;
   }
@@ -5005,12 +5005,21 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   padding: 0;
 }
 
-@media (min-width: 782px) {
+@media (min-width: 600px) {
   .media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon {
     display: flex;
   }
 }
-@media (max-width: 781px) {
+@media (min-width: 600px) {
+  .media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill) {
+    position: relative !important;
+  }
+  .media-editor .interface-complementary-area__fill,
+  .media-editor .interface-complementary-area {
+    width: 280px !important;
+  }
+}
+@media (max-width: 599px) {
   .media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill) {
     width: 100%;
   }
@@ -5134,9 +5143,14 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .media-editor-image-controls.is-stacked {
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   gap: 24px;
+}
+
+.media-editor-image-controls__transforms {
+  display: flex;
+  gap: 48px;
 }
 
 .media-editor-image-controls__group {
