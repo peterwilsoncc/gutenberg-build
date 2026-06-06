@@ -100,7 +100,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe, value, getSnapshot]
         );
-        useEffect19(
+        useEffect20(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe(function() {
@@ -126,7 +126,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React48 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState29 = React48.useState, useEffect19 = React48.useEffect, useLayoutEffect4 = React48.useLayoutEffect, useDebugValue2 = React48.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React48 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState29 = React48.useState, useEffect20 = React48.useEffect, useLayoutEffect4 = React48.useLayoutEffect, useDebugValue2 = React48.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React48.useSyncExternalStore ? React48.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -154,9 +154,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef22 = React48.useRef, useEffect19 = React48.useEffect, useMemo29 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
+      var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef23 = React48.useRef, useEffect20 = React48.useEffect, useMemo29 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-        var instRef = useRef22(null);
+        var instRef = useRef23(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -197,7 +197,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual]
         );
         var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-        useEffect19(
+        useEffect20(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -9494,14 +9494,14 @@ var import_components61 = __toESM(require_components());
 var import_editor = __toESM(require_editor());
 var import_core_data12 = __toESM(require_core_data());
 var import_data13 = __toESM(require_data());
-var import_element50 = __toESM(require_element());
+var import_element51 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
 var import_components60 = __toESM(require_components(), 1);
 var import_blocks5 = __toESM(require_blocks(), 1);
 var import_data12 = __toESM(require_data(), 1);
 var import_block_editor14 = __toESM(require_block_editor(), 1);
-var import_element49 = __toESM(require_element(), 1);
+var import_element50 = __toESM(require_element(), 1);
 var import_compose6 = __toESM(require_compose(), 1);
 
 // packages/global-styles-engine/build-module/utils/object.mjs
@@ -11287,7 +11287,7 @@ var {
 // packages/global-styles-ui/build-module/screen-typography.mjs
 var import_i18n22 = __toESM(require_i18n(), 1);
 var import_components33 = __toESM(require_components(), 1);
-var import_element37 = __toESM(require_element(), 1);
+var import_element38 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-body.mjs
 var import_components15 = __toESM(require_components(), 1);
@@ -11467,7 +11467,7 @@ function TypographyVariations({
 // packages/global-styles-ui/build-module/font-families.mjs
 var import_i18n20 = __toESM(require_i18n(), 1);
 var import_components31 = __toESM(require_components(), 1);
-var import_element36 = __toESM(require_element(), 1);
+var import_element37 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-library/context.mjs
 var import_element28 = __toESM(require_element(), 1);
@@ -12165,11 +12165,12 @@ var import_data8 = __toESM(require_data(), 1);
 var import_components23 = __toESM(require_components(), 1);
 var import_core_data6 = __toESM(require_core_data(), 1);
 var import_data7 = __toESM(require_data(), 1);
-var import_element31 = __toESM(require_element(), 1);
+var import_element32 = __toESM(require_element(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-card.mjs
 var import_i18n13 = __toESM(require_i18n(), 1);
+var import_element30 = __toESM(require_element(), 1);
 var import_components21 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/font-library/font-demo.mjs
@@ -12264,16 +12265,24 @@ function FontCard({
   font: font2,
   onClick,
   variantsText,
-  navigatorPath
+  navigatorPath,
+  shouldFocus
 }) {
   const variantsCount = font2.fontFace?.length || 1;
   const style = {
     cursor: !!onClick ? "pointer" : "default"
   };
   const navigator2 = (0, import_components21.useNavigator)();
+  const ref = (0, import_element30.useRef)(null);
+  (0, import_element30.useEffect)(() => {
+    if (shouldFocus) {
+      ref.current?.focus();
+    }
+  }, [shouldFocus]);
   return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
     import_components21.Button,
     {
+      ref,
       __next40pxDefaultSize: true,
       onClick: () => {
         onClick();
@@ -12304,14 +12313,14 @@ function FontCard({
 var font_card_default = FontCard;
 
 // packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
-var import_element30 = __toESM(require_element(), 1);
+var import_element31 = __toESM(require_element(), 1);
 var import_components22 = __toESM(require_components(), 1);
 var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 function LibraryFontVariant({
   face,
   font: font2
 }) {
-  const { isFontActivated, toggleActivateFont } = (0, import_element30.useContext)(FontLibraryContext);
+  const { isFontActivated, toggleActivateFont } = (0, import_element31.useContext)(FontLibraryContext);
   const isInstalled = (font2?.fontFace?.length ?? 0) > 0 ? isFontActivated(
     font2.slug,
     face.fontStyle,
@@ -12326,7 +12335,7 @@ function LibraryFontVariant({
     toggleActivateFont(font2);
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
-  const checkboxId = (0, import_element30.useId)();
+  const checkboxId = (0, import_element31.useId)();
   return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(import_components22.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
     /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
       import_components22.CheckboxControl,
@@ -12408,10 +12417,11 @@ function InstalledFonts() {
     isInstalling,
     saveFontFamilies,
     getFontFacesActivated
-  } = (0, import_element31.useContext)(FontLibraryContext);
+  } = (0, import_element32.useContext)(FontLibraryContext);
   const [fontFamilies, setFontFamilies] = useSetting("typography.fontFamilies");
-  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = (0, import_element31.useState)(false);
-  const [notice, setNotice] = (0, import_element31.useState)(null);
+  const [lastSelectedFontSlug, setLastSelectedFontSlug] = (0, import_element32.useState)(void 0);
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = (0, import_element32.useState)(false);
+  const [notice, setNotice] = (0, import_element32.useState)(null);
   const [baseFontFamilies] = useSetting("typography.fontFamilies", void 0, "base");
   const globalStylesId = (0, import_data7.useSelect)((select) => {
     const { __experimentalGetCurrentGlobalStylesId } = select(import_core_data6.store);
@@ -12424,7 +12434,7 @@ function InstalledFonts() {
   );
   const editedFontFamilies = globalStyles?.edits?.settings?.typography?.fontFamilies;
   const savedFontFamilies = globalStyles?.record?.settings?.typography?.fontFamilies;
-  const fontFamiliesHasChanges = (0, import_element31.useMemo)(() => {
+  const fontFamiliesHasChanges = (0, import_element32.useMemo)(() => {
     if (editedFontFamilies === void 0) {
       return false;
     }
@@ -12498,7 +12508,7 @@ function InstalledFonts() {
       variantsInstalled
     );
   };
-  (0, import_element31.useEffect)(() => {
+  (0, import_element32.useEffect)(() => {
     handleSetLibraryFontSelected(libraryFontSelected);
   }, []);
   const activeFontsCount = libraryFontSelected ? getFontFacesActivated(
@@ -12577,6 +12587,7 @@ function InstalledFonts() {
                             variantsText: getFontCardVariantsText(
                               font2
                             ),
+                            shouldFocus: font2.slug === lastSelectedFontSlug,
                             onClick: () => {
                               setNotice(null);
                               handleSetLibraryFontSelected(
@@ -12614,6 +12625,7 @@ function InstalledFonts() {
                             variantsText: getFontCardVariantsText(
                               font2
                             ),
+                            shouldFocus: font2.slug === lastSelectedFontSlug,
                             onClick: () => {
                               setNotice(null);
                               handleSetLibraryFontSelected(
@@ -12648,6 +12660,9 @@ function InstalledFonts() {
                     icon: (0, import_i18n14.isRTL)() ? chevron_right_default : chevron_left_default,
                     size: "small",
                     onClick: () => {
+                      setLastSelectedFontSlug(
+                        libraryFontSelected?.slug
+                      );
                       handleSetLibraryFontSelected(
                         void 0
                       );
@@ -12803,7 +12818,7 @@ function ConfirmDeleteDialog({
 var installed_fonts_default = InstalledFonts;
 
 // packages/global-styles-ui/build-module/font-library/font-collection.mjs
-var import_element33 = __toESM(require_element(), 1);
+var import_element34 = __toESM(require_element(), 1);
 var import_components26 = __toESM(require_components(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 var import_i18n16 = __toESM(require_i18n(), 1);
@@ -12886,7 +12901,7 @@ function GoogleFontsConfirmDialog() {
 var google_fonts_confirm_dialog_default = GoogleFontsConfirmDialog;
 
 // packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
-var import_element32 = __toESM(require_element(), 1);
+var import_element33 = __toESM(require_element(), 1);
 var import_components25 = __toESM(require_components(), 1);
 var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 function CollectionFontVariant({
@@ -12903,7 +12918,7 @@ function CollectionFontVariant({
     handleToggleVariant(font2);
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
-  const checkboxId = (0, import_element32.useId)();
+  const checkboxId = (0, import_element33.useId)();
   return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(import_components25.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
     /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
       import_components25.CheckboxControl,
@@ -12938,21 +12953,22 @@ function FontCollection({ slug }) {
   const getGoogleFontsPermissionFromStorage = () => {
     return window.localStorage.getItem(LOCAL_STORAGE_ITEM) === "true";
   };
-  const [selectedFont, setSelectedFont] = (0, import_element33.useState)(
+  const [selectedFont, setSelectedFont] = (0, import_element34.useState)(
     null
   );
-  const [notice, setNotice] = (0, import_element33.useState)(null);
-  const [fontsToInstall, setFontsToInstall] = (0, import_element33.useState)(
+  const [lastSelectedFontSlug, setLastSelectedFontSlug] = (0, import_element34.useState)(void 0);
+  const [notice, setNotice] = (0, import_element34.useState)(null);
+  const [fontsToInstall, setFontsToInstall] = (0, import_element34.useState)(
     []
   );
-  const [page, setPage] = (0, import_element33.useState)(1);
-  const [filters, setFilters] = (0, import_element33.useState)({});
-  const [renderConfirmDialog, setRenderConfirmDialog] = (0, import_element33.useState)(
+  const [page, setPage] = (0, import_element34.useState)(1);
+  const [filters, setFilters] = (0, import_element34.useState)({});
+  const [renderConfirmDialog, setRenderConfirmDialog] = (0, import_element34.useState)(
     requiresPermission && !getGoogleFontsPermissionFromStorage()
   );
-  const { installFonts, isInstalling } = (0, import_element33.useContext)(FontLibraryContext);
+  const { installFonts, isInstalling } = (0, import_element34.useContext)(FontLibraryContext);
   const { record: selectedCollection, isResolving: isLoading } = (0, import_core_data7.useEntityRecord)("root", "fontCollection", slug);
-  (0, import_element33.useEffect)(() => {
+  (0, import_element34.useEffect)(() => {
     const handleStorage = () => {
       setRenderConfirmDialog(
         requiresPermission && !getGoogleFontsPermissionFromStorage()
@@ -12966,19 +12982,19 @@ function FontCollection({ slug }) {
     window.localStorage.setItem(LOCAL_STORAGE_ITEM, "false");
     window.dispatchEvent(new Event("storage"));
   };
-  (0, import_element33.useEffect)(() => {
+  (0, import_element34.useEffect)(() => {
     setSelectedFont(null);
   }, [slug]);
-  (0, import_element33.useEffect)(() => {
+  (0, import_element34.useEffect)(() => {
     setFontsToInstall([]);
   }, [selectedFont]);
-  const collectionFonts = (0, import_element33.useMemo)(
+  const collectionFonts = (0, import_element34.useMemo)(
     () => selectedCollection?.font_families ?? [],
     [selectedCollection]
   );
   const collectionCategories = selectedCollection?.categories ?? [];
   const categories = [DEFAULT_CATEGORY, ...collectionCategories];
-  const fonts = (0, import_element33.useMemo)(
+  const fonts = (0, import_element34.useMemo)(
     () => filterFonts(collectionFonts, filters),
     [collectionFonts, filters]
   );
@@ -13154,6 +13170,7 @@ function FontCollection({ slug }) {
                         {
                           font: font2.font_family_settings,
                           navigatorPath: "/fontFamily",
+                          shouldFocus: font2.font_family_settings.slug === lastSelectedFontSlug,
                           onClick: () => {
                             setSelectedFont(
                               font2.font_family_settings
@@ -13175,6 +13192,9 @@ function FontCollection({ slug }) {
                     icon: (0, import_i18n16.isRTL)() ? chevron_right_default : chevron_left_default,
                     size: "small",
                     onClick: () => {
+                      setLastSelectedFontSlug(
+                        selectedFont?.slug
+                      );
                       setSelectedFont(null);
                       setNotice(null);
                     },
@@ -13285,7 +13305,7 @@ function FontCollection({ slug }) {
                 expanded: false,
                 spacing: 1,
                 className: "font-library__page-selection",
-                children: (0, import_element33.createInterpolateElement)(
+                children: (0, import_element34.createInterpolateElement)(
                   (0, import_i18n16.sprintf)(
                     // translators: 1: Current page number, 2: Total number of pages.
                     (0, import_i18n16._x)(
@@ -13363,7 +13383,7 @@ var font_collection_default = FontCollection;
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
 var import_i18n17 = __toESM(require_i18n(), 1);
 var import_components28 = __toESM(require_components(), 1);
-var import_element34 = __toESM(require_element(), 1);
+var import_element35 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
 var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
@@ -23422,9 +23442,9 @@ function makeFamiliesFromFaces(fontFaces) {
 // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
 var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 function UploadFonts() {
-  const { installFonts } = (0, import_element34.useContext)(FontLibraryContext);
-  const [isUploading, setIsUploading] = (0, import_element34.useState)(false);
-  const [notice, setNotice] = (0, import_element34.useState)(null);
+  const { installFonts } = (0, import_element35.useContext)(FontLibraryContext);
+  const [isUploading, setIsUploading] = (0, import_element35.useState)(false);
+  const [notice, setNotice] = (0, import_element35.useState)(null);
   const handleDropZone = (files) => {
     handleFilesUpload(files);
   };
@@ -23600,7 +23620,7 @@ var UPLOAD_TAB = {
 // packages/global-styles-ui/build-module/font-family-item.mjs
 var import_i18n19 = __toESM(require_i18n(), 1);
 var import_components30 = __toESM(require_components(), 1);
-var import_element35 = __toESM(require_element(), 1);
+var import_element36 = __toESM(require_element(), 1);
 var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-families.mjs
@@ -23617,7 +23637,7 @@ var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 // packages/global-styles-ui/build-module/screen-typography-element.mjs
 var import_i18n23 = __toESM(require_i18n(), 1);
 var import_components34 = __toESM(require_components(), 1);
-var import_element38 = __toESM(require_element(), 1);
+var import_element39 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/typography-panel.mjs
 var import_block_editor6 = __toESM(require_block_editor(), 1);
@@ -23660,7 +23680,7 @@ var import_block_editor7 = __toESM(require_block_editor(), 1);
 // packages/global-styles-ui/build-module/palette.mjs
 var import_components36 = __toESM(require_components(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
-var import_element39 = __toESM(require_element(), 1);
+var import_element40 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
 var import_components35 = __toESM(require_components(), 1);
@@ -23817,7 +23837,7 @@ var { useHasBackgroundPanel: useHasBackgroundPanel3 } = unlock2(import_block_edi
 // packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_components45 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
-var import_element40 = __toESM(require_element(), 1);
+var import_element41 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.mjs
 var import_components44 = __toESM(require_components(), 1);
@@ -23831,7 +23851,7 @@ var { Menu } = unlock2(import_components45.privateApis);
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
 var import_components46 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
-var import_element41 = __toESM(require_element(), 1);
+var import_element42 = __toESM(require_element(), 1);
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu2 } = unlock2(import_components46.privateApis);
 var customShadowMenuItems = [
@@ -23860,7 +23880,7 @@ var import_block_editor11 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/dimensions-panel.mjs
 var import_block_editor10 = __toESM(require_block_editor(), 1);
-var import_element42 = __toESM(require_element(), 1);
+var import_element43 = __toESM(require_element(), 1);
 var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock2(import_block_editor10.privateApis);
 
@@ -23881,14 +23901,14 @@ var import_components48 = __toESM(require_components(), 1);
 // packages/global-styles-ui/build-module/style-variations-container.mjs
 var import_core_data9 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
-var import_element43 = __toESM(require_element(), 1);
+var import_element44 = __toESM(require_element(), 1);
 var import_components47 = __toESM(require_components(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 function StyleVariationsContainer({
   gap = 2
 }) {
-  const { user } = (0, import_element43.useContext)(GlobalStylesContext);
+  const { user } = (0, import_element44.useContext)(GlobalStylesContext);
   const userStyles = user?.styles;
   const variations = (0, import_data9.useSelect)((select) => {
     const result = select(
@@ -23904,7 +23924,7 @@ function StyleVariationsContainer({
       ]);
     }
   );
-  const themeVariations = (0, import_element43.useMemo)(() => {
+  const themeVariations = (0, import_element44.useMemo)(() => {
     const withEmptyVariation = [
       {
         title: (0, import_i18n34.__)("Default"),
@@ -23988,12 +24008,12 @@ var { AdvancedPanel: StylesAdvancedPanel2 } = unlock2(import_block_editor12.priv
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
 var import_i18n40 = __toESM(require_i18n(), 1);
 var import_components53 = __toESM(require_components(), 1);
-var import_element45 = __toESM(require_element(), 1);
+var import_element46 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
 var import_data10 = __toESM(require_data(), 1);
 var import_core_data10 = __toESM(require_core_data(), 1);
-var import_element44 = __toESM(require_element(), 1);
+var import_element45 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.mjs
 var import_i18n38 = __toESM(require_i18n(), 1);
@@ -24016,7 +24036,7 @@ var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
 var import_i18n42 = __toESM(require_i18n(), 1);
 var import_components55 = __toESM(require_components(), 1);
-var import_element46 = __toESM(require_element(), 1);
+var import_element47 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.mjs
 var import_components54 = __toESM(require_components(), 1);
@@ -24030,7 +24050,7 @@ var { Menu: Menu3 } = unlock2(import_components55.privateApis);
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_i18n46 = __toESM(require_i18n(), 1);
 var import_components59 = __toESM(require_components(), 1);
-var import_element48 = __toESM(require_element(), 1);
+var import_element49 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor13 = __toESM(require_block_editor(), 1);
@@ -24045,7 +24065,7 @@ var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 // packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.mjs
 var import_components57 = __toESM(require_components(), 1);
 var import_i18n45 = __toESM(require_i18n(), 1);
-var import_element47 = __toESM(require_element(), 1);
+var import_element48 = __toESM(require_element(), 1);
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/size-control/index.mjs
@@ -24141,7 +24161,7 @@ function FontLibraryPage() {
   const { records: collections = [] } = (0, import_core_data12.useEntityRecords)("root", "fontCollection", {
     _fields: "slug,name,description"
   });
-  const [activeTab, setActiveTab] = (0, import_element50.useState)("installed-fonts");
+  const [activeTab, setActiveTab] = (0, import_element51.useState)("installed-fonts");
   const { base, user, setUser, isReady } = useGlobalStyles();
   const canUserCreate = (0, import_data13.useSelect)((select) => {
     return select(import_core_data12.store).canUser("create", {
