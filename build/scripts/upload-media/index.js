@@ -149,6 +149,7 @@ var wp;
     OperationType2["TranscodeImage"] = "TRANSCODE_IMAGE";
     OperationType2["ThumbnailGeneration"] = "THUMBNAIL_GENERATION";
     OperationType2["Finalize"] = "FINALIZE";
+    OperationType2["DetectUltraHdr"] = "DETECT_ULTRAHDR";
     return OperationType2;
   })(OperationType || {});
 
@@ -659,6 +660,10 @@ var wp;
     }
     return hasTransparency(await response.arrayBuffer());
   }
+  async function vipsGetUltraHdrInfo(buffer) {
+    const { vipsGetUltraHdrInfo: getUltraHdrInfo } = await loadVipsModule();
+    return getUltraHdrInfo(buffer);
+  }
   async function vipsResizeImage(id, file, resize, smartCrop, addSuffix, signal, scaledSuffix, quality) {
     if (signal?.aborted) {
       throw new Error("Operation aborted");
@@ -1061,6 +1066,7 @@ var wp;
   __export(private_actions_exports, {
     addItem: () => addItem,
     addSideloadItem: () => addSideloadItem,
+    detectUltraHdr: () => detectUltraHdr,
     finalizeItem: () => finalizeItem,
     finishOperation: () => finishOperation,
     generateThumbnails: () => generateThumbnails,
@@ -1930,6 +1936,7 @@ var wp;
 
   // packages/upload-media/build-module/store/private-actions.mjs
   var DEFAULT_OUTPUT_QUALITY = 0.82;
+  var ultraHdrItems = /* @__PURE__ */ new Set();
   function addItem({
     file: fileOrBlob,
     batchId,
@@ -2126,6 +2133,9 @@ var wp;
         case OperationType.Finalize:
           dispatch.finalizeItem(id);
           break;
+        case OperationType.DetectUltraHdr:
+          dispatch.detectUltraHdr(id);
+          break;
       }
     };
   }
@@ -2162,6 +2172,7 @@ var wp;
       if (!item) {
         return;
       }
+      ultraHdrItems.delete(id);
       clearRetryTimer(id);
       dispatch({
         type: Type.Remove,
@@ -2252,6 +2263,9 @@ var wp;
           tooLargeForClient = true;
         }
       }
+      if (file.type === "image/jpeg" && !tooLargeForClient) {
+        operations.push(OperationType.DetectUltraHdr);
+      }
       if (isImage && isVipsSupported && !tooLargeForClient) {
         operations.push(
           OperationType.Upload,
@@ -2318,6 +2332,24 @@ var wp;
         };
       }
       dispatch.finishOperation(id, updates);
+    };
+  }
+  function detectUltraHdr(id) {
+    return async ({ select: select2, dispatch }) => {
+      const item = select2.getItem(id);
+      if (!item) {
+        return;
+      }
+      let info;
+      try {
+        const buffer = await item.file.arrayBuffer();
+        info = await vipsGetUltraHdrInfo(buffer);
+      } catch {
+      }
+      if (info) {
+        ultraHdrItems.add(id);
+      }
+      dispatch.finishOperation(id, {});
     };
   }
   function uploadItem(id) {
@@ -2586,10 +2618,11 @@ var wp;
         const thumbnailSource = item.sourceFile;
         const file = attachment.filename ? renameFile(thumbnailSource, attachment.filename) : thumbnailSource;
         const batchId = v4_default();
+        const isUltraHdr = ultraHdrItems.has(item.id);
         const outputMimeType = attachment.image_output_format;
         const interlaced = attachment.image_save_progressive ?? false;
         let thumbnailTranscodeOperation = null;
-        if (outputMimeType) {
+        if (!isUltraHdr && outputMimeType) {
           thumbnailTranscodeOperation = await getTranscodeImageOperation(
             thumbnailSource,
             outputMimeType,
@@ -2618,7 +2651,7 @@ var wp;
           const thumbnailOperations = [
             [OperationType.ResizeCrop, { resize: imageSize }]
           ];
-          if (thumbnailTranscodeOperation) {
+          if (!isUltraHdr && thumbnailTranscodeOperation) {
             thumbnailOperations.push(thumbnailTranscodeOperation);
           }
           thumbnailOperations.push(OperationType.Upload);
@@ -2657,7 +2690,7 @@ var wp;
                   }
                 ]
               ];
-              if (thumbnailTranscodeOperation) {
+              if (!isUltraHdr && thumbnailTranscodeOperation) {
                 scaledOperations.push(
                   thumbnailTranscodeOperation
                 );
