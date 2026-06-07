@@ -1835,6 +1835,91 @@ var wp;
   function clearFeatureDetectionCache() {
     cachedResult = null;
   }
+  var BYTES_PER_PIXEL = 4;
+  var INTERLACED_MEMORY_BUDGET = 0.5 * 1024 * 1024 * 1024;
+  var BASELINE_MEMORY_BUDGET = 0.9 * 1024 * 1024 * 1024;
+  function exceedsClientProcessingMemory(dimensions) {
+    const { width, height, interlaced } = dimensions;
+    const estimatedBytes = width * height * BYTES_PER_PIXEL;
+    const budget = interlaced ? INTERLACED_MEMORY_BUDGET : BASELINE_MEMORY_BUDGET;
+    return estimatedBytes > budget;
+  }
+
+  // packages/upload-media/build-module/get-image-dimensions.mjs
+  var MAX_HEADER_BYTES = 512 * 1024;
+  function parseJpeg(view) {
+    let offset = 2;
+    while (offset < view.byteLength) {
+      if (view.getUint8(offset) !== 255) {
+        return null;
+      }
+      while (offset < view.byteLength && view.getUint8(offset) === 255) {
+        offset++;
+      }
+      if (offset >= view.byteLength) {
+        return null;
+      }
+      const marker = view.getUint8(offset);
+      offset++;
+      if (marker === 1 || marker >= 208 && marker <= 217) {
+        continue;
+      }
+      if (marker === 218) {
+        return null;
+      }
+      if (offset + 2 > view.byteLength) {
+        return null;
+      }
+      const segmentLength = view.getUint16(offset);
+      if (segmentLength < 2) {
+        return null;
+      }
+      const isStartOfFrame = marker >= 192 && marker <= 207 && marker !== 196 && marker !== 200 && marker !== 204;
+      if (isStartOfFrame) {
+        if (offset + 7 > view.byteLength) {
+          return null;
+        }
+        const height = view.getUint16(offset + 3);
+        const width = view.getUint16(offset + 5);
+        const interlaced = marker === 194 || marker === 198 || marker === 202 || marker === 206;
+        return { width, height, interlaced };
+      }
+      offset += segmentLength;
+    }
+    return null;
+  }
+  function parsePng(view) {
+    if (view.byteLength < 29) {
+      return null;
+    }
+    const isIhdr = view.getUint8(12) === 73 && // I
+    view.getUint8(13) === 72 && // H
+    view.getUint8(14) === 68 && // D
+    view.getUint8(15) === 82;
+    if (!isIhdr) {
+      return null;
+    }
+    const width = view.getUint32(16);
+    const height = view.getUint32(20);
+    const interlaceMethod = view.getUint8(28);
+    return { width, height, interlaced: interlaceMethod !== 0 };
+  }
+  async function getImageDimensions(file) {
+    try {
+      const headerBytes = Math.min(file.size, MAX_HEADER_BYTES);
+      const buffer = await file.slice(0, headerBytes).arrayBuffer();
+      const view = new DataView(buffer);
+      if (view.byteLength >= 3 && view.getUint16(0) === 65496) {
+        return parseJpeg(view);
+      }
+      if (view.byteLength >= 8 && view.getUint32(0) === 2303741511 && view.getUint32(4) === 218765834) {
+        return parsePng(view);
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  }
 
   // packages/upload-media/build-module/stub-file.mjs
   var StubFile = class extends File {
@@ -2160,7 +2245,14 @@ var wp;
         file.type
       );
       const isHeic = HEIC_MIME_TYPES.includes(file.type);
+      let tooLargeForClient = false;
       if (isImage && isVipsSupported) {
+        const dimensions = await getImageDimensions(file);
+        if (dimensions && exceedsClientProcessingMemory(dimensions)) {
+          tooLargeForClient = true;
+        }
+      }
+      if (isImage && isVipsSupported && !tooLargeForClient) {
         operations.push(
           OperationType.Upload,
           OperationType.ThumbnailGeneration,
@@ -2209,7 +2301,7 @@ var wp;
             convert_format: true
           }
         };
-      } else if (!isVipsSupported || !isImage) {
+      } else if (!isVipsSupported || !isImage || tooLargeForClient) {
         updates = {
           additionalData: {
             ...item.additionalData,
