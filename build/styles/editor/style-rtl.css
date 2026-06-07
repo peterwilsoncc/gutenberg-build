@@ -8512,6 +8512,25 @@ textarea.editor-post-text-editor::placeholder {
   color: #1e1e1e;
 }
 
+.editor-upload-progress-snackbar__spinner,
+.editor-upload-progress-snackbar__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.editor-upload-progress-snackbar__spinner .components-spinner {
+  margin: 0;
+}
+
+.editor-upload-progress-snackbar__check svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
 .editor-visual-editor {
   position: relative;
   display: flex;

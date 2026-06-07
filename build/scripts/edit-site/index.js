@@ -17040,7 +17040,7 @@ var wp;
   // packages/edit-site/build-module/components/layout/index.mjs
   var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation6 } = unlock(import_router6.privateApis);
-  var { useStyle } = unlock(import_editor6.privateApis);
+  var { useStyle, UploadProgressSnackbar } = unlock(import_editor6.privateApis);
   var ANIMATION_DURATION2 = 0.3;
   function Layout() {
     const { query, name: routeKey, areas: areas2, widths } = useLocation6();
@@ -17135,6 +17135,7 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_notices.SnackbarNotices, { className: "edit-site-layout__snackbar" }),
+            /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(UploadProgressSnackbar, {}),
             isMobileViewport && areas2.mobile && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", { className: "edit-site-layout__mobile", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SidebarNavigationProvider, { children: canvas !== "edit" ? /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(import_jsx_runtime108.Fragment, { children: [
               showMobileSiteHub && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
                 SiteHubMobile,

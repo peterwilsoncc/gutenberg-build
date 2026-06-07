@@ -11087,7 +11087,7 @@ var wp;
   var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   var { useCommandContext } = unlock2(import_commands2.privateApis);
   var { useDrag } = unlock2(import_components9.privateApis);
-  var { Editor, FullscreenMode } = unlock2(import_editor18.privateApis);
+  var { Editor, FullscreenMode, UploadProgressSnackbar } = unlock2(import_editor18.privateApis);
   var { BlockKeyboardShortcuts } = unlock2(import_block_library.privateApis);
   var DESIGN_POST_TYPES = [
     "wp_template",
@@ -11521,7 +11521,8 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_plugins.PluginArea, { onError: onPluginAreaError }),
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(more_menu_default, {}),
             backButton,
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_notices3.SnackbarNotices, { className: "edit-post-layout__snackbar" })
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_notices3.SnackbarNotices, { className: "edit-post-layout__snackbar" }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(UploadProgressSnackbar, {})
           ]
         }
       ) })
