@@ -1107,328 +1107,6 @@ var wp;
     }
   });
 
-  // node_modules/diff/lib/diff/base.js
-  var require_base = __commonJS({
-    "node_modules/diff/lib/diff/base.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.default = Diff;
-      function Diff() {
-      }
-      Diff.prototype = {
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        diff: function diff(oldString, newString) {
-          var options = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-          var callback = options.callback;
-          if (typeof options === "function") {
-            callback = options;
-            options = {};
-          }
-          this.options = options;
-          var self2 = this;
-          function done(value) {
-            if (callback) {
-              setTimeout(function() {
-                callback(void 0, value);
-              }, 0);
-              return true;
-            } else {
-              return value;
-            }
-          }
-          oldString = this.castInput(oldString);
-          newString = this.castInput(newString);
-          oldString = this.removeEmpty(this.tokenize(oldString));
-          newString = this.removeEmpty(this.tokenize(newString));
-          var newLen = newString.length, oldLen = oldString.length;
-          var editLength = 1;
-          var maxEditLength = newLen + oldLen;
-          var bestPath = [{
-            newPos: -1,
-            components: []
-          }];
-          var oldPos = this.extractCommon(bestPath[0], newString, oldString, 0);
-          if (bestPath[0].newPos + 1 >= newLen && oldPos + 1 >= oldLen) {
-            return done([{
-              value: this.join(newString),
-              count: newString.length
-            }]);
-          }
-          function execEditLength() {
-            for (var diagonalPath = -1 * editLength; diagonalPath <= editLength; diagonalPath += 2) {
-              var basePath = (
-                /*istanbul ignore start*/
-                void 0
-              );
-              var addPath = bestPath[diagonalPath - 1], removePath = bestPath[diagonalPath + 1], _oldPos = (removePath ? removePath.newPos : 0) - diagonalPath;
-              if (addPath) {
-                bestPath[diagonalPath - 1] = void 0;
-              }
-              var canAdd = addPath && addPath.newPos + 1 < newLen, canRemove = removePath && 0 <= _oldPos && _oldPos < oldLen;
-              if (!canAdd && !canRemove) {
-                bestPath[diagonalPath] = void 0;
-                continue;
-              }
-              if (!canAdd || canRemove && addPath.newPos < removePath.newPos) {
-                basePath = clonePath(removePath);
-                self2.pushComponent(basePath.components, void 0, true);
-              } else {
-                basePath = addPath;
-                basePath.newPos++;
-                self2.pushComponent(basePath.components, true, void 0);
-              }
-              _oldPos = self2.extractCommon(basePath, newString, oldString, diagonalPath);
-              if (basePath.newPos + 1 >= newLen && _oldPos + 1 >= oldLen) {
-                return done(buildValues(self2, basePath.components, newString, oldString, self2.useLongestToken));
-              } else {
-                bestPath[diagonalPath] = basePath;
-              }
-            }
-            editLength++;
-          }
-          if (callback) {
-            (function exec() {
-              setTimeout(function() {
-                if (editLength > maxEditLength) {
-                  return callback();
-                }
-                if (!execEditLength()) {
-                  exec();
-                }
-              }, 0);
-            })();
-          } else {
-            while (editLength <= maxEditLength) {
-              var ret = execEditLength();
-              if (ret) {
-                return ret;
-              }
-            }
-          }
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        pushComponent: function pushComponent(components, added, removed) {
-          var last = components[components.length - 1];
-          if (last && last.added === added && last.removed === removed) {
-            components[components.length - 1] = {
-              count: last.count + 1,
-              added,
-              removed
-            };
-          } else {
-            components.push({
-              count: 1,
-              added,
-              removed
-            });
-          }
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        extractCommon: function extractCommon(basePath, newString, oldString, diagonalPath) {
-          var newLen = newString.length, oldLen = oldString.length, newPos = basePath.newPos, oldPos = newPos - diagonalPath, commonCount = 0;
-          while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(newString[newPos + 1], oldString[oldPos + 1])) {
-            newPos++;
-            oldPos++;
-            commonCount++;
-          }
-          if (commonCount) {
-            basePath.components.push({
-              count: commonCount
-            });
-          }
-          basePath.newPos = newPos;
-          return oldPos;
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        equals: function equals3(left, right) {
-          if (this.options.comparator) {
-            return this.options.comparator(left, right);
-          } else {
-            return left === right || this.options.ignoreCase && left.toLowerCase() === right.toLowerCase();
-          }
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        removeEmpty: function removeEmpty(array) {
-          var ret = [];
-          for (var i3 = 0; i3 < array.length; i3++) {
-            if (array[i3]) {
-              ret.push(array[i3]);
-            }
-          }
-          return ret;
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        castInput: function castInput(value) {
-          return value;
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        tokenize: function tokenize(value) {
-          return value.split("");
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        join: function join(chars) {
-          return chars.join("");
-        }
-      };
-      function buildValues(diff, components, newString, oldString, useLongestToken) {
-        var componentPos = 0, componentLen = components.length, newPos = 0, oldPos = 0;
-        for (; componentPos < componentLen; componentPos++) {
-          var component = components[componentPos];
-          if (!component.removed) {
-            if (!component.added && useLongestToken) {
-              var value = newString.slice(newPos, newPos + component.count);
-              value = value.map(function(value2, i3) {
-                var oldValue = oldString[oldPos + i3];
-                return oldValue.length > value2.length ? oldValue : value2;
-              });
-              component.value = diff.join(value);
-            } else {
-              component.value = diff.join(newString.slice(newPos, newPos + component.count));
-            }
-            newPos += component.count;
-            if (!component.added) {
-              oldPos += component.count;
-            }
-          } else {
-            component.value = diff.join(oldString.slice(oldPos, oldPos + component.count));
-            oldPos += component.count;
-            if (componentPos && components[componentPos - 1].added) {
-              var tmp = components[componentPos - 1];
-              components[componentPos - 1] = components[componentPos];
-              components[componentPos] = tmp;
-            }
-          }
-        }
-        var lastComponent = components[componentLen - 1];
-        if (componentLen > 1 && typeof lastComponent.value === "string" && (lastComponent.added || lastComponent.removed) && diff.equals("", lastComponent.value)) {
-          components[componentLen - 2].value += lastComponent.value;
-          components.pop();
-        }
-        return components;
-      }
-      function clonePath(path) {
-        return {
-          newPos: path.newPos,
-          components: path.components.slice(0)
-        };
-      }
-    }
-  });
-
-  // node_modules/diff/lib/diff/array.js
-  var require_array = __commonJS({
-    "node_modules/diff/lib/diff/array.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.diffArrays = diffArrays3;
-      exports.arrayDiff = void 0;
-      var _base = _interopRequireDefault(require_base());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { default: obj };
-      }
-      var arrayDiff = new /*istanbul ignore start*/
-      _base.default();
-      exports.arrayDiff = arrayDiff;
-      arrayDiff.tokenize = function(value) {
-        return value.slice();
-      };
-      arrayDiff.join = arrayDiff.removeEmpty = function(value) {
-        return value;
-      };
-      function diffArrays3(oldArr, newArr, callback) {
-        return arrayDiff.diff(oldArr, newArr, callback);
-      }
-    }
-  });
-
-  // node_modules/diff/lib/util/params.js
-  var require_params = __commonJS({
-    "node_modules/diff/lib/util/params.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.generateOptions = generateOptions;
-      function generateOptions(options, defaults2) {
-        if (typeof options === "function") {
-          defaults2.callback = options;
-        } else if (options) {
-          for (var name2 in options) {
-            if (options.hasOwnProperty(name2)) {
-              defaults2[name2] = options[name2];
-            }
-          }
-        }
-        return defaults2;
-      }
-    }
-  });
-
-  // node_modules/diff/lib/diff/word.js
-  var require_word = __commonJS({
-    "node_modules/diff/lib/diff/word.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.diffWords = diffWords3;
-      exports.diffWordsWithSpace = diffWordsWithSpace;
-      exports.wordDiff = void 0;
-      var _base = _interopRequireDefault(require_base());
-      var _params = require_params();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { default: obj };
-      }
-      var extendedWordChars = /^[A-Za-z\xC0-\u02C6\u02C8-\u02D7\u02DE-\u02FF\u1E00-\u1EFF]+$/;
-      var reWhitespace = /\S/;
-      var wordDiff = new /*istanbul ignore start*/
-      _base.default();
-      exports.wordDiff = wordDiff;
-      wordDiff.equals = function(left, right) {
-        if (this.options.ignoreCase) {
-          left = left.toLowerCase();
-          right = right.toLowerCase();
-        }
-        return left === right || this.options.ignoreWhitespace && !reWhitespace.test(left) && !reWhitespace.test(right);
-      };
-      wordDiff.tokenize = function(value) {
-        var tokens = value.split(/(\s+|[()[\]{}'"]|\b)/);
-        for (var i3 = 0; i3 < tokens.length - 1; i3++) {
-          if (!tokens[i3 + 1] && tokens[i3 + 2] && extendedWordChars.test(tokens[i3]) && extendedWordChars.test(tokens[i3 + 2])) {
-            tokens[i3] += tokens[i3 + 2];
-            tokens.splice(i3 + 1, 2);
-            i3--;
-          }
-        }
-        return tokens;
-      };
-      function diffWords3(oldStr, newStr, options) {
-        options = /*istanbul ignore start*/
-        (0, /*istanbul ignore end*/
-        /*istanbul ignore start*/
-        _params.generateOptions)(options, {
-          ignoreWhitespace: true
-        });
-        return wordDiff.diff(oldStr, newStr, options);
-      }
-      function diffWordsWithSpace(oldStr, newStr, options) {
-        return wordDiff.diff(oldStr, newStr, options);
-      }
-    }
-  });
-
   // package-external:@wordpress/block-serialization-default-parser
   var require_block_serialization_default_parser = __commonJS({
     "package-external:@wordpress/block-serialization-default-parser"(exports, module) {
@@ -39258,9 +38936,9 @@ If there's a particular need for this, please submit a feature request at https:
   var getValueFromId = (id) => ({ item }) => {
     const path = id.split(".");
     let value = item;
-    for (const segment of path) {
-      if (value.hasOwnProperty(segment)) {
-        value = value[segment];
+    for (const segment2 of path) {
+      if (value.hasOwnProperty(segment2)) {
+        value = value[segment2];
       } else {
         value = void 0;
       }
@@ -39274,9 +38952,9 @@ If there's a particular need for this, please submit a feature request at https:
     const path = id.split(".");
     const result = {};
     let current = result;
-    for (const segment of path.slice(0, -1)) {
-      current[segment] = {};
-      current = current[segment];
+    for (const segment2 of path.slice(0, -1)) {
+      current[segment2] = {};
+      current = current[segment2];
     }
     current[path.at(-1)] = value;
     return result;
@@ -41423,12 +41101,12 @@ If there's a particular need for this, please submit a feature request at https:
     const result = { ...formValidity };
     let current = result;
     for (let i3 = 0; i3 < path.length - 1; i3++) {
-      const segment = path[i3];
-      if (!current[segment]) {
-        current[segment] = {};
+      const segment2 = path[i3];
+      if (!current[segment2]) {
+        current[segment2] = {};
       }
-      current[segment] = { ...current[segment] };
-      current = current[segment];
+      current[segment2] = { ...current[segment2] };
+      current = current[segment2];
     }
     const finalKey = path[path.length - 1];
     current[finalKey] = {
@@ -41444,12 +41122,12 @@ If there's a particular need for this, please submit a feature request at https:
     const result = { ...formValidity };
     let current = result;
     for (let i3 = 0; i3 < path.length - 1; i3++) {
-      const segment = path[i3];
-      if (!current[segment]) {
+      const segment2 = path[i3];
+      if (!current[segment2]) {
         return formValidity;
       }
-      current[segment] = { ...current[segment] };
-      current = current[segment];
+      current[segment2] = { ...current[segment2] };
+      current = current[segment2];
     }
     const finalKey = path[path.length - 1];
     if (!current[finalKey]) {
@@ -63698,11 +63376,11 @@ If there's a particular need for this, please submit a feature request at https:
       if (55296 <= charCode && charCode <= 57343) return 0;
       if ((charCode & 65534) === 65534 || (charCode & 65535) === 65535)
         return 0;
-      let segment = this.segments.find(
+      let segment2 = this.segments.find(
         (s3) => s3.startCode <= charCode && charCode <= s3.endCode
       );
-      if (!segment) return 0;
-      return segment.glyphIDs[charCode - segment.startCode];
+      if (!segment2) return 0;
+      return segment2.glyphIDs[charCode - segment2.startCode];
     }
     supports(charCode) {
       return this.getGlyphId(charCode) !== 0;
@@ -70742,14 +70420,499 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element194 = __toESM(require_element(), 1);
   var import_blocks15 = __toESM(require_blocks(), 1);
 
+  // packages/editor/node_modules/diff/libesm/diff/base.js
+  var Diff = class {
+    diff(oldStr, newStr, options = {}) {
+      let callback;
+      if (typeof options === "function") {
+        callback = options;
+        options = {};
+      } else if ("callback" in options) {
+        callback = options.callback;
+      }
+      const oldString = this.castInput(oldStr, options);
+      const newString = this.castInput(newStr, options);
+      const oldTokens = this.removeEmpty(this.tokenize(oldString, options));
+      const newTokens = this.removeEmpty(this.tokenize(newString, options));
+      return this.diffWithOptionsObj(oldTokens, newTokens, options, callback);
+    }
+    diffWithOptionsObj(oldTokens, newTokens, options, callback) {
+      var _a;
+      const done = (value) => {
+        value = this.postProcess(value, options);
+        if (callback) {
+          setTimeout(function() {
+            callback(value);
+          }, 0);
+          return void 0;
+        } else {
+          return value;
+        }
+      };
+      const newLen = newTokens.length, oldLen = oldTokens.length;
+      let editLength = 1;
+      let maxEditLength = newLen + oldLen;
+      if (options.maxEditLength != null) {
+        maxEditLength = Math.min(maxEditLength, options.maxEditLength);
+      }
+      const maxExecutionTime = (_a = options.timeout) !== null && _a !== void 0 ? _a : Infinity;
+      const abortAfterTimestamp = Date.now() + maxExecutionTime;
+      const bestPath = [{ oldPos: -1, lastComponent: void 0 }];
+      let newPos = this.extractCommon(bestPath[0], newTokens, oldTokens, 0, options);
+      if (bestPath[0].oldPos + 1 >= oldLen && newPos + 1 >= newLen) {
+        return done(this.buildValues(bestPath[0].lastComponent, newTokens, oldTokens));
+      }
+      let minDiagonalToConsider = -Infinity, maxDiagonalToConsider = Infinity;
+      const execEditLength = () => {
+        for (let diagonalPath = Math.max(minDiagonalToConsider, -editLength); diagonalPath <= Math.min(maxDiagonalToConsider, editLength); diagonalPath += 2) {
+          let basePath;
+          const removePath = bestPath[diagonalPath - 1], addPath = bestPath[diagonalPath + 1];
+          if (removePath) {
+            bestPath[diagonalPath - 1] = void 0;
+          }
+          let canAdd = false;
+          if (addPath) {
+            const addPathNewPos = addPath.oldPos - diagonalPath;
+            canAdd = addPath && 0 <= addPathNewPos && addPathNewPos < newLen;
+          }
+          const canRemove = removePath && removePath.oldPos + 1 < oldLen;
+          if (!canAdd && !canRemove) {
+            bestPath[diagonalPath] = void 0;
+            continue;
+          }
+          if (!canRemove || canAdd && removePath.oldPos < addPath.oldPos) {
+            basePath = this.addToPath(addPath, true, false, 0, options);
+          } else {
+            basePath = this.addToPath(removePath, false, true, 1, options);
+          }
+          newPos = this.extractCommon(basePath, newTokens, oldTokens, diagonalPath, options);
+          if (basePath.oldPos + 1 >= oldLen && newPos + 1 >= newLen) {
+            return done(this.buildValues(basePath.lastComponent, newTokens, oldTokens)) || true;
+          } else {
+            bestPath[diagonalPath] = basePath;
+            if (basePath.oldPos + 1 >= oldLen) {
+              maxDiagonalToConsider = Math.min(maxDiagonalToConsider, diagonalPath - 1);
+            }
+            if (newPos + 1 >= newLen) {
+              minDiagonalToConsider = Math.max(minDiagonalToConsider, diagonalPath + 1);
+            }
+          }
+        }
+        editLength++;
+      };
+      if (callback) {
+        (function exec() {
+          setTimeout(function() {
+            if (editLength > maxEditLength || Date.now() > abortAfterTimestamp) {
+              return callback(void 0);
+            }
+            if (!execEditLength()) {
+              exec();
+            }
+          }, 0);
+        })();
+      } else {
+        while (editLength <= maxEditLength && Date.now() <= abortAfterTimestamp) {
+          const ret = execEditLength();
+          if (ret) {
+            return ret;
+          }
+        }
+      }
+    }
+    addToPath(path, added, removed, oldPosInc, options) {
+      const last = path.lastComponent;
+      if (last && !options.oneChangePerToken && last.added === added && last.removed === removed) {
+        return {
+          oldPos: path.oldPos + oldPosInc,
+          lastComponent: { count: last.count + 1, added, removed, previousComponent: last.previousComponent }
+        };
+      } else {
+        return {
+          oldPos: path.oldPos + oldPosInc,
+          lastComponent: { count: 1, added, removed, previousComponent: last }
+        };
+      }
+    }
+    extractCommon(basePath, newTokens, oldTokens, diagonalPath, options) {
+      const newLen = newTokens.length, oldLen = oldTokens.length;
+      let oldPos = basePath.oldPos, newPos = oldPos - diagonalPath, commonCount = 0;
+      while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(oldTokens[oldPos + 1], newTokens[newPos + 1], options)) {
+        newPos++;
+        oldPos++;
+        commonCount++;
+        if (options.oneChangePerToken) {
+          basePath.lastComponent = { count: 1, previousComponent: basePath.lastComponent, added: false, removed: false };
+        }
+      }
+      if (commonCount && !options.oneChangePerToken) {
+        basePath.lastComponent = { count: commonCount, previousComponent: basePath.lastComponent, added: false, removed: false };
+      }
+      basePath.oldPos = oldPos;
+      return newPos;
+    }
+    equals(left, right, options) {
+      if (options.comparator) {
+        return options.comparator(left, right);
+      } else {
+        return left === right || !!options.ignoreCase && left.toLowerCase() === right.toLowerCase();
+      }
+    }
+    removeEmpty(array) {
+      const ret = [];
+      for (let i3 = 0; i3 < array.length; i3++) {
+        if (array[i3]) {
+          ret.push(array[i3]);
+        }
+      }
+      return ret;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    castInput(value, options) {
+      return value;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    tokenize(value, options) {
+      return Array.from(value);
+    }
+    join(chars) {
+      return chars.join("");
+    }
+    postProcess(changeObjects, options) {
+      return changeObjects;
+    }
+    get useLongestToken() {
+      return false;
+    }
+    buildValues(lastComponent, newTokens, oldTokens) {
+      const components = [];
+      let nextComponent;
+      while (lastComponent) {
+        components.push(lastComponent);
+        nextComponent = lastComponent.previousComponent;
+        delete lastComponent.previousComponent;
+        lastComponent = nextComponent;
+      }
+      components.reverse();
+      const componentLen = components.length;
+      let componentPos = 0, newPos = 0, oldPos = 0;
+      for (; componentPos < componentLen; componentPos++) {
+        const component = components[componentPos];
+        if (!component.removed) {
+          if (!component.added && this.useLongestToken) {
+            let value = newTokens.slice(newPos, newPos + component.count);
+            value = value.map(function(value2, i3) {
+              const oldValue = oldTokens[oldPos + i3];
+              return oldValue.length > value2.length ? oldValue : value2;
+            });
+            component.value = this.join(value);
+          } else {
+            component.value = this.join(newTokens.slice(newPos, newPos + component.count));
+          }
+          newPos += component.count;
+          if (!component.added) {
+            oldPos += component.count;
+          }
+        } else {
+          component.value = this.join(oldTokens.slice(oldPos, oldPos + component.count));
+          oldPos += component.count;
+        }
+      }
+      return components;
+    }
+  };
+
+  // packages/editor/node_modules/diff/libesm/util/string.js
+  function longestCommonPrefix(str1, str22) {
+    let i3;
+    for (i3 = 0; i3 < str1.length && i3 < str22.length; i3++) {
+      if (str1[i3] != str22[i3]) {
+        return str1.slice(0, i3);
+      }
+    }
+    return str1.slice(0, i3);
+  }
+  function longestCommonSuffix(str1, str22) {
+    let i3;
+    if (!str1 || !str22 || str1[str1.length - 1] != str22[str22.length - 1]) {
+      return "";
+    }
+    for (i3 = 0; i3 < str1.length && i3 < str22.length; i3++) {
+      if (str1[str1.length - (i3 + 1)] != str22[str22.length - (i3 + 1)]) {
+        return str1.slice(-i3);
+      }
+    }
+    return str1.slice(-i3);
+  }
+  function replacePrefix(string, oldPrefix, newPrefix) {
+    if (string.slice(0, oldPrefix.length) != oldPrefix) {
+      throw Error(`string ${JSON.stringify(string)} doesn't start with prefix ${JSON.stringify(oldPrefix)}; this is a bug`);
+    }
+    return newPrefix + string.slice(oldPrefix.length);
+  }
+  function replaceSuffix(string, oldSuffix, newSuffix) {
+    if (!oldSuffix) {
+      return string + newSuffix;
+    }
+    if (string.slice(-oldSuffix.length) != oldSuffix) {
+      throw Error(`string ${JSON.stringify(string)} doesn't end with suffix ${JSON.stringify(oldSuffix)}; this is a bug`);
+    }
+    return string.slice(0, -oldSuffix.length) + newSuffix;
+  }
+  function removePrefix(string, oldPrefix) {
+    return replacePrefix(string, oldPrefix, "");
+  }
+  function removeSuffix(string, oldSuffix) {
+    return replaceSuffix(string, oldSuffix, "");
+  }
+  function maximumOverlap(string1, string2) {
+    return string2.slice(0, overlapCount(string1, string2));
+  }
+  function overlapCount(a3, b3) {
+    let startA = 0;
+    if (a3.length > b3.length) {
+      startA = a3.length - b3.length;
+    }
+    let endB = b3.length;
+    if (a3.length < b3.length) {
+      endB = a3.length;
+    }
+    const map = Array(endB);
+    let k2 = 0;
+    map[0] = 0;
+    for (let j2 = 1; j2 < endB; j2++) {
+      if (b3[j2] == b3[k2]) {
+        map[j2] = map[k2];
+      } else {
+        map[j2] = k2;
+      }
+      while (k2 > 0 && b3[j2] != b3[k2]) {
+        k2 = map[k2];
+      }
+      if (b3[j2] == b3[k2]) {
+        k2++;
+      }
+    }
+    k2 = 0;
+    for (let i3 = startA; i3 < a3.length; i3++) {
+      while (k2 > 0 && a3[i3] != b3[k2]) {
+        k2 = map[k2];
+      }
+      if (a3[i3] == b3[k2]) {
+        k2++;
+      }
+    }
+    return k2;
+  }
+  function segment(string, segmenter) {
+    const parts = [];
+    for (const segmentObj of Array.from(segmenter.segment(string))) {
+      const segment2 = segmentObj.segment;
+      if (parts.length && /\s/.test(parts[parts.length - 1]) && /\s/.test(segment2)) {
+        parts[parts.length - 1] += segment2;
+      } else {
+        parts.push(segment2);
+      }
+    }
+    return parts;
+  }
+  function trailingWs(string, segmenter) {
+    if (segmenter) {
+      return leadingAndTrailingWs(string, segmenter)[1];
+    }
+    let i3;
+    for (i3 = string.length - 1; i3 >= 0; i3--) {
+      if (!string[i3].match(/\s/)) {
+        break;
+      }
+    }
+    return string.substring(i3 + 1);
+  }
+  function leadingWs(string, segmenter) {
+    if (segmenter) {
+      return leadingAndTrailingWs(string, segmenter)[0];
+    }
+    const match3 = string.match(/^\s*/);
+    return match3 ? match3[0] : "";
+  }
+  function leadingAndTrailingWs(string, segmenter) {
+    if (!segmenter) {
+      return [leadingWs(string), trailingWs(string)];
+    }
+    if (segmenter.resolvedOptions().granularity != "word") {
+      throw new Error('The segmenter passed must have a granularity of "word"');
+    }
+    const segments = segment(string, segmenter);
+    const firstSeg = segments[0];
+    const lastSeg = segments[segments.length - 1];
+    const head2 = /\s/.test(firstSeg) ? firstSeg : "";
+    const tail = /\s/.test(lastSeg) ? lastSeg : "";
+    return [head2, tail];
+  }
+
+  // packages/editor/node_modules/diff/libesm/diff/word.js
+  var extendedWordChars = "a-zA-Z0-9_\\u{AD}\\u{C0}-\\u{D6}\\u{D8}-\\u{F6}\\u{F8}-\\u{2C6}\\u{2C8}-\\u{2D7}\\u{2DE}-\\u{2FF}\\u{1E00}-\\u{1EFF}";
+  var tokenizeIncludingWhitespace = new RegExp(`[${extendedWordChars}]+|\\s+|[^${extendedWordChars}]`, "ug");
+  var WordDiff = class extends Diff {
+    equals(left, right, options) {
+      if (options.ignoreCase) {
+        left = left.toLowerCase();
+        right = right.toLowerCase();
+      }
+      return left.trim() === right.trim();
+    }
+    tokenize(value, options = {}) {
+      let parts;
+      if (options.intlSegmenter) {
+        const segmenter = options.intlSegmenter;
+        if (segmenter.resolvedOptions().granularity != "word") {
+          throw new Error('The segmenter passed must have a granularity of "word"');
+        }
+        parts = segment(value, segmenter);
+      } else {
+        parts = value.match(tokenizeIncludingWhitespace) || [];
+      }
+      const tokens = [];
+      let prevPart = null;
+      parts.forEach((part) => {
+        if (/\s/.test(part)) {
+          if (prevPart == null) {
+            tokens.push(part);
+          } else {
+            tokens.push(tokens.pop() + part);
+          }
+        } else if (prevPart != null && /\s/.test(prevPart)) {
+          if (tokens[tokens.length - 1] == prevPart) {
+            tokens.push(tokens.pop() + part);
+          } else {
+            tokens.push(prevPart + part);
+          }
+        } else {
+          tokens.push(part);
+        }
+        prevPart = part;
+      });
+      return tokens;
+    }
+    join(tokens) {
+      return tokens.map((token, i3) => {
+        if (i3 == 0) {
+          return token;
+        } else {
+          return token.replace(/^\s+/, "");
+        }
+      }).join("");
+    }
+    postProcess(changes, options) {
+      if (!changes || options.oneChangePerToken) {
+        return changes;
+      }
+      let lastKeep = null;
+      let insertion = null;
+      let deletion = null;
+      changes.forEach((change) => {
+        if (change.added) {
+          insertion = change;
+        } else if (change.removed) {
+          deletion = change;
+        } else {
+          if (insertion || deletion) {
+            dedupeWhitespaceInChangeObjects(lastKeep, deletion, insertion, change, options.intlSegmenter);
+          }
+          lastKeep = change;
+          insertion = null;
+          deletion = null;
+        }
+      });
+      if (insertion || deletion) {
+        dedupeWhitespaceInChangeObjects(lastKeep, deletion, insertion, null, options.intlSegmenter);
+      }
+      return changes;
+    }
+  };
+  var wordDiff = new WordDiff();
+  function dedupeWhitespaceInChangeObjects(startKeep, deletion, insertion, endKeep, segmenter) {
+    if (deletion && insertion) {
+      const [oldWsPrefix, oldWsSuffix] = leadingAndTrailingWs(deletion.value, segmenter);
+      const [newWsPrefix, newWsSuffix] = leadingAndTrailingWs(insertion.value, segmenter);
+      if (startKeep) {
+        const commonWsPrefix = longestCommonPrefix(oldWsPrefix, newWsPrefix);
+        startKeep.value = replaceSuffix(startKeep.value, newWsPrefix, commonWsPrefix);
+        deletion.value = removePrefix(deletion.value, commonWsPrefix);
+        insertion.value = removePrefix(insertion.value, commonWsPrefix);
+      }
+      if (endKeep) {
+        const commonWsSuffix = longestCommonSuffix(oldWsSuffix, newWsSuffix);
+        endKeep.value = replacePrefix(endKeep.value, newWsSuffix, commonWsSuffix);
+        deletion.value = removeSuffix(deletion.value, commonWsSuffix);
+        insertion.value = removeSuffix(insertion.value, commonWsSuffix);
+      }
+    } else if (insertion) {
+      if (startKeep) {
+        const ws = leadingWs(insertion.value, segmenter);
+        insertion.value = insertion.value.substring(ws.length);
+      }
+      if (endKeep) {
+        const ws = leadingWs(endKeep.value, segmenter);
+        endKeep.value = endKeep.value.substring(ws.length);
+      }
+    } else if (startKeep && endKeep) {
+      const newWsFull = leadingWs(endKeep.value, segmenter), [delWsStart, delWsEnd] = leadingAndTrailingWs(deletion.value, segmenter);
+      const newWsStart = longestCommonPrefix(newWsFull, delWsStart);
+      deletion.value = removePrefix(deletion.value, newWsStart);
+      const newWsEnd = longestCommonSuffix(removePrefix(newWsFull, newWsStart), delWsEnd);
+      deletion.value = removeSuffix(deletion.value, newWsEnd);
+      endKeep.value = replacePrefix(endKeep.value, newWsFull, newWsEnd);
+      startKeep.value = replaceSuffix(startKeep.value, newWsFull, newWsFull.slice(0, newWsFull.length - newWsEnd.length));
+    } else if (endKeep) {
+      const endKeepWsPrefix = leadingWs(endKeep.value, segmenter);
+      const deletionWsSuffix = trailingWs(deletion.value, segmenter);
+      const overlap = maximumOverlap(deletionWsSuffix, endKeepWsPrefix);
+      deletion.value = removeSuffix(deletion.value, overlap);
+    } else if (startKeep) {
+      const startKeepWsSuffix = trailingWs(startKeep.value, segmenter);
+      const deletionWsPrefix = leadingWs(deletion.value, segmenter);
+      const overlap = maximumOverlap(startKeepWsSuffix, deletionWsPrefix);
+      deletion.value = removePrefix(deletion.value, overlap);
+    }
+  }
+  var WordsWithSpaceDiff = class extends Diff {
+    tokenize(value) {
+      const regex = new RegExp(`(\\r?\\n)|[${extendedWordChars}]+|[^\\S\\n\\r]+|[^${extendedWordChars}]`, "ug");
+      return value.match(regex) || [];
+    }
+  };
+  var wordsWithSpaceDiff = new WordsWithSpaceDiff();
+  function diffWordsWithSpace(oldStr, newStr, options) {
+    return wordsWithSpaceDiff.diff(oldStr, newStr, options);
+  }
+
+  // packages/editor/node_modules/diff/libesm/diff/array.js
+  var ArrayDiff = class extends Diff {
+    tokenize(value) {
+      return value.slice();
+    }
+    join(value) {
+      return value;
+    }
+    removeEmpty(value) {
+      return value;
+    }
+  };
+  var arrayDiff = new ArrayDiff();
+  function diffArrays(oldArr, newArr, options) {
+    return arrayDiff.diff(oldArr, newArr, options);
+  }
+
   // packages/editor/build-module/components/post-revisions-preview/block-diff.mjs
-  var import_array5 = __toESM(require_array(), 1);
-  var import_word = __toESM(require_word(), 1);
   var import_block_serialization_default_parser = __toESM(require_block_serialization_default_parser(), 1);
   var import_blocks14 = __toESM(require_blocks(), 1);
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_i18n180 = __toESM(require_i18n(), 1);
   var { parseRawBlock } = unlock(import_blocks14.privateApis);
+  function isWhitespaceRawBlock(rawBlock) {
+    return rawBlock.blockName === null && (!rawBlock.innerHTML || !rawBlock.innerHTML.trim());
+  }
   function stringifyValue(value) {
     if (value === null || value === void 0) {
       return "";
@@ -70772,9 +70935,9 @@ If there's a particular need for this, please submit a feature request at https:
     const wordLikeRegex = /[\p{L}\p{N}]/u;
     const getWords = (text) => {
       const words = [];
-      for (const { segment, isWordLike } of segmenter.segment(text)) {
-        if (isWordLike || wordLikeRegex.test(segment)) {
-          words.push(segment);
+      for (const { segment: segment2, isWordLike } of segmenter.segment(text)) {
+        if (isWordLike || wordLikeRegex.test(segment2)) {
+          words.push(segment2);
         }
       }
       return words;
@@ -70869,14 +71032,19 @@ If there's a particular need for this, please submit a feature request at https:
         };
         const lo = Math.min(rem.index, bestMatch.index);
         const hi = Math.max(rem.index, bestMatch.index);
-        let hasAddedBetween = false;
+        let crossesCurrentContent = false;
         for (let i3 = lo + 1; i3 < hi; i3++) {
-          if (blocks[i3].__revisionDiffStatus?.status === "added" && !pairedAdded.has(i3)) {
-            hasAddedBetween = true;
+          const status = blocks[i3].__revisionDiffStatus?.status;
+          if (status === void 0) {
+            crossesCurrentContent = true;
+            break;
+          }
+          if (status === "added" && !pairedAdded.has(i3)) {
+            crossesCurrentContent = true;
             break;
           }
         }
-        if (hasAddedBetween) {
+        if (crossesCurrentContent) {
           modifications.set(bestMatch.index, modifiedBlock);
           pairedRemoved.add(rem.index);
         } else {
@@ -70896,6 +71064,8 @@ If there's a particular need for this, please submit a feature request at https:
     }).filter(Boolean);
   }
   function diffRawBlocks(currentRaw, previousRaw) {
+    currentRaw = currentRaw.filter((b3) => !isWhitespaceRawBlock(b3));
+    previousRaw = previousRaw.filter((b3) => !isWhitespaceRawBlock(b3));
     const createBlockSignature = (rawBlock) => JSON.stringify({
       name: rawBlock.blockName,
       attrs: rawBlock.attrs,
@@ -70907,7 +71077,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const currentSigs = currentRaw.map(createBlockSignature);
     const previousSigs = previousRaw.map(createBlockSignature);
-    const diff = (0, import_array5.diffArrays)(previousSigs, currentSigs);
+    const diff = diffArrays(previousSigs, currentSigs);
     const result = [];
     let currIdx = 0;
     let prevIdx = 0;
@@ -71035,7 +71205,7 @@ If there's a particular need for this, please submit a feature request at https:
   function applyRichTextDiff(currentRichText, previousRichText) {
     const currentText = currentRichText.toPlainText();
     const previousText = previousRichText.toPlainText();
-    const textDiff = (0, import_word.diffWords)(previousText, currentText);
+    const textDiff = diffWordsWithSpace(previousText, currentText);
     let result = (0, import_rich_text.create)({ text: "" });
     let currentIdx = 0;
     let previousIdx = 0;
@@ -71155,7 +71325,10 @@ If there's a particular need for this, please submit a feature request at https:
           previousBlock.attributes[attrName]
         );
         if (currStr !== prevStr) {
-          changedAttributes[attrName] = (0, import_word.diffWords)(prevStr, currStr);
+          changedAttributes[attrName] = diffWordsWithSpace(
+            prevStr,
+            currStr
+          );
         }
       }
     }
@@ -71202,14 +71375,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-revisions-preview/preserve-client-ids.mjs
-  var import_array6 = __toESM(require_array(), 1);
   function preserveClientIds(newBlocks, prevBlocks) {
     if (!prevBlocks?.length || !newBlocks?.length) {
       return newBlocks;
     }
     const newSigs = newBlocks.map((block) => block.name);
     const prevSigs = prevBlocks.map((block) => block.name);
-    const diffResult = (0, import_array6.diffArrays)(prevSigs, newSigs);
+    const diffResult = diffArrays(prevSigs, newSigs);
     let newIndex = 0;
     let prevIndex = 0;
     const result = [];
@@ -90909,7 +91081,6 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/revision-fields-diff/index.mjs
-  var import_word2 = __toESM(require_word(), 1);
   var import_data241 = __toESM(require_data(), 1);
   var import_element309 = __toESM(require_element(), 1);
   var import_i18n308 = __toESM(require_i18n(), 1);
@@ -90985,7 +91156,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (!revStr && !prevStr) {
           continue;
         }
-        result[key] = (0, import_word2.diffWords)(prevStr, revStr);
+        result[key] = diffWordsWithSpace(prevStr, revStr);
       }
       if (Object.keys(result).length === 0) {
         return null;

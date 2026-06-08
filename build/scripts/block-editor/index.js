@@ -710,246 +710,6 @@ var wp;
     }
   });
 
-  // node_modules/diff/lib/diff/base.js
-  var require_base = __commonJS({
-    "node_modules/diff/lib/diff/base.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.default = Diff;
-      function Diff() {
-      }
-      Diff.prototype = {
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        diff: function diff(oldString, newString) {
-          var options = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-          var callback = options.callback;
-          if (typeof options === "function") {
-            callback = options;
-            options = {};
-          }
-          this.options = options;
-          var self = this;
-          function done(value) {
-            if (callback) {
-              setTimeout(function() {
-                callback(void 0, value);
-              }, 0);
-              return true;
-            } else {
-              return value;
-            }
-          }
-          oldString = this.castInput(oldString);
-          newString = this.castInput(newString);
-          oldString = this.removeEmpty(this.tokenize(oldString));
-          newString = this.removeEmpty(this.tokenize(newString));
-          var newLen = newString.length, oldLen = oldString.length;
-          var editLength = 1;
-          var maxEditLength = newLen + oldLen;
-          var bestPath = [{
-            newPos: -1,
-            components: []
-          }];
-          var oldPos = this.extractCommon(bestPath[0], newString, oldString, 0);
-          if (bestPath[0].newPos + 1 >= newLen && oldPos + 1 >= oldLen) {
-            return done([{
-              value: this.join(newString),
-              count: newString.length
-            }]);
-          }
-          function execEditLength() {
-            for (var diagonalPath = -1 * editLength; diagonalPath <= editLength; diagonalPath += 2) {
-              var basePath = (
-                /*istanbul ignore start*/
-                void 0
-              );
-              var addPath = bestPath[diagonalPath - 1], removePath = bestPath[diagonalPath + 1], _oldPos = (removePath ? removePath.newPos : 0) - diagonalPath;
-              if (addPath) {
-                bestPath[diagonalPath - 1] = void 0;
-              }
-              var canAdd = addPath && addPath.newPos + 1 < newLen, canRemove = removePath && 0 <= _oldPos && _oldPos < oldLen;
-              if (!canAdd && !canRemove) {
-                bestPath[diagonalPath] = void 0;
-                continue;
-              }
-              if (!canAdd || canRemove && addPath.newPos < removePath.newPos) {
-                basePath = clonePath(removePath);
-                self.pushComponent(basePath.components, void 0, true);
-              } else {
-                basePath = addPath;
-                basePath.newPos++;
-                self.pushComponent(basePath.components, true, void 0);
-              }
-              _oldPos = self.extractCommon(basePath, newString, oldString, diagonalPath);
-              if (basePath.newPos + 1 >= newLen && _oldPos + 1 >= oldLen) {
-                return done(buildValues(self, basePath.components, newString, oldString, self.useLongestToken));
-              } else {
-                bestPath[diagonalPath] = basePath;
-              }
-            }
-            editLength++;
-          }
-          if (callback) {
-            (function exec() {
-              setTimeout(function() {
-                if (editLength > maxEditLength) {
-                  return callback();
-                }
-                if (!execEditLength()) {
-                  exec();
-                }
-              }, 0);
-            })();
-          } else {
-            while (editLength <= maxEditLength) {
-              var ret = execEditLength();
-              if (ret) {
-                return ret;
-              }
-            }
-          }
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        pushComponent: function pushComponent(components, added, removed) {
-          var last = components[components.length - 1];
-          if (last && last.added === added && last.removed === removed) {
-            components[components.length - 1] = {
-              count: last.count + 1,
-              added,
-              removed
-            };
-          } else {
-            components.push({
-              count: 1,
-              added,
-              removed
-            });
-          }
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        extractCommon: function extractCommon(basePath, newString, oldString, diagonalPath) {
-          var newLen = newString.length, oldLen = oldString.length, newPos = basePath.newPos, oldPos = newPos - diagonalPath, commonCount = 0;
-          while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(newString[newPos + 1], oldString[oldPos + 1])) {
-            newPos++;
-            oldPos++;
-            commonCount++;
-          }
-          if (commonCount) {
-            basePath.components.push({
-              count: commonCount
-            });
-          }
-          basePath.newPos = newPos;
-          return oldPos;
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        equals: function equals(left, right) {
-          if (this.options.comparator) {
-            return this.options.comparator(left, right);
-          } else {
-            return left === right || this.options.ignoreCase && left.toLowerCase() === right.toLowerCase();
-          }
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        removeEmpty: function removeEmpty(array) {
-          var ret = [];
-          for (var i2 = 0; i2 < array.length; i2++) {
-            if (array[i2]) {
-              ret.push(array[i2]);
-            }
-          }
-          return ret;
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        castInput: function castInput(value) {
-          return value;
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        tokenize: function tokenize2(value) {
-          return value.split("");
-        },
-        /*istanbul ignore start*/
-        /*istanbul ignore end*/
-        join: function join(chars) {
-          return chars.join("");
-        }
-      };
-      function buildValues(diff, components, newString, oldString, useLongestToken) {
-        var componentPos = 0, componentLen = components.length, newPos = 0, oldPos = 0;
-        for (; componentPos < componentLen; componentPos++) {
-          var component = components[componentPos];
-          if (!component.removed) {
-            if (!component.added && useLongestToken) {
-              var value = newString.slice(newPos, newPos + component.count);
-              value = value.map(function(value2, i2) {
-                var oldValue = oldString[oldPos + i2];
-                return oldValue.length > value2.length ? oldValue : value2;
-              });
-              component.value = diff.join(value);
-            } else {
-              component.value = diff.join(newString.slice(newPos, newPos + component.count));
-            }
-            newPos += component.count;
-            if (!component.added) {
-              oldPos += component.count;
-            }
-          } else {
-            component.value = diff.join(oldString.slice(oldPos, oldPos + component.count));
-            oldPos += component.count;
-            if (componentPos && components[componentPos - 1].added) {
-              var tmp = components[componentPos - 1];
-              components[componentPos - 1] = components[componentPos];
-              components[componentPos] = tmp;
-            }
-          }
-        }
-        var lastComponent = components[componentLen - 1];
-        if (componentLen > 1 && typeof lastComponent.value === "string" && (lastComponent.added || lastComponent.removed) && diff.equals("", lastComponent.value)) {
-          components[componentLen - 2].value += lastComponent.value;
-          components.pop();
-        }
-        return components;
-      }
-      function clonePath(path) {
-        return {
-          newPos: path.newPos,
-          components: path.components.slice(0)
-        };
-      }
-    }
-  });
-
-  // node_modules/diff/lib/diff/character.js
-  var require_character = __commonJS({
-    "node_modules/diff/lib/diff/character.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.diffChars = diffChars2;
-      exports.characterDiff = void 0;
-      var _base = _interopRequireDefault(require_base());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { default: obj };
-      }
-      var characterDiff = new /*istanbul ignore start*/
-      _base.default();
-      exports.characterDiff = characterDiff;
-      function diffChars2(oldStr, newStr, options) {
-        return characterDiff.diff(oldStr, newStr, options);
-      }
-    }
-  });
-
   // vendor-external:react
   var require_react = __commonJS({
     "vendor-external:react"(exports, module) {
@@ -18598,8 +18358,217 @@ var wp;
   var import_blocks17 = __toESM(require_blocks(), 1);
   var import_data18 = __toESM(require_data(), 1);
 
+  // packages/block-editor/node_modules/diff/libesm/diff/base.js
+  var Diff = class {
+    diff(oldStr, newStr, options = {}) {
+      let callback;
+      if (typeof options === "function") {
+        callback = options;
+        options = {};
+      } else if ("callback" in options) {
+        callback = options.callback;
+      }
+      const oldString = this.castInput(oldStr, options);
+      const newString = this.castInput(newStr, options);
+      const oldTokens = this.removeEmpty(this.tokenize(oldString, options));
+      const newTokens = this.removeEmpty(this.tokenize(newString, options));
+      return this.diffWithOptionsObj(oldTokens, newTokens, options, callback);
+    }
+    diffWithOptionsObj(oldTokens, newTokens, options, callback) {
+      var _a;
+      const done = (value) => {
+        value = this.postProcess(value, options);
+        if (callback) {
+          setTimeout(function() {
+            callback(value);
+          }, 0);
+          return void 0;
+        } else {
+          return value;
+        }
+      };
+      const newLen = newTokens.length, oldLen = oldTokens.length;
+      let editLength = 1;
+      let maxEditLength = newLen + oldLen;
+      if (options.maxEditLength != null) {
+        maxEditLength = Math.min(maxEditLength, options.maxEditLength);
+      }
+      const maxExecutionTime = (_a = options.timeout) !== null && _a !== void 0 ? _a : Infinity;
+      const abortAfterTimestamp = Date.now() + maxExecutionTime;
+      const bestPath = [{ oldPos: -1, lastComponent: void 0 }];
+      let newPos = this.extractCommon(bestPath[0], newTokens, oldTokens, 0, options);
+      if (bestPath[0].oldPos + 1 >= oldLen && newPos + 1 >= newLen) {
+        return done(this.buildValues(bestPath[0].lastComponent, newTokens, oldTokens));
+      }
+      let minDiagonalToConsider = -Infinity, maxDiagonalToConsider = Infinity;
+      const execEditLength = () => {
+        for (let diagonalPath = Math.max(minDiagonalToConsider, -editLength); diagonalPath <= Math.min(maxDiagonalToConsider, editLength); diagonalPath += 2) {
+          let basePath;
+          const removePath = bestPath[diagonalPath - 1], addPath = bestPath[diagonalPath + 1];
+          if (removePath) {
+            bestPath[diagonalPath - 1] = void 0;
+          }
+          let canAdd = false;
+          if (addPath) {
+            const addPathNewPos = addPath.oldPos - diagonalPath;
+            canAdd = addPath && 0 <= addPathNewPos && addPathNewPos < newLen;
+          }
+          const canRemove = removePath && removePath.oldPos + 1 < oldLen;
+          if (!canAdd && !canRemove) {
+            bestPath[diagonalPath] = void 0;
+            continue;
+          }
+          if (!canRemove || canAdd && removePath.oldPos < addPath.oldPos) {
+            basePath = this.addToPath(addPath, true, false, 0, options);
+          } else {
+            basePath = this.addToPath(removePath, false, true, 1, options);
+          }
+          newPos = this.extractCommon(basePath, newTokens, oldTokens, diagonalPath, options);
+          if (basePath.oldPos + 1 >= oldLen && newPos + 1 >= newLen) {
+            return done(this.buildValues(basePath.lastComponent, newTokens, oldTokens)) || true;
+          } else {
+            bestPath[diagonalPath] = basePath;
+            if (basePath.oldPos + 1 >= oldLen) {
+              maxDiagonalToConsider = Math.min(maxDiagonalToConsider, diagonalPath - 1);
+            }
+            if (newPos + 1 >= newLen) {
+              minDiagonalToConsider = Math.max(minDiagonalToConsider, diagonalPath + 1);
+            }
+          }
+        }
+        editLength++;
+      };
+      if (callback) {
+        (function exec() {
+          setTimeout(function() {
+            if (editLength > maxEditLength || Date.now() > abortAfterTimestamp) {
+              return callback(void 0);
+            }
+            if (!execEditLength()) {
+              exec();
+            }
+          }, 0);
+        })();
+      } else {
+        while (editLength <= maxEditLength && Date.now() <= abortAfterTimestamp) {
+          const ret = execEditLength();
+          if (ret) {
+            return ret;
+          }
+        }
+      }
+    }
+    addToPath(path, added, removed, oldPosInc, options) {
+      const last = path.lastComponent;
+      if (last && !options.oneChangePerToken && last.added === added && last.removed === removed) {
+        return {
+          oldPos: path.oldPos + oldPosInc,
+          lastComponent: { count: last.count + 1, added, removed, previousComponent: last.previousComponent }
+        };
+      } else {
+        return {
+          oldPos: path.oldPos + oldPosInc,
+          lastComponent: { count: 1, added, removed, previousComponent: last }
+        };
+      }
+    }
+    extractCommon(basePath, newTokens, oldTokens, diagonalPath, options) {
+      const newLen = newTokens.length, oldLen = oldTokens.length;
+      let oldPos = basePath.oldPos, newPos = oldPos - diagonalPath, commonCount = 0;
+      while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(oldTokens[oldPos + 1], newTokens[newPos + 1], options)) {
+        newPos++;
+        oldPos++;
+        commonCount++;
+        if (options.oneChangePerToken) {
+          basePath.lastComponent = { count: 1, previousComponent: basePath.lastComponent, added: false, removed: false };
+        }
+      }
+      if (commonCount && !options.oneChangePerToken) {
+        basePath.lastComponent = { count: commonCount, previousComponent: basePath.lastComponent, added: false, removed: false };
+      }
+      basePath.oldPos = oldPos;
+      return newPos;
+    }
+    equals(left, right, options) {
+      if (options.comparator) {
+        return options.comparator(left, right);
+      } else {
+        return left === right || !!options.ignoreCase && left.toLowerCase() === right.toLowerCase();
+      }
+    }
+    removeEmpty(array) {
+      const ret = [];
+      for (let i2 = 0; i2 < array.length; i2++) {
+        if (array[i2]) {
+          ret.push(array[i2]);
+        }
+      }
+      return ret;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    castInput(value, options) {
+      return value;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    tokenize(value, options) {
+      return Array.from(value);
+    }
+    join(chars) {
+      return chars.join("");
+    }
+    postProcess(changeObjects, options) {
+      return changeObjects;
+    }
+    get useLongestToken() {
+      return false;
+    }
+    buildValues(lastComponent, newTokens, oldTokens) {
+      const components = [];
+      let nextComponent;
+      while (lastComponent) {
+        components.push(lastComponent);
+        nextComponent = lastComponent.previousComponent;
+        delete lastComponent.previousComponent;
+        lastComponent = nextComponent;
+      }
+      components.reverse();
+      const componentLen = components.length;
+      let componentPos = 0, newPos = 0, oldPos = 0;
+      for (; componentPos < componentLen; componentPos++) {
+        const component = components[componentPos];
+        if (!component.removed) {
+          if (!component.added && this.useLongestToken) {
+            let value = newTokens.slice(newPos, newPos + component.count);
+            value = value.map(function(value2, i2) {
+              const oldValue = oldTokens[oldPos + i2];
+              return oldValue.length > value2.length ? oldValue : value2;
+            });
+            component.value = this.join(value);
+          } else {
+            component.value = this.join(newTokens.slice(newPos, newPos + component.count));
+          }
+          newPos += component.count;
+          if (!component.added) {
+            oldPos += component.count;
+          }
+        } else {
+          component.value = this.join(oldTokens.slice(oldPos, oldPos + component.count));
+          oldPos += component.count;
+        }
+      }
+      return components;
+    }
+  };
+
+  // packages/block-editor/node_modules/diff/libesm/diff/character.js
+  var CharacterDiff = class extends Diff {
+  };
+  var characterDiff = new CharacterDiff();
+  function diffChars(oldStr, newStr, options) {
+    return characterDiff.diff(oldStr, newStr, options);
+  }
+
   // packages/block-editor/build-module/components/block-compare/index.mjs
-  var import_character = __toESM(require_character(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
   var import_blocks16 = __toESM(require_blocks(), 1);
 
@@ -18645,7 +18614,7 @@ var wp;
     convertButtonText
   }) {
     function getDifference(originalContent, newContent) {
-      const difference2 = (0, import_character.diffChars)(originalContent, newContent);
+      const difference2 = diffChars(originalContent, newContent);
       return difference2.map((item, pos) => {
         const classes = clsx_default({
           "block-editor-block-compare__added": item.added,
