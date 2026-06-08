@@ -2153,7 +2153,7 @@ button.font-library__upload-area {
   right: 0;
   background-color: inherit;
   padding: var(--wpds-dimension-padding-md, 12px) var(--wpds-dimension-padding-2xl, 24px);
-  border-top: var(--wpds-border-width-xs, 1px) solid var(--wpds-color-stroke-surface-neutral-weak, #e4e4e4);
+  border-top: var(--wpds-border-width-xs, 1px) solid var(--wpds-color-stroke-surface-neutral-weak, #f0f0f0);
   flex-shrink: 0;
 }
 
@@ -2625,7 +2625,7 @@ div.dataviews-view-list {
 .dataviews-view-list div[role=row],
 .dataviews-view-list div[role=article] {
   margin: 0;
-  border-top: 1px solid var(--wpds-color-stroke-surface-neutral-weak, #e4e4e4);
+  border-top: 1px solid var(--wpds-color-stroke-surface-neutral-weak, #f0f0f0);
 }
 
 .dataviews-view-list div[role=row] .dataviews-view-list__item-wrapper,
@@ -2680,13 +2680,13 @@ div.dataviews-view-list {
 }
 .dataviews-view-list div[role=row].is-selected.is-selected,
 .dataviews-view-list div[role=article].is-selected.is-selected {
-  border-top: 1px solid var(--wpds-color-stroke-surface-brand, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 46%, white));
+  border-top: 1px solid var(--wpds-color-stroke-surface-brand, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 40%, white));
 }
 
 .dataviews-view-list div[role=row].is-selected.is-selected + div[role=row], .dataviews-view-list div[role=row].is-selected.is-selected + div[role=article],
 .dataviews-view-list div[role=article].is-selected.is-selected + div[role=row],
 .dataviews-view-list div[role=article].is-selected.is-selected + div[role=article] {
-  border-top: 1px solid var(--wpds-color-stroke-surface-brand, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 46%, white));
+  border-top: 1px solid var(--wpds-color-stroke-surface-brand, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 40%, white));
 }
 
 .dataviews-view-list div[role=row]:not(.is-selected):hover, .dataviews-view-list div[role=row]:not(.is-selected).is-hovered, .dataviews-view-list div[role=row]:not(.is-selected):focus-within,
@@ -2966,7 +2966,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-table tr {
-  border-top: 1px solid var(--wpds-color-stroke-surface-neutral-weak, #e4e4e4);
+  border-top: 1px solid var(--wpds-color-stroke-surface-neutral-weak, #f0f0f0);
   background-color: inherit;
 }
 
@@ -2999,7 +2999,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-table tr.is-selected, .dataviews-view-table tr.is-selected + tr {
-  border-top: 1px solid var(--wpds-color-stroke-surface-brand, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 46%, white));
+  border-top: 1px solid var(--wpds-color-stroke-surface-brand, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 40%, white));
 }
 
 .dataviews-view-table tr.is-selected .dataviews-view-table__actions-column--sticky {
@@ -3033,7 +3033,7 @@ div.dataviews-view-list {
   right: 0;
   left: 0;
   height: 1px;
-  background-color: var(--wpds-color-stroke-surface-neutral-weak, #e4e4e4);
+  background-color: var(--wpds-color-stroke-surface-neutral-weak, #f0f0f0);
 }
 
 .dataviews-view-table thead tr {
