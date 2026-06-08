@@ -3963,7 +3963,7 @@ div.components-toolbar > div + div.has-left-divider::before {
 .components-tooltip {
   background: #000;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  border-radius: 2px;
+  border-radius: var(--wpds-border-radius-md, 4px);
   color: #f0f0f0;
   text-align: center;
   line-height: 1.4;
