@@ -155,14 +155,14 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React47 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef21 = React47.useRef, useEffect18 = React47.useEffect, useMemo17 = React47.useMemo, useDebugValue2 = React47.useDebugValue;
+      var React47 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef21 = React47.useRef, useEffect18 = React47.useEffect, useMemo19 = React47.useMemo, useDebugValue2 = React47.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef21(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo17(
+        instRef = useMemo19(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -317,7 +317,7 @@ var require_keyboard_shortcuts = __commonJS({
 });
 
 // packages/boot/build-module/components/app/index.mjs
-var import_element31 = __toESM(require_element(), 1);
+var import_element32 = __toESM(require_element(), 1);
 var import_data12 = __toESM(require_data(), 1);
 
 // packages/boot/build-module/components/app/router.mjs
@@ -9361,6 +9361,27 @@ function Page({
 Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
+// packages/admin-ui/build-module/admin-theme-colors/index.mjs
+var DEFAULT_THEME_COLORS = {
+  primary: "#3858e9",
+  bg: "#25292b"
+};
+var ADMIN_THEME_COLORS = /* @__PURE__ */ new Map([
+  ["fresh", DEFAULT_THEME_COLORS],
+  ["modern", { primary: "#3858e9", bg: "#222524" }],
+  ["midnight", { primary: "#cf4339", bg: "#3d4042" }],
+  ["coffee", { primary: "#916745", bg: "#5b534d" }],
+  ["ocean", { primary: "#567958", bg: "#5f787f" }],
+  ["blue", { primary: "#437aa8", bg: "#3876a8" }],
+  ["ectoplasm", { primary: "#646c3e", bg: "#4f386e" }],
+  ["sunrise", { primary: "#ad631e", bg: "#cc4541" }],
+  ["light", { primary: "#007cba", bg: "#eaeeed" }]
+]);
+function getAdminThemeColors() {
+  const scheme = document.body.className.match(/admin-color-([\w-]+)/)?.[1] ?? "fresh";
+  return ADMIN_THEME_COLORS.get(scheme) ?? DEFAULT_THEME_COLORS;
+}
+
 // packages/boot/build-module/components/app/router.mjs
 var import_data11 = __toESM(require_data(), 1);
 var import_core_data6 = __toESM(require_core_data(), 1);
@@ -9375,6 +9396,7 @@ var import_components14 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis5 } from "@wordpress/route";
 var import_element29 = __toESM(require_element(), 1);
 var import_i18n11 = __toESM(require_i18n(), 1);
+var import_theme2 = __toESM(require_theme(), 1);
 
 // packages/boot/build-module/components/sidebar/index.mjs
 var import_components10 = __toESM(require_components(), 1);
@@ -10683,34 +10705,8 @@ function useRouteTitle() {
   }, [routeTitle, siteTitle, location]);
 }
 
-// packages/boot/build-module/components/user-theme-provider/index.mjs
-var import_theme2 = __toESM(require_theme(), 1);
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
-var ThemeProvider2 = unlock2(import_theme2.privateApis).ThemeProvider;
-var THEME_PRIMARY_COLORS = /* @__PURE__ */ new Map([
-  ["light", "#0085ba"],
-  ["modern", "#3858e9"],
-  ["blue", "#096484"],
-  ["coffee", "#46403c"],
-  ["ectoplasm", "#523f6d"],
-  ["midnight", "#e14d43"],
-  ["ocean", "#627c83"],
-  ["sunrise", "#dd823b"]
-]);
-function getAdminThemePrimaryColor() {
-  const theme = document.body.className.match(/admin-color-([a-z]+)/)?.[1];
-  return theme && THEME_PRIMARY_COLORS.get(theme);
-}
-function UserThemeProvider({
-  color,
-  ...restProps
-}) {
-  const primary = getAdminThemePrimaryColor();
-  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(ThemeProvider2, { ...restProps, color: { primary, ...color } });
-}
-
 // packages/boot/build-module/components/root/index.mjs
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b2d4649ae5']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "b2d4649ae5");
@@ -10718,6 +10714,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 var { useLocation: useLocation2, useMatches: useMatches3, Outlet } = unlock2(routePrivateApis5);
+var { ThemeProvider: ThemeProvider2 } = unlock2(import_theme2.privateApis);
 function Root2() {
   const matches = useMatches3();
   const location = useLocation2();
@@ -10732,111 +10729,125 @@ function Root2() {
   (0, import_element29.useEffect)(() => {
     setIsMobileSidebarOpen(false);
   }, [location.pathname, isMobileViewport]);
-  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(UserThemeProvider, { isRoot: true, color: { bg: "#f8f8f8" }, children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(UserThemeProvider, { color: { bg: "#1d2327" }, children: /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(
-    "div",
+  const themeColors = (0, import_element29.useMemo)(getAdminThemeColors, []);
+  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+    ThemeProvider2,
     {
-      className: clsx_default("boot-layout", {
-        "has-canvas": !!canvas || canvas === null,
-        "has-full-canvas": isFullScreen
-      }),
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(SavePanel, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_notices.SnackbarNotices, { className: "boot-notices__snackbar" }),
-        isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
-          import_components14.Button,
-          {
-            icon: menu_default,
-            onClick: () => setIsMobileSidebarOpen(true),
-            label: (0, import_i18n11.__)("Open navigation panel"),
-            size: "compact"
-          }
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
-          import_components14.__unstableMotion.div,
-          {
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            exit: { opacity: 0 },
-            transition: {
-              type: "tween",
-              duration: disableMotion ? 0 : 0.2,
-              ease: "easeOut"
-            },
-            className: "boot-layout__sidebar-backdrop",
-            onClick: () => setIsMobileSidebarOpen(false),
-            onKeyDown: (event) => {
-              if (event.key === "Escape") {
-                setIsMobileSidebarOpen(
-                  false
-                );
+      isRoot: true,
+      color: { ...themeColors, bg: "#f8f8f8" },
+      children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(ThemeProvider2, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
+        "div",
+        {
+          className: clsx_default("boot-layout", {
+            "has-canvas": !!canvas || canvas === null,
+            "has-full-canvas": isFullScreen
+          }),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(SavePanel, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_notices.SnackbarNotices, { className: "boot-notices__snackbar" }),
+            isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+              import_components14.Button,
+              {
+                icon: menu_default,
+                onClick: () => setIsMobileSidebarOpen(true),
+                label: (0, import_i18n11.__)("Open navigation panel"),
+                size: "compact"
               }
-            },
-            role: "button",
-            tabIndex: -1,
-            "aria-label": (0, import_i18n11.__)(
-              "Close navigation panel"
-            )
-          }
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
-          import_components14.__unstableMotion.div,
-          {
-            initial: { x: "-100%" },
-            animate: { x: 0 },
-            exit: { x: "-100%" },
-            transition: {
-              type: "tween",
-              duration: disableMotion ? 0 : 0.2,
-              ease: "easeOut"
-            },
-            className: "boot-layout__sidebar is-mobile",
-            children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Sidebar, {})
-          }
-        ) }),
-        !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Sidebar, {}) }),
-        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(UserThemeProvider, { color: { bg: "#ffffff" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Outlet, {}),
-          (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(
-            "div",
-            {
-              className: clsx_default(
-                "boot-layout__canvas",
-                {
-                  "has-mobile-drawer": canvas?.isPreview && isMobileViewport
-                }
-              ),
-              children: [
-                canvas?.isPreview && isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "boot-layout__mobile-sidebar-drawer", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
-                  import_components14.Button,
-                  {
-                    icon: menu_default,
-                    onClick: () => setIsMobileSidebarOpen(
-                      true
-                    ),
-                    label: (0, import_i18n11.__)(
-                      "Open navigation panel"
-                    ),
-                    size: "compact"
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+              import_components14.__unstableMotion.div,
+              {
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                exit: { opacity: 0 },
+                transition: {
+                  type: "tween",
+                  duration: disableMotion ? 0 : 0.2,
+                  ease: "easeOut"
+                },
+                className: "boot-layout__sidebar-backdrop",
+                onClick: () => setIsMobileSidebarOpen(false),
+                onKeyDown: (event) => {
+                  if (event.key === "Escape") {
+                    setIsMobileSidebarOpen(
+                      false
+                    );
                   }
-                ) }),
-                /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
-                  CanvasRenderer,
-                  {
-                    canvas,
-                    routeContentModule
-                  }
+                },
+                role: "button",
+                tabIndex: -1,
+                "aria-label": (0, import_i18n11.__)(
+                  "Close navigation panel"
                 )
-              ]
-            }
-          )
-        ] }) })
-      ]
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+              import_components14.__unstableMotion.div,
+              {
+                initial: { x: "-100%" },
+                animate: { x: 0 },
+                exit: { x: "-100%" },
+                transition: {
+                  type: "tween",
+                  duration: disableMotion ? 0 : 0.2,
+                  ease: "easeOut"
+                },
+                className: "boot-layout__sidebar is-mobile",
+                children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Sidebar, {})
+              }
+            ) }),
+            !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Sidebar, {}) }),
+            /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
+              ThemeProvider2,
+              {
+                color: { ...themeColors, bg: "#ffffff" },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Outlet, {}),
+                  (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
+                    "div",
+                    {
+                      className: clsx_default(
+                        "boot-layout__canvas",
+                        {
+                          "has-mobile-drawer": canvas?.isPreview && isMobileViewport
+                        }
+                      ),
+                      children: [
+                        canvas?.isPreview && isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "boot-layout__mobile-sidebar-drawer", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+                          import_components14.Button,
+                          {
+                            icon: menu_default,
+                            onClick: () => setIsMobileSidebarOpen(
+                              true
+                            ),
+                            label: (0, import_i18n11.__)(
+                              "Open navigation panel"
+                            ),
+                            size: "compact"
+                          }
+                        ) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+                          CanvasRenderer,
+                          {
+                            canvas,
+                            routeContentModule
+                          }
+                        )
+                      ]
+                    }
+                  )
+                ]
+              }
+            ) })
+          ]
+        }
+      ) })
     }
-  ) }) }) }) });
+  ) }) });
 }
 
 // packages/boot/build-module/components/app/router.mjs
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 var {
   createLazyRoute,
   createRouter,
@@ -10848,7 +10859,7 @@ var {
   useLoaderData
 } = unlock2(routePrivateApis6);
 function NotFoundComponent() {
-  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(page_default, { title: (0, import_i18n12.__)("Route not found"), hasPadding: true, children: (0, import_i18n12.__)("The page you're looking for does not exist") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(page_default, { title: (0, import_i18n12.__)("Route not found"), hasPadding: true, children: (0, import_i18n12.__)("The page you're looking for does not exist") }) });
 }
 function createRouteFromDefinition(route, parentRoute) {
   let tanstackRoute = createRoute({
@@ -10906,9 +10917,9 @@ function createRouteFromDefinition(route, parentRoute) {
     return createLazyRoute(route.path)({
       component: function RouteComponent() {
         const { inspector: showInspector } = useLoaderData({ from: route.path }) ?? {};
-        return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(import_jsx_runtime49.Fragment, { children: [
-          Stage && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Stage, {}) }),
-          Inspector && showInspector && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Inspector, {}) })
+        return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(import_jsx_runtime48.Fragment, { children: [
+          Stage && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Stage, {}) }),
+          Inspector && showInspector && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Inspector, {}) })
         ] });
       }
     });
@@ -10964,14 +10975,16 @@ function Router({
       }
     });
   }, [routes, rootComponent]);
-  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(RouterProvider, { router });
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(RouterProvider, { router });
 }
 
 // packages/boot/build-module/components/root/single-page.mjs
 var import_notices2 = __toESM(require_notices(), 1);
 var import_components15 = __toESM(require_components(), 1);
+var import_element31 = __toESM(require_element(), 1);
 import { privateApis as routePrivateApis7 } from "@wordpress/route";
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var import_theme3 = __toESM(require_theme(), 1);
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b2d4649ae5']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "b2d4649ae5");
@@ -10979,6 +10992,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 var { useMatches: useMatches4, Outlet: Outlet2 } = unlock2(routePrivateApis7);
+var { ThemeProvider: ThemeProvider3 } = unlock2(import_theme3.privateApis);
 function RootSinglePage() {
   const matches = useMatches4();
   const currentMatch = matches[matches.length - 1];
@@ -10986,7 +11000,8 @@ function RootSinglePage() {
   const routeContentModule = currentMatch?.loaderData?.routeContentModule;
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
-  return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(UserThemeProvider, { isRoot: true, color: { bg: "#f8f8f8" }, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(UserThemeProvider, { color: { bg: "#1d2327" }, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
+  const themeColors = (0, import_element31.useMemo)(getAdminThemeColors, []);
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ThemeProvider3, { isRoot: true, color: { ...themeColors, bg: "#f8f8f8" }, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ThemeProvider3, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
     "div",
     {
       className: clsx_default(
@@ -10997,28 +11012,34 @@ function RootSinglePage() {
         }
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SavePanel, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
-        /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(UserThemeProvider, { color: { bg: "#ffffff" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Outlet2, {}),
-          (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
-            CanvasRenderer,
-            {
-              canvas,
-              routeContentModule
-            }
-          ) })
-        ] }) })
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(SavePanel, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
+          ThemeProvider3,
+          {
+            color: { ...themeColors, bg: "#ffffff" },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Outlet2, {}),
+              (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+                CanvasRenderer,
+                {
+                  canvas,
+                  routeContentModule
+                }
+              ) })
+            ]
+          }
+        ) })
       ]
     }
   ) }) }) });
 }
 
 // packages/boot/build-module/components/app/index.mjs
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
 function App({ rootComponent }) {
   const routes = (0, import_data12.useSelect)((select) => select(store).getRoutes(), []);
-  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Router, { routes, rootComponent });
+  return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Router, { routes, rootComponent });
 }
 async function init({
   mountId,
@@ -11042,9 +11063,9 @@ async function init({
   }
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element31.createRoot)(rootElement);
+    const root = (0, import_element32.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_element31.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_element32.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(App, {}) })
     );
   }
 }
@@ -11057,9 +11078,9 @@ async function initSinglePage({
   });
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element31.createRoot)(rootElement);
+    const root = (0, import_element32.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_element31.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(App, { rootComponent: RootSinglePage }) })
+      /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_element32.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(App, { rootComponent: RootSinglePage }) })
     );
   }
 }

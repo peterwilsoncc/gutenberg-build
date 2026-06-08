@@ -242,14 +242,14 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React62 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef75 = React62.useRef, useEffect69 = React62.useEffect, useMemo93 = React62.useMemo, useDebugValue2 = React62.useDebugValue;
+        var React62 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef75 = React62.useRef, useEffect69 = React62.useEffect, useMemo94 = React62.useMemo, useDebugValue2 = React62.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe3, getSnapshot, getServerSnapshot, selector2, isEqual2) {
           var instRef = useRef75(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo93(
+          instRef = useMemo94(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -1738,7 +1738,7 @@ var wp;
 
   // packages/edit-site/build-module/components/app/index.mjs
   var import_data89 = __toESM(require_data(), 1);
-  var import_router42 = __toESM(require_router(), 1);
+  var import_router38 = __toESM(require_router(), 1);
   var import_element196 = __toESM(require_element(), 1);
   var import_core_data70 = __toESM(require_core_data(), 1);
 
@@ -13001,6 +13001,27 @@ var wp;
   Page.SidebarToggleFill = SidebarToggleFill;
   var page_default2 = Page;
 
+  // packages/admin-ui/build-module/admin-theme-colors/index.mjs
+  var DEFAULT_THEME_COLORS = {
+    primary: "#3858e9",
+    bg: "#25292b"
+  };
+  var ADMIN_THEME_COLORS = /* @__PURE__ */ new Map([
+    ["fresh", DEFAULT_THEME_COLORS],
+    ["modern", { primary: "#3858e9", bg: "#222524" }],
+    ["midnight", { primary: "#cf4339", bg: "#3d4042" }],
+    ["coffee", { primary: "#916745", bg: "#5b534d" }],
+    ["ocean", { primary: "#567958", bg: "#5f787f" }],
+    ["blue", { primary: "#437aa8", bg: "#3876a8" }],
+    ["ectoplasm", { primary: "#646c3e", bg: "#4f386e" }],
+    ["sunrise", { primary: "#ad631e", bg: "#cc4541" }],
+    ["light", { primary: "#007cba", bg: "#eaeeed" }]
+  ]);
+  function getAdminThemeColors() {
+    const scheme = document.body.className.match(/admin-color-([\w-]+)/)?.[1] ?? "fresh";
+    return ADMIN_THEME_COLORS.get(scheme) ?? DEFAULT_THEME_COLORS;
+  }
+
   // packages/edit-site/build-module/components/layout/index.mjs
   var import_components8 = __toESM(require_components(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
@@ -13008,6 +13029,7 @@ var wp;
   var import_element44 = __toESM(require_element(), 1);
   var import_editor6 = __toESM(require_editor(), 1);
   var import_router6 = __toESM(require_router(), 1);
+  var import_theme2 = __toESM(require_theme(), 1);
   var import_plugins2 = __toESM(require_plugins(), 1);
   var import_notices = __toESM(require_notices(), 1);
   var import_data13 = __toESM(require_data(), 1);
@@ -17041,13 +17063,16 @@ var wp;
   var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation6 } = unlock(import_router6.privateApis);
   var { useStyle, UploadProgressSnackbar } = unlock(import_editor6.privateApis);
+  var { ThemeProvider: ThemeProvider2 } = unlock(import_theme2.privateApis);
   var ANIMATION_DURATION2 = 0.3;
+  var CONTENT_COLOR = { bg: "#ffffff" };
   function Layout() {
     const { query, name: routeKey, areas: areas2, widths } = useLocation6();
     const canvas = routeKey === "notfound" ? "view" : query?.canvas ?? "view";
     const hasAdminBarInEditor = window.__experimentalAdminBarInEditor;
     const showDesktopSiteHub = !hasAdminBarInEditor;
     const showMobileSiteHub = !hasAdminBarInEditor || routeKey !== "home";
+    const hasMobileAreas = areas2.mobileSidebar || areas2.mobileContent || areas2.preview;
     const isMobileViewport = (0, import_compose2.useViewportMatch)("medium", "<");
     const toggleRef = (0, import_element44.useRef)();
     const navigateRegionsProps = (0, import_components8.__unstableUseNavigateRegions)();
@@ -17091,7 +17116,7 @@ var wp;
             }
           ),
           children: /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)("div", { className: "edit-site-layout__content", children: [
-            (!isMobileViewport || !areas2.mobile) && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+            (!isMobileViewport || !hasMobileAreas) && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
               navigable_region_default,
               {
                 ariaLabel: (0, import_i18n8.__)("Navigation"),
@@ -17136,7 +17161,7 @@ var wp;
             ),
             /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_notices.SnackbarNotices, { className: "edit-site-layout__snackbar" }),
             /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(UploadProgressSnackbar, {}),
-            isMobileViewport && areas2.mobile && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", { className: "edit-site-layout__mobile", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SidebarNavigationProvider, { children: canvas !== "edit" ? /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(import_jsx_runtime108.Fragment, { children: [
+            isMobileViewport && hasMobileAreas && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", { className: "edit-site-layout__mobile", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SidebarNavigationProvider, { children: canvas !== "edit" ? /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(import_jsx_runtime108.Fragment, { children: [
               showMobileSiteHub && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
                 SiteHubMobile,
                 {
@@ -17144,10 +17169,16 @@ var wp;
                   isTransparent: isResizableFrameOversized
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SidebarContent, { routeKey, children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.mobile }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SidebarContent, { routeKey, children: areas2.mobileContent ? /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+                ThemeProvider2,
+                {
+                  color: CONTENT_COLOR,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", { className: "edit-site-layout__mobile-content", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.mobileContent }) })
+                }
+              ) : /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.mobileSidebar }) }),
               /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SaveHub, {}),
               /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SavePanel, {})
-            ] }) : /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.mobile }) }) }),
+            ] }) : /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(ThemeProvider2, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.preview }) }) }) }),
             !isMobileViewport && areas2.content && canvas !== "edit" && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
               "div",
               {
@@ -17155,7 +17186,7 @@ var wp;
                 style: {
                   maxWidth: widths?.content
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.content })
+                children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(ThemeProvider2, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.content }) })
               }
             ),
             !isMobileViewport && areas2.edit && canvas !== "edit" && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
@@ -17165,7 +17196,7 @@ var wp;
                 style: {
                   maxWidth: widths?.edit
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.edit })
+                children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(ThemeProvider2, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.edit }) })
               }
             ),
             !isMobileViewport && areas2.preview && /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)("div", { className: "edit-site-layout__canvas-container", children: [
@@ -17194,7 +17225,13 @@ var wp;
                       innerContentStyle: {
                         background: gradientValue ?? backgroundColor
                       },
-                      children: areas2.preview
+                      children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+                        ThemeProvider2,
+                        {
+                          color: CONTENT_COLOR,
+                          children: areas2.preview
+                        }
+                      )
                     }
                   ) })
                 }
@@ -17206,6 +17243,7 @@ var wp;
     ] });
   }
   function LayoutWithGlobalStylesProvider(props) {
+    const themeColors = (0, import_element44.useMemo)(getAdminThemeColors, []);
     const { createErrorNotice } = (0, import_data13.useDispatch)(import_notices.store);
     function onPluginAreaError(name2) {
       createErrorNotice(
@@ -17220,7 +17258,7 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_components8.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(tooltip_exports.Provider, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_plugins2.PluginArea, { onError: onPluginAreaError }),
-      /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Layout, { ...props })
+      /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(ThemeProvider2, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Layout, { ...props }) })
     ] }) });
   }
 
@@ -17485,7 +17523,6 @@ var wp;
                     import_components10.__experimentalHeading,
                     {
                       className: "edit-site-sidebar-navigation-screen__title",
-                      color: "#e0e0e0",
                       level: 1,
                       size: 20,
                       children: !isPreviewingTheme() ? title : (0, import_i18n10.sprintf)(
@@ -33392,7 +33429,7 @@ var wp;
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
         return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(EditSiteEditor, { isHomeRoute: true }) : void 0;
       },
-      mobile({ siteData }) {
+      mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
           return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(import_jsx_runtime200.Fragment, {});
         }
@@ -33400,9 +33437,6 @@ var wp;
       }
     }
   };
-
-  // packages/edit-site/build-module/components/site-editor-routes/identity.mjs
-  var import_router20 = __toESM(require_router(), 1);
 
   // packages/edit-site/build-module/components/sidebar-identity/index.mjs
   var import_i18n123 = __toESM(require_i18n(), 1);
@@ -52436,15 +52470,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/identity.mjs
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation19 } = unlock(import_router20.privateApis);
-  function MobileIdentityView() {
-    const { query = {} } = useLocation19();
-    const { canvas } = query;
-    if (canvas === "edit") {
-      return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(EditSiteEditor, {});
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(SidebarIdentity, {});
-  }
   var identityRoute = {
     name: "identity",
     path: "/identity",
@@ -52452,7 +52477,7 @@ If there's a particular need for this, please submit a feature request at https:
       sidebar: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(SidebarNavigationScreenIdentity, {}),
       content: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(SidebarIdentity, {}),
       preview: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(EditSiteEditor, {}),
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(MobileIdentityView, {})
+      mobileContent: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(SidebarIdentity, {})
     },
     widths: {
       content: 380
@@ -52460,14 +52485,14 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/styles.mjs
-  var import_router22 = __toESM(require_router(), 1);
+  var import_router21 = __toESM(require_router(), 1);
   var import_editor24 = __toESM(require_editor(), 1);
   var import_url15 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/sidebar-global-styles/index.mjs
   var import_i18n124 = __toESM(require_i18n(), 1);
   var import_element161 = __toESM(require_element(), 1);
-  var import_router21 = __toESM(require_router(), 1);
+  var import_router20 = __toESM(require_router(), 1);
   var import_editor23 = __toESM(require_editor(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
   var import_data56 = __toESM(require_data(), 1);
@@ -52475,7 +52500,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url14 = __toESM(require_url(), 1);
   var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
   var { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock(import_editor23.privateApis);
-  var { useLocation: useLocation20, useHistory: useHistory12 } = unlock(import_router21.privateApis);
+  var { useLocation: useLocation19, useHistory: useHistory12 } = unlock(import_router20.privateApis);
   var GlobalStylesPageActions = ({
     isStyleBookOpened,
     setIsStyleBookOpened,
@@ -52508,7 +52533,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   };
   var useSection = () => {
-    const { path, query } = useLocation20();
+    const { path, query } = useLocation19();
     const history = useHistory12();
     return (0, import_element161.useMemo)(() => {
       return [
@@ -52524,7 +52549,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [path, query.section, history]);
   };
   function SidebarGlobalStyles() {
-    const { path } = useLocation20();
+    const { path } = useLocation19();
     const [isStyleBookOpened, setIsStyleBookOpened] = (0, import_element161.useState)(
       path.includes("preview=stylebook")
     );
@@ -52563,18 +52588,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/styles.mjs
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation21, useHistory: useHistory13 } = unlock(import_router22.privateApis);
+  var { useLocation: useLocation20, useHistory: useHistory13 } = unlock(import_router21.privateApis);
   var { StyleBookPreview } = unlock(import_editor24.privateApis);
-  function MobileGlobalStylesUI() {
-    const { query = {} } = useLocation21();
-    const { canvas } = query;
-    if (canvas === "edit") {
-      return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(EditSiteEditor, {});
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(SidebarGlobalStyles, {});
-  }
   function StylesPreviewArea() {
-    const { path, query } = useLocation21();
+    const { path, query } = useLocation20();
     const history = useHistory13();
     const isStylebook = query.preview === "stylebook";
     const section = query.section ?? "/";
@@ -52603,15 +52620,12 @@ If there's a particular need for this, please submit a feature request at https:
       content: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(SidebarGlobalStyles, {}),
       sidebar: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(SidebarNavigationScreenGlobalStyles, { backPath: "/" }),
       preview: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(StylesPreviewArea, {}),
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(MobileGlobalStylesUI, {})
+      mobileContent: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(SidebarGlobalStyles, {})
     },
     widths: {
       content: 380
     }
   };
-
-  // packages/edit-site/build-module/components/site-editor-routes/navigation.mjs
-  var import_router27 = __toESM(require_router(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/index.mjs
   var import_i18n133 = __toESM(require_i18n(), 1);
@@ -52636,7 +52650,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components137 = __toESM(require_components(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
   var import_element163 = __toESM(require_element(), 1);
-  var import_router23 = __toESM(require_router(), 1);
+  var import_router22 = __toESM(require_router(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/rename-modal.mjs
   var import_components135 = __toESM(require_components(), 1);
@@ -52724,7 +52738,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory14 } = unlock(import_router23.privateApis);
+  var { useHistory: useHistory14 } = unlock(import_router22.privateApis);
   var POPOVER_PROPS = {
     position: "bottom right"
   };
@@ -52832,16 +52846,16 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element164 = __toESM(require_element(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_block_editor20 = __toESM(require_block_editor(), 1);
-  var import_router24 = __toESM(require_router(), 1);
+  var import_router23 = __toESM(require_router(), 1);
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   var POPOVER_PROPS2 = {
     className: "block-editor-block-settings-menu__popover",
     placement: "bottom-start"
   };
-  var { useHistory: useHistory15, useLocation: useLocation22 } = unlock(import_router24.privateApis);
+  var { useHistory: useHistory15, useLocation: useLocation21 } = unlock(import_router23.privateApis);
   function LeafMoreMenu(props) {
     const history = useHistory15();
-    const { path } = useLocation22();
+    const { path } = useLocation21();
     const { block } = props;
     const { clientId } = block;
     const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data57.useDispatch)(import_block_editor20.store);
@@ -53111,7 +53125,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n132 = __toESM(require_i18n(), 1);
   var import_data61 = __toESM(require_data(), 1);
   var import_notices5 = __toESM(require_notices(), 1);
-  var import_router26 = __toESM(require_router(), 1);
+  var import_router25 = __toESM(require_router(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/index.mjs
   var import_core_data39 = __toESM(require_core_data(), 1);
@@ -53119,14 +53133,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n131 = __toESM(require_i18n(), 1);
   var import_data60 = __toESM(require_data(), 1);
   var import_html_entities7 = __toESM(require_html_entities(), 1);
-  var import_router25 = __toESM(require_router(), 1);
+  var import_router24 = __toESM(require_router(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation23 } = unlock(import_router25.privateApis);
+  var { useLocation: useLocation22 } = unlock(import_router24.privateApis);
   var postType = `wp_navigation`;
   function SidebarNavigationScreenNavigationMenu({ backPath }) {
     const {
       params: { postId }
-    } = useLocation23();
+    } = useLocation22();
     const { record: navigationMenu, isResolving } = (0, import_core_data39.useEntityRecord)(
       "postType",
       postType,
@@ -53210,7 +53224,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.mjs
-  var { useHistory: useHistory16 } = unlock(import_router26.privateApis);
+  var { useHistory: useHistory16 } = unlock(import_router25.privateApis);
   function useDeleteNavigationMenu() {
     const { deleteEntityRecord } = (0, import_data61.useDispatch)(import_core_data40.store);
     const { createSuccessNotice, createErrorNotice } = (0, import_data61.useDispatch)(import_notices5.store);
@@ -53460,12 +53474,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/navigation.mjs
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation24 } = unlock(import_router27.privateApis);
-  function MobileNavigationView() {
-    const { query = {} } = useLocation24();
-    const { canvas = "view" } = query;
-    return canvas === "edit" ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(SidebarNavigationScreenNavigationMenus, { backPath: "/" });
-  }
   var navigationRoute = {
     name: "navigation",
     path: "/navigation",
@@ -53480,24 +53488,17 @@ If there's a particular need for this, please submit a feature request at https:
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
         return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(EditSiteEditor, {}) : void 0;
       },
-      mobile({ siteData }) {
+      mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
           return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_jsx_runtime300.Fragment, {});
         }
-        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(MobileNavigationView, {}) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(SidebarNavigationScreenUnsupported, {});
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(SidebarNavigationScreenNavigationMenus, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(SidebarNavigationScreenUnsupported, {});
       }
     }
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/navigation-item.mjs
-  var import_router28 = __toESM(require_router(), 1);
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation25 } = unlock(import_router28.privateApis);
-  function MobileNavigationItemView() {
-    const { query = {} } = useLocation25();
-    const { canvas = "view" } = query;
-    return canvas === "edit" ? /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(SidebarNavigationScreenNavigationMenu, { backPath: "/navigation" });
-  }
   var navigationItemRoute = {
     name: "navigation-item",
     path: "/wp_navigation/:postId",
@@ -53514,11 +53515,11 @@ If there's a particular need for this, please submit a feature request at https:
         }
         return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(SidebarNavigationScreenUnsupported, {});
       },
-      mobile({ siteData }) {
+      mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
           return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(import_jsx_runtime301.Fragment, {});
         }
-        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(MobileNavigationItemView, {}) : /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(SidebarNavigationScreenUnsupported, {});
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(SidebarNavigationScreenNavigationMenu, { backPath: "/navigation" }) : /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(SidebarNavigationScreenUnsupported, {});
       }
     }
   };
@@ -53528,7 +53529,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_editor28 = __toESM(require_editor(), 1);
   var import_element171 = __toESM(require_element(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
-  var import_router29 = __toESM(require_router(), 1);
+  var import_router26 = __toESM(require_router(), 1);
 
   // node_modules/dequal/dist/index.mjs
   var has = Object.prototype.hasOwnProperty;
@@ -54423,7 +54424,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
   var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation26 } = unlock(import_router29.privateApis);
+  var { useLocation: useLocation23 } = unlock(import_router26.privateApis);
   function CategoriesGroup({
     templatePartViews,
     patternViews,
@@ -54465,7 +54466,7 @@ If there's a particular need for this, please submit a feature request at https:
   function SidebarNavigationScreenPatterns({ backPath }) {
     const {
       query: { postType: postType2 = "wp_block", categoryId }
-    } = useLocation26();
+    } = useLocation23();
     const currentCategory = categoryId || (postType2 === PATTERN_TYPES.user ? PATTERN_DEFAULT_CATEGORY : TEMPLATE_PART_ALL_AREAS_CATEGORY);
     const { view_list: templatePartViews } = useViewConfig({
       kind: "postType",
@@ -54532,7 +54533,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_core_data52 = __toESM(require_core_data(), 1);
   var import_editor32 = __toESM(require_editor(), 1);
-  var import_router33 = __toESM(require_router(), 1);
+  var import_router30 = __toESM(require_router(), 1);
   var import_data75 = __toESM(require_data(), 1);
   var import_url17 = __toESM(require_url(), 1);
 
@@ -54605,20 +54606,20 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element173 = __toESM(require_element(), 1);
   var import_i18n136 = __toESM(require_i18n(), 1);
   var import_data71 = __toESM(require_data(), 1);
-  var import_router30 = __toESM(require_router(), 1);
+  var import_router27 = __toESM(require_router(), 1);
   var import_patterns2 = __toESM(require_patterns(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
   var import_core_data48 = __toESM(require_core_data(), 1);
   var import_editor30 = __toESM(require_editor(), 1);
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory17, useLocation: useLocation27 } = unlock(import_router30.privateApis);
+  var { useHistory: useHistory17, useLocation: useLocation24 } = unlock(import_router27.privateApis);
   var { CreatePatternModal, useAddPatternCategory } = unlock(
     import_patterns2.privateApis
   );
   var { CreateTemplatePartModal } = unlock(import_editor30.privateApis);
   function AddNewPattern() {
     const history = useHistory17();
-    const location = useLocation27();
+    const location = useLocation24();
     const [showPatternModal, setShowPatternModal] = (0, import_element173.useState)(false);
     const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element173.useState)(false);
     const { createPatternFromFile } = unlock((0, import_data71.useDispatch)(import_patterns2.store));
@@ -54835,9 +54836,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities9 = __toESM(require_html_entities(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
-  var import_router31 = __toESM(require_router(), 1);
+  var import_router28 = __toESM(require_router(), 1);
   var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory18 } = unlock(import_router31.privateApis);
+  var { useHistory: useHistory18 } = unlock(import_router28.privateApis);
   function DeleteCategoryMenuItem({ category, onClose }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element175.useState)(false);
     const history = useHistory18();
@@ -54954,11 +54955,11 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/dataviews-actions/index.mjs
   var import_i18n140 = __toESM(require_i18n(), 1);
   var import_element176 = __toESM(require_element(), 1);
-  var import_router32 = __toESM(require_router(), 1);
+  var import_router29 = __toESM(require_router(), 1);
   var import_data73 = __toESM(require_data(), 1);
   var import_core_data50 = __toESM(require_core_data(), 1);
   var import_url16 = __toESM(require_url(), 1);
-  var { useLocation: useLocation28, useHistory: useHistory19 } = unlock(import_router32.privateApis);
+  var { useLocation: useLocation25, useHistory: useHistory19 } = unlock(import_router29.privateApis);
   var useSetActiveTemplateAction = () => {
     const activeTheme = (0, import_data73.useSelect)(
       (select4) => select4(import_core_data50.store).getCurrentTheme()
@@ -55031,7 +55032,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useQuickEditPostAction = () => {
     const history = useHistory19();
-    const { path, query } = useLocation28();
+    const { path, query } = useLocation25();
     return (0, import_element176.useMemo)(
       () => ({
         id: "quick-edit",
@@ -55244,7 +55245,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider } = unlock(import_block_editor26.privateApis);
   var { usePostActions, patternTitleField } = unlock(import_editor32.privateApis);
-  var { useLocation: useLocation29, useHistory: useHistory20 } = unlock(import_router33.privateApis);
+  var { useLocation: useLocation26, useHistory: useHistory20 } = unlock(import_router30.privateApis);
   var EMPTY_ARRAY11 = [];
   function usePagePatternsHeader(type, categoryId) {
     const { patternCategories } = usePatternCategories();
@@ -55269,7 +55270,7 @@ If there's a particular need for this, please submit a feature request at https:
     return { title, description };
   }
   function DataviewsPatterns() {
-    const { path, query } = useLocation29();
+    const { path, query } = useLocation26();
     const { postType: postType2 = "wp_block", categoryId: categoryIdFromURL } = query;
     const history = useHistory20();
     const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
@@ -55416,11 +55417,16 @@ If there's a particular need for this, please submit a feature request at https:
         return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(SidebarNavigationScreenPatterns, { backPath });
       },
       content: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(DataviewsPatterns, {}),
-      mobile({ siteData, query }) {
-        const { categoryId } = query;
+      mobileSidebar({ siteData, query }) {
+        if (query.categoryId) {
+          return void 0;
+        }
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
         const backPath = isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? "/" : void 0;
-        return !!categoryId ? /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(DataviewsPatterns, {}) : /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(SidebarNavigationScreenPatterns, { backPath });
+        return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(SidebarNavigationScreenPatterns, { backPath });
+      },
+      mobileContent({ query }) {
+        return query.categoryId ? /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(DataviewsPatterns, {}) : void 0;
       }
     }
   };
@@ -55436,7 +55442,7 @@ If there's a particular need for this, please submit a feature request at https:
         const backPath = isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? "/" : void 0;
         return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(SidebarNavigationScreenPatterns, { backPath });
       },
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(EditSiteEditor, {}),
+      // Also rendered on mobile, where this route is only reached at canvas=edit.
       preview: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(EditSiteEditor, {})
     }
   };
@@ -55448,7 +55454,7 @@ If there's a particular need for this, please submit a feature request at https:
     path: "/wp_template_part/*postId",
     areas: {
       sidebar: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(SidebarNavigationScreenPatterns, { backPath: "/" }),
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(EditSiteEditor, {}),
+      // Also rendered on mobile, where this route is only reached at canvas=edit.
       preview: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(EditSiteEditor, {})
     }
   };
@@ -55465,10 +55471,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element179 = __toESM(require_element(), 1);
   var import_components147 = __toESM(require_components(), 1);
   var import_i18n143 = __toESM(require_i18n(), 1);
-  var import_router34 = __toESM(require_router(), 1);
+  var import_router31 = __toESM(require_router(), 1);
   var import_url18 = __toESM(require_url(), 1);
   var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation30 } = unlock(import_router34.privateApis);
+  var { useLocation: useLocation27 } = unlock(import_router31.privateApis);
   var EMPTY_ARRAY12 = [];
   function TemplateDataviewItem({ template, isActive }) {
     const { text, icon } = useAddedBy(template.type, template.id);
@@ -55485,7 +55491,7 @@ If there's a particular need for this, please submit a feature request at https:
   function DataviewsTemplatesSidebarContent() {
     const {
       query: { activeView = "active" }
-    } = useLocation30();
+    } = useLocation27();
     const { records } = (0, import_core_data53.useEntityRecords)("root", "registeredTemplate", {
       // This should not be needed, the endpoint returns all registered
       // templates, but it's not possible right now to turn off pagination for
@@ -55544,10 +55550,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
   var import_components148 = __toESM(require_components(), 1);
-  var import_router35 = __toESM(require_router(), 1);
+  var import_router32 = __toESM(require_router(), 1);
   var import_url19 = __toESM(require_url(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation31 } = unlock(import_router35.privateApis);
+  var { useLocation: useLocation28 } = unlock(import_router32.privateApis);
   var SLUG_TO_ICON = {
     all: pages_default,
     published: published_default,
@@ -55567,7 +55573,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       path,
       query: { activeView = "all" }
-    } = useLocation31();
+    } = useLocation28();
     const { view_list: viewList } = useViewConfig({
       kind: "postType",
       name: postType2
@@ -55654,7 +55660,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_element185 = __toESM(require_element(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
-  var import_router37 = __toESM(require_router(), 1);
+  var import_router34 = __toESM(require_router(), 1);
   var import_editor36 = __toESM(require_editor(), 1);
   var import_url22 = __toESM(require_url(), 1);
   var import_data80 = __toESM(require_data(), 1);
@@ -55671,7 +55677,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose29 = __toESM(require_compose(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
-  var import_router36 = __toESM(require_router(), 1);
+  var import_router33 = __toESM(require_router(), 1);
   var import_dom34 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
@@ -56567,7 +56573,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory21 } = unlock(import_router36.privateApis);
+  var { useHistory: useHistory21 } = unlock(import_router33.privateApis);
   var DEFAULT_TEMPLATE_SLUGS = [
     "front-page",
     "home",
@@ -57097,10 +57103,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-templates/index.mjs
   var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   var { usePostActions: usePostActions2, usePostFields, templateTitleField } = unlock(import_editor36.privateApis);
-  var { useHistory: useHistory22, useLocation: useLocation32 } = unlock(import_router37.privateApis);
+  var { useHistory: useHistory22, useLocation: useLocation29 } = unlock(import_router34.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions2 } = unlock(import_core_data59.privateApis);
   function PageTemplates() {
-    const { path, query } = useLocation32();
+    const { path, query } = useLocation29();
     const { activeView = "active", postId } = query;
     const [selection, setSelection] = (0, import_element185.useState)([postId]);
     const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element185.useState)(false);
@@ -57395,7 +57401,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n155 = __toESM(require_i18n(), 1);
   var import_element190 = __toESM(require_element(), 1);
   var import_core_data63 = __toESM(require_core_data(), 1);
-  var import_router39 = __toESM(require_router(), 1);
+  var import_router36 = __toESM(require_router(), 1);
   var import_editor37 = __toESM(require_editor(), 1);
   var import_url25 = __toESM(require_url(), 1);
   var import_compose33 = __toESM(require_compose(), 1);
@@ -57409,7 +57415,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose32 = __toESM(require_compose(), 1);
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
-  var import_router38 = __toESM(require_router(), 1);
+  var import_router35 = __toESM(require_router(), 1);
   var import_dom36 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
@@ -58382,7 +58388,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory23 } = unlock(import_router38.privateApis);
+  var { useHistory: useHistory23 } = unlock(import_router35.privateApis);
   var DEFAULT_TEMPLATE_SLUGS2 = [
     "front-page",
     "home",
@@ -58722,10 +58728,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
   var { usePostActions: usePostActions3, templateTitleField: templateTitleField2 } = unlock(import_editor37.privateApis);
-  var { useHistory: useHistory24, useLocation: useLocation33 } = unlock(import_router39.privateApis);
+  var { useHistory: useHistory24, useLocation: useLocation30 } = unlock(import_router36.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions3 } = unlock(import_core_data63.privateApis);
   function PageTemplates2() {
-    const { path, query } = useLocation33();
+    const { path, query } = useLocation30();
     const { activeView = "all", postId } = query;
     const [selection, setSelection] = (0, import_element190.useState)([postId]);
     const {
@@ -58900,12 +58906,19 @@ If there's a particular need for this, please submit a feature request at https:
         const isListView2 = await isTemplateListView(query);
         return isListView2 ? /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(EditSiteEditor, {}) : void 0;
       },
-      mobile({ siteData }) {
+      mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
           return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_jsx_runtime326.Fragment, {});
         }
         if (!siteData.currentTheme.is_block_theme) {
           return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(SidebarNavigationScreenUnsupported, {});
+        }
+        return void 0;
+      },
+      mobileContent({ siteData }) {
+        const isBlockTheme = siteData.currentTheme?.is_block_theme;
+        if (!isBlockTheme) {
+          return void 0;
         }
         const isTemplateActivateEnabled = typeof window !== "undefined" && window.__experimentalTemplateActivate;
         return isTemplateActivateEnabled ? /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(PageTemplates, {}) : /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(PageTemplates2, {});
@@ -58928,12 +58941,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(SidebarNavigationScreenUnsupported, {});
     },
-    mobile({ siteData }) {
-      if (!isThemeDataLoaded(siteData)) {
-        return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(import_jsx_runtime327.Fragment, {});
-      }
-      return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(SidebarNavigationScreenUnsupported, {});
-    },
+    // Also rendered on mobile, where this route is only reached at canvas=edit.
     preview({ siteData }) {
       if (!isThemeDataLoaded(siteData)) {
         return null;
@@ -58948,7 +58956,6 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
-  var import_router41 = __toESM(require_router(), 1);
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_data87 = __toESM(require_data(), 1);
   var import_core_data69 = __toESM(require_core_data(), 1);
@@ -58957,7 +58964,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components159 = __toESM(require_components(), 1);
   var import_core_data68 = __toESM(require_core_data(), 1);
   var import_element194 = __toESM(require_element(), 1);
-  var import_router40 = __toESM(require_router(), 1);
+  var import_router37 = __toESM(require_router(), 1);
   var import_data86 = __toESM(require_data(), 1);
   var import_editor41 = __toESM(require_editor(), 1);
   var import_compose34 = __toESM(require_compose(), 1);
@@ -59272,7 +59279,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/post-list/index.mjs
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   var { usePostActions: usePostActions4, usePostFields: usePostFields3 } = unlock(import_editor41.privateApis);
-  var { useLocation: useLocation34, useHistory: useHistory25 } = unlock(import_router40.privateApis);
+  var { useLocation: useLocation31, useHistory: useHistory25 } = unlock(import_router37.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions4 } = unlock(import_core_data68.privateApis);
   var EMPTY_ARRAY15 = [];
   var DEFAULT_STATUSES = "draft,future,pending,private,publish";
@@ -59283,7 +59290,7 @@ If there's a particular need for this, please submit a feature request at https:
     return item.level;
   }
   function PostList({ postType: postType2 }) {
-    const { path, query } = useLocation34();
+    const { path, query } = useLocation31();
     const { activeView = "all", postId, quickEdit = false } = query;
     const history = useHistory25();
     const {
@@ -59539,7 +59546,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation35 } = unlock(import_router41.privateApis);
   async function isListView(query) {
     const { activeView = "all" } = query;
     const config2 = await unlock((0, import_data87.resolveSelect)(import_core_data69.store)).getViewConfig(
@@ -59558,11 +59564,6 @@ If there's a particular need for this, please submit a feature request at https:
       activeViewOverrides: viewEntry?.view ?? {}
     });
     return view.type === "list";
-  }
-  function MobilePagesView() {
-    const { query = {} } = useLocation35();
-    const { canvas = "view" } = query;
-    return canvas === "edit" ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(PostList, { postType: "page" });
   }
   var pagesRoute = {
     name: "pages",
@@ -59593,11 +59594,15 @@ If there's a particular need for this, please submit a feature request at https:
         const isList = await isListView(query);
         return isList ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(EditSiteEditor, {}) : void 0;
       },
-      mobile({ siteData }) {
+      mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
           return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_jsx_runtime331.Fragment, {});
         }
-        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(MobilePagesView, {}) : /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(SidebarNavigationScreenUnsupported, {});
+        return siteData.currentTheme.is_block_theme ? void 0 : /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(SidebarNavigationScreenUnsupported, {});
+      },
+      mobileContent({ siteData }) {
+        const isBlockTheme = siteData.currentTheme?.is_block_theme;
+        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(PostList, { postType: "page" }) : void 0;
       }
     },
     widths: {
@@ -59628,12 +59633,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ) : /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(SidebarNavigationScreenUnsupported, {});
       },
-      mobile({ siteData }) {
-        if (!isThemeDataLoaded(siteData)) {
-          return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(import_jsx_runtime332.Fragment, {});
-        }
-        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(SidebarNavigationScreenUnsupported, {});
-      },
+      // Also rendered on mobile, where this route is only reached at canvas=edit.
       preview({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
           return null;
@@ -59676,7 +59676,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ) : void 0;
       },
-      mobile({ siteData }) {
+      mobileContent({ siteData }) {
         return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
           StyleBookPreview2,
           {
@@ -59702,7 +59702,7 @@ If there's a particular need for this, please submit a feature request at https:
     path: "*",
     areas: {
       sidebar: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(SidebarNavigationScreenMain, {}),
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+      mobileSidebar: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
         SidebarNavigationScreenMain,
         {
           customDescription: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(NotFoundError, {})
@@ -59741,7 +59741,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/app/index.mjs
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
-  var { RouterProvider } = unlock(import_router42.privateApis);
+  var { RouterProvider } = unlock(import_router38.privateApis);
   function AppLayout() {
     useCommonCommands();
     useSetCommandContext();
