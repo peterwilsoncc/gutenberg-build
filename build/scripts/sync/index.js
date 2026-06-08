@@ -10630,8 +10630,8 @@ var wp;
         event.keysChanged.forEach((key) => {
           switch (key) {
             case CRDT_STATE_MAP_SAVED_AT_KEY:
-              const newValue = stateMap.get(CRDT_STATE_MAP_SAVED_AT_KEY);
-              if ("number" === typeof newValue && newValue > now) {
+              const savedAt = stateMap.get(CRDT_STATE_MAP_SAVED_AT_KEY);
+              if ("number" === typeof savedAt && savedAt > now) {
                 log("loadEntity", "refetching record", entityId);
                 void handlers.refetchRecord().catch(() => {
                 });
@@ -10772,7 +10772,9 @@ var wp;
       const entityId = getEntityId(objectType, objectId);
       log("unloadEntity", "unloading", entityId);
       entityStates.get(entityId)?.unload();
-      updateCRDTDoc(objectType, null, {}, origin, { isSave: true });
+      updateCRDTDoc(objectType, null, {}, origin, {
+        isSave: true
+      });
     }
     function unloadAll() {
       log("unloadAll", "unloading all entities", "all");
