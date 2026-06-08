@@ -46008,7 +46008,6 @@ ${js}
     });
     const innerBlocksProps = (0, import_block_editor163.useInnerBlocksProps)(
       {
-        ...blockProps,
         className: "remove-outline"
         // Remove the outline from the inner blocks container.
       },
