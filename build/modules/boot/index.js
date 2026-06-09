@@ -8994,28 +8994,17 @@ if (typeof process === "undefined" || true) {
 }
 var style_default4 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
+var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup = (0, import_element16.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = (
-    /* This should ideally use whatever dark color makes sense,
-     * and not be hardcoded to #1e1e1e. The solutions would be to:
-     *   - review the design of the tooltip, in case we want to stop
-     *     hardcoding it to a dark background
-     *   - create new semantic tokens as needed (aliasing either the
-     *     "inverted bg" or "perma-dark bg" private tokens) and have
-     *     Tooltip.Popup use them;
-     *   - remove the hardcoded `bg` setting from the `ThemeProvider`
-     *     below
-     */
-    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ThemeProvider, { color: { bg: "#1e1e1e" }, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-      index_parts_exports.Popup,
-      {
-        ref,
-        className: clsx_default(style_default4.popup, className),
-        ...props,
-        children
-      }
-    ) })
-  );
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+    index_parts_exports.Popup,
+    {
+      ref,
+      className: clsx_default(style_default4.popup, className),
+      ...props,
+      children
+    }
+  ) });
   const positionedPopup = renderSlotWithChildren(
     positioner,
     /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Positioner, {}),
@@ -9364,18 +9353,18 @@ var page_default = Page;
 // packages/admin-ui/build-module/admin-theme-colors/index.mjs
 var DEFAULT_THEME_COLORS = {
   primary: "#3858e9",
-  bg: "#25292b"
+  background: "#25292b"
 };
 var ADMIN_THEME_COLORS = /* @__PURE__ */ new Map([
   ["fresh", DEFAULT_THEME_COLORS],
-  ["modern", { primary: "#3858e9", bg: "#222524" }],
-  ["midnight", { primary: "#cf4339", bg: "#3d4042" }],
-  ["coffee", { primary: "#916745", bg: "#5b534d" }],
-  ["ocean", { primary: "#567958", bg: "#5f787f" }],
-  ["blue", { primary: "#437aa8", bg: "#3876a8" }],
-  ["ectoplasm", { primary: "#646c3e", bg: "#4f386e" }],
-  ["sunrise", { primary: "#ad631e", bg: "#cc4541" }],
-  ["light", { primary: "#007cba", bg: "#eaeeed" }]
+  ["modern", { primary: "#3858e9", background: "#222524" }],
+  ["midnight", { primary: "#cf4339", background: "#3d4042" }],
+  ["coffee", { primary: "#916745", background: "#5b534d" }],
+  ["ocean", { primary: "#567958", background: "#5f787f" }],
+  ["blue", { primary: "#437aa8", background: "#3876a8" }],
+  ["ectoplasm", { primary: "#646c3e", background: "#4f386e" }],
+  ["sunrise", { primary: "#ad631e", background: "#cc4541" }],
+  ["light", { primary: "#007cba", background: "#eaeeed" }]
 ]);
 function getAdminThemeColors() {
   const scheme = document.body.className.match(/admin-color-([\w-]+)/)?.[1] ?? "fresh";
@@ -10734,7 +10723,7 @@ function Root2() {
     ThemeProvider2,
     {
       isRoot: true,
-      color: { ...themeColors, bg: "#f8f8f8" },
+      color: { ...themeColors, background: "#f8f8f8" },
       children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(ThemeProvider2, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
         "div",
         {
@@ -10800,7 +10789,10 @@ function Root2() {
             /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
               ThemeProvider2,
               {
-                color: { ...themeColors, bg: "#ffffff" },
+                color: {
+                  ...themeColors,
+                  background: "#ffffff"
+                },
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Outlet, {}),
                   (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
@@ -11001,38 +10993,48 @@ function RootSinglePage() {
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
   const themeColors = (0, import_element31.useMemo)(getAdminThemeColors, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ThemeProvider3, { isRoot: true, color: { ...themeColors, bg: "#f8f8f8" }, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ThemeProvider3, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
-    "div",
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+    ThemeProvider3,
     {
-      className: clsx_default(
-        "boot-layout boot-layout--single-page",
+      isRoot: true,
+      color: { ...themeColors, background: "#f8f8f8" },
+      children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ThemeProvider3, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
+        "div",
         {
-          "has-canvas": !!canvas || canvas === null,
-          "has-full-canvas": isFullScreen
+          className: clsx_default(
+            "boot-layout boot-layout--single-page",
+            {
+              "has-canvas": !!canvas || canvas === null,
+              "has-full-canvas": isFullScreen
+            }
+          ),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(SavePanel, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
+            /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
+              ThemeProvider3,
+              {
+                color: {
+                  ...themeColors,
+                  background: "#ffffff"
+                },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Outlet2, {}),
+                  (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+                    CanvasRenderer,
+                    {
+                      canvas,
+                      routeContentModule
+                    }
+                  ) })
+                ]
+              }
+            ) })
+          ]
         }
-      ),
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(SavePanel, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
-        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
-          ThemeProvider3,
-          {
-            color: { ...themeColors, bg: "#ffffff" },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Outlet2, {}),
-              (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
-                CanvasRenderer,
-                {
-                  canvas,
-                  routeContentModule
-                }
-              ) })
-            ]
-          }
-        ) })
-      ]
+      ) })
     }
-  ) }) }) });
+  ) });
 }
 
 // packages/boot/build-module/components/app/index.mjs

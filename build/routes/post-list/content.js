@@ -11812,28 +11812,17 @@ if (typeof process === "undefined" || true) {
 }
 var style_default11 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var ThemeProvider = unlock2(import_theme.privateApis).ThemeProvider;
+var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup = (0, import_element31.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = (
-    /* This should ideally use whatever dark color makes sense,
-     * and not be hardcoded to #1e1e1e. The solutions would be to:
-     *   - review the design of the tooltip, in case we want to stop
-     *     hardcoding it to a dark background
-     *   - create new semantic tokens as needed (aliasing either the
-     *     "inverted bg" or "perma-dark bg" private tokens) and have
-     *     Tooltip.Popup use them;
-     *   - remove the hardcoded `bg` setting from the `ThemeProvider`
-     *     below
-     */
-    /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(ThemeProvider, { color: { bg: "#1e1e1e" }, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
-      index_parts_exports2.Popup,
-      {
-        ref,
-        className: clsx_default(style_default11.popup, className),
-        ...props,
-        children
-      }
-    ) })
-  );
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+    index_parts_exports2.Popup,
+    {
+      ref,
+      className: clsx_default(style_default11.popup, className),
+      ...props,
+      children
+    }
+  ) });
   const positionedPopup = renderSlotWithChildren(
     positioner,
     /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Positioner, {}),

@@ -12528,28 +12528,17 @@ var wp;
   }
   var style_default11 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
   var ThemeProvider = unlock2(import_theme.privateApis).ThemeProvider;
+  var POPUP_COLOR = { background: "#1e1e1e" };
   var Popup = (0, import_element31.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-    const popupContent = (
-      /* This should ideally use whatever dark color makes sense,
-       * and not be hardcoded to #1e1e1e. The solutions would be to:
-       *   - review the design of the tooltip, in case we want to stop
-       *     hardcoding it to a dark background
-       *   - create new semantic tokens as needed (aliasing either the
-       *     "inverted bg" or "perma-dark bg" private tokens) and have
-       *     Tooltip.Popup use them;
-       *   - remove the hardcoded `bg` setting from the `ThemeProvider`
-       *     below
-       */
-      /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(ThemeProvider, { color: { bg: "#1e1e1e" }, children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
-        index_parts_exports2.Popup,
-        {
-          ref,
-          className: clsx_default(style_default11.popup, className),
-          ...props,
-          children
-        }
-      ) })
-    );
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+      index_parts_exports2.Popup,
+      {
+        ref,
+        className: clsx_default(style_default11.popup, className),
+        ...props,
+        children
+      }
+    ) });
     const positionedPopup = renderSlotWithChildren(
       positioner,
       /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(Positioner, {}),
@@ -13002,18 +12991,18 @@ var wp;
   // packages/admin-ui/build-module/admin-theme-colors/index.mjs
   var DEFAULT_THEME_COLORS = {
     primary: "#3858e9",
-    bg: "#25292b"
+    background: "#25292b"
   };
   var ADMIN_THEME_COLORS = /* @__PURE__ */ new Map([
     ["fresh", DEFAULT_THEME_COLORS],
-    ["modern", { primary: "#3858e9", bg: "#222524" }],
-    ["midnight", { primary: "#cf4339", bg: "#3d4042" }],
-    ["coffee", { primary: "#916745", bg: "#5b534d" }],
-    ["ocean", { primary: "#567958", bg: "#5f787f" }],
-    ["blue", { primary: "#437aa8", bg: "#3876a8" }],
-    ["ectoplasm", { primary: "#646c3e", bg: "#4f386e" }],
-    ["sunrise", { primary: "#ad631e", bg: "#cc4541" }],
-    ["light", { primary: "#007cba", bg: "#eaeeed" }]
+    ["modern", { primary: "#3858e9", background: "#222524" }],
+    ["midnight", { primary: "#cf4339", background: "#3d4042" }],
+    ["coffee", { primary: "#916745", background: "#5b534d" }],
+    ["ocean", { primary: "#567958", background: "#5f787f" }],
+    ["blue", { primary: "#437aa8", background: "#3876a8" }],
+    ["ectoplasm", { primary: "#646c3e", background: "#4f386e" }],
+    ["sunrise", { primary: "#ad631e", background: "#cc4541" }],
+    ["light", { primary: "#007cba", background: "#eaeeed" }]
   ]);
   function getAdminThemeColors() {
     const scheme = document.body.className.match(/admin-color-([\w-]+)/)?.[1] ?? "fresh";
@@ -17063,7 +17052,7 @@ var wp;
   var { useStyle, UploadProgressSnackbar } = unlock(import_editor6.privateApis);
   var { ThemeProvider: ThemeProvider2 } = unlock(import_theme2.privateApis);
   var ANIMATION_DURATION2 = 0.3;
-  var CONTENT_COLOR = { bg: "#ffffff" };
+  var CONTENT_COLOR = { background: "#ffffff" };
   function Layout() {
     const { query, name: routeKey, areas: areas2, widths } = useLocation6();
     const canvas = routeKey === "notfound" ? "view" : query?.canvas ?? "view";
