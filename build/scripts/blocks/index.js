@@ -9354,9 +9354,6 @@ var wp;
   var import_deprecated10 = __toESM(require_deprecated(), 1);
   var import_dom12 = __toESM(require_dom(), 1);
 
-  // packages/blocks/build-module/api/raw-handling/html-to-blocks.mjs
-  var import_element4 = __toESM(require_element(), 1);
-
   // packages/blocks/build-module/api/raw-handling/get-raw-transforms.mjs
   function getRawTransforms() {
     return getBlockTransforms("from").filter(({ type }) => type === "raw").map((transform) => {
@@ -9381,11 +9378,6 @@ var wp;
         })
       );
       if (!rawTransform) {
-        if (import_element4.Platform.isNative) {
-          return parse2(
-            `<!-- wp:html -->${node.outerHTML}<!-- /wp:html -->`
-          );
-        }
         return createBlock(
           // Should not be hardcoded.
           "core/html",
@@ -10445,7 +10437,7 @@ ${p3}`
   }
 
   // packages/blocks/build-module/api/templates.mjs
-  var import_element5 = __toESM(require_element(), 1);
+  var import_element4 = __toESM(require_element(), 1);
   function doBlocksMatchTemplate(blocks = [], template = []) {
     return blocks.length === template.length && template.every(([name, , innerBlocksTemplate], index) => {
       const block = blocks[index];
@@ -10467,7 +10459,7 @@ ${p3}`
   }
   function normalizeAttribute(definition, value) {
     if (isHTMLAttribute(definition) && Array.isArray(value)) {
-      return (0, import_element5.renderToString)(value);
+      return (0, import_element4.renderToString)(value);
     }
     if (isQueryAttribute(definition) && value) {
       return value.map(

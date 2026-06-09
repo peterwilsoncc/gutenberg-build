@@ -3233,10 +3233,7 @@ var wp;
 
   // packages/edit-widgets/build-module/components/sidebar/index.mjs
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
-  var SIDEBAR_ACTIVE_BY_DEFAULT = import_element13.Platform.select({
-    web: true,
-    native: false
-  });
+  var SIDEBAR_ACTIVE_BY_DEFAULT = true;
   var BLOCK_INSPECTOR_IDENTIFIER = "edit-widgets/block-inspector";
   var WIDGET_AREAS_IDENTIFIER = "edit-widgets/block-areas";
   var { Tabs } = unlock(import_components11.privateApis);
