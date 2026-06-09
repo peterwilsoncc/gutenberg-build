@@ -57048,8 +57048,7 @@ ${js}
             placeholder: (
               // translators: placeholder text used for the quote
               (0, import_i18n187.__)("Add quote")
-            ),
-            textAlign: "center"
+            )
           }
         ),
         shouldShowCitation && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
@@ -57068,8 +57067,6 @@ ${js}
               citation: nextCitation
             }),
             className: "wp-block-pullquote__citation",
-            __unstableMobileNoFocusOnMount: true,
-            textAlign: "center",
             __unstableOnSplitAtEnd: () => insertBlocksAfter(
               (0, import_blocks92.createBlock)((0, import_blocks92.getDefaultBlockName)())
             )
@@ -61731,7 +61728,6 @@ ${js}
             isSelected,
             attributes: attributes2,
             setAttributes,
-            __unstableMobileNoFocusOnMount: true,
             icon: verse_default,
             label: (0, import_i18n218.__)("Quote citation"),
             placeholder: (

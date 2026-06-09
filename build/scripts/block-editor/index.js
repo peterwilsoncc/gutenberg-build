@@ -64330,27 +64330,6 @@ var wp;
   var inputEventContext = (0, import_element215.createContext)();
   inputEventContext.displayName = "inputEventContext";
   var instanceIdKey = /* @__PURE__ */ Symbol("instanceId");
-  function removeNativeProps(props) {
-    const {
-      __unstableMobileNoFocusOnMount,
-      deleteEnter,
-      placeholderTextColor,
-      textAlign,
-      selectionColor,
-      tagsToEliminate,
-      disableEditingMenu,
-      fontSize,
-      fontFamily,
-      fontWeight,
-      fontStyle,
-      minWidth,
-      maxWidth,
-      disableSuggestions,
-      disableAutocorrection,
-      ...restProps
-    } = props;
-    return restProps;
-  }
   function RichTextWrapper({
     children,
     tagName = "div",
@@ -64380,7 +64359,6 @@ var wp;
     readOnly,
     ...props
   }, forwardedRef) {
-    props = removeNativeProps(props);
     if (onSplit) {
       (0, import_deprecated30.default)("wp.blockEditor.RichText onSplit prop", {
         since: "6.4",
@@ -64698,7 +64676,7 @@ var wp;
         __unstableAllowPrefixTransformations,
         readOnly,
         ...contentProps
-      } = removeNativeProps(props);
+      } = props;
       return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
         Tag,
         {
