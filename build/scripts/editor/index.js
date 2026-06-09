@@ -43698,6 +43698,7 @@ If there's a particular need for this, please submit a feature request at https:
   var ABSOLUTE_MIN_ZOOM = 0.1;
   var MAX_ZOOM = 10;
   var MIN_CROP_PIXELS = 24;
+  var MIN_CROP_SCREEN_PX = 44;
   var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
   var DEFAULT_KEYBOARD_STEP = 0.01;
   var KEYBOARD_SHIFT_STEP_MULTIPLIER = 10;
@@ -45114,6 +45115,186 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element143 = __toESM(require_element(), 1);
   var import_i18n123 = __toESM(require_i18n(), 1);
 
+  // packages/media-editor/build-module/image-editor/core/stencil-math.mjs
+  function getMinCropPixels(displayScale) {
+    if (displayScale <= 0) {
+      return MIN_CROP_PIXELS;
+    }
+    return Math.max(MIN_CROP_PIXELS, MIN_CROP_SCREEN_PX / displayScale);
+  }
+  var DEFAULT_MIN_CROP_SIZE = { width: 0.05, height: 0.05 };
+  function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
+    const dx = imageSize.width > 0 ? (clientX - drag2.startX) / imageSize.width : 0;
+    const dy = imageSize.height > 0 ? (clientY - drag2.startY) / imageSize.height : 0;
+    const s3 = drag2.startRect;
+    const handle = drag2.handle;
+    let edgeTop = s3.y;
+    let edgeBottom = s3.y + s3.height;
+    let edgeLeft = s3.x;
+    let edgeRight = s3.x + s3.width;
+    if (handle === "n" || handle === "nw" || handle === "ne") {
+      edgeTop = Math.max(
+        bounds.minY,
+        Math.min(s3.y + dy, edgeBottom - minCropSize.height)
+      );
+    }
+    if (handle === "s" || handle === "sw" || handle === "se") {
+      edgeBottom = Math.max(
+        edgeTop + minCropSize.height,
+        Math.min(s3.y + s3.height + dy, bounds.maxY)
+      );
+    }
+    if (handle === "w" || handle === "nw" || handle === "sw") {
+      edgeLeft = Math.max(
+        bounds.minX,
+        Math.min(s3.x + dx, edgeRight - minCropSize.width)
+      );
+    }
+    if (handle === "e" || handle === "ne" || handle === "se") {
+      edgeRight = Math.max(
+        edgeLeft + minCropSize.width,
+        Math.min(s3.x + s3.width + dx, bounds.maxX)
+      );
+    }
+    return {
+      x: edgeLeft,
+      y: edgeTop,
+      width: edgeRight - edgeLeft,
+      height: edgeBottom - edgeTop
+    };
+  }
+  function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio, minCropSize = DEFAULT_MIN_CROP_SIZE) {
+    if (normalizedRatio <= 0 || imageSize.width <= 0 || imageSize.height <= 0) {
+      return { ...drag2.startRect };
+    }
+    const dx = (clientX - drag2.startX) / imageSize.width;
+    const dy = (clientY - drag2.startY) / imageSize.height;
+    const s3 = drag2.startRect;
+    const handle = drag2.handle;
+    const anchorX = handle === "nw" || handle === "sw" ? s3.x + s3.width : s3.x;
+    const anchorY = handle === "nw" || handle === "ne" ? s3.y + s3.height : s3.y;
+    const dirX = handle === "nw" || handle === "sw" ? -1 : 1;
+    const dirY = handle === "nw" || handle === "ne" ? -1 : 1;
+    const draggedX = (handle === "nw" || handle === "sw" ? s3.x : s3.x + s3.width) + dx;
+    const draggedY = (handle === "nw" || handle === "ne" ? s3.y : s3.y + s3.height) + dy;
+    let distW = (draggedX - anchorX) * dirX;
+    let distH = (draggedY - anchorY) * dirY;
+    const minDistW = Math.max(
+      minCropSize.width,
+      minCropSize.height * normalizedRatio
+    );
+    const minDistH = minDistW / normalizedRatio;
+    distW = Math.max(distW, minDistW);
+    distH = Math.max(distH, minDistH);
+    const pixelDistW = distW * imageSize.width;
+    const pixelDistH = distH * imageSize.height;
+    const pixelRatio = normalizedRatio * imageSize.width / imageSize.height;
+    if (pixelDistW / pixelDistH > pixelRatio) {
+      distH = distW / normalizedRatio;
+    } else {
+      distW = distH * normalizedRatio;
+    }
+    const maxW = dirX > 0 ? bounds.maxX - anchorX : anchorX - bounds.minX;
+    const maxH = dirY > 0 ? bounds.maxY - anchorY : anchorY - bounds.minY;
+    if (distW > maxW) {
+      distW = maxW;
+      distH = distW / normalizedRatio;
+    }
+    if (distH > maxH) {
+      distH = maxH;
+      distW = distH * normalizedRatio;
+    }
+    distW = Math.max(distW, minDistW);
+    distH = Math.max(distH, minDistH);
+    const newX = dirX > 0 ? anchorX : anchorX - distW;
+    const newY = dirY > 0 ? anchorY : anchorY - distH;
+    return { x: newX, y: newY, width: distW, height: distH };
+  }
+  function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
+    const s3 = drag2.startRect;
+    const pixelW = s3.width * imageSize.width;
+    const pixelH = s3.height * imageSize.height;
+    if (pixelH <= 0 || pixelW <= 0) {
+      return computeFreeResizeRect(
+        drag2,
+        clientX,
+        clientY,
+        imageSize,
+        bounds,
+        minCropSize
+      );
+    }
+    const normalizedRatio = s3.width / s3.height;
+    const handle = drag2.handle;
+    if (handle === "nw" || handle === "ne" || handle === "sw" || handle === "se") {
+      return computeLockedResizeRect(
+        drag2,
+        clientX,
+        clientY,
+        imageSize,
+        bounds,
+        normalizedRatio,
+        minCropSize
+      );
+    }
+    const free = computeFreeResizeRect(
+      drag2,
+      clientX,
+      clientY,
+      imageSize,
+      bounds,
+      minCropSize
+    );
+    if (handle === "n" || handle === "s") {
+      let newHeight2 = free.height;
+      let newWidth2 = newHeight2 * normalizedRatio;
+      const centerX = s3.x + s3.width / 2;
+      const maxWidth = Math.min(centerX - bounds.minX, bounds.maxX - centerX) * 2;
+      if (newWidth2 > maxWidth) {
+        newWidth2 = maxWidth;
+        newHeight2 = newWidth2 / normalizedRatio;
+      }
+      const minHeight = Math.max(
+        minCropSize.height,
+        minCropSize.width / normalizedRatio
+      );
+      if (newHeight2 < minHeight) {
+        newHeight2 = minHeight;
+        newWidth2 = newHeight2 * normalizedRatio;
+      }
+      const newY = handle === "n" ? s3.y + s3.height - newHeight2 : s3.y;
+      return {
+        x: centerX - newWidth2 / 2,
+        y: newY,
+        width: newWidth2,
+        height: newHeight2
+      };
+    }
+    let newWidth = free.width;
+    let newHeight = newWidth / normalizedRatio;
+    const centerY = s3.y + s3.height / 2;
+    const maxHeight = Math.min(centerY - bounds.minY, bounds.maxY - centerY) * 2;
+    if (newHeight > maxHeight) {
+      newHeight = maxHeight;
+      newWidth = newHeight * normalizedRatio;
+    }
+    const minWidth = Math.max(
+      minCropSize.width,
+      minCropSize.height * normalizedRatio
+    );
+    if (newWidth < minWidth) {
+      newWidth = minWidth;
+      newHeight = newWidth / normalizedRatio;
+    }
+    const newX = handle === "w" ? s3.x + s3.width - newWidth : s3.x;
+    return {
+      x: newX,
+      y: centerY - newHeight / 2,
+      width: newWidth,
+      height: newHeight
+    };
+  }
+
   // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
   function computeInscribedRect(aspectRatio, visualSize) {
     let w3 = 1;
@@ -46027,180 +46208,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element139 = __toESM(require_element(), 1);
   var import_i18n122 = __toESM(require_i18n(), 1);
 
-  // packages/media-editor/build-module/image-editor/core/stencil-math.mjs
-  var DEFAULT_MIN_CROP_SIZE = { width: 0.05, height: 0.05 };
-  function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
-    const dx = imageSize.width > 0 ? (clientX - drag2.startX) / imageSize.width : 0;
-    const dy = imageSize.height > 0 ? (clientY - drag2.startY) / imageSize.height : 0;
-    const s3 = drag2.startRect;
-    const handle = drag2.handle;
-    let edgeTop = s3.y;
-    let edgeBottom = s3.y + s3.height;
-    let edgeLeft = s3.x;
-    let edgeRight = s3.x + s3.width;
-    if (handle === "n" || handle === "nw" || handle === "ne") {
-      edgeTop = Math.max(
-        bounds.minY,
-        Math.min(s3.y + dy, edgeBottom - minCropSize.height)
-      );
-    }
-    if (handle === "s" || handle === "sw" || handle === "se") {
-      edgeBottom = Math.max(
-        edgeTop + minCropSize.height,
-        Math.min(s3.y + s3.height + dy, bounds.maxY)
-      );
-    }
-    if (handle === "w" || handle === "nw" || handle === "sw") {
-      edgeLeft = Math.max(
-        bounds.minX,
-        Math.min(s3.x + dx, edgeRight - minCropSize.width)
-      );
-    }
-    if (handle === "e" || handle === "ne" || handle === "se") {
-      edgeRight = Math.max(
-        edgeLeft + minCropSize.width,
-        Math.min(s3.x + s3.width + dx, bounds.maxX)
-      );
-    }
-    return {
-      x: edgeLeft,
-      y: edgeTop,
-      width: edgeRight - edgeLeft,
-      height: edgeBottom - edgeTop
-    };
-  }
-  function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio, minCropSize = DEFAULT_MIN_CROP_SIZE) {
-    if (normalizedRatio <= 0 || imageSize.width <= 0 || imageSize.height <= 0) {
-      return { ...drag2.startRect };
-    }
-    const dx = (clientX - drag2.startX) / imageSize.width;
-    const dy = (clientY - drag2.startY) / imageSize.height;
-    const s3 = drag2.startRect;
-    const handle = drag2.handle;
-    const anchorX = handle === "nw" || handle === "sw" ? s3.x + s3.width : s3.x;
-    const anchorY = handle === "nw" || handle === "ne" ? s3.y + s3.height : s3.y;
-    const dirX = handle === "nw" || handle === "sw" ? -1 : 1;
-    const dirY = handle === "nw" || handle === "ne" ? -1 : 1;
-    const draggedX = (handle === "nw" || handle === "sw" ? s3.x : s3.x + s3.width) + dx;
-    const draggedY = (handle === "nw" || handle === "ne" ? s3.y : s3.y + s3.height) + dy;
-    let distW = (draggedX - anchorX) * dirX;
-    let distH = (draggedY - anchorY) * dirY;
-    const minDistW = Math.max(
-      minCropSize.width,
-      minCropSize.height * normalizedRatio
-    );
-    const minDistH = minDistW / normalizedRatio;
-    distW = Math.max(distW, minDistW);
-    distH = Math.max(distH, minDistH);
-    const pixelDistW = distW * imageSize.width;
-    const pixelDistH = distH * imageSize.height;
-    const pixelRatio = normalizedRatio * imageSize.width / imageSize.height;
-    if (pixelDistW / pixelDistH > pixelRatio) {
-      distH = distW / normalizedRatio;
-    } else {
-      distW = distH * normalizedRatio;
-    }
-    const maxW = dirX > 0 ? bounds.maxX - anchorX : anchorX - bounds.minX;
-    const maxH = dirY > 0 ? bounds.maxY - anchorY : anchorY - bounds.minY;
-    if (distW > maxW) {
-      distW = maxW;
-      distH = distW / normalizedRatio;
-    }
-    if (distH > maxH) {
-      distH = maxH;
-      distW = distH * normalizedRatio;
-    }
-    distW = Math.max(distW, minDistW);
-    distH = Math.max(distH, minDistH);
-    const newX = dirX > 0 ? anchorX : anchorX - distW;
-    const newY = dirY > 0 ? anchorY : anchorY - distH;
-    return { x: newX, y: newY, width: distW, height: distH };
-  }
-  function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
-    const s3 = drag2.startRect;
-    const pixelW = s3.width * imageSize.width;
-    const pixelH = s3.height * imageSize.height;
-    if (pixelH <= 0 || pixelW <= 0) {
-      return computeFreeResizeRect(
-        drag2,
-        clientX,
-        clientY,
-        imageSize,
-        bounds,
-        minCropSize
-      );
-    }
-    const normalizedRatio = s3.width / s3.height;
-    const handle = drag2.handle;
-    if (handle === "nw" || handle === "ne" || handle === "sw" || handle === "se") {
-      return computeLockedResizeRect(
-        drag2,
-        clientX,
-        clientY,
-        imageSize,
-        bounds,
-        normalizedRatio,
-        minCropSize
-      );
-    }
-    const free = computeFreeResizeRect(
-      drag2,
-      clientX,
-      clientY,
-      imageSize,
-      bounds,
-      minCropSize
-    );
-    if (handle === "n" || handle === "s") {
-      let newHeight2 = free.height;
-      let newWidth2 = newHeight2 * normalizedRatio;
-      const centerX = s3.x + s3.width / 2;
-      const maxWidth = Math.min(centerX - bounds.minX, bounds.maxX - centerX) * 2;
-      if (newWidth2 > maxWidth) {
-        newWidth2 = maxWidth;
-        newHeight2 = newWidth2 / normalizedRatio;
-      }
-      const minHeight = Math.max(
-        minCropSize.height,
-        minCropSize.width / normalizedRatio
-      );
-      if (newHeight2 < minHeight) {
-        newHeight2 = minHeight;
-        newWidth2 = newHeight2 * normalizedRatio;
-      }
-      const newY = handle === "n" ? s3.y + s3.height - newHeight2 : s3.y;
-      return {
-        x: centerX - newWidth2 / 2,
-        y: newY,
-        width: newWidth2,
-        height: newHeight2
-      };
-    }
-    let newWidth = free.width;
-    let newHeight = newWidth / normalizedRatio;
-    const centerY = s3.y + s3.height / 2;
-    const maxHeight = Math.min(centerY - bounds.minY, bounds.maxY - centerY) * 2;
-    if (newHeight > maxHeight) {
-      newHeight = maxHeight;
-      newWidth = newHeight * normalizedRatio;
-    }
-    const minWidth = Math.max(
-      minCropSize.width,
-      minCropSize.height * normalizedRatio
-    );
-    if (newWidth < minWidth) {
-      newWidth = minWidth;
-      newHeight = newWidth / normalizedRatio;
-    }
-    const newX = handle === "w" ? s3.x + s3.width - newWidth : s3.x;
-    return {
-      x: newX,
-      y: centerY - newHeight / 2,
-      width: newWidth,
-      height: newHeight
-    };
-  }
-
   // packages/media-editor/build-module/image-editor/react/visually-hidden-style.mjs
   var VISUALLY_HIDDEN_STYLE = {
     position: "absolute",
@@ -47030,14 +47037,19 @@ If there's a particular need for this, please submit a feature request at https:
         naturalHeight,
         snapRotation
       );
+      const displayScale = elementSize.width / naturalWidth * state2.zoom;
+      const minPixels = getMinCropPixels(displayScale);
       return {
-        width: Math.min(1, MIN_CROP_PIXELS * state2.zoom / bbox.width),
-        height: Math.min(
-          1,
-          MIN_CROP_PIXELS * state2.zoom / bbox.height
-        )
+        width: Math.min(1, minPixels * state2.zoom / bbox.width),
+        height: Math.min(1, minPixels * state2.zoom / bbox.height)
       };
-    }, [naturalWidth, naturalHeight, state2.rotation, state2.zoom]);
+    }, [
+      naturalWidth,
+      naturalHeight,
+      state2.rotation,
+      state2.zoom,
+      elementSize.width
+    ]);
     (0, import_element143.useEffect)(() => {
       setVisualSize(visualSize);
     }, [visualSize, setVisualSize]);
