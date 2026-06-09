@@ -37567,6 +37567,19 @@ This message will only show in development mode. It won't appear in production. 
     }
     return nextValue;
   }
+  function getFocusableContext(container, target, tabbableOnly) {
+    const finder = tabbableOnly ? import_dom29.focus.tabbable : import_dom29.focus.focusable;
+    const focusables = finder.find(container);
+    const index2 = focusables.indexOf(target);
+    if (index2 > -1) {
+      return {
+        index: index2,
+        target,
+        focusables
+      };
+    }
+    return null;
+  }
   function UnforwardedNavigableContainer({
     children,
     stopNavigationEvents,
@@ -37578,25 +37591,6 @@ This message will only show in development mode. It won't appear in production. 
     ...restProps
   }, ref) {
     const containerRef = (0, import_element111.useRef)(null);
-    const getFocusableIndex = (0, import_element111.useCallback)((focusables, target) => {
-      return focusables.indexOf(target);
-    }, []);
-    const getFocusableContext = (0, import_element111.useCallback)((target) => {
-      if (!containerRef.current) {
-        return null;
-      }
-      const finder = onlyBrowserTabstops ? import_dom29.focus.tabbable : import_dom29.focus.focusable;
-      const focusables = finder.find(containerRef.current);
-      const index2 = getFocusableIndex(focusables, target);
-      if (index2 > -1 && target) {
-        return {
-          index: index2,
-          target,
-          focusables
-        };
-      }
-      return null;
-    }, [onlyBrowserTabstops, getFocusableIndex]);
     (0, import_element111.useEffect)(() => {
       const container = containerRef.current;
       if (!container) {
@@ -37622,7 +37616,7 @@ This message will only show in development mode. It won't appear in production. 
         if (!activeElement) {
           return;
         }
-        const context = getFocusableContext(activeElement);
+        const context = getFocusableContext(container, activeElement, !!onlyBrowserTabstops);
         if (!context) {
           return;
         }
@@ -37643,7 +37637,7 @@ This message will only show in development mode. It won't appear in production. 
       return () => {
         container.removeEventListener("keydown", handleKeyDown);
       };
-    }, [onKeyDown, eventToOffset, stopNavigationEvents, cycle, onNavigate, getFocusableContext]);
+    }, [onKeyDown, eventToOffset, stopNavigationEvents, cycle, onNavigate, onlyBrowserTabstops]);
     const mergedRef = (0, import_compose43.useMergeRefs)([containerRef, ref]);
     return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)("div", {
       ref: mergedRef,
