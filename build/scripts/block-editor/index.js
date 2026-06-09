@@ -13865,7 +13865,9 @@ var wp;
         attributes: {
           ...targetBlock.attributes,
           ...updatedAttributes
-        }
+        },
+        // Block A's inner blocks sit inside the selection; only B's survive.
+        innerBlocks: blockB.innerBlocks
       },
       ...isForward ? [] : blocksWithTheSameType
     ];
