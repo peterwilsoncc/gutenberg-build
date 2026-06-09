@@ -41467,14 +41467,14 @@ var wp;
     } = (0, import_data61.useSelect)(
       (select3) => {
         const {
-          getBlockRootClientId: getBlockRootClientId2,
+          getBlockRootClientId: getBlockRootClientId22,
           hasInserterItems: hasInserterItems2,
           getAllowedBlocks: getAllowedBlocks2,
           getDirectInsertBlock: getDirectInsertBlock2,
           getBlockListSettings: getBlockListSettings2
         } = select3(store);
-        const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType30 } = select3(import_blocks38.store);
-        const _targetRootClientId = rootClientId || getBlockRootClientId2(clientId) || void 0;
+        const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType210 } = select3(import_blocks38.store);
+        const _targetRootClientId = rootClientId || getBlockRootClientId22(clientId) || void 0;
         const allowedBlocks = getAllowedBlocks2(_targetRootClientId);
         const directInsertBlock = shouldDirectInsert && getDirectInsertBlock2(_targetRootClientId);
         const { defaultBlock } = getBlockListSettings2(_targetRootClientId) ?? {};
@@ -41484,7 +41484,7 @@ var wp;
         if (!_blockToInsert && _hasSingleBlockType && defaultBlock?.name === _allowedBlockType.name) {
           _blockToInsert = defaultBlock;
         }
-        const defaultBlockType = directInsertBlock ? getBlockType30(directInsertBlock.name) : null;
+        const defaultBlockType = directInsertBlock ? getBlockType210(directInsertBlock.name) : null;
         return {
           hasItems: hasInserterItems2(_targetRootClientId),
           hasSingleBlockType: _hasSingleBlockType,
@@ -41500,8 +41500,16 @@ var wp;
       },
       [rootClientId, clientId, shouldDirectInsert]
     );
-    const registry = (0, import_data61.useRegistry)();
     const { insertBlock: insertBlock2 } = (0, import_data61.useDispatch)(store);
+    const {
+      getBlock: getBlock2,
+      getBlockIndex: getBlockIndex2,
+      getBlockOrder: getBlockOrder2,
+      getBlockRootClientId: getBlockRootClientId2,
+      getBlockSelectionEnd: getBlockSelectionEnd2,
+      getPreviousBlockClientId: getPreviousBlockClientId2
+    } = (0, import_data61.useSelect)(store);
+    const { getActiveBlockVariation, getBlockType: getBlockType30 } = (0, import_data61.useSelect)(import_blocks38.store);
     if (!hasItems && (isAppender || targetRootClientId || clientId)) {
       return null;
     }
@@ -41511,7 +41519,6 @@ var wp;
         if (!attributesToCopy?.length) {
           return {};
         }
-        const { getBlock: getBlock2, getPreviousBlockClientId: getPreviousBlockClientId2 } = registry.select(store);
         let adjacentAttributes;
         if (clientId) {
           const currentBlock = getBlock2(clientId);
@@ -41535,12 +41542,6 @@ var wp;
         );
       }
       function getInsertionIndex() {
-        const {
-          getBlockIndex: getBlockIndex2,
-          getBlockSelectionEnd: getBlockSelectionEnd2,
-          getBlockOrder: getBlockOrder2,
-          getBlockRootClientId: getBlockRootClientId2
-        } = registry.select(store);
         if (clientId) {
           return getBlockIndex2(clientId);
         }
@@ -41564,12 +41565,25 @@ var wp;
         selectBlockOnInsert
       );
       onSelectOrClose?.(newBlock);
-      const message2 = (0, import_i18n61.sprintf)(
-        // translators: %s: the name of the block that has been added
-        (0, import_i18n61.__)("%s block added"),
-        allowedBlockType.title
-      );
-      (0, import_a11y10.speak)(message2);
+      const blockTypeToInsert = getBlockType30(blockName);
+      let blockLabelToInsert;
+      if (blockTypeToInsert) {
+        blockLabelToInsert = (0, import_blocks38.__experimentalGetBlockLabel)(
+          blockTypeToInsert,
+          newBlock.attributes
+        );
+        if (blockLabelToInsert === blockTypeToInsert.title) {
+          blockLabelToInsert = getActiveBlockVariation(blockName, newBlock.attributes)?.title || blockLabelToInsert;
+        }
+      }
+      if (blockLabelToInsert) {
+        const message2 = (0, import_i18n61.sprintf)(
+          // translators: %s: the name of the block that has been added
+          (0, import_i18n61.__)("%s block added"),
+          blockLabelToInsert
+        );
+        (0, import_a11y10.speak)(message2);
+      }
     }
     function renderToggle3({ onToggle: dropdownOnToggle, isOpen }) {
       const toggleArgs = {

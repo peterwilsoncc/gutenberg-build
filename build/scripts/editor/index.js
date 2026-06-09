@@ -72101,9 +72101,6 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [currentPostType]
     );
-    if (!BlockRemovalWarningModal) {
-      return null;
-    }
     if (!removalRulesForPostType) {
       return null;
     }
