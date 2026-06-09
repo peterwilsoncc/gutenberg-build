@@ -5256,7 +5256,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
     display: flex;
   }
 }
-@media (min-width: 600px) {
+@media (min-width: 600px) and (max-width: 781px) {
   .media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill) {
     position: relative !important;
   }
