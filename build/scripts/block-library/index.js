@@ -33468,6 +33468,7 @@ ${js}
       },
       [context, isSingleSelected, metadata?.bindings?.url]
     );
+    const pinnedHeight = height === "auto" ? void 0 : height;
     const placeholder2 = (content) => {
       return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(
         import_components59.Placeholder,
@@ -33482,9 +33483,9 @@ ${js}
             "Drag and drop an image, upload, or choose from your library."
           ),
           style: {
-            aspectRatio: !(width && height) && aspectRatio ? aspectRatio : void 0,
-            width: height && aspectRatio ? "100%" : width,
-            height: width && aspectRatio ? "100%" : height,
+            aspectRatio: !(width && pinnedHeight) && aspectRatio ? aspectRatio : void 0,
+            width: pinnedHeight && aspectRatio ? "100%" : width,
+            height: width && aspectRatio ? "100%" : pinnedHeight,
             objectFit: scale,
             ...borderProps.style,
             ...shadowProps.style
@@ -33876,12 +33877,17 @@ ${js}
           const href = anchorElement && anchorElement.href ? anchorElement.href : void 0;
           const rel = anchorElement && anchorElement.rel ? anchorElement.rel : void 0;
           const linkClass = anchorElement && anchorElement.className ? anchorElement.className : void 0;
-          const width = parsePixelDimension(
+          const widthValue = parsePixelDimension(
             img.getAttribute("width")
           );
-          const height = parsePixelDimension(
+          const heightValue = parsePixelDimension(
             img.getAttribute("height")
           );
+          const widthNumber = parseInt(widthValue, 10);
+          const heightNumber = parseInt(heightValue, 10);
+          const aspectRatio = widthNumber && heightNumber ? String(widthNumber / heightNumber) : void 0;
+          const width = widthValue || (heightValue ? "auto" : void 0);
+          const height = widthValue ? "auto" : heightValue;
           const attributes2 = (0, import_blocks39.getBlockAttributes)(
             "core/image",
             node.outerHTML,
@@ -33894,7 +33900,8 @@ ${js}
               linkClass,
               anchor,
               width,
-              height
+              height,
+              aspectRatio
             }
           );
           if ((0, import_blob14.isBlobURL)(attributes2.url)) {
