@@ -6317,7 +6317,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   max-width: 70%;
 }
 @media (min-width: 782px) {
-  .editor-document-bar__title {
+  .editor-document-bar.has-shortcut .editor-document-bar__title {
     padding-left: 24px;
   }
 }

@@ -76166,6 +76166,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { open: openCommandCenter } = (0, import_data95.useDispatch)(import_commands3.store);
     const isReducedMotion = (0, import_compose36.useReducedMotion)();
+    const hasShortcut = !window.__experimentalAdminBarInEditor;
     const isTemplate2 = TEMPLATE_POST_TYPES.includes(postType2);
     const hasBackButton = !!onNavigateToPreviousEntityRecord || !!unlockedPatternInfo;
     const entityTitle = isTemplate2 ? templateTitle : documentTitle;
@@ -76188,7 +76189,8 @@ If there's a particular need for this, please submit a feature request at https:
       "div",
       {
         className: clsx_default("editor-document-bar", {
-          "has-back-button": hasBackButton
+          "has-back-button": hasBackButton,
+          "has-shortcut": hasShortcut
         }),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(import_components162.__unstableAnimatePresence, { children: hasBackButton && /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
@@ -76246,7 +76248,7 @@ If there's a particular need for this, please submit a feature request at https:
                   },
                   hasBackButton
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime364.jsx)("span", { className: "editor-document-bar__shortcut", children: import_keycodes11.displayShortcut.primary("k") })
+                hasShortcut && /* @__PURE__ */ (0, import_jsx_runtime364.jsx)("span", { className: "editor-document-bar__shortcut", children: import_keycodes11.displayShortcut.primary("k") })
               ]
             }
           )
