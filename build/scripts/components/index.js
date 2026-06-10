@@ -47676,7 +47676,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     function removeViewportStyles(ruleOrNode) {
       if (ruleOrNode.style) {
         ["width", "height", "minHeight", "maxHeight"].forEach(function(style2) {
-          if (/^\\d+(vw|vh|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)$/.test(ruleOrNode.style[style2])) {
+          if (/^\d*\.?\d+(?:vw|vh|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)$/.test(ruleOrNode.style[style2])) {
             ruleOrNode.style[style2] = "";
           }
         });
