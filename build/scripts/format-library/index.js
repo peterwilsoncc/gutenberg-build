@@ -6153,12 +6153,33 @@ var wp;
           icon: math_default,
           title: title14,
           onClick: () => {
+            if (isObjectActive) {
+              const latex = activeObjectAttributes?.["data-latex"] || "";
+              const newValue2 = (0, import_rich_text16.insert)(value, latex);
+              newValue2.start = newValue2.end - latex.length;
+              onChange(newValue2);
+              onFocus();
+              return;
+            }
+            const selectedText = value.text.slice(
+              value.start,
+              value.end
+            );
+            let innerHTML = "";
+            if (selectedText && latexToMathML) {
+              try {
+                innerHTML = latexToMathML(selectedText, {
+                  displayMode: false
+                });
+              } catch {
+              }
+            }
             const newValue = (0, import_rich_text16.insertObject)(value, {
               type: name14,
               attributes: {
-                "data-latex": ""
+                "data-latex": selectedText
               },
-              innerHTML: ""
+              innerHTML
             });
             newValue.start = newValue.end - 1;
             onChange(newValue);
