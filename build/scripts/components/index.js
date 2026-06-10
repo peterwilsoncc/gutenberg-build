@@ -33070,6 +33070,9 @@ This message will only show in development mode. It won't appear in production. 
       metaProps,
       labelProps
     } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
+    if (disableCustomColors && colors.length === 0 && !actions) {
+      return null;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(component_default18, {
       spacing: 3,
       ref: forwardedRef,

@@ -68587,6 +68587,7 @@ var wp;
     defaultControls = DEFAULT_CONTROLS5
   }) {
     const colors2 = useColorsPerOrigin(settings2);
+    const areCustomSolidsEnabled = settings2?.color?.custom;
     const decodeValue = (0, import_element232.useCallback)(
       (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue),
       [settings2]
@@ -68719,6 +68720,7 @@ var wp;
                 import_components203.BorderBoxControl,
                 {
                   colors: colors2,
+                  disableCustomColors: !areCustomSolidsEnabled,
                   enableAlpha: true,
                   enableStyle: showBorderStyle,
                   onChange: onBorderChange,
