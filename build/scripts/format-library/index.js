@@ -6146,45 +6146,40 @@ var wp;
         setLatexToMathML(() => module.default);
       });
     }, []);
+    function onClick() {
+      let newValue;
+      if (isObjectActive) {
+        const latex = activeObjectAttributes?.["data-latex"] || "";
+        newValue = (0, import_rich_text16.insert)(value, latex);
+        newValue.start = newValue.end - latex.length;
+      } else {
+        const selectedText = (0, import_rich_text16.getTextContent)((0, import_rich_text16.slice)(value));
+        let innerHTML = "";
+        if (selectedText && latexToMathML) {
+          try {
+            innerHTML = latexToMathML(selectedText, {
+              displayMode: false
+            });
+          } catch {
+          }
+        }
+        newValue = (0, import_rich_text16.insertObject)(value, {
+          type: name14,
+          attributes: { "data-latex": selectedText },
+          innerHTML
+        });
+        newValue.start = newValue.end - 1;
+      }
+      onChange(newValue);
+      onFocus();
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(import_jsx_runtime43.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
         import_block_editor16.RichTextToolbarButton,
         {
           icon: math_default,
           title: title14,
-          onClick: () => {
-            if (isObjectActive) {
-              const latex = activeObjectAttributes?.["data-latex"] || "";
-              const newValue2 = (0, import_rich_text16.insert)(value, latex);
-              newValue2.start = newValue2.end - latex.length;
-              onChange(newValue2);
-              onFocus();
-              return;
-            }
-            const selectedText = value.text.slice(
-              value.start,
-              value.end
-            );
-            let innerHTML = "";
-            if (selectedText && latexToMathML) {
-              try {
-                innerHTML = latexToMathML(selectedText, {
-                  displayMode: false
-                });
-              } catch {
-              }
-            }
-            const newValue = (0, import_rich_text16.insertObject)(value, {
-              type: name14,
-              attributes: {
-                "data-latex": selectedText
-              },
-              innerHTML
-            });
-            newValue.start = newValue.end - 1;
-            onChange(newValue);
-            onFocus();
-          },
+          onClick,
           isActive: isObjectActive
         }
       ),
