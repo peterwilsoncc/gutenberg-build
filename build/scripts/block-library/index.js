@@ -46311,7 +46311,14 @@ ${js}
       },
       isTopLevelItem: {
         type: "boolean"
+      },
+      isParentSubmenu: {
+        type: "boolean",
+        default: true
       }
+    },
+    providesContext: {
+      "core/isInsideSubmenu": "isParentSubmenu"
     },
     usesContext: [
       "textColor",
@@ -47250,10 +47257,6 @@ ${js}
       parentPageID: {
         type: "integer",
         default: 0
-      },
-      isNested: {
-        type: "boolean",
-        default: false
       }
     },
     usesContext: [
@@ -47270,7 +47273,8 @@ ${js}
       "showSubmenuIcon",
       "style",
       "openSubmenusOnClick",
-      "submenuVisibility"
+      "submenuVisibility",
+      "core/isInsideSubmenu"
     ],
     supports: {
       anchor: true,
@@ -47641,7 +47645,6 @@ ${js}
       [pagesByParentId, parentPageID]
     );
     const {
-      isNested,
       hasSelectedChild,
       parentClientId,
       hasDraggedChild,
@@ -47653,18 +47656,12 @@ ${js}
           hasSelectedInnerBlock,
           hasDraggedInnerBlock
         } = select9(import_block_editor172.store);
-        const blockParents = getBlockParentsByBlockName(
-          clientId,
-          "core/navigation-submenu",
-          true
-        );
         const navigationBlockParents = getBlockParentsByBlockName(
           clientId,
           "core/navigation",
           true
         );
         return {
-          isNested: blockParents.length > 0,
           isChildOfNavigation: navigationBlockParents.length > 0,
           hasSelectedChild: hasSelectedInnerBlock(clientId, true),
           hasDraggedChild: hasDraggedInnerBlock(clientId, true),
@@ -47700,9 +47697,6 @@ ${js}
       selectBlock,
       openModal
     ]);
-    (0, import_element88.useEffect)(() => {
-      setAttributes({ isNested });
-    }, [isNested, setAttributes]);
     return /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(import_jsx_runtime350.Fragment, { children: [
       (pagesTree.length > 0 || allowConvertToLinks) && /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(import_block_editor172.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(
         import_components101.__experimentalToolsPanel,
