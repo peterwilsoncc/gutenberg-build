@@ -5150,6 +5150,10 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex-direction: column;
 }
 
+.media-editor-modal .media-editor .interface-interface-skeleton.interface-interface-skeleton {
+  top: auto;
+}
+
 .media-editor .interface-interface-skeleton__editor {
   min-width: 0;
   flex: 1;
