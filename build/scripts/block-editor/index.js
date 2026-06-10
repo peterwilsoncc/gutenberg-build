@@ -35273,6 +35273,7 @@ var wp;
   var import_components34 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/iframe/index.mjs
+  var import_react14 = __toESM(require_react(), 1);
   var import_element75 = __toESM(require_element(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
@@ -37083,6 +37084,10 @@ var wp;
     if (src) {
       return src;
     }
+    let body = "";
+    if (import_react14.version.split(".")[0] === "18") {
+      body = "<body><script>document.currentScript.parentElement.remove()<\/script></body>";
+    }
     const html = `<!doctype html>
 <html>
 	<head>
@@ -37104,9 +37109,7 @@ var wp;
 		${resolvedAssets.styles ?? ""}
 		${resolvedAssets.scripts ?? ""}
 	</head>
-	<body>
-		<script>document.currentScript.parentElement.remove()<\/script>
-	</body>
+	${body}
 </html>`;
     src = URL.createObjectURL(new Blob([html], { type: "text/html" }));
     iframeSrcCache.set(resolvedAssets, src);
@@ -62270,7 +62273,7 @@ var wp;
   var import_data148 = __toESM(require_data(), 1);
   var import_url8 = __toESM(require_url(), 1);
   var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
-  var import_react14 = __toESM(require_react(), 1);
+  var import_react15 = __toESM(require_react(), 1);
   var { ValidatedInputControl } = unlock(import_components174.privateApis);
   function isFunction(maybeFunc) {
     return typeof maybeFunc === "function";
@@ -62672,7 +62675,7 @@ var wp;
           className: clsx_default("block-editor-url-input__suggestions", {
             [`${className}__suggestions`]: className
           }),
-          children: suggestions.map((suggestion, index2) => /* @__PURE__ */ (0, import_react14.createElement)(
+          children: suggestions.map((suggestion, index2) => /* @__PURE__ */ (0, import_react15.createElement)(
             import_components174.Button,
             {
               __next40pxDefaultSize: true,
@@ -64012,7 +64015,7 @@ var wp;
   var import_rich_text11 = __toESM(require_rich_text(), 1);
   var import_element209 = __toESM(require_element(), 1);
   var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
-  var import_react15 = __toESM(require_react(), 1);
+  var import_react16 = __toESM(require_react(), 1);
   var DEFAULT_BLOCK_CONTEXT2 = {};
   var usesContextKey = /* @__PURE__ */ Symbol("usesContext");
   function Edit3({
@@ -64061,7 +64064,7 @@ var wp;
     );
   }
   function FormatEdit({ formatTypes, ...props }) {
-    return formatTypes.map((settings2) => /* @__PURE__ */ (0, import_react15.createElement)(Edit3, { settings: settings2, ...props, key: settings2.name }));
+    return formatTypes.map((settings2) => /* @__PURE__ */ (0, import_react16.createElement)(Edit3, { settings: settings2, ...props, key: settings2.name }));
   }
 
   // packages/block-editor/build-module/components/rich-text/content.mjs
