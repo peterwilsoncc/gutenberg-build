@@ -32572,7 +32572,7 @@ ${js}
       }
     }, [isSingleSelected]);
     const canEditImage = id && naturalWidth && naturalHeight && imageEditing && !!editMediaEntity;
-    const allowCrop = isSingleSelected && canEditImage && !isEditingImage && !isContentOnlyMode;
+    const allowCrop = isSingleSelected && canEditImage && !isEditingImage && !isContentOnlyMode && !isUploading;
     function switchToCover() {
       replaceBlocks(
         clientId,
