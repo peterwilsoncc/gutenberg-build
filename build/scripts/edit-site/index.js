@@ -17156,13 +17156,33 @@ var wp;
                   isTransparent: isResizableFrameOversized
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SidebarContent, { routeKey, children: areas2.mobileContent ? /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
-                ThemeProvider2,
+              areas2.mobileContent ? (
+                /*
+                 * ThemeProvider wraps SidebarContent (rather than
+                 * just the content) so the scroll wrapper it renders
+                 * inherits the content background tokens. See
+                 * `.edit-site-sidebar__screen-wrapper` in style.scss.
+                 */
+                /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+                  ThemeProvider2,
+                  {
+                    color: CONTENT_COLOR,
+                    children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+                      SidebarContent,
+                      {
+                        routeKey,
+                        children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", { className: "edit-site-layout__mobile-content", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.mobileContent }) })
+                      }
+                    )
+                  }
+                )
+              ) : /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+                SidebarContent,
                 {
-                  color: CONTENT_COLOR,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", { className: "edit-site-layout__mobile-content", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.mobileContent }) })
+                  routeKey,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.mobileSidebar })
                 }
-              ) : /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.mobileSidebar }) }),
+              ),
               /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SaveHub, {}),
               /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(SavePanel, {})
             ] }) : /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(ThemeProvider2, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_editor6.ErrorBoundary, { children: areas2.preview }) }) }) }),

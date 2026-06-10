@@ -4811,6 +4811,9 @@ button.font-library__upload-area {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.edit-site-sidebar__screen-wrapper:has(.edit-site-layout__mobile-content) {
   background: var(--wpds-color-bg-surface-neutral, #fcfcfc);
 }
 
