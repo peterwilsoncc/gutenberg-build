@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState34({
+        cachedValue = useState35({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React58 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState34 = React58.useState, useEffect32 = React58.useEffect, useLayoutEffect6 = React58.useLayoutEffect, useDebugValue2 = React58.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React58 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState35 = React58.useState, useEffect32 = React58.useEffect, useLayoutEffect6 = React58.useLayoutEffect, useDebugValue2 = React58.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React58.useSyncExternalStore ? React58.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -11814,7 +11814,7 @@ var import_core_data3 = __toESM(require_core_data());
 var import_data10 = __toESM(require_data());
 var import_editor = __toESM(require_editor());
 var import_html_entities = __toESM(require_html_entities());
-var import_i18n38 = __toESM(require_i18n());
+var import_i18n39 = __toESM(require_i18n());
 
 // packages/media-editor/build-module/components/media-editor-provider/index.mjs
 var import_element35 = __toESM(require_element(), 1);
@@ -19481,19 +19481,19 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 (0, import_data.register)(store);
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_components39 = __toESM(require_components(), 1);
+var import_components40 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_components38 = __toESM(require_components(), 1);
+var import_components39 = __toESM(require_components(), 1);
 var import_compose6 = __toESM(require_compose(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 var import_element88 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
@@ -20427,6 +20427,8 @@ var interface_skeleton_default = (0, import_element70.forwardRef)(InterfaceSkele
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
 var import_element81 = __toESM(require_element(), 1);
+var import_components35 = __toESM(require_components(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
 var import_i18n27 = __toESM(require_i18n(), 1);
@@ -24534,6 +24536,9 @@ function MediaEditorCanvas({
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
   const { beginGesture, endGesture, setImage } = controller;
+  const [status, setStatus] = (0, import_element81.useState)(
+    "loading"
+  );
   const aspectRatio = (0, import_element81.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
@@ -24560,27 +24565,59 @@ function MediaEditorCanvas({
       naturalHeight: mediaHeight
     });
   }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setImage]);
-  if (!mediaUrl || mediaType.type !== "image") {
+  const isImage = mediaType.type === "image";
+  (0, import_element81.useEffect)(() => {
+    if (!mediaUrl || !isImage) {
+      return;
+    }
+    setStatus("loading");
+    const probe = new window.Image();
+    probe.onload = () => setStatus("loaded");
+    probe.onerror = () => setStatus("error");
+    probe.src = mediaUrl;
+    if (probe.complete) {
+      setStatus(probe.naturalWidth > 0 ? "loaded" : "error");
+    }
+    return () => {
+      probe.onload = null;
+      probe.onerror = null;
+    };
+  }, [mediaUrl, isImage]);
+  if (!mediaUrl || !isImage) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-    Cropper,
-    {
-      src: mediaUrl,
-      controller,
-      aspectRatio,
-      freeformCrop: true,
-      focusOnMount,
-      showGrid: "interactive",
-      isPlacementActive,
-      onGestureStart: handleGestureStart,
-      onGestureEnd: handleGestureEnd
-    }
-  ) });
+  if (status === "error") {
+    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("p", { children: (0, import_i18n31.__)("Failed to load image.") }) }) });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)("div", { className: "media-editor-canvas", children: [
+    status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components35.Spinner, {}) }),
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+      "div",
+      {
+        className: clsx_default("media-editor-canvas__cropper", {
+          "is-loaded": status === "loaded"
+        }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+          Cropper,
+          {
+            src: mediaUrl,
+            controller,
+            aspectRatio,
+            freeformCrop: true,
+            focusOnMount: focusOnMount && status === "loaded",
+            showGrid: "interactive",
+            isPlacementActive,
+            onGestureStart: handleGestureStart,
+            onGestureEnd: handleGestureEnd
+          }
+        )
+      }
+    )
+  ] });
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_i18n31 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
 var import_element82 = __toESM(require_element(), 1);
@@ -24951,7 +24988,7 @@ function MediaEditorFineRotation({
       children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
         RotationRuler,
         {
-          label: (0, import_i18n31.__)("Fine rotation"),
+          label: (0, import_i18n32.__)("Fine rotation"),
           min: -MAX_ROTATION_OFFSET,
           max: MAX_ROTATION_OFFSET,
           value: fineOffset,
@@ -24963,8 +25000,8 @@ function MediaEditorFineRotation({
 }
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
-var import_components35 = __toESM(require_components(), 1);
-var import_i18n32 = __toESM(require_i18n(), 1);
+var import_components36 = __toESM(require_components(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
 var import_element85 = __toESM(require_element(), 1);
@@ -25017,21 +25054,21 @@ function MediaEditorImageControls({
   };
   const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(import_jsx_runtime117.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-      import_components35.Button,
+      import_components36.Button,
       {
         size: "compact",
         icon: rotate_left_default,
-        label: (0, import_i18n32.__)("Rotate 90\xB0 counter-clockwise"),
+        label: (0, import_i18n33.__)("Rotate 90\xB0 counter-clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(-1)
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-      import_components35.Button,
+      import_components36.Button,
       {
         size: "compact",
         icon: rotate_right_default,
-        label: (0, import_i18n32.__)("Rotate 90\xB0 clockwise"),
+        label: (0, import_i18n33.__)("Rotate 90\xB0 clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(1)
       }
@@ -25039,11 +25076,11 @@ function MediaEditorImageControls({
   ] });
   const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(import_jsx_runtime117.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-      import_components35.Button,
+      import_components36.Button,
       {
         size: "compact",
         icon: flip_horizontal_default,
-        label: (0, import_i18n32.__)("Flip horizontal"),
+        label: (0, import_i18n33.__)("Flip horizontal"),
         showTooltip: true,
         isPressed: state.flip.horizontal,
         onClick: () => setFlip({
@@ -25053,11 +25090,11 @@ function MediaEditorImageControls({
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-      import_components35.Button,
+      import_components36.Button,
       {
         size: "compact",
         icon: flip_vertical_default,
-        label: (0, import_i18n32.__)("Flip vertical"),
+        label: (0, import_i18n33.__)("Flip vertical"),
         showTooltip: true,
         isPressed: state.flip.vertical,
         onClick: () => setFlip({
@@ -25069,11 +25106,11 @@ function MediaEditorImageControls({
   ] });
   const zoomButtons = /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(import_jsx_runtime117.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-      import_components35.Button,
+      import_components36.Button,
       {
         size: "compact",
         icon: plus_default,
-        label: (0, import_i18n32.__)("Zoom in"),
+        label: (0, import_i18n33.__)("Zoom in"),
         showTooltip: true,
         disabled: state.zoom >= MAX_ZOOM,
         accessibleWhenDisabled: true,
@@ -25081,11 +25118,11 @@ function MediaEditorImageControls({
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-      import_components35.Button,
+      import_components36.Button,
       {
         size: "compact",
         icon: line_solid_default,
-        label: (0, import_i18n32.__)("Zoom out"),
+        label: (0, import_i18n33.__)("Zoom out"),
         showTooltip: true,
         disabled: state.zoom <= minZoom,
         accessibleWhenDisabled: true,
@@ -25094,17 +25131,17 @@ function MediaEditorImageControls({
     )
   ] });
   const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-    import_components35.DropdownMenu,
+    import_components36.DropdownMenu,
     {
       icon: aspect_ratio_default,
-      label: (0, import_i18n32.__)("Aspect ratio"),
+      label: (0, import_i18n33.__)("Aspect ratio"),
       popoverProps: { placement: "top" },
       toggleProps: { size: "compact" },
-      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components35.MenuGroup, { label: (0, import_i18n32.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
+      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components36.MenuGroup, { label: (0, import_i18n33.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
         const value = preset.value.toString();
         const isSelected = value === aspectRatioValue;
         return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-          import_components35.MenuItem,
+          import_components36.MenuItem,
           {
             role: "menuitemradio",
             isSelected,
@@ -25128,14 +25165,14 @@ function MediaEditorImageControls({
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n32.__)("Rotate"),
+            "aria-label": (0, import_i18n33.__)("Rotate"),
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n32.__)("Rotate")
+                  children: (0, import_i18n33.__)("Rotate")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
@@ -25147,14 +25184,14 @@ function MediaEditorImageControls({
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n32.__)("Flip"),
+            "aria-label": (0, import_i18n33.__)("Flip"),
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n32.__)("Flip")
+                  children: (0, import_i18n33.__)("Flip")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
@@ -25167,14 +25204,14 @@ function MediaEditorImageControls({
         {
           className: "media-editor-image-controls__group",
           role: "group",
-          "aria-label": (0, import_i18n32.__)("Zoom"),
+          "aria-label": (0, import_i18n33.__)("Zoom"),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
               "span",
               {
                 className: "media-editor-image-controls__label",
                 "aria-hidden": "true",
-                children: (0, import_i18n32.__)("Zoom")
+                children: (0, import_i18n33.__)("Zoom")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
@@ -25192,8 +25229,8 @@ function MediaEditorImageControls({
 }
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
-var import_components36 = __toESM(require_components(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_components37 = __toESM(require_components(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
 var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCropPanel({
   aspectRatioValue,
@@ -25212,13 +25249,13 @@ function MediaEditorCropPanel({
         gap: "xl",
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("h2", {}), children: (0, import_i18n33.__)("Crop options") }),
+          /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("h2", {}), children: (0, import_i18n34.__)("Crop options") }),
           showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(MediaEditorImageControls, { withLabels: true }),
           /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
-            import_components36.SelectControl,
+            import_components37.SelectControl,
             {
               __next40pxDefaultSize: true,
-              label: (0, import_i18n33.__)("Aspect ratio"),
+              label: (0, import_i18n34.__)("Aspect ratio"),
               value: aspectRatioValue,
               onChange: onAspectRatioChange,
               options: aspectRatioOptions.map((preset) => ({
@@ -25234,57 +25271,57 @@ function MediaEditorCropPanel({
 }
 
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
-var import_components37 = __toESM(require_components(), 1);
+var import_components38 = __toESM(require_components(), 1);
 var import_element86 = __toESM(require_element(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
-    description: (0, import_i18n34.__)("Undo"),
+    description: (0, import_i18n35.__)("Undo"),
     keyCombination: { modifier: "primary", character: "z" }
   },
   {
-    description: (0, import_i18n34.__)("Redo"),
+    description: (0, import_i18n35.__)("Redo"),
     keyCombination: { modifier: "primaryShift", character: "z" }
   },
   {
-    description: (0, import_i18n34.__)("Pan"),
+    description: (0, import_i18n35.__)("Pan"),
     keyCombination: {
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n34.__)("Arrow keys")
+      ariaLabel: (0, import_i18n35.__)("Arrow keys")
     }
   },
   {
-    description: (0, import_i18n34.__)("Zoom in"),
+    description: (0, import_i18n35.__)("Zoom in"),
     keyCombination: { character: "+" }
   },
   {
-    description: (0, import_i18n34.__)("Zoom out"),
+    description: (0, import_i18n35.__)("Zoom out"),
     keyCombination: { character: "-" }
   },
   {
-    description: (0, import_i18n34.__)("Rotate 90\xB0 clockwise"),
+    description: (0, import_i18n35.__)("Rotate 90\xB0 clockwise"),
     keyCombination: { character: "R" }
   },
   {
-    description: (0, import_i18n34.__)("Rotate 90\xB0 counter-clockwise"),
+    description: (0, import_i18n35.__)("Rotate 90\xB0 counter-clockwise"),
     keyCombination: { modifier: "shift", character: "R" }
   },
   {
-    description: (0, import_i18n34.__)("Flip horizontal"),
+    description: (0, import_i18n35.__)("Flip horizontal"),
     keyCombination: { character: "H" }
   },
   {
-    description: (0, import_i18n34.__)("Flip vertical"),
+    description: (0, import_i18n35.__)("Flip vertical"),
     keyCombination: { character: "V" }
   },
   {
-    description: (0, import_i18n34.__)("Pan or resize crop (large step)"),
+    description: (0, import_i18n35.__)("Pan or resize crop (large step)"),
     keyCombination: {
       modifier: "shift",
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n34.__)("Shift + Arrow keys")
+      ariaLabel: (0, import_i18n35.__)("Shift + Arrow keys")
     }
   }
 ];
@@ -25334,13 +25371,13 @@ function MediaEditorKeyboardShortcutsModal({
   onClose
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(
-    import_components37.Modal,
+    import_components38.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
-      title: (0, import_i18n34.__)("Keyboard shortcuts"),
+      title: (0, import_i18n35.__)("Keyboard shortcuts"),
       onRequestClose: onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime119.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n34.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime119.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n35.__)(
           "These shortcuts work when the image editor has focus."
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
@@ -25376,7 +25413,7 @@ var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
 var import_element87 = __toESM(require_element(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
@@ -25544,15 +25581,15 @@ function useSaveMediaEditor({
         });
       }
     } catch (error2) {
-      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n35.__)("An unknown error occurred.");
+      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n36.__)("An unknown error occurred.");
       createErrorNotice(
-        isImage ? (0, import_i18n35.sprintf)(
+        isImage ? (0, import_i18n36.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n35.__)("Could not save image. %s"),
+          (0, import_i18n36.__)("Could not save image. %s"),
           message2
-        ) : (0, import_i18n35.sprintf)(
+        ) : (0, import_i18n36.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n35.__)("Could not save media. %s"),
+          (0, import_i18n36.__)("Could not save media. %s"),
           message2
         ),
         {
@@ -25583,7 +25620,7 @@ function useSaveMediaEditor({
 var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var PLACEMENT_CONTROL_IDLE_MS = 300;
-var { Tabs } = unlock3(import_components38.privateApis);
+var { Tabs } = unlock3(import_components39.privateApis);
 function MediaEditorSidebar({ tabs }) {
   const tabsContextValue = (0, import_element88.useContext)(Tabs.Context);
   return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
@@ -25591,13 +25628,13 @@ function MediaEditorSidebar({ tabs }) {
     {
       scope: "media-editor",
       identifier: "media-editor/details",
-      title: (0, import_i18n36.__)("Details"),
+      title: (0, import_i18n37.__)("Details"),
       icon: drawer_right_default,
       isActiveByDefault: true,
       className: "media-editor__sidebar",
       panelClassName: "media-editor__sidebar-panel",
       headerClassName: "media-editor__sidebar-header",
-      closeLabel: (0, import_i18n36.__)("Close media panel"),
+      closeLabel: (0, import_i18n37.__)("Close media panel"),
       header: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
       children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
         Tabs.TabPanel,
@@ -25619,7 +25656,7 @@ function HeaderActions({
 }) {
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element88.useState)(false);
   return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
-    import_components38.Flex,
+    import_components39.Flex,
     {
       className: "media-editor__header-actions",
       justify: "flex-end",
@@ -25627,21 +25664,21 @@ function HeaderActions({
       gap: 2,
       children: [
         isImage && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components38.Button,
+          import_components39.Button,
           {
             size: "compact",
             icon: keyboard_default,
-            label: (0, import_i18n36.__)("Keyboard shortcuts"),
+            label: (0, import_i18n37.__)("Keyboard shortcuts"),
             onClick: () => setIsShortcutsModalOpen(true)
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
         showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components38.Button,
+          import_components39.Button,
           {
             size: "compact",
             icon: close_default,
-            label: (0, import_i18n36.__)("Close"),
+            label: (0, import_i18n37.__)("Close"),
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true
@@ -25690,29 +25727,29 @@ function HistoryActions({
     endGesture();
   };
   return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
-    import_components38.Flex,
+    import_components39.Flex,
     {
       className: "media-editor__history-actions",
       expanded: false,
       gap: 2,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components38.Button,
+          import_components39.Button,
           {
             size: "compact",
             variant: "tertiary",
             disabled: !isDirty,
             accessibleWhenDisabled: true,
             onClick: handleReset,
-            children: (0, import_i18n36.__)("Reset")
+            children: (0, import_i18n37.__)("Reset")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components38.Button,
+          import_components39.Button,
           {
             size: "compact",
             icon: undo_default,
-            label: (0, import_i18n36.__)("Undo"),
+            label: (0, import_i18n37.__)("Undo"),
             showTooltip: true,
             shortcut: import_keycodes2.displayShortcut.primary("z"),
             disabled: isUndoRedoDisabled || !hasUndo,
@@ -25721,11 +25758,11 @@ function HistoryActions({
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components38.Button,
+          import_components39.Button,
           {
             size: "compact",
             icon: redo_default,
-            label: (0, import_i18n36.__)("Redo"),
+            label: (0, import_i18n37.__)("Redo"),
             showTooltip: true,
             shortcut: (0, import_keycodes2.isAppleOS)() ? import_keycodes2.displayShortcut.primaryShift("z") : import_keycodes2.displayShortcut.primary("y"),
             disabled: isUndoRedoDisabled || !hasRedo,
@@ -25746,7 +25783,7 @@ function FooterActions({
 }) {
   const saveDisabled = isSaving || !hasMedia || !hasChanges;
   return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
-    import_components38.Flex,
+    import_components39.Flex,
     {
       className: "media-editor__footer-actions",
       justify: "flex-end",
@@ -25754,18 +25791,18 @@ function FooterActions({
       gap: 2,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components38.Button,
+          import_components39.Button,
           {
             __next40pxDefaultSize: true,
             variant: "tertiary",
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n36.__)("Cancel")
+            children: (0, import_i18n37.__)("Cancel")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components38.Button,
+          import_components39.Button,
           {
             __next40pxDefaultSize: true,
             variant: "primary",
@@ -25773,7 +25810,7 @@ function FooterActions({
             isBusy: isSaving,
             disabled: saveDisabled,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n36.__)("Save")
+            children: (0, import_i18n37.__)("Save")
           }
         )
       ]
@@ -25881,7 +25918,7 @@ function MediaEditorContent({
   const tabs = (0, import_element88.useMemo)(() => {
     const detailsTab = {
       id: "details",
-      title: (0, import_i18n36.__)("Details"),
+      title: (0, import_i18n37.__)("Details"),
       panel: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
         Stack,
         {
@@ -25898,7 +25935,7 @@ function MediaEditorContent({
     return [
       {
         id: "crop",
-        title: (0, import_i18n36.__)("Crop"),
+        title: (0, import_i18n37.__)("Crop"),
         panel: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
           Stack,
           {
@@ -25996,15 +26033,15 @@ function MediaEditorContent({
       onChange: handleChange,
       settings: { fields },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_components38.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(import_jsx_runtime120.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_components39.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(import_jsx_runtime120.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(MediaEditorSidebar, { tabs }) }),
           /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
             interface_skeleton_default,
             {
               className: "media-editor__skeleton",
               labels: {
-                body: isImage ? (0, import_i18n36.__)("Image editor") : (0, import_i18n36.__)("Media preview"),
-                sidebar: (0, import_i18n36.__)("Media details")
+                body: isImage ? (0, import_i18n37.__)("Image editor") : (0, import_i18n37.__)("Media preview"),
+                sidebar: (0, import_i18n37.__)("Media details")
               },
               content: /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)("div", { className: "media-editor__content", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
@@ -26023,17 +26060,17 @@ function MediaEditorContent({
           )
         ] }) }),
         /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components38.__experimentalConfirmDialog,
+          import_components39.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
-            confirmButtonText: (0, import_i18n36.__)("Discard"),
-            cancelButtonText: (0, import_i18n36.__)("Keep editing"),
+            confirmButtonText: (0, import_i18n37.__)("Discard"),
+            cancelButtonText: (0, import_i18n37.__)("Keep editing"),
             onCancel: () => setIsDiscardDialogOpen(false),
             onConfirm: () => {
               setIsDiscardDialogOpen(false);
               discardAndClose();
             },
-            children: (0, import_i18n36.__)(
+            children: (0, import_i18n37.__)(
               "Are you sure you want to discard your unsaved changes?"
             )
           }
@@ -26156,11 +26193,11 @@ function MediaEditorModal({
         }
         handleClose();
         if (previous && savedId !== previous.id && onUpdate) {
-          createSuccessNotice((0, import_i18n37.__)("Image edited."), {
+          createSuccessNotice((0, import_i18n38.__)("Image edited."), {
             type: "snackbar",
             actions: [
               {
-                label: (0, import_i18n37.__)("Undo"),
+                label: (0, import_i18n38.__)("Undo"),
                 onClick: () => {
                   onUpdate({
                     id: previous.id,
@@ -26186,10 +26223,10 @@ function MediaEditorModal({
           className: "media-editor-modal__shortcut-scope",
           onKeyDown: stopKeyDownPropagation,
           children: /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
-            import_components39.Modal,
+            import_components40.Modal,
             {
               className: "media-editor-modal",
-              title: (0, import_i18n37.__)("Edit media"),
+              title: (0, import_i18n38.__)("Edit media"),
               size: "fill",
               isDismissible: false,
               shouldCloseOnClickOutside,
@@ -26203,7 +26240,7 @@ function MediaEditorModal({
                   {
                     className: `media-editor-modal__footer is-${footerLayout}`,
                     role: "region",
-                    "aria-label": (0, import_i18n37.__)("Editor actions"),
+                    "aria-label": (0, import_i18n38.__)("Editor actions"),
                     children: footerActions
                   }
                 )
@@ -26235,10 +26272,10 @@ var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptIn
 );
 
 // routes/media-editor/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='4f29065fbb']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='a0288cb6ec']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "4f29065fbb");
-  style.appendChild(document.createTextNode('.media-editor-preview{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:32px;position:relative}.media-editor-preview__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-preview--loading{height:100%;width:100%}.media-editor-preview--image img{height:auto;max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain;opacity:0;width:auto}@keyframes __wp-base-styles-fade-in{0%{opacity:0}to{opacity:1}}@media not (prefers-reduced-motion){.media-editor-preview--image img.loaded{animation:__wp-base-styles-fade-in .08s linear 0s;animation-fill-mode:forwards}}.media-editor-preview--video video{height:auto;max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain;width:auto}.media-editor-preview--audio audio{max-width:100%}.media-editor-preview--file{text-align:center}.media-editor-preview__file-info{background:#f0f0f0;border-radius:2px;padding:24px}.media-editor-preview__file-name{font-weight:600;margin-bottom:8px}.media-editor-preview__mime-type{color:#757575;font-size:.9em;margin-bottom:16px}.media-editor-preview__download-link{display:inline-block;margin-top:8px}.media-editor-preview--empty,.media-editor-preview--error{color:#757575;text-align:center}.media-editor-preview__url{color:#949494;font-size:.9em;margin-top:8px;word-break:break-all}.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:24px;min-height:100px;min-width:100px;position:absolute}.wp-media-editor-image-editor__canvas:focus{outline:none}.wp-media-editor-image-editor__stage{inset:0;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px hsla(0,0%,88%,.6);pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px hsla(0,0%,88%,.4)}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid{opacity:0;transition:none}.wp-media-editor-image-editor__grid-line{background:hsla(0,0%,100%,.4);position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__dimensions-tooltip{background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.08);color:#1e1e1e;font-size:11px;font-variant-numeric:tabular-nums;line-height:1.4;padding:2px 6px;pointer-events:none;position:absolute;white-space:nowrap;z-index:2}.wp-media-editor-image-editor__stencil-rect{border:1px solid #1e1e1e;box-sizing:border-box;pointer-events:none;position:absolute;transition:border-color .15s ease,box-shadow .15s ease}.wp-media-editor-image-editor__canvas--focus-visible:focus .wp-media-editor-image-editor__stencil-rect{border-color:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));box-shadow:0 0 0 1px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle{-webkit-appearance:none;-moz-appearance:none;appearance:none;background:#fff;border:1px solid var(--wp-admin-theme-color,#007cba);border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__handle:focus{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:transparent;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}.media-editor{display:flex;flex:1;flex-direction:column;height:100%;min-height:0}.media-editor .media-editor__loading{align-items:center;display:flex;height:100%;justify-content:center}.media-editor .interface-interface-skeleton{bottom:auto;flex:1;flex-direction:column;height:100%;left:auto;max-height:none;position:relative;right:auto;top:auto}.media-editor-modal .media-editor .interface-interface-skeleton.interface-interface-skeleton{top:auto}.media-editor .interface-interface-skeleton__editor{flex:1;min-width:0}.media-editor .media-editor__content{border-radius:8px;display:flex;flex:1;flex-direction:column;margin:0 24px;min-height:0;overflow:hidden}@media (min-width:600px){.media-editor .media-editor__content{margin-right:16px}}.media-editor .media-editor__canvas-toolbar{background:#e0e0e0;display:flex;flex-shrink:0;justify-content:center;padding:8px 16px}.media-editor .media-editor__canvas-toolbar .media-editor-fine-rotation{flex:0 1 360px;min-width:0}.media-editor .media-editor__canvas-area{align-items:center;background:#e0e0e0;display:flex;flex:1;justify-content:center;min-height:0;overflow:auto}.media-editor .media-editor__canvas-area .media-editor-preview{height:100%}.media-editor .media-editor__canvas-area img,.media-editor .media-editor__canvas-area video{max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain}.media-editor .media-editor__sidebar{box-sizing:border-box}.media-editor .media-editor__sidebar *,.media-editor .media-editor__sidebar :after,.media-editor .media-editor__sidebar :before{box-sizing:inherit}@media (min-width:600px){.media-editor .media-editor__sidebar{padding-left:8px}}.media-editor .media-editor__sidebar-panel{padding-bottom:24px}.media-editor .interface-interface-skeleton__sidebar{border-top:0;box-shadow:none;outline:1px solid transparent}.media-editor .media-editor__panel{padding:16px}@media (min-width:600px){.media-editor .media-editor__panel{padding:16px 24px 0 0}}.media-editor .components-panel__header.media-editor__sidebar-header{margin-right:24px;padding-left:0;padding-right:8px}.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{padding:0}@media (min-width:600px){.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{display:flex}}@media (min-width:600px) and (max-width:781px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){position:relative!important}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:280px!important}}@media (max-width:599px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){width:100%}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:100%!important}}.media-editor__snackbar{bottom:24px;box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor__snackbar .components-snackbar{margin-inline:auto}.media-editor-form .dataforms-layouts-panel__field-control{text-wrap:pretty}.media-editor-modal.components-modal__frame .components-modal__content{display:flex;flex-direction:column;margin-bottom:0;min-height:0;padding:0}.media-editor-modal.components-modal__frame .components-modal__children-container{display:flex;flex:1;flex-direction:column;min-height:0}.media-editor-modal.components-modal__frame .media-editor-modal__footer{background:#fff;display:flex;flex-shrink:0;gap:16px;padding:16px 32px 24px;z-index:1000001}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide{align-items:center;flex-direction:row}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__footer-actions{margin-left:auto}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow{flex-direction:column}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow>.media-editor-image-controls{align-self:center}.media-editor-modal__footer-row{align-items:center;display:flex;flex-wrap:wrap;gap:16px}.media-editor-modal__footer-row .media-editor-image-controls,.media-editor-modal__footer-row .media-editor__footer-actions{margin-left:auto}.media-editor__history-actions .components-button.has-icon:not([aria-disabled=true]){color:var(--wp-admin-theme-color)}.media-editor-modal,.media-editor-modal__snackbar{display:flex;flex-direction:column}.media-editor-modal__snackbar{bottom:24px;box-sizing:border-box;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor-modal__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal__snackbar{z-index:1000001}.media-editor-canvas{height:100%;position:relative;width:100%}.media-editor-image-controls{align-items:center;display:flex;flex-wrap:nowrap;gap:8px}.media-editor-image-controls.is-stacked{align-items:flex-start;flex-direction:column;gap:24px}.media-editor-image-controls__transforms{display:flex;gap:48px}.media-editor-image-controls__group{display:flex;flex-direction:column;gap:4px}.media-editor-image-controls__label{font-size:11px;font-weight:500;line-height:1.4;text-transform:uppercase}.media-editor-image-controls__buttons{display:flex;gap:8px;padding-inline:2px 0}.media-editor-keyboard-shortcuts-modal{min-width:280px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__note{color:#757575;font-size:13px;margin:0 0 16px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-list{list-style:none;margin:0;padding:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut{align-items:baseline;border-top:1px solid #ddd;display:flex;margin-bottom:0;padding:.6rem 0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut:last-child{border-bottom:1px solid #ddd}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-description{flex:1;margin:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term{background:none;font-weight:600;margin:0 0 0 1rem;padding:0;text-align:right}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key{border-radius:8%;margin:0 .2rem;padding:.25rem .5rem}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child{margin:0 0 0 .2rem}.rotation-ruler{box-sizing:border-box;color:#1e1e1e;container-type:inline-size;cursor:ew-resize;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:32px;min-width:180px;padding:0 8px;position:relative;touch-action:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.rotation-ruler[data-disabled]{cursor:default;opacity:.5;pointer-events:none}.rotation-ruler:has(.rotation-ruler__input:focus-visible){border-radius:4px;outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:2px}.rotation-ruler__input{clip:rect(0 0 0 0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.rotation-ruler__pointer{background:var(--wp-admin-theme-color,#3858e9);border-radius:1px;bottom:0;height:18px;left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);width:2px}.rotation-ruler__strip{inset:0;mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent);overflow:hidden;position:absolute}.rotation-ruler__ticks{display:block;left:50%;overflow:visible;position:absolute;top:0}.rotation-ruler__tick{stroke:currentColor;stroke-width:1}.rotation-ruler__tick--minor{opacity:.35}.rotation-ruler__tick--mid{opacity:.6}.rotation-ruler__tick--major{opacity:1}.rotation-ruler__label{fill:currentColor;font-size:10px;font-weight:400;opacity:.45}.rotation-ruler__active-label{color:#1e1e1e;font-size:12px;font-weight:600;height:14px;left:50%;line-height:14px;pointer-events:none;position:absolute;top:0;transform:translateX(-50%)}.rotation-ruler__active-label:before{background:linear-gradient(90deg,transparent 0,#e0e0e0 12px,#e0e0e0 calc(100% - 12px),transparent);content:"";height:100%;left:50%;position:absolute;top:0;transform:translateX(-50%);width:60px}.rotation-ruler__active-label-number{display:inline-block;position:relative}.rotation-ruler__active-label-sign{position:absolute;right:100%;top:0}.rotation-ruler__active-label-unit{left:100%;position:absolute;top:0}@container (max-width: 220px){.rotation-ruler__tick--minor{opacity:0}}@media (prefers-reduced-motion:reduce){.rotation-ruler__ticks{transition:none}}.media-editor-route__content{display:flex;flex:1;min-height:0;overflow:hidden}'));
+  style.setAttribute("data-wp-hash", "a0288cb6ec");
+  style.appendChild(document.createTextNode('.media-editor-preview{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:32px;position:relative}.media-editor-preview__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-preview--loading{height:100%;width:100%}.media-editor-preview--image img{height:auto;max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain;opacity:0;width:auto}@media not (prefers-reduced-motion){.media-editor-preview--image img.loaded{animation:__wp-base-styles-fade-in .08s linear 0s;animation-fill-mode:forwards}}.media-editor-preview--video video{height:auto;max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain;width:auto}.media-editor-preview--audio audio{max-width:100%}.media-editor-preview--file{text-align:center}.media-editor-preview__file-info{background:#f0f0f0;border-radius:2px;padding:24px}.media-editor-preview__file-name{font-weight:600;margin-bottom:8px}.media-editor-preview__mime-type{color:#757575;font-size:.9em;margin-bottom:16px}.media-editor-preview__download-link{display:inline-block;margin-top:8px}.media-editor-preview--empty,.media-editor-preview--error{color:#757575;text-align:center}.media-editor-preview__url{color:#949494;font-size:.9em;margin-top:8px;word-break:break-all}.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:24px;min-height:100px;min-width:100px;position:absolute}.wp-media-editor-image-editor__canvas:focus{outline:none}.wp-media-editor-image-editor__stage{inset:0;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px hsla(0,0%,88%,.6);pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px hsla(0,0%,88%,.4)}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid{opacity:0;transition:none}.wp-media-editor-image-editor__grid-line{background:hsla(0,0%,100%,.4);position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__dimensions-tooltip{background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.08);color:#1e1e1e;font-size:11px;font-variant-numeric:tabular-nums;line-height:1.4;padding:2px 6px;pointer-events:none;position:absolute;white-space:nowrap;z-index:2}.wp-media-editor-image-editor__stencil-rect{border:1px solid #1e1e1e;box-sizing:border-box;pointer-events:none;position:absolute;transition:border-color .15s ease,box-shadow .15s ease}.wp-media-editor-image-editor__canvas--focus-visible:focus .wp-media-editor-image-editor__stencil-rect{border-color:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));box-shadow:0 0 0 1px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle{-webkit-appearance:none;-moz-appearance:none;appearance:none;background:#fff;border:1px solid var(--wp-admin-theme-color,#007cba);border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__handle:focus{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:transparent;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}.media-editor{display:flex;flex:1;flex-direction:column;height:100%;min-height:0}.media-editor .media-editor__loading{align-items:center;display:flex;height:100%;justify-content:center}.media-editor .interface-interface-skeleton{bottom:auto;flex:1;flex-direction:column;height:100%;left:auto;max-height:none;position:relative;right:auto;top:auto}.media-editor-modal .media-editor .interface-interface-skeleton.interface-interface-skeleton{top:auto}.media-editor .interface-interface-skeleton__editor{flex:1;min-width:0}.media-editor .media-editor__content{border-radius:8px;display:flex;flex:1;flex-direction:column;margin:0 24px;min-height:0;overflow:hidden}@media (min-width:600px){.media-editor .media-editor__content{margin-right:16px}}.media-editor .media-editor__canvas-toolbar{background:#e0e0e0;display:flex;flex-shrink:0;justify-content:center;padding:8px 16px}.media-editor .media-editor__canvas-toolbar .media-editor-fine-rotation{flex:0 1 360px;min-width:0}.media-editor .media-editor__canvas-area{align-items:center;background:#e0e0e0;display:flex;flex:1;justify-content:center;min-height:0;overflow:auto}.media-editor .media-editor__canvas-area .media-editor-preview{height:100%}.media-editor .media-editor__canvas-area img,.media-editor .media-editor__canvas-area video{max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain}.media-editor .media-editor__sidebar{box-sizing:border-box}.media-editor .media-editor__sidebar *,.media-editor .media-editor__sidebar :after,.media-editor .media-editor__sidebar :before{box-sizing:inherit}@media (min-width:600px){.media-editor .media-editor__sidebar{padding-left:8px}}.media-editor .media-editor__sidebar-panel{padding-bottom:24px}.media-editor .interface-interface-skeleton__sidebar{border-top:0;box-shadow:none;outline:1px solid transparent}.media-editor .media-editor__panel{padding:16px}@media (min-width:600px){.media-editor .media-editor__panel{padding:16px 24px 0 0}}.media-editor .components-panel__header.media-editor__sidebar-header{margin-right:24px;padding-left:0;padding-right:8px}.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{padding:0}@media (min-width:600px){.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{display:flex}}@media (min-width:600px) and (max-width:781px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){position:relative!important}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:280px!important}}@media (max-width:599px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){width:100%}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:100%!important}}.media-editor__snackbar{bottom:24px;box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor__snackbar .components-snackbar{margin-inline:auto}.media-editor-form .dataforms-layouts-panel__field-control{text-wrap:pretty}.media-editor-modal.components-modal__frame .components-modal__content{display:flex;flex-direction:column;margin-bottom:0;min-height:0;padding:0}.media-editor-modal.components-modal__frame .components-modal__children-container{display:flex;flex:1;flex-direction:column;min-height:0}.media-editor-modal.components-modal__frame .media-editor-modal__footer{background:#fff;display:flex;flex-shrink:0;gap:16px;padding:16px 32px 24px;z-index:1000001}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide{align-items:center;flex-direction:row}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__footer-actions{margin-left:auto}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow{flex-direction:column}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow>.media-editor-image-controls{align-self:center}.media-editor-modal__footer-row{align-items:center;display:flex;flex-wrap:wrap;gap:16px}.media-editor-modal__footer-row .media-editor-image-controls,.media-editor-modal__footer-row .media-editor__footer-actions{margin-left:auto}.media-editor__history-actions .components-button.has-icon:not([aria-disabled=true]){color:var(--wp-admin-theme-color)}.media-editor-modal,.media-editor-modal__snackbar{display:flex;flex-direction:column}.media-editor-modal__snackbar{bottom:24px;box-sizing:border-box;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor-modal__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal__snackbar{z-index:1000001}.media-editor-canvas{height:100%;position:relative;width:100%}.media-editor-canvas__cropper{height:100%;opacity:0;pointer-events:none;width:100%}.media-editor-canvas__cropper.is-loaded{opacity:1;pointer-events:auto}@keyframes __wp-base-styles-fade-in{0%{opacity:0}to{opacity:1}}@media not (prefers-reduced-motion){.media-editor-canvas__cropper.is-loaded{animation:__wp-base-styles-fade-in .2s linear 0s;animation-fill-mode:forwards}}.media-editor-canvas__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-canvas__error{align-items:center;color:#757575;display:flex;height:100%;justify-content:center;text-align:center;width:100%}.media-editor-image-controls{align-items:center;display:flex;flex-wrap:nowrap;gap:8px}.media-editor-image-controls.is-stacked{align-items:flex-start;flex-direction:column;gap:24px}.media-editor-image-controls__transforms{display:flex;gap:48px}.media-editor-image-controls__group{display:flex;flex-direction:column;gap:4px}.media-editor-image-controls__label{font-size:11px;font-weight:500;line-height:1.4;text-transform:uppercase}.media-editor-image-controls__buttons{display:flex;gap:8px;padding-inline:2px 0}.media-editor-keyboard-shortcuts-modal{min-width:280px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__note{color:#757575;font-size:13px;margin:0 0 16px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-list{list-style:none;margin:0;padding:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut{align-items:baseline;border-top:1px solid #ddd;display:flex;margin-bottom:0;padding:.6rem 0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut:last-child{border-bottom:1px solid #ddd}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-description{flex:1;margin:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term{background:none;font-weight:600;margin:0 0 0 1rem;padding:0;text-align:right}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key{border-radius:8%;margin:0 .2rem;padding:.25rem .5rem}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child{margin:0 0 0 .2rem}.rotation-ruler{box-sizing:border-box;color:#1e1e1e;container-type:inline-size;cursor:ew-resize;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:32px;min-width:180px;padding:0 8px;position:relative;touch-action:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.rotation-ruler[data-disabled]{cursor:default;opacity:.5;pointer-events:none}.rotation-ruler:has(.rotation-ruler__input:focus-visible){border-radius:4px;outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:2px}.rotation-ruler__input{clip:rect(0 0 0 0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.rotation-ruler__pointer{background:var(--wp-admin-theme-color,#3858e9);border-radius:1px;bottom:0;height:18px;left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);width:2px}.rotation-ruler__strip{inset:0;mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent);overflow:hidden;position:absolute}.rotation-ruler__ticks{display:block;left:50%;overflow:visible;position:absolute;top:0}.rotation-ruler__tick{stroke:currentColor;stroke-width:1}.rotation-ruler__tick--minor{opacity:.35}.rotation-ruler__tick--mid{opacity:.6}.rotation-ruler__tick--major{opacity:1}.rotation-ruler__label{fill:currentColor;font-size:10px;font-weight:400;opacity:.45}.rotation-ruler__active-label{color:#1e1e1e;font-size:12px;font-weight:600;height:14px;left:50%;line-height:14px;pointer-events:none;position:absolute;top:0;transform:translateX(-50%)}.rotation-ruler__active-label:before{background:linear-gradient(90deg,transparent 0,#e0e0e0 12px,#e0e0e0 calc(100% - 12px),transparent);content:"";height:100%;left:50%;position:absolute;top:0;transform:translateX(-50%);width:60px}.rotation-ruler__active-label-number{display:inline-block;position:relative}.rotation-ruler__active-label-sign{position:absolute;right:100%;top:0}.rotation-ruler__active-label-unit{left:100%;position:absolute;top:0}@container (max-width: 220px){.rotation-ruler__tick--minor{opacity:0}}@media (prefers-reduced-motion:reduce){.rotation-ruler__ticks{transition:none}}.media-editor-route__content{display:flex;flex:1;min-height:0;overflow:hidden}'));
   document.head.appendChild(style);
 }
 
@@ -26253,7 +26290,7 @@ function isMediaEditorAdminPage() {
 }
 function getMediaTitle(media) {
   const title = typeof media?.title === "string" ? media.title : media?.title?.rendered || media?.title?.raw;
-  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n38.__)("Edit media");
+  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n39.__)("Edit media");
 }
 function MediaEditorRoute() {
   const { id } = useParams({ from: "/media-editor/$id" });
@@ -26302,7 +26339,7 @@ function MediaEditorRoute() {
             {
               items: isStandaloneAdminPage ? [{ label: title }] : [
                 {
-                  label: (0, import_i18n38.__)("Media"),
+                  label: (0, import_i18n39.__)("Media"),
                   to: MEDIA_LIST_PATH
                 },
                 { label: title }

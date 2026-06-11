@@ -5384,6 +5384,49 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   height: 100%;
 }
 
+.media-editor-canvas__cropper {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.media-editor-canvas__cropper.is-loaded {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@keyframes __wp-base-styles-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media not (prefers-reduced-motion) {
+  .media-editor-canvas__cropper.is-loaded {
+    animation: __wp-base-styles-fade-in 0.2s linear 0s;
+    animation-fill-mode: forwards;
+  }
+}
+.media-editor-canvas__spinner {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+.media-editor-canvas__error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #757575;
+  text-align: center;
+}
+
 .media-editor-image-controls {
   display: flex;
   flex-wrap: nowrap;
