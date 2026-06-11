@@ -1,3 +1,48 @@
+/**
+ * SCSS Variables.
+ *
+ * Please use variables from this sheet to ensure consistency across the UI.
+ * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
+ * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
+ */
+/**
+ * Colors
+ */
+/**
+ * Fonts & basic variables.
+ */
+/**
+ * Typography
+ */
+/**
+ * Grid System.
+ * https://make.wordpress.org/design/2019/10/31/proposal-a-consistent-spacing-system-for-wordpress/
+ */
+/**
+ * Radius scale.
+ */
+/**
+ * Elevation scale.
+ */
+/**
+ * Dimensions.
+ */
+/**
+ * Mobile specific styles
+ */
+/**
+ * Editor styles.
+ */
+/**
+ * Block & Editor UI.
+ */
+/**
+ * Block paddings.
+ */
+/**
+ * React Native specific.
+ * These variables do not appear to be used anywhere else.
+ */
 body.has-admin-bar-in-editor {
   margin-top: 0;
   height: 100%;
@@ -16,7 +61,7 @@ body.has-admin-bar-in-editor .edit-site-editor__view-mode-toggle:hover .edit-sit
   color: var(--wp-admin-theme-color);
 }
 body.has-admin-bar-in-editor .edit-site-sidebar-navigation-screen__title-icon {
-  padding-top: 16px;
+  padding-top: 32px;
 }
 body.has-admin-bar-in-editor .edit-site-layout__content,
 body.has-admin-bar-in-editor .edit-site-layout__sidebar {

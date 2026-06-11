@@ -5686,7 +5686,7 @@ body.has-admin-bar-in-editor .edit-site-editor__view-mode-toggle:hover .edit-sit
   color: var(--wp-admin-theme-color);
 }
 body.has-admin-bar-in-editor .edit-site-sidebar-navigation-screen__title-icon {
-  padding-top: 16px;
+  padding-top: 32px;
 }
 body.has-admin-bar-in-editor .edit-site-layout__content,
 body.has-admin-bar-in-editor .edit-site-layout__sidebar {
