@@ -3400,7 +3400,8 @@ var wp;
          */
         getPersistedCRDTDoc: (record) => {
           return record?.meta?.[POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE] || null;
-        }
+        },
+        shouldSync: () => !(Array.isArray(window._wpCollaborationDisabledPostTypes) && window._wpCollaborationDisabledPostTypes.includes(name))
       };
       return entity2;
     });

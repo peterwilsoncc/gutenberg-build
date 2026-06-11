@@ -5690,12 +5690,17 @@ var wp;
         return false;
       }
       const currentPostType = getCurrentPostType(state2);
+      const currentPostId = getCurrentPostId(state2);
       const entityConfig = select7(import_core_data4.store).getEntityConfig(
         "postType",
         currentPostType
       );
+      const syncConfig = entityConfig?.syncConfig;
       return Boolean(
-        entityConfig?.syncConfig && window._wpCollaborationEnabled
+        syncConfig && syncConfig.supportsPersistence && window._wpCollaborationEnabled && false !== syncConfig.shouldSync?.(
+          `postType/${currentPostType}`,
+          currentPostId
+        )
       );
     }
   );
