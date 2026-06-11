@@ -4795,7 +4795,7 @@ ul.wp-block-rss.is-grid li {
   text-decoration: none !important;
 }
 
-.wp-block-tab {
+:where(.wp-block-tab-list button) {
   box-sizing: border-box;
   color: inherit;
   display: block;
@@ -4821,7 +4821,7 @@ ul.wp-block-rss.is-grid li {
   text-transform: inherit;
   text-align: inherit;
 }
-.wp-block-tab[aria-selected=true]::before, .wp-block-tab.is-active::before {
+:where(.wp-block-tab-list button)[aria-selected=true]::before, :where(.wp-block-tab-list button).is-active::before {
   content: "";
   position: absolute;
   border-bottom: 2px solid currentColor;

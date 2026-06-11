@@ -8075,64 +8075,6 @@ return array(
 		'editorStyle' => 'wp-block-spacer-editor',
 		'style' => 'wp-block-spacer'
 	),
-	'tab' => array(
-		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'__experimental' => true,
-		'apiVersion' => 3,
-		'name' => 'core/tab',
-		'title' => 'Tab',
-		'description' => 'A single tab button in the tab list.',
-		'category' => 'design',
-		'textdomain' => 'default',
-		'parent' => array(
-			'core/tab-list'
-		),
-		'usesContext' => array(
-			'core/tabs-list',
-			'core/tabs-activeTabIndex',
-			'core/tabs-editorActiveTabIndex',
-			'core/tab-index',
-			'core/tab-id',
-			'core/tab-label'
-		),
-		'supports' => array(
-			'html' => false,
-			'reusable' => false,
-			'visibility' => false,
-			'lock' => false,
-			'color' => array(
-				'background' => true,
-				'text' => true,
-				'__experimentalDefaultControls' => array(
-					'background' => true,
-					'text' => true
-				)
-			),
-			'typography' => array(
-				'fontSize' => true,
-				'__experimentalFontFamily' => true,
-				'textAlign' => true,
-				'__experimentalDefaultControls' => array(
-					'fontSize' => true
-				)
-			),
-			'spacing' => array(
-				'padding' => true,
-				'__experimentalDefaultControls' => array(
-					'padding' => true
-				)
-			),
-			'__experimentalBorder' => array(
-				'radius' => true,
-				'color' => true,
-				'width' => true,
-				'style' => true
-			)
-		),
-		'editorScript' => 'file:./index.js',
-		'editorStyle' => 'file:./editor.css',
-		'style' => 'file:./style-index.css'
-	),
 	'tab-list' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'__experimental' => true,
@@ -8145,14 +8087,24 @@ return array(
 		'parent' => array(
 			'core/tabs'
 		),
-		'allowedBlocks' => array(
-			'core/tab'
-		),
 		'usesContext' => array(
 			'core/tabs-list'
 		),
 		'attributes' => array(
-			
+			'tabs' => array(
+				'type' => 'array',
+				'source' => 'query',
+				'selector' => 'button',
+				'query' => array(
+					'label' => array(
+						'type' => 'string',
+						'source' => 'html'
+					)
+				),
+				'default' => array(
+					
+				)
+			)
 		),
 		'supports' => array(
 			'html' => false,
@@ -8168,6 +8120,7 @@ return array(
 			'color' => array(
 				'background' => true,
 				'text' => true,
+				'__experimentalSkipSerialization' => true,
 				'__experimentalDefaultControls' => array(
 					'background' => true,
 					'text' => true
@@ -8181,7 +8134,8 @@ return array(
 				'color' => true,
 				'radius' => true,
 				'style' => true,
-				'width' => true
+				'width' => true,
+				'__experimentalSkipSerialization' => true
 			),
 			'layout' => array(
 				'default' => array(
@@ -8198,6 +8152,9 @@ return array(
 				'padding' => true,
 				'margin' => true,
 				'blockGap' => true,
+				'__experimentalSkipSerialization' => array(
+					'padding'
+				),
 				'__experimentalDefaultControls' => array(
 					'padding' => true,
 					'margin' => true,
@@ -8205,8 +8162,19 @@ return array(
 				)
 			)
 		),
+		'selectors' => array(
+			'border' => '.wp-block-tab-list button',
+			'color' => array(
+				'background' => '.wp-block-tab-list button',
+				'text' => '.wp-block-tab-list button'
+			),
+			'spacing' => array(
+				'padding' => '.wp-block-tab-list button'
+			)
+		),
 		'editorScript' => 'file:./index.js',
-		'editorStyle' => 'file:./editor.css'
+		'editorStyle' => 'file:./editor.css',
+		'style' => 'file:./style-index.css'
 	),
 	'tab-panel' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',

@@ -1,1 +1,1 @@
-.wp-block-tab-list>.block-editor-block-list__layout{display:contents}.wp-block-tab-list .block-editor-block-list__block:has(>.wp-block-tab){display:contents}
+.wp-block-tab-list{display:flex;flex-wrap:nowrap;gap:.5em}.wp-block-tab-list button.is-active:before{border-bottom:2px solid;bottom:0;content:"";left:0;pointer-events:none;position:absolute;width:100%}
