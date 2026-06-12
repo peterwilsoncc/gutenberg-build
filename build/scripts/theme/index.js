@@ -73,7 +73,8 @@ var wp;
   var ThemeContext = (0, import_element.createContext)({
     resolvedSettings: {
       color: {},
-      cursor: void 0
+      cursor: void 0,
+      cornerRadius: void 0
     }
   });
 
@@ -4111,21 +4112,24 @@ var wp;
   }
   function useThemeProviderStyles({
     color = {},
-    cursor
+    cursor,
+    cornerRadius
   } = {}) {
     const { resolvedSettings: inheritedSettings } = (0, import_element2.useContext)(ThemeContext);
     const primary = color.primary ?? inheritedSettings.color?.primary ?? DEFAULT_SEED_COLORS.primary;
     const background = color.background ?? inheritedSettings.color?.background ?? DEFAULT_SEED_COLORS.background;
     const cursorControl = cursor?.control ?? inheritedSettings.cursor?.control;
+    const cornerRadiusPreset = cornerRadius ?? inheritedSettings.cornerRadius ?? "subtle";
     const resolvedSettings = (0, import_element2.useMemo)(
       () => ({
         color: {
           primary,
           background
         },
-        cursor: cursorControl ? { control: cursorControl } : void 0
+        cursor: cursorControl ? { control: cursorControl } : void 0,
+        cornerRadius: cornerRadiusPreset
       }),
-      [primary, background, cursorControl]
+      [primary, background, cursorControl, cornerRadiusPreset]
     );
     const colorStyles = (0, import_element2.useMemo)(() => {
       const seeds = {
@@ -4273,13 +4277,16 @@ var wp;
     children,
     color = {},
     cursor,
+    cornerRadius,
     isRoot = false
   }) => {
     const instanceId = (0, import_element3.useId)();
     const { themeProviderStyles, resolvedSettings } = useThemeProviderStyles({
       color,
-      cursor
+      cursor,
+      cornerRadius
     });
+    const cornerRadiusPreset = resolvedSettings.cornerRadius ?? "subtle";
     const contextValue = (0, import_element3.useMemo)(
       () => ({
         resolvedSettings
@@ -4296,6 +4303,7 @@ var wp;
         {
           "data-wpds-theme-provider-id": instanceId,
           "data-wpds-root-provider": isRoot,
+          "data-wpds-corner-radius": cornerRadiusPreset,
           className: style_default.root,
           children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeContext.Provider, { value: contextValue, children })
         }
