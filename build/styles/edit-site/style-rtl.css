@@ -4854,7 +4854,7 @@ button.font-library__upload-area {
 }
 @media (min-width: 782px) {
   .edit-site-layout:not(.is-full-canvas) .edit-site-layout__canvas .edit-site-resizable-frame__inner-content {
-    border-radius: 8px;
+    border-radius: var(--wpds-border-radius-xl, 12px);
   }
   .edit-site-layout__canvas .edit-site-resizable-frame__inner-content:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 27px rgba(0, 0, 0, 0.07), 0 30px 36px rgba(0, 0, 0, 0.04), 0 50px 43px rgba(0, 0, 0, 0.02);
@@ -4974,7 +4974,7 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
 }
 @media (min-width: 782px) {
   .edit-site-layout__area {
-    border-radius: 8px;
+    border-radius: var(--wpds-border-radius-xl, 12px);
     margin: 16px 0 16px 16px;
   }
 }
