@@ -3121,6 +3121,7 @@ var wp;
   };
 
   // packages/theme/build-module/color-ramps/lib/color-utils.mjs
+  var ALLOWED_SEED_COLOR_SPACES = [srgb_default];
   function getColorString(color) {
     ColorSpace.register(srgb_default);
     const rgbRounded = serialize(to(color, srgb_default));
@@ -3129,6 +3130,24 @@ var wp;
   function getContrast(colorA, colorB) {
     ColorSpace.register(srgb_default);
     return contrastWCAG21(colorA, colorB);
+  }
+  function assertValidSeedColor(seed) {
+    ALLOWED_SEED_COLOR_SPACES.forEach(
+      (space) => ColorSpace.register(space)
+    );
+    let spaceId;
+    try {
+      ({ spaceId } = parse(seed));
+    } catch {
+      throw new Error(
+        `Unsupported seed color "${seed}": expected a hex value, an \`rgb()\`/\`rgba()\` string, or a CSS named color.`
+      );
+    }
+    if (!ALLOWED_SEED_COLOR_SPACES.some((space) => space.id === spaceId)) {
+      throw new Error(
+        `Unsupported seed color "${seed}": expected a hex value, an \`rgb()\`/\`rgba()\` string, or a CSS named color, but received a \`${spaceId}\` color.`
+      );
+    }
   }
   function clampToGamut(c) {
     ColorSpace.register(srgb_default);
@@ -3596,6 +3615,7 @@ var wp;
     pinLightness,
     rescaleToFitContrastTargets = true
   } = {}) {
+    assertValidSeedColor(seedArg);
     let seed;
     try {
       seed = clampToGamut(seedArg);
