@@ -1668,7 +1668,7 @@ button.font-library__upload-area {
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip .dataviews-filters-__summary-filter-text-name {
@@ -1714,7 +1714,7 @@ button.font-library__upload-area {
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip-remove:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
 .dataviews-filters__search-widget-filter-combobox-list {
@@ -2074,7 +2074,7 @@ button.font-library__upload-area {
 }
 .dataviews-filters__search-widget-filter-combobox__wrapper .dataviews-filters__search-widget-filter-combobox__input:focus {
   background: var(--wpds-color-background-surface-neutral-strong, #fff);
-  box-shadow: inset 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: inset 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
 .dataviews-filters__search-widget-filter-combobox__wrapper .dataviews-filters__search-widget-filter-combobox__input::-moz-placeholder {
@@ -2382,7 +2382,7 @@ button.font-library__upload-area {
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   border-radius: var(--wpds-border-radius-md, 4px);
   pointer-events: none;
   outline: 2px solid transparent;
@@ -2427,7 +2427,7 @@ button.font-library__upload-area {
 
 .dataviews-view-grid .dataviews-view-grid__card .dataviews-view-grid__media:focus::after,
 .dataviews-view-grid-infinite-scroll .dataviews-view-grid__card .dataviews-view-grid__media:focus::after {
-  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
 .dataviews-view-grid .dataviews-view-grid__media,
@@ -2751,7 +2751,7 @@ div.dataviews-view-list {
   position: absolute;
   content: "";
   inset: var(--wp-admin-border-width-focus);
-  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   border-radius: var(--wpds-border-radius-sm, 2px);
   outline: 2px solid transparent;
 }
@@ -3248,7 +3248,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-grid .dataviews-view-picker-grid__card .dataviews-view-picker-grid__media:focus::after {
-  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
 .dataviews-view-picker-grid:focus-visible[aria-activedescendant] {
@@ -3256,7 +3256,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-grid:focus-visible [data-active-item=true] {
-  outline: 2px solid var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  outline: 2px solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
 .dataviews-view-picker-grid .dataviews-selection-checkbox {
@@ -3387,7 +3387,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-table tbody:focus-visible [data-active-item=true] {
-  outline: 2px solid var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  outline: 2px solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
 .dataviews-view-picker-table .dataviews-selection-checkbox .components-checkbox-control__input.components-checkbox-control__input {
@@ -3451,7 +3451,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-activity .dataviews-view-activity__item-content .dataviews-view-activity__item-title--clickable:focus-visible {
-  outline: var(--wp-admin-border-width-focus) solid var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  outline: var(--wp-admin-border-width-focus) solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   outline-offset: var(--wp-admin-border-width-focus);
   border-radius: var(--wpds-border-radius-sm, 2px);
 }
@@ -3634,7 +3634,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-activity:focus-visible .dataviews-view-picker-activity__item[data-active-item=true] {
-  outline: 2px solid var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  outline: 2px solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   outline-offset: -2px;
 }
 
@@ -3931,7 +3931,7 @@ div.dataviews-view-list {
 
 .dataforms-layouts-panel__field-trigger-icon:focus-visible {
   opacity: 1;
-  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
 }
 
 .dataforms-layouts-panel__field-dropdown-anchor {

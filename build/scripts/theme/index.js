@@ -3017,7 +3017,7 @@ var wp;
     "primary-stroke3": [
       "background-thumb-brand",
       "background-thumb-brand-active",
-      "stroke-focus-brand",
+      "stroke-focus",
       "stroke-interactive-brand",
       "stroke-surface-brand-strong"
     ],

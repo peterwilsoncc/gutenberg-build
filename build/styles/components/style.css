@@ -1692,7 +1692,7 @@ input.components-combobox-control__input[type=text]:focus {
   color: var(--wpds-color-foreground-interactive-brand-active, var(--wp-admin-theme-color, #3858e9));
 }
 .components-external-link:focus {
-  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   box-shadow: none;
   border-radius: 0;
 }
@@ -3580,7 +3580,7 @@ body.lockscroll {
   }
 }
 .components-tab-panel__tabs-item:focus-visible::before {
-  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   outline: 2px solid transparent;
 }
 .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item {
@@ -3598,7 +3598,7 @@ body.lockscroll {
   outline: none;
 }
 .components-tab-panel__tab-content:focus-visible {
-  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus-brand, var(--wp-admin-theme-color, #3858e9));
+  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   outline: 2px solid transparent;
   outline-offset: 0;
 }
