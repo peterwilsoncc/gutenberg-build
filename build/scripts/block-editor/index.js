@@ -67675,7 +67675,7 @@ var wp;
     return settings2?.dimensions?.width;
   }
   function hasAspectRatio(settings2, styleState = DEFAULT_BLOCK_STYLE_STATE2) {
-    return isDefaultBlockStyleState(styleState) && settings2?.dimensions?.aspectRatio;
+    return !hasPseudoBlockStyleState(styleState) && settings2?.dimensions?.aspectRatio;
   }
   function hasChildLayout(settings2, styleState = DEFAULT_BLOCK_STYLE_STATE2) {
     if (hasPseudoBlockStyleState(styleState)) {
@@ -83488,6 +83488,12 @@ var wp;
     }
     return !!support?.[feature];
   }
+  function isExplicitAspectRatio(aspectRatio) {
+    if (!aspectRatio) {
+      return false;
+    }
+    return `${aspectRatio}`.trim().toLowerCase() !== "auto";
+  }
   var dimensions_default = {
     useBlockProps: useBlockProps12,
     attributeKeys: ["height", "minHeight", "width", "style"],
@@ -83499,11 +83505,14 @@ var wp;
     if (!hasDimensionsSupport(name, "aspectRatio") || shouldSkipSerialization(name, DIMENSIONS_SUPPORT_KEY, "aspectRatio")) {
       return {};
     }
+    const hasExplicitAspectRatio = isExplicitAspectRatio(
+      style?.dimensions?.aspectRatio
+    );
     const className = clsx_default({
-      "has-aspect-ratio": !!style?.dimensions?.aspectRatio
+      "has-aspect-ratio": hasExplicitAspectRatio
     });
     const inlineStyleOverrides = {};
-    if (style?.dimensions?.aspectRatio) {
+    if (hasExplicitAspectRatio) {
       inlineStyleOverrides.minHeight = "unset";
       inlineStyleOverrides.height = "unset";
     } else if (minHeight || style?.dimensions?.minHeight || height || style?.dimensions?.height) {
@@ -83595,8 +83604,31 @@ var wp;
     });
     return cleanEmptyObject({ border: cleanEmptyObject(fallbackBorder) });
   }
+  function getStateFallbackDimensionStyles(stateStyles) {
+    const dimensions = stateStyles?.dimensions;
+    if (!dimensions) {
+      return void 0;
+    }
+    if (isExplicitAspectRatio(dimensions.aspectRatio)) {
+      return {
+        dimensions: {
+          minHeight: "unset",
+          height: "unset"
+        }
+      };
+    }
+    if (dimensions.minHeight || dimensions.height) {
+      return {
+        dimensions: {
+          aspectRatio: "unset"
+        }
+      };
+    }
+  }
   function getStateStylesCSS(stateStyles, selector3) {
-    const css = (0, import_style_engine4.compileCSS)(stateStyles, { selector: selector3 });
+    const fallbackDimensionStyles = getStateFallbackDimensionStyles(stateStyles);
+    const stylesWithDimensionFallbacks = fallbackDimensionStyles ? mergeStyleObjects(stateStyles, fallbackDimensionStyles) : stateStyles;
+    const css = (0, import_style_engine4.compileCSS)(stylesWithDimensionFallbacks, { selector: selector3 });
     const importantCSS = css ? css.replace(/;/g, " !important;") : void 0;
     const fallbackBorderStyles = getStateFallbackBorderStyles(stateStyles);
     const fallbackCSS = fallbackBorderStyles ? (0, import_style_engine4.compileCSS)(fallbackBorderStyles, { selector: selector3 }) : void 0;
@@ -87524,7 +87556,7 @@ var wp;
     defaultValue = DEFAULT_SCALE_OPTIONS[0].value,
     isShownByDefault = true
   }) {
-    const displayValue = value ?? "fill";
+    const displayValue = value ?? defaultValue;
     const scaleHelp = (0, import_element310.useMemo)(() => {
       return options.reduce((acc, option) => {
         acc[option.value] = option.help;
@@ -87649,8 +87681,7 @@ var wp;
     // Match CSS default value for aspect-ratio.
     scaleOptions,
     // Default options handled by ScaleTool.
-    defaultScale = "fill",
-    // Match CSS default value for object-fit.
+    defaultScale = "cover",
     unitsOptions,
     // Default options handled by UnitControl.
     tools = ["aspectRatio", "widthHeight", "scale"]
@@ -87658,10 +87689,11 @@ var wp;
     const width = value.width === void 0 || value.width === "auto" ? null : value.width;
     const height = value.height === void 0 || value.height === "auto" ? null : value.height;
     const aspectRatio = value.aspectRatio === void 0 || value.aspectRatio === "auto" ? null : value.aspectRatio;
-    const scale = value.scale === void 0 || value.scale === "fill" ? null : value.scale;
+    const scale = value.scale === void 0 ? null : value.scale;
     const [lastScale, setLastScale] = (0, import_element311.useState)(scale);
     const [lastAspectRatio, setLastAspectRatio] = (0, import_element311.useState)(aspectRatio);
-    const aspectRatioValue = width && height ? "custom" : lastAspectRatio;
+    const hasCustomAspectRatio = !!(width && height);
+    const aspectRatioValue = hasCustomAspectRatio ? "custom" : aspectRatio;
     const showScaleControl = aspectRatio || width && height;
     return /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(import_jsx_runtime497.Fragment, { children: [
       tools.includes("aspectRatio") && /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
@@ -87742,7 +87774,6 @@ var wp;
           value: lastScale,
           onChange: (nextScale) => {
             const nextValue = { ...value };
-            nextScale = nextScale === "fill" ? null : nextScale;
             setLastScale(nextScale);
             if (!nextScale) {
               delete nextValue.scale;
@@ -88101,6 +88132,9 @@ var wp;
     InspectorControlsLastItem: last_item_default,
     useHasBlockToolbar,
     cleanEmptyObject,
+    getStyleForState,
+    isDefaultBlockStyleState,
+    setStyleForState,
     usePrivateStyleOverride,
     BlockQuickNavigation,
     LayoutStyle,

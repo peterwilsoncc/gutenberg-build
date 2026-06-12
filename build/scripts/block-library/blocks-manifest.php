@@ -3611,6 +3611,7 @@ return array(
 			)
 		),
 		'selectors' => array(
+			'dimensions' => '.wp-block-image img',
 			'border' => '.wp-block-image img, .wp-block-image .wp-block-image__crop-area, .wp-block-image .components-placeholder',
 			'shadow' => '.wp-block-image img, .wp-block-image .wp-block-image__crop-area, .wp-block-image .components-placeholder',
 			'filter' => array(
@@ -6076,6 +6077,7 @@ return array(
 			)
 		),
 		'selectors' => array(
+			'dimensions' => '.wp-block-post-featured-image img',
 			'border' => '.wp-block-post-featured-image img, .wp-block-post-featured-image .block-editor-media-placeholder, .wp-block-post-featured-image .wp-block-post-featured-image__overlay',
 			'shadow' => '.wp-block-post-featured-image img, .wp-block-post-featured-image .components-placeholder',
 			'filter' => array(
