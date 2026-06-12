@@ -80972,7 +80972,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_i18n242._x)("Remove %s", "term"),
       singularName
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_components209.__experimentalVStack, { spacing: 4, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(Stack, { direction: "column", gap: "lg", children: [
       /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
         import_components209.FormTokenField,
         {
