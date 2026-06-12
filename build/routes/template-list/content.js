@@ -26205,7 +26205,7 @@ var import_element84 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 var import_i18n54 = __toESM(require_i18n());
 
-// routes/lock-unlock.ts
+// routes/lock-unlock/index.ts
 var import_private_apis4 = __toESM(require_private_apis());
 var { lock: lock4, unlock: unlock4 } = (0, import_private_apis4.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",

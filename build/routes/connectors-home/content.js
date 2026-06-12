@@ -10980,6 +10980,13 @@ import {
   privateApis as connectorsPrivateApis2
 } from "@wordpress/connectors";
 
+// routes/lock-unlock/index.ts
+var import_private_apis2 = __toESM(require_private_apis());
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/routes"
+);
+
 // routes/connectors-home/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='09e9b056ea']")) {
   const style = document.createElement("style");
@@ -11008,13 +11015,6 @@ import {
   __experimentalDefaultConnectorSettings as DefaultConnectorSettings,
   privateApis as connectorsPrivateApis
 } from "@wordpress/connectors";
-
-// routes/lock-unlock.ts
-var import_private_apis2 = __toESM(require_private_apis());
-var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/routes"
-);
 
 // routes/connectors-home/use-connector-plugin.ts
 var import_core_data = __toESM(require_core_data());

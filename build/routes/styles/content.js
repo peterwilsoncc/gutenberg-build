@@ -1138,6 +1138,13 @@ var import_components2 = __toESM(require_components());
 var import_element4 = __toESM(require_element());
 import { useEditorSettings } from "@wordpress/lazy-editor";
 
+// routes/lock-unlock/index.ts
+var import_private_apis = __toESM(require_private_apis());
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/routes"
+);
+
 // routes/styles/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='1153641d9c']")) {
   const style = document.createElement("style");
@@ -1145,13 +1152,6 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   style.appendChild(document.createTextNode(".routes-styles__page .global-styles-ui-screen-root{box-shadow:none}.routes-styles__page .global-styles-ui-screen-root>div>hr{display:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider .components-tools-panel{border-top:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider{overflow-y:auto;padding-inline:0}"));
   document.head.appendChild(style);
 }
-
-// routes/lock-unlock.ts
-var import_private_apis = __toESM(require_private_apis());
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/routes"
-);
 
 // routes/styles/stage.tsx
 var { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock(import_editor.privateApis);
