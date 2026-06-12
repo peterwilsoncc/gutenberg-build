@@ -72373,7 +72373,8 @@ If there's a particular need for this, please submit a feature request at https:
       isEditedPostDirty: isEditedPostDirty2,
       isPostSavingLocked: isPostSavingLocked2,
       isListViewOpened: isListViewOpened2,
-      getEditorMode: getEditorMode2
+      getEditorMode: getEditorMode2,
+      isSavingNonPostEntityChanges: isSavingNonPostEntityChanges2
     } = (0, import_data76.useSelect)(store);
     (0, import_keyboard_shortcuts4.useShortcut)(
       "core/editor/toggle-mode",
@@ -72399,7 +72400,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     (0, import_keyboard_shortcuts4.useShortcut)("core/editor/save", (event) => {
       event.preventDefault();
-      if (isPostSavingLocked2()) {
+      if (isPostSavingLocked2() || isSavingNonPostEntityChanges2()) {
         return;
       }
       if (!isEditedPostDirty2()) {
@@ -80350,7 +80351,7 @@ If there's a particular need for this, please submit a feature request at https:
         isPostSavingLocked: store4.isPostSavingLocked(),
         isPublishable: store4.isEditedPostPublishable(),
         isPublished: store4.isCurrentPostPublished(),
-        hasPublishAction: store4.getCurrentPost()._links?.["wp:action-publish"] ?? false,
+        hasPublishAction: !!store4.getCurrentPost()?._links?.["wp:action-publish"],
         postType: store4.getCurrentPostType(),
         postId: store4.getCurrentPostId(),
         postStatus: store4.getEditedPostAttribute("status"),
@@ -80378,8 +80379,9 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return callback(...args);
     };
-    const isButtonDisabled = isPostSavingLocked2 || (isSaving || !isSaveable || !isPublishable && !forceIsDirty) && (!hasNonPostEntityChanges2 || isSavingNonPostEntityChanges2);
-    const isToggleDisabled = isPostSavingLocked2 || (isPublished || isSaving || !isSaveable || !isPublishable && !forceIsDirty) && (!hasNonPostEntityChanges2 || isSavingNonPostEntityChanges2);
+    const isButtonDisabled = isPostSavingLocked2 || // Disable while a non-post entity (e.g. a newly created term) is mid-save.
+    isSavingNonPostEntityChanges2 || (isSaving || !isSaveable || !isPublishable && !forceIsDirty) && !hasNonPostEntityChanges2;
+    const isToggleDisabled = isPostSavingLocked2 || isSavingNonPostEntityChanges2 || (isPublished || isSaving || !isSaveable || !isPublishable && !forceIsDirty) && !hasNonPostEntityChanges2;
     let publishStatus = "publish";
     if (postStatusHasChanged) {
       publishStatus = postStatus;
@@ -82446,6 +82448,7 @@ If there's a particular need for this, please submit a feature request at https:
       isSaveable,
       isSaving,
       isSavingLocked,
+      isSavingNonPostEntityChanges: isSavingNonPostEntityChanges2,
       isScheduled,
       hasPublishAction,
       showIconLabels,
@@ -82454,34 +82457,23 @@ If there's a particular need for this, please submit a feature request at https:
       postType: postType2
     } = (0, import_data164.useSelect)(
       (select7) => {
-        const {
-          isEditedPostNew: isEditedPostNew2,
-          isCurrentPostPublished: isCurrentPostPublished2,
-          isCurrentPostScheduled: isCurrentPostScheduled2,
-          isEditedPostDirty: isEditedPostDirty2,
-          isSavingPost: isSavingPost2,
-          isEditedPostSaveable: isEditedPostSaveable2,
-          isPostSavingLocked: isPostSavingLocked2,
-          getCurrentPost: getCurrentPost2,
-          isAutosavingPost: isAutosavingPost2,
-          getEditedPostAttribute: getEditedPostAttribute2,
-          getPostEdits: getPostEdits2
-        } = select7(store);
+        const store4 = select7(store);
         const { get } = select7(import_preferences14.store);
         return {
-          isAutosaving: isAutosavingPost2(),
-          isDirty: forceIsDirty || isEditedPostDirty2(),
-          isNew: isEditedPostNew2(),
-          isPublished: isCurrentPostPublished2(),
-          isSaving: isSavingPost2(),
-          isSaveable: isEditedPostSaveable2(),
-          isSavingLocked: isPostSavingLocked2(),
-          isScheduled: isCurrentPostScheduled2(),
-          hasPublishAction: getCurrentPost2()?._links?.["wp:action-publish"] ?? false,
+          isAutosaving: store4.isAutosavingPost(),
+          isDirty: forceIsDirty || store4.isEditedPostDirty(),
+          isNew: store4.isEditedPostNew(),
+          isPublished: store4.isCurrentPostPublished(),
+          isSaving: store4.isSavingPost(),
+          isSaveable: store4.isEditedPostSaveable(),
+          isSavingLocked: store4.isPostSavingLocked(),
+          isSavingNonPostEntityChanges: store4.isSavingNonPostEntityChanges(),
+          isScheduled: store4.isCurrentPostScheduled(),
+          hasPublishAction: !!store4.getCurrentPost()?._links?.["wp:action-publish"],
           showIconLabels: get("core", "showIconLabels"),
-          postStatus: getEditedPostAttribute2("status"),
-          postStatusHasChanged: !!getPostEdits2()?.status,
-          postType: select7(store).getCurrentPostType()
+          postStatus: store4.getEditedPostAttribute("status"),
+          postStatusHasChanged: !!store4.getPostEdits()?.status,
+          postType: store4.getCurrentPostType()
         };
       },
       [forceIsDirty]
@@ -82513,7 +82505,8 @@ If there's a particular need for this, please submit a feature request at https:
     const shortLabel = (0, import_i18n253.__)("Save");
     const isSaved = forceSavedMessage || !isNew && !isDirty;
     const isSavedState = isSaving || isSaved;
-    const isDisabled = isSaving || isSaved || !isSaveable || isSavingLocked;
+    const isDisabled = isSaving || isSaved || !isSaveable || isSavingLocked || // Disable while a non-post entity (e.g. a newly created term) is mid-save.
+    isSavingNonPostEntityChanges2;
     let text;
     if (isSaving) {
       text = isAutosaving ? (0, import_i18n253.__)("Autosaving") : (0, import_i18n253.__)("Saving");
