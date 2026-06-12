@@ -31935,6 +31935,7 @@ var wp;
   var import_data28 = __toESM(require_data(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
+  var { Badge: WCBadge } = unlock3(import_components61.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
   // packages/global-styles-ui/build-module/pagination/index.mjs
@@ -35365,7 +35366,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge } = unlock4(import_components89.privateApis);
+  var { Badge: WCBadge2 } = unlock4(import_components89.privateApis);
   function chunk(array, size4) {
     const chunks = [];
     for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size4) {
@@ -35544,7 +35545,7 @@ var wp;
                   justify: "flex-start",
                   children: badgeFields.map((field) => {
                     return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
-                      WCBadge,
+                      WCBadge2,
                       {
                         className: "dataviews-view-grid__field-value",
                         children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
@@ -36911,7 +36912,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock4(import_components95.privateApis);
+  var { Badge: WCBadge3 } = unlock4(import_components95.privateApis);
   function GridItem3({
     view,
     multiselect,
@@ -37008,7 +37009,7 @@ var wp;
                 justify: "flex-start",
                 children: badgeFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
-                    WCBadge2,
+                    WCBadge3,
                     {
                       className: "dataviews-view-picker-grid__field-value",
                       children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
@@ -56433,7 +56434,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_data79 = __toESM(require_data(), 1);
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge3 } = unlock(import_components152.privateApis);
+  var { Badge: WCBadge4 } = unlock(import_components152.privateApis);
   var { useEntityRecordsWithPermissions } = unlock(import_core_data58.privateApis);
   var { useStyle: useStyle5 } = unlock(import_editor35.privateApis);
   function useAllDefaultTemplateTypes() {
@@ -56532,7 +56533,7 @@ If there's a particular need for this, please submit a feature request at https:
       const activeLabel = item._isCustom ? (0, import_i18n149._x)("Active when used", "template") : (0, import_i18n149._x)("Active", "template");
       const activeIntent = item._isCustom ? "info" : "success";
       const isActive = item._isActive;
-      return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(WCBadge3, { intent: isActive ? activeIntent : "default", children: isActive ? activeLabel : (0, import_i18n149._x)("Inactive", "template") });
+      return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(WCBadge4, { intent: isActive ? activeIntent : "default", children: isActive ? activeLabel : (0, import_i18n149._x)("Inactive", "template") });
     }
   };
   var useThemeField = () => {
@@ -56546,9 +56547,9 @@ If there's a particular need for this, please submit a feature request at https:
         getValue: ({ item }) => item.theme,
         render: function Render3({ item }) {
           if (item.theme === activeTheme.stylesheet) {
-            return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(WCBadge3, { intent: "success", children: item.theme });
+            return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(WCBadge4, { intent: "success", children: item.theme });
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(WCBadge3, { intent: "error", children: item.theme });
+          return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(WCBadge4, { intent: "error", children: item.theme });
         }
       }),
       [activeTheme]

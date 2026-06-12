@@ -895,8 +895,7 @@ button.font-library__upload-area {
 }
 
 .global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__changes > li,
-.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__meta,
-.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__applied-text {
+.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__meta {
   color: #1e1e1e;
 }
 
@@ -922,14 +921,13 @@ button.font-library__upload-area {
 }
 
 .global-styles-ui-screen-revisions__apply-button.is-primary,
-.global-styles-ui-screen-revisions__applied-text {
+.global-styles-ui-screen-revisions__active-badge {
   align-self: flex-start;
-  margin: 4px 12px 12px 40px;
+  margin: 0 12px 12px 40px;
 }
 
 .global-styles-ui-screen-revisions__changes,
-.global-styles-ui-screen-revisions__meta,
-.global-styles-ui-screen-revisions__applied-text {
+.global-styles-ui-screen-revisions__meta {
   color: #757575;
   font-size: 12px;
 }

@@ -67958,6 +67958,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data57 = __toESM(require_data(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
+  var { Badge: WCBadge4 } = unlock6(import_components141.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
   function ChangesSummary({ revision, previousRevision }) {
     const changes = getGlobalStylesChanges(
@@ -68100,9 +68101,14 @@ If there's a particular need for this, please submit a feature request at https:
                     }
                   )
                 ] }) }),
-                isSelected2 && (areStylesEqual ? /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("p", { className: "global-styles-ui-screen-revisions__applied-text", children: (0, import_i18n171.__)(
-                  "These styles are already applied to your site."
-                ) }) : /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+                isSelected2 && (areStylesEqual ? /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+                  WCBadge4,
+                  {
+                    className: "global-styles-ui-screen-revisions__active-badge",
+                    intent: "info",
+                    children: (0, import_i18n171.__)("Active")
+                  }
+                ) : /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
                   import_components141.Button,
                   {
                     size: "compact",
@@ -90038,7 +90044,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge4 } = unlock(import_components259.privateApis);
+  var { Badge: WCBadge5 } = unlock(import_components259.privateApis);
   function PostCardPanel({
     postType: postType2,
     postId: postId2,
@@ -90134,7 +90140,7 @@ If there's a particular need for this, please submit a feature request at https:
                 as: "h2",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("span", { className: "editor-post-card-panel__title-name", children: title }),
-                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(WCBadge4, { children: pageTypeBadge })
+                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(WCBadge5, { children: pageTypeBadge })
                 ]
               }
             ),
@@ -91587,7 +91593,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data251 = __toESM(require_data(), 1);
   var import_i18n317 = __toESM(require_i18n(), 1);
   var import_jsx_runtime520 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge5 } = unlock(import_components278.privateApis);
+  var { Badge: WCBadge6 } = unlock(import_components278.privateApis);
   var DAY_IN_MILLISECONDS2 = 864e5;
   var EMPTY_ARRAY14 = [];
   var defaultLayouts = { activity: true };
@@ -91667,7 +91673,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         title: /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_components278.__experimentalHStack, { justify: "space-between", align: "center", as: "span", children: [
           /* @__PURE__ */ (0, import_jsx_runtime520.jsx)("span", { children: (0, import_i18n317.__)("Revisions") }),
-          /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(WCBadge5, { className: "editor-post-revisions-panel__revisions-count", children: revisionsCount })
+          /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(WCBadge6, { className: "editor-post-revisions-panel__revisions-count", children: revisionsCount })
         ] }),
         initialOpen: false,
         children: /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_components278.__experimentalVStack, { className: "editor-post-revisions-panel", children: [
