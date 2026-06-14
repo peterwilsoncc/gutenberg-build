@@ -3393,6 +3393,18 @@ return array(
 			'icon' => array(
 				'type' => 'string',
 				'role' => 'content'
+			),
+			'flipHorizontal' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'flipVertical' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'rotation' => array(
+				'type' => 'number',
+				'default' => 0
 			)
 		),
 		'supports' => array(
