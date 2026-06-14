@@ -43201,6 +43201,8 @@ If there's a particular need for this, please submit a feature request at https:
   var MAX_ZOOM = 10;
   var MIN_CROP_PIXELS = 24;
   var MIN_CROP_SCREEN_PX = 44;
+  var SETTLE_TARGET_CANVAS_FILL = 0.8;
+  var MAX_VIEW_SCALE = 8;
   var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
   var DEFAULT_KEYBOARD_STEP = 0.01;
   var KEYBOARD_SHIFT_STEP_MULTIPLIER = 10;
@@ -43881,6 +43883,17 @@ If there's a particular need for this, please submit a feature request at https:
       elementSize: { width: renderedW, height: renderedH },
       visualSize
     };
+  }
+  function getViewScale(cropRect, canvasSize, visualSize, targetFill, maxScale) {
+    const cropScreenW = cropRect.width * visualSize.width;
+    const cropScreenH = cropRect.height * visualSize.height;
+    if (!isValidSize(canvasSize) || !isValidSize(visualSize) || !(cropScreenW > 0) || !(cropScreenH > 0) || !Number.isFinite(targetFill) || !Number.isFinite(maxScale) || !(targetFill > 0) || !(maxScale >= 1)) {
+      return 1;
+    }
+    const kW = targetFill * canvasSize.width / cropScreenW;
+    const kH = targetFill * canvasSize.height / cropScreenH;
+    const k2 = Math.min(kW, kH);
+    return Math.min(maxScale, Math.max(1, k2));
   }
   function createCamera(state2, containerSize, imageSize) {
     const m2 = mat2d_exports.create();
@@ -44617,6 +44630,26 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element142 = __toESM(require_element(), 1);
   var import_i18n123 = __toESM(require_i18n(), 1);
 
+  // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
+  function computeInscribedRect(aspectRatio, visualSize) {
+    let w3 = 1;
+    let h3 = 1;
+    if (aspectRatio && aspectRatio > 0 && visualSize.width > 0) {
+      const normalizedRatio = aspectRatio * visualSize.height / visualSize.width;
+      if (normalizedRatio <= 1) {
+        w3 = normalizedRatio;
+      } else {
+        h3 = 1 / normalizedRatio;
+      }
+    }
+    return {
+      x: (1 - w3) / 2,
+      y: (1 - h3) / 2,
+      width: w3,
+      height: h3
+    };
+  }
+
   // packages/media-editor/build-module/image-editor/core/stencil-math.mjs
   function getMinCropPixels(displayScale) {
     if (displayScale <= 0) {
@@ -44794,26 +44827,6 @@ If there's a particular need for this, please submit a feature request at https:
       y: centerY - newHeight / 2,
       width: newWidth,
       height: newHeight
-    };
-  }
-
-  // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
-  function computeInscribedRect(aspectRatio, visualSize) {
-    let w3 = 1;
-    let h3 = 1;
-    if (aspectRatio && aspectRatio > 0 && visualSize.width > 0) {
-      const normalizedRatio = aspectRatio * visualSize.height / visualSize.width;
-      if (normalizedRatio <= 1) {
-        w3 = normalizedRatio;
-      } else {
-        h3 = 1 / normalizedRatio;
-      }
-    }
-    return {
-      x: (1 - w3) / 2,
-      y: (1 - h3) / 2,
-      width: w3,
-      height: h3
     };
   }
 
@@ -46015,6 +46028,7 @@ If there's a particular need for this, please submit a feature request at https:
       "div",
       {
         className: "wp-media-editor-image-editor__stencil",
+        "data-testid": "cropper-stencil",
         style: {
           left,
           top,
@@ -46085,6 +46099,7 @@ If there's a particular need for this, please submit a feature request at https:
       "div",
       {
         className: "wp-media-editor-image-editor__dimming",
+        "data-testid": "cropper-dimming",
         style: {
           left,
           top,
@@ -46529,29 +46544,6 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [canvasSize, naturalWidth, naturalHeight, state2.rotation]
     );
-    const minCropSize = (0, import_element142.useMemo)(() => {
-      if (naturalWidth <= 0 || naturalHeight <= 0) {
-        return void 0;
-      }
-      const snapRotation = Math.round(state2.rotation / 90) * 90;
-      const bbox = getRotatedBBox(
-        naturalWidth,
-        naturalHeight,
-        snapRotation
-      );
-      const displayScale = elementSize.width / naturalWidth * state2.zoom;
-      const minPixels = getMinCropPixels(displayScale);
-      return {
-        width: Math.min(1, minPixels * state2.zoom / bbox.width),
-        height: Math.min(1, minPixels * state2.zoom / bbox.height)
-      };
-    }, [
-      naturalWidth,
-      naturalHeight,
-      state2.rotation,
-      state2.zoom,
-      elementSize.width
-    ]);
     (0, import_element142.useEffect)(() => {
       setVisualSize(visualSize);
     }, [visualSize, setVisualSize]);
@@ -46607,13 +46599,56 @@ If there's a particular need for this, please submit a feature request at https:
     const [activeHandle, setActiveHandle] = (0, import_element142.useState)(
       null
     );
+    const viewScaleRest = (0, import_element142.useMemo)(
+      () => getViewScale(
+        state2.cropRect,
+        canvasSize,
+        visualSize,
+        SETTLE_TARGET_CANVAS_FILL,
+        MAX_VIEW_SCALE
+      ),
+      [state2.cropRect, canvasSize, visualSize]
+    );
+    const [frozenViewScale, setFrozenViewScale] = (0, import_element142.useState)(1);
+    const viewScale = isResizing ? frozenViewScale : viewScaleRest;
+    const scaledVisualSize = (0, import_element142.useMemo)(
+      () => ({
+        width: visualSize.width * viewScale,
+        height: visualSize.height * viewScale
+      }),
+      [visualSize.width, visualSize.height, viewScale]
+    );
+    const minCropSize = (0, import_element142.useMemo)(() => {
+      if (naturalWidth <= 0 || naturalHeight <= 0) {
+        return void 0;
+      }
+      const snapRotation = Math.round(state2.rotation / 90) * 90;
+      const bbox = getRotatedBBox(
+        naturalWidth,
+        naturalHeight,
+        snapRotation
+      );
+      const displayScale = elementSize.width / naturalWidth * state2.zoom * viewScale;
+      const minPixels = getMinCropPixels(displayScale);
+      return {
+        width: Math.min(1, minPixels * state2.zoom / bbox.width),
+        height: Math.min(1, minPixels * state2.zoom / bbox.height)
+      };
+    }, [
+      naturalWidth,
+      naturalHeight,
+      state2.rotation,
+      state2.zoom,
+      elementSize.width,
+      viewScale
+    ]);
     const {
       handlers,
       onWheelNative,
       isDragging,
       isZooming,
       isPlacementActive: isInteractionPlacementActive
-    } = useInteraction(state2, controller, canvasSize, visualSize, {
+    } = useInteraction(state2, controller, canvasSize, scaledVisualSize, {
       minZoom: effectiveMinZoom,
       maxZoom,
       onGestureStart,
@@ -46673,24 +46708,24 @@ If there's a particular need for this, please submit a feature request at https:
     const handleCropChange = (0, import_element142.useCallback)(
       (rect) => {
         setCropRect(rect);
-        if (isResizingRef.current && visualSize.width > 0 && visualSize.height > 0) {
-          const offsetX = (canvasSize.width - visualSize.width) / 2;
-          const offsetY = (canvasSize.height - visualSize.height) / 2;
+        if (isResizingRef.current && scaledVisualSize.width > 0 && scaledVisualSize.height > 0) {
+          const offsetX = (canvasSize.width - scaledVisualSize.width) / 2;
+          const offsetY = (canvasSize.height - scaledVisualSize.height) / 2;
           const rightOverflow = Math.max(
             0,
-            offsetX + (rect.x + rect.width) * visualSize.width - canvasSize.width
+            offsetX + (rect.x + rect.width) * scaledVisualSize.width - canvasSize.width
           );
           const leftOverflow = Math.max(
             0,
-            -(offsetX + rect.x * visualSize.width)
+            -(offsetX + rect.x * scaledVisualSize.width)
           );
           const bottomOverflow = Math.max(
             0,
-            offsetY + (rect.y + rect.height) * visualSize.height - canvasSize.height
+            offsetY + (rect.y + rect.height) * scaledVisualSize.height - canvasSize.height
           );
           const topOverflow = Math.max(
             0,
-            -(offsetY + rect.y * visualSize.height)
+            -(offsetY + rect.y * scaledVisualSize.height)
           );
           setViewportPan({
             x: -rightOverflow + leftOverflow,
@@ -46698,7 +46733,7 @@ If there's a particular need for this, please submit a feature request at https:
           });
         }
       },
-      [setCropRect, setViewportPan, canvasSize, visualSize]
+      [setCropRect, setViewportPan, canvasSize, scaledVisualSize]
     );
     const [settling, setSettling] = (0, import_element142.useState)(false);
     const settleTimerRef = (0, import_element142.useRef)();
@@ -46725,6 +46760,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const handleResizeStart = (0, import_element142.useCallback)(
       (handle) => {
+        setFrozenViewScale(viewScaleRest);
         isResizingRef.current = true;
         setIsResizing(true);
         setActiveHandle(handle ?? null);
@@ -46734,7 +46770,7 @@ If there's a particular need for this, please submit a feature request at https:
         resetViewport();
         onGestureStart?.();
       },
-      [onGestureStart, resetViewport]
+      [onGestureStart, resetViewport, viewScaleRest]
     );
     const handleResizeEnd = (0, import_element142.useCallback)(() => {
       isResizingRef.current = false;
@@ -46764,6 +46800,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const centerX = (canvasSize.width - elementSize.width) / 2;
       const centerY = (canvasSize.height - elementSize.height) / 2;
+      const displayScale = naturalWidth > 0 ? elementSize.width / naturalWidth * state2.zoom * viewScale : 0;
       return {
         width: elementSize.width,
         height: elementSize.height,
@@ -46771,10 +46808,25 @@ If there's a particular need for this, please submit a feature request at https:
         maxHeight: elementSize.height,
         left: centerX,
         top: centerY,
-        transform: transformString,
-        transition: imageTransition
+        // Always lead with `scale()` (identity at rest) so the transform's
+        // function list stays structurally constant across rest, resize, and
+        // settle. A conditional that dropped `scale()` at viewScale === 1
+        // would change the list shape exactly when the settle transition
+        // crosses 1:1, forcing the browser to fall back to matrix-decomposition
+        // interpolation instead of interpolating each function in turn.
+        transform: `scale(${viewScale}) ${transformString}`,
+        transition: imageTransition,
+        imageRendering: displayScale > 1 ? "pixelated" : void 0
       };
-    }, [canvasSize, elementSize, transformString, imageTransition]);
+    }, [
+      canvasSize,
+      elementSize,
+      naturalWidth,
+      state2.zoom,
+      transformString,
+      imageTransition,
+      viewScale
+    ]);
     const settleTransition = settling ? "transform 200ms ease-out" : void 0;
     const willChange = isResizing || settling ? "transform" : void 0;
     let stageStyle;
@@ -46785,7 +46837,11 @@ If there's a particular need for this, please submit a feature request at https:
         willChange
       };
     } else if (settling) {
-      stageStyle = { transition: settleTransition, willChange };
+      stageStyle = {
+        transform: "translate(0px, 0px)",
+        transition: settleTransition,
+        willChange
+      };
     }
     const setContainerRef = (0, import_element142.useCallback)(
       (element) => {
@@ -46851,6 +46907,7 @@ If there's a particular need for this, please submit a feature request at https:
                       "img",
                       {
                         className: "wp-media-editor-image-editor__image",
+                        "data-testid": "cropper-image",
                         src,
                         alt: "",
                         onLoad: handleImageLoad,
@@ -46863,7 +46920,7 @@ If there's a particular need for this, please submit a feature request at https:
                       {
                         cropRect: state2.cropRect,
                         containerSize: canvasSize,
-                        imageSize: visualSize,
+                        imageSize: scaledVisualSize,
                         transition: settleStencilTransition
                       }
                     ),
@@ -46872,7 +46929,7 @@ If there's a particular need for this, please submit a feature request at https:
                       {
                         cropRect: state2.cropRect,
                         containerSize: canvasSize,
-                        imageSize: visualSize,
+                        imageSize: scaledVisualSize,
                         onCropChange: handleCropChange,
                         onResizeStart: handleResizeStart,
                         onResizeEnd: handleResizeEnd,
@@ -46889,7 +46946,7 @@ If there's a particular need for this, please submit a feature request at https:
                       {
                         cropRect: state2.cropRect,
                         containerSize: canvasSize,
-                        imageSize: visualSize
+                        imageSize: scaledVisualSize
                       }
                     ),
                     activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
@@ -46897,7 +46954,7 @@ If there's a particular need for this, please submit a feature request at https:
                       {
                         cropRect: state2.cropRect,
                         containerSize: canvasSize,
-                        imageSize: visualSize,
+                        imageSize: scaledVisualSize,
                         activeHandle,
                         outputWidth: outputSize.width,
                         outputHeight: outputSize.height
