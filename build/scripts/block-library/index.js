@@ -67886,7 +67886,6 @@ ${js}
     supports: {
       anchor: true,
       html: false,
-      reusable: false,
       color: {
         background: true,
         text: true,
@@ -67898,8 +67897,7 @@ ${js}
       layout: true,
       spacing: {
         blockGap: true,
-        padding: true,
-        margin: false
+        padding: true
       },
       typography: {
         fontSize: true,
@@ -67909,14 +67907,12 @@ ${js}
           __experimentalFontFamily: true
         }
       },
-      renaming: true,
       visibility: false
     },
     providesContext: {
       "core/tab-label": "label"
     },
-    editorScript: "file:./index.js",
-    style: "file:./style-index.css"
+    style: "wp-block-tab-panel"
   };
 
   // packages/block-library/build-module/tab-panel/index.mjs
@@ -67988,17 +67984,9 @@ ${js}
     allowedBlocks: ["core/tab-panel"],
     attributes: {},
     supports: {
-      anchor: false,
       html: false,
-      reusable: false,
       visibility: false,
       lock: false,
-      dimensions: {
-        aspectRatio: false,
-        height: false,
-        minHeight: false,
-        width: false
-      },
       color: {
         background: true,
         text: true,
@@ -68010,26 +67998,11 @@ ${js}
         }
       },
       spacing: {
-        blockGap: false,
-        padding: true,
-        margin: true
+        padding: true
       },
       typography: {
         fontSize: true,
         __experimentalFontFamily: true
-      },
-      layout: {
-        default: {
-          type: "flex",
-          flexWrap: "nowrap",
-          justifyContent: "stretch",
-          orientation: "vertical"
-        },
-        allowSwitching: false,
-        allowVerticalAlignment: false,
-        allowOrientation: false,
-        allowJustification: true,
-        allowSizingOnChildren: false
       },
       __experimentalBorder: {
         radius: true,
@@ -68037,9 +68010,7 @@ ${js}
         width: true,
         style: true
       }
-    },
-    editorScript: "file:./index.js",
-    style: "file:./style-index.css"
+    }
   };
 
   // packages/block-library/build-module/tab-panels/index.mjs
@@ -70593,15 +70564,8 @@ ${js}
     },
     supports: {
       html: false,
-      reusable: false,
       visibility: false,
       lock: false,
-      dimensions: {
-        aspectRatio: false,
-        height: false,
-        minHeight: false,
-        width: false
-      },
       color: {
         background: true,
         text: true,
@@ -70624,23 +70588,18 @@ ${js}
       },
       layout: {
         default: {
-          type: "flex",
-          flexWrap: "nowrap",
-          orientation: "horizontal"
+          type: "flex"
         },
-        allowSwitching: false,
-        allowVerticalAlignment: true,
-        allowJustification: true,
-        allowOrientation: true
+        allowVerticalAlignment: false,
+        allowOrientation: false,
+        allowWrap: false
       },
       spacing: {
         padding: true,
-        margin: true,
         blockGap: true,
         __experimentalSkipSerialization: ["padding"],
         __experimentalDefaultControls: {
           padding: true,
-          margin: true,
           blockGap: true
         }
       }
@@ -70655,9 +70614,8 @@ ${js}
         padding: ".wp-block-tab-list button"
       }
     },
-    editorScript: "file:./index.js",
-    editorStyle: "file:./editor.css",
-    style: "file:./style-index.css"
+    editorStyle: "wp-block-tab-list-editor",
+    style: "wp-block-tab-list"
   };
 
   // packages/block-library/build-module/tab-list/index.mjs
@@ -70726,7 +70684,7 @@ ${js}
   var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY8 = [];
   var TABS_TEMPLATE = [["core/tab-list"], ["core/tab-panels"]];
-  function Edit22({ clientId, attributes: attributes2, setAttributes }) {
+  function Edit22({ clientId, attributes: attributes2 }) {
     const { anchor, activeTabIndex, editorActiveTabIndex } = attributes2;
     const { tabPanels, tabListClientId } = (0, import_data147.useSelect)(
       (select9) => {
@@ -70768,14 +70726,7 @@ ${js}
       renderAppender: false
     });
     return /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(import_block_editor267.BlockContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime509.jsxs)("div", { ...innerBlockProps, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
-        Controls4,
-        {
-          clientId,
-          attributes: attributes2,
-          setAttributes
-        }
-      ),
+      /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(Controls4, { clientId }),
       innerBlockProps.children
     ] }) });
   }
@@ -70823,18 +70774,7 @@ ${js}
         }
       },
       layout: {
-        default: {
-          type: "flex",
-          flexWrap: "nowrap",
-          justifyContent: "stretch",
-          verticalAlignment: "stretch",
-          orientation: "vertical"
-        },
-        allowSwitching: false,
-        allowVerticalAlignment: true,
-        allowJustification: true,
-        allowOrientation: true,
-        allowSizingOnChildren: true
+        allowEditing: false
       },
       html: false,
       interactivity: true,
@@ -70846,17 +70786,14 @@ ${js}
       typography: {
         fontSize: true,
         __experimentalFontFamily: true
-      },
-      renaming: true
+      }
     },
     providesContext: {
       "core/tabs-activeTabIndex": "activeTabIndex",
       "core/tabs-editorActiveTabIndex": "editorActiveTabIndex"
     },
     usesContext: ["core/tabs-list", "core/tabs-id"],
-    editorScript: "file:./index.js",
-    editorStyle: "file:./index.css",
-    style: "file:./style-index.css",
+    style: "wp-block-tabs",
     viewScriptModule: "@wordpress/block-library/tabs/view"
   };
 

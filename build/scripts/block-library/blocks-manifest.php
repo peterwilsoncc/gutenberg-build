@@ -8122,15 +8122,8 @@ return array(
 		),
 		'supports' => array(
 			'html' => false,
-			'reusable' => false,
 			'visibility' => false,
 			'lock' => false,
-			'dimensions' => array(
-				'aspectRatio' => false,
-				'height' => false,
-				'minHeight' => false,
-				'width' => false
-			),
 			'color' => array(
 				'background' => true,
 				'text' => true,
@@ -8153,25 +8146,20 @@ return array(
 			),
 			'layout' => array(
 				'default' => array(
-					'type' => 'flex',
-					'flexWrap' => 'nowrap',
-					'orientation' => 'horizontal'
+					'type' => 'flex'
 				),
-				'allowSwitching' => false,
-				'allowVerticalAlignment' => true,
-				'allowJustification' => true,
-				'allowOrientation' => true
+				'allowVerticalAlignment' => false,
+				'allowOrientation' => false,
+				'allowWrap' => false
 			),
 			'spacing' => array(
 				'padding' => true,
-				'margin' => true,
 				'blockGap' => true,
 				'__experimentalSkipSerialization' => array(
 					'padding'
 				),
 				'__experimentalDefaultControls' => array(
 					'padding' => true,
-					'margin' => true,
 					'blockGap' => true
 				)
 			)
@@ -8186,9 +8174,8 @@ return array(
 				'padding' => '.wp-block-tab-list button'
 			)
 		),
-		'editorScript' => 'file:./index.js',
-		'editorStyle' => 'file:./editor.css',
-		'style' => 'file:./style-index.css'
+		'editorStyle' => 'wp-block-tab-list-editor',
+		'style' => 'wp-block-tab-list'
 	),
 	'tab-panel' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -8216,7 +8203,6 @@ return array(
 		'supports' => array(
 			'anchor' => true,
 			'html' => false,
-			'reusable' => false,
 			'color' => array(
 				'background' => true,
 				'text' => true,
@@ -8228,8 +8214,7 @@ return array(
 			'layout' => true,
 			'spacing' => array(
 				'blockGap' => true,
-				'padding' => true,
-				'margin' => false
+				'padding' => true
 			),
 			'typography' => array(
 				'fontSize' => true,
@@ -8239,14 +8224,12 @@ return array(
 					'__experimentalFontFamily' => true
 				)
 			),
-			'renaming' => true,
 			'visibility' => false
 		),
 		'providesContext' => array(
 			'core/tab-label' => 'label'
 		),
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		'style' => 'wp-block-tab-panel'
 	),
 	'tab-panels' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -8267,17 +8250,9 @@ return array(
 			
 		),
 		'supports' => array(
-			'anchor' => false,
 			'html' => false,
-			'reusable' => false,
 			'visibility' => false,
 			'lock' => false,
-			'dimensions' => array(
-				'aspectRatio' => false,
-				'height' => false,
-				'minHeight' => false,
-				'width' => false
-			),
 			'color' => array(
 				'background' => true,
 				'text' => true,
@@ -8289,26 +8264,11 @@ return array(
 				)
 			),
 			'spacing' => array(
-				'blockGap' => false,
-				'padding' => true,
-				'margin' => true
+				'padding' => true
 			),
 			'typography' => array(
 				'fontSize' => true,
 				'__experimentalFontFamily' => true
-			),
-			'layout' => array(
-				'default' => array(
-					'type' => 'flex',
-					'flexWrap' => 'nowrap',
-					'justifyContent' => 'stretch',
-					'orientation' => 'vertical'
-				),
-				'allowSwitching' => false,
-				'allowVerticalAlignment' => false,
-				'allowOrientation' => false,
-				'allowJustification' => true,
-				'allowSizingOnChildren' => false
 			),
 			'__experimentalBorder' => array(
 				'radius' => true,
@@ -8316,9 +8276,7 @@ return array(
 				'width' => true,
 				'style' => true
 			)
-		),
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		)
 	),
 	'table' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -8670,18 +8628,7 @@ return array(
 				)
 			),
 			'layout' => array(
-				'default' => array(
-					'type' => 'flex',
-					'flexWrap' => 'nowrap',
-					'justifyContent' => 'stretch',
-					'verticalAlignment' => 'stretch',
-					'orientation' => 'vertical'
-				),
-				'allowSwitching' => false,
-				'allowVerticalAlignment' => true,
-				'allowJustification' => true,
-				'allowOrientation' => true,
-				'allowSizingOnChildren' => true
+				'allowEditing' => false
 			),
 			'html' => false,
 			'interactivity' => true,
@@ -8693,8 +8640,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'__experimentalFontFamily' => true
-			),
-			'renaming' => true
+			)
 		),
 		'providesContext' => array(
 			'core/tabs-activeTabIndex' => 'activeTabIndex',
@@ -8704,9 +8650,7 @@ return array(
 			'core/tabs-list',
 			'core/tabs-id'
 		),
-		'editorScript' => 'file:./index.js',
-		'editorStyle' => 'file:./index.css',
-		'style' => 'file:./style-index.css',
+		'style' => 'wp-block-tabs',
 		'viewScriptModule' => '@wordpress/block-library/tabs/view'
 	),
 	'tag-cloud' => array(
