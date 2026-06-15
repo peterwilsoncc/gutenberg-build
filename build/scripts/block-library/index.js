@@ -30533,16 +30533,7 @@ ${js}
     };
     const rotationStyle = rotation ? { rotate: `${rotation}deg` } : {};
     const blockControls = /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)(import_jsx_runtime277.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_block_editor110.BlockControls, { group: isContentOnlyMode ? "inline" : "other", children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_components54.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
-        import_components54.ToolbarButton,
-        {
-          onClick: () => {
-            setInserterOpen(true);
-          },
-          children: icon4 ? (0, import_i18n93.__)("Replace") : (0, import_i18n93.__)("Choose icon")
-        }
-      ) }) }),
-      icon4 && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_block_editor110.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)(import_components54.ToolbarGroup, { children: [
+      icon4 && /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)(import_block_editor110.BlockControls, { group: "block", children: [
         /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
           import_components54.ToolbarButton,
           {
@@ -30575,33 +30566,49 @@ ${js}
             })
           }
         )
-      ] }) }),
-      isContentOnlyMode && icon4 && // Add some extra controls for content attributes when content only mode is active.
-      // With content only mode active, the inspector is hidden, so users need another way
-      // to edit these attributes.
-      /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_block_editor110.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_components54.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
-        import_components54.DropdownMenu,
-        {
-          icon: "",
-          popoverProps: {
-            className: "is-alternate"
-          },
-          text: (0, import_i18n93.__)("Label"),
-          children: () => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
-            import_components54.TextControl,
-            {
-              className: "wp-block-icon__toolbar-content",
-              label: (0, import_i18n93.__)("Label"),
-              value: ariaLabel || "",
-              onChange: (value) => setAttributes({ ariaLabel: value }),
-              help: (0, import_i18n93.__)(
-                "Briefly describe the icon to help screen reader users. Leave blank for decorative icons."
-              ),
-              __next40pxDefaultSize: true
-            }
-          )
-        }
-      ) }) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)(import_block_editor110.BlockControls, { group: "other", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
+          import_components54.ToolbarButton,
+          {
+            onClick: () => {
+              setInserterOpen(true);
+            },
+            children: icon4 ? (0, import_i18n93.__)("Replace") : (0, import_i18n93.__)("Choose icon")
+          }
+        ),
+        isContentOnlyMode && icon4 && // Add some extra controls for content attributes when content only mode is active.
+        // With content only mode active, the inspector is hidden, so users need another way
+        // to edit these attributes.
+        /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
+          import_components54.DropdownMenu,
+          {
+            icon: "",
+            toggleProps: {
+              as: import_components54.ToolbarButton
+            },
+            popoverProps: {
+              className: "is-alternate"
+            },
+            text: (0, import_i18n93.__)("Label"),
+            children: () => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
+              import_components54.TextControl,
+              {
+                className: "wp-block-icon__toolbar-content",
+                label: (0, import_i18n93.__)("Label"),
+                value: ariaLabel || "",
+                onChange: (value) => setAttributes({
+                  ariaLabel: value
+                }),
+                help: (0, import_i18n93.__)(
+                  "Briefly describe the icon to help screen reader users. Leave blank for decorative icons."
+                ),
+                __next40pxDefaultSize: true
+              }
+            )
+          }
+        )
+      ] })
     ] });
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const inspectorControls = icon4 && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_jsx_runtime277.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_block_editor110.InspectorControls, { group: "settings", children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
