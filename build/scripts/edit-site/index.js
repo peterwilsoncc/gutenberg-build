@@ -36906,7 +36906,7 @@ var wp;
   var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
   function useIsMultiselectPicker(actions) {
     return (0, import_element106.useMemo)(() => {
-      return actions?.every((action) => action.supportsBulk);
+      return !!actions?.length && actions?.every((action) => action.supportsBulk);
     }, [actions]);
   }
 

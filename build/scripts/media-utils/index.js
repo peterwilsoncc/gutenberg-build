@@ -13595,7 +13595,7 @@ var wp;
   var EMPTY_ARRAY2 = [];
   function useIsMultiselectPicker(actions) {
     return (0, import_element35.useMemo)(() => {
-      return actions?.every((action) => action.supportsBulk);
+      return !!actions?.length && actions?.every((action) => action.supportsBulk);
     }, [actions]);
   }
   function BulkSelectionCheckbox2({
@@ -13688,7 +13688,7 @@ var wp;
       );
     }) });
   }
-  function DataViewsPickerFooter() {
+  function PickerBulkSelectionInfo() {
     const {
       data,
       selection,
@@ -13699,16 +13699,82 @@ var wp;
       view
     } = (0, import_element35.useContext)(dataviews_context_default);
     const isMultiselect = useIsMultiselectPicker(actions);
+    const selectedItems = (0, import_element35.useMemo)(
+      () => data.filter((item) => selection.includes(getItemId(item))),
+      [selection, getItemId, data]
+    );
+    if (!actions.length) {
+      return null;
+    }
     const message2 = getFooterMessage(
       selection.length,
       data.length,
       paginationInfo.totalItems,
       !!view.infiniteScrollEnabled
     );
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsxs)(
+      Stack,
+      {
+        direction: "row",
+        className: "dataviews-picker-footer__bulk-selection",
+        gap: "md",
+        align: "center",
+        children: [
+          isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+            BulkSelectionCheckbox2,
+            {
+              selection,
+              selectedItems,
+              onChangeSelection,
+              data,
+              getItemId,
+              disableSelectAll: !!view.infiniteScrollEnabled
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("span", { className: "dataviews-bulk-actions-footer__item-count", children: message2 })
+        ]
+      }
+    );
+  }
+  function PickerActions() {
+    const {
+      data,
+      selection,
+      getItemId,
+      actions = EMPTY_ARRAY2
+    } = (0, import_element35.useContext)(dataviews_context_default);
     const selectedItems = (0, import_element35.useMemo)(
       () => data.filter((item) => selection.includes(getItemId(item))),
       [selection, getItemId, data]
     );
+    if (!actions.length) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("div", { className: "dataviews-picker-footer__actions", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+      ActionButtons,
+      {
+        actions,
+        items: selectedItems,
+        selection
+      }
+    ) });
+  }
+  function DataViewsPickerBulkActionToolbar() {
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsxs)(Stack, { direction: "row", gap: "md", align: "center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(PickerBulkSelectionInfo, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(PickerActions, {})
+    ] });
+  }
+  function DataViewsPickerFooter() {
+    const {
+      actions = EMPTY_ARRAY2,
+      paginationInfo,
+      view
+    } = (0, import_element35.useContext)(dataviews_context_default);
+    const hasPagination = !view.infiniteScrollEnabled && !!paginationInfo.totalItems && paginationInfo.totalPages > 1;
+    if (!actions.length && !hasPagination) {
+      return null;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime64.jsxs)(
       Stack,
       {
@@ -13718,38 +13784,9 @@ var wp;
         className: "dataviews-footer",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime64.jsxs)(
-            Stack,
-            {
-              direction: "row",
-              className: "dataviews-picker-footer__bulk-selection",
-              gap: "md",
-              align: "center",
-              children: [
-                isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
-                  BulkSelectionCheckbox2,
-                  {
-                    selection,
-                    selectedItems,
-                    onChangeSelection,
-                    data,
-                    getItemId,
-                    disableSelectAll: !!view.infiniteScrollEnabled
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("span", { className: "dataviews-bulk-actions-footer__item-count", children: message2 })
-              ]
-            }
-          ),
+          /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(PickerBulkSelectionInfo, {}),
           /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(dataviews_pagination_default, {}),
-          Boolean(actions?.length) && /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("div", { className: "dataviews-picker-footer__actions", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
-            ActionButtons,
-            {
-              actions,
-              items: selectedItems,
-              selection
-            }
-          ) })
+          /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(PickerActions, {})
         ]
       }
     );
@@ -25852,7 +25889,8 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   var DataViewsPickerSubComponents = DataViewsPicker;
-  DataViewsPickerSubComponents.BulkActionToolbar = DataViewsPickerFooter;
+  DataViewsPickerSubComponents.BulkActionToolbar = DataViewsPickerBulkActionToolbar;
+  DataViewsPickerSubComponents.Footer = DataViewsPickerFooter;
   DataViewsPickerSubComponents.Filters = filters_default;
   DataViewsPickerSubComponents.FiltersToggled = filters_toggled_default;
   DataViewsPickerSubComponents.FiltersToggle = toggle_default;
@@ -27588,7 +27626,7 @@ If there's a particular need for this, please submit a feature request at https:
                           onOpenChange: handlePopoverOpenChange
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(dataviews_picker_default.BulkActionToolbar, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(dataviews_picker_default.Footer, {})
                     ]
                   }
                 )

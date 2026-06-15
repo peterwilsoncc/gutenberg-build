@@ -15453,7 +15453,7 @@ var dataviews_pagination_default = (0, import_element50.memo)(DataViewsPaginatio
 var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 function useIsMultiselectPicker(actions2) {
   return (0, import_element51.useMemo)(() => {
-    return actions2?.every((action) => action.supportsBulk);
+    return !!actions2?.length && actions2?.every((action) => action.supportsBulk);
   }, [actions2]);
 }
 
