@@ -32423,7 +32423,7 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime190.jsx)("h1", { className: "edit-site-welcome-guide__heading", children: heading }),
               /* @__PURE__ */ (0, import_jsx_runtime190.jsx)("p", { className: "edit-site-welcome-guide__text", children: (0, import_i18n64.__)(
                 // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
-                "It\u2019s now possible to edit page content in the site editor. To customise other parts of the page like the header and footer switch to editing the template using the settings sidebar."
+                "It\u2019s now possible to edit page content in the site editor. To customize other parts of the page like the header and footer switch to editing the template using the settings sidebar."
               ) })
             ] })
           }
