@@ -43964,10 +43964,11 @@ If there's a particular need for this, please submit a feature request at https:
   var MIN_ZOOM = 1;
   var ABSOLUTE_MIN_ZOOM = 0.1;
   var MAX_ZOOM = 10;
-  var MIN_CROP_PIXELS = 24;
+  var MIN_CROP_PIXELS = 16;
   var MIN_CROP_SCREEN_PX = 44;
   var SETTLE_TARGET_CANVAS_FILL = 0.8;
   var MAX_VIEW_SCALE = 8;
+  var PIXEL_SNAP_DISPLAY_SCALE = 1;
   var DEFAULT_WHEEL_ZOOM_SPEED = 25e-4;
   var DEFAULT_KEYBOARD_STEP = 0.01;
   var KEYBOARD_SHIFT_STEP_MULTIPLIER = 10;
@@ -46547,7 +46548,9 @@ If there's a particular need for this, please submit a feature request at https:
     stencilTransition,
     cropBounds,
     onEscape,
-    minCropSize
+    minCropSize,
+    snapCropRect,
+    keyboardResizeStep
   }) {
     const boundsMinX = cropBounds?.minX ?? 0;
     const boundsMinY = cropBounds?.minY ?? 0;
@@ -46633,6 +46636,7 @@ If there's a particular need for this, please submit a feature request at https:
               );
             } else {
               newRect = h3.computeFreeRect(drag2, latestX, latestY);
+              newRect = h3.snapCropRect?.(newRect, drag2.handle) ?? newRect;
             }
             h3.onCropChange(newRect);
           });
@@ -46702,7 +46706,8 @@ If there's a particular need for this, please submit a feature request at https:
       computeFreeRect,
       computeShiftLockedRect,
       onCropChange,
-      onResizeEnd
+      onResizeEnd,
+      snapCropRect
     };
     const handleKeyDown = (0, import_element141.useCallback)(
       (handle, event) => {
@@ -46729,20 +46734,24 @@ If there's a particular need for this, please submit a feature request at https:
             onResizeEnd?.();
           }, KEYBOARD_SETTLE_DELAY);
         };
-        const step = event.shiftKey ? DEFAULT_KEYBOARD_STEP * KEYBOARD_SHIFT_STEP_MULTIPLIER : DEFAULT_KEYBOARD_STEP;
+        const stepMultiplier = event.shiftKey ? KEYBOARD_SHIFT_STEP_MULTIPLIER : 1;
+        const stepX = keyboardResizeStep?.width ?? DEFAULT_KEYBOARD_STEP;
+        const stepY = keyboardResizeStep?.height ?? DEFAULT_KEYBOARD_STEP;
+        const adjustedStepX = stepX * stepMultiplier;
+        const adjustedStepY = stepY * stepMultiplier;
         let dx = 0;
         let dy = 0;
         if (key === "ArrowLeft") {
-          dx = -step;
+          dx = -adjustedStepX;
         }
         if (key === "ArrowRight") {
-          dx = step;
+          dx = adjustedStepX;
         }
         if (key === "ArrowUp") {
-          dy = -step;
+          dy = -adjustedStepY;
         }
         if (key === "ArrowDown") {
-          dy = step;
+          dy = adjustedStepY;
         }
         if (hasLockedRatio) {
           const syntheticDrag = {
@@ -46766,9 +46775,8 @@ If there's a particular need for this, please submit a feature request at https:
           };
           const clientX = dx * imageSize.width;
           const clientY = dy * imageSize.height;
-          onCropChange(
-            computeFreeRect(syntheticDrag, clientX, clientY)
-          );
+          const rect = computeFreeRect(syntheticDrag, clientX, clientY);
+          onCropChange(snapCropRect?.(rect, handle) ?? rect);
           scheduleKeyboardResizeEnd();
         }
       },
@@ -46782,7 +46790,9 @@ If there's a particular need for this, please submit a feature request at https:
         onCropChange,
         onResizeStart,
         onResizeEnd,
-        onEscape
+        onEscape,
+        keyboardResizeStep,
+        snapCropRect
       ]
     );
     if (containerSize.width === 0 || containerSize.height === 0) {
@@ -47134,6 +47144,110 @@ If there's a particular need for this, please submit a feature request at https:
       zoom: safeState.zoom
     };
   }
+  function getCropRectFromSourceRegion(state2, imageSize, region) {
+    if (!isValidSize(imageSize) || region.width <= 0 || region.height <= 0) {
+      return null;
+    }
+    const safeState = sanitizeCropperState(state2);
+    const syntheticContainer = { width: 1e3, height: 1e3 };
+    const baseCamera = createCamera(
+      { ...safeState, pan: { x: 0, y: 0 }, zoom: 1 },
+      syntheticContainer,
+      imageSize
+    );
+    const visibleBounds = getVisibleBounds(baseCamera);
+    if (visibleBounds.width <= 0 || visibleBounds.height <= 0) {
+      return null;
+    }
+    const sourceCenter = vec2_exports.fromValues(
+      (region.x + region.width / 2) / imageSize.width,
+      (region.y + region.height / 2) / imageSize.height
+    );
+    const screenCenter = vec2_exports.create();
+    const camera = createCamera(safeState, syntheticContainer, imageSize);
+    vec2_exports.transformMat2d(screenCenter, sourceCenter, camera);
+    const snapRotation = Math.round(safeState.rotation / 90) * 90;
+    const { width: rotW, height: rotH } = getRotatedBBox(
+      imageSize.width,
+      imageSize.height,
+      snapRotation
+    );
+    if (rotW <= 0 || rotH <= 0) {
+      return null;
+    }
+    const width = region.width * safeState.zoom / rotW;
+    const height = region.height * safeState.zoom / rotH;
+    const centerX = (screenCenter[0] - visibleBounds.left) / visibleBounds.width;
+    const centerY = (screenCenter[1] - visibleBounds.top) / visibleBounds.height;
+    return {
+      x: centerX - width / 2,
+      y: centerY - height / 2,
+      width,
+      height
+    };
+  }
+  var CARDINAL_ROTATION_EPSILON = 1e-6;
+  function isCardinalRotation(rotation) {
+    const normalizedRotation = normalizeRotation(rotation);
+    const nearestCardinal = Math.round(normalizedRotation / 90) * 90;
+    return Math.abs(normalizedRotation - nearestCardinal) < CARDINAL_ROTATION_EPSILON;
+  }
+  function snapCropRectToSourcePixels(state2, imageSize, cropRect, handle) {
+    const safeState = sanitizeCropperState(state2);
+    if (!isCardinalRotation(safeState.rotation)) {
+      return cropRect;
+    }
+    return snapCropRectEdgesToSourcePixels(safeState, imageSize, cropRect, {
+      left: handle.includes("w"),
+      top: handle.includes("n"),
+      right: handle.includes("e"),
+      bottom: handle.includes("s")
+    });
+  }
+  function snapCropRectToSourcePixelGrid(state2, imageSize, cropRect) {
+    return snapCropRectEdgesToSourcePixels(state2, imageSize, cropRect, {
+      left: true,
+      top: true,
+      right: true,
+      bottom: true
+    });
+  }
+  function snapCropRectEdgesToSourcePixels(state2, imageSize, cropRect, edges) {
+    if (!isValidSize(imageSize)) {
+      return cropRect;
+    }
+    const stateWithCrop = sanitizeCropperState({ ...state2, cropRect });
+    const region = getSourceRegion(stateWithCrop, imageSize);
+    const shouldSnapX = edges.left || edges.right;
+    const shouldSnapY = edges.top || edges.bottom;
+    const left = edges.left ? Math.round(region.x) : region.x;
+    const top = edges.top ? Math.round(region.y) : region.y;
+    const right = edges.right ? Math.round(region.x + region.width) : region.x + region.width;
+    const bottom = edges.bottom ? Math.round(region.y + region.height) : region.y + region.height;
+    if (right <= left || bottom <= top) {
+      return cropRect;
+    }
+    const snappedCropRect = getCropRectFromSourceRegion(
+      stateWithCrop,
+      imageSize,
+      {
+        ...region,
+        x: left,
+        y: top,
+        width: right - left,
+        height: bottom - top
+      }
+    );
+    if (!snappedCropRect) {
+      return cropRect;
+    }
+    return {
+      x: shouldSnapX ? snappedCropRect.x : cropRect.x,
+      y: shouldSnapY ? snappedCropRect.y : cropRect.y,
+      width: shouldSnapX ? snappedCropRect.width : cropRect.width,
+      height: shouldSnapY ? snappedCropRect.height : cropRect.height
+    };
+  }
 
   // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
   var import_element144 = __toESM(require_element(), 1);
@@ -47204,6 +47318,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   var CROP_RECT_EPSILON = 1e-6;
+  var CARDINAL_ROTATION_EPSILON2 = 1e-6;
   function CropperInner({
     src,
     controller,
@@ -47383,6 +47498,35 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [visualSize.width, visualSize.height, viewScale]
     );
+    const displayScale = naturalWidth > 0 ? elementSize.width / naturalWidth * state2.zoom * viewScale : 0;
+    const keyboardResizeStep = (0, import_element145.useMemo)(() => {
+      if (displayScale < PIXEL_SNAP_DISPLAY_SCALE || aspectRatio && aspectRatio > 0 || naturalWidth <= 0 || naturalHeight <= 0) {
+        return void 0;
+      }
+      const snapRotation = Math.round(state2.rotation / 90) * 90;
+      if (Math.abs(state2.rotation - snapRotation) >= CARDINAL_ROTATION_EPSILON2) {
+        return void 0;
+      }
+      const bbox = getRotatedBBox(
+        naturalWidth,
+        naturalHeight,
+        snapRotation
+      );
+      if (bbox.width <= 0 || bbox.height <= 0) {
+        return void 0;
+      }
+      return {
+        width: state2.zoom / bbox.width,
+        height: state2.zoom / bbox.height
+      };
+    }, [
+      displayScale,
+      aspectRatio,
+      naturalWidth,
+      naturalHeight,
+      state2.rotation,
+      state2.zoom
+    ]);
     const minCropSize = (0, import_element145.useMemo)(() => {
       if (naturalWidth <= 0 || naturalHeight <= 0) {
         return void 0;
@@ -47393,7 +47537,6 @@ If there's a particular need for this, please submit a feature request at https:
         naturalHeight,
         snapRotation
       );
-      const displayScale = elementSize.width / naturalWidth * state2.zoom * viewScale;
       const minPixels = getMinCropPixels(displayScale);
       return {
         width: Math.min(1, minPixels * state2.zoom / bbox.width),
@@ -47404,8 +47547,48 @@ If there's a particular need for this, please submit a feature request at https:
       naturalHeight,
       state2.rotation,
       state2.zoom,
-      elementSize.width,
-      viewScale
+      displayScale
+    ]);
+    const snapCropRect = (0, import_element145.useCallback)(
+      (rect, handle) => {
+        if (displayScale < PIXEL_SNAP_DISPLAY_SCALE || naturalWidth <= 0 || naturalHeight <= 0) {
+          return rect;
+        }
+        return snapCropRectToSourcePixels(
+          state2,
+          { width: naturalWidth, height: naturalHeight },
+          rect,
+          handle
+        );
+      },
+      [displayScale, naturalWidth, naturalHeight, state2]
+    );
+    const wasPixelSnapEnabledRef = (0, import_element145.useRef)(false);
+    (0, import_element145.useEffect)(() => {
+      const isPixelSnapEnabled = freeformCrop && (!aspectRatio || aspectRatio <= 0) && displayScale >= PIXEL_SNAP_DISPLAY_SCALE && naturalWidth > 0 && naturalHeight > 0;
+      const wasPixelSnapEnabled = wasPixelSnapEnabledRef.current;
+      wasPixelSnapEnabledRef.current = isPixelSnapEnabled;
+      if (!isPixelSnapEnabled || wasPixelSnapEnabled) {
+        return;
+      }
+      const snappedCropRect = snapCropRectToSourcePixelGrid(
+        state2,
+        { width: naturalWidth, height: naturalHeight },
+        state2.cropRect
+      );
+      const currentCropRect = state2.cropRect;
+      if (Math.abs(currentCropRect.x - snappedCropRect.x) < CROP_RECT_EPSILON && Math.abs(currentCropRect.y - snappedCropRect.y) < CROP_RECT_EPSILON && Math.abs(currentCropRect.width - snappedCropRect.width) < CROP_RECT_EPSILON && Math.abs(currentCropRect.height - snappedCropRect.height) < CROP_RECT_EPSILON) {
+        return;
+      }
+      setCropRect(snappedCropRect);
+    }, [
+      aspectRatio,
+      displayScale,
+      freeformCrop,
+      naturalWidth,
+      naturalHeight,
+      setCropRect,
+      state2
     ]);
     const {
       handlers,
@@ -47565,7 +47748,6 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const centerX = (canvasSize.width - elementSize.width) / 2;
       const centerY = (canvasSize.height - elementSize.height) / 2;
-      const displayScale = naturalWidth > 0 ? elementSize.width / naturalWidth * state2.zoom * viewScale : 0;
       return {
         width: elementSize.width,
         height: elementSize.height,
@@ -47586,10 +47768,9 @@ If there's a particular need for this, please submit a feature request at https:
     }, [
       canvasSize,
       elementSize,
-      naturalWidth,
-      state2.zoom,
       transformString,
       imageTransition,
+      displayScale,
       viewScale
     ]);
     const settleTransition = settling ? "transform 200ms ease-out" : void 0;
@@ -47703,7 +47884,9 @@ If there's a particular need for this, please submit a feature request at https:
                         freeformCrop,
                         stencilTransition: settleStencilTransition,
                         cropBounds,
-                        minCropSize
+                        minCropSize,
+                        snapCropRect,
+                        keyboardResizeStep
                       }
                     ),
                     (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
