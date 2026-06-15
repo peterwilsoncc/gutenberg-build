@@ -30492,7 +30492,7 @@ ${js}
       ]
     }
   );
-  function Edit16({ attributes: attributes2, setAttributes }) {
+  function Edit16({ attributes: attributes2, setAttributes, clientId }) {
     const { icon: icon4, ariaLabel, flipHorizontal, flipVertical, rotation } = attributes2;
     const [isInserterOpen, setInserterOpen] = (0, import_element44.useState)(false);
     const isContentOnlyMode = (0, import_block_editor110.useBlockEditingMode)() === "contentOnly";
@@ -30510,6 +30510,22 @@ ${js}
       },
       [isInserterOpen, icon4]
     );
+    const wasJustInserted = (0, import_data43.useSelect)(
+      (select9) => select9(import_block_editor110.store).wasBlockJustInserted(clientId),
+      [clientId]
+    );
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data43.useDispatch)(import_block_editor110.store);
+    (0, import_element44.useEffect)(() => {
+      if (!icon4 && wasJustInserted) {
+        __unstableMarkNextChangeAsNotPersistent();
+        setAttributes({ icon: "core/info" });
+      }
+    }, [
+      icon4,
+      wasJustInserted,
+      setAttributes,
+      __unstableMarkNextChangeAsNotPersistent
+    ]);
     const iconToDisplay = selectedIcon?.content || "";
     const flipClasses = {
       "is-flip-horizontal": flipHorizontal,
@@ -30770,7 +30786,7 @@ ${js}
     icon: icon_default2,
     example: {
       attributes: {
-        icon: "core/audio",
+        icon: "core/info",
         style: {
           dimensions: {
             width: "48px"
