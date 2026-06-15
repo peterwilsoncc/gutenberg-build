@@ -44992,7 +44992,13 @@ var wp;
           isSticky
         )
       ),
-      [contentElement, selectedBlockElement, scrollContainer, toolbarHeight]
+      [
+        contentElement,
+        selectedBlockElement,
+        scrollContainer,
+        toolbarHeight,
+        isSticky
+      ]
     );
     (0, import_element128.useLayoutEffect)(updateProps, [blockIndex, updateProps]);
     (0, import_element128.useLayoutEffect)(() => {
@@ -45000,15 +45006,15 @@ var wp;
         return;
       }
       const contentView = contentElement?.ownerDocument?.defaultView;
-      contentView?.addEventHandler?.("resize", updateProps);
+      contentView?.addEventListener?.("resize", updateProps);
       let resizeObserver;
       const blockView = selectedBlockElement?.ownerDocument?.defaultView;
-      if (blockView.ResizeObserver) {
+      if (blockView?.ResizeObserver) {
         resizeObserver = new blockView.ResizeObserver(updateProps);
         resizeObserver.observe(selectedBlockElement);
       }
       return () => {
-        contentView?.removeEventHandler?.("resize", updateProps);
+        contentView?.removeEventListener?.("resize", updateProps);
         if (resizeObserver) {
           resizeObserver.disconnect();
         }
