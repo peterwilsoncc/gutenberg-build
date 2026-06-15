@@ -91818,6 +91818,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return String(value);
   }
+  function isEmptyMeta(str3) {
+    return !str3 || str3 === "[]" || str3 === "{}";
+  }
   function RevisionFieldsDiffPanel() {
     const { revision, previousRevision } = (0, import_data240.useSelect)((select7) => {
       const { getCurrentRevision: getCurrentRevision2, getPreviousRevision: getPreviousRevision2 } = unlock(
@@ -91842,7 +91845,7 @@ If there's a particular need for this, please submit a feature request at https:
       for (const key of allMetaKeys) {
         const revStr = stringifyValue2(revisionMeta[key]);
         const prevStr = stringifyValue2(previousMeta[key]);
-        if (!revStr && !prevStr) {
+        if (isEmptyMeta(revStr) && isEmptyMeta(prevStr)) {
           continue;
         }
         result[key] = diffWordsWithSpace(prevStr, revStr);
