@@ -7816,6 +7816,36 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   outline-offset: -2px;
 }
 
+.interface-complementary-area:has(.editor-post-revisions-timeline) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.interface-complementary-area:has(.editor-post-revisions-timeline) .editor-sidebar__panel-tabs {
+  flex-shrink: 0;
+}
+
+.editor-sidebar__panel:has(.editor-post-revisions-timeline) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.editor-sidebar__panel:has(.editor-post-revisions-timeline) [role=tabpanel]:has(.editor-post-revisions-timeline) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.editor-sidebar__panel:has(.editor-post-revisions-timeline) .editor-revision-meta-diff__content {
+  max-height: 80px;
+  overflow-y: auto;
+}
+.editor-sidebar__panel:has(.editor-post-revisions-timeline) .editor-post-revisions-timeline {
+  flex: 1;
+  min-height: 0;
+}
+
 .editor-revision-fields-diff__value {
   word-break: break-word;
 }
