@@ -53102,7 +53102,7 @@ ${js}
               import_components109.__experimentalToolsPanelItem,
               {
                 hasValue: () => isLink !== false,
-                label: postType?.labels.singular_name ? (0, import_i18n171.sprintf)(
+                label: postType?.labels?.singular_name ? (0, import_i18n171.sprintf)(
                   // translators: %s: Name of the post type e.g: "post".
                   (0, import_i18n171.__)("Link to %s"),
                   postType.labels.singular_name.toLowerCase()
@@ -53112,7 +53112,7 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
                   import_components109.ToggleControl,
                   {
-                    label: postType?.labels.singular_name ? (0, import_i18n171.sprintf)(
+                    label: postType?.labels?.singular_name ? (0, import_i18n171.sprintf)(
                       // translators: %s: Name of the post type e.g: "post".
                       (0, import_i18n171.__)("Link to %s"),
                       postType.labels.singular_name.toLowerCase()
@@ -54415,7 +54415,7 @@ ${js}
             /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
               import_components113.__experimentalToolsPanelItem,
               {
-                label: postType?.labels.singular_name ? (0, import_i18n176.sprintf)(
+                label: postType?.labels?.singular_name ? (0, import_i18n176.sprintf)(
                   // translators: %s: Name of the post type e.g: "post".
                   (0, import_i18n176.__)("Link to %s"),
                   postType.labels.singular_name

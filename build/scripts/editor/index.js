@@ -84378,7 +84378,7 @@ If there's a particular need for this, please submit a feature request at https:
         postSlug: (0, import_url21.safeDecodeURIComponent)(
           select7(store).getEditedPostSlug()
         ),
-        viewPostLabel: postType2?.labels.view_item,
+        viewPostLabel: postType2?.labels?.view_item,
         postLink: post2.link,
         permalinkPrefix: permalinkParts?.prefix,
         permalinkSuffix: permalinkParts?.suffix,
@@ -86319,7 +86319,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         permalink: select7(store).getPermalink(),
         isPublished: select7(store).isCurrentPostPublished(),
-        label: postType2?.labels.view_item,
+        label: postType2?.labels?.view_item,
         hasLoaded: !!postType2,
         showIconLabels: get("core", "showIconLabels")
       };
@@ -91165,7 +91165,7 @@ If there's a particular need for this, please submit a feature request at https:
       postIds.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_components259.__experimentalText, { className: "editor-post-card-panel__description", children: (0, import_i18n300.sprintf)(
         // translators: %s: Name of the plural post type e.g: "Posts".
         (0, import_i18n300.__)("Changes will be applied to all selected %s."),
-        labels?.name.toLowerCase()
+        labels?.name?.toLowerCase()
       ) })
     ] });
   }
