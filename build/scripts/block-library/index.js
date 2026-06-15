@@ -27457,7 +27457,7 @@ ${url}
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
+            lightboxSetting?.allowEditing && hasLightboxImages && /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
               import_components46.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n77.__)("Navigation button type"),
@@ -27466,7 +27466,7 @@ ${url}
                 onDeselect: () => setAttributes({
                   navigationButtonType: "icon"
                 }),
-                children: hasLightboxImages && /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
                   import_components46.__experimentalToggleGroupControl,
                   {
                     label: (0, import_i18n77.__)("Navigation button type"),
