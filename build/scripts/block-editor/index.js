@@ -67228,14 +67228,36 @@ var wp;
 
   // packages/block-editor/build-module/components/child-layout-control/index.mjs
   var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
-  function helpText(selfStretch, parentLayout) {
-    const { orientation = "horizontal" } = parentLayout;
-    if (selfStretch === "fill") {
+  var FLEX_CHILD_LAYOUT_VALUES = {
+    fit: "fit",
+    grow: "fill",
+    max: "fixed",
+    fixed: "fixedNoShrink"
+  };
+  var FLEX_SIZE_VALUES = [
+    FLEX_CHILD_LAYOUT_VALUES.max,
+    FLEX_CHILD_LAYOUT_VALUES.fixed
+  ];
+  function isFlexSizeValue(value) {
+    return FLEX_SIZE_VALUES.includes(value);
+  }
+  function maxSizeLabel(parentLayout) {
+    const { orientation = "horizontal" } = parentLayout ?? {};
+    return orientation === "horizontal" ? (0, import_i18n185._x)("Max", "Block with maximum width in flex layout") : (0, import_i18n185._x)("Max", "Block with maximum height in flex layout");
+  }
+  function helpText(flexControlValue, parentLayout) {
+    const { orientation = "horizontal" } = parentLayout ?? {};
+    if (flexControlValue === FLEX_CHILD_LAYOUT_VALUES.grow) {
       return (0, import_i18n185.__)("Stretch to fill available space.");
     }
-    if (selfStretch === "fixed" && orientation === "horizontal") {
+    if (flexControlValue === FLEX_CHILD_LAYOUT_VALUES.max && orientation === "horizontal") {
+      return (0, import_i18n185.__)("Specify a maximum width.");
+    } else if (flexControlValue === FLEX_CHILD_LAYOUT_VALUES.max) {
+      return (0, import_i18n185.__)("Specify a maximum height.");
+    }
+    if (flexControlValue === FLEX_CHILD_LAYOUT_VALUES.fixed && orientation === "horizontal") {
       return (0, import_i18n185.__)("Specify a fixed width.");
-    } else if (selfStretch === "fixed") {
+    } else if (flexControlValue === FLEX_CHILD_LAYOUT_VALUES.fixed) {
       return (0, import_i18n185.__)("Specify a fixed height.");
     }
     return (0, import_i18n185.__)("Fit contents.");
@@ -67288,6 +67310,8 @@ var wp;
   }) {
     const { selfStretch, flexSize } = childLayout;
     const { orientation = "horizontal" } = parentLayout ?? {};
+    const flexControlValue = selfStretch || FLEX_CHILD_LAYOUT_VALUES.fit;
+    const hasFlexSizeValue = isFlexSizeValue(flexControlValue);
     const hasFlexValue = () => !!selfStretch;
     const flexResetLabel = orientation === "horizontal" ? (0, import_i18n185.__)("Width") : (0, import_i18n185.__)("Height");
     const [availableUnits] = useSettings("spacing.units");
@@ -67308,10 +67332,10 @@ var wp;
       });
     };
     (0, import_element229.useEffect)(() => {
-      if (selfStretch === "fixed" && !flexSize) {
+      if (isFlexSizeValue(selfStretch) && !flexSize) {
         onChange({
           ...childLayout,
-          selfStretch: "fit"
+          selfStretch: FLEX_CHILD_LAYOUT_VALUES.fit
         });
       }
     }, []);
@@ -67331,10 +67355,10 @@ var wp;
             {
               size: "__unstable-large",
               label: childLayoutOrientation(parentLayout),
-              value: selfStretch || "fit",
-              help: helpText(selfStretch, parentLayout),
+              value: flexControlValue,
+              help: helpText(flexControlValue, parentLayout),
               onChange: (value) => {
-                const newFlexSize = value !== "fixed" ? null : flexSize;
+                const newFlexSize = isFlexSizeValue(value) ? flexSize : null;
                 onChange({
                   selfStretch: value,
                   flexSize: newFlexSize
@@ -67345,47 +67369,55 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
                   import_components199.__experimentalToggleGroupControlOption,
                   {
-                    value: "fit",
+                    value: FLEX_CHILD_LAYOUT_VALUES.fit,
                     label: (0, import_i18n185._x)(
                       "Fit",
                       "Intrinsic block width in flex layout"
                     )
                   },
-                  "fit"
+                  FLEX_CHILD_LAYOUT_VALUES.fit
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
                   import_components199.__experimentalToggleGroupControlOption,
                   {
-                    value: "fill",
+                    value: FLEX_CHILD_LAYOUT_VALUES.grow,
                     label: (0, import_i18n185._x)(
                       "Grow",
                       "Block with expanding width in flex layout"
                     )
                   },
-                  "fill"
+                  FLEX_CHILD_LAYOUT_VALUES.grow
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
                   import_components199.__experimentalToggleGroupControlOption,
                   {
-                    value: "fixed",
+                    value: FLEX_CHILD_LAYOUT_VALUES.max,
+                    label: maxSizeLabel(parentLayout)
+                  },
+                  FLEX_CHILD_LAYOUT_VALUES.max
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
+                  import_components199.__experimentalToggleGroupControlOption,
+                  {
+                    value: FLEX_CHILD_LAYOUT_VALUES.fixed,
                     label: (0, import_i18n185._x)(
                       "Fixed",
                       "Block with fixed width in flex layout"
                     )
                   },
-                  "fixed"
+                  FLEX_CHILD_LAYOUT_VALUES.fixed
                 )
               ]
             }
           ),
-          selfStretch === "fixed" && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
+          hasFlexSizeValue && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
             import_components199.__experimentalUnitControl,
             {
               size: "__unstable-large",
               units: units2,
               onChange: (value) => {
                 onChange({
-                  selfStretch,
+                  selfStretch: flexControlValue,
                   flexSize: value
                 });
               },
@@ -67400,7 +67432,7 @@ var wp;
     );
   }
   function childLayoutOrientation(parentLayout) {
-    const { orientation = "horizontal" } = parentLayout;
+    const { orientation = "horizontal" } = parentLayout ?? {};
     return orientation === "horizontal" ? (0, import_i18n185.__)("Width") : (0, import_i18n185.__)("Height");
   }
   function GridControls({
@@ -86126,6 +86158,19 @@ var wp;
     mobile: "@media (width <= 480px)",
     tablet: "@media (480px < width <= 782px)"
   };
+  var FLEX_CHILD_LAYOUT_VALUES2 = {
+    fit: "fit",
+    grow: "fill",
+    max: "fixed",
+    fixed: "fixedNoShrink"
+  };
+  var FLEX_SIZE_VALUES2 = [
+    FLEX_CHILD_LAYOUT_VALUES2.max,
+    FLEX_CHILD_LAYOUT_VALUES2.fixed
+  ];
+  function isFlexSizeValue2(value) {
+    return FLEX_SIZE_VALUES2.includes(value);
+  }
   function serializeRule({ selector: selector3, declarations }) {
     return `${selector3} {
 		${Object.entries(declarations).map(([property, value]) => `${property}: ${value}`).join("; ")};
@@ -86152,14 +86197,26 @@ var wp;
       columnSpan,
       rowSpan
     } = effectiveLayout;
+    const baseSelfStretch = layout.selfStretch;
     const { columnCount, minimumColumnWidth } = parentLayout;
     const rules = [];
     const declarations = {};
     if (!hasViewportOverrides || hasViewportOverride("selfStretch") || hasViewportOverride("flexSize")) {
-      if (selfStretch === "fixed" && flexSize) {
+      if (hasViewportOverrides && (selfStretch === FLEX_CHILD_LAYOUT_VALUES2.fit || selfStretch === FLEX_CHILD_LAYOUT_VALUES2.grow) && isFlexSizeValue2(baseSelfStretch) && layout.flexSize) {
+        declarations["flex-basis"] = "unset";
+        if (baseSelfStretch === FLEX_CHILD_LAYOUT_VALUES2.fixed) {
+          declarations["flex-shrink"] = "unset";
+        }
+      }
+      if (isFlexSizeValue2(selfStretch) && flexSize) {
         declarations["flex-basis"] = flexSize;
+        if (selfStretch === FLEX_CHILD_LAYOUT_VALUES2.fixed) {
+          declarations["flex-shrink"] = "0";
+        } else if (hasViewportOverrides && baseSelfStretch === FLEX_CHILD_LAYOUT_VALUES2.fixed) {
+          declarations["flex-shrink"] = "unset";
+        }
         declarations["box-sizing"] = "border-box";
-      } else if (selfStretch === "fill") {
+      } else if (selfStretch === FLEX_CHILD_LAYOUT_VALUES2.grow) {
         declarations["flex-grow"] = "1";
       }
     }
