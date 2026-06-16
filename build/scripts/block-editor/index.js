@@ -83642,6 +83642,19 @@ var wp;
     });
     return cleanEmptyObject({ border: cleanEmptyObject(fallbackBorder) });
   }
+  function getStateBackgroundResetCSS(stateStyles, selector3) {
+    const hasSolidBackground = !!stateStyles?.color?.background;
+    if (!hasSolidBackground) {
+      return void 0;
+    }
+    const hasColorGradient = !!stateStyles?.color?.gradient;
+    const hasBackgroundGradient = !!stateStyles?.background?.gradient || !!stateStyles?.background?.backgroundImage;
+    if (hasColorGradient || hasBackgroundGradient) {
+      return void 0;
+    }
+    const declaration = "background-image: unset !important";
+    return selector3 ? `${selector3} { ${declaration}; }` : `${declaration};`;
+  }
   function getStateFallbackDimensionStyles(stateStyles) {
     const dimensions = stateStyles?.dimensions;
     if (!dimensions) {
@@ -83670,7 +83683,11 @@ var wp;
     const importantCSS = css ? css.replace(/;/g, " !important;") : void 0;
     const fallbackBorderStyles = getStateFallbackBorderStyles(stateStyles);
     const fallbackCSS = fallbackBorderStyles ? (0, import_style_engine4.compileCSS)(fallbackBorderStyles, { selector: selector3 }) : void 0;
-    return [importantCSS, fallbackCSS].filter(Boolean).join("\n");
+    const backgroundResetCSS = getStateBackgroundResetCSS(
+      stateStyles,
+      selector3
+    );
+    return [importantCSS, fallbackCSS, backgroundResetCSS].filter(Boolean).join("\n");
   }
   function isPlainObject2(value) {
     return !!value && typeof value === "object" && !Array.isArray(value);
