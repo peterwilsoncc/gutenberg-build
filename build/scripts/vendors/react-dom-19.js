@@ -4875,7 +4875,7 @@ var ReactDOM = (() => {
           return trackUsedThenable(thenableState$1, thenable, index);
         }
         function coerceRef(workInProgress2, element) {
-          element = element.props.ref;
+          element = (element.props.ref ?? element.ref);
           workInProgress2.ref = void 0 !== element ? element : null;
         }
         function throwOnInvalidObjectTypeImpl(returnFiber, newChild) {
@@ -20480,7 +20480,7 @@ var ReactDOM = (() => {
     }
   });
 
-  // ../react-19/react-polyfill.ts
+  // ../react-19/react-polyfill.js
   var react_polyfill_exports = {};
   __export(react_polyfill_exports, {
     findDOMNode: () => findDOMNode,
@@ -20580,7 +20580,7 @@ var ReactDOM = (() => {
   }
   var import_react_dom, import_client, internalsKey, HostComponent, HostText, roots;
   var init_react_polyfill = __esm({
-    "../react-19/react-polyfill.ts"() {
+    "../react-19/react-polyfill.js"() {
       import_react_dom = __toESM(require_react_dom());
       import_client = __toESM(require_client());
       internalsKey = "_reactInternals";
@@ -20596,7 +20596,8 @@ var ReactDOM = (() => {
       module.exports = {
         ...require_react_dom(),
         ...require_client(),
-        ...(init_react_polyfill(), __toCommonJS(react_polyfill_exports))
+        ...(init_react_polyfill(), __toCommonJS(react_polyfill_exports)),
+        __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: {}
       };
     }
   });
