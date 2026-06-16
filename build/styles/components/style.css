@@ -494,14 +494,14 @@ p + .components-button.is-tertiary {
   min-width: 32px;
 }
 .components-button.is-small {
-  height: 24px;
+  height: var(--wpds-dimension-size-sm, 24px);
   line-height: 22px;
   padding: 0 8px;
   font-size: 11px;
 }
 .components-button.is-small.has-icon:not(.has-text) {
   padding: 0;
-  min-width: 24px;
+  min-width: var(--wpds-dimension-size-sm, 24px);
 }
 .components-button.has-icon {
   padding: 6px;
@@ -2580,7 +2580,7 @@ input.components-combobox-control__input[type=text]:focus {
 .components-notice__content {
   grid-column: 1;
   grid-row: 1;
-  padding-block: calc((24px - 1lh) / 2);
+  padding-block: calc((var(--wpds-dimension-size-sm, 24px) - 1lh) / 2);
 }
 
 .components-notice__actions {
@@ -3930,7 +3930,7 @@ body.lockscroll {
 }
 .components-toolbar-group .components-button.components-button svg,
 .components-toolbar-group .components-button.has-icon.has-icon svg {
-  min-width: 24px;
+  min-width: var(--wpds-dimension-size-sm, 24px);
 }
 .components-toolbar-group .components-button.components-button::before,
 .components-toolbar-group .components-button.has-icon.has-icon::before {
