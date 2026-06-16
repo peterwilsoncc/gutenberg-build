@@ -21347,21 +21347,21 @@ If there's a particular need for this, please submit a feature request at https:
     accentDarker10: `var(--wp-components-color-accent-darker-10, var(--wp-admin-theme-color-darker-10, #2145e6))`,
     accentDarker20: `var(--wp-components-color-accent-darker-20, var(--wp-admin-theme-color-darker-20, #183ad6))`,
     /** Used when placing text on the accent color. */
-    accentInverted: `var(--wp-components-color-accent-inverted, ${white})`,
-    background: `var(--wp-components-color-background, ${white})`,
-    foreground: `var(--wp-components-color-foreground, ${GRAY[900]})`,
+    accentInverted: `var(--wp-components-color-accent-inverted, var(--wpds-color-foreground-interactive-brand-strong, #fff))`,
+    background: `var(--wp-components-color-background, var(--wpds-color-background-surface-neutral-strong, #fff))`,
+    foreground: `var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e))`,
     /** Used when placing text on the foreground color. */
-    foregroundInverted: `var(--wp-components-color-foreground-inverted, ${white})`,
+    foregroundInverted: `var(--wp-components-color-foreground-inverted, var(--wpds-color-background-surface-neutral, #fcfcfc))`,
     gray: {
       /** @deprecated Use `COLORS.theme.foreground` instead. */
-      900: `var(--wp-components-color-foreground, ${GRAY[900]})`,
-      800: `var(--wp-components-color-gray-800, ${GRAY[800]})`,
-      700: `var(--wp-components-color-gray-700, ${GRAY[700]})`,
-      600: `var(--wp-components-color-gray-600, ${GRAY[600]})`,
-      400: `var(--wp-components-color-gray-400, ${GRAY[400]})`,
-      300: `var(--wp-components-color-gray-300, ${GRAY[300]})`,
-      200: `var(--wp-components-color-gray-200, ${GRAY[200]})`,
-      100: `var(--wp-components-color-gray-100, ${GRAY[100]})`
+      900: `var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e))`,
+      800: `var(--wp-components-color-gray-800, var(--wpds-color-foreground-content-neutral, #1e1e1e))`,
+      700: `var(--wp-components-color-gray-700, var(--wpds-color-foreground-content-neutral-weak, #707070))`,
+      600: `var(--wp-components-color-gray-600, var(--wpds-color-stroke-interactive-neutral, #8d8d8d))`,
+      400: `var(--wp-components-color-gray-400, var(--wpds-color-stroke-interactive-neutral, #8d8d8d))`,
+      300: `var(--wp-components-color-gray-300, var(--wpds-color-stroke-surface-neutral, #dbdbdb))`,
+      200: `var(--wp-components-color-gray-200, var(--wpds-color-stroke-surface-neutral, #dbdbdb))`,
+      100: `var(--wp-components-color-gray-100, var(--wpds-color-background-surface-neutral, #fcfcfc))`
     }
   };
   var UI = {
@@ -22333,7 +22333,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle("0cdd5d4fc6", "._02e2af5803bf5bda__grid-container{aspect-ratio:1;border:1px solid transparent;border-radius:4px;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);direction:ltr;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);outline:none}.c421f8ed08c23077__grid-row{box-sizing:border-box;display:grid;grid-column:1/-1;grid-template-columns:repeat(3,1fr)}._3af769f755097fdb__cell{align-items:center;appearance:none;border:none;box-sizing:border-box;display:flex;justify-content:center;margin:0;outline:none;padding:0;position:relative}._37ef12d4fb6d6131__point{aspect-ratio:1;border:3px solid;box-sizing:border-box;color:var(--wp-components-color-gray-400,#ccc);contain:strict;display:block;margin:auto;width:6px}._3af769f755097fdb__cell[data-active-item] ._37ef12d4fb6d6131__point{color:var(--wp-components-color-foreground,#1e1e1e);transform:scale(1.6666666667)}._3af769f755097fdb__cell:not([data-active-item]):hover ._37ef12d4fb6d6131__point{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}._3af769f755097fdb__cell[data-focus-visible] ._37ef12d4fb6d6131__point{outline:1px solid var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline-offset:1px}@media not (prefers-reduced-motion){._37ef12d4fb6d6131__point{transition-duration:.12s;transition-property:color,transform;transition-timing-function:linear}}");
+    registerStyle("0c5e50ec66", "._02e2af5803bf5bda__grid-container{aspect-ratio:1;border:1px solid transparent;border-radius:4px;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);direction:ltr;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);outline:none}.c421f8ed08c23077__grid-row{box-sizing:border-box;display:grid;grid-column:1/-1;grid-template-columns:repeat(3,1fr)}._3af769f755097fdb__cell{align-items:center;appearance:none;border:none;box-sizing:border-box;display:flex;justify-content:center;margin:0;outline:none;padding:0;position:relative}._37ef12d4fb6d6131__point{aspect-ratio:1;border:3px solid;box-sizing:border-box;color:var(--wp-components-color-gray-400,var(--wpds-color-stroke-interactive-neutral,#8d8d8d));contain:strict;display:block;margin:auto;width:6px}._3af769f755097fdb__cell[data-active-item] ._37ef12d4fb6d6131__point{color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));transform:scale(1.6666666667)}._3af769f755097fdb__cell:not([data-active-item]):hover ._37ef12d4fb6d6131__point{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}._3af769f755097fdb__cell[data-focus-visible] ._37ef12d4fb6d6131__point{outline:1px solid var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline-offset:1px}@media not (prefers-reduced-motion){._37ef12d4fb6d6131__point{transition-duration:.12s;transition-property:color,transform;transition-timing-function:linear}}");
   }
   var style_module_default = { "grid-container": "_02e2af5803bf5bda__grid-container", "grid-row": "c421f8ed08c23077__grid-row", "cell": "_3af769f755097fdb__cell", "point": "_37ef12d4fb6d6131__point" };
   function Cell({
@@ -22482,7 +22482,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle2("0cdd5d4fc6", "._02e2af5803bf5bda__grid-container{aspect-ratio:1;border:1px solid transparent;border-radius:4px;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);direction:ltr;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);outline:none}.c421f8ed08c23077__grid-row{box-sizing:border-box;display:grid;grid-column:1/-1;grid-template-columns:repeat(3,1fr)}._3af769f755097fdb__cell{align-items:center;appearance:none;border:none;box-sizing:border-box;display:flex;justify-content:center;margin:0;outline:none;padding:0;position:relative}._37ef12d4fb6d6131__point{aspect-ratio:1;border:3px solid;box-sizing:border-box;color:var(--wp-components-color-gray-400,#ccc);contain:strict;display:block;margin:auto;width:6px}._3af769f755097fdb__cell[data-active-item] ._37ef12d4fb6d6131__point{color:var(--wp-components-color-foreground,#1e1e1e);transform:scale(1.6666666667)}._3af769f755097fdb__cell:not([data-active-item]):hover ._37ef12d4fb6d6131__point{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}._3af769f755097fdb__cell[data-focus-visible] ._37ef12d4fb6d6131__point{outline:1px solid var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline-offset:1px}@media not (prefers-reduced-motion){._37ef12d4fb6d6131__point{transition-duration:.12s;transition-property:color,transform;transition-timing-function:linear}}");
+    registerStyle2("0c5e50ec66", "._02e2af5803bf5bda__grid-container{aspect-ratio:1;border:1px solid transparent;border-radius:4px;box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer);direction:ltr;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);outline:none}.c421f8ed08c23077__grid-row{box-sizing:border-box;display:grid;grid-column:1/-1;grid-template-columns:repeat(3,1fr)}._3af769f755097fdb__cell{align-items:center;appearance:none;border:none;box-sizing:border-box;display:flex;justify-content:center;margin:0;outline:none;padding:0;position:relative}._37ef12d4fb6d6131__point{aspect-ratio:1;border:3px solid;box-sizing:border-box;color:var(--wp-components-color-gray-400,var(--wpds-color-stroke-interactive-neutral,#8d8d8d));contain:strict;display:block;margin:auto;width:6px}._3af769f755097fdb__cell[data-active-item] ._37ef12d4fb6d6131__point{color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));transform:scale(1.6666666667)}._3af769f755097fdb__cell:not([data-active-item]):hover ._37ef12d4fb6d6131__point{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}._3af769f755097fdb__cell[data-focus-visible] ._37ef12d4fb6d6131__point{outline:1px solid var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline-offset:1px}@media not (prefers-reduced-motion){._37ef12d4fb6d6131__point{transition-duration:.12s;transition-property:color,transform;transition-timing-function:linear}}");
   }
   var style_module_default2 = { "grid-container": "_02e2af5803bf5bda__grid-container", "grid-row": "c421f8ed08c23077__grid-row", "cell": "_3af769f755097fdb__cell", "point": "_37ef12d4fb6d6131__point" };
   function UnforwardedAlignmentMatrixControl({
@@ -26718,7 +26718,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle3("e91ec3f005", "._8f57b8d483c51fbe__circle-root{border:1px solid var(--wp-components-color-gray-600,#949494);border-radius:50%;box-sizing:border-box;cursor:grab;height:32px;overflow:hidden;width:32px}._8f57b8d483c51fbe__circle-root:active{cursor:grabbing}.b1bae984ac10fcc3__circle-indicator-wrapper{box-sizing:border-box;height:100%;position:relative;width:100%}.b1bae984ac10fcc3__circle-indicator-wrapper:focus-visible{outline:none}._6d2fe0a2cbb31bf0__circle-indicator{background:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));border-radius:50%;box-sizing:border-box;display:block;height:6px;left:50%;position:absolute;top:4px;transform:translateX(-50%);width:6px}");
+    registerStyle3("cbb20ea39f", "._8f57b8d483c51fbe__circle-root{border:1px solid var(--wp-components-color-gray-600,var(--wpds-color-stroke-interactive-neutral,#8d8d8d));border-radius:50%;box-sizing:border-box;cursor:grab;height:32px;overflow:hidden;width:32px}._8f57b8d483c51fbe__circle-root:active{cursor:grabbing}.b1bae984ac10fcc3__circle-indicator-wrapper{box-sizing:border-box;height:100%;position:relative;width:100%}.b1bae984ac10fcc3__circle-indicator-wrapper:focus-visible{outline:none}._6d2fe0a2cbb31bf0__circle-indicator{background:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));border-radius:50%;box-sizing:border-box;display:block;height:6px;left:50%;position:absolute;top:4px;transform:translateX(-50%);width:6px}");
   }
   var style_module_default3 = { "circle-root": "_8f57b8d483c51fbe__circle-root", "circle-indicator-wrapper": "b1bae984ac10fcc3__circle-indicator-wrapper", "circle-indicator": "_6d2fe0a2cbb31bf0__circle-indicator" };
   function AngleCircle({
