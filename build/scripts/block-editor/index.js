@@ -44388,7 +44388,6 @@ var wp;
   // packages/block-editor/build-module/components/inspector-controls/fill.mjs
   var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
   var PATTERN_EDITING_GROUPS = ["content", "list"];
-  var TEMPLATE_PART_GROUPS = ["default", "settings", "advanced"];
   function InspectorControlsFill({
     children,
     group = "default",
@@ -44414,9 +44413,8 @@ var wp;
     }
     if (context[mayDisplayPatternEditingControlsKey]) {
       const isTemplatePart9 = context.name === "core/template-part";
-      const isTemplatePartGroup = TEMPLATE_PART_GROUPS.includes(group);
       const isPatternEditingGroup = PATTERN_EDITING_GROUPS.includes(group);
-      const canShowGroup = isTemplatePart9 && isTemplatePartGroup || isPatternEditingGroup;
+      const canShowGroup = isTemplatePart9 || isPatternEditingGroup;
       if (!canShowGroup) {
         return null;
       }
@@ -71698,7 +71696,7 @@ var wp;
           contentClientIds
         }
       ),
-      !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime403.jsxs)(import_jsx_runtime403.Fragment, { children: [
+      (!isSectionBlock2 || blockName === "core/template-part") && /* @__PURE__ */ (0, import_jsx_runtime403.jsxs)(import_jsx_runtime403.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(
           inspector_controls_default.Slot,
           {
