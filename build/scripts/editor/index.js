@@ -75993,7 +75993,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!previewCategory) {
         return { examples: examplesForSinglePageUse };
       }
-      if (blockVariation) {
+      if (blockVariation && filteredExamples?.examples?.length) {
         return {
           examples: applyBlockVariationsToExamples(
             filteredExamples.examples,
