@@ -6567,9 +6567,6 @@ return array(
 				'source' => 'rich-text',
 				'selector' => 'cite',
 				'role' => 'content'
-			),
-			'textAlign' => array(
-				'type' => 'string'
 			)
 		),
 		'supports' => array(
@@ -6606,6 +6603,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,

@@ -56790,6 +56790,110 @@ ${js}
     values.pop();
     return values.join("<br>");
   }
+  var v67 = {
+    attributes: {
+      value: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "p",
+        role: "content"
+      },
+      citation: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "cite",
+        role: "content"
+      },
+      textAlign: {
+        type: "string"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: ["left", "right", "wide", "full"],
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true
+        }
+      },
+      color: {
+        gradients: true,
+        background: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      dimensions: {
+        minHeight: true
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      __experimentalStyle: {
+        typography: {
+          fontSize: "1.5em",
+          lineHeight: "1.6"
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    save({ attributes: attributes2 }) {
+      const { textAlign, citation, value } = attributes2;
+      const shouldShowCitation = !import_block_editor207.RichText.isEmpty(citation);
+      return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
+        "figure",
+        {
+          ...import_block_editor207.useBlockProps.save({
+            className: clsx_default({
+              [`has-text-align-${textAlign}`]: textAlign
+            })
+          }),
+          children: /* @__PURE__ */ (0, import_jsx_runtime385.jsxs)("blockquote", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_block_editor207.RichText.Content, { tagName: "p", value }),
+            shouldShowCitation && /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_block_editor207.RichText.Content, { tagName: "cite", value: citation })
+          ] })
+        }
+      );
+    },
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    migrate: migrate_text_align_default
+  };
   var v57 = {
     attributes: {
       value: {
@@ -56874,10 +56978,10 @@ ${js}
       );
     },
     migrate({ value, ...attributes2 }) {
-      return {
+      return migrate_text_align_default({
         value: multilineToInline(value),
         ...attributes2
-      };
+      });
     }
   };
   var v49 = {
@@ -56989,7 +57093,7 @@ ${js}
           text: customTextColor
         };
       }
-      return {
+      return migrate_text_align_default({
         value: multilineToInline(value),
         className,
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
@@ -56997,7 +57101,7 @@ ${js}
         textAlign: isSolidColorStyle ? "left" : void 0,
         ...attributes2,
         style: style2
-      };
+      });
     }
   };
   var v39 = {
@@ -57114,7 +57218,7 @@ ${js}
           };
         }
       }
-      return {
+      return migrate_text_align_default({
         value: multilineToInline(value),
         className,
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
@@ -57122,7 +57226,7 @@ ${js}
         textAlign: isSolidColorStyle ? "left" : void 0,
         ...attributes2,
         style: style2
-      };
+      });
     }
   };
   var v215 = {
@@ -57211,7 +57315,7 @@ ${js}
           text: customTextColor
         };
       }
-      return {
+      return migrate_text_align_default({
         value: multilineToInline(value),
         className,
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
@@ -57219,7 +57323,7 @@ ${js}
         textAlign: isSolidColorStyle ? "left" : void 0,
         ...attributes2,
         style: style2
-      };
+      });
     }
   };
   var v138 = {
@@ -57267,7 +57371,7 @@ ${js}
       };
     }
   };
-  var deprecated_default41 = [v57, v49, v39, v215, v138, v02];
+  var deprecated_default41 = [v67, v57, v49, v39, v215, v138, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n187 = __toESM(require_i18n(), 1);
@@ -57282,69 +57386,51 @@ ${js}
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
-  function PullQuoteEdit({
-    attributes: attributes2,
-    setAttributes,
-    isSelected,
-    insertBlocksAfter
-  }) {
-    const { textAlign, citation, value } = attributes2;
-    const blockProps = (0, import_block_editor208.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+  function PullQuoteEdit(props) {
+    const { attributes: attributes2, setAttributes, isSelected, insertBlocksAfter } = props;
+    useDeprecatedTextAlign(props);
+    const { citation, value } = attributes2;
+    const blockProps = (0, import_block_editor208.useBlockProps)();
     const shouldShowCitation = !import_block_editor208.RichText.isEmpty(citation) || isSelected;
-    return /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(import_jsx_runtime386.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_block_editor208.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
-        import_block_editor208.AlignmentControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_jsx_runtime386.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(Figure, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(BlockQuote, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
+        import_block_editor208.RichText,
         {
-          value: textAlign,
-          onChange: (nextAlign) => {
-            setAttributes({ textAlign: nextAlign });
-          }
+          identifier: "value",
+          tagName: "p",
+          value,
+          onChange: (nextValue) => setAttributes({
+            value: nextValue
+          }),
+          "aria-label": (0, import_i18n187.__)("Pullquote text"),
+          placeholder: (
+            // translators: placeholder text used for the quote
+            (0, import_i18n187.__)("Add quote")
+          )
         }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(Figure, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(BlockQuote, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
-          import_block_editor208.RichText,
-          {
-            identifier: "value",
-            tagName: "p",
-            value,
-            onChange: (nextValue) => setAttributes({
-              value: nextValue
-            }),
-            "aria-label": (0, import_i18n187.__)("Pullquote text"),
-            placeholder: (
-              // translators: placeholder text used for the quote
-              (0, import_i18n187.__)("Add quote")
-            )
-          }
-        ),
-        shouldShowCitation && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
-          import_block_editor208.RichText,
-          {
-            identifier: "citation",
-            tagName: "cite",
-            style: { display: "block" },
-            value: citation,
-            "aria-label": (0, import_i18n187.__)("Pullquote citation text"),
-            placeholder: (
-              // translators: placeholder text used for the citation
-              (0, import_i18n187.__)("Add citation")
-            ),
-            onChange: (nextCitation) => setAttributes({
-              citation: nextCitation
-            }),
-            className: "wp-block-pullquote__citation",
-            __unstableOnSplitAtEnd: () => insertBlocksAfter(
-              (0, import_blocks92.createBlock)((0, import_blocks92.getDefaultBlockName)())
-            )
-          }
-        )
-      ] }) })
-    ] });
+      ),
+      shouldShowCitation && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
+        import_block_editor208.RichText,
+        {
+          identifier: "citation",
+          tagName: "cite",
+          style: { display: "block" },
+          value: citation,
+          "aria-label": (0, import_i18n187.__)("Pullquote citation text"),
+          placeholder: (
+            // translators: placeholder text used for the citation
+            (0, import_i18n187.__)("Add citation")
+          ),
+          onChange: (nextCitation) => setAttributes({
+            citation: nextCitation
+          }),
+          className: "wp-block-pullquote__citation",
+          __unstableOnSplitAtEnd: () => insertBlocksAfter(
+            (0, import_blocks92.createBlock)((0, import_blocks92.getDefaultBlockName)())
+          )
+        }
+      )
+    ] }) }) });
   }
   var edit_default30 = PullQuoteEdit;
 
@@ -57369,9 +57455,6 @@ ${js}
         source: "rich-text",
         selector: "cite",
         role: "content"
-      },
-      textAlign: {
-        type: "string"
       }
     },
     supports: {
@@ -57403,6 +57486,7 @@ ${js}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -57443,22 +57527,12 @@ ${js}
   var import_block_editor209 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
   function save40({ attributes: attributes2 }) {
-    const { textAlign, citation, value } = attributes2;
+    const { citation, value } = attributes2;
     const shouldShowCitation = !import_block_editor209.RichText.isEmpty(citation);
-    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
-      "figure",
-      {
-        ...import_block_editor209.useBlockProps.save({
-          className: clsx_default({
-            [`has-text-align-${textAlign}`]: textAlign
-          })
-        }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)("blockquote", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_block_editor209.RichText.Content, { tagName: "p", value }),
-          shouldShowCitation && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_block_editor209.RichText.Content, { tagName: "cite", value: citation })
-        ] })
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)("figure", { ...import_block_editor209.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)("blockquote", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_block_editor209.RichText.Content, { tagName: "p", value }),
+      shouldShowCitation && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_block_editor209.RichText.Content, { tagName: "cite", value: citation })
+    ] }) });
   }
 
   // packages/block-library/build-module/pullquote/transforms.mjs
@@ -60052,7 +60126,7 @@ ${js}
     },
     migrate: migrateDisplayLayout
   };
-  var v67 = {
+  var v68 = {
     attributes: {
       queryId: {
         type: "number"
@@ -60108,7 +60182,7 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v410, v310, v216, v139];
+  var deprecated14 = [v68, v58, v410, v310, v216, v139];
   var deprecated_default42 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
