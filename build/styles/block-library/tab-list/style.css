@@ -1,4 +1,4 @@
-.wp-block-tab {
+:where(.wp-block-tab-list button) {
   box-sizing: border-box;
   color: inherit;
   display: block;
@@ -24,12 +24,12 @@
   text-transform: inherit;
   text-align: inherit;
 }
-.wp-block-tab[aria-selected=true]::before, .wp-block-tab.is-active::before {
+:where(.wp-block-tab-list button)[aria-selected=true]::before, :where(.wp-block-tab-list button).is-active::before {
   content: "";
   position: absolute;
   border-bottom: 2px solid currentColor;
   pointer-events: none;
-  right: 0;
+  left: 0;
   width: 100%;
   bottom: 0;
 }

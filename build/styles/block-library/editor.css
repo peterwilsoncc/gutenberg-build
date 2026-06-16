@@ -2369,23 +2369,19 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   width: 112px;
 }
 
-.wp-block-tab-list > .block-editor-block-list__layout {
-  display: contents;
+.wp-block-tab-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5em;
 }
-.wp-block-tab-list .block-editor-block-list__block:has(> .wp-block-tab) {
-  display: contents;
-}
-
-.wp-block-tab.is-selected {
-  outline-offset: 2px;
-}
-
-.block-editor-block-preview__live-content:has(.wp-block-tab) {
-  flex-basis: inherit !important;
-  flex-grow: inherit !important;
-}
-.block-editor-block-preview__live-content:has(.wp-block-tab) .wp-block-tab {
-  flex-basis: 100% !important;
+.wp-block-tab-list button.is-active::before {
+  content: "";
+  position: absolute;
+  border-bottom: 2px solid currentColor;
+  pointer-events: none;
+  left: 0;
+  width: 100%;
+  bottom: 0;
 }
 
 .block-editor-template-part__selection-modal {
