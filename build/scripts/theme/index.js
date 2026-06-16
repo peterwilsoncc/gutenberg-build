@@ -3137,7 +3137,9 @@ var wp;
     "caution-surface2": ["background-surface-caution-weak"],
     "caution-surface4": ["background-surface-caution"],
     "caution-fgSurface4": ["foreground-content-caution"],
-    "caution-fgSurface3": ["foreground-content-caution-weak"]
+    "caution-fgSurface3": ["foreground-content-caution-weak"],
+    "caution-stroke3": ["stroke-surface-caution-strong"],
+    "caution-stroke1": ["stroke-surface-caution"]
   };
 
   // packages/theme/build-module/color-ramps/lib/color-utils.mjs
