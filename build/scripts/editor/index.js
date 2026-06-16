@@ -45464,7 +45464,7 @@ If there's a particular need for this, please submit a feature request at https:
       height: edgeBottom - edgeTop
     };
   }
-  function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio, minCropSize = DEFAULT_MIN_CROP_SIZE) {
+  function computeLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, normalizedRatio, minCropSize = DEFAULT_MIN_CROP_SIZE, driverAxis) {
     if (normalizedRatio <= 0 || imageSize.width <= 0 || imageSize.height <= 0) {
       return { ...drag2.startRect };
     }
@@ -45487,10 +45487,9 @@ If there's a particular need for this, please submit a feature request at https:
     const minDistH = minDistW / normalizedRatio;
     distW = Math.max(distW, minDistW);
     distH = Math.max(distH, minDistH);
-    const pixelDistW = distW * imageSize.width;
-    const pixelDistH = distH * imageSize.height;
     const pixelRatio = normalizedRatio * imageSize.width / imageSize.height;
-    if (pixelDistW / pixelDistH > pixelRatio) {
+    const isWidthDriver = driverAxis === "width" || !driverAxis && distW * imageSize.width / (distH * imageSize.height) > pixelRatio;
+    if (isWidthDriver) {
       distH = distW / normalizedRatio;
     } else {
       distW = distH * normalizedRatio;
@@ -46678,14 +46677,15 @@ If there's a particular need for this, please submit a feature request at https:
       [imageSize, bounds, minCropSize]
     );
     const computeLockedRect = (0, import_element141.useCallback)(
-      (drag2, clientX, clientY) => computeLockedResizeRect(
+      (drag2, clientX, clientY, driverAxis) => computeLockedResizeRect(
         drag2,
         clientX,
         clientY,
         imageSize,
         bounds,
         normalizedRatio,
-        minCropSize
+        minCropSize,
+        driverAxis
       ),
       [imageSize, bounds, normalizedRatio, minCropSize]
     );
@@ -46753,6 +46753,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (key === "ArrowDown") {
           dy = adjustedStepY;
         }
+        const keyboardDriverAxis = dx !== 0 ? "width" : "height";
         if (hasLockedRatio) {
           const syntheticDrag = {
             handle,
@@ -46763,7 +46764,12 @@ If there's a particular need for this, please submit a feature request at https:
           const clientX = dx * imageSize.width;
           const clientY = dy * imageSize.height;
           onCropChange(
-            computeLockedRect(syntheticDrag, clientX, clientY)
+            computeLockedRect(
+              syntheticDrag,
+              clientX,
+              clientY,
+              keyboardDriverAxis
+            )
           );
           scheduleKeyboardResizeEnd();
         } else {
