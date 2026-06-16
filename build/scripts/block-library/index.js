@@ -13227,7 +13227,7 @@ var wp;
     ] });
   }
   function Placeholder4({ clientId, name: name122, setAttributes }) {
-    const { blockType, variations: variations18 } = (0, import_data17.useSelect)(
+    const { blockType, variations: variations19 } = (0, import_data17.useSelect)(
       (select9) => {
         const { getBlockVariations: getBlockVariations4, getBlockType: getBlockType5 } = select9(import_blocks18.store);
         return {
@@ -13244,7 +13244,7 @@ var wp;
       {
         icon: blockType?.icon?.src,
         label: blockType?.title,
-        variations: variations18,
+        variations: variations19,
         instructions: (0, import_i18n27.__)("Divide into columns. Select a layout:"),
         onSelect: (nextVariation) => {
           if (nextVariation.attributes) {
@@ -28382,7 +28382,7 @@ ${url}
     return [showPlaceholder, setShowPlaceholder];
   }
   function GroupPlaceHolder({ name: name122, onSelect }) {
-    const variations18 = (0, import_data37.useSelect)(
+    const variations19 = (0, import_data37.useSelect)(
       (select9) => select9(import_blocks32.store).getBlockVariations(name122, "block"),
       [name122]
     );
@@ -28390,10 +28390,10 @@ ${url}
       className: "wp-block-group__placeholder"
     });
     (0, import_element36.useEffect)(() => {
-      if (variations18 && variations18.length === 1) {
-        onSelect(variations18[0]);
+      if (variations19 && variations19.length === 1) {
+        onSelect(variations19[0]);
       }
-    }, [onSelect, variations18]);
+    }, [onSelect, variations19]);
     return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
       import_components47.Placeholder,
       {
@@ -28404,7 +28404,7 @@ ${url}
             role: "list",
             className: "wp-block-group-placeholder__variations",
             "aria-label": (0, import_i18n78.__)("Block variations"),
-            children: variations18.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
+            children: variations19.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
               import_components47.Button,
               {
                 __next40pxDefaultSize: true,
@@ -30492,7 +30492,7 @@ ${js}
       ]
     }
   );
-  function Edit16({ attributes: attributes2, setAttributes, clientId }) {
+  function Edit16({ attributes: attributes2, setAttributes }) {
     const { icon: icon4, ariaLabel, flipHorizontal, flipVertical, rotation } = attributes2;
     const [isInserterOpen, setInserterOpen] = (0, import_element44.useState)(false);
     const isContentOnlyMode = (0, import_block_editor110.useBlockEditingMode)() === "contentOnly";
@@ -30510,22 +30510,6 @@ ${js}
       },
       [isInserterOpen, icon4]
     );
-    const wasJustInserted = (0, import_data43.useSelect)(
-      (select9) => select9(import_block_editor110.store).wasBlockJustInserted(clientId),
-      [clientId]
-    );
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data43.useDispatch)(import_block_editor110.store);
-    (0, import_element44.useEffect)(() => {
-      if (!icon4 && wasJustInserted) {
-        __unstableMarkNextChangeAsNotPersistent();
-        setAttributes({ icon: "core/info" });
-      }
-    }, [
-      icon4,
-      wasJustInserted,
-      setAttributes,
-      __unstableMarkNextChangeAsNotPersistent
-    ]);
     const iconToDisplay = selectedIcon?.content || "";
     const flipClasses = {
       "is-flip-horizontal": flipHorizontal,
@@ -30787,6 +30771,16 @@ ${js}
   var icon3 = /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components56.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", fill: "none", children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components56.Path, { d: "M6 9.5h3.5V6H6v3.5Zm5 .5a1 1 0 0 1-.898.995L10 11H5.5l-.103-.005a1 1 0 0 1-.892-.893L4.5 10V5.5a1 1 0 0 1 1-1H10a1 1 0 0 1 1 1V10ZM18.25 7.75a2 2 0 1 0-4 0 2 2 0 0 0 4 0Zm1.5 0a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM6.88 13.535a1 1 0 0 1 1.74 0l2.534 4.472a1 1 0 0 1-.87 1.493H5.216a1 1 0 0 1-.87-1.493l2.534-4.472ZM6.074 18h3.352L7.75 15.041l-1.676 2.96ZM14.952 13h2.596a1 1 0 0 1 .866.5l1.298 2.25a1 1 0 0 1 0 1L18.414 19l-.074.11a1 1 0 0 1-.792.39h-2.596a1 1 0 0 1-.792-.39l-.074-.11-1.298-2.25a1.001 1.001 0 0 1 0-1l1.298-2.25a1 1 0 0 1 .866-.5Zm-.72 3.25 1.01 1.75h2.017l1.009-1.75-1.01-1.75h-2.017l-1.01 1.75Z" }) });
   var icon_default2 = icon3;
 
+  // packages/block-library/build-module/icon/variations.mjs
+  var variations10 = [
+    {
+      name: "default",
+      isDefault: true,
+      attributes: { icon: "core/info" }
+    }
+  ];
+  var variations_default10 = variations10;
+
   // packages/block-library/build-module/icon/index.mjs
   var { name: name43 } = block_default43;
   var settings43 = {
@@ -30801,6 +30795,7 @@ ${js}
         }
       }
     },
+    variations: variations_default10,
     edit: edit_default17
   };
   var init43 = () => initBlock({ name: name43, metadata: block_default43, settings: settings43 });
@@ -46327,7 +46322,7 @@ ${js}
       const isActive = (blockAttributes8, variationAttributes) => {
         return blockAttributes8.type === variationAttributes.type;
       };
-      const variations18 = settings121.variations.map((variation) => {
+      const variations19 = settings121.variations.map((variation) => {
         return {
           ...variation,
           ...!variation.icon && {
@@ -46340,7 +46335,7 @@ ${js}
       });
       return {
         ...settings121,
-        variations: variations18
+        variations: variations19
       };
     }
     return settings121;
@@ -53438,7 +53433,7 @@ ${js}
 
   // packages/block-library/build-module/post-date/variations.mjs
   var import_i18n172 = __toESM(require_i18n(), 1);
-  var variations10 = [
+  var variations11 = [
     {
       name: "post-date",
       title: (0, import_i18n172.__)("Post Date"),
@@ -53475,7 +53470,7 @@ ${js}
       isActive: (blockAttributes8) => blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && blockAttributes8?.metadata?.bindings?.datetime?.args?.field === "modified"
     }
   ];
-  var variations_default10 = variations10;
+  var variations_default11 = variations11;
 
   // packages/block-library/build-module/post-date/index.mjs
   var { name: name74 } = block_default73;
@@ -53483,7 +53478,7 @@ ${js}
     icon: post_date_default,
     edit: PostDateEdit,
     deprecated: deprecated_default35,
-    variations: variations_default10
+    variations: variations_default11
   };
   var init73 = () => initBlock({ name: name74, metadata: block_default73, settings: settings73 });
 
@@ -54909,7 +54904,7 @@ ${js}
 
   // packages/block-library/build-module/post-navigation-link/variations.mjs
   var import_i18n178 = __toESM(require_i18n(), 1);
-  var variations11 = [
+  var variations12 = [
     {
       name: "post-previous",
       title: (0, import_i18n178.__)("Previous Post"),
@@ -54944,13 +54939,13 @@ ${js}
       }
     }
   ];
-  variations11.forEach((variation) => {
+  variations12.forEach((variation) => {
     if (variation.isActive) {
       return;
     }
     variation.isActive = (blockAttributes8, variationAttributes) => blockAttributes8.type === variationAttributes.type;
   });
-  var variations_default11 = variations11;
+  var variations_default12 = variations12;
 
   // packages/block-library/build-module/post-navigation-link/deprecated.mjs
   var v134 = {
@@ -55021,7 +55016,7 @@ ${js}
   var { name: name77 } = block_default76;
   var settings76 = {
     edit: PostNavigationLinkEdit,
-    variations: variations_default11,
+    variations: variations_default12,
     deprecated: deprecated_default37,
     example: {
       attributes: {
@@ -55679,7 +55674,7 @@ ${js}
     if (name122 !== "core/post-terms") {
       return settings121;
     }
-    const variations18 = settings121.variations.map((variation) => ({
+    const variations19 = settings121.variations.map((variation) => ({
       ...variation,
       ...{
         icon: variationIconMap[variation.name] ?? post_categories_default
@@ -55687,7 +55682,7 @@ ${js}
     }));
     return {
       ...settings121,
-      variations: variations18
+      variations: variations19
     };
   }
 
@@ -55993,7 +55988,7 @@ ${js}
 
   // packages/block-library/build-module/post-time-to-read/variations.mjs
   var import_i18n183 = __toESM(require_i18n(), 1);
-  var variations12 = [
+  var variations13 = [
     {
       name: "time-to-read",
       title: (0, import_i18n183.__)("Time to Read"),
@@ -56018,7 +56013,7 @@ ${js}
       icon: word_count_default
     }
   ];
-  var variations_default12 = variations12;
+  var variations_default13 = variations13;
 
   // packages/block-library/build-module/post-time-to-read/deprecated.mjs
   var v136 = {
@@ -56087,7 +56082,7 @@ ${js}
   var settings79 = {
     icon: time_default,
     edit: edit_default29,
-    variations: variations_default12,
+    variations: variations_default13,
     example: {},
     deprecated: deprecated_default39
   };
@@ -57985,7 +57980,7 @@ ${js}
       },
       [attributes2]
     );
-    const variations18 = (0, import_element106.useMemo)(() => {
+    const variations19 = (0, import_element106.useMemo)(() => {
       const isNotConnected = (variation) => !variation.attributes?.namespace;
       if (!activeVariationName) {
         return blockVariations.filter(isNotConnected);
@@ -57998,7 +57993,7 @@ ${js}
       }
       return blockVariations.filter(isNotConnected);
     }, [activeVariationName, blockVariations]);
-    return variations18;
+    return variations19;
   }
   var usePatterns = (clientId, name122) => {
     return (0, import_data114.useSelect)(
@@ -59615,7 +59610,7 @@ ${js}
       }
     }
   ];
-  var variations13 = [
+  var variations14 = [
     {
       name: "title-date",
       title: (0, import_i18n206.__)("Title & Date"),
@@ -59681,7 +59676,7 @@ ${js}
       scope: ["block"]
     }
   ];
-  var variations_default13 = variations13;
+  var variations_default14 = variations14;
 
   // packages/block-library/build-module/query/deprecated.mjs
   var import_blocks97 = __toESM(require_blocks(), 1);
@@ -60241,7 +60236,7 @@ ${js}
       ]
     },
     save: save41,
-    variations: variations_default13,
+    variations: variations_default14,
     deprecated: deprecated_default42
   };
   var init83 = () => initBlock({ name: name84, metadata: block_default83, settings: settings83 });
@@ -61366,7 +61361,7 @@ ${js}
 
   // packages/block-library/build-module/query-title/variations.mjs
   var import_i18n216 = __toESM(require_i18n(), 1);
-  var variations14 = [
+  var variations15 = [
     {
       isDefault: true,
       name: "archive-title",
@@ -61407,13 +61402,13 @@ ${js}
       scope: ["inserter"]
     }
   ];
-  variations14.forEach((variation) => {
+  variations15.forEach((variation) => {
     if (variation.isActive) {
       return;
     }
     variation.isActive = (blockAttributes8, variationAttributes) => blockAttributes8.type === variationAttributes.type;
   });
-  var variations_default14 = variations14;
+  var variations_default15 = variations15;
 
   // packages/block-library/build-module/query-title/deprecated.mjs
   var v217 = {
@@ -61527,7 +61522,7 @@ ${js}
   var settings89 = {
     icon: title_default,
     edit: QueryTitleEdit,
-    variations: variations_default14,
+    variations: variations_default15,
     deprecated: deprecated_default44
   };
   var init89 = () => initBlock({ name: name90, metadata: block_default89, settings: settings89 });
@@ -63912,14 +63907,14 @@ ${js}
 
   // packages/block-library/build-module/search/variations.mjs
   var import_i18n225 = __toESM(require_i18n(), 1);
-  var variations15 = [
+  var variations16 = [
     {
       name: "default",
       isDefault: true,
       attributes: { buttonText: (0, import_i18n225.__)("Search"), label: (0, import_i18n225.__)("Search") }
     }
   ];
-  var variations_default15 = variations15;
+  var variations_default16 = variations16;
 
   // packages/block-library/build-module/search/index.mjs
   var { fieldsKey: fieldsKey17, formKey: formKey17 } = unlock(import_blocks102.privateApis);
@@ -63930,7 +63925,7 @@ ${js}
       attributes: { buttonText: (0, import_i18n226.__)("Search"), label: (0, import_i18n226.__)("Search") },
       viewportWidth: 400
     },
-    variations: variations_default15,
+    variations: variations_default16,
     edit: SearchEdit
   };
   if (window.__experimentalContentOnlyInspectorFields) {
@@ -66274,7 +66269,7 @@ ${js}
 
   // packages/block-library/build-module/social-link/variations.mjs
   var import_i18n234 = __toESM(require_i18n(), 1);
-  var variations16 = [
+  var variations17 = [
     {
       isDefault: true,
       name: "wordpress",
@@ -66569,13 +66564,13 @@ ${js}
       icon: YouTubeIcon
     }
   ];
-  variations16.forEach((variation) => {
+  variations17.forEach((variation) => {
     if (variation.isActive) {
       return;
     }
     variation.isActive = (blockAttributes8, variationAttributes) => blockAttributes8.service === variationAttributes.service;
   });
-  var variations_default16 = variations16;
+  var variations_default17 = variations17;
 
   // packages/block-library/build-module/social-link/index.mjs
   var { fieldsKey: fieldsKey18, formKey: formKey18 } = unlock(import_blocks110.privateApis);
@@ -66583,7 +66578,7 @@ ${js}
   var settings101 = {
     icon: share_default,
     edit: edit_default32,
-    variations: variations_default16
+    variations: variations_default17
   };
   if (window.__experimentalContentOnlyInspectorFields) {
     settings101[fieldsKey18] = [
@@ -72377,7 +72372,7 @@ ${js}
         }
         return entity?.area === variationAttributes.area;
       };
-      const variations18 = settings121.variations.map((variation) => {
+      const variations19 = settings121.variations.map((variation) => {
         return {
           ...variation,
           ...!variation.isActive && { isActive },
@@ -72388,7 +72383,7 @@ ${js}
       });
       return {
         ...settings121,
-        variations: variations18
+        variations: variations19
       };
     }
     return settings121;
@@ -73829,7 +73824,7 @@ ${js}
       isLink: true
     }
   ];
-  var variations17 = [
+  var variations18 = [
     {
       name: "name",
       title: (0, import_i18n265.__)("Name"),
@@ -73863,7 +73858,7 @@ ${js}
       ]
     }
   ];
-  var variations_default17 = variations17;
+  var variations_default18 = variations18;
 
   // packages/block-library/build-module/terms-query/index.mjs
   var { name: name116 } = block_default115;
@@ -73872,7 +73867,7 @@ ${js}
     edit: edit_default39,
     save: save54,
     example: {},
-    variations: variations_default17
+    variations: variations_default18
   };
   var init115 = () => initBlock({ name: name116, metadata: block_default115, settings: settings115 });
 
