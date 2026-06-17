@@ -44411,14 +44411,6 @@ ${js}
       },
       [setAttributes]
     );
-    (0, import_element83.useEffect)(() => {
-      if (orientation === "horizontal" && submenuVisibility === "always") {
-        setAttributes({
-          submenuVisibility: "hover",
-          showSubmenuIcon: true
-        });
-      }
-    }, [orientation, submenuVisibility, setAttributes]);
     const recursionId = `navigationMenu/${ref}`;
     const recursionDetected = (0, import_block_editor161.useHasRecursion)(recursionId);
     const {
@@ -44476,6 +44468,20 @@ ${js}
       isInnerBlockSelected,
       innerBlocks
     } = useInnerBlocks(clientId);
+    (0, import_element83.useEffect)(() => {
+      if ((isSelected || isInnerBlockSelected) && orientation === "horizontal" && submenuVisibility === "always") {
+        setAttributes({
+          submenuVisibility: "hover",
+          showSubmenuIcon: true
+        });
+      }
+    }, [
+      isSelected,
+      isInnerBlockSelected,
+      orientation,
+      submenuVisibility,
+      setAttributes
+    ]);
     const hasPageListWithSubmenuRef = (0, import_element83.useRef)(false);
     const hasSubmenus = (0, import_data86.useSelect)(
       (select9) => {
