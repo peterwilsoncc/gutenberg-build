@@ -416,7 +416,7 @@ var wp;
     createRegistry: () => createRegistry,
     createRegistryControl: () => createRegistryControl,
     createRegistrySelector: () => createRegistrySelector,
-    createSelector: () => createSelector,
+    createSelector: () => rememo_default,
     dispatch: () => dispatch2,
     keyedReducer: () => keyedReducer,
     plugins: () => plugins_exports,
@@ -1090,9 +1090,6 @@ var wp;
     );
   }
 
-  // packages/data/build-module/create-selector.mjs
-  var createSelector = rememo_default;
-
   // packages/data/build-module/redux-store/metadata/selectors.mjs
   function getResolutionState(state, selectorName, args) {
     const map = state[selectorName];
@@ -1146,7 +1143,7 @@ var wp;
       )
     );
   }
-  var countSelectorsByStatus = createSelector(
+  var countSelectorsByStatus = rememo_default(
     (state) => {
       const selectorsByStatus = {};
       Object.values(state).forEach(

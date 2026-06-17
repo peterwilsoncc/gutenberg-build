@@ -95,14 +95,22 @@ var { actions: privateActions, state: privateState } = store(
        * @param {KeyboardEvent} event The keydown event.
        */
       handleTabKeyDown: withSyncEvent((event) => {
+        const context = getContext();
+        const { isVertical } = context;
         const { tabIndex } = privateState;
         if (tabIndex === null) {
           return;
         }
-        if (event.key === "ArrowRight") {
+        if (event.key === "ArrowRight" && !isVertical) {
           event.preventDefault();
           privateActions.moveFocus(tabIndex + 1);
-        } else if (event.key === "ArrowLeft") {
+        } else if (event.key === "ArrowLeft" && !isVertical) {
+          event.preventDefault();
+          privateActions.moveFocus(tabIndex - 1);
+        } else if (event.key === "ArrowDown" && isVertical) {
+          event.preventDefault();
+          privateActions.moveFocus(tabIndex + 1);
+        } else if (event.key === "ArrowUp" && isVertical) {
           event.preventDefault();
           privateActions.moveFocus(tabIndex - 1);
         }

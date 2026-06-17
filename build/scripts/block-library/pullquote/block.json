@@ -18,6 +18,9 @@
 			"source": "rich-text",
 			"selector": "cite",
 			"role": "content"
+		},
+		"textAlign": {
+			"type": "string"
 		}
 	},
 	"supports": {
@@ -49,7 +52,6 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,

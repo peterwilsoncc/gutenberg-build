@@ -22,6 +22,7 @@
 	"supports": {
 		"anchor": true,
 		"html": false,
+		"reusable": false,
 		"color": {
 			"background": true,
 			"text": true,
@@ -33,7 +34,8 @@
 		"layout": true,
 		"spacing": {
 			"blockGap": true,
-			"padding": true
+			"padding": true,
+			"margin": false
 		},
 		"typography": {
 			"fontSize": true,
@@ -43,10 +45,12 @@
 				"__experimentalFontFamily": true
 			}
 		},
+		"renaming": true,
 		"visibility": false
 	},
 	"providesContext": {
 		"core/tab-label": "label"
 	},
-	"style": "wp-block-tab-panel"
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
 }

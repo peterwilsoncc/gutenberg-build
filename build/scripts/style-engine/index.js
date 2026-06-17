@@ -345,18 +345,7 @@ var wp;
       );
     }
   };
-  var objectFit = {
-    name: "objectFit",
-    generate: (style, options) => {
-      return generateRule(
-        style,
-        options,
-        ["dimensions", "objectFit"],
-        "objectFit"
-      );
-    }
-  };
-  var dimensions_default = [height, minHeight, minWidth, aspectRatio, width2, objectFit];
+  var dimensions_default = [height, minHeight, minWidth, aspectRatio, width2];
 
   // packages/style-engine/build-module/styles/background/index.mjs
   var backgroundImage = {
