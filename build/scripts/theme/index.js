@@ -4347,7 +4347,7 @@ var wp;
         "div",
         {
           "data-wpds-theme-provider-id": instanceId,
-          "data-wpds-root-provider": isRoot,
+          "data-wpds-root-provider": isRoot || void 0,
           "data-wpds-corner-radius": cornerRadiusPreset,
           className: style_default.root,
           children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeContext.Provider, { value: contextValue, children })
