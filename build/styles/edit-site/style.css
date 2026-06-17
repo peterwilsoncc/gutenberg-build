@@ -4606,11 +4606,6 @@ button.font-library__upload-area {
 .edit-site-list__rename-modal {
   z-index: 1000001;
 }
-@media (min-width: 782px) {
-  .edit-site-list__rename-modal .components-base-control {
-    width: 320px;
-  }
-}
 
 .edit-site-editor__editor-interface {
   opacity: 1;
