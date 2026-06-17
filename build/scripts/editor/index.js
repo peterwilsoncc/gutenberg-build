@@ -271,7 +271,7 @@ var wp;
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect14(
+          useLayoutEffect15(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -279,7 +279,7 @@ var wp;
             },
             [subscribe3, value, getSnapshot]
           );
-          useEffect113(
+          useEffect112(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe3(function() {
@@ -305,7 +305,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React62 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState152 = React62.useState, useEffect113 = React62.useEffect, useLayoutEffect14 = React62.useLayoutEffect, useDebugValue2 = React62.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React62 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState152 = React62.useState, useEffect112 = React62.useEffect, useLayoutEffect15 = React62.useLayoutEffect, useDebugValue2 = React62.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React62.useSyncExternalStore ? React62.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -333,7 +333,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React62 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore5 = shim.useSyncExternalStore, useRef106 = React62.useRef, useEffect113 = React62.useEffect, useMemo142 = React62.useMemo, useDebugValue2 = React62.useDebugValue;
+        var React62 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore5 = shim.useSyncExternalStore, useRef106 = React62.useRef, useEffect112 = React62.useEffect, useMemo142 = React62.useMemo, useDebugValue2 = React62.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe3, getSnapshot, getServerSnapshot, selector2, isEqual2) {
           var instRef = useRef106(null);
           if (null === instRef.current) {
@@ -376,7 +376,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector2, isEqual2]
           );
           var value = useSyncExternalStore5(subscribe3, instRef[0], instRef[1]);
-          useEffect113(
+          useEffect112(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -93402,6 +93402,23 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const [actionState, setActionState] = (0, import_element322.useState)(null);
     const actionButtonRef = (0, import_element322.useRef)(null);
+    const commentRef = (0, import_element322.useRef)(null);
+    const rawContent = note?.content?.raw;
+    const [prevContent, setPrevContent] = (0, import_element322.useState)(rawContent);
+    const [isExpanded, setIsExpanded] = (0, import_element322.useState)(false);
+    const [isOverflowing, setIsOverflowing] = (0, import_element322.useState)(false);
+    if (prevContent !== rawContent) {
+      setPrevContent(rawContent);
+      setIsExpanded(false);
+    }
+    (0, import_element322.useLayoutEffect)(() => {
+      const commentElement = commentRef.current;
+      if (commentElement) {
+        setIsOverflowing(
+          commentElement.scrollHeight > commentElement.clientHeight
+        );
+      }
+    }, [rawContent]);
     const canResolve = note.parent === 0;
     const isResolutionNote = note.type === "note" && note.meta && (note.meta._wp_note_status === "resolved" || note.meta._wp_note_status === "reopen");
     const menuItems = [
@@ -93428,35 +93445,6 @@ If there's a particular need for this, please submit a feature request at https:
     const deleteConfirmMessage = note.parent === 0 ? (0, import_i18n323.__)(
       "Are you sure you want to delete this note? This will also delete all of this note's replies."
     ) : (0, import_i18n323.__)("Are you sure you want to delete this reply?");
-    const prevContentRef = (0, import_element322.useRef)(note?.content?.raw);
-    const commentRef = (0, import_element322.useRef)(null);
-    const [isOverflowing, setIsOverflowing] = (0, import_element322.useState)(false);
-    const [collapsed, setCollapsed] = (0, import_element322.useState)(true);
-    (0, import_element322.useEffect)(() => {
-      if (prevContentRef.current !== note?.content?.raw) {
-        setCollapsed(true);
-      }
-    }, [note?.content?.raw]);
-    (0, import_element322.useEffect)(() => {
-      if (!collapsed) {
-        return;
-      }
-      const commentElement = commentRef.current;
-      if (!commentElement) {
-        return;
-      }
-      const isEdit = prevContentRef.current !== note?.content?.raw;
-      prevContentRef.current = note?.content?.raw;
-      if (commentElement.scrollHeight > commentElement.clientHeight) {
-        setIsOverflowing(true);
-        if (isEdit) {
-          setCollapsed(false);
-        }
-      } else {
-        setIsOverflowing(false);
-        setCollapsed(null);
-      }
-    }, [collapsed, note?.content?.raw]);
     const handleCancel = () => {
       setActionState(null);
       actionButtonRef.current?.focus();
@@ -93504,9 +93492,9 @@ If there's a particular need for this, please submit a feature request at https:
           ref: commentRef,
           className: clsx_default("editor-collab-sidebar-panel__note-content", {
             "editor-collab-sidebar-panel__resolution-text": isResolutionNote,
-            "is-collapsed": collapsed
+            "is-collapsed": !isExpanded
           }),
-          children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_element322.RawHTML, { children: content })
+          dangerouslySetInnerHTML: { __html: content ?? "" }
         }
       );
     }
@@ -93557,8 +93545,8 @@ If there's a particular need for this, please submit a feature request at https:
               className: "editor-collab-sidebar-panel__show-more-button",
               variant: "unstyled",
               size: "small",
-              onClick: () => setCollapsed(!collapsed),
-              children: collapsed ? (0, import_i18n323.__)("Show more") : (0, import_i18n323.__)("Show less")
+              onClick: () => setIsExpanded(!isExpanded),
+              children: !isExpanded ? (0, import_i18n323.__)("Show more") : (0, import_i18n323.__)("Show less")
             }
           )
         ]
