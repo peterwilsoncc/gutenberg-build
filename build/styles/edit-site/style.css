@@ -463,7 +463,7 @@
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip.has-values:hover:not(.dataviews-filters__summary-chip-container .dataviews-filters__summary-chip.has-values.is-not-clickable), .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip.has-values[aria-expanded=true] {
-  color: var(--wpds-color-foreground-interactive-brand-active, var(--wp-admin-theme-color, #3858e9));
+  color: var(--wpds-color-foreground-interactive-brand-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 52%, black));
   background: var(--wpds-color-background-interactive-brand-weak-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 12%, white));
   border-color: var(--wpds-color-stroke-interactive-brand-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 85%, black));
 }
