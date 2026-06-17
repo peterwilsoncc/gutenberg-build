@@ -435,13 +435,30 @@ var wp;
   var import_data15 = __toESM(require_data(), 1);
 
   // packages/core-data/build-module/reducer.mjs
-  var import_es64 = __toESM(require_es6(), 1);
+  var import_es65 = __toESM(require_es6(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
   var import_data7 = __toESM(require_data(), 1);
   var import_undo_manager = __toESM(require_undo_manager(), 1);
 
-  // packages/core-data/build-module/utils/conservative-map-item.mjs
+  // packages/core-data/build-module/utils/clear-unchanged-edits.mjs
   var import_es6 = __toESM(require_es6(), 1);
+  function clearUnchangedEdits(edits, persistedRecord) {
+    if (!persistedRecord) {
+      return edits;
+    }
+    return Object.fromEntries(
+      Object.entries(edits).map(([key, value]) => {
+        const persisted = persistedRecord[key]?.raw ?? persistedRecord[key];
+        return [
+          key,
+          (0, import_es6.default)(value, persisted) ? void 0 : value
+        ];
+      })
+    );
+  }
+
+  // packages/core-data/build-module/utils/conservative-map-item.mjs
+  var import_es62 = __toESM(require_es6(), 1);
   function conservativeMapItem(item, nextItem) {
     if (!item) {
       return nextItem;
@@ -449,7 +466,7 @@ var wp;
     let hasChanges = false;
     const result = {};
     for (const key in nextItem) {
-      if ((0, import_es6.default)(item[key], nextItem[key])) {
+      if ((0, import_es62.default)(item[key], nextItem[key])) {
         result[key] = item[key];
       } else {
         hasChanges = true;
@@ -1944,7 +1961,7 @@ var wp;
   }
 
   // packages/core-data/build-module/utils/crdt.mjs
-  var import_es63 = __toESM(require_es6(), 1);
+  var import_es64 = __toESM(require_es6(), 1);
   var import_blocks3 = __toESM(require_blocks(), 1);
   var import_sync14 = __toESM(require_sync(), 1);
 
@@ -1993,7 +2010,7 @@ var wp;
   var v4_default = v4;
 
   // packages/core-data/build-module/utils/crdt-blocks.mjs
-  var import_es62 = __toESM(require_es6(), 1);
+  var import_es63 = __toESM(require_es6(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
   var import_rich_text3 = __toESM(require_rich_text(), 1);
   var import_sync10 = __toESM(require_sync(), 1);
@@ -2122,7 +2139,7 @@ var wp;
       innerBlocks: null,
       clientId: null
     };
-    const res = (0, import_es62.default)(
+    const res = (0, import_es63.default)(
       Object.assign({}, gblock, overwrites),
       Object.assign({}, yblockAsJson, overwrites)
     );
@@ -2284,7 +2301,7 @@ var wp;
                     currentAttribute
                   );
                   const isYType = currentAttribute instanceof import_sync10.Y.AbstractType;
-                  const isAttributeChanged = !isExpectedType || isYType || !(0, import_es62.default)(
+                  const isAttributeChanged = !isExpectedType || isYType || !(0, import_es63.default)(
                     currentAttribute,
                     incomingAttributeValue
                   );
@@ -2343,7 +2360,7 @@ var wp;
               break;
             }
             default:
-              if (!(0, import_es62.default)(
+              if (!(0, import_es63.default)(
                 incomingYBlock[incomingBlockProperty],
                 localYBlock.get(incomingBlockProperty)
               )) {
@@ -2382,9 +2399,9 @@ var wp;
   }
   function areArrayElementsEqual(newElement, yElement) {
     if (yElement instanceof import_sync10.Y.Map && isRecord(newElement)) {
-      return (0, import_es62.default)(newElement, yElement.toJSON());
+      return (0, import_es63.default)(newElement, yElement.toJSON());
     }
-    return (0, import_es62.default)(newElement, yElement);
+    return (0, import_es63.default)(newElement, yElement);
   }
   function mergeYArray(yArray, newValue, schema, cursorPosition, cursorScope) {
     if (!schema.query) {
@@ -2464,7 +2481,7 @@ var wp;
       );
     } else {
       const newYValue = createYValueFromSchema(schema, newVal);
-      if (newYValue !== newVal || !(0, import_es62.default)(currentVal, newVal)) {
+      if (newYValue !== newVal || !(0, import_es63.default)(currentVal, newVal)) {
         yMap.set(key, newYValue);
       }
     }
@@ -3024,7 +3041,7 @@ var wp;
     return void 0;
   }
   function haveValuesChanged(currentValue, newValue) {
-    return !(0, import_es63.default)(currentValue, newValue);
+    return !(0, import_es64.default)(currentValue, newValue);
   }
   function updateMapValue(map, key, currentValue, newValue) {
     if (void 0 === newValue) {
@@ -3707,18 +3724,21 @@ var wp;
       const { record } = action;
       let newState = state;
       record.forEach(({ id: { kind, name, recordId }, changes }) => {
+        const persistedRecord = state?.queriedData?.items?.default?.[recordId];
+        const edits = Object.fromEntries(
+          Object.entries(changes).map(([key, value]) => [
+            key,
+            action.type === "UNDO" ? value.from : value.to
+          ])
+        );
         newState = reducer(newState, {
           type: "EDIT_ENTITY_RECORD",
           kind,
           name,
           recordId,
-          edits: Object.entries(changes).reduce(
-            (acc, [key, value]) => {
-              acc[key] = action.type === "UNDO" ? value.from : value.to;
-              return acc;
-            },
-            {}
-          )
+          // Clear edits matching the persisted record so the entity is
+          // no longer dirty after undoing back to its saved state.
+          edits: clearUnchangedEdits(edits, persistedRecord)
         });
       });
       return newState;
@@ -3764,12 +3784,12 @@ var wp;
                       // Edits are the "raw" attribute values, but records may have
                       // objects with more properties, so we use `get` here for the
                       // comparison.
-                      !(0, import_es64.default)(
+                      !(0, import_es65.default)(
                         edits[key],
                         record[key]?.raw ?? record[key]
                       ) && // Sometimes the server alters the sent value which means
                       // we need to also remove the edits before the api request.
-                      (!action.persistedEdits || !(0, import_es64.default)(
+                      (!action.persistedEdits || !(0, import_es65.default)(
                         edits[key],
                         action.persistedEdits[key]
                       ))
@@ -4995,7 +5015,6 @@ var wp;
     saveEntityRecord: () => saveEntityRecord,
     undo: () => undo
   });
-  var import_es65 = __toESM(require_es6(), 1);
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
@@ -5363,12 +5382,7 @@ var wp;
       recordId,
       // Clear edits when they are equal to their persisted counterparts
       // so that the property is not considered dirty.
-      edits: Object.keys(edits).reduce((acc, key) => {
-        const recordValue = record[key];
-        const value = editsWithMerges[key];
-        acc[key] = (0, import_es65.default)(recordValue, value) ? void 0 : value;
-        return acc;
-      }, {})
+      edits: clearUnchangedEdits(editsWithMerges, record)
     };
     if (entityConfig.syncConfig) {
       const objectType = `${kind}/${name}`;
