@@ -24044,40 +24044,13 @@ ${url}
       },
       {
         type: "block",
-        blocks: ["core/audio"],
+        blocks: ["core/audio", "core/video", "core/image"],
         transform: (attributes2) => {
+          const href = attributes2.src ?? attributes2.url;
           return (0, import_blocks27.createBlock)("core/file", {
-            href: attributes2.src,
-            fileName: attributes2.caption,
-            textLinkHref: attributes2.src,
-            id: attributes2.id,
-            anchor: attributes2.anchor,
-            downloadButtonText
-          });
-        }
-      },
-      {
-        type: "block",
-        blocks: ["core/video"],
-        transform: (attributes2) => {
-          return (0, import_blocks27.createBlock)("core/file", {
-            href: attributes2.src,
-            fileName: attributes2.caption,
-            textLinkHref: attributes2.src,
-            id: attributes2.id,
-            anchor: attributes2.anchor,
-            downloadButtonText
-          });
-        }
-      },
-      {
-        type: "block",
-        blocks: ["core/image"],
-        transform: (attributes2) => {
-          return (0, import_blocks27.createBlock)("core/file", {
-            href: attributes2.url,
-            fileName: attributes2.caption || (0, import_url9.getFilename)(attributes2.url),
-            textLinkHref: attributes2.url,
+            href,
+            fileName: attributes2.caption || (0, import_url9.getFilename)(href),
+            textLinkHref: href,
             id: attributes2.id,
             anchor: attributes2.anchor,
             downloadButtonText
