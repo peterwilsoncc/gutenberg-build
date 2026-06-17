@@ -26051,7 +26051,7 @@ This message will only show in development mode. It won't appear in production. 
       variant: computedVariant
     };
   }
-  function UnforwardedButton(props, ref) {
+  var Button3 = (0, import_element34.forwardRef)(function UnforwardedButton(props, ref) {
     const {
       __next40pxDefaultSize,
       accessibleWhenDisabled,
@@ -26186,9 +26186,7 @@ This message will only show in development mode. It won't appear in production. 
         })
       })]
     });
-  }
-  var Button3 = (0, import_element34.forwardRef)(UnforwardedButton);
-  Button3.displayName = "Button";
+  });
   var button_default = Button3;
 
   // packages/components/build-module/number-control/styles/number-control-styles.mjs
