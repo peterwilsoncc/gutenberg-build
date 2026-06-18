@@ -3877,7 +3877,7 @@ div.dataviews-view-list {
 
 .dataforms-layouts-panel__field-trigger--label-side {
   flex-direction: row;
-  gap: var(--wpds-dimension-gap-md, 12px);
+  gap: var(--wpds-dimension-gap-sm, 8px);
 }
 
 .dataforms-layouts-panel__field-trigger--label-top {
