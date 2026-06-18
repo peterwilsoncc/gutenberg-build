@@ -19497,6 +19497,9 @@ var wp;
     toggleUseFeaturedImage,
     onClearMedia,
     onSelectEmbedUrl,
+    onEditMedia,
+    editMediaButtonRef,
+    showEditMediaButton,
     blockEditingMode
   }) {
     const {
@@ -19560,6 +19563,16 @@ var wp;
             isActive: isMinFullHeight,
             onToggle: toggleMinFullHeight,
             isDisabled: !hasInnerBlocks
+          }
+        ),
+        showEditMediaButton && /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
+          import_components34.ToolbarButton,
+          {
+            ref: editMediaButtonRef,
+            icon: crop_default,
+            label: (0, import_i18n52.__)("Crop background image"),
+            onClick: onEditMedia,
+            "aria-haspopup": "dialog"
           }
         )
       ] }),
@@ -20401,6 +20414,7 @@ var wp;
 
   // packages/block-library/build-module/cover/edit/index.mjs
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
+  var { openMediaEditorModalKey } = unlock(import_block_editor68.privateApis);
   function getInnerBlocksTemplate(attributes2) {
     return [
       [
@@ -20456,6 +20470,10 @@ var wp;
       postId
     );
     const { getSettings: getSettings2 } = (0, import_data28.useSelect)(import_block_editor68.store);
+    const openMediaEditorModal = (0, import_data28.useSelect)(
+      (select9) => select9(import_block_editor68.store).getSettings()[openMediaEditorModalKey],
+      []
+    );
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data28.useDispatch)(import_block_editor68.store);
     const propsRef = (0, import_element26.useRef)({ attributes: attributes2, overlayColor });
     (0, import_element26.useLayoutEffect)(() => {
@@ -20697,6 +20715,7 @@ var wp;
       }
     );
     const mediaElement = (0, import_element26.useRef)();
+    const editMediaButtonRef = (0, import_element26.useRef)();
     const currentSettings = {
       isVideoBackground,
       isImageBackground,
@@ -20706,6 +20725,55 @@ var wp;
       isImgElement,
       overlayColor
     };
+    const openCoverMediaEditorModal = (0, import_element26.useCallback)(() => {
+      if (!id || !openMediaEditorModal) {
+        return;
+      }
+      openMediaEditorModal({
+        id,
+        onClose: () => {
+          editMediaButtonRef.current?.focus();
+        },
+        onUpdate: async ({ id: newId, url: newUrl }) => {
+          if (typeof newId !== "number") {
+            return;
+          }
+          const nextAttributes = {
+            id: newId,
+            backgroundType: IMAGE_BACKGROUND_TYPE,
+            ...newUrl ? { url: newUrl } : {},
+            ...newId !== id ? { sizeSlug: DEFAULT_MEDIA_SIZE_SLUG } : {}
+          };
+          if (newUrl) {
+            const averageBackgroundColor = await getMediaColor(newUrl);
+            const {
+              attributes: currentAttrs,
+              overlayColor: currentOverlay
+            } = propsRef.current;
+            let newOverlayColor = currentOverlay.color;
+            if (!currentAttrs.isUserOverlayColor) {
+              newOverlayColor = averageBackgroundColor;
+              setOverlayColor(newOverlayColor);
+              __unstableMarkNextChangeAsNotPersistent();
+            }
+            nextAttributes.isDark = compositeIsDark(
+              currentAttrs.dimRatio,
+              newOverlayColor,
+              averageBackgroundColor
+            );
+            nextAttributes.isUserOverlayColor = currentAttrs.isUserOverlayColor || false;
+          }
+          setAttributes(nextAttributes);
+        }
+      });
+    }, [
+      id,
+      openMediaEditorModal,
+      setAttributes,
+      setOverlayColor,
+      __unstableMarkNextChangeAsNotPersistent
+    ]);
+    const showEditMediaButton = hasNonContentControls && !useFeaturedImage && isImageBackground && !!id && !!url && !isUploadingMedia && !!openMediaEditorModal;
     const toggleUseFeaturedImage = async () => {
       const newUseFeaturedImage = !useFeaturedImage;
       const averageBackgroundColor = newUseFeaturedImage ? await getMediaColor(mediaUrl) : DEFAULT_BACKGROUND_COLOR;
@@ -20744,7 +20812,10 @@ var wp;
         currentSettings,
         toggleUseFeaturedImage,
         onClearMedia,
-        blockEditingMode
+        blockEditingMode,
+        onEditMedia: openCoverMediaEditorModal,
+        editMediaButtonRef,
+        showEditMediaButton
       }
     );
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
@@ -32198,7 +32269,7 @@ ${js}
     }
     return syncedAttributes;
   }
-  var { openMediaEditorModalKey } = unlock(import_block_editor113.privateApis);
+  var { openMediaEditorModalKey: openMediaEditorModalKey2 } = unlock(import_block_editor113.privateApis);
   var ATTACHMENT_EDIT_QUERY = { context: "edit" };
   function getAttachmentFallbackForEmptyBlockMetadata({ alt, caption }) {
     const attachment = {};
@@ -32226,7 +32297,7 @@ ${js}
     const { id, url, alt, caption } = attributes2;
     const registry = (0, import_data45.useRegistry)();
     const openMediaEditorModal = (0, import_data45.useSelect)(
-      (select9) => select9(import_block_editor113.store).getSettings()[openMediaEditorModalKey],
+      (select9) => select9(import_block_editor113.store).getSettings()[openMediaEditorModalKey2],
       []
     );
     const blockAttributesRef = (0, import_element46.useRef)({
@@ -64444,7 +64515,7 @@ ${js}
   var import_notices17 = __toESM(require_notices(), 1);
   var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES9 = ["image"];
-  var { mediaEditKey: mediaEditKey2, openMediaEditorModalKey: openMediaEditorModalKey2 } = unlock(
+  var { mediaEditKey: mediaEditKey2, openMediaEditorModalKey: openMediaEditorModalKey3 } = unlock(
     import_block_editor240.privateApis
   );
   var SiteLogo = ({
@@ -64487,7 +64558,7 @@ ${js}
         imageEditing: settings121.imageEditing,
         maxWidth: settings121.maxWidth,
         editMediaEntity: settings121?.[mediaEditKey2],
-        openMediaEditorModal: settings121?.[openMediaEditorModalKey2]
+        openMediaEditorModal: settings121?.[openMediaEditorModalKey3]
       };
     }, []);
     (0, import_element122.useEffect)(() => {
