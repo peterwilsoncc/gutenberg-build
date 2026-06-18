@@ -73389,7 +73389,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         return () => setEditedPost2(null, null);
       }, [post2.type, post2.id, setEditedPost2, removeNotice]);
-      (0, import_element205.useEffect)(() => {
+      (0, import_element205.useLayoutEffect)(() => {
         updateEditorSettings2(settings);
       }, [settings, updateEditorSettings2]);
       (0, import_element205.useEffect)(() => {
@@ -77381,17 +77381,14 @@ If there's a particular need for this, please submit a feature request at https:
     return hasStorageSupport;
   };
   function useAutosaveNotice() {
-    const { postId: postId2, isEditedPostNew: isEditedPostNew2, hasRemoteAutosave } = (0, import_data108.useSelect)(
+    const registry = (0, import_data108.useRegistry)();
+    const { postId: postId2, isEditedPostNew: isEditedPostNew2 } = (0, import_data108.useSelect)(
       (select7) => ({
         postId: select7(store).getCurrentPostId(),
-        isEditedPostNew: select7(store).isEditedPostNew(),
-        hasRemoteAutosave: !!select7(store).getEditorSettings().autosave
+        isEditedPostNew: select7(store).isEditedPostNew()
       }),
       []
     );
-    const { getEditedPostAttribute: getEditedPostAttribute2 } = (0, import_data108.useSelect)(store);
-    const { createWarningNotice, removeNotice } = (0, import_data108.useDispatch)(import_notices23.store);
-    const { editPost: editPost2, resetEditorBlocks: resetEditorBlocks2 } = (0, import_data108.useDispatch)(store);
     (0, import_element224.useEffect)(() => {
       let localAutosave = localAutosaveGet(postId2, isEditedPostNew2);
       if (!localAutosave) {
@@ -77404,18 +77401,20 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const { post_title: title, content, excerpt } = localAutosave;
       const edits = { title, content, excerpt };
-      {
-        const hasDifference = Object.keys(edits).some((key) => {
-          return edits[key] !== getEditedPostAttribute2(key);
-        });
-        if (!hasDifference) {
-          localAutosaveClear(postId2, isEditedPostNew2);
-          return;
-        }
+      const { getEditedPostAttribute: getEditedPostAttribute2, getEditorSettings: getEditorSettings2 } = registry.select(store);
+      const hasDifference = Object.keys(edits).some((key) => {
+        return edits[key] !== getEditedPostAttribute2(key);
+      });
+      if (!hasDifference) {
+        localAutosaveClear(postId2, isEditedPostNew2);
+        return;
       }
+      const hasRemoteAutosave = !!getEditorSettings2().autosave;
       if (hasRemoteAutosave) {
         return;
       }
+      const { createWarningNotice, removeNotice } = registry.dispatch(import_notices23.store);
+      const { editPost: editPost2, resetEditorBlocks: resetEditorBlocks2 } = registry.dispatch(store);
       const id = "wpEditorAutosaveRestore";
       createWarningNotice(
         (0, import_i18n211.__)(
@@ -77439,7 +77438,7 @@ If there's a particular need for this, please submit a feature request at https:
           ]
         }
       );
-    }, [isEditedPostNew2, postId2]);
+    }, [registry, postId2, isEditedPostNew2]);
   }
   function useAutosavePurge() {
     const { postId: postId2, isEditedPostNew: isEditedPostNew2, isDirty, isAutosaving, didError } = (0, import_data108.useSelect)(
