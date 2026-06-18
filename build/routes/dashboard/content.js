@@ -22247,10 +22247,10 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/dashboard/stage.tsx
-var import_core_data2 = __toESM(require_core_data());
-var import_data10 = __toESM(require_data());
+var import_core_data = __toESM(require_core_data());
+var import_data9 = __toESM(require_data());
 var import_element184 = __toESM(require_element());
-var import_i18n71 = __toESM(require_i18n());
+var import_i18n70 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
 
@@ -41180,7 +41180,7 @@ function ResetConfirmation() {
 // packages/widget-dashboard/build-module/components/widget-chrome/widget-chrome.mjs
 var import_components54 = __toESM(require_components(), 1);
 var import_element167 = __toESM(require_element(), 1);
-var import_i18n64 = __toESM(require_i18n(), 1);
+var import_i18n63 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/context/widget-context.mjs
 var import_element163 = __toESM(require_element(), 1);
@@ -41240,30 +41240,12 @@ function WidgetRender({
 }
 
 // packages/widget-primitives/build-module/hooks/use-widget-types.mjs
-var import_data7 = __toESM(require_data(), 1);
-var import_core_data = __toESM(require_core_data(), 1);
 var import_element165 = __toESM(require_element(), 1);
-var import_i18n63 = __toESM(require_i18n(), 1);
-(0, import_data7.dispatch)(import_core_data.store).addEntities([
-  {
-    name: "widgetModule",
-    kind: "root",
-    key: "name",
-    baseURL: "/wp/v2/widget-modules",
-    plural: "widgetModules",
-    label: (0, import_i18n63.__)("Widget modules"),
-    supportsPagination: false
-  }
-]);
-function useWidgetTypes() {
-  const records = (0, import_data7.useSelect)(
-    (select) => select(import_core_data.store).getEntityRecords("root", "widgetModule"),
-    []
-  );
+function useWidgetTypes(records) {
   const [widgetTypes, setWidgetTypes] = (0, import_element165.useState)([]);
   const [isResolvingWidgetTypes, setIsResolvingWidgetTypes] = (0, import_element165.useState)(true);
   (0, import_element165.useEffect)(() => {
-    if (records === null) {
+    if (records === null || records === void 0) {
       setIsResolvingWidgetTypes(true);
       return;
     }
@@ -41437,7 +41419,7 @@ var WidgetErrorBoundary = class extends import_element167.Component {
   }
   render() {
     if (this.state.hasError) {
-      return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(notice_exports.Root, { intent: "error", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(notice_exports.Description, { children: (0, import_i18n64.__)("This widget encountered an error.") }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(notice_exports.Root, { intent: "error", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(notice_exports.Description, { children: (0, import_i18n63.__)("This widget encountered an error.") }) });
     }
     return this.props.children;
   }
@@ -41464,7 +41446,7 @@ function UnavailableWidget({ widgetTypeName }) {
         gap: "md",
         className: widget_chrome_default.unavailable,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Text, { children: (0, import_i18n64.__)("Widget is no longer available.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Text, { children: (0, import_i18n63.__)("Widget is no longer available.") }),
           /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("code", {}), children: widgetTypeName })
         ]
       }
@@ -41509,7 +41491,7 @@ var WidgetChrome = (0, import_element167.forwardRef)(
             ref,
             className: clsx_default(widget_chrome_default.widgetChrome, className),
             "aria-busy": "true",
-            "aria-label": (0, import_i18n64.__)("Loading"),
+            "aria-label": (0, import_i18n63.__)("Loading"),
             children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
               card_exports.Content,
               {
@@ -41526,7 +41508,7 @@ var WidgetChrome = (0, import_element167.forwardRef)(
           render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("section", {}),
           ref,
           className: clsx_default(widget_chrome_default.widgetChrome, className),
-          "aria-label": (0, import_i18n64.__)("Missing widget"),
+          "aria-label": (0, import_i18n63.__)("Missing widget"),
           children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
         }
       ) });
@@ -41570,7 +41552,7 @@ var WidgetChrome = (0, import_element167.forwardRef)(
 
 // packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
 var import_element169 = __toESM(require_element(), 1);
-var import_i18n66 = __toESM(require_i18n(), 1);
+var import_i18n65 = __toESM(require_i18n(), 1);
 
 // node_modules/uuid/dist/stringify.js
 var byteToHex = [];
@@ -41633,7 +41615,7 @@ function createDashboardWidget(widgetType, initialAttributes) {
 
 // packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
 var import_element168 = __toESM(require_element(), 1);
-var import_i18n65 = __toESM(require_i18n(), 1);
+var import_i18n64 = __toESM(require_i18n(), 1);
 var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE53 = "data-wp-hash";
 function getRuntime53() {
@@ -41738,7 +41720,7 @@ var fields2 = [
   {
     id: "title",
     type: "text",
-    label: (0, import_i18n65.__)("Title"),
+    label: (0, import_i18n64.__)("Title"),
     filterBy: false
   },
   {
@@ -41758,7 +41740,7 @@ var fields2 = [
 ];
 function WidgetPicker({
   onSelect,
-  itemListLabel = (0, import_i18n65.__)("Widget list")
+  itemListLabel = (0, import_i18n64.__)("Widget list")
 }) {
   const { widgetTypes: registeredTypes } = useDashboardInternalContext();
   const [selection, setSelection] = (0, import_element168.useState)([]);
@@ -41772,7 +41754,7 @@ function WidgetPicker({
     () => [
       {
         id: "select",
-        label: (0, import_i18n65.__)("Select"),
+        label: (0, import_i18n64.__)("Select"),
         isPrimary: true,
         supportsBulk: true,
         callback: (items) => onSelect(items)
@@ -41836,7 +41818,7 @@ function WidgetInserter() {
       ),
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(dialog_exports.Header, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(dialog_exports.Title, { children: (0, import_i18n66.__)("Add widget") }),
+          /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(dialog_exports.Title, { children: (0, import_i18n65.__)("Add widget") }),
           /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(dialog_exports.CloseIcon, {})
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(dialog_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetPicker, { onSelect: insertWidgets }) })
@@ -41847,7 +41829,7 @@ function WidgetInserter() {
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
 var import_element170 = __toESM(require_element(), 1);
-var import_i18n68 = __toESM(require_i18n(), 1);
+var import_i18n67 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-settings/utils/get-admin-menu-inset.mjs
 var ADMIN_MENU_ID = "adminmenuback";
@@ -41863,13 +41845,13 @@ function getAdminMenuInset() {
 }
 
 // packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
-var import_i18n67 = __toESM(require_i18n(), 1);
+var import_i18n66 = __toESM(require_i18n(), 1);
 function getWidgetSettingsTitle(widgetType) {
-  return widgetType?.title ? (0, import_i18n67.sprintf)(
+  return widgetType?.title ? (0, import_i18n66.sprintf)(
     /* translators: %s: Widget title. */
-    (0, import_i18n67.__)("%s settings"),
+    (0, import_i18n66.__)("%s settings"),
     widgetType.title
-  ) : (0, import_i18n67.__)("Widget settings");
+  ) : (0, import_i18n66.__)("Widget settings");
 }
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
@@ -42078,7 +42060,7 @@ function WidgetSettings() {
                   tone: "brand",
                   size: "compact",
                   onClick: () => handleOpenChange(false),
-                  children: (0, import_i18n68.__)("Cancel")
+                  children: (0, import_i18n67.__)("Cancel")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
@@ -42089,7 +42071,7 @@ function WidgetSettings() {
                   size: "compact",
                   onClick: handleSave,
                   disabled: !hasUncommittedChanges,
-                  children: (0, import_i18n68.__)("Save")
+                  children: (0, import_i18n67.__)("Save")
                 }
               )
             ] })
@@ -42204,7 +42186,7 @@ function WidgetToolbar({
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings-trigger.mjs
 var import_element171 = __toESM(require_element(), 1);
-var import_i18n69 = __toESM(require_i18n(), 1);
+var import_i18n68 = __toESM(require_i18n(), 1);
 var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
 function WidgetSettingsTrigger({
   widget,
@@ -42243,7 +42225,7 @@ function WidgetSettingsTrigger({
     IconButton,
     {
       icon: cog_default,
-      label: (0, import_i18n69.__)("Widget settings"),
+      label: (0, import_i18n68.__)("Widget settings"),
       variant: "minimal",
       tone: "neutral",
       size: "compact",
@@ -42711,7 +42693,7 @@ function useDndMonitorProvider() {
     listeners.add(listener);
     return () => listeners.delete(listener);
   }, [listeners]);
-  const dispatch2 = (0, import_react44.useCallback)((_ref) => {
+  const dispatch = (0, import_react44.useCallback)((_ref) => {
     let {
       type,
       event
@@ -42721,7 +42703,7 @@ function useDndMonitorProvider() {
       return (_listener$type = listener[type]) == null ? void 0 : _listener$type.call(listener, event);
     });
   }, [listeners]);
-  return [dispatch2, registerListener];
+  return [dispatch, registerListener];
 }
 var defaultScreenReaderInstructions = {
   draggable: "\n    To pick up a draggable item, press the space bar.\n    While dragging, use the arrow keys to move the item.\n    Press space again to drop the item in its new position, or press escape to cancel.\n  "
@@ -45051,7 +45033,7 @@ var DndContext = /* @__PURE__ */ (0, import_react44.memo)(function DndContext2(_
     ...props
   } = _ref;
   const store = (0, import_react44.useReducer)(reducer, void 0, getInitialState);
-  const [state, dispatch2] = store;
+  const [state, dispatch] = store;
   const [dispatchMonitorEvent, registerMonitorListener] = useDndMonitorProvider();
   const [status, setStatus] = (0, import_react44.useState)(Status.Uninitialized);
   const isInitialized = status === Status.Initialized;
@@ -45251,7 +45233,7 @@ var DndContext = /* @__PURE__ */ (0, import_react44.memo)(function DndContext2(_
           (0, import_react_dom5.unstable_batchedUpdates)(() => {
             onDragStart == null ? void 0 : onDragStart(event2);
             setStatus(Status.Initializing);
-            dispatch2({
+            dispatch({
               type: Action3.DragStart,
               initialCoordinates,
               active: id2
@@ -45265,7 +45247,7 @@ var DndContext = /* @__PURE__ */ (0, import_react44.memo)(function DndContext2(_
           });
         },
         onMove(coordinates) {
-          dispatch2({
+          dispatch({
             type: Action3.DragMove,
             coordinates
           });
@@ -45303,7 +45285,7 @@ var DndContext = /* @__PURE__ */ (0, import_react44.memo)(function DndContext2(_
           }
           activeRef.current = null;
           (0, import_react_dom5.unstable_batchedUpdates)(() => {
-            dispatch2({
+            dispatch({
               type
             });
             setStatus(Status.Uninitialized);
@@ -45498,13 +45480,13 @@ var DndContext = /* @__PURE__ */ (0, import_react44.memo)(function DndContext2(_
       ariaDescribedById: {
         draggable: draggableDescribedById
       },
-      dispatch: dispatch2,
+      dispatch,
       draggableNodes,
       over,
       measureDroppableContainers
     };
     return context;
-  }, [activatorEvent, activators, active, activeNodeRect, dispatch2, draggableDescribedById, draggableNodes, over, measureDroppableContainers]);
+  }, [activatorEvent, activators, active, activeNodeRect, dispatch, draggableDescribedById, draggableNodes, over, measureDroppableContainers]);
   return import_react44.default.createElement(DndMonitorContext.Provider, {
     value: registerMonitorListener
   }, import_react44.default.createElement(InternalContext.Provider, {
@@ -45623,7 +45605,7 @@ function useDroppable(_ref) {
   const key2 = useUniqueId(ID_PREFIX$1);
   const {
     active,
-    dispatch: dispatch2,
+    dispatch,
     over,
     measureDroppableContainers
   } = (0, import_react44.useContext)(InternalContext);
@@ -45687,7 +45669,7 @@ function useDroppable(_ref) {
   }, [nodeRef, resizeObserver]);
   (0, import_react44.useEffect)(
     () => {
-      dispatch2({
+      dispatch({
         type: Action3.RegisterDroppable,
         element: {
           id,
@@ -45698,7 +45680,7 @@ function useDroppable(_ref) {
           data: dataRef
         }
       });
-      return () => dispatch2({
+      return () => dispatch({
         type: Action3.UnregisterDroppable,
         key: key2,
         id
@@ -45709,7 +45691,7 @@ function useDroppable(_ref) {
   );
   (0, import_react44.useEffect)(() => {
     if (disabled2 !== previous.current.disabled) {
-      dispatch2({
+      dispatch({
         type: Action3.SetDroppableDisabled,
         id,
         key: key2,
@@ -45717,7 +45699,7 @@ function useDroppable(_ref) {
       });
       previous.current.disabled = disabled2;
     }
-  }, [id, key2, disabled2, dispatch2]);
+  }, [id, key2, disabled2, dispatch]);
   return {
     active,
     rect,
@@ -49359,7 +49341,7 @@ function useDashboardContainerColumnCount(forwardedRef) {
 
 // packages/widget-dashboard/build-module/components/widgets/widget-layout-toolbar.mjs
 var import_components55 = __toESM(require_components(), 1);
-var import_i18n70 = __toESM(require_i18n(), 1);
+var import_i18n69 = __toESM(require_i18n(), 1);
 var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE64 = "data-wp-hash";
 function getRuntime64() {
@@ -49482,7 +49464,7 @@ function WidgetLayoutToolbar({
             IconButton,
             {
               icon: more_vertical_default,
-              label: (0, import_i18n70.__)("Widget options"),
+              label: (0, import_i18n69.__)("Widget options"),
               size: "compact",
               variant: "minimal",
               tone: "neutral"
@@ -49491,13 +49473,13 @@ function WidgetLayoutToolbar({
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(Menu7.Group, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.GroupLabel, { children: (0, import_i18n70.__)("Width") }),
+        /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.GroupLabel, { children: (0, import_i18n69.__)("Width") }),
         /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
           Menu7.Item,
           {
             disabled: width === "fill",
             onClick: () => onNamedWidthChange("fill"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Use available width") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.ItemLabel, { children: (0, import_i18n69.__)("Use available width") })
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
@@ -49505,7 +49487,7 @@ function WidgetLayoutToolbar({
           {
             disabled: width === "full",
             onClick: () => onNamedWidthChange("full"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Make full width") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.ItemLabel, { children: (0, import_i18n69.__)("Make full width") })
           }
         )
       ] }) })
@@ -49514,7 +49496,7 @@ function WidgetLayoutToolbar({
       IconButton,
       {
         icon: trash_default,
-        label: (0, import_i18n70.__)("Remove"),
+        label: (0, import_i18n69.__)("Remove"),
         size: "compact",
         variant: "minimal",
         tone: "neutral",
@@ -49915,16 +49897,16 @@ var WidgetDashboard = Object.assign(
 
 // routes/dashboard/hooks/use-dashboard-layout/use-dashboard-layout.ts
 var import_api_fetch = __toESM(require_api_fetch());
-var import_data8 = __toESM(require_data());
+var import_data7 = __toESM(require_data());
 var import_preferences = __toESM(require_preferences());
 var SCOPE = "core/dashboard";
 var KEY = "dashboardLayout";
 function useDashboardLayout(dashboardName) {
-  const layout = (0, import_data8.useSelect)(
+  const layout = (0, import_data7.useSelect)(
     (select) => select(import_preferences.store).get(SCOPE, KEY) ?? [],
     []
   );
-  const { set: set3 } = (0, import_data8.useDispatch)(import_preferences.store);
+  const { set: set3 } = (0, import_data7.useDispatch)(import_preferences.store);
   function setLayout(newLayout) {
     void set3(SCOPE, KEY, newLayout);
   }
@@ -49939,19 +49921,19 @@ function useDashboardLayout(dashboardName) {
 
 // routes/dashboard/hooks/use-dashboard-grid-settings/use-dashboard-grid-settings.ts
 var import_es64 = __toESM(require_es6());
-var import_data9 = __toESM(require_data());
+var import_data8 = __toESM(require_data());
 var import_preferences2 = __toESM(require_preferences());
 var SCOPE2 = "core/dashboard";
 var KEY2 = "dashboardGridSettings";
 function useDashboardGridSettings() {
-  const settings = (0, import_data9.useSelect)((select) => {
+  const settings = (0, import_data8.useSelect)((select) => {
     const stored = select(import_preferences2.store).get(SCOPE2, KEY2);
     return normalizeGridSettings(
       stored ?? DEFAULT_GRID,
       DEFAULT_ROW_HEIGHT
     );
   }, []);
-  const { set: set3 } = (0, import_data9.useDispatch)(import_preferences2.store);
+  const { set: set3 } = (0, import_data8.useDispatch)(import_preferences2.store);
   function setSettings(next) {
     if ((0, import_es64.default)(next, DEFAULT_GRID)) {
       void set3(SCOPE2, KEY2, null);
@@ -49972,14 +49954,18 @@ function Dashboard() {
     "gutenberg_dashboard"
   );
   const [gridSettings, setGridSettings] = useDashboardGridSettings();
-  const [widgetTypes, isResolving] = useWidgetTypes();
+  const widgetsModules = (0, import_data9.useSelect)(
+    (select) => select(import_core_data.store).getEntityRecords("root", "widgetModule"),
+    []
+  );
+  const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
   const [editMode, setEditMode] = (0, import_element184.useState)(false);
-  const isMobileViewport = (0, import_data10.useSelect)(
+  const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
   );
-  const greetingName = (0, import_data10.useSelect)((select) => {
-    const user = select(import_core_data2.store).getCurrentUser();
+  const greetingName = (0, import_data9.useSelect)((select) => {
+    const user = select(import_core_data.store).getCurrentUser();
     if (!user) {
       return void 0;
     }
@@ -49995,20 +49981,20 @@ function Dashboard() {
     }
     return user.slug;
   }, []);
-  const { createSuccessNotice } = (0, import_data10.useDispatch)(import_notices.store);
+  const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices.store);
   const handleLayoutChange = (next) => {
     setLayout(next);
-    void createSuccessNotice((0, import_i18n71.__)("Dashboard saved."), {
+    void createSuccessNotice((0, import_i18n70.__)("Dashboard saved."), {
       type: "snackbar"
     });
   };
-  let pageTitle = (0, import_i18n71.__)("Dashboard");
+  let pageTitle = (0, import_i18n70.__)("Dashboard");
   if (editMode) {
-    pageTitle = (0, import_i18n71.__)("Customize Dashboard");
+    pageTitle = (0, import_i18n70.__)("Customize Dashboard");
   } else if (greetingName) {
-    pageTitle = (0, import_i18n71.sprintf)(
+    pageTitle = (0, import_i18n70.sprintf)(
       /* translators: %s: current user's display name. */
-      (0, import_i18n71.__)("Howdy, %s"),
+      (0, import_i18n70.__)("Howdy, %s"),
       greetingName
     );
   }
