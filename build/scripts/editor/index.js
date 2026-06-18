@@ -46827,6 +46827,15 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   var CROP_RECT_EPSILON = 1e-6;
   var CARDINAL_ROTATION_EPSILON2 = 1e-6;
+  var SETTLE_TRANSITION_DURATION_MS = 200;
+  var SETTLE_TRANSITION_FALLBACK_MS = SETTLE_TRANSITION_DURATION_MS + 100;
+  var SETTLE_TRANSFORM_TRANSITION = `transform ${SETTLE_TRANSITION_DURATION_MS}ms ease-out`;
+  var SETTLE_STENCIL_TRANSITION = [
+    `left ${SETTLE_TRANSITION_DURATION_MS}ms ease-out`,
+    `top ${SETTLE_TRANSITION_DURATION_MS}ms ease-out`,
+    `width ${SETTLE_TRANSITION_DURATION_MS}ms ease-out`,
+    `height ${SETTLE_TRANSITION_DURATION_MS}ms ease-out`
+  ].join(", ");
   function CropperInner({
     src,
     controller,
@@ -47226,6 +47235,11 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const [settling, setSettling] = (0, import_element143.useState)(false);
     const settleTimerRef = (0, import_element143.useRef)();
+    const finishSettling = (0, import_element143.useCallback)(() => {
+      clearTimeout(settleTimerRef.current);
+      isSettlingRef.current = false;
+      setSettling(false);
+    }, []);
     (0, import_element143.useEffect)(() => {
       return () => {
         clearTimeout(settleTimerRef.current);
@@ -47256,13 +47270,11 @@ If there's a particular need for this, please submit a feature request at https:
         isResizingRef.current = true;
         setIsResizing(true);
         setActiveHandle(handle ?? null);
-        clearTimeout(settleTimerRef.current);
-        isSettlingRef.current = false;
-        setSettling(false);
+        finishSettling();
         resetViewport();
         onGestureStart?.();
       },
-      [onGestureStart, resetViewport, viewScaleRest]
+      [finishSettling, onGestureStart, resetViewport, viewScaleRest]
     );
     const handleResizeEnd = (0, import_element143.useCallback)(() => {
       const isCancellingForPinch = isTouchPinchingRef.current;
@@ -47271,8 +47283,7 @@ If there's a particular need for this, please submit a feature request at https:
       setActiveHandle(null);
       clearTimeout(settleTimerRef.current);
       if (isCancellingForPinch) {
-        isSettlingRef.current = false;
-        setSettling(false);
+        finishSettling();
         resetViewport();
         return;
       }
@@ -47281,18 +47292,27 @@ If there's a particular need for this, please submit a feature request at https:
       resetViewport();
       settleCrop();
       onGestureEnd?.();
-      settleTimerRef.current = setTimeout(() => {
-        isSettlingRef.current = false;
-        setSettling(false);
-      }, 200);
-    }, [settleCrop, onGestureEnd, resetViewport]);
+      settleTimerRef.current = setTimeout(
+        finishSettling,
+        SETTLE_TRANSITION_FALLBACK_MS
+      );
+    }, [finishSettling, settleCrop, onGestureEnd, resetViewport]);
+    const handleSettleTransitionEnd = (0, import_element143.useCallback)(
+      (event) => {
+        if (!isSettlingRef.current || event.propertyName !== "transform") {
+          return;
+        }
+        finishSettling();
+      },
+      [finishSettling]
+    );
     let imageTransition;
     if (settling) {
-      imageTransition = "transform 200ms ease-out";
+      imageTransition = SETTLE_TRANSFORM_TRANSITION;
     } else if (isZooming) {
       imageTransition = "transform 150ms linear";
     }
-    const settleStencilTransition = settling ? "left 200ms ease-out, top 200ms ease-out, width 200ms ease-out, height 200ms ease-out" : void 0;
+    const settleStencilTransition = settling ? SETTLE_STENCIL_TRANSITION : void 0;
     const imageStyle = (0, import_element143.useMemo)(() => {
       if (elementSize.width === 0 || elementSize.height === 0) {
         return {};
@@ -47324,7 +47344,7 @@ If there's a particular need for this, please submit a feature request at https:
       displayScale,
       viewScale
     ]);
-    const settleTransition = settling ? "transform 200ms ease-out" : void 0;
+    const settleTransition = settling ? SETTLE_TRANSFORM_TRANSITION : void 0;
     const willChange = isResizing || settling ? "transform" : void 0;
     let stageStyle;
     if (viewportState.pan.x !== 0 || viewportState.pan.y !== 0) {
@@ -47399,6 +47419,7 @@ If there's a particular need for this, please submit a feature request at https:
                   className: "wp-media-editor-image-editor__stage",
                   "data-testid": "cropper-stage",
                   style: stageStyle,
+                  onTransitionEnd: handleSettleTransitionEnd,
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
                       "img",
