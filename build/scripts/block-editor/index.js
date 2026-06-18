@@ -82229,15 +82229,25 @@ var wp;
         if (!_attributes?.metadata?.bindings) {
           return _attributes;
         }
+        const { __experimentalBlockBindingsSupportedAttributes } = select3(store).getSettings();
+        const bindableAttributes = __experimentalBlockBindingsSupportedAttributes?.[blockType?.name];
+        const bindings = bindableAttributes ? replacePatternOverridesDefaultBinding(
+          _attributes.metadata.bindings,
+          bindableAttributes
+        ) : _attributes.metadata.bindings;
         const { getBlockBindingsSource: getBlockBindingsSource4 } = unlock(select3(import_blocks105.store));
-        return Object.entries(_attributes.metadata.bindings).reduce(
+        return Object.entries(bindings).reduce(
           (acc, [attribute, binding]) => {
+            if (attribute === "__default") {
+              return acc;
+            }
             const source = getBlockBindingsSource4(binding.source);
             if (!source) {
               return acc;
             }
             const values = source.getValues({
               select: select3,
+              clientId,
               context: blockContext,
               bindings: { [attribute]: binding }
             });
@@ -82246,7 +82256,7 @@ var wp;
           _attributes
         );
       },
-      [blockContext, clientId]
+      [blockContext, clientId, blockType?.name]
     );
     const { selectBlock: selectBlock2, toggleBlockHighlight: toggleBlockHighlight2 } = (0, import_data181.useDispatch)(store);
     const debouncedToggleBlockHighlight = (0, import_compose109.useDebounce)(

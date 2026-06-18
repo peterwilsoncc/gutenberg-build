@@ -95123,7 +95123,7 @@ If there's a particular need for this, please submit a feature request at https:
       for (const attributeName of Object.keys(bindings)) {
         const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
         if (overridableValue === void 0) {
-          overridesValues[attributeName] = currentBlockAttributes[attributeName];
+          overridesValues[attributeName] = currentBlockAttributes?.[attributeName];
           continue;
         } else {
           overridesValues[attributeName] = overridableValue === "" ? void 0 : overridableValue;
