@@ -4981,7 +4981,7 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   border-top: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
   flex-shrink: 0;
   margin: 0;
-  padding: 16px 16px;
+  padding: 16px;
 }
 
 .edit-site-save-hub__button {
