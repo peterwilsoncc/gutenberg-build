@@ -22177,6 +22177,9 @@ var InteractionController = class {
     if (e2.button !== 0) {
       return;
     }
+    if (e2.pointerType === "touch") {
+      return;
+    }
     e2.preventDefault();
     const ownerDoc = el.ownerDocument;
     if (ownerDoc?.activeElement instanceof HTMLElement && ownerDoc.activeElement !== el) {
@@ -22395,6 +22398,7 @@ var InteractionController = class {
     if (!touch) {
       return;
     }
+    moveEvent.preventDefault();
     cancelAnimationFrame(this.rafId);
     this.rafId = requestAnimationFrame(() => {
       const s2 = this.options.getState();
@@ -22432,13 +22436,11 @@ var InteractionController = class {
           const startMy = touch.startMidY - rect.top - latestContainerSize.height / 2;
           const panDx = visSize.width > 0 ? (mx - startMx) / visSize.width : 0;
           const panDy = visSize.height > 0 ? (my - startMy) / visSize.height : 0;
-          const zoomRatio = s2.zoom !== 0 ? 1 - newZoom / s2.zoom : 0;
-          const focalNormX = mx / visSize.width;
-          const focalNormY = my / visSize.height;
-          const zoomCropX = s2.pan.x + (focalNormX - s2.pan.x) * zoomRatio;
-          const zoomCropY = s2.pan.y + (focalNormY - s2.pan.y) * zoomRatio;
-          const newCropX = touch.startPanX + panDx + (zoomCropX - s2.pan.x);
-          const newCropY = touch.startPanY + panDy + (zoomCropY - s2.pan.y);
+          const zoomRatio = touch.startZoom !== 0 ? 1 - newZoom / touch.startZoom : 0;
+          const startFocalNormX = startMx / visSize.width;
+          const startFocalNormY = startMy / visSize.height;
+          const newCropX = touch.startPanX + panDx + (startFocalNormX - touch.startPanX) * zoomRatio;
+          const newCropY = touch.startPanY + panDy + (startFocalNormY - touch.startPanY) * zoomRatio;
           const { pan: clampedCrop } = restrictPanZoom(
             {
               ...s2,
@@ -23015,6 +23017,7 @@ function RectangleStencil({
   onResizeEnd,
   aspectRatio,
   freeformCrop = false,
+  isResizeDisabled = false,
   stencilTransition,
   cropBounds,
   onEscape,
@@ -23039,12 +23042,19 @@ function RectangleStencil({
   const keyboardResizeActiveRef = (0, import_element74.useRef)(false);
   const resizeHandleDescriptionId = (0, import_element74.useId)();
   const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
+  const activePointerResizeRef = (0, import_element74.useRef)(null);
   (0, import_element74.useEffect)(() => {
     return () => {
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
+      activePointerResizeRef.current?.cancel(false);
     };
   }, []);
+  (0, import_element74.useEffect)(() => {
+    if (isResizeDisabled) {
+      activePointerResizeRef.current?.cancel();
+    }
+  }, [isResizeDisabled]);
   const latestHandlersRef = (0, import_element74.useRef)(null);
   const normalizedRatio = (0, import_element74.useMemo)(() => {
     if (!hasLockedRatio || imageSize.width === 0) {
@@ -23060,6 +23070,11 @@ function RectangleStencil({
   const height = cropRect.height * imageSize.height;
   const handlePointerDown = (0, import_element74.useCallback)(
     (handle, event) => {
+      if (isResizeDisabled || event.pointerType === "touch" && event.isPrimary === false) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
       if (event.button !== 0) {
         return;
       }
@@ -23112,7 +23127,7 @@ function RectangleStencil({
         });
       };
       let ended = false;
-      const onEnd = () => {
+      const endResize = (notifyResizeEnd = true, restoreFocus = true) => {
         if (ended) {
           return;
         }
@@ -23124,17 +23139,25 @@ function RectangleStencil({
         el.removeEventListener("pointermove", onMove);
         el.removeEventListener("pointerup", onEnd);
         el.removeEventListener("lostpointercapture", onEnd);
-        latestHandlersRef.current?.onResizeEnd?.();
-        el.focus({ preventScroll: true });
+        activePointerResizeRef.current = null;
+        if (notifyResizeEnd) {
+          latestHandlersRef.current?.onResizeEnd?.();
+        }
+        if (restoreFocus) {
+          el.focus({ preventScroll: true });
+        }
       };
+      const cancelResize = (notifyResizeEnd = true) => endResize(notifyResizeEnd, false);
+      const onEnd = () => endResize();
       el.addEventListener("pointermove", onMove);
       el.addEventListener("pointerup", onEnd);
       el.addEventListener("lostpointercapture", onEnd);
+      activePointerResizeRef.current = { cancel: cancelResize };
       onResizeStart?.(handle);
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
     },
-    [cropRect, onResizeStart]
+    [cropRect, isResizeDisabled, onResizeStart]
   );
   const computeFreeRect = (0, import_element74.useCallback)(
     (drag2, clientX, clientY) => computeFreeResizeRect(
@@ -23183,6 +23206,9 @@ function RectangleStencil({
   const handleKeyDown = (0, import_element74.useCallback)(
     (handle, event) => {
       const key = event.key;
+      if (isResizeDisabled) {
+        return;
+      }
       if (key === "Escape") {
         event.preventDefault();
         event.stopPropagation();
@@ -23269,7 +23295,8 @@ function RectangleStencil({
       onResizeEnd,
       onEscape,
       keyboardResizeStep,
-      snapCropRect
+      snapCropRect,
+      isResizeDisabled
     ]
   );
   if (containerSize.width === 0 || containerSize.height === 0) {
@@ -23317,7 +23344,11 @@ function RectangleStencil({
             type: "button",
             className: `wp-media-editor-image-editor__handle wp-media-editor-image-editor__handle--${pos}`,
             onPointerDown: (event) => handlePointerDown(pos, event),
-            onTouchStart: (event) => event.stopPropagation(),
+            onTouchStart: (event) => {
+              if (event.touches.length < 2) {
+                event.stopPropagation();
+              }
+            },
             onKeyDown: (event) => handleKeyDown(pos, event),
             "aria-label": getHandleLabel(pos),
             "aria-describedby": resizeHandleDescriptionId
@@ -23953,6 +23984,12 @@ function CropperInner({
   const [isResizing, setIsResizing] = (0, import_element78.useState)(false);
   const isResizingRef = (0, import_element78.useRef)(false);
   const isSettlingRef = (0, import_element78.useRef)(false);
+  const [isTouchPinching, setIsTouchPinchingState] = (0, import_element78.useState)(false);
+  const isTouchPinchingRef = (0, import_element78.useRef)(false);
+  const setTouchPinching = (0, import_element78.useCallback)((isPinching) => {
+    isTouchPinchingRef.current = isPinching;
+    setIsTouchPinchingState(isPinching);
+  }, []);
   const [activeHandle, setActiveHandle] = (0, import_element78.useState)(
     null
   );
@@ -24084,12 +24121,36 @@ function CropperInner({
     onPointerDownCapture: () => {
       setIsFocusVisible(false);
     },
+    onTouchStartCapture: (event) => {
+      if (event.touches.length > 1) {
+        setTouchPinching(true);
+      }
+    },
+    onTouchMoveCapture: (event) => {
+      if (event.touches.length > 1) {
+        setTouchPinching(true);
+      }
+    },
+    onTouchEndCapture: (event) => {
+      if (event.touches.length === 0) {
+        setTouchPinching(false);
+      }
+    },
+    onTouchCancelCapture: (event) => {
+      if (event.touches.length === 0) {
+        setTouchPinching(false);
+      }
+    },
     onKeyDownCapture: (event) => {
       if (!["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
         setIsFocusVisible(true);
       }
     },
     onPointerDown: (event) => {
+      if (isResizingRef.current || isTouchPinchingRef.current || event.pointerType === "touch" && event.isPrimary === false) {
+        event.preventDefault();
+        return;
+      }
       handlers.onPointerDown?.(event);
       setIsFocusVisible(false);
     }
@@ -24132,6 +24193,9 @@ function CropperInner({
   );
   const handleCropChange = (0, import_element78.useCallback)(
     (rect) => {
+      if (isTouchPinchingRef.current) {
+        return;
+      }
       setCropRect(rect);
       if (isResizingRef.current && scaledVisualSize.width > 0 && scaledVisualSize.height > 0) {
         const offsetX = (canvasSize.width - scaledVisualSize.width) / 2;
@@ -24185,6 +24249,9 @@ function CropperInner({
   }, []);
   const handleResizeStart = (0, import_element78.useCallback)(
     (handle) => {
+      if (isTouchPinchingRef.current) {
+        return;
+      }
       setFrozenViewScale(viewScaleRest);
       isResizingRef.current = true;
       setIsResizing(true);
@@ -24198,15 +24265,22 @@ function CropperInner({
     [onGestureStart, resetViewport, viewScaleRest]
   );
   const handleResizeEnd = (0, import_element78.useCallback)(() => {
+    const isCancellingForPinch = isTouchPinchingRef.current;
     isResizingRef.current = false;
     setIsResizing(false);
     setActiveHandle(null);
+    clearTimeout(settleTimerRef.current);
+    if (isCancellingForPinch) {
+      isSettlingRef.current = false;
+      setSettling(false);
+      resetViewport();
+      return;
+    }
     isSettlingRef.current = true;
     setSettling(true);
     resetViewport();
     settleCrop();
     onGestureEnd?.();
-    clearTimeout(settleTimerRef.current);
     settleTimerRef.current = setTimeout(() => {
       isSettlingRef.current = false;
       setSettling(false);
@@ -24359,6 +24433,7 @@ function CropperInner({
                       onEscape: handleEscape,
                       aspectRatio,
                       freeformCrop,
+                      isResizeDisabled: isTouchPinching,
                       stencilTransition: settleStencilTransition,
                       cropBounds,
                       minCropSize,

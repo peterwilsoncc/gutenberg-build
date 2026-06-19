@@ -45177,6 +45177,9 @@ If there's a particular need for this, please submit a feature request at https:
       if (e3.button !== 0) {
         return;
       }
+      if (e3.pointerType === "touch") {
+        return;
+      }
       e3.preventDefault();
       const ownerDoc = el.ownerDocument;
       if (ownerDoc?.activeElement instanceof HTMLElement && ownerDoc.activeElement !== el) {
@@ -45395,6 +45398,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!touch) {
         return;
       }
+      moveEvent.preventDefault();
       cancelAnimationFrame(this.rafId);
       this.rafId = requestAnimationFrame(() => {
         const s3 = this.options.getState();
@@ -45432,13 +45436,11 @@ If there's a particular need for this, please submit a feature request at https:
             const startMy = touch.startMidY - rect.top - latestContainerSize.height / 2;
             const panDx = visSize.width > 0 ? (mx - startMx) / visSize.width : 0;
             const panDy = visSize.height > 0 ? (my - startMy) / visSize.height : 0;
-            const zoomRatio = s3.zoom !== 0 ? 1 - newZoom / s3.zoom : 0;
-            const focalNormX = mx / visSize.width;
-            const focalNormY = my / visSize.height;
-            const zoomCropX = s3.pan.x + (focalNormX - s3.pan.x) * zoomRatio;
-            const zoomCropY = s3.pan.y + (focalNormY - s3.pan.y) * zoomRatio;
-            const newCropX = touch.startPanX + panDx + (zoomCropX - s3.pan.x);
-            const newCropY = touch.startPanY + panDy + (zoomCropY - s3.pan.y);
+            const zoomRatio = touch.startZoom !== 0 ? 1 - newZoom / touch.startZoom : 0;
+            const startFocalNormX = startMx / visSize.width;
+            const startFocalNormY = startMy / visSize.height;
+            const newCropX = touch.startPanX + panDx + (startFocalNormX - touch.startPanX) * zoomRatio;
+            const newCropY = touch.startPanY + panDy + (startFocalNormY - touch.startPanY) * zoomRatio;
             const { pan: clampedCrop } = restrictPanZoom(
               {
                 ...s3,
@@ -46015,6 +46017,7 @@ If there's a particular need for this, please submit a feature request at https:
     onResizeEnd,
     aspectRatio,
     freeformCrop = false,
+    isResizeDisabled = false,
     stencilTransition,
     cropBounds,
     onEscape,
@@ -46039,12 +46042,19 @@ If there's a particular need for this, please submit a feature request at https:
     const keyboardResizeActiveRef = (0, import_element139.useRef)(false);
     const resizeHandleDescriptionId = (0, import_element139.useId)();
     const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
+    const activePointerResizeRef = (0, import_element139.useRef)(null);
     (0, import_element139.useEffect)(() => {
       return () => {
         clearTimeout(keyboardSettleTimerRef.current);
         keyboardResizeActiveRef.current = false;
+        activePointerResizeRef.current?.cancel(false);
       };
     }, []);
+    (0, import_element139.useEffect)(() => {
+      if (isResizeDisabled) {
+        activePointerResizeRef.current?.cancel();
+      }
+    }, [isResizeDisabled]);
     const latestHandlersRef = (0, import_element139.useRef)(null);
     const normalizedRatio = (0, import_element139.useMemo)(() => {
       if (!hasLockedRatio || imageSize.width === 0) {
@@ -46060,6 +46070,11 @@ If there's a particular need for this, please submit a feature request at https:
     const height = cropRect.height * imageSize.height;
     const handlePointerDown = (0, import_element139.useCallback)(
       (handle, event) => {
+        if (isResizeDisabled || event.pointerType === "touch" && event.isPrimary === false) {
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
         if (event.button !== 0) {
           return;
         }
@@ -46112,7 +46127,7 @@ If there's a particular need for this, please submit a feature request at https:
           });
         };
         let ended = false;
-        const onEnd = () => {
+        const endResize = (notifyResizeEnd = true, restoreFocus = true) => {
           if (ended) {
             return;
           }
@@ -46124,17 +46139,25 @@ If there's a particular need for this, please submit a feature request at https:
           el.removeEventListener("pointermove", onMove);
           el.removeEventListener("pointerup", onEnd);
           el.removeEventListener("lostpointercapture", onEnd);
-          latestHandlersRef.current?.onResizeEnd?.();
-          el.focus({ preventScroll: true });
+          activePointerResizeRef.current = null;
+          if (notifyResizeEnd) {
+            latestHandlersRef.current?.onResizeEnd?.();
+          }
+          if (restoreFocus) {
+            el.focus({ preventScroll: true });
+          }
         };
+        const cancelResize = (notifyResizeEnd = true) => endResize(notifyResizeEnd, false);
+        const onEnd = () => endResize();
         el.addEventListener("pointermove", onMove);
         el.addEventListener("pointerup", onEnd);
         el.addEventListener("lostpointercapture", onEnd);
+        activePointerResizeRef.current = { cancel: cancelResize };
         onResizeStart?.(handle);
         clearTimeout(keyboardSettleTimerRef.current);
         keyboardResizeActiveRef.current = false;
       },
-      [cropRect, onResizeStart]
+      [cropRect, isResizeDisabled, onResizeStart]
     );
     const computeFreeRect = (0, import_element139.useCallback)(
       (drag2, clientX, clientY) => computeFreeResizeRect(
@@ -46183,6 +46206,9 @@ If there's a particular need for this, please submit a feature request at https:
     const handleKeyDown = (0, import_element139.useCallback)(
       (handle, event) => {
         const key = event.key;
+        if (isResizeDisabled) {
+          return;
+        }
         if (key === "Escape") {
           event.preventDefault();
           event.stopPropagation();
@@ -46269,7 +46295,8 @@ If there's a particular need for this, please submit a feature request at https:
         onResizeEnd,
         onEscape,
         keyboardResizeStep,
-        snapCropRect
+        snapCropRect,
+        isResizeDisabled
       ]
     );
     if (containerSize.width === 0 || containerSize.height === 0) {
@@ -46317,7 +46344,11 @@ If there's a particular need for this, please submit a feature request at https:
               type: "button",
               className: `wp-media-editor-image-editor__handle wp-media-editor-image-editor__handle--${pos}`,
               onPointerDown: (event) => handlePointerDown(pos, event),
-              onTouchStart: (event) => event.stopPropagation(),
+              onTouchStart: (event) => {
+                if (event.touches.length < 2) {
+                  event.stopPropagation();
+                }
+              },
               onKeyDown: (event) => handleKeyDown(pos, event),
               "aria-label": getHandleLabel(pos),
               "aria-describedby": resizeHandleDescriptionId
@@ -46953,6 +46984,12 @@ If there's a particular need for this, please submit a feature request at https:
     const [isResizing, setIsResizing] = (0, import_element143.useState)(false);
     const isResizingRef = (0, import_element143.useRef)(false);
     const isSettlingRef = (0, import_element143.useRef)(false);
+    const [isTouchPinching, setIsTouchPinchingState] = (0, import_element143.useState)(false);
+    const isTouchPinchingRef = (0, import_element143.useRef)(false);
+    const setTouchPinching = (0, import_element143.useCallback)((isPinching) => {
+      isTouchPinchingRef.current = isPinching;
+      setIsTouchPinchingState(isPinching);
+    }, []);
     const [activeHandle, setActiveHandle] = (0, import_element143.useState)(
       null
     );
@@ -47084,12 +47121,36 @@ If there's a particular need for this, please submit a feature request at https:
       onPointerDownCapture: () => {
         setIsFocusVisible(false);
       },
+      onTouchStartCapture: (event) => {
+        if (event.touches.length > 1) {
+          setTouchPinching(true);
+        }
+      },
+      onTouchMoveCapture: (event) => {
+        if (event.touches.length > 1) {
+          setTouchPinching(true);
+        }
+      },
+      onTouchEndCapture: (event) => {
+        if (event.touches.length === 0) {
+          setTouchPinching(false);
+        }
+      },
+      onTouchCancelCapture: (event) => {
+        if (event.touches.length === 0) {
+          setTouchPinching(false);
+        }
+      },
       onKeyDownCapture: (event) => {
         if (!["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
           setIsFocusVisible(true);
         }
       },
       onPointerDown: (event) => {
+        if (isResizingRef.current || isTouchPinchingRef.current || event.pointerType === "touch" && event.isPrimary === false) {
+          event.preventDefault();
+          return;
+        }
         handlers.onPointerDown?.(event);
         setIsFocusVisible(false);
       }
@@ -47132,6 +47193,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const handleCropChange = (0, import_element143.useCallback)(
       (rect) => {
+        if (isTouchPinchingRef.current) {
+          return;
+        }
         setCropRect(rect);
         if (isResizingRef.current && scaledVisualSize.width > 0 && scaledVisualSize.height > 0) {
           const offsetX = (canvasSize.width - scaledVisualSize.width) / 2;
@@ -47185,6 +47249,9 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const handleResizeStart = (0, import_element143.useCallback)(
       (handle) => {
+        if (isTouchPinchingRef.current) {
+          return;
+        }
         setFrozenViewScale(viewScaleRest);
         isResizingRef.current = true;
         setIsResizing(true);
@@ -47198,15 +47265,22 @@ If there's a particular need for this, please submit a feature request at https:
       [onGestureStart, resetViewport, viewScaleRest]
     );
     const handleResizeEnd = (0, import_element143.useCallback)(() => {
+      const isCancellingForPinch = isTouchPinchingRef.current;
       isResizingRef.current = false;
       setIsResizing(false);
       setActiveHandle(null);
+      clearTimeout(settleTimerRef.current);
+      if (isCancellingForPinch) {
+        isSettlingRef.current = false;
+        setSettling(false);
+        resetViewport();
+        return;
+      }
       isSettlingRef.current = true;
       setSettling(true);
       resetViewport();
       settleCrop();
       onGestureEnd?.();
-      clearTimeout(settleTimerRef.current);
       settleTimerRef.current = setTimeout(() => {
         isSettlingRef.current = false;
         setSettling(false);
@@ -47359,6 +47433,7 @@ If there's a particular need for this, please submit a feature request at https:
                         onEscape: handleEscape,
                         aspectRatio,
                         freeformCrop,
+                        isResizeDisabled: isTouchPinching,
                         stencilTransition: settleStencilTransition,
                         cropBounds,
                         minCropSize,
