@@ -32159,31 +32159,21 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime186.jsxs)(import_components71.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-main", children: [
       isBlockBasedTheme && /* @__PURE__ */ (0, import_jsx_runtime186.jsxs)(import_jsx_runtime186.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
-          SidebarNavigationItemGlobalStyles,
-          {
-            to: "/styles",
-            uid: "global-styles-navigation-item",
-            icon: styles_default,
-            children: (0, import_i18n61.__)("Styles")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
-          SidebarNavigationItem,
-          {
-            uid: "navigation-navigation-item",
-            to: "/navigation",
-            withChevron: true,
-            icon: navigation_default,
-            children: (0, import_i18n61.__)("Navigation")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
           SidebarNavigationItemIdentity,
           {
             to: "/identity",
             uid: "identity-navigation-item",
             icon: site_logo_default,
             children: (0, import_i18n61._x)("Identity", "site identity")
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
+          SidebarNavigationItemGlobalStyles,
+          {
+            to: "/styles",
+            uid: "global-styles-navigation-item",
+            icon: styles_default,
+            children: (0, import_i18n61.__)("Styles")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
@@ -32199,11 +32189,11 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
           SidebarNavigationItem,
           {
-            uid: "template-navigation-item",
-            to: "/template",
+            uid: "navigation-navigation-item",
+            to: "/navigation",
             withChevron: true,
-            icon: layout_default,
-            children: (0, import_i18n61.__)("Templates")
+            icon: navigation_default,
+            children: (0, import_i18n61.__)("Navigation")
           }
         )
       ] }),
@@ -32225,6 +32215,16 @@ var wp;
           withChevron: true,
           icon: symbol_default,
           children: (0, import_i18n61.__)("Patterns")
+        }
+      ),
+      isBlockBasedTheme && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
+        SidebarNavigationItem,
+        {
+          uid: "template-navigation-item",
+          to: "/template",
+          withChevron: true,
+          icon: layout_default,
+          children: (0, import_i18n61.__)("Templates")
         }
       )
     ] });
