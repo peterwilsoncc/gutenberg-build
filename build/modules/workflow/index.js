@@ -3502,7 +3502,7 @@ function WorkflowMenu() {
                 {
                   className: "workflows-workflow-menu__executing",
                   align: "center",
-                  children: (0, import_i18n.__)("Executing ability\u2026")
+                  children: (0, import_i18n.__)("Executing ability…")
                 }
               ),
               !isExecuting && search && filteredAbilities.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(_e.Empty, { children: (0, import_i18n.__)("No results found.") }),

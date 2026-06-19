@@ -10346,8 +10346,8 @@ function SaveButton() {
     return (0, import_i18n6.sprintf)(
       // translators: %d: number of unsaved changes (number).
       (0, import_i18n6._n)(
-        "Review %d change\u2026",
-        "Review %d changes\u2026",
+        "Review %d change…",
+        "Review %d changes…",
         dirtyEntityRecordsCount
       ),
       dirtyEntityRecordsCount
@@ -10682,7 +10682,7 @@ function useRouteTitle() {
       const decodedSiteTitle = (0, import_html_entities2.decodeEntities)(siteTitle);
       const formattedTitle = (0, import_i18n10.sprintf)(
         /* translators: Admin document title. 1: Admin screen name, 2: Site name. */
-        (0, import_i18n10.__)("%1$s \u2039 %2$s \u2014 WordPress"),
+        (0, import_i18n10.__)("%1$s ‹ %2$s — WordPress"),
         decodedRouteTitle,
         decodedSiteTitle
       );
