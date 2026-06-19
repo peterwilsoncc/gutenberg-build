@@ -58241,7 +58241,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions3, templateTitleField: templateTitleField2 } = unlock(import_editor37.privateApis);
+  var { usePostActions: usePostActions3, usePostFields: usePostFields2 } = unlock(import_editor37.privateApis);
   var { useHistory: useHistory24, useLocation: useLocation30 } = unlock(import_router36.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions3 } = unlock(import_core_data63.privateApis);
   function PageTemplates2() {
@@ -58311,18 +58311,22 @@ If there's a particular need for this, please submit a feature request at https:
         label: author
       }));
     }, [records]);
-    const fields2 = (0, import_element189.useMemo)(
-      () => [
+    const postFields = usePostFields2({ postType: TEMPLATE_POST_TYPE });
+    const fields2 = (0, import_element189.useMemo)(() => {
+      const __fields = [
         previewField2,
-        templateTitleField2,
-        descriptionField,
         {
           ...authorField,
           elements: authors
         }
-      ],
-      [authors]
-    );
+      ];
+      return [
+        ...__fields,
+        ...(postFields || []).filter(
+          (field) => ["description", "title"].includes(field.id)
+        )
+      ];
+    }, [authors, postFields]);
     const { data, paginationInfo } = (0, import_element189.useMemo)(() => {
       return filterSortAndPaginate(records, view, fields2);
     }, [records, view, fields2]);
@@ -58634,7 +58638,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element192 = __toESM(require_element(), 1);
   var import_editor40 = __toESM(require_editor(), 1);
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
-  var { usePostFields: usePostFields2, PostCardPanel } = unlock(import_editor40.privateApis);
+  var { usePostFields: usePostFields3, PostCardPanel } = unlock(import_editor40.privateApis);
   var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
   function QuickEditModal({
     postType: postType2,
@@ -58675,7 +58679,7 @@ If there's a particular need for this, please submit a feature request at https:
       [postType2, postId, isBulk]
     );
     const { editEntityRecord, saveEditedEntityRecord } = (0, import_data85.useDispatch)(import_core_data67.store);
-    const _fields = usePostFields2({ postType: postType2 });
+    const _fields = usePostFields3({ postType: postType2 });
     const fields2 = (0, import_element192.useMemo)(
       () => _fields?.map((field) => {
         if (field.id === "status") {
@@ -58792,7 +58796,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/post-list/index.mjs
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions4, usePostFields: usePostFields3 } = unlock(import_editor41.privateApis);
+  var { usePostActions: usePostActions4, usePostFields: usePostFields4 } = unlock(import_editor41.privateApis);
   var { useLocation: useLocation31, useHistory: useHistory25 } = unlock(import_router37.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions4 } = unlock(import_core_data68.privateApis);
   var EMPTY_ARRAY15 = [];
@@ -58863,7 +58867,7 @@ If there's a particular need for this, please submit a feature request at https:
       const newSelection = postId?.split(",") ?? [];
       setSelection(newSelection);
     }, [postId]);
-    const fields2 = usePostFields3({
+    const fields2 = usePostFields4({
       postType: postType2
     });
     const queryArgs = (0, import_element193.useMemo)(() => {
