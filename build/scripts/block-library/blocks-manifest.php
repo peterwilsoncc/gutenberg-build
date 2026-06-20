@@ -7460,6 +7460,10 @@ return array(
 				'default' => array(
 					
 				)
+			),
+			'tagName' => array(
+				'type' => 'string',
+				'default' => ''
 			)
 		),
 		'supports' => array(

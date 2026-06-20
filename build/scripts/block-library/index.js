@@ -63430,6 +63430,10 @@ ${js}
       query: {
         type: "object",
         default: {}
+      },
+      tagName: {
+        type: "string",
+        default: ""
       }
     },
     supports: {
@@ -63491,6 +63495,7 @@ ${js}
   var import_compose53 = __toESM(require_compose(), 1);
   var import_i18n226 = __toESM(require_i18n(), 1);
   var import_dom13 = __toESM(require_dom(), 1);
+  var import_a11y5 = __toESM(require_a11y(), 1);
 
   // packages/block-library/build-module/search/utils.mjs
   var PC_WIDTH_DEFAULT = 50;
@@ -63502,6 +63507,17 @@ ${js}
 
   // packages/block-library/build-module/search/edit.mjs
   var import_jsx_runtime427 = __toESM(require_jsx_runtime(), 1);
+  var TAG_NAME_MESSAGES = {
+    "": (0, import_i18n226.__)(
+      "Lets the theme decide. Uses the <search> landmark element if the theme opts in, otherwise a <form>."
+    ),
+    search: (0, import_i18n226.__)(
+      "Wraps the block in a <search> landmark, announced as a search region by assistive technologies."
+    ),
+    form: (0, import_i18n226.__)(
+      'Uses a <form role="search"> wrapper for backward compatibility with existing theme styles.'
+    )
+  };
   var DEFAULT_INNER_PADDING = "4px";
   var PERCENTAGE_WIDTHS = [25, 50, 75, 100];
   function SearchEdit({
@@ -63522,6 +63538,7 @@ ${js}
       buttonText,
       buttonPosition,
       buttonUseIcon,
+      tagName,
       style: style2
     } = attributes2;
     const wasJustInsertedIntoNavigationBlock = (0, import_data131.useSelect)(
@@ -63703,169 +63720,191 @@ ${js}
       ] });
     };
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const controls = /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_jsx_runtime427.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_block_editor235.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(
-      import_components146.__experimentalToolsPanel,
-      {
-        label: (0, import_i18n226.__)("Settings"),
-        resetAll: () => {
-          setAttributes({
-            width: void 0,
-            widthUnit: void 0,
-            showLabel: true,
-            buttonUseIcon: false,
-            buttonPosition: "button-outside"
-          });
-        },
-        dropdownMenuProps,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-            import_components146.__experimentalToolsPanelItem,
-            {
-              hasValue: () => !showLabel,
-              label: (0, import_i18n226.__)("Show label"),
-              onDeselect: () => {
-                setAttributes({
-                  showLabel: true
-                });
-              },
-              isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-                import_components146.ToggleControl,
-                {
-                  checked: showLabel,
-                  label: (0, import_i18n226.__)("Show label"),
-                  onChange: (value) => setAttributes({
-                    showLabel: value
-                  })
-                }
-              )
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-            import_components146.__experimentalToolsPanelItem,
-            {
-              hasValue: () => buttonPosition !== "button-outside",
-              label: (0, import_i18n226.__)("Button position"),
-              onDeselect: () => {
-                setAttributes({
-                  buttonPosition: "button-outside"
-                });
-              },
-              isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-                import_components146.SelectControl,
-                {
-                  value: buttonPosition,
-                  __next40pxDefaultSize: true,
-                  label: (0, import_i18n226.__)("Button position"),
-                  onChange: (value) => {
-                    setAttributes({
-                      buttonPosition: value
-                    });
-                  },
-                  options: buttonPositionControls
-                }
-              )
-            }
-          ),
-          buttonPosition !== "no-button" && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-            import_components146.__experimentalToolsPanelItem,
-            {
-              hasValue: () => !!buttonUseIcon,
-              label: (0, import_i18n226.__)("Use button with icon"),
-              onDeselect: () => {
-                setAttributes({
-                  buttonUseIcon: false
-                });
-              },
-              isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-                import_components146.ToggleControl,
-                {
-                  checked: buttonUseIcon,
-                  label: (0, import_i18n226.__)("Use button with icon"),
-                  onChange: (value) => setAttributes({
-                    buttonUseIcon: value
-                  })
-                }
-              )
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-            import_components146.__experimentalToolsPanelItem,
-            {
-              hasValue: () => !!width,
-              label: (0, import_i18n226.__)("Width"),
-              onDeselect: () => {
-                setAttributes({
-                  width: void 0,
-                  widthUnit: void 0
-                });
-              },
-              isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_components146.__experimentalVStack, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-                  import_components146.__experimentalUnitControl,
+    const controls = /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_jsx_runtime427.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_block_editor235.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(
+        import_components146.__experimentalToolsPanel,
+        {
+          label: (0, import_i18n226.__)("Settings"),
+          resetAll: () => {
+            setAttributes({
+              width: void 0,
+              widthUnit: void 0,
+              showLabel: true,
+              buttonUseIcon: false,
+              buttonPosition: "button-outside"
+            });
+          },
+          dropdownMenuProps,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+              import_components146.__experimentalToolsPanelItem,
+              {
+                hasValue: () => !showLabel,
+                label: (0, import_i18n226.__)("Show label"),
+                onDeselect: () => {
+                  setAttributes({
+                    showLabel: true
+                  });
+                },
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                  import_components146.ToggleControl,
                   {
-                    __next40pxDefaultSize: true,
-                    label: (0, import_i18n226.__)("Width"),
-                    id: unitControlInputId,
-                    min: isPercentageUnit(widthUnit) ? 0 : MIN_WIDTH,
-                    max: isPercentageUnit(widthUnit) ? 100 : void 0,
-                    step: 1,
-                    onChange: (newWidth) => {
-                      const parsedNewWidth = newWidth === "" ? void 0 : parseInt(newWidth, 10);
-                      setAttributes({
-                        width: parsedNewWidth
-                      });
-                    },
-                    onUnitChange: (newUnit) => {
-                      setAttributes({
-                        width: "%" === newUnit ? PC_WIDTH_DEFAULT : PX_WIDTH_DEFAULT,
-                        widthUnit: newUnit
-                      });
-                    },
-                    __unstableInputWidth: "80px",
-                    value: `${width}${widthUnit}`,
-                    units
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-                  import_components146.__experimentalToggleGroupControl,
-                  {
-                    label: (0, import_i18n226.__)("Percentage Width"),
-                    value: PERCENTAGE_WIDTHS.includes(width) && widthUnit === "%" ? width : void 0,
-                    hideLabelFromVision: true,
-                    onChange: (newWidth) => {
-                      setAttributes({
-                        width: newWidth,
-                        widthUnit: "%"
-                      });
-                    },
-                    isBlock: true,
-                    __next40pxDefaultSize: true,
-                    children: PERCENTAGE_WIDTHS.map((widthValue) => {
-                      return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-                        import_components146.__experimentalToggleGroupControlOption,
-                        {
-                          value: widthValue,
-                          label: (0, import_i18n226.sprintf)(
-                            /* translators: %d: Percentage value. */
-                            (0, import_i18n226.__)("%d%%"),
-                            widthValue
-                          )
-                        },
-                        widthValue
-                      );
+                    checked: showLabel,
+                    label: (0, import_i18n226.__)("Show label"),
+                    onChange: (value) => setAttributes({
+                      showLabel: value
                     })
                   }
                 )
-              ] })
-            }
-          )
-        ]
-      }
-    ) }) });
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+              import_components146.__experimentalToolsPanelItem,
+              {
+                hasValue: () => buttonPosition !== "button-outside",
+                label: (0, import_i18n226.__)("Button position"),
+                onDeselect: () => {
+                  setAttributes({
+                    buttonPosition: "button-outside"
+                  });
+                },
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                  import_components146.SelectControl,
+                  {
+                    value: buttonPosition,
+                    __next40pxDefaultSize: true,
+                    label: (0, import_i18n226.__)("Button position"),
+                    onChange: (value) => {
+                      setAttributes({
+                        buttonPosition: value
+                      });
+                    },
+                    options: buttonPositionControls
+                  }
+                )
+              }
+            ),
+            buttonPosition !== "no-button" && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+              import_components146.__experimentalToolsPanelItem,
+              {
+                hasValue: () => !!buttonUseIcon,
+                label: (0, import_i18n226.__)("Use button with icon"),
+                onDeselect: () => {
+                  setAttributes({
+                    buttonUseIcon: false
+                  });
+                },
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                  import_components146.ToggleControl,
+                  {
+                    checked: buttonUseIcon,
+                    label: (0, import_i18n226.__)("Use button with icon"),
+                    onChange: (value) => setAttributes({
+                      buttonUseIcon: value
+                    })
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+              import_components146.__experimentalToolsPanelItem,
+              {
+                hasValue: () => !!width,
+                label: (0, import_i18n226.__)("Width"),
+                onDeselect: () => {
+                  setAttributes({
+                    width: void 0,
+                    widthUnit: void 0
+                  });
+                },
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_components146.__experimentalVStack, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                    import_components146.__experimentalUnitControl,
+                    {
+                      __next40pxDefaultSize: true,
+                      label: (0, import_i18n226.__)("Width"),
+                      id: unitControlInputId,
+                      min: isPercentageUnit(widthUnit) ? 0 : MIN_WIDTH,
+                      max: isPercentageUnit(widthUnit) ? 100 : void 0,
+                      step: 1,
+                      onChange: (newWidth) => {
+                        const parsedNewWidth = newWidth === "" ? void 0 : parseInt(newWidth, 10);
+                        setAttributes({
+                          width: parsedNewWidth
+                        });
+                      },
+                      onUnitChange: (newUnit) => {
+                        setAttributes({
+                          width: "%" === newUnit ? PC_WIDTH_DEFAULT : PX_WIDTH_DEFAULT,
+                          widthUnit: newUnit
+                        });
+                      },
+                      __unstableInputWidth: "80px",
+                      value: `${width}${widthUnit}`,
+                      units
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                    import_components146.__experimentalToggleGroupControl,
+                    {
+                      label: (0, import_i18n226.__)("Percentage Width"),
+                      value: PERCENTAGE_WIDTHS.includes(width) && widthUnit === "%" ? width : void 0,
+                      hideLabelFromVision: true,
+                      onChange: (newWidth) => {
+                        setAttributes({
+                          width: newWidth,
+                          widthUnit: "%"
+                        });
+                      },
+                      isBlock: true,
+                      __next40pxDefaultSize: true,
+                      children: PERCENTAGE_WIDTHS.map((widthValue) => {
+                        return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+                          import_components146.__experimentalToggleGroupControlOption,
+                          {
+                            value: widthValue,
+                            label: (0, import_i18n226.sprintf)(
+                              /* translators: %d: Percentage value. */
+                              (0, import_i18n226.__)("%d%%"),
+                              widthValue
+                            )
+                          },
+                          widthValue
+                        );
+                      })
+                    }
+                  )
+                ] })
+              }
+            )
+          ]
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_block_editor235.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+        import_components146.SelectControl,
+        {
+          __next40pxDefaultSize: true,
+          label: (0, import_i18n226.__)("HTML element"),
+          value: tagName ?? "",
+          options: [
+            { label: (0, import_i18n226.__)("Default"), value: "" },
+            { label: "<search>", value: "search" },
+            { label: "<form>", value: "form" }
+          ],
+          onChange: (value) => {
+            setAttributes({ tagName: value });
+            (0, import_a11y5.speak)(
+              TAG_NAME_MESSAGES[value].replace(/[<>]/g, "")
+            );
+          },
+          help: TAG_NAME_MESSAGES[tagName ?? ""]
+        }
+      ) })
+    ] });
     const isNonZeroBorderRadius = (radius) => radius !== void 0 && parseInt(radius, 10) !== 0;
     const padBorderRadius = (radius) => isNonZeroBorderRadius(radius) ? `calc(${radius} + ${DEFAULT_INNER_PADDING})` : void 0;
     const getWrapperStyles = () => {
@@ -63913,58 +63952,61 @@ ${js}
       "wp-block-search__label",
       typographyProps.className
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)("div", { ...blockProps, children: [
+    const Wrapper = "search" === tagName ? "search" : "div";
+    return /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_jsx_runtime427.Fragment, { children: [
       controls,
-      showLabel && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-        import_block_editor235.RichText,
-        {
-          identifier: "label",
-          className: labelClassnames,
-          "aria-label": (0, import_i18n226.__)("Label text"),
-          placeholder: (0, import_i18n226.__)("Add label\u2026"),
-          withoutInteractiveFormatting: true,
-          value: label,
-          onChange: (html) => setAttributes({ label: html }),
-          style: typographyProps.style
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(
-        import_components146.ResizableBox,
-        {
-          size: {
-            width: width === void 0 ? "auto" : `${width}${widthUnit}`,
-            height: "auto"
-          },
-          className: clsx_default(
-            "wp-block-search__inside-wrapper",
-            isButtonPositionInside ? borderProps.className : void 0
-          ),
-          style: getWrapperStyles(),
-          minWidth: MIN_WIDTH,
-          enable: getResizableSides(),
-          onResizeStart: (event, direction, elt) => {
-            setAttributes({
-              width: parseInt(elt.offsetWidth, 10),
-              widthUnit: "px"
-            });
-            toggleSelection(false);
-          },
-          onResizeStop: (event, direction, elt, delta) => {
-            setAttributes({
-              width: parseInt(width + delta.width, 10)
-            });
-            toggleSelection(true);
-          },
-          showHandle: isSelected,
-          children: [
-            (isButtonPositionInside || isButtonPositionOutside || hasOnlyButton) && /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_jsx_runtime427.Fragment, { children: [
-              renderTextField(),
-              renderButton()
-            ] }),
-            hasNoButton && renderTextField()
-          ]
-        }
-      )
+      /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(Wrapper, { ...blockProps, children: [
+        showLabel && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+          import_block_editor235.RichText,
+          {
+            identifier: "label",
+            className: labelClassnames,
+            "aria-label": (0, import_i18n226.__)("Label text"),
+            placeholder: (0, import_i18n226.__)("Add label\u2026"),
+            withoutInteractiveFormatting: true,
+            value: label,
+            onChange: (html) => setAttributes({ label: html }),
+            style: typographyProps.style
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(
+          import_components146.ResizableBox,
+          {
+            size: {
+              width: width === void 0 ? "auto" : `${width}${widthUnit}`,
+              height: "auto"
+            },
+            className: clsx_default(
+              "wp-block-search__inside-wrapper",
+              isButtonPositionInside ? borderProps.className : void 0
+            ),
+            style: getWrapperStyles(),
+            minWidth: MIN_WIDTH,
+            enable: getResizableSides(),
+            onResizeStart: (event, direction, elt) => {
+              setAttributes({
+                width: parseInt(elt.offsetWidth, 10),
+                widthUnit: "px"
+              });
+              toggleSelection(false);
+            },
+            onResizeStop: (event, direction, elt, delta) => {
+              setAttributes({
+                width: parseInt(width + delta.width, 10)
+              });
+              toggleSelection(true);
+            },
+            showHandle: isSelected,
+            children: [
+              (isButtonPositionInside || isButtonPositionOutside || hasOnlyButton) && /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_jsx_runtime427.Fragment, { children: [
+                renderTextField(),
+                renderButton()
+              ] }),
+              hasNoButton && renderTextField()
+            ]
+          }
+        )
+      ] })
     ] });
   }
 
