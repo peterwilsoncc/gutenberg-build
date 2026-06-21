@@ -41466,7 +41466,7 @@ function Header8({ titleId, widgetType }) {
         children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Icon, { icon: widgetType.icon })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(card_exports.Title, { id: titleId, render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("h3", {}), children: widgetType.title })
+    /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(card_exports.Title, { id: titleId, render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("h2", {}), children: widgetType.title })
   ] }) });
 }
 var WidgetChrome = (0, import_element167.forwardRef)(
@@ -49964,23 +49964,6 @@ function Dashboard() {
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
   );
-  const greetingName = (0, import_data9.useSelect)((select) => {
-    const user = select(import_core_data.store).getCurrentUser();
-    if (!user) {
-      return void 0;
-    }
-    const displayName = user.name?.trim();
-    if (displayName) {
-      return displayName;
-    }
-    if ("username" in user && typeof user.username === "string") {
-      const username = user.username.trim();
-      if (username) {
-        return username;
-      }
-    }
-    return user.slug;
-  }, []);
   const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices.store);
   const handleLayoutChange = (next) => {
     setLayout(next);
@@ -49988,16 +49971,7 @@ function Dashboard() {
       type: "snackbar"
     });
   };
-  let pageTitle = (0, import_i18n70.__)("Dashboard");
-  if (editMode) {
-    pageTitle = (0, import_i18n70.__)("Customize Dashboard");
-  } else if (greetingName) {
-    pageTitle = (0, import_i18n70.sprintf)(
-      /* translators: %s: current user's display name. */
-      (0, import_i18n70.__)("Howdy, %s"),
-      greetingName
-    );
-  }
+  const pageTitle = editMode ? (0, import_i18n70.__)("Customize Dashboard") : (0, import_i18n70.__)("Dashboard");
   return /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(
     WidgetDashboard,
     {
