@@ -70303,6 +70303,7 @@ If there's a particular need for this, please submit a feature request at https:
     "clearBlockSelection",
     "codeEditingEnabled",
     "colors",
+    "disableContentOnlyForTemplateParts",
     "disableContentOnlyForUnsyncedPatterns",
     "disableCustomColors",
     "disableCustomFontSizes",
@@ -70569,7 +70570,7 @@ If there's a particular need for this, please submit a feature request at https:
         [isNavigationPostEditorKey]: postType2 === "wp_navigation",
         // When in template-locked mode (e.g., "Show Template" in the post editor),
         // don't treat template parts as contentOnly sections.
-        disableContentOnlyForTemplateParts: renderingMode2 === "template-locked",
+        disableContentOnlyForTemplateParts: renderingMode2 === "template-locked" || settings.disableContentOnlyForTemplateParts,
         ...deviceType2 ? { [deviceTypeKey]: deviceType2 } : {},
         [onViewportStateChangeKey]: updateDeviceTypeForViewportState2,
         [isNavigationOverlayContextKey]: isNavigationOverlayContext
