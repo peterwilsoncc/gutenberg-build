@@ -7282,15 +7282,15 @@ var wp;
     return bindings?.[DEFAULT_ATTRIBUTE]?.source === PATTERN_OVERRIDES_SOURCE;
   }
   function replacePatternOverridesDefaultBinding(bindings, supportedAttributes) {
-    if (hasPatternOverridesDefaultBinding(bindings)) {
-      const bindingsWithDefaults = {};
-      for (const attributeName of supportedAttributes) {
-        const bindingSource = bindings[attributeName] ? bindings[attributeName] : { source: PATTERN_OVERRIDES_SOURCE };
-        bindingsWithDefaults[attributeName] = bindingSource;
-      }
-      return bindingsWithDefaults;
+    if (!hasPatternOverridesDefaultBinding(bindings)) {
+      return bindings;
     }
-    return bindings;
+    const bindingsWithDefaults = {};
+    for (const attributeName of supportedAttributes) {
+      const bindingSource = bindings[attributeName] ? bindings[attributeName] : { source: PATTERN_OVERRIDES_SOURCE };
+      bindingsWithDefaults[attributeName] = bindingSource;
+    }
+    return bindingsWithDefaults;
   }
 
   // packages/block-editor/build-module/components/block-list/private-block-context.mjs
@@ -10673,16 +10673,16 @@ var wp;
 
   // packages/block-editor/build-module/utils/object.mjs
   function setImmutably(object, path, value) {
-    path = Array.isArray(path) ? [...path] : [path];
-    object = Array.isArray(object) ? [...object] : { ...object };
-    const leaf = path.pop();
-    let prev = object;
-    for (const key of path) {
+    const pathArray = Array.isArray(path) ? [...path] : [path];
+    const result = Array.isArray(object) ? [...object] : { ...object };
+    const leaf = pathArray.pop();
+    let prev = result;
+    for (const key of pathArray) {
       const lvl = prev[key];
-      prev = prev[key] = Array.isArray(lvl) ? [...lvl] : { ...lvl };
+      prev[key] = prev = Array.isArray(lvl) ? [...lvl] : { ...lvl };
     }
     prev[leaf] = value;
-    return object;
+    return result;
   }
   var getValueFromObjectPath = (object, path, defaultValue) => {
     const arrayPath = Array.isArray(path) ? path : path.split(".");
@@ -11471,6 +11471,12 @@ var wp;
   };
 
   // packages/block-editor/build-module/utils/sorting.mjs
+  function isGreater(a2, b2) {
+    if (typeof a2 === "string" && typeof b2 === "string") {
+      return a2 > b2;
+    }
+    return Number(a2) > Number(b2);
+  }
   var comparator = (field, items, order) => {
     return (a2, b2) => {
       let cmpA, cmpB;
@@ -11481,9 +11487,9 @@ var wp;
         cmpA = a2[field];
         cmpB = b2[field];
       }
-      if (cmpA > cmpB) {
+      if (isGreater(cmpA, cmpB)) {
         return order === "asc" ? 1 : -1;
-      } else if (cmpB > cmpA) {
+      } else if (isGreater(cmpB, cmpA)) {
         return order === "asc" ? -1 : 1;
       }
       const orderA = items.findIndex((item) => item === a2);
@@ -13506,6 +13512,7 @@ var wp;
         return key;
       }
     }
+    return void 0;
   }
 
   // packages/block-editor/build-module/store/actions.mjs
@@ -18216,7 +18223,9 @@ var wp;
       return null;
     }
     const editorCanvas = Array.from(
-      document.querySelectorAll('iframe[name="editor-canvas"]').values()
+      document.querySelectorAll(
+        'iframe[name="editor-canvas"]'
+      ).values()
     ).find((iframe) => {
       const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
       return iframeDocument === editor.ownerDocument;
@@ -21909,10 +21918,7 @@ var wp;
     if (!node) {
       return;
     }
-    const elementNode = (
-      /** @type {Element} */
-      node
-    );
+    const elementNode = node;
     const blockNode = elementNode.closest(BLOCK_SELECTOR);
     if (!blockNode) {
       return;
@@ -36372,7 +36378,9 @@ var wp;
     }
     return html;
   }
-  function getPasteEventData({ clipboardData }) {
+  function getPasteEventData({
+    clipboardData
+  }) {
     let plainText = "";
     let html = "";
     try {
@@ -37548,7 +37556,8 @@ var wp;
       0,
       {
         type: "combinator",
-        content: " "
+        content: " ",
+        pos: [0, 0]
       },
       ...tokenizedPrefix
     );
@@ -57252,13 +57261,9 @@ var wp;
     fontFamilyFaces?.forEach((face) => {
       if ("string" === typeof face.fontWeight && /\s/.test(face.fontWeight.trim())) {
         isVariableFont = true;
-        let [startValue, endValue] = face.fontWeight.split(" ");
-        startValue = parseInt(startValue.slice(0, 1));
-        if (endValue === "1000") {
-          endValue = 10;
-        } else {
-          endValue = parseInt(endValue.slice(0, 1));
-        }
+        const [startStr, endStr] = face.fontWeight.split(" ");
+        const startValue = parseInt(startStr.slice(0, 1));
+        const endValue = endStr === "1000" ? 10 : parseInt(endStr.slice(0, 1));
         for (let i2 = startValue; i2 <= endValue; i2++) {
           const fontWeightValue = `${i2.toString()}00`;
           if (!fontWeights.some(
@@ -57289,7 +57294,7 @@ var wp;
         }
       }
     });
-    if (!fontWeights.some((weight) => weight.value >= "600")) {
+    if (!fontWeights.some((weight) => (weight.value ?? "") >= "600")) {
       fontWeights.push({
         name: (0, import_i18n129._x)("Bold", "font weight"),
         value: "700"
@@ -57312,12 +57317,12 @@ var wp;
         const optionName = styleValue === "normal" ? weightName : (0, import_i18n129.sprintf)(
           /* translators: 1: Font weight name. 2: Font style name. */
           (0, import_i18n129._x)("%1$s %2$s", "font"),
-          weightName,
-          styleName
+          weightName ?? "",
+          styleName ?? ""
         );
         combinedStyleAndWeightOptions.push({
           key: `${styleValue}-${weightValue}`,
-          name: optionName,
+          name: optionName ?? "",
           style: {
             fontStyle: styleValue,
             fontWeight: weightValue
