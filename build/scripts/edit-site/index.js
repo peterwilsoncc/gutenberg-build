@@ -18661,6 +18661,70 @@ var wp;
     return variable;
   }
 
+  // packages/global-styles-engine/build-module/style-state-back-compat.mjs
+  var LEGACY_STYLE_STATE_ALIASES = {
+    "@mobile": "mobile",
+    "@tablet": "tablet",
+    "-current": "@current"
+  };
+  function isObjectRecord(value) {
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+  function normalizeStyleStateNode(node) {
+    if (!isObjectRecord(node)) {
+      return node;
+    }
+    let normalized = node;
+    Object.entries(LEGACY_STYLE_STATE_ALIASES).forEach(
+      ([state, legacyState]) => {
+        if (Object.hasOwn(node, legacyState)) {
+          if (normalized === node) {
+            normalized = { ...node };
+          }
+          if (!Object.hasOwn(node, state)) {
+            normalized[state] = node[legacyState];
+          }
+          delete normalized[legacyState];
+        }
+      }
+    );
+    Object.entries(normalized).forEach(([key, value]) => {
+      if (!isObjectRecord(value)) {
+        return;
+      }
+      const normalizedValue = normalizeStyleStateNode(value);
+      if (normalizedValue !== value) {
+        if (normalized === node) {
+          normalized = { ...node };
+        }
+        normalized[key] = normalizedValue;
+      }
+    });
+    return normalized;
+  }
+  function normalizeStyleStateAliases(globalStyles) {
+    if (false) {
+      return globalStyles;
+    }
+    if (!globalStyles?.styles) {
+      return globalStyles;
+    }
+    const styles = normalizeStyleStateNode(globalStyles.styles);
+    return styles === globalStyles.styles ? globalStyles : { ...globalStyles, styles };
+  }
+  function getLegacyStyleStatePath(path) {
+    if (false) {
+      return void 0;
+    }
+    const pathParts = path.split(".");
+    const legacyPathParts = pathParts.map(
+      (part) => LEGACY_STYLE_STATE_ALIASES[part] ?? part
+    );
+    return legacyPathParts.some(
+      (part, index2) => part !== pathParts[index2]
+    ) ? legacyPathParts.join(".") : void 0;
+  }
+
   // packages/global-styles-engine/build-module/settings/get-style.mjs
   function getStyle(globalStyles, path, blockName, shouldDecodeEncode = true) {
     const appendedPath = path ? "." + path : "";
@@ -18668,7 +18732,22 @@ var wp;
     if (!globalStyles) {
       return void 0;
     }
-    const rawResult = getValueFromObjectPath(globalStyles, finalPath);
+    let rawResult = getValueFromObjectPath(globalStyles, finalPath);
+    const legacyPath = getLegacyStyleStatePath(finalPath);
+    if (rawResult === void 0 && legacyPath) {
+      let hasCanonicalPath = true;
+      let currentValue = globalStyles;
+      for (const pathPart of finalPath.split(".")) {
+        if (!currentValue || typeof currentValue !== "object" || !Object.hasOwn(currentValue, pathPart)) {
+          hasCanonicalPath = false;
+          break;
+        }
+        currentValue = currentValue[pathPart];
+      }
+      if (!hasCanonicalPath) {
+        rawResult = getValueFromObjectPath(globalStyles, legacyPath);
+      }
+    }
     const result = shouldDecodeEncode ? getValueFromVariable(globalStyles, blockName, rawResult) : rawResult;
     return result;
   }
@@ -18678,7 +18757,7 @@ var wp;
     const appendedPath = path ? "." + path : "";
     const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
     return setImmutably(
-      globalStyles,
+      normalizeStyleStateAliases(globalStyles),
       finalPath.split("."),
       newValue
     );
@@ -18715,25 +18794,29 @@ var wp;
 
   // packages/global-styles-engine/build-module/core/merge.mjs
   function mergeGlobalStyles(base, user) {
-    return (0, import_deepmerge.default)(base, user, {
-      /*
-       * We only pass as arrays the presets,
-       * in which case we want the new array of values
-       * to override the old array (no merging).
-       */
-      isMergeableObject: isPlainObject,
-      /*
-       * Exceptions to the above rule.
-       * Background images should be replaced, not merged,
-       * as they themselves are specific object definitions for the style.
-       */
-      customMerge: (key) => {
-        if (key === "backgroundImage") {
-          return (baseConfig, userConfig) => userConfig ?? baseConfig;
+    return (0, import_deepmerge.default)(
+      normalizeStyleStateAliases(base),
+      normalizeStyleStateAliases(user),
+      {
+        /*
+         * We only pass as arrays the presets,
+         * in which case we want the new array of values
+         * to override the old array (no merging).
+         */
+        isMergeableObject: isPlainObject,
+        /*
+         * Exceptions to the above rule.
+         * Background images should be replaced, not merged,
+         * as they themselves are specific object definitions for the style.
+         */
+        customMerge: (key) => {
+          if (key === "backgroundImage") {
+            return (baseConfig, userConfig) => userConfig ?? baseConfig;
+          }
+          return void 0;
         }
-        return void 0;
       }
-    });
+    );
   }
 
   // packages/global-styles-engine/build-module/core/render.mjs
@@ -19283,8 +19366,8 @@ var wp;
     ]
   };
   var RESPONSIVE_BREAKPOINTS = {
-    mobile: "@media (width <= 480px)",
-    tablet: "@media (480px < width <= 782px)"
+    "@mobile": "@media (width <= 480px)",
+    "@tablet": "@media (480px < width <= 782px)"
   };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
@@ -20140,10 +20223,17 @@ var wp;
       variationStyles: false,
       ...styleOptions
     };
-    const nodesWithStyles = getNodesWithStyles(tree, blockSelectors);
-    const nodesWithSettings = getNodesWithSettings(tree, blockSelectors);
-    const useRootPaddingAlign = tree?.settings?.useRootPaddingAwareAlignments;
-    const { contentSize, wideSize } = tree?.settings?.layout || {};
+    const normalizedTree = normalizeStyleStateAliases(tree);
+    const nodesWithStyles = getNodesWithStyles(
+      normalizedTree,
+      blockSelectors
+    );
+    const nodesWithSettings = getNodesWithSettings(
+      normalizedTree,
+      blockSelectors
+    );
+    const useRootPaddingAlign = normalizedTree?.settings?.useRootPaddingAwareAlignments;
+    const { contentSize, wideSize } = normalizedTree?.settings?.layout || {};
     const hasBodyStyles = options.marginReset || options.rootPadding || options.layoutStyles;
     let ruleset = "";
     if (options.presets && (contentSize || wideSize)) {
@@ -20177,7 +20267,7 @@ var wp;
           ...responsiveNodes.flatMap(getPseudoStyleNodes)
         ].forEach((expandedNode) => {
           ruleset += renderStylesNode(expandedNode, {
-            tree,
+            tree: normalizedTree,
             useRootPaddingAlign,
             disableLayoutStyles,
             hasBlockGapSupport,
@@ -20193,7 +20283,7 @@ var wp;
       ruleset = ruleset + ".wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }";
     }
     if (options.blockGap && hasBlockGapSupport) {
-      const gapValue = getGapCSSValue(tree?.styles?.spacing?.blockGap) || "0.5em";
+      const gapValue = getGapCSSValue(normalizedTree?.styles?.spacing?.blockGap) || "0.5em";
       ruleset = ruleset + `:root :where(.wp-site-blocks) > * { margin-block-start: ${gapValue}; margin-block-end: 0; }`;
       ruleset = ruleset + ":root :where(.wp-site-blocks) > :first-child { margin-block-start: 0; }";
       ruleset = ruleset + ":root :where(.wp-site-blocks) > :last-child { margin-block-end: 0; }";
@@ -40065,8 +40155,8 @@ If there's a particular need for this, please submit a feature request at https:
     ]
   };
   var RESPONSIVE_STATES = [
-    { value: "tablet", label: (0, import_i18n76.__)("Tablet") },
-    { value: "mobile", label: (0, import_i18n76.__)("Mobile") }
+    { value: "@tablet", label: (0, import_i18n76.__)("Tablet") },
+    { value: "@mobile", label: (0, import_i18n76.__)("Mobile") }
   ];
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {

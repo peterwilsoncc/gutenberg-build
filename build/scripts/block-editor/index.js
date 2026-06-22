@@ -48752,6 +48752,58 @@ var wp;
     return variable;
   }
 
+  // packages/global-styles-engine/build-module/style-state-back-compat.mjs
+  var LEGACY_STYLE_STATE_ALIASES = {
+    "@mobile": "mobile",
+    "@tablet": "tablet",
+    "-current": "@current"
+  };
+  function isObjectRecord(value) {
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+  function normalizeStyleStateNode(node) {
+    if (!isObjectRecord(node)) {
+      return node;
+    }
+    let normalized = node;
+    Object.entries(LEGACY_STYLE_STATE_ALIASES).forEach(
+      ([state, legacyState]) => {
+        if (Object.hasOwn(node, legacyState)) {
+          if (normalized === node) {
+            normalized = { ...node };
+          }
+          if (!Object.hasOwn(node, state)) {
+            normalized[state] = node[legacyState];
+          }
+          delete normalized[legacyState];
+        }
+      }
+    );
+    Object.entries(normalized).forEach(([key, value]) => {
+      if (!isObjectRecord(value)) {
+        return;
+      }
+      const normalizedValue = normalizeStyleStateNode(value);
+      if (normalizedValue !== value) {
+        if (normalized === node) {
+          normalized = { ...node };
+        }
+        normalized[key] = normalizedValue;
+      }
+    });
+    return normalized;
+  }
+  function normalizeStyleStateAliases(globalStyles) {
+    if (false) {
+      return globalStyles;
+    }
+    if (!globalStyles?.styles) {
+      return globalStyles;
+    }
+    const styles = normalizeStyleStateNode(globalStyles.styles);
+    return styles === globalStyles.styles ? globalStyles : { ...globalStyles, styles };
+  }
+
   // packages/global-styles-engine/build-module/core/merge.mjs
   var import_deepmerge = __toESM(require_cjs(), 1);
 
@@ -48774,25 +48826,29 @@ var wp;
 
   // packages/global-styles-engine/build-module/core/merge.mjs
   function mergeGlobalStyles(base, user) {
-    return (0, import_deepmerge.default)(base, user, {
-      /*
-       * We only pass as arrays the presets,
-       * in which case we want the new array of values
-       * to override the old array (no merging).
-       */
-      isMergeableObject: isPlainObject,
-      /*
-       * Exceptions to the above rule.
-       * Background images should be replaced, not merged,
-       * as they themselves are specific object definitions for the style.
-       */
-      customMerge: (key) => {
-        if (key === "backgroundImage") {
-          return (baseConfig, userConfig) => userConfig ?? baseConfig;
+    return (0, import_deepmerge.default)(
+      normalizeStyleStateAliases(base),
+      normalizeStyleStateAliases(user),
+      {
+        /*
+         * We only pass as arrays the presets,
+         * in which case we want the new array of values
+         * to override the old array (no merging).
+         */
+        isMergeableObject: isPlainObject,
+        /*
+         * Exceptions to the above rule.
+         * Background images should be replaced, not merged,
+         * as they themselves are specific object definitions for the style.
+         */
+        customMerge: (key) => {
+          if (key === "backgroundImage") {
+            return (baseConfig, userConfig) => userConfig ?? baseConfig;
+          }
+          return void 0;
         }
-        return void 0;
       }
-    });
+    );
   }
 
   // packages/global-styles-engine/build-module/core/render.mjs
@@ -49127,8 +49183,8 @@ var wp;
     ]
   };
   var RESPONSIVE_BREAKPOINTS = {
-    mobile: "@media (width <= 480px)",
-    tablet: "@media (480px < width <= 782px)"
+    "@mobile": "@media (width <= 480px)",
+    "@tablet": "@media (480px < width <= 782px)"
   };
   function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
     return PRESET_METADATA.reduce(
@@ -49865,10 +49921,17 @@ var wp;
       variationStyles: false,
       ...styleOptions
     };
-    const nodesWithStyles = getNodesWithStyles(tree, blockSelectors);
-    const nodesWithSettings = getNodesWithSettings(tree, blockSelectors);
-    const useRootPaddingAlign = tree?.settings?.useRootPaddingAwareAlignments;
-    const { contentSize, wideSize } = tree?.settings?.layout || {};
+    const normalizedTree = normalizeStyleStateAliases(tree);
+    const nodesWithStyles = getNodesWithStyles(
+      normalizedTree,
+      blockSelectors
+    );
+    const nodesWithSettings = getNodesWithSettings(
+      normalizedTree,
+      blockSelectors
+    );
+    const useRootPaddingAlign = normalizedTree?.settings?.useRootPaddingAwareAlignments;
+    const { contentSize, wideSize } = normalizedTree?.settings?.layout || {};
     const hasBodyStyles = options.marginReset || options.rootPadding || options.layoutStyles;
     let ruleset = "";
     if (options.presets && (contentSize || wideSize)) {
@@ -49902,7 +49965,7 @@ var wp;
           ...responsiveNodes.flatMap(getPseudoStyleNodes)
         ].forEach((expandedNode) => {
           ruleset += renderStylesNode(expandedNode, {
-            tree,
+            tree: normalizedTree,
             useRootPaddingAlign,
             disableLayoutStyles,
             hasBlockGapSupport,
@@ -49918,7 +49981,7 @@ var wp;
       ruleset = ruleset + ".wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }";
     }
     if (options.blockGap && hasBlockGapSupport) {
-      const gapValue = getGapCSSValue2(tree?.styles?.spacing?.blockGap) || "0.5em";
+      const gapValue = getGapCSSValue2(normalizedTree?.styles?.spacing?.blockGap) || "0.5em";
       ruleset = ruleset + `:root :where(.wp-site-blocks) > * { margin-block-start: ${gapValue}; margin-block-end: 0; }`;
       ruleset = ruleset + ":root :where(.wp-site-blocks) > :first-child { margin-block-start: 0; }";
       ruleset = ruleset + ":root :where(.wp-site-blocks) > :last-child { margin-block-end: 0; }";
@@ -72155,8 +72218,8 @@ var wp;
     ":active": (0, import_i18n200.__)("Active")
   };
   var RESPONSIVE_STATE_LABELS = {
-    tablet: (0, import_i18n200.__)("Tablet"),
-    mobile: (0, import_i18n200.__)("Mobile")
+    "@tablet": (0, import_i18n200.__)("Tablet"),
+    "@mobile": (0, import_i18n200.__)("Mobile")
   };
   var VALID_BLOCK_PSEUDO_STATES = {
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
@@ -83621,8 +83684,8 @@ var wp;
   var import_jsx_runtime479 = __toESM(require_jsx_runtime(), 1);
   var BORDER_SIDES = ["Top", "Right", "Bottom", "Left"];
   var RESPONSIVE_BREAKPOINTS2 = {
-    mobile: "@media (width <= 480px)",
-    tablet: "@media (480px < width <= 782px)"
+    "@mobile": "@media (width <= 480px)",
+    "@tablet": "@media (480px < width <= 782px)"
   };
   var styleSupportKeys2 = [
     ...TYPOGRAPHY_SUPPORT_KEYS2,
@@ -83822,7 +83885,10 @@ var wp;
     const nestedStateKeys = ["elements", ...validPseudoStates];
     Object.entries(RESPONSIVE_BREAKPOINTS2).forEach(
       ([viewport, mediaQuery]) => {
-        const viewportStyles = style?.[viewport];
+        const viewportStyles = getStyleForState(style, {
+          viewport,
+          pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
+        });
         if (!viewportStyles) {
           return;
         }
@@ -84624,8 +84690,8 @@ var wp;
   var VARIATION_PREFIX2 = "is-style-";
   var layoutBlockSupportKey = "layout";
   var RESPONSIVE_BREAKPOINTS3 = {
-    mobile: "@media (width <= 480px)",
-    tablet: "@media (480px < width <= 782px)"
+    "@mobile": "@media (width <= 480px)",
+    "@tablet": "@media (480px < width <= 782px)"
   };
   var CHILD_LAYOUT_KEYS = [
     "selfStretch",
@@ -84734,7 +84800,10 @@ var wp;
     globalBlockGapValue
   }) {
     return Object.entries(RESPONSIVE_BREAKPOINTS3).map(([viewport, mediaQuery]) => {
-      const viewportStyle = attributes?.style?.[viewport];
+      const viewportStyle = getStyleForState(attributes?.style, {
+        viewport,
+        pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
+      });
       const viewportLayout = getLayoutContainerValues(
         viewportStyle?.layout
       );
@@ -86201,8 +86270,8 @@ var wp;
   var import_jsx_runtime486 = __toESM(require_jsx_runtime(), 1);
   var LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
   var RESPONSIVE_BREAKPOINTS4 = {
-    mobile: "@media (width <= 480px)",
-    tablet: "@media (480px < width <= 782px)"
+    "@mobile": "@media (width <= 480px)",
+    "@tablet": "@media (480px < width <= 782px)"
   };
   var FLEX_CHILD_LAYOUT_VALUES2 = {
     fit: "fit",
@@ -86352,7 +86421,10 @@ var wp;
   }) {
     const baseLayout = style?.layout ?? {};
     return Object.entries(RESPONSIVE_BREAKPOINTS4).map(([viewport, mediaQuery]) => {
-      const viewportLayout = style?.[viewport]?.layout;
+      const viewportLayout = getStyleForState(style, {
+        viewport,
+        pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
+      })?.layout;
       if (!viewportLayout || !Object.keys(viewportLayout).length) {
         return "";
       }

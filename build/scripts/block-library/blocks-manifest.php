@@ -4647,7 +4647,7 @@ return array(
 		),
 		'selectors' => array(
 			'states' => array(
-				'@current' => '.wp-block-navigation .current-menu-item'
+				'-current' => '.wp-block-navigation .current-menu-item'
 			)
 		),
 		'editorStyle' => 'wp-block-navigation-link-editor',

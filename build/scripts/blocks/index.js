@@ -4856,6 +4856,32 @@ var wp;
   }
 
   // packages/blocks/build-module/api/parser/convert-legacy-block.mjs
+  function normalizeStyleStateAliases(style) {
+    if (false) {
+      return style;
+    }
+    if (!style || typeof style !== "object" || Array.isArray(style)) {
+      return style;
+    }
+    let normalizedStyle = style;
+    const viewportAliases = {
+      "@mobile": "mobile",
+      "@tablet": "tablet"
+    };
+    Object.entries(viewportAliases).forEach(([state, legacyState]) => {
+      if (!Object.hasOwn(normalizedStyle, legacyState)) {
+        return;
+      }
+      if (normalizedStyle === style) {
+        normalizedStyle = { ...normalizedStyle };
+      }
+      if (!Object.hasOwn(normalizedStyle, state)) {
+        normalizedStyle[state] = normalizedStyle[legacyState];
+      }
+      delete normalizedStyle[legacyState];
+    });
+    return normalizedStyle;
+  }
   function convertLegacyBlockNameAndAttributes(name, attributes) {
     const newAttributes = { ...attributes };
     if ("core/cover-image" === name) {
@@ -4931,6 +4957,10 @@ var wp;
           rowSpan: isNaN(rowSpanNumber) ? void 0 : rowSpanNumber
         }
       };
+    }
+    const normalizedStyle = normalizeStyleStateAliases(newAttributes.style);
+    if (normalizedStyle !== newAttributes.style) {
+      newAttributes.style = normalizedStyle;
     }
     return [name, newAttributes];
   }
