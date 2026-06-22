@@ -86467,29 +86467,53 @@ var wp;
         const parentAttributes = getBlockAttributes3(_rootClientId);
         const blockAttributes = getBlockAttributes3(clientId);
         const settings2 = getSettings7();
+        const currentDeviceType = settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
         return {
           rootClientId: _rootClientId,
           isVisible: true,
           parentBlockVisibility: parentAttributes?.metadata?.blockVisibility,
           blockBlockVisibility: blockAttributes?.metadata?.blockVisibility,
-          deviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
+          deviceType: currentDeviceType,
           // Check if the selected child block is itself a grid.
           isChildBlockAGrid: blockAttributes?.layout?.type === "grid"
         };
       },
       [clientId]
     );
-    const { isBlockCurrentlyHidden: isParentBlockCurrentlyHidden } = useBlockVisibility({
+    const blockElement = useBlockElement(clientId);
+    const rawCanvasView = blockElement?.ownerDocument?.defaultView;
+    const canvasView = rawCanvasView === null ? void 0 : rawCanvasView;
+    const {
+      isBlockCurrentlyHidden: isParentBlockCurrentlyHidden,
+      currentViewport
+    } = useBlockVisibility({
       blockVisibility: parentBlockVisibility,
-      deviceType
+      deviceType,
+      view: canvasView
     });
+    const isAnyAncestorHidden = (0, import_data191.useSelect)(
+      (select3) => {
+        if (!rootClientId) {
+          return false;
+        }
+        const { isBlockParentHiddenAtViewport: isBlockParentHiddenAtViewport2 } = unlock(
+          select3(store)
+        );
+        return isBlockParentHiddenAtViewport2(
+          rootClientId,
+          currentViewport
+        );
+      },
+      [rootClientId, currentViewport]
+    );
     const { isBlockCurrentlyHidden: isBlockItselfCurrentlyHidden } = useBlockVisibility({
       blockVisibility: blockBlockVisibility,
-      deviceType
+      deviceType,
+      view: canvasView
     });
     const [resizerBounds, setResizerBounds] = (0, import_element301.useState)();
     const childGridClientId = isChildBlockAGrid ? clientId : void 0;
-    if (!isVisible || isParentBlockCurrentlyHidden) {
+    if (!isVisible || isParentBlockCurrentlyHidden || isAnyAncestorHidden) {
       return null;
     }
     const showResizer = allowSizingOnChildren && !isBlockItselfCurrentlyHidden;
@@ -87007,7 +87031,7 @@ var wp;
     useGridLayoutSync(props);
   }
   function GridTools2({ clientId, layout }) {
-    const { isVisible, blockVisibility: blockVisibility2, deviceType, isAnyAncestorHidden } = (0, import_data196.useSelect)(
+    const { isVisible, blockVisibility: blockVisibility2, deviceType } = (0, import_data196.useSelect)(
       (select3) => {
         const {
           isBlockSelected: isBlockSelected2,
@@ -87021,28 +87045,37 @@ var wp;
         if (!isDraggingBlocks2() && !isBlockSelected2(clientId) || getTemplateLock2(clientId) || getBlockEditingMode2(clientId) !== "default" || hasSelectedInnerBlock2(clientId)) {
           return { isVisible: false };
         }
-        const { isBlockParentHiddenAtViewport: isBlockParentHiddenAtViewport2 } = unlock(
-          select3(store)
-        );
         const attributes = getBlockAttributes3(clientId);
         const settings2 = getSettings7();
         const currentDeviceType = settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
         return {
           isVisible: true,
           blockVisibility: attributes?.metadata?.blockVisibility,
-          deviceType: currentDeviceType,
-          isAnyAncestorHidden: isBlockParentHiddenAtViewport2(
-            clientId,
-            currentDeviceType
-          )
+          deviceType: currentDeviceType
         };
       },
       [clientId]
     );
-    const { isBlockCurrentlyHidden } = useBlockVisibility({
+    const blockElement = useBlockElement(clientId);
+    const rawCanvasView = blockElement?.ownerDocument?.defaultView;
+    const canvasView = rawCanvasView === null ? void 0 : rawCanvasView;
+    const { isBlockCurrentlyHidden, currentViewport } = useBlockVisibility({
       blockVisibility: blockVisibility2,
-      deviceType
+      deviceType,
+      view: canvasView
     });
+    const isAnyAncestorHidden = (0, import_data196.useSelect)(
+      (select3) => {
+        if (!isVisible) {
+          return false;
+        }
+        const { isBlockParentHiddenAtViewport: isBlockParentHiddenAtViewport2 } = unlock(
+          select3(store)
+        );
+        return isBlockParentHiddenAtViewport2(clientId, currentViewport);
+      },
+      [clientId, currentViewport, isVisible]
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime490.jsxs)(import_jsx_runtime490.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(GridLayoutSync, { clientId }),
       isVisible && !isBlockCurrentlyHidden && !isAnyAncestorHidden && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
