@@ -90319,13 +90319,18 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/views/build-module/use-view-config.mjs
   function useViewConfig({
     kind,
-    name: name2
+    name: name2,
+    fields: fields2
   }) {
+    const fieldList = Array.isArray(fields2) ? fields2 : fields2?.split(",");
+    const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
     return (0, import_data225.useSelect)(
       (select7) => {
-        return unlock7(select7(import_core_data119.store)).getViewConfig(kind, name2);
+        return unlock7(select7(import_core_data119.store)).getViewConfig(kind, name2, {
+          fields: fieldsKey
+        });
       },
-      [kind, name2]
+      [kind, name2, fieldsKey]
     );
   }
 
@@ -91064,6 +91069,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/sidebar/dataform-post-summary.mjs
   var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_FORM = { layout: { type: "panel" }, fields: [] };
+  var VIEW_CONFIG_FIELDS = ["form"];
   var ENTITIES = {
     wp_template: {
       root_site: {
@@ -91103,7 +91109,8 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { form: formConfig } = useViewConfig({
       kind: "postType",
-      name: postType2
+      name: postType2,
+      fields: VIEW_CONFIG_FIELDS
     });
     const form = formConfig ?? EMPTY_FORM;
     const record = (0, import_data232.useSelect)(

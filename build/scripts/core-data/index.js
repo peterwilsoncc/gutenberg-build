@@ -4092,11 +4092,16 @@ var wp;
   }
   function viewConfigs(state = {}, action) {
     switch (action.type) {
-      case "RECEIVE_VIEW_CONFIG":
+      case "RECEIVE_VIEW_CONFIG": {
+        const key = `${action.kind}/${action.name}`;
         return {
           ...state,
-          [`${action.kind}/${action.name}`]: action.config
+          [key]: {
+            ...state[key],
+            ...action.config
+          }
         };
+      }
     }
     return state;
   }
@@ -7028,9 +7033,14 @@ var wp;
     });
     dispatch3.receiveEditorAssets(assets);
   };
-  var getViewConfig2 = (kind, name) => async ({ dispatch: dispatch3 }) => {
+  var getViewConfig2 = (kind, name, options = {}) => async ({ dispatch: dispatch3 }) => {
+    const query = { kind, name };
+    const fields = get_normalized_comma_separable_default(options.fields);
+    if (fields?.length) {
+      query._fields = fields.join(",");
+    }
     const config = await (0, import_api_fetch9.default)({
-      path: (0, import_url6.addQueryArgs)("/wp/v2/view-config", { kind, name })
+      path: (0, import_url6.addQueryArgs)("/wp/v2/view-config", query)
     });
     dispatch3.receiveViewConfig(kind, name, config);
   };

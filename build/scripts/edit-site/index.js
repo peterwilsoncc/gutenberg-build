@@ -53458,13 +53458,18 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/views/build-module/use-view-config.mjs
   function useViewConfig({
     kind,
-    name: name2
+    name: name2,
+    fields: fields2
   }) {
+    const fieldList = Array.isArray(fields2) ? fields2 : fields2?.split(",");
+    const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
     return (0, import_data65.useSelect)(
       (select4) => {
-        return unlock6(select4(import_core_data42.store)).getViewConfig(kind, name2);
+        return unlock6(select4(import_core_data42.store)).getViewConfig(kind, name2, {
+          fields: fieldsKey
+        });
       },
-      [kind, name2]
+      [kind, name2, fieldsKey]
     );
   }
 
@@ -54014,6 +54019,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
   var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
+  var VIEW_CONFIG_FIELDS = ["view_list"];
   var { useLocation: useLocation23 } = unlock(import_router25.privateApis);
   function CategoriesGroup({
     templatePartViews,
@@ -54060,11 +54066,13 @@ If there's a particular need for this, please submit a feature request at https:
     const currentCategory = categoryId || (postType2 === PATTERN_TYPES.user ? PATTERN_DEFAULT_CATEGORY : TEMPLATE_PART_ALL_AREAS_CATEGORY);
     const { view_list: templatePartViews } = useViewConfig({
       kind: "postType",
-      name: TEMPLATE_PART_POST_TYPE
+      name: TEMPLATE_PART_POST_TYPE,
+      fields: VIEW_CONFIG_FIELDS
     });
     const { view_list: patternViews } = useViewConfig({
       kind: "postType",
-      name: PATTERN_TYPES.user
+      name: PATTERN_TYPES.user,
+      fields: VIEW_CONFIG_FIELDS
     });
     const { templatePartAreas, isLoading, hasTemplateParts } = useTemplatePartAreas();
     const templatePartCounts = (0, import_element170.useMemo)(() => {
@@ -54837,6 +54845,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { usePostActions, patternTitleField } = unlock(import_editor32.privateApis);
   var { useLocation: useLocation26, useHistory: useHistory20 } = unlock(import_router29.privateApis);
   var EMPTY_ARRAY11 = [];
+  var VIEW_CONFIG_FIELDS2 = ["default_view", "default_layouts"];
   function usePagePatternsHeader(type, categoryId) {
     const { patternCategories } = usePatternCategories();
     const templatePartAreas = (0, import_data75.useSelect)(
@@ -54866,7 +54875,8 @@ If there's a particular need for this, please submit a feature request at https:
     const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
     const { default_view: defaultView, default_layouts: defaultLayouts2 } = useViewConfig({
       kind: "postType",
-      name: postType2
+      name: postType2,
+      fields: VIEW_CONFIG_FIELDS2
     });
     const { view, updateView, isModified, resetToDefault } = useView({
       kind: "postType",
@@ -55144,6 +55154,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url19 = __toESM(require_url(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation28 } = unlock(import_router31.privateApis);
+  var VIEW_CONFIG_FIELDS3 = ["view_list"];
   var SLUG_TO_ICON = {
     all: pages_default,
     published: published_default,
@@ -55166,7 +55177,8 @@ If there's a particular need for this, please submit a feature request at https:
     } = useLocation28();
     const { view_list: viewList } = useViewConfig({
       kind: "postType",
-      name: postType2
+      name: postType2,
+      fields: VIEW_CONFIG_FIELDS3
     });
     if (!postType2) {
       return null;
@@ -58320,6 +58332,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { usePostActions: usePostActions3, usePostFields: usePostFields2 } = unlock(import_editor37.privateApis);
   var { useHistory: useHistory24, useLocation: useLocation30 } = unlock(import_router35.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions3 } = unlock(import_core_data63.privateApis);
+  var VIEW_CONFIG_FIELDS4 = ["default_view", "default_layouts", "view_list"];
   function PageTemplates2() {
     const { path, query } = useLocation30();
     const { activeView = "all", postId } = query;
@@ -58330,7 +58343,8 @@ If there's a particular need for this, please submit a feature request at https:
       view_list: viewList
     } = useViewConfig({
       kind: "postType",
-      name: TEMPLATE_POST_TYPE
+      name: TEMPLATE_POST_TYPE,
+      fields: VIEW_CONFIG_FIELDS4
     });
     const activeViewOverrides = (0, import_element189.useMemo)(
       () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
