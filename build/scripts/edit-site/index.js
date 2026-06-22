@@ -17562,6 +17562,15 @@ var wp;
   var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
   var { useHistory: useHistory6, useLink, useLocation: useLocation10 } = unlock(import_router10.privateApis);
   function SidebarNavigationItem({
+    isHidden: isHidden2 = false,
+    ...props
+  }) {
+    if (isHidden2) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(SidebarNavigationItemContent, { ...props });
+  }
+  function SidebarNavigationItemContent({
     className,
     icon,
     withChevron = false,
@@ -17629,56 +17638,48 @@ var wp;
   var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
   function MainSidebarNavigationContent({ isBlockBasedTheme = true }) {
     return /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(import_components11.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-main", children: [
-      isBlockBasedTheme && /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(import_jsx_runtime112.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
-          SidebarNavigationItem,
-          {
-            to: "/identity",
-            uid: "identity-navigation-item",
-            icon: site_logo_default,
-            activeOnRouteName: "identity",
-            children: (0, import_i18n12._x)("Identity", "site identity")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
-          SidebarNavigationItem,
-          {
-            to: "/styles",
-            uid: "global-styles-navigation-item",
-            icon: styles_default,
-            activeOnRouteName: "styles",
-            children: (0, import_i18n12.__)("Styles")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
-          SidebarNavigationItem,
-          {
-            uid: "page-navigation-item",
-            to: "/page",
-            withChevron: true,
-            icon: page_default,
-            children: (0, import_i18n12.__)("Pages")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
-          SidebarNavigationItem,
-          {
-            uid: "navigation-navigation-item",
-            to: "/navigation",
-            withChevron: true,
-            icon: navigation_default,
-            children: (0, import_i18n12.__)("Navigation")
-          }
-        )
-      ] }),
-      !isBlockBasedTheme && /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
         SidebarNavigationItem,
         {
-          uid: "stylebook-navigation-item",
-          to: "/stylebook",
-          withChevron: true,
+          to: "/identity",
+          uid: "identity-navigation-item",
+          icon: site_logo_default,
+          activeOnRouteName: "identity",
+          isHidden: !isBlockBasedTheme,
+          children: (0, import_i18n12._x)("Identity", "site identity")
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+        SidebarNavigationItem,
+        {
+          to: isBlockBasedTheme ? "/styles" : "/stylebook",
+          uid: isBlockBasedTheme ? "global-styles-navigation-item" : "stylebook-navigation-item",
           icon: styles_default,
+          activeOnRouteName: isBlockBasedTheme ? "styles" : void 0,
+          withChevron: !isBlockBasedTheme,
           children: (0, import_i18n12.__)("Styles")
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+        SidebarNavigationItem,
+        {
+          uid: "page-navigation-item",
+          to: "/page",
+          withChevron: true,
+          icon: page_default,
+          isHidden: !isBlockBasedTheme,
+          children: (0, import_i18n12.__)("Pages")
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+        SidebarNavigationItem,
+        {
+          uid: "navigation-navigation-item",
+          to: "/navigation",
+          withChevron: true,
+          icon: navigation_default,
+          isHidden: !isBlockBasedTheme,
+          children: (0, import_i18n12.__)("Navigation")
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
@@ -17691,13 +17692,14 @@ var wp;
           children: (0, import_i18n12.__)("Patterns")
         }
       ),
-      isBlockBasedTheme && /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
         SidebarNavigationItem,
         {
           uid: "template-navigation-item",
           to: "/template",
           withChevron: true,
           icon: layout_default,
+          isHidden: !isBlockBasedTheme,
           children: (0, import_i18n12.__)("Templates")
         }
       )

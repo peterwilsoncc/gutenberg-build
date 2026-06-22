@@ -75629,16 +75629,17 @@ ${js}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime548.jsxs)("figure", { ...blockProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components184.Disabled, { isDisabled: !isSingleSelected, children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
           "video",
           {
             controls,
+            inert: !isSingleSelected ? "true" : void 0,
             poster,
             src: src || temporaryURL,
             ref: videoPlayer,
             children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(Tracks, { tracks })
           }
-        ) }),
+        ),
         !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components184.Spinner, {}),
         /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
           Caption,
