@@ -91721,7 +91721,9 @@ If there's a particular need for this, please submit a feature request at https:
       (select7) => select7(store).getCurrentPostType(),
       []
     );
-    if (window?.__experimentalDataFormInspector && ["page", "post", "wp_template"].includes(postType2)) {
+    if (window?.__experimentalDataFormInspector && ["page", "post", "wp_template", "wp_template_part"].includes(
+      postType2
+    )) {
       return /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(DataFormPostSummary, { onActionPerformed });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(ClassicPostSummary, { onActionPerformed });
