@@ -70665,36 +70665,54 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const registry = (0, import_data63.useRegistry)();
     (0, import_element191.useEffect)(() => {
-      const { setBlockEditingMode, unsetBlockEditingMode } = registry.dispatch(import_block_editor23.store);
+      const {
+        setBlockEditingMode,
+        unsetBlockEditingMode,
+        __unstableMarkNextChangeAsNotPersistent
+      } = registry.dispatch(import_block_editor23.store);
+      __unstableMarkNextChangeAsNotPersistent();
       setBlockEditingMode("", "disabled");
       return () => {
+        __unstableMarkNextChangeAsNotPersistent();
         unsetBlockEditingMode("");
       };
     }, [registry]);
     (0, import_element191.useEffect)(() => {
-      const { setBlockEditingMode, unsetBlockEditingMode } = registry.dispatch(import_block_editor23.store);
+      const {
+        setBlockEditingMode,
+        unsetBlockEditingMode,
+        __unstableMarkNextChangeAsNotPersistent
+      } = registry.dispatch(import_block_editor23.store);
       registry.batch(() => {
         for (const clientId of templateParts) {
+          __unstableMarkNextChangeAsNotPersistent();
           setBlockEditingMode(clientId, "contentOnly");
         }
       });
       return () => {
         registry.batch(() => {
           for (const clientId of templateParts) {
+            __unstableMarkNextChangeAsNotPersistent();
             unsetBlockEditingMode(clientId);
           }
         });
       };
     }, [templateParts, registry]);
     (0, import_element191.useEffect)(() => {
-      const { setBlockEditingMode, unsetBlockEditingMode } = registry.dispatch(import_block_editor23.store);
+      const {
+        setBlockEditingMode,
+        unsetBlockEditingMode,
+        __unstableMarkNextChangeAsNotPersistent
+      } = registry.dispatch(import_block_editor23.store);
       const contentOnlySet = new Set(contentOnlyIds);
       registry.batch(() => {
         for (const clientId of contentOnlyIds) {
+          __unstableMarkNextChangeAsNotPersistent();
           setBlockEditingMode(clientId, "contentOnly");
         }
         for (const clientId of templatePartChildren) {
           if (!contentOnlySet.has(clientId)) {
+            __unstableMarkNextChangeAsNotPersistent();
             setBlockEditingMode(clientId, "disabled");
           }
         }
@@ -70702,10 +70720,12 @@ If there's a particular need for this, please submit a feature request at https:
       return () => {
         registry.batch(() => {
           for (const clientId of contentOnlyIds) {
+            __unstableMarkNextChangeAsNotPersistent();
             unsetBlockEditingMode(clientId);
           }
           for (const clientId of templatePartChildren) {
             if (!contentOnlySet.has(clientId)) {
+              __unstableMarkNextChangeAsNotPersistent();
               unsetBlockEditingMode(clientId);
             }
           }
@@ -70720,20 +70740,27 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data64 = __toESM(require_data(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
   function NavigationBlockEditingMode() {
+    const registry = (0, import_data64.useRegistry)();
     const blockClientId = (0, import_data64.useSelect)(
       (select7) => select7(import_block_editor24.store).getBlockOrder()?.[0],
       []
     );
-    const { setBlockEditingMode, unsetBlockEditingMode } = (0, import_data64.useDispatch)(import_block_editor24.store);
     (0, import_element192.useEffect)(() => {
       if (!blockClientId) {
         return;
       }
+      const {
+        setBlockEditingMode,
+        unsetBlockEditingMode,
+        __unstableMarkNextChangeAsNotPersistent
+      } = registry.dispatch(import_block_editor24.store);
+      __unstableMarkNextChangeAsNotPersistent();
       setBlockEditingMode(blockClientId, "contentOnly");
       return () => {
+        __unstableMarkNextChangeAsNotPersistent();
         unsetBlockEditingMode(blockClientId);
       };
-    }, [blockClientId, unsetBlockEditingMode, setBlockEditingMode]);
+    }, [registry, blockClientId]);
   }
 
   // packages/editor/build-module/components/provider/use-hide-blocks-from-inserter.mjs
