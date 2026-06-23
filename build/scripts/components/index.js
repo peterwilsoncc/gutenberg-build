@@ -96,7 +96,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState76({
+          cachedValue = useState77({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -134,7 +134,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React40 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState76 = React40.useState, useEffect75 = React40.useEffect, useLayoutEffect25 = React40.useLayoutEffect, useDebugValue = React40.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React40 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState77 = React40.useState, useEffect75 = React40.useEffect, useLayoutEffect25 = React40.useLayoutEffect, useDebugValue = React40.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React40.useSyncExternalStore ? React40.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2961,8 +2961,8 @@ var wp;
     Role3.displayName = render.displayName || render.name;
     return Role3;
   }
-  function memo2(Component8, propsAreEqual) {
-    return React.memo(Component8, propsAreEqual);
+  function memo2(Component7, propsAreEqual) {
+    return React.memo(Component7, propsAreEqual);
   }
   function createElement(Type, props) {
     const { wrapElement, render, ...rest } = props;
@@ -3874,11 +3874,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React2.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState76 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+    const useState77 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
     return [React2.useMemo(() => ({
       ...store,
-      useState: useState76
-    }), [store, useState76]), useEvent(() => {
+      useState: useState77
+    }), [store, useState77]), useEvent(() => {
       setStore((store2) => createStore2({
         ...props,
         ...store2.getState()
@@ -5957,10 +5957,10 @@ If there's a particular need for this, please submit a feature request at https:
       ...props,
       render: backdrop
     });
-    const Component8 = typeof backdrop !== "boolean" ? backdrop : "div";
+    const Component7 = typeof backdrop !== "boolean" ? backdrop : "div";
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Role, {
       ...props,
-      render: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Component8, {})
+      render: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Component7, {})
     });
   }
 
@@ -6683,11 +6683,11 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return props;
   });
-  function createDialogComponent(Component8, useProviderContext = useDialogProviderContext) {
+  function createDialogComponent(Component7, useProviderContext = useDialogProviderContext) {
     return forwardRef2(function DialogComponent(props) {
       const context = useProviderContext();
       if (!useStoreState(props.store || context, (state) => !props.unmountOnHide || state?.mounted || !!props.open)) return null;
-      return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Component8, { ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Component7, { ...props });
     });
   }
   var DialogWithStore = createDialogComponent(forwardRef2(function DialogImpl(props) {
@@ -17921,7 +17921,7 @@ If there's a particular need for this, please submit a feature request at https:
   var LazyContext = (0, import_react64.createContext)({ strict: false });
 
   // packages/components/node_modules/framer-motion/dist/es/motion/utils/use-visual-element.mjs
-  function useVisualElement(Component8, visualState, props, createVisualElement, ProjectionNodeConstructor) {
+  function useVisualElement(Component7, visualState, props, createVisualElement, ProjectionNodeConstructor) {
     var _a, _b;
     const { visualElement: parent } = (0, import_react65.useContext)(MotionContext);
     const lazyContext = (0, import_react65.useContext)(LazyContext);
@@ -17930,7 +17930,7 @@ If there's a particular need for this, please submit a feature request at https:
     const visualElementRef = (0, import_react65.useRef)(null);
     createVisualElement = createVisualElement || lazyContext.renderer;
     if (!visualElementRef.current && createVisualElement) {
-      visualElementRef.current = createVisualElement(Component8, {
+      visualElementRef.current = createVisualElement(Component7, {
         visualState,
         parent,
         props,
@@ -18110,7 +18110,7 @@ If there's a particular need for this, please submit a feature request at https:
   var motionComponentSymbol = /* @__PURE__ */ Symbol.for("motionComponentSymbol");
 
   // packages/components/node_modules/framer-motion/dist/es/motion/index.mjs
-  function createRendererMotionComponent({ preloadedFeatures, createVisualElement, useRender, useVisualState, Component: Component8 }) {
+  function createRendererMotionComponent({ preloadedFeatures, createVisualElement, useRender, useVisualState, Component: Component7 }) {
     preloadedFeatures && loadFeatures(preloadedFeatures);
     function MotionComponent(props, externalRef) {
       let MeasureLayout2;
@@ -18126,12 +18126,12 @@ If there's a particular need for this, please submit a feature request at https:
         useStrictMode(configAndProps, preloadedFeatures);
         const layoutProjection = getProjectionFunctionality(configAndProps);
         MeasureLayout2 = layoutProjection.MeasureLayout;
-        context.visualElement = useVisualElement(Component8, visualState, configAndProps, createVisualElement, layoutProjection.ProjectionNode);
+        context.visualElement = useVisualElement(Component7, visualState, configAndProps, createVisualElement, layoutProjection.ProjectionNode);
       }
-      return (0, import_jsx_runtime40.jsxs)(MotionContext.Provider, { value: context, children: [MeasureLayout2 && context.visualElement ? (0, import_jsx_runtime40.jsx)(MeasureLayout2, { visualElement: context.visualElement, ...configAndProps }) : null, useRender(Component8, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, context.visualElement)] });
+      return (0, import_jsx_runtime40.jsxs)(MotionContext.Provider, { value: context, children: [MeasureLayout2 && context.visualElement ? (0, import_jsx_runtime40.jsx)(MeasureLayout2, { visualElement: context.visualElement, ...configAndProps }) : null, useRender(Component7, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, context.visualElement)] });
     }
     const ForwardRefMotionComponent = (0, import_react68.forwardRef)(MotionComponent);
-    ForwardRefMotionComponent[motionComponentSymbol] = Component8;
+    ForwardRefMotionComponent[motionComponentSymbol] = Component7;
     return ForwardRefMotionComponent;
   }
   function useLayoutId({ layoutId }) {
@@ -18186,26 +18186,26 @@ If there's a particular need for this, please submit a feature request at https:
   ];
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/utils/is-svg-component.mjs
-  function isSVGComponent(Component8) {
+  function isSVGComponent(Component7) {
     if (
       /**
        * If it's not a string, it's a custom React component. Currently we only support
        * HTML custom React components.
        */
-      typeof Component8 !== "string" || /**
+      typeof Component7 !== "string" || /**
        * If it contains a dash, the element is a custom HTML webcomponent.
        */
-      Component8.includes("-")
+      Component7.includes("-")
     ) {
       return false;
     } else if (
       /**
        * If it's in our list of lowercase SVG tags, it's an SVG component
        */
-      lowercaseSVGElements.indexOf(Component8) > -1 || /**
+      lowercaseSVGElements.indexOf(Component7) > -1 || /**
        * If it contains a capital letter, it's an SVG component
        */
-      /[A-Z]/u.test(Component8)
+      /[A-Z]/u.test(Component7)
     ) {
       return true;
     }
@@ -18667,10 +18667,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/render/svg/use-props.mjs
   var import_react72 = __toESM(require_react(), 1);
-  function useSVGProps(props, visualState, _isStatic, Component8) {
+  function useSVGProps(props, visualState, _isStatic, Component7) {
     const visualProps = (0, import_react72.useMemo)(() => {
       const state = createSvgRenderState();
-      buildSVGAttrs(state, visualState, isSVGTag(Component8), props.transformTemplate);
+      buildSVGAttrs(state, visualState, isSVGTag(Component7), props.transformTemplate);
       return {
         ...state.attrs,
         style: { ...state.style }
@@ -18686,14 +18686,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/use-render.mjs
   function createUseRender(forwardMotionProps = false) {
-    const useRender = (Component8, props, ref, { latestValues }, isStatic) => {
-      const useVisualProps = isSVGComponent(Component8) ? useSVGProps : useHTMLProps;
-      const visualProps = useVisualProps(props, latestValues, isStatic, Component8);
-      const filteredProps = filterProps(props, typeof Component8 === "string", forwardMotionProps);
-      const elementProps = Component8 !== import_react73.Fragment ? { ...filteredProps, ...visualProps, ref } : {};
+    const useRender = (Component7, props, ref, { latestValues }, isStatic) => {
+      const useVisualProps = isSVGComponent(Component7) ? useSVGProps : useHTMLProps;
+      const visualProps = useVisualProps(props, latestValues, isStatic, Component7);
+      const filteredProps = filterProps(props, typeof Component7 === "string", forwardMotionProps);
+      const elementProps = Component7 !== import_react73.Fragment ? { ...filteredProps, ...visualProps, ref } : {};
       const { children } = props;
       const renderedChildren = (0, import_react73.useMemo)(() => isMotionValue(children) ? children.get() : children, [children]);
-      return (0, import_react73.createElement)(Component8, {
+      return (0, import_react73.createElement)(Component7, {
         ...elementProps,
         children: renderedChildren
       });
@@ -18703,14 +18703,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/render/components/create-factory.mjs
   function createMotionComponentFactory(preloadedFeatures, createVisualElement) {
-    return function createMotionComponent2(Component8, { forwardMotionProps } = { forwardMotionProps: false }) {
-      const baseConfig = isSVGComponent(Component8) ? svgMotionConfig : htmlMotionConfig;
+    return function createMotionComponent2(Component7, { forwardMotionProps } = { forwardMotionProps: false }) {
+      const baseConfig = isSVGComponent(Component7) ? svgMotionConfig : htmlMotionConfig;
       const config = {
         ...baseConfig,
         preloadedFeatures,
         useRender: createUseRender(forwardMotionProps),
         createVisualElement,
-        Component: Component8
+        Component: Component7
       };
       return createRendererMotionComponent(config);
     };
@@ -19226,9 +19226,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/create-visual-element.mjs
-  var createDomVisualElement = (Component8, options2) => {
-    return isSVGComponent(Component8) ? new SVGVisualElement(options2) : new HTMLVisualElement(options2, {
-      allowProjection: Component8 !== import_react74.Fragment
+  var createDomVisualElement = (Component7, options2) => {
+    return isSVGComponent(Component7) ? new SVGVisualElement(options2) : new HTMLVisualElement(options2, {
+      allowProjection: Component7 !== import_react74.Fragment
     });
   };
 
@@ -21926,16 +21926,16 @@ If there's a particular need for this, please submit a feature request at https:
   var getStyledClassNameFromKey = memize(getStyledClassName);
 
   // packages/components/build-module/context/context-connect.mjs
-  function contextConnect(Component8, namespace) {
-    return _contextConnect(Component8, namespace, {
+  function contextConnect(Component7, namespace) {
+    return _contextConnect(Component7, namespace, {
       forwardsRef: true
     });
   }
-  function contextConnectWithoutRef(Component8, namespace) {
-    return _contextConnect(Component8, namespace);
+  function contextConnectWithoutRef(Component7, namespace) {
+    return _contextConnect(Component7, namespace);
   }
-  function _contextConnect(Component8, namespace, options2) {
-    const WrappedComponent = options2?.forwardsRef ? (0, import_element16.forwardRef)(Component8) : Component8;
+  function _contextConnect(Component7, namespace, options2) {
+    const WrappedComponent = options2?.forwardsRef ? (0, import_element16.forwardRef)(Component7) : Component7;
     if (typeof namespace === "undefined") {
       true ? (0, import_warning2.default)("contextConnect: Please provide a namespace") : void 0;
     }
@@ -21952,28 +21952,28 @@ If there's a particular need for this, please submit a feature request at https:
       selector: `.${getStyledClassNameFromKey(namespace)}`
     });
   }
-  function getConnectNamespace(Component8) {
-    if (!Component8) {
+  function getConnectNamespace(Component7) {
+    if (!Component7) {
       return [];
     }
     let namespaces = [];
-    if (Component8[CONNECT_STATIC_NAMESPACE]) {
-      namespaces = Component8[CONNECT_STATIC_NAMESPACE];
+    if (Component7[CONNECT_STATIC_NAMESPACE]) {
+      namespaces = Component7[CONNECT_STATIC_NAMESPACE];
     }
-    if (Component8.type && Component8.type[CONNECT_STATIC_NAMESPACE]) {
-      namespaces = Component8.type[CONNECT_STATIC_NAMESPACE];
+    if (Component7.type && Component7.type[CONNECT_STATIC_NAMESPACE]) {
+      namespaces = Component7.type[CONNECT_STATIC_NAMESPACE];
     }
     return namespaces;
   }
-  function hasConnectNamespace(Component8, match4) {
-    if (!Component8) {
+  function hasConnectNamespace(Component7, match4) {
+    if (!Component7) {
       return false;
     }
     if (typeof match4 === "string") {
-      return getConnectNamespace(Component8).includes(match4);
+      return getConnectNamespace(Component7).includes(match4);
     }
     if (Array.isArray(match4)) {
-      return match4.some((result) => getConnectNamespace(Component8).includes(result));
+      return match4.some((result) => getConnectNamespace(Component7).includes(result));
     }
     return false;
   }
@@ -28150,9 +28150,9 @@ This message will only show in development mode. It won't appear in production. 
     instanceId,
     listBoxId,
     className: className2,
-    Component: Component8 = "div"
+    Component: Component7 = "div"
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(Component8, {
+    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(Component7, {
       id: listBoxId,
       role: "listbox",
       className: "components-autocomplete__results",
@@ -37756,7 +37756,7 @@ This message will only show in development mode. It won't appear in production. 
   };
   function proxyComposite(ProxiedComponent, propMap = {}) {
     const displayName = ProxiedComponent.displayName ?? "";
-    const Component8 = (legacyProps) => {
+    const Component7 = (legacyProps) => {
       (0, import_deprecated13.default)(`wp.components.${displayName}`, {
         since: "6.7",
         alternative: LEGACY_TO_NEW_DISPLAY_NAME.hasOwnProperty(displayName) ? LEGACY_TO_NEW_DISPLAY_NAME[displayName] : void 0
@@ -37784,15 +37784,15 @@ This message will only show in development mode. It won't appear in production. 
         store
       });
     };
-    Component8.displayName = displayName;
-    return Component8;
+    Component7.displayName = displayName;
+    return Component7;
   }
   var UnproxiedCompositeGroup = (0, import_element119.forwardRef)(({
     role,
     ...props
   }, ref) => {
-    const Component8 = role === "row" ? Composite22.Row : Composite22.Group;
-    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(Component8, {
+    const Component7 = role === "row" ? Composite22.Row : Composite22.Group;
+    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(Component7, {
       ref,
       role,
       ...props
@@ -48613,12 +48613,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToolbarItem({
     children,
-    as: Component8,
+    as: Component7,
     ...props
   }, ref) {
     const accessibleToolbarStore = (0, import_element183.useContext)(toolbar_context_default);
     const isRenderProp = typeof children === "function";
-    if (!isRenderProp && !Component8) {
+    if (!isRenderProp && !Component7) {
       true ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
       return null;
     }
@@ -48628,8 +48628,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       "data-toolbar-item": true
     };
     if (!accessibleToolbarStore) {
-      if (Component8) {
-        return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Component8, {
+      if (Component7) {
+        return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Component7, {
           ...allProps,
           children
         });
@@ -48639,7 +48639,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       return children(allProps);
     }
-    const render = isRenderProp ? children : Component8 && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Component8, {
+    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Component7, {
       children
     });
     return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(ToolbarItem, {
@@ -49728,7 +49728,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
   var RovingTabIndexItem = (0, import_element197.forwardRef)(function UnforwardedRovingTabIndexItem({
     children,
-    as: Component8,
+    as: Component7,
     ...props
   }, forwardedRef) {
     const localRef = (0, import_element197.useRef)(null);
@@ -49755,10 +49755,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (typeof children === "function") {
       return children(allProps);
     }
-    if (!Component8) {
+    if (!Component7) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(Component8, {
+    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(Component7, {
       ...allProps,
       children
     });
@@ -50137,13 +50137,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     };
   }
-  var navigate_regions_default = (0, import_compose76.createHigherOrderComponent)((Component8) => function NavigateRegions({
+  var navigate_regions_default = (0, import_compose76.createHigherOrderComponent)((Component7) => function NavigateRegions({
     shortcuts,
     ...props
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", {
       ...useNavigateRegions(shortcuts),
-      children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Component8, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Component7, {
         ...props
       })
     });
@@ -50170,53 +50170,27 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_compose78 = __toESM(require_compose(), 1);
   var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
   var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose78.createHigherOrderComponent)((WrappedComponent) => {
-    return class WithFallbackStyles extends import_element204.Component {
-      constructor(props) {
-        super(props);
-        this.nodeRef = this.props.node;
-        this.state = {
-          fallbackStyles: void 0,
-          grabStylesCompleted: false
-        };
-        this.bindRef = this.bindRef.bind(this);
-      }
-      bindRef(node2) {
-        if (!node2) {
-          return;
-        }
-        this.nodeRef = node2;
-      }
-      componentDidMount() {
-        this.grabFallbackStyles();
-      }
-      componentDidUpdate() {
-        this.grabFallbackStyles();
-      }
-      grabFallbackStyles() {
-        const {
-          grabStylesCompleted,
-          fallbackStyles
-        } = this.state;
-        if (this.nodeRef && !grabStylesCompleted) {
-          const newFallbackStyles = mapNodeToProps(this.nodeRef, this.props);
+    return function WithFallbackStyles(props) {
+      const [fallbackStyles, setFallbackStyles] = (0, import_element204.useState)(void 0);
+      const nodeRef = (0, import_element204.useRef)(null);
+      (0, import_compose78.useIsomorphicLayoutEffect)(() => {
+        const node2 = props.node ?? nodeRef.current;
+        const grabStylesCompleted = !!fallbackStyles && Object.values(fallbackStyles).every(Boolean);
+        if (node2 && !grabStylesCompleted) {
+          const newFallbackStyles = mapNodeToProps(node2, props);
           if (!(0, import_es63.default)(newFallbackStyles, fallbackStyles)) {
-            this.setState({
-              fallbackStyles: newFallbackStyles,
-              grabStylesCompleted: Object.values(newFallbackStyles).every(Boolean)
-            });
+            setFallbackStyles(newFallbackStyles);
           }
         }
-      }
-      render() {
-        const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(WrappedComponent, {
-          ...this.props,
-          ...this.state.fallbackStyles
-        });
-        return this.props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)("div", {
-          ref: this.bindRef,
-          children: [" ", wrappedComponent, " "]
-        });
-      }
+      });
+      const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(WrappedComponent, {
+        ...props,
+        ...fallbackStyles
+      });
+      return props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)("div", {
+        ref: nodeRef,
+        children: [" ", wrappedComponent, " "]
+      });
     };
   }, "withFallbackStyles");
 
@@ -50324,7 +50298,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_compose81 = __toESM(require_compose(), 1);
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
   var with_notices_default = (0, import_compose81.createHigherOrderComponent)((OriginalComponent) => {
-    function Component8(props, ref) {
+    function Component7(props, ref) {
       const [noticeList, setNoticeList] = (0, import_element207.useState)([]);
       const noticeOperations = (0, import_element207.useMemo)(() => {
         const createNotice = (notice) => {
@@ -50373,17 +50347,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = OriginalComponent;
     if (typeof render === "function") {
       isForwardRef = true;
-      return (0, import_element207.forwardRef)(Component8);
+      return (0, import_element207.forwardRef)(Component7);
     }
-    return Component8;
+    return Component7;
   }, "withNotices");
 
   // packages/components/build-module/higher-order/with-spoken-messages/index.mjs
   var import_compose82 = __toESM(require_compose(), 1);
   var import_a11y11 = __toESM(require_a11y(), 1);
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
-  var with_spoken_messages_default = (0, import_compose82.createHigherOrderComponent)((Component8) => function WithSpokenMessages(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(Component8, {
+  var with_spoken_messages_default = (0, import_compose82.createHigherOrderComponent)((Component7) => function WithSpokenMessages(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(Component7, {
       ...props,
       speak: import_a11y11.speak,
       debouncedSpeak: (0, import_compose82.useDebounce)(import_a11y11.speak, 500)
