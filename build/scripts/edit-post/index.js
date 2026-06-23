@@ -10697,11 +10697,15 @@ var wp;
   // packages/edit-post/build-module/components/preferences-modal/meta-boxes-section.mjs
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   var { PreferencesModalSection } = unlock2(import_preferences6.privateApis);
-  function MetaBoxesSection({
-    areCustomFieldsRegistered,
-    metaBoxes: metaBoxes2,
-    ...sectionProps
-  }) {
+  function MetaBoxesSection(sectionProps) {
+    const { areCustomFieldsRegistered, metaBoxes: metaBoxes2 } = (0, import_data17.useSelect)((select3) => {
+      const { getEditorSettings } = select3(import_editor12.store);
+      const { getAllMetaBoxes: getAllMetaBoxes2 } = select3(store);
+      return {
+        areCustomFieldsRegistered: getEditorSettings().enableCustomFields !== void 0,
+        metaBoxes: getAllMetaBoxes2()
+      };
+    }, []);
     const thirdPartyMetaBoxes = metaBoxes2.filter(
       ({ id }) => id !== "postcustom"
     );
@@ -10720,15 +10724,6 @@ var wp;
       ))
     ] });
   }
-  var meta_boxes_section_default = (0, import_data17.withSelect)((select3) => {
-    const { getEditorSettings } = select3(import_editor12.store);
-    const { getAllMetaBoxes: getAllMetaBoxes2 } = select3(store);
-    return {
-      // This setting should not live in the block editor's store.
-      areCustomFieldsRegistered: getEditorSettings().enableCustomFields !== void 0,
-      metaBoxes: getAllMetaBoxes2()
-    };
-  })(MetaBoxesSection);
 
   // packages/edit-post/build-module/components/preferences-modal/index.mjs
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
@@ -10736,7 +10731,7 @@ var wp;
   var { PreferencesModal } = unlock2(import_editor13.privateApis);
   function EditPostPreferencesModal() {
     const extraSections = {
-      general: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(meta_boxes_section_default, { title: (0, import_i18n9.__)("Advanced") }),
+      general: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(MetaBoxesSection, { title: (0, import_i18n9.__)("Advanced") }),
       appearance: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
         PreferenceToggleControl,
         {
