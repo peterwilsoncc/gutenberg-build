@@ -34131,6 +34131,7 @@ This message will only show in development mode. It won't appear in production. 
     min: min3 = 0,
     presets,
     presetKey,
+    placeholder: placeholderProp,
     ...props
   }) {
     const defaultValuesToModify = getSidesToModify(side, sides3);
@@ -34229,7 +34230,7 @@ This message will only show in development mode. It won't appear in production. 
             onUnitChange: handleOnUnitChange,
             onFocus: handleOnFocus,
             label: LABELS[side],
-            placeholder: mixedPlaceholder,
+            placeholder: mixedPlaceholder ?? placeholderProp,
             hideLabelFromVision: true
           })
         }), /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(FlexedRangeControl, {
