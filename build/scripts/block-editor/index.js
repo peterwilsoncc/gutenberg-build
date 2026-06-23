@@ -80123,8 +80123,8 @@ var wp;
     validity,
     touched,
     disabled: disabled2,
-    onClick,
-    "aria-expanded": ariaExpanded
+    isOpen,
+    onClick
   }) {
     const { labelPosition, editVisibility } = field.layout;
     const errorMessage = get_first_validation_error_default(validity);
@@ -80153,9 +80153,9 @@ var wp;
       fieldLabel || ""
     );
     const rowRef = (0, import_element275.useRef)(null);
-    const handleRowClick = () => {
-      const selection2 = rowRef.current?.ownerDocument.defaultView?.getSelection();
-      if (selection2 && selection2.toString().length > 0) {
+    const editButtonRef = (0, import_element275.useRef)(null);
+    const handleRowClick = (event) => {
+      if (!isOpen && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
         return;
       }
       onClick();
@@ -80235,11 +80235,12 @@ var wp;
           !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(
             import_components250.Button,
             {
+              ref: editButtonRef,
               className: "dataforms-layouts-panel__field-trigger-icon",
               label: ariaLabel,
               icon: pencil_default,
               size: "small",
-              "aria-expanded": ariaExpanded,
+              "aria-expanded": isOpen,
               "aria-haspopup": "dialog",
               "aria-describedby": `${controlId}`
             }
@@ -80972,7 +80973,7 @@ var wp;
           touched,
           disabled: fieldDefinition.readOnly === true,
           onClick: () => setIsOpen(true),
-          "aria-expanded": isOpen
+          isOpen
         }
       ),
       isOpen && /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
@@ -81103,8 +81104,8 @@ var wp;
                 validity,
                 touched,
                 disabled: fieldDefinition.readOnly === true,
-                onClick: onToggle,
-                "aria-expanded": isOpen
+                isOpen,
+                onClick: onToggle
               }
             ),
             renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [

@@ -38947,8 +38947,8 @@ function SummaryButton({
   validity,
   touched,
   disabled: disabled2,
-  onClick,
-  "aria-expanded": ariaExpanded
+  isOpen,
+  onClick
 }) {
   const { labelPosition, editVisibility } = field.layout;
   const errorMessage = get_first_validation_error_default(validity);
@@ -38977,9 +38977,9 @@ function SummaryButton({
     fieldLabel || ""
   );
   const rowRef = (0, import_element151.useRef)(null);
-  const handleRowClick = () => {
-    const selection = rowRef.current?.ownerDocument.defaultView?.getSelection();
-    if (selection && selection.toString().length > 0) {
+  const editButtonRef = (0, import_element151.useRef)(null);
+  const handleRowClick = (event) => {
+    if (!isOpen && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
       return;
     }
     onClick();
@@ -39059,11 +39059,12 @@ function SummaryButton({
         !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
           import_components50.Button,
           {
+            ref: editButtonRef,
             className: "dataforms-layouts-panel__field-trigger-icon",
             label: ariaLabel,
             icon: pencil_default,
             size: "small",
-            "aria-expanded": ariaExpanded,
+            "aria-expanded": isOpen,
             "aria-haspopup": "dialog",
             "aria-describedby": `${controlId}`
           }
@@ -39796,7 +39797,7 @@ function PanelModal({
         touched,
         disabled: fieldDefinition.readOnly === true,
         onClick: () => setIsOpen(true),
-        "aria-expanded": isOpen
+        isOpen
       }
     ),
     isOpen && /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
@@ -39927,8 +39928,8 @@ function PanelDropdown({
               validity,
               touched,
               disabled: fieldDefinition.readOnly === true,
-              onClick: onToggle,
-              "aria-expanded": isOpen
+              isOpen,
+              onClick: onToggle
             }
           ),
           renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [

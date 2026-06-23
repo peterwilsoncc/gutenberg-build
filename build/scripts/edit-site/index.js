@@ -37272,8 +37272,8 @@ If there's a particular need for this, please submit a feature request at https:
     validity,
     touched,
     disabled: disabled2,
-    onClick,
-    "aria-expanded": ariaExpanded
+    isOpen,
+    onClick
   }) {
     const { labelPosition, editVisibility } = field.layout;
     const errorMessage = get_first_validation_error_default(validity);
@@ -37302,9 +37302,9 @@ If there's a particular need for this, please submit a feature request at https:
       fieldLabel || ""
     );
     const rowRef = (0, import_element115.useRef)(null);
-    const handleRowClick = () => {
-      const selection = rowRef.current?.ownerDocument.defaultView?.getSelection();
-      if (selection && selection.toString().length > 0) {
+    const editButtonRef = (0, import_element115.useRef)(null);
+    const handleRowClick = (event) => {
+      if (!isOpen && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
         return;
       }
       onClick();
@@ -37384,11 +37384,12 @@ If there's a particular need for this, please submit a feature request at https:
           !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
             import_components68.Button,
             {
+              ref: editButtonRef,
               className: "dataforms-layouts-panel__field-trigger-icon",
               label: ariaLabel,
               icon: pencil_default,
               size: "small",
-              "aria-expanded": ariaExpanded,
+              "aria-expanded": isOpen,
               "aria-haspopup": "dialog",
               "aria-describedby": `${controlId}`
             }
@@ -38121,7 +38122,7 @@ If there's a particular need for this, please submit a feature request at https:
           touched,
           disabled: fieldDefinition.readOnly === true,
           onClick: () => setIsOpen(true),
-          "aria-expanded": isOpen
+          isOpen
         }
       ),
       isOpen && /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
@@ -38252,8 +38253,8 @@ If there's a particular need for this, please submit a feature request at https:
                 validity,
                 touched,
                 disabled: fieldDefinition.readOnly === true,
-                onClick: onToggle,
-                "aria-expanded": isOpen
+                isOpen,
+                onClick: onToggle
               }
             ),
             renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
