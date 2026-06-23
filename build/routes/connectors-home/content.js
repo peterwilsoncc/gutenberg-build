@@ -232,13 +232,6 @@ var require_theme = __commonJS({
   }
 });
 
-// package-external:@wordpress/private-apis
-var require_private_apis = __commonJS({
-  "package-external:@wordpress/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
-  }
-});
-
 // package-external:@wordpress/components
 var require_components = __commonJS({
   "package-external:@wordpress/components"(exports, module) {
@@ -257,6 +250,13 @@ var require_data = __commonJS({
 var require_core_data = __commonJS({
   "package-external:@wordpress/core-data"(exports, module) {
     module.exports = window.wp.coreData;
+  }
+});
+
+// package-external:@wordpress/private-apis
+var require_private_apis = __commonJS({
+  "package-external:@wordpress/private-apis"(exports, module) {
+    module.exports = window.wp.privateApis;
   }
 });
 
@@ -9057,13 +9057,6 @@ function renderSlotWithChildren(slot, defaultSlot, children) {
   return (0, import_element15.cloneElement)(slot ?? defaultSlot, { children });
 }
 
-// packages/ui/build-module/lock-unlock.mjs
-var import_private_apis = __toESM(require_private_apis(), 1);
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/ui"
-);
-
 // packages/ui/build-module/stack/stack.mjs
 var import_element16 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
@@ -9533,10 +9526,9 @@ if (typeof process === "undefined" || true) {
   registerStyle8("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
 }
 var style_default7 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
 var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup = (0, import_element19.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_theme.ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     index_parts_exports.Popup,
     {
       ref,
@@ -10981,8 +10973,8 @@ import {
 } from "@wordpress/connectors";
 
 // routes/lock-unlock/index.ts
-var import_private_apis2 = __toESM(require_private_apis());
-var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis = __toESM(require_private_apis());
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/routes"
 );
@@ -11481,7 +11473,7 @@ var GeminiLogo = () => /* @__PURE__ */ React.createElement(
 );
 
 // routes/connectors-home/default-connectors.tsx
-var { store: connectorsStore } = unlock2(connectorsPrivateApis);
+var { store: connectorsStore } = unlock(connectorsPrivateApis);
 function getConnectorScriptModuleData() {
   try {
     return JSON.parse(
@@ -11649,7 +11641,7 @@ function registerDefaultConnectors() {
       authentication,
       plugin: data.plugin
     };
-    const existing = unlock2((0, import_data2.select)(connectorsStore)).getConnector(
+    const existing = unlock((0, import_data2.select)(connectorsStore)).getConnector(
       connectorName
     );
     if (authentication.method === "api_key" && !existing?.render) {
@@ -11885,7 +11877,7 @@ function AiPluginCallout() {
 }
 
 // routes/connectors-home/stage.tsx
-var { store } = unlock2(connectorsPrivateApis2);
+var { store } = unlock(connectorsPrivateApis2);
 registerDefaultConnectors();
 function ConnectorsPage() {
   const isFileModDisabled = getIsFileModDisabled();
@@ -11898,7 +11890,7 @@ function ConnectorsPage() {
         "ai/ai"
       );
       return {
-        connectors: unlock2(select2(store)).getConnectors(),
+        connectors: unlock(select2(store)).getConnectors(),
         canInstallPlugins: coreSelect.canUser("create", {
           kind: "root",
           name: "plugin"

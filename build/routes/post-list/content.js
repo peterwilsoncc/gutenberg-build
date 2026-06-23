@@ -11327,13 +11327,6 @@ function renderSlotWithChildren(slot, defaultSlot, children) {
   return (0, import_element27.cloneElement)(slot ?? defaultSlot, { children });
 }
 
-// packages/ui/build-module/lock-unlock.mjs
-var import_private_apis2 = __toESM(require_private_apis(), 1);
-var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/ui"
-);
-
 // packages/ui/build-module/stack/stack.mjs
 var import_element28 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
@@ -11811,10 +11804,9 @@ if (typeof process === "undefined" || true) {
   registerStyle12("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
 }
 var style_default11 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-var ThemeProvider = unlock2(import_theme.privateApis).ThemeProvider;
 var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup = (0, import_element31.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_theme.ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
     index_parts_exports2.Popup,
     {
       ref,
@@ -12094,15 +12086,15 @@ var import_data4 = __toESM(require_data(), 1);
 var import_compose = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/lock-unlock.mjs
-var import_private_apis3 = __toESM(require_private_apis(), 1);
-var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis2 = __toESM(require_private_apis(), 1);
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/dataviews"
 );
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
 var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
-var { Menu, kebabCase } = unlock3(import_components2.privateApis);
+var { Menu, kebabCase } = unlock2(import_components2.privateApis);
 function ButtonTrigger({
   action,
   onClick,
@@ -12728,7 +12720,7 @@ function getHideableFields(view, fields) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
 var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu2 } = unlock3(import_components4.privateApis);
+var { Menu: Menu2 } = unlock2(import_components4.privateApis);
 function WithMenuSeparators({ children }) {
   return import_element37.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(import_element37.Fragment, { children: [
     i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Menu2.Separator, {}),
@@ -13867,7 +13859,7 @@ function usePlaceholdersNeeded(data, isInfiniteScroll, gridColumns) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
 var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
-var { Badge: WCBadge } = unlock3(import_components8.privateApis);
+var { Badge: WCBadge } = unlock2(import_components8.privateApis);
 function chunk(array, size4) {
   const chunks = [];
   for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size4) {
@@ -14429,7 +14421,7 @@ var import_element47 = __toESM(require_element(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu3 } = unlock3(import_components10.privateApis);
+var { Menu: Menu3 } = unlock2(import_components10.privateApis);
 function generateItemWrapperCompositeId(idPrefix) {
   return `${idPrefix}-item-wrapper`;
 }
@@ -15413,7 +15405,7 @@ function useIsMultiselectPicker(actions) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-var { Badge: WCBadge2 } = unlock3(import_components14.privateApis);
+var { Badge: WCBadge2 } = unlock2(import_components14.privateApis);
 function GridItem3({
   view,
   multiselect,
@@ -23101,7 +23093,7 @@ var import_components22 = __toESM(require_components(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
 var import_element62 = __toESM(require_element(), 1);
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu4 } = unlock3(import_components22.privateApis);
+var { Menu: Menu4 } = unlock2(import_components22.privateApis);
 function AddFilterMenu({
   filters,
   view,
@@ -23581,7 +23573,7 @@ var import_element70 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
 var import_compose11 = __toESM(require_compose(), 1);
 var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu5 } = unlock3(import_components27.privateApis);
+var { Menu: Menu5 } = unlock2(import_components27.privateApis);
 var DATAVIEWS_CONFIG_POPOVER_PROPS = {
   className: "dataviews-config__popover",
   placement: "bottom-end",
@@ -23924,7 +23916,7 @@ function getCustomValidity(isValid2, validity) {
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
 var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedCheckboxControl } = unlock3(import_components28.privateApis);
+var { ValidatedCheckboxControl } = unlock2(import_components28.privateApis);
 function Checkbox({
   field,
   onChange,
@@ -23960,7 +23952,7 @@ function Checkbox({
 var import_components29 = __toESM(require_components(), 1);
 var import_element72 = __toESM(require_element(), 1);
 var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedComboboxControl } = unlock3(import_components29.privateApis);
+var { ValidatedComboboxControl } = unlock2(import_components29.privateApis);
 function Combobox3({
   data,
   field,
@@ -24131,7 +24123,7 @@ function parseDateTime(dateTimeString) {
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar, ValidatedInputControl } = unlock3(import_components31.privateApis);
+var { DateCalendar, ValidatedInputControl } = unlock2(import_components31.privateApis);
 var formatDateTime = (value) => {
   if (!value) {
     return "";
@@ -24316,7 +24308,7 @@ var import_element76 = __toESM(require_element(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components32.privateApis);
+var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock2(import_components32.privateApis);
 var DATE_PRESETS = [
   {
     id: "today",
@@ -24953,7 +24945,7 @@ function DateControl({
 var import_components33 = __toESM(require_components(), 1);
 var import_element77 = __toESM(require_element(), 1);
 var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedSelectControl } = unlock3(import_components33.privateApis);
+var { ValidatedSelectControl } = unlock2(import_components33.privateApis);
 function Select({
   data,
   field,
@@ -25018,7 +25010,7 @@ var import_components35 = __toESM(require_components(), 1);
 var import_components34 = __toESM(require_components(), 1);
 var import_element78 = __toESM(require_element(), 1);
 var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components34.privateApis);
+var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components34.privateApis);
 function ValidatedText({
   data,
   field,
@@ -25154,7 +25146,7 @@ var import_components38 = __toESM(require_components(), 1);
 var import_element79 = __toESM(require_element(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedNumberControl } = unlock3(import_components38.privateApis);
+var { ValidatedNumberControl } = unlock2(import_components38.privateApis);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
     return "";
@@ -25302,7 +25294,7 @@ function Number2(props) {
 var import_components39 = __toESM(require_components(), 1);
 var import_element80 = __toESM(require_element(), 1);
 var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedRadioControl } = unlock3(import_components39.privateApis);
+var { ValidatedRadioControl } = unlock2(import_components39.privateApis);
 function Radio({
   data,
   field,
@@ -25376,7 +25368,7 @@ function Text3({
 var import_components40 = __toESM(require_components(), 1);
 var import_element82 = __toESM(require_element(), 1);
 var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleControl } = unlock3(import_components40.privateApis);
+var { ValidatedToggleControl } = unlock2(import_components40.privateApis);
 function Toggle({
   field,
   onChange,
@@ -25412,7 +25404,7 @@ function Toggle({
 var import_components41 = __toESM(require_components(), 1);
 var import_element83 = __toESM(require_element(), 1);
 var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedTextareaControl } = unlock3(import_components41.privateApis);
+var { ValidatedTextareaControl } = unlock2(import_components41.privateApis);
 function Textarea({
   data,
   field,
@@ -25455,7 +25447,7 @@ function Textarea({
 var import_components42 = __toESM(require_components(), 1);
 var import_element84 = __toESM(require_element(), 1);
 var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleGroupControl } = unlock3(import_components42.privateApis);
+var { ValidatedToggleGroupControl } = unlock2(import_components42.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -25512,7 +25504,7 @@ function ToggleGroup({
 var import_components43 = __toESM(require_components(), 1);
 var import_element85 = __toESM(require_element(), 1);
 var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedFormTokenField } = unlock3(import_components43.privateApis);
+var { ValidatedFormTokenField } = unlock2(import_components43.privateApis);
 function ArrayControl({
   data,
   field,
@@ -25762,7 +25754,7 @@ var import_components44 = __toESM(require_components(), 1);
 var import_element86 = __toESM(require_element(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components44.privateApis);
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components44.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
@@ -29905,8 +29897,8 @@ var import_editor2 = __toESM(require_editor());
 var import_i18n51 = __toESM(require_i18n());
 
 // routes/lock-unlock/index.ts
-var import_private_apis4 = __toESM(require_private_apis());
-var { lock: lock4, unlock: unlock4 } = (0, import_private_apis4.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis3 = __toESM(require_private_apis());
+var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/routes"
 );
@@ -30065,7 +30057,7 @@ var import_core_data3 = __toESM(require_core_data());
 var import_components53 = __toESM(require_components());
 var import_element104 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
-var { usePostFields, PostCardPanel } = unlock4(import_editor.privateApis);
+var { usePostFields, PostCardPanel } = unlock3(import_editor.privateApis);
 var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
 function QuickEditModal({
   postType,
@@ -30087,7 +30079,7 @@ function QuickEditModal({
         };
       }
       const args = ["postType", postType, postId[0]];
-      const { getHomePage, getPostsPageId } = unlock4(
+      const { getHomePage, getPostsPageId } = unlock3(
         select2(import_core_data3.store)
       );
       const singlePostId = String(postId[0]);
@@ -30260,9 +30252,9 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/post-list/stage.tsx
-var { useEntityRecordsWithPermissions } = unlock4(import_core_data4.privateApis);
-var { usePostActions, usePostFields: usePostFields2 } = unlock4(import_editor2.privateApis);
-var { Tabs } = unlock4(import_components54.privateApis);
+var { useEntityRecordsWithPermissions } = unlock3(import_core_data4.privateApis);
+var { usePostActions, usePostFields: usePostFields2 } = unlock3(import_editor2.privateApis);
+var { Tabs } = unlock3(import_components54.privateApis);
 var LAYOUT_LIST2 = "list";
 function getItemId(item) {
   return item.id.toString();

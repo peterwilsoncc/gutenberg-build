@@ -31,13 +31,6 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // package-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "package-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
-    }
-  });
-
   // package-external:@wordpress/element
   var require_element = __commonJS({
     "package-external:@wordpress/element"(exports, module) {
@@ -55,15 +48,8 @@ var wp;
   // packages/theme/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
-    privateApis: () => privateApis
+    ThemeProvider: () => ThemeProvider
   });
-
-  // packages/theme/build-module/lock-unlock.mjs
-  var import_private_apis = __toESM(require_private_apis(), 1);
-  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/theme"
-  );
 
   // packages/theme/build-module/theme-provider.mjs
   var import_element3 = __toESM(require_element(), 1);
@@ -4355,13 +4341,6 @@ var wp;
       )
     ] });
   };
-
-  // packages/theme/build-module/private-apis.mjs
-  var privateApis = {};
-  lock(privateApis, {
-    ThemeProvider,
-    useThemeProviderStyles
-  });
   return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map
