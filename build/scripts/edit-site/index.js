@@ -40881,7 +40881,8 @@ If there's a particular need for this, please submit a feature request at https:
     useHasTypographyPanel: useHasTypographyPanel2,
     useHasBorderPanel,
     useSettingsForBlockElement: useSettingsForBlockElement2,
-    useHasColorPanel: useHasColorPanel2
+    useHasColorPanel: useHasColorPanel2,
+    useHasBackgroundPanel: useHasBackgroundPanel2
   } = unlock4(import_block_editor8.privateApis);
   function useSortedBlockTypes() {
     const blockItems = (0, import_data46.useSelect)(
@@ -40905,11 +40906,12 @@ If there's a particular need for this, please submit a feature request at https:
     const settings2 = useSettingsForBlockElement2(rawSettings, blockName);
     const hasTypographyPanel = useHasTypographyPanel2(settings2);
     const hasColorPanel = useHasColorPanel2(settings2);
+    const hasBackgroundPanel = useHasBackgroundPanel2(settings2);
     const hasBorderPanel = useHasBorderPanel(settings2);
     const hasDimensionsPanel = useHasDimensionsPanel2(settings2);
     const hasLayoutPanel = hasBorderPanel || hasDimensionsPanel;
     const hasVariationsPanel = !!useBlockVariations(blockName)?.length;
-    const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasLayoutPanel || hasVariationsPanel;
+    const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasVariationsPanel;
     return hasGlobalStyles;
   }
   function BlockMenuItem({ block }) {
@@ -40999,7 +41001,7 @@ If there's a particular need for this, please submit a feature request at https:
     useHasColorPanel: useHasColorPanel3,
     useHasFiltersPanel,
     useHasImageSettingsPanel,
-    useHasBackgroundPanel: useHasBackgroundPanel2,
+    useHasBackgroundPanel: useHasBackgroundPanel3,
     BackgroundPanel: StylesBackgroundPanel,
     BorderPanel: StylesBorderPanel,
     ColorPanel: StylesColorPanel,
@@ -51566,7 +51568,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-background.mjs
   var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
-  var { useHasBackgroundPanel: useHasBackgroundPanel3 } = unlock4(import_block_editor14.privateApis);
+  var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock4(import_block_editor14.privateApis);
 
   // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_components116 = __toESM(require_components(), 1);

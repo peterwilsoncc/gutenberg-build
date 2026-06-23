@@ -11219,7 +11219,8 @@ var {
   useHasTypographyPanel: useHasTypographyPanel2,
   useHasBorderPanel,
   useSettingsForBlockElement: useSettingsForBlockElement2,
-  useHasColorPanel: useHasColorPanel2
+  useHasColorPanel: useHasColorPanel2,
+  useHasBackgroundPanel: useHasBackgroundPanel2
 } = unlock(import_block_editor3.privateApis);
 function useSortedBlockTypes() {
   const blockItems = (0, import_data4.useSelect)(
@@ -11243,11 +11244,12 @@ function useBlockHasGlobalStyles(blockName) {
   const settings = useSettingsForBlockElement2(rawSettings, blockName);
   const hasTypographyPanel = useHasTypographyPanel2(settings);
   const hasColorPanel = useHasColorPanel2(settings);
+  const hasBackgroundPanel = useHasBackgroundPanel2(settings);
   const hasBorderPanel = useHasBorderPanel(settings);
   const hasDimensionsPanel = useHasDimensionsPanel2(settings);
   const hasLayoutPanel = hasBorderPanel || hasDimensionsPanel;
   const hasVariationsPanel = !!useBlockVariations(blockName)?.length;
-  const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasLayoutPanel || hasVariationsPanel;
+  const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasVariationsPanel;
   return hasGlobalStyles;
 }
 function BlockMenuItem({ block }) {
@@ -11337,7 +11339,7 @@ var {
   useHasColorPanel: useHasColorPanel3,
   useHasFiltersPanel,
   useHasImageSettingsPanel,
-  useHasBackgroundPanel: useHasBackgroundPanel2,
+  useHasBackgroundPanel: useHasBackgroundPanel3,
   BackgroundPanel: StylesBackgroundPanel,
   BorderPanel: StylesBorderPanel,
   ColorPanel: StylesColorPanel,
@@ -23896,7 +23898,7 @@ var { BackgroundPanel: StylesBackgroundPanel2 } = unlock(
 
 // packages/global-styles-ui/build-module/screen-background.mjs
 var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-var { useHasBackgroundPanel: useHasBackgroundPanel3 } = unlock(import_block_editor9.privateApis);
+var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock(import_block_editor9.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_components45 = __toESM(require_components(), 1);

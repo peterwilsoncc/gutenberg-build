@@ -53823,7 +53823,8 @@ If there's a particular need for this, please submit a feature request at https:
     useHasTypographyPanel: useHasTypographyPanel2,
     useHasBorderPanel,
     useSettingsForBlockElement: useSettingsForBlockElement2,
-    useHasColorPanel: useHasColorPanel2
+    useHasColorPanel: useHasColorPanel2,
+    useHasBackgroundPanel: useHasBackgroundPanel2
   } = unlock5(import_block_editor8.privateApis);
   function useSortedBlockTypes() {
     const blockItems = (0, import_data52.useSelect)(
@@ -53847,11 +53848,12 @@ If there's a particular need for this, please submit a feature request at https:
     const settings = useSettingsForBlockElement2(rawSettings, blockName);
     const hasTypographyPanel = useHasTypographyPanel2(settings);
     const hasColorPanel = useHasColorPanel2(settings);
+    const hasBackgroundPanel = useHasBackgroundPanel2(settings);
     const hasBorderPanel = useHasBorderPanel(settings);
     const hasDimensionsPanel = useHasDimensionsPanel2(settings);
     const hasLayoutPanel = hasBorderPanel || hasDimensionsPanel;
     const hasVariationsPanel = !!useBlockVariations(blockName)?.length;
-    const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasLayoutPanel || hasVariationsPanel;
+    const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasVariationsPanel;
     return hasGlobalStyles;
   }
   function BlockMenuItem({ block }) {
@@ -54081,7 +54083,7 @@ If there's a particular need for this, please submit a feature request at https:
     useHasColorPanel: useHasColorPanel3,
     useHasFiltersPanel,
     useHasImageSettingsPanel,
-    useHasBackgroundPanel: useHasBackgroundPanel2,
+    useHasBackgroundPanel: useHasBackgroundPanel3,
     BackgroundPanel: StylesBackgroundPanel,
     BorderPanel: StylesBorderPanel,
     ColorPanel: StylesColorPanel,
@@ -54149,7 +54151,7 @@ If there's a particular need for this, please submit a feature request at https:
       return updatedSettings;
     }, [settingsForBlockElement, disableBlockGap, disableAspectRatio]);
     const blockVariations = useBlockVariations(name2);
-    const hasBackgroundPanel = useHasBackgroundPanel2(settings);
+    const hasBackgroundPanel = useHasBackgroundPanel3(settings);
     const hasTypographyPanel = useHasTypographyPanel3(settings);
     const hasColorPanel = useHasColorPanel3(settings);
     const hasBorderPanel = useHasBorderPanel2(settings);
@@ -54281,15 +54283,6 @@ If there's a particular need for this, please submit a feature request at https:
         /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(Subtitle, { children: (0, import_i18n149.__)("Style Variations") }),
         /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(VariationsPanel, { name: name2 })
       ] }) }),
-      hasColorPanel && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-        StylesColorPanel,
-        {
-          inheritedValue: inheritedStyle,
-          value: style,
-          onChange: setStyle2,
-          settings
-        }
-      ),
       hasBackgroundPanel && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
         StylesBackgroundPanel,
         {
@@ -54337,6 +54330,15 @@ If there's a particular need for this, please submit a feature request at https:
           onChange: setStyle2,
           settings,
           includeLayoutControls: true
+        }
+      ),
+      hasColorPanel && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+        StylesColorPanel,
+        {
+          inheritedValue: inheritedStyle,
+          value: style,
+          onChange: setStyle2,
+          settings
         }
       ),
       hasImageSettingsPanel && !hasSelectedState && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
@@ -67706,10 +67708,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-background.mjs
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
-  var { useHasBackgroundPanel: useHasBackgroundPanel3 } = unlock5(import_block_editor14.privateApis);
+  var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock5(import_block_editor14.privateApis);
   function ScreenBackground() {
     const [settings] = useSetting("");
-    const hasBackgroundPanel = useHasBackgroundPanel3(settings);
+    const hasBackgroundPanel = useHasBackgroundPanel4(settings);
     return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(import_jsx_runtime319.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
         ScreenHeader,
