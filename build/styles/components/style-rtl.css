@@ -3606,7 +3606,7 @@ body.lockscroll {
 .components-text-control__input[type=month],
 .components-text-control__input[type=number] {
   width: 100%;
-  height: 32px;
+  height: 40px;
   margin: 0;
   background: var(--wp-components-color-background, var(--wpds-color-background-surface-neutral-strong, #fff));
   color: var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e));
@@ -3710,6 +3710,8 @@ body.lockscroll {
 .components-text-control__input[type=month],
 .components-text-control__input[type=number] {
   border-color: var(--wp-components-color-gray-600, var(--wpds-color-stroke-interactive-neutral, #8d8d8d));
+  padding-right: 12px;
+  padding-left: 12px;
 }
 .components-text-control__input::-moz-placeholder, .components-text-control__input[type=text]::-moz-placeholder, .components-text-control__input[type=tel]::-moz-placeholder, .components-text-control__input[type=time]::-moz-placeholder, .components-text-control__input[type=url]::-moz-placeholder, .components-text-control__input[type=week]::-moz-placeholder, .components-text-control__input[type=password]::-moz-placeholder, .components-text-control__input[type=color]::-moz-placeholder, .components-text-control__input[type=date]::-moz-placeholder, .components-text-control__input[type=datetime]::-moz-placeholder, .components-text-control__input[type=datetime-local]::-moz-placeholder, .components-text-control__input[type=email]::-moz-placeholder, .components-text-control__input[type=month]::-moz-placeholder, .components-text-control__input[type=number]::-moz-placeholder {
   color: color-mix(in srgb, var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e)), transparent 38%);
@@ -3729,24 +3731,6 @@ body.lockscroll {
 .components-text-control__input[type=month]::placeholder,
 .components-text-control__input[type=number]::placeholder {
   color: color-mix(in srgb, var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e)), transparent 38%);
-}
-.components-text-control__input.is-next-40px-default-size,
-.components-text-control__input[type=text].is-next-40px-default-size,
-.components-text-control__input[type=tel].is-next-40px-default-size,
-.components-text-control__input[type=time].is-next-40px-default-size,
-.components-text-control__input[type=url].is-next-40px-default-size,
-.components-text-control__input[type=week].is-next-40px-default-size,
-.components-text-control__input[type=password].is-next-40px-default-size,
-.components-text-control__input[type=color].is-next-40px-default-size,
-.components-text-control__input[type=date].is-next-40px-default-size,
-.components-text-control__input[type=datetime].is-next-40px-default-size,
-.components-text-control__input[type=datetime-local].is-next-40px-default-size,
-.components-text-control__input[type=email].is-next-40px-default-size,
-.components-text-control__input[type=month].is-next-40px-default-size,
-.components-text-control__input[type=number].is-next-40px-default-size {
-  height: 40px;
-  padding-right: 12px;
-  padding-left: 12px;
 }
 
 .components-text-control__input[type=email],

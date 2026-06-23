@@ -52263,7 +52263,6 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
             import_components134.TextControl,
             {
-              __next40pxDefaultSize: true,
               value: editedMenuTitle,
               placeholder: (0, import_i18n125.__)("Navigation title"),
               onChange: setEditedMenuTitle,
@@ -56127,7 +56126,6 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
         import_components149.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n147.__)("Name"),
           value: title,
           onChange: setTitle,
@@ -57942,7 +57940,6 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
         import_components154.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n153.__)("Name"),
           value: title,
           onChange: setTitle,
@@ -58654,7 +58651,6 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
             import_components156.TextControl,
             {
-              __next40pxDefaultSize: true,
               label: (0, import_i18n156.__)("Title"),
               onChange: setTitle,
               placeholder: (0, import_i18n156.__)("No title"),

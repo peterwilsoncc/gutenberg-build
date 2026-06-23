@@ -27489,7 +27489,6 @@ function AddCustomGenericTemplateModalContent({
   return /* @__PURE__ */ React.createElement("form", { onSubmit: onCreateTemplate }, /* @__PURE__ */ React.createElement(import_components50.__experimentalVStack, { spacing: 6 }, /* @__PURE__ */ React.createElement(
     import_components50.TextControl,
     {
-      __next40pxDefaultSize: true,
       label: (0, import_i18n52.__)("Name"),
       value: title,
       onChange: setTitle,

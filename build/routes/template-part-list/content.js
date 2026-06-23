@@ -26232,7 +26232,6 @@ function CreateTemplatePartModalContents({
         /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
           import_components47.TextControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n44.__)("Name"),
             value: title,
             onChange: setTitle,

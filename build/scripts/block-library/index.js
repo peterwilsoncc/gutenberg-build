@@ -7790,7 +7790,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
                   import_components9.TextControl,
                   {
-                    __next40pxDefaultSize: true,
                     autoComplete: "off",
                     label: (0, import_i18n12.__)("Separator"),
                     value: separator,
@@ -9971,7 +9970,6 @@ var wp;
         isLinkTag && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
           import_components10.TextControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n13.__)("Link relation"),
             help: (0, import_element10.createInterpolateElement)(
               (0, import_i18n13.__)(
@@ -19466,7 +19464,6 @@ var wp;
             import_components33.TextControl,
             {
               type: "url",
-              __next40pxDefaultSize: true,
               label: (0, import_i18n51.__)("Video URL"),
               value: url,
               onChange: (value) => {
@@ -21818,7 +21815,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(import_block_editor71.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
         import_components36.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n57.__)("Name attribute"),
           value: name122 || "",
           onChange: (newName) => setAttributes({ name: newName }),
@@ -24429,7 +24425,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
                   import_components44.TextControl,
                   {
-                    __next40pxDefaultSize: true,
                     autoComplete: "off",
                     label: (0, import_i18n71.__)("Email for form submissions"),
                     value: email || "",
@@ -24472,7 +24467,6 @@ ${url}
         /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
           import_components44.TextControl,
           {
-            __next40pxDefaultSize: true,
             autoComplete: "off",
             label: (0, import_i18n71.__)("Form action"),
             value: action,
@@ -25141,7 +25135,6 @@ ${url}
         /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
           import_components45.TextControl,
           {
-            __next40pxDefaultSize: true,
             autoComplete: "off",
             label: (0, import_i18n73.__)("Name"),
             value: name122,
@@ -25158,7 +25151,6 @@ ${url}
         "hidden" === type && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
           import_components45.TextControl,
           {
-            __next40pxDefaultSize: true,
             autoComplete: "off",
             label: (0, import_i18n73.__)("Value"),
             value,
@@ -29778,7 +29770,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
                   import_components48.TextControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n87.__)("Text"),
                     value: label ? (0, import_dom4.__unstableStripHTML)(label) : "",
                     onChange: (labelValue) => {
@@ -30643,8 +30634,7 @@ ${js}
                 }),
                 help: (0, import_i18n95.__)(
                   "Briefly describe the icon to help screen reader users. Leave blank for decorative icons."
-                ),
-                __next40pxDefaultSize: true
+                )
               }
             )
           }
@@ -30675,8 +30665,7 @@ ${js}
                   "Briefly describe the icon to help screen reader users. Leave blank for decorative icons."
                 ),
                 value: ariaLabel || "",
-                onChange: (value) => setAttributes({ ariaLabel: value }),
-                __next40pxDefaultSize: true
+                onChange: (value) => setAttributes({ ariaLabel: value })
               }
             )
           }
@@ -32588,7 +32577,6 @@ ${js}
           children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)("div", { className: "wp-block-image__toolbar_content_textarea__container", children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
             import_components58.TextControl,
             {
-              __next40pxDefaultSize: true,
               className: "wp-block-image__toolbar_content_textarea",
               label: (0, import_i18n97.__)("Title attribute"),
               value: attributes2.title || "",
@@ -33326,7 +33314,6 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_block_editor114.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
         import_components58.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n97.__)("Title attribute"),
           value: title || "",
           onChange: onSetTitle,
@@ -36093,7 +36080,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
                 import_components62.TextControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n102.__)("Start value"),
                   type: "number",
                   onChange: (value) => {
@@ -40805,7 +40791,6 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
       import_components74.TextControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n120.__)("Menu name"),
         value: title,
         onChange: updateTitle
@@ -43098,7 +43083,6 @@ ${js}
           /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
             import_components90.TextControl,
             {
-              __next40pxDefaultSize: true,
               label: (0, import_i18n137.__)("Title"),
               onChange: setTitle,
               placeholder: (0, import_i18n137.__)("No title"),
@@ -43764,7 +43748,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
                 import_components92.TextControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n141.__)("Text"),
                   value: label ? (0, import_dom10.__unstableStripHTML)(label) : "",
                   onChange: (labelValue) => {
@@ -43881,7 +43864,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
                 import_components92.TextControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n141.__)("Rel attribute"),
                   value: rel || "",
                   onChange: (relValue) => {
@@ -50777,7 +50759,6 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
           import_components105.TextControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n163.__)("Artist"),
             value: artist ? (0, import_dom12.__unstableStripHTML)(artist) : "",
             onChange: (artistValue) => {
@@ -50788,7 +50769,6 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
           import_components105.TextControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n163.__)("Album"),
             value: album ? (0, import_dom12.__unstableStripHTML)(album) : "",
             onChange: (albumValue) => {
@@ -50799,7 +50779,6 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
           import_components105.TextControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n163.__)("Title"),
             value: title ? (0, import_dom12.__unstableStripHTML)(title) : "",
             onChange: (titleValue) => {
@@ -52029,7 +52008,6 @@ ${js}
             /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
               import_components108.TextControl,
               {
-                __next40pxDefaultSize: true,
                 value: commentId,
                 onChange: (val) => setCommentIdInput(parseInt(val))
               }
@@ -54526,7 +54504,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
                   import_components113.TextControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n178.__)("Link relation"),
                     help: (0, import_element102.createInterpolateElement)(
                       (0, import_i18n178.__)(
@@ -55667,7 +55644,6 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(import_block_editor202.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
         import_components116.TextControl,
         {
-          __next40pxDefaultSize: true,
           autoComplete: "off",
           label: (0, import_i18n183.__)("Separator"),
           value: separator || "",
@@ -56416,7 +56392,6 @@ ${js}
                     children: /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(
                       import_components118.TextControl,
                       {
-                        __next40pxDefaultSize: true,
                         label: (0, import_i18n186.__)("Link relation"),
                         help: (0, import_element105.createInterpolateElement)(
                           (0, import_i18n186.__)(
@@ -59114,7 +59089,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
                   import_components129.TextControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n202.__)("Keyword"),
                     value: querySearch,
                     onChange: (newQuerySearch) => {
@@ -63337,7 +63311,6 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(import_block_editor234.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
         import_components145.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n225.__)("Link relation"),
           help: (0, import_element118.createInterpolateElement)(
             (0, import_i18n225.__)(
@@ -66224,7 +66197,6 @@ ${js}
           renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
             import_components152.TextControl,
             {
-              __next40pxDefaultSize: true,
               className: "wp-block-social-link__toolbar_content_text",
               label: (0, import_i18n235.__)("Text"),
               help: (0, import_i18n235.__)(
@@ -66257,7 +66229,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
                 import_components152.TextControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n235.__)("Text"),
                   help: (0, import_i18n235.__)(
                     "The text is visible when enabled from the parent Social Icons block."
@@ -66274,7 +66245,6 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(import_block_editor243.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
         import_components152.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n235.__)("Link relation"),
           help: (0, import_element123.createInterpolateElement)(
             (0, import_i18n235.__)(
@@ -69453,7 +69423,6 @@ ${js}
                 /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
                   import_components159.TextControl,
                   {
-                    __next40pxDefaultSize: true,
                     type: "number",
                     label: (0, import_i18n245.__)("Column count"),
                     value: initialColumnCount,
@@ -69465,7 +69434,6 @@ ${js}
                 /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
                   import_components159.TextControl,
                   {
-                    __next40pxDefaultSize: true,
                     type: "number",
                     label: (0, import_i18n245.__)("Row count"),
                     value: initialRowCount,
@@ -71543,8 +71511,7 @@ ${js}
               label: (0, import_i18n253.__)("Name"),
               value: title,
               onChange: setTitle,
-              placeholder: (0, import_i18n253.__)("Custom Template Part"),
-              __next40pxDefaultSize: true
+              placeholder: (0, import_i18n253.__)("Custom Template Part")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime512.jsxs)(import_components162.__experimentalHStack, { justify: "right", children: [
@@ -72004,7 +71971,6 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
           import_components166.TextControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n257.__)("Title"),
             value: title,
             onChange: (value) => {
@@ -75207,7 +75173,6 @@ ${js}
             /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
               import_components183.TextControl,
               {
-                __next40pxDefaultSize: true,
                 onChange: (newLabel) => setTrackState((prevTrackState) => ({
                   ...prevTrackState,
                   label: newLabel
@@ -75220,7 +75185,6 @@ ${js}
             /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
               import_components183.TextControl,
               {
-                __next40pxDefaultSize: true,
                 onChange: (newSrcLang) => setTrackState((prevTrackState) => ({
                   ...prevTrackState,
                   srcLang: newSrcLang

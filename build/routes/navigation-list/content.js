@@ -26126,8 +26126,7 @@ var AddNavigationModal = ({
           onChange: setMenuTitle,
           label: (0, import_i18n45.__)("Name"),
           placeholder: (0, import_i18n45.__)("Enter menu name"),
-          disabled: isBusy,
-          __next40pxDefaultSize: true
+          disabled: isBusy
         }
       ), /* @__PURE__ */ React.createElement(import_components47.__experimentalHStack, { justify: "right", spacing: 2 }, /* @__PURE__ */ React.createElement(
         import_components47.Button,

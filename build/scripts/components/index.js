@@ -48392,9 +48392,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTextControl(props, ref) {
     const {
-      // Prevent passing this to `input`.
+      // Prevent passing legacy props to `input`.
       __nextHasNoMarginBottom: _2,
-      __next40pxDefaultSize = false,
+      __next40pxDefaultSize: __63,
       label,
       hideLabelFromVision,
       value,
@@ -48407,11 +48407,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = props;
     const id3 = (0, import_compose72.useInstanceId)(TextControl, "inspector-text-control", idProp);
     const onChangeValue = (event) => onChange(event.target.value);
-    maybeWarnDeprecated36pxSize({
-      componentName: "TextControl",
-      size: void 0,
-      __next40pxDefaultSize
-    });
     return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(base_control_default, {
       label,
       hideLabelFromVision,
@@ -48419,9 +48414,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       help,
       className: className2,
       children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("input", {
-        className: clsx_default("components-text-control__input", {
-          "is-next-40px-default-size": __next40pxDefaultSize
-        }),
+        className: "components-text-control__input",
         type,
         id: id3,
         value,
@@ -54598,7 +54591,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(text_control_default, {
-        __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
       })

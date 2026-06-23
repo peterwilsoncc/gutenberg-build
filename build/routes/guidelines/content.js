@@ -30293,7 +30293,6 @@ function BlockGuidelineModal({
     /* @__PURE__ */ React.createElement(import_components55.__experimentalVStack, { spacing: 4 }, isEditing ? /* @__PURE__ */ React.createElement(
       import_components55.TextControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n52.__)("Block"),
         value: selectedBlockLabel,
         onChange: () => {

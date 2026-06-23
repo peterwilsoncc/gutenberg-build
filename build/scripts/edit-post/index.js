@@ -10387,8 +10387,7 @@ var wp;
                   value: title,
                   onChange: setTitle,
                   placeholder: (0, import_i18n4.__)("My pattern"),
-                  className: "patterns-create-modal__name-input",
-                  __next40pxDefaultSize: true
+                  className: "patterns-create-modal__name-input"
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(

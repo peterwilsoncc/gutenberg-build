@@ -21278,7 +21278,6 @@ var wp;
               value: field.getValue({ item: data }) || "",
               placeholder: (0, import_i18n23.__)("Use a secure password"),
               type: "text",
-              __next40pxDefaultSize: true,
               maxLength: 255
             }
           ) })
@@ -22333,7 +22332,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
           import_components15.TextControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n50.__)("Name"),
             value: title,
             onChange: setTitle,
@@ -23756,7 +23754,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
             import_components20.TextControl,
             {
-              __next40pxDefaultSize: true,
               label: (0, import_i18n59.__)("Name"),
               value: title,
               onChange: setTitle,
@@ -78357,7 +78354,6 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
             import_components175.TextControl,
             {
-              __next40pxDefaultSize: true,
               label: (0, import_i18n220.__)("Name"),
               value: title,
               onChange: setTitle,
@@ -81362,7 +81358,6 @@ If there's a particular need for this, please submit a feature request at https:
             placeholder: (0, import_i18n246.__)("Use a secure password"),
             type: "text",
             id: `editor-post-visibility__password-input-${instanceId}`,
-            __next40pxDefaultSize: true,
             maxLength: 255
           }
         )
@@ -82253,7 +82248,6 @@ If there's a particular need for this, please submit a feature request at https:
         /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
           import_components212.TextControl,
           {
-            __next40pxDefaultSize: true,
             className: "editor-post-taxonomies__hierarchical-terms-input",
             label: newTermLabel,
             value: formName,
@@ -82794,7 +82788,6 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
             import_components216.TextControl,
             {
-              __next40pxDefaultSize: true,
               className: "post-publish-panel__postpublish-post-address",
               readOnly: true,
               label: (0, import_i18n256.sprintf)(
@@ -83243,7 +83236,6 @@ If there's a particular need for this, please submit a feature request at https:
                           ),
                           type: "text",
                           id: passwordInputId,
-                          __next40pxDefaultSize: true,
                           maxLength: 255
                         }
                       ) })

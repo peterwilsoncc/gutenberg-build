@@ -1266,8 +1266,7 @@ var wp;
               value: title,
               onChange: setTitle,
               placeholder: (0, import_i18n3.__)("My pattern"),
-              className: "patterns-create-modal__name-input",
-              __next40pxDefaultSize: true
+              className: "patterns-create-modal__name-input"
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
@@ -1473,7 +1472,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
             import_components4.TextControl,
             {
-              __next40pxDefaultSize: true,
               label: (0, import_i18n5.__)("Name"),
               value: name,
               onChange: setName,
@@ -1868,7 +1866,6 @@ var wp;
               import_components7.TextControl,
               {
                 ref: textControlRef,
-                __next40pxDefaultSize: true,
                 label: (0, import_i18n8.__)("Name"),
                 value: name,
                 onChange,
@@ -1970,7 +1967,6 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
                 import_components8.TextControl,
                 {
-                  __next40pxDefaultSize: true,
                   value: editedBlockName,
                   label: (0, import_i18n9.__)("Name"),
                   help: (0, import_i18n9.__)(

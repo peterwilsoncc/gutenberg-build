@@ -47204,7 +47204,6 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
                 import_components92.TextControl,
                 {
-                  __next40pxDefaultSize: true,
                   value: editedBlockName ?? blockName,
                   label: (0, import_i18n82.__)("Name"),
                   help: hasOverridesWarning ? (0, import_i18n82.__)(
@@ -57012,7 +57011,6 @@ var wp;
       isCustom && /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
         import_components142.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n125.__)("Custom format"),
           hideLabelFromVision: true,
           help: (0, import_element181.createInterpolateElement)(
@@ -61729,8 +61727,7 @@ var wp;
                       label: (0, import_i18n156.__)("Text"),
                       value: internalControlValue?.title,
                       onChange: setInternalTextInputValue,
-                      onKeyDown: handleSubmitWithEnter,
-                      __next40pxDefaultSize: true
+                      onKeyDown: handleSubmitWithEnter
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
@@ -65197,7 +65194,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
         import_components185.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n170.__)("Link relation"),
           value: rel ?? "",
           onChange: onSetLinkRel,
@@ -65214,7 +65210,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
         import_components185.TextControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n170.__)("Link CSS class"),
           value: linkClass || "",
           onChange: onSetLinkClass
@@ -74442,7 +74437,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
       import_components228.TextControl,
       {
-        __next40pxDefaultSize: true,
         className: "html-anchor-control",
         label: (0, import_i18n207.__)("HTML anchor"),
         help: /* @__PURE__ */ (0, import_jsx_runtime424.jsxs)(import_jsx_runtime424.Fragment, { children: [
@@ -82474,7 +82468,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime470.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime470.jsx)(
       import_components259.TextControl,
       {
-        __next40pxDefaultSize: true,
         autoComplete: "off",
         label: (0, import_i18n232.__)("Additional CSS class(es)"),
         value: className || "",

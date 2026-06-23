@@ -356,7 +356,6 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                   import_components.TextControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n2.__)("Name"),
                     value: title,
                     onChange: setTitle,
