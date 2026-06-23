@@ -1976,7 +1976,7 @@ var wp;
                   onChange: setEditedBlockName
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(Stack, { justify: "end", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(Stack, { gap: "sm", justify: "end", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
                   import_components8.Button,
                   {
