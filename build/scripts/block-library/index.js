@@ -7277,7 +7277,14 @@ var wp;
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)("figure", { ...blockProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(import_components8.Disabled, { isDisabled: !isSingleSelected, children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)("audio", { controls: "controls", src: src ?? temporaryURL }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
+          "audio",
+          {
+            controls: "controls",
+            inert: !isSingleSelected ? "true" : void 0,
+            src: src ?? temporaryURL
+          }
+        ),
         !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(import_components8.Spinner, {}),
         /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
           Caption,
