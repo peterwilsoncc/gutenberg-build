@@ -38,6 +38,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/compose
+  var require_compose = __commonJS({
+    "package-external:@wordpress/compose"(exports, module) {
+      module.exports = window.wp.compose;
+    }
+  });
+
   // vendor-external:react/jsx-runtime
   var require_jsx_runtime = __commonJS({
     "vendor-external:react/jsx-runtime"(exports, module) {
@@ -53,6 +60,7 @@ var wp;
 
   // packages/theme/build-module/theme-provider.mjs
   var import_element3 = __toESM(require_element(), 1);
+  var import_compose = __toESM(require_compose(), 1);
 
   // packages/theme/build-module/context.mjs
   var import_element = __toESM(require_element(), 1);
@@ -4286,24 +4294,7 @@ var wp;
     registerStyle("f4e6e06c6a", ".dba930ea7a9438fd__root{display:contents}");
   }
   var style_default = { "root": "dba930ea7a9438fd__root" };
-  function cssObjectToText(values) {
-    return Object.entries(values).map(([key, value]) => `${key}: ${value};`).join("");
-  }
-  function generateCSSSelector({
-    instanceId,
-    isRoot
-  }) {
-    const rootSel = `[data-wpds-root-provider="true"]`;
-    const instanceIdSel = `[data-wpds-theme-provider-id="${instanceId}"]`;
-    const selectors = [];
-    if (isRoot) {
-      selectors.push(
-        `:root:has(.${style_default.root}${rootSel}${instanceIdSel})`
-      );
-    }
-    selectors.push(`.${style_default.root}.${style_default.root}${instanceIdSel}`);
-    return selectors.join(",");
-  }
+  var rootProviderCountByDocument = /* @__PURE__ */ new WeakMap();
   var ThemeProvider = ({
     children,
     color = {},
@@ -4311,7 +4302,6 @@ var wp;
     cornerRadius,
     isRoot = false
   }) => {
-    const instanceId = (0, import_element3.useId)();
     const { themeProviderStyles, resolvedSettings } = useThemeProviderStyles({
       color,
       cursor,
@@ -4324,22 +4314,67 @@ var wp;
       }),
       [resolvedSettings]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-      themeProviderStyles ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("style", { children: `${generateCSSSelector({
-        instanceId,
-        isRoot
-      })} {${cssObjectToText(themeProviderStyles)}}` }) : null,
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-        "div",
-        {
-          "data-wpds-theme-provider-id": instanceId,
-          "data-wpds-root-provider": isRoot || void 0,
-          "data-wpds-corner-radius": cornerRadiusPreset,
-          className: style_default.root,
-          children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeContext.Provider, { value: contextValue, children })
+    const wrapperRef = (0, import_element3.useRef)(null);
+    (0, import_compose.useIsomorphicLayoutEffect)(() => {
+      if (!isRoot) {
+        return;
+      }
+      const doc = wrapperRef.current?.ownerDocument;
+      if (!doc) {
+        return;
+      }
+      const root = doc.documentElement;
+      if (true) {
+        const active = rootProviderCountByDocument.get(doc) ?? 0;
+        if (active > 0) {
+          console.warn(
+            "ThemeProvider: More than one root provider (`isRoot`) is mounted on the same document. Their forwarded document-level styles conflict, and unmounting one can reset the others. Render a single root provider per document."
+          );
         }
-      )
-    ] });
+        rootProviderCountByDocument.set(doc, active + 1);
+      }
+      const previous = /* @__PURE__ */ new Map();
+      const applied = [];
+      for (const [rawKey, rawValue] of Object.entries(
+        themeProviderStyles
+      )) {
+        if (!rawKey.startsWith("--") || rawValue === null || rawValue === void 0) {
+          continue;
+        }
+        previous.set(rawKey, root.style.getPropertyValue(rawKey));
+        root.style.setProperty(rawKey, String(rawValue));
+        applied.push(rawKey);
+      }
+      return () => {
+        if (true) {
+          const active = rootProviderCountByDocument.get(doc) ?? 1;
+          if (active <= 1) {
+            rootProviderCountByDocument.delete(doc);
+          } else {
+            rootProviderCountByDocument.set(doc, active - 1);
+          }
+        }
+        for (const key of applied) {
+          const prev = previous.get(key);
+          if (prev) {
+            root.style.setProperty(key, prev);
+          } else {
+            root.style.removeProperty(key);
+          }
+        }
+      };
+    }, [isRoot, themeProviderStyles]);
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      "div",
+      {
+        ref: wrapperRef,
+        "data-wpds-root-provider": isRoot || void 0,
+        "data-wpds-corner-radius": cornerRadiusPreset,
+        className: style_default.root,
+        style: themeProviderStyles,
+        children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeContext.Provider, { value: contextValue, children })
+      }
+    );
   };
   return __toCommonJS(index_exports);
 })();
