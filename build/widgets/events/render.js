@@ -35755,7 +35755,7 @@ var import_i18n49 = __toESM(require_i18n());
 
 // widgets/events/components/location-picker/location-picker.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle32("46af197bf6", "._6c0e74a3d3d754d1__locationInput{flex:1;min-inline-size:calc(var(--wpds-dimension-base, 4px)*30)}");
+  registerStyle32("278b6f4aa5", "._6c0e74a3d3d754d1__locationInput{flex:1;min-inline-size:120px}");
 }
 var location_picker_default = { "locationInput": "_6c0e74a3d3d754d1__locationInput" };
 

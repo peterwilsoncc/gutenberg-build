@@ -1398,7 +1398,7 @@ button.font-library__upload-area {
   flex-grow: 1;
   min-height: 0;
   box-sizing: border-box;
-  scroll-padding-bottom: calc(var(--wpds-dimension-base, 4px) * 16);
+  scroll-padding-bottom: 64px;
   /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
   container: dataviews-wrapper/inline-size;
   display: flex;
@@ -1716,7 +1716,7 @@ button.font-library__upload-area {
 }
 
 .dataviews-filters__search-widget-filter-combobox-list {
-  max-height: calc(var(--wpds-dimension-base, 4px) * 46);
+  max-height: 184px;
   padding: var(--wpds-dimension-padding-xs, 4px);
   overflow: auto;
   border-top: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
@@ -2490,7 +2490,7 @@ button.font-library__upload-area {
 .dataviews-view-grid-infinite-scroll .dataviews-view-grid__fields .dataviews-view-grid__field-value:not(:empty) {
   min-height: var(--wpds-dimension-size-sm, 24px);
   line-height: var(--wpds-typography-line-height-sm, 20px);
-  padding-top: calc(var(--wpds-dimension-base, 4px) / 2);
+  padding-top: calc((var(--wpds-dimension-size-sm, 24px) - var(--wpds-typography-line-height-sm, 20px)) / 2);
 }
 
 .dataviews-view-grid .dataviews-view-grid__fields .dataviews-view-grid__field,
@@ -2766,8 +2766,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-list .dataviews-view-list__media-wrapper {
-  width: calc(var(--wpds-dimension-base, 4px) * 13);
-  height: calc(var(--wpds-dimension-base, 4px) * 13);
+  width: 48px;
+  height: 48px;
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
@@ -2794,7 +2794,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-list .dataviews-view-list__field-wrapper {
-  min-height: calc(var(--wpds-dimension-base, 4px) * 13);
+  min-height: 48px;
   flex-grow: 1;
   min-width: 0;
 }
@@ -2868,12 +2868,12 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__media-wrapper {
-  width: calc(var(--wpds-dimension-base, 4px) * 16);
-  height: calc(var(--wpds-dimension-base, 4px) * 16);
+  width: 64px;
+  height: 64px;
 }
 
 .dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__field-wrapper {
-  min-height: calc(var(--wpds-dimension-base, 4px) * 16);
+  min-height: 64px;
 }
 
 .dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__fields {
@@ -3306,7 +3306,7 @@ div.dataviews-view-list {
 .dataviews-view-picker-grid .dataviews-view-picker-grid__fields .dataviews-view-picker-grid__field-value:not(:empty) {
   min-height: var(--wpds-dimension-size-sm, 24px);
   line-height: var(--wpds-typography-line-height-sm, 20px);
-  padding-top: calc(var(--wpds-dimension-base, 4px) / 2);
+  padding-top: calc((var(--wpds-dimension-size-sm, 24px) - var(--wpds-typography-line-height-sm, 20px)) / 2);
 }
 
 .dataviews-view-picker-grid .dataviews-view-picker-grid__fields .dataviews-view-picker-grid__field {
@@ -3369,7 +3369,7 @@ div.dataviews-view-list {
   font-weight: var(--wpds-typography-font-weight-medium, 499);
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
   margin: 0 0 var(--wpds-dimension-gap-sm, 8px) 0;
-  padding: 0 calc(var(--wpds-dimension-base, 4px) * 12);
+  padding: 0 48px;
 }
 
 .dataviews-view-picker-table {
@@ -3377,7 +3377,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-table .dataviews-view-table__checkbox-column {
-  width: calc(var(--wpds-dimension-base, 4px) * 12);
+  width: 48px;
 }
 
 .dataviews-view-picker-table tbody:focus-visible[aria-activedescendant] {
@@ -3517,8 +3517,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-compact .dataviews-view-activity__item-type-icon {
-  width: calc(var(--wpds-dimension-base, 4px) * 3 - 1px);
-  height: calc(var(--wpds-dimension-base, 4px) * 3 - 1px);
+  width: calc(var(--wpds-dimension-size-3xs, 12px) - 1px);
+  height: calc(var(--wpds-dimension-size-3xs, 12px) - 1px);
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-compact .dataviews-view-activity__item-content {
@@ -3534,8 +3534,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-balanced .dataviews-view-activity__item-type-icon {
-  width: calc(var(--wpds-dimension-base, 4px) * 6 + 1px);
-  height: calc(var(--wpds-dimension-base, 4px) * 6 + 1px);
+  width: calc(var(--wpds-dimension-size-sm, 24px) + 1px);
+  height: calc(var(--wpds-dimension-size-sm, 24px) + 1px);
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-balanced .dataviews-view-activity__item-content {
@@ -3552,8 +3552,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-comfortable .dataviews-view-activity__item-type-icon {
-  width: calc(var(--wpds-dimension-base, 4px) * 8 + 1px);
-  height: calc(var(--wpds-dimension-base, 4px) * 8 + 1px);
+  width: calc(var(--wpds-dimension-size-md, 32px) + 1px);
+  height: calc(var(--wpds-dimension-size-md, 32px) + 1px);
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-comfortable .dataviews-view-activity__item-content {
@@ -3562,8 +3562,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-activity .dataviews-view-activity__item.is-comfortable .dataviews-view-activity__item-bullet, .dataviews-view-activity .dataviews-view-activity__item.is-balanced .dataviews-view-activity__item-bullet {
-  width: calc(var(--wpds-dimension-base, 4px) * 2 + 1px);
-  height: calc(var(--wpds-dimension-base, 4px) * 2 + 1px);
+  width: calc(var(--wpds-dimension-size-4xs, 8px) + 1px);
+  height: calc(var(--wpds-dimension-size-4xs, 8px) + 1px);
   position: relative;
   top: 50%;
   transform: translateY(-50%);
@@ -3661,8 +3661,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-activity .dataviews-view-picker-activity__item.is-compact .dataviews-view-picker-activity__item-type-icon {
-  width: calc(var(--wpds-dimension-base, 4px) * 3 - 1px);
-  height: calc(var(--wpds-dimension-base, 4px) * 3 - 1px);
+  width: calc(var(--wpds-dimension-size-3xs, 12px) - 1px);
+  height: calc(var(--wpds-dimension-size-3xs, 12px) - 1px);
 }
 
 .dataviews-view-picker-activity .dataviews-view-picker-activity__item.is-compact .dataviews-view-picker-activity__item-content {
@@ -3678,8 +3678,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-activity .dataviews-view-picker-activity__item.is-balanced .dataviews-view-picker-activity__item-type-icon {
-  width: calc(var(--wpds-dimension-base, 4px) * 6 + 1px);
-  height: calc(var(--wpds-dimension-base, 4px) * 6 + 1px);
+  width: calc(var(--wpds-dimension-size-sm, 24px) + 1px);
+  height: calc(var(--wpds-dimension-size-sm, 24px) + 1px);
 }
 
 .dataviews-view-picker-activity .dataviews-view-picker-activity__item.is-balanced .dataviews-view-picker-activity__item-content {
@@ -3696,8 +3696,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-activity .dataviews-view-picker-activity__item.is-comfortable .dataviews-view-picker-activity__item-type-icon {
-  width: calc(var(--wpds-dimension-base, 4px) * 8 + 1px);
-  height: calc(var(--wpds-dimension-base, 4px) * 8 + 1px);
+  width: calc(var(--wpds-dimension-size-md, 32px) + 1px);
+  height: calc(var(--wpds-dimension-size-md, 32px) + 1px);
 }
 
 .dataviews-view-picker-activity .dataviews-view-picker-activity__item.is-comfortable .dataviews-view-picker-activity__item-content {
@@ -3706,8 +3706,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-activity .dataviews-view-picker-activity__item.is-comfortable .dataviews-view-picker-activity__item-bullet, .dataviews-view-picker-activity .dataviews-view-picker-activity__item.is-balanced .dataviews-view-picker-activity__item-bullet {
-  width: calc(var(--wpds-dimension-base, 4px) * 2 + 1px);
-  height: calc(var(--wpds-dimension-base, 4px) * 2 + 1px);
+  width: calc(var(--wpds-dimension-size-4xs, 8px) + 1px);
+  height: calc(var(--wpds-dimension-size-4xs, 8px) + 1px);
   position: relative;
   top: 50%;
   transform: translateY(-50%);
