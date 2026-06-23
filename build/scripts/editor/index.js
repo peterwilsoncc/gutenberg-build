@@ -91207,6 +91207,62 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_FORM = { layout: { type: "panel" }, fields: [] };
   var VIEW_CONFIG_FIELDS = ["form"];
+  function useInspectorPanelVisibility(form) {
+    const {
+      isPostStatusRemoved,
+      featuredImageEnabled,
+      excerptEnabled,
+      discussionEnabled,
+      pageAttributesEnabled
+    } = (0, import_data234.useSelect)((select7) => {
+      const { isEditorPanelRemoved: isEditorPanelRemoved2, isEditorPanelEnabled: isEditorPanelEnabled2 } = select7(store);
+      return {
+        isPostStatusRemoved: isEditorPanelRemoved2("post-status"),
+        featuredImageEnabled: isEditorPanelEnabled2("featured-image"),
+        excerptEnabled: isEditorPanelEnabled2("post-excerpt"),
+        discussionEnabled: isEditorPanelEnabled2("discussion-panel"),
+        pageAttributesEnabled: isEditorPanelEnabled2("page-attributes")
+      };
+    }, []);
+    const visibleForm = (0, import_element304.useMemo)(() => {
+      if (!form.fields?.length) {
+        return form;
+      }
+      const visibilityById = {
+        featured_media: featuredImageEnabled,
+        excerpt: excerptEnabled,
+        "post-content-info": true,
+        discussion: discussionEnabled && !isPostStatusRemoved,
+        parent: pageAttributesEnabled && !isPostStatusRemoved
+      };
+      const isFieldVisible = (id) => id in visibilityById ? visibilityById[id] : !isPostStatusRemoved;
+      const filterFields = (fields2) => fields2.reduce((acc, field) => {
+        const id = typeof field === "string" ? field : field.id;
+        if (!isFieldVisible(id)) {
+          return acc;
+        }
+        if (typeof field !== "string" && Array.isArray(field.children)) {
+          const children = filterFields(field.children);
+          if (!children.length) {
+            return acc;
+          }
+          acc.push({ ...field, children });
+          return acc;
+        }
+        acc.push(field);
+        return acc;
+      }, []);
+      return { ...form, fields: filterFields(form.fields) };
+    }, [
+      form,
+      isPostStatusRemoved,
+      featuredImageEnabled,
+      excerptEnabled,
+      discussionEnabled,
+      pageAttributesEnabled
+    ]);
+    return visibleForm;
+  }
   var ENTITIES = {
     wp_template: {
       root_site: {
@@ -91237,11 +91293,12 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function DataFormPostSummary({ onActionPerformed }) {
-    const { postType: postType2, postId: postId2 } = (0, import_data234.useSelect)((select7) => {
-      const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select7(store);
+    const { postType: postType2, postId: postId2, isPostStatusRemoved } = (0, import_data234.useSelect)((select7) => {
+      const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2, isEditorPanelRemoved: isEditorPanelRemoved2 } = select7(store);
       return {
         postType: getCurrentPostType2(),
-        postId: getCurrentPostId2()
+        postId: getCurrentPostId2(),
+        isPostStatusRemoved: isEditorPanelRemoved2("post-status")
       };
     }, []);
     const { form: formConfig } = useViewConfig({
@@ -91249,7 +91306,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: postType2,
       fields: VIEW_CONFIG_FIELDS
     });
-    const form = formConfig ?? EMPTY_FORM;
+    const form = useInspectorPanelVisibility(formConfig ?? EMPTY_FORM);
     const record = (0, import_data234.useSelect)(
       (select7) => {
         if (!postType2 || !postId2) {
@@ -91410,7 +91467,7 @@ If there's a particular need for this, please submit a feature request at https:
           onChange
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(PostTrash, { onActionPerformed })
+      !isPostStatusRemoved && /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(PostTrash, { onActionPerformed })
     ] }) });
   }
 
