@@ -33634,7 +33634,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n30 = __toESM(require_i18n(), 1);
   var import_warning5 = __toESM(require_warning(), 1);
 
-  // packages/components/build-module/box-control/input-control.mjs
+  // packages/components/build-module/box-control/box-input-control.mjs
   var import_compose37 = __toESM(require_compose(), 1);
   var import_i18n28 = __toESM(require_i18n(), 1);
   var import_element90 = __toESM(require_element(), 1);
@@ -34081,7 +34081,7 @@ This message will only show in development mode. It won't appear in production. 
     label: "FlexedRangeControl"
   })("width:100%;margin-inline-end:", space(2), ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJveC1jb250cm9sLXN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFvQ3dEIiwiZmlsZSI6ImJveC1jb250cm9sLXN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBCb3hDb250cm9sSWNvbiBmcm9tICcuLi9pY29uJztcbmltcG9ydCBCdXR0b24gZnJvbSAnLi4vLi4vYnV0dG9uJztcbmltcG9ydCB7IEhTdGFjayB9IGZyb20gJy4uLy4uL2gtc3RhY2snO1xuaW1wb3J0IFJhbmdlQ29udHJvbCBmcm9tICcuLi8uLi9yYW5nZS1jb250cm9sJztcbmltcG9ydCBVbml0Q29udHJvbCBmcm9tICcuLi8uLi91bml0LWNvbnRyb2wnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi8uLi91dGlscy9zcGFjZSc7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRVbml0Q29udHJvbCA9IHN0eWxlZCggVW5pdENvbnRyb2wgKWBcblx0bWF4LXdpZHRoOiA5MHB4O1xuYDtcblxuZXhwb3J0IGNvbnN0IElucHV0V3JhcHBlciA9IHN0eWxlZCggSFN0YWNrIClgXG5cdGdyaWQtY29sdW1uOiAxIC8gc3BhbiAzO1xuYDtcblxuZXhwb3J0IGNvbnN0IFJlc2V0QnV0dG9uID0gc3R5bGVkKCBCdXR0b24gKWBcblx0Z3JpZC1hcmVhOiAxIC8gMjtcblx0anVzdGlmeS1zZWxmOiBlbmQ7XG5gO1xuXG5leHBvcnQgY29uc3QgTGlua2VkQnV0dG9uV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdGdyaWQtYXJlYTogMSAvIDM7XG5cdGp1c3RpZnktc2VsZjogZW5kO1xuYDtcblxuZXhwb3J0IGNvbnN0IEZsZXhlZEJveENvbnRyb2xJY29uID0gc3R5bGVkKCBCb3hDb250cm9sSWNvbiApYFxuXHRmbGV4OiAwIDAgYXV0bztcbmA7XG5cbmV4cG9ydCBjb25zdCBGbGV4ZWRSYW5nZUNvbnRyb2wgPSBzdHlsZWQoIFJhbmdlQ29udHJvbCApYFxuXHR3aWR0aDogMTAwJTtcblx0bWFyZ2luLWlubGluZS1lbmQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG4iXX0= */"));
 
-  // packages/components/build-module/box-control/input-control.mjs
+  // packages/components/build-module/box-control/box-input-control.mjs
   var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
   var noop8 = () => {
   };
@@ -34120,7 +34120,6 @@ This message will only show in development mode. It won't appear in production. 
     return modifiedSides.filter((s3) => allowedSides.has(s3));
   }
   function BoxInputControl({
-    __next40pxDefaultSize,
     onChange = noop8,
     onFocus = noop8,
     values,
@@ -34220,7 +34219,7 @@ This message will only show in development mode. It won't appear in production. 
             ...props,
             min: min3,
             __shouldNotWarnDeprecated36pxSize: true,
-            __next40pxDefaultSize,
+            __next40pxDefaultSize: true,
             className: "component-box-control__unit-control",
             id: inputId,
             isPressEnterToChange: true,
@@ -34234,7 +34233,7 @@ This message will only show in development mode. It won't appear in production. 
             hideLabelFromVision: true
           })
         }), /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(FlexedRangeControl, {
-          __next40pxDefaultSize,
+          __next40pxDefaultSize: true,
           __shouldNotWarnDeprecated36pxSize: true,
           "aria-controls": inputId,
           label: LABELS[side],
@@ -34308,7 +34307,6 @@ This message will only show in development mode. It won't appear in production. 
     return idProp || instanceId;
   }
   function BoxControl({
-    __next40pxDefaultSize = false,
     id: idProp,
     inputProps = defaultInputProps,
     onChange = noop9,
@@ -34365,15 +34363,9 @@ This message will only show in development mode. It won't appear in production. 
       setSelectedUnits,
       sides: sides3,
       values: inputValues,
-      __next40pxDefaultSize,
       presets,
       presetKey
     };
-    maybeWarnDeprecated36pxSize({
-      componentName: "BoxControl",
-      __next40pxDefaultSize,
-      size: void 0
-    });
     const sidesToRender = getAllowedSides(sides3);
     if (presets && !presetKey || !presets && presetKey) {
       const definedProp = presets ? "presets" : "presetKey";
@@ -34399,21 +34391,13 @@ This message will only show in development mode. It won't appear in production. 
           onClick: toggleLinked,
           isLinked
         })
-      }), !isLinked && splitOnAxis && ["vertical", "horizontal"].map((axis) => (
-        // Disable reason: the parent component is handling the __next40pxDefaultSize prop
-        // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(BoxInputControl, {
-          side: axis,
-          ...inputControlProps
-        }, axis)
-      )), !isLinked && !splitOnAxis && Array.from(sidesToRender).map((axis) => (
-        // Disable reason: the parent component is handling the __next40pxDefaultSize prop
-        // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(BoxInputControl, {
-          side: axis,
-          ...inputControlProps
-        }, axis)
-      )), allowReset && /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(ResetButton, {
+      }), !isLinked && splitOnAxis && ["vertical", "horizontal"].map((axis) => /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(BoxInputControl, {
+        side: axis,
+        ...inputControlProps
+      }, axis)), !isLinked && !splitOnAxis && Array.from(sidesToRender).map((axis) => /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(BoxInputControl, {
+        side: axis,
+        ...inputControlProps
+      }, axis)), allowReset && /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(ResetButton, {
         className: "component-box-control__reset-button",
         variant: "secondary",
         size: "small",

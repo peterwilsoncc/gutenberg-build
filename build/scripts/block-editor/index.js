@@ -69032,7 +69032,6 @@ var wp;
                 !showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
                   import_components203.BoxControl,
                   {
-                    __next40pxDefaultSize: true,
                     values: paddingValues,
                     onChange: setPaddingValues,
                     label: (0, import_i18n189.__)("Padding"),
@@ -69077,7 +69076,6 @@ var wp;
                 !showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
                   import_components203.BoxControl,
                   {
-                    __next40pxDefaultSize: true,
                     values: marginValues,
                     onChange: setMarginValues,
                     inputProps: {
@@ -69134,7 +69132,6 @@ var wp;
                 !showSpacingPresetsControl && (isAxialGap ? /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
                   import_components203.BoxControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n189.__)("Block spacing"),
                     min: 0,
                     onChange: setGapValues,
