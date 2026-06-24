@@ -2769,15 +2769,11 @@ div.dataviews-view-list {
   position: relative;
   z-index: 1;
   cursor: help;
-  fill: var(--wpds-color-foreground-content-error-weak, #cc1818);
+  color: var(--wpds-color-foreground-content-error-weak, #cc1818);
   display: inline-flex;
   flex-direction: row;
   align-items: center;
   gap: var(--wpds-dimension-gap-xs, 4px);
-}
-
-.dataforms-layouts-panel__field-label-error-content svg {
-  fill: currentColor;
 }
 
 .dataforms-layouts-panel__field-control {
