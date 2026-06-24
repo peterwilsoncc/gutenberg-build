@@ -46107,7 +46107,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/query-controls/author-select.mjs
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
   function AuthorSelect({
-    __next40pxDefaultSize,
     label,
     noOptionLabel,
     authorList,
@@ -46124,7 +46123,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onChange: onChangeProp,
       tree: termsTree,
       selectedId: selectedAuthorId !== void 0 ? String(selectedAuthorId) : void 0,
-      __next40pxDefaultSize
+      __next40pxDefaultSize: true
     });
   }
 
@@ -46132,7 +46131,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element163 = __toESM(require_element(), 1);
   var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
   function CategorySelect({
-    __next40pxDefaultSize,
     label,
     noOptionLabel,
     categoriesList,
@@ -46150,7 +46148,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       tree: termsTree,
       selectedId: selectedCategoryId !== void 0 ? String(selectedCategoryId) : void 0,
       ...props,
-      __next40pxDefaultSize
+      __next40pxDefaultSize: true
     });
   }
 
@@ -46218,7 +46216,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
       }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(CategorySelect, {
-        __next40pxDefaultSize: true,
         categoriesList: props.categoriesList,
         label: (0, import_i18n64.__)("Category"),
         noOptionLabel: (0, import_i18n64._x)("All", "categories"),
@@ -46239,7 +46236,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         onChange: props.onCategoryChange,
         maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
       }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(AuthorSelect, {
-        __next40pxDefaultSize: true,
         authorList,
         label: (0, import_i18n64.__)("Author"),
         noOptionLabel: (0, import_i18n64._x)("All", "authors"),
