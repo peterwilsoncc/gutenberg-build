@@ -43102,10 +43102,8 @@ This message will only show in development mode. It won't appear in production. 
   };
   var FontSizePickerSelect = (props) => {
     const {
-      __next40pxDefaultSize,
       fontSizes,
       value,
-      size: size3,
       valueMode = "literal",
       onChange
     } = props;
@@ -43131,8 +43129,7 @@ This message will only show in development mode. It won't appear in production. 
       return options2.find((option) => option.value === value) ?? DEFAULT_OPTION;
     }, [value, valueMode, options2]);
     return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(StyledCustomSelectControl, {
-      __next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: true,
+      __next40pxDefaultSize: true,
       className: "components-font-size-picker__select",
       label: (0, import_i18n52.__)("Font size"),
       hideLabelFromVision: true,
@@ -43149,8 +43146,7 @@ This message will only show in development mode. It won't appear in production. 
       }) => {
         const matchingFontSize = selectedItem.key === "default" ? void 0 : fontSizes.find((fontSize) => fontSize.slug === selectedItem.key);
         onChange(selectedItem.value, matchingFontSize);
-      },
-      size: size3
+      }
     });
   };
   var font_size_picker_select_default = FontSizePickerSelect;
@@ -43181,8 +43177,6 @@ This message will only show in development mode. It won't appear in production. 
       fontSizes,
       value,
       valueMode = "literal",
-      __next40pxDefaultSize,
-      size: size3,
       onChange
     } = props;
     const currentValue = (() => {
@@ -43200,8 +43194,7 @@ This message will only show in development mode. It won't appear in production. 
       return fontSizeBySize?.slug;
     })();
     return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(component_default12, {
-      __next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: true,
+      __next40pxDefaultSize: true,
       label: (0, import_i18n54.__)("Font size"),
       hideLabelFromVision: true,
       value: currentValue,
@@ -43216,7 +43209,6 @@ This message will only show in development mode. It won't appear in production. 
         }
       },
       isBlock: true,
-      size: size3,
       children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(component_default14, {
         value: fontSize.slug,
         label: T_SHIRT_ABBREVIATIONS[index2],
@@ -43233,12 +43225,10 @@ This message will only show in development mode. It won't appear in production. 
   var MAX_TOGGLE_GROUP_SIZES = 5;
   var UnforwardedFontSizePicker = (props, ref) => {
     const {
-      __next40pxDefaultSize = false,
       fallbackFontSize,
       fontSizes = [],
       disableCustomFontSizes = false,
       onChange,
-      size: size3 = "default",
       units: unitsProp = DEFAULT_UNITS,
       value,
       valueMode = "literal",
@@ -43274,11 +43264,6 @@ This message will only show in development mode. It won't appear in production. 
     const [valueQuantity, valueUnit] = parseQuantityAndUnitFromRawValue(resolvedValueForControls, units);
     const isValueUnitRelative = !!valueUnit && ["em", "rem", "vw", "vh"].includes(valueUnit);
     const isDisabled = value === void 0;
-    maybeWarnDeprecated36pxSize({
-      componentName: "FontSizePicker",
-      __next40pxDefaultSize,
-      size: size3
-    });
     return /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(Container3, {
       ref,
       className: "components-font-size-picker",
@@ -43299,12 +43284,10 @@ This message will only show in development mode. It won't appear in production. 
         })
       }), /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)("div", {
         children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(font_size_picker_select_default, {
-          __next40pxDefaultSize,
           fontSizes,
           value,
           valueMode,
           disableCustomFontSizes,
-          size: size3,
           onChange: (newValue, selectedItem) => {
             if (newValue === void 0) {
               onChange?.(void 0, selectedItem);
@@ -43317,8 +43300,6 @@ This message will only show in development mode. It won't appear in production. 
           fontSizes,
           value,
           valueMode,
-          __next40pxDefaultSize,
-          size: size3,
           onChange: (newValue, selectedItem) => {
             if (newValue === void 0) {
               onChange?.(void 0, selectedItem);
@@ -43331,8 +43312,7 @@ This message will only show in development mode. It won't appear in production. 
           children: [/* @__PURE__ */ (0, import_jsx_runtime214.jsx)(component_default4, {
             isBlock: true,
             children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(unit_control_default, {
-              __next40pxDefaultSize,
-              __shouldNotWarnDeprecated36pxSize: true,
+              __next40pxDefaultSize: true,
               label: (0, import_i18n55.__)("Font size"),
               labelPosition: "top",
               hideLabelFromVision: true,
@@ -43345,7 +43325,6 @@ This message will only show in development mode. It won't appear in production. 
                   onChange?.(hasUnits2 ? newValue : parseInt(newValue, 10));
                 }
               },
-              size: size3,
               units: hasUnits2 ? units : [],
               min: 0
             })
@@ -43355,8 +43334,7 @@ This message will only show in development mode. It won't appear in production. 
               marginX: 2,
               marginBottom: 0,
               children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(range_control_default, {
-                __next40pxDefaultSize,
-                __shouldNotWarnDeprecated36pxSize: true,
+                __next40pxDefaultSize: true,
                 className: "components-font-size-picker__custom-input",
                 label: (0, import_i18n55.__)("Font size"),
                 hideLabelFromVision: true,
@@ -43387,7 +43365,7 @@ This message will only show in development mode. It won't appear in production. 
               },
               variant: "secondary",
               __next40pxDefaultSize: true,
-              size: size3 === "__unstable-large" || props.__next40pxDefaultSize ? "default" : "small",
+              size: "default",
               children: (0, import_i18n55.__)("Reset")
             })
           })]

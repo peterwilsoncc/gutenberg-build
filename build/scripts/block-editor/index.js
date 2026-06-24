@@ -15261,8 +15261,7 @@ var wp;
       {
         ...props,
         fontSizes,
-        disableCustomFontSizes: !customFontSize,
-        __next40pxDefaultSize: true
+        disableCustomFontSizes: !customFontSize
       }
     );
   }
@@ -67938,8 +67937,7 @@ var wp;
                   fontSizes: mergedFontSizes,
                   disableCustomFontSizes,
                   withReset: false,
-                  withSlider: true,
-                  size: "__unstable-large"
+                  withSlider: true
                 }
               )
             }
