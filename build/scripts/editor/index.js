@@ -24128,6 +24128,7 @@ var wp;
         post: 0,
         _embedded: { ...data?._embedded, "wp:attached-to": void 0 }
       });
+      setValue(null);
       setOptions([]);
     };
     const onValueChange = async (filterValue) => {
@@ -24184,7 +24185,7 @@ var wp;
         }
       }
     };
-    const help = !!data.post ? (0, import_element58.createInterpolateElement)(
+    const help = (0, import_element58.createInterpolateElement)(
       (0, import_i18n64.__)(
         "Search for a post or page to attach this media to or <button>detach current</button>."
       ),
@@ -24195,11 +24196,12 @@ var wp;
             __next40pxDefaultSize: true,
             onClick: handleDetach,
             variant: "link",
-            accessibleWhenDisabled: true
+            accessibleWhenDisabled: true,
+            disabled: !value
           }
         )
       }
-    ) : (0, import_i18n64.__)("Search for a post or page to attach this media to.");
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
       import_components22.ComboboxControl,
       {

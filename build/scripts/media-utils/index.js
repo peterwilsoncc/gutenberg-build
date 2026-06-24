@@ -26310,6 +26310,7 @@ If there's a particular need for this, please submit a feature request at https:
         post: 0,
         _embedded: { ...data?._embedded, "wp:attached-to": void 0 }
       });
+      setValue(null);
       setOptions([]);
     };
     const onValueChange = async (filterValue) => {
@@ -26366,7 +26367,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     };
-    const help = !!data.post ? (0, import_element76.createInterpolateElement)(
+    const help = (0, import_element76.createInterpolateElement)(
       (0, import_i18n52.__)(
         "Search for a post or page to attach this media to or <button>detach current</button>."
       ),
@@ -26377,11 +26378,12 @@ If there's a particular need for this, please submit a feature request at https:
             __next40pxDefaultSize: true,
             onClick: handleDetach,
             variant: "link",
-            accessibleWhenDisabled: true
+            accessibleWhenDisabled: true,
+            disabled: !value
           }
         )
       }
-    ) : (0, import_i18n52.__)("Search for a post or page to attach this media to.");
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
       import_components47.ComboboxControl,
       {
