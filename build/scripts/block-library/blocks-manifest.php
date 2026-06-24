@@ -5119,9 +5119,6 @@ return array(
 			'core/playlist-track'
 		),
 		'attributes' => array(
-			'currentTrack' => array(
-				'type' => 'string'
-			),
 			'type' => array(
 				'type' => 'string',
 				'default' => 'audio'
@@ -5155,8 +5152,7 @@ return array(
 			)
 		),
 		'providesContext' => array(
-			'showArtists' => 'showArtists',
-			'currentTrack' => 'currentTrack'
+			'showArtists' => 'showArtists'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -5234,8 +5230,7 @@ return array(
 		),
 		'textdomain' => 'default',
 		'usesContext' => array(
-			'showArtists',
-			'currentTrack'
+			'showArtists'
 		),
 		'attributes' => array(
 			'blob' => array(
@@ -5244,9 +5239,6 @@ return array(
 			),
 			'id' => array(
 				'type' => 'number'
-			),
-			'uniqueId' => array(
-				'type' => 'string'
 			),
 			'src' => array(
 				'type' => 'string'
