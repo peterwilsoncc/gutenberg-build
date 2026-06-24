@@ -16334,6 +16334,28 @@ var wp;
     horizontal: "center",
     vertical: "top"
   };
+  var verticalAlignmentOptions = {
+    top: {
+      icon: justify_top_default,
+      label: (0, import_i18n12._x)("Align top", "Block vertical alignment setting")
+    },
+    center: {
+      icon: justify_center_vertical_default,
+      label: (0, import_i18n12._x)("Align middle", "Block vertical alignment setting")
+    },
+    bottom: {
+      icon: justify_bottom_default,
+      label: (0, import_i18n12._x)("Align bottom", "Block vertical alignment setting")
+    },
+    stretch: {
+      icon: justify_stretch_vertical_default,
+      label: (0, import_i18n12._x)("Stretch to fill", "Block vertical alignment setting")
+    },
+    "space-between": {
+      icon: justify_space_between_vertical_default,
+      label: (0, import_i18n12._x)("Space between", "Block vertical alignment setting")
+    }
+  };
   var flexWrapOptions = ["wrap", "nowrap"];
   var flex_default = {
     name: "flex",
@@ -16348,16 +16370,30 @@ var wp;
       const {
         allowOrientation = true,
         allowJustification = true,
+        allowVerticalAlignment = true,
         allowWrap = true
       } = layoutBlockSupport;
       const hasLayoutValue = (key, defaultValue) => (layout?.[key] ?? defaultValue) !== (resetLayout?.[key] ?? defaultValue);
       const hasJustificationValue = () => hasLayoutValue("justifyContent", "left");
+      const hasVerticalAlignmentValue = () => hasLayoutValue(
+        "verticalAlignment",
+        getDefaultVerticalAlignment(layout)
+      );
       const hasOrientationValue = () => hasLayoutValue("orientation", "horizontal");
       const hasWrapValue = () => hasLayoutValue("flexWrap", "wrap");
       const resetJustification = () => onChange(
         cleanEmptyObject({
           ...layout,
           justifyContent: resetLayout?.justifyContent
+        })
+      );
+      const resetVerticalAlignment = () => onChange(
+        cleanEmptyObject({
+          ...layout,
+          verticalAlignment: getCompatibleVerticalAlignment(
+            resetLayout?.verticalAlignment,
+            layout?.orientation
+          )
         })
       );
       const resetOrientation = () => {
@@ -16425,6 +16461,22 @@ var wp;
             ]
           }
         ),
+        allowVerticalAlignment && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+          import_components11.__experimentalToolsPanelItem,
+          {
+            label: (0, import_i18n12.__)("Alignment"),
+            hasValue: hasVerticalAlignmentValue,
+            onDeselect: resetVerticalAlignment,
+            panelId: clientId,
+            children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+              FlexLayoutVerticalAlignmentControl,
+              {
+                layout,
+                onChange
+              }
+            )
+          }
+        ),
         allowWrap && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
           import_components11.__experimentalToolsPanelItem,
           {
@@ -16465,7 +16517,8 @@ var wp;
           FlexLayoutVerticalAlignmentControl,
           {
             layout,
-            onChange
+            onChange,
+            isToolbar: true
           }
         )
       ] });
@@ -16545,22 +16598,62 @@ var wp;
       return [];
     }
   };
-  function FlexLayoutVerticalAlignmentControl({ layout, onChange }) {
+  function getDefaultVerticalAlignment({ orientation = "horizontal" } = {}) {
+    return orientation === "horizontal" ? defaultAlignments.horizontal : defaultAlignments.vertical;
+  }
+  function getCompatibleVerticalAlignment(verticalAlignment, orientation) {
+    if (orientation === "horizontal" && verticalAlignment === "space-between" || orientation === "vertical" && verticalAlignment === "stretch") {
+      return void 0;
+    }
+    return verticalAlignment;
+  }
+  function getVerticalAlignmentControls(orientation) {
+    return orientation === "horizontal" ? ["top", "center", "bottom", "stretch"] : ["top", "center", "bottom", "space-between"];
+  }
+  function FlexLayoutVerticalAlignmentControl({
+    layout,
+    onChange,
+    isToolbar = false
+  }) {
     const { orientation = "horizontal" } = layout;
-    const defaultVerticalAlignment = orientation === "horizontal" ? defaultAlignments.horizontal : defaultAlignments.vertical;
-    const { verticalAlignment = defaultVerticalAlignment } = layout;
+    const { verticalAlignment = getDefaultVerticalAlignment(layout) } = layout;
     const onVerticalAlignmentChange = (value) => {
       onChange({
         ...layout,
         verticalAlignment: value
       });
     };
+    const controls = getVerticalAlignmentControls(orientation);
+    if (isToolbar) {
+      return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+        BlockVerticalAlignmentControl,
+        {
+          onChange: onVerticalAlignmentChange,
+          value: verticalAlignment,
+          controls
+        }
+      );
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
-      BlockVerticalAlignmentControl,
+      import_components11.__experimentalToggleGroupControl,
       {
+        __next40pxDefaultSize: true,
+        label: (0, import_i18n12.__)("Alignment"),
         onChange: onVerticalAlignmentChange,
         value: verticalAlignment,
-        controls: orientation === "horizontal" ? ["top", "center", "bottom", "stretch"] : ["top", "center", "bottom", "space-between"]
+        className: "block-editor-hooks__flex-layout-alignment-controls",
+        children: controls.map((control) => {
+          const { icon, label } = verticalAlignmentOptions[control];
+          return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+            import_components11.__experimentalToggleGroupControlOptionIcon,
+            {
+              value: control,
+              icon,
+              label
+            },
+            control
+          );
+        })
       }
     );
   }
