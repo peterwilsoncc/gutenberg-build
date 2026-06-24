@@ -32269,7 +32269,6 @@ ${js}
     return syncedAttributes;
   }
   var { openMediaEditorModalKey: openMediaEditorModalKey2 } = unlock(import_block_editor113.privateApis);
-  var ATTACHMENT_EDIT_QUERY = { context: "edit" };
   function getAttachmentFallbackForEmptyBlockMetadata({ alt, caption }) {
     const attachment = {};
     if (!alt) {
@@ -32316,19 +32315,11 @@ ${js}
       };
     }, [alt, caption, id, url]);
     const getCachedAttachmentRecord = (0, import_element46.useCallback)(
-      (attachmentId) => {
-        const { getEditedEntityRecord, getEntityRecord } = registry.select(import_core_data23.store);
-        return getEditedEntityRecord(
-          "postType",
-          "attachment",
-          attachmentId
-        ) || getEntityRecord(
-          "postType",
-          "attachment",
-          attachmentId,
-          ATTACHMENT_EDIT_QUERY
-        ) || getEntityRecord("postType", "attachment", attachmentId);
-      },
+      (attachmentId) => registry.select(import_core_data23.store).getEditedEntityRecord(
+        "postType",
+        "attachment",
+        attachmentId
+      ),
       [registry]
     );
     const resolveAttachmentRecord = (0, import_element46.useCallback)(
@@ -32336,11 +32327,6 @@ ${js}
         const resolveSelect = registry.resolveSelect(import_core_data23.store);
         try {
           return await resolveSelect.getEntityRecord(
-            "postType",
-            "attachment",
-            attachmentId,
-            ATTACHMENT_EDIT_QUERY
-          ) || await resolveSelect.getEntityRecord(
             "postType",
             "attachment",
             attachmentId
@@ -32358,12 +32344,6 @@ ${js}
           "postType",
           "attachment",
           attachmentId
-        ]);
-        invalidateResolution("getEntityRecord", [
-          "postType",
-          "attachment",
-          attachmentId,
-          ATTACHMENT_EDIT_QUERY
         ]);
         return resolveAttachmentRecord(attachmentId);
       },
