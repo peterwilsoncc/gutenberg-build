@@ -56846,12 +56846,12 @@ var wp;
       // The `ColorPalette` must stay at a stable position in the tree whether
       // or not a notice is present. Wrapping it in a `VStack` only when a
       // notice appears remounts it, which resets the custom color picker back
-      // to the swatch view mid-edit. Keep `ColorPalette` last and toggle only
-      // the notice ahead of it; the notice's own bottom margin provides the
-      // spacing the wrapper used to.
+      // to the swatch view mid-edit. Keep `ColorPalette` first and toggle only
+      // the trailing notice after it, so the palette holds a stable index and
+      // the notice sits at the bottom of the popover.
       [TAB_IDS.color]: /* @__PURE__ */ (0, import_jsx_runtime312.jsxs)(import_jsx_runtime312.Fragment, { children: [
-        noticeProps && /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(import_components140.Notice, { isDismissible: false, ...noticeProps }),
-        colorPalette
+        colorPalette,
+        noticeProps && /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(import_components140.Notice, { isDismissible: false, ...noticeProps })
       ] }),
       [TAB_IDS.gradient]: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
         import_components140.GradientPicker,
