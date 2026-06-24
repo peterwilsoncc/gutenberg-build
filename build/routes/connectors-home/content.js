@@ -9652,14 +9652,8 @@ function Root(props) {
   return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(index_parts_exports.Root, { ...props });
 }
 
-// packages/ui/build-module/tooltip/provider.mjs
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
-function Provider({ ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(index_parts_exports.Provider, { ...props });
-}
-
 // packages/ui/build-module/icon-button/icon-button.mjs
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
 function getRuntime9() {
   const globalScope = globalThis;
@@ -9759,13 +9753,13 @@ var IconButton = (0, import_element21.forwardRef)(
     ...restProps
   }, ref) {
     const classes = clsx_default(style_default8["icon-button"], className);
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(Root, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
         Trigger,
         {
           ref,
           disabled: disabled2 && !focusableWhenDisabled,
-          render: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
             Button4,
             {
               ...restProps,
@@ -9777,31 +9771,24 @@ var IconButton = (0, import_element21.forwardRef)(
             }
           ),
           className: classes,
-          children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-            Icon,
-            {
-              icon,
-              size: 24,
-              className: style_default8.icon
-            }
-          )
+          children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Icon, { icon, size: 24, className: style_default8.icon })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(Popup, { positioner, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(Popup, { positioner, children: [
         label,
-        shortcut && /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_jsx_runtime26.Fragment, { children: [
+        shortcut && /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(import_jsx_runtime25.Fragment, { children: [
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { "aria-hidden": "true", children: shortcut.displayShortcut })
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { "aria-hidden": "true", children: shortcut.displayShortcut })
         ] })
       ] })
-    ] }) });
+    ] });
   }
 );
 
 // packages/ui/build-module/link/link.mjs
 var import_element22 = __toESM(require_element(), 1);
 var import_i18n2 = __toESM(require_i18n(), 1);
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
 function getRuntime10() {
   const globalScope = globalThis;
@@ -9922,9 +9909,9 @@ var Link = (0, import_element22.forwardRef)(function Link2({
         className
       ),
       target: openInNewTab ? "_blank" : void 0,
-      children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_jsx_runtime27.Fragment, { children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_jsx_runtime26.Fragment, { children: [
         children,
-        openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
           "span",
           {
             className: style_default9["link-icon"],
@@ -9956,7 +9943,7 @@ __export(notice_exports, {
 // packages/ui/build-module/notice/root.mjs
 var import_element23 = __toESM(require_element(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
 function getRuntime11() {
   const globalScope = globalThis;
@@ -10099,9 +10086,9 @@ var Root2 = (0, import_element23.forwardRef)(function Notice({
     props: mergeProps(
       {
         className: mergedClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(import_jsx_runtime28.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_jsx_runtime27.Fragment, { children: [
           children,
-          iconElement && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+          iconElement && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
             Icon,
             {
               className: style_default10.icon,
@@ -10118,7 +10105,7 @@ var Root2 = (0, import_element23.forwardRef)(function Notice({
 
 // packages/ui/build-module/notice/title.mjs
 var import_element24 = __toESM(require_element(), 1);
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
 function getRuntime12() {
   const globalScope = globalThis;
@@ -10205,7 +10192,7 @@ if (typeof process === "undefined" || true) {
 var style_default11 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var Title = (0, import_element24.forwardRef)(
   function NoticeTitle({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
       Text,
       {
         ref,
@@ -10219,7 +10206,7 @@ var Title = (0, import_element24.forwardRef)(
 
 // packages/ui/build-module/notice/description.mjs
 var import_element25 = __toESM(require_element(), 1);
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
 function getRuntime13() {
   const globalScope = globalThis;
@@ -10306,7 +10293,7 @@ if (typeof process === "undefined" || true) {
 var style_default12 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var Description = (0, import_element25.forwardRef)(
   function NoticeDescription({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
       Text,
       {
         ref,
@@ -10424,7 +10411,7 @@ var Actions = (0, import_element26.forwardRef)(
 // packages/ui/build-module/notice/close-icon.mjs
 var import_element27 = __toESM(require_element(), 1);
 var import_i18n3 = __toESM(require_i18n(), 1);
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
 function getRuntime15() {
   const globalScope = globalThis;
@@ -10511,7 +10498,7 @@ if (typeof process === "undefined" || true) {
 var style_default14 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var CloseIcon = (0, import_element27.forwardRef)(
   function NoticeCloseIcon({ className, icon = close_small_default, label = (0, import_i18n3.__)("Dismiss"), ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
       IconButton,
       {
         ...props,
@@ -10529,7 +10516,7 @@ var CloseIcon = (0, import_element27.forwardRef)(
 
 // packages/ui/build-module/notice/action-button.mjs
 var import_element28 = __toESM(require_element(), 1);
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
 function getRuntime16() {
   const globalScope = globalThis;
@@ -10617,7 +10604,7 @@ var style_default15 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570
 var ActionButton = (0, import_element28.forwardRef)(
   function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
     const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
       Button4,
       {
         ...props,
@@ -10638,7 +10625,7 @@ var ActionButton = (0, import_element28.forwardRef)(
 
 // packages/ui/build-module/notice/action-link.mjs
 var import_element29 = __toESM(require_element(), 1);
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
 function getRuntime17() {
   const globalScope = globalThis;
@@ -10725,14 +10712,14 @@ if (typeof process === "undefined" || true) {
 var style_default16 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var ActionLink = (0, import_element29.forwardRef)(
   function NoticeActionLink({ className, render, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
       Text,
       {
         ref,
         className: clsx_default(style_default16["action-link"], className),
         ...props,
         variant: "body-md",
-        render: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Link, { tone: "neutral", variant: "default", render })
+        render: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(Link, { tone: "neutral", variant: "default", render })
       }
     );
   }
@@ -10740,10 +10727,10 @@ var ActionLink = (0, import_element29.forwardRef)(
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
 var import_element30 = __toESM(require_element(), 1);
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
 var NavigableRegion = (0, import_element30.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
       Tag,
       {
         ref,
@@ -10765,7 +10752,7 @@ var import_components = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
 
 // packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
 function getRuntime18() {
   const globalScope = globalThis;
@@ -10861,8 +10848,8 @@ function Header({
   showSidebarToggle = true
 }) {
   const HeadingTag = `h${headingLevel}`;
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Stack, { direction: "column", className: style_default17.header, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(Stack, { direction: "column", className: style_default17.header, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
       Stack,
       {
         className: style_default17["header-content"],
@@ -10870,15 +10857,15 @@ function Header({
         gap: "sm",
         justify: "space-between",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
               SidebarToggleSlot,
               {
                 bubblesVirtually: true,
                 className: style_default17["sidebar-toggle-slot"]
               }
             ),
-            visual && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+            visual && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
               "div",
               {
                 className: style_default17["header-visual"],
@@ -10886,11 +10873,11 @@ function Header({
                 children: visual
               }
             ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+            title && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
               Text,
               {
                 className: style_default17["header-title"],
-                render: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(HeadingTag, {}),
+                render: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(HeadingTag, {}),
                 variant: "heading-lg",
                 children: title
               }
@@ -10898,7 +10885,7 @@ function Header({
             breadcrumbs,
             badges
           ] }),
-          actions && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+          actions && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
             Stack,
             {
               align: "center",
@@ -10911,10 +10898,10 @@ function Header({
         ]
       }
     ),
-    subTitle && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+    subTitle && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
       Text,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("p", {}),
         variant: "body-md",
         className: style_default17["header-subtitle"],
         children: subTitle
@@ -10924,7 +10911,7 @@ function Header({
 }
 
 // packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
 function getRuntime19() {
   const globalScope = globalThis;
@@ -11025,8 +11012,8 @@ function Page({
 }) {
   const classes = clsx_default(style_default18.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
       Header,
       {
         headingLevel,
@@ -11039,7 +11026,7 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
       "div",
       {
         className: clsx_default(

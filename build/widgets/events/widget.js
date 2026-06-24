@@ -16420,14 +16420,8 @@ function Root(props) {
   return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(index_parts_exports3.Root, { ...props });
 }
 
-// packages/ui/build-module/tooltip/provider.mjs
-var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
-function Provider({ ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(index_parts_exports3.Provider, { ...props });
-}
-
 // packages/ui/build-module/icon-button/icon-button.mjs
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
 function getRuntime8() {
   const globalScope = globalThis;
@@ -16527,13 +16521,13 @@ var IconButton = (0, import_element26.forwardRef)(
     ...restProps
   }, ref) {
     const classes = clsx_default(style_default7["icon-button"], className);
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(Root, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
         Trigger,
         {
           ref,
           disabled: disabled2 && !focusableWhenDisabled,
-          render: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
             Button4,
             {
               ...restProps,
@@ -16545,24 +16539,17 @@ var IconButton = (0, import_element26.forwardRef)(
             }
           ),
           className: classes,
-          children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
-            Icon,
-            {
-              icon,
-              size: 24,
-              className: style_default7.icon
-            }
-          )
+          children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Icon, { icon, size: 24, className: style_default7.icon })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(Popup, { positioner, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(Popup, { positioner, children: [
         label,
-        shortcut && /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(import_jsx_runtime47.Fragment, { children: [
+        shortcut && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(import_jsx_runtime46.Fragment, { children: [
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("span", { "aria-hidden": "true", children: shortcut.displayShortcut })
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", { "aria-hidden": "true", children: shortcut.displayShortcut })
         ] })
       ] })
-    ] }) });
+    ] });
   }
 );
 
@@ -16589,11 +16576,11 @@ __export(autocomplete_exports, {
 // packages/ui/build-module/form/primitives/autocomplete/clear.mjs
 var import_element27 = __toESM(require_element(), 1);
 var import_i18n2 = __toESM(require_i18n(), 1);
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_RENDER = ({
   "aria-label": ariaLabel = (0, import_i18n2.__)("Clear"),
   ...props
-}, { disabled: disabled2 }) => /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+}, { disabled: disabled2 }) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
   IconButton,
   {
     icon: close_small_default,
@@ -16609,7 +16596,7 @@ var DEFAULT_RENDER = ({
 );
 var Clear = (0, import_element27.forwardRef)(
   function Clear2({ render = DEFAULT_RENDER, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
       index_parts_exports.Clear,
       {
         ref,
@@ -16621,17 +16608,17 @@ var Clear = (0, import_element27.forwardRef)(
 );
 
 // packages/ui/build-module/form/primitives/autocomplete/collection.mjs
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 function Collection({
   children,
   ...restProps
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(index_parts_exports.Collection, { ...restProps, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(index_parts_exports.Collection, { ...restProps, children });
 }
 
 // packages/ui/build-module/form/primitives/autocomplete/empty.mjs
 var import_element28 = __toESM(require_element(), 1);
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
 function getRuntime9() {
   const globalScope = globalThis;
@@ -16718,7 +16705,7 @@ if (typeof process === "undefined" || true) {
 var item_popup_default = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "list": "f43dc7c768d7b622__list", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "is-size-compact": "f181b98b0d33282a__is-size-compact", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-icon": "a3adcfd0b73ffd40__item-icon", "empty": "_06c7ff39d2f685b9__empty" };
 var Empty = (0, import_element28.forwardRef)(
   function Empty2({ className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
       index_parts_exports.Empty,
       {
         className: clsx_default(item_popup_default.empty, className),
@@ -16731,7 +16718,7 @@ var Empty = (0, import_element28.forwardRef)(
 
 // packages/ui/build-module/form/primitives/autocomplete/group.mjs
 var import_element29 = __toESM(require_element(), 1);
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
 function getRuntime10() {
   const globalScope = globalThis;
@@ -16818,7 +16805,7 @@ if (typeof process === "undefined" || true) {
 var item_popup_default2 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "list": "f43dc7c768d7b622__list", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "is-size-compact": "f181b98b0d33282a__is-size-compact", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-icon": "a3adcfd0b73ffd40__item-icon", "empty": "_06c7ff39d2f685b9__empty" };
 var Group = (0, import_element29.forwardRef)(
   function Group2({ className, children, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
       index_parts_exports.Group,
       {
         className: clsx_default(item_popup_default2.group, className),
@@ -16832,7 +16819,7 @@ var Group = (0, import_element29.forwardRef)(
 
 // packages/ui/build-module/form/primitives/autocomplete/group-label.mjs
 var import_element30 = __toESM(require_element(), 1);
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
 function getRuntime11() {
   const globalScope = globalThis;
@@ -16918,12 +16905,12 @@ if (typeof process === "undefined" || true) {
 }
 var item_popup_default3 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "list": "f43dc7c768d7b622__list", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "is-size-compact": "f181b98b0d33282a__is-size-compact", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-icon": "a3adcfd0b73ffd40__item-icon", "empty": "_06c7ff39d2f685b9__empty" };
 var GroupLabel = (0, import_element30.forwardRef)(function GroupLabel2({ className, children, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
     Text,
     {
       variant: "heading-sm",
       className: clsx_default(item_popup_default3["group-label"], className),
-      render: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(index_parts_exports.GroupLabel, { ref, ...restProps }),
+      render: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(index_parts_exports.GroupLabel, { ref, ...restProps }),
       children
     }
   );
@@ -16931,9 +16918,9 @@ var GroupLabel = (0, import_element30.forwardRef)(function GroupLabel2({ classNa
 
 // packages/ui/build-module/form/primitives/autocomplete/input-group.mjs
 var import_element31 = __toESM(require_element(), 1);
-var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 var InputGroup = (0, import_element31.forwardRef)(function InputGroup2(props, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(index_parts_exports.InputGroup, { ref, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(index_parts_exports.InputGroup, { ref, ...props });
 });
 
 // packages/ui/build-module/form/primitives/autocomplete/input.mjs
@@ -16944,7 +16931,7 @@ var import_element34 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
 var import_element32 = __toESM(require_element(), 1);
-var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
 function getRuntime12() {
   const globalScope = globalThis;
@@ -17048,7 +17035,7 @@ var InputLayout = (0, import_element32.forwardRef)(
     suffix,
     ...restProps
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
       "div",
       {
         ref,
@@ -17063,7 +17050,7 @@ var InputLayout = (0, import_element32.forwardRef)(
         ),
         ...restProps,
         children: [
-          import_element32.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+          import_element32.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
             "div",
             {
               className: style_default8["slot-wrapper"],
@@ -17072,7 +17059,7 @@ var InputLayout = (0, import_element32.forwardRef)(
             }
           ),
           children,
-          import_element32.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+          import_element32.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
             "div",
             {
               className: style_default8["slot-wrapper"],
@@ -17088,7 +17075,7 @@ var InputLayout = (0, import_element32.forwardRef)(
 
 // packages/ui/build-module/form/primitives/input-layout/slot.mjs
 var import_element33 = __toESM(require_element(), 1);
-var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
 function getRuntime13() {
   const globalScope = globalThis;
@@ -17174,7 +17161,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default9 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
 var InputLayoutSlot = (0, import_element33.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
     "div",
     {
       ref,
@@ -17195,7 +17182,7 @@ var InputLayout3 = Object.assign(InputLayout, {
 });
 
 // packages/ui/build-module/form/primitives/input/input.mjs
-var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
 function getRuntime14() {
   const globalScope = globalThis;
@@ -17289,7 +17276,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default10 = { "input": "_2ae7be2fc1bb17a3__input" };
 var Input3 = (0, import_element34.forwardRef)(function Input22({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
     InputLayout3,
     {
       className: clsx_default(
@@ -17301,7 +17288,7 @@ var Input3 = (0, import_element34.forwardRef)(function Input22({ className, size
       visuallyDisabled: restProps.disabled,
       prefix,
       suffix,
-      children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
         Input,
         {
           ref,
@@ -17314,11 +17301,11 @@ var Input3 = (0, import_element34.forwardRef)(function Input22({ className, size
 });
 
 // packages/ui/build-module/form/primitives/autocomplete/input.mjs
-var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Input3, { ...props });
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Input3, { ...props });
 var Input4 = (0, import_element35.forwardRef)(
   function Input23({ render = DEFAULT_RENDER2, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
       index_parts_exports.Input,
       {
         ref,
@@ -17331,7 +17318,7 @@ var Input4 = (0, import_element35.forwardRef)(
 
 // packages/ui/build-module/form/primitives/autocomplete/item.mjs
 var import_element36 = __toESM(require_element(), 1);
-var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
 function getRuntime15() {
   const globalScope = globalThis;
@@ -17422,7 +17409,7 @@ if (typeof process === "undefined" || true) {
 var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 var Item = (0, import_element36.forwardRef)(
   function Item2({ className, children, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
       index_parts_exports.Item,
       {
         className: clsx_default(
@@ -17440,7 +17427,7 @@ var Item = (0, import_element36.forwardRef)(
 
 // packages/ui/build-module/form/primitives/autocomplete/list.mjs
 var import_element37 = __toESM(require_element(), 1);
-var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
 function getRuntime16() {
   const globalScope = globalThis;
@@ -17527,7 +17514,7 @@ if (typeof process === "undefined" || true) {
 var item_popup_default5 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "list": "f43dc7c768d7b622__list", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "is-size-compact": "f181b98b0d33282a__is-size-compact", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-icon": "a3adcfd0b73ffd40__item-icon", "empty": "_06c7ff39d2f685b9__empty" };
 var List = (0, import_element37.forwardRef)(
   function List2({ className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
       index_parts_exports.List,
       {
         className: clsx_default(item_popup_default5.list, className),
@@ -17645,10 +17632,10 @@ var import_theme2 = __toESM(require_theme(), 1);
 
 // packages/ui/build-module/form/primitives/autocomplete/portal.mjs
 var import_element39 = __toESM(require_element(), 1);
-var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
 var Portal2 = (0, import_element39.forwardRef)(
   function AutocompletePortal({ container, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
       index_parts_exports.Portal,
       {
         container: container ?? getWpCompatOverlaySlot(),
@@ -17670,7 +17657,7 @@ var ITEM_POPUP_POSITIONER_PROPS = {
 };
 
 // packages/ui/build-module/form/primitives/autocomplete/positioner.mjs
-var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
 function getRuntime18() {
   const globalScope = globalThis;
@@ -17761,7 +17748,7 @@ if (typeof process === "undefined" || true) {
 var style_default11 = { "positioner": "_8eb0a29484225eea__positioner" };
 var Positioner2 = (0, import_element40.forwardRef)(
   function AutocompletePositioner({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
       index_parts_exports.Positioner,
       {
         ...ITEM_POPUP_POSITIONER_PROPS,
@@ -17778,7 +17765,7 @@ var Positioner2 = (0, import_element40.forwardRef)(
 );
 
 // packages/ui/build-module/form/primitives/autocomplete/popup.mjs
-var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
 function getRuntime19() {
   const globalScope = globalThis;
@@ -17865,7 +17852,7 @@ if (typeof process === "undefined" || true) {
 var item_popup_default7 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "list": "f43dc7c768d7b622__list", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "is-size-compact": "f181b98b0d33282a__is-size-compact", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-icon": "a3adcfd0b73ffd40__item-icon", "empty": "_06c7ff39d2f685b9__empty" };
 var Popup2 = (0, import_element41.forwardRef)(
   function Popup22({ className, portal, positioner, ...restProps }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_theme2.ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_theme2.ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
       index_parts_exports.Popup,
       {
         ref,
@@ -17875,23 +17862,23 @@ var Popup2 = (0, import_element41.forwardRef)(
     ) });
     const positionedPopup = renderSlotWithChildren(
       positioner,
-      /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Positioner2, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Positioner2, {}),
       popupContent
     );
-    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Portal2, {}), positionedPopup);
+    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Portal2, {}), positionedPopup);
   }
 );
 
 // packages/ui/build-module/form/primitives/autocomplete/root.mjs
-var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
 function Root2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(index_parts_exports.Root, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(index_parts_exports.Root, { ...props });
 }
 
 // packages/ui/build-module/form/primitives/autocomplete/value.mjs
-var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 function Value(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(index_parts_exports.Value, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(index_parts_exports.Value, { ...props });
 }
 
 // packages/ui/build-module/form/primitives/field/index.mjs
@@ -17907,7 +17894,7 @@ __export(field_exports, {
 
 // packages/ui/build-module/form/primitives/field/root.mjs
 var import_element42 = __toESM(require_element(), 1);
-var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
 function getRuntime20() {
   const globalScope = globalThis;
@@ -17992,9 +17979,9 @@ if (typeof process === "undefined" || true) {
   registerStyle20("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
 var resets_default6 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-var DEFAULT_RENDER3 = (props) => /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+var DEFAULT_RENDER3 = (props) => /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
 var Root3 = (0, import_element42.forwardRef)(function Root22({ className, render = DEFAULT_RENDER3, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
     index_parts_exports2.Root,
     {
       ref,
@@ -18007,9 +17994,9 @@ var Root3 = (0, import_element42.forwardRef)(function Root22({ className, render
 
 // packages/ui/build-module/form/primitives/field/item.mjs
 var import_element43 = __toESM(require_element(), 1);
-var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
 var Item3 = (0, import_element43.forwardRef)(function Item22(props, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(index_parts_exports2.Item, { ref, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(index_parts_exports2.Item, { ref, ...props });
 });
 
 // packages/ui/build-module/form/primitives/field/label.mjs
@@ -18120,7 +18107,7 @@ var VisuallyHidden = (0, import_element44.forwardRef)(
 );
 
 // packages/ui/build-module/form/primitives/field/label.mjs
-var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
 function getRuntime22() {
   const globalScope = globalThis;
@@ -18207,7 +18194,7 @@ if (typeof process === "undefined" || true) {
 var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var Label = (0, import_element45.forwardRef)(
   function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
-    const label = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+    const label = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
       index_parts_exports2.Label,
       {
         ref,
@@ -18220,7 +18207,7 @@ var Label = (0, import_element45.forwardRef)(
       }
     );
     if (hideFromVision) {
-      return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(VisuallyHidden, { render: label });
+      return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(VisuallyHidden, { render: label });
     }
     return label;
   }
@@ -18228,7 +18215,7 @@ var Label = (0, import_element45.forwardRef)(
 
 // packages/ui/build-module/form/primitives/field/description.mjs
 var import_element46 = __toESM(require_element(), 1);
-var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
 function getRuntime23() {
   const globalScope = globalThis;
@@ -18318,7 +18305,7 @@ if (typeof process === "undefined" || true) {
 }
 var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var Description = (0, import_element46.forwardRef)(function Description2({ className, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
     index_parts_exports2.Description,
     {
       ref,
@@ -18335,7 +18322,7 @@ var Description = (0, import_element46.forwardRef)(function Description2({ class
 // packages/ui/build-module/form/primitives/field/details.mjs
 var import_element47 = __toESM(require_element(), 1);
 var import_i18n3 = __toESM(require_i18n(), 1);
-var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
 function getRuntime24() {
   const globalScope = globalThis;
@@ -18422,9 +18409,9 @@ if (typeof process === "undefined" || true) {
 var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var Details = (0, import_element47.forwardRef)(
   function Details2({ className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(import_jsx_runtime69.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n3.__)("More details follow the field.") }),
-      /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(import_jsx_runtime68.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n3.__)("More details follow the field.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
         "div",
         {
           ref,
@@ -18438,16 +18425,16 @@ var Details = (0, import_element47.forwardRef)(
 
 // packages/ui/build-module/form/primitives/field/control.mjs
 var import_element48 = __toESM(require_element(), 1);
-var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
 var Control = (0, import_element48.forwardRef)(
   function Control2(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(index_parts_exports2.Control, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(index_parts_exports2.Control, { ref, ...props });
   }
 );
 
 // packages/ui/build-module/form/input-control/input-control.mjs
 var import_element49 = __toESM(require_element(), 1);
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
 var InputControl = (0, import_element49.forwardRef)(
   function InputControl2({
     className,
@@ -18457,11 +18444,11 @@ var InputControl = (0, import_element49.forwardRef)(
     hideLabelFromVision,
     ...restProps
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(field_exports.Root, { className, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(Input3, { ref, ...restProps }),
-      description && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(field_exports.Description, { children: description }),
-      details && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(field_exports.Details, { children: details })
+    return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(field_exports.Root, { className, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(Input3, { ref, ...restProps }),
+      description && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(field_exports.Description, { children: description }),
+      details && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(field_exports.Details, { children: details })
     ] });
   }
 );
@@ -18472,7 +18459,7 @@ var location_picker_default = {
 };
 
 // widgets/events/components/location-picker/location-picker.tsx
-var import_jsx_runtime72 = __toESM(require_jsx_runtime());
+var import_jsx_runtime71 = __toESM(require_jsx_runtime());
 var DRAFT_DEBOUNCE_MS = 300;
 function LocationPicker({
   onSubmit = () => {
@@ -18612,7 +18599,7 @@ function LocationPicker({
       controller.abort();
     };
   }, [locationInput]);
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
     "form",
     {
       onSubmit: (e) => {
@@ -18621,20 +18608,20 @@ function LocationPicker({
           onSubmit(locationInput);
         }
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(Stack, { direction: "row", align: "start", wrap: "wrap", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(Stack, { direction: "row", align: "start", wrap: "wrap", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(
           autocomplete_exports.Root,
           {
             items: locationOptions,
             value: locationInput,
             onValueChange: setLocationInput,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
                 autocomplete_exports.Input,
                 {
                   id: locationInputId,
                   className: location_picker_default.locationInput,
-                  render: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+                  render: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
                     InputControl,
                     {
                       autoComplete: "off",
@@ -18647,9 +18634,9 @@ function LocationPicker({
                       onValueChange: () => {
                       },
                       onBlur: !selectButton ? flushDraftPublish : void 0,
-                      suffix: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(autocomplete_exports.Clear, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+                      suffix: /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Clear, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
                           IconButton,
                           {
                             icon: map_marker_default,
@@ -18668,7 +18655,7 @@ function LocationPicker({
                   placeholder: (0, import_i18n4.__)("City, like Tokyo\u2026")
                 }
               ),
-              locationOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(autocomplete_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(autocomplete_exports.List, { children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(autocomplete_exports.ListBody, { children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+              locationOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.List, { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.ListBody, { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
                 autocomplete_exports.Item,
                 {
                   value: item,
@@ -18679,7 +18666,7 @@ function LocationPicker({
             ]
           }
         ),
-        selectButton && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+        selectButton && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
           Button4,
           {
             variant: "outline",
@@ -18695,7 +18682,7 @@ function LocationPicker({
 }
 
 // widgets/events/components/location-setting-control/location-setting-control.tsx
-var import_jsx_runtime73 = __toESM(require_jsx_runtime());
+var import_jsx_runtime72 = __toESM(require_jsx_runtime());
 function LocationSettingControl({
   data,
   field,
@@ -18714,7 +18701,7 @@ function LocationSettingControl({
     },
     [data, field, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     LocationPicker,
     {
       seedInput: value ?? "",

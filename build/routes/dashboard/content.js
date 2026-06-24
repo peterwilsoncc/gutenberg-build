@@ -18792,7 +18792,7 @@ var IconButton = (0, import_element44.forwardRef)(
     ...restProps
   }, ref) {
     const classes = clsx_default(style_default15["icon-button"], className);
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Root5, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Root5, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
         Trigger3,
         {
@@ -18810,14 +18810,7 @@ var IconButton = (0, import_element44.forwardRef)(
             }
           ),
           className: classes,
-          children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
-            Icon,
-            {
-              icon,
-              size: 24,
-              className: style_default15.icon
-            }
-          )
+          children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(Icon, { icon, size: 24, className: style_default15.icon })
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Popup2, { positioner, children: [
@@ -18827,7 +18820,7 @@ var IconButton = (0, import_element44.forwardRef)(
           /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { "aria-hidden": "true", children: shortcut.displayShortcut })
         ] })
       ] })
-    ] }) });
+    ] });
   }
 );
 
