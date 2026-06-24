@@ -26324,13 +26324,14 @@ If there's a particular need for this, please submit a feature request at https:
         {}
       );
       setSearchResults(results);
-      const mappedSuggestions = results.map((result) => {
+      const suggestions = results.map((result) => {
         return {
           label: result.title,
           value: result.id.toString()
         };
       });
-      setOptions(mappedSuggestions);
+      const includeCurrent = !filterValue && suggestions.findIndex((s2) => s2.value === value) === -1;
+      setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
     const handleSelectOption = (selectedPostId) => {

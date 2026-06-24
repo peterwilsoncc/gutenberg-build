@@ -24142,13 +24142,14 @@ var wp;
         {}
       );
       setSearchResults(results);
-      const mappedSuggestions = results.map((result) => {
+      const suggestions = results.map((result) => {
         return {
           label: result.title,
           value: result.id.toString()
         };
       });
-      setOptions(mappedSuggestions);
+      const includeCurrent = !filterValue && suggestions.findIndex((s3) => s3.value === value) === -1;
+      setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
     const handleSelectOption = (selectedPostId) => {
