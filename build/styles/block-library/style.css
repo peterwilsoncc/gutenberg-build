@@ -4830,7 +4830,7 @@ ul.wp-block-rss.is-grid li {
   text-transform: inherit;
   text-align: inherit;
 }
-:where(.wp-block-tab-list button)[aria-selected=true]::before, :where(.wp-block-tab-list button).is-active::before {
+:where(.wp-block-tab-list button)[aria-selected=true]::before {
   content: "";
   position: absolute;
   border-bottom: 2px solid currentColor;

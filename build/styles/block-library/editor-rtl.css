@@ -2365,21 +2365,6 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   width: 112px;
 }
 
-.wp-block-tab-list {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.5em;
-}
-.wp-block-tab-list button.is-active::before {
-  content: "";
-  position: absolute;
-  border-bottom: 2px solid currentColor;
-  pointer-events: none;
-  right: 0;
-  width: 100%;
-  bottom: 0;
-}
-
 .block-editor-template-part__selection-modal {
   z-index: 1000001;
 }

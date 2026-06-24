@@ -67953,19 +67953,10 @@ ${js}
       }
     ]
   ];
-  var { cancelAnimationFrame: cancelAnimationFrame2 } = window;
   function Edit19({ clientId, context, isSelected }) {
-    const focusRef = (0, import_element126.useRef)();
     const activeTabIndex = context["core/tabs-activeTabIndex"];
     const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
     const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
-    (0, import_element126.useEffect)(() => {
-      return () => {
-        if (focusRef.current) {
-          cancelAnimationFrame2(focusRef.current);
-        }
-      };
-    }, []);
     const { blockIndex, hasInnerBlocksSelected, tabsClientId } = (0, import_data142.useSelect)(
       (select9) => {
         const {
@@ -68042,7 +68033,8 @@ ${js}
   var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   function save48() {
     const blockProps = import_block_editor256.useBlockProps.save({
-      role: "tabpanel"
+      role: "tabpanel",
+      tabIndex: 0
     });
     const innerBlocksProps = import_block_editor256.useInnerBlocksProps.save(blockProps);
     return /* @__PURE__ */ (0, import_jsx_runtime497.jsx)("section", { ...innerBlocksProps });
@@ -68169,7 +68161,6 @@ ${js}
     textdomain: "default",
     parent: ["core/tabs"],
     allowedBlocks: ["core/tab-panel"],
-    attributes: {},
     supports: {
       html: false,
       visibility: false,
@@ -70569,7 +70560,12 @@ ${js}
   var import_element130 = __toESM(require_element(), 1);
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY7 = [];
-  function Edit21({ attributes: attributes2, clientId, context }) {
+  function Edit21({
+    attributes: attributes2,
+    clientId,
+    context,
+    __unstableLayoutClassNames: layoutClassNames
+  }) {
     const tabsList = context["core/tabs-list"] || EMPTY_ARRAY7;
     const colorProps = (0, import_block_editor265.__experimentalUseColorProps)(attributes2);
     const borderProps = (0, import_block_editor265.__experimentalUseBorderProps)(attributes2);
@@ -70587,9 +70583,7 @@ ${js}
       },
       [clientId]
     );
-    const effectiveActiveIndex = (0, import_element130.useMemo)(() => {
-      return editorActiveTabIndex ?? activeTabIndex;
-    }, [editorActiveTabIndex, activeTabIndex]);
+    const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
     const { __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes } = (0, import_data146.useDispatch)(import_block_editor265.store);
     const handleTabClick = (0, import_element130.useCallback)(
       (tabIndex) => {
@@ -70647,7 +70641,10 @@ ${js}
     }, [tabsList.length, effectiveActiveIndex]);
     const blockProps = (0, import_block_editor265.useBlockProps)({
       role: "tablist",
-      ref: menuRef
+      ref: menuRef,
+      // Applied manually since this block has no inner blocks for the layout
+      // support to add its container classes to.
+      className: layoutClassNames
     });
     const buttonClassName = clsx_default(colorProps.className, borderProps.className);
     const buttonStyle = {
@@ -70664,9 +70661,9 @@ ${js}
           "button",
           {
             type: "button",
-            className: clsx_default(buttonClassName, {
-              "is-active": isActive
-            }),
+            role: "tab",
+            "aria-selected": isActive,
+            className: buttonClassName || void 0,
             style: buttonStyle,
             tabIndex: -1,
             onClick: (event) => {
@@ -70773,7 +70770,8 @@ ${js}
       },
       layout: {
         default: {
-          type: "flex"
+          type: "flex",
+          flexWrap: "nowrap"
         },
         allowVerticalAlignment: false,
         allowOrientation: false,
@@ -70799,7 +70797,6 @@ ${js}
         padding: ".wp-block-tab-list button"
       }
     },
-    editorStyle: "wp-block-tab-list-editor",
     style: "wp-block-tab-list"
   };
 

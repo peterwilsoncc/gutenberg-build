@@ -8148,7 +8148,8 @@ return array(
 			),
 			'layout' => array(
 				'default' => array(
-					'type' => 'flex'
+					'type' => 'flex',
+					'flexWrap' => 'nowrap'
 				),
 				'allowVerticalAlignment' => false,
 				'allowOrientation' => false,
@@ -8176,7 +8177,6 @@ return array(
 				'padding' => '.wp-block-tab-list button'
 			)
 		),
-		'editorStyle' => 'wp-block-tab-list-editor',
 		'style' => 'wp-block-tab-list'
 	),
 	'tab-panel' => array(
@@ -8247,9 +8247,6 @@ return array(
 		),
 		'allowedBlocks' => array(
 			'core/tab-panel'
-		),
-		'attributes' => array(
-			
 		),
 		'supports' => array(
 			'html' => false,
