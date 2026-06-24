@@ -45,28 +45,27 @@ var require_i18n = __commonJS({
   }
 });
 
-// routes/dashboard/route.ts
-var import_data = __toESM(require_data());
-var import_core_data = __toESM(require_core_data());
-var import_i18n = __toESM(require_i18n());
-var route = {
-  beforeLoad() {
-    if ((0, import_data.select)(import_core_data.store).getEntityConfig("root", "widgetModule")) {
-      return;
-    }
-    (0, import_data.dispatch)(import_core_data.store).addEntities([
-      {
-        name: "widgetModule",
-        kind: "root",
-        key: "name",
-        baseURL: "/wp/v2/widget-modules",
-        plural: "widgetModules",
-        label: (0, import_i18n.__)("Widget modules"),
-        supportsPagination: false
-      }
-    ]);
+// packages/dashboard-init/build-module/index.mjs
+var import_data = __toESM(require_data(), 1);
+var import_core_data = __toESM(require_core_data(), 1);
+var import_i18n = __toESM(require_i18n(), 1);
+async function init() {
+  if ((0, import_data.select)(import_core_data.store).getEntityConfig("root", "widgetModule")) {
+    return;
   }
-};
+  (0, import_data.dispatch)(import_core_data.store).addEntities([
+    {
+      name: "widgetModule",
+      kind: "root",
+      key: "name",
+      baseURL: "/wp/v2/widget-modules",
+      plural: "widgetModules",
+      label: (0, import_i18n.__)("Widget modules"),
+      supportsPagination: false
+    }
+  ]);
+}
 export {
-  route
+  init
 };
+//# sourceMappingURL=index.js.map

@@ -11033,6 +11033,12 @@ function App({ rootComponent }) {
   const routes = (0, import_data12.useSelect)((select) => select(store).getRoutes(), []);
   return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Router, { routes, rootComponent });
 }
+async function runInitModules(initModules) {
+  for (const moduleId of initModules ?? []) {
+    const module = await import(moduleId);
+    await module.init();
+  }
+}
 async function init({
   mountId,
   menuItems,
@@ -11049,10 +11055,7 @@ async function init({
   if (dashboardLink) {
     (0, import_data12.dispatch)(store).setDashboardLink(dashboardLink);
   }
-  for (const moduleId of initModules ?? []) {
-    const module = await import(moduleId);
-    await module.init();
-  }
+  await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
     const root = (0, import_element32.createRoot)(rootElement);
@@ -11063,11 +11066,13 @@ async function init({
 }
 async function initSinglePage({
   mountId,
-  routes
+  routes,
+  initModules
 }) {
   (routes ?? []).forEach((route) => {
     (0, import_data12.dispatch)(store).registerRoute(route);
   });
+  await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
     const root = (0, import_element32.createRoot)(rootElement);

@@ -25,7 +25,7 @@ return array(
 		'name'        => 'dashboard',
 		'path'        => '/',
 		'page'        => 'dashboard',
-		'has_route'   => true,
+		'has_route'   => false,
 		'has_content' => true,
 	),
 	array(
