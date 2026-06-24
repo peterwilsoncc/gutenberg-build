@@ -617,6 +617,17 @@ var wp;
       );
     }
   };
+  var textShadow = {
+    name: "textShadow",
+    generate: (style, options) => {
+      return generateRule(
+        style,
+        options,
+        ["typography", "textShadow"],
+        "textShadow"
+      );
+    }
+  };
   var typography_default = [
     fontFamily,
     fontSize,
@@ -627,6 +638,7 @@ var wp;
     textColumns,
     textDecoration,
     textIndent,
+    textShadow,
     textTransform,
     writingMode
   ];
