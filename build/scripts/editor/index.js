@@ -91255,12 +91255,21 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function DataFormPostSummary({ onActionPerformed }) {
-    const { postType: postType2, postId: postId2, isPostStatusRemoved } = (0, import_data234.useSelect)((select7) => {
-      const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2, isEditorPanelRemoved: isEditorPanelRemoved2 } = select7(store);
+    const { postType: postType2, postId: postId2, isPostStatusRemoved, availableTemplates } = (0, import_data234.useSelect)((select7) => {
+      const {
+        getCurrentPostType: getCurrentPostType2,
+        getCurrentPostId: getCurrentPostId2,
+        isEditorPanelRemoved: isEditorPanelRemoved2,
+        getEditorSettings: getEditorSettings2
+      } = select7(store);
+      const _availableTemplates = select7(
+        import_core_data127.store
+      ).getCurrentTheme()?.is_block_theme ? null : getEditorSettings2().availableTemplates ?? null;
       return {
         postType: getCurrentPostType2(),
         postId: getCurrentPostId2(),
-        isPostStatusRemoved: isEditorPanelRemoved2("post-status")
+        isPostStatusRemoved: isEditorPanelRemoved2("post-status"),
+        availableTemplates: _availableTemplates
       };
     }, []);
     const { form: formConfig } = useViewConfig({
@@ -91283,13 +91292,11 @@ If there's a particular need for this, please submit a feature request at https:
       [postType2, postId2]
     );
     const templatePanelMode = usePostTemplatePanelMode();
-    const { entityData, entityIds, availableTemplates } = (0, import_data234.useSelect)(
+    const entityRecords = (0, import_data234.useSelect)(
       (select7) => {
-        const { getEditedEntityRecord, canUser, getCurrentTheme } = select7(import_core_data127.store);
-        const _availableTemplates = getCurrentTheme()?.is_block_theme ? null : select7(store).getEditorSettings().availableTemplates ?? {};
-        const extra = {};
-        const ids = {};
-        for (const [key, entity] of Object.entries(
+        const { getEditedEntityRecord, canUser } = select7(import_core_data127.store);
+        const records = {};
+        for (const [namespace, entity] of Object.entries(
           ENTITIES[postType2] ?? {}
         )) {
           if (!canUser("read", {
@@ -91302,18 +91309,13 @@ If there's a particular need for this, please submit a feature request at https:
           if (entity.getId && !id) {
             continue;
           }
-          extra[key] = getEditedEntityRecord(
+          records[namespace] = getEditedEntityRecord(
             entity.kind,
             entity.name,
             id
           );
-          ids[key] = id;
         }
-        return {
-          entityData: extra,
-          entityIds: ids,
-          availableTemplates: _availableTemplates
-        };
+        return records;
       },
       [postType2]
     );
@@ -91321,16 +91323,14 @@ If there's a particular need for this, please submit a feature request at https:
       if (!record) {
         return record;
       }
-      const extra = { ...entityData };
+      const extra = { ...entityRecords };
       if (availableTemplates && Object.keys(availableTemplates).length) {
         extra.available_templates = availableTemplates;
       }
-      if (!Object.keys(extra).length) {
-        return record;
-      }
       return { ...record, ...extra };
-    }, [record, entityData, availableTemplates]);
+    }, [record, entityRecords, availableTemplates]);
     const { editEntityRecord } = (0, import_data234.useDispatch)(import_core_data127.store);
+    const registry = (0, import_data234.useRegistry)();
     const fieldNamespaces = (0, import_element304.useMemo)(() => {
       const map = {};
       for (const [namespace, entity] of Object.entries(
@@ -91390,12 +91390,8 @@ If there's a particular need for this, please submit a feature request at https:
       for (const [key, value] of Object.entries(edits)) {
         const entity = entities[key];
         if (entity) {
-          editEntityRecord(
-            entity.kind,
-            entity.name,
-            entityIds[key],
-            value
-          );
+          const id = entity.getId ? entity.getId(registry.select) : void 0;
+          editEntityRecord(entity.kind, entity.name, id, value);
         } else {
           baseEdits[key] = value;
         }
