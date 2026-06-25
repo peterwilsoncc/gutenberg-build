@@ -18828,7 +18828,7 @@ var wp;
     HTML: block.originalContent
   });
   function BlockInvalidWarning({ clientId }) {
-    const { block, canInsertHTMLBlock, canInsertClassicBlock } = (0, import_data18.useSelect)(
+    const { block, canInsertHTMLBlock } = (0, import_data18.useSelect)(
       (select3) => {
         const { canInsertBlockType: canInsertBlockType2, getBlock: getBlock2, getBlockRootClientId: getBlockRootClientId2 } = select3(store);
         const rootClientId = getBlockRootClientId2(clientId);
@@ -18836,10 +18836,6 @@ var wp;
           block: getBlock2(clientId),
           canInsertHTMLBlock: canInsertBlockType2(
             "core/html",
-            rootClientId
-          ),
-          canInsertClassicBlock: canInsertBlockType2(
-            "core/freeform",
             rootClientId
           )
         };
@@ -18851,12 +18847,6 @@ var wp;
     const onCompareClose = (0, import_element22.useCallback)(() => setCompare(false), []);
     const convert = (0, import_element22.useMemo)(
       () => ({
-        toClassic() {
-          const classicBlock = (0, import_blocks17.createBlock)("core/freeform", {
-            content: block.originalContent
-          });
-          return replaceBlock2(block.clientId, classicBlock);
-        },
         toHTML() {
           const htmlBlock = (0, import_blocks17.createBlock)("core/html", {
             content: block.originalContent
@@ -18888,13 +18878,9 @@ var wp;
         canInsertHTMLBlock && {
           title: (0, import_i18n23.__)("Convert to HTML"),
           onClick: convert.toHTML
-        },
-        canInsertClassicBlock && {
-          title: (0, import_i18n23.__)("Convert to Classic Block"),
-          onClick: convert.toClassic
         }
       ].filter(Boolean),
-      [canInsertHTMLBlock, canInsertClassicBlock, convert]
+      [canInsertHTMLBlock, convert]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
