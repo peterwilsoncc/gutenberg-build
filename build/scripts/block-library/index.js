@@ -70395,7 +70395,7 @@ ${js}
     );
     const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
     const { __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes } = (0, import_data145.useDispatch)(import_block_editor264.store);
-    const handleTabClick = (0, import_element131.useCallback)(
+    const selectTabPanel = (0, import_element131.useCallback)(
       (tabIndex) => {
         if (tabsClientId && tabIndex !== effectiveActiveIndex) {
           __unstableMarkNextChangeAsNotPersistent();
@@ -70471,9 +70471,8 @@ ${js}
             className: buttonClassName || void 0,
             style: buttonStyle,
             tabIndex: -1,
-            onClick: (event) => {
-              event.preventDefault();
-              handleTabClick(index);
+            onFocus: () => {
+              selectTabPanel(index);
             },
             children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               import_block_editor264.RichText,
