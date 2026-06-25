@@ -17289,11 +17289,13 @@ var wp;
       const { allowSizingOnChildren = false } = layoutBlockSupport;
       const showColumnsControl = true;
       const showMinWidthControl = !layout?.isManualPlacement || window.__experimentalEnableGridInteractivity;
+      const showFillControl = !layout?.isManualPlacement;
       const defaultColumnCount = layout.isManualPlacement ? 3 : void 0;
       const hasLayoutValue = (key, defaultValue) => (layout?.[key] ?? defaultValue) !== (resetLayout?.[key] ?? defaultValue);
       const hasGridTypeValue = () => hasLayoutValue("isManualPlacement", false);
       const hasColumnsAndRowsValue = () => hasLayoutValue("columnCount", defaultColumnCount) || hasLayoutValue("rowCount");
       const hasMinimumColumnWidthValue = () => hasLayoutValue("minimumColumnWidth");
+      const hasFillValue = () => hasLayoutValue("autoFit", false);
       const resetGridType = () => onChange(
         cleanEmptyObject({
           ...layout,
@@ -17313,6 +17315,12 @@ var wp;
         cleanEmptyObject({
           ...layout,
           minimumColumnWidth: resetLayout?.minimumColumnWidth
+        })
+      );
+      const resetFill = () => onChange(
+        cleanEmptyObject({
+          ...layout,
+          autoFit: resetLayout?.autoFit
         })
       );
       return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_jsx_runtime132.Fragment, { children: [
@@ -17367,6 +17375,22 @@ var wp;
               }
             )
           }
+        ),
+        showFillControl && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+          import_components15.__experimentalToolsPanelItem,
+          {
+            label: (0, import_i18n15.__)("Fill available space"),
+            hasValue: hasFillValue,
+            onDeselect: resetFill,
+            panelId: clientId,
+            children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+              GridLayoutFillControl,
+              {
+                layout,
+                onChange
+              }
+            )
+          }
         )
       ] });
     },
@@ -17389,8 +17413,10 @@ var wp;
       const {
         minimumColumnWidth = null,
         columnCount = null,
-        rowCount = null
+        rowCount = null,
+        autoFit = false
       } = effectiveLayout;
+      const autoPlacement4 = autoFit ? "auto-fit" : "auto-fill";
       if (true) {
         if (minimumColumnWidth && typeof minimumColumnWidth !== "string") {
           throw new Error("minimumColumnWidth must be a string");
@@ -17400,6 +17426,9 @@ var wp;
         }
         if (rowCount && typeof rowCount !== "number") {
           throw new Error("rowCount must be a number");
+        }
+        if (autoFit && typeof autoFit !== "boolean") {
+          throw new Error("autoFit must be a boolean");
         }
       }
       let fallbackGapValue = "1.2rem";
@@ -17411,7 +17440,7 @@ var wp;
       const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
       let output = "";
       const rules = [];
-      const shouldOutputGridColumns = !hasViewportOverrides || hasViewportOverride("minimumColumnWidth") || hasViewportOverride("columnCount") || hasBlockGapOverride && minimumColumnWidth && columnCount > 0;
+      const shouldOutputGridColumns = !hasViewportOverrides || hasViewportOverride("minimumColumnWidth") || hasViewportOverride("columnCount") || hasViewportOverride("autoFit") || hasBlockGapOverride && minimumColumnWidth && columnCount > 0;
       const shouldOutputGridRows = (!hasViewportOverrides || hasViewportOverride("rowCount")) && columnCount && rowCount;
       if (shouldOutputGridColumns && minimumColumnWidth && columnCount > 0) {
         let blockGapToUse = blockGapValue || fallbackGapValue;
@@ -17420,7 +17449,7 @@ var wp;
         }
         const maxValue = `max(min( ${minimumColumnWidth}, 100%), ( 100% - (${blockGapToUse}*${columnCount - 1}) ) / ${columnCount})`;
         rules.push(
-          `grid-template-columns: repeat(auto-fill, minmax(${maxValue}, 1fr))`
+          `grid-template-columns: repeat(${autoPlacement4}, minmax(${maxValue}, 1fr))`
         );
       } else if (shouldOutputGridColumns && columnCount) {
         rules.push(
@@ -17428,7 +17457,7 @@ var wp;
         );
       } else if (shouldOutputGridColumns) {
         rules.push(
-          `grid-template-columns: repeat(auto-fill, minmax(min(${minimumColumnWidth || "12rem"}, 100%), 1fr))`
+          `grid-template-columns: repeat(${autoPlacement4}, minmax(min(${minimumColumnWidth || "12rem"}, 100%), 1fr))`
         );
       }
       if (shouldOutputGridColumns) {
@@ -17593,6 +17622,23 @@ var wp;
         ) })
       ] })
     ] }) });
+  }
+  function GridLayoutFillControl({ layout, onChange }) {
+    const { autoFit = false } = layout;
+    return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+      import_components15.ToggleControl,
+      {
+        label: (0, import_i18n15.__)("Fill available space"),
+        help: (0, import_i18n15.__)(
+          "Stretch columns to fill the available space, instead of leaving gaps when there are too few items to fill a row."
+        ),
+        checked: autoFit,
+        onChange: (value) => onChange({
+          ...layout,
+          autoFit: value
+        })
+      }
+    );
   }
   function GridLayoutTypeControl({ layout, onChange }) {
     const { columnCount, rowCount, minimumColumnWidth, isManualPlacement } = layout;
