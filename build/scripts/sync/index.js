@@ -10782,6 +10782,7 @@ var wp;
         entityState.unload();
       }
       entityStates.clear();
+      undoManager = void 0;
       for (const [, collectionState] of [...collectionStates]) {
         collectionState.unload();
       }
