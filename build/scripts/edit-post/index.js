@@ -73,6 +73,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/hooks
+  var require_hooks = __commonJS({
+    "package-external:@wordpress/hooks"(exports, module) {
+      module.exports = window.wp.hooks;
+    }
+  });
+
   // package-external:@wordpress/widgets
   var require_widgets = __commonJS({
     "package-external:@wordpress/widgets"(exports, module) {
@@ -375,13 +382,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/hooks
-  var require_hooks = __commonJS({
-    "package-external:@wordpress/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
-    }
-  });
-
   // package-external:@wordpress/keycodes
   var require_keycodes = __commonJS({
     "package-external:@wordpress/keycodes"(exports, module) {
@@ -413,6 +413,7 @@ var wp;
   var import_element29 = __toESM(require_element(), 1);
   var import_data26 = __toESM(require_data(), 1);
   var import_preferences11 = __toESM(require_preferences(), 1);
+  var import_hooks2 = __toESM(require_hooks(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
   var import_editor20 = __toESM(require_editor(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
@@ -11713,6 +11714,15 @@ var wp;
       welcomeGuide: true,
       welcomeGuideTemplate: true
     });
+    const collaborationNotificationPreferenceDefaults = (0, import_hooks2.applyFilters)(
+      "editor.CollaborationNotificationPreferenceDefaults",
+      {
+        showCollaborationJoinNotifications: true,
+        showCollaborationLeaveNotifications: true,
+        showCollaborationPostSaveNotifications: true
+      },
+      "core/edit-post"
+    );
     (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core", {
       allowRightClickOverrides: true,
       editorMode: "visual",
@@ -11727,7 +11737,9 @@ var wp;
       enableChoosePatternModal: true,
       isPublishSidebarEnabled: true,
       showCollaborationCursor: false,
-      showCollaborationNotifications: true
+      showCollaborationJoinNotifications: collaborationNotificationPreferenceDefaults.showCollaborationJoinNotifications,
+      showCollaborationLeaveNotifications: collaborationNotificationPreferenceDefaults.showCollaborationLeaveNotifications,
+      showCollaborationPostSaveNotifications: collaborationNotificationPreferenceDefaults.showCollaborationPostSaveNotifications
     });
     if (window.__clientSideMediaProcessing) {
       (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core/media", {

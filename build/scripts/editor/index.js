@@ -89933,32 +89933,54 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_i18n300.sprintf)((0, import_i18n300.__)("Draft saved by %s."), name2);
   }
   function useCollaboratorNotifications(postId2, postType2) {
-    const { postStatus, isCollaborationEnabled, showNotifications } = (0, import_data220.useSelect)(
-      (select7) => {
-        const {
-          getCurrentPostAttribute: getCurrentPostAttribute2,
-          isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2
-        } = unlock(select7(store));
-        return {
-          postStatus: getCurrentPostAttribute2("status"),
-          isCollaborationEnabled: isCollaborationEnabledForCurrentPost2(),
-          showNotifications: select7(import_preferences23.store).get(
-            "core",
-            "showCollaborationNotifications"
-          ) ?? true
-        };
-      },
-      []
-    );
+    const {
+      postStatus,
+      isCollaborationEnabled,
+      showJoinNotifications,
+      showLeaveNotifications,
+      showPostSaveNotifications
+    } = (0, import_data220.useSelect)((select7) => {
+      const {
+        getCurrentPostAttribute: getCurrentPostAttribute2,
+        isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2
+      } = unlock(select7(store));
+      const getNotificationPreference = (name2) => select7(import_preferences23.store).get("core", name2) ?? true;
+      return {
+        postStatus: getCurrentPostAttribute2("status"),
+        isCollaborationEnabled: isCollaborationEnabledForCurrentPost2(),
+        showJoinNotifications: getNotificationPreference(
+          "showCollaborationJoinNotifications"
+        ),
+        showLeaveNotifications: getNotificationPreference(
+          "showCollaborationLeaveNotifications"
+        ),
+        showPostSaveNotifications: getNotificationPreference(
+          "showCollaborationPostSaveNotifications"
+        )
+      };
+    }, []);
     const { createNotice } = (0, import_data220.useDispatch)(import_notices31.store);
-    const shouldSubscribe = isCollaborationEnabled && showNotifications;
-    const effectivePostId = shouldSubscribe ? postId2 : null;
-    const effectivePostType = shouldSubscribe ? postType2 : null;
+    const shouldShowJoinNotifications = isCollaborationEnabled && showJoinNotifications;
+    const shouldShowLeaveNotifications = isCollaborationEnabled && showLeaveNotifications;
+    const shouldShowPostSaveNotifications = isCollaborationEnabled && showPostSaveNotifications;
+    const effectiveTarget = (shouldShow) => shouldShow ? [postId2, postType2] : [null, null];
+    const [joinPostId, joinPostType] = effectiveTarget(
+      shouldShowJoinNotifications
+    );
+    const [leavePostId, leavePostType] = effectiveTarget(
+      shouldShowLeaveNotifications
+    );
+    const [postSavePostId, postSavePostType] = effectiveTarget(
+      shouldShowPostSaveNotifications
+    );
     useOnCollaboratorJoin(
-      effectivePostId,
-      effectivePostType,
+      joinPostId,
+      joinPostType,
       (0, import_element294.useCallback)(
         (collaborator, me) => {
+          if (!shouldShowJoinNotifications) {
+            return;
+          }
           if (me && collaborator.collaboratorInfo.enteredAt < me.collaboratorInfo.enteredAt) {
             return;
           }
@@ -89976,14 +89998,17 @@ If there's a particular need for this, please submit a feature request at https:
             }
           );
         },
-        [createNotice]
+        [createNotice, shouldShowJoinNotifications]
       )
     );
     useOnCollaboratorLeave(
-      effectivePostId,
-      effectivePostType,
+      leavePostId,
+      leavePostType,
       (0, import_element294.useCallback)(
         (collaborator) => {
+          if (!shouldShowLeaveNotifications) {
+            return;
+          }
           void createNotice(
             "info",
             (0, import_i18n300.sprintf)(
@@ -89998,15 +90023,15 @@ If there's a particular need for this, please submit a feature request at https:
             }
           );
         },
-        [createNotice]
+        [createNotice, shouldShowLeaveNotifications]
       )
     );
     useOnPostSave(
-      effectivePostId,
-      effectivePostType,
+      postSavePostId,
+      postSavePostType,
       (0, import_element294.useCallback)(
         (saveEvent, saver, prevEvent) => {
-          if (!postStatus) {
+          if (!shouldShowPostSaveNotifications || !postStatus) {
             return;
           }
           const effectiveStatus = saveEvent.postStatus ?? postStatus ?? "draft";
@@ -90023,7 +90048,7 @@ If there's a particular need for this, please submit a feature request at https:
             isDismissible: false
           });
         },
-        [createNotice, postStatus]
+        [createNotice, postStatus, shouldShowPostSaveNotifications]
       )
     );
   }
@@ -95416,34 +95441,60 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n343.__)("Show starter patterns")
                     }
                   ),
-                  showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime547.jsxs)(import_jsx_runtime547.Fragment, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-                      PreferenceToggleControl,
-                      {
-                        scope: "core",
-                        featureName: "showCollaborationCursor",
-                        help: (0, import_i18n343.__)(
-                          "Show your own avatar inside blocks during collaborative editing sessions."
-                        ),
-                        label: (0, import_i18n343.__)(
-                          "Show avatar in blocks"
-                        )
-                      }
-                    ),
-                    /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-                      PreferenceToggleControl,
-                      {
-                        scope: "core",
-                        featureName: "showCollaborationNotifications",
-                        help: (0, import_i18n343.__)(
-                          "Show notifications when collaborators join, leave, or save the post."
-                        ),
-                        label: (0, import_i18n343.__)(
-                          "Show collaboration notifications"
-                        )
-                      }
-                    )
-                  ] })
+                  showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
+                    PreferenceToggleControl,
+                    {
+                      scope: "core",
+                      featureName: "showCollaborationCursor",
+                      help: (0, import_i18n343.__)(
+                        "Show your own avatar inside blocks during collaborative editing sessions."
+                      ),
+                      label: (0, import_i18n343.__)("Show avatar in blocks")
+                    }
+                  )
+                ]
+              }
+            ),
+            showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime547.jsxs)(
+              PreferencesModalSection,
+              {
+                title: (0, import_i18n343.__)(
+                  "Collaboration notifications"
+                ),
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
+                    PreferenceToggleControl,
+                    {
+                      scope: "core",
+                      featureName: "showCollaborationJoinNotifications",
+                      help: (0, import_i18n343.__)(
+                        "Show notifications when collaborators join the post."
+                      ),
+                      label: (0, import_i18n343.__)("Collaborator joined")
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
+                    PreferenceToggleControl,
+                    {
+                      scope: "core",
+                      featureName: "showCollaborationLeaveNotifications",
+                      help: (0, import_i18n343.__)(
+                        "Show notifications when collaborators leave the post."
+                      ),
+                      label: (0, import_i18n343.__)("Collaborator left")
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
+                    PreferenceToggleControl,
+                    {
+                      scope: "core",
+                      featureName: "showCollaborationPostSaveNotifications",
+                      help: (0, import_i18n343.__)(
+                        "Show notifications when collaborators save, update, or publish the post."
+                      ),
+                      label: (0, import_i18n343.__)("Post updated")
+                    }
+                  )
                 ]
               }
             ),
