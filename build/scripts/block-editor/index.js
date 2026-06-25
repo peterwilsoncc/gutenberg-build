@@ -44933,10 +44933,12 @@ var wp;
         }
         const attributes = getBlockAttributes3(clientId);
         const { isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2 } = unlock(blockEditorSelect);
-        const isIsolatedEditor = !!getSettings7()?.[isIsolatedEditorKey];
+        const settings2 = getSettings7();
+        const isIsolatedEditor = !!settings2?.[isIsolatedEditorKey];
+        const disableContentOnlyForUnsyncedPatterns = !!settings2?.disableContentOnlyForUnsyncedPatterns;
         const patternName = attributes?.metadata?.patternName;
         const isEditedContentOnlySection = isWithinEditedContentOnlySection2(clientId);
-        if (patternName && !isEditedContentOnlySection && !isIsolatedEditor) {
+        if (patternName && !isEditedContentOnlySection && !isIsolatedEditor && !disableContentOnlyForUnsyncedPatterns) {
           const pattern = __experimentalGetParsedPattern2(patternName);
           const positionLabel2 = getPositionTypeLabel(attributes);
           return {
@@ -51626,7 +51628,9 @@ var wp;
       getSettings: getSettings7
     } = unlock(select3(store));
     const { getBlockStyles: getBlockStyles2 } = select3(import_blocks73.store);
-    const isIsolatedEditor = !!getSettings7()?.[isIsolatedEditorKey];
+    const settings2 = getSettings7();
+    const isIsolatedEditor = !!settings2?.[isIsolatedEditorKey];
+    const disableContentOnlyForUnsyncedPatterns = !!settings2?.disableContentOnlyForUnsyncedPatterns;
     const hasTemplateLock = clientIds.some(
       (id) => getTemplateLock2(id) === "contentOnly"
     );
@@ -51634,7 +51638,7 @@ var wp;
     const blockName = isSingleBlock && getBlockName2(clientIds[0]);
     const hasBlockStyles = isSingleBlock && !!getBlockStyles2(blockName)?.length;
     const hasPatternNameInSelection = clientIds.some(
-      (id) => !!getBlockAttributes3(id)?.metadata?.patternName && !isWithinEditedContentOnlySection2(id) && !isIsolatedEditor
+      (id) => !!getBlockAttributes3(id)?.metadata?.patternName && !isWithinEditedContentOnlySection2(id) && !isIsolatedEditor && !disableContentOnlyForUnsyncedPatterns
     );
     const hasPatternOverrides = clientIds.every(
       (clientId) => hasPatternOverridesDefaultBinding(
@@ -51668,11 +51672,13 @@ var wp;
       isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2,
       getSettings: getSettings7
     } = unlock(select3(store));
-    const isIsolatedEditor = !!getSettings7()?.[isIsolatedEditorKey];
+    const settings2 = getSettings7();
+    const isIsolatedEditor = !!settings2?.[isIsolatedEditorKey];
+    const disableContentOnlyForUnsyncedPatterns = !!settings2?.disableContentOnlyForUnsyncedPatterns;
     const _isSingleBlock = clientIds.length === 1;
     const firstClientId = clientIds[0];
     const blockAttributes = getBlockAttributes3(firstClientId);
-    if (_isSingleBlock && blockAttributes?.metadata?.patternName && !isWithinEditedContentOnlySection2(firstClientId) && !isIsolatedEditor) {
+    if (_isSingleBlock && blockAttributes?.metadata?.patternName && !isWithinEditedContentOnlySection2(firstClientId) && !isIsolatedEditor && !disableContentOnlyForUnsyncedPatterns) {
       return symbol_default;
     }
     const blockName = getBlockName2(firstClientId);

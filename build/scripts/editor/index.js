@@ -72243,7 +72243,9 @@ If there's a particular need for this, please submit a feature request at https:
       isViewable,
       isCodeEditingEnabled,
       isRichEditingEnabled,
-      isPublishSidebarEnabled: isPublishSidebarEnabled2
+      isPublishSidebarEnabled: isPublishSidebarEnabled2,
+      disableContentOnlyForUnsyncedPatterns,
+      disableContentOnlyForTemplateParts
     } = (0, import_data70.useSelect)((select7) => {
       const { get } = select7(import_preferences8.store);
       const { isListViewOpened: isListViewOpened2, getCurrentPostType: getCurrentPostType2, getEditorSettings: getEditorSettings2 } = select7(store);
@@ -72259,7 +72261,9 @@ If there's a particular need for this, please submit a feature request at https:
         isViewable: getPostType(getCurrentPostType2())?.viewable ?? false,
         isCodeEditingEnabled: getEditorSettings2().codeEditingEnabled,
         isRichEditingEnabled: getEditorSettings2().richEditingEnabled,
-        isPublishSidebarEnabled: select7(store).isPublishSidebarEnabled()
+        isPublishSidebarEnabled: select7(store).isPublishSidebarEnabled(),
+        disableContentOnlyForUnsyncedPatterns: !!getEditorSettings2().disableContentOnlyForUnsyncedPatterns,
+        disableContentOnlyForTemplateParts: !!getEditorSettings2().disableContentOnlyForTemplateParts
       };
     }, []);
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data70.useSelect)(store3);
@@ -72271,8 +72275,12 @@ If there's a particular need for this, please submit a feature request at https:
       switchEditorMode: switchEditorMode2,
       toggleDistractionFree: toggleDistractionFree2,
       toggleSpotlightMode: toggleSpotlightMode2,
-      toggleTopToolbar: toggleTopToolbar2
+      toggleTopToolbar: toggleTopToolbar2,
+      updateEditorSettings: updateEditorSettings2
     } = (0, import_data70.useDispatch)(store);
+    const { stopEditingContentOnlySection } = unlock(
+      (0, import_data70.useDispatch)(import_block_editor25.store)
+    );
     const { openModal: openModal2, enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data70.useDispatch)(store3);
     const { getCurrentPostId: getCurrentPostId2 } = (0, import_data70.useSelect)(store);
     const allowSwitchEditorMode = isCodeEditingEnabled && isRichEditingEnabled;
@@ -72280,6 +72288,7 @@ If there's a particular need for this, please submit a feature request at https:
       return { commands: [], isLoading: false };
     }
     const commands = [];
+    const disableContentOnlyForPatternsAndTemplateParts = disableContentOnlyForUnsyncedPatterns && disableContentOnlyForTemplateParts;
     commands.push({
       name: "core/open-shortcut-help",
       label: (0, import_i18n190.__)("Keyboard shortcuts"),
@@ -72340,6 +72349,21 @@ If there's a particular need for this, please submit a feature request at https:
       category: "command",
       callback: ({ close }) => {
         toggleTopToolbar2();
+        close();
+      }
+    });
+    commands.push({
+      name: "core/toggle-pattern-editing",
+      label: disableContentOnlyForPatternsAndTemplateParts ? (0, import_i18n190.__)("Disable editing all patterns") : (0, import_i18n190.__)("Enable editing all patterns"),
+      icon: symbol_default,
+      category: "command",
+      callback: ({ close }) => {
+        const disableContentOnly = !disableContentOnlyForPatternsAndTemplateParts;
+        stopEditingContentOnlySection();
+        updateEditorSettings2({
+          disableContentOnlyForUnsyncedPatterns: disableContentOnly,
+          disableContentOnlyForTemplateParts: disableContentOnly
+        });
         close();
       }
     });
