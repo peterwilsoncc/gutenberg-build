@@ -82397,7 +82397,6 @@ If there's a particular need for this, please submit a feature request at https:
       showFilter && !loading && /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
         import_components212.SearchControl,
         {
-          __next40pxDefaultSize: true,
           label: filterLabel,
           placeholder: filterLabel,
           value: filterValue,
