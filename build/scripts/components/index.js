@@ -42806,6 +42806,7 @@ This message will only show in development mode. It won't appear in production. 
   function FocalPointPicker({
     // Prevent passing to internal component.
     __nextHasNoMarginBottom: _2,
+    __next40pxDefaultSize: _next40pxDefaultSize,
     autoPlay = true,
     className: className2,
     help,
