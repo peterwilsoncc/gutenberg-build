@@ -2893,6 +2893,23 @@ iframe[name=editor-canvas] {
 .block-editor-list-view-leaf.is-selected .block-editor-list-view-block-select-button__image:not(:only-child) {
   box-shadow: 0 0 0 2px var(--wp-admin-theme-color);
 }
+.block-editor-list-view-leaf.is-disabled {
+  opacity: 0.2;
+}
+@media not (prefers-reduced-motion) {
+  .block-editor-list-view-leaf.is-disabled {
+    transition: opacity 0.1s linear;
+  }
+}
+.block-editor-list-view-leaf.is-disabled:hover {
+  opacity: 0.2;
+}
+.block-editor-list-view-leaf.is-disabled .block-editor-list-view__expander {
+  cursor: default;
+}
+.block-editor-list-view-leaf.is-disabled .block-editor-list-view-block-select-button:hover {
+  color: inherit;
+}
 
 .block-editor-list-view-draggable-chip {
   opacity: 0.8;

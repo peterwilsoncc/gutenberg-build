@@ -10621,6 +10621,7 @@ var wp;
     getInsertionPoint: () => getInsertionPoint,
     getLastFocus: () => getLastFocus,
     getLastInsertedBlocksClientIds: () => getLastInsertedBlocksClientIds,
+    getListViewClientIdsTree: () => getListViewClientIdsTree,
     getListViewExpandRevision: () => getListViewExpandRevision,
     getParentSectionBlock: () => getParentSectionBlock,
     getPatternBySlug: () => getPatternBySlug,
@@ -10881,15 +10882,16 @@ var wp;
     getClientIdsTreeUnmemoized,
     (state) => [state.blocks.order]
   );
-  function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
+  function getFilteredClientIdsTreeUnmemoized(state, rootClientId, includesBlock) {
     const blockOrder = getBlockOrder(state, rootClientId);
     const result = [];
     for (const clientId of blockOrder) {
-      const innerBlocks = getEnabledClientIdsTreeUnmemoized(
+      const innerBlocks = getFilteredClientIdsTreeUnmemoized(
         state,
-        clientId
+        clientId,
+        includesBlock
       );
-      if (getBlockEditingMode(state, clientId) !== "disabled") {
+      if (includesBlock(state, clientId)) {
         result.push({ clientId, innerBlocks });
       } else {
         result.push(...innerBlocks);
@@ -10897,11 +10899,76 @@ var wp;
     }
     return result;
   }
+  function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
+    return getFilteredClientIdsTreeUnmemoized(
+      state,
+      rootClientId,
+      (_state, clientId) => getBlockEditingMode(_state, clientId) !== "disabled"
+    );
+  }
+  function hasExplicitDisabledParent(state, clientId) {
+    let parent = state.blocks.parents.get(clientId);
+    while (parent !== void 0) {
+      const parentBlockEditingMode = state.blocks.blockEditingModes.get(parent);
+      if (parentBlockEditingMode) {
+        return parentBlockEditingMode === "disabled";
+      }
+      parent = state.blocks.parents.get(parent);
+    }
+    return false;
+  }
+  function getListViewClientIdsTreeUnmemoized(state, rootClientId) {
+    return getFilteredClientIdsTreeUnmemoized(
+      state,
+      rootClientId,
+      (_state, clientId) => {
+        if (getBlockEditingMode(_state, clientId) !== "disabled") {
+          return true;
+        }
+        const explicitBlockEditingMode = _state.blocks.blockEditingModes.get(clientId);
+        if (explicitBlockEditingMode) {
+          return explicitBlockEditingMode !== "disabled";
+        }
+        if (hasExplicitDisabledParent(_state, clientId)) {
+          return false;
+        }
+        if (_state.editedContentOnlySection) {
+          if (isWithinEditedContentOnlySection(_state, clientId)) {
+            return false;
+          }
+          const parentSectionBlock = getParentSectionBlock(
+            _state,
+            clientId
+          );
+          if (!parentSectionBlock) {
+            return true;
+          }
+          if (isContentBlock2(getBlockName(_state, clientId))) {
+            return true;
+          }
+        }
+        return false;
+      }
+    );
+  }
   var getEnabledClientIdsTree = (0, import_data3.createRegistrySelector)(
     () => (0, import_data3.createSelector)(getEnabledClientIdsTreeUnmemoized, (state) => [
       state.blocks.order,
       state.derivedBlockEditingModes,
       state.blocks.blockEditingModes
+    ])
+  );
+  var getListViewClientIdsTree = (0, import_data3.createRegistrySelector)(
+    () => (0, import_data3.createSelector)(getListViewClientIdsTreeUnmemoized, (state) => [
+      state.blocks.order,
+      state.derivedBlockEditingModes,
+      state.blocks.blockEditingModes,
+      state.blocks.parents,
+      state.blocks.byClientId,
+      state.blocks.attributes,
+      state.blockListSettings,
+      state.editedContentOnlySection,
+      state.settings
     ])
   );
   var getEnabledBlockParents = (0, import_data3.createSelector)(
@@ -53116,7 +53183,7 @@ var wp;
         "span",
         {
           className: "block-editor-list-view__expander",
-          onClick: (event) => onClick(event, { forceToggle: true }),
+          onClick: onClick ? (event) => onClick(event, { forceToggle: true }) : void 0,
           "aria-hidden": "true",
           "data-testid": "list-view-expander",
           children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(icon_default, { icon: (0, import_i18n104.isRTL)() ? chevron_left_small_default : chevron_right_small_default })
@@ -53216,7 +53283,8 @@ var wp;
     draggable,
     isExpanded,
     ariaDescribedBy,
-    visibilityLabel
+    visibilityLabel,
+    isDisabled = false
   }, ref) {
     const blockInformation = useBlockDisplayInformation(clientId);
     const blockTitle = useBlockDisplayTitle({
@@ -53236,94 +53304,99 @@ var wp;
         onClick(event);
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(
-      "a",
-      {
-        className: clsx_default(
-          "block-editor-list-view-block-select-button",
-          className
-        ),
-        onClick,
-        onContextMenu,
-        onKeyDown,
-        onMouseDown,
-        ref,
-        tabIndex,
-        onFocus,
-        onDragStart: onDragStartHandler,
-        onDragEnd,
-        draggable,
-        href: `#block-${clientId}`,
-        "aria-describedby": ariaDescribedBy,
-        "aria-expanded": isExpanded,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(ListViewExpander, { onClick: onToggleExpanded }),
-          /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-            block_icon_default,
-            {
-              icon: blockInformation?.icon,
-              showColors: true,
-              context: "list-view"
-            }
+    return (
+      // Disabled list view items intentionally omit href so TreeGrid skips them.
+      // eslint-disable-next-line jsx-a11y/anchor-is-valid
+      /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(
+        "a",
+        {
+          className: clsx_default(
+            "block-editor-list-view-block-select-button",
+            className
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(
-            import_components120.__experimentalHStack,
-            {
-              alignment: "center",
-              className: "block-editor-list-view-block-select-button__label-wrapper",
-              justify: "flex-start",
-              spacing: 1,
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(import_components120.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) }),
-                blockInformation?.anchor && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(WCBadge3, { className: "block-editor-list-view-block-select-button__anchor", children: blockInformation.anchor }) }),
-                isSticky && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("span", { className: "block-editor-list-view-block-select-button__sticky", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(icon_default, { icon: pin_small_default }) }),
-                images.length ? /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-                  "span",
-                  {
-                    className: "block-editor-list-view-block-select-button__images",
-                    "aria-hidden": true,
-                    children: images.map((image, index2) => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-                      "span",
-                      {
-                        className: "block-editor-list-view-block-select-button__image",
-                        style: {
-                          backgroundImage: `url(${image.url})`,
-                          zIndex: images.length - index2
-                          // Ensure the first image is on top, and subsequent images are behind.
-                        }
-                      },
-                      image.clientId
-                    ))
-                  }
-                ) : null,
-                !!visibilityLabel && // The tooltip below is a sighted-hover affordance for
-                // the (decorative) visibility icon. The same
-                // `visibilityLabel` is exposed to assistive technology
-                // via the row's `aria-describedby`, which references the
-                // hidden `AriaReferencedText` rendered by the parent
-                // `ListViewBlock`.
-                /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(tooltip_exports.Root, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-                    tooltip_exports.Trigger,
+          onClick,
+          onContextMenu,
+          onKeyDown,
+          onMouseDown,
+          ref,
+          tabIndex,
+          onFocus,
+          onDragStart: onDragStartHandler,
+          onDragEnd,
+          draggable,
+          href: isDisabled ? void 0 : `#block-${clientId}`,
+          "aria-disabled": isDisabled ? true : void 0,
+          "aria-describedby": ariaDescribedBy,
+          "aria-expanded": isExpanded,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(ListViewExpander, { onClick: onToggleExpanded }),
+            /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+              block_icon_default,
+              {
+                icon: blockInformation?.icon,
+                showColors: true,
+                context: "list-view"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(
+              import_components120.__experimentalHStack,
+              {
+                alignment: "center",
+                className: "block-editor-list-view-block-select-button__label-wrapper",
+                justify: "flex-start",
+                spacing: 1,
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(import_components120.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) }),
+                  blockInformation?.anchor && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(WCBadge3, { className: "block-editor-list-view-block-select-button__anchor", children: blockInformation.anchor }) }),
+                  isSticky && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("span", { className: "block-editor-list-view-block-select-button__sticky", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(icon_default, { icon: pin_small_default }) }),
+                  images.length ? /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+                    "span",
                     {
-                      render: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+                      className: "block-editor-list-view-block-select-button__images",
+                      "aria-hidden": true,
+                      children: images.map((image, index2) => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
                         "span",
                         {
-                          className: "block-editor-list-view-block-select-button__block-visibility",
-                          "aria-hidden": "true",
-                          children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(icon_default, { icon: unseen_default })
-                        }
-                      )
+                          className: "block-editor-list-view-block-select-button__image",
+                          style: {
+                            backgroundImage: `url(${image.url})`,
+                            zIndex: images.length - index2
+                            // Ensure the first image is on top, and subsequent images are behind.
+                          }
+                        },
+                        image.clientId
+                      ))
                     }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(tooltip_exports.Popup, { children: visibilityLabel })
-                ] }),
-                shouldShowLockIcon && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("span", { className: "block-editor-list-view-block-select-button__lock", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(icon_default, { icon: lock_small_default }) })
-              ]
-            }
-          )
-        ]
-      }
+                  ) : null,
+                  !!visibilityLabel && // The tooltip below is a sighted-hover affordance for
+                  // the (decorative) visibility icon. The same
+                  // `visibilityLabel` is exposed to assistive technology
+                  // via the row's `aria-describedby`, which references the
+                  // hidden `AriaReferencedText` rendered by the parent
+                  // `ListViewBlock`.
+                  /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(tooltip_exports.Root, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+                      tooltip_exports.Trigger,
+                      {
+                        render: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+                          "span",
+                          {
+                            className: "block-editor-list-view-block-select-button__block-visibility",
+                            "aria-hidden": "true",
+                            children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(icon_default, { icon: unseen_default })
+                          }
+                        )
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(tooltip_exports.Popup, { children: visibilityLabel })
+                  ] }),
+                  shouldShowLockIcon && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("span", { className: "block-editor-list-view-block-select-button__lock", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(icon_default, { icon: lock_small_default }) })
+                ]
+              }
+            )
+          ]
+        }
+      )
     );
   }
   var block_select_button_default = (0, import_element164.forwardRef)(ListViewBlockSelectButton);
@@ -53537,7 +53610,8 @@ var wp;
       removeBlocks: removeBlocks2,
       insertAfterBlock: insertAfterBlock2,
       insertBeforeBlock: insertBeforeBlock2,
-      showViewportModal: showViewportModal2
+      showViewportModal: showViewportModal2,
+      stopEditingContentOnlySection: stopEditingContentOnlySection2
     } = unlock((0, import_data126.useDispatch)(store));
     const debouncedToggleBlockHighlight = (0, import_compose70.useDebounce)(
       toggleBlockHighlight2,
@@ -53560,19 +53634,32 @@ var wp;
     const { getGroupingBlockName } = (0, import_data126.useSelect)(import_blocks78.store);
     const blockInformation = useBlockDisplayInformation(clientId);
     const pasteStyles = usePasteStyles();
-    const { block, blockName, allowRightClickOverrides } = (0, import_data126.useSelect)(
+    const {
+      block,
+      blockName,
+      blockEditingMode,
+      allowRightClickOverrides,
+      editedSection
+    } = (0, import_data126.useSelect)(
       (select3) => {
-        const { getBlock: getBlock2, getBlockName: getBlockName2, getSettings: getSettings7 } = unlock(
-          select3(store)
-        );
+        const {
+          getBlock: getBlock2,
+          getBlockName: getBlockName2,
+          getBlockEditingMode: getBlockEditingModeForClientId,
+          getSettings: getSettings7,
+          getEditedContentOnlySection: getEditedContentOnlySection2
+        } = unlock(select3(store));
         return {
           block: getBlock2(clientId),
           blockName: getBlockName2(clientId),
-          allowRightClickOverrides: getSettings7().allowRightClickOverrides
+          blockEditingMode: getBlockEditingModeForClientId(clientId),
+          allowRightClickOverrides: getSettings7().allowRightClickOverrides,
+          editedSection: getEditedContentOnlySection2()
         };
       },
       [clientId]
     );
+    const isDisabled = blockEditingMode === "disabled";
     const { canRename } = useBlockRename(blockName);
     const showBlockActions = (
       // When a block hides its toolbar it also hides the block settings menu,
@@ -53612,6 +53699,12 @@ var wp;
         return;
       }
       if (event.target.closest("[role=dialog]")) {
+        return;
+      }
+      if (editedSection && isMatch("core/block-editor/unselect", event)) {
+        event.stopPropagation();
+        event.preventDefault();
+        stopEditingContentOnlySection2();
         return;
       }
       const isDeleteKey = [import_keycodes15.BACKSPACE, import_keycodes15.DELETE].includes(event.keyCode);
@@ -53840,7 +53933,8 @@ var wp;
       block?.attributes?.metadata?.blockVisibility
     );
     const hasSiblings = siblingBlockCount > 0;
-    const hasRenderedMovers = showBlockMovers && hasSiblings;
+    const canShowBlockActions = showBlockActions && !isDisabled;
+    const hasRenderedMovers = showBlockMovers && hasSiblings && !isDisabled;
     const moverCellClassName = clsx_default(
       "block-editor-list-view-block__mover-cell",
       { "is-visible": isHovered || isSelected }
@@ -53852,7 +53946,7 @@ var wp;
     let colSpan;
     if (hasRenderedMovers) {
       colSpan = 2;
-    } else if (!showBlockActions) {
+    } else if (!canShowBlockActions) {
       colSpan = 3;
     }
     const classes = clsx_default({
@@ -53864,25 +53958,34 @@ var wp;
       "is-dragging": isDragged,
       "has-single-cell": !showBlockActions,
       "is-synced": blockInformation?.isSynced,
-      "is-draggable": canMoveBlock2,
+      "is-draggable": canMoveBlock2 && !isDisabled,
       "is-displacement-normal": displacement === "normal",
       "is-displacement-up": displacement === "up",
       "is-displacement-down": displacement === "down",
       "is-after-dragged-blocks": isAfterDraggedBlocks,
-      "is-nesting": isNesting
+      "is-nesting": isNesting,
+      "is-disabled": isDisabled
     });
     const dropdownClientIds = selectedClientIds.includes(clientId) ? selectedClientIds : [clientId];
-    const currentlyEditingBlockInCanvas = isSelected && selectedClientIds.length === 1;
+    const getListViewBlockTabIndex = (rovingTabIndex) => {
+      if (isDisabled) {
+        return -1;
+      }
+      if (isSelected && selectedClientIds.length === 1) {
+        return 0;
+      }
+      return rovingTabIndex;
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(
       leaf_default,
       {
         className: classes,
         isDragged,
         onKeyDown,
-        onMouseEnter,
-        onMouseLeave,
-        onFocus: onMouseEnter,
-        onBlur: onMouseLeave,
+        onMouseEnter: isDisabled ? void 0 : onMouseEnter,
+        onMouseLeave: isDisabled ? void 0 : onMouseLeave,
+        onFocus: isDisabled ? void 0 : onMouseEnter,
+        onBlur: isDisabled ? void 0 : onMouseLeave,
         level,
         position,
         rowCount,
@@ -53905,20 +54008,21 @@ var wp;
                   {
                     block,
                     onClick: selectEditorBlock,
-                    onContextMenu,
+                    onContextMenu: isDisabled ? void 0 : onContextMenu,
                     onMouseDown,
-                    onToggleExpanded: toggleExpanded,
+                    onToggleExpanded: isDisabled ? void 0 : toggleExpanded,
                     isSelected,
                     position,
                     siblingBlockCount,
                     level,
                     ref,
-                    tabIndex: currentlyEditingBlockInCanvas ? 0 : tabIndex,
+                    tabIndex: getListViewBlockTabIndex(tabIndex),
                     onFocus,
                     isExpanded: canEditBlock2 ? isExpanded : void 0,
                     selectedClientIds,
                     ariaDescribedBy: descriptionId,
-                    visibilityLabel: blockVisibilityDescription
+                    visibilityLabel: blockVisibilityDescription,
+                    isDisabled
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(AriaReferencedText, { id: descriptionId, children: [
@@ -53958,7 +54062,7 @@ var wp;
               ]
             }
           ) }),
-          showBlockActions && BlockSettingsMenu2 && /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+          canShowBlockActions && BlockSettingsMenu2 && /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
             import_components121.__experimentalTreeGridCell,
             {
               className: listViewBlockSettingsClassName,
@@ -54544,12 +54648,12 @@ var wp;
         const {
           getDraggedBlockClientIds: getDraggedBlockClientIds2,
           getSelectedBlockClientIds: getSelectedBlockClientIds2,
-          getEnabledClientIdsTree: getEnabledClientIdsTree2
+          getListViewClientIdsTree: getListViewClientIdsTree2
         } = unlock(select3(store));
         return {
           selectedClientIds: getSelectedBlockClientIds2(),
           draggedClientIds: getDraggedBlockClientIds2(),
-          clientIdsTree: blocks2 ?? getEnabledClientIdsTree2(rootClientId)
+          clientIdsTree: blocks2 ?? getListViewClientIdsTree2(rootClientId)
         };
       },
       [blocks2, rootClientId]
@@ -66092,11 +66196,14 @@ var wp;
     editContentOnlySection: editContentOnlySection2,
     stopEditingContentOnlySection: stopEditingContentOnlySection2
   }) {
+    const { selectBlock: selectBlock2 } = (0, import_data153.useDispatch)(store);
     const handleClick = () => {
       if (!editedContentOnlySection2) {
         editContentOnlySection2(clientId);
+        selectBlock2(clientId);
       } else {
         stopEditingContentOnlySection2();
+        selectBlock2(clientId);
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(import_components189.__experimentalVStack, { className: "block-editor-block-inspector-edit-contents", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
