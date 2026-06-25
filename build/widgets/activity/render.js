@@ -26333,94 +26333,6 @@ function filterSortAndPaginate(data, view, fields) {
   };
 }
 
-// packages/style-runtime/src/index.ts
-var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
-function getRuntime14() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument14(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash14(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE14}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE14) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle14(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime14();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash14(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE14, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument14(targetDocument) {
-  const runtime = getRuntime14();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle14(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle14(hash, css) {
-  const runtime = getRuntime14();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle14(targetDocument, hash, css);
-  }
-}
-
-// widgets/activity/style.module.css
-if (typeof process === "undefined" || true) {
-  registerStyle14("4aa3daa799", "._784d2967c5e53514__loading{height:100%}._21768f83511c9ec9__list{max-height:420px}");
-}
-var style_default13 = { "loading": "_784d2967c5e53514__loading", "list": "_21768f83511c9ec9__list" };
-
 // widgets/activity/render.tsx
 var import_jsx_runtime118 = __toESM(require_jsx_runtime());
 function formatGroupDate(dateStr) {
@@ -26512,9 +26424,7 @@ var DEFAULT_VIEW = {
     showLabel: false
   }
 };
-function Activity({
-  attributes
-}) {
+function Activity({ attributes }) {
   const perPage = Math.max(1, attributes?.perPage ?? DEFAULT_PER_PAGE);
   const [view, setView] = (0, import_element84.useState)(DEFAULT_VIEW);
   const queries = (0, import_element84.useMemo)(
@@ -26626,7 +26536,7 @@ function Activity({
         direction: "column",
         align: "center",
         justify: "center",
-        className: style_default13.loading,
+        style: { height: "100%" },
         children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_components46.Spinner, {})
       }
     );
@@ -26638,7 +26548,7 @@ function Activity({
         direction: "column",
         align: "center",
         justify: "center",
-        className: style_default13.loading,
+        style: { height: "100%" },
         children: /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(empty_state_exports.Root, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(empty_state_exports.Icon, { icon: post_list_default }),
           /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(empty_state_exports.Title, { children: (0, import_i18n45.__)("No activity yet.") }),
@@ -26649,7 +26559,7 @@ function Activity({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Stack, { direction: "column", className: style_default13.list, children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     dataviews_default,
     {
       data: shownData,
@@ -26672,7 +26582,7 @@ function Activity({
       isItemClickable: (item) => !!item.link,
       children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(dataviews_default.Layout, {})
     }
-  ) });
+  );
 }
 export {
   Activity as default
