@@ -14650,7 +14650,7 @@ var ReactDOM = (() => {
               "" !== value || didWarnForNewBooleanPropsWithEmptyValue[key] || (didWarnForNewBooleanPropsWithEmptyValue[key] = true, console.error(
                 "Received an empty string for a boolean attribute `%s`. This will treat the attribute as if it were false. Either pass `false` to silence this warning, or pass `true` if you used an empty string in earlier versions of React to indicate this attribute is true.",
                 key
-              ));
+              )); if ( "string" === typeof value ) value = true; 
             case "allowFullScreen":
             case "async":
             case "autoPlay":
