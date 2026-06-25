@@ -70479,11 +70479,7 @@ ${js}
           }
         });
       };
-      if (tabsList.length > prevCount) {
-        focusButtonAt(tabsList.length - 1);
-      } else {
-        focusButtonAt(effectiveActiveIndex);
-      }
+      focusButtonAt(effectiveActiveIndex);
     }, [tabsList.length, effectiveActiveIndex]);
     const blockProps = (0, import_block_editor265.useBlockProps)({
       role: "tablist",
