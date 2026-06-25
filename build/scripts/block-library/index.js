@@ -32690,7 +32690,6 @@ ${js}
       { loadedNaturalWidth, loadedNaturalHeight },
       setLoadedNaturalSize
     ] = (0, import_element47.useState)({});
-    const [isEditingImage, setIsEditingImage] = (0, import_element47.useState)(false);
     const [externalBlob, setExternalBlob] = (0, import_element47.useState)();
     const [hasImageErrored, setHasImageErrored] = (0, import_element47.useState)(false);
     const hasNonContentControls = blockEditingMode === "default";
@@ -32841,13 +32840,8 @@ ${js}
         }
       });
     }
-    (0, import_element47.useEffect)(() => {
-      if (!isSingleSelected) {
-        setIsEditingImage(false);
-      }
-    }, [isSingleSelected]);
     const canEditImage = id && naturalWidth && naturalHeight && imageEditing && !!editMediaEntity;
-    const allowCrop = isSingleSelected && canEditImage && !isEditingImage && !isContentOnlyMode && !isUploading;
+    const allowCrop = isSingleSelected && canEditImage && !!openImageMediaEditorModal && !isContentOnlyMode && !isUploading;
     function switchToCover() {
       replaceBlocks(
         clientId,
@@ -33042,10 +33036,10 @@ ${js}
         metadata?.bindings
       ]
     );
-    const showUrlInput = isSingleSelected && !isEditingImage && !lockHrefControls && !lockUrlControls && !isDecorative;
+    const showUrlInput = isSingleSelected && !lockHrefControls && !lockUrlControls && !isDecorative;
     const showCoverControls = isSingleSelected && canInsertCover && !isContentOnlyMode;
     const showBlockControls = showUrlInput || allowCrop || showCoverControls;
-    const mediaReplaceFlow = isSingleSelected && !isEditingImage && !lockUrlControls && // For contentOnly mode, put this button in its own area so it has borders around it.
+    const mediaReplaceFlow = isSingleSelected && !lockUrlControls && // For contentOnly mode, put this button in its own area so it has borders around it.
     /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_block_editor114.BlockControls, { group: isContentOnlyMode ? "inline" : "other", children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
       import_block_editor114.MediaReplaceFlow,
       {
@@ -33084,8 +33078,8 @@ ${js}
           import_components57.ToolbarButton,
           {
             ref: cropButtonRef,
-            onClick: openImageMediaEditorModal ? openImageMediaEditorModal : () => setIsEditingImage(true),
-            "aria-haspopup": openImageMediaEditorModal ? "dialog" : void 0,
+            onClick: openImageMediaEditorModal,
+            "aria-haspopup": "dialog",
             icon: crop_default,
             label: (0, import_i18n96.__)("Crop")
           }
@@ -33318,10 +33312,9 @@ ${js}
     }
     const borderProps = (0, import_block_editor114.__experimentalUseBorderProps)(attributes2);
     const shadowProps = (0, import_block_editor114.__experimentalGetShadowClassesAndStyles)(attributes2);
-    const isRounded = attributes2.className?.includes("is-style-rounded");
     const { postType, postId, queryId } = context;
     const isDescendentOfQueryLoop = Number.isFinite(queryId);
-    let img = temporaryURL && hasImageErrored ? (
+    const img = /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(ImageWrapper, { href, children: temporaryURL && hasImageErrored ? (
       // Show a placeholder during upload when the blob URL can't be loaded. This can
       // happen when the user uploads a HEIC image in a browser that doesn't support them.
       /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
@@ -33371,28 +33364,9 @@ ${js}
         }
       ),
       isUploading && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components57.Spinner, {})
-    ] });
-    if (canEditImage && isEditingImage) {
-      img = /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(ImageWrapper, { href, children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
-        import_block_editor114.__experimentalImageEditor,
-        {
-          id,
-          url,
-          ...pixelSize,
-          naturalHeight,
-          naturalWidth,
-          onSaveImage: (imageAttributes) => setAttributes(imageAttributes),
-          onFinishEditing: () => {
-            setIsEditingImage(false);
-          },
-          borderProps: isRounded ? void 0 : borderProps
-        }
-      ) });
-    } else {
-      img = /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(ImageWrapper, { href, children: img });
-    }
+    ] }) });
     let resizableBox;
-    if (isResizable && isSingleSelected && !isEditingImage && !isUploading && !SIZED_LAYOUTS.includes(parentLayoutType)) {
+    if (isResizable && isSingleSelected && !isUploading && !SIZED_LAYOUTS.includes(parentLayoutType)) {
       const numericRatio = aspectRatio && evalAspectRatio(aspectRatio);
       const customRatio = pixelSize.width / pixelSize.height;
       const naturalRatio = naturalWidth / naturalHeight;
@@ -64469,7 +64443,6 @@ ${js}
     const isWideAligned = ["wide", "full"].includes(align);
     const isResizable = !isWideAligned && isLargeViewport;
     const [{ naturalWidth, naturalHeight }, setNaturalSize] = (0, import_element123.useState)({});
-    const [isEditingImage, setIsEditingImage] = (0, import_element123.useState)(false);
     const cropButtonRef = (0, import_element123.useRef)();
     const { toggleSelection, __unstableMarkNextChangeAsNotPersistent } = (0, import_data133.useDispatch)(import_block_editor241.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -64501,11 +64474,6 @@ ${js}
         setAttributes({ shouldSyncIcon: false });
       }
     }, []);
-    (0, import_element123.useEffect)(() => {
-      if (!isSelected) {
-        setIsEditingImage(false);
-      }
-    }, [isSelected]);
     const handleMediaUpdate = ({ id: newId }) => {
       if (typeof newId === "number") {
         setLogo(newId);
@@ -64578,57 +64546,6 @@ ${js}
     }
     const canEditImage = logoId && naturalWidth && naturalHeight && imageEditing && !!editMediaEntity;
     const shouldShowCropAndDimensions = !isContentOnlyMode;
-    let imgEdit;
-    if (canEditImage && isEditingImage) {
-      imgEdit = /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-        import_block_editor241.__experimentalImageEditor,
-        {
-          id: logoId,
-          url: logoUrl,
-          width: currentWidth,
-          height: currentHeight,
-          naturalHeight,
-          naturalWidth,
-          onSaveImage: (imageAttributes) => {
-            setLogo(imageAttributes.id);
-          },
-          onFinishEditing: () => {
-            setIsEditingImage(false);
-          }
-        }
-      );
-    } else {
-      imgEdit = /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-        import_components148.ResizableBox,
-        {
-          size: {
-            width: currentWidth,
-            height: currentHeight
-          },
-          showHandle: isSelected && shouldShowCropAndDimensions,
-          minWidth,
-          maxWidth: maxWidthBuffer,
-          minHeight,
-          maxHeight: maxWidthBuffer / ratio,
-          lockAspectRatio: true,
-          enable: {
-            top: false,
-            right: showRightHandle,
-            bottom: true,
-            left: showLeftHandle
-          },
-          onResizeStart,
-          onResizeStop: (event, direction, elt, delta) => {
-            onResizeStop();
-            setAttributes({
-              width: parseInt(currentWidth + delta.width, 10),
-              height: parseInt(currentHeight + delta.height, 10)
-            });
-          },
-          children: imgWrapper
-        }
-      );
-    }
     const shouldUseNewUrl = !window?.__experimentalUseCustomizerSiteLogoUrl;
     const siteIconSettingsUrl = shouldUseNewUrl ? siteUrl + "/wp-admin/options-general.php" : siteUrl + "/wp-admin/customize.php?autofocus[section]=title_tagline";
     const syncSiteIconHelpText = (0, import_element123.createInterpolateElement)(
@@ -64744,21 +64661,50 @@ ${js}
           ]
         }
       ) }),
-      canEditImage && !isEditingImage && shouldShowCropAndDimensions && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_block_editor241.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+      canEditImage && openMediaEditorModal && shouldShowCropAndDimensions && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_block_editor241.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
         import_components148.ToolbarButton,
         {
           ref: cropButtonRef,
-          onClick: openMediaEditorModal && logoId ? () => openMediaEditorModal({
+          onClick: () => openMediaEditorModal({
             id: logoId,
             onUpdate: handleMediaUpdate,
             onClose: () => cropButtonRef.current?.focus()
-          }) : () => setIsEditingImage(true),
-          "aria-haspopup": openMediaEditorModal && logoId ? "dialog" : void 0,
+          }),
+          "aria-haspopup": "dialog",
           icon: crop_default,
           label: (0, import_i18n230.__)("Crop")
         }
       ) }),
-      imgEdit
+      /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+        import_components148.ResizableBox,
+        {
+          size: {
+            width: currentWidth,
+            height: currentHeight
+          },
+          showHandle: isSelected && shouldShowCropAndDimensions,
+          minWidth,
+          maxWidth: maxWidthBuffer,
+          minHeight,
+          maxHeight: maxWidthBuffer / ratio,
+          lockAspectRatio: true,
+          enable: {
+            top: false,
+            right: showRightHandle,
+            bottom: true,
+            left: showLeftHandle
+          },
+          onResizeStart,
+          onResizeStop: (event, direction, elt, delta) => {
+            onResizeStop();
+            setAttributes({
+              width: parseInt(currentWidth + delta.width, 10),
+              height: parseInt(currentHeight + delta.height, 10)
+            });
+          },
+          children: imgWrapper
+        }
+      )
     ] });
   };
   function LogoEdit({
