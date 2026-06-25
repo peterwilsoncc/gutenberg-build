@@ -71697,6 +71697,30 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/commands/index.mjs
+  function getTogglePatternEditingCommand({
+    disableContentOnlyForPatternsAndTemplateParts,
+    stopEditingContentOnlySection,
+    updateEditorSettings: updateEditorSettings2
+  }) {
+    return {
+      name: "core/toggle-pattern-editing",
+      label: disableContentOnlyForPatternsAndTemplateParts ? (0, import_i18n190.__)("Disable editing all patterns") : (0, import_i18n190.__)("Enable editing all patterns"),
+      icon: symbol_default,
+      category: "command",
+      callback: ({ close }) => {
+        const disableContentOnly = !disableContentOnlyForPatternsAndTemplateParts;
+        stopEditingContentOnlySection();
+        updateEditorSettings2({
+          disableContentOnlyForUnsyncedPatterns: disableContentOnly,
+          disableContentOnlyForTemplateParts: disableContentOnly
+        });
+        close();
+      }
+    };
+  }
+  function isPatternOrTemplatePartBlock(blockName, attributes) {
+    return !!attributes?.metadata?.patternName || blockName === "core/template-part";
+  }
   var getEditorCommandLoader = () => function useEditorCommandLoader() {
     const {
       editorMode,
@@ -71817,21 +71841,13 @@ If there's a particular need for this, please submit a feature request at https:
         close();
       }
     });
-    commands.push({
-      name: "core/toggle-pattern-editing",
-      label: disableContentOnlyForPatternsAndTemplateParts ? (0, import_i18n190.__)("Disable editing all patterns") : (0, import_i18n190.__)("Enable editing all patterns"),
-      icon: symbol_default,
-      category: "command",
-      callback: ({ close }) => {
-        const disableContentOnly = !disableContentOnlyForPatternsAndTemplateParts;
-        stopEditingContentOnlySection();
-        updateEditorSettings2({
-          disableContentOnlyForUnsyncedPatterns: disableContentOnly,
-          disableContentOnlyForTemplateParts: disableContentOnly
-        });
-        close();
-      }
-    });
+    commands.push(
+      getTogglePatternEditingCommand({
+        disableContentOnlyForPatternsAndTemplateParts,
+        stopEditingContentOnlySection,
+        updateEditorSettings: updateEditorSettings2
+      })
+    );
     if (allowSwitchEditorMode) {
       commands.push({
         name: "core/toggle-code-editor",
@@ -71926,6 +71942,57 @@ If there's a particular need for this, please submit a feature request at https:
     return {
       commands,
       isLoading: false
+    };
+  };
+  var getPatternEditingContextualCommands = () => function usePatternEditingContextualCommands({ search }) {
+    const {
+      disableContentOnlyForPatternsAndTemplateParts,
+      hasPatternOrTemplatePartSelection,
+      isPreviewMode
+    } = (0, import_data70.useSelect)((select7) => {
+      const {
+        getBlockAttributes: getBlockAttributes2,
+        getBlockName: getBlockName2,
+        getBlockParents,
+        getSelectedBlockClientId: getSelectedBlockClientId2,
+        getSelectedBlockClientIds,
+        getSettings: getSettings10
+      } = select7(import_block_editor24.store);
+      const { getEditorSettings: getEditorSettings2 } = select7(store);
+      const editorSettings2 = getEditorSettings2();
+      const selectedBlockClientId = getSelectedBlockClientId2();
+      const selectedBlockClientIds = getSelectedBlockClientIds();
+      const clientIdsToCheck = selectedBlockClientId && selectedBlockClientIds.length === 1 ? [
+        selectedBlockClientId,
+        ...getBlockParents(selectedBlockClientId, true)
+      ] : [];
+      return {
+        disableContentOnlyForPatternsAndTemplateParts: !!editorSettings2.disableContentOnlyForUnsyncedPatterns && !!editorSettings2.disableContentOnlyForTemplateParts,
+        hasPatternOrTemplatePartSelection: clientIdsToCheck.some(
+          (clientId) => isPatternOrTemplatePartBlock(
+            getBlockName2(clientId),
+            getBlockAttributes2(clientId)
+          )
+        ),
+        isPreviewMode: getSettings10().isPreviewMode
+      };
+    }, []);
+    const { updateEditorSettings: updateEditorSettings2 } = (0, import_data70.useDispatch)(store);
+    const { stopEditingContentOnlySection } = unlock(
+      (0, import_data70.useDispatch)(import_block_editor24.store)
+    );
+    if (search || !hasPatternOrTemplatePartSelection && !disableContentOnlyForPatternsAndTemplateParts || isPreviewMode) {
+      return { isLoading: false, commands: [] };
+    }
+    return {
+      isLoading: false,
+      commands: [
+        getTogglePatternEditingCommand({
+          disableContentOnlyForPatternsAndTemplateParts,
+          stopEditingContentOnlySection,
+          updateEditorSettings: updateEditorSettings2
+        })
+      ]
     };
   };
   var getEditedEntityContextualCommands = () => function useEditedEntityContextualCommands() {
@@ -72087,6 +72154,11 @@ If there's a particular need for this, please submit a feature request at https:
       name: "core/editor/contextual-commands",
       hook: getEditedEntityContextualCommands(),
       context: "entity-edit"
+    });
+    (0, import_commands.useCommandLoader)({
+      name: "core/editor/pattern-editing-contextual-commands",
+      hook: getPatternEditingContextualCommands(),
+      context: "block-selection-edit"
     });
     (0, import_commands.useCommandLoader)({
       name: "core/editor/page-content-focus",
