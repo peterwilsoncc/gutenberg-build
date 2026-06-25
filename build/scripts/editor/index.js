@@ -74951,7 +74951,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data97 = __toESM(require_data(), 1);
   var import_components163 = __toESM(require_components(), 1);
   var import_block_editor41 = __toESM(require_block_editor(), 1);
-  var import_keycodes11 = __toESM(require_keycodes(), 1);
   var import_core_data64 = __toESM(require_core_data(), 1);
   var import_commands3 = __toESM(require_commands(), 1);
   var import_element216 = __toESM(require_element(), 1);
@@ -76800,7 +76799,6 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { open: openCommandCenter } = (0, import_data97.useDispatch)(import_commands3.store);
     const isReducedMotion = (0, import_compose35.useReducedMotion)();
-    const hasShortcut = !window.__experimentalAdminBarInEditor;
     const isTemplate2 = TEMPLATE_POST_TYPES.includes(postType2);
     const hasBackButton = !!onNavigateToPreviousEntityRecord || !!unlockedPatternInfo;
     const entityTitle = isTemplate2 ? templateTitle : documentTitle;
@@ -76823,8 +76821,7 @@ If there's a particular need for this, please submit a feature request at https:
       "div",
       {
         className: clsx_default("editor-document-bar", {
-          "has-back-button": hasBackButton,
-          "has-shortcut": hasShortcut
+          "has-back-button": hasBackButton
         }),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(import_components163.__unstableAnimatePresence, { children: hasBackButton && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
@@ -76848,42 +76845,39 @@ If there's a particular need for this, please submit a feature request at https:
               className: "editor-document-bar__icon-layout"
             }
           ),
-          isNotFound ? /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(import_components163.__experimentalText, { children: (0, import_i18n208.__)("Document not found") }) : /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
+          isNotFound ? /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(import_components163.__experimentalText, { children: (0, import_i18n208.__)("Document not found") }) : /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
             import_components163.Button,
             {
               className: "editor-document-bar__command",
               onClick: () => openCommandCenter(),
               size: "compact",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
-                  import_components163.__unstableMotion.div,
-                  {
-                    className: "editor-document-bar__title",
-                    initial: mountedRef.current ? {
-                      opacity: 0,
-                      transform: hasBackButton ? "translateX(15%)" : "translateX(-15%)"
-                    } : false,
-                    animate: {
-                      opacity: 1,
-                      transform: "translateX(0%)"
-                    },
-                    transition: isReducedMotion ? { duration: 0 } : void 0,
-                    children: [
-                      icon && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(import_block_editor41.BlockIcon, { icon }),
-                      /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(import_components163.__experimentalText, { size: "body", as: "h1", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__post-title", children: title ? (0, import_dom22.__unstableStripHTML)(title) : (0, import_i18n208.__)("No title") }),
-                        unlockedPatternInfo && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__post-type-label", children: unlockedPatternInfo.type === "template-part" ? `\xB7 ${(0, import_i18n208.__)("Template Part")}` : `\xB7 ${(0, import_i18n208.__)("Pattern")}` }),
-                        !unlockedPatternInfo && pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${pageTypeBadge}` }),
-                        !unlockedPatternInfo && postTypeLabel && !props.title && !pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${(0, import_html_entities14.decodeEntities)(
-                          postTypeLabel
-                        )}` })
-                      ] })
-                    ]
+              children: /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(
+                import_components163.__unstableMotion.div,
+                {
+                  className: "editor-document-bar__title",
+                  initial: mountedRef.current ? {
+                    opacity: 0,
+                    transform: hasBackButton ? "translateX(15%)" : "translateX(-15%)"
+                  } : false,
+                  animate: {
+                    opacity: 1,
+                    transform: "translateX(0%)"
                   },
-                  hasBackButton
-                ),
-                hasShortcut && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__shortcut", children: import_keycodes11.displayShortcut.primary("k") })
-              ]
+                  transition: isReducedMotion ? { duration: 0 } : void 0,
+                  children: [
+                    icon && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(import_block_editor41.BlockIcon, { icon }),
+                    /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(import_components163.__experimentalText, { size: "body", as: "h1", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__post-title", children: title ? (0, import_dom22.__unstableStripHTML)(title) : (0, import_i18n208.__)("No title") }),
+                      unlockedPatternInfo && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__post-type-label", children: unlockedPatternInfo.type === "template-part" ? `\xB7 ${(0, import_i18n208.__)("Template Part")}` : `\xB7 ${(0, import_i18n208.__)("Pattern")}` }),
+                      !unlockedPatternInfo && pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${pageTypeBadge}` }),
+                      !unlockedPatternInfo && postTypeLabel && !props.title && !pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${(0, import_html_entities14.decodeEntities)(
+                        postTypeLabel
+                      )}` })
+                    ] })
+                  ]
+                },
+                hasBackButton
+              )
             }
           )
         ]
@@ -77147,7 +77141,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n210 = __toESM(require_i18n(), 1);
   var import_block_editor44 = __toESM(require_block_editor(), 1);
   var import_keyboard_shortcuts5 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes12 = __toESM(require_keycodes(), 1);
+  var import_keycodes11 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime373 = __toESM(require_jsx_runtime(), 1);
   function EditorKeyboardShortcutsRegister() {
     const { registerShortcut } = (0, import_data100.useDispatch)(import_keyboard_shortcuts5.store);
@@ -77191,7 +77185,7 @@ If there's a particular need for this, please submit a feature request at https:
         // history shortcut. It's a fine alias for both Windows and Linux.
         // Since there's no conflict for Ctrl+Shift+Z on both Windows and
         // Linux, we keep it as the default for consistency.
-        aliases: (0, import_keycodes12.isAppleOS)() ? [] : [
+        aliases: (0, import_keycodes11.isAppleOS)() ? [] : [
           {
             modifier: "primary",
             character: "y"
@@ -77286,11 +77280,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_components165 = __toESM(require_components(), 1);
   var import_data101 = __toESM(require_data(), 1);
-  var import_keycodes13 = __toESM(require_keycodes(), 1);
+  var import_keycodes12 = __toESM(require_keycodes(), 1);
   var import_element219 = __toESM(require_element(), 1);
   var import_jsx_runtime374 = __toESM(require_jsx_runtime(), 1);
   function EditorHistoryRedo(props, ref) {
-    const shortcut = (0, import_keycodes13.isAppleOS)() ? import_keycodes13.displayShortcut.primaryShift("z") : import_keycodes13.displayShortcut.primary("y");
+    const shortcut = (0, import_keycodes12.isAppleOS)() ? import_keycodes12.displayShortcut.primaryShift("z") : import_keycodes12.displayShortcut.primary("y");
     const hasRedo = (0, import_data101.useSelect)(
       (select7) => select7(store).hasEditorRedo(),
       []
@@ -77317,7 +77311,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n212 = __toESM(require_i18n(), 1);
   var import_components166 = __toESM(require_components(), 1);
   var import_data102 = __toESM(require_data(), 1);
-  var import_keycodes14 = __toESM(require_keycodes(), 1);
+  var import_keycodes13 = __toESM(require_keycodes(), 1);
   var import_element220 = __toESM(require_element(), 1);
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   function EditorHistoryUndo(props, ref) {
@@ -77334,7 +77328,7 @@ If there's a particular need for this, please submit a feature request at https:
         ref,
         icon: !(0, import_i18n212.isRTL)() ? undo_default : redo_default,
         label: (0, import_i18n212.__)("Undo"),
-        shortcut: import_keycodes14.displayShortcut.primary("z"),
+        shortcut: import_keycodes13.displayShortcut.primary("z"),
         "aria-disabled": !hasUndo,
         onClick: hasUndo ? undo2 : void 0,
         className: "editor-history__undo"
@@ -83179,7 +83173,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data166 = __toESM(require_data(), 1);
   var import_element254 = __toESM(require_element(), 1);
   var import_i18n261 = __toESM(require_i18n(), 1);
-  var import_keycodes15 = __toESM(require_keycodes(), 1);
+  var import_keycodes14 = __toESM(require_keycodes(), 1);
   var import_preferences14 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/post-status/index.mjs
@@ -83547,7 +83541,7 @@ If there's a particular need for this, please submit a feature request at https:
           })]: isSaving
         }) : void 0,
         onClick: isDisabled ? void 0 : () => savePost2(),
-        shortcut: isDisabled ? void 0 : import_keycodes15.displayShortcut.primary("s"),
+        shortcut: isDisabled ? void 0 : import_keycodes14.displayShortcut.primary("s"),
         variant: "tertiary",
         size: "compact",
         icon: isLargeViewport ? void 0 : cloud_upload_default,
@@ -84032,7 +84026,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities27 = __toESM(require_html_entities(), 1);
   var import_data177 = __toESM(require_data(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
-  var import_keycodes16 = __toESM(require_keycodes(), 1);
+  var import_keycodes15 = __toESM(require_keycodes(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
   var import_rich_text3 = __toESM(require_rich_text(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
@@ -84154,7 +84148,7 @@ If there's a particular need for this, please submit a feature request at https:
       insertDefaultBlock2(void 0, void 0, 0);
     }
     function onKeyDown(event) {
-      if (event.keyCode === import_keycodes16.ENTER) {
+      if (event.keyCode === import_keycodes15.ENTER) {
         event.preventDefault();
         onEnterPress();
       }
@@ -86000,7 +85994,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/more-menu/index.mjs
   var import_i18n283 = __toESM(require_i18n(), 1);
   var import_data200 = __toESM(require_data(), 1);
-  var import_keycodes17 = __toESM(require_keycodes(), 1);
+  var import_keycodes16 = __toESM(require_keycodes(), 1);
   var import_components241 = __toESM(require_components(), 1);
   var import_preferences16 = __toESM(require_preferences(), 1);
 
@@ -86177,7 +86171,7 @@ If there's a particular need for this, please submit a feature request at https:
                 messageDeactivated: (0, import_i18n283.__)(
                   "Distraction free mode deactivated."
                 ),
-                shortcut: import_keycodes17.displayShortcut.primaryShift(
+                shortcut: import_keycodes16.displayShortcut.primaryShift(
                   "\\"
                 )
               }
@@ -86213,7 +86207,7 @@ If there's a particular need for this, please submit a feature request at https:
               import_components241.MenuItem,
               {
                 onClick: () => openModal2("editor/keyboard-shortcut-help"),
-                shortcut: import_keycodes17.displayShortcut.access("h"),
+                shortcut: import_keycodes16.displayShortcut.access("h"),
                 children: (0, import_i18n283.__)("Keyboard shortcuts")
               }
             ),
@@ -86525,7 +86519,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor72 = __toESM(require_block_editor(), 1);
   var import_preferences19 = __toESM(require_preferences(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes18 = __toESM(require_keycodes(), 1);
+  var import_keycodes17 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime478 = __toESM(require_jsx_runtime(), 1);
   var ZoomOutToggle = ({ disabled: disabled2 }) => {
     const { isZoomOut, showIconLabels, isDistractionFree } = (0, import_data204.useSelect)(
@@ -86555,7 +86549,7 @@ If there's a particular need for this, please submit a feature request at https:
         keyCombination: {
           // `primaryShift+0` (`ctrl+shift+0`) is the shortcut for switching
           // to input mode in Windows, so apply a different key combination.
-          modifier: (0, import_keycodes18.isAppleOS)() ? "primaryShift" : "secondary",
+          modifier: (0, import_keycodes17.isAppleOS)() ? "primaryShift" : "secondary",
           character: "0"
         }
       });
@@ -88413,7 +88407,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose66 = __toESM(require_compose(), 1);
   var import_element285 = __toESM(require_element(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
-  var import_keycodes19 = __toESM(require_keycodes(), 1);
+  var import_keycodes18 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime486 = __toESM(require_jsx_runtime(), 1);
   var { PrivateInserterLibrary } = unlock(import_block_editor75.privateApis);
   function InserterSidebar() {
@@ -88459,7 +88453,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [inserterSidebarToggleRef2, setIsInserterOpened2]);
     const closeOnEscape = (0, import_element285.useCallback)(
       (event) => {
-        if (event.keyCode === import_keycodes19.ESCAPE && !event.defaultPrevented) {
+        if (event.keyCode === import_keycodes18.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
           closeInserterSidebar();
         }
@@ -88497,7 +88491,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element286 = __toESM(require_element(), 1);
   var import_i18n293 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes20 = __toESM(require_keycodes(), 1);
+  var import_keycodes19 = __toESM(require_keycodes(), 1);
 
   // packages/editor/build-module/components/list-view-sidebar/list-view-outline.mjs
   var import_components248 = __toESM(require_components(), 1);
@@ -88536,7 +88530,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [getListViewToggleRef2, setIsListViewOpened2]);
     const closeOnEscape = (0, import_element286.useCallback)(
       (event) => {
-        if (event.keyCode === import_keycodes20.ESCAPE && !event.defaultPrevented) {
+        if (event.keyCode === import_keycodes19.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
           closeListView();
         }
@@ -92562,7 +92556,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element314 = __toESM(require_element(), 1);
   var import_i18n322 = __toESM(require_i18n(), 1);
   var import_html_entities33 = __toESM(require_html_entities(), 1);
-  var import_keycodes21 = __toESM(require_keycodes(), 1);
+  var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_notices35 = __toESM(require_notices(), 1);
   var import_preferences27 = __toESM(require_preferences(), 1);
   var import_jsx_runtime521 = __toESM(require_jsx_runtime(), 1);
@@ -92645,7 +92639,7 @@ If there's a particular need for this, please submit a feature request at https:
                   "aria-label": tooltipText,
                   onClick: () => setIsSwapModalOpen(true),
                   onKeyDown: (event) => {
-                    if (event.keyCode === import_keycodes21.ENTER || event.keyCode === import_keycodes21.SPACE) {
+                    if (event.keyCode === import_keycodes20.ENTER || event.keyCode === import_keycodes20.SPACE) {
                       event.preventDefault();
                       setIsSwapModalOpen(true);
                     }
@@ -93305,7 +93299,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components278 = __toESM(require_components(), 1);
   var import_i18n329 = __toESM(require_i18n(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
-  var import_keycodes22 = __toESM(require_keycodes(), 1);
+  var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
   function NoteForm({ onSubmit, onCancel, note, labels }) {
     const [inputComment, setInputComment] = (0, import_element319.useState)(
@@ -93336,7 +93330,7 @@ If there's a particular need for this, please submit a feature request at https:
               rows: 1,
               maxRows: 20,
               onKeyDown: (event) => {
-                if (import_keycodes22.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
+                if (import_keycodes21.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
                   event.target.parentNode.requestSubmit();
                 }
                 if (event.key === "Escape") {

@@ -127,8 +127,8 @@ function gutenberg_initialize_experiments_settings() {
 				),
 				array(
 					'id'          => 'gutenberg-omnibar',
-					'label'       => __( 'Omnipresent Toolbar', 'gutenberg' ),
-					'description' => __( 'Improves the toolbar as navigation layer, including showing the toolbar in the fullscreen Post and Site Editor.', 'gutenberg' ),
+					'label'       => __( 'Toolbar UI refresh', 'gutenberg' ),
+					'description' => __( 'Previews a redesigned toolbar UI that is visually consistent everywhere. For now, it includes replacing home/odometer dashicon with site icon if set.', 'gutenberg' ),
 				),
 				array(
 					'id'          => 'gutenberg-react-19',
