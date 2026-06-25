@@ -69730,7 +69730,6 @@ var wp;
                   popoverPlacement: "left-start",
                   value: border,
                   __experimentalIsRenderedInSidebar: true,
-                  size: "__unstable-large",
                   hideLabelFromVision: !hasShadowControl,
                   label: (0, import_i18n191.__)("Border")
                 }
