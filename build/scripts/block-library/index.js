@@ -70630,12 +70630,13 @@ ${js}
   var import_element133 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tabs/use-tab-list-items-sync.mjs
+  var import_es62 = __toESM(require_es6(), 1);
   var import_block_editor266 = __toESM(require_block_editor(), 1);
   var import_data146 = __toESM(require_data(), 1);
   var import_element132 = __toESM(require_element(), 1);
   function useTabListItemsSync({ tabPanels, tabListClientId }) {
     const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data146.useDispatch)(import_block_editor266.store);
-    const prevTabsRef = (0, import_element132.useRef)(null);
+    const { getBlockAttributes: getBlockAttributes4 } = (0, import_data146.useSelect)(import_block_editor266.store);
     (0, import_element132.useEffect)(() => {
       if (!tabListClientId) {
         return;
@@ -70643,16 +70644,16 @@ ${js}
       const newTabs = tabPanels.map((tab) => ({
         label: tab.attributes.label || ""
       }));
-      const serialized = JSON.stringify(newTabs);
-      if (serialized === prevTabsRef.current) {
+      const currentTabs = getBlockAttributes4(tabListClientId)?.tabs ?? [];
+      if ((0, import_es62.default)(newTabs, currentTabs)) {
         return;
       }
-      prevTabsRef.current = serialized;
       __unstableMarkNextChangeAsNotPersistent();
       updateBlockAttributes(tabListClientId, { tabs: newTabs });
     }, [
       tabPanels,
       tabListClientId,
+      getBlockAttributes4,
       updateBlockAttributes,
       __unstableMarkNextChangeAsNotPersistent
     ]);
