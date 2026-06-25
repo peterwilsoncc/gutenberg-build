@@ -35117,7 +35117,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle6("f2c8d759d8", ".e10c29fc10c181dc__divider{border:0;margin:0}.e10c29fc10c181dc__divider[aria-orientation=horizontal]{block-size:0;border-block-end:1px solid currentColor;inline-size:auto;margin-block-end:var(--wp-components-divider-margin-end,0);margin-block-start:var(--wp-components-divider-margin-start,0)}.e10c29fc10c181dc__divider[aria-orientation=vertical]{block-size:auto;border-inline-end:1px solid currentColor;display:inline;inline-size:0;margin-inline-end:var(--wp-components-divider-margin-end,0);margin-inline-start:var(--wp-components-divider-margin-start,0)}");
+    registerStyle6("b6ebee9322", ".e10c29fc10c181dc__divider{border:0;margin:0}.e10c29fc10c181dc__divider:where([aria-orientation=horizontal]){block-size:0;border-block-end:1px solid currentColor;inline-size:auto;margin-block-end:var(--wp-components-divider-margin-end,0);margin-block-start:var(--wp-components-divider-margin-start,0)}.e10c29fc10c181dc__divider:where([aria-orientation=vertical]){block-size:auto;border-inline-end:1px solid currentColor;display:inline;inline-size:0;margin-inline-end:var(--wp-components-divider-margin-end,0);margin-inline-start:var(--wp-components-divider-margin-start,0)}");
   }
   var style_module_default6 = { "divider": "e10c29fc10c181dc__divider" };
   function UnconnectedDivider(props, forwardedRef) {
