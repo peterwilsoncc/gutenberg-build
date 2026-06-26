@@ -771,12 +771,12 @@ var wp;
       function getCaseSensitiveTagName(tagName) {
         return constants_1.CASE_SENSITIVE_TAG_NAMES_MAP[tagName];
       }
-      function formatAttributes(attributes2) {
+      function formatAttributes(attributes) {
         var map = {};
         var index = 0;
-        var attributesLength = attributes2.length;
+        var attributesLength = attributes.length;
         for (; index < attributesLength; index++) {
-          var attribute = attributes2[index];
+          var attribute = attributes[index];
           map[attribute.name] = attribute.value;
         }
         return map;
@@ -2262,14 +2262,14 @@ var wp;
         reset: true,
         submit: true
       };
-      function attributesToProps2(attributes2, nodeName) {
-        if (attributes2 === void 0) {
-          attributes2 = {};
+      function attributesToProps2(attributes, nodeName) {
+        if (attributes === void 0) {
+          attributes = {};
         }
         var props = {};
-        var isInputValueOnly = Boolean(attributes2.type && valueOnlyInputs[attributes2.type]);
-        for (var attributeName in attributes2) {
-          var attributeValue = attributes2[attributeName];
+        var isInputValueOnly = Boolean(attributes.type && valueOnlyInputs[attributes.type]);
+        for (var attributeName in attributes) {
+          var attributeValue = attributes[attributeName];
           if ((0, react_property_1.isCustomAttribute)(attributeName)) {
             props[attributeName] = attributeValue;
             continue;
@@ -2298,7 +2298,7 @@ var wp;
             props[attributeName] = attributeValue;
           }
         }
-        (0, utilities_1.setStyleProp)(attributes2.style, props);
+        (0, utilities_1.setStyleProp)(attributes.style, props);
         return props;
       }
       function getPropName(attributeName) {
@@ -5125,12 +5125,12 @@ var wp;
   var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE = [["core/accordion-heading"], ["core/accordion-panel"]];
   function Edit2({
-    attributes: attributes2,
+    attributes,
     clientId,
     setAttributes,
     isSelected: isSingleSelected
   }) {
-    const { openByDefault } = attributes2;
+    const { openByDefault } = attributes;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { isSelected } = (0, import_data3.useSelect)(
       (select9) => {
@@ -5201,8 +5201,8 @@ var wp;
   // packages/block-library/build-module/accordion-item/save.mjs
   var import_block_editor5 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
-  function save2({ attributes: attributes2 }) {
-    const { openByDefault } = attributes2;
+  function save2({ attributes }) {
+    const { openByDefault } = attributes;
     const blockProps = import_block_editor5.useBlockProps.save({
       className: clsx_default({
         "is-open": openByDefault
@@ -5302,8 +5302,8 @@ var wp;
   var import_block_editor6 = __toESM(require_block_editor(), 1);
   var import_data4 = __toESM(require_data(), 1);
   var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
-  function Edit3({ attributes: attributes2, setAttributes, context }) {
-    const { title } = attributes2;
+  function Edit3({ attributes, setAttributes, context }) {
+    const { title } = attributes;
     const {
       "core/accordion-icon-position": iconPosition,
       "core/accordion-show-icon": showIcon,
@@ -5329,7 +5329,7 @@ var wp;
       "typography.fluid",
       "layout"
     );
-    const typographyProps = (0, import_block_editor6.getTypographyClassesAndStyles)(attributes2, {
+    const typographyProps = (0, import_block_editor6.getTypographyClassesAndStyles)(attributes, {
       typography: {
         fluid: fluidTypographySettings
       },
@@ -5338,7 +5338,7 @@ var wp;
       }
     });
     const blockProps = (0, import_block_editor6.useBlockProps)();
-    const spacingProps = (0, import_block_editor6.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const spacingProps = (0, import_block_editor6.__experimentalGetSpacingClassesAndStyles)(attributes);
     return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(
       "button",
       {
@@ -5386,12 +5386,12 @@ var wp;
   // packages/block-library/build-module/accordion-heading/save.mjs
   var import_block_editor7 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
-  function save3({ attributes: attributes2 }) {
-    const { level, title, iconPosition, showIcon } = attributes2;
+  function save3({ attributes }) {
+    const { level, title, iconPosition, showIcon } = attributes;
     const TagName2 = "h" + (level || 3);
-    const typographyProps = (0, import_block_editor7.getTypographyClassesAndStyles)(attributes2);
+    const typographyProps = (0, import_block_editor7.getTypographyClassesAndStyles)(attributes);
     const blockProps = import_block_editor7.useBlockProps.save();
-    const spacingProps = (0, import_block_editor7.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const spacingProps = (0, import_block_editor7.__experimentalGetSpacingClassesAndStyles)(attributes);
     return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(
       "button",
       {
@@ -5600,11 +5600,11 @@ var wp;
       shadow: true,
       visibility: false
     },
-    save({ attributes: attributes2 }) {
-      const { level, title, iconPosition, showIcon } = attributes2;
+    save({ attributes }) {
+      const { level, title, iconPosition, showIcon } = attributes;
       const TagName2 = "h" + (level || 3);
       const blockProps = import_block_editor8.useBlockProps.save();
-      const spacingProps = (0, import_block_editor8.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const spacingProps = (0, import_block_editor8.__experimentalGetSpacingClassesAndStyles)(attributes);
       return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(
         "button",
         {
@@ -5714,12 +5714,12 @@ var wp;
       visibility: false,
       lock: false
     },
-    save({ attributes: attributes2 }) {
-      const { level, title, iconPosition, showIcon } = attributes2;
+    save({ attributes }) {
+      const { level, title, iconPosition, showIcon } = attributes;
       const TagName2 = "h" + (level || 3);
-      const typographyProps = (0, import_block_editor8.getTypographyClassesAndStyles)(attributes2);
+      const typographyProps = (0, import_block_editor8.getTypographyClassesAndStyles)(attributes);
       const blockProps = import_block_editor8.useBlockProps.save();
-      const spacingProps = (0, import_block_editor8.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const spacingProps = (0, import_block_editor8.__experimentalGetSpacingClassesAndStyles)(attributes);
       return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(
         "button",
         {
@@ -5784,8 +5784,8 @@ var wp;
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_data5 = __toESM(require_data(), 1);
   var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
-  function Edit4({ attributes: attributes2, context, clientId, isSelected }) {
-    const { allowedBlocks, templateLock } = attributes2;
+  function Edit4({ attributes, context, clientId, isSelected }) {
+    const { allowedBlocks, templateLock } = attributes;
     const openByDefault = context["core/accordion-open-by-default"];
     const { hasSelection } = (0, import_data5.useSelect)(
       (select9) => {
@@ -5995,11 +5995,11 @@ var wp;
   var import_server_side_render = __toESM(require_server_side_render(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
   var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
-  function ArchivesEdit({ attributes: attributes2, setAttributes, name: name122 }) {
-    const { showLabel, showPostCounts, displayAsDropdown, type } = attributes2;
+  function ArchivesEdit({ attributes, setAttributes, name: name122 }) {
+    const { showLabel, showPostCounts, displayAsDropdown, type } = attributes;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { content, status, error } = (0, import_server_side_render.useServerSideRender)({
-      attributes: attributes2,
+      attributes,
       skipBlockSupportAttributes: true,
       block: name122
     });
@@ -6346,7 +6346,7 @@ var wp;
   var AvatarInspectorControls = ({
     setAttributes,
     avatar,
-    attributes: attributes2,
+    attributes,
     selectUser
   }) => {
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -6369,7 +6369,7 @@ var wp;
             {
               label: (0, import_i18n8.__)("Image size"),
               isShownByDefault: true,
-              hasValue: () => attributes2?.size !== 96,
+              hasValue: () => attributes?.size !== 96,
               onDeselect: () => setAttributes({ size: 96 }),
               children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
                 import_components5.RangeControl,
@@ -6381,8 +6381,8 @@ var wp;
                   }),
                   min: avatar.minSize,
                   max: avatar.maxSize,
-                  initialPosition: attributes2?.size,
-                  value: attributes2?.size
+                  initialPosition: attributes?.size,
+                  value: attributes?.size
                 }
               )
             }
@@ -6392,24 +6392,24 @@ var wp;
             {
               label: (0, import_i18n8.__)("Link to user profile"),
               isShownByDefault: true,
-              hasValue: () => attributes2?.isLink,
+              hasValue: () => attributes?.isLink,
               onDeselect: () => setAttributes({ isLink: false }),
               children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
                 import_components5.ToggleControl,
                 {
                   label: (0, import_i18n8.__)("Link to user profile"),
-                  onChange: () => setAttributes({ isLink: !attributes2.isLink }),
-                  checked: attributes2.isLink
+                  onChange: () => setAttributes({ isLink: !attributes.isLink }),
+                  checked: attributes.isLink
                 }
               )
             }
           ),
-          attributes2.isLink && /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+          attributes.isLink && /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
             import_components5.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n8.__)("Open in new tab"),
               isShownByDefault: true,
-              hasValue: () => attributes2?.linkTarget !== "_self",
+              hasValue: () => attributes?.linkTarget !== "_self",
               onDeselect: () => setAttributes({ linkTarget: "_self" }),
               children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
                 import_components5.ToggleControl,
@@ -6418,7 +6418,7 @@ var wp;
                   onChange: (value) => setAttributes({
                     linkTarget: value ? "_blank" : "_self"
                   }),
-                  checked: attributes2.linkTarget === "_blank"
+                  checked: attributes.linkTarget === "_blank"
                 }
               )
             }
@@ -6428,12 +6428,12 @@ var wp;
             {
               label: (0, import_i18n8.__)("User"),
               isShownByDefault: true,
-              hasValue: () => !!attributes2?.userId,
+              hasValue: () => !!attributes?.userId,
               onDeselect: () => setAttributes({ userId: void 0 }),
               children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
                 UserControl,
                 {
-                  value: attributes2?.userId,
+                  value: attributes?.userId,
                   onChange: (value) => {
                     setAttributes({
                       userId: value
@@ -6458,30 +6458,30 @@ var wp;
   ) : children;
   var ResizableAvatar = ({
     setAttributes,
-    attributes: attributes2,
+    attributes,
     avatar,
     blockProps,
     isSelected
   }) => {
-    const borderProps = (0, import_block_editor12.__experimentalUseBorderProps)(attributes2);
+    const borderProps = (0, import_block_editor12.__experimentalUseBorderProps)(attributes);
     const doubledSizedSrc = (0, import_url.addQueryArgs)(
       (0, import_url.removeQueryArgs)(avatar?.src, ["s"]),
       {
-        s: attributes2?.size * 2
+        s: attributes?.size * 2
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(AvatarLinkWrapper, { isLink: attributes2.isLink, children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(AvatarLinkWrapper, { isLink: attributes.isLink, children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
       import_components5.ResizableBox,
       {
         size: {
-          width: attributes2.size,
-          height: attributes2.size
+          width: attributes.size,
+          height: attributes.size
         },
         showHandle: isSelected,
         onResizeStop: (event, direction, elt, delta) => {
           setAttributes({
             size: parseInt(
-              attributes2.size + (delta.height || delta.width),
+              attributes.size + (delta.height || delta.width),
               10
             )
           });
@@ -6502,7 +6502,7 @@ var wp;
             alt: avatar.alt,
             className: clsx_default(
               "avatar",
-              "avatar-" + attributes2.size,
+              "avatar-" + attributes.size,
               "photo",
               "wp-block-avatar__image",
               borderProps.className
@@ -6513,7 +6513,7 @@ var wp;
       }
     ) }) });
   };
-  var CommentEdit = ({ attributes: attributes2, context, setAttributes, isSelected }) => {
+  var CommentEdit = ({ attributes, context, setAttributes, isSelected }) => {
     const { commentId } = context;
     const blockProps = (0, import_block_editor12.useBlockProps)();
     const avatar = useCommentAvatar({ commentId });
@@ -6523,14 +6523,14 @@ var wp;
         {
           avatar,
           setAttributes,
-          attributes: attributes2,
+          attributes,
           selectUser: false
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
         ResizableAvatar,
         {
-          attributes: attributes2,
+          attributes,
           avatar,
           blockProps,
           isSelected,
@@ -6539,10 +6539,10 @@ var wp;
       )
     ] });
   };
-  var UserEdit = ({ attributes: attributes2, context, setAttributes, isSelected }) => {
+  var UserEdit = ({ attributes, context, setAttributes, isSelected }) => {
     const { postId, postType } = context;
     const avatar = useUserAvatar({
-      userId: attributes2?.userId,
+      userId: attributes?.userId,
       postId,
       postType
     });
@@ -6552,7 +6552,7 @@ var wp;
         AvatarInspectorControls,
         {
           selectUser: true,
-          attributes: attributes2,
+          attributes,
           avatar,
           setAttributes
         }
@@ -6560,7 +6560,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
         ResizableAvatar,
         {
-          attributes: attributes2,
+          attributes,
           avatar,
           blockProps,
           isSelected,
@@ -6638,8 +6638,8 @@ var wp;
       supports: {
         align: true
       },
-      save({ attributes: attributes2 }) {
-        const { autoplay, caption, loop, preload, src } = attributes2;
+      save({ attributes }) {
+        const { autoplay, caption, loop, preload, src } = attributes;
         return /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)("figure", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
             "audio",
@@ -6850,8 +6850,8 @@ var wp;
     return (0, import_element5.renderToString)(photoPreview);
   };
   var createUpgradedEmbedBlock = (props, attributesFromPreview = {}) => {
-    const { preview, attributes: attributes2 = {} } = props;
-    const { url, providerNameSlug, type, ...restAttributes } = attributes2;
+    const { preview, attributes = {} } = props;
+    const { url, providerNameSlug, type, ...restAttributes } = attributes;
     if (!url || !(0, import_blocks3.getBlockType)(DEFAULT_EMBED_BLOCK)) {
       return;
     }
@@ -6953,7 +6953,7 @@ var wp;
       if (!preview) {
         return {};
       }
-      const attributes2 = {};
+      const attributes = {};
       let { type = "rich" } = preview;
       const { html, provider_name: providerName } = preview;
       const providerNameSlug = kebabCase(
@@ -6963,18 +6963,18 @@ var wp;
         type = WP_EMBED_TYPE;
       }
       if (html || "photo" === type) {
-        attributes2.type = type;
-        attributes2.providerNameSlug = providerNameSlug;
+        attributes.type = type;
+        attributes.providerNameSlug = providerNameSlug;
       }
       if (hasAspectRatioClass(currentClassNames)) {
-        return attributes2;
+        return attributes;
       }
-      attributes2.className = getClassNames(
+      attributes.className = getClassNames(
         html,
         currentClassNames,
         isResponsive && allowResponsive
       );
-      return attributes2;
+      return attributes;
     }
   );
   var getMergedAttributesWithPreview = (currentAttributes, preview, title, isResponsive) => {
@@ -7001,7 +7001,7 @@ var wp;
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
   function Caption({
     attributeKey = "caption",
-    attributes: attributes2,
+    attributes,
     setAttributes,
     isSelected,
     insertBlocksAfter,
@@ -7017,7 +7017,7 @@ var wp;
     icon: icon4 = caption_default,
     ...props
   }) {
-    const caption = attributes2[attributeKey];
+    const caption = attributes[attributeKey];
     const prevCaption = (0, import_compose4.usePrevious)(caption);
     const isCaptionEmpty = import_block_editor14.RichText.isEmpty(caption);
     const isPrevCaptionEmpty = import_block_editor14.RichText.isEmpty(prevCaption);
@@ -7086,15 +7086,15 @@ var wp;
   var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES = ["audio"];
   function AudioEdit({
-    attributes: attributes2,
+    attributes,
     className,
     setAttributes,
     onReplace,
     isSelected: isSingleSelected,
     insertBlocksAfter
   }) {
-    const { id, autoplay, loop, preload, src } = attributes2;
-    const [temporaryURL, setTemporaryURL] = (0, import_element7.useState)(attributes2.blob);
+    const { id, autoplay, loop, preload, src } = attributes;
+    const [temporaryURL, setTemporaryURL] = (0, import_element7.useState)(attributes.blob);
     const blockEditingMode = (0, import_block_editor15.useBlockEditingMode)();
     const hasNonContentControls = blockEditingMode === "default";
     useUploadMediaFromBlobURL({
@@ -7167,7 +7167,7 @@ var wp;
           onSelectURL,
           accept: "audio/*",
           allowedTypes: ALLOWED_MEDIA_TYPES,
-          value: attributes2,
+          value: attributes,
           onError: onUploadError
         }
       ) });
@@ -7289,7 +7289,7 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
           Caption,
           {
-            attributes: attributes2,
+            attributes,
             setAttributes,
             isSelected: isSingleSelected,
             insertBlocksAfter,
@@ -7375,8 +7375,8 @@ var wp;
   // packages/block-library/build-module/audio/save.mjs
   var import_block_editor16 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
-  function save5({ attributes: attributes2 }) {
-    const { autoplay, caption, loop, preload, src } = attributes2;
+  function save5({ attributes }) {
+    const { autoplay, caption, loop, preload, src } = attributes;
     return src && /* @__PURE__ */ (0, import_jsx_runtime174.jsxs)("figure", { ...import_block_editor16.useBlockProps.save(), children: [
       /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(
         "audio",
@@ -7607,7 +7607,7 @@ var wp;
   var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
   var separatorDefaultValue = "/";
   function BreadcrumbEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     name: name122,
     context: { postId, postType, templateSlug }
@@ -7618,7 +7618,7 @@ var wp;
       showCurrentItem,
       prefersTaxonomy,
       showOnHomePage
-    } = attributes2;
+    } = attributes;
     const {
       post,
       isPostTypeHierarchical,
@@ -7664,7 +7664,7 @@ var wp;
     }, [post]);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { content, status, error } = (0, import_server_side_render2.useServerSideRender)({
-      attributes: attributes2,
+      attributes,
       skipBlockSupportAttributes: true,
       block: name122,
       urlQueryArgs: { post_id: postId, invalidationKey }
@@ -7889,15 +7889,15 @@ var wp;
   // packages/block-library/build-module/utils/migrate-font-family.mjs
   var import_block_editor18 = __toESM(require_block_editor(), 1);
   var { cleanEmptyObject } = unlock(import_block_editor18.privateApis);
-  function migrate_font_family_default(attributes2) {
-    if (!attributes2?.style?.typography?.fontFamily) {
-      return attributes2;
+  function migrate_font_family_default(attributes) {
+    if (!attributes?.style?.typography?.fontFamily) {
+      return attributes;
     }
-    const { fontFamily, ...typography } = attributes2.style.typography;
+    const { fontFamily, ...typography } = attributes.style.typography;
     return {
-      ...attributes2,
+      ...attributes,
       style: cleanEmptyObject({
-        ...attributes2.style,
+        ...attributes.style,
         typography
       }),
       fontFamily: fontFamily.split("|").pop()
@@ -7905,17 +7905,17 @@ var wp;
   }
 
   // packages/block-library/build-module/utils/migrate-text-align.mjs
-  function migrate_text_align_default(attributes2) {
-    const { textAlign, ...restAttributes } = attributes2;
+  function migrate_text_align_default(attributes) {
+    const { textAlign, ...restAttributes } = attributes;
     if (!textAlign) {
-      return attributes2;
+      return attributes;
     }
     return {
       ...restAttributes,
       style: {
-        ...attributes2.style,
+        ...attributes.style,
         typography: {
-          ...attributes2.style?.typography,
+          ...attributes.style?.typography,
           textAlign
         }
       }
@@ -7924,8 +7924,8 @@ var wp;
 
   // packages/block-library/build-module/button/deprecated.mjs
   var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
-  var migrateWidth = (attributes2) => {
-    const { width, ...otherAttributes } = attributes2;
+  var migrateWidth = (attributes) => {
+    const { width, ...otherAttributes } = attributes;
     if (!width) {
       return otherAttributes;
     }
@@ -7940,8 +7940,8 @@ var wp;
       }
     };
   };
-  var migrateBorderRadius = (attributes2) => {
-    const { borderRadius, ...newAttributes } = attributes2;
+  var migrateBorderRadius = (attributes) => {
+    const { borderRadius, ...newAttributes } = attributes;
     const oldBorderRadius = [
       borderRadius,
       newAttributes.style?.border?.radius
@@ -7962,49 +7962,49 @@ var wp;
       }
     };
   };
-  function migrateAlign(attributes2) {
-    if (!attributes2.align) {
-      return attributes2;
+  function migrateAlign(attributes) {
+    if (!attributes.align) {
+      return attributes;
     }
-    const { align, ...otherAttributes } = attributes2;
+    const { align, ...otherAttributes } = attributes;
     return {
       ...otherAttributes,
       className: clsx_default(
         otherAttributes.className,
-        `align${attributes2.align}`
+        `align${attributes.align}`
       )
     };
   }
-  var migrateCustomColorsAndGradients = (attributes2) => {
-    if (!attributes2.customTextColor && !attributes2.customBackgroundColor && !attributes2.customGradient) {
-      return attributes2;
+  var migrateCustomColorsAndGradients = (attributes) => {
+    if (!attributes.customTextColor && !attributes.customBackgroundColor && !attributes.customGradient) {
+      return attributes;
     }
     const style2 = { color: {} };
-    if (attributes2.customTextColor) {
-      style2.color.text = attributes2.customTextColor;
+    if (attributes.customTextColor) {
+      style2.color.text = attributes.customTextColor;
     }
-    if (attributes2.customBackgroundColor) {
-      style2.color.background = attributes2.customBackgroundColor;
+    if (attributes.customBackgroundColor) {
+      style2.color.background = attributes.customBackgroundColor;
     }
-    if (attributes2.customGradient) {
-      style2.color.gradient = attributes2.customGradient;
+    if (attributes.customGradient) {
+      style2.color.gradient = attributes.customGradient;
     }
     const {
       customTextColor,
       customBackgroundColor,
       customGradient,
       ...restAttributes
-    } = attributes2;
+    } = attributes;
     return {
       ...restAttributes,
       style: style2
     };
   };
-  var oldColorsMigration = (attributes2) => {
+  var oldColorsMigration = (attributes) => {
     const { color, textColor, ...restAttributes } = {
-      ...attributes2,
-      customTextColor: attributes2.textColor && "#" === attributes2.textColor[0] ? attributes2.textColor : void 0,
-      customBackgroundColor: attributes2.color && "#" === attributes2.color[0] ? attributes2.color : void 0
+      ...attributes,
+      customTextColor: attributes.textColor && "#" === attributes.textColor[0] ? attributes.textColor : void 0,
+      customBackgroundColor: attributes.color && "#" === attributes.color[0] ? attributes.color : void 0
     };
     return migrateCustomColorsAndGradients(restAttributes);
   };
@@ -8161,7 +8161,7 @@ var wp;
         writingMode: ".wp-block-button"
       }
     },
-    save({ attributes: attributes2, className }) {
+    save({ attributes, className }) {
       const {
         tagName,
         type,
@@ -8173,15 +8173,15 @@ var wp;
         title,
         url,
         width
-      } = attributes2;
+      } = attributes;
       const TagName2 = tagName || "a";
       const isButtonTag = "button" === TagName2;
       const buttonType = type || "button";
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
-      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
-      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes);
+      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes);
+      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes);
       const buttonClasses = clsx_default(
         "wp-block-button__link",
         colorProps.className,
@@ -8221,8 +8221,8 @@ var wp;
         }
       ) });
     },
-    isEligible(attributes2) {
-      return typeof attributes2.width === "number";
+    isEligible(attributes) {
+      return typeof attributes.width === "number";
     },
     migrate: migrateWidth
   };
@@ -8360,7 +8360,7 @@ var wp;
         writingMode: ".wp-block-button"
       }
     },
-    save({ attributes: attributes2, className }) {
+    save({ attributes, className }) {
       const {
         tagName,
         type,
@@ -8373,15 +8373,15 @@ var wp;
         title,
         url,
         width
-      } = attributes2;
+      } = attributes;
       const TagName2 = tagName || "a";
       const isButtonTag = "button" === TagName2;
       const buttonType = type || "button";
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
-      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
-      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes);
+      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes);
+      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes);
       const buttonClasses = clsx_default(
         "wp-block-button__link",
         colorProps.className,
@@ -8422,8 +8422,8 @@ var wp;
         }
       ) });
     },
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || typeof attributes2.width === "number";
+    isEligible(attributes) {
+      return !!attributes.textAlign || typeof attributes.width === "number";
     },
     migrate: (0, import_compose6.compose)(migrateWidth, migrate_text_align_default)
   };
@@ -8545,7 +8545,7 @@ var wp;
         clientNavigation: true
       }
     },
-    save({ attributes: attributes2, className }) {
+    save({ attributes, className }) {
       const {
         tagName,
         type,
@@ -8558,14 +8558,14 @@ var wp;
         title,
         url,
         width
-      } = attributes2;
+      } = attributes;
       const TagName2 = tagName || "a";
       const isButtonTag = "button" === TagName2;
       const buttonType = type || "button";
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
-      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes);
+      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes);
       const buttonClasses = clsx_default(
         "wp-block-button__link",
         colorProps.className,
@@ -8603,8 +8603,8 @@ var wp;
         }
       ) });
     },
-    isEligible(attributes2) {
-      return typeof attributes2.width === "number";
+    isEligible(attributes) {
+      return typeof attributes.width === "number";
     },
     migrate: migrateWidth
   };
@@ -8691,14 +8691,14 @@ var wp;
       },
       __experimentalSelector: ".wp-block-button__link"
     },
-    save({ attributes: attributes2, className }) {
-      const { fontSize, linkTarget, rel, style: style2, text, title, url, width } = attributes2;
+    save({ attributes, className }) {
+      const { fontSize, linkTarget, rel, style: style2, text, title, url, width } = attributes;
       if (!text) {
         return null;
       }
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes);
       const buttonClasses = clsx_default(
         "wp-block-button__link",
         colorProps.className,
@@ -8806,14 +8806,14 @@ var wp;
       },
       __experimentalSelector: ".wp-block-button__link"
     },
-    save({ attributes: attributes2, className }) {
-      const { fontSize, linkTarget, rel, style: style2, text, title, url, width } = attributes2;
+    save({ attributes, className }) {
+      const { fontSize, linkTarget, rel, style: style2, text, title, url, width } = attributes;
       if (!text) {
         return null;
       }
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes);
       const buttonClasses = clsx_default(
         "wp-block-button__link",
         colorProps.className,
@@ -8907,7 +8907,7 @@ var wp;
       isEligible({ style: style2 }) {
         return typeof style2?.border?.radius === "number";
       },
-      save({ attributes: attributes2, className }) {
+      save({ attributes, className }) {
         const {
           fontSize,
           linkTarget,
@@ -8917,12 +8917,12 @@ var wp;
           title,
           url,
           width
-        } = attributes2;
+        } = attributes;
         if (!text) {
           return null;
         }
         const borderRadius = style2?.border?.radius;
-        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes);
         const buttonClasses = clsx_default(
           "wp-block-button__link",
           colorProps.className,
@@ -9005,9 +9005,9 @@ var wp;
           type: "number"
         }
       },
-      save({ attributes: attributes2, className }) {
-        const { borderRadius, linkTarget, rel, text, title, url, width } = attributes2;
-        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+      save({ attributes, className }) {
+        const { borderRadius, linkTarget, rel, text, title, url, width } = attributes;
+        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes);
         const buttonClasses = clsx_default(
           "wp-block-button__link",
           colorProps.className,
@@ -9089,9 +9089,9 @@ var wp;
           type: "number"
         }
       },
-      save({ attributes: attributes2, className }) {
-        const { borderRadius, linkTarget, rel, text, title, url, width } = attributes2;
-        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+      save({ attributes, className }) {
+        const { borderRadius, linkTarget, rel, text, title, url, width } = attributes;
+        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes);
         const buttonClasses = clsx_default(
           "wp-block-button__link",
           colorProps.className,
@@ -9165,8 +9165,8 @@ var wp;
           type: "object"
         }
       },
-      save({ attributes: attributes2 }) {
-        const { borderRadius, linkTarget, rel, text, title, url } = attributes2;
+      save({ attributes }) {
+        const { borderRadius, linkTarget, rel, text, title, url } = attributes;
         const buttonClasses = clsx_default("wp-block-button__link", {
           "no-border-radius": borderRadius === 0
         });
@@ -9233,14 +9233,14 @@ var wp;
           type: "string"
         }
       },
-      isEligible: (attributes2) => !!attributes2.customTextColor || !!attributes2.customBackgroundColor || !!attributes2.customGradient || !!attributes2.align,
+      isEligible: (attributes) => !!attributes.customTextColor || !!attributes.customBackgroundColor || !!attributes.customGradient || !!attributes.align,
       migrate: (0, import_compose6.compose)(
         migrateWidth,
         migrateBorderRadius,
         migrateCustomColorsAndGradients,
         migrateAlign
       ),
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           backgroundColor,
           borderRadius,
@@ -9254,7 +9254,7 @@ var wp;
           textColor,
           title,
           url
-        } = attributes2;
+        } = attributes;
         const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
         const backgroundClass = !customGradient && (0, import_block_editor19.getColorClassName)("background-color", backgroundColor);
         const gradientClass = (0, import_block_editor19.__experimentalGetGradientClass)(gradient);
@@ -9325,20 +9325,20 @@ var wp;
       isEligible(attribute) {
         return attribute.className && attribute.className.includes("is-style-squared");
       },
-      migrate(attributes2) {
-        let newClassName = attributes2.className;
+      migrate(attributes) {
+        let newClassName = attributes.className;
         if (newClassName) {
           newClassName = newClassName.replace(/is-style-squared[\s]?/, "").trim();
         }
         return migrateBorderRadius(
           migrateCustomColorsAndGradients({
-            ...attributes2,
+            ...attributes,
             className: newClassName ? newClassName : void 0,
             borderRadius: 0
           })
         );
       },
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           backgroundColor,
           customBackgroundColor,
@@ -9349,7 +9349,7 @@ var wp;
           textColor,
           title,
           url
-        } = attributes2;
+        } = attributes;
         const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
         const backgroundClass = (0, import_block_editor19.getColorClassName)(
           "background-color",
@@ -9401,7 +9401,7 @@ var wp;
         }
       },
       migrate: (0, import_compose6.compose)(migrateWidth, oldColorsMigration),
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           url,
           text,
@@ -9410,7 +9410,7 @@ var wp;
           textColor,
           customBackgroundColor,
           customTextColor
-        } = attributes2;
+        } = attributes;
         const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
         const backgroundClass = (0, import_block_editor19.getColorClassName)(
           "background-color",
@@ -9453,8 +9453,8 @@ var wp;
           default: "none"
         }
       },
-      save({ attributes: attributes2 }) {
-        const { url, text, title, align, color, textColor } = attributes2;
+      save({ attributes }) {
+        const { url, text, title, align, color, textColor } = attributes;
         const buttonStyle = {
           backgroundColor: color,
           color: textColor
@@ -9488,8 +9488,8 @@ var wp;
           default: "none"
         }
       },
-      save({ attributes: attributes2 }) {
-        const { url, text, title, align, color, textColor } = attributes2;
+      save({ attributes }) {
+        const { url, text, title, align, color, textColor } = attributes;
         return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
           "div",
           {
@@ -9570,8 +9570,8 @@ var wp;
   var import_data10 = __toESM(require_data(), 1);
   var import_block_editor20 = __toESM(require_block_editor(), 1);
   function useDeprecatedTextAlign(props) {
-    const { name: name122, attributes: attributes2, setAttributes } = props;
-    const { textAlign } = attributes2;
+    const { name: name122, attributes, setAttributes } = props;
+    const { textAlign } = attributes;
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data10.useDispatch)(import_block_editor20.store);
     const updateStyleWithAlign = (0, import_compose7.useEvent)(() => {
       (0, import_deprecated3.default)(`textAlign attribute in ${name122}`, {
@@ -9692,7 +9692,7 @@ var wp;
   }
   function ButtonEdit(props) {
     const {
-      attributes: attributes2,
+      attributes,
       setAttributes,
       className,
       isSelected,
@@ -9710,7 +9710,7 @@ var wp;
       text,
       url,
       metadata
-    } = attributes2;
+    } = attributes;
     const width = style2?.dimensions?.width;
     useDeprecatedTextAlign(props);
     const TagName2 = tagName || "a";
@@ -9723,11 +9723,11 @@ var wp;
       }
     }
     const [popoverAnchor, setPopoverAnchor] = (0, import_element10.useState)(null);
-    const borderProps = (0, import_block_editor21.__experimentalUseBorderProps)(attributes2);
-    const colorProps = (0, import_block_editor21.__experimentalUseColorProps)(attributes2);
-    const spacingProps = (0, import_block_editor21.__experimentalGetSpacingClassesAndStyles)(attributes2);
-    const shadowProps = (0, import_block_editor21.__experimentalGetShadowClassesAndStyles)(attributes2);
-    const dimensionsProps = (0, import_block_editor21.__experimentalGetDimensionsClassesAndStyles)(attributes2);
+    const borderProps = (0, import_block_editor21.__experimentalUseBorderProps)(attributes);
+    const colorProps = (0, import_block_editor21.__experimentalUseColorProps)(attributes);
+    const spacingProps = (0, import_block_editor21.__experimentalGetSpacingClassesAndStyles)(attributes);
+    const shadowProps = (0, import_block_editor21.__experimentalGetShadowClassesAndStyles)(attributes);
+    const dimensionsProps = (0, import_block_editor21.__experimentalGetDimensionsClassesAndStyles)(attributes);
     const ref = (0, import_element10.useRef)();
     const richTextRef = (0, import_element10.useRef)();
     const blockProps = (0, import_block_editor21.useBlockProps)({
@@ -9826,7 +9826,7 @@ var wp;
         ...dimensionSizes?.default ?? []
       ];
     }, [dimensionSizes]);
-    const typographyProps = (0, import_block_editor21.getTypographyClassesAndStyles)(attributes2, {
+    const typographyProps = (0, import_block_editor21.getTypographyClassesAndStyles)(attributes, {
       typography: {
         fluid: fluidTypographySettings
       },
@@ -10158,7 +10158,7 @@ var wp;
   // packages/block-library/build-module/button/save.mjs
   var import_block_editor22 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
-  function save6({ attributes: attributes2 }) {
+  function save6({ attributes }) {
     const {
       tagName,
       type,
@@ -10169,15 +10169,15 @@ var wp;
       text,
       title,
       url
-    } = attributes2;
+    } = attributes;
     const TagName2 = tagName || "a";
     const isButtonTag = "button" === TagName2;
     const buttonType = type || "button";
-    const borderProps = (0, import_block_editor22.__experimentalGetBorderClassesAndStyles)(attributes2);
-    const colorProps = (0, import_block_editor22.__experimentalGetColorClassesAndStyles)(attributes2);
-    const spacingProps = (0, import_block_editor22.__experimentalGetSpacingClassesAndStyles)(attributes2);
-    const shadowProps = (0, import_block_editor22.__experimentalGetShadowClassesAndStyles)(attributes2);
-    const typographyProps = (0, import_block_editor22.getTypographyClassesAndStyles)(attributes2);
+    const borderProps = (0, import_block_editor22.__experimentalGetBorderClassesAndStyles)(attributes);
+    const colorProps = (0, import_block_editor22.__experimentalGetColorClassesAndStyles)(attributes);
+    const spacingProps = (0, import_block_editor22.__experimentalGetSpacingClassesAndStyles)(attributes);
+    const shadowProps = (0, import_block_editor22.__experimentalGetShadowClassesAndStyles)(attributes);
+    const typographyProps = (0, import_block_editor22.getTypographyClassesAndStyles)(attributes);
     const buttonClasses = clsx_default(
       "wp-block-button__link",
       colorProps.className,
@@ -10233,9 +10233,9 @@ var wp;
       ...a2,
       text: (a2.text || "") + text
     }),
-    __experimentalLabel(attributes2, { context }) {
-      const { text } = attributes2;
-      const customName = attributes2?.metadata?.name;
+    __experimentalLabel(attributes, { context }) {
+      const { text } = attributes;
+      const customName = attributes?.metadata?.name;
       const hasContent = text?.trim().length > 0;
       if (context === "list-view" && (customName || hasContent)) {
         return customName || text;
@@ -10291,11 +10291,11 @@ var wp;
   // packages/block-library/build-module/buttons/deprecated.mjs
   var import_block_editor23 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
-  var migrateWithLayout = (attributes2) => {
-    if (!!attributes2.layout) {
-      return attributes2;
+  var migrateWithLayout = (attributes) => {
+    if (!!attributes.layout) {
+      return attributes;
     }
-    const { contentJustification, orientation, ...updatedAttributes } = attributes2;
+    const { contentJustification, orientation, ...updatedAttributes } = attributes;
     if (contentJustification || orientation) {
       Object.assign(updatedAttributes, {
         layout: {
@@ -10360,9 +10360,9 @@ var wp;
       isEligible({ align }) {
         return align && ["center", "left", "right"].includes(align);
       },
-      migrate(attributes2) {
+      migrate(attributes) {
         return migrateWithLayout({
-          ...attributes2,
+          ...attributes,
           align: void 0,
           // Floating Buttons blocks shouldn't have been supported in the
           // first place. Most users using them probably expected them to
@@ -10370,7 +10370,7 @@ var wp;
           // migrated to use content justification.
           // As for center-aligned Buttons blocks, the content justification
           // equivalent will create an identical end result in most cases.
-          contentJustification: attributes2.align
+          contentJustification: attributes.align
         });
       }
     }
@@ -10383,8 +10383,8 @@ var wp;
 
   // packages/block-library/build-module/utils/get-transformed-attributes.mjs
   var import_blocks9 = __toESM(require_blocks(), 1);
-  function getTransformedAttributes(attributes2, newBlockName, bindingsCallback = null) {
-    if (!attributes2) {
+  function getTransformedAttributes(attributes, newBlockName, bindingsCallback = null) {
+    if (!attributes) {
       return void 0;
     }
     const newBlockType = (0, import_blocks9.getBlockType)(newBlockName);
@@ -10392,19 +10392,19 @@ var wp;
       return void 0;
     }
     const transformedAttributes = {};
-    if ((0, import_blocks9.hasBlockSupport)(newBlockType, "anchor") && attributes2.anchor) {
-      transformedAttributes.anchor = attributes2.anchor;
+    if ((0, import_blocks9.hasBlockSupport)(newBlockType, "anchor") && attributes.anchor) {
+      transformedAttributes.anchor = attributes.anchor;
     }
-    if ((0, import_blocks9.hasBlockSupport)(newBlockType, "ariaLabel") && attributes2.ariaLabel) {
-      transformedAttributes.ariaLabel = attributes2.ariaLabel;
+    if ((0, import_blocks9.hasBlockSupport)(newBlockType, "ariaLabel") && attributes.ariaLabel) {
+      transformedAttributes.ariaLabel = attributes.ariaLabel;
     }
-    if (attributes2.metadata) {
+    if (attributes.metadata) {
       const transformedMetadata = [];
       if (bindingsCallback) {
         transformedMetadata.push("id", "bindings");
       }
       if (transformedMetadata.length > 0) {
-        const newMetadata = Object.entries(attributes2.metadata).reduce(
+        const newMetadata = Object.entries(attributes.metadata).reduce(
           (obj, [prop, value]) => {
             if (!transformedMetadata.includes(prop)) {
               return obj;
@@ -10439,9 +10439,9 @@ var wp;
             {},
             // Loop the selected buttons.
             buttons.map(
-              (attributes2) => (
+              (attributes) => (
                 // Create singular button in the buttons block.
-                (0, import_blocks10.createBlock)("core/button", attributes2)
+                (0, import_blocks10.createBlock)("core/button", attributes)
               )
             )
           )
@@ -10457,16 +10457,16 @@ var wp;
             "core/buttons",
             {},
             // Loop the selected buttons.
-            buttons.map((attributes2) => {
-              const { content } = attributes2;
+            buttons.map((attributes) => {
+              const { content } = attributes;
               const element = (0, import_rich_text.__unstableCreateElement)(document, content);
               const text = element.innerText || "";
               const link = element.querySelector("a");
               const url = link?.getAttribute("href");
               return (0, import_blocks10.createBlock)("core/button", {
-                ...attributes2,
+                ...attributes,
                 ...getTransformedAttributes(
-                  attributes2,
+                  attributes,
                   "core/button",
                   ({ content: contentBinding }) => ({
                     text: contentBinding
@@ -10479,10 +10479,10 @@ var wp;
           )
         ),
         isMatch: (paragraphs) => {
-          return paragraphs.every((attributes2) => {
+          return paragraphs.every((attributes) => {
             const element = (0, import_rich_text.__unstableCreateElement)(
               document,
-              attributes2.content
+              attributes.content
             );
             const text = element.innerText || "";
             const links = element.querySelectorAll("a");
@@ -10511,8 +10511,8 @@ var wp;
       "width"
     ]
   };
-  function ButtonsEdit({ attributes: attributes2, className }) {
-    const { fontSize, layout, style: style2 } = attributes2;
+  function ButtonsEdit({ attributes, className }) {
+    const { fontSize, layout, style: style2 } = attributes;
     const blockProps = (0, import_block_editor24.useBlockProps)({
       className: clsx_default(className, {
         "has-custom-font-size": fontSize || style2?.typography?.fontSize
@@ -10604,8 +10604,8 @@ var wp;
   // packages/block-library/build-module/buttons/save.mjs
   var import_block_editor25 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
-  function save7({ attributes: attributes2, className }) {
-    const { fontSize, style: style2 } = attributes2;
+  function save7({ attributes, className }) {
+    const { fontSize, style: style2 } = attributes;
     const blockProps = import_block_editor25.useBlockProps.save({
       className: clsx_default(className, {
         "has-custom-font-size": fontSize || style2?.typography?.fontSize
@@ -10722,7 +10722,7 @@ var wp;
       month: dateObj.getMonth() + 1
     };
   });
-  function CalendarEdit({ attributes: attributes2, name: name122 }) {
+  function CalendarEdit({ attributes, name: name122 }) {
     const { date, hasPosts, hasPostsResolved } = (0, import_data12.useSelect)((select9) => {
       const { getEntityRecords, hasFinishedResolution } = select9(import_core_data5.store);
       const singlePublishedPostQuery = {
@@ -10755,7 +10755,7 @@ var wp;
     }, []);
     const { content, status, error } = (0, import_server_side_render3.useServerSideRender)({
       attributes: {
-        ...attributes2,
+        ...attributes,
         ...getYearMonth(date)
       },
       block: name122
@@ -12140,12 +12140,12 @@ var wp;
   // packages/block-library/build-module/freeform/edit.mjs
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
   function FreeformEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId,
     onReplace
   }) {
-    const { content } = attributes2;
+    const { content } = attributes;
     const [isOpen, setOpen] = (0, import_element14.useState)(false);
     const editButtonRef = (0, import_element14.useRef)(null);
     const canRemove = (0, import_data15.useSelect)(
@@ -12248,8 +12248,8 @@ var wp;
   // packages/block-library/build-module/freeform/save.mjs
   var import_element15 = __toESM(require_element(), 1);
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
-  function save8({ attributes: attributes2 }) {
-    const { content } = attributes2;
+  function save8({ attributes }) {
+    const { content } = attributes;
     return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(import_element15.RawHTML, { children: content });
   }
 
@@ -12285,7 +12285,7 @@ var wp;
   var import_blocks13 = __toESM(require_blocks(), 1);
   var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
   function CodeEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     onRemove,
     insertBlocksAfter,
@@ -12297,7 +12297,7 @@ var wp;
       {
         tagName: "code",
         identifier: "content",
-        value: attributes2.content,
+        value: attributes.content,
         onChange: (content) => setAttributes({ content }),
         onRemove,
         onMerge: mergeBlocks,
@@ -12402,13 +12402,13 @@ var wp;
 
   // packages/block-library/build-module/code/save.mjs
   var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
-  function save9({ attributes: attributes2 }) {
+  function save9({ attributes }) {
     return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)("pre", { ...import_block_editor32.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
       import_block_editor32.RichText.Content,
       {
         tagName: "code",
         value: escape(
-          typeof attributes2.content === "string" ? attributes2.content : attributes2.content.toHTMLString({
+          typeof attributes.content === "string" ? attributes.content : attributes.content.toHTMLString({
             preserveWhiteSpace: true
           })
         )
@@ -12429,11 +12429,11 @@ var wp;
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2) => {
-          const { content } = attributes2;
+        transform: (attributes) => {
+          const { content } = attributes;
           return (0, import_blocks14.createBlock)("core/code", {
-            ...attributes2,
-            ...getTransformedAttributes(attributes2, "core/code"),
+            ...attributes,
+            ...getTransformedAttributes(attributes, "core/code"),
             content
           });
         }
@@ -12441,11 +12441,11 @@ var wp;
       {
         type: "block",
         blocks: ["core/html"],
-        transform: (attributes2) => {
-          const { content: text } = attributes2;
+        transform: (attributes) => {
+          const { content: text } = attributes;
           return (0, import_blocks14.createBlock)("core/code", {
-            ...attributes2,
-            ...getTransformedAttributes(attributes2, "core/code"),
+            ...attributes,
+            ...getTransformedAttributes(attributes, "core/code"),
             // The HTML is plain text (with plain line breaks), so
             // convert it to rich text.
             content: (0, import_rich_text2.toHTMLString)({ value: (0, import_rich_text2.create)({ text }) })
@@ -12472,10 +12472,10 @@ var wp;
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2) => {
-          const { content } = attributes2;
+        transform: (attributes) => {
+          const { content } = attributes;
           return (0, import_blocks14.createBlock)("core/paragraph", {
-            ...getTransformedAttributes(attributes2, "core/paragraph"),
+            ...getTransformedAttributes(attributes, "core/paragraph"),
             content
           });
         }
@@ -12499,9 +12499,9 @@ var wp;
         /* eslint-enable @wordpress/i18n-no-collapsible-whitespace */
       }
     },
-    merge(attributes2, attributesToMerge) {
+    merge(attributes, attributesToMerge) {
       return {
-        content: attributes2.content + "\n\n" + attributesToMerge.content
+        content: attributes.content + "\n\n" + attributesToMerge.content
       };
     },
     transforms: transforms_default4,
@@ -12551,14 +12551,14 @@ var wp;
       isEligible({ width }) {
         return isFinite(width);
       },
-      migrate(attributes2) {
+      migrate(attributes) {
         return {
-          ...attributes2,
-          width: `${attributes2.width}%`
+          ...attributes,
+          width: `${attributes.width}%`
         };
       },
-      save({ attributes: attributes2 }) {
-        const { verticalAlignment, width } = attributes2;
+      save({ attributes }) {
+        const { verticalAlignment, width } = attributes;
         const wrapperClasses = clsx_default({
           [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment
         });
@@ -12767,8 +12767,8 @@ var wp;
   // packages/block-library/build-module/column/save.mjs
   var import_block_editor35 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
-  function save10({ attributes: attributes2 }) {
-    const { verticalAlignment, width } = attributes2;
+  function save10({ attributes }) {
+    const { verticalAlignment, width } = attributes;
     const wrapperClasses = clsx_default({
       [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment
     });
@@ -12827,18 +12827,18 @@ var wp;
       }
     }
   }
-  var migrateCustomColors = (attributes2) => {
-    if (!attributes2.customTextColor && !attributes2.customBackgroundColor) {
-      return attributes2;
+  var migrateCustomColors = (attributes) => {
+    if (!attributes.customTextColor && !attributes.customBackgroundColor) {
+      return attributes;
     }
     const style2 = { color: {} };
-    if (attributes2.customTextColor) {
-      style2.color.text = attributes2.customTextColor;
+    if (attributes.customTextColor) {
+      style2.color.text = attributes.customTextColor;
     }
-    if (attributes2.customBackgroundColor) {
-      style2.color.background = attributes2.customBackgroundColor;
+    if (attributes.customBackgroundColor) {
+      style2.color.background = attributes.customBackgroundColor;
     }
-    const { customTextColor, customBackgroundColor, ...restAttributes } = attributes2;
+    const { customTextColor, customBackgroundColor, ...restAttributes } = attributes;
     return {
       ...restAttributes,
       style: style2,
@@ -12865,14 +12865,14 @@ var wp;
         }
       },
       migrate: migrateCustomColors,
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           verticalAlignment,
           backgroundColor,
           customBackgroundColor,
           textColor,
           customTextColor
-        } = attributes2;
+        } = attributes;
         const backgroundClass = (0, import_block_editor36.getColorClassName)(
           "background-color",
           backgroundColor
@@ -12906,7 +12906,7 @@ var wp;
           default: 2
         }
       },
-      isEligible(attributes2, innerBlocks) {
+      isEligible(attributes, innerBlocks) {
         const isFastPassEligible = innerBlocks.some(
           (innerBlock) => /layout-column-\d+/.test(innerBlock.originalContent)
         );
@@ -12917,7 +12917,7 @@ var wp;
           (innerBlock) => getDeprecatedLayoutColumn(innerBlock.originalContent) !== void 0
         );
       },
-      migrate(attributes2, innerBlocks) {
+      migrate(attributes, innerBlocks) {
         const columns = innerBlocks.reduce((accumulator, innerBlock) => {
           const { originalContent } = innerBlock;
           let columnIndex = getDeprecatedLayoutColumn(originalContent);
@@ -12933,7 +12933,7 @@ var wp;
         const migratedInnerBlocks = columns.map(
           (columnBlocks) => (0, import_blocks16.createBlock)("core/column", {}, columnBlocks)
         );
-        const { columns: ignoredColumns, ...restAttributes } = attributes2;
+        const { columns: ignoredColumns, ...restAttributes } = attributes;
         return [
           {
             ...restAttributes,
@@ -12942,8 +12942,8 @@ var wp;
           migratedInnerBlocks
         ];
       },
-      save({ attributes: attributes2 }) {
-        const { columns } = attributes2;
+      save({ attributes }) {
+        const { columns } = attributes;
         return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)("div", { className: `has-${columns}-columns`, children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(import_block_editor36.InnerBlocks.Content, {}) });
       }
     },
@@ -12954,16 +12954,16 @@ var wp;
           default: 2
         }
       },
-      migrate(attributes2, innerBlocks) {
-        const { columns, ...restAttributes } = attributes2;
-        attributes2 = {
+      migrate(attributes, innerBlocks) {
+        const { columns, ...restAttributes } = attributes;
+        attributes = {
           ...restAttributes,
           isStackedOnMobile: true
         };
-        return [attributes2, innerBlocks];
+        return [attributes, innerBlocks];
       },
-      save({ attributes: attributes2 }) {
-        const { verticalAlignment, columns } = attributes2;
+      save({ attributes }) {
+        const { verticalAlignment, columns } = attributes;
         const wrapperClasses = clsx_default(`has-${columns}-columns`, {
           [`are-vertically-aligned-${verticalAlignment}`]: verticalAlignment
         });
@@ -13160,8 +13160,8 @@ var wp;
       }
     );
   }
-  function ColumnsEditContainer({ attributes: attributes2, setAttributes, clientId }) {
-    const { isStackedOnMobile, verticalAlignment, templateLock } = attributes2;
+  function ColumnsEditContainer({ attributes, setAttributes, clientId }) {
+    const { isStackedOnMobile, verticalAlignment, templateLock } = attributes;
     const registry = (0, import_data17.useRegistry)();
     const { getBlockOrder } = (0, import_data17.useSelect)(import_block_editor37.store);
     const { updateBlockAttributes } = (0, import_data17.useDispatch)(import_block_editor37.store);
@@ -13350,8 +13350,8 @@ var wp;
   // packages/block-library/build-module/columns/save.mjs
   var import_block_editor38 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
-  function save11({ attributes: attributes2 }) {
-    const { isStackedOnMobile, verticalAlignment } = attributes2;
+  function save11({ attributes }) {
+    const { isStackedOnMobile, verticalAlignment } = attributes;
     const className = clsx_default({
       [`are-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
       [`is-not-stacked-on-mobile`]: !isStackedOnMobile
@@ -13522,8 +13522,8 @@ var wp;
         type: "block",
         blocks: ["core/group"],
         priority: 1,
-        transform: (attributes2, innerBlocks) => {
-          const { layout, ...rest } = attributes2;
+        transform: (attributes, innerBlocks) => {
+          const { layout, ...rest } = attributes;
           const { columnCount } = layout;
           return (0, import_blocks18.createBlock)(
             "core/columns",
@@ -13540,10 +13540,10 @@ var wp;
         __experimentalConvert: (blocks) => {
           const columnWidth = +(100 / blocks.length).toFixed(2);
           const innerBlocksTemplate = blocks.map(
-            ({ name: name122, attributes: attributes2, innerBlocks }) => [
+            ({ name: name122, attributes, innerBlocks }) => [
               "core/column",
               { width: `${columnWidth}%` },
-              [[name122, { ...attributes2 }, innerBlocks]]
+              [[name122, { ...attributes }, innerBlocks]]
             ]
           );
           return (0, import_blocks18.createBlock)(
@@ -13563,7 +13563,7 @@ var wp;
         type: "block",
         blocks: ["core/media-text"],
         priority: 1,
-        transform: (attributes2, innerBlocks) => {
+        transform: (attributes, innerBlocks) => {
           const {
             align,
             backgroundColor,
@@ -13577,16 +13577,16 @@ var wp;
             mediaUrl: url,
             mediaWidth,
             verticalAlignment
-          } = attributes2;
+          } = attributes;
           let media;
           if (mediaType === "image" || !mediaType) {
             const imageAttrs = { id, alt, url, sizeSlug };
             const linkAttrs = {
-              href: attributes2.href,
-              linkClass: attributes2.linkClass,
-              linkDestination: attributes2.linkDestination,
-              linkTarget: attributes2.linkTarget,
-              rel: attributes2.rel
+              href: attributes.href,
+              linkClass: attributes.linkClass,
+              linkDestination: attributes.linkDestination,
+              linkTarget: attributes.linkTarget,
+              rel: attributes.rel
             };
             media = ["core/image", { ...imageAttrs, ...linkAttrs }];
           } else {
@@ -13622,12 +13622,12 @@ var wp;
         type: "block",
         blocks: ["core/group"],
         variationName: "group-grid",
-        transform: (attributes2, innerBlocks) => {
+        transform: (attributes, innerBlocks) => {
           const columnCount = innerBlocks.length;
           return (0, import_blocks18.createBlock)(
             "core/group",
             {
-              ...attributes2,
+              ...attributes,
               isStackedOnMobile: void 0,
               verticalAlignment: void 0,
               layout: {
@@ -13640,7 +13640,7 @@ var wp;
         }
       }
     ],
-    ungroup: (attributes2, innerBlocks) => innerBlocks.flatMap((innerBlock) => innerBlock.innerBlocks)
+    ungroup: (attributes, innerBlocks) => innerBlocks.flatMap((innerBlock) => innerBlock.innerBlocks)
   };
   var transforms_default5 = transforms5;
 
@@ -14079,11 +14079,11 @@ var wp;
   // packages/block-library/build-module/comments/edit/comments-legacy.mjs
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   function CommentsLegacy({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     context: { postType, postId }
   }) {
-    const { textAlign } = attributes2;
+    const { textAlign } = attributes;
     const actions = [
       /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
         import_components20.Button,
@@ -14205,8 +14205,8 @@ var wp;
   // packages/block-library/build-module/comments/edit/index.mjs
   var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
   function CommentsEdit(props) {
-    const { attributes: attributes2, setAttributes, clientId } = props;
-    const { tagName: TagName2, legacy } = attributes2;
+    const { attributes, setAttributes, clientId } = props;
+    const { tagName: TagName2, legacy } = attributes;
     const blockProps = (0, import_block_editor44.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor44.useInnerBlocksProps)(blockProps, {
       template: template_default
@@ -14218,7 +14218,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
         CommentsInspectorControls,
         {
-          attributes: attributes2,
+          attributes,
           setAttributes,
           clientId
         }
@@ -14313,12 +14313,12 @@ var wp;
   var import_i18n33 = __toESM(require_i18n(), 1);
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
   function Edit6({
-    attributes: attributes2,
+    attributes,
     context: { commentId },
     setAttributes,
     isSelected
   }) {
-    const { height, width } = attributes2;
+    const { height, width } = attributes;
     const [avatars] = (0, import_core_data9.useEntityProp)(
       "root",
       "comment",
@@ -14336,7 +14336,7 @@ var wp;
     const minSize = sizes ? sizes[0] : 24;
     const maxSize = sizes ? sizes[sizes.length - 1] : 96;
     const blockProps = (0, import_block_editor46.useBlockProps)();
-    const spacingProps = (0, import_block_editor46.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const spacingProps = (0, import_block_editor46.__experimentalGetSpacingClassesAndStyles)(attributes);
     const maxSizeBuffer = Math.floor(maxSize * 2.5);
     const avatarURL = (0, import_data20.useSelect)((select9) => {
       const { __experimentalDiscussionSettings } = select9(import_block_editor46.store).getSettings();
@@ -14634,8 +14634,8 @@ var wp;
       return null;
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     }
@@ -14818,8 +14818,8 @@ var wp;
       return null;
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     }
@@ -15129,8 +15129,8 @@ var wp;
   var import_i18n37 = __toESM(require_i18n(), 1);
   var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
   function Edit10(props) {
-    const { attributes: attributes2, setAttributes } = props;
-    const { linkTarget } = attributes2;
+    const { attributes, setAttributes } = props;
+    const { linkTarget } = attributes;
     useDeprecatedTextAlign(props);
     const blockProps = (0, import_block_editor50.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -15226,8 +15226,8 @@ var wp;
       return null;
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     }
@@ -15368,8 +15368,8 @@ var wp;
       return null;
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     }
@@ -16394,13 +16394,13 @@ var wp;
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
   function Edit12(props) {
     useDeprecatedTextAlign(props);
-    const { attributes: attributes2, setAttributes, context } = props;
+    const { attributes, setAttributes, context } = props;
     const {
       showPostTitle,
       showCommentsCount,
       level = 2,
       levelOptions
-    } = attributes2;
+    } = attributes;
     const { postId, postType } = context;
     const TagName2 = "h" + level;
     const [commentsCount, setCommentsCount] = (0, import_element20.useState)();
@@ -16616,8 +16616,8 @@ var wp;
       const { singleCommentLabel, multipleCommentsLabel, ...newAttributes } = oldAttributes;
       return migrate_text_align_default(newAttributes);
     },
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -16801,21 +16801,21 @@ var wp;
   function dimRatioToClassV1(ratio) {
     return ratio === 0 || ratio === 50 || !ratio ? null : "has-background-dim-" + 10 * Math.round(ratio / 10);
   }
-  function migrateDimRatio(attributes2) {
+  function migrateDimRatio(attributes) {
     return {
-      ...attributes2,
-      dimRatio: !attributes2.url ? 100 : attributes2.dimRatio
+      ...attributes,
+      dimRatio: !attributes.url ? 100 : attributes.dimRatio
     };
   }
-  function migrateTag(attributes2) {
-    if (!attributes2.tagName) {
-      attributes2 = {
-        ...attributes2,
+  function migrateTag(attributes) {
+    if (!attributes.tagName) {
+      attributes = {
+        ...attributes,
         tagName: "div"
       };
     }
     return {
-      ...attributes2
+      ...attributes
     };
   }
   var blockAttributes2 = {
@@ -17014,7 +17014,7 @@ var wp;
   var v142 = {
     attributes: v14BlockAttributes,
     supports: v14BlockSupports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -17035,7 +17035,7 @@ var wp;
         minHeightUnit,
         tagName: Tag,
         sizeSlug
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -17149,7 +17149,7 @@ var wp;
   var v132 = {
     attributes: v12toV13BlockAttributes,
     supports: v12BlockSupports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -17169,7 +17169,7 @@ var wp;
         minHeight: minHeightProp,
         minHeightUnit,
         tagName: Tag
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -17281,16 +17281,16 @@ var wp;
   var v122 = {
     attributes: v12toV13BlockAttributes,
     supports: v12BlockSupports,
-    isEligible(attributes2) {
-      return (attributes2.customOverlayColor !== void 0 || attributes2.overlayColor !== void 0) && attributes2.isUserOverlayColor === void 0;
+    isEligible(attributes) {
+      return (attributes.customOverlayColor !== void 0 || attributes.overlayColor !== void 0) && attributes.isUserOverlayColor === void 0;
     },
-    migrate(attributes2) {
+    migrate(attributes) {
       return {
-        ...attributes2,
+        ...attributes,
         isUserOverlayColor: true
       };
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -17310,7 +17310,7 @@ var wp;
         minHeight: minHeightProp,
         minHeightUnit,
         tagName: Tag
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -17422,7 +17422,7 @@ var wp;
   var v112 = {
     attributes: v8ToV11BlockAttributes,
     supports: v7toV11BlockSupports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -17441,7 +17441,7 @@ var wp;
         id,
         minHeight: minHeightProp,
         minHeightUnit
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -17554,7 +17554,7 @@ var wp;
   var v102 = {
     attributes: v8ToV11BlockAttributes,
     supports: v7toV11BlockSupports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -17573,7 +17573,7 @@ var wp;
         id,
         minHeight: minHeightProp,
         minHeightUnit
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -17673,7 +17673,7 @@ var wp;
   var v9 = {
     attributes: v8ToV11BlockAttributes,
     supports: v7toV11BlockSupports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -17691,7 +17691,7 @@ var wp;
         id,
         minHeight: minHeightProp,
         minHeightUnit
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -17791,7 +17791,7 @@ var wp;
   var v8 = {
     attributes: v8ToV11BlockAttributes,
     supports: v7toV11BlockSupports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -17809,7 +17809,7 @@ var wp;
         id,
         minHeight: minHeightProp,
         minHeightUnit
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -17933,7 +17933,7 @@ var wp;
       }
     },
     supports: v7toV11BlockSupports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -17950,7 +17950,7 @@ var wp;
         id,
         minHeight: minHeightProp,
         minHeightUnit
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -18057,7 +18057,7 @@ var wp;
     supports: {
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -18072,7 +18072,7 @@ var wp;
         url,
         minHeight: minHeightProp,
         minHeightUnit
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -18160,7 +18160,7 @@ var wp;
     supports: {
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -18172,7 +18172,7 @@ var wp;
         overlayColor,
         url,
         minHeight
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -18244,7 +18244,7 @@ var wp;
     supports: {
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         gradient,
@@ -18256,7 +18256,7 @@ var wp;
         overlayColor,
         url,
         minHeight
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -18326,7 +18326,7 @@ var wp;
     supports: {
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundType,
         contentAlign,
@@ -18337,7 +18337,7 @@ var wp;
         overlayColor,
         title,
         url
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -18379,21 +18379,21 @@ var wp;
         )
       ] });
     },
-    migrate(attributes2) {
+    migrate(attributes) {
       const newAttribs = {
-        ...attributes2,
-        dimRatio: !attributes2.url ? 100 : attributes2.dimRatio,
-        tagName: !attributes2.tagName ? "div" : attributes2.tagName
+        ...attributes,
+        dimRatio: !attributes.url ? 100 : attributes.dimRatio,
+        tagName: !attributes.tagName ? "div" : attributes.tagName
       };
       const { title, contentAlign, ...restAttributes } = newAttribs;
       return [
         restAttributes,
         [
           (0, import_blocks19.createBlock)("core/paragraph", {
-            content: attributes2.title,
+            content: attributes.title,
             style: {
               typography: {
-                textAlign: attributes2.contentAlign
+                textAlign: attributes.contentAlign
               }
             },
             fontSize: "large",
@@ -18422,7 +18422,7 @@ var wp;
     supports: {
       className: false
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         url,
         title,
@@ -18432,7 +18432,7 @@ var wp;
         contentAlign,
         overlayColor,
         customOverlayColor
-      } = attributes2;
+      } = attributes;
       const overlayColorClass = (0, import_block_editor61.getColorClassName)(
         "background-color",
         overlayColor
@@ -18461,21 +18461,21 @@ var wp;
         }
       ) });
     },
-    migrate(attributes2) {
+    migrate(attributes) {
       const newAttribs = {
-        ...attributes2,
-        dimRatio: !attributes2.url ? 100 : attributes2.dimRatio,
-        tagName: !attributes2.tagName ? "div" : attributes2.tagName
+        ...attributes,
+        dimRatio: !attributes.url ? 100 : attributes.dimRatio,
+        tagName: !attributes.tagName ? "div" : attributes.tagName
       };
       const { title, contentAlign, align, ...restAttributes } = newAttribs;
       return [
         restAttributes,
         [
           (0, import_blocks19.createBlock)("core/paragraph", {
-            content: attributes2.title,
+            content: attributes.title,
             style: {
               typography: {
-                textAlign: attributes2.contentAlign
+                textAlign: attributes.contentAlign
               }
             },
             fontSize: "large",
@@ -18504,8 +18504,8 @@ var wp;
     supports: {
       className: false
     },
-    save({ attributes: attributes2 }) {
-      const { url, title, hasParallax, dimRatio, align } = attributes2;
+    save({ attributes }) {
+      const { url, title, hasParallax, dimRatio, align } = attributes;
       const style2 = backgroundImageStyles(url);
       const classes = clsx_default(
         "wp-block-cover-image",
@@ -18518,21 +18518,21 @@ var wp;
       );
       return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)("section", { className: classes, style: style2, children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_block_editor61.RichText.Content, { tagName: "h2", value: title }) });
     },
-    migrate(attributes2) {
+    migrate(attributes) {
       const newAttribs = {
-        ...attributes2,
-        dimRatio: !attributes2.url ? 100 : attributes2.dimRatio,
-        tagName: !attributes2.tagName ? "div" : attributes2.tagName
+        ...attributes,
+        dimRatio: !attributes.url ? 100 : attributes.dimRatio,
+        tagName: !attributes.tagName ? "div" : attributes.tagName
       };
       const { title, contentAlign, align, ...restAttributes } = newAttribs;
       return [
         restAttributes,
         [
           (0, import_blocks19.createBlock)("core/paragraph", {
-            content: attributes2.title,
+            content: attributes.title,
             style: {
               typography: {
-                textAlign: attributes2.contentAlign
+                textAlign: attributes.contentAlign
               }
             },
             fontSize: "large",
@@ -18599,8 +18599,8 @@ var wp;
   }
   function getActiveDimensionValue(options2 = {}) {
     const {
-      attributes: attributes2 = {},
-      style: style2 = attributes2?.style,
+      attributes = {},
+      style: style2 = attributes?.style,
       selectedState,
       hasSelectedStyleState,
       attributeKey,
@@ -18613,7 +18613,7 @@ var wp;
     if (Object.hasOwn(options2, "rootValue")) {
       return rootValue;
     }
-    return attributes2?.[attributeKey];
+    return attributes?.[attributeKey];
   }
   function setStateDimensions(style2, selectedState, nextDimensions) {
     const stateStyle = getStateStyle(style2, selectedState);
@@ -18672,15 +18672,15 @@ var wp;
     );
   }
   function getDimensionResetAttributes({
-    attributes: attributes2 = {},
-    style: style2 = attributes2?.style,
+    attributes = {},
+    style: style2 = attributes?.style,
     selectedState,
     hasSelectedStyleState,
     keys,
     defaultAttributes = {}
   }) {
     return {
-      ...hasSelectedStyleState ? {} : { ...attributes2, ...defaultAttributes },
+      ...hasSelectedStyleState ? {} : { ...attributes, ...defaultAttributes },
       style: hasSelectedStyleState ? resetStateDimensions(style2, selectedState, keys) : resetDimensions(style2, keys)
     };
   }
@@ -18890,7 +18890,7 @@ var wp;
     );
   }
   function CoverInspectorControls({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId,
     setOverlayColor,
@@ -18911,7 +18911,7 @@ var wp;
       alt,
       tagName,
       poster
-    } = attributes2;
+    } = attributes;
     const {
       isVideoBackground,
       isImageBackground,
@@ -18919,7 +18919,7 @@ var wp;
       url,
       overlayColor
     } = currentSettings;
-    const sizeSlug = attributes2.sizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
+    const sizeSlug = attributes.sizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
     const { gradientValue, setGradient } = (0, import_block_editor64.__experimentalUseGradient)();
     const { imageSizes, selectedStyleState } = (0, import_data27.useSelect)(
       (select9) => {
@@ -18936,7 +18936,7 @@ var wp;
     const hasSelectedStyleState = !isDefaultBlockStyleState(selectedStyleState);
     const selectedStyleStateKey = getStyleStateKey(selectedStyleState);
     const stateMinHeight = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "minHeight",
@@ -18947,11 +18947,11 @@ var wp;
     const activeMinHeight = hasSelectedStyleState ? stateMinHeightValue : minHeight;
     const activeMinHeightUnit = hasSelectedStyleState ? stateMinHeightUnit || minHeightUnit : minHeightUnit;
     const activeAspectRatio = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "aspectRatio",
-      rootValue: attributes2?.style?.dimensions?.aspectRatio
+      rootValue: attributes?.style?.dimensions?.aspectRatio
     });
     const image = (0, import_data27.useSelect)(
       (select9) => id && isImageBackground ? select9(import_core_data15.store).getEntityRecord(
@@ -18998,7 +18998,7 @@ var wp;
       if (hasSelectedStyleState) {
         setAttributes(
           getDimensionUpdateAttributes({
-            style: attributes2.style,
+            style: attributes.style,
             selectedState: selectedStyleState,
             hasSelectedStyleState,
             nextDimensions: {
@@ -19012,16 +19012,16 @@ var wp;
       setAttributes({
         minHeight: nextMinHeight,
         style: cleanEmptyObject3({
-          ...attributes2?.style,
+          ...attributes?.style,
           dimensions: {
-            ...attributes2?.style?.dimensions,
+            ...attributes?.style?.dimensions,
             aspectRatio: void 0
             // Reset aspect ratio when minHeight is set.
           }
         })
       });
     };
-    const getResetMinHeightAttributes = (attrs = attributes2) => {
+    const getResetMinHeightAttributes = (attrs = attributes) => {
       return getDimensionResetAttributes({
         style: attrs.style,
         selectedState: selectedStyleState,
@@ -19470,7 +19470,7 @@ var wp;
   var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
   var { cleanEmptyObject: cleanEmptyObject4 } = unlock(import_block_editor65.privateApis);
   function CoverBlockControls({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     onSelectMedia,
     currentSettings,
@@ -19489,12 +19489,12 @@ var wp;
       minHeight,
       minHeightUnit,
       backgroundType
-    } = attributes2;
+    } = attributes;
     const { hasInnerBlocks, url } = currentSettings;
     const [prevMinHeightValue, setPrevMinHeightValue] = (0, import_element24.useState)(minHeight);
     const [prevMinHeightUnit, setPrevMinHeightUnit] = (0, import_element24.useState)(minHeightUnit);
     const [isEmbedUrlInputOpen, setIsEmbedUrlInputOpen] = (0, import_element24.useState)(false);
-    const isMinFullHeight = minHeightUnit === "vh" && minHeight === 100 && !attributes2?.style?.dimensions?.aspectRatio;
+    const isMinFullHeight = minHeightUnit === "vh" && minHeight === 100 && !attributes?.style?.dimensions?.aspectRatio;
     const isContentOnlyMode = blockEditingMode === "contentOnly";
     const toggleMinFullHeight = () => {
       if (isMinFullHeight) {
@@ -19515,9 +19515,9 @@ var wp;
         minHeight: 100,
         minHeightUnit: "vh",
         style: cleanEmptyObject4({
-          ...attributes2?.style,
+          ...attributes?.style,
           dimensions: {
-            ...attributes2?.style?.dimensions,
+            ...attributes?.style?.dimensions,
             aspectRatio: void 0
             // Reset aspect ratio when minHeight is set.
           }
@@ -20395,7 +20395,7 @@ var wp;
   // packages/block-library/build-module/cover/edit/index.mjs
   var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
   var { openMediaEditorModalKey } = unlock(import_block_editor68.privateApis);
-  function getInnerBlocksTemplate(attributes2) {
+  function getInnerBlocksTemplate(attributes) {
     return [
       [
         "core/paragraph",
@@ -20406,14 +20406,14 @@ var wp;
             }
           },
           placeholder: (0, import_i18n53.__)("Write title\u2026"),
-          ...attributes2
+          ...attributes
         }
       ]
     ];
   }
   var isTemporaryMedia = (id, url) => !id && (0, import_blob7.isBlobURL)(url);
   function CoverEdit({
-    attributes: attributes2,
+    attributes,
     clientId,
     isSelected,
     overlayColor,
@@ -20442,7 +20442,7 @@ var wp;
       isUserOverlayColor,
       sizeSlug,
       poster
-    } = attributes2;
+    } = attributes;
     const [featuredImage] = (0, import_core_data16.useEntityProp)(
       "postType",
       postType,
@@ -20455,9 +20455,9 @@ var wp;
       []
     );
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data28.useDispatch)(import_block_editor68.store);
-    const propsRef = (0, import_element26.useRef)({ attributes: attributes2, overlayColor });
+    const propsRef = (0, import_element26.useRef)({ attributes, overlayColor });
     (0, import_element26.useLayoutEffect)(() => {
-      propsRef.current = { attributes: attributes2, overlayColor };
+      propsRef.current = { attributes, overlayColor };
     });
     const { media } = (0, import_data28.useSelect)(
       (select9) => {
@@ -20785,7 +20785,7 @@ var wp;
     const blockControls = /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
       CoverBlockControls,
       {
-        attributes: attributes2,
+        attributes,
         setAttributes,
         onSelectMedia,
         onSelectEmbedUrl,
@@ -20801,7 +20801,7 @@ var wp;
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
       CoverInspectorControls,
       {
-        attributes: attributes2,
+        attributes,
         setAttributes,
         clientId,
         setOverlayColor: onSetOverlayColor,
@@ -20830,7 +20830,7 @@ var wp;
         setAttributes({ minHeight: newMinHeight });
       },
       // Hide the resize handle if an aspect ratio is set, as the aspect ratio takes precedence.
-      showHandle: !attributes2.style?.dimensions?.aspectRatio,
+      showHandle: !attributes.style?.dimensions?.aspectRatio,
       size: resizableBoxDimensions,
       width
     };
@@ -21165,7 +21165,7 @@ var wp;
   // packages/block-library/build-module/cover/save.mjs
   var import_block_editor69 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
-  function save14({ attributes: attributes2 }) {
+  function save14({ attributes }) {
     const {
       backgroundType,
       gradient,
@@ -21187,7 +21187,7 @@ var wp;
       tagName: Tag,
       sizeSlug,
       poster
-    } = attributes2;
+    } = attributes;
     const overlayColorClass = (0, import_block_editor69.getColorClassName)(
       "background-color",
       overlayColor
@@ -21377,8 +21377,8 @@ var wp;
       {
         type: "block",
         blocks: ["core/group"],
-        transform: (attributes2, innerBlocks) => {
-          const { align, anchor, backgroundColor, gradient, style: style2 } = attributes2;
+        transform: (attributes, innerBlocks) => {
+          const { align, anchor, backgroundColor, gradient, style: style2 } = attributes;
           if (innerBlocks?.length === 1 && innerBlocks[0]?.name === "core/cover") {
             return (0, import_blocks21.createBlock)(
               "core/cover",
@@ -21397,11 +21397,11 @@ var wp;
             customGradient: style2?.color?.gradient
           };
           const attributesWithoutBackgroundColors = {
-            ...attributes2,
+            ...attributes,
             backgroundColor: void 0,
             gradient: void 0,
             style: cleanEmptyObject5({
-              ...attributes2?.style,
+              ...attributes?.style,
               color: style2?.color ? {
                 ...style2?.color,
                 background: void 0,
@@ -21483,16 +21483,16 @@ var wp;
           }
           return true;
         },
-        transform: (attributes2, innerBlocks) => {
+        transform: (attributes, innerBlocks) => {
           const transformedColorAttributes = {
-            backgroundColor: attributes2?.overlayColor,
-            gradient: attributes2?.gradient,
+            backgroundColor: attributes?.overlayColor,
+            gradient: attributes?.gradient,
             style: cleanEmptyObject5({
-              ...attributes2?.style,
-              color: attributes2?.customOverlayColor || attributes2?.customGradient || attributes2?.style?.color ? {
-                background: attributes2?.customOverlayColor,
-                gradient: attributes2?.customGradient,
-                ...attributes2?.style?.color
+              ...attributes?.style,
+              color: attributes?.customOverlayColor || attributes?.customGradient || attributes?.style?.color ? {
+                background: attributes?.customOverlayColor,
+                gradient: attributes?.customGradient,
+                ...attributes?.style?.color
               } : void 0
             })
           };
@@ -21525,7 +21525,7 @@ var wp;
           }
           return (0, import_blocks21.createBlock)(
             "core/group",
-            { ...attributes2, ...transformedColorAttributes },
+            { ...attributes, ...transformedColorAttributes },
             innerBlocks
           );
         }
@@ -21734,8 +21734,8 @@ var wp;
       }
     ]
   ];
-  function DetailsEdit({ attributes: attributes2, setAttributes, clientId }) {
-    const { name: name122, showContent, summary, allowedBlocks, placeholder: placeholder2 } = attributes2;
+  function DetailsEdit({ attributes, setAttributes, clientId }) {
+    const { name: name122, showContent, summary, allowedBlocks, placeholder: placeholder2 } = attributes;
     const blockProps = (0, import_block_editor71.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor71.useInnerBlocksProps)(blockProps, {
       template: TEMPLATE5,
@@ -21845,9 +21845,9 @@ var wp;
   // packages/block-library/build-module/details/save.mjs
   var import_block_editor72 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
-  function save15({ attributes: attributes2 }) {
-    const { name: name122, showContent } = attributes2;
-    const summary = attributes2.summary ? attributes2.summary : "Details";
+  function save15({ attributes }) {
+    const { name: name122, showContent } = attributes;
+    const summary = attributes.summary ? attributes.summary : "Details";
     const blockProps = import_block_editor72.useBlockProps.save();
     return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(
       "details",
@@ -21906,9 +21906,9 @@ var wp;
         }
       ]
     },
-    __experimentalLabel(attributes2, { context }) {
-      const { summary } = attributes2;
-      const customName = attributes2?.metadata?.name;
+    __experimentalLabel(attributes, { context }) {
+      const { summary } = attributes;
+      const customName = attributes?.metadata?.name;
       const hasSummary = summary?.trim().length > 0;
       if (context === "list-view" && (customName || hasSummary)) {
         return customName || summary;
@@ -22389,7 +22389,7 @@ var wp;
         responsive,
         url: attributesUrl
       },
-      attributes: attributes2,
+      attributes,
       isSelected,
       onReplace,
       setAttributes,
@@ -22441,13 +22441,13 @@ var wp;
       [attributesUrl]
     );
     const getMergedAttributes = () => getMergedAttributesWithPreview(
-      attributes2,
+      attributes,
       preview,
       title,
       responsive
     );
     function toggleResponsive(newAllowResponsive) {
-      const { className: className2 } = attributes2;
+      const { className: className2 } = attributes;
       const { html } = preview;
       setAttributes({
         allowResponsive: newAllowResponsive,
@@ -22494,7 +22494,7 @@ var wp;
         }
       }
       const hasChanges = Object.keys(mergedAttributes).some(
-        (key) => mergedAttributes[key] !== attributes2[key]
+        (key) => mergedAttributes[key] !== attributes[key]
       );
       if (hasChanges) {
         __unstableMarkNextChangeAsNotPersistent();
@@ -22520,7 +22520,7 @@ var wp;
             }
             const rewrittenURL = rewriteXToTwitter(url);
             const blockClass = removeAspectRatioClasses(
-              attributes2.className
+              attributes.className
             );
             setURL(rewrittenURL);
             setAttributes({
@@ -22583,14 +22583,14 @@ var wp;
                 icon: icon4,
                 label,
                 insertBlocksAfter,
-                attributes: attributes2,
+                attributes,
                 setAttributes
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
               Caption,
               {
-                attributes: attributes2,
+                attributes,
                 setAttributes,
                 isSelected,
                 insertBlocksAfter,
@@ -22608,8 +22608,8 @@ var wp;
   // packages/block-library/build-module/embed/save.mjs
   var import_block_editor77 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
-  function save16({ attributes: attributes2 }) {
-    const { url, caption, type, providerNameSlug } = attributes2;
+  function save16({ attributes }) {
+    const { url, caption, type, providerNameSlug } = attributes;
     if (!url) {
       return null;
     }
@@ -23033,8 +23033,8 @@ ${url}
   var { attributes: blockAttributes3 } = block_default7;
   var v25 = {
     attributes: blockAttributes3,
-    save({ attributes: attributes2 }) {
-      const { url, caption, type, providerNameSlug } = attributes2;
+    save({ attributes }) {
+      const { url, caption, type, providerNameSlug } = attributes;
       if (!url) {
         return null;
       }
@@ -23151,7 +23151,7 @@ ${url}
       anchor: true,
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         href,
         fileId,
@@ -23162,7 +23162,7 @@ ${url}
         downloadButtonText: downloadButtonText2,
         displayPreview,
         previewHeight
-      } = attributes2;
+      } = attributes;
       const pdfEmbedLabel = import_block_editor79.RichText.isEmpty(fileName) ? (0, import_i18n63.__)("PDF embed") : (0, import_i18n63.sprintf)(
         /* translators: %s: filename. */
         (0, import_i18n63.__)("Embed of %s."),
@@ -23262,7 +23262,7 @@ ${url}
       anchor: true,
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         href,
         fileId,
@@ -23273,7 +23273,7 @@ ${url}
         downloadButtonText: downloadButtonText2,
         displayPreview,
         previewHeight
-      } = attributes2;
+      } = attributes;
       const pdfEmbedLabel = import_block_editor79.RichText.isEmpty(fileName) ? (0, import_i18n63.__)("PDF embed") : (0, import_i18n63.sprintf)(
         /* translators: %s: filename. */
         (0, import_i18n63.__)("Embed of %s."),
@@ -23364,7 +23364,7 @@ ${url}
       anchor: true,
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         href,
         fileName,
@@ -23374,7 +23374,7 @@ ${url}
         downloadButtonText: downloadButtonText2,
         displayPreview,
         previewHeight
-      } = attributes2;
+      } = attributes;
       const pdfEmbedLabel = import_block_editor79.RichText.isEmpty(fileName) ? (0, import_i18n63.__)("PDF embed") : (0, import_i18n63.sprintf)(
         /* translators: %s: filename. */
         (0, import_i18n63.__)("Embed of %s."),
@@ -23634,7 +23634,7 @@ ${url}
       }
     );
   }
-  function FileEdit({ attributes: attributes2, isSelected, setAttributes, clientId }) {
+  function FileEdit({ attributes, isSelected, setAttributes, clientId }) {
     const {
       id,
       fileName,
@@ -23645,8 +23645,8 @@ ${url}
       downloadButtonText: downloadButtonText2,
       displayPreview,
       previewHeight
-    } = attributes2;
-    const [temporaryURL, setTemporaryURL] = (0, import_element31.useState)(attributes2.blob);
+    } = attributes;
+    const [temporaryURL, setTemporaryURL] = (0, import_element31.useState)(attributes.blob);
     const { media } = (0, import_data31.useSelect)(
       (select9) => ({
         media: id === void 0 ? void 0 : select9(import_core_data18.store).getEntityRecord(
@@ -23687,8 +23687,8 @@ ${url}
         (newMedia.mime || newMedia.mime_type) === "application/pdf" || (0, import_url8.getFilename)(newMedia.url).toLowerCase().endsWith(".pdf")
       );
       const pdfAttributes = {
-        displayPreview: isPdf ? attributes2.displayPreview ?? true : void 0,
-        previewHeight: isPdf ? attributes2.previewHeight ?? 600 : void 0
+        displayPreview: isPdf ? attributes.displayPreview ?? true : void 0,
+        previewHeight: isPdf ? attributes.previewHeight ?? 600 : void 0
       };
       setAttributes({
         href: newMedia.url,
@@ -23980,7 +23980,7 @@ ${url}
   // packages/block-library/build-module/file/save.mjs
   var import_block_editor82 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
-  function save17({ attributes: attributes2 }) {
+  function save17({ attributes }) {
     const {
       href,
       fileId,
@@ -23991,7 +23991,7 @@ ${url}
       downloadButtonText: downloadButtonText2,
       displayPreview,
       previewHeight
-    } = attributes2;
+    } = attributes;
     const pdfEmbedLabel = import_block_editor82.RichText.isEmpty(fileName) ? "PDF embed" : (
       // To do: use toPlainText, but we need ensure it's RichTextData. See
       // https://github.com/WordPress/gutenberg/pull/56710.
@@ -24095,14 +24095,14 @@ ${url}
       {
         type: "block",
         blocks: ["core/audio", "core/video", "core/image"],
-        transform: (attributes2) => {
-          const href = attributes2.src ?? attributes2.url;
+        transform: (attributes) => {
+          const href = attributes.src ?? attributes.url;
           return (0, import_blocks26.createBlock)("core/file", {
             href,
-            fileName: attributes2.caption || (0, import_url9.getFilename)(href),
+            fileName: attributes.caption || (0, import_url9.getFilename)(href),
             textLinkHref: href,
-            id: attributes2.id,
-            anchor: attributes2.anchor,
+            id: attributes.id,
+            anchor: attributes.anchor,
             downloadButtonText
           });
         }
@@ -24120,12 +24120,12 @@ ${url}
           const media = getEntityRecord("postType", "attachment", id);
           return !!media && media.mime_type.includes("audio");
         },
-        transform: (attributes2) => {
+        transform: (attributes) => {
           return (0, import_blocks26.createBlock)("core/audio", {
-            src: attributes2.href,
-            caption: attributes2.fileName,
-            id: attributes2.id,
-            anchor: attributes2.anchor
+            src: attributes.href,
+            caption: attributes.fileName,
+            id: attributes.id,
+            anchor: attributes.anchor
           });
         }
       },
@@ -24140,12 +24140,12 @@ ${url}
           const media = getEntityRecord("postType", "attachment", id);
           return !!media && media.mime_type.includes("video");
         },
-        transform: (attributes2) => {
+        transform: (attributes) => {
           return (0, import_blocks26.createBlock)("core/video", {
-            src: attributes2.href,
-            caption: attributes2.fileName,
-            id: attributes2.id,
-            anchor: attributes2.anchor
+            src: attributes.href,
+            caption: attributes.fileName,
+            id: attributes.id,
+            anchor: attributes.anchor
           });
         }
       },
@@ -24160,12 +24160,12 @@ ${url}
           const media = getEntityRecord("postType", "attachment", id);
           return !!media && media.mime_type.includes("image");
         },
-        transform: (attributes2) => {
+        transform: (attributes) => {
           return (0, import_blocks26.createBlock)("core/image", {
-            url: attributes2.href,
-            caption: attributes2.fileName,
-            id: attributes2.id,
-            anchor: attributes2.anchor
+            url: attributes.href,
+            caption: attributes.fileName,
+            id: attributes.id,
+            anchor: attributes.anchor
           });
         }
       }
@@ -24324,7 +24324,7 @@ ${url}
     ],
     ["core/form-submit-button", {}]
   ];
-  var Edit13 = ({ attributes: attributes2, setAttributes, clientId }) => {
+  var Edit13 = ({ attributes, setAttributes, clientId }) => {
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const resetAllSettings = () => {
       setAttributes({
@@ -24334,7 +24334,7 @@ ${url}
         method: "post"
       });
     };
-    const { action, method, email, submissionMethod } = attributes2;
+    const { action, method, email, submissionMethod } = attributes;
     const blockProps = (0, import_block_editor83.useBlockProps)();
     const { hasInnerBlocks } = (0, import_data33.useSelect)(
       (select9) => {
@@ -24546,9 +24546,9 @@ ${url}
   // packages/block-library/build-module/form/save.mjs
   var import_block_editor84 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
-  function save18({ attributes: attributes2 }) {
+  function save18({ attributes }) {
     const blockProps = import_block_editor84.useBlockProps.save();
-    const { submissionMethod } = attributes2;
+    const { submissionMethod } = attributes;
     return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
       "form",
       {
@@ -24744,11 +24744,11 @@ ${url}
         type: "string"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { submissionMethod } = attributes2;
-      const colorProps = (0, import_block_editor85.__experimentalGetColorClassesAndStyles)(attributes2);
-      const typographyProps = (0, import_block_editor85.getTypographyClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor85.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    save({ attributes }) {
+      const { submissionMethod } = attributes;
+      const colorProps = (0, import_block_editor85.__experimentalGetColorClassesAndStyles)(attributes);
+      const typographyProps = (0, import_block_editor85.getTypographyClassesAndStyles)(attributes);
+      const spacingProps = (0, import_block_editor85.__experimentalGetSpacingClassesAndStyles)(attributes);
       const blockProps = import_block_editor85.useBlockProps.save({
         // In this deprecated version, the block support is deliberately empty.
         // As a result, the useBlockProps.save() does not output style or id attributes,
@@ -24758,7 +24758,7 @@ ${url}
           ...typographyProps.style,
           ...spacingProps.style
         },
-        id: attributes2.anchor
+        id: attributes.anchor
       });
       return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
         "form",
@@ -24889,10 +24889,10 @@ ${url}
         }
       }
     },
-    save({ attributes: attributes2 }) {
-      const { type, name: name122, label, inlineLabel, required, placeholder: placeholder2, value } = attributes2;
-      const borderProps = (0, import_block_editor86.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor86.__experimentalGetColorClassesAndStyles)(attributes2);
+    save({ attributes }) {
+      const { type, name: name122, label, inlineLabel, required, placeholder: placeholder2, value } = attributes;
+      const borderProps = (0, import_block_editor86.__experimentalGetBorderClassesAndStyles)(attributes);
+      const colorProps = (0, import_block_editor86.__experimentalGetColorClassesAndStyles)(attributes);
       const inputStyle = {
         ...borderProps.style,
         ...colorProps.style
@@ -24993,10 +24993,10 @@ ${url}
         }
       }
     },
-    save({ attributes: attributes2 }) {
-      const { type, name: name122, label, inlineLabel, required, placeholder: placeholder2, value } = attributes2;
-      const borderProps = (0, import_block_editor86.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor86.__experimentalGetColorClassesAndStyles)(attributes2);
+    save({ attributes }) {
+      const { type, name: name122, label, inlineLabel, required, placeholder: placeholder2, value } = attributes;
+      const borderProps = (0, import_block_editor86.__experimentalGetBorderClassesAndStyles)(attributes);
+      const colorProps = (0, import_block_editor86.__experimentalGetColorClassesAndStyles)(attributes);
       const inputStyle = {
         ...borderProps.style,
         ...colorProps.style
@@ -25044,14 +25044,14 @@ ${url}
   var import_components44 = __toESM(require_components(), 1);
   var import_element32 = __toESM(require_element(), 1);
   var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
-  function InputFieldBlock({ attributes: attributes2, setAttributes, className }) {
-    const { type, name: name122, label, inlineLabel, required, placeholder: placeholder2, value } = attributes2;
+  function InputFieldBlock({ attributes, setAttributes, className }) {
+    const { type, name: name122, label, inlineLabel, required, placeholder: placeholder2, value } = attributes;
     const blockProps = (0, import_block_editor87.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const ref = (0, import_element32.useRef)();
     const TagName2 = type === "textarea" ? "textarea" : "input";
-    const borderProps = (0, import_block_editor87.__experimentalUseBorderProps)(attributes2);
-    const colorProps = (0, import_block_editor87.__experimentalUseColorProps)(attributes2);
+    const borderProps = (0, import_block_editor87.__experimentalUseBorderProps)(attributes);
+    const colorProps = (0, import_block_editor87.__experimentalUseColorProps)(attributes);
     if (ref.current) {
       ref.current.focus();
     }
@@ -25290,10 +25290,10 @@ ${url}
   var getNameFromLabel = (content) => {
     return (0, import_remove_accents2.default)((0, import_dom3.__unstableStripHTML)(content)).replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase().replace(/(^-+)|(-+$)/g, "");
   };
-  function save19({ attributes: attributes2 }) {
-    const { type, name: name122, label, inlineLabel, required, placeholder: placeholder2, value } = attributes2;
-    const borderProps = (0, import_block_editor88.__experimentalGetBorderClassesAndStyles)(attributes2);
-    const colorProps = (0, import_block_editor88.__experimentalGetColorClassesAndStyles)(attributes2);
+  function save19({ attributes }) {
+    const { type, name: name122, label, inlineLabel, required, placeholder: placeholder2, value } = attributes;
+    const borderProps = (0, import_block_editor88.__experimentalGetBorderClassesAndStyles)(attributes);
+    const colorProps = (0, import_block_editor88.__experimentalGetColorClassesAndStyles)(attributes);
     const inputStyle = {
       ...borderProps.style,
       ...colorProps.style
@@ -25530,8 +25530,8 @@ ${url}
       }
     ]
   ];
-  var Edit15 = ({ attributes: attributes2, clientId }) => {
-    const { type } = attributes2;
+  var Edit15 = ({ attributes, clientId }) => {
+    const { type } = attributes;
     const blockProps = (0, import_block_editor91.useBlockProps)({
       className: clsx_default("wp-block-form-submission-notification", {
         [`form-notification-type-${type}`]: type
@@ -25586,8 +25586,8 @@ ${url}
   // packages/block-library/build-module/form-submission-notification/save.mjs
   var import_block_editor92 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
-  function save21({ attributes: attributes2 }) {
-    const { type } = attributes2;
+  function save21({ attributes }) {
+    const { type } = attributes;
     return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
       "div",
       {
@@ -25693,8 +25693,8 @@ ${url}
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   var DEPRECATED_LINK_DESTINATION_MEDIA = "file";
   var DEPRECATED_LINK_DESTINATION_ATTACHMENT = "post";
-  function defaultColumnsNumberV1(attributes2) {
-    return Math.min(3, attributes2?.images?.length);
+  function defaultColumnsNumberV1(attributes) {
+    return Math.min(3, attributes?.images?.length);
   }
   function getHrefAndDestination(image, destination) {
     switch (destination) {
@@ -25726,17 +25726,17 @@ ${url}
     }
     return {};
   }
-  function runV2Migration(attributes2) {
-    let linkTo = attributes2.linkTo ? attributes2.linkTo : "none";
+  function runV2Migration(attributes) {
+    let linkTo = attributes.linkTo ? attributes.linkTo : "none";
     if (linkTo === "post") {
       linkTo = "attachment";
     } else if (linkTo === "file") {
       linkTo = "media";
     }
-    const imageBlocks = attributes2.images.map((image) => {
-      return getImageBlock(image, attributes2.sizeSlug, linkTo);
+    const imageBlocks = attributes.images.map((image) => {
+      return getImageBlock(image, attributes.sizeSlug, linkTo);
     });
-    const { images, ids, ...restAttributes } = attributes2;
+    const { images, ids, ...restAttributes } = attributes;
     return [
       {
         ...restAttributes,
@@ -25849,8 +25849,8 @@ ${url}
         default: false
       }
     },
-    save({ attributes: attributes2 }) {
-      const { caption, columns, imageCrop } = attributes2;
+    save({ attributes }) {
+      const { caption, columns, imageCrop } = attributes;
       const className = clsx_default("has-nested-images", {
         [`columns-${columns}`]: columns !== void 0,
         [`columns-default`]: columns === void 0,
@@ -25954,14 +25954,14 @@ ${url}
       anchor: true,
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         images,
-        columns = defaultColumnsNumberV1(attributes2),
+        columns = defaultColumnsNumberV1(attributes),
         imageCrop,
         caption,
         linkTo
-      } = attributes2;
+      } = attributes;
       const className = `columns-${columns} ${imageCrop ? "is-cropped" : ""}`;
       return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)("figure", { ...import_block_editor93.useBlockProps.save({ className }), children: [
         /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("ul", { className: "blocks-gallery-grid", children: images.map((image) => {
@@ -26014,8 +26014,8 @@ ${url}
         )
       ] });
     },
-    migrate(attributes2) {
-      return runV2Migration(attributes2);
+    migrate(attributes) {
+      return runV2Migration(attributes);
     }
   };
   var v52 = {
@@ -26100,17 +26100,17 @@ ${url}
     isEligible({ linkTo }) {
       return !linkTo || linkTo === "attachment" || linkTo === "media";
     },
-    migrate(attributes2) {
-      return runV2Migration(attributes2);
+    migrate(attributes) {
+      return runV2Migration(attributes);
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         images,
-        columns = defaultColumnsNumberV1(attributes2),
+        columns = defaultColumnsNumberV1(attributes),
         imageCrop,
         caption,
         linkTo
-      } = attributes2;
+      } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(
         "figure",
         {
@@ -26237,17 +26237,17 @@ ${url}
     isEligible({ ids }) {
       return ids && ids.some((id) => typeof id === "string");
     },
-    migrate(attributes2) {
-      return runV2Migration(attributes2);
+    migrate(attributes) {
+      return runV2Migration(attributes);
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         images,
-        columns = defaultColumnsNumberV1(attributes2),
+        columns = defaultColumnsNumberV1(attributes),
         imageCrop,
         caption,
         linkTo
-      } = attributes2;
+      } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(
         "figure",
         {
@@ -26366,13 +26366,13 @@ ${url}
     supports: {
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         images,
-        columns = defaultColumnsNumberV1(attributes2),
+        columns = defaultColumnsNumberV1(attributes),
         imageCrop,
         linkTo
-      } = attributes2;
+      } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
         "ul",
         {
@@ -26419,8 +26419,8 @@ ${url}
         }
       );
     },
-    migrate(attributes2) {
-      return runV2Migration(attributes2);
+    migrate(attributes) {
+      return runV2Migration(attributes);
     }
   };
   var v28 = {
@@ -26479,19 +26479,19 @@ ${url}
         return parseInt(id, 10) !== ids[index];
       }));
     },
-    migrate(attributes2) {
-      return runV2Migration(attributes2);
+    migrate(attributes) {
+      return runV2Migration(attributes);
     },
     supports: {
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         images,
-        columns = defaultColumnsNumberV1(attributes2),
+        columns = defaultColumnsNumberV1(attributes),
         imageCrop,
         linkTo
-      } = attributes2;
+      } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
         "ul",
         {
@@ -26580,14 +26580,14 @@ ${url}
     supports: {
       align: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         images,
-        columns = defaultColumnsNumberV1(attributes2),
+        columns = defaultColumnsNumberV1(attributes),
         align,
         imageCrop,
         linkTo
-      } = attributes2;
+      } = attributes;
       const className = clsx_default(`columns-${columns}`, {
         alignnone: align === "none",
         "is-cropped": imageCrop
@@ -26620,8 +26620,8 @@ ${url}
         );
       }) });
     },
-    migrate(attributes2) {
-      return runV2Migration(attributes2);
+    migrate(attributes) {
+      return runV2Migration(attributes);
     }
   };
   var deprecated_default19 = [v72, v62, v52, v42, v33, v28, v118];
@@ -26672,26 +26672,26 @@ ${url}
   var DEFAULT_MEDIA_SIZE_SLUG3 = "full";
 
   // packages/block-library/build-module/gallery/utils.mjs
-  function getHrefAndDestination2(image, galleryDestination, imageDestination, attributes2, lightboxSetting) {
+  function getHrefAndDestination2(image, galleryDestination, imageDestination, attributes, lightboxSetting) {
     switch (imageDestination ? imageDestination : galleryDestination) {
       case LINK_DESTINATION_MEDIA_WP_CORE:
       case LINK_DESTINATION_MEDIA:
         return {
           href: image?.source_url || image?.url,
           linkDestination: LINK_DESTINATION_MEDIA2,
-          lightbox: lightboxSetting?.enabled ? { ...attributes2?.lightbox, enabled: false } : void 0
+          lightbox: lightboxSetting?.enabled ? { ...attributes?.lightbox, enabled: false } : void 0
         };
       case LINK_DESTINATION_ATTACHMENT_WP_CORE:
       case LINK_DESTINATION_ATTACHMENT:
         return {
           href: image?.link,
           linkDestination: LINK_DESTINATION_ATTACHMENT2,
-          lightbox: lightboxSetting?.enabled ? { ...attributes2?.lightbox, enabled: false } : void 0
+          lightbox: lightboxSetting?.enabled ? { ...attributes?.lightbox, enabled: false } : void 0
         };
       case LINK_DESTINATION_LIGHTBOX:
         return {
           href: void 0,
-          lightbox: !lightboxSetting?.enabled ? { ...attributes2?.lightbox, enabled: true } : void 0,
+          lightbox: !lightboxSetting?.enabled ? { ...attributes?.lightbox, enabled: true } : void 0,
           linkDestination: LINK_DESTINATION_NONE2
         };
       case LINK_DESTINATION_NONE:
@@ -26761,7 +26761,7 @@ ${url}
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
   function Gallery(props) {
     const {
-      attributes: attributes2,
+      attributes,
       isSelected,
       setAttributes,
       mediaPlaceholder,
@@ -26771,7 +26771,7 @@ ${url}
       isContentLocked,
       multiGallerySelection
     } = props;
-    const { align, columns, imageCrop } = attributes2;
+    const { align, columns, imageCrop } = attributes;
     return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(
       "figure",
       {
@@ -26793,7 +26793,7 @@ ${url}
           /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
             Caption,
             {
-              attributes: attributes2,
+              attributes,
               setAttributes,
               isSelected,
               insertBlocksAfter,
@@ -26977,7 +26977,7 @@ ${url}
   function GalleryEdit(props) {
     const {
       setAttributes,
-      attributes: attributes2,
+      attributes,
       className,
       clientId,
       isSelected,
@@ -27002,7 +27002,7 @@ ${url}
       linkTo,
       sizeSlug,
       aspectRatio
-    } = attributes2;
+    } = attributes;
     const {
       __unstableMarkNextChangeAsNotPersistent,
       replaceInnerBlocks,
@@ -27094,7 +27094,7 @@ ${url}
       } else {
         newLinkTarget = getUpdatedLinkTargetSettings(
           linkTarget,
-          attributes2
+          attributes
         );
       }
       return {
@@ -27570,7 +27570,7 @@ ${url}
         /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
           GapStyles,
           {
-            blockGap: attributes2.style?.spacing?.blockGap,
+            blockGap: attributes.style?.spacing?.blockGap,
             clientId
           }
         )
@@ -27765,8 +27765,8 @@ ${url}
   // packages/block-library/build-module/gallery/save.mjs
   var import_block_editor97 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
-  function saveWithInnerBlocks({ attributes: attributes2 }) {
-    const { caption, columns, imageCrop } = attributes2;
+  function saveWithInnerBlocks({ attributes }) {
+    const { caption, columns, imageCrop } = attributes;
     const className = clsx_default("has-nested-images", {
       [`columns-${columns}`]: columns !== void 0,
       [`columns-default`]: columns === void 0,
@@ -27861,15 +27861,15 @@ ${url}
         type: "block",
         isMultiBlock: true,
         blocks: ["core/image"],
-        transform: (attributes2) => {
-          let { align, sizeSlug } = attributes2[0];
-          align = attributes2.every(
+        transform: (attributes) => {
+          let { align, sizeSlug } = attributes[0];
+          align = attributes.every(
             (attribute) => attribute.align === align
           ) ? align : void 0;
-          sizeSlug = attributes2.every(
+          sizeSlug = attributes.every(
             (attribute) => attribute.sizeSlug === sizeSlug
           ) ? sizeSlug : void 0;
-          const validImages = attributes2.filter(({ url }) => url);
+          const validImages = attributes.filter(({ url }) => url);
           const innerBlocks = validImages.map((image) => {
             image.width = void 0;
             image.height = void 0;
@@ -27990,7 +27990,7 @@ ${url}
         type: "block",
         blocks: ["core/group"],
         variationName: "group-grid",
-        transform: (attributes2, innerBlocks) => {
+        transform: (attributes, innerBlocks) => {
           const {
             allowResize,
             aspectRatio,
@@ -28007,7 +28007,7 @@ ${url}
             shortCodeTransforms,
             sizeSlug,
             ...rest
-          } = attributes2;
+          } = attributes;
           return (0, import_blocks30.createBlock)(
             "core/group",
             {
@@ -28068,24 +28068,24 @@ ${url}
   // packages/block-library/build-module/group/deprecated.mjs
   var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
-  var migrateAttributes = (attributes2) => {
-    if (!attributes2.tagName) {
-      attributes2 = {
-        ...attributes2,
+  var migrateAttributes = (attributes) => {
+    if (!attributes.tagName) {
+      attributes = {
+        ...attributes,
         tagName: "div"
       };
     }
-    if (!attributes2.customTextColor && !attributes2.customBackgroundColor) {
-      return attributes2;
+    if (!attributes.customTextColor && !attributes.customBackgroundColor) {
+      return attributes;
     }
     const style2 = { color: {} };
-    if (attributes2.customTextColor) {
-      style2.color.text = attributes2.customTextColor;
+    if (attributes.customTextColor) {
+      style2.color.text = attributes.customTextColor;
     }
-    if (attributes2.customBackgroundColor) {
-      style2.color.background = attributes2.customBackgroundColor;
+    if (attributes.customBackgroundColor) {
+      style2.color.background = attributes.customBackgroundColor;
     }
-    const { customTextColor, customBackgroundColor, ...restAttributes } = attributes2;
+    const { customTextColor, customBackgroundColor, ...restAttributes } = attributes;
     return {
       ...restAttributes,
       style: style2
@@ -28157,11 +28157,11 @@ ${url}
         return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Tag, { ...import_block_editor98.useInnerBlocksProps.save(import_block_editor98.useBlockProps.save()) });
       },
       isEligible: ({ layout }) => layout?.inherit || layout?.contentSize && layout?.type !== "constrained",
-      migrate: (attributes2) => {
-        const { layout = null } = attributes2;
+      migrate: (attributes) => {
+        const { layout = null } = attributes;
         if (layout?.inherit || layout?.contentSize) {
           return {
-            ...attributes2,
+            ...attributes,
             layout: {
               ...layout,
               type: "constrained"
@@ -28196,8 +28196,8 @@ ${url}
           radius: true
         }
       },
-      save({ attributes: attributes2 }) {
-        const { tagName: Tag } = attributes2;
+      save({ attributes }) {
+        const { tagName: Tag } = attributes;
         return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Tag, { ...import_block_editor98.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("div", { className: "wp-block-group__inner-container", children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(import_block_editor98.InnerBlocks.Content, {}) }) });
       }
     },
@@ -28223,13 +28223,13 @@ ${url}
         html: false
       },
       migrate: migrateAttributes,
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           backgroundColor,
           customBackgroundColor,
           textColor,
           customTextColor
-        } = attributes2;
+        } = attributes;
         const backgroundClass = (0, import_block_editor98.getColorClassName)(
           "background-color",
           backgroundColor
@@ -28268,13 +28268,13 @@ ${url}
         anchor: true,
         html: false
       },
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           backgroundColor,
           customBackgroundColor,
           textColor,
           customTextColor
-        } = attributes2;
+        } = attributes;
         const backgroundClass = (0, import_block_editor98.getColorClassName)(
           "background-color",
           backgroundColor
@@ -28307,8 +28307,8 @@ ${url}
         html: false
       },
       migrate: migrateAttributes,
-      save({ attributes: attributes2 }) {
-        const { backgroundColor, customBackgroundColor } = attributes2;
+      save({ attributes }) {
+        const { backgroundColor, customBackgroundColor } = attributes;
         const backgroundClass = (0, import_block_editor98.getColorClassName)(
           "background-color",
           backgroundColor
@@ -28386,7 +28386,7 @@ ${url}
     return icons?.[name122];
   };
   function useShouldShowPlaceHolder({
-    attributes: attributes2 = {
+    attributes = {
       style: void 0,
       backgroundColor: void 0,
       textColor: void 0,
@@ -28395,7 +28395,7 @@ ${url}
     usedLayoutType = "",
     hasInnerBlocks = false
   }) {
-    const { style: style2, backgroundColor, textColor, fontSize } = attributes2;
+    const { style: style2, backgroundColor, textColor, fontSize } = attributes;
     const [showPlaceholder, setShowPlaceholder] = (0, import_element36.useState)(
       !hasInnerBlocks && !backgroundColor && !fontSize && !textColor && !style2 && usedLayoutType !== "flex" && usedLayoutType !== "grid"
     );
@@ -28479,7 +28479,7 @@ ${url}
       }
     ) });
   }
-  function GroupEdit({ attributes: attributes2, name: name122, setAttributes, clientId }) {
+  function GroupEdit({ attributes, name: name122, setAttributes, clientId }) {
     const { hasInnerBlocks, themeSupportsLayout } = (0, import_data38.useSelect)(
       (select9) => {
         const { getBlock, getSettings: getSettings2 } = select9(import_block_editor100.store);
@@ -28496,13 +28496,13 @@ ${url}
       templateLock,
       allowedBlocks,
       layout = {}
-    } = attributes2;
+    } = attributes;
     const { type = "default" } = layout;
     const layoutSupportEnabled = themeSupportsLayout || type === "flex" || type === "grid";
     const ref = (0, import_element37.useRef)();
     const blockProps = (0, import_block_editor100.useBlockProps)({ ref });
     const [showPlaceholder, setShowPlaceholder] = useShouldShowPlaceHolder({
-      attributes: attributes2,
+      attributes,
       usedLayoutType: type,
       hasInnerBlocks
     });
@@ -28888,25 +28888,25 @@ ${url}
       type: "string"
     }
   };
-  var migrateCustomColors2 = (attributes2) => {
-    if (!attributes2.customTextColor) {
-      return attributes2;
+  var migrateCustomColors2 = (attributes) => {
+    if (!attributes.customTextColor) {
+      return attributes;
     }
     const style2 = {
       color: {
-        text: attributes2.customTextColor
+        text: attributes.customTextColor
       }
     };
-    const { customTextColor, ...restAttributes } = attributes2;
+    const { customTextColor, ...restAttributes } = attributes;
     return {
       ...restAttributes,
       style: style2
     };
   };
   var TEXT_ALIGN_OPTIONS = ["left", "right", "center"];
-  var migrateTextAlign = (attributes2) => {
-    const { align, ...rest } = attributes2;
-    return TEXT_ALIGN_OPTIONS.includes(align) ? { ...rest, textAlign: align } : attributes2;
+  var migrateTextAlign = (attributes) => {
+    const { align, ...rest } = attributes;
+    return TEXT_ALIGN_OPTIONS.includes(align) ? { ...rest, textAlign: align } : attributes;
   };
   var v119 = {
     supports: blockSupports,
@@ -28919,11 +28919,11 @@ ${url}
         type: "string"
       }
     },
-    migrate: (attributes2) => migrate_text_align_default(
-      migrateCustomColors2(migrateTextAlign(attributes2))
+    migrate: (attributes) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes))
     ),
-    save({ attributes: attributes2 }) {
-      const { align, level, content, textColor, customTextColor } = attributes2;
+    save({ attributes }) {
+      const { align, level, content, textColor, customTextColor } = attributes;
       const tagName = "h" + level;
       const textClass = (0, import_block_editor102.getColorClassName)("color", textColor);
       const className = clsx_default({
@@ -28953,11 +28953,11 @@ ${url}
         type: "string"
       }
     },
-    migrate: (attributes2) => migrate_text_align_default(
-      migrateCustomColors2(migrateTextAlign(attributes2))
+    migrate: (attributes) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes))
     ),
-    save({ attributes: attributes2 }) {
-      const { align, content, customTextColor, level, textColor } = attributes2;
+    save({ attributes }) {
+      const { align, content, customTextColor, level, textColor } = attributes;
       const tagName = "h" + level;
       const textClass = (0, import_block_editor102.getColorClassName)("color", textColor);
       const className = clsx_default({
@@ -28989,11 +28989,11 @@ ${url}
         type: "string"
       }
     },
-    migrate: (attributes2) => migrate_text_align_default(
-      migrateCustomColors2(migrateTextAlign(attributes2))
+    migrate: (attributes) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes))
     ),
-    save({ attributes: attributes2 }) {
-      const { align, content, customTextColor, level, textColor } = attributes2;
+    save({ attributes }) {
+      const { align, content, customTextColor, level, textColor } = attributes;
       const tagName = "h" + level;
       const textClass = (0, import_block_editor102.getColorClassName)("color", textColor);
       const className = clsx_default({
@@ -29034,11 +29034,11 @@ ${url}
     },
     attributes: blockAttributes4,
     isEligible: ({ align }) => TEXT_ALIGN_OPTIONS.includes(align),
-    migrate: (attributes2) => migrate_text_align_default(
-      migrateCustomColors2(migrateTextAlign(attributes2))
+    migrate: (attributes) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes))
     ),
-    save({ attributes: attributes2 }) {
-      const { align, content, level } = attributes2;
+    save({ attributes }) {
+      const { align, content, level } = attributes;
       const TagName2 = "h" + level;
       const className = clsx_default({
         [`has-text-align-${align}`]: align
@@ -29101,16 +29101,16 @@ ${url}
         type: "string"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { textAlign, content, level } = attributes2;
+    save({ attributes }) {
+      const { textAlign, content, level } = attributes;
       const TagName2 = "h" + level;
       const className = clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
       });
       return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(TagName2, { ...import_block_editor102.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(import_block_editor102.RichText.Content, { value: content }) });
     },
-    migrate: (attributes2) => migrate_text_align_default(
-      migrateCustomColors2(migrateTextAlign(attributes2))
+    migrate: (attributes) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes))
     )
   };
   var v63 = {
@@ -29180,19 +29180,19 @@ ${url}
         type: "string"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { textAlign, content, level } = attributes2;
+    save({ attributes }) {
+      const { textAlign, content, level } = attributes;
       const TagName2 = "h" + level;
       const className = clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
       });
       return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(TagName2, { ...import_block_editor102.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(import_block_editor102.RichText.Content, { value: content }) });
     },
-    migrate: (attributes2) => migrate_text_align_default(
-      migrateCustomColors2(migrateTextAlign(attributes2))
+    migrate: (attributes) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes))
     ),
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     }
@@ -29239,7 +29239,7 @@ ${url}
   var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
   function HeadingEdit(props) {
     const {
-      attributes: attributes2,
+      attributes,
       setAttributes,
       mergeBlocks,
       onReplace,
@@ -29247,7 +29247,7 @@ ${url}
       clientId
     } = props;
     useDeprecatedTextAlign(props);
-    const { content, level, placeholder: placeholder2, anchor } = attributes2;
+    const { content, level, placeholder: placeholder2, anchor } = attributes;
     const tagName = "h" + level;
     const blockProps = (0, import_block_editor103.useBlockProps)({
       style: style2
@@ -29381,8 +29381,8 @@ ${url}
   // packages/block-library/build-module/heading/save.mjs
   var import_block_editor104 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
-  function save23({ attributes: attributes2 }) {
-    const { content, level } = attributes2;
+  function save23({ attributes }) {
+    const { content, level } = attributes;
     const TagName2 = "h" + level;
     return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(TagName2, { ...import_block_editor104.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(import_block_editor104.RichText.Content, { value: content }) });
   }
@@ -29402,7 +29402,7 @@ ${url}
         type: "block",
         isMultiBlock: true,
         blocks: ["core/paragraph"],
-        transform: (attributes2) => attributes2.map((_attributes) => {
+        transform: (attributes) => attributes.map((_attributes) => {
           const { content, anchor, style: style2 } = _attributes;
           const textAlign = style2?.typography?.textAlign;
           return (0, import_blocks33.createBlock)("core/heading", {
@@ -29443,22 +29443,22 @@ ${url}
           };
         },
         transform(node) {
-          const attributes2 = (0, import_blocks33.getBlockAttributes)(
+          const attributes = (0, import_blocks33.getBlockAttributes)(
             "core/heading",
             node.outerHTML
           );
           const { textAlign } = node.style || {};
-          attributes2.level = getLevelFromHeadingNodeName(node.nodeName);
+          attributes.level = getLevelFromHeadingNodeName(node.nodeName);
           if (textAlign === "left" || textAlign === "center" || textAlign === "right") {
-            attributes2.style = {
-              ...attributes2.style,
+            attributes.style = {
+              ...attributes.style,
               typography: {
-                ...attributes2.style?.typography,
+                ...attributes.style?.typography,
                 textAlign
               }
             };
           }
-          return (0, import_blocks33.createBlock)("core/heading", attributes2);
+          return (0, import_blocks33.createBlock)("core/heading", attributes);
         }
       },
       ...[1, 2, 3, 4, 5, 6].map((level) => ({
@@ -29482,7 +29482,7 @@ ${url}
         type: "block",
         isMultiBlock: true,
         blocks: ["core/paragraph"],
-        transform: (attributes2) => attributes2.map((_attributes) => {
+        transform: (attributes) => attributes.map((_attributes) => {
           const { content, style: style2 } = _attributes;
           const textAlign = style2?.typography?.textAlign;
           return (0, import_blocks33.createBlock)("core/paragraph", {
@@ -29554,9 +29554,9 @@ ${url}
         }
       }
     },
-    __experimentalLabel(attributes2, { context }) {
-      const { content, level } = attributes2;
-      const customName = attributes2?.metadata?.name;
+    __experimentalLabel(attributes, { context }) {
+      const { content, level } = attributes;
+      const customName = attributes?.metadata?.name;
       const hasContent = content?.trim().length > 0;
       if (context === "list-view" && (customName || hasContent)) {
         return customName || content;
@@ -29579,9 +29579,9 @@ ${url}
     },
     transforms: transforms_default12,
     deprecated: deprecated_default21,
-    merge(attributes2, attributesToMerge) {
+    merge(attributes, attributesToMerge) {
       return {
-        content: (attributes2.content || "") + (attributesToMerge.content || "")
+        content: (attributes.content || "") + (attributesToMerge.content || "")
       };
     },
     edit: edit_default16,
@@ -29691,7 +29691,7 @@ ${url}
   var import_dom4 = __toESM(require_dom(), 1);
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   var preventDefault = (event) => event.preventDefault();
-  function HomeEdit({ attributes: attributes2, setAttributes, context }) {
+  function HomeEdit({ attributes, setAttributes, context }) {
     const {
       homeUrl,
       onNavigateToEntityRecord,
@@ -29715,7 +29715,7 @@ ${url}
       };
     }, []);
     const { textColor, backgroundColor, style: style2 } = context;
-    const { label, opensInNewTab, description } = attributes2;
+    const { label, opensInNewTab, description } = attributes;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockProps = (0, import_block_editor105.useBlockProps)({
       className: clsx_default("wp-block-navigation-item", {
@@ -30204,12 +30204,12 @@ ${js}
 
   // packages/block-library/build-module/html/edit.mjs
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
-  function HTMLEdit({ attributes: attributes2, setAttributes, isSelected }) {
+  function HTMLEdit({ attributes, setAttributes, isSelected }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element41.useState)(false);
     const blockProps = (0, import_block_editor109.useBlockProps)({
       className: "block-library-html__edit"
     });
-    if (!attributes2.content?.trim()) {
+    if (!attributes.content?.trim()) {
       return /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)("div", { ...blockProps, children: [
         /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
           import_components50.Placeholder,
@@ -30234,7 +30234,7 @@ ${js}
           HTMLEditModal,
           {
             onRequestClose: () => setIsModalOpen(false),
-            content: attributes2.content,
+            content: attributes.content,
             setAttributes
           }
         )
@@ -30259,12 +30259,12 @@ ${js}
           )
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(HTMLEditPreview, { content: attributes2.content, isSelected }),
+      /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(HTMLEditPreview, { content: attributes.content, isSelected }),
       isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
         HTMLEditModal,
         {
           onRequestClose: () => setIsModalOpen(false),
-          content: attributes2.content,
+          content: attributes.content,
           setAttributes
         }
       )
@@ -30304,8 +30304,8 @@ ${js}
   // packages/block-library/build-module/html/save.mjs
   var import_element42 = __toESM(require_element(), 1);
   var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
-  function save25({ attributes: attributes2 }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_element42.RawHTML, { children: attributes2.content });
+  function save25({ attributes }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_element42.RawHTML, { children: attributes.content });
   }
 
   // packages/block-library/build-module/html/transforms.mjs
@@ -30371,7 +30371,7 @@ ${js}
   var import_i18n92 = __toESM(require_i18n(), 1);
   var import_components51 = __toESM(require_components(), 1);
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
-  function IconGrid({ icons, onChange, attributes: attributes2 }) {
+  function IconGrid({ icons, onChange, attributes }) {
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { className: "wp-block-icon__inserter-grid", children: !icons?.length ? /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { className: "wp-block-icon__inserter-grid-no-results", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("p", { children: (0, import_i18n92.__)("No results found.") }) }) : /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
       "div",
       {
@@ -30383,7 +30383,7 @@ ${js}
             {
               className: "wp-block-icon__inserter-grid-icons-list-item",
               onClick: () => onChange(icon4.name),
-              variant: icon4.name === attributes2?.icon ? "primary" : void 0,
+              variant: icon4.name === attributes?.icon ? "primary" : void 0,
               __next40pxDefaultSize: true,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("span", { className: "wp-block-icon__inserter-grid-icons-list-item-icon", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
@@ -30447,7 +30447,7 @@ ${js}
   function CustomInserterModal({
     icons = [],
     setInserterOpen,
-    attributes: attributes2,
+    attributes,
     setAttributes
   }) {
     const [searchInput, setSearchInput] = (0, import_element43.useState)("");
@@ -30492,7 +30492,7 @@ ${js}
             {
               icons: filteredIcons,
               onChange: setIcon,
-              attributes: attributes2
+              attributes
             }
           )
         ] })
@@ -30526,14 +30526,14 @@ ${js}
       ]
     }
   );
-  function Edit16({ attributes: attributes2, setAttributes }) {
-    const { icon: icon4, ariaLabel, flipHorizontal, flipVertical, rotation } = attributes2;
+  function Edit16({ attributes, setAttributes }) {
+    const { icon: icon4, ariaLabel, flipHorizontal, flipVertical, rotation } = attributes;
     const [isInserterOpen, setInserterOpen] = (0, import_element44.useState)(false);
     const isContentOnlyMode = (0, import_block_editor110.useBlockEditingMode)() === "contentOnly";
-    const colorProps = (0, import_block_editor110.__experimentalUseColorProps)(attributes2);
-    const spacingProps = (0, import_block_editor110.__experimentalGetSpacingClassesAndStyles)(attributes2);
-    const borderProps = (0, import_block_editor110.__experimentalUseBorderProps)(attributes2);
-    const dimensionsProps = (0, import_block_editor110.getDimensionsClassesAndStyles)(attributes2);
+    const colorProps = (0, import_block_editor110.__experimentalUseColorProps)(attributes);
+    const spacingProps = (0, import_block_editor110.__experimentalGetSpacingClassesAndStyles)(attributes);
+    const borderProps = (0, import_block_editor110.__experimentalUseBorderProps)(attributes);
+    const dimensionsProps = (0, import_block_editor110.getDimensionsClassesAndStyles)(attributes);
     const { selectedIcon, allIcons = [] } = (0, import_data43.useSelect)(
       (select9) => {
         const { getEntityRecord, getEntityRecords } = select9(import_core_data22.store);
@@ -30705,7 +30705,7 @@ ${js}
         {
           icons: allIcons,
           setInserterOpen,
-          attributes: attributes2,
+          attributes,
           setAttributes
         }
       )
@@ -30885,8 +30885,8 @@ ${js}
         type: "number"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { url, alt, caption, align, href, width, height } = attributes2;
+    save({ attributes }) {
+      const { url, alt, caption, align, href, width, height } = attributes;
       const extraImageProps = width || height ? { width, height } : {};
       const image = /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("img", { src: url, alt, ...extraImageProps });
       let figureStyle = {};
@@ -30947,8 +30947,8 @@ ${js}
         type: "number"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { url, alt, caption, align, href, width, height, id } = attributes2;
+    save({ attributes }) {
+      const { url, alt, caption, align, href, width, height, id } = attributes;
       const image = /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
         "img",
         {
@@ -31008,8 +31008,8 @@ ${js}
         default: "none"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { url, alt, caption, align, href, width, height, id } = attributes2;
+    save({ attributes }) {
+      const { url, alt, caption, align, href, width, height, id } = attributes;
       const classes = clsx_default({
         [`align${align}`]: align,
         "is-resized": width || height
@@ -31102,7 +31102,7 @@ ${js}
     supports: {
       anchor: true
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         url,
         alt,
@@ -31117,7 +31117,7 @@ ${js}
         linkTarget,
         sizeSlug,
         title
-      } = attributes2;
+      } = attributes;
       const newRel = !rel ? void 0 : rel;
       const classes = clsx_default({
         [`align${align}`]: align,
@@ -31242,7 +31242,7 @@ ${js}
         }
       }
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         url,
         alt,
@@ -31257,7 +31257,7 @@ ${js}
         linkTarget,
         sizeSlug,
         title
-      } = attributes2;
+      } = attributes;
       const newRel = !rel ? void 0 : rel;
       const classes = clsx_default({
         [`align${align}`]: align,
@@ -31393,15 +31393,15 @@ ${js}
         }
       }
     },
-    migrate(attributes2) {
-      const { height, width } = attributes2;
+    migrate(attributes) {
+      const { height, width } = attributes;
       return {
-        ...attributes2,
+        ...attributes,
         width: typeof width === "number" ? `${width}px` : width,
         height: typeof height === "number" ? `${height}px` : height
       };
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         url,
         alt,
@@ -31418,9 +31418,9 @@ ${js}
         linkTarget,
         sizeSlug,
         title
-      } = attributes2;
+      } = attributes;
       const newRel = !rel ? void 0 : rel;
-      const borderProps = (0, import_block_editor111.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor111.__experimentalGetBorderClassesAndStyles)(attributes);
       const classes = clsx_default({
         [`align${align}`]: align,
         [`size-${sizeSlug}`]: sizeSlug,
@@ -31573,15 +31573,15 @@ ${js}
         }
       }
     },
-    migrate(attributes2) {
-      const { width, height } = attributes2;
+    migrate(attributes) {
+      const { width, height } = attributes;
       return {
-        ...attributes2,
+        ...attributes,
         width: typeof width === "number" ? `${width}px` : width,
         height: typeof height === "number" ? `${height}px` : height
       };
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         url,
         alt,
@@ -31598,9 +31598,9 @@ ${js}
         linkTarget,
         sizeSlug,
         title
-      } = attributes2;
+      } = attributes;
       const newRel = !rel ? void 0 : rel;
-      const borderProps = (0, import_block_editor111.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor111.__experimentalGetBorderClassesAndStyles)(attributes);
       const classes = clsx_default({
         [`align${align}`]: align,
         [`size-${sizeSlug}`]: sizeSlug,
@@ -31758,17 +31758,17 @@ ${js}
         }
       }
     },
-    migrate({ width, height, ...attributes2 }) {
-      if (!attributes2.behaviors?.lightbox) {
-        return attributes2;
+    migrate({ width, height, ...attributes }) {
+      if (!attributes.behaviors?.lightbox) {
+        return attributes;
       }
       const {
         behaviors: {
           lightbox: { enabled }
         }
-      } = attributes2;
+      } = attributes;
       const newAttributes = {
-        ...attributes2,
+        ...attributes,
         lightbox: {
           enabled
         }
@@ -31776,10 +31776,10 @@ ${js}
       delete newAttributes.behaviors;
       return newAttributes;
     },
-    isEligible(attributes2) {
-      return !!attributes2.behaviors;
+    isEligible(attributes) {
+      return !!attributes.behaviors;
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         url,
         alt,
@@ -31796,9 +31796,9 @@ ${js}
         linkTarget,
         sizeSlug,
         title
-      } = attributes2;
+      } = attributes;
       const newRel = !rel ? void 0 : rel;
-      const borderProps = (0, import_block_editor111.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor111.__experimentalGetBorderClassesAndStyles)(attributes);
       const classes = clsx_default({
         [`align${align}`]: align,
         [`size-${sizeSlug}`]: sizeSlug,
@@ -31969,7 +31969,7 @@ ${js}
         __experimentalSkipSerialization: true
       }
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         url,
         alt,
@@ -31988,10 +31988,10 @@ ${js}
         sizeSlug,
         title,
         metadata: { bindings = {} } = {}
-      } = attributes2;
+      } = attributes;
       const newRel = !rel ? void 0 : rel;
-      const borderProps = (0, import_block_editor111.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const shadowProps = (0, import_block_editor111.__experimentalGetShadowClassesAndStyles)(attributes2);
+      const borderProps = (0, import_block_editor111.__experimentalGetBorderClassesAndStyles)(attributes);
+      const shadowProps = (0, import_block_editor111.__experimentalGetShadowClassesAndStyles)(attributes);
       const classes = clsx_default({
         alignnone: "none" === align,
         [`size-${sizeSlug}`]: sizeSlug,
@@ -32264,11 +32264,11 @@ ${js}
     return hasKnownAlt && hasKnownCaption;
   }
   function useOpenImageMediaEditorModal({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     onClose
   }) {
-    const { id, url, alt, caption } = attributes2;
+    const { id, url, alt, caption } = attributes;
     const registry = (0, import_data45.useRegistry)();
     const openMediaEditorModal = (0, import_data45.useSelect)(
       (select9) => select9(import_block_editor113.store).getSettings()[openMediaEditorModalKey2],
@@ -32444,7 +32444,7 @@ ${js}
     );
   };
   function ContentOnlyControls({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     lockAltControls,
     lockAltControlsMessage,
@@ -32507,7 +32507,7 @@ ${js}
             {
               className: "wp-block-image__toolbar_content_textarea",
               label: (0, import_i18n96.__)("Alternative text"),
-              value: attributes2.alt || "",
+              value: attributes.alt || "",
               onChange: (value) => setAttributes({ alt: value }),
               disabled: lockAltControls,
               help: lockAltControls ? /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_jsx_runtime280.Fragment, { children: lockAltControlsMessage }) : /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(import_jsx_runtime280.Fragment, { children: [
@@ -32545,7 +32545,7 @@ ${js}
             {
               className: "wp-block-image__toolbar_content_textarea",
               label: (0, import_i18n96.__)("Title attribute"),
-              value: attributes2.title || "",
+              value: attributes.title || "",
               onChange: (value) => setAttributes({
                 title: value
               }),
@@ -32567,7 +32567,7 @@ ${js}
   function Image2({
     temporaryURL,
     isSideloading,
-    attributes: attributes2,
+    attributes,
     setAttributes,
     isSingleSelected,
     insertBlocksAfter,
@@ -32601,7 +32601,7 @@ ${js}
       lightbox,
       metadata,
       isDecorative
-    } = attributes2;
+    } = attributes;
     const [imageElement, setImageElement] = (0, import_element47.useState)();
     const [resizeDelta, setResizeDelta] = (0, import_element47.useState)(null);
     const [pixelSize, setPixelSize] = (0, import_element47.useState)({});
@@ -32673,7 +32673,7 @@ ${js}
       []
     );
     const openImageMediaEditorModal = useOpenImageMediaEditorModal({
-      attributes: attributes2,
+      attributes,
       setAttributes,
       onClose: handleMediaEditorModalClose
     });
@@ -32874,25 +32874,25 @@ ${js}
     const hasSelectedStyleState = !isDefaultBlockStyleState2(selectedStyleState);
     const selectedStyleStateKey = getStyleStateKey(selectedStyleState);
     const activeWidth = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "width"
     });
     const activeHeight = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "height"
     });
     const activeAspectRatio = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "aspectRatio"
     });
     const activeScale = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "scale",
@@ -32901,7 +32901,7 @@ ${js}
     const setDimensionAttributes = (nextDimensions) => {
       setAttributes(
         getDimensionUpdateAttributes({
-          style: attributes2.style,
+          style: attributes.style,
           selectedState: selectedStyleState,
           hasSelectedStyleState,
           nextDimensions,
@@ -33107,7 +33107,7 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_block_editor114.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
         ContentOnlyControls,
         {
-          attributes: attributes2,
+          attributes,
           setAttributes,
           lockAltControls,
           lockAltControlsMessage,
@@ -33310,8 +33310,8 @@ ${js}
     } else {
       defaultedAlt = (0, import_i18n96.__)("This image has an empty alt attribute");
     }
-    const borderProps = (0, import_block_editor114.__experimentalUseBorderProps)(attributes2);
-    const shadowProps = (0, import_block_editor114.__experimentalGetShadowClassesAndStyles)(attributes2);
+    const borderProps = (0, import_block_editor114.__experimentalUseBorderProps)(attributes);
+    const shadowProps = (0, import_block_editor114.__experimentalGetShadowClassesAndStyles)(attributes);
     const { postType, postId, queryId } = context;
     const isDescendentOfQueryLoop = Number.isFinite(queryId);
     const img = /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(ImageWrapper, { href, children: temporaryURL && hasImageErrored ? (
@@ -33472,7 +33472,7 @@ ${js}
       !isDecorative && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
         Caption,
         {
-          attributes: attributes2,
+          attributes,
           setAttributes,
           isSelected: isSingleSelected,
           insertBlocksAfter,
@@ -33525,7 +33525,7 @@ ${js}
     return "url" in (image?.sizes?.[size] ?? {}) || "source_url" in (image?.media_details?.sizes?.[size] ?? {});
   }
   function ImageEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     isSelected: isSingleSelected,
     className,
@@ -33546,8 +33546,8 @@ ${js}
       scale,
       align,
       metadata
-    } = attributes2;
-    const [temporaryURL, setTemporaryURL] = (0, import_element49.useState)(attributes2.blob);
+    } = attributes;
+    const [temporaryURL, setTemporaryURL] = (0, import_element49.useState)(attributes.blob);
     const containerRef = (0, import_element49.useRef)();
     const layoutType = parentLayout?.type || parentLayout?.default?.type;
     const isMaxWidthContainerWidth = !layoutType || layoutType !== "flex" && layoutType !== "grid";
@@ -33666,7 +33666,7 @@ ${js}
           sizeSlug: newSize
         };
       }
-      let linkDestination = attributes2.linkDestination;
+      let linkDestination = attributes.linkDestination;
       if (!linkDestination) {
         switch (window?.wp?.media?.view?.settings?.defaultProps?.link || LINK_DESTINATION_NONE2) {
           case "file":
@@ -33741,8 +33741,8 @@ ${js}
         src: url
       }
     );
-    const borderProps = (0, import_block_editor115.__experimentalUseBorderProps)(attributes2);
-    const shadowProps = (0, import_block_editor115.__experimentalGetShadowClassesAndStyles)(attributes2);
+    const borderProps = (0, import_block_editor115.__experimentalUseBorderProps)(attributes);
+    const shadowProps = (0, import_block_editor115.__experimentalGetShadowClassesAndStyles)(attributes);
     const classes = clsx_default(className, {
       "is-transient": !!temporaryURL || isSideloading,
       "is-resized": !!width || !!height,
@@ -33813,7 +33813,7 @@ ${js}
           {
             temporaryURL,
             isSideloading,
-            attributes: attributes2,
+            attributes,
             setAttributes,
             isSingleSelected,
             insertBlocksAfter,
@@ -34018,7 +34018,7 @@ ${js}
   // packages/block-library/build-module/image/save.mjs
   var import_block_editor116 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
-  function save26({ attributes: attributes2 }) {
+  function save26({ attributes }) {
     const {
       url,
       alt,
@@ -34038,10 +34038,10 @@ ${js}
       title,
       isDecorative,
       metadata: { bindings = {} } = {}
-    } = attributes2;
+    } = attributes;
     const newRel = !rel ? void 0 : rel;
-    const borderProps = (0, import_block_editor116.__experimentalGetBorderClassesAndStyles)(attributes2);
-    const shadowProps = (0, import_block_editor116.__experimentalGetShadowClassesAndStyles)(attributes2);
+    const borderProps = (0, import_block_editor116.__experimentalGetBorderClassesAndStyles)(attributes);
+    const shadowProps = (0, import_block_editor116.__experimentalGetShadowClassesAndStyles)(attributes);
     const classes = clsx_default({
       // All other align classes are handled by block supports.
       // `{ align: 'none' }` is unique to transforms for the image block.
@@ -34112,7 +34112,7 @@ ${js}
   // packages/block-library/build-module/image/transforms.mjs
   var import_blob14 = __toESM(require_blob(), 1);
   var import_blocks38 = __toESM(require_blocks(), 1);
-  function stripFirstImage(attributes2, { shortcode }) {
+  function stripFirstImage(attributes, { shortcode }) {
     const { body } = document.implementation.createHTMLDocument("");
     body.innerHTML = shortcode.content;
     let nodeToRemove = body.querySelector("img");
@@ -34197,7 +34197,7 @@ ${js}
           const aspectRatio = widthNumber && heightNumber ? String(widthNumber / heightNumber) : void 0;
           const width = widthValue || (heightValue ? "auto" : void 0);
           const height = widthValue ? "auto" : heightValue;
-          const attributes2 = (0, import_blocks38.getBlockAttributes)(
+          const attributes = (0, import_blocks38.getBlockAttributes)(
             "core/image",
             node.outerHTML,
             {
@@ -34213,11 +34213,11 @@ ${js}
               aspectRatio
             }
           );
-          if ((0, import_blob14.isBlobURL)(attributes2.url)) {
-            attributes2.blob = attributes2.url;
-            delete attributes2.url;
+          if ((0, import_blob14.isBlobURL)(attributes.url)) {
+            attributes.blob = attributes.url;
+            delete attributes.url;
           }
-          return (0, import_blocks38.createBlock)("core/image", attributes2);
+          return (0, import_blocks38.createBlock)("core/image", attributes);
         }
       },
       {
@@ -34259,7 +34259,7 @@ ${js}
             shortcode: stripFirstImage
           },
           href: {
-            shortcode: (attributes2, { shortcode }) => {
+            shortcode: (attributes, { shortcode }) => {
               return getFirstAnchorAttributeFormHTML(
                 shortcode.content,
                 "href"
@@ -34267,7 +34267,7 @@ ${js}
             }
           },
           rel: {
-            shortcode: (attributes2, { shortcode }) => {
+            shortcode: (attributes, { shortcode }) => {
               return getFirstAnchorAttributeFormHTML(
                 shortcode.content,
                 "rel"
@@ -34275,7 +34275,7 @@ ${js}
             }
           },
           linkClass: {
-            shortcode: (attributes2, { shortcode }) => {
+            shortcode: (attributes, { shortcode }) => {
               return getFirstAnchorAttributeFormHTML(
                 shortcode.content,
                 "class"
@@ -34316,13 +34316,13 @@ ${js}
         caption: (0, import_i18n98.__)("Mont Blanc appears\u2014still, snowy, and serene.")
       }
     },
-    __experimentalLabel(attributes2, { context }) {
-      const customName = attributes2?.metadata?.name;
+    __experimentalLabel(attributes, { context }) {
+      const customName = attributes?.metadata?.name;
       if ((context === "list-view" || context === "breadcrumb") && customName) {
         return customName;
       }
       if (context === "accessibility") {
-        const { caption, alt, url } = attributes2;
+        const { caption, alt, url } = attributes;
         if (!url) {
           return (0, import_i18n98.__)("Empty");
         }
@@ -34332,9 +34332,9 @@ ${js}
         return alt + (caption ? ". " + caption : "");
       }
     },
-    getEditWrapperProps(attributes2) {
+    getEditWrapperProps(attributes) {
       return {
-        "data-align": attributes2.align
+        "data-align": attributes.align
       };
     },
     transforms: transforms_default14,
@@ -34508,11 +34508,11 @@ ${js}
   var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
   var MIN_COMMENTS = 1;
   var MAX_COMMENTS = 100;
-  function LatestComments({ attributes: attributes2, setAttributes, name: name122 }) {
-    const { commentsToShow, displayAvatar, displayDate, displayContent } = attributes2;
+  function LatestComments({ attributes, setAttributes, name: name122 }) {
+    const { commentsToShow, displayAvatar, displayDate, displayContent } = attributes;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { content, status, error } = (0, import_server_side_render4.useServerSideRender)({
-      attributes: attributes2,
+      attributes,
       skipBlockSupportAttributes: true,
       block: name122,
       urlQueryArgs: {
@@ -34689,13 +34689,13 @@ ${js}
         clientNavigation: true
       }
     },
-    isEligible(attributes2) {
-      return attributes2?.displayExcerpt === false;
+    isEligible(attributes) {
+      return attributes?.displayExcerpt === false;
     },
-    migrate(attributes2) {
+    migrate(attributes) {
       return {
-        ...attributes2,
-        displayContent: attributes2.displayExcerpt ? "excerpt" : "none"
+        ...attributes,
+        displayContent: attributes.displayExcerpt ? "excerpt" : "none"
       };
     }
   };
@@ -34764,14 +34764,6 @@ ${js}
         type: "boolean",
         default: false
       },
-      postLayout: {
-        type: "string",
-        default: "list"
-      },
-      columns: {
-        type: "number",
-        default: 3
-      },
       order: {
         type: "string",
         default: "desc"
@@ -34809,6 +34801,7 @@ ${js}
       anchor: true,
       align: true,
       html: false,
+      layout: true,
       color: {
         gradients: true,
         link: true,
@@ -34820,7 +34813,13 @@ ${js}
       },
       spacing: {
         margin: true,
-        padding: true
+        padding: true,
+        blockGap: {
+          __experimentalDefault: "1.25em"
+        },
+        __experimentalDefaultControls: {
+          blockGap: true
+        }
       },
       typography: {
         fontSize: true,
@@ -34856,11 +34855,108 @@ ${js}
   };
 
   // packages/block-library/build-module/latest-posts/deprecated.mjs
-  var { attributes } = block_default46;
+  var currentSupports = {
+    anchor: true,
+    align: true,
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true,
+        link: true
+      }
+    },
+    html: false,
+    layout: true,
+    spacing: {
+      margin: true,
+      padding: true,
+      blockGap: {
+        __experimentalDefault: "1.25em"
+      },
+      __experimentalDefaultControls: {
+        blockGap: true
+      }
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
+    interactivity: {
+      clientNavigation: true
+    }
+  };
+  var legacyLayoutAttributes = {
+    postLayout: {
+      type: "string",
+      default: "list"
+    },
+    columns: {
+      type: "number",
+      default: 3
+    }
+  };
+  var migrateCategories = (oldAttributes) => {
+    if (!oldAttributes.categories || "string" !== typeof oldAttributes.categories) {
+      return oldAttributes;
+    }
+    return {
+      ...oldAttributes,
+      categories: [{ id: Number(oldAttributes.categories) }]
+    };
+  };
+  var migratePostLayout = (oldAttributes) => {
+    const { postLayout, columns, ...attributesWithoutLegacyLayout } = oldAttributes;
+    if (!postLayout) {
+      return oldAttributes;
+    }
+    return {
+      ...attributesWithoutLegacyLayout,
+      layout: {
+        type: postLayout === "grid" ? "grid" : "default",
+        ...postLayout === "grid" && columns && { columnCount: columns }
+      }
+    };
+  };
   var deprecated_default24 = [
     {
       attributes: {
-        ...attributes,
+        ...block_default46.attributes,
+        ...legacyLayoutAttributes,
+        categories: {
+          type: ["array", "string"]
+        }
+      },
+      supports: currentSupports,
+      migrate: (oldAttributes) => migratePostLayout(migrateCategories(oldAttributes)),
+      isEligible: ({ postLayout }) => postLayout,
+      save: () => null
+    },
+    {
+      attributes: {
+        ...block_default46.attributes,
         categories: {
           type: "string"
         }
@@ -34869,12 +34965,7 @@ ${js}
         align: true,
         html: false
       },
-      migrate: (oldAttributes) => {
-        return {
-          ...oldAttributes,
-          categories: [{ id: Number(oldAttributes.categories) }]
-        };
-      },
+      migrate: migrateCategories,
       isEligible: ({ categories }) => categories && "string" === typeof categories,
       save: () => null
     }
@@ -34894,7 +34985,6 @@ ${js}
   // packages/block-library/build-module/latest-posts/constants.mjs
   var MIN_EXCERPT_LENGTH = 10;
   var MAX_EXCERPT_LENGTH = 100;
-  var MAX_POSTS_COLUMNS = 6;
   var DEFAULT_EXCERPT_LENGTH = 55;
 
   // packages/block-library/build-module/latest-posts/edit.mjs
@@ -34941,7 +35031,7 @@ ${js}
   function getCurrentAuthor(post) {
     return post._embedded?.author?.[0];
   }
-  function Controls({ attributes: attributes2, setAttributes, postCount }) {
+  function Controls({ attributes, setAttributes }) {
     const {
       postsToShow,
       order,
@@ -34953,15 +35043,13 @@ ${js}
       displayPostContent,
       displayPostDate,
       displayAuthor,
-      postLayout,
-      columns,
       excerptLength,
       featuredImageAlign,
       featuredImageSizeSlug,
       featuredImageSizeWidth,
       featuredImageSizeHeight,
       addLinkToFeaturedImage
-    } = attributes2;
+    } = attributes;
     const {
       imageSizes,
       defaultImageWidth,
@@ -35277,7 +35365,7 @@ ${js}
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
         import_components60.__experimentalToolsPanel,
         {
           label: (0, import_i18n100.__)("Sorting and filtering"),
@@ -35286,73 +35374,51 @@ ${js}
             orderBy: "date",
             postsToShow: 5,
             categories: void 0,
-            selectedAuthor: void 0,
-            columns: 3
+            selectedAuthor: void 0
           }),
           dropdownMenuProps,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
-              import_components60.__experimentalToolsPanelItem,
-              {
-                hasValue: () => order !== "desc" || orderBy !== "date" || postsToShow !== 5 || categories?.length > 0 || !!selectedAuthor,
-                label: (0, import_i18n100.__)("Sort and filter"),
-                onDeselect: () => setAttributes({
-                  order: "desc",
-                  orderBy: "date",
-                  postsToShow: 5,
-                  categories: void 0,
-                  selectedAuthor: void 0
-                }),
-                isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
-                  import_components60.QueryControls,
-                  {
-                    ...{ order, orderBy },
-                    numberOfItems: postsToShow,
-                    onOrderChange: (value) => setAttributes({ order: value }),
-                    onOrderByChange: (value) => setAttributes({ orderBy: value }),
-                    onNumberOfItemsChange: (value) => setAttributes({ postsToShow: value }),
-                    categorySuggestions,
-                    onCategoryChange: selectCategories,
-                    selectedCategories: categories,
-                    onAuthorChange: (value) => setAttributes({
-                      selectedAuthor: "" !== value ? Number(value) : void 0
-                    }),
-                    authorList: authorList ?? [],
-                    selectedAuthorId: selectedAuthor
-                  }
-                )
-              }
-            ),
-            postLayout === "grid" && /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
-              import_components60.__experimentalToolsPanelItem,
-              {
-                hasValue: () => columns !== 3,
-                label: (0, import_i18n100.__)("Columns"),
-                onDeselect: () => setAttributes({
-                  columns: 3
-                }),
-                isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
-                  import_components60.RangeControl,
-                  {
-                    __next40pxDefaultSize: true,
-                    label: (0, import_i18n100.__)("Columns"),
-                    value: columns,
-                    onChange: (value) => setAttributes({ columns: value }),
-                    min: 2,
-                    max: !postCount ? MAX_POSTS_COLUMNS : Math.min(MAX_POSTS_COLUMNS, postCount),
-                    required: true
-                  }
-                )
-              }
-            )
-          ]
+          children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
+            import_components60.__experimentalToolsPanelItem,
+            {
+              hasValue: () => order !== "desc" || orderBy !== "date" || postsToShow !== 5 || categories?.length > 0 || !!selectedAuthor,
+              label: (0, import_i18n100.__)("Sort and filter"),
+              onDeselect: () => setAttributes({
+                order: "desc",
+                orderBy: "date",
+                postsToShow: 5,
+                categories: void 0,
+                selectedAuthor: void 0
+              }),
+              isShownByDefault: true,
+              children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
+                import_components60.QueryControls,
+                {
+                  ...{ order, orderBy },
+                  numberOfItems: postsToShow,
+                  onOrderChange: (value) => setAttributes({ order: value }),
+                  onOrderByChange: (value) => setAttributes({ orderBy: value }),
+                  onNumberOfItemsChange: (value) => setAttributes({ postsToShow: value }),
+                  categorySuggestions,
+                  onCategoryChange: selectCategories,
+                  selectedCategories: categories,
+                  onAuthorChange: (value) => setAttributes({
+                    selectedAuthor: "" !== value ? Number(value) : void 0
+                  }),
+                  authorList: authorList ?? [],
+                  selectedAuthorId: selectedAuthor
+                }
+              )
+            }
+          )
         }
       )
     ] });
   }
-  function LatestPostsEdit({ attributes: attributes2, setAttributes }) {
+  function LatestPostsEdit({
+    attributes,
+    setAttributes,
+    __unstableLayoutClassNames
+  }) {
     const instanceId = (0, import_compose26.useInstanceId)(LatestPostsEdit);
     const {
       postsToShow,
@@ -35365,6 +35431,7 @@ ${js}
       displayPostContent,
       displayPostDate,
       displayAuthor,
+      layout,
       postLayout,
       columns,
       excerptLength,
@@ -35373,7 +35440,10 @@ ${js}
       featuredImageSizeWidth,
       featuredImageSizeHeight,
       addLinkToFeaturedImage
-    } = attributes2;
+    } = attributes;
+    const { type: savedLayoutType, minimumColumnWidth } = layout || {};
+    const layoutType = savedLayoutType || (postLayout === "grid" ? "grid" : "default");
+    const columnCount = layout?.columnCount ?? (!savedLayoutType ? columns : void 0) ?? 3;
     const { latestPosts } = (0, import_data48.useSelect)(
       (select9) => {
         const { getEntityRecords } = select9(import_core_data25.store);
@@ -35411,18 +35481,18 @@ ${js}
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_block_editor118.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
       Controls,
       {
-        attributes: attributes2,
-        setAttributes,
-        postCount: latestPosts?.length ?? 0
+        attributes,
+        setAttributes
       }
     ) });
     const blockProps = (0, import_block_editor118.useBlockProps)({
-      className: clsx_default({
+      className: clsx_default(__unstableLayoutClassNames, {
         "wp-block-latest-posts__list": true,
-        "is-grid": postLayout === "grid",
+        "is-grid": layoutType === "grid",
         "has-dates": displayPostDate,
         "has-author": displayAuthor,
-        [`columns-${columns}`]: postLayout === "grid"
+        [`columns-${columnCount}`]: layoutType === "grid" && columnCount,
+        "has-native-responsive-grid": layoutType === "grid" && columnCount && minimumColumnWidth
       })
     });
     if (!hasPosts) {
@@ -35432,18 +35502,26 @@ ${js}
       ] });
     }
     const displayPosts = latestPosts.length > postsToShow ? latestPosts.slice(0, postsToShow) : latestPosts;
+    const setDisplayLayout = (newDisplayLayout) => setAttributes({
+      layout: { ...layout, ...newDisplayLayout },
+      postLayout: void 0,
+      columns: void 0
+    });
     const layoutControls = [
       {
         icon: list_default,
         title: (0, import_i18n100._x)("List view", "Latest posts block display setting"),
-        onClick: () => setAttributes({ postLayout: "list" }),
-        isActive: postLayout === "list"
+        onClick: () => setDisplayLayout({ type: "default" }),
+        isActive: layoutType === "default" || layoutType === "constrained"
       },
       {
         icon: grid_default,
         title: (0, import_i18n100._x)("Grid view", "Latest posts block display setting"),
-        onClick: () => setAttributes({ postLayout: "grid" }),
-        isActive: postLayout === "grid"
+        onClick: () => setDisplayLayout({
+          type: "grid",
+          columnCount
+        }),
+        isActive: layoutType === "grid"
       }
     ];
     const dateFormat = (0, import_date2.getSettings)().formats.date;
@@ -35626,8 +35704,8 @@ ${js}
     );
     return (0, import_blocks40.createBlock)("core/list", listAttributes, innerBlocks);
   }
-  function migrateToListV2(attributes2) {
-    const { values, start, reversed, ordered, type, ...otherAttributes } = attributes2;
+  function migrateToListV2(attributes) {
+    const { values, start, reversed, ordered, type, ...otherAttributes } = attributes;
     const list = document.createElement(ordered ? "ol" : "ul");
     list.innerHTML = values;
     if (start) {
@@ -35645,15 +35723,15 @@ ${js}
       listBlock.innerBlocks
     ];
   }
-  function migrateTypeToInlineStyle(attributes2) {
-    const { type } = attributes2;
+  function migrateTypeToInlineStyle(attributes) {
+    const { type } = attributes;
     if (type && LIST_STYLES[type]) {
       return {
-        ...attributes2,
+        ...attributes,
         type: LIST_STYLES[type]
       };
     }
-    return attributes2;
+    return attributes;
   }
 
   // packages/block-library/build-module/list/deprecated.mjs
@@ -35702,8 +35780,8 @@ ${js}
       __experimentalSelector: "ol,ul",
       __experimentalSlashInserter: true
     },
-    save({ attributes: attributes2 }) {
-      const { ordered, values, type, reversed, start } = attributes2;
+    save({ attributes }) {
+      const { ordered, values, type, reversed, start } = attributes;
       const TagName2 = ordered ? "ol" : "ul";
       return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(TagName2, { ...import_block_editor119.useBlockProps.save({ type, reversed, start }), children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(import_block_editor119.RichText.Content, { value: values, multiline: "li" }) });
     },
@@ -35768,8 +35846,8 @@ ${js}
       __experimentalSelector: "ol,ul",
       __experimentalSlashInserter: true
     },
-    save({ attributes: attributes2 }) {
-      const { ordered, values, type, reversed, start } = attributes2;
+    save({ attributes }) {
+      const { ordered, values, type, reversed, start } = attributes;
       const TagName2 = ordered ? "ol" : "ul";
       return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(TagName2, { ...import_block_editor119.useBlockProps.save({ type, reversed, start }), children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(import_block_editor119.RichText.Content, { value: values, multiline: "li" }) });
     },
@@ -35843,8 +35921,8 @@ ${js}
     isEligible({ type }) {
       return !!type;
     },
-    save({ attributes: attributes2 }) {
-      const { ordered, type, reversed, start } = attributes2;
+    save({ attributes }) {
+      const { ordered, type, reversed, start } = attributes;
       const TagName2 = ordered ? "ol" : "ul";
       return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(TagName2, { ...import_block_editor119.useBlockProps.save({ type, reversed, start }), children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(import_block_editor119.InnerBlocks.Content, {}) });
     },
@@ -35916,8 +35994,8 @@ ${js}
       __experimentalOnMerge: "true",
       __experimentalSlashInserter: true
     },
-    save({ attributes: attributes2 }) {
-      const { ordered, type, reversed, start } = attributes2;
+    save({ attributes }) {
+      const { ordered, type, reversed, start } = attributes;
       const TagName2 = ordered ? "ol" : "ul";
       return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
         TagName2,
@@ -36082,14 +36160,14 @@ ${js}
     name: "core/list-item"
   };
   var TEMPLATE9 = [["core/list-item"]];
-  function useMigrateOnLoad(attributes2, clientId) {
+  function useMigrateOnLoad(attributes, clientId) {
     const registry = (0, import_data49.useRegistry)();
     const { updateBlockAttributes, replaceInnerBlocks } = (0, import_data49.useDispatch)(import_block_editor121.store);
     (0, import_element52.useEffect)(() => {
-      if (!attributes2.values) {
+      if (!attributes.values) {
         return;
       }
-      const [newAttributes, newInnerBlocks] = migrateToListV2(attributes2);
+      const [newAttributes, newInnerBlocks] = migrateToListV2(attributes);
       (0, import_deprecated26.default)("Value attribute on the list block", {
         since: "6.0",
         version: "6.5",
@@ -36099,7 +36177,7 @@ ${js}
         updateBlockAttributes(clientId, newAttributes);
         replaceInnerBlocks(clientId, newInnerBlocks);
       });
-    }, [attributes2.values]);
+    }, [attributes.values]);
   }
   function useOutdentList(clientId) {
     const { replaceBlocks, selectionChange } = (0, import_data49.useDispatch)(import_block_editor121.store);
@@ -36136,8 +36214,8 @@ ${js}
       }
     ) });
   }
-  function Edit17({ attributes: attributes2, setAttributes, clientId }) {
-    const { ordered, type, reversed, start } = attributes2;
+  function Edit17({ attributes, setAttributes, clientId }) {
+    const { ordered, type, reversed, start } = attributes;
     const blockProps = (0, import_block_editor121.useBlockProps)({
       style: {
         listStyleType: ordered && type !== "decimal" ? type : void 0
@@ -36151,7 +36229,7 @@ ${js}
       templateInsertUpdatesSelection: true,
       __experimentalCaptureToolbars: true
     });
-    useMigrateOnLoad(attributes2, clientId);
+    useMigrateOnLoad(attributes, clientId);
     const controls = /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(import_block_editor121.BlockControls, { group: "block", children: [
       /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
         import_components62.ToolbarButton,
@@ -36298,8 +36376,8 @@ ${js}
   // packages/block-library/build-module/list/save.mjs
   var import_block_editor122 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
-  function save27({ attributes: attributes2 }) {
-    const { ordered, type, reversed, start } = attributes2;
+  function save27({ attributes }) {
+    const { ordered, type, reversed, start } = attributes;
     const TagName2 = ordered ? "ol" : "ul";
     return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
       TagName2,
@@ -36335,9 +36413,9 @@ ${js}
     return listContentSchema;
   }
   function getListContentFlat(blocks) {
-    return blocks.flatMap(({ name: name122, attributes: attributes2, innerBlocks = [] }) => {
+    return blocks.flatMap(({ name: name122, attributes, innerBlocks = [] }) => {
       if (name122 === "core/list-item") {
-        return [attributes2.content, ...getListContentFlat(innerBlocks)];
+        return [attributes.content, ...getListContentFlat(innerBlocks)];
       }
       return getListContentFlat(innerBlocks);
     });
@@ -36474,8 +36552,8 @@ ${js}
   var import_a11y = __toESM(require_a11y(), 1);
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge } = unlock(import_components63.privateApis);
-  function MathEdit({ attributes: attributes2, setAttributes, isSelected }) {
-    const { latex, mathML } = attributes2;
+  function MathEdit({ attributes, setAttributes, isSelected }) {
+    const { latex, mathML } = attributes;
     const [blockRef, setBlockRef] = (0, import_element53.useState)();
     const [error, setError] = (0, import_element53.useState)(null);
     const [latexToMathML, setLatexToMathML] = (0, import_element53.useState)();
@@ -36636,8 +36714,8 @@ ${js}
   // packages/block-library/build-module/math/save.mjs
   var import_block_editor124 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
-  function save28({ attributes: attributes2 }) {
-    const { latex, mathML } = attributes2;
+  function save28({ attributes }) {
+    const { latex, mathML } = attributes;
     if (!latex) {
       return null;
     }
@@ -36665,8 +36743,8 @@ ${js}
         selector: "math"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { latex, mathML } = attributes2;
+    save({ attributes }) {
+      const { latex, mathML } = attributes;
       if (!latex) {
         return null;
       }
@@ -37220,12 +37298,12 @@ ${js}
     ] });
   }
   function ListItemEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId,
     mergeBlocks
   }) {
-    const { placeholder: placeholder2, content } = attributes2;
+    const { placeholder: placeholder2, content } = attributes;
     const blockProps = (0, import_block_editor131.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor131.useInnerBlocksProps)(blockProps, {
       renderAppender: false,
@@ -37258,9 +37336,9 @@ ${js}
   // packages/block-library/build-module/list-item/save.mjs
   var import_block_editor132 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
-  function save29({ attributes: attributes2 }) {
+  function save29({ attributes }) {
     return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)("li", { ...import_block_editor132.useBlockProps.save(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor132.RichText.Content, { value: attributes2.content }),
+      /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor132.RichText.Content, { value: attributes.content }),
       /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor132.InnerBlocks.Content, {})
     ] });
   }
@@ -37272,8 +37350,8 @@ ${js}
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2, innerBlocks = []) => [
-          (0, import_blocks47.createBlock)("core/paragraph", attributes2),
+        transform: (attributes, innerBlocks = []) => [
+          (0, import_blocks47.createBlock)("core/paragraph", attributes),
           ...innerBlocks.map((block) => (0, import_blocks47.cloneBlock)(block))
         ]
       }
@@ -37288,17 +37366,17 @@ ${js}
     icon: list_item_default,
     edit: ListItemEdit,
     save: save29,
-    merge(attributes2, attributesToMerge) {
+    merge(attributes, attributesToMerge) {
       return {
-        ...attributes2,
-        content: attributes2.content + attributesToMerge.content
+        ...attributes,
+        content: attributes.content + attributesToMerge.content
       };
     },
     transforms: transforms_default16,
     [unlock(import_block_editor133.privateApis).requiresWrapperOnCopy]: true,
-    __experimentalLabel(attributes2, { context }) {
-      const { content } = attributes2;
-      const customName = attributes2?.metadata?.name;
+    __experimentalLabel(attributes, { context }) {
+      const { content } = attributes;
+      const customName = attributes?.metadata?.name;
       const hasContent = content?.trim().length > 0;
       if (context === "list-view" && (customName || hasContent)) {
         return customName || content;
@@ -37338,8 +37416,8 @@ ${js}
   var import_components65 = __toESM(require_components(), 1);
   var import_i18n107 = __toESM(require_i18n(), 1);
   var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
-  function LoginOutEdit({ attributes: attributes2, setAttributes }) {
-    const { displayLoginAsForm, redirectToCurrent } = attributes2;
+  function LoginOutEdit({ attributes, setAttributes }) {
+    const { displayLoginAsForm, redirectToCurrent } = attributes;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(import_jsx_runtime296.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_block_editor134.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(
@@ -37531,27 +37609,27 @@ ${js}
   var DEFAULT_MEDIA_WIDTH = 50;
   var noop = () => {
   };
-  var migrateCustomColors3 = (attributes2) => {
-    if (!attributes2.customBackgroundColor) {
-      return attributes2;
+  var migrateCustomColors3 = (attributes) => {
+    if (!attributes.customBackgroundColor) {
+      return attributes;
     }
     const style2 = {
       color: {
-        background: attributes2.customBackgroundColor
+        background: attributes.customBackgroundColor
       }
     };
-    const { customBackgroundColor, ...restAttributes } = attributes2;
+    const { customBackgroundColor, ...restAttributes } = attributes;
     return {
       ...restAttributes,
       style: style2
     };
   };
-  var migrateDefaultAlign = (attributes2) => {
-    if (attributes2.align) {
-      return attributes2;
+  var migrateDefaultAlign = (attributes) => {
+    if (attributes.align) {
+      return attributes;
     }
     return {
-      ...attributes2,
+      ...attributes,
       align: "wide"
     };
   };
@@ -37755,7 +37833,7 @@ ${js}
     attributes: v7Attributes,
     supports: v7Supports,
     usesContext: ["postId", "postType"],
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         isStackedOnMobile,
         mediaAlt,
@@ -37771,8 +37849,8 @@ ${js}
         href,
         linkTarget,
         rel
-      } = attributes2;
-      const mediaSizeSlug = attributes2.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
+      } = attributes;
+      const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
       const newRel = !rel ? void 0 : rel;
       const imageClasses = clsx_default({
         [`wp-image-${mediaId}`]: mediaId && mediaType === "image",
@@ -37859,7 +37937,7 @@ ${js}
   var v65 = {
     attributes: v6Attributes,
     supports: v6Supports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         isStackedOnMobile,
         mediaAlt,
@@ -37875,8 +37953,8 @@ ${js}
         href,
         linkTarget,
         rel
-      } = attributes2;
-      const mediaSizeSlug = attributes2.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
+      } = attributes;
+      const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
       const newRel = !rel ? void 0 : rel;
       const imageClasses = clsx_default({
         [`wp-image-${mediaId}`]: mediaId && mediaType === "image",
@@ -37960,15 +38038,15 @@ ${js}
       ] });
     },
     migrate: migrateDefaultAlign,
-    isEligible(attributes2, innerBlocks, { block }) {
+    isEligible(attributes, innerBlocks, { block }) {
       const { attributes: finalizedAttributes } = block;
-      return attributes2.align === void 0 && !!finalizedAttributes.className?.includes("alignwide");
+      return attributes.align === void 0 && !!finalizedAttributes.className?.includes("alignwide");
     }
   };
   var v55 = {
     attributes: v4ToV5BlockAttributes,
     supports: v4ToV5Supports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         isStackedOnMobile,
         mediaAlt,
@@ -37984,8 +38062,8 @@ ${js}
         href,
         linkTarget,
         rel
-      } = attributes2;
-      const mediaSizeSlug = attributes2.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
+      } = attributes;
+      const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
       const newRel = !rel ? void 0 : rel;
       const imageClasses = clsx_default({
         [`wp-image-${mediaId}`]: mediaId && mediaType === "image",
@@ -38073,7 +38151,7 @@ ${js}
   var v45 = {
     attributes: v4ToV5BlockAttributes,
     supports: v4ToV5Supports,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         isStackedOnMobile,
         mediaAlt,
@@ -38089,8 +38167,8 @@ ${js}
         href,
         linkTarget,
         rel
-      } = attributes2;
-      const mediaSizeSlug = attributes2.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
+      } = attributes;
+      const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
       const newRel = !rel ? void 0 : rel;
       const imageClasses = clsx_default({
         [`wp-image-${mediaId}`]: mediaId && mediaType === "image",
@@ -38209,7 +38287,7 @@ ${js}
       }
     },
     migrate: (0, import_compose30.compose)(migrateCustomColors3, migrateDefaultAlign),
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundColor,
         customBackgroundColor,
@@ -38227,7 +38305,7 @@ ${js}
         href,
         linkTarget,
         rel
-      } = attributes2;
+      } = attributes;
       const newRel = !rel ? void 0 : rel;
       let image = /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
         "img",
@@ -38313,7 +38391,7 @@ ${js}
       }
     },
     migrate: (0, import_compose30.compose)(migrateCustomColors3, migrateDefaultAlign),
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundColor,
         customBackgroundColor,
@@ -38327,7 +38405,7 @@ ${js}
         verticalAlignment,
         imageFill,
         focalPoint
-      } = attributes2;
+      } = attributes;
       const mediaTypeRenders = {
         image: () => /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
           "img",
@@ -38389,7 +38467,7 @@ ${js}
       }
     },
     migrate: migrateDefaultAlign,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         backgroundColor,
         customBackgroundColor,
@@ -38399,7 +38477,7 @@ ${js}
         mediaType,
         mediaUrl,
         mediaWidth
-      } = attributes2;
+      } = attributes;
       const mediaTypeRenders = {
         image: () => /* @__PURE__ */ (0, import_jsx_runtime297.jsx)("img", { src: mediaUrl, alt: mediaAlt }),
         video: () => /* @__PURE__ */ (0, import_jsx_runtime297.jsx)("video", { controls: true, src: mediaUrl })
@@ -38746,7 +38824,7 @@ ${js}
     );
   }
   function MediaTextEdit({
-    attributes: attributes2,
+    attributes,
     isSelected,
     setAttributes,
     context: { postId, postType }
@@ -38770,7 +38848,7 @@ ${js}
       verticalAlignment,
       allowedBlocks,
       useFeaturedImage
-    } = attributes2;
+    } = attributes;
     const [featuredImage] = (0, import_core_data26.useEntityProp)(
       "postType",
       postType,
@@ -38832,7 +38910,7 @@ ${js}
       style22.objectPosition = `${x3 * 100}% ${y2 * 100}%`;
     };
     const [temporaryMediaWidth, setTemporaryMediaWidth] = (0, import_element58.useState)(null);
-    const onSelectMedia = attributesFromMedia2({ attributes: attributes2, setAttributes });
+    const onSelectMedia = attributesFromMedia2({ attributes, setAttributes });
     const onSetHref = (props) => {
       setAttributes(props);
     };
@@ -39260,7 +39338,7 @@ ${js}
   var DEFAULT_MEDIA_WIDTH2 = 50;
   var noop3 = () => {
   };
-  function save30({ attributes: attributes2 }) {
+  function save30({ attributes }) {
     const {
       isStackedOnMobile,
       mediaAlt,
@@ -39276,8 +39354,8 @@ ${js}
       href,
       linkTarget,
       rel
-    } = attributes2;
-    const mediaSizeSlug = attributes2.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
+    } = attributes;
+    const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG4;
     const newRel = !rel ? void 0 : rel;
     const imageClasses = clsx_default({
       [`wp-image-${mediaId}`]: mediaId && mediaType === "image",
@@ -39623,8 +39701,8 @@ ${js}
   var import_block_editor139 = __toESM(require_block_editor(), 1);
   var import_dom7 = __toESM(require_dom(), 1);
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
-  function MissingEdit({ attributes: attributes2, clientId }) {
-    const { originalName, originalUndelimitedContent } = attributes2;
+  function MissingEdit({ attributes, clientId }) {
+    const { originalName, originalUndelimitedContent } = attributes;
     const hasContent = !!originalUndelimitedContent;
     const { hasFreeformBlock, hasHTMLBlock } = (0, import_data59.useSelect)(
       (select9) => {
@@ -39738,17 +39816,17 @@ ${js}
   // packages/block-library/build-module/missing/save.mjs
   var import_element60 = __toESM(require_element(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
-  function save31({ attributes: attributes2 }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(import_element60.RawHTML, { children: attributes2.originalContent });
+  function save31({ attributes }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(import_element60.RawHTML, { children: attributes.originalContent });
   }
 
   // packages/block-library/build-module/missing/index.mjs
   var { name: name52 } = block_default52;
   var settings52 = {
     name: name52,
-    __experimentalLabel(attributes2, { context }) {
+    __experimentalLabel(attributes, { context }) {
       if (context === "accessibility") {
-        const { originalName } = attributes2;
+        const { originalName } = attributes;
         const originalBlockType = originalName ? (0, import_blocks52.getBlockType)(originalName) : void 0;
         if (originalBlockType) {
           return originalBlockType.settings.title || originalName;
@@ -39912,13 +39990,13 @@ ${js}
   var settings53 = {
     icon: more_default,
     example: {},
-    __experimentalLabel(attributes2, { context }) {
-      const customName = attributes2?.metadata?.name;
+    __experimentalLabel(attributes, { context }) {
+      const customName = attributes?.metadata?.name;
       if ((context === "list-view" || context === "breadcrumb") && customName) {
         return customName;
       }
       if (context === "accessibility") {
-        return attributes2.customText;
+        return attributes.customText;
       }
     },
     transforms: transforms_default18,
@@ -41849,9 +41927,9 @@ ${js}
       }
     };
   }
-  function useEntityBinding({ clientId, attributes: attributes2 }) {
+  function useEntityBinding({ clientId, attributes }) {
     const { updateBlockBindings } = (0, import_block_editor146.useBlockBindingsUtils)(clientId);
-    const { metadata, id, kind, type } = attributes2;
+    const { metadata, id, kind, type } = attributes;
     const blockEditingMode = (0, import_block_editor146.useBlockEditingMode)();
     const hasUrlBinding = !!metadata?.bindings?.url && !!id;
     const expectedSource = kind === "post-type" ? "core/post-data" : "core/term-data";
@@ -41947,7 +42025,7 @@ ${js}
         return block2;
       }
       const blockType = menuItem.children?.length ? "core/navigation-submenu" : "core/navigation-link";
-      const attributes2 = menuItemToBlockAttributes(
+      const attributes = menuItemToBlockAttributes(
         menuItem,
         blockType,
         level
@@ -41962,7 +42040,7 @@ ${js}
         ...mapping,
         ...nestedMapping
       };
-      const block = (0, import_blocks58.createBlock)(blockType, attributes2, nestedBlocks);
+      const block = (0, import_blocks58.createBlock)(blockType, attributes, nestedBlocks);
       mapping[menuItem.id] = block.clientId;
       return block;
     });
@@ -42769,7 +42847,7 @@ ${js}
     const isBuiltInType = ["post", "page", "tag", "category"].indexOf(type) > -1;
     const isCustomLink = !newKind && !isBuiltInType || newKind === "custom";
     const kind = isCustomLink ? "custom" : newKind;
-    const attributes2 = {
+    const attributes = {
       // Passed `url` may already be encoded. To prevent double encoding, decodeURI is executed to revert to the original string.
       ...newUrl !== void 0 ? { url: newUrl ? encodeURI((0, import_url14.safeDecodeURI)(newUrl)) : newUrl } : {},
       ...label && { label },
@@ -42783,22 +42861,22 @@ ${js}
         newUrl
       );
       if (shouldSever) {
-        attributes2.id = void 0;
-        attributes2.kind = "custom";
-        attributes2.type = "custom";
+        attributes.id = void 0;
+        attributes.kind = "custom";
+        attributes.type = "custom";
       }
     } else if (newID && Number.isInteger(newID)) {
-      attributes2.id = newID;
+      attributes.id = newID;
     } else if (blockAttributes8.id) {
-      attributes2.kind = kind;
-      attributes2.type = type;
+      attributes.kind = kind;
+      attributes.type = type;
     }
-    setAttributes(attributes2);
-    const finalId = "id" in attributes2 ? attributes2.id : blockAttributes8.id;
-    const finalKind = "kind" in attributes2 ? attributes2.kind : blockAttributes8.kind;
+    setAttributes(attributes);
+    const finalId = "id" in attributes ? attributes.id : blockAttributes8.id;
+    const finalKind = "kind" in attributes ? attributes.kind : blockAttributes8.kind;
     return {
       isEntityLink: !!finalId && finalKind !== "custom",
-      attributes: attributes2
+      attributes
       // Return the computed attributes object
     };
   };
@@ -42806,14 +42884,14 @@ ${js}
   // packages/block-library/build-module/navigation-link/shared/use-handle-link-change.mjs
   function useHandleLinkChange({
     clientId,
-    attributes: attributes2,
+    attributes,
     setAttributes,
     allowTextUpdate = false
   }) {
     const { updateBlockAttributes } = (0, import_data76.useDispatch)(import_block_editor151.store);
     const { hasUrlBinding, createBinding, clearBinding } = useEntityBinding({
       clientId,
-      attributes: attributes2
+      attributes
     });
     return (0, import_element78.useCallback)(
       (updatedLink) => {
@@ -42826,11 +42904,11 @@ ${js}
           type: updatedLink.type,
           id: updatedLink.id
         };
-        const currentText = attributes2.label ? (0, import_dom8.__unstableStripHTML)(attributes2.label) : "";
+        const currentText = attributes.label ? (0, import_dom8.__unstableStripHTML)(attributes.label) : "";
         const updatedText = updatedLink.title ?? "";
         const hasTextUpdate = allowTextUpdate && updatedLink.title !== void 0 && updatedText !== currentText;
         const textUpdateAttributes = hasTextUpdate ? { label: (0, import_escape_html2.escapeHTML)(updatedText) } : {};
-        if (!attributes2.label || attributes2.label === "" || hasTextUpdate) {
+        if (!attributes.label || attributes.label === "" || hasTextUpdate) {
           attrs.title = updatedLink.title;
         }
         const willBeCustomLink = !updatedLink.id && hasUrlBinding;
@@ -42844,7 +42922,7 @@ ${js}
             ...textUpdateAttributes
           });
         } else {
-          const { isEntityLink, attributes: updatedAttributes } = updateAttributes(attrs, setAttributes, attributes2);
+          const { isEntityLink, attributes: updatedAttributes } = updateAttributes(attrs, setAttributes, attributes);
           if (isEntityLink) {
             createBinding(updatedAttributes);
           } else {
@@ -42856,7 +42934,7 @@ ${js}
         }
       },
       [
-        attributes2,
+        attributes,
         allowTextUpdate,
         clientId,
         hasUrlBinding,
@@ -43611,20 +43689,20 @@ ${js}
     return type || (0, import_i18n140.__)("item");
   }
   function Controls2({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId,
     isLinkEditable = true
   }) {
-    const { label, url, description, rel, opensInNewTab } = attributes2;
+    const { label, url, description, rel, opensInNewTab } = attributes;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { hasUrlBinding, isBoundEntityAvailable, entityRecord } = useEntityBinding({
       clientId,
-      attributes: attributes2
+      attributes
     });
     const [isInvalid, isDraft] = useIsInvalidLink(
-      attributes2.kind,
-      attributes2.type,
+      attributes.kind,
+      attributes.type,
       entityRecord?.id,
       hasUrlBinding
     );
@@ -43633,13 +43711,13 @@ ${js}
       helpText = getInvalidLinkHelpText();
     } else if (isDraft) {
       helpText = getDraftHelpText({
-        type: attributes2.type,
-        kind: attributes2.kind
+        type: attributes.type,
+        kind: attributes.kind
       });
     }
     const handleLinkChange = useHandleLinkChange({
       clientId,
-      attributes: attributes2,
+      attributes,
       setAttributes
     });
     const onNavigateToEntityRecord = (0, import_data81.useSelect)(
@@ -43657,7 +43735,7 @@ ${js}
     const preview = useLinkPreview({
       url,
       entityRecord,
-      type: attributes2.type,
+      type: attributes.type,
       hasBinding: hasUrlBinding,
       isEntityAvailable: isBoundEntityAvailable
     });
@@ -43717,8 +43795,8 @@ ${js}
                     preview,
                     onSelect: handleLinkChange,
                     suggestionsQuery: getSuggestionsQuery(
-                      attributes2.type,
-                      attributes2.kind
+                      attributes.type,
+                      attributes.kind
                     ),
                     label: (0, import_i18n140.__)("Link to"),
                     help: helpText ? helpText : void 0
@@ -43743,14 +43821,14 @@ ${js}
                 )
               }
             ),
-            !!url && hasUrlBinding && isBoundEntityAvailable && entityRecord?.id && attributes2.kind === "post-type" && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+            !!url && hasUrlBinding && isBoundEntityAvailable && entityRecord?.id && attributes.kind === "post-type" && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
               import_components91.Button,
               {
                 variant: "secondary",
                 onClick: () => {
                   onNavigateToEntityRecord({
                     postId: entityRecord.id,
-                    postType: attributes2.type
+                    postType: attributes.type
                   });
                 },
                 __next40pxDefaultSize: true,
@@ -44365,7 +44443,7 @@ ${js}
     ] });
   }
   function Navigation({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId,
     isSelected,
@@ -44396,8 +44474,8 @@ ${js}
       } = {},
       hasIcon,
       icon: icon4 = "handle"
-    } = attributes2;
-    const ref = attributes2.ref;
+    } = attributes;
+    const ref = attributes.ref;
     const setRef = (0, import_element83.useCallback)(
       (postId) => {
         setAttributes({ ref: postId });
@@ -44572,7 +44650,7 @@ ${js}
     const TagName2 = isWithinOverlay ? "div" : "nav";
     const isPlaceholder = !ref && !isCreatingNavigationMenu && !isConvertingClassicMenu && hasResolvedNavigationMenus && classicMenus?.length === 0 && !hasUncontrolledInnerBlocks;
     const isLoading = !hasResolvedNavigationMenus || isCreatingNavigationMenu || isConvertingClassicMenu || !!(ref && !isEntityAvailable && !isConvertingClassicMenu);
-    const textDecoration = attributes2.style?.typography?.textDecoration;
+    const textDecoration = attributes.style?.typography?.textDecoration;
     const hasBlockOverlay = (0, import_data86.useSelect)(
       (select9) => select9(import_block_editor161.store).__unstableHasActiveBlockOverlayActive(
         clientId
@@ -44592,14 +44670,14 @@ ${js}
         setAttributes({
           submenuVisibility: "always",
           layout: {
-            ...attributes2.layout,
+            ...attributes.layout,
             orientation: "vertical"
           },
           showSubmenuIcon: false
         });
       }
     }, [
-      attributes2.layout,
+      attributes.layout,
       isWithinOverlay,
       overlayMenu,
       ref,
@@ -45095,8 +45173,8 @@ ${js}
   // packages/block-library/build-module/navigation/save.mjs
   var import_block_editor162 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
-  function save33({ attributes: attributes2 }) {
-    if (attributes2.ref) {
+  function save33({ attributes }) {
+    if (attributes.ref) {
       return;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_block_editor162.InnerBlocks.Content, {});
@@ -45112,17 +45190,17 @@ ${js}
     textDecoration: "var:preset|text-decoration|",
     textTransform: "var:preset|text-transform|"
   };
-  var migrateIdToRef = ({ navigationMenuId, ...attributes2 }) => {
+  var migrateIdToRef = ({ navigationMenuId, ...attributes }) => {
     return {
-      ...attributes2,
+      ...attributes,
       ref: navigationMenuId
     };
   };
-  var migrateWithLayout2 = (attributes2) => {
-    if (!!attributes2.layout) {
-      return attributes2;
+  var migrateWithLayout2 = (attributes) => {
+    if (!!attributes.layout) {
+      return attributes;
     }
-    const { itemsJustification, orientation, ...updatedAttributes } = attributes2;
+    const { itemsJustification, orientation, ...updatedAttributes } = attributes;
     if (itemsJustification || orientation) {
       Object.assign(updatedAttributes, {
         layout: {
@@ -45136,10 +45214,10 @@ ${js}
     }
     return updatedAttributes;
   };
-  var migrateOpenSubmenusOnClick = (attributes2) => {
-    const { openSubmenusOnClick, ...restAttributes } = attributes2;
+  var migrateOpenSubmenusOnClick = (attributes) => {
+    const { openSubmenusOnClick, ...restAttributes } = attributes;
     if (openSubmenusOnClick === null || openSubmenusOnClick === void 0) {
-      return attributes2;
+      return attributes;
     }
     return {
       ...restAttributes,
@@ -45525,20 +45603,20 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var migrateIsResponsive = function(attributes2) {
-    delete attributes2.isResponsive;
+  var migrateIsResponsive = function(attributes) {
+    delete attributes.isResponsive;
     return {
-      ...attributes2,
+      ...attributes,
       overlayMenu: "mobile"
     };
   };
-  var migrateTypographyPresets = function(attributes2) {
+  var migrateTypographyPresets = function(attributes) {
     return {
-      ...attributes2,
+      ...attributes,
       style: {
-        ...attributes2.style,
+        ...attributes.style,
         typography: Object.fromEntries(
-          Object.entries(attributes2.style.typography ?? {}).map(
+          Object.entries(attributes.style.typography ?? {}).map(
             ([key, value]) => {
               const prefix = TYPOGRAPHY_PRESET_DEPRECATION_MAP[key];
               if (prefix && value.startsWith(prefix)) {
@@ -45631,8 +45709,8 @@ ${js}
           __experimentalTextDecoration: true
         }
       },
-      isEligible(attributes2) {
-        return attributes2.isResponsive;
+      isEligible(attributes) {
+        return attributes.isResponsive;
       },
       migrate: (0, import_compose36.compose)(
         migrateIdToRef,
@@ -45692,12 +45770,12 @@ ${js}
       save() {
         return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_block_editor163.InnerBlocks.Content, {});
       },
-      isEligible(attributes2) {
-        if (!attributes2.style || !attributes2.style.typography) {
+      isEligible(attributes) {
+        if (!attributes.style || !attributes.style.typography) {
           return false;
         }
         for (const styleAttribute in TYPOGRAPHY_PRESET_DEPRECATION_MAP) {
-          const attributeValue = attributes2.style.typography[styleAttribute];
+          const attributeValue = attributes.style.typography[styleAttribute];
           if (attributeValue && attributeValue.startsWith(
             TYPOGRAPHY_PRESET_DEPRECATION_MAP[styleAttribute]
           )) {
@@ -45752,12 +45830,12 @@ ${js}
         html: false,
         inserter: true
       },
-      migrate: (0, import_compose36.compose)(migrateIdToRef, (attributes2) => {
-        const { rgbTextColor, rgbBackgroundColor, ...restAttributes } = attributes2;
+      migrate: (0, import_compose36.compose)(migrateIdToRef, (attributes) => {
+        const { rgbTextColor, rgbBackgroundColor, ...restAttributes } = attributes;
         return {
           ...restAttributes,
-          customTextColor: attributes2.textColor ? void 0 : attributes2.rgbTextColor,
-          customBackgroundColor: attributes2.backgroundColor ? void 0 : attributes2.rgbBackgroundColor
+          customTextColor: attributes.textColor ? void 0 : attributes.rgbTextColor,
+          customBackgroundColor: attributes.backgroundColor ? void 0 : attributes.rgbBackgroundColor
         };
       }),
       save() {
@@ -45969,7 +46047,7 @@ ${js}
     return missingText;
   }
   function NavigationLinkEdit({
-    attributes: attributes2,
+    attributes,
     isSelected,
     setAttributes,
     insertBlocksAfter,
@@ -45978,7 +46056,7 @@ ${js}
     context,
     clientId
   }) {
-    const { id, label, type, url, description, kind, metadata } = attributes2;
+    const { id, label, type, url, description, kind, metadata } = attributes;
     const { maxNestingLevel } = context;
     const {
       replaceBlock,
@@ -46036,11 +46114,11 @@ ${js}
     const { getBlocks } = (0, import_data88.useSelect)(import_block_editor164.store);
     const { hasUrlBinding, isBoundEntityAvailable, entityRecord } = useEntityBinding({
       clientId,
-      attributes: attributes2
+      attributes
     });
     const handleLinkChange = useHandleLinkChange({
       clientId,
-      attributes: attributes2,
+      attributes,
       setAttributes,
       allowTextUpdate: true
     });
@@ -46058,11 +46136,11 @@ ${js}
       }
       const newSubmenu = (0, import_blocks62.createBlock)(
         "core/navigation-submenu",
-        attributes2,
+        attributes,
         innerBlocks
       );
       replaceBlock(clientId, newSubmenu);
-    }, [getBlocks, clientId, selectBlock, replaceBlock, attributes2]);
+    }, [getBlocks, clientId, selectBlock, replaceBlock, attributes]);
     (0, import_element84.useEffect)(() => {
       if (isNewLink.current && isSelected) {
         selectBlock(parentBlockClientId);
@@ -46191,7 +46269,7 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(import_block_editor164.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
         Controls2,
         {
-          attributes: attributes2,
+          attributes,
           setAttributes,
           clientId
         }
@@ -46242,7 +46320,7 @@ ${js}
             {
               ref: linkUIref,
               clientId,
-              link: attributes2,
+              link: attributes,
               entity: {
                 entityRecord,
                 hasBinding: hasUrlBinding,
@@ -46384,9 +46462,9 @@ ${js}
       {
         type: "block",
         blocks: ["core/navigation-submenu"],
-        transform: (attributes2, innerBlocks) => (0, import_blocks63.createBlock)(
+        transform: (attributes, innerBlocks) => (0, import_blocks63.createBlock)(
           "core/navigation-submenu",
-          attributes2,
+          attributes,
           innerBlocks
         )
       },
@@ -46461,19 +46539,19 @@ ${js}
   var { name: name55 } = block_default55;
   var settings55 = {
     icon: custom_link_default,
-    __experimentalLabel(attributes2, { context }) {
+    __experimentalLabel(attributes, { context }) {
       if (context === "list-view") {
-        return attributes2?.label;
+        return attributes?.label;
       }
       if (context === "appender") {
-        const type = attributes2?.type || "link";
+        const type = attributes?.type || "link";
         return (0, import_i18n148.sprintf)(
           /* translators: %s: block type (e.g., 'page', 'post', 'category') */
           (0, import_i18n148._x)("Add %s", "add default block type"),
           type
         );
       }
-      return attributes2?.label;
+      return attributes?.label;
     },
     merge(leftAttributes, { label: rightLabel = "" }) {
       return {
@@ -46491,8 +46569,8 @@ ${js}
     },
     deprecated: [
       {
-        isEligible(attributes2) {
-          return attributes2.nofollow;
+        isEligible(attributes) {
+          return attributes.nofollow;
         },
         attributes: {
           label: {
@@ -46708,7 +46786,7 @@ ${js}
     "core/loginout"
   ];
   function NavigationSubmenuEdit({
-    attributes: attributes2,
+    attributes,
     isSelected,
     setAttributes,
     mergeBlocks,
@@ -46716,17 +46794,17 @@ ${js}
     context,
     clientId
   }) {
-    const { label, url, description, kind, type, id } = attributes2;
+    const { label, url, description, kind, type, id } = attributes;
     const { showSubmenuIcon, maxNestingLevel, submenuVisibility } = context;
     const blockEditingMode = (0, import_block_editor167.useBlockEditingMode)();
     const openSubmenusOnClick = blockEditingMode !== "default" ? true : submenuVisibility === "click";
     const { hasUrlBinding, isBoundEntityAvailable, entityRecord } = useEntityBinding({
       clientId,
-      attributes: attributes2
+      attributes
     });
     const handleLinkChange = useHandleLinkChange({
       clientId,
-      attributes: attributes2,
+      attributes,
       setAttributes,
       allowTextUpdate: true
     });
@@ -46857,7 +46935,7 @@ ${js}
     });
     const ParentElement = openSubmenusOnClick ? "button" : "a";
     function transformToLink() {
-      const newLinkBlock = (0, import_blocks65.createBlock)("core/navigation-link", attributes2);
+      const newLinkBlock = (0, import_blocks65.createBlock)("core/navigation-link", attributes);
       replaceBlock(clientId, newLinkBlock);
     }
     (0, import_element85.useEffect)(() => {
@@ -46896,7 +46974,7 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(import_block_editor167.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
         Controls2,
         {
-          attributes: attributes2,
+          attributes,
           setAttributes,
           clientId,
           isLinkEditable: !openSubmenusOnClick
@@ -46940,7 +47018,7 @@ ${js}
             LinkUI,
             {
               clientId,
-              link: attributes2,
+              link: attributes,
               entity: {
                 entityRecord,
                 hasBinding: hasUrlBinding,
@@ -46978,13 +47056,13 @@ ${js}
       {
         type: "block",
         blocks: ["core/navigation-link"],
-        isMatch: (attributes2, block) => block?.innerBlocks?.length === 0,
-        transform: (attributes2) => (0, import_blocks66.createBlock)("core/navigation-link", attributes2)
+        isMatch: (attributes, block) => block?.innerBlocks?.length === 0,
+        transform: (attributes) => (0, import_blocks66.createBlock)("core/navigation-link", attributes)
       },
       {
         type: "block",
         blocks: ["core/spacer"],
-        isMatch: (attributes2, block) => block?.innerBlocks?.length === 0,
+        isMatch: (attributes, block) => block?.innerBlocks?.length === 0,
         transform: () => {
           return (0, import_blocks66.createBlock)("core/spacer");
         }
@@ -46992,7 +47070,7 @@ ${js}
       {
         type: "block",
         blocks: ["core/site-logo"],
-        isMatch: (attributes2, block) => block?.innerBlocks?.length === 0,
+        isMatch: (attributes, block) => block?.innerBlocks?.length === 0,
         transform: () => {
           return (0, import_blocks66.createBlock)("core/site-logo");
         }
@@ -47000,7 +47078,7 @@ ${js}
       {
         type: "block",
         blocks: ["core/home-link"],
-        isMatch: (attributes2, block) => block?.innerBlocks?.length === 0,
+        isMatch: (attributes, block) => block?.innerBlocks?.length === 0,
         transform: () => {
           return (0, import_blocks66.createBlock)("core/home-link");
         }
@@ -47008,7 +47086,7 @@ ${js}
       {
         type: "block",
         blocks: ["core/social-links"],
-        isMatch: (attributes2, block) => block?.innerBlocks?.length === 0,
+        isMatch: (attributes, block) => block?.innerBlocks?.length === 0,
         transform: () => {
           return (0, import_blocks66.createBlock)("core/social-links");
         }
@@ -47016,7 +47094,7 @@ ${js}
       {
         type: "block",
         blocks: ["core/search"],
-        isMatch: (attributes2, block) => block?.innerBlocks?.length === 0,
+        isMatch: (attributes, block) => block?.innerBlocks?.length === 0,
         transform: () => {
           return (0, import_blocks66.createBlock)("core/search");
         }
@@ -47035,9 +47113,9 @@ ${js}
       }
       return add_submenu_default;
     },
-    __experimentalLabel(attributes2, { context }) {
-      const { label } = attributes2;
-      const customName = attributes2?.metadata?.name;
+    __experimentalLabel(attributes, { context }) {
+      const { label } = attributes;
+      const customName = attributes?.metadata?.name;
       if ((context === "list-view" || context === "breadcrumb") && customName) {
         return customName;
       }
@@ -47177,10 +47255,10 @@ ${js}
   var import_i18n152 = __toESM(require_i18n(), 1);
   var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
   function NavigationOverlayCloseEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes
   }) {
-    const { displayMode, text } = attributes2;
+    const { displayMode, text } = attributes;
     const showIcon = displayMode === "icon" || displayMode === "both";
     const showText = displayMode === "text" || displayMode === "both";
     const displayText = text || (0, import_i18n152.__)("Close");
@@ -47441,13 +47519,13 @@ ${js}
 
   // packages/block-library/build-module/pattern/edit.mjs
   var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
-  var PatternEdit = ({ attributes: attributes2, clientId }) => {
+  var PatternEdit = ({ attributes, clientId }) => {
     const registry = (0, import_data91.useRegistry)();
     const selectedPattern = (0, import_data91.useSelect)(
       (select9) => select9(import_block_editor171.store).__experimentalGetParsedPattern(
-        attributes2.slug
+        attributes.slug
       ),
-      [attributes2.slug]
+      [attributes.slug]
     );
     const currentThemeStylesheet = (0, import_data91.useSelect)(
       (select9) => select9(import_core_data52.store).getCurrentTheme()?.stylesheet,
@@ -47712,12 +47790,12 @@ ${js}
     }
     const transformSubmenus = (listOfLinks) => {
       listOfLinks.forEach((block, index, listOfLinksArray) => {
-        const { attributes: attributes2, innerBlocks } = block;
+        const { attributes, innerBlocks } = block;
         if (innerBlocks.length !== 0) {
           transformSubmenus(innerBlocks);
           const transformedBlock = (0, import_blocks70.createBlock)(
             "core/navigation-submenu",
-            attributes2,
+            attributes,
             innerBlocks
           );
           listOfLinksArray[index] = transformedBlock;
@@ -47842,10 +47920,10 @@ ${js}
   function PageListEdit({
     context,
     clientId,
-    attributes: attributes2,
+    attributes,
     setAttributes
   }) {
-    const { parentPageID } = attributes2;
+    const { parentPageID } = attributes;
     const [isOpen, setOpen] = (0, import_element88.useState)(false);
     const openModal = (0, import_element88.useCallback)(() => setOpen(true), []);
     const closeModal = () => setOpen(false);
@@ -48204,8 +48282,8 @@ ${js}
       return site?.show_on_front === "page" && site?.page_on_front;
     }, []);
   }
-  function PageListItemEdit({ context, attributes: attributes2 }) {
-    const { id, label, link, hasChildren, title } = attributes2;
+  function PageListItemEdit({ context, attributes }) {
+    const { id, label, link, hasChildren, title } = attributes;
     const isNavigationChild = "showSubmenuIcon" in context;
     const frontPageId = useFrontPageId();
     const submenuVisibility = context.submenuVisibility;
@@ -48336,45 +48414,45 @@ ${js}
       type: "object"
     }
   };
-  var migrateCustomColorsAndFontSizes = (attributes2) => {
-    if (!attributes2.customTextColor && !attributes2.customBackgroundColor && !attributes2.customFontSize) {
-      return attributes2;
+  var migrateCustomColorsAndFontSizes = (attributes) => {
+    if (!attributes.customTextColor && !attributes.customBackgroundColor && !attributes.customFontSize) {
+      return attributes;
     }
     const style2 = {};
-    if (attributes2.customTextColor || attributes2.customBackgroundColor) {
+    if (attributes.customTextColor || attributes.customBackgroundColor) {
       style2.color = {};
     }
-    if (attributes2.customTextColor) {
-      style2.color.text = attributes2.customTextColor;
+    if (attributes.customTextColor) {
+      style2.color.text = attributes.customTextColor;
     }
-    if (attributes2.customBackgroundColor) {
-      style2.color.background = attributes2.customBackgroundColor;
+    if (attributes.customBackgroundColor) {
+      style2.color.background = attributes.customBackgroundColor;
     }
-    if (attributes2.customFontSize) {
-      style2.typography = { fontSize: attributes2.customFontSize };
+    if (attributes.customFontSize) {
+      style2.typography = { fontSize: attributes.customFontSize };
     }
     const {
       customTextColor,
       customBackgroundColor,
       customFontSize,
       ...restAttributes
-    } = attributes2;
+    } = attributes;
     return {
       ...restAttributes,
       style: style2
     };
   };
-  var migrateTextAlign2 = (attributes2) => {
-    const { align, ...restAttributes } = attributes2;
+  var migrateTextAlign2 = (attributes) => {
+    const { align, ...restAttributes } = attributes;
     if (!align) {
-      return attributes2;
+      return attributes;
     }
     return {
       ...restAttributes,
       style: {
-        ...attributes2.style,
+        ...attributes.style,
         typography: {
-          ...attributes2.style?.typography,
+          ...attributes.style?.typography,
           textAlign: align
         }
       }
@@ -48392,13 +48470,13 @@ ${js}
         }
       },
       attributes: blockAttributes5,
-      isEligible(attributes2) {
-        return !!attributes2.align || !!attributes2.className?.match(
+      isEligible(attributes) {
+        return !!attributes.align || !!attributes.className?.match(
           /\bhas-text-align-(left|center|right)\b/
         );
       },
-      save({ attributes: attributes2 }) {
-        const { align, content, dropCap, direction } = attributes2;
+      save({ attributes }) {
+        const { align, content, dropCap, direction } = attributes;
         const className = clsx_default({
           "has-drop-cap": align === ((0, import_i18n156.isRTL)() ? "left" : "right") || align === "center" ? false : dropCap,
           [`has-text-align-${align}`]: align
@@ -48423,8 +48501,8 @@ ${js}
         }
       },
       migrate: migrateTextAlign2,
-      save({ attributes: attributes2 }) {
-        const { align, content, dropCap, direction } = attributes2;
+      save({ attributes }) {
+        const { align, content, dropCap, direction } = attributes;
         const className = clsx_default({
           "has-drop-cap": align === ((0, import_i18n156.isRTL)() ? "left" : "right") || align === "center" ? false : dropCap,
           [`has-text-align-${align}`]: align
@@ -48446,12 +48524,12 @@ ${js}
           type: "number"
         }
       },
-      migrate(attributes2) {
+      migrate(attributes) {
         return migrateCustomColorsAndFontSizes(
-          migrateTextAlign2(attributes2)
+          migrateTextAlign2(attributes)
         );
       },
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           align,
           content,
@@ -48463,7 +48541,7 @@ ${js}
           fontSize,
           customFontSize,
           direction
-        } = attributes2;
+        } = attributes;
         const textClass = (0, import_block_editor175.getColorClassName)("color", textColor);
         const backgroundClass = (0, import_block_editor175.getColorClassName)(
           "background-color",
@@ -48510,12 +48588,12 @@ ${js}
           type: "number"
         }
       },
-      migrate(attributes2) {
+      migrate(attributes) {
         return migrateCustomColorsAndFontSizes(
-          migrateTextAlign2(attributes2)
+          migrateTextAlign2(attributes)
         );
       },
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           align,
           content,
@@ -48527,7 +48605,7 @@ ${js}
           fontSize,
           customFontSize,
           direction
-        } = attributes2;
+        } = attributes;
         const textClass = (0, import_block_editor175.getColorClassName)("color", textColor);
         const backgroundClass = (0, import_block_editor175.getColorClassName)(
           "background-color",
@@ -48577,12 +48655,12 @@ ${js}
           type: "string"
         }
       },
-      migrate(attributes2) {
+      migrate(attributes) {
         return migrateCustomColorsAndFontSizes(
-          migrateTextAlign2(attributes2)
+          migrateTextAlign2(attributes)
         );
       },
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           width,
           align,
@@ -48594,7 +48672,7 @@ ${js}
           customTextColor,
           fontSize,
           customFontSize
-        } = attributes2;
+        } = attributes;
         const textClass = (0, import_block_editor175.getColorClassName)("color", textColor);
         const backgroundClass = (0, import_block_editor175.getColorClassName)(
           "background-color",
@@ -48634,7 +48712,7 @@ ${js}
           type: "number"
         }
       },
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         const {
           width,
           align,
@@ -48643,7 +48721,7 @@ ${js}
           backgroundColor,
           textColor,
           fontSize
-        } = attributes2;
+        } = attributes;
         const className = clsx_default({
           [`align${width}`]: width,
           "has-background": backgroundColor,
@@ -48664,13 +48742,13 @@ ${js}
           }
         );
       },
-      migrate(attributes2) {
+      migrate(attributes) {
         return migrateCustomColorsAndFontSizes(
           migrateTextAlign2({
-            ...attributes2,
-            customFontSize: Number.isFinite(attributes2.fontSize) ? attributes2.fontSize : void 0,
-            customTextColor: attributes2.textColor && "#" === attributes2.textColor[0] ? attributes2.textColor : void 0,
-            customBackgroundColor: attributes2.backgroundColor && "#" === attributes2.backgroundColor[0] ? attributes2.backgroundColor : void 0
+            ...attributes,
+            customFontSize: Number.isFinite(attributes.fontSize) ? attributes.fontSize : void 0,
+            customTextColor: attributes.textColor && "#" === attributes.textColor[0] ? attributes.textColor : void 0,
+            customBackgroundColor: attributes.backgroundColor && "#" === attributes.backgroundColor[0] ? attributes.backgroundColor : void 0
           })
         );
       }
@@ -48685,10 +48763,10 @@ ${js}
           default: ""
         }
       },
-      save({ attributes: attributes2 }) {
-        return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(import_element89.RawHTML, { children: attributes2.content });
+      save({ attributes }) {
+        return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(import_element89.RawHTML, { children: attributes.content });
       },
-      migrate: (attributes2) => attributes2
+      migrate: (attributes) => attributes
     }
   ];
   var deprecated_default29 = deprecated12;
@@ -48845,7 +48923,7 @@ ${js}
   function hasDropCapDisabled(align) {
     return align === ((0, import_i18n157.isRTL)() ? "left" : "right") || align === "center";
   }
-  function DropCapControl({ clientId, attributes: attributes2, setAttributes, name: name122 }) {
+  function DropCapControl({ clientId, attributes, setAttributes, name: name122 }) {
     const [isDropCapFeatureEnabled] = (0, import_block_editor178.useSettings)("typography.dropCap");
     const hasSelectedStyleState = (0, import_data97.useSelect)(
       (select9) => {
@@ -48857,7 +48935,7 @@ ${js}
     if (!isDropCapFeatureEnabled || hasSelectedStyleState) {
       return null;
     }
-    const { style: style2, dropCap } = attributes2;
+    const { style: style2, dropCap } = attributes;
     const textAlign = style2?.typography?.textAlign;
     let helpText;
     if (hasDropCapDisabled(textAlign)) {
@@ -48895,7 +48973,7 @@ ${js}
     ) });
   }
   function ParagraphBlock({
-    attributes: attributes2,
+    attributes,
     mergeBlocks,
     onReplace,
     onRemove,
@@ -48904,9 +48982,9 @@ ${js}
     isSelected: isSingleSelected,
     name: name122
   }) {
-    const { content, direction, dropCap, placeholder: placeholder2, style: style2 } = attributes2;
+    const { content, direction, dropCap, placeholder: placeholder2, style: style2 } = attributes;
     const textAlign = style2?.typography?.textAlign;
-    useDeprecatedAlign(attributes2.align, style2, setAttributes);
+    useDeprecatedAlign(attributes.align, style2, setAttributes);
     const blockProps = (0, import_block_editor178.useBlockProps)({
       ref: useOnEnter({ clientId, content }),
       className: clsx_default({
@@ -48928,7 +49006,7 @@ ${js}
         {
           name: name122,
           clientId,
-          attributes: attributes2,
+          attributes,
           setAttributes
         }
       ),
@@ -49051,8 +49129,8 @@ ${js}
   var import_block_editor179 = __toESM(require_block_editor(), 1);
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
-  function save37({ attributes: attributes2 }) {
-    const { content, dropCap, direction, style: style2 } = attributes2;
+  function save37({ attributes }) {
+    const { content, dropCap, direction, style: style2 } = attributes;
     const textAlign = style2?.typography?.textAlign;
     const className = clsx_default({
       "has-drop-cap": textAlign === ((0, import_i18n158.isRTL)() ? "left" : "right") || textAlign === "center" ? false : dropCap
@@ -49077,18 +49155,18 @@ ${js}
           }
         }),
         transform(node) {
-          const attributes2 = (0, import_blocks74.getBlockAttributes)(name62, node.outerHTML);
+          const attributes = (0, import_blocks74.getBlockAttributes)(name62, node.outerHTML);
           const { textAlign } = node.style || {};
           if (textAlign === "left" || textAlign === "center" || textAlign === "right") {
-            attributes2.style = {
-              ...attributes2.style,
+            attributes.style = {
+              ...attributes.style,
               typography: {
-                ...attributes2.style?.typography,
+                ...attributes.style?.typography,
                 textAlign
               }
             };
           }
-          return (0, import_blocks74.createBlock)(name62, attributes2);
+          return (0, import_blocks74.createBlock)(name62, attributes);
         }
       }
     ]
@@ -49107,8 +49185,8 @@ ${js}
         )
       }
     },
-    __experimentalLabel(attributes2, { context }) {
-      const customName = attributes2?.metadata?.name;
+    __experimentalLabel(attributes, { context }) {
+      const customName = attributes?.metadata?.name;
       if ((context === "list-view" || context === "breadcrumb") && customName) {
         return customName;
       }
@@ -49116,15 +49194,15 @@ ${js}
         if (customName) {
           return customName;
         }
-        const { content } = attributes2;
+        const { content } = attributes;
         return !content || content.length === 0 ? (0, import_i18n159.__)("Empty") : content;
       }
     },
     transforms: transforms_default22,
     deprecated: deprecated_default29,
-    merge(attributes2, attributesToMerge) {
+    merge(attributes, attributesToMerge) {
       return {
-        content: (attributes2.content || "") + (attributesToMerge.content || "")
+        content: (attributes.content || "") + (attributesToMerge.content || "")
       };
     },
     edit: edit_default22,
@@ -50070,7 +50148,7 @@ ${js}
   var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES6 = ["audio"];
   var PlaylistEdit = ({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     isSelected,
     insertBlocksAfter,
@@ -50083,8 +50161,8 @@ ${js}
       showImages,
       showArtists,
       showTrackLength
-    } = attributes2;
-    const waveformStyle = attributes2.className?.match(/is-style-([\w-]+)/)?.[1] || "bars";
+    } = attributes;
+    const waveformStyle = attributes.className?.match(/is-style-([\w-]+)/)?.[1] || "bars";
     const blockProps = (0, import_block_editor180.useBlockProps)();
     const { replaceInnerBlocks } = (0, import_data98.useDispatch)(import_block_editor180.store);
     const { createErrorNotice } = (0, import_data98.useDispatch)(import_notices14.store);
@@ -50400,7 +50478,7 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
           Caption,
           {
-            attributes: attributes2,
+            attributes,
             setAttributes,
             isSelected,
             insertBlocksAfter,
@@ -50417,14 +50495,14 @@ ${js}
   // packages/block-library/build-module/playlist/save.mjs
   var import_block_editor181 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
-  function saveWithInnerBlocks2({ attributes: attributes2 }) {
+  function saveWithInnerBlocks2({ attributes }) {
     const {
       caption,
       showNumbers,
       showTracklist,
       showArtists,
       showTrackLength
-    } = attributes2;
+    } = attributes;
     const blockProps = import_block_editor181.useBlockProps.save();
     const innerBlocksProps = import_block_editor181.useInnerBlocksProps.save(blockProps);
     return /* @__PURE__ */ (0, import_jsx_runtime359.jsxs)("figure", { ...innerBlocksProps, children: [
@@ -50536,14 +50614,14 @@ ${js}
   var ALLOWED_MEDIA_TYPES7 = ["audio"];
   var ALBUM_COVER_ALLOWED_MEDIA_TYPES = ["image"];
   var PlaylistTrackEdit = ({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     context,
     clientId,
     isSelected
   }) => {
-    const { id, src, album, artist, image, length, title } = attributes2;
-    const [temporaryURL, setTemporaryURL] = (0, import_element95.useState)(attributes2.blob);
+    const { id, src, album, artist, image, length, title } = attributes;
+    const [temporaryURL, setTemporaryURL] = (0, import_element95.useState)(attributes.blob);
     const showArtists = context?.showArtists;
     const imageButton = (0, import_element95.useRef)();
     const blockProps = (0, import_block_editor182.useBlockProps)();
@@ -50621,7 +50699,7 @@ ${js}
           onSelect: onSelectTrack,
           accept: "audio/*",
           allowedTypes: ALLOWED_MEDIA_TYPES7,
-          value: attributes2,
+          value: attributes,
           onError: onUploadError
         }
       ) });
@@ -50894,7 +50972,7 @@ ${js}
   var import_i18n163 = __toESM(require_i18n(), 1);
   var import_block_editor183 = __toESM(require_block_editor(), 1);
   var { cleanEmptyObject: cleanEmptyObject6 } = unlock(import_block_editor183.privateApis);
-  function recreateWithRecommendedBlocks(attributes2, blockTypes) {
+  function recreateWithRecommendedBlocks(attributes, blockTypes) {
     const {
       avatarSize,
       byline,
@@ -50905,7 +50983,7 @@ ${js}
       textAlign,
       style: style2,
       ...restAttributes
-    } = attributes2;
+    } = attributes;
     const shouldInsertAvatarBlock = showAvatar && blockTypes.some((blockType) => blockType.name === "core/avatar");
     const shouldInsertParagraphBlock = byline && blockTypes.some((blockType) => blockType.name === "core/paragraph");
     const shouldInsertPostAuthorNameBlock = blockTypes.some(
@@ -51072,7 +51150,7 @@ ${js}
   function PostAuthorEdit({
     isSelected,
     context: { postType, postId, queryId },
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId
   }) {
@@ -51110,7 +51188,7 @@ ${js}
       isLink,
       linkTarget,
       avatarSize
-    } = attributes2;
+    } = attributes;
     const avatarSizes = [];
     const authorName = authorDetails?.name || (0, import_i18n164.__)("Post Author");
     if (authorDetails?.avatar_urls) {
@@ -51142,7 +51220,7 @@ ${js}
     function transformBlock() {
       replaceBlock(
         clientId,
-        recreateWithRecommendedBlocks(attributes2, blockTypes)
+        recreateWithRecommendedBlocks(attributes, blockTypes)
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(import_jsx_runtime361.Fragment, { children: [
@@ -51606,8 +51684,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -51797,8 +51875,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -52098,8 +52176,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -52265,8 +52343,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -52497,8 +52575,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -52882,13 +52960,13 @@ ${js}
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
   function PostDateEdit(props) {
     const {
-      attributes: attributes2,
+      attributes,
       context: { postType: postTypeSlug, queryId },
       setAttributes,
       name: name122
     } = props;
     useDeprecatedTextAlign(props);
-    const { datetime, format: format3, isLink } = attributes2;
+    const { datetime, format: format3, isLink } = attributes;
     const blockProps = (0, import_block_editor193.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const [popoverAnchor, setPopoverAnchor] = (0, import_element101.useState)(null);
@@ -52922,8 +53000,8 @@ ${js}
       [postTypeSlug]
     );
     const activeBlockVariationName = (0, import_data105.useSelect)(
-      (select9) => select9(import_blocks83.store).getActiveBlockVariation(name122, attributes2)?.name,
-      [name122, attributes2]
+      (select9) => select9(import_blocks83.store).getActiveBlockVariation(name122, attributes)?.name,
+      [name122, attributes]
     );
     const blockEditingMode = (0, import_block_editor193.useBlockEditingMode)();
     const validDatetime = datetime || /* @__PURE__ */ new Date();
@@ -53121,8 +53199,8 @@ ${js}
       return null;
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     }
@@ -53219,8 +53297,8 @@ ${js}
         ...otherAttributes
       });
     },
-    isEligible(attributes2) {
-      return attributes2?.metadata?.bindings?.datetime?.source === "core/post-data" && !!attributes2?.metadata?.bindings?.datetime?.args?.key;
+    isEligible(attributes) {
+      return attributes?.metadata?.bindings?.datetime?.source === "core/post-data" && !!attributes?.metadata?.bindings?.datetime?.args?.key;
     }
   };
   var v213 = {
@@ -53311,8 +53389,8 @@ ${js}
         });
       }
     },
-    isEligible(attributes2) {
-      return !attributes2.datetime && !attributes2?.metadata?.bindings?.datetime;
+    isEligible(attributes) {
+      return !attributes.datetime && !attributes?.metadata?.bindings?.datetime;
     }
   };
   var v131 = {
@@ -53347,8 +53425,8 @@ ${js}
     save() {
       return null;
     },
-    migrate(attributes2) {
-      return migrate_text_align_default(migrate_font_family_default(attributes2));
+    migrate(attributes) {
+      return migrate_text_align_default(migrate_font_family_default(attributes));
     },
     isEligible({ style: style2 }) {
       return style2?.typography?.fontFamily;
@@ -53743,8 +53821,8 @@ ${js}
       return null;
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     }
@@ -53925,33 +54003,33 @@ ${js}
   ];
   var DimensionControls = ({
     clientId,
-    attributes: attributes2,
+    attributes,
     setAttributes,
     selectedStyleState,
     hasSelectedStyleState = false
   }) => {
-    const { style: style2 } = attributes2;
+    const { style: style2 } = attributes;
     const selectedStyleStateKey = getStyleStateKey(selectedStyleState);
     const activeAspectRatio = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "aspectRatio"
     });
     const activeWidth = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "width"
     });
     const activeHeight = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "height"
     });
     const activeScale = getActiveDimensionValue({
-      attributes: attributes2,
+      attributes,
       selectedState: selectedStyleState,
       hasSelectedStyleState,
       attributeKey: "scale",
@@ -54006,12 +54084,12 @@ ${js}
   var import_jsx_runtime373 = __toESM(require_jsx_runtime(), 1);
   var Overlay = ({
     clientId,
-    attributes: attributes2,
+    attributes,
     setAttributes,
     overlayColor,
     setOverlayColor
   }) => {
-    const { dimRatio } = attributes2;
+    const { dimRatio } = attributes;
     const { gradientValue, setGradient } = (0, import_block_editor196.__experimentalUseGradient)();
     const colorGradientSettings = (0, import_block_editor196.__experimentalUseMultipleOriginColorsAndGradients)();
     if (!colorGradientSettings.hasColorsOrGradients) {
@@ -54088,11 +54166,11 @@ ${js}
 
   // packages/block-library/build-module/post-featured-image/overlay.mjs
   var import_jsx_runtime374 = __toESM(require_jsx_runtime(), 1);
-  var Overlay2 = ({ attributes: attributes2, overlayColor }) => {
-    const { dimRatio } = attributes2;
+  var Overlay2 = ({ attributes, overlayColor }) => {
+    const { dimRatio } = attributes;
     const { gradientClass, gradientValue } = (0, import_block_editor197.__experimentalUseGradient)();
     const colorGradientSettings = (0, import_block_editor197.__experimentalUseMultipleOriginColorsAndGradients)();
-    const borderProps = (0, import_block_editor197.__experimentalUseBorderProps)(attributes2);
+    const borderProps = (0, import_block_editor197.__experimentalUseBorderProps)(attributes);
     const overlayStyles = {
       backgroundColor: overlayColor.color,
       backgroundImage: gradientValue,
@@ -54157,7 +54235,7 @@ ${js}
   }
   function PostFeaturedImageEdit({
     clientId,
-    attributes: attributes2,
+    attributes,
     setAttributes,
     context: { postId, postType: postTypeSlug, queryId }
   }) {
@@ -54172,7 +54250,7 @@ ${js}
       rel,
       linkTarget,
       useFirstImageFromPost
-    } = attributes2;
+    } = attributes;
     const [temporaryURL, setTemporaryURL] = (0, import_element103.useState)();
     const [storedFeaturedImage, setFeaturedImage] = (0, import_core_data62.useEntityProp)(
       "postType",
@@ -54227,8 +54305,8 @@ ${js}
         "is-transient": temporaryURL
       })
     });
-    const borderProps = (0, import_block_editor198.__experimentalUseBorderProps)(attributes2);
-    const shadowProps = (0, import_block_editor198.__experimentalGetShadowClassesAndStyles)(attributes2);
+    const borderProps = (0, import_block_editor198.__experimentalUseBorderProps)(attributes);
+    const shadowProps = (0, import_block_editor198.__experimentalGetShadowClassesAndStyles)(attributes);
     const blockEditingMode = (0, import_block_editor198.useBlockEditingMode)();
     const placeholder2 = (content) => {
       return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
@@ -54282,7 +54360,7 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_block_editor198.InspectorControls, { group: "color", children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
         overlay_controls_default,
         {
-          attributes: attributes2,
+          attributes,
           setAttributes,
           clientId
         }
@@ -54309,7 +54387,7 @@ ${js}
             dimension_controls_default,
             {
               clientId,
-              attributes: attributes2,
+              attributes,
               setAttributes,
               media,
               selectedStyleState,
@@ -54424,7 +54502,7 @@ ${js}
           /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
             overlay_default,
             {
-              attributes: attributes2,
+              attributes,
               setAttributes,
               clientId
             }
@@ -54505,7 +54583,7 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
           overlay_default,
           {
-            attributes: attributes2,
+            attributes,
             setAttributes,
             clientId
           }
@@ -54927,8 +55005,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -55495,14 +55573,14 @@ ${js}
     "core/text-color"
   ];
   function PostTermsEdit({
-    attributes: attributes2,
+    attributes,
     clientId,
     context,
     isSelected,
     setAttributes,
     insertBlocksAfter
   }) {
-    const { term, separator, prefix, suffix } = attributes2;
+    const { term, separator, prefix, suffix } = attributes;
     const { postId, postType } = context;
     const selectedTerm = (0, import_data111.useSelect)(
       (select9) => {
@@ -55679,8 +55757,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -55790,8 +55868,8 @@ ${js}
   var import_core_data67 = __toESM(require_core_data(), 1);
   var import_wordcount = __toESM(require_wordcount(), 1);
   var import_jsx_runtime380 = __toESM(require_jsx_runtime(), 1);
-  function PostTimeToReadEdit({ attributes: attributes2, setAttributes, context }) {
-    const { displayAsRange, displayMode, averageReadingSpeed } = attributes2;
+  function PostTimeToReadEdit({ attributes, setAttributes, context }) {
+    const { displayAsRange, displayMode, averageReadingSpeed } = attributes;
     const { postId, postType } = context;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const [contentStructure] = (0, import_core_data67.useEntityProp)(
@@ -55991,8 +56069,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -56374,8 +56452,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -56459,14 +56537,14 @@ ${js}
   var import_blocks88 = __toESM(require_blocks(), 1);
   var import_jsx_runtime382 = __toESM(require_jsx_runtime(), 1);
   function PreformattedEdit({
-    attributes: attributes2,
+    attributes,
     mergeBlocks,
     setAttributes,
     onRemove,
     insertBlocksAfter,
     style: style2
   }) {
-    const { content } = attributes2;
+    const { content } = attributes;
     const blockProps = (0, import_block_editor205.useBlockProps)({ style: style2 });
     return /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(
       import_block_editor205.RichText,
@@ -56557,8 +56635,8 @@ ${js}
   // packages/block-library/build-module/preformatted/save.mjs
   var import_block_editor206 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime383 = __toESM(require_jsx_runtime(), 1);
-  function save39({ attributes: attributes2 }) {
-    const { content } = attributes2;
+  function save39({ attributes }) {
+    const { content } = attributes;
     return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)("pre", { ...import_block_editor206.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_block_editor206.RichText.Content, { value: content }) });
   }
 
@@ -56588,17 +56666,17 @@ ${js}
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2) => (0, import_blocks89.createBlock)("core/paragraph", attributes2)
+        transform: (attributes) => (0, import_blocks89.createBlock)("core/paragraph", attributes)
       },
       {
         type: "block",
         blocks: ["core/code"],
-        transform: (attributes2) => (0, import_blocks89.createBlock)("core/code", attributes2)
+        transform: (attributes) => (0, import_blocks89.createBlock)("core/code", attributes)
       },
       {
         type: "block",
         blocks: ["core/verse"],
-        transform: (attributes2) => (0, import_blocks89.createBlock)("core/verse", attributes2)
+        transform: (attributes) => (0, import_blocks89.createBlock)("core/verse", attributes)
       }
     ]
   };
@@ -56622,9 +56700,9 @@ ${js}
     transforms: transforms_default27,
     edit: PreformattedEdit,
     save: save39,
-    merge(attributes2, attributesToMerge) {
+    merge(attributes, attributesToMerge) {
       return {
-        content: attributes2.content + "\n\n" + attributesToMerge.content
+        content: attributes.content + "\n\n" + attributesToMerge.content
       };
     }
   };
@@ -56786,8 +56864,8 @@ ${js}
         clientNavigation: true
       }
     },
-    save({ attributes: attributes2 }) {
-      const { textAlign, citation, value } = attributes2;
+    save({ attributes }) {
+      const { textAlign, citation, value } = attributes;
       const shouldShowCitation = !import_block_editor207.RichText.isEmpty(citation);
       return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
         "figure",
@@ -56804,8 +56882,8 @@ ${js}
         }
       );
     },
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -56876,8 +56954,8 @@ ${js}
         }
       }
     },
-    save({ attributes: attributes2 }) {
-      const { textAlign, citation, value } = attributes2;
+    save({ attributes }) {
+      const { textAlign, citation, value } = attributes;
       const shouldShowCitation = !import_block_editor207.RichText.isEmpty(citation);
       return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
         "figure",
@@ -56894,10 +56972,10 @@ ${js}
         }
       );
     },
-    migrate({ value, ...attributes2 }) {
+    migrate({ value, ...attributes }) {
       return migrate_text_align_default({
         value: multilineToInline(value),
-        ...attributes2
+        ...attributes
       });
     }
   };
@@ -56920,7 +56998,7 @@ ${js}
         width: true
       }
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         mainColor,
         customMainColor,
@@ -56929,7 +57007,7 @@ ${js}
         value,
         citation,
         className
-      } = attributes2;
+      } = attributes;
       const isSolidColorStyle = className?.includes(SOLID_COLOR_CLASS);
       let figureClasses, figureStyles;
       if (isSolidColorStyle) {
@@ -56985,7 +57063,7 @@ ${js}
       mainColor,
       customMainColor,
       customTextColor,
-      ...attributes2
+      ...attributes
     }) {
       const isSolidColorStyle = className?.includes(SOLID_COLOR_CLASS);
       let style2;
@@ -57016,7 +57094,7 @@ ${js}
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
         borderColor: isSolidColorStyle ? void 0 : mainColor,
         textAlign: isSolidColorStyle ? "left" : void 0,
-        ...attributes2,
+        ...attributes,
         style: style2
       });
     }
@@ -57032,7 +57110,7 @@ ${js}
         attribute: "style"
       }
     },
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         mainColor,
         customMainColor,
@@ -57042,7 +57120,7 @@ ${js}
         citation,
         className,
         figureStyle
-      } = attributes2;
+      } = attributes;
       const isSolidColorStyle = className?.includes(SOLID_COLOR_CLASS);
       let figureClasses, figureStyles;
       if (isSolidColorStyle) {
@@ -57094,7 +57172,7 @@ ${js}
       mainColor,
       customMainColor,
       customTextColor,
-      ...attributes2
+      ...attributes
     }) {
       const isSolidColorStyle = className?.includes(SOLID_COLOR_CLASS);
       let style2;
@@ -57124,7 +57202,7 @@ ${js}
         if (borderColor) {
           return {
             value: multilineToInline(value),
-            ...attributes2,
+            ...attributes,
             className,
             // Block supports: Set style.border.color if a deprecated block has `mainColor`, inline border CSS and is not a solid color style.
             style: {
@@ -57141,14 +57219,14 @@ ${js}
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
         borderColor: isSolidColorStyle ? void 0 : mainColor,
         textAlign: isSolidColorStyle ? "left" : void 0,
-        ...attributes2,
+        ...attributes,
         style: style2
       });
     }
   };
   var v215 = {
     attributes: blockAttributes6,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         mainColor,
         customMainColor,
@@ -57157,7 +57235,7 @@ ${js}
         value,
         citation,
         className
-      } = attributes2;
+      } = attributes;
       const isSolidColorStyle = className?.includes(SOLID_COLOR_CLASS);
       let figureClass, figureStyles;
       if (isSolidColorStyle) {
@@ -57207,7 +57285,7 @@ ${js}
       mainColor,
       customMainColor,
       customTextColor,
-      ...attributes2
+      ...attributes
     }) {
       const isSolidColorStyle = className?.includes(SOLID_COLOR_CLASS);
       let style2 = {};
@@ -57238,7 +57316,7 @@ ${js}
         backgroundColor: isSolidColorStyle ? mainColor : void 0,
         borderColor: isSolidColorStyle ? void 0 : mainColor,
         textAlign: isSolidColorStyle ? "left" : void 0,
-        ...attributes2,
+        ...attributes,
         style: style2
       });
     }
@@ -57247,17 +57325,17 @@ ${js}
     attributes: {
       ...blockAttributes6
     },
-    save({ attributes: attributes2 }) {
-      const { value, citation } = attributes2;
+    save({ attributes }) {
+      const { value, citation } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)("blockquote", { children: [
         /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor207.RichText.Content, { value, multiline: true }),
         !import_block_editor207.RichText.isEmpty(citation) && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor207.RichText.Content, { tagName: "cite", value: citation })
       ] });
     },
-    migrate({ value, ...attributes2 }) {
+    migrate({ value, ...attributes }) {
       return {
         value: multilineToInline(value),
-        ...attributes2
+        ...attributes
       };
     }
   };
@@ -57274,17 +57352,17 @@ ${js}
         default: "none"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { value, citation, align } = attributes2;
+    save({ attributes }) {
+      const { value, citation, align } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)("blockquote", { className: `align${align}`, children: [
         /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor207.RichText.Content, { value, multiline: true }),
         !import_block_editor207.RichText.isEmpty(citation) && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor207.RichText.Content, { tagName: "footer", value: citation })
       ] });
     },
-    migrate({ value, ...attributes2 }) {
+    migrate({ value, ...attributes }) {
       return {
         value: multilineToInline(value),
-        ...attributes2
+        ...attributes
       };
     }
   };
@@ -57304,9 +57382,9 @@ ${js}
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
   function PullQuoteEdit(props) {
-    const { attributes: attributes2, setAttributes, isSelected, insertBlocksAfter } = props;
+    const { attributes, setAttributes, isSelected, insertBlocksAfter } = props;
     useDeprecatedTextAlign(props);
-    const { citation, value } = attributes2;
+    const { citation, value } = attributes;
     const blockProps = (0, import_block_editor208.useBlockProps)();
     const shouldShowCitation = !import_block_editor208.RichText.isEmpty(citation) || isSelected;
     return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_jsx_runtime385.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(Figure, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime385.jsxs)(BlockQuote, { children: [
@@ -57443,8 +57521,8 @@ ${js}
   // packages/block-library/build-module/pullquote/save.mjs
   var import_block_editor209 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
-  function save40({ attributes: attributes2 }) {
-    const { citation, value } = attributes2;
+  function save40({ attributes }) {
+    const { citation, value } = attributes;
     const shouldShowCitation = !import_block_editor209.RichText.isEmpty(citation);
     return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("figure", { ...import_block_editor209.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)("blockquote", { children: [
       /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_block_editor209.RichText.Content, { tagName: "p", value }),
@@ -57461,17 +57539,17 @@ ${js}
         type: "block",
         isMultiBlock: true,
         blocks: ["core/paragraph"],
-        transform: (attributes2) => {
+        transform: (attributes) => {
           return (0, import_blocks92.createBlock)("core/pullquote", {
             value: (0, import_rich_text5.toHTMLString)({
               value: (0, import_rich_text5.join)(
-                attributes2.map(
+                attributes.map(
                   ({ content }) => (0, import_rich_text5.create)({ html: content })
                 ),
                 "\n"
               )
             }),
-            anchor: attributes2.anchor
+            anchor: attributes.anchor
           });
         }
       },
@@ -57826,13 +57904,13 @@ ${js}
       return orderByOptions;
     }, [supportsCustomOrder]);
   }
-  function useAllowedControls(attributes2) {
+  function useAllowedControls(attributes) {
     return (0, import_data114.useSelect)(
       (select9) => select9(import_blocks94.store).getActiveBlockVariation(
         "core/query",
-        attributes2
+        attributes
       )?.allowedControls,
-      [attributes2]
+      [attributes]
     );
   }
   function isControlAllowed(allowedControls, key) {
@@ -57868,12 +57946,12 @@ ${js}
     }
     return { newBlocks: clonedBlocks, queryClientIds };
   };
-  function useBlockNameForPatterns(clientId, attributes2) {
+  function useBlockNameForPatterns(clientId, attributes) {
     return (0, import_data114.useSelect)(
       (select9) => {
         const activeVariationName = select9(
           import_blocks94.store
-        ).getActiveBlockVariation("core/query", attributes2)?.name;
+        ).getActiveBlockVariation("core/query", attributes)?.name;
         if (!activeVariationName) {
           return "core/query";
         }
@@ -57885,22 +57963,22 @@ ${js}
         );
         return activePatterns.length > 0 ? `core/query/${activeVariationName}` : "core/query";
       },
-      [clientId, attributes2]
+      [clientId, attributes]
     );
   }
-  function useScopedBlockVariations(attributes2) {
+  function useScopedBlockVariations(attributes) {
     const { activeVariationName, blockVariations } = (0, import_data114.useSelect)(
       (select9) => {
         const { getActiveBlockVariation, getBlockVariations: getBlockVariations4 } = select9(import_blocks94.store);
         return {
           activeVariationName: getActiveBlockVariation(
             "core/query",
-            attributes2
+            attributes
           )?.name,
           blockVariations: getBlockVariations4("core/query", "block")
         };
       },
-      [attributes2]
+      [attributes]
     );
     const variations20 = (0, import_element107.useMemo)(() => {
       const isNotConnected = (variation) => !variation.attributes?.namespace;
@@ -58606,8 +58684,8 @@ ${js}
   // packages/block-library/build-module/query/edit/inspector-controls/index.mjs
   var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
   function QueryInspectorControls(props) {
-    const { attributes: attributes2, setQuery, isSingular } = props;
-    const { query } = attributes2;
+    const { attributes, setQuery, isSingular } = props;
+    const { query } = attributes;
     const {
       order,
       orderBy,
@@ -58622,7 +58700,7 @@ ${js}
       parents,
       format: format3
     } = query;
-    const allowedControls = useAllowedControls(attributes2);
+    const allowedControls = useAllowedControls(attributes);
     const showSticky = postType === "post";
     const {
       postTypesTaxonomiesMap,
@@ -59099,7 +59177,7 @@ ${js}
   var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
   function PatternSelectionModal({
     clientId,
-    attributes: attributes2,
+    attributes,
     setIsPatternSelectionModalOpen
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
@@ -59109,14 +59187,14 @@ ${js}
         title: (0, import_i18n203.__)("Choose a pattern"),
         onRequestClose: () => setIsPatternSelectionModalOpen(false),
         isFullScreen: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(PatternSelection, { clientId, attributes: attributes2 })
+        children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(PatternSelection, { clientId, attributes })
       }
     );
   }
-  function useBlockPatterns(clientId, attributes2) {
+  function useBlockPatterns(clientId, attributes) {
     const blockNameForPatterns = useBlockNameForPatterns(
       clientId,
-      attributes2
+      attributes
     );
     const allPatterns = usePatterns(clientId, blockNameForPatterns);
     const rootBlockPatterns = (0, import_element112.useMemo)(() => {
@@ -59128,18 +59206,18 @@ ${js}
   }
   function PatternSelection({
     clientId,
-    attributes: attributes2,
+    attributes,
     showTitlesAsTooltip = false,
     showSearch = true
   }) {
     const [searchValue, setSearchValue] = (0, import_element112.useState)("");
     const { replaceBlock, selectBlock } = (0, import_data121.useDispatch)(import_block_editor212.store);
-    const blockPatterns = useBlockPatterns(clientId, attributes2);
+    const blockPatterns = useBlockPatterns(clientId, attributes);
     const blockPreviewContext = (0, import_element112.useMemo)(
       () => ({
-        previewPostType: attributes2.query.postType
+        previewPostType: attributes.query.postType
       }),
-      [attributes2.query.postType]
+      [attributes.query.postType]
     );
     const filteredBlockPatterns = (0, import_element112.useMemo)(() => {
       return searchPatterns(blockPatterns, searchValue);
@@ -59147,7 +59225,7 @@ ${js}
     const onBlockPatternSelect = (pattern, blocks) => {
       const { newBlocks, queryClientIds } = getTransformedBlocksFromPattern(
         blocks,
-        attributes2
+        attributes
       );
       replaceBlock(clientId, newBlocks);
       if (queryClientIds[0]) {
@@ -59177,8 +59255,8 @@ ${js}
 
   // packages/block-library/build-module/query/edit/query-toolbar.mjs
   var import_jsx_runtime400 = __toESM(require_jsx_runtime(), 1);
-  function PatternPicker({ clientId, attributes: attributes2, hasInnerBlocks }) {
-    const hasPatterns = useBlockPatterns(clientId, attributes2).length;
+  function PatternPicker({ clientId, attributes, hasInnerBlocks }) {
+    const hasPatterns = useBlockPatterns(clientId, attributes).length;
     if (!hasPatterns) {
       return null;
     }
@@ -59202,7 +59280,7 @@ ${js}
           PatternSelection,
           {
             clientId,
-            attributes: attributes2,
+            attributes,
             showSearch: false,
             showTitlesAsTooltip: true
           }
@@ -59230,7 +59308,7 @@ ${js}
   var DEFAULTS_POSTS_PER_PAGE = 3;
   var TEMPLATE13 = [["core/post-template"]];
   function QueryContent({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId,
     context,
@@ -59243,7 +59321,7 @@ ${js}
       enhancedPagination,
       tagName: TagName2 = "div",
       query: { inherit } = {}
-    } = attributes2;
+    } = attributes;
     const { templateSlug } = context;
     const { isSingular } = getQueryContextFromTemplate(templateSlug);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data123.useDispatch)(import_block_editor214.store);
@@ -59304,14 +59382,14 @@ ${js}
         QueryToolbar,
         {
           clientId,
-          attributes: attributes2,
+          attributes,
           hasInnerBlocks: true
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
         EnhancedPaginationModal,
         {
-          attributes: attributes2,
+          attributes,
           setAttributes,
           clientId
         }
@@ -59320,7 +59398,7 @@ ${js}
         QueryInspectorControls,
         {
           name: name122,
-          attributes: attributes2,
+          attributes,
           setQuery: updateQuery,
           setAttributes,
           clientId,
@@ -59365,7 +59443,7 @@ ${js}
   var import_compose51 = __toESM(require_compose(), 1);
   var import_jsx_runtime402 = __toESM(require_jsx_runtime(), 1);
   function QueryPlaceholder({
-    attributes: attributes2,
+    attributes,
     clientId,
     name: name122,
     openPatternSelectionModal,
@@ -59385,13 +59463,13 @@ ${js}
           blockType: getBlockType5(name122),
           activeBlockVariation: getActiveBlockVariation(
             name122,
-            attributes2
+            attributes
           )
         };
       },
-      [name122, attributes2]
+      [name122, attributes]
     );
-    const hasPatterns = !!useBlockPatterns(clientId, attributes2).length;
+    const hasPatterns = !!useBlockPatterns(clientId, attributes).length;
     const icon4 = activeBlockVariation?.icon?.src || activeBlockVariation?.icon || blockType?.icon?.src;
     const label = activeBlockVariation?.title || blockType?.title;
     const blockProps = (0, import_block_editor215.useBlockProps)({
@@ -59402,7 +59480,7 @@ ${js}
         QueryVariationPicker,
         {
           clientId,
-          attributes: attributes2,
+          attributes,
           icon: icon4,
           label
         }
@@ -59413,7 +59491,7 @@ ${js}
         QueryToolbar,
         {
           clientId,
-          attributes: attributes2,
+          attributes,
           hasInnerBlocks: false
         }
       ),
@@ -59451,8 +59529,8 @@ ${js}
       )
     ] });
   }
-  function QueryVariationPicker({ clientId, attributes: attributes2, icon: icon4, label }) {
-    const scopeVariations = useScopedBlockVariations(attributes2);
+  function QueryVariationPicker({ clientId, attributes, icon: icon4, label }) {
+    const scopeVariations = useScopedBlockVariations(attributes);
     const { replaceInnerBlocks } = (0, import_data124.useDispatch)(import_block_editor215.store);
     const blockProps = (0, import_block_editor215.useBlockProps)();
     return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
@@ -59479,7 +59557,7 @@ ${js}
   // packages/block-library/build-module/query/edit/index.mjs
   var import_jsx_runtime403 = __toESM(require_jsx_runtime(), 1);
   var QueryEdit = (props) => {
-    const { clientId, attributes: attributes2 } = props;
+    const { clientId, attributes } = props;
     const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] = (0, import_element115.useState)(false);
     const hasInnerBlocks = (0, import_data125.useSelect)(
       (select9) => !!select9(import_block_editor216.store).getBlocks(clientId).length,
@@ -59498,7 +59576,7 @@ ${js}
         PatternSelectionModal,
         {
           clientId,
-          attributes: attributes2,
+          attributes,
           setIsPatternSelectionModalOpen
         }
       )
@@ -59613,8 +59691,8 @@ ${js}
   var import_block_editor218 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
   var { cleanEmptyObject: cleanEmptyObject7 } = unlock(import_block_editor218.privateApis);
-  var migrateToTaxQuery = (attributes2) => {
-    const { query } = attributes2;
+  var migrateToTaxQuery = (attributes) => {
+    const { query } = attributes;
     const { categoryIds, tagIds, taxQuery, ...newQuery } = query;
     if (!!categoryIds?.length || !!tagIds?.length) {
       newQuery.taxQuery = {
@@ -59628,15 +59706,15 @@ ${js}
       newQuery.taxQuery = { include: taxQuery };
     }
     return {
-      ...attributes2,
+      ...attributes,
       query: newQuery
     };
   };
-  var migrateColors = (attributes2, innerBlocks) => {
-    const { style: style2, backgroundColor, gradient, textColor, ...newAttributes } = attributes2;
+  var migrateColors = (attributes, innerBlocks) => {
+    const { style: style2, backgroundColor, gradient, textColor, ...newAttributes } = attributes;
     const hasColorStyles = backgroundColor || gradient || textColor || style2?.color || style2?.elements?.link;
     if (!hasColorStyles) {
-      return [attributes2, innerBlocks];
+      return [attributes, innerBlocks];
     }
     if (style2) {
       newAttributes.style = cleanEmptyObject7({
@@ -59685,15 +59763,15 @@ ${js}
     return [newAttributes, [newGroupBlock]];
   };
   var hasSingleInnerGroupBlock = (innerBlocks = []) => innerBlocks.length === 1 && innerBlocks[0].name === "core/group";
-  var migrateToConstrainedLayout = (attributes2) => {
-    const { layout = null } = attributes2;
+  var migrateToConstrainedLayout = (attributes) => {
+    const { layout = null } = attributes;
     if (!layout) {
-      return attributes2;
+      return attributes;
     }
     const { inherit = null, contentSize = null, ...newLayout } = layout;
     if (inherit || contentSize) {
       return {
-        ...attributes2,
+        ...attributes,
         layout: {
           ...newLayout,
           contentSize,
@@ -59701,7 +59779,7 @@ ${js}
         }
       };
     }
-    return attributes2;
+    return attributes;
   };
   var findPostTemplateBlock = (innerBlocks = []) => {
     let foundBlock = null;
@@ -59728,14 +59806,14 @@ ${js}
     });
     return innerBlocks;
   };
-  var migrateDisplayLayout = (attributes2, innerBlocks) => {
-    const { displayLayout = null, ...newAttributes } = attributes2;
+  var migrateDisplayLayout = (attributes, innerBlocks) => {
+    const { displayLayout = null, ...newAttributes } = attributes;
     if (!displayLayout) {
-      return [attributes2, innerBlocks];
+      return [attributes, innerBlocks];
     }
     const postTemplateBlock = findPostTemplateBlock(innerBlocks);
     if (!postTemplateBlock) {
-      return [attributes2, innerBlocks];
+      return [attributes, innerBlocks];
     }
     const { type, columns } = displayLayout;
     const updatedLayoutType = type === "flex" ? "grid" : "default";
@@ -59788,8 +59866,8 @@ ${js}
     supports: {
       html: false
     },
-    migrate(attributes2, innerBlocks) {
-      const withTaxQuery = migrateToTaxQuery(attributes2);
+    migrate(attributes, innerBlocks) {
+      const withTaxQuery = migrateToTaxQuery(attributes);
       const { layout, ...restWithTaxQuery } = withTaxQuery;
       const newAttributes = {
         ...restWithTaxQuery,
@@ -59845,8 +59923,8 @@ ${js}
       layout: true
     },
     isEligible: ({ query: { categoryIds, tagIds } = {} }) => categoryIds || tagIds,
-    migrate(attributes2, innerBlocks) {
-      const withTaxQuery = migrateToTaxQuery(attributes2);
+    migrate(attributes, innerBlocks) {
+      const withTaxQuery = migrateToTaxQuery(attributes);
       const [withColorAttributes, withColorInnerBlocks] = migrateColors(
         withTaxQuery,
         innerBlocks
@@ -59913,13 +59991,13 @@ ${js}
       },
       layout: true
     },
-    isEligible(attributes2) {
-      const { style: style2, backgroundColor, gradient, textColor } = attributes2;
+    isEligible(attributes) {
+      const { style: style2, backgroundColor, gradient, textColor } = attributes;
       return backgroundColor || gradient || textColor || style2?.color || style2?.elements?.link;
     },
-    migrate(attributes2, innerBlocks) {
+    migrate(attributes, innerBlocks) {
       const [withColorAttributes, withColorInnerBlocks] = migrateColors(
-        attributes2,
+        attributes,
         innerBlocks
       );
       const withConstrainedLayoutAttributes = migrateToConstrainedLayout(withColorAttributes);
@@ -59990,8 +60068,8 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(Tag, { ...innerBlocksProps });
     },
     isEligible: ({ layout }) => layout?.inherit || layout?.contentSize && layout?.type !== "constrained",
-    migrate(attributes2, innerBlocks) {
-      const withConstrainedLayoutAttributes = migrateToConstrainedLayout(attributes2);
+    migrate(attributes, innerBlocks) {
+      const withConstrainedLayoutAttributes = migrateToConstrainedLayout(attributes);
       return migrateDisplayLayout(
         withConstrainedLayoutAttributes,
         innerBlocks
@@ -60102,8 +60180,8 @@ ${js}
     isEligible: ({ query: { taxQuery } = {} }) => !!taxQuery && Object.keys(taxQuery).some(
       (key) => !["include", "exclude"].includes(key)
     ),
-    migrate(attributes2, innerBlocks) {
-      const withTaxQuery = migrateToTaxQuery(attributes2);
+    migrate(attributes, innerBlocks) {
+      const withTaxQuery = migrateToTaxQuery(attributes);
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
@@ -60746,10 +60824,10 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(import_jsx_runtime415.Fragment, { children: paginationItems });
   };
   function QueryPaginationNumbersEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes
   }) {
-    const { midSize } = attributes2;
+    const { midSize } = attributes;
     const paginationNumbers = previewPaginationNumbers(
       parseInt(midSize, 10)
     );
@@ -61402,8 +61480,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -61577,8 +61655,8 @@ ${js}
 
   // packages/block-library/build-module/query-total/edit.mjs
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
-  function QueryTotalEdit({ attributes: attributes2, setAttributes }) {
-    const { displayType } = attributes2;
+  function QueryTotalEdit({ attributes, setAttributes }) {
+    const { displayType } = attributes;
     const blockProps = (0, import_block_editor228.useBlockProps)();
     const getButtonPositionIcon = () => {
       switch (displayType) {
@@ -61653,8 +61731,8 @@ ${js}
   var import_blocks97 = __toESM(require_blocks(), 1);
   var import_block_editor229 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
-  var migrateToQuoteV2 = (attributes2) => {
-    const { value, ...restAttributes } = attributes2;
+  var migrateToQuoteV2 = (attributes) => {
+    const { value, ...restAttributes } = attributes;
     return [
       {
         ...restAttributes
@@ -61675,16 +61753,16 @@ ${js}
     ];
   };
   var TEXT_ALIGN_OPTIONS2 = ["left", "right", "center"];
-  var migrateTextAlign3 = (attributes2, innerBlocks) => {
-    const { align, ...rest } = attributes2;
-    const migratedAttributes = TEXT_ALIGN_OPTIONS2.includes(align) ? { ...rest, textAlign: align } : attributes2;
+  var migrateTextAlign3 = (attributes, innerBlocks) => {
+    const { align, ...rest } = attributes;
+    const migratedAttributes = TEXT_ALIGN_OPTIONS2.includes(align) ? { ...rest, textAlign: align } : attributes;
     return [migratedAttributes, innerBlocks];
   };
-  var migrateLargeStyle = (attributes2, innerBlocks) => {
+  var migrateLargeStyle = (attributes, innerBlocks) => {
     return [
       {
-        ...attributes2,
-        className: attributes2.className ? attributes2.className + " is-style-large" : "is-style-large"
+        ...attributes,
+        className: attributes.className ? attributes.className + " is-style-large" : "is-style-large"
       },
       innerBlocks
     ];
@@ -61740,8 +61818,8 @@ ${js}
       }
     },
     isEligible: ({ align }) => TEXT_ALIGN_OPTIONS2.includes(align),
-    save({ attributes: attributes2 }) {
-      const { align, citation } = attributes2;
+    save({ attributes }) {
+      const { align, citation } = attributes;
       const className = clsx_default({
         [`has-text-align-${align}`]: align
       });
@@ -61789,8 +61867,8 @@ ${js}
         }
       }
     },
-    save({ attributes: attributes2 }) {
-      const { align, value, citation } = attributes2;
+    save({ attributes }) {
+      const { align, value, citation } = attributes;
       const className = clsx_default({
         [`has-text-align-${align}`]: align
       });
@@ -61799,8 +61877,8 @@ ${js}
         !import_block_editor229.RichText.isEmpty(citation) && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_block_editor229.RichText.Content, { tagName: "cite", value: citation })
       ] });
     },
-    migrate(attributes2) {
-      return migrateTextAlign3(...migrateToQuoteV2(attributes2));
+    migrate(attributes) {
+      return migrateTextAlign3(...migrateToQuoteV2(attributes));
     }
   };
   var v218 = {
@@ -61822,11 +61900,11 @@ ${js}
         type: "string"
       }
     },
-    migrate(attributes2) {
-      return migrateTextAlign3(...migrateToQuoteV2(attributes2));
+    migrate(attributes) {
+      return migrateTextAlign3(...migrateToQuoteV2(attributes));
     },
-    save({ attributes: attributes2 }) {
-      const { align, value, citation } = attributes2;
+    save({ attributes }) {
+      const { align, value, citation } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)("blockquote", { style: { textAlign: align ? align : null }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_block_editor229.RichText.Content, { multiline: true, value }),
         !import_block_editor229.RichText.isEmpty(citation) && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_block_editor229.RichText.Content, { tagName: "cite", value: citation })
@@ -61856,17 +61934,17 @@ ${js}
         default: 1
       }
     },
-    migrate(attributes2) {
-      if (attributes2.style === 2) {
-        const { style: style2, ...restAttributes } = attributes2;
+    migrate(attributes) {
+      if (attributes.style === 2) {
+        const { style: style2, ...restAttributes } = attributes;
         return migrateTextAlign3(
           ...migrateLargeStyle(...migrateToQuoteV2(restAttributes))
         );
       }
-      return migrateTextAlign3(...migrateToQuoteV2(attributes2));
+      return migrateTextAlign3(...migrateToQuoteV2(attributes));
     },
-    save({ attributes: attributes2 }) {
-      const { align, value, citation, style: style2 } = attributes2;
+    save({ attributes }) {
+      const { align, value, citation, style: style2 } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(
         "blockquote",
         {
@@ -61903,15 +61981,15 @@ ${js}
         default: 1
       }
     },
-    migrate(attributes2) {
-      if (!isNaN(parseInt(attributes2.style))) {
-        const { style: style2, ...restAttributes } = attributes2;
+    migrate(attributes) {
+      if (!isNaN(parseInt(attributes.style))) {
+        const { style: style2, ...restAttributes } = attributes;
         return migrateTextAlign3(...migrateToQuoteV2(restAttributes));
       }
-      return migrateTextAlign3(...migrateToQuoteV2(attributes2));
+      return migrateTextAlign3(...migrateToQuoteV2(attributes));
     },
-    save({ attributes: attributes2 }) {
-      const { align, value, citation, style: style2 } = attributes2;
+    save({ attributes }) {
+      const { align, value, citation, style: style2 } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(
         "blockquote",
         {
@@ -61936,14 +62014,14 @@ ${js}
   var import_deprecated48 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime421 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE16 = [["core/paragraph", {}]];
-  var useMigrateOnLoad2 = (attributes2, clientId) => {
+  var useMigrateOnLoad2 = (attributes, clientId) => {
     const registry = (0, import_data129.useRegistry)();
     const { updateBlockAttributes, replaceInnerBlocks } = (0, import_data129.useDispatch)(import_block_editor230.store);
     (0, import_element117.useEffect)(() => {
-      if (!attributes2.value) {
+      if (!attributes.value) {
         return;
       }
-      const [newAttributes, newInnerBlocks] = migrateToQuoteV2(attributes2);
+      const [newAttributes, newInnerBlocks] = migrateToQuoteV2(attributes);
       (0, import_deprecated48.default)("Value attribute on the quote block", {
         since: "6.0",
         version: "6.5",
@@ -61953,18 +62031,18 @@ ${js}
         updateBlockAttributes(clientId, newAttributes);
         replaceInnerBlocks(clientId, newInnerBlocks);
       });
-    }, [attributes2.value]);
+    }, [attributes.value]);
   };
   function QuoteEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     insertBlocksAfter,
     clientId,
     className,
     isSelected
   }) {
-    const { textAlign, allowedBlocks } = attributes2;
-    useMigrateOnLoad2(attributes2, clientId);
+    const { textAlign, allowedBlocks } = attributes;
+    useMigrateOnLoad2(attributes, clientId);
     const blockProps = (0, import_block_editor230.useBlockProps)({
       className: clsx_default(className, {
         [`has-text-align-${textAlign}`]: textAlign
@@ -61996,7 +62074,7 @@ ${js}
             tagName: "cite",
             style: { display: "block" },
             isSelected,
-            attributes: attributes2,
+            attributes,
             setAttributes,
             icon: verse_default,
             label: (0, import_i18n219.__)("Quote citation"),
@@ -62126,8 +62204,8 @@ ${js}
   // packages/block-library/build-module/quote/save.mjs
   var import_block_editor231 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime422 = __toESM(require_jsx_runtime(), 1);
-  function save44({ attributes: attributes2 }) {
-    const { textAlign, citation } = attributes2;
+  function save44({ attributes }) {
+    const { textAlign, citation } = attributes;
     const className = clsx_default({
       [`has-text-align-${textAlign}`]: textAlign
     });
@@ -62244,7 +62322,7 @@ ${js}
           );
         },
         transform: ({ align, citation, anchor, fontSize, style: style2 }, innerBlocks) => {
-          const value = innerBlocks.map(({ attributes: attributes2 }) => `${attributes2.content}`).join("<br>");
+          const value = innerBlocks.map(({ attributes }) => `${attributes.content}`).join("<br>");
           return (0, import_blocks98.createBlock)("core/pullquote", {
             value,
             align,
@@ -62277,7 +62355,7 @@ ${js}
             }
             return (0, import_blocks98.switchToBlockType)(innerBlock, "core/paragraph") || [];
           });
-          const content = paragraphs.map(({ attributes: attributes2 }) => attributes2.content || "").filter(Boolean).join("<br>");
+          const content = paragraphs.map(({ attributes }) => attributes.content || "").filter(Boolean).join("<br>");
           return (0, import_blocks98.createBlock)("core/verse", { content });
         }
       },
@@ -62617,8 +62695,8 @@ ${js}
      *     }
      * }
      */
-    migrate(attributes2) {
-      const { content, ...retainedAttributes } = attributes2;
+    migrate(attributes) {
+      const { content, ...retainedAttributes } = attributes;
       if (content && Object.keys(content).length) {
         const updatedContent = { ...content };
         for (const contentKey in content) {
@@ -62629,7 +62707,7 @@ ${js}
           content: updatedContent
         };
       }
-      return attributes2;
+      return attributes;
     }
   };
   var v143 = {
@@ -62665,8 +62743,8 @@ ${js}
      * }
      *
      */
-    migrate(attributes2) {
-      const { overrides, ...retainedAttributes } = attributes2;
+    migrate(attributes) {
+      const { overrides, ...retainedAttributes } = attributes;
       const content = {};
       Object.keys(overrides).forEach((id) => {
         content[id] = overrides[id];
@@ -62950,8 +63028,8 @@ ${js}
   var import_jsx_runtime425 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_MIN_ITEMS = 1;
   var DEFAULT_MAX_ITEMS = 20;
-  function RSSEdit({ attributes: attributes2, setAttributes, name: name122 }) {
-    const [isEditing, setIsEditing] = (0, import_element119.useState)(!attributes2.feedURL);
+  function RSSEdit({ attributes, setAttributes, name: name122 }) {
+    const [isEditing, setIsEditing] = (0, import_element119.useState)(!attributes.feedURL);
     const {
       blockLayout,
       columns,
@@ -62963,11 +63041,11 @@ ${js}
       itemsToShow,
       openInNewTab,
       rel
-    } = attributes2;
+    } = attributes;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     function toggleAttribute(propName) {
       return () => {
-        const value = attributes2[propName];
+        const value = attributes[propName];
         setAttributes({ [propName]: !value });
       };
     }
@@ -62979,7 +63057,7 @@ ${js}
       }
     }
     const { content, status, error } = (0, import_server_side_render5.useServerSideRender)({
-      attributes: attributes2,
+      attributes,
       skipBlockSupportAttributes: true,
       block: name122
     });
@@ -63388,7 +63466,7 @@ ${js}
   var PERCENTAGE_WIDTHS = [25, 50, 75, 100];
   function SearchEdit({
     className,
-    attributes: attributes2,
+    attributes,
     setAttributes,
     toggleSelection,
     isSelected,
@@ -63406,7 +63484,7 @@ ${js}
       buttonUseIcon,
       tagName,
       style: style2
-    } = attributes2;
+    } = attributes;
     const wasJustInsertedIntoNavigationBlock = (0, import_data132.useSelect)(
       (select9) => {
         const { getBlockParentsByBlockName, wasBlockJustInserted } = select9(import_block_editor236.store);
@@ -63430,7 +63508,7 @@ ${js}
       setAttributes
     ]);
     const borderRadius = style2?.border?.radius;
-    let borderProps = (0, import_block_editor236.__experimentalUseBorderProps)(attributes2);
+    let borderProps = (0, import_block_editor236.__experimentalUseBorderProps)(attributes);
     if (typeof borderRadius === "number") {
       borderProps = {
         ...borderProps,
@@ -63440,12 +63518,12 @@ ${js}
         }
       };
     }
-    const colorProps = (0, import_block_editor236.__experimentalUseColorProps)(attributes2);
+    const colorProps = (0, import_block_editor236.__experimentalUseColorProps)(attributes);
     const [fluidTypographySettings, layout] = (0, import_block_editor236.useSettings)(
       "typography.fluid",
       "layout"
     );
-    const typographyProps = (0, import_block_editor236.getTypographyClassesAndStyles)(attributes2, {
+    const typographyProps = (0, import_block_editor236.getTypographyClassesAndStyles)(attributes, {
       typography: {
         fluid: fluidTypographySettings
       },
@@ -63984,9 +64062,9 @@ ${js}
       }
     );
   };
-  function SeparatorEdit({ attributes: attributes2, setAttributes }) {
-    const { backgroundColor, opacity, style: style2, tagName } = attributes2;
-    const colorProps = (0, import_block_editor237.__experimentalUseColorProps)(attributes2);
+  function SeparatorEdit({ attributes, setAttributes }) {
+    const { backgroundColor, opacity, style: style2, tagName } = attributes;
+    const colorProps = (0, import_block_editor237.__experimentalUseColorProps)(attributes);
     const currentColor = colorProps?.style?.backgroundColor;
     const hasCustomColor = !!style2?.color?.background;
     useDeprecatedOpacity(opacity, currentColor, setAttributes);
@@ -64078,10 +64156,10 @@ ${js}
   // packages/block-library/build-module/separator/save.mjs
   var import_block_editor238 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime428 = __toESM(require_jsx_runtime(), 1);
-  function separatorSave({ attributes: attributes2 }) {
-    const { backgroundColor, style: style2, opacity, tagName: Tag } = attributes2;
+  function separatorSave({ attributes }) {
+    const { backgroundColor, style: style2, opacity, tagName: Tag } = attributes;
     const customColor = style2?.color?.background;
-    const colorProps = (0, import_block_editor238.__experimentalGetColorClassesAndStyles)(attributes2);
+    const colorProps = (0, import_block_editor238.__experimentalGetColorClassesAndStyles)(attributes);
     const colorClass = (0, import_block_editor238.getColorClassName)("color", backgroundColor);
     const className = clsx_default(
       {
@@ -64154,8 +64232,8 @@ ${js}
         type: "string"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { color, customColor } = attributes2;
+    save({ attributes }) {
+      const { color, customColor } = attributes;
       const backgroundClass = (0, import_block_editor239.getColorClassName)("background-color", color);
       const colorClass = (0, import_block_editor239.getColorClassName)("color", color);
       const className = clsx_default({
@@ -64169,8 +64247,8 @@ ${js}
       };
       return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)("hr", { ...import_block_editor239.useBlockProps.save({ className, style: style2 }) });
     },
-    migrate(attributes2) {
-      const { color, customColor, ...restAttributes } = attributes2;
+    migrate(attributes) {
+      const { color, customColor, ...restAttributes } = attributes;
       return {
         ...restAttributes,
         backgroundColor: color ? color : void 0,
@@ -64214,7 +64292,7 @@ ${js}
   var import_compose55 = __toESM(require_compose(), 1);
   var import_components147 = __toESM(require_components(), 1);
   var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
-  function ShortcodeEdit({ attributes: attributes2, setAttributes }) {
+  function ShortcodeEdit({ attributes, setAttributes }) {
     const instanceId = (0, import_compose55.useInstanceId)(ShortcodeEdit);
     const inputId = `blocks-shortcode-input-${instanceId}`;
     return /* @__PURE__ */ (0, import_jsx_runtime430.jsx)("div", { ...(0, import_block_editor240.useBlockProps)(), children: /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(import_components147.Placeholder, { icon: shortcode_default, label: (0, import_i18n229.__)("Shortcode"), children: /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
@@ -64222,7 +64300,7 @@ ${js}
       {
         className: "blocks-shortcode__textarea",
         id: inputId,
-        value: attributes2.text,
+        value: attributes.text,
         "aria-label": (0, import_i18n229.__)("Shortcode text"),
         placeholder: (0, import_i18n229.__)("Write shortcode here\u2026"),
         onChange: (text) => setAttributes({ text })
@@ -64233,8 +64311,8 @@ ${js}
   // packages/block-library/build-module/shortcode/save.mjs
   var import_element122 = __toESM(require_element(), 1);
   var import_jsx_runtime431 = __toESM(require_jsx_runtime(), 1);
-  function save45({ attributes: attributes2 }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_element122.RawHTML, { children: attributes2.text });
+  function save45({ attributes }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_element122.RawHTML, { children: attributes.text });
   }
 
   // packages/block-library/build-module/shortcode/transforms.mjs
@@ -64708,12 +64786,12 @@ ${js}
     ] });
   };
   function LogoEdit({
-    attributes: attributes2,
+    attributes,
     className,
     setAttributes,
     isSelected
   }) {
-    const { width, shouldSyncIcon } = attributes2;
+    const { width, shouldSyncIcon } = attributes;
     const {
       siteLogoId,
       canUserEdit,
@@ -64848,7 +64926,7 @@ ${js}
           SiteLogo,
           {
             alt,
-            attributes: attributes2,
+            attributes,
             className,
             isSelected,
             setAttributes,
@@ -65092,8 +65170,8 @@ ${js}
   var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
   function SiteTaglineEdit(props) {
     useDeprecatedTextAlign(props);
-    const { attributes: attributes2, setAttributes, insertBlocksAfter } = props;
-    const { level, levelOptions } = attributes2;
+    const { attributes, setAttributes, insertBlocksAfter } = props;
+    const { level, levelOptions } = attributes;
     const { canUserEdit, tagline } = (0, import_data134.useSelect)((select9) => {
       const { canUser, getEntityRecord, getEditedEntityRecord } = select9(import_core_data81.store);
       const canEdit = canUser("update", {
@@ -65208,8 +65286,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -65362,8 +65440,8 @@ ${js}
   var import_jsx_runtime435 = __toESM(require_jsx_runtime(), 1);
   function SiteTitleEdit(props) {
     useDeprecatedTextAlign(props);
-    const { attributes: attributes2, setAttributes, insertBlocksAfter } = props;
-    const { level, levelOptions, isLink, linkTarget } = attributes2;
+    const { attributes, setAttributes, insertBlocksAfter } = props;
+    const { level, levelOptions, isLink, linkTarget } = attributes;
     const { canUserEdit, title } = (0, import_data135.useSelect)((select9) => {
       const { canUser, getEntityRecord, getEditedEntityRecord } = select9(import_core_data82.store);
       const canEdit = canUser("update", {
@@ -65545,8 +65623,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -65989,14 +66067,14 @@ ${js}
     );
   };
   var SocialLinkEdit = ({
-    attributes: attributes2,
+    attributes,
     context,
     isSelected,
     setAttributes,
     clientId,
     name: name122
   }) => {
-    const { url, service, label = "", rel } = attributes2;
+    const { url, service, label = "", rel } = attributes;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const {
       showLabels,
@@ -66024,10 +66102,10 @@ ${js}
       (select9) => {
         const { getActiveBlockVariation } = select9(import_blocks108.store);
         return {
-          activeVariation: getActiveBlockVariation(name122, attributes2)
+          activeVariation: getActiveBlockVariation(name122, attributes)
         };
       },
-      [name122, attributes2]
+      [name122, attributes]
     );
     const { icon: icon4, label: socialLinkName } = getSocialService(activeVariation);
     const socialLinkText = label.trim() === "" ? socialLinkName : label;
@@ -66562,15 +66640,15 @@ ${js}
   // packages/block-library/build-module/social-links/deprecated.mjs
   var import_block_editor245 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime485 = __toESM(require_jsx_runtime(), 1);
-  var migrateWithLayout3 = (attributes2) => {
-    if (!!attributes2.layout) {
-      return attributes2;
+  var migrateWithLayout3 = (attributes) => {
+    if (!!attributes.layout) {
+      return attributes;
     }
-    const { className } = attributes2;
+    const { className } = attributes;
     const prefix = `items-justified-`;
     const justifiedItemsRegex = new RegExp(`\\b${prefix}[^ ]*[ ]?\\b`, "g");
     const newAttributes = {
-      ...attributes2,
+      ...attributes,
       className: className?.replace(justifiedItemsRegex, "").trim()
     };
     const justifyContent = className?.match(justifiedItemsRegex)?.[0]?.trim();
@@ -66663,7 +66741,7 @@ ${js}
   function SocialLinksEdit(props) {
     const {
       clientId,
-      attributes: attributes2,
+      attributes,
       iconBackgroundColor,
       iconColor,
       isSelected,
@@ -66677,7 +66755,7 @@ ${js}
       openInNewTab,
       showLabels,
       size
-    } = attributes2;
+    } = attributes;
     const { hasSocialIcons, hasSelectedChild } = (0, import_data137.useSelect)(
       (select9) => {
         const { getBlockCount, hasSelectedInnerBlock } = select9(import_block_editor246.store);
@@ -66689,7 +66767,7 @@ ${js}
       [clientId]
     );
     const hasAnySelected = isSelected || hasSelectedChild;
-    const logosOnly = attributes2.className?.includes("is-style-logos-only");
+    const logosOnly = attributes.className?.includes("is-style-logos-only");
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     (0, import_element125.useEffect)(() => {
       if (logosOnly) {
@@ -66717,7 +66795,7 @@ ${js}
     const blockProps = (0, import_block_editor246.useBlockProps)({ className });
     const innerBlocksProps = (0, import_block_editor246.useInnerBlocksProps)(blockProps, {
       templateLock: false,
-      orientation: attributes2.layout?.orientation ?? "horizontal",
+      orientation: attributes.layout?.orientation ?? "horizontal",
       __experimentalAppenderTagName: "li",
       renderAppender: !hasSocialIcons || hasAnySelected ? import_block_editor246.InnerBlocks.ButtonBlockAppender : void 0
     });
@@ -67065,22 +67143,22 @@ ${js}
           type: "number"
         }
       },
-      migrate(attributes2) {
-        const { height, width } = attributes2;
+      migrate(attributes) {
+        const { height, width } = attributes;
         return {
-          ...attributes2,
+          ...attributes,
           width: width !== void 0 ? `${width}px` : void 0,
           height: height !== void 0 ? `${height}px` : void 0
         };
       },
-      save({ attributes: attributes2 }) {
+      save({ attributes }) {
         return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
           "div",
           {
             ...import_block_editor248.useBlockProps.save({
               style: {
-                height: attributes2.height,
-                width: attributes2.width
+                height: attributes.height,
+                width: attributes.width
               },
               "aria-hidden": true
             })
@@ -67266,7 +67344,7 @@ ${js}
     );
   };
   var SpacerEdit = ({
-    attributes: attributes2,
+    attributes,
     isSelected,
     setAttributes,
     toggleSelection,
@@ -67286,7 +67364,7 @@ ${js}
     } = parentLayout || {};
     const isFlexLayout = type === "flex" || !type && defaultType === "flex";
     const inheritedOrientation = !parentOrientation && isFlexLayout ? "horizontal" : parentOrientation || orientation;
-    const { height, width, style: blockStyle = {} } = attributes2;
+    const { height, width, style: blockStyle = {} } = attributes;
     const { layout = {} } = blockStyle;
     const { selfStretch, flexSize } = layout;
     const spacingSizes = useSpacingSizes2();
@@ -67550,8 +67628,8 @@ ${js}
   // packages/block-library/build-module/spacer/save.mjs
   var import_block_editor251 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
-  function save47({ attributes: attributes2 }) {
-    const { height, width, style: style2 } = attributes2;
+  function save47({ attributes }) {
+    const { height, width, style: style2 } = attributes;
     const { layout: { selfStretch } = {} } = style2 || {};
     const finalHeight = selfStretch === "fill" || selfStretch === "fit" ? void 0 : height;
     return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
@@ -68165,14 +68243,14 @@ ${js}
         clientNavigation: true
       }
     },
-    save({ attributes: attributes2 }) {
-      const { hasFixedLayout, head, body, foot, caption } = attributes2;
+    save({ attributes }) {
+      const { hasFixedLayout, head, body, foot, caption } = attributes;
       const isEmpty = !head.length && !body.length && !foot.length;
       if (isEmpty) {
         return null;
       }
-      const colorProps = (0, import_block_editor258.__experimentalGetColorClassesAndStyles)(attributes2);
-      const borderProps = (0, import_block_editor258.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor258.__experimentalGetColorClassesAndStyles)(attributes);
+      const borderProps = (0, import_block_editor258.__experimentalGetBorderClassesAndStyles)(attributes);
       const classes = clsx_default(colorProps.className, borderProps.className, {
         "has-fixed-layout": hasFixedLayout
       });
@@ -68356,14 +68434,14 @@ ${js}
       },
       __experimentalSelector: ".wp-block-table > table"
     },
-    save({ attributes: attributes2 }) {
-      const { hasFixedLayout, head, body, foot, caption } = attributes2;
+    save({ attributes }) {
+      const { hasFixedLayout, head, body, foot, caption } = attributes;
       const isEmpty = !head.length && !body.length && !foot.length;
       if (isEmpty) {
         return null;
       }
-      const colorProps = (0, import_block_editor258.__experimentalGetColorClassesAndStyles)(attributes2);
-      const borderProps = (0, import_block_editor258.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor258.__experimentalGetColorClassesAndStyles)(attributes);
+      const borderProps = (0, import_block_editor258.__experimentalGetBorderClassesAndStyles)(attributes);
       const classes = clsx_default(colorProps.className, borderProps.className, {
         "has-fixed-layout": hasFixedLayout
       });
@@ -68496,8 +68574,8 @@ ${js}
       align: true,
       __experimentalSelector: ".wp-block-table > table"
     },
-    save: ({ attributes: attributes2 }) => {
-      const { hasFixedLayout, head, body, foot, backgroundColor, caption } = attributes2;
+    save: ({ attributes }) => {
+      const { hasFixedLayout, head, body, foot, backgroundColor, caption } = attributes;
       const isEmpty = !head.length && !body.length && !foot.length;
       if (isEmpty) {
         return null;
@@ -68544,18 +68622,18 @@ ${js}
         hasCaption && /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_block_editor258.RichText.Content, { tagName: "figcaption", value: caption })
       ] });
     },
-    isEligible: (attributes2) => {
-      return attributes2.backgroundColor && attributes2.backgroundColor in oldColors && !attributes2.style;
+    isEligible: (attributes) => {
+      return attributes.backgroundColor && attributes.backgroundColor in oldColors && !attributes.style;
     },
     // This version is the first to introduce the style attribute to the
     // table block. As a result, we'll explicitly override that.
-    migrate: (attributes2) => {
+    migrate: (attributes) => {
       return {
-        ...attributes2,
+        ...attributes,
         backgroundColor: void 0,
         style: {
           color: {
-            background: oldColors[attributes2.backgroundColor]
+            background: oldColors[attributes.backgroundColor]
           }
         }
       };
@@ -68635,8 +68713,8 @@ ${js}
     supports: {
       align: true
     },
-    save({ attributes: attributes2 }) {
-      const { hasFixedLayout, head, body, foot, backgroundColor } = attributes2;
+    save({ attributes }) {
+      const { hasFixedLayout, head, body, foot, backgroundColor } = attributes;
       const isEmpty = !head.length && !body.length && !foot.length;
       if (isEmpty) {
         return null;
@@ -68898,17 +68976,17 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(TagName2, { ...props });
   }
   function TableEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     insertBlocksAfter,
     isSelected: isSingleSelected
   }) {
-    const { hasFixedLayout, head, foot } = attributes2;
+    const { hasFixedLayout, head, foot } = attributes;
     const [initialRowCount, setInitialRowCount] = (0, import_element128.useState)(2);
     const [initialColumnCount, setInitialColumnCount] = (0, import_element128.useState)(2);
     const [selectedCell, setSelectedCell] = (0, import_element128.useState)();
-    const colorProps = (0, import_block_editor259.__experimentalUseColorProps)(attributes2);
-    const borderProps = (0, import_block_editor259.__experimentalUseBorderProps)(attributes2);
+    const colorProps = (0, import_block_editor259.__experimentalUseColorProps)(attributes);
+    const borderProps = (0, import_block_editor259.__experimentalUseBorderProps)(attributes);
     const blockEditingMode = (0, import_block_editor259.useBlockEditingMode)();
     const tableRef = (0, import_element128.useRef)();
     const [hasTableCreated, setHasTableCreated] = (0, import_element128.useState)(false);
@@ -68959,7 +69037,7 @@ ${js}
         columnIndex: selectedCell.columnIndex
       };
       const newAttributes = updateSelectedCell(
-        attributes2,
+        attributes,
         columnSelection,
         (cellAttributes) => ({
           ...cellAttributes,
@@ -68972,13 +69050,13 @@ ${js}
       if (!selectedCell) {
         return;
       }
-      return getCellAttribute(attributes2, selectedCell, "align");
+      return getCellAttribute(attributes, selectedCell, "align");
     }
     function onToggleHeaderSection() {
-      setAttributes(toggleSection(attributes2, "head"));
+      setAttributes(toggleSection(attributes, "head"));
     }
     function onToggleFooterSection() {
-      setAttributes(toggleSection(attributes2, "foot"));
+      setAttributes(toggleSection(attributes, "foot"));
     }
     function onInsertRow(delta) {
       if (!selectedCell) {
@@ -68987,7 +69065,7 @@ ${js}
       const { sectionName, rowIndex } = selectedCell;
       const newRowIndex = rowIndex + delta;
       setAttributes(
-        insertRow(attributes2, {
+        insertRow(attributes, {
           sectionName,
           rowIndex: newRowIndex
         })
@@ -69011,7 +69089,7 @@ ${js}
       }
       const { sectionName, rowIndex } = selectedCell;
       setSelectedCell();
-      setAttributes(deleteRow(attributes2, { sectionName, rowIndex }));
+      setAttributes(deleteRow(attributes, { sectionName, rowIndex }));
     }
     function onInsertColumn(delta = 0) {
       if (!selectedCell) {
@@ -69020,7 +69098,7 @@ ${js}
       const { columnIndex } = selectedCell;
       const newColumnIndex = columnIndex + delta;
       setAttributes(
-        insertColumn(attributes2, {
+        insertColumn(attributes, {
           columnIndex: newColumnIndex
         })
       );
@@ -69043,7 +69121,7 @@ ${js}
       const { sectionName, columnIndex } = selectedCell;
       setSelectedCell();
       setAttributes(
-        deleteColumn(attributes2, { sectionName, columnIndex })
+        deleteColumn(attributes, { sectionName, columnIndex })
       );
     }
     (0, import_element128.useEffect)(() => {
@@ -69058,7 +69136,7 @@ ${js}
       }
     }, [hasTableCreated]);
     const sections = ["head", "body", "foot"].filter(
-      (name122) => !isEmptyTableSection(attributes2[name122])
+      (name122) => !isEmptyTableSection(attributes[name122])
     );
     const tableControls = [
       {
@@ -69098,7 +69176,7 @@ ${js}
         onClick: onDeleteColumn
       }
     ];
-    const renderedSections = sections.map((name122) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(TSection, { name: name122, children: attributes2[name122].map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("tr", { children: cells.map((cellProps, columnIndex) => {
+    const renderedSections = sections.map((name122) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(TSection, { name: name122, children: attributes[name122].map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("tr", { children: cells.map((cellProps, columnIndex) => {
       const isSelected = selectedCell?.sectionName === name122 && selectedCell?.rowIndex === rowIndex && selectedCell?.columnIndex === columnIndex;
       return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
         Cell,
@@ -69221,7 +69299,7 @@ ${js}
               // the fact the editor rewrites individual border
               // widths into a shorthand format.
               "has-individual-borders": (0, import_components157.__experimentalHasSplitBorders)(
-                attributes2?.style?.border
+                attributes?.style?.border
               )
             }
           ),
@@ -69279,7 +69357,7 @@ ${js}
       ) : /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
         Caption,
         {
-          attributes: attributes2,
+          attributes,
           setAttributes,
           isSelected: isSingleSelected,
           insertBlocksAfter,
@@ -69562,14 +69640,14 @@ ${js}
   // packages/block-library/build-module/table/save.mjs
   var import_block_editor260 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
-  function save50({ attributes: attributes2 }) {
-    const { hasFixedLayout, head, body, foot, caption } = attributes2;
+  function save50({ attributes }) {
+    const { hasFixedLayout, head, body, foot, caption } = attributes;
     const isEmpty = !head.length && !body.length && !foot.length;
     if (isEmpty) {
       return null;
     }
-    const colorProps = (0, import_block_editor260.__experimentalGetColorClassesAndStyles)(attributes2);
-    const borderProps = (0, import_block_editor260.__experimentalGetBorderClassesAndStyles)(attributes2);
+    const colorProps = (0, import_block_editor260.__experimentalGetColorClassesAndStyles)(attributes);
+    const borderProps = (0, import_block_editor260.__experimentalGetBorderClassesAndStyles)(attributes);
     const classes = clsx_default(colorProps.className, borderProps.className, {
       "has-fixed-layout": hasFixedLayout
     });
@@ -69686,7 +69764,7 @@ ${js}
         selector: "table",
         schema: tablePasteSchema,
         transform: (node) => {
-          const attributes2 = Array.from(node.children).reduce(
+          const attributes = Array.from(node.children).reduce(
             (sectionAcc, section) => {
               if (!section.children.length) {
                 return sectionAcc;
@@ -69731,7 +69809,7 @@ ${js}
             },
             {}
           );
-          return (0, import_blocks112.createBlock)("core/table", attributes2);
+          return (0, import_blocks112.createBlock)("core/table", attributes);
         }
       }
     ]
@@ -70068,12 +70146,12 @@ ${js}
   function observeCallback(select9, dispatch, clientId) {
     const { getBlockAttributes: getBlockAttributes4 } = select9(import_block_editor261.store);
     const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = dispatch(import_block_editor261.store);
-    const attributes2 = getBlockAttributes4(clientId);
-    if (attributes2 === null) {
+    const attributes = getBlockAttributes4(clientId);
+    if (attributes === null) {
       return;
     }
     const headings = getLatestHeadings(select9, clientId);
-    if (!(0, import_es6.default)(headings, attributes2.headings)) {
+    if (!(0, import_es6.default)(headings, attributes.headings)) {
       window.queueMicrotask(() => {
         __unstableMarkNextChangeAsNotPersistent();
         updateBlockAttributes(clientId, { headings });
@@ -70371,15 +70449,15 @@ ${js}
   var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY7 = [];
   function Edit21({
-    attributes: attributes2,
+    attributes,
     clientId,
     context,
     __unstableLayoutClassNames: layoutClassNames
   }) {
     const tabsList = context["core/tabs-list"] || EMPTY_ARRAY7;
-    const colorProps = (0, import_block_editor264.__experimentalUseColorProps)(attributes2);
-    const borderProps = (0, import_block_editor264.__experimentalUseBorderProps)(attributes2);
-    const spacingProps = (0, import_block_editor264.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const colorProps = (0, import_block_editor264.__experimentalUseColorProps)(attributes);
+    const borderProps = (0, import_block_editor264.__experimentalUseBorderProps)(attributes);
+    const spacingProps = (0, import_block_editor264.__experimentalGetSpacingClassesAndStyles)(attributes);
     const { tabsClientId, editorActiveTabIndex, activeTabIndex } = (0, import_data145.useSelect)(
       (select9) => {
         const { getBlockRootClientId, getBlockAttributes: getBlockAttributes4 } = select9(import_block_editor264.store);
@@ -70495,14 +70573,14 @@ ${js}
   // packages/block-library/build-module/tab-list/save.mjs
   var import_block_editor265 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
-  function save52({ attributes: attributes2 }) {
-    const { tabs } = attributes2;
+  function save52({ attributes }) {
+    const { tabs } = attributes;
     const blockProps = import_block_editor265.useBlockProps.save({
       role: "tablist"
     });
-    const colorProps = (0, import_block_editor265.__experimentalGetColorClassesAndStyles)(attributes2);
-    const borderProps = (0, import_block_editor265.__experimentalGetBorderClassesAndStyles)(attributes2);
-    const spacingProps = (0, import_block_editor265.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const colorProps = (0, import_block_editor265.__experimentalGetColorClassesAndStyles)(attributes);
+    const borderProps = (0, import_block_editor265.__experimentalGetBorderClassesAndStyles)(attributes);
+    const spacingProps = (0, import_block_editor265.__experimentalGetSpacingClassesAndStyles)(attributes);
     const buttonClassName = clsx_default(colorProps.className, borderProps.className);
     const buttonStyle = {
       ...colorProps.style,
@@ -70662,8 +70740,8 @@ ${js}
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY8 = [];
   var TABS_TEMPLATE = [["core/tab-list"], ["core/tab-panels"]];
-  function Edit22({ clientId, attributes: attributes2 }) {
-    const { anchor, activeTabIndex, editorActiveTabIndex } = attributes2;
+  function Edit22({ clientId, attributes }) {
+    const { anchor, activeTabIndex, editorActiveTabIndex } = attributes;
     const { tabPanels, tabListClientId } = (0, import_data147.useSelect)(
       (select9) => {
         const { getBlocks } = select9(import_block_editor267.store);
@@ -70934,14 +71012,14 @@ ${js}
   var MAX_TAGS = 100;
   var MIN_FONT_SIZE = 0.1;
   var MAX_FONT_SIZE = 100;
-  function TagCloudEdit({ attributes: attributes2, setAttributes, name: name122 }) {
+  function TagCloudEdit({ attributes, setAttributes, name: name122 }) {
     const {
       taxonomy,
       showTagCounts,
       numberOfTags,
       smallestFontSize,
       largestFontSize
-    } = attributes2;
+    } = attributes;
     const [availableUnits] = (0, import_block_editor269.useSettings)("spacing.units");
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const units = (0, import_components159.__experimentalUseCustomUnits)({
@@ -71106,7 +71184,7 @@ ${js}
       }
     ) });
     const { content, status, error } = (0, import_server_side_render6.useServerSideRender)({
-      attributes: attributes2,
+      attributes,
       skipBlockSupportAttributes: true,
       block: name122
     });
@@ -71550,19 +71628,19 @@ ${js}
   var import_blocks117 = __toESM(require_blocks(), 1);
   function transformWidgetToBlock(widget) {
     if (widget.id_base !== "block") {
-      let attributes2;
+      let attributes;
       if (widget._embedded.about[0].is_multi) {
-        attributes2 = {
+        attributes = {
           idBase: widget.id_base,
           instance: widget.instance
         };
       } else {
-        attributes2 = {
+        attributes = {
           id: widget.id
         };
       }
       return switchLegacyWidgetType(
-        (0, import_blocks117.createBlock)("core/legacy-widget", attributes2)
+        (0, import_blocks117.createBlock)("core/legacy-widget", attributes)
       );
     }
     const parsedBlocks = (0, import_blocks117.parse)(widget.instance.raw.content, {
@@ -72034,7 +72112,7 @@ ${js}
     ) });
   }
   function TemplatePartEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId
   }) {
@@ -72044,7 +72122,7 @@ ${js}
       (select9) => select9(import_core_data89.store).getCurrentTheme()?.stylesheet,
       []
     );
-    const { slug, theme = currentTheme, tagName, layout = {} } = attributes2;
+    const { slug, theme = currentTheme, tagName, layout = {} } = attributes;
     const templatePartId = createTemplatePartId(theme, slug);
     const hasAlreadyRendered = (0, import_block_editor274.useHasRecursion)(templatePartId);
     const [isTemplatePartSelectionOpen, setIsTemplatePartSelectionOpen] = (0, import_element140.useState)(false);
@@ -72067,7 +72145,7 @@ ${js}
           templatePartId
         ];
         const entityRecord = templatePartId ? getEditedEntityRecord(...getEntityArgs) : null;
-        const _area = entityRecord?.area || attributes2.area;
+        const _area = entityRecord?.area || attributes.area;
         const hasResolvedEntity = templatePartId ? hasFinishedResolution(
           "getEditedEntityRecord",
           getEntityArgs
@@ -72088,7 +72166,7 @@ ${js}
           canUserEditBlock: canEditBlock(clientId)
         };
       },
-      [templatePartId, attributes2.area, clientId]
+      [templatePartId, attributes.area, clientId]
     );
     const areaObject = useTemplatePartArea(area);
     const blockProps = (0, import_block_editor274.useBlockProps)();
@@ -72157,7 +72235,7 @@ ${js}
         isPlaceholder && /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
           TemplatePartPlaceholder,
           {
-            area: attributes2.area,
+            area: attributes.area,
             templatePartId,
             clientId,
             setAttributes,
@@ -72493,11 +72571,11 @@ ${js}
     }
   };
   function TermCountEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     context: { termId, taxonomy }
   }) {
-    const { bracketType } = attributes2;
+    const { bracketType } = attributes;
     const term = useTermCount(termId, taxonomy);
     const termCount = term?.termCount || 0;
     const blockProps = (0, import_block_editor275.useBlockProps)();
@@ -72737,8 +72815,8 @@ ${js}
       }
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     },
@@ -72914,11 +72992,11 @@ ${js}
   // packages/block-library/build-module/term-name/edit.mjs
   var import_jsx_runtime519 = __toESM(require_jsx_runtime(), 1);
   function TermNameEdit({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     context: { termId, taxonomy }
   }) {
-    const { textAlign, level = 0, isLink, levelOptions } = attributes2;
+    const { textAlign, level = 0, isLink, levelOptions } = attributes;
     const { term } = useTermName(termId, taxonomy);
     const termName2 = term?.name ? (0, import_html_entities15.decodeEntities)(term.name) : (0, import_i18n259.__)("Term Name");
     const blockProps = (0, import_block_editor277.useBlockProps)({
@@ -73377,13 +73455,13 @@ ${js}
   // packages/block-library/build-module/terms-query/edit/inspector-controls/index.mjs
   var import_jsx_runtime528 = __toESM(require_jsx_runtime(), 1);
   function TermsQueryInspectorControls({
-    attributes: attributes2,
+    attributes,
     setQuery,
     setAttributes,
     clientId,
     templateSlug
   }) {
-    const { termQuery, tagName: TagName2 } = attributes2;
+    const { termQuery, tagName: TagName2 } = attributes;
     const {
       taxonomy,
       orderBy,
@@ -73591,12 +73669,12 @@ ${js}
   var import_jsx_runtime529 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE18 = [["core/term-template"]];
   function TermsQueryContent({
-    attributes: attributes2,
+    attributes,
     setAttributes,
     clientId,
     context
   }) {
-    const { tagName: TagName2 } = attributes2;
+    const { tagName: TagName2 } = attributes;
     const blockProps = (0, import_block_editor280.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor280.useInnerBlocksProps)(blockProps, {
       template: TEMPLATE18
@@ -73611,7 +73689,7 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(
         TermsQueryInspectorControls,
         {
-          attributes: attributes2,
+          attributes,
           setQuery,
           setAttributes,
           clientId,
@@ -73628,7 +73706,7 @@ ${js}
   var import_block_editor281 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
   function TermsQueryPlaceholder({
-    attributes: attributes2,
+    attributes,
     clientId,
     name: name122
   }) {
@@ -73643,12 +73721,12 @@ ${js}
           blockType: getBlockType5(name122),
           activeBlockVariation: getActiveBlockVariation(
             name122,
-            attributes2
+            attributes
           ),
           scopeVariations: getBlockVariations4(name122, "block")
         };
       },
-      [name122, attributes2]
+      [name122, attributes]
     );
     const icon4 = activeBlockVariation?.icon?.src || activeBlockVariation?.icon || blockType?.icon?.src;
     const label = activeBlockVariation?.title || blockType?.title;
@@ -74034,8 +74112,8 @@ ${js}
   var import_block_editor286 = __toESM(require_block_editor(), 1);
   var import_deprecated59 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
-  function TextColumnsEdit({ attributes: attributes2, setAttributes }) {
-    const { width, content, columns } = attributes2;
+  function TextColumnsEdit({ attributes, setAttributes }) {
+    const { width, content, columns } = attributes;
     (0, import_deprecated59.default)("The Text Columns block", {
       since: "5.3",
       alternative: "the Columns block"
@@ -74147,8 +74225,8 @@ ${js}
   // packages/block-library/build-module/text-columns/save.mjs
   var import_block_editor287 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime537 = __toESM(require_jsx_runtime(), 1);
-  function save55({ attributes: attributes2 }) {
-    const { width, content, columns } = attributes2;
+  function save55({ attributes }) {
+    const { width, content, columns } = attributes;
     return /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
       "div",
       {
@@ -74197,8 +74275,8 @@ ${js}
   var { name: name118 } = block_default117;
   var settings117 = {
     transforms: transforms_default37,
-    getEditWrapperProps(attributes2) {
-      const { width } = attributes2;
+    getEditWrapperProps(attributes) {
+      const { width } = attributes;
       if ("wide" === width || "full" === width) {
         return { "data-align": width };
       }
@@ -74234,8 +74312,8 @@ ${js}
         type: "string"
       }
     },
-    save({ attributes: attributes2 }) {
-      const { textAlign, content } = attributes2;
+    save({ attributes }) {
+      const { textAlign, content } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
         import_block_editor288.RichText.Content,
         {
@@ -74275,15 +74353,15 @@ ${js}
         padding: true
       }
     },
-    save({ attributes: attributes2 }) {
-      const { textAlign, content } = attributes2;
+    save({ attributes }) {
+      const { textAlign, content } = attributes;
       const className = clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
       });
       return /* @__PURE__ */ (0, import_jsx_runtime538.jsx)("pre", { ...import_block_editor288.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(import_block_editor288.RichText.Content, { value: content }) });
     },
-    migrate(attributes2) {
-      return migrate_text_align_default(migrate_font_family_default(attributes2));
+    migrate(attributes) {
+      return migrate_text_align_default(migrate_font_family_default(attributes));
     },
     isEligible({ style: style2, textAlign }) {
       return style2?.typography?.fontFamily || !!textAlign;
@@ -74340,16 +74418,16 @@ ${js}
         clientNavigation: true
       }
     },
-    save({ attributes: attributes2 }) {
-      const { textAlign, content } = attributes2;
+    save({ attributes }) {
+      const { textAlign, content } = attributes;
       const className = clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
       });
       return /* @__PURE__ */ (0, import_jsx_runtime538.jsx)("pre", { ...import_block_editor288.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(import_block_editor288.RichText.Content, { value: content }) });
     },
     migrate: migrate_text_align_default,
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || !!attributes2.className?.match(
+    isEligible(attributes) {
+      return !!attributes.textAlign || !!attributes.className?.match(
         /\bhas-text-align-(left|center|right)\b/
       );
     }
@@ -74363,14 +74441,14 @@ ${js}
   var import_jsx_runtime539 = __toESM(require_jsx_runtime(), 1);
   function VerseEdit(props) {
     const {
-      attributes: attributes2,
+      attributes,
       setAttributes,
       mergeBlocks,
       onRemove,
       insertBlocksAfter,
       style: style2
     } = props;
-    const { content } = attributes2;
+    const { content } = attributes;
     useDeprecatedTextAlign(props);
     const blockProps = (0, import_block_editor289.useBlockProps)({ style: style2 });
     return /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
@@ -74478,8 +74556,8 @@ ${js}
   // packages/block-library/build-module/verse/save.mjs
   var import_block_editor290 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime540 = __toESM(require_jsx_runtime(), 1);
-  function save56({ attributes: attributes2 }) {
-    const { content } = attributes2;
+  function save56({ attributes }) {
+    const { content } = attributes;
     return /* @__PURE__ */ (0, import_jsx_runtime540.jsx)("pre", { ...import_block_editor290.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(import_block_editor290.RichText.Content, { value: content }) });
   }
 
@@ -74490,14 +74568,14 @@ ${js}
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2) => (0, import_blocks123.createBlock)("core/verse", attributes2)
+        transform: (attributes) => (0, import_blocks123.createBlock)("core/verse", attributes)
       }
     ],
     to: [
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2) => (0, import_blocks123.createBlock)("core/paragraph", attributes2)
+        transform: (attributes) => (0, import_blocks123.createBlock)("core/paragraph", attributes)
       }
     ]
   };
@@ -74520,9 +74598,9 @@ ${js}
     },
     transforms: transforms_default38,
     deprecated: deprecated_default54,
-    merge(attributes2, attributesToMerge) {
+    merge(attributes, attributesToMerge) {
       return {
-        content: attributes2.content + "\n\n" + attributesToMerge.content
+        content: attributes.content + "\n\n" + attributesToMerge.content
       };
     },
     edit: VerseEdit,
@@ -74676,7 +74754,7 @@ ${js}
   var { attributes: blockAttributes7 } = block_default119;
   var v150 = {
     attributes: blockAttributes7,
-    save({ attributes: attributes2 }) {
+    save({ attributes }) {
       const {
         autoplay,
         caption,
@@ -74688,7 +74766,7 @@ ${js}
         src,
         playsInline,
         tracks
-      } = attributes2;
+      } = attributes;
       return /* @__PURE__ */ (0, import_jsx_runtime542.jsxs)("figure", { ...import_block_editor291.useBlockProps.save(), children: [
         src && /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(
           "video",
@@ -74731,8 +74809,8 @@ ${js}
     { value: "metadata", label: (0, import_i18n270.__)("Metadata") },
     { value: "none", label: (0, import_i18n270._x)("None", "Preload value") }
   ];
-  var VideoSettings = ({ setAttributes, attributes: attributes2 }) => {
-    const { autoplay, controls, loop, muted, playsInline, preload } = attributes2;
+  var VideoSettings = ({ setAttributes, attributes }) => {
+    const { autoplay, controls, loop, muted, playsInline, preload } = attributes;
     const autoPlayHelpText = (0, import_i18n270.__)(
       "Autoplay may cause usability issues for some users."
     );
@@ -75236,15 +75314,15 @@ ${js}
   var ALLOWED_MEDIA_TYPES10 = ["video"];
   function VideoEdit({
     isSelected: isSingleSelected,
-    attributes: attributes2,
+    attributes,
     className,
     setAttributes,
     insertBlocksAfter,
     onReplace
   }) {
     const videoPlayer = (0, import_element147.useRef)();
-    const { id, controls, poster, src, tracks } = attributes2;
-    const [temporaryURL, setTemporaryURL] = (0, import_element147.useState)(attributes2.blob);
+    const { id, controls, poster, src, tracks } = attributes;
+    const [temporaryURL, setTemporaryURL] = (0, import_element147.useState)(attributes.blob);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor293.useBlockEditingMode)();
     const hasNonContentControls = blockEditingMode === "default";
@@ -75337,7 +75415,7 @@ ${js}
           onSelectURL,
           accept: "video/*",
           allowedTypes: ALLOWED_MEDIA_TYPES10,
-          value: attributes2,
+          value: attributes,
           onError: onUploadError,
           placeholder: placeholder2
         }
@@ -75390,7 +75468,7 @@ ${js}
               edit_common_settings_default,
               {
                 setAttributes,
-                attributes: attributes2
+                attributes
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(
@@ -75421,7 +75499,7 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(
           Caption,
           {
-            attributes: attributes2,
+            attributes,
             setAttributes,
             isSelected: isSingleSelected,
             insertBlocksAfter,
@@ -75437,7 +75515,7 @@ ${js}
   // packages/block-library/build-module/video/save.mjs
   var import_block_editor294 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime546 = __toESM(require_jsx_runtime(), 1);
-  function save57({ attributes: attributes2 }) {
+  function save57({ attributes }) {
     const {
       autoplay,
       caption,
@@ -75449,7 +75527,7 @@ ${js}
       src,
       playsInline,
       tracks
-    } = attributes2;
+    } = attributes;
     return /* @__PURE__ */ (0, import_jsx_runtime546.jsxs)("figure", { ...import_block_editor294.useBlockProps.save(), children: [
       src && /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(
         "video",
@@ -75537,7 +75615,7 @@ ${js}
         isMatch: (node) => node.nodeName === "P" && node.children.length === 1 && node.firstChild.nodeName === "VIDEO",
         transform: (node) => {
           const videoElement = node.firstChild;
-          const attributes2 = {
+          const attributes = {
             autoplay: videoElement.hasAttribute("autoplay") ? true : void 0,
             controls: videoElement.hasAttribute("controls") ? void 0 : false,
             loop: videoElement.hasAttribute("loop") ? true : void 0,
@@ -75547,11 +75625,11 @@ ${js}
             poster: videoElement.getAttribute("poster") || void 0,
             src: videoElement.getAttribute("src") || void 0
           };
-          if ((0, import_blob21.isBlobURL)(attributes2.src)) {
-            attributes2.blob = attributes2.src;
-            delete attributes2.src;
+          if ((0, import_blob21.isBlobURL)(attributes.src)) {
+            attributes.blob = attributes.src;
+            delete attributes.src;
           }
-          return (0, import_blocks125.createBlock)("core/video", attributes2);
+          return (0, import_blocks125.createBlock)("core/video", attributes);
         }
       }
     ]
@@ -76004,14 +76082,14 @@ ${js}
         return;
       }
       const destinationBlockName = level === 0 ? "core/paragraph" : "core/heading";
-      const attributes2 = getBlockAttributes4(currentClientId);
-      if (isParagraph && level === 0 || isHeading && attributes2.level === level) {
+      const attributes = getBlockAttributes4(currentClientId);
+      if (isParagraph && level === 0 || isHeading && attributes.level === level) {
         return;
       }
       const newAttributes = {
-        content: attributes2.content
+        content: attributes.content
       };
-      const sourceTextAlign = attributes2.textAlign || attributes2.style?.typography?.textAlign;
+      const sourceTextAlign = attributes.textAlign || attributes.style?.typography?.textAlign;
       if (destinationBlockName === "core/heading") {
         newAttributes.level = level;
       }
@@ -76251,12 +76329,12 @@ ${js}
             apiVersion: 3
           },
           // Inspector controls are rendered by the auto-register hook in block-editor
-          edit: function Edit24({ attributes: attributes2 }) {
+          edit: function Edit24({ attributes }) {
             const disabledRef = (0, import_compose62.useDisabled)();
             const blockProps = (0, import_block_editor298.useBlockProps)({ ref: disabledRef });
             const { content, status, error } = (0, import_server_side_render7.useServerSideRender)({
               block: blockName,
-              attributes: attributes2
+              attributes
             });
             if (status === "loading") {
               return /* @__PURE__ */ (0, import_jsx_runtime549.jsx)("div", { ...blockProps, children: (0, import_i18n277.__)("Loading\u2026") });

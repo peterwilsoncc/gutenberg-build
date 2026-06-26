@@ -3761,14 +3761,6 @@ return array(
 				'type' => 'boolean',
 				'default' => false
 			),
-			'postLayout' => array(
-				'type' => 'string',
-				'default' => 'list'
-			),
-			'columns' => array(
-				'type' => 'number',
-				'default' => 3
-			),
 			'order' => array(
 				'type' => 'string',
 				'default' => 'desc'
@@ -3810,6 +3802,7 @@ return array(
 			'anchor' => true,
 			'align' => true,
 			'html' => false,
+			'layout' => true,
 			'color' => array(
 				'gradients' => true,
 				'link' => true,
@@ -3821,7 +3814,13 @@ return array(
 			),
 			'spacing' => array(
 				'margin' => true,
-				'padding' => true
+				'padding' => true,
+				'blockGap' => array(
+					'__experimentalDefault' => '1.25em'
+				),
+				'__experimentalDefaultControls' => array(
+					'blockGap' => true
+				)
 			),
 			'typography' => array(
 				'fontSize' => true,
