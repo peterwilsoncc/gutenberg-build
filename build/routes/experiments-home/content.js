@@ -18988,10 +18988,10 @@ var import_i18n22 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 
 // routes/experiments-home/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='0dca74c247']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='97a1d43e1a']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "0dca74c247");
-  style.appendChild(document.createTextNode(".experiments-page__form{box-sizing:border-box;margin:0 auto;max-width:680px;padding:24px;width:100%}"));
+  style.setAttribute("data-wp-hash", "97a1d43e1a");
+  style.appendChild(document.createTextNode(".experiments-page__container{box-sizing:border-box;margin-inline:auto;max-width:680px;padding:24px;width:100%}"));
   document.head.appendChild(style);
 }
 
@@ -19128,9 +19128,22 @@ function ExperimentsPage() {
     page_default,
     {
       title: (0, import_i18n22.__)("Gutenberg Experiments"),
-      subTitle: (0, import_element66.createInterpolateElement)(
+      subTitle: (0, import_i18n22.__)(
+        "The latest block and full site editing features before they ship in a WordPress release."
+      )
+    },
+    /* @__PURE__ */ React.createElement(
+      Stack,
+      {
+        className: "experiments-page__container",
+        direction: "column",
+        gap: "md"
+      },
+      /* @__PURE__ */ React.createElement(card_exports.Root, null, /* @__PURE__ */ React.createElement(card_exports.Content, null, /* @__PURE__ */ React.createElement(Stack, { direction: "column", gap: "md" }, /* @__PURE__ */ React.createElement(Text, { variant: "body-lg", render: /* @__PURE__ */ React.createElement("p", null) }, (0, import_i18n22.__)(
+        "The Gutenberg plugin adds editing, customization, and site building to WordPress, and gives early adopters access to the latest block and full site editing features before they ship in a WordPress release."
+      )), /* @__PURE__ */ React.createElement(Text, { variant: "body-lg", render: /* @__PURE__ */ React.createElement("p", null) }, (0, import_element66.createInterpolateElement)(
         (0, import_i18n22.__)(
-          "The Gutenberg plugin adds editing, customization, and site building to WordPress, and gives early adopters access to the latest block and full site editing features before they ship in a WordPress release. <br />The experiments below are in active development, so expect rough edges and changes over time. <br />To learn more about the project and how to build with blocks, see the <a>Block Editor Handbook</a>."
+          "The experiments below are in active development, so expect rough edges and changes over time. To learn more about the project and how to build with blocks, see the <a>Block Editor Handbook</a>."
         ),
         {
           a: /* @__PURE__ */ React.createElement(
@@ -19139,25 +19152,24 @@ function ExperimentsPage() {
               href: "https://developer.wordpress.org/block-editor/",
               openInNewTab: true
             }
-          ),
-          br: /* @__PURE__ */ React.createElement("br", null)
+          )
+        }
+      ))))),
+      /* @__PURE__ */ React.createElement(
+        DataForm,
+        {
+          data: settings,
+          fields,
+          form: {
+            layout: { type: "card" },
+            fields: formFields
+          },
+          onChange: (values) => {
+            setSettings(values);
+          }
         }
       )
-    },
-    /* @__PURE__ */ React.createElement("div", { className: "experiments-page__form" }, /* @__PURE__ */ React.createElement(
-      DataForm,
-      {
-        data: settings,
-        fields,
-        form: {
-          layout: { type: "card" },
-          fields: formFields
-        },
-        onChange: (values) => {
-          setSettings(values);
-        }
-      }
-    ))
+    )
   );
 }
 function Stage() {
