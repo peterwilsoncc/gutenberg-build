@@ -157,6 +157,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
+    }
+  });
+
   // node_modules/fast-deep-equal/es6/index.js
   var require_es6 = __commonJS({
     "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
@@ -217,13 +224,6 @@ var wp;
   var require_is_shallow_equal = __commonJS({
     "package-external:@wordpress/is-shallow-equal"(exports, module) {
       module.exports = window.wp.isShallowEqual;
-    }
-  });
-
-  // package-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "package-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
     }
   });
 

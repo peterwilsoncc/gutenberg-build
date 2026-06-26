@@ -12129,6 +12129,13 @@ var wp;
     return (0, import_element27.cloneElement)(slot ?? defaultSlot, { children });
   }
 
+  // packages/ui/build-module/lock-unlock.mjs
+  var import_private_apis2 = __toESM(require_private_apis(), 1);
+  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/ui"
+  );
+
   // packages/ui/build-module/stack/stack.mjs
   var import_element28 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
@@ -12606,9 +12613,10 @@ var wp;
     registerStyle12("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
   var style_default11 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+  var ThemeProvider = unlock2(import_theme.privateApis).ThemeProvider;
   var POPUP_COLOR = { background: "#1e1e1e" };
   var Popup = (0, import_element31.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_theme.ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
       index_parts_exports2.Popup,
       {
         ref,
@@ -16963,6 +16971,7 @@ var wp;
   var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation6 } = unlock(import_router6.privateApis);
   var { useStyle, UploadProgressSnackbar } = unlock(import_editor6.privateApis);
+  var { ThemeProvider: ThemeProvider2 } = unlock(import_theme2.privateApis);
   var ANIMATION_DURATION2 = 0.3;
   var CONTENT_COLOR = { background: "#ffffff" };
   function Layout() {
@@ -17073,7 +17082,7 @@ var wp;
                  * `.edit-site-sidebar__screen-wrapper` in style.scss.
                  */
                 /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
-                  import_theme2.ThemeProvider,
+                  ThemeProvider2,
                   {
                     color: CONTENT_COLOR,
                     children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
@@ -17094,7 +17103,7 @@ var wp;
               ),
               /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(SaveHub, {}),
               /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(SavePanel, {})
-            ] }) : /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_theme2.ThemeProvider, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_editor6.ErrorBoundary, { children: areas2.preview }) }) }) }),
+            ] }) : /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(ThemeProvider2, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_editor6.ErrorBoundary, { children: areas2.preview }) }) }) }),
             !isMobileViewport && areas2.content && canvas !== "edit" && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
               "div",
               {
@@ -17102,7 +17111,7 @@ var wp;
                 style: {
                   maxWidth: widths?.content
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_theme2.ThemeProvider, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_editor6.ErrorBoundary, { children: areas2.content }) })
+                children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(ThemeProvider2, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_editor6.ErrorBoundary, { children: areas2.content }) })
               }
             ),
             !isMobileViewport && areas2.edit && canvas !== "edit" && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
@@ -17112,7 +17121,7 @@ var wp;
                 style: {
                   maxWidth: widths?.edit
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_theme2.ThemeProvider, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_editor6.ErrorBoundary, { children: areas2.edit }) })
+                children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(ThemeProvider2, { color: CONTENT_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_editor6.ErrorBoundary, { children: areas2.edit }) })
               }
             ),
             !isMobileViewport && areas2.preview && /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { className: "edit-site-layout__canvas-container", children: [
@@ -17142,7 +17151,7 @@ var wp;
                         background: gradientValue ?? backgroundColor
                       },
                       children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
-                        import_theme2.ThemeProvider,
+                        ThemeProvider2,
                         {
                           color: CONTENT_COLOR,
                           children: areas2.preview
@@ -17174,7 +17183,7 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components6.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(tooltip_exports.Provider, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_plugins2.PluginArea, { onError: onPluginAreaError }),
-      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_theme2.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(Layout, { ...props }) })
+      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(ThemeProvider2, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(Layout, { ...props }) })
     ] }) });
   }
 
@@ -21426,15 +21435,15 @@ var wp;
   var import_compose5 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/lock-unlock.mjs
-  var import_private_apis2 = __toESM(require_private_apis(), 1);
-  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis3 = __toESM(require_private_apis(), 1);
+  var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/dataviews"
   );
 
   // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
   var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
-  var { Menu, kebabCase: kebabCase2 } = unlock2(import_components21.privateApis);
+  var { Menu, kebabCase: kebabCase2 } = unlock3(import_components21.privateApis);
   function ButtonTrigger({
     action,
     onClick,
@@ -22060,7 +22069,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
   var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu2 } = unlock2(import_components23.privateApis);
+  var { Menu: Menu2 } = unlock3(import_components23.privateApis);
   function WithMenuSeparators({ children }) {
     return import_element59.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(import_element59.Fragment, { children: [
       i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(Menu2.Separator, {}),
@@ -23199,7 +23208,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge } = unlock2(import_components27.privateApis);
+  var { Badge: WCBadge } = unlock3(import_components27.privateApis);
   function chunk(array, size4) {
     const chunks = [];
     for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size4) {
@@ -23761,7 +23770,7 @@ var wp;
   var import_i18n36 = __toESM(require_i18n(), 1);
   var import_data37 = __toESM(require_data(), 1);
   var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu3 } = unlock2(import_components29.privateApis);
+  var { Menu: Menu3 } = unlock3(import_components29.privateApis);
   function generateItemWrapperCompositeId(idPrefix) {
     return `${idPrefix}-item-wrapper`;
   }
@@ -24745,7 +24754,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock2(import_components33.privateApis);
+  var { Badge: WCBadge2 } = unlock3(import_components33.privateApis);
   function GridItem3({
     view,
     multiselect,
@@ -32433,7 +32442,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n49 = __toESM(require_i18n(), 1);
   var import_element84 = __toESM(require_element(), 1);
   var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu4 } = unlock2(import_components41.privateApis);
+  var { Menu: Menu4 } = unlock3(import_components41.privateApis);
   function AddFilterMenu({
     filters,
     view,
@@ -32913,7 +32922,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_warning = __toESM(require_warning(), 1);
   var import_compose15 = __toESM(require_compose(), 1);
   var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu5 } = unlock2(import_components46.privateApis);
+  var { Menu: Menu5 } = unlock3(import_components46.privateApis);
   var DATAVIEWS_CONFIG_POPOVER_PROPS = {
     className: "dataviews-config__popover",
     placement: "bottom-end",
@@ -33256,7 +33265,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
   var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedCheckboxControl } = unlock2(import_components47.privateApis);
+  var { ValidatedCheckboxControl } = unlock3(import_components47.privateApis);
   function Checkbox({
     field,
     onChange,
@@ -33292,7 +33301,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components48 = __toESM(require_components(), 1);
   var import_element94 = __toESM(require_element(), 1);
   var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedComboboxControl } = unlock2(import_components48.privateApis);
+  var { ValidatedComboboxControl } = unlock3(import_components48.privateApis);
   function Combobox3({
     data,
     field,
@@ -33463,7 +33472,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
-  var { DateCalendar, ValidatedInputControl } = unlock2(import_components50.privateApis);
+  var { DateCalendar, ValidatedInputControl } = unlock3(import_components50.privateApis);
   var formatDateTime = (value) => {
     if (!value) {
       return "";
@@ -33648,7 +33657,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n57 = __toESM(require_i18n(), 1);
   var import_date4 = __toESM(require_date(), 1);
   var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
-  var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock2(import_components51.privateApis);
+  var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components51.privateApis);
   var DATE_PRESETS = [
     {
       id: "today",
@@ -34285,7 +34294,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components52 = __toESM(require_components(), 1);
   var import_element99 = __toESM(require_element(), 1);
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedSelectControl } = unlock2(import_components52.privateApis);
+  var { ValidatedSelectControl } = unlock3(import_components52.privateApis);
   function Select({
     data,
     field,
@@ -34350,7 +34359,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components53 = __toESM(require_components(), 1);
   var import_element100 = __toESM(require_element(), 1);
   var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components53.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components53.privateApis);
   function ValidatedText({
     data,
     field,
@@ -34486,7 +34495,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element101 = __toESM(require_element(), 1);
   var import_i18n58 = __toESM(require_i18n(), 1);
   var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedNumberControl } = unlock2(import_components57.privateApis);
+  var { ValidatedNumberControl } = unlock3(import_components57.privateApis);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
       return "";
@@ -34634,7 +34643,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components58 = __toESM(require_components(), 1);
   var import_element102 = __toESM(require_element(), 1);
   var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedRadioControl } = unlock2(import_components58.privateApis);
+  var { ValidatedRadioControl } = unlock3(import_components58.privateApis);
   function Radio({
     data,
     field,
@@ -34708,7 +34717,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components59 = __toESM(require_components(), 1);
   var import_element104 = __toESM(require_element(), 1);
   var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleControl } = unlock2(import_components59.privateApis);
+  var { ValidatedToggleControl } = unlock3(import_components59.privateApis);
   function Toggle({
     field,
     onChange,
@@ -34744,7 +34753,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components60 = __toESM(require_components(), 1);
   var import_element105 = __toESM(require_element(), 1);
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedTextareaControl } = unlock2(import_components60.privateApis);
+  var { ValidatedTextareaControl } = unlock3(import_components60.privateApis);
   function Textarea({
     data,
     field,
@@ -34787,7 +34796,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components61 = __toESM(require_components(), 1);
   var import_element106 = __toESM(require_element(), 1);
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleGroupControl } = unlock2(import_components61.privateApis);
+  var { ValidatedToggleGroupControl } = unlock3(import_components61.privateApis);
   function ToggleGroup({
     data,
     field,
@@ -34844,7 +34853,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components62 = __toESM(require_components(), 1);
   var import_element107 = __toESM(require_element(), 1);
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedFormTokenField } = unlock2(import_components62.privateApis);
+  var { ValidatedFormTokenField } = unlock3(import_components62.privateApis);
   function ArrayControl({
     data,
     field,
@@ -34936,7 +34945,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element108 = __toESM(require_element(), 1);
   var import_i18n59 = __toESM(require_i18n(), 1);
   var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components63.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components63.privateApis);
   var ColorPickerDropdown = ({
     color,
     onColorChange,
@@ -38851,8 +38860,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/fields/build-module/lock-unlock.mjs
-  var import_private_apis3 = __toESM(require_private_apis(), 1);
-  var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis4 = __toESM(require_private_apis(), 1);
+  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis4.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/fields"
   );
@@ -38919,7 +38928,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/fields/build-module/components/media-edit/index.mjs
   var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
-  var { MediaUploadModal } = unlock3(import_media_utils.privateApis);
+  var { MediaUploadModal } = unlock4(import_media_utils.privateApis);
   function AnimatedMediaItem({
     children,
     index: index2,
@@ -40216,8 +40225,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/global-styles-ui/build-module/lock-unlock.mjs
-  var import_private_apis4 = __toESM(require_private_apis(), 1);
-  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis4.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis5 = __toESM(require_private_apis(), 1);
+  var { lock: lock5, unlock: unlock5 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/global-styles-ui"
   );
@@ -40230,7 +40239,7 @@ If there's a particular need for this, please submit a feature request at https:
     useHasColorPanel,
     useSettingsForBlockElement,
     useHasBackgroundPanel
-  } = unlock4(import_block_editor6.privateApis);
+  } = unlock5(import_block_editor6.privateApis);
 
   // packages/global-styles-ui/build-module/preview-styles.mjs
   var import_components77 = __toESM(require_components(), 1);
@@ -40725,7 +40734,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n80 = __toESM(require_i18n(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
-  var { StateControl, StateControlBadges } = unlock4(import_block_editor7.privateApis);
+  var { StateControl, StateControlBadges } = unlock5(import_block_editor7.privateApis);
 
   // packages/global-styles-ui/build-module/screen-block-list.mjs
   var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
@@ -40736,7 +40745,7 @@ If there's a particular need for this, please submit a feature request at https:
     useSettingsForBlockElement: useSettingsForBlockElement2,
     useHasColorPanel: useHasColorPanel2,
     useHasBackgroundPanel: useHasBackgroundPanel2
-  } = unlock4(import_block_editor8.privateApis);
+  } = unlock5(import_block_editor8.privateApis);
   function useSortedBlockTypes() {
     const blockItems = (0, import_data45.useSelect)(
       (select4) => select4(import_blocks5.store).getBlockTypes(),
@@ -40863,7 +40872,7 @@ If there's a particular need for this, please submit a feature request at https:
     FiltersPanel: StylesFiltersPanel,
     ImageSettingsPanel,
     AdvancedPanel: StylesAdvancedPanel
-  } = unlock4(import_block_editor10.privateApis);
+  } = unlock5(import_block_editor10.privateApis);
 
   // packages/global-styles-ui/build-module/screen-typography.mjs
   var import_i18n96 = __toESM(require_i18n(), 1);
@@ -41083,7 +41092,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/utils/index.mjs
   var { File } = window;
-  var { kebabCase: kebabCase3 } = unlock4(import_components89.privateApis);
+  var { kebabCase: kebabCase3 } = unlock5(import_components89.privateApis);
 
   // packages/global-styles-ui/build-module/font-library/context.mjs
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
@@ -51189,14 +51198,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.mjs
   var import_components97 = __toESM(require_components(), 1);
-  var { kebabCase: kebabCase4 } = unlock4(import_components97.privateApis);
+  var { kebabCase: kebabCase4 } = unlock5(import_components97.privateApis);
 
   // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
   var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-library/modal.mjs
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs } = unlock4(import_components99.privateApis);
+  var { Tabs } = unlock5(import_components99.privateApis);
   var DEFAULT_TAB = {
     id: "installed-fonts",
     title: (0, import_i18n92._x)("Library", "Font library")
@@ -51231,7 +51240,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/typography-panel.mjs
   var import_block_editor11 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
-  var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock4(import_block_editor11.privateApis);
+  var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock5(import_block_editor11.privateApis);
 
   // packages/global-styles-ui/build-module/typography-preview.mjs
   var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
@@ -51280,7 +51289,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-colors.mjs
   var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
-  var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock4(
+  var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock5(
     import_block_editor12.privateApis
   );
 
@@ -51405,7 +51414,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-color-palette.mjs
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs2 } = unlock4(import_components112.privateApis);
+  var { Tabs: Tabs2 } = unlock5(import_components112.privateApis);
 
   // packages/global-styles-ui/build-module/screen-background.mjs
   var import_i18n103 = __toESM(require_i18n(), 1);
@@ -51415,13 +51424,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/background-panel.mjs
   var import_block_editor13 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
-  var { BackgroundPanel: StylesBackgroundPanel2 } = unlock4(
+  var { BackgroundPanel: StylesBackgroundPanel2 } = unlock5(
     import_block_editor13.privateApis
   );
 
   // packages/global-styles-ui/build-module/screen-background.mjs
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
-  var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock4(import_block_editor14.privateApis);
+  var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock5(import_block_editor14.privateApis);
 
   // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_components115 = __toESM(require_components(), 1);
@@ -51435,14 +51444,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu6 } = unlock4(import_components115.privateApis);
+  var { Menu: Menu6 } = unlock5(import_components115.privateApis);
 
   // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
   var import_components116 = __toESM(require_components(), 1);
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_element150 = __toESM(require_element(), 1);
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu7 } = unlock4(import_components116.privateApis);
+  var { Menu: Menu7 } = unlock5(import_components116.privateApis);
   var customShadowMenuItems = [
     {
       label: (0, import_i18n106.__)("Rename"),
@@ -51471,11 +51480,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor15 = __toESM(require_block_editor(), 1);
   var import_element151 = __toESM(require_element(), 1);
   var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
-  var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock4(import_block_editor15.privateApis);
+  var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock5(import_block_editor15.privateApis);
 
   // packages/global-styles-ui/build-module/screen-layout.mjs
   var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
-  var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock4(
+  var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock5(
     import_block_editor16.privateApis
   );
 
@@ -51592,7 +51601,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components120 = __toESM(require_components(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
-  var { AdvancedPanel: StylesAdvancedPanel2 } = unlock4(import_block_editor17.privateApis);
+  var { AdvancedPanel: StylesAdvancedPanel2 } = unlock5(import_block_editor17.privateApis);
 
   // packages/global-styles-ui/build-module/screen-revisions/index.mjs
   var import_i18n114 = __toESM(require_i18n(), 1);
@@ -51746,7 +51755,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data52 = __toESM(require_data(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge3 } = unlock4(import_components121.privateApis);
+  var { Badge: WCBadge3 } = unlock5(import_components121.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
   // packages/global-styles-ui/build-module/pagination/index.mjs
@@ -51769,7 +51778,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu8 } = unlock4(import_components125.privateApis);
+  var { Menu: Menu8 } = unlock5(import_components125.privateApis);
 
   // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_i18n120 = __toESM(require_i18n(), 1);
@@ -51798,7 +51807,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu9 } = unlock4(import_components129.privateApis);
+  var { Menu: Menu9 } = unlock5(import_components129.privateApis);
 
   // packages/global-styles-ui/build-module/global-styles-ui.mjs
   var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
@@ -53295,8 +53304,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data41 = __toESM(require_core_data(), 1);
 
   // packages/views/build-module/lock-unlock.mjs
-  var import_private_apis5 = __toESM(require_private_apis(), 1);
-  var { lock: lock5, unlock: unlock5 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis6 = __toESM(require_private_apis(), 1);
+  var { lock: lock6, unlock: unlock6 } = (0, import_private_apis6.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/views"
   );
@@ -53311,7 +53320,7 @@ If there's a particular need for this, please submit a feature request at https:
     const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
     return (0, import_data64.useSelect)(
       (select4) => {
-        return unlock5(select4(import_core_data41.store)).getViewConfig(kind, name2, {
+        return unlock6(select4(import_core_data41.store)).getViewConfig(kind, name2, {
           fields: fieldsKey
         });
       },

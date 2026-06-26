@@ -246,6 +246,13 @@ var require_theme = __commonJS({
   }
 });
 
+// package-external:@wordpress/private-apis
+var require_private_apis = __commonJS({
+  "package-external:@wordpress/private-apis"(exports, module) {
+    module.exports = window.wp.privateApis;
+  }
+});
+
 // package-external:@wordpress/components
 var require_components = __commonJS({
   "package-external:@wordpress/components"(exports, module) {
@@ -264,13 +271,6 @@ var require_core_data = __commonJS({
 var require_notices = __commonJS({
   "package-external:@wordpress/notices"(exports, module) {
     module.exports = window.wp.notices;
-  }
-});
-
-// package-external:@wordpress/private-apis
-var require_private_apis = __commonJS({
-  "package-external:@wordpress/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
   }
 });
 
@@ -8555,6 +8555,13 @@ function renderSlotWithChildren(slot, defaultSlot, children) {
   return (0, import_element11.cloneElement)(slot ?? defaultSlot, { children });
 }
 
+// packages/ui/build-module/lock-unlock.mjs
+var import_private_apis = __toESM(require_private_apis(), 1);
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/ui"
+);
+
 // packages/ui/build-module/stack/stack.mjs
 var import_element12 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
@@ -9032,9 +9039,10 @@ if (typeof process === "undefined" || true) {
   registerStyle5("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
 }
 var style_default4 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
 var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup = (0, import_element15.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_theme.ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
     index_parts_exports.Popup,
     {
       ref,
@@ -9548,15 +9556,15 @@ var import_components2 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis } from "@wordpress/route";
 
 // packages/boot/build-module/lock-unlock.mjs
-var import_private_apis = __toESM(require_private_apis(), 1);
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis2 = __toESM(require_private_apis(), 1);
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/boot"
 );
 
 // packages/boot/build-module/components/navigation/router-link-item.mjs
 var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-var { createLink } = unlock(routePrivateApis);
+var { createLink } = unlock2(routePrivateApis);
 function AnchorOnlyItem(props, forwardedRef) {
   return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_components2.__experimentalItem, { as: "a", ref: forwardedRef, ...props });
 }
@@ -9988,7 +9996,7 @@ var findDropdownParent = (id, menuItems) => {
 };
 
 // packages/boot/build-module/components/navigation/use-sidebar-parent.mjs
-var { useRouter, useMatches } = unlock(routePrivateApis2);
+var { useRouter, useMatches } = unlock2(routePrivateApis2);
 function useSidebarParent() {
   const matches = useMatches();
   const router = useRouter();
@@ -10496,7 +10504,7 @@ var import_i18n8 = __toESM(require_i18n(), 1);
 var import_html_entities = __toESM(require_html_entities(), 1);
 import { speak } from "@wordpress/a11y";
 import { privateApis as routePrivateApis3 } from "@wordpress/route";
-var { useLocation, useMatches: useMatches2 } = unlock(routePrivateApis3);
+var { useLocation, useMatches: useMatches2 } = unlock2(routePrivateApis3);
 function useRouteTitle() {
   const location = useLocation();
   const matches = useMatches2();
@@ -10542,7 +10550,8 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   style.appendChild(document.createTextNode(".boot-layout{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:row;height:100%;isolation:isolate;width:100%}.boot-layout__sidebar-backdrop{background-color:rgba(0,0,0,.5);bottom:0;cursor:var(--wpds-cursor-control,pointer);left:0;position:fixed;right:0;top:0;z-index:100002}.boot-layout__sidebar{flex-shrink:0;height:100%;overflow:hidden;position:relative;width:240px}.boot-layout__sidebar.is-mobile{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);bottom:0;box-shadow:2px 0 8px rgba(0,0,0,.2);inset-inline-start:0;max-width:85vw;position:fixed;top:0;width:300px;z-index:100003}.boot-layout__mobile-sidebar-drawer{left:0;position:fixed;right:0;top:0}.boot-layout--single-page .boot-layout__mobile-sidebar-drawer{top:46px}.boot-layout__mobile-sidebar-drawer{align-items:center;background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-bottom:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);display:flex;justify-content:flex-start;padding:16px;z-index:3}.boot-layout__canvas.has-mobile-drawer{padding-top:65px;position:relative}.boot-layout__surfaces{display:flex;flex-grow:1;gap:8px;margin:0}@media (min-width:782px){.boot-layout__surfaces{margin:8px}.boot-layout--single-page .boot-layout__surfaces{margin-top:0;margin-inline-start:0}}.boot-layout__inspector,.boot-layout__stage{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-radius:0;bottom:0;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;left:0;margin:0;overflow-y:auto;position:relative;position:fixed;right:0;top:0;width:100vw}.boot-layout--single-page .boot-layout__inspector,.boot-layout--single-page .boot-layout__stage{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.boot-layout__inspector,.boot-layout__stage{border-radius:var(--wpds-border-radius-xl,12px);height:auto;margin:0;position:static;width:auto}.boot-layout--single-page .boot-layout__inspector,.boot-layout--single-page .boot-layout__stage{height:auto}}.boot-layout__stage{z-index:2}@media (min-width:782px){.boot-layout__stage{z-index:auto}}.boot-layout__inspector{z-index:3}@media (min-width:782px){.boot-layout__inspector{z-index:auto}}.boot-layout__canvas{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:0;bottom:0;box-shadow:0 1px 3px rgba(0,0,0,.1);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;left:0;margin:0;overflow-y:auto;position:relative;position:fixed;right:0;top:0;width:100vw;z-index:1}.boot-layout--single-page .boot-layout__canvas{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.boot-layout__canvas{border-radius:var(--wpds-border-radius-xl,12px);height:auto;position:static;width:auto;z-index:auto}.boot-layout--single-page .boot-layout__canvas{height:auto}.boot-layout.has-canvas .boot-layout__stage,.boot-layout__inspector{max-width:400px}}.boot-layout__canvas .interface-interface-skeleton{height:100%;left:0!important;position:relative;top:0!important}.boot-layout.has-full-canvas .boot-layout__surfaces{gap:0;margin:0}.boot-layout.has-full-canvas .boot-layout__inspector,.boot-layout.has-full-canvas .boot-layout__stage{display:none}.boot-layout.has-full-canvas .boot-layout__canvas{border:none;border-radius:0;bottom:0;box-shadow:none;left:0;margin:0;max-width:none;overflow:hidden;position:fixed;right:0;top:var(--wp-admin--admin-bar--height,0)}.boot-layout--single-page .boot-layout.has-full-canvas .boot-layout__canvas{top:46px}@media (min-width:782px){.boot-layout--single-page .boot-layout.has-full-canvas .boot-layout__canvas{top:32px}}@media (max-width:782px){.boot-layout__canvas:not(.has-mobile-drawer),.boot-layout__inspector,.boot-layout__stage{height:calc(100vh - var(--wp-admin--admin-bar--height, 0));top:var(--wp-admin--admin-bar--height,0)}.boot-layout__mobile-sidebar-drawer{top:var(--wp-admin--admin-bar--height,0)}}"));
   document.head.appendChild(style);
 }
-var { useLocation: useLocation2, useMatches: useMatches3, Outlet } = unlock(routePrivateApis4);
+var { useLocation: useLocation2, useMatches: useMatches3, Outlet } = unlock2(routePrivateApis4);
+var { ThemeProvider: ThemeProvider2 } = unlock2(import_theme2.privateApis);
 function Root2() {
   const matches = useMatches3();
   const location = useLocation2();
@@ -10559,11 +10568,11 @@ function Root2() {
   }, [location.pathname, isMobileViewport]);
   const themeColors = (0, import_element28.useMemo)(getAdminThemeColors, []);
   return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_components13.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
-    import_theme2.ThemeProvider,
+    ThemeProvider2,
     {
       isRoot: true,
       color: { ...themeColors, background: "#f8f8f8" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_theme2.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(ThemeProvider2, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
         "div",
         {
           className: clsx_default("boot-layout", {
@@ -10626,7 +10635,7 @@ function Root2() {
             ) }),
             !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Sidebar, {}) }),
             /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
-              import_theme2.ThemeProvider,
+              ThemeProvider2,
               {
                 color: {
                   ...themeColors,
@@ -10688,7 +10697,7 @@ var {
   createBrowserHistory,
   parseHref,
   useLoaderData
-} = unlock(routePrivateApis5);
+} = unlock2(routePrivateApis5);
 function NotFoundComponent() {
   return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(page_default, { title: (0, import_i18n10.__)("Route not found"), hasPadding: true, children: (0, import_i18n10.__)("The page you're looking for does not exist") }) });
 }
@@ -10822,7 +10831,8 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   style.appendChild(document.createTextNode(".boot-layout{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:row;height:100%;isolation:isolate;width:100%}.boot-layout__sidebar-backdrop{background-color:rgba(0,0,0,.5);bottom:0;cursor:var(--wpds-cursor-control,pointer);left:0;position:fixed;right:0;top:0;z-index:100002}.boot-layout__sidebar{flex-shrink:0;height:100%;overflow:hidden;position:relative;width:240px}.boot-layout__sidebar.is-mobile{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);bottom:0;box-shadow:2px 0 8px rgba(0,0,0,.2);inset-inline-start:0;max-width:85vw;position:fixed;top:0;width:300px;z-index:100003}.boot-layout__mobile-sidebar-drawer{left:0;position:fixed;right:0;top:0}.boot-layout--single-page .boot-layout__mobile-sidebar-drawer{top:46px}.boot-layout__mobile-sidebar-drawer{align-items:center;background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-bottom:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);display:flex;justify-content:flex-start;padding:16px;z-index:3}.boot-layout__canvas.has-mobile-drawer{padding-top:65px;position:relative}.boot-layout__surfaces{display:flex;flex-grow:1;gap:8px;margin:0}@media (min-width:782px){.boot-layout__surfaces{margin:8px}.boot-layout--single-page .boot-layout__surfaces{margin-top:0;margin-inline-start:0}}.boot-layout__inspector,.boot-layout__stage{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-radius:0;bottom:0;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;left:0;margin:0;overflow-y:auto;position:relative;position:fixed;right:0;top:0;width:100vw}.boot-layout--single-page .boot-layout__inspector,.boot-layout--single-page .boot-layout__stage{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.boot-layout__inspector,.boot-layout__stage{border-radius:var(--wpds-border-radius-xl,12px);height:auto;margin:0;position:static;width:auto}.boot-layout--single-page .boot-layout__inspector,.boot-layout--single-page .boot-layout__stage{height:auto}}.boot-layout__stage{z-index:2}@media (min-width:782px){.boot-layout__stage{z-index:auto}}.boot-layout__inspector{z-index:3}@media (min-width:782px){.boot-layout__inspector{z-index:auto}}.boot-layout__canvas{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:0;bottom:0;box-shadow:0 1px 3px rgba(0,0,0,.1);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;left:0;margin:0;overflow-y:auto;position:relative;position:fixed;right:0;top:0;width:100vw;z-index:1}.boot-layout--single-page .boot-layout__canvas{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.boot-layout__canvas{border-radius:var(--wpds-border-radius-xl,12px);height:auto;position:static;width:auto;z-index:auto}.boot-layout--single-page .boot-layout__canvas{height:auto}.boot-layout.has-canvas .boot-layout__stage,.boot-layout__inspector{max-width:400px}}.boot-layout__canvas .interface-interface-skeleton{height:100%;left:0!important;position:relative;top:0!important}.boot-layout.has-full-canvas .boot-layout__surfaces{gap:0;margin:0}.boot-layout.has-full-canvas .boot-layout__inspector,.boot-layout.has-full-canvas .boot-layout__stage{display:none}.boot-layout.has-full-canvas .boot-layout__canvas{border:none;border-radius:0;bottom:0;box-shadow:none;left:0;margin:0;max-width:none;overflow:hidden;position:fixed;right:0;top:var(--wp-admin--admin-bar--height,0)}.boot-layout--single-page .boot-layout.has-full-canvas .boot-layout__canvas{top:46px}@media (min-width:782px){.boot-layout--single-page .boot-layout.has-full-canvas .boot-layout__canvas{top:32px}}@media (max-width:782px){.boot-layout__canvas:not(.has-mobile-drawer),.boot-layout__inspector,.boot-layout__stage{height:calc(100vh - var(--wp-admin--admin-bar--height, 0));top:var(--wp-admin--admin-bar--height,0)}.boot-layout__mobile-sidebar-drawer{top:var(--wp-admin--admin-bar--height,0)}}"));
   document.head.appendChild(style);
 }
-var { useMatches: useMatches4, Outlet: Outlet2 } = unlock(routePrivateApis6);
+var { useMatches: useMatches4, Outlet: Outlet2 } = unlock2(routePrivateApis6);
+var { ThemeProvider: ThemeProvider3 } = unlock2(import_theme3.privateApis);
 function RootSinglePage() {
   const matches = useMatches4();
   const currentMatch = matches[matches.length - 1];
@@ -10832,11 +10842,11 @@ function RootSinglePage() {
   useRouteTitle();
   const themeColors = (0, import_element30.useMemo)(getAdminThemeColors, []);
   return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
-    import_theme3.ThemeProvider,
+    ThemeProvider3,
     {
       isRoot: true,
       color: { ...themeColors, background: "#f8f8f8" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_theme3.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(ThemeProvider3, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
         "div",
         {
           className: clsx_default(
@@ -10850,7 +10860,7 @@ function RootSinglePage() {
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(SavePanel, {}),
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
-              import_theme3.ThemeProvider,
+              ThemeProvider3,
               {
                 color: {
                   ...themeColors,

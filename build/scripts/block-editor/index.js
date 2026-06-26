@@ -12492,8 +12492,8 @@ var wp;
     if (attributes === null) {
       return true;
     }
-    const { lock: lock3 } = attributes;
-    return !lock3?.edit;
+    const { lock: lock4 } = attributes;
+    return !lock4?.edit;
   }
   function canLockBlockType(state, nameOrType) {
     if (state.settings.isPreviewMode) {
@@ -34045,6 +34045,13 @@ var wp;
     return (0, import_element57.cloneElement)(slot ?? defaultSlot, { children });
   }
 
+  // packages/ui/build-module/lock-unlock.mjs
+  var import_private_apis2 = __toESM(require_private_apis(), 1);
+  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/ui"
+  );
+
   // packages/ui/build-module/stack/stack.mjs
   var import_element58 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
@@ -34522,9 +34529,10 @@ var wp;
     registerStyle12("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
   var style_default11 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+  var ThemeProvider = unlock2(import_theme.privateApis).ThemeProvider;
   var POPUP_COLOR = { background: "#1e1e1e" };
   var Popup = (0, import_element61.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(import_theme.ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
       index_parts_exports2.Popup,
       {
         ref,
@@ -47137,17 +47145,17 @@ var wp;
   var import_blocks57 = __toESM(require_blocks(), 1);
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   var ALLOWS_EDIT_LOCKING = ["core/navigation"];
-  function getTemplateLockValue(lock3) {
-    if (lock3.remove && lock3.move) {
+  function getTemplateLockValue(lock4) {
+    if (lock4.remove && lock4.move) {
       return "all";
     }
-    if (lock3.remove && !lock3.move) {
+    if (lock4.remove && !lock4.move) {
       return "insert";
     }
     return false;
   }
   function BlockLockModal({ clientId, onClose }) {
-    const [lock3, setLock] = (0, import_element136.useState)({ move: false, remove: false });
+    const [lock4, setLock] = (0, import_element136.useState)({ move: false, remove: false });
     const { isEditLocked, isMoveLocked, isRemoveLocked } = useBlockLock(clientId);
     const { allowsEditLocking, templateLock, hasTemplateLock } = (0, import_data96.useSelect)(
       (select3) => {
@@ -47174,9 +47182,9 @@ var wp;
         ...allowsEditLocking ? { edit: isEditLocked } : {}
       });
     }, [isEditLocked, isMoveLocked, isRemoveLocked, allowsEditLocking]);
-    const isAllChecked = Object.values(lock3).every(Boolean);
-    const isMixed = Object.values(lock3).some(Boolean) && !isAllChecked;
-    const isDirty = lock3.move !== isMoveLocked || lock3.remove !== isRemoveLocked || allowsEditLocking && lock3.edit !== isEditLocked || hasTemplateLock && applyTemplateLock !== !!templateLock;
+    const isAllChecked = Object.values(lock4).every(Boolean);
+    const isMixed = Object.values(lock4).some(Boolean) && !isAllChecked;
+    const isDirty = lock4.move !== isMoveLocked || lock4.remove !== isRemoveLocked || allowsEditLocking && lock4.edit !== isEditLocked || hasTemplateLock && applyTemplateLock !== !!templateLock;
     return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
       import_components88.Modal,
       {
@@ -47197,8 +47205,8 @@ var wp;
                 return;
               }
               updateBlockAttributes2([clientId], {
-                lock: lock3,
-                templateLock: applyTemplateLock ? getTemplateLockValue(lock3) : void 0
+                lock: lock4,
+                templateLock: applyTemplateLock ? getTemplateLockValue(lock4) : void 0
               });
               onClose();
             },
@@ -47236,7 +47244,7 @@ var wp;
                                 import_components88.CheckboxControl,
                                 {
                                   label: (0, import_i18n78.__)("Lock editing"),
-                                  checked: !!lock3.edit,
+                                  checked: !!lock4.edit,
                                   onChange: (edit) => setLock((prevLock) => ({
                                     ...prevLock,
                                     edit
@@ -47247,7 +47255,7 @@ var wp;
                                 import_components88.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
-                                  icon: lock3.edit ? lock_default : unlock_default
+                                  icon: lock4.edit ? lock_default : unlock_default
                                 }
                               )
                             ] }),
@@ -47256,7 +47264,7 @@ var wp;
                                 import_components88.CheckboxControl,
                                 {
                                   label: (0, import_i18n78.__)("Lock movement"),
-                                  checked: lock3.move,
+                                  checked: lock4.move,
                                   onChange: (move) => setLock((prevLock) => ({
                                     ...prevLock,
                                     move
@@ -47267,7 +47275,7 @@ var wp;
                                 import_components88.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
-                                  icon: lock3.move ? lock_default : unlock_default
+                                  icon: lock4.move ? lock_default : unlock_default
                                 }
                               )
                             ] }),
@@ -47276,7 +47284,7 @@ var wp;
                                 import_components88.CheckboxControl,
                                 {
                                   label: (0, import_i18n78.__)("Lock removal"),
-                                  checked: lock3.remove,
+                                  checked: lock4.remove,
                                   onChange: (remove5) => setLock((prevLock) => ({
                                     ...prevLock,
                                     remove: remove5
@@ -47287,7 +47295,7 @@ var wp;
                                 import_components88.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
-                                  icon: lock3.remove ? lock_default : unlock_default
+                                  icon: lock4.remove ? lock_default : unlock_default
                                 }
                               )
                             ] })
@@ -47303,7 +47311,7 @@ var wp;
                     className: "block-editor-block-lock-modal__template-lock",
                     label: (0, import_i18n78.__)("Apply to all blocks inside"),
                     checked: applyTemplateLock,
-                    disabled: lock3.move && !lock3.remove,
+                    disabled: lock4.move && !lock4.remove,
                     onChange: () => setApplyTemplateLock(!applyTemplateLock)
                   }
                 )
@@ -75932,8 +75940,8 @@ var wp;
   };
 
   // packages/dataviews/build-module/lock-unlock.mjs
-  var import_private_apis2 = __toESM(require_private_apis(), 1);
-  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis3 = __toESM(require_private_apis(), 1);
+  var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/dataviews"
   );
@@ -78185,7 +78193,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
   var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedCheckboxControl } = unlock2(import_components235.privateApis);
+  var { ValidatedCheckboxControl } = unlock3(import_components235.privateApis);
   function Checkbox({
     field,
     onChange,
@@ -78221,7 +78229,7 @@ var wp;
   var import_components236 = __toESM(require_components(), 1);
   var import_element261 = __toESM(require_element(), 1);
   var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedComboboxControl } = unlock2(import_components236.privateApis);
+  var { ValidatedComboboxControl } = unlock3(import_components236.privateApis);
   function Combobox({
     data,
     field,
@@ -78392,7 +78400,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_jsx_runtime436 = __toESM(require_jsx_runtime(), 1);
-  var { DateCalendar, ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components238.privateApis);
+  var { DateCalendar, ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components238.privateApis);
   var formatDateTime = (value) => {
     if (!value) {
       return "";
@@ -78577,7 +78585,7 @@ var wp;
   var import_i18n219 = __toESM(require_i18n(), 1);
   var import_date6 = __toESM(require_date(), 1);
   var import_jsx_runtime437 = __toESM(require_jsx_runtime(), 1);
-  var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock2(import_components239.privateApis);
+  var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components239.privateApis);
   var DATE_PRESETS = [
     {
       id: "today",
@@ -79214,7 +79222,7 @@ var wp;
   var import_components240 = __toESM(require_components(), 1);
   var import_element266 = __toESM(require_element(), 1);
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedSelectControl } = unlock2(import_components240.privateApis);
+  var { ValidatedSelectControl } = unlock3(import_components240.privateApis);
   function Select({
     data,
     field,
@@ -79279,7 +79287,7 @@ var wp;
   var import_components241 = __toESM(require_components(), 1);
   var import_element267 = __toESM(require_element(), 1);
   var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components241.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components241.privateApis);
   function ValidatedText({
     data,
     field,
@@ -79415,7 +79423,7 @@ var wp;
   var import_element268 = __toESM(require_element(), 1);
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_jsx_runtime444 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedNumberControl } = unlock2(import_components245.privateApis);
+  var { ValidatedNumberControl } = unlock3(import_components245.privateApis);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
       return "";
@@ -79563,7 +79571,7 @@ var wp;
   var import_components246 = __toESM(require_components(), 1);
   var import_element269 = __toESM(require_element(), 1);
   var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedRadioControl } = unlock2(import_components246.privateApis);
+  var { ValidatedRadioControl } = unlock3(import_components246.privateApis);
   function Radio({
     data,
     field,
@@ -79637,7 +79645,7 @@ var wp;
   var import_components247 = __toESM(require_components(), 1);
   var import_element271 = __toESM(require_element(), 1);
   var import_jsx_runtime449 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleControl } = unlock2(import_components247.privateApis);
+  var { ValidatedToggleControl } = unlock3(import_components247.privateApis);
   function Toggle({
     field,
     onChange,
@@ -79673,7 +79681,7 @@ var wp;
   var import_components248 = __toESM(require_components(), 1);
   var import_element272 = __toESM(require_element(), 1);
   var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedTextareaControl } = unlock2(import_components248.privateApis);
+  var { ValidatedTextareaControl } = unlock3(import_components248.privateApis);
   function Textarea({
     data,
     field,
@@ -79716,7 +79724,7 @@ var wp;
   var import_components249 = __toESM(require_components(), 1);
   var import_element273 = __toESM(require_element(), 1);
   var import_jsx_runtime451 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleGroupControl } = unlock2(import_components249.privateApis);
+  var { ValidatedToggleGroupControl } = unlock3(import_components249.privateApis);
   function ToggleGroup({
     data,
     field,
@@ -79773,7 +79781,7 @@ var wp;
   var import_components250 = __toESM(require_components(), 1);
   var import_element274 = __toESM(require_element(), 1);
   var import_jsx_runtime452 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedFormTokenField } = unlock2(import_components250.privateApis);
+  var { ValidatedFormTokenField } = unlock3(import_components250.privateApis);
   function ArrayControl({
     data,
     field,
@@ -79865,7 +79873,7 @@ var wp;
   var import_element275 = __toESM(require_element(), 1);
   var import_i18n221 = __toESM(require_i18n(), 1);
   var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components251.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl4 } = unlock3(import_components251.privateApis);
   var ColorPickerDropdown = ({
     color,
     onColorChange,

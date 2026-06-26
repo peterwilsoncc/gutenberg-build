@@ -312,6 +312,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
+    }
+  });
+
   // package-external:@wordpress/components
   var require_components = __commonJS({
     "package-external:@wordpress/components"(exports, module) {
@@ -365,13 +372,6 @@ var wp;
   var require_html_entities = __commonJS({
     "package-external:@wordpress/html-entities"(exports, module) {
       module.exports = window.wp.htmlEntities;
-    }
-  });
-
-  // package-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "package-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
     }
   });
 
@@ -8546,6 +8546,13 @@ var wp;
     return (0, import_element10.cloneElement)(slot ?? defaultSlot, { children });
   }
 
+  // packages/ui/build-module/lock-unlock.mjs
+  var import_private_apis = __toESM(require_private_apis(), 1);
+  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/ui"
+  );
+
   // packages/ui/build-module/stack/stack.mjs
   var import_element11 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE = "data-wp-hash";
@@ -9023,9 +9030,10 @@ var wp;
     registerStyle4("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
   var style_default3 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+  var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
   var POPUP_COLOR = { background: "#1e1e1e" };
   var Popup = (0, import_element14.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_theme.ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       index_parts_exports.Popup,
       {
         ref,
@@ -9563,15 +9571,15 @@ var wp;
   var fullscreen_mode_close_default = FullscreenModeClose;
 
   // packages/edit-post/build-module/lock-unlock.mjs
-  var import_private_apis = __toESM(require_private_apis(), 1);
-  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis2 = __toESM(require_private_apis(), 1);
+  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/edit-post"
   );
 
   // packages/edit-post/build-module/components/back-button/index.mjs
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-  var { BackButton: BackButtonFill } = unlock(import_editor2.privateApis);
+  var { BackButton: BackButtonFill } = unlock2(import_editor2.privateApis);
   var slideX = {
     hidden: { x: "-100%" },
     distractionFreeInactive: { x: 0 },
@@ -9765,7 +9773,7 @@ var wp;
   };
 
   // packages/edit-post/build-module/store/actions.mjs
-  var { interfaceStore } = unlock(import_editor4.privateApis);
+  var { interfaceStore } = unlock2(import_editor4.privateApis);
   var openGeneralSidebar = (name) => ({ registry }) => {
     registry.dispatch(interfaceStore).enableComplementaryArea("core", name);
   };
@@ -9846,10 +9854,10 @@ var wp;
     return { type: "NOTHING" };
   }
   var showBlockTypes = (blockNames) => ({ registry }) => {
-    unlock(registry.dispatch(import_editor4.store)).showBlockTypes(blockNames);
+    unlock2(registry.dispatch(import_editor4.store)).showBlockTypes(blockNames);
   };
   var hideBlockTypes = (blockNames) => ({ registry }) => {
-    unlock(registry.dispatch(import_editor4.store)).hideBlockTypes(blockNames);
+    unlock2(registry.dispatch(import_editor4.store)).hideBlockTypes(blockNames);
   };
   function setAvailableMetaBoxesPerLocation(metaBoxesPerLocation) {
     return {
@@ -10046,7 +10054,7 @@ var wp;
   var import_core_data4 = __toESM(require_core_data(), 1);
   var import_editor5 = __toESM(require_editor(), 1);
   var import_deprecated2 = __toESM(require_deprecated(), 1);
-  var { interfaceStore: interfaceStore2 } = unlock(import_editor5.privateApis);
+  var { interfaceStore: interfaceStore2 } = unlock2(import_editor5.privateApis);
   var EMPTY_ARRAY2 = [];
   var EMPTY_OBJECT2 = {};
   var getEditorMode = (0, import_data5.createRegistrySelector)(
@@ -10256,7 +10264,7 @@ var wp;
           version: "6.7"
         }
       );
-      return unlock(select3(import_editor5.store)).getInserter();
+      return unlock2(select3(import_editor5.store)).getInserter();
     }
   );
   var isListViewOpened = (0, import_data5.createRegistrySelector)((select3) => () => {
@@ -10279,7 +10287,7 @@ var wp;
   var getEditedPostTemplate = (0, import_data5.createRegistrySelector)(
     (select3) => () => {
       const { id: postId, type: postType } = select3(import_editor5.store).getCurrentPost();
-      const templateId = unlock(select3(import_core_data4.store)).getTemplateId(
+      const templateId = unlock2(select3(import_core_data4.store)).getTemplateId(
         postType,
         postId
       );
@@ -10598,7 +10606,7 @@ var wp;
   var import_preferences4 = __toESM(require_preferences(), 1);
   var import_url4 = __toESM(require_url(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-  var { PreferenceBaseOption } = unlock(import_preferences4.privateApis);
+  var { PreferenceBaseOption } = unlock2(import_preferences4.privateApis);
   function submitCustomFieldsForm() {
     const customFieldsForm = document.getElementById(
       "toggle-custom-fields-form"
@@ -10650,7 +10658,7 @@ var wp;
   var import_editor11 = __toESM(require_editor(), 1);
   var import_preferences5 = __toESM(require_preferences(), 1);
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
-  var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences5.privateApis);
+  var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock2(import_preferences5.privateApis);
   function EnablePanelOption(props) {
     const { toggleEditorPanelEnabled: toggleEditorPanelEnabled2 } = (0, import_data16.useDispatch)(import_editor11.store);
     const { isChecked, isRemoved } = (0, import_data16.useSelect)(
@@ -10678,7 +10686,7 @@ var wp;
 
   // packages/edit-post/build-module/components/preferences-modal/meta-boxes-section.mjs
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
-  var { PreferencesModalSection } = unlock(import_preferences6.privateApis);
+  var { PreferencesModalSection } = unlock2(import_preferences6.privateApis);
   function MetaBoxesSection(sectionProps) {
     const { areCustomFieldsRegistered, metaBoxes: metaBoxes2 } = (0, import_data17.useSelect)((select3) => {
       const { getEditorSettings } = select3(import_editor12.store);
@@ -10709,8 +10717,8 @@ var wp;
 
   // packages/edit-post/build-module/components/preferences-modal/index.mjs
   var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-  var { PreferenceToggleControl } = unlock(import_preferences7.privateApis);
-  var { PreferencesModal } = unlock(import_editor13.privateApis);
+  var { PreferenceToggleControl } = unlock2(import_preferences7.privateApis);
+  var { PreferencesModal } = unlock2(import_editor13.privateApis);
   function EditPostPreferencesModal() {
     const extraSections = {
       general: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(MetaBoxesSection, { title: (0, import_i18n9.__)("Advanced") }),
@@ -10729,7 +10737,7 @@ var wp;
 
   // packages/edit-post/build-module/components/more-menu/index.mjs
   var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
-  var { ToolsMoreMenuGroup, ViewMoreMenuGroup } = unlock(import_editor14.privateApis);
+  var { ToolsMoreMenuGroup, ViewMoreMenuGroup } = unlock2(import_editor14.privateApis);
   var MoreMenu = () => {
     const isLargeViewport = (0, import_compose.useViewportMatch)("large");
     return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_jsx_runtime34.Fragment, { children: [
@@ -10999,7 +11007,7 @@ var wp;
         isGutenbergPlugin || // We also still want to iframe all the special
         // editor features and modes such as device previews, zoom out, and
         // template/pattern editing.
-        getDeviceType() !== "Desktop" || ["wp_template", "wp_block"].includes(getCurrentPostType()) || unlock(select3(import_block_editor.store)).isZoomOut() || // Finally, still iframe the editor if all present blocks are v3
+        getDeviceType() !== "Desktop" || ["wp_template", "wp_block"].includes(getCurrentPostType()) || unlock2(select3(import_block_editor.store)).isZoomOut() || // Finally, still iframe the editor if all present blocks are v3
         // (which means they are marked as iframe-compatible).
         [...new Set(getClientIdsWithDescendants().map(getBlockName))].map(getBlockType).filter(Boolean).every((blockType) => blockType.apiVersion >= 3)
       );
@@ -11120,7 +11128,7 @@ var wp;
         const {
           __unstableIsEditorReady,
           isCollaborationEnabledForCurrentPost
-        } = unlock(select3(import_editor17.store));
+        } = unlock2(select3(import_editor17.store));
         return {
           isEnabledAndEditorReady: enabled && __unstableIsEditorReady(),
           isCollaborationEnabled: isCollaborationEnabledForCurrentPost(),
@@ -11130,7 +11138,7 @@ var wp;
       },
       [enabled]
     );
-    const { setCollaborationSupported } = unlock((0, import_data24.useDispatch)(import_core_data7.store));
+    const { setCollaborationSupported } = unlock2((0, import_data24.useDispatch)(import_core_data7.store));
     const { updateEditorSettings } = (0, import_data24.useDispatch)(import_editor17.store);
     const { initializeMetaBoxes: initializeMetaBoxes2 } = (0, import_data24.useDispatch)(store);
     (0, import_element27.useEffect)(() => {
@@ -11156,10 +11164,10 @@ var wp;
 
   // packages/edit-post/build-module/components/layout/index.mjs
   var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
-  var { useCommandContext } = unlock(import_commands2.privateApis);
-  var { useDrag } = unlock(import_components9.privateApis);
-  var { Editor, FullscreenMode, UploadProgressSnackbar } = unlock(import_editor18.privateApis);
-  var { BlockKeyboardShortcuts } = unlock(import_block_library.privateApis);
+  var { useCommandContext } = unlock2(import_commands2.privateApis);
+  var { useDrag } = unlock2(import_components9.privateApis);
+  var { Editor, FullscreenMode, UploadProgressSnackbar } = unlock2(import_editor18.privateApis);
+  var { BlockKeyboardShortcuts } = unlock2(import_block_library.privateApis);
   var DESIGN_POST_TYPES = [
     "wp_template",
     "wp_template_part",
@@ -11424,7 +11432,7 @@ var wp;
       (select3) => {
         const { get } = select3(import_preferences10.store);
         const { isFeatureActive: isFeatureActive2, hasMetaBoxes: hasMetaBoxes2 } = select3(store);
-        const { canUser, getPostType, getTemplateId } = unlock(
+        const { canUser, getPostType, getTemplateId } = unlock2(
           select3(import_core_data8.store)
         );
         const supportsTemplateMode = settings.supportsTemplateMode;
@@ -11433,10 +11441,10 @@ var wp;
           kind: "postType",
           name: "wp_template"
         });
-        const { getBlockSelectionStart, isZoomOut } = unlock(
+        const { getBlockSelectionStart, isZoomOut } = unlock2(
           select3(import_block_editor2.store)
         );
-        const { getEditorMode: getEditorMode2, getDefaultRenderingMode } = unlock(
+        const { getEditorMode: getEditorMode2, getDefaultRenderingMode } = unlock2(
           select3(import_editor18.store)
         );
         const isNotDesignPostType = !DESIGN_POST_TYPES.includes(currentPostType);
@@ -11606,7 +11614,7 @@ var wp;
   var import_url6 = __toESM(require_url(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
-  var { PluginPostExcerpt } = unlock(import_editor19.privateApis);
+  var { PluginPostExcerpt } = unlock2(import_editor19.privateApis);
   var isSiteEditor = (0, import_url6.getPath)(window.location.href)?.includes(
     "site-editor.php"
   );
@@ -11689,8 +11697,8 @@ var wp;
   var {
     BackButton: __experimentalMainDashboardButton,
     registerCoreBlockBindingsSources
-  } = unlock(import_editor20.privateApis);
-  var { enablePreloadMultiUse, clearPreloadedData } = unlock(
+  } = unlock2(import_editor20.privateApis);
+  var { enablePreloadMultiUse, clearPreloadedData } = unlock2(
     import_api_fetch2.default.privateApis
   );
   function initializeEditor(id, postType, postId, settings, initialEdits) {
