@@ -46119,38 +46119,31 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
   function TreeSelect(props) {
     const {
+      // Prevent passing legacy props to internal component.
       __nextHasNoMarginBottom: _2,
-      // Prevent passing to internal component
+      __next40pxDefaultSize: _next40pxDefaultSize,
       label,
       noOptionLabel,
       onChange,
       selectedId,
       tree = [],
       ...restProps
-    } = useDeprecated36pxDefaultSizeProp(props);
+    } = props;
     const options2 = (0, import_element161.useMemo)(() => {
       return [noOptionLabel && {
         value: "",
         label: noOptionLabel
       }, ...getSelectOptions(tree)].filter((option) => !!option);
     }, [noOptionLabel, tree]);
-    maybeWarnDeprecated36pxSize({
-      componentName: "TreeSelect",
-      size: restProps.size,
-      __next40pxDefaultSize: restProps.__next40pxDefaultSize
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(SelectControl, {
+      __next40pxDefaultSize: true,
+      __shouldNotWarnDeprecated36pxSize: true,
+      label,
+      options: options2,
+      onChange,
+      value: selectedId,
+      ...restProps
     });
-    return (
-      // Disable reason: the parent component already takes case of the `__next40pxDefaultSize` prop.
-      // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
-      /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(SelectControl, {
-        __shouldNotWarnDeprecated36pxSize: true,
-        label,
-        options: options2,
-        onChange,
-        value: selectedId,
-        ...restProps
-      })
-    );
   }
   var tree_select_default = TreeSelect;
 
@@ -46172,8 +46165,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       noOptionLabel,
       onChange: onChangeProp,
       tree: termsTree,
-      selectedId: selectedAuthorId !== void 0 ? String(selectedAuthorId) : void 0,
-      __next40pxDefaultSize: true
+      selectedId: selectedAuthorId !== void 0 ? String(selectedAuthorId) : void 0
     });
   }
 
@@ -46197,8 +46189,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onChange: onChangeProp,
       tree: termsTree,
       selectedId: selectedCategoryId !== void 0 ? String(selectedCategoryId) : void 0,
-      ...props,
-      __next40pxDefaultSize: true
+      ...props
     });
   }
 

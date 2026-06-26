@@ -82636,7 +82636,6 @@ If there's a particular need for this, please submit a feature request at https:
         !!availableTerms.length && /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
           import_components212.TreeSelect,
           {
-            __next40pxDefaultSize: true,
             label: parentSelectLabel,
             noOptionLabel: noParentOption,
             onChange: onChangeFormParent,
