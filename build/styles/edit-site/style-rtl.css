@@ -4263,6 +4263,14 @@ button.font-library__upload-area {
   height: 100%;
 }
 
+.global-styles-ui-color-palette__tablist-container {
+  border-bottom: 1px solid #ddd;
+}
+
+.global-styles-ui-color-palette__tablist {
+  margin-bottom: -1px;
+}
+
 .global-styles-ui-sidebar__navigator-screen .single-column {
   grid-column: span 1;
 }
@@ -5551,11 +5559,13 @@ body:has(.edit-site-resizable-frame__inner.is-resizing) {
   padding-left: 0;
 }
 .edit-site-styles .global-styles-ui-sidebar__navigator-provider .global-styles-ui-sidebar__navigator-screen {
-  padding-top: 12px;
-  padding-right: 12px;
-  padding-left: 12px;
-  padding-bottom: 12px;
+  padding: 12px;
   outline: none;
+}
+.edit-site-styles .global-styles-ui-sidebar__navigator-provider .global-styles-ui-sidebar__navigator-screen .global-styles-ui-color-palette__tablist-container {
+  margin-inline: -12px;
+  width: calc(100% + 24px);
+  padding-inline: 12px;
 }
 .edit-site-styles .edit-site-sidebar-button {
   color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);

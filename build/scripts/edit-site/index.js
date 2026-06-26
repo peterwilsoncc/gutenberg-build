@@ -39856,7 +39856,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url12 = __toESM(require_url(), 1);
 
   // packages/global-styles-ui/build-module/global-styles-ui.mjs
-  var import_components130 = __toESM(require_components(), 1);
+  var import_components129 = __toESM(require_components(), 1);
   var import_blocks8 = __toESM(require_blocks(), 1);
   var import_data53 = __toESM(require_data(), 1);
   var import_block_editor19 = __toESM(require_block_editor(), 1);
@@ -51294,7 +51294,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-color-palette.mjs
   var import_i18n102 = __toESM(require_i18n(), 1);
-  var import_components112 = __toESM(require_components(), 1);
 
   // packages/global-styles-ui/build-module/color-palette-panel.mjs
   var import_compose24 = __toESM(require_compose(), 1);
@@ -51413,12 +51412,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-color-palette.mjs
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs2 } = unlock5(import_components112.privateApis);
 
   // packages/global-styles-ui/build-module/screen-background.mjs
   var import_i18n103 = __toESM(require_i18n(), 1);
   var import_block_editor14 = __toESM(require_block_editor(), 1);
-  var import_components113 = __toESM(require_components(), 1);
+  var import_components112 = __toESM(require_components(), 1);
 
   // packages/global-styles-ui/build-module/background-panel.mjs
   var import_block_editor13 = __toESM(require_block_editor(), 1);
@@ -51432,25 +51430,25 @@ If there's a particular need for this, please submit a feature request at https:
   var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock5(import_block_editor14.privateApis);
 
   // packages/global-styles-ui/build-module/shadows-panel.mjs
-  var import_components115 = __toESM(require_components(), 1);
+  var import_components114 = __toESM(require_components(), 1);
   var import_i18n105 = __toESM(require_i18n(), 1);
   var import_element149 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.mjs
-  var import_components114 = __toESM(require_components(), 1);
+  var import_components113 = __toESM(require_components(), 1);
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu6 } = unlock5(import_components115.privateApis);
+  var { Menu: Menu6 } = unlock5(import_components114.privateApis);
 
   // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
-  var import_components116 = __toESM(require_components(), 1);
+  var import_components115 = __toESM(require_components(), 1);
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_element150 = __toESM(require_element(), 1);
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu7 } = unlock5(import_components116.privateApis);
+  var { Menu: Menu7 } = unlock5(import_components115.privateApis);
   var customShadowMenuItems = [
     {
       label: (0, import_i18n106.__)("Rename"),
@@ -51488,18 +51486,18 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/global-styles-ui/build-module/screen-style-variations.mjs
-  var import_components119 = __toESM(require_components(), 1);
+  var import_components118 = __toESM(require_components(), 1);
   var import_i18n110 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/style-variations-content.mjs
   var import_i18n109 = __toESM(require_i18n(), 1);
-  var import_components118 = __toESM(require_components(), 1);
+  var import_components117 = __toESM(require_components(), 1);
 
   // packages/global-styles-ui/build-module/style-variations-container.mjs
   var import_core_data33 = __toESM(require_core_data(), 1);
   var import_data50 = __toESM(require_data(), 1);
   var import_element152 = __toESM(require_element(), 1);
-  var import_components117 = __toESM(require_components(), 1);
+  var import_components116 = __toESM(require_components(), 1);
   var import_i18n108 = __toESM(require_i18n(), 1);
   var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
   function StyleVariationsContainer({
@@ -51568,7 +51566,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
-      import_components117.__experimentalGrid,
+      import_components116.__experimentalGrid,
       {
         columns: 2,
         className: "global-styles-ui-style-variations-container",
@@ -51597,14 +51595,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-css.mjs
   var import_i18n111 = __toESM(require_i18n(), 1);
-  var import_components120 = __toESM(require_components(), 1);
+  var import_components119 = __toESM(require_components(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
   var { AdvancedPanel: StylesAdvancedPanel2 } = unlock5(import_block_editor17.privateApis);
 
   // packages/global-styles-ui/build-module/screen-revisions/index.mjs
   var import_i18n114 = __toESM(require_i18n(), 1);
-  var import_components123 = __toESM(require_components(), 1);
+  var import_components122 = __toESM(require_components(), 1);
   var import_element154 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
@@ -51748,17 +51746,17 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.mjs
   var import_i18n112 = __toESM(require_i18n(), 1);
-  var import_components121 = __toESM(require_components(), 1);
+  var import_components120 = __toESM(require_components(), 1);
   var import_date10 = __toESM(require_date(), 1);
   var import_core_data35 = __toESM(require_core_data(), 1);
   var import_data52 = __toESM(require_data(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge3 } = unlock5(import_components121.privateApis);
+  var { Badge: WCBadge3 } = unlock5(import_components120.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
   // packages/global-styles-ui/build-module/pagination/index.mjs
-  var import_components122 = __toESM(require_components(), 1);
+  var import_components121 = __toESM(require_components(), 1);
   var import_i18n113 = __toESM(require_i18n(), 1);
   var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
 
@@ -51767,21 +51765,21 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
   var import_i18n116 = __toESM(require_i18n(), 1);
-  var import_components125 = __toESM(require_components(), 1);
+  var import_components124 = __toESM(require_components(), 1);
   var import_element155 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.mjs
-  var import_components124 = __toESM(require_components(), 1);
+  var import_components123 = __toESM(require_components(), 1);
   var import_i18n115 = __toESM(require_i18n(), 1);
   var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu8 } = unlock5(import_components125.privateApis);
+  var { Menu: Menu8 } = unlock5(import_components124.privateApis);
 
   // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_i18n120 = __toESM(require_i18n(), 1);
-  var import_components129 = __toESM(require_components(), 1);
+  var import_components128 = __toESM(require_components(), 1);
   var import_element157 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
@@ -51790,23 +51788,23 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.mjs
-  var import_components126 = __toESM(require_components(), 1);
+  var import_components125 = __toESM(require_components(), 1);
   var import_i18n118 = __toESM(require_i18n(), 1);
   var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.mjs
-  var import_components127 = __toESM(require_components(), 1);
+  var import_components126 = __toESM(require_components(), 1);
   var import_i18n119 = __toESM(require_i18n(), 1);
   var import_element156 = __toESM(require_element(), 1);
   var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/size-control/index.mjs
-  var import_components128 = __toESM(require_components(), 1);
+  var import_components127 = __toESM(require_components(), 1);
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu9 } = unlock5(import_components129.privateApis);
+  var { Menu: Menu9 } = unlock5(import_components128.privateApis);
 
   // packages/global-styles-ui/build-module/global-styles-ui.mjs
   var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
@@ -51847,7 +51845,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-details-footer/index.mjs
   var import_i18n121 = __toESM(require_i18n(), 1);
   var import_url11 = __toESM(require_url(), 1);
-  var import_components131 = __toESM(require_components(), 1);
+  var import_components130 = __toESM(require_components(), 1);
   var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
   function SidebarNavigationScreenDetailsFooter({
     record,
@@ -51864,7 +51862,7 @@ If there's a particular need for this, please submit a feature request at https:
       hrefProps.as = "a";
     }
     return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-      import_components131.__experimentalItemGroup,
+      import_components130.__experimentalItemGroup,
       {
         size: "large",
         className: "edit-site-sidebar-navigation-screen-details-footer",
@@ -51941,7 +51939,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_editor23 = __toESM(require_editor(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
   var import_data55 = __toESM(require_data(), 1);
-  var import_components132 = __toESM(require_components(), 1);
+  var import_components131 = __toESM(require_components(), 1);
   var import_url13 = __toESM(require_url(), 1);
   var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   var { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock(import_editor23.privateApis);
@@ -51953,9 +51951,9 @@ If there's a particular need for this, please submit a feature request at https:
     onChangeSection
   }) => {
     const history = useHistory12();
-    return /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(import_components132.__experimentalHStack, { className: "edit-site-styles__header-actions", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(import_components131.__experimentalHStack, { className: "edit-site-styles__header-actions", children: [
       /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
-        import_components132.Button,
+        import_components131.Button,
         {
           isPressed: isStyleBookOpened,
           icon: seen_default,
@@ -52077,7 +52075,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data40 = __toESM(require_core_data(), 1);
   var import_data61 = __toESM(require_data(), 1);
   var import_html_entities7 = __toESM(require_html_entities(), 1);
-  var import_components138 = __toESM(require_components(), 1);
+  var import_components137 = __toESM(require_components(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/constants.mjs
   var PRELOADED_NAVIGATION_MENUS_QUERY = {
@@ -52092,13 +52090,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities5 = __toESM(require_html_entities(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
-  var import_components135 = __toESM(require_components(), 1);
+  var import_components134 = __toESM(require_components(), 1);
   var import_i18n126 = __toESM(require_i18n(), 1);
   var import_element162 = __toESM(require_element(), 1);
   var import_router21 = __toESM(require_router(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/rename-modal.mjs
-  var import_components133 = __toESM(require_components(), 1);
+  var import_components132 = __toESM(require_components(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
   var import_element161 = __toESM(require_element(), 1);
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
@@ -52108,15 +52106,15 @@ If there's a particular need for this, please submit a feature request at https:
     const titleHasChanged = editedMenuTitle !== menuTitle;
     const isEditedMenuTitleValid = titleHasChanged && notEmptyString(editedMenuTitle);
     return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-      import_components133.Modal,
+      import_components132.Modal,
       {
         title: (0, import_i18n124.__)("Rename"),
         onRequestClose: onClose,
         focusOnMount: "firstContentElement",
         size: "small",
-        children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("form", { className: "sidebar-navigation__rename-modal-form", children: /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_components133.__experimentalVStack, { spacing: "3", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("form", { className: "sidebar-navigation__rename-modal-form", children: /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_components132.__experimentalVStack, { spacing: "3", children: [
           /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-            import_components133.TextControl,
+            import_components132.TextControl,
             {
               value: editedMenuTitle,
               placeholder: (0, import_i18n124.__)("Navigation title"),
@@ -52124,9 +52122,9 @@ If there's a particular need for this, please submit a feature request at https:
               label: (0, import_i18n124.__)("Name")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_components133.__experimentalHStack, { justify: "right", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_components132.__experimentalHStack, { justify: "right", children: [
             /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-              import_components133.Button,
+              import_components132.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -52135,7 +52133,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-              import_components133.Button,
+              import_components132.Button,
               {
                 __next40pxDefaultSize: true,
                 accessibleWhenDisabled: true,
@@ -52160,12 +52158,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/delete-confirm-dialog.mjs
-  var import_components134 = __toESM(require_components(), 1);
+  var import_components133 = __toESM(require_components(), 1);
   var import_i18n125 = __toESM(require_i18n(), 1);
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   function DeleteConfirmDialog({ onClose, onConfirm }) {
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-      import_components134.__experimentalConfirmDialog,
+      import_components133.__experimentalConfirmDialog,
       {
         isOpen: true,
         onConfirm: () => {
@@ -52199,15 +52197,15 @@ If there's a particular need for this, please submit a feature request at https:
     const openDeleteConfirmDialog = () => setDeleteConfirmDialogOpen(true);
     return /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(import_jsx_runtime289.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
-        import_components135.DropdownMenu,
+        import_components134.DropdownMenu,
         {
           className: "sidebar-navigation__more-menu",
           label: (0, import_i18n126.__)("Actions"),
           icon: more_vertical_default,
           popoverProps: POPOVER_PROPS,
-          children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(import_components135.MenuGroup, { children: [
+          children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(import_components134.MenuGroup, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
-              import_components135.MenuItem,
+              import_components134.MenuItem,
               {
                 onClick: () => {
                   openRenameModal();
@@ -52217,7 +52215,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
-              import_components135.MenuItem,
+              import_components134.MenuItem,
               {
                 onClick: () => {
                   history.navigate(
@@ -52228,7 +52226,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
-              import_components135.MenuItem,
+              import_components134.MenuItem,
               {
                 onClick: () => {
                   onDuplicate();
@@ -52238,7 +52236,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
-              import_components135.MenuItem,
+              import_components134.MenuItem,
               {
                 isDestructive: true,
                 onClick: () => {
@@ -52285,7 +52283,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_library2 = __toESM(require_block_library(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/leaf-more-menu.mjs
-  var import_components136 = __toESM(require_components(), 1);
+  var import_components135 = __toESM(require_components(), 1);
   var import_data56 = __toESM(require_data(), 1);
   var import_element163 = __toESM(require_element(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
@@ -52340,7 +52338,7 @@ If there's a particular need for this, please submit a feature request at https:
       [path, history]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-      import_components136.DropdownMenu,
+      import_components135.DropdownMenu,
       {
         icon: more_vertical_default,
         label: (0, import_i18n127.__)("Options"),
@@ -52349,9 +52347,9 @@ If there's a particular need for this, please submit a feature request at https:
         noIcons: true,
         ...props,
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(import_jsx_runtime290.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(import_components136.MenuGroup, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(import_components135.MenuGroup, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-              import_components136.MenuItem,
+              import_components135.MenuItem,
               {
                 icon: chevron_up_default,
                 onClick: () => {
@@ -52362,7 +52360,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-              import_components136.MenuItem,
+              import_components135.MenuItem,
               {
                 icon: chevron_down_default,
                 onClick: () => {
@@ -52373,7 +52371,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             block.attributes?.type === "page" && block.attributes?.id && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-              import_components136.MenuItem,
+              import_components135.MenuItem,
               {
                 onClick: () => {
                   onGoToPage(block);
@@ -52383,8 +52381,8 @@ If there's a particular need for this, please submit a feature request at https:
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(import_components136.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-            import_components136.MenuItem,
+          /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(import_components135.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+            import_components135.MenuItem,
             {
               onClick: () => {
                 removeBlocks([clientId], false);
@@ -52573,7 +52571,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/index.mjs
   var import_core_data38 = __toESM(require_core_data(), 1);
-  var import_components137 = __toESM(require_components(), 1);
+  var import_components136 = __toESM(require_components(), 1);
   var import_i18n130 = __toESM(require_i18n(), 1);
   var import_data59 = __toESM(require_data(), 1);
   var import_html_entities6 = __toESM(require_html_entities(), 1);
@@ -52618,7 +52616,7 @@ If there's a particular need for this, please submit a feature request at https:
             "Navigation Menus are a curated collection of blocks that allow visitors to get around your site."
           ),
           backPath,
-          children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components137.Spinner, { className: "edit-site-sidebar-navigation-screen-navigation-menus__loading" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components136.Spinner, { className: "edit-site-sidebar-navigation-screen-navigation-menus__loading" })
         }
       );
     }
@@ -52854,7 +52852,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { handleSave, handleDelete, handleDuplicate } = useNavigationMenuHandlers();
     const hasNavigationMenus = !!navigationMenus?.length;
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(SidebarNavigationScreenWrapper, { backPath, children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components138.Spinner, { className: "edit-site-sidebar-navigation-screen-navigation-menus__loading" }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(SidebarNavigationScreenWrapper, { backPath, children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components137.Spinner, { className: "edit-site-sidebar-navigation-screen-navigation-menus__loading" }) });
     }
     if (!isLoading && !hasNavigationMenus) {
       return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
@@ -52877,7 +52875,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(SidebarNavigationScreenWrapper, { backPath, children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components138.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-navigation-menus", children: navigationMenus?.map(({ id, title, status }, index2) => /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(SidebarNavigationScreenWrapper, { backPath, children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components137.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-navigation-menus", children: navigationMenus?.map(({ id, title, status }, index2) => /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
       NavMenuItem,
       {
         postId: id,
@@ -52969,7 +52967,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
-  var import_components139 = __toESM(require_components(), 1);
+  var import_components138 = __toESM(require_components(), 1);
   var import_editor28 = __toESM(require_editor(), 1);
   var import_element170 = __toESM(require_element(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
@@ -53883,7 +53881,7 @@ If there's a particular need for this, please submit a feature request at https:
     currentCategory,
     currentType
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(import_components139.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(import_components138.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: [
       templatePartViews?.map((view) => /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
         CategoryItem,
         {
@@ -53961,7 +53959,7 @@ If there's a particular need for this, please submit a feature request at https:
         content: /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(import_jsx_runtime299.Fragment, { children: [
           isLoading && (0, import_i18n134.__)("Loading items\u2026"),
           !isLoading && /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(import_jsx_runtime299.Fragment, { children: [
-            !hasTemplateParts && !hasPatterns && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components139.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components139.__experimentalItem, { children: (0, import_i18n134.__)("No items found") }) }),
+            !hasTemplateParts && !hasPatterns && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components138.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-patterns__group", children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components138.__experimentalItem, { children: (0, import_i18n134.__)("No items found") }) }),
             /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
               CategoriesGroup,
               {
@@ -54050,11 +54048,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/page-patterns/actions.mjs
-  var import_components143 = __toESM(require_components(), 1);
+  var import_components142 = __toESM(require_components(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
 
   // packages/edit-site/build-module/components/add-new-pattern/index.mjs
-  var import_components140 = __toESM(require_components(), 1);
+  var import_components139 = __toESM(require_components(), 1);
   var import_element172 = __toESM(require_element(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
   var import_data70 = __toESM(require_data(), 1);
@@ -54146,7 +54144,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
       addNewPatternLabel && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-        import_components140.DropdownMenu,
+        import_components139.DropdownMenu,
         {
           controls,
           icon: null,
@@ -54238,7 +54236,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/page-patterns/rename-category-menu-item.mjs
-  var import_components141 = __toESM(require_components(), 1);
+  var import_components140 = __toESM(require_components(), 1);
   var import_element173 = __toESM(require_element(), 1);
   var import_i18n136 = __toESM(require_i18n(), 1);
   var import_patterns3 = __toESM(require_patterns(), 1);
@@ -54247,7 +54245,7 @@ If there's a particular need for this, please submit a feature request at https:
   function RenameCategoryMenuItem({ category, onClose }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element173.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(import_jsx_runtime301.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(import_components141.MenuItem, { onClick: () => setIsModalOpen(true), children: (0, import_i18n136.__)("Rename") }),
+      /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(import_components140.MenuItem, { onClick: () => setIsModalOpen(true), children: (0, import_i18n136.__)("Rename") }),
       isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
         RenameModal2,
         {
@@ -54281,7 +54279,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/page-patterns/delete-category-menu-item.mjs
-  var import_components142 = __toESM(require_components(), 1);
+  var import_components141 = __toESM(require_components(), 1);
   var import_core_data48 = __toESM(require_core_data(), 1);
   var import_data71 = __toESM(require_data(), 1);
   var import_element174 = __toESM(require_element(), 1);
@@ -54334,9 +54332,9 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(import_jsx_runtime302.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(import_components142.MenuItem, { isDestructive: true, onClick: () => setIsModalOpen(true), children: (0, import_i18n137.__)("Delete") }),
+      /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(import_components141.MenuItem, { isDestructive: true, onClick: () => setIsModalOpen(true), children: (0, import_i18n137.__)("Delete") }),
       /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-        import_components142.__experimentalConfirmDialog,
+        import_components141.__experimentalConfirmDialog,
         {
           isOpen: isModalOpen,
           onConfirm: onDelete,
@@ -54375,7 +54373,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(import_jsx_runtime303.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(AddNewPattern, {}),
       !!patternCategory?.id && /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
-        import_components143.DropdownMenu,
+        import_components142.DropdownMenu,
         {
           icon: more_vertical_default,
           label: (0, import_i18n138.__)("Actions"),
@@ -54383,7 +54381,7 @@ If there's a particular need for this, please submit a feature request at https:
             className: "edit-site-patterns__button",
             size: "compact"
           },
-          children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(import_components143.MenuGroup, { children: [
+          children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(import_components142.MenuGroup, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
               RenameCategoryMenuItem,
               {
@@ -54765,7 +54763,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
   var import_core_data52 = __toESM(require_core_data(), 1);
   var import_element178 = __toESM(require_element(), 1);
-  var import_components144 = __toESM(require_components(), 1);
+  var import_components143 = __toESM(require_components(), 1);
   var import_i18n142 = __toESM(require_i18n(), 1);
   var import_router30 = __toESM(require_router(), 1);
   var import_url17 = __toESM(require_url(), 1);
@@ -54870,7 +54868,7 @@ If there's a particular need for this, please submit a feature request at https:
       }, {});
       return (firstItemPerAuthor && Object.values(firstItemPerAuthor)) ?? EMPTY_ARRAY12;
     }, [records]);
-    return /* @__PURE__ */ (0, import_jsx_runtime309.jsxs)(import_components144.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-templates-browse", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsxs)(import_components143.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-templates-browse", children: [
       /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
         SidebarNavigationItem,
         {
@@ -54911,7 +54909,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data75 = __toESM(require_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
-  var import_components145 = __toESM(require_components(), 1);
+  var import_components144 = __toESM(require_components(), 1);
   var import_router31 = __toESM(require_router(), 1);
   var import_url18 = __toESM(require_url(), 1);
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
@@ -54945,7 +54943,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!postType2) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(import_jsx_runtime310.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(import_components145.__experimentalItemGroup, { className: "edit-site-sidebar-dataviews", children: viewList?.map((view) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(import_jsx_runtime310.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(import_components144.__experimentalItemGroup, { className: "edit-site-sidebar-dataviews", children: viewList?.map((view) => {
       const isActive = view.slug === activeView;
       const slug = view.slug === "all" ? void 0 : view.slug;
       const icon = resolveIcon(view);
@@ -55029,11 +55027,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url21 = __toESM(require_url(), 1);
   var import_data79 = __toESM(require_data(), 1);
   var import_compose30 = __toESM(require_compose(), 1);
-  var import_components150 = __toESM(require_components(), 1);
+  var import_components149 = __toESM(require_components(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/index.mjs
-  var import_components148 = __toESM(require_components(), 1);
+  var import_components147 = __toESM(require_components(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_element182 = __toESM(require_element(), 1);
   var import_data77 = __toESM(require_data(), 1);
@@ -55047,7 +55045,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
   var import_element180 = __toESM(require_element(), 1);
   var import_i18n145 = __toESM(require_i18n(), 1);
-  var import_components146 = __toESM(require_components(), 1);
+  var import_components145 = __toESM(require_components(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_compose28 = __toESM(require_compose(), 1);
@@ -55571,10 +55569,10 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const baseCssClass = "edit-site-custom-template-modal__suggestions_list__list-item";
     return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(
-      import_components146.Composite.Item,
+      import_components145.Composite.Item,
       {
         render: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-          import_components146.Button,
+          import_components145.Button,
           {
             __next40pxDefaultSize: true,
             role: "option",
@@ -55588,14 +55586,14 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-            import_components146.__experimentalText,
+            import_components145.__experimentalText,
             {
               size: "body",
               lineHeight: 1.53846153846,
               weight: 500,
               className: `${baseCssClass}__title`,
               children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-                import_components146.TextHighlight,
+                import_components145.TextHighlight,
                 {
                   text: (0, import_html_entities10.decodeEntities)(suggestion.name),
                   highlight: search
@@ -55604,7 +55602,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           suggestion.link && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-            import_components146.__experimentalText,
+            import_components145.__experimentalText,
             {
               size: "body",
               lineHeight: 1.53846153846,
@@ -55665,7 +55663,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(import_jsx_runtime313.Fragment, { children: [
       showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-        import_components146.SearchControl,
+        import_components145.SearchControl,
         {
           onChange: setSearch,
           value: search,
@@ -55674,7 +55672,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       !!suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-        import_components146.Composite,
+        import_components145.Composite,
         {
           orientation: "vertical",
           role: "listbox",
@@ -55693,7 +55691,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       debouncedSearch && !suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-        import_components146.__experimentalText,
+        import_components145.__experimentalText,
         {
           as: "p",
           className: "edit-site-custom-template-modal__no-results",
@@ -55718,28 +55716,28 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [showSearchEntities]);
     return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(
-      import_components146.__experimentalVStack,
+      import_components145.__experimentalVStack,
       {
         spacing: 4,
         className: "edit-site-custom-template-modal__contents-wrapper",
         alignment: "left",
         children: [
           !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(import_jsx_runtime313.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components146.__experimentalText, { as: "p", children: (0, import_i18n145.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components145.__experimentalText, { as: "p", children: (0, import_i18n145.__)(
               "Select whether to create a single template for all items or a specific one."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(
-              import_components146.Flex,
+              import_components145.Flex,
               {
                 className: "edit-site-custom-template-modal__contents",
                 gap: "4",
                 align: "initial",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(
-                    import_components146.FlexItem,
+                    import_components145.FlexItem,
                     {
                       isBlock: true,
-                      as: import_components146.Button,
+                      as: import_components145.Button,
                       onClick: () => {
                         const {
                           slug,
@@ -55756,7 +55754,7 @@ If there's a particular need for this, please submit a feature request at https:
                       },
                       children: [
                         /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-                          import_components146.__experimentalText,
+                          import_components145.__experimentalText,
                           {
                             as: "span",
                             weight: 500,
@@ -55765,7 +55763,7 @@ If there's a particular need for this, please submit a feature request at https:
                           }
                         ),
                         /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-                          import_components146.__experimentalText,
+                          import_components145.__experimentalText,
                           {
                             as: "span",
                             lineHeight: 1.53846153846,
@@ -55777,16 +55775,16 @@ If there's a particular need for this, please submit a feature request at https:
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(
-                    import_components146.FlexItem,
+                    import_components145.FlexItem,
                     {
                       isBlock: true,
-                      as: import_components146.Button,
+                      as: import_components145.Button,
                       onClick: () => {
                         setShowSearchEntities(true);
                       },
                       children: [
                         /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-                          import_components146.__experimentalText,
+                          import_components145.__experimentalText,
                           {
                             as: "span",
                             weight: 500,
@@ -55795,7 +55793,7 @@ If there's a particular need for this, please submit a feature request at https:
                           }
                         ),
                         /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-                          import_components146.__experimentalText,
+                          import_components145.__experimentalText,
                           {
                             as: "span",
                             lineHeight: 1.53846153846,
@@ -55809,8 +55807,8 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components146.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-              import_components146.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components145.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
+              import_components145.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -55820,7 +55818,7 @@ If there's a particular need for this, please submit a feature request at https:
             ) })
           ] }),
           showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(import_jsx_runtime313.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components146.__experimentalText, { as: "p", children: (0, import_i18n145.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components145.__experimentalText, { as: "p", children: (0, import_i18n145.__)(
               "This template will be used only for the specific item chosen."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
@@ -55830,8 +55828,8 @@ If there's a particular need for this, please submit a feature request at https:
                 onSelect
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components146.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-              import_components146.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components145.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
+              import_components145.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -55855,7 +55853,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template/add-custom-generic-template-modal-content.mjs
   var import_element181 = __toESM(require_element(), 1);
   var import_i18n146 = __toESM(require_i18n(), 1);
-  var import_components147 = __toESM(require_components(), 1);
+  var import_components146 = __toESM(require_components(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent({ createTemplate, onBack }) {
     const [title, setTitle] = (0, import_element181.useState)("");
@@ -55885,9 +55883,9 @@ If there's a particular need for this, please submit a feature request at https:
         setIsBusy(false);
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(import_components147.__experimentalVStack, { spacing: 6, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(import_components146.__experimentalVStack, { spacing: 6, children: [
       /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-        import_components147.TextControl,
+        import_components146.TextControl,
         {
           label: (0, import_i18n146.__)("Name"),
           value: title,
@@ -55902,13 +55900,13 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(
-        import_components147.__experimentalHStack,
+        import_components146.__experimentalHStack,
         {
           className: "edit-site-custom-generic-template__modal-actions",
           justify: "right",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-              import_components147.Button,
+              import_components146.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -55917,7 +55915,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-              import_components147.Button,
+              import_components146.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -55977,7 +55975,7 @@ If there's a particular need for this, please submit a feature request at https:
     children
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
-      import_components148.Button,
+      import_components147.Button,
       {
         __next40pxDefaultSize: true,
         className,
@@ -55985,7 +55983,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: description,
         showTooltip: !!description,
         children: /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(
-          import_components148.Flex,
+          import_components147.Flex,
           {
             as: "span",
             spacing: 2,
@@ -55994,16 +55992,16 @@ If there's a particular need for this, please submit a feature request at https:
             style: { width: "100%" },
             direction,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components148.Icon, { icon }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components147.Icon, { icon }) }),
               /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(
-                import_components148.__experimentalVStack,
+                import_components147.__experimentalVStack,
                 {
                   className: "edit-site-add-new-template__template-name",
                   alignment: "center",
                   spacing: 0,
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
-                      import_components148.__experimentalText,
+                      import_components147.__experimentalText,
                       {
                         align: "center",
                         weight: 500,
@@ -56120,7 +56118,7 @@ If there's a particular need for this, please submit a feature request at https:
       modalTitle = (0, import_i18n147.__)("Create custom template");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(
-      import_components148.Modal,
+      import_components147.Modal,
       {
         title: modalTitle,
         className: clsx_default("edit-site-add-new-template__modal", {
@@ -56132,7 +56130,7 @@ If there's a particular need for this, please submit a feature request at https:
         ref: containerRef,
         children: [
           modalContent === modalContentMap.templatesList && /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(
-            import_components148.__experimentalGrid,
+            import_components147.__experimentalGrid,
             {
               columns: isMobile ? 2 : 3,
               gap: 4,
@@ -56140,7 +56138,7 @@ If there's a particular need for this, please submit a feature request at https:
               justify: "center",
               className: "edit-site-add-new-template__template-list__contents",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components148.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n147.__)(
+                /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components147.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n147.__)(
                   "Select what the new template should apply to:"
                 ) }),
                 missingTemplates.map((template) => {
@@ -56169,7 +56167,7 @@ If there's a particular need for this, please submit a feature request at https:
                       modalContentMap.customGenericTemplate
                     ),
                     children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
-                      import_components148.__experimentalText,
+                      import_components147.__experimentalText,
                       {
                         lineHeight: 1.53846153846,
                         children: (0, import_i18n147.__)(
@@ -56215,7 +56213,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(import_jsx_runtime315.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
-        import_components148.Button,
+        import_components147.Button,
         {
           variant: "primary",
           onClick: () => setShowModal(true),
@@ -56272,7 +56270,7 @@ If there's a particular need for this, please submit a feature request at https:
   var add_new_template_default = (0, import_element182.memo)(NewTemplate);
 
   // packages/edit-site/build-module/components/page-templates/fields.mjs
-  var import_components149 = __toESM(require_components(), 1);
+  var import_components148 = __toESM(require_components(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
   var import_element183 = __toESM(require_element(), 1);
   var import_html_entities12 = __toESM(require_html_entities(), 1);
@@ -56282,7 +56280,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data57 = __toESM(require_core_data(), 1);
   var import_data78 = __toESM(require_data(), 1);
   var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge4 } = unlock(import_components149.privateApis);
+  var { Badge: WCBadge4 } = unlock(import_components148.privateApis);
   var { useEntityRecordsWithPermissions } = unlock(import_core_data57.privateApis);
   var { useStyle: useStyle5 } = unlock(import_editor35.privateApis);
   function useAllDefaultTemplateTypes() {
@@ -56345,7 +56343,7 @@ If there's a particular need for this, please submit a feature request at https:
   function AuthorField({ item }) {
     const [isImageLoaded, setIsImageLoaded] = (0, import_element183.useState)(false);
     const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(import_components149.__experimentalHStack, { alignment: "left", spacing: 0, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(import_components148.__experimentalHStack, { alignment: "left", spacing: 0, children: [
       imageUrl && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
         "div",
         {
@@ -56362,7 +56360,7 @@ If there's a particular need for this, please submit a feature request at https:
           )
         }
       ),
-      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("div", { className: "fields-controls__author-icon", children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(import_components149.Icon, { icon }) }),
+      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("div", { className: "fields-controls__author-icon", children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(import_components148.Icon, { icon }) }),
       /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("span", { className: "fields-controls__author-name", children: text })
     ] });
   }
@@ -56741,7 +56739,7 @@ If there's a particular need for this, please submit a feature request at https:
             activeView
           ),
           selectedRegisteredTemplate && duplicateAction && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
-            import_components150.Modal,
+            import_components149.Modal,
             {
               title: (0, import_i18n149.__)("Duplicate"),
               onRequestClose: () => setSelectedRegisteredTemplate(),
@@ -56770,7 +56768,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose33 = __toESM(require_compose(), 1);
 
   // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
-  var import_components153 = __toESM(require_components(), 1);
+  var import_components152 = __toESM(require_components(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
   var import_element188 = __toESM(require_element(), 1);
   var import_data81 = __toESM(require_data(), 1);
@@ -56784,7 +56782,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
   var import_element186 = __toESM(require_element(), 1);
   var import_i18n151 = __toESM(require_i18n(), 1);
-  var import_components151 = __toESM(require_components(), 1);
+  var import_components150 = __toESM(require_components(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
@@ -57383,10 +57381,10 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const baseCssClass = "edit-site-custom-template-modal__suggestions_list__list-item";
     return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(
-      import_components151.Composite.Item,
+      import_components150.Composite.Item,
       {
         render: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-          import_components151.Button,
+          import_components150.Button,
           {
             __next40pxDefaultSize: true,
             role: "option",
@@ -57400,14 +57398,14 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-            import_components151.__experimentalText,
+            import_components150.__experimentalText,
             {
               size: "body",
               lineHeight: 1.53846153846,
               weight: 500,
               className: `${baseCssClass}__title`,
               children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                import_components151.TextHighlight,
+                import_components150.TextHighlight,
                 {
                   text: (0, import_html_entities15.decodeEntities)(suggestion.name),
                   highlight: search
@@ -57416,7 +57414,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           suggestion.link && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-            import_components151.__experimentalText,
+            import_components150.__experimentalText,
             {
               size: "body",
               lineHeight: 1.53846153846,
@@ -57477,7 +57475,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
       showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-        import_components151.SearchControl,
+        import_components150.SearchControl,
         {
           onChange: setSearch,
           value: search,
@@ -57486,7 +57484,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       !!suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-        import_components151.Composite,
+        import_components150.Composite,
         {
           orientation: "vertical",
           role: "listbox",
@@ -57505,7 +57503,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       debouncedSearch && !suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-        import_components151.__experimentalText,
+        import_components150.__experimentalText,
         {
           as: "p",
           className: "edit-site-custom-template-modal__no-results",
@@ -57532,28 +57530,28 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [showSearchEntities]);
     return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(
-      import_components151.__experimentalVStack,
+      import_components150.__experimentalVStack,
       {
         spacing: 4,
         className: "edit-site-custom-template-modal__contents-wrapper",
         alignment: "left",
         children: [
           !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components151.__experimentalText, { as: "p", children: (0, import_i18n151.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components150.__experimentalText, { as: "p", children: (0, import_i18n151.__)(
               "Select whether to create a single template for all items or a specific one."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(
-              import_components151.Flex,
+              import_components150.Flex,
               {
                 className: "edit-site-custom-template-modal__contents",
                 gap: "4",
                 align: "initial",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(
-                    import_components151.FlexItem,
+                    import_components150.FlexItem,
                     {
                       isBlock: true,
-                      as: import_components151.Button,
+                      as: import_components150.Button,
                       onClick: () => {
                         const {
                           slug,
@@ -57570,7 +57568,7 @@ If there's a particular need for this, please submit a feature request at https:
                       },
                       children: [
                         /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                          import_components151.__experimentalText,
+                          import_components150.__experimentalText,
                           {
                             as: "span",
                             weight: 500,
@@ -57579,7 +57577,7 @@ If there's a particular need for this, please submit a feature request at https:
                           }
                         ),
                         /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                          import_components151.__experimentalText,
+                          import_components150.__experimentalText,
                           {
                             as: "span",
                             lineHeight: 1.53846153846,
@@ -57591,16 +57589,16 @@ If there's a particular need for this, please submit a feature request at https:
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(
-                    import_components151.FlexItem,
+                    import_components150.FlexItem,
                     {
                       isBlock: true,
-                      as: import_components151.Button,
+                      as: import_components150.Button,
                       onClick: () => {
                         setShowSearchEntities(true);
                       },
                       children: [
                         /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                          import_components151.__experimentalText,
+                          import_components150.__experimentalText,
                           {
                             as: "span",
                             weight: 500,
@@ -57609,7 +57607,7 @@ If there's a particular need for this, please submit a feature request at https:
                           }
                         ),
                         /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                          import_components151.__experimentalText,
+                          import_components150.__experimentalText,
                           {
                             as: "span",
                             lineHeight: 1.53846153846,
@@ -57623,8 +57621,8 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components151.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-              import_components151.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components150.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+              import_components150.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -57634,7 +57632,7 @@ If there's a particular need for this, please submit a feature request at https:
             ) })
           ] }),
           showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components151.__experimentalText, { as: "p", children: (0, import_i18n151.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components150.__experimentalText, { as: "p", children: (0, import_i18n151.__)(
               "This template will be used only for the specific item chosen."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
@@ -57644,8 +57642,8 @@ If there's a particular need for this, please submit a feature request at https:
                 onSelect
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components151.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-              import_components151.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components150.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+              import_components150.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -57669,7 +57667,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-generic-template-modal-content.mjs
   var import_element187 = __toESM(require_element(), 1);
   var import_i18n152 = __toESM(require_i18n(), 1);
-  var import_components152 = __toESM(require_components(), 1);
+  var import_components151 = __toESM(require_components(), 1);
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent2({ createTemplate, onBack }) {
     const [title, setTitle] = (0, import_element187.useState)("");
@@ -57699,9 +57697,9 @@ If there's a particular need for this, please submit a feature request at https:
         setIsBusy(false);
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(import_components152.__experimentalVStack, { spacing: 6, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(import_components151.__experimentalVStack, { spacing: 6, children: [
       /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
-        import_components152.TextControl,
+        import_components151.TextControl,
         {
           label: (0, import_i18n152.__)("Name"),
           value: title,
@@ -57716,13 +57714,13 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(
-        import_components152.__experimentalHStack,
+        import_components151.__experimentalHStack,
         {
           className: "edit-site-custom-generic-template__modal-actions",
           justify: "right",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
-              import_components152.Button,
+              import_components151.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -57731,7 +57729,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
-              import_components152.Button,
+              import_components151.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -57791,7 +57789,7 @@ If there's a particular need for this, please submit a feature request at https:
     children
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
-      import_components153.Button,
+      import_components152.Button,
       {
         __next40pxDefaultSize: true,
         className,
@@ -57799,7 +57797,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: description,
         showTooltip: !!description,
         children: /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
-          import_components153.Flex,
+          import_components152.Flex,
           {
             as: "span",
             spacing: 2,
@@ -57808,16 +57806,16 @@ If there's a particular need for this, please submit a feature request at https:
             style: { width: "100%" },
             direction,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_components153.Icon, { icon }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_components152.Icon, { icon }) }),
               /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
-                import_components153.__experimentalVStack,
+                import_components152.__experimentalVStack,
                 {
                   className: "edit-site-add-new-template__template-name",
                   alignment: "center",
                   spacing: 0,
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
-                      import_components153.__experimentalText,
+                      import_components152.__experimentalText,
                       {
                         align: "center",
                         weight: 500,
@@ -57932,7 +57930,7 @@ If there's a particular need for this, please submit a feature request at https:
       modalTitle = (0, import_i18n153.__)("Create custom template");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
-      import_components153.Modal,
+      import_components152.Modal,
       {
         title: modalTitle,
         className: clsx_default("edit-site-add-new-template__modal", {
@@ -57944,7 +57942,7 @@ If there's a particular need for this, please submit a feature request at https:
         ref: containerRef,
         children: [
           modalContent === modalContentMap2.templatesList && /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
-            import_components153.__experimentalGrid,
+            import_components152.__experimentalGrid,
             {
               columns: isMobile ? 2 : 3,
               gap: 4,
@@ -57952,7 +57950,7 @@ If there's a particular need for this, please submit a feature request at https:
               justify: "center",
               className: "edit-site-add-new-template__template-list__contents",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_components153.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n153.__)(
+                /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_components152.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n153.__)(
                   "Select what the new template should apply to:"
                 ) }),
                 missingTemplates.map((template) => {
@@ -57981,7 +57979,7 @@ If there's a particular need for this, please submit a feature request at https:
                       modalContentMap2.customGenericTemplate
                     ),
                     children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
-                      import_components153.__experimentalText,
+                      import_components152.__experimentalText,
                       {
                         lineHeight: 1.53846153846,
                         children: (0, import_i18n153.__)(
@@ -58027,7 +58025,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(import_jsx_runtime320.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
-        import_components153.Button,
+        import_components152.Button,
         {
           variant: "primary",
           onClick: () => setShowModal(true),
@@ -58304,7 +58302,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data68 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/post-list/index.mjs
-  var import_components156 = __toESM(require_components(), 1);
+  var import_components155 = __toESM(require_components(), 1);
   var import_core_data67 = __toESM(require_core_data(), 1);
   var import_element193 = __toESM(require_element(), 1);
   var import_router36 = __toESM(require_router(), 1);
@@ -58314,7 +58312,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url25 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/add-new-post/index.mjs
-  var import_components154 = __toESM(require_components(), 1);
+  var import_components153 = __toESM(require_components(), 1);
   var import_i18n155 = __toESM(require_i18n(), 1);
   var import_data83 = __toESM(require_data(), 1);
   var import_element190 = __toESM(require_element(), 1);
@@ -58376,7 +58374,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-      import_components154.Modal,
+      import_components153.Modal,
       {
         title: (
           // translators: %s: post type singular_name label e.g: "Page".
@@ -58385,9 +58383,9 @@ If there's a particular need for this, please submit a feature request at https:
         onRequestClose: onClose,
         focusOnMount: "firstContentElement",
         size: "small",
-        children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("form", { onSubmit: createPost, children: /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_components154.__experimentalVStack, { spacing: 4, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("form", { onSubmit: createPost, children: /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_components153.__experimentalVStack, { spacing: 4, children: [
           /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-            import_components154.TextControl,
+            import_components153.TextControl,
             {
               label: (0, import_i18n155.__)("Title"),
               onChange: setTitle,
@@ -58395,9 +58393,9 @@ If there's a particular need for this, please submit a feature request at https:
               value: title
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_components154.__experimentalHStack, { spacing: 2, justify: "end", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_components153.__experimentalHStack, { spacing: 2, justify: "end", children: [
             /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-              import_components154.Button,
+              import_components153.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -58406,7 +58404,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-              import_components154.Button,
+              import_components153.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -58458,7 +58456,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n156 = __toESM(require_i18n(), 1);
   var import_data84 = __toESM(require_data(), 1);
   var import_core_data66 = __toESM(require_core_data(), 1);
-  var import_components155 = __toESM(require_components(), 1);
+  var import_components154 = __toESM(require_components(), 1);
   var import_element192 = __toESM(require_element(), 1);
   var import_editor40 = __toESM(require_editor(), 1);
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
@@ -58569,7 +58567,7 @@ If there's a particular need for this, please submit a feature request at https:
       closeModal?.();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(
-      import_components155.Modal,
+      import_components154.Modal,
       {
         overlayClassName: "dataviews-action-modal__quick-edit",
         __experimentalHideHeader: true,
@@ -58593,9 +58591,9 @@ If there's a particular need for this, please submit a feature request at https:
               onChange
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_components155.__experimentalHStack, { className: "dataviews-action-modal__quick-edit-footer", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_components154.__experimentalHStack, { className: "dataviews-action-modal__quick-edit-footer", children: [
             /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
-              import_components155.Button,
+              import_components154.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "secondary",
@@ -58604,7 +58602,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
-              import_components155.Button,
+              import_components154.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -58827,7 +58825,7 @@ If there's a particular need for this, please submit a feature request at https:
         headingLevel: 2,
         actions: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_jsx_runtime326.Fragment, { children: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(import_jsx_runtime326.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
-            import_components156.Button,
+            import_components155.Button,
             {
               variant: "primary",
               onClick: openModal,
@@ -59032,10 +59030,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/notfound.mjs
   var import_i18n160 = __toESM(require_i18n(), 1);
-  var import_components157 = __toESM(require_components(), 1);
+  var import_components156 = __toESM(require_components(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   function NotFoundError() {
-    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components157.Notice, { status: "error", isDismissible: false, children: (0, import_i18n160.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components156.Notice, { status: "error", isDismissible: false, children: (0, import_i18n160.__)(
       "The requested page could not be found. Please check the URL."
     ) });
   }
@@ -59050,7 +59048,7 @@ If there's a particular need for this, please submit a feature request at https:
           customDescription: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(NotFoundError, {})
         }
       ),
-      content: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components157.__experimentalSpacer, { padding: 2, children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(NotFoundError, {}) })
+      content: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components156.__experimentalSpacer, { padding: 2, children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(NotFoundError, {}) })
     }
   };
 
