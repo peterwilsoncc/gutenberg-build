@@ -7444,7 +7444,15 @@ var ajv = new import_ajv_draft_04.default({
   allowUnionTypes: true
   // Allow anyOf without explicit type
 });
-(0, import_ajv_formats.default)(ajv, ["date-time", "email", "hostname", "ipv4", "ipv6", "uuid"]);
+(0, import_ajv_formats.default)(ajv, [
+  "date-time",
+  "email",
+  "hostname",
+  "ipv4",
+  "ipv6",
+  "uri",
+  "uuid"
+]);
 function formatAjvError(ajvError, param) {
   const instancePath = ajvError.instancePath ? ajvError.instancePath.replace(/\//g, "][").replace(/^\]\[/, "[") + "]" : "";
   const fullParam = param + instancePath;
@@ -7470,7 +7478,8 @@ function formatAjvError(ajvError, param) {
         uuid: `${fullParam} is not a valid UUID.`,
         ipv4: `${fullParam} is not a valid IP address.`,
         ipv6: `${fullParam} is not a valid IP address.`,
-        hostname: `${fullParam} is not a valid hostname.`
+        hostname: `${fullParam} is not a valid hostname.`,
+        uri: `${fullParam} is not a valid URI.`
       };
       return formatMessages[format] || `Invalid ${format}.`;
     case "minimum":
