@@ -1245,7 +1245,6 @@ var wp;
     [NAVIGATION_POST_TYPE]: (0, import_i18n.__)("Navigation")
   };
   var LAYOUT_LIST = "list";
-  var OPERATOR_IS = "is";
   var OPERATOR_IS_ANY = "isAny";
   var OPERATOR_IS_NONE = "isNone";
   var OPERATOR_BEFORE = "before";
@@ -21309,7 +21308,7 @@ var wp;
   var OPERATOR_BETWEEN = "between";
   var OPERATOR_IN_THE_PAST = "inThePast";
   var OPERATOR_OVER = "over";
-  var OPERATOR_IS2 = "is";
+  var OPERATOR_IS = "is";
   var OPERATOR_IS_NOT = "isNot";
   var OPERATOR_LESS_THAN = "lessThan";
   var OPERATOR_GREATER_THAN = "greaterThan";
@@ -31803,7 +31802,7 @@ If there's a particular need for this, please submit a feature request at https:
       selection: "custom"
     },
     {
-      name: OPERATOR_IS2,
+      name: OPERATOR_IS,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Is"),
       filterText: (filter, activeElements) => (0, import_element82.createInterpolateElement)(
@@ -35310,7 +35309,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
     validOperators: [
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_CONTAINS,
       OPERATOR_NOT_CONTAINS,
@@ -35412,7 +35411,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_LESS_THAN,
       OPERATOR_GREATER_THAN,
@@ -35422,7 +35421,7 @@ If there's a particular need for this, please submit a feature request at https:
     ],
     validOperators: [
       // Single-selection
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_LESS_THAN,
       OPERATOR_GREATER_THAN,
@@ -35495,7 +35494,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_LESS_THAN,
       OPERATOR_GREATER_THAN,
@@ -35505,7 +35504,7 @@ If there's a particular need for this, please submit a feature request at https:
     ],
     validOperators: [
       // Single-selection
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_LESS_THAN,
       OPERATOR_GREATER_THAN,
@@ -35540,7 +35539,7 @@ If there's a particular need for this, please submit a feature request at https:
     defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
     validOperators: [
       // Single selection
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_CONTAINS,
       OPERATOR_NOT_CONTAINS,
@@ -35780,8 +35779,8 @@ If there's a particular need for this, please submit a feature request at https:
     },
     enableSorting: true,
     enableGlobalSearch: false,
-    defaultOperators: [OPERATOR_IS2, OPERATOR_IS_NOT],
-    validOperators: [OPERATOR_IS2, OPERATOR_IS_NOT],
+    defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
+    validOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
     format: {},
     getValueFormatted: getValueFormatted6
   };
@@ -35908,7 +35907,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
     validOperators: [
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_CONTAINS,
       OPERATOR_NOT_CONTAINS,
@@ -35996,7 +35995,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
     validOperators: [
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_IS_ANY2,
       OPERATOR_IS_NONE2
@@ -36020,7 +36019,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
     validOperators: [
-      OPERATOR_IS2,
+      OPERATOR_IS,
       OPERATOR_IS_NOT,
       OPERATOR_CONTAINS,
       OPERATOR_NOT_CONTAINS,
@@ -36056,7 +36055,7 @@ If there's a particular need for this, please submit a feature request at https:
     sort: sort6,
     enableSorting: true,
     enableGlobalSearch: false,
-    defaultOperators: [OPERATOR_IS2, OPERATOR_IS_NOT],
+    defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
     validOperators: getAllOperatorNames(),
     format: {},
     getValueFormatted: get_value_formatted_default_default,
@@ -44100,8 +44099,8 @@ If there's a particular need for this, please submit a feature request at https:
                             ringbuffer,
                             ringbuffer_size
                           );
-                          for (var _x26 = 0; _x26 < copy_dst - ringbuffer_end; _x26++)
-                            ringbuffer[_x26] = ringbuffer[ringbuffer_end + _x26];
+                          for (var _x25 = 0; _x25 < copy_dst - ringbuffer_end; _x25++)
+                            ringbuffer[_x25] = ringbuffer[ringbuffer_end + _x25];
                         }
                       } else {
                         throw new Error(
@@ -54559,45 +54558,11 @@ If there's a particular need for this, please submit a feature request at https:
     render: PreviewField,
     enableSorting: false
   };
-  var SYNC_FILTERS = [
-    {
-      value: PATTERN_SYNC_TYPES.full,
-      label: (0, import_i18n140._x)("Synced", "pattern (singular)"),
-      description: (0, import_i18n140.__)("Patterns that are kept in sync across the site.")
-    },
-    {
-      value: PATTERN_SYNC_TYPES.unsynced,
-      label: (0, import_i18n140._x)("Not synced", "pattern (singular)"),
-      description: (0, import_i18n140.__)(
-        "Patterns that can be changed freely without affecting the site."
-      )
-    }
-  ];
-  var patternStatusField = {
-    label: (0, import_i18n140.__)("Sync status"),
-    id: "sync-status",
-    render: ({ item }) => {
-      const syncStatus = "wp_pattern_sync_status" in item ? item.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full : PATTERN_SYNC_TYPES.unsynced;
-      return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
-        "span",
-        {
-          className: `edit-site-patterns__field-sync-status-${syncStatus}`,
-          children: SYNC_FILTERS.find(({ value }) => value === syncStatus).label
-        }
-      );
-    },
-    elements: SYNC_FILTERS,
-    filterBy: {
-      operators: [OPERATOR_IS],
-      isPrimary: true
-    },
-    enableSorting: false
-  };
 
   // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider } = unlock(import_block_editor26.privateApis);
-  var { usePostActions, usePostFields, patternTitleField } = unlock(import_editor32.privateApis);
+  var { usePostActions, usePostFields } = unlock(import_editor32.privateApis);
   var { useLocation: useLocation26, useHistory: useHistory20 } = unlock(import_router29.privateApis);
   var EMPTY_ARRAY11 = [];
   var VIEW_CONFIG_FIELDS2 = ["default_view", "default_layouts"];
@@ -54660,21 +54625,10 @@ If there's a particular need for this, please submit a feature request at https:
       search: view.search,
       syncStatus: viewSyncStatus
     });
-    const templatePartFields = usePostFields({
-      postType: TEMPLATE_PART_POST_TYPE
-    });
-    const templatePartAuthorField = templatePartFields.find(
-      (field) => field.id === "author"
-    );
+    const postTypeFields = usePostFields({ postType: postType2 });
     const fields2 = (0, import_element177.useMemo)(() => {
-      const _fields = [previewField, patternTitleField];
-      if (postType2 === PATTERN_TYPES.user) {
-        _fields.push(patternStatusField);
-      } else if (postType2 === TEMPLATE_PART_POST_TYPE && templatePartAuthorField) {
-        _fields.push(templatePartAuthorField);
-      }
-      return _fields;
-    }, [postType2, templatePartAuthorField]);
+      return [previewField, ...postTypeFields || []];
+    }, [postTypeFields]);
     const { data, paginationInfo } = (0, import_element177.useMemo)(() => {
       const viewWithoutFilters = { ...view };
       delete viewWithoutFilters.search;
