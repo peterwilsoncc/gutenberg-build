@@ -11419,8 +11419,7 @@ var wp;
       isDistractionFree,
       showMetaBoxes,
       isWelcomeGuideVisible,
-      templateId,
-      isDevicePreview
+      templateId
     } = (0, import_data25.useSelect)(
       (select3) => {
         const { get } = select3(import_preferences10.store);
@@ -11437,7 +11436,9 @@ var wp;
         const { getBlockSelectionStart, isZoomOut } = unlock(
           select3(import_block_editor2.store)
         );
-        const { getEditorMode: getEditorMode2, getDefaultRenderingMode, getDeviceType } = unlock(select3(import_editor18.store));
+        const { getEditorMode: getEditorMode2, getDefaultRenderingMode } = unlock(
+          select3(import_editor18.store)
+        );
         const isNotDesignPostType = !DESIGN_POST_TYPES.includes(currentPostType);
         const isDirectlyEditingPattern = currentPostType === "wp_block" && !onNavigateToPreviousEntityRecord;
         const _templateId = getTemplateId(currentPostType, currentPostId);
@@ -11452,8 +11453,7 @@ var wp;
           isDistractionFree: get("core", "distractionFree"),
           showMetaBoxes: isNotDesignPostType && !isZoomOut() || isDirectlyEditingPattern,
           isWelcomeGuideVisible: isFeatureActive2("welcomeGuide"),
-          templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate2 ? _templateId : null,
-          isDevicePreview: getDeviceType() !== "Desktop"
+          templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate2 ? _templateId : null
         };
       },
       [
@@ -11574,7 +11574,7 @@ var wp;
           extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
             MetaBoxesMain,
             {
-              isLegacy: isDevicePreview
+              isLegacy: !shouldIframe
             }
           ),
           children: [
