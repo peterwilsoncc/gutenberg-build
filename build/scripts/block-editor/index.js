@@ -16941,6 +16941,8 @@ var wp;
   var import_i18n14 = __toESM(require_i18n(), 1);
   var import_style_engine = __toESM(require_style_engine(), 1);
   var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+  var GLOBAL_CONTENT_SIZE = "var(--wp--style--global--content-size, none)";
+  var GLOBAL_WIDE_SIZE = "var(--wp--style--global--wide-size, none)";
   var constrained_default = {
     name: "constrained",
     label: (0, import_i18n14.__)("Constrained"),
@@ -17020,15 +17022,13 @@ var wp;
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n14.__)("Content width"),
                   labelPosition: "top",
-                  value: contentSize || wideSize || "",
+                  value: contentSize === null ? "" : contentSize || wideSize || "",
                   onChange: (nextWidth) => {
                     nextWidth = 0 > parseFloat(nextWidth) ? "0" : nextWidth;
-                    onChange(
-                      cleanEmptyObject({
-                        ...layout,
-                        contentSize: nextWidth !== "" ? nextWidth : void 0
-                      })
-                    );
+                    onChange({
+                      ...layout,
+                      contentSize: nextWidth !== "" ? nextWidth : void 0
+                    });
                   },
                   units: units2,
                   prefix: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components13.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(icon_default, { icon: align_none_default }) })
@@ -17050,15 +17050,13 @@ var wp;
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n14.__)("Wide width"),
                     labelPosition: "top",
-                    value: wideSize || contentSize || "",
+                    value: wideSize === null ? "" : wideSize || contentSize || "",
                     onChange: (nextWidth) => {
                       nextWidth = 0 > parseFloat(nextWidth) ? "0" : nextWidth;
-                      onChange(
-                        cleanEmptyObject({
-                          ...layout,
-                          wideSize: nextWidth !== "" ? nextWidth : void 0
-                        })
-                      );
+                      onChange({
+                        ...layout,
+                        wideSize: nextWidth !== "" ? nextWidth : void 0
+                      });
                     },
                     units: units2,
                     prefix: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components13.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(icon_default, { icon: stretch_wide_default }) })
@@ -17148,9 +17146,14 @@ var wp;
       const marginLeft = justifyContent === "left" ? "0 !important" : "auto !important";
       const marginRight = justifyContent === "right" ? "0 !important" : "auto !important";
       const hasJustificationOverride = hasViewportOverrides && hasViewportOverride("justifyContent");
-      const shouldOutputConstrainedSizes = !hasViewportOverrides || hasViewportOverride("contentSize") || hasViewportOverride("wideSize");
+      const hasContentSizeOverride = hasViewportOverrides && hasViewportOverride("contentSize");
+      const hasWideSizeOverride = hasViewportOverrides && hasViewportOverride("wideSize");
+      const shouldOutputConstrainedSizes = !hasViewportOverrides || hasContentSizeOverride || hasWideSizeOverride;
+      const isResettingConstrainedSizes = hasViewportOverrides && (hasContentSizeOverride && !contentSize || hasWideSizeOverride && !wideSize);
+      const contentMaxWidth = contentSize || (wideSize && !hasContentSizeOverride ? wideSize : GLOBAL_CONTENT_SIZE);
+      const wideMaxWidth = wideSize || (contentSize && !hasWideSizeOverride ? contentSize : GLOBAL_WIDE_SIZE);
       const constrainedSizeDeclarations = [
-        `max-width: ${contentSize ?? wideSize}`
+        `max-width: ${contentMaxWidth}`
       ];
       if (!hasViewportOverrides || hasJustificationOverride) {
         constrainedSizeDeclarations.push(
@@ -17158,7 +17161,7 @@ var wp;
           `margin-right: ${marginRight}`
         );
       }
-      let output = shouldOutputConstrainedSizes && (!!contentSize || !!wideSize) ? `
+      let output = shouldOutputConstrainedSizes && (!!contentSize || !!wideSize || isResettingConstrainedSizes) ? `
 						${appendSelectors(
         selector3,
         "> :where(:not(.alignleft):not(.alignright):not(.alignfull))"
@@ -17166,7 +17169,7 @@ var wp;
 						${constrainedSizeDeclarations.join("; ")};
 					}
 					${appendSelectors(selector3, "> .alignwide")}  {
-						max-width: ${wideSize ?? contentSize};
+						max-width: ${wideMaxWidth};
 					}
 					${appendSelectors(selector3, "> .alignfull")} {
 						max-width: none;
@@ -17623,7 +17626,7 @@ var wp;
                 columnCount: newColumnCount
               });
             },
-            value: columnCount,
+            value: columnCount ?? "",
             min: 1,
             label: (0, import_i18n15.__)("Columns"),
             hideLabelFromVision: !isManualPlacement
@@ -85180,8 +85183,9 @@ var wp;
       ).map((key) => [key, existingLayout[key]])
     );
     Object.entries(layout || {}).forEach(([key, value]) => {
+      const baseHasValue = Object.hasOwn(baseLayout || {}, key);
       if (!CHILD_LAYOUT_KEYS.includes(key) && value !== baseLayout?.[key]) {
-        overrides[key] = value;
+        overrides[key] = value === void 0 && baseHasValue ? null : value;
       }
     });
     return cleanEmptyObject({
@@ -85409,7 +85413,7 @@ var wp;
         const nextStateStyle = cleanEmptyObject({
           ...stateStyle,
           layout: getLayoutStateOverrides(
-            cleanEmptyObject(newLayout),
+            newLayout,
             baseLayout,
             stateStyle?.layout
           )
