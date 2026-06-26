@@ -67690,15 +67690,13 @@ ${js}
       insertBlock,
       removeBlock,
       updateBlockAttributes,
-      selectBlock,
       __unstableMarkNextChangeAsNotPersistent
     } = (0, import_data139.useDispatch)(import_block_editor252.store);
     const {
       tabPanelsClientId,
       activeTabPanelClientId,
       tabCount,
-      editorActiveTabIndex,
-      tabListClientId
+      editorActiveTabIndex
     } = (0, import_data139.useSelect)(
       (select9) => {
         if (!tabsClientId) {
@@ -67706,8 +67704,7 @@ ${js}
             tabPanelsClientId: null,
             activeTabPanelClientId: null,
             tabCount: 0,
-            editorActiveTabIndex: 0,
-            tabListClientId: null
+            editorActiveTabIndex: 0
           };
         }
         const { getBlocks, getBlockAttributes: getBlockAttributes4 } = select9(import_block_editor252.store);
@@ -67717,17 +67714,13 @@ ${js}
         const tabPanels = innerBlocks.find(
           (block) => block.name === "core/tab-panels"
         );
-        const tabList = innerBlocks.find(
-          (block) => block.name === "core/tab-list"
-        );
         const tabPanelBlocks = tabPanels?.innerBlocks || [];
         const activeTabPanel = tabPanelBlocks[activeIndex];
         return {
           tabPanelsClientId: tabPanels?.clientId || null,
           activeTabPanelClientId: activeTabPanel?.clientId || null,
           tabCount: tabPanelBlocks.length,
-          editorActiveTabIndex: activeIndex,
-          tabListClientId: tabList?.clientId || null
+          editorActiveTabIndex: activeIndex
         };
       },
       [tabsClientId]
@@ -67736,18 +67729,19 @@ ${js}
       if (!tabPanelsClientId) {
         return;
       }
-      const newTabPanelBlock = (0, import_blocks111.createBlock)("core/tab-panel", {
-        label: (0, import_i18n239.__)("Tab")
-      });
-      insertBlock(newTabPanelBlock, void 0, tabPanelsClientId, false);
+      insertBlock(
+        (0, import_blocks111.createBlock)("core/tab-panel", {
+          label: (0, import_i18n239.__)("Tab")
+        }),
+        void 0,
+        tabPanelsClientId,
+        false
+      );
       const newIndex = tabCount;
       __unstableMarkNextChangeAsNotPersistent();
       updateBlockAttributes(tabsClientId, {
         editorActiveTabIndex: newIndex
       });
-      if (tabListClientId) {
-        selectBlock(tabListClientId);
-      }
     };
     const removeTab = () => {
       if (!activeTabPanelClientId || tabCount <= 1) {
@@ -67759,9 +67753,6 @@ ${js}
         editorActiveTabIndex: newActiveIndex
       });
       removeBlock(activeTabPanelClientId, false);
-      if (tabListClientId) {
-        selectBlock(tabListClientId);
-      }
     };
     const isRemoveDisabled = tabCount <= 1 || !activeTabPanelClientId;
     return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_block_editor252.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(import_components155.ToolbarGroup, { children: [
