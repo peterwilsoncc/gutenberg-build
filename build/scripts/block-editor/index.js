@@ -44963,8 +44963,7 @@ var wp;
         const {
           getBlockName: getBlockName2,
           getBlockAttributes: getBlockAttributes3,
-          __experimentalGetParsedPattern: __experimentalGetParsedPattern2,
-          getSettings: getSettings7
+          __experimentalGetParsedPattern: __experimentalGetParsedPattern2
         } = blockEditorSelect;
         const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks46.store);
         const blockName = getBlockName2(clientId);
@@ -44973,13 +44972,9 @@ var wp;
           return null;
         }
         const attributes = getBlockAttributes3(clientId);
-        const { isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2 } = unlock(blockEditorSelect);
-        const settings2 = getSettings7();
-        const isIsolatedEditor = !!settings2?.[isIsolatedEditorKey];
-        const disableContentOnlyForUnsyncedPatterns = !!settings2?.disableContentOnlyForUnsyncedPatterns;
+        const { isSectionBlock: isSectionBlock2 } = unlock(blockEditorSelect);
         const patternName = attributes?.metadata?.patternName;
-        const isEditedContentOnlySection = isWithinEditedContentOnlySection2(clientId);
-        if (patternName && !isEditedContentOnlySection && !isIsolatedEditor && !disableContentOnlyForUnsyncedPatterns) {
+        if (patternName && isSectionBlock2(clientId)) {
           const pattern = __experimentalGetParsedPattern2(patternName);
           const positionLabel2 = getPositionTypeLabel(attributes);
           return {
@@ -51665,13 +51660,9 @@ var wp;
       getTemplateLock: getTemplateLock2,
       getBlockEditingMode: getBlockEditingMode2,
       canEditBlock: canEditBlock2,
-      isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2,
-      getSettings: getSettings7
+      isSectionBlock: isSectionBlock2
     } = unlock(select3(store));
     const { getBlockStyles: getBlockStyles2 } = select3(import_blocks73.store);
-    const settings2 = getSettings7();
-    const isIsolatedEditor = !!settings2?.[isIsolatedEditorKey];
-    const disableContentOnlyForUnsyncedPatterns = !!settings2?.disableContentOnlyForUnsyncedPatterns;
     const hasTemplateLock = clientIds.some(
       (id) => getTemplateLock2(id) === "contentOnly"
     );
@@ -51679,7 +51670,7 @@ var wp;
     const blockName = isSingleBlock && getBlockName2(clientIds[0]);
     const hasBlockStyles = isSingleBlock && !!getBlockStyles2(blockName)?.length;
     const hasPatternNameInSelection = clientIds.some(
-      (id) => !!getBlockAttributes3(id)?.metadata?.patternName && !isWithinEditedContentOnlySection2(id) && !isIsolatedEditor && !disableContentOnlyForUnsyncedPatterns
+      (id) => !!getBlockAttributes3(id)?.metadata?.patternName && isSectionBlock2(id)
     );
     const hasPatternOverrides = clientIds.every(
       (clientId) => hasPatternOverridesDefaultBinding(
@@ -51707,19 +51698,13 @@ var wp;
     return "default";
   }
   function getBlockIcon({ select: select3, clientIds }) {
-    const {
-      getBlockName: getBlockName2,
-      getBlockAttributes: getBlockAttributes3,
-      isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2,
-      getSettings: getSettings7
-    } = unlock(select3(store));
-    const settings2 = getSettings7();
-    const isIsolatedEditor = !!settings2?.[isIsolatedEditorKey];
-    const disableContentOnlyForUnsyncedPatterns = !!settings2?.disableContentOnlyForUnsyncedPatterns;
+    const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, isSectionBlock: isSectionBlock2 } = unlock(
+      select3(store)
+    );
     const _isSingleBlock = clientIds.length === 1;
     const firstClientId = clientIds[0];
     const blockAttributes = getBlockAttributes3(firstClientId);
-    if (_isSingleBlock && blockAttributes?.metadata?.patternName && !isWithinEditedContentOnlySection2(firstClientId) && !isIsolatedEditor && !disableContentOnlyForUnsyncedPatterns) {
+    if (_isSingleBlock && blockAttributes?.metadata?.patternName && isSectionBlock2(firstClientId)) {
       return symbol_default;
     }
     const blockName = getBlockName2(firstClientId);
