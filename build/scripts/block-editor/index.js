@@ -44135,7 +44135,7 @@ var wp;
         if (isTyping3) {
           let stopTypingOnNonTextField2 = function(event) {
             const { target } = event;
-            timerId = node.ownerDocument.defaultView.setTimeout(() => {
+            timerId = defaultView.setTimeout(() => {
               if (!(0, import_dom45.isTextField)(target)) {
                 stopTyping2();
               }
@@ -44146,13 +44146,14 @@ var wp;
               stopTyping2();
             }
           }, stopTypingOnSelectionUncollapse2 = function() {
-            const selection2 = node.ownerDocument.defaultView.getSelection();
+            const selection2 = defaultView.getSelection();
             if (!selection2.isCollapsed) {
               stopTyping2();
             }
           };
           var stopTypingOnNonTextField = stopTypingOnNonTextField2, stopTypingOnEscapeKey = stopTypingOnEscapeKey2, stopTypingOnSelectionUncollapse = stopTypingOnSelectionUncollapse2;
           let timerId;
+          const { defaultView } = node.ownerDocument;
           node.addEventListener("focus", stopTypingOnNonTextField2);
           node.addEventListener("keydown", stopTypingOnEscapeKey2);
           node.ownerDocument.addEventListener(
@@ -44160,7 +44161,7 @@ var wp;
             stopTypingOnSelectionUncollapse2
           );
           return () => {
-            node.ownerDocument.defaultView.clearTimeout(timerId);
+            defaultView.clearTimeout(timerId);
             node.removeEventListener(
               "focus",
               stopTypingOnNonTextField2
