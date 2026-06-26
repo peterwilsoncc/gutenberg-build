@@ -70577,13 +70577,14 @@ ${js}
       ...spacingProps.style
     };
     return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { ...blockProps, children: tabs.map((tab, index) => /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
-      "button",
+      import_block_editor265.RichText.Content,
       {
         className: buttonClassName || void 0,
         style: buttonStyle,
+        tagName: "button",
+        value: tab.label,
         type: "button",
-        role: "tab",
-        children: tab.label
+        role: "tab"
       },
       index
     )) });
@@ -70608,8 +70609,9 @@ ${js}
         selector: "button",
         query: {
           label: {
-            type: "string",
-            source: "html"
+            type: "rich-text",
+            source: "rich-text",
+            role: "content"
           }
         },
         default: []

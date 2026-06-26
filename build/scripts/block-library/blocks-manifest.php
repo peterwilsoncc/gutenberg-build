@@ -8104,8 +8104,9 @@ return array(
 				'selector' => 'button',
 				'query' => array(
 					'label' => array(
-						'type' => 'string',
-						'source' => 'html'
+						'type' => 'rich-text',
+						'source' => 'rich-text',
+						'role' => 'content'
 					)
 				),
 				'default' => array(
