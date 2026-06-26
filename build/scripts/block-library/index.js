@@ -70473,31 +70473,20 @@ ${js}
     );
     const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
     const { __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes } = (0, import_data145.useDispatch)(import_block_editor264.store);
-    const selectTabPanel = (0, import_element131.useCallback)(
-      (tabIndex) => {
-        if (tabsClientId && tabIndex !== effectiveActiveIndex) {
-          __unstableMarkNextChangeAsNotPersistent();
-          updateBlockAttributes(tabsClientId, {
-            editorActiveTabIndex: tabIndex
-          });
-        }
-      },
-      [
-        tabsClientId,
-        effectiveActiveIndex,
-        updateBlockAttributes,
-        __unstableMarkNextChangeAsNotPersistent
-      ]
-    );
-    const handleLabelChange = (0, import_element131.useCallback)(
-      (tabIndex, newLabel) => {
-        const tab = tabsList[tabIndex];
-        if (tab?.clientId) {
-          updateBlockAttributes(tab.clientId, { label: newLabel });
-        }
-      },
-      [tabsList, updateBlockAttributes]
-    );
+    function selectTabPanel(tabIndex) {
+      if (tabsClientId && tabIndex !== effectiveActiveIndex) {
+        __unstableMarkNextChangeAsNotPersistent();
+        updateBlockAttributes(tabsClientId, {
+          editorActiveTabIndex: tabIndex
+        });
+      }
+    }
+    function handleLabelChange(tabIndex, newLabel) {
+      const tab = tabsList[tabIndex];
+      if (tab?.clientId) {
+        updateBlockAttributes(tab.clientId, { label: newLabel });
+      }
+    }
     const menuRef = (0, import_element131.useRef)();
     const prevTabCountRef = (0, import_element131.useRef)(tabsList.length);
     (0, import_element131.useEffect)(() => {
