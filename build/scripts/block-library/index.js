@@ -70821,7 +70821,6 @@ ${js}
   var import_element133 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tabs/use-tab-list-items-sync.mjs
-  var import_es62 = __toESM(require_es6(), 1);
   var import_block_editor266 = __toESM(require_block_editor(), 1);
   var import_data146 = __toESM(require_data(), 1);
   var import_element132 = __toESM(require_element(), 1);
@@ -70836,7 +70835,7 @@ ${js}
         label: tab.attributes.label || ""
       }));
       const currentTabs = getBlockAttributes4(tabListClientId)?.tabs ?? [];
-      if ((0, import_es62.default)(newTabs, currentTabs)) {
+      if (JSON.stringify(newTabs) === JSON.stringify(currentTabs)) {
         return;
       }
       __unstableMarkNextChangeAsNotPersistent();
