@@ -66870,7 +66870,6 @@ var wp;
   var import_i18n183 = __toESM(require_i18n(), 1);
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
   function TextIndentControl({
-    __next40pxDefaultSize = false,
     value,
     onChange,
     __unstableInputWidth = "60px",
@@ -66901,9 +66900,8 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
         import_components197.__experimentalUnitControl,
         {
-          __next40pxDefaultSize,
-          __shouldNotWarnDeprecated36pxSize: true,
           ...otherProps,
+          __next40pxDefaultSize: true,
           label: (0, import_i18n183.__)("Line indent"),
           value,
           __unstableInputWidth,
@@ -66919,14 +66917,12 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components197.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
           import_components197.__experimentalUnitControl,
           {
-            __next40pxDefaultSize,
-            __shouldNotWarnDeprecated36pxSize: true,
+            __next40pxDefaultSize: true,
             label: (0, import_i18n183.__)("Line indent"),
             labelPosition: "top",
             hideLabelFromVision: true,
             value,
             onChange,
-            size: otherProps.size,
             units: units2,
             __unstableInputWidth,
             min: 0
@@ -66935,8 +66931,7 @@ var wp;
         withSlider && /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components197.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components197.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
           import_components197.RangeControl,
           {
-            __next40pxDefaultSize,
-            __shouldNotWarnDeprecated36pxSize: true,
+            __next40pxDefaultSize: true,
             label: (0, import_i18n183.__)("Line indent"),
             hideLabelFromVision: true,
             value: valueQuantity,
@@ -68202,7 +68197,6 @@ var wp;
                   {
                     value: textIndent,
                     onChange: setTextIndentValue,
-                    size: "__unstable-large",
                     __unstableInputWidth: "auto",
                     withSlider: true,
                     hasBottomMargin: isGlobalStyles
