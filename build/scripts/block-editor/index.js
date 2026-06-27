@@ -57856,12 +57856,15 @@ var wp;
 
   // packages/block-editor/build-module/components/font-family/index.mjs
   var import_components145 = __toESM(require_components(), 1);
-  var import_deprecated17 = __toESM(require_deprecated(), 1);
   var import_i18n131 = __toESM(require_i18n(), 1);
   var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   function FontFamilyControl({
-    /** Start opting into the larger default height that will become the default size in a future version. */
-    __next40pxDefaultSize = false,
+    /**
+     * Start opting into the larger default height that will become the default size in a future version.
+     *
+     * @deprecated Default behavior since WordPress 7.1. Prop can be safely removed.
+     */
+    __next40pxDefaultSize: _next40pxDefaultSize,
     value = "",
     onChange,
     fontFamilies,
@@ -57886,22 +57889,11 @@ var wp;
         style: { fontFamily }
       }))
     ];
-    if (!__next40pxDefaultSize && (props.size === void 0 || props.size === "default")) {
-      (0, import_deprecated17.default)(
-        `36px default size for wp.blockEditor.__experimentalFontFamilyControl`,
-        {
-          since: "6.8",
-          version: "7.1",
-          hint: "Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version."
-        }
-      );
-    }
     const selectedValue = options.find((option) => option.key === value) ?? "";
     return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
       import_components145.CustomSelectControl,
       {
-        __next40pxDefaultSize,
-        __shouldNotWarnDeprecated36pxSize: true,
+        __next40pxDefaultSize: true,
         label: (0, import_i18n131.__)("Font"),
         value: selectedValue,
         onChange: ({ selectedItem }) => onChange(selectedItem.key),
@@ -58604,7 +58596,7 @@ var wp;
   var import_element186 = __toESM(require_element(), 1);
   var import_components153 = __toESM(require_components(), 1);
   var import_i18n139 = __toESM(require_i18n(), 1);
-  var import_deprecated18 = __toESM(require_deprecated(), 1);
+  var import_deprecated17 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
   var RANGE_CONTROL_CUSTOM_SETTINGS = {
     px: { max: 1e3, step: 1 },
@@ -58641,7 +58633,7 @@ var wp;
     onChange,
     value
   }) {
-    (0, import_deprecated18.default)("wp.blockEditor.HeightControl", {
+    (0, import_deprecated17.default)("wp.blockEditor.HeightControl", {
       since: "7.0",
       version: "7.2",
       alternative: "wp.blockEditor.DimensionControl"
@@ -58737,7 +58729,7 @@ var wp;
 
   // packages/block-editor/build-module/components/image-editor/index.mjs
   var import_components159 = __toESM(require_components(), 1);
-  var import_deprecated19 = __toESM(require_deprecated(), 1);
+  var import_deprecated18 = __toESM(require_deprecated(), 1);
 
   // node_modules/react-easy-crop/index.module.js
   var React59 = __toESM(require_react());
@@ -60537,7 +60529,7 @@ var wp;
     onFinishEditing,
     borderProps
   }) {
-    (0, import_deprecated19.default)("wp.blockEditor.__experimentalImageEditor", {
+    (0, import_deprecated18.default)("wp.blockEditor.__experimentalImageEditor", {
       since: "7.1",
       hint: "The Media Editor modal is now the default crop experience for core blocks. This component will be removed in a future major release."
     });
@@ -60843,7 +60835,7 @@ var wp;
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_data145 = __toESM(require_data(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
-  var import_deprecated23 = __toESM(require_deprecated(), 1);
+  var import_deprecated22 = __toESM(require_deprecated(), 1);
   var import_url6 = __toESM(require_url(), 1);
 
   // packages/block-editor/build-module/components/link-control/settings-drawer.mjs
@@ -60897,7 +60889,7 @@ var wp;
   // packages/block-editor/build-module/components/link-control/search-input.mjs
   var import_element197 = __toESM(require_element(), 1);
   var import_i18n152 = __toESM(require_i18n(), 1);
-  var import_deprecated22 = __toESM(require_deprecated(), 1);
+  var import_deprecated21 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/link-control/search-results.mjs
   var import_i18n151 = __toESM(require_i18n(), 1);
@@ -60950,7 +60942,7 @@ var wp;
   var import_dom55 = __toESM(require_dom(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
-  var import_deprecated20 = __toESM(require_deprecated(), 1);
+  var import_deprecated19 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
   var TYPES = {
     post: {
@@ -61074,7 +61066,7 @@ var wp;
   }
   var search_item_default = LinkControlSearchItem;
   var __experimentalLinkControlSearchItem = (props) => {
-    (0, import_deprecated20.default)("wp.blockEditor.__experimentalLinkControlSearchItem", {
+    (0, import_deprecated19.default)("wp.blockEditor.__experimentalLinkControlSearchItem", {
       since: "6.8"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(LinkControlSearchItem, { ...props });
@@ -61101,7 +61093,7 @@ var wp;
   ];
 
   // packages/block-editor/build-module/components/link-control/search-results.mjs
-  var import_deprecated21 = __toESM(require_deprecated(), 1);
+  var import_deprecated20 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
   function LinkControlSearchResults({
     withCreateSuggestion,
@@ -61185,7 +61177,7 @@ var wp;
   }
   var search_results_default2 = LinkControlSearchResults;
   var __experimentalLinkControlSearchResults = (props) => {
-    (0, import_deprecated21.default)("wp.blockEditor.__experimentalLinkControlSearchResults", {
+    (0, import_deprecated20.default)("wp.blockEditor.__experimentalLinkControlSearchResults", {
       since: "6.8"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(LinkControlSearchResults, { ...props });
@@ -61408,7 +61400,7 @@ var wp;
   );
   var search_input_default = LinkControlSearchInput;
   var __experimentalLinkControlSearchInput = (props) => {
-    (0, import_deprecated22.default)("wp.blockEditor.__experimentalLinkControlSearchInput", {
+    (0, import_deprecated21.default)("wp.blockEditor.__experimentalLinkControlSearchInput", {
       since: "6.8"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(LinkControlSearchInput, { ...props });
@@ -62285,7 +62277,7 @@ var wp;
   LinkControl.ViewerFill = ViewerFill;
   LinkControl.DEFAULT_LINK_SETTINGS = DEFAULT_LINK_SETTINGS;
   var DeprecatedExperimentalLinkControl = (props) => {
-    (0, import_deprecated23.default)("wp.blockEditor.__experimentalLinkControl", {
+    (0, import_deprecated22.default)("wp.blockEditor.__experimentalLinkControl", {
       since: "6.8",
       alternative: "wp.blockEditor.LinkControl"
     });
@@ -62663,13 +62655,13 @@ var wp;
   var import_i18n163 = __toESM(require_i18n(), 1);
   var import_element205 = __toESM(require_element(), 1);
   var import_data148 = __toESM(require_data(), 1);
-  var import_deprecated25 = __toESM(require_deprecated(), 1);
+  var import_deprecated24 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/url-popover/index.mjs
   var import_i18n162 = __toESM(require_i18n(), 1);
   var import_element204 = __toESM(require_element(), 1);
   var import_components176 = __toESM(require_components(), 1);
-  var import_deprecated24 = __toESM(require_deprecated(), 1);
+  var import_deprecated23 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/url-popover/link-viewer.mjs
   var import_i18n159 = __toESM(require_i18n(), 1);
@@ -63241,7 +63233,7 @@ var wp;
       ...popoverProps3
     }, ref) => {
       if (position !== void 0) {
-        (0, import_deprecated24.default)("`position` prop in wp.blockEditor.URLPopover", {
+        (0, import_deprecated23.default)("`position` prop in wp.blockEditor.URLPopover", {
           since: "6.2",
           alternative: "`placement` prop"
         });
@@ -63407,7 +63399,7 @@ var wp;
     style
   }) {
     if (deprecatedOnHTMLDrop) {
-      (0, import_deprecated25.default)("wp.blockEditor.MediaPlaceholder onHTMLDrop prop", {
+      (0, import_deprecated24.default)("wp.blockEditor.MediaPlaceholder onHTMLDrop prop", {
         since: "6.2",
         version: "6.4"
       });
@@ -63802,7 +63794,7 @@ var wp;
   var import_rich_text14 = __toESM(require_rich_text(), 1);
   var import_components181 = __toESM(require_components(), 1);
   var import_blocks87 = __toESM(require_blocks(), 1);
-  var import_deprecated29 = __toESM(require_deprecated(), 1);
+  var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_i18n166 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/rich-text/format-toolbar-container.mjs
@@ -64541,7 +64533,7 @@ var wp;
   // packages/block-editor/build-module/components/rich-text/content.mjs
   var import_element210 = __toESM(require_element(), 1);
   var import_blocks85 = __toESM(require_blocks(), 1);
-  var import_deprecated26 = __toESM(require_deprecated(), 1);
+  var import_deprecated25 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime360 = __toESM(require_jsx_runtime(), 1);
   function valueToHTMLString(value, multiline) {
     if (rich_text_default.isEmpty(value)) {
@@ -64549,7 +64541,7 @@ var wp;
       return multilineTag ? `<${multilineTag}></${multilineTag}>` : "";
     }
     if (Array.isArray(value)) {
-      (0, import_deprecated26.default)("wp.blockEditor.RichText value prop as children type", {
+      (0, import_deprecated25.default)("wp.blockEditor.RichText value prop as children type", {
         since: "6.1",
         version: "6.3",
         alternative: "value prop as string",
@@ -64577,11 +64569,11 @@ var wp;
   var import_element212 = __toESM(require_element(), 1);
   var import_blocks86 = __toESM(require_blocks(), 1);
   var import_rich_text13 = __toESM(require_rich_text(), 1);
-  var import_deprecated28 = __toESM(require_deprecated(), 1);
+  var import_deprecated27 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/rich-text/multiline.mjs
   var import_element211 = __toESM(require_element(), 1);
-  var import_deprecated27 = __toESM(require_deprecated(), 1);
+  var import_deprecated26 = __toESM(require_deprecated(), 1);
   var import_data150 = __toESM(require_data(), 1);
   var import_keycodes25 = __toESM(require_keycodes(), 1);
   var import_rich_text12 = __toESM(require_rich_text(), 1);
@@ -64595,7 +64587,7 @@ var wp;
     multiline,
     ...props
   }, forwardedRef) {
-    (0, import_deprecated27.default)("wp.blockEditor.RichText multiline prop", {
+    (0, import_deprecated26.default)("wp.blockEditor.RichText multiline prop", {
       since: "6.1",
       version: "6.3",
       alternative: "nested blocks (InnerBlocks)",
@@ -64705,7 +64697,7 @@ var wp;
       let value = props.value;
       let onChange = props.onChange;
       if (Array.isArray(value)) {
-        (0, import_deprecated28.default)("wp.blockEditor.RichText value prop as children type", {
+        (0, import_deprecated27.default)("wp.blockEditor.RichText value prop as children type", {
           since: "6.1",
           version: "6.3",
           alternative: "value prop as string",
@@ -64833,7 +64825,7 @@ var wp;
     ...props
   }, forwardedRef) {
     if (onSplit) {
-      (0, import_deprecated29.default)("wp.blockEditor.RichText onSplit prop", {
+      (0, import_deprecated28.default)("wp.blockEditor.RichText onSplit prop", {
         since: "6.4",
         alternative: 'block.json support key: "splitting"'
       });
@@ -66129,18 +66121,18 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/preview-options/index.mjs
-  var import_deprecated30 = __toESM(require_deprecated(), 1);
+  var import_deprecated29 = __toESM(require_deprecated(), 1);
   function PreviewOptions() {
-    (0, import_deprecated30.default)("wp.blockEditor.PreviewOptions", {
+    (0, import_deprecated29.default)("wp.blockEditor.PreviewOptions", {
       version: "6.5"
     });
     return null;
   }
 
   // packages/block-editor/build-module/components/use-resize-canvas/index.mjs
-  var import_deprecated31 = __toESM(require_deprecated(), 1);
+  var import_deprecated30 = __toESM(require_deprecated(), 1);
   function useResizeCanvas() {
-    (0, import_deprecated31.default)("wp.blockEditor.useResizeCanvas", {
+    (0, import_deprecated30.default)("wp.blockEditor.useResizeCanvas", {
       since: "7.1",
       hint: "Device preview is now handled by the editor canvas. This hook no longer does anything."
     });
@@ -68092,8 +68084,7 @@ var wp;
                 {
                   fontFamilies,
                   value: fontFamily,
-                  onChange: setFontFamily,
-                  size: "__unstable-large"
+                  onChange: setFontFamily
                 }
               )
             }
@@ -68158,8 +68149,7 @@ var wp;
                 {
                   __unstableInputWidth: "auto",
                   value: lineHeight,
-                  onChange: setLineHeight,
-                  size: "__unstable-large"
+                  onChange: setLineHeight
                 }
               )
             }
@@ -74107,10 +74097,10 @@ var wp;
   var block_inspector_default = BlockInspector;
 
   // packages/block-editor/build-module/components/copy-handler/index.mjs
-  var import_deprecated32 = __toESM(require_deprecated(), 1);
+  var import_deprecated31 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime417 = __toESM(require_jsx_runtime(), 1);
   var __unstableUseClipboardHandler = () => {
-    (0, import_deprecated32.default)("__unstableUseClipboardHandler", {
+    (0, import_deprecated31.default)("__unstableUseClipboardHandler", {
       alternative: "BlockCanvas or WritingFlow",
       since: "6.4",
       version: "6.7"
@@ -74118,7 +74108,7 @@ var wp;
     return useClipboardHandler();
   };
   function CopyHandler(props) {
-    (0, import_deprecated32.default)("CopyHandler", {
+    (0, import_deprecated31.default)("CopyHandler", {
       alternative: "BlockCanvas or WritingFlow",
       since: "6.4",
       version: "6.7"
@@ -74191,9 +74181,9 @@ var wp;
   var library_default = (0, import_element249.forwardRef)(PublicInserterLibrary);
 
   // packages/block-editor/build-module/components/selection-scroll-into-view/index.mjs
-  var import_deprecated33 = __toESM(require_deprecated(), 1);
+  var import_deprecated32 = __toESM(require_deprecated(), 1);
   function MultiSelectScrollIntoView() {
-    (0, import_deprecated33.default)("wp.blockEditor.MultiSelectScrollIntoView", {
+    (0, import_deprecated32.default)("wp.blockEditor.MultiSelectScrollIntoView", {
       hint: "This behaviour is now built-in.",
       since: "5.8"
     });
@@ -74363,7 +74353,7 @@ var wp;
 
   // packages/block-editor/build-module/components/recursion-provider/index.mjs
   var import_element250 = __toESM(require_element(), 1);
-  var import_deprecated34 = __toESM(require_deprecated(), 1);
+  var import_deprecated33 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
   var RenderedRefsContext = (0, import_element250.createContext)({});
   RenderedRefsContext.displayName = "RenderedRefsContext";
@@ -74392,14 +74382,14 @@ var wp;
     return Boolean(previouslyRenderedBlocks[blockName]?.has(uniqueId2));
   }
   var DeprecatedExperimentalRecursionProvider = (props) => {
-    (0, import_deprecated34.default)("wp.blockEditor.__experimentalRecursionProvider", {
+    (0, import_deprecated33.default)("wp.blockEditor.__experimentalRecursionProvider", {
       since: "6.5",
       alternative: "wp.blockEditor.RecursionProvider"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(RecursionProvider, { ...props });
   };
   var DeprecatedExperimentalUseHasRecursion = (...args) => {
-    (0, import_deprecated34.default)("wp.blockEditor.__experimentalUseHasRecursion", {
+    (0, import_deprecated33.default)("wp.blockEditor.__experimentalUseHasRecursion", {
       since: "6.5",
       alternative: "wp.blockEditor.useHasRecursion"
     });
@@ -74513,10 +74503,10 @@ var wp;
   var publish_date_time_picker_default = (0, import_element251.forwardRef)(PublicPublishDateTimePicker);
 
   // packages/block-editor/build-module/components/tool-selector/index.mjs
-  var import_deprecated35 = __toESM(require_deprecated(), 1);
+  var import_deprecated34 = __toESM(require_deprecated(), 1);
   var import_element252 = __toESM(require_element(), 1);
   function ToolSelector() {
-    (0, import_deprecated35.default)("wp.blockEditor.ToolSelector", {
+    (0, import_deprecated34.default)("wp.blockEditor.ToolSelector", {
       since: "6.9",
       hint: "The ToolSelector component no longer renders anything."
     });
@@ -83948,7 +83938,7 @@ var wp;
   var import_element294 = __toESM(require_element(), 1);
   var import_data183 = __toESM(require_data(), 1);
   var import_blocks114 = __toESM(require_blocks(), 1);
-  var import_deprecated36 = __toESM(require_deprecated(), 1);
+  var import_deprecated35 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
   var import_element293 = __toESM(require_element(), 1);
@@ -84214,7 +84204,7 @@ var wp;
     return { className, style: inlineStyleOverrides };
   }
   function useCustomSides() {
-    (0, import_deprecated36.default)("wp.blockEditor.__experimentalUseCustomSides", {
+    (0, import_deprecated35.default)("wp.blockEditor.__experimentalUseCustomSides", {
       since: "6.3",
       version: "6.4"
     });
