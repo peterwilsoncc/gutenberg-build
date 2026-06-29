@@ -1995,11 +1995,11 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState110({
+          cachedValue = useState111({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect17(
+          useLayoutEffect18(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -2033,7 +2033,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React60 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState110 = React60.useState, useEffect87 = React60.useEffect, useLayoutEffect17 = React60.useLayoutEffect, useDebugValue2 = React60.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React60 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState111 = React60.useState, useEffect87 = React60.useEffect, useLayoutEffect18 = React60.useLayoutEffect, useDebugValue2 = React60.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React60.useSyncExternalStore ? React60.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2061,14 +2061,14 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React60 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef85 = React60.useRef, useEffect87 = React60.useEffect, useMemo136 = React60.useMemo, useDebugValue2 = React60.useDebugValue;
+        var React60 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef86 = React60.useRef, useEffect87 = React60.useEffect, useMemo137 = React60.useMemo, useDebugValue2 = React60.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
-          var instRef = useRef85(null);
+          var instRef = useRef86(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo136(
+          instRef = useMemo137(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -12290,6 +12290,9 @@ var wp;
     if (rootTemplateLock && rootTemplateLock !== "contentOnly") {
       return false;
     }
+    if (isInnerContentRoot(state, rootClientId)) {
+      return false;
+    }
     const blockEditingMode = getBlockEditingMode(state, rootClientId ?? "");
     const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
     const sectionClientId = isParentSectionBlock ? rootClientId : getParentSectionBlock(state, rootClientId);
@@ -12394,8 +12397,14 @@ var wp;
       (id) => canInsertBlockType(state, getBlockName(state, id), rootClientId)
     );
   }
+  function isInnerContentRoot(state, rootClientId) {
+    return !!rootClientId && getBlockName(state, rootClientId) === "core/html";
+  }
   function canRemoveBlock(state, clientId) {
     if (state.settings.isPreviewMode) {
+      return false;
+    }
+    if (isInnerContentRoot(state, getBlockRootClientId(state, clientId))) {
       return false;
     }
     const attributes = getBlockAttributes(state, clientId);
@@ -12449,6 +12458,9 @@ var wp;
   }
   function canMoveBlock(state, clientId) {
     if (state.settings.isPreviewMode) {
+      return false;
+    }
+    if (isInnerContentRoot(state, getBlockRootClientId(state, clientId))) {
       return false;
     }
     const attributes = getBlockAttributes(state, clientId);
@@ -18958,9 +18970,12 @@ var wp;
     const convert = (0, import_element22.useMemo)(
       () => ({
         toHTML() {
-          const htmlBlock = (0, import_blocks17.createBlock)("core/html", {
-            content: block.originalContent
-          });
+          const htmlBlock = (0, import_blocks17.createBlock)(
+            "core/html",
+            {},
+            [],
+            [block.originalContent]
+          );
           return replaceBlock2(block.clientId, htmlBlock);
         },
         toBlocks() {
@@ -66065,7 +66080,7 @@ var wp;
     onMouseOver,
     showSideInLabel = true,
     sides: sides2 = ALL_SIDES,
-    useSelect: useSelect175,
+    useSelect: useSelect176,
     values
   }) {
     const spacingSizes = useSpacingSizes();
@@ -66089,7 +66104,7 @@ var wp;
       sides: sides2,
       spacingSizes,
       type: labelProp,
-      useSelect: useSelect175,
+      useSelect: useSelect176,
       values: inputValues
     };
     const renderControls = () => {
@@ -88903,6 +88918,66 @@ var wp;
     ] });
   }
 
+  // packages/block-editor/build-module/components/inner-content/index.mjs
+  var import_element314 = __toESM(require_element(), 1);
+  var import_data199 = __toESM(require_data(), 1);
+  var import_dom64 = __toESM(require_dom(), 1);
+  var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
+  var SLOT_TAG_NAME = "wp-inner-block-slot";
+  var LAYOUT = { type: "default", alignments: [] };
+  function InnerContent({ clientId }) {
+    const { innerContent, order } = (0, import_data199.useSelect)(
+      (select3) => {
+        const { getBlock: getBlock2, getBlockOrder: getBlockOrder2 } = select3(store);
+        return {
+          innerContent: getBlock2(clientId)?.innerContent,
+          order: getBlockOrder2(clientId)
+        };
+      },
+      [clientId]
+    );
+    const html = (0, import_element314.useMemo)(() => {
+      let slotIndex = 0;
+      return (innerContent ?? []).map(
+        (item) => item === null ? `<${SLOT_TAG_NAME} data-slot-index="${slotIndex++}" style="display: contents"></${SLOT_TAG_NAME}>` : item
+      ).join("");
+    }, [innerContent]);
+    const containerRef = (0, import_element314.useRef)();
+    const [slots, setSlots] = (0, import_element314.useState)([]);
+    (0, import_element314.useLayoutEffect)(() => {
+      const container = containerRef.current;
+      container.innerHTML = (0, import_dom64.safeHTML)(html);
+      setSlots(
+        Array.from(container.querySelectorAll(SLOT_TAG_NAME)).sort(
+          (a2, b2) => Number(a2.dataset.slotIndex) - Number(b2.dataset.slotIndex)
+        )
+      );
+    }, [html]);
+    return /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(LayoutProvider, { value: LAYOUT, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+        "div",
+        {
+          ref: containerRef,
+          className: "block-editor-inner-content",
+          style: { display: "contents" }
+        }
+      ),
+      order.map(
+        (childClientId, index2) => slots[index2] ? (0, import_element314.createPortal)(
+          /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            block_default2,
+            {
+              rootClientId: clientId,
+              clientId: childClientId
+            }
+          ),
+          slots[index2],
+          childClientId
+        ) : null
+      )
+    ] });
+  }
+
   // packages/block-editor/build-module/private-apis.mjs
   var privateApis13 = {};
   lock(privateApis13, {
@@ -88971,7 +89046,8 @@ var wp;
     PrivateBlockContext,
     useListViewPanelState,
     isHashLink,
-    isRelativePath
+    isRelativePath,
+    InnerContent
   });
   return __toCommonJS(index_exports);
 })();

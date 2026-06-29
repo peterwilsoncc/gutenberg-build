@@ -10147,9 +10147,7 @@ var wp;
     const convertToHTML = () => {
       replaceBlock(
         props.clientId,
-        (0, import_blocks7.createBlock)("core/html", {
-          content: originalUndelimitedContent
-        })
+        (0, import_blocks7.createBlock)("core/html", {}, [], [originalUndelimitedContent])
       );
     };
     const hasContent = !!originalUndelimitedContent;
