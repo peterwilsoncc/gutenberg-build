@@ -18799,7 +18799,7 @@ var wp;
   var import_blocks17 = __toESM(require_blocks(), 1);
   var import_data18 = __toESM(require_data(), 1);
 
-  // packages/block-editor/node_modules/diff/libesm/diff/base.js
+  // node_modules/diff/libesm/diff/base.js
   var Diff = class {
     diff(oldStr, newStr, options = {}) {
       let callback;
@@ -19001,7 +19001,7 @@ var wp;
     }
   };
 
-  // packages/block-editor/node_modules/diff/libesm/diff/character.js
+  // node_modules/diff/libesm/diff/character.js
   var CharacterDiff = class extends Diff {
   };
   var characterDiff = new CharacterDiff();
@@ -28882,7 +28882,7 @@ var wp;
     });
   };
 
-  // node_modules/@base-ui/react/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
+  // node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
   var React28 = __toESM(require_react(), 1);
   var import_react5 = __toESM(require_react(), 1);
   var ReactDOM3 = __toESM(require_react_dom(), 1);

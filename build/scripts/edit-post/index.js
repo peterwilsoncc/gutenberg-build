@@ -4409,7 +4409,7 @@ var wp;
     });
   };
 
-  // node_modules/@base-ui/react/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
+  // node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
   var React19 = __toESM(require_react(), 1);
   var import_react2 = __toESM(require_react(), 1);
   var ReactDOM3 = __toESM(require_react_dom(), 1);

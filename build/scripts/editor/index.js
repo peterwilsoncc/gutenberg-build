@@ -10450,7 +10450,7 @@ var wp;
     });
   };
 
-  // node_modules/@base-ui/react/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
+  // node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
   var React29 = __toESM(require_react(), 1);
   var import_react2 = __toESM(require_react(), 1);
   var ReactDOM3 = __toESM(require_react_dom(), 1);
@@ -72675,7 +72675,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element201 = __toESM(require_element(), 1);
   var import_blocks14 = __toESM(require_blocks(), 1);
 
-  // packages/editor/node_modules/diff/libesm/diff/base.js
+  // node_modules/diff/libesm/diff/base.js
   var Diff = class {
     diff(oldStr, newStr, options = {}) {
       let callback;
@@ -72877,7 +72877,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/editor/node_modules/diff/libesm/diff/character.js
+  // node_modules/diff/libesm/diff/character.js
   var CharacterDiff = class extends Diff {
   };
   var characterDiff = new CharacterDiff();
@@ -72885,7 +72885,7 @@ If there's a particular need for this, please submit a feature request at https:
     return characterDiff.diff(oldStr, newStr, options);
   }
 
-  // packages/editor/node_modules/diff/libesm/util/string.js
+  // node_modules/diff/libesm/util/string.js
   function longestCommonPrefix(str1, str22) {
     let i3;
     for (i3 = 0; i3 < str1.length && i3 < str22.length; i3++) {
@@ -73013,7 +73013,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [head2, tail];
   }
 
-  // packages/editor/node_modules/diff/libesm/diff/word.js
+  // node_modules/diff/libesm/diff/word.js
   var extendedWordChars = "a-zA-Z0-9_\\u{AD}\\u{C0}-\\u{D6}\\u{D8}-\\u{F6}\\u{F8}-\\u{2C6}\\u{2C8}-\\u{2D7}\\u{2DE}-\\u{2FF}\\u{1E00}-\\u{1EFF}";
   var tokenizeIncludingWhitespace = new RegExp(`[${extendedWordChars}]+|\\s+|[^${extendedWordChars}]`, "ug");
   var WordDiff = class extends Diff {
@@ -73150,7 +73150,7 @@ If there's a particular need for this, please submit a feature request at https:
     return wordsWithSpaceDiff.diff(oldStr, newStr, options);
   }
 
-  // packages/editor/node_modules/diff/libesm/diff/line.js
+  // node_modules/diff/libesm/diff/line.js
   var LineDiff = class extends Diff {
     constructor() {
       super(...arguments);
@@ -73198,7 +73198,7 @@ If there's a particular need for this, please submit a feature request at https:
     return retLines;
   }
 
-  // packages/editor/node_modules/diff/libesm/diff/array.js
+  // node_modules/diff/libesm/diff/array.js
   var ArrayDiff = class extends Diff {
     tokenize(value) {
       return value.slice();
