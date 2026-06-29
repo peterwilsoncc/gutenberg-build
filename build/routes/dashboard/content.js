@@ -41824,7 +41824,8 @@ function useWidgetTypes(records) {
             ...module.default,
             name: record.name,
             renderModule: record.render_module ?? "",
-            ...record.presentation ? { presentation: record.presentation } : {}
+            ...record.presentation ? { presentation: record.presentation } : {},
+            ...record.category ? { category: record.category } : {}
           };
         } catch {
           return null;

@@ -13,6 +13,7 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'content-bleed',
+		'category'     => 'dashboard',
 	),
 	array(
 		'name'         => 'core/events',
@@ -20,6 +21,7 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'content-bleed',
+		'category'     => 'dashboard',
 	),
 	array(
 		'name'         => 'core/hello-dolly',
@@ -27,6 +29,7 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'full-bleed',
+		'category'     => 'dashboard',
 	),
 	array(
 		'name'         => 'core/hello-world',
@@ -34,6 +37,7 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'full-bleed',
+		'category'     => 'demo',
 	),
 	array(
 		'name'         => 'core/news',
@@ -41,6 +45,7 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'content-bleed',
+		'category'     => 'dashboard',
 	),
 	array(
 		'name'         => 'core/quick-draft',
@@ -48,6 +53,7 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'content-bleed',
+		'category'     => 'dashboard',
 	),
 	array(
 		'name'         => 'core/site-health',
@@ -55,6 +61,7 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'framed',
+		'category'     => 'site',
 	),
 	array(
 		'name'         => 'core/site-preview',
@@ -62,6 +69,7 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'full-bleed',
+		'category'     => 'dashboard',
 	),
 	array(
 		'name'         => 'core/welcome',
@@ -69,5 +77,6 @@ return array(
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'full-bleed',
+		'category'     => 'dashboard',
 	)
 );
