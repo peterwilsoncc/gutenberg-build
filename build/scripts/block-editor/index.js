@@ -17663,7 +17663,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components15.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           import_components15.RangeControl,
           {
-            __next40pxDefaultSize: true,
             onChange: handleSliderChange,
             value: quantity || 0,
             min: 0,
@@ -17729,7 +17728,6 @@ var wp;
         ) : /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           import_components15.RangeControl,
           {
-            __next40pxDefaultSize: true,
             value: columnCount ?? 1,
             onChange: (value) => onChange({
               ...layout,
@@ -56596,8 +56594,7 @@ var wp;
           onMouseOver,
           step,
           value: parsedQuantity,
-          withInputField: false,
-          __next40pxDefaultSize: true
+          withInputField: false
         }
       )
     ] });
@@ -56767,8 +56764,7 @@ var wp;
               renderTooltipContent: customTooltipContent,
               step: 1,
               value: currentValue,
-              withInputField: false,
-              __next40pxDefaultSize: true
+              withInputField: false
             }
           ),
           hasPresets && !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
@@ -58745,7 +58741,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_components153.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_components153.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
           import_components153.RangeControl,
           {
-            __next40pxDefaultSize: true,
             value: customRangeValue,
             min: 0,
             max: RANGE_CONTROL_CUSTOM_SETTINGS[selectedUnit]?.max ?? 100,
@@ -60508,7 +60503,6 @@ var wp;
         renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(import_components156.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
           import_components156.RangeControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n142.__)("Zoom"),
             min: MIN_ZOOM3,
             max: MAX_ZOOM3,
@@ -66956,7 +66950,6 @@ var wp;
         withSlider && /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components197.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components197.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
           import_components197.RangeControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n183.__)("Line indent"),
             hideLabelFromVision: true,
             value: valueQuantity,

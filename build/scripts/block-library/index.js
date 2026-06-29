@@ -6506,7 +6506,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
                 import_components5.RangeControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n8.__)("Image size"),
                   onChange: (newSize) => setAttributes({
                     size: newSize
@@ -13257,7 +13256,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
               import_components17.RangeControl,
               {
-                __next40pxDefaultSize: true,
                 label: (0, import_i18n26.__)("Columns"),
                 value: count,
                 onChange: (value) => updateColumns(count, Math.max(minCount, value)),
@@ -14479,7 +14477,6 @@ var wp;
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_block_editor46.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_components21.PanelBody, { title: (0, import_i18n33.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
       import_components21.RangeControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n33.__)("Image size"),
         onChange: (newWidth) => setAttributes({
           width: newWidth,
@@ -19357,8 +19354,7 @@ var wp;
                 min: 0,
                 max: 100,
                 step: 10,
-                required: true,
-                __next40pxDefaultSize: true
+                required: true
               }
             )
           }
@@ -23631,7 +23627,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
                   import_components41.RangeControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n64.__)("Height in pixels"),
                     min: MIN_PREVIEW_HEIGHT,
                     max: Math.max(
@@ -27521,8 +27516,7 @@ ${url}
                     onChange: setColumnsNumber,
                     min: 1,
                     max: Math.min(MAX_COLUMNS, images.length),
-                    required: true,
-                    __next40pxDefaultSize: true
+                    required: true
                   }
                 )
               }
@@ -34782,7 +34776,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
                   import_components59.RangeControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n99.__)("Number of comments"),
                     value: commentsToShow,
                     onChange: (value) => setAttributes({ commentsToShow: value }),
@@ -35342,7 +35335,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
                   import_components60.RangeControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n100.__)("Max number of words"),
                     value: excerptLength,
                     onChange: (value) => setAttributes({ excerptLength: value }),
@@ -39151,7 +39143,6 @@ ${text}
               children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
                 import_components67.RangeControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n110.__)("Media width"),
                   value: temporaryMediaWidth || mediaWidth,
                   onChange: commitWidthChange,
@@ -53879,7 +53870,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
                   import_components109.RangeControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n174.__)("Max number of words"),
                     value: excerptLength,
                     onChange: (value) => {
@@ -54313,8 +54303,7 @@ ${text}
               min: 0,
               max: 100,
               step: 10,
-              required: true,
-              __next40pxDefaultSize: true
+              required: true
             }
           )
         }
@@ -58784,7 +58773,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
       import_components125.RangeControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n198.__)("Items per page"),
         min: MIN_POSTS_PER_PAGE,
         max: MAX_POSTS_PER_PAGE,
@@ -61019,7 +61007,6 @@ ${text}
               children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
                 import_components137.RangeControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n214.__)("Number of links"),
                   help: (0, import_i18n214.__)(
                     "Specify how many links can appear before and after the current page number. Links to the first, current and last page are always visible."
@@ -63325,7 +63312,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
                   import_components144.RangeControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n224.__)("Number of items"),
                     value: itemsToShow,
                     onChange: (value) => setAttributes({ itemsToShow: value }),
@@ -63397,7 +63383,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
                   import_components144.RangeControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n224.__)("Max number of words in excerpt"),
                     value: excerptLength,
                     onChange: (value) => setAttributes({ excerptLength: value }),
@@ -63418,7 +63403,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
                   import_components144.RangeControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n224.__)("Columns"),
                     value: columns,
                     onChange: (value) => setAttributes({ columns: value }),
@@ -64831,7 +64815,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
                   import_components148.RangeControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n230.__)("Image width"),
                     onChange: (newWidth) => setAttributes({ width: newWidth }),
                     min: minWidth,
@@ -71312,7 +71295,6 @@ ${text}
               children: /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
                 import_components159.RangeControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n250.__)("Number of tags"),
                   value: numberOfTags,
                   onChange: (value) => setAttributes({ numberOfTags: value }),
@@ -73442,7 +73424,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
       import_components174.RangeControl,
       {
-        __next40pxDefaultSize: true,
         value,
         min: 0,
         max: 100,
@@ -74290,7 +74271,6 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(import_block_editor287.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(import_components179.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(
         import_components179.RangeControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n268.__)("Columns"),
           value: columns,
           onChange: (value) => setAttributes({ columns: value }),

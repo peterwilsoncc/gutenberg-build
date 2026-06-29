@@ -25959,7 +25959,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
       import_components37.RangeControl,
       {
-        __next40pxDefaultSize: true,
         showTooltip: false,
         label: (0, import_i18n44.__)("Preview size"),
         value: previewSizeToUse,

@@ -31095,7 +31095,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
       import_components44.RangeControl,
       {
-        __next40pxDefaultSize: true,
         showTooltip: false,
         label: (0, import_i18n98.__)("Preview size"),
         value: previewSizeToUse,
@@ -71409,7 +71408,6 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(import_components147.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(import_components147.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
         import_components147.RangeControl,
         {
-          __next40pxDefaultSize: true,
           label,
           hideLabelFromVision: true,
           value: valueQuantity,
@@ -91107,7 +91105,6 @@ If there's a particular need for this, please submit a feature request at https:
     const sliderOrSpinner = isLoading || selectedIndex === -1 ? /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_components248.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
       import_components248.RangeControl,
       {
-        __next40pxDefaultSize: true,
         "aria-valuetext": renderTooltipContent(selectedIndex),
         className: "editor-revisions-header__slider",
         hideLabelFromVision: true,

@@ -15269,7 +15269,6 @@ function PreviewSizePicker() {
   return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
     import_components18.RangeControl,
     {
-      __next40pxDefaultSize: true,
       showTooltip: false,
       label: (0, import_i18n22.__)("Preview size"),
       value: previewSizeToUse,
