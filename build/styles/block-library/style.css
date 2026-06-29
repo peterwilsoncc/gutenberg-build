@@ -58,8 +58,7 @@
   justify-content: center;
 }
 
-.wp-block-accordion-panel[inert], .wp-block-accordion-panel[aria-hidden=true] {
-  display: none;
+.wp-block-accordion-panel[hidden] {
   margin-block-start: 0;
 }
 

@@ -5937,7 +5937,7 @@ var wp;
       [clientId, isSelected, openByDefault]
     );
     const blockProps = (0, import_block_editor9.useBlockProps)({
-      "aria-hidden": !hasSelection,
+      hidden: !hasSelection,
       role: "region"
     });
     const innerBlocksProps = (0, import_block_editor9.useInnerBlocksProps)(blockProps, {
