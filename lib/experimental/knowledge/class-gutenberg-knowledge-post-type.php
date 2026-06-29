@@ -1,6 +1,6 @@
 <?php
 /**
- * Guidelines Post Type registration.
+ * Knowledge Post Type registration.
  *
  * @package gutenberg
  */
@@ -10,30 +10,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Handles registration of the Guidelines custom post type.
+ * Handles registration of the Knowledge custom post type.
  */
-class Gutenberg_Guidelines_Post_Type {
+class Gutenberg_Knowledge_Post_Type {
 
 	/**
 	 * The post type name.
 	 *
 	 * @var string
 	 */
-	const POST_TYPE = 'wp_guideline';
+	const POST_TYPE = 'wp_knowledge';
 
 	/**
-	 * The taxonomy name for guideline types.
+	 * The taxonomy name for knowledge types.
 	 *
 	 * @var string
 	 */
-	const TAXONOMY = 'wp_guideline_type';
+	const TAXONOMY = 'wp_knowledge_type';
 
 	/**
-	 * Taxonomy term slug used for site-wide content guidelines.
+	 * Taxonomy term slug used for the site-wide guidelines singleton.
+	 *
+	 * The site-wide guidelines post managed by the Settings → Guidelines page
+	 * carries this term; it maps to the `guideline` built-in knowledge type.
 	 *
 	 * @var string
 	 */
-	const TERM_CONTENT = 'content';
+	const TERM_GUIDELINE = 'guideline';
 
 	/**
 	 * The standard guideline category meta keys.
@@ -113,23 +116,29 @@ class Gutenberg_Guidelines_Post_Type {
 					'view_items'               => __( 'View Guidelines', 'gutenberg' ),
 				),
 				'public'                => false,
-				// Guidelines have no native post-type screens; management
+				// Knowledge rows have no native post-type screens; management
 				// flows through the Settings → Guidelines page (see
 				// load.php) and the REST API.
 				'show_ui'               => false,
 				'show_in_rest'          => true,
-				'rest_base'             => 'guidelines',
+				'rest_base'             => 'knowledge',
 
-				'rest_controller_class' => Gutenberg_Guidelines_REST_Controller::class,
+				'rest_controller_class' => Gutenberg_Knowledge_REST_Controller::class,
 
-				'capability_type'       => 'guideline',
+				// The primitive capabilities follow the standard plural form
+				// (`edit_knowledge_items`) while the per-post meta capabilities
+				// keep the singular form (`edit_knowledge_item`) — the same
+				// primitive/meta split WordPress uses for posts (`edit_posts` vs
+				// `edit_post`). The `*_knowledge_item` forms are never granted;
+				// `map_meta_cap()` resolves them onto the primitives.
+				'capability_type'       => array( 'knowledge_item', 'knowledge_items' ),
 				'map_meta_cap'          => true,
 				// `read` is remapped so Subscribers (who hold the base `read`
 				// cap) are blocked at the post-type door. Every other primitive
-				// defaults to a guideline-prefixed cap synthesized by
-				// `_wp_guidelines_synthesize_caps()`.
+				// defaults to a knowledge_items-suffixed cap synthesized by
+				// `wp_maybe_grant_knowledge_caps()`.
 				'capabilities'          => array(
-					'read' => 'read_guidelines',
+					'read' => 'read_knowledge_items',
 				),
 				'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'revisions' ),
 				'hierarchical'          => false,
@@ -139,6 +148,14 @@ class Gutenberg_Guidelines_Post_Type {
 				'can_export'            => true,
 			)
 		);
+
+		/*
+		 * Disable autosave endpoints for knowledge. 'editor' support implies
+		 * 'autosave', but knowledge is headless storage with no editor session,
+		 * so the autosave REST routes have no consumer. Revision history is
+		 * retained.
+		 */
+		remove_post_type_support( self::POST_TYPE, 'autosave' );
 
 		register_taxonomy(
 			self::TAXONOMY,
@@ -165,35 +182,43 @@ class Gutenberg_Guidelines_Post_Type {
 					'update_item'           => __( 'Update Guideline Type', 'gutenberg' ),
 					'view_item'             => __( 'View Guideline Type', 'gutenberg' ),
 				),
+				/*
+				 * Editing and assigning terms reuse the `wp_knowledge` primitive
+				 * `edit_knowledge_items` so that anyone who can edit a knowledge
+				 * row can also lazily create and assign its type. Managing or
+				 * deleting the type vocabulary itself stays an administrator task.
+				 */
 				'capabilities'       => array(
 					'manage_terms' => 'manage_options',
-					'edit_terms'   => 'edit_guidelines',
+					'edit_terms'   => 'edit_knowledge_items',
 					'delete_terms' => 'manage_options',
-					'assign_terms' => 'edit_guidelines',
+					'assign_terms' => 'edit_knowledge_items',
 				),
 				'query_var'          => false,
 				'rewrite'            => false,
-				'show_ui'            => true,
-				'show_admin_column'  => true,
+				// Headless, like the post type: knowledge type terms are managed
+				// through the REST API, not a wp-admin taxonomy screen.
+				'show_ui'            => false,
 				'show_in_nav_menus'  => false,
 				'show_in_rest'       => true,
 			)
 		);
 
-		add_filter( 'user_has_cap', '_wp_guidelines_synthesize_caps', 10, 4 );
-		add_action( 'save_post_' . self::POST_TYPE, '_wp_guidelines_ensure_default_type_term' );
-		add_filter( 'wp_insert_term_data', '_wp_guidelines_maybe_map_term_label', 10, 2 );
+		add_filter( 'user_has_cap', 'wp_maybe_grant_knowledge_caps', 1, 4 );
+		add_action( 'save_post_' . self::POST_TYPE, 'wp_knowledge_ensure_default_type_term' );
+		add_filter( 'wp_insert_term_data', 'wp_knowledge_maybe_map_term_label', 10, 2 );
 	}
 
 	/**
-	 * Determines whether a guideline post belongs to the content singleton.
+	 * Determines whether a knowledge post belongs to the site-wide
+	 * guidelines singleton.
 	 *
-	 * Used by the /wp/v2/content-guidelines route to reject non-content-typed
-	 * posts addressed by ID — those belong to the standard /wp/v2/guidelines
-	 * collection.
+	 * Used by the /wp/v2/content-guidelines route to reject posts without
+	 * the `guideline` term addressed by ID — those belong to the standard
+	 * /wp/v2/knowledge collection.
 	 *
 	 * @param int $post_id Post ID.
-	 * @return bool True if the post has the `content` term.
+	 * @return bool True if the post has the `guideline` term.
 	 */
 	public static function is_content_guideline( $post_id ) {
 		$terms = get_the_terms( $post_id, self::TAXONOMY );
@@ -202,7 +227,7 @@ class Gutenberg_Guidelines_Post_Type {
 		}
 
 		foreach ( $terms as $term ) {
-			if ( self::TERM_CONTENT === $term->slug ) {
+			if ( self::TERM_GUIDELINE === $term->slug ) {
 				return true;
 			}
 		}
