@@ -31,6 +31,13 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
+  // package-external:@wordpress/deprecated
+  var require_deprecated = __commonJS({
+    "package-external:@wordpress/deprecated"(exports, module) {
+      module.exports = window.wp.deprecated;
+    }
+  });
+
   // package-external:@wordpress/private-apis
   var require_private_apis = __commonJS({
     "package-external:@wordpress/private-apis"(exports, module) {
@@ -62,8 +69,12 @@ var wp;
   // packages/theme/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
+    ThemeProvider: () => ThemeProvider,
     privateApis: () => privateApis
   });
+
+  // packages/theme/build-module/private-apis.mjs
+  var import_deprecated = __toESM(require_deprecated(), 1);
 
   // packages/theme/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
@@ -4392,10 +4403,28 @@ var wp;
   };
 
   // packages/theme/build-module/private-apis.mjs
+  function warnPrivateApi(apiName, options = {}) {
+    (0, import_deprecated.default)(`\`privateApis.${apiName}\` from \`@wordpress/theme\``, {
+      since: "7.1",
+      version: "7.3",
+      ...options
+    });
+  }
   var privateApis = {};
   lock(privateApis, {
-    ThemeProvider,
-    useThemeProviderStyles
+    get ThemeProvider() {
+      warnPrivateApi("ThemeProvider", {
+        alternative: "`ThemeProvider` from `@wordpress/theme`"
+      });
+      return ThemeProvider;
+    },
+    get useThemeProviderStyles() {
+      warnPrivateApi("useThemeProviderStyles", {
+        alternative: "`ThemeProvider` from `@wordpress/theme` for supported theming use cases",
+        hint: "`useThemeProviderStyles` has no public replacement."
+      });
+      return useThemeProviderStyles;
+    }
   });
   return __toCommonJS(index_exports);
 })();

@@ -4993,11 +4993,11 @@ var wp;
       if (!hasFinishedResolution("getPostType", [postType2]) || !hasFinishedResolution("getCurrentTheme")) {
         return void 0;
       }
-      const theme = currentTheme?.stylesheet;
+      const theme2 = currentTheme?.stylesheet;
       const defaultModePreference = select7(import_preferences2.store).get(
         "core",
         "renderingModes"
-      )?.[theme]?.[postType2];
+      )?.[theme2]?.[postType2];
       if (RENDERING_MODES.includes(defaultModePreference)) {
         return defaultModePreference;
       }
@@ -17366,12 +17366,32 @@ var wp;
     return (0, import_element32.cloneElement)(slot ?? defaultSlot, { children });
   }
 
+  // packages/ui/build-module/utils/theme-provider.mjs
+  var theme = __toESM(require_theme(), 1);
+
   // packages/ui/build-module/lock-unlock.mjs
   var import_private_apis3 = __toESM(require_private_apis(), 1);
   var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/ui"
   );
+
+  // packages/ui/build-module/utils/theme-provider.mjs
+  function getThemeProvider() {
+    const themePackage = theme;
+    if (themePackage.ThemeProvider) {
+      return themePackage.ThemeProvider;
+    }
+    if (!themePackage.privateApis) {
+      throw new Error(
+        "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
+      );
+    }
+    return unlock3(
+      themePackage.privateApis
+    ).ThemeProvider;
+  }
+  var ThemeProvider = getThemeProvider();
 
   // packages/ui/build-module/stack/stack.mjs
   var import_element33 = __toESM(require_element(), 1);
@@ -17497,7 +17517,6 @@ var wp;
 
   // packages/ui/build-module/tooltip/popup.mjs
   var import_element36 = __toESM(require_element(), 1);
-  var import_theme = __toESM(require_theme(), 1);
 
   // packages/ui/build-module/tooltip/portal.mjs
   var import_element34 = __toESM(require_element(), 1);
@@ -17850,7 +17869,6 @@ var wp;
     registerStyle14("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
   var style_default13 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-  var ThemeProvider = unlock3(import_theme.privateApis).ThemeProvider;
   var POPUP_COLOR = { background: "#1e1e1e" };
   var Popup = (0, import_element36.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
     const popupContent = /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
@@ -75232,8 +75250,8 @@ If there's a particular need for this, please submit a feature request at https:
         const { canRemoveBlock, getBlock: getBlock2 } = select7(import_block_editor29.store);
         const { getEntityRecord, getCurrentTheme } = select7(import_core_data51.store);
         const block = getBlock2(clientId);
-        const { slug, theme } = block?.attributes ?? {};
-        const themeSlug = theme || getCurrentTheme()?.stylesheet;
+        const { slug, theme: theme2 } = block?.attributes ?? {};
+        const themeSlug = theme2 || getCurrentTheme()?.stylesheet;
         const templatePartId = themeSlug && slug ? `${themeSlug}//${slug}` : null;
         const entity = templatePartId ? getEntityRecord(
           "postType",
@@ -76328,13 +76346,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var setDefaultRenderingMode = (mode) => ({ select: select7, registry }) => {
     const postType2 = select7.getCurrentPostType();
-    const theme = registry.select(import_core_data56.store).getCurrentTheme()?.stylesheet;
-    const renderingModes = registry.select(import_preferences9.store).get("core", "renderingModes")?.[theme] ?? {};
+    const theme2 = registry.select(import_core_data56.store).getCurrentTheme()?.stylesheet;
+    const renderingModes = registry.select(import_preferences9.store).get("core", "renderingModes")?.[theme2] ?? {};
     if (renderingModes[postType2] === mode) {
       return;
     }
     const newModes = {
-      [theme]: {
+      [theme2]: {
         ...renderingModes,
         [postType2]: mode
       }
@@ -79067,8 +79085,8 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
       if (blockName === "core/template-part" && !!attributes?.slug) {
-        const theme = attributes.theme || getCurrentTheme()?.stylesheet;
-        const templatePartId = theme ? `${theme}//${attributes.slug}` : null;
+        const theme2 = attributes.theme || getCurrentTheme()?.stylesheet;
+        const templatePartId = theme2 ? `${theme2}//${attributes.slug}` : null;
         if (templatePartId) {
           const entity = getEditedEntityRecord(
             "postType",
