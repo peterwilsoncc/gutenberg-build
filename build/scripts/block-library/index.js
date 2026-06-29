@@ -43864,6 +43864,16 @@ ${text}
     }
     return badges;
   }
+  function getEntityTitle(entityRecord) {
+    const title = entityRecord?.title;
+    if (typeof title === "string") {
+      return title;
+    }
+    if (title && "rendered" in title) {
+      return title.rendered || (0, import_i18n140.__)("(no title)");
+    }
+    return entityRecord?.name;
+  }
   function useLinkPreview({
     url,
     entityRecord,
@@ -43877,7 +43887,7 @@ ${text}
         "__unstableBase"
       )?.home;
     }, []);
-    const title = entityRecord?.title?.rendered || entityRecord?.title || entityRecord?.name;
+    const title = getEntityTitle(entityRecord);
     const { richData } = useRemoteUrlData(title ? null : url);
     const { displayUrl, isExternal } = computeDisplayUrl({
       linkUrl: url,
