@@ -5942,6 +5942,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   font-size: 12px;
 }
 
+mark.wp-note {
+  border-radius: 1px;
+  transition: background-color 0.1s ease-in-out;
+}
+
 .editor-avatar {
   position: relative;
   display: inline-flex;
