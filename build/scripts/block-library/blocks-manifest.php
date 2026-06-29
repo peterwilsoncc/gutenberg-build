@@ -9285,6 +9285,12 @@ return array(
 				'attribute' => 'src',
 				'role' => 'content'
 			),
+			'width' => array(
+				'type' => 'number'
+			),
+			'height' => array(
+				'type' => 'number'
+			),
 			'playsInline' => array(
 				'type' => 'boolean',
 				'source' => 'attribute',

@@ -982,6 +982,10 @@ figure.wp-block-image:not(.wp-block) {
 .wp-block-image {
   position: relative;
 }
+.wp-block-image.is-transient:not(.alignwide):not(.alignfull) {
+  width: -moz-fit-content;
+  width: fit-content;
+}
 .wp-block-image .is-applying img, .wp-block-image.is-transient img {
   opacity: 0.3;
 }
