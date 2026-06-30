@@ -245,6 +245,13 @@ var require_theme = __commonJS({
   }
 });
 
+// package-external:@wordpress/private-apis
+var require_private_apis = __commonJS({
+  "package-external:@wordpress/private-apis"(exports, module) {
+    module.exports = window.wp.privateApis;
+  }
+});
+
 // package-external:@wordpress/components
 var require_components = __commonJS({
   "package-external:@wordpress/components"(exports, module) {
@@ -450,13 +457,6 @@ var require_cjs = __commonJS({
     };
     var deepmerge_1 = deepmerge2;
     module.exports = deepmerge_1;
-  }
-});
-
-// package-external:@wordpress/private-apis
-var require_private_apis = __commonJS({
-  "package-external:@wordpress/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
   }
 });
 
@@ -8636,6 +8636,13 @@ function renderSlotWithChildren(slot, defaultSlot, children) {
   return (0, import_element12.cloneElement)(slot ?? defaultSlot, { children });
 }
 
+// packages/ui/build-module/lock-unlock.mjs
+var import_private_apis = __toESM(require_private_apis(), 1);
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/ui"
+);
+
 // packages/ui/build-module/stack/stack.mjs
 var import_element13 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
@@ -9113,9 +9120,10 @@ if (typeof process === "undefined" || true) {
   registerStyle5("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
 }
 var style_default4 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
 var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup = (0, import_element16.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_theme.ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
     index_parts_exports.Popup,
     {
       ref,
@@ -10680,8 +10688,8 @@ function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
 }
 
 // packages/global-styles-ui/build-module/lock-unlock.mjs
-var import_private_apis = __toESM(require_private_apis(), 1);
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis2 = __toESM(require_private_apis(), 1);
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/global-styles-ui"
 );
@@ -10694,7 +10702,7 @@ var {
   useHasColorPanel,
   useSettingsForBlockElement,
   useHasBackgroundPanel
-} = unlock(import_block_editor.privateApis);
+} = unlock2(import_block_editor.privateApis);
 
 // packages/global-styles-ui/build-module/preview-styles.mjs
 var import_components7 = __toESM(require_components(), 1);
@@ -11210,7 +11218,7 @@ var import_components10 = __toESM(require_components(), 1);
 var import_i18n6 = __toESM(require_i18n(), 1);
 var import_block_editor2 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-var { StateControl, StateControlBadges } = unlock(import_block_editor2.privateApis);
+var { StateControl, StateControlBadges } = unlock2(import_block_editor2.privateApis);
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
 var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
@@ -11221,7 +11229,7 @@ var {
   useSettingsForBlockElement: useSettingsForBlockElement2,
   useHasColorPanel: useHasColorPanel2,
   useHasBackgroundPanel: useHasBackgroundPanel2
-} = unlock(import_block_editor3.privateApis);
+} = unlock2(import_block_editor3.privateApis);
 function useSortedBlockTypes() {
   const blockItems = (0, import_data4.useSelect)(
     (select) => select(import_blocks2.store).getBlockTypes(),
@@ -11348,7 +11356,7 @@ var {
   FiltersPanel: StylesFiltersPanel,
   ImageSettingsPanel,
   AdvancedPanel: StylesAdvancedPanel
-} = unlock(import_block_editor5.privateApis);
+} = unlock2(import_block_editor5.privateApis);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
 var import_i18n22 = __toESM(require_i18n(), 1);
@@ -11608,7 +11616,7 @@ var FONT_STYLES = {
 
 // packages/global-styles-ui/build-module/font-library/utils/index.mjs
 var { File } = window;
-var { kebabCase } = unlock(import_components19.privateApis);
+var { kebabCase } = unlock2(import_components19.privateApis);
 function setUIValuesNeeded(font2, extraValues = {}) {
   if (!font2.name && (font2.fontFamily || font2.slug)) {
     font2.name = font2.fontFamily || font2.slug;
@@ -23485,7 +23493,7 @@ var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
 
 // packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.mjs
 var import_components27 = __toESM(require_components(), 1);
-var { kebabCase: kebabCase2 } = unlock(import_components27.privateApis);
+var { kebabCase: kebabCase2 } = unlock2(import_components27.privateApis);
 function makeFamiliesFromFaces(fontFaces) {
   const fontFamiliesObject = fontFaces.reduce(
     (acc, item) => {
@@ -23673,7 +23681,7 @@ var upload_fonts_default = UploadFonts;
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
 var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
-var { Tabs } = unlock(import_components29.privateApis);
+var { Tabs } = unlock2(import_components29.privateApis);
 var DEFAULT_TAB = {
   id: "installed-fonts",
   title: (0, import_i18n18._x)("Library", "Font library")
@@ -23708,7 +23716,7 @@ var import_element39 = __toESM(require_element(), 1);
 // packages/global-styles-ui/build-module/typography-panel.mjs
 var import_block_editor6 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock(import_block_editor6.privateApis);
+var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock2(import_block_editor6.privateApis);
 
 // packages/global-styles-ui/build-module/typography-preview.mjs
 var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
@@ -23757,7 +23765,7 @@ var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-colors.mjs
 var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock(
+var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock2(
   import_block_editor7.privateApis
 );
 
@@ -23882,7 +23890,7 @@ var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
 var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
-var { Tabs: Tabs2 } = unlock(import_components42.privateApis);
+var { Tabs: Tabs2 } = unlock2(import_components42.privateApis);
 
 // packages/global-styles-ui/build-module/screen-background.mjs
 var import_i18n29 = __toESM(require_i18n(), 1);
@@ -23892,13 +23900,13 @@ var import_components43 = __toESM(require_components(), 1);
 // packages/global-styles-ui/build-module/background-panel.mjs
 var import_block_editor8 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
-var { BackgroundPanel: StylesBackgroundPanel2 } = unlock(
+var { BackgroundPanel: StylesBackgroundPanel2 } = unlock2(
   import_block_editor8.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-background.mjs
 var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock(import_block_editor9.privateApis);
+var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock2(import_block_editor9.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_components45 = __toESM(require_components(), 1);
@@ -23912,14 +23920,14 @@ var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
-var { Menu } = unlock(import_components45.privateApis);
+var { Menu } = unlock2(import_components45.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
 var import_components46 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_element42 = __toESM(require_element(), 1);
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu2 } = unlock(import_components46.privateApis);
+var { Menu: Menu2 } = unlock2(import_components46.privateApis);
 var customShadowMenuItems = [
   {
     label: (0, import_i18n32.__)("Rename"),
@@ -23948,11 +23956,11 @@ var import_block_editor11 = __toESM(require_block_editor(), 1);
 var import_block_editor10 = __toESM(require_block_editor(), 1);
 var import_element43 = __toESM(require_element(), 1);
 var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock(import_block_editor10.privateApis);
+var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock2(import_block_editor10.privateApis);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
 var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
-var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock(
+var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock2(
   import_block_editor11.privateApis
 );
 
@@ -24069,7 +24077,7 @@ var import_i18n37 = __toESM(require_i18n(), 1);
 var import_components50 = __toESM(require_components(), 1);
 var import_block_editor12 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
-var { AdvancedPanel: StylesAdvancedPanel2 } = unlock(import_block_editor12.privateApis);
+var { AdvancedPanel: StylesAdvancedPanel2 } = unlock2(import_block_editor12.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
 var import_i18n40 = __toESM(require_i18n(), 1);
@@ -24089,7 +24097,7 @@ var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data11 = __toESM(require_data(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
-var { Badge: WCBadge } = unlock(import_components51.privateApis);
+var { Badge: WCBadge } = unlock2(import_components51.privateApis);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
 // packages/global-styles-ui/build-module/pagination/index.mjs
@@ -24112,7 +24120,7 @@ var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
 var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu3 } = unlock(import_components55.privateApis);
+var { Menu: Menu3 } = unlock2(import_components55.privateApis);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_i18n46 = __toESM(require_i18n(), 1);
@@ -24141,7 +24149,7 @@ var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu4 } = unlock(import_components59.privateApis);
+var { Menu: Menu4 } = unlock2(import_components59.privateApis);
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
@@ -24207,8 +24215,8 @@ function FontLibrary({
 }
 
 // routes/font-list/lock-unlock.ts
-var import_private_apis2 = __toESM(require_private_apis());
-var { unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis3 = __toESM(require_private_apis());
+var { unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/font-list-route"
 );
@@ -24222,8 +24230,8 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/font-list/stage.tsx
-var { Tabs: Tabs3 } = unlock2(import_components61.privateApis);
-var { useGlobalStyles } = unlock2(import_editor.privateApis);
+var { Tabs: Tabs3 } = unlock3(import_components61.privateApis);
+var { useGlobalStyles } = unlock3(import_editor.privateApis);
 function FontLibraryPage() {
   const { records: collections = [] } = (0, import_core_data12.useEntityRecords)("root", "fontCollection", {
     _fields: "slug,name,description"
