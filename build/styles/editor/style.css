@@ -5255,7 +5255,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 @media (min-width: 600px) {
   .media-editor .media-editor__panel {
-    padding: 16px 24px 0 0;
+    padding: 24px 24px 0 0;
   }
 }
 .media-editor .components-panel__header.media-editor__sidebar-header {

@@ -5253,7 +5253,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 @media (min-width: 600px) {
   .media-editor .media-editor__panel {
-    padding: 16px 0 0 24px;
+    padding: 24px 0 0 24px;
   }
 }
 .media-editor .components-panel__header.media-editor__sidebar-header {
