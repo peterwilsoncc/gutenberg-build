@@ -31866,16 +31866,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React75.createContext(void 0);
     const scopedContext = React75.createContext(void 0);
-    const useContext72 = () => React75.useContext(context);
+    const useContext71 = () => React75.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React75.useContext(scopedContext);
-      const store4 = useContext72();
+      const store4 = useContext71();
       if (onlyScoped) return scoped;
       return scoped || store4;
     };
     const useProviderContext = () => {
       const scoped = React75.useContext(scopedContext);
-      const store4 = useContext72();
+      const store4 = useContext71();
       if (scoped && scoped === store4) return;
       return store4;
     };
@@ -31897,7 +31897,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext72,
+      useContext: useContext71,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -50973,9 +50973,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
   var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
   var PLACEMENT_CONTROL_IDLE_MS = 300;
-  var { Tabs } = unlock5(import_components90.privateApis);
   function MediaEditorSidebar({ tabs }) {
-    const tabsContextValue = (0, import_element160.useContext)(Tabs.Context);
     return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
       complementary_area_default,
       {
@@ -50988,16 +50986,8 @@ If there's a particular need for this, please submit a feature request at https:
         panelClassName: "media-editor__sidebar-panel",
         headerClassName: "media-editor__sidebar-header",
         closeLabel: (0, import_i18n140.__)("Close media panel"),
-        header: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Tabs.Tab, { tabId: tab.id, children: tab.title }, tab.id)) }) }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Tabs.Context.Provider, { value: tabsContextValue, children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
-          Tabs.TabPanel,
-          {
-            tabId: tab.id,
-            focusable: false,
-            children: tab.panel
-          },
-          tab.id
-        )) })
+        header: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }),
+        children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(tabs_exports.Panel, { value: tab.id, tabIndex: -1, children: tab.panel }, tab.id))
       }
     );
   }
@@ -51316,6 +51306,8 @@ If there's a particular need for this, please submit a feature request at https:
       aspectRatioOptions,
       isPanelLayout
     ]);
+    const [selectedTabId, setSelectedTabId] = (0, import_element160.useState)();
+    const activeTabId = selectedTabId ?? tabs[0]?.id;
     const handleChange = (updates) => {
       editEntityRecord("postType", "attachment", id, updates);
     };
@@ -51386,32 +51378,40 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: handleChange,
         settings: { fields: fields2 },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components90.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(import_jsx_runtime282.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Tabs, { children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(MediaEditorSidebar, { tabs }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
-              interface_skeleton_default,
-              {
-                className: "media-editor__skeleton",
-                labels: {
-                  body: isImage ? (0, import_i18n140.__)("Image editor") : (0, import_i18n140.__)("Media preview"),
-                  sidebar: (0, import_i18n140.__)("Media details")
-                },
-                content: /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)("div", { className: "media-editor__content", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
-                    MediaEditorCanvas,
-                    {
-                      focusOnMount: true,
-                      isPlacementActive,
-                      onGestureStart: handleCanvasGestureStart,
-                      onGestureEnd: handleCanvasGestureEnd
-                    }
-                  ) : /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(MediaPreview2, {}) }),
-                  isImage && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
-                ] }),
-                sidebar: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
-              }
-            )
-          ] }) }),
+          !media ? /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "media-editor", children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components90.Spinner, {}) }) }) : /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(
+            tabs_exports.Root,
+            {
+              className: "media-editor",
+              value: activeTabId,
+              onValueChange: (value) => setSelectedTabId(value),
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(MediaEditorSidebar, { tabs }),
+                /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+                  interface_skeleton_default,
+                  {
+                    className: "media-editor__skeleton",
+                    labels: {
+                      body: isImage ? (0, import_i18n140.__)("Image editor") : (0, import_i18n140.__)("Media preview"),
+                      sidebar: (0, import_i18n140.__)("Media details")
+                    },
+                    content: /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)("div", { className: "media-editor__content", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+                        MediaEditorCanvas,
+                        {
+                          focusOnMount: true,
+                          isPlacementActive,
+                          onGestureStart: handleCanvasGestureStart,
+                          onGestureEnd: handleCanvasGestureEnd
+                        }
+                      ) : /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(MediaPreview2, {}) }),
+                      isImage && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
+                    ] }),
+                    sidebar: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+                  }
+                )
+              ]
+            }
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
             import_components90.__experimentalConfirmDialog,
             {
@@ -68545,7 +68545,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/modal.mjs
   var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs2 } = unlock6(import_components119.privateApis);
+  var { Tabs } = unlock6(import_components119.privateApis);
   var DEFAULT_TAB = {
     id: "installed-fonts",
     title: (0, import_i18n161._x)("Library", "Font library")
@@ -68583,8 +68583,8 @@ If there's a particular need for this, please submit a feature request at https:
         onRequestClose,
         isFullScreen: true,
         className: "font-library-modal",
-        children: /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(Tabs2, { defaultTabId, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime313.jsx)("div", { className: "font-library-modal__tablist-container", children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(Tabs2.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(Tabs2.Tab, { tabId: id, children: title }, id)) }) }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(Tabs, { defaultTabId, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime313.jsx)("div", { className: "font-library-modal__tablist-container", children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(Tabs.TabList, { children: tabs.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(Tabs.Tab, { tabId: id, children: title }, id)) }) }),
           tabs.map(({ id }) => {
             let contents;
             switch (id) {
@@ -68598,7 +68598,7 @@ If there's a particular need for this, please submit a feature request at https:
                 contents = /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(font_collection_default, { slug: id });
             }
             return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-              Tabs2.TabPanel,
+              Tabs.TabPanel,
               {
                 tabId: id,
                 focusable: false,
@@ -78028,7 +78028,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/style-book/index.mjs
   var import_jsx_runtime376 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider2 } = unlock(import_block_editor38.privateApis);
-  var { Tabs: Tabs3 } = unlock(import_components157.privateApis);
+  var { Tabs: Tabs2 } = unlock(import_components157.privateApis);
   function isObjectEmpty(object) {
     return !object || Object.keys(object).length === 0;
   }
@@ -78203,8 +78203,8 @@ If there's a particular need for this, please submit a feature request at https:
           color: textColor,
           background: backgroundColor
         },
-        children: showTabs ? /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(Tabs3, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime376.jsx)("div", { className: "editor-style-book__tablist-container", children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(Tabs3.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(Tabs3.Tab, { tabId: tab.slug, children: tab.title }, tab.slug)) }) }),
+        children: showTabs ? /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(Tabs2, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime376.jsx)("div", { className: "editor-style-book__tablist-container", children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(Tabs2.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(Tabs2.Tab, { tabId: tab.slug, children: tab.title }, tab.slug)) }) }),
           tabs.map((tab) => {
             const categoryDefinition = tab.slug ? getTopLevelStyleBookCategories().find(
               (_category) => _category.slug === tab.slug
@@ -78214,7 +78214,7 @@ If there's a particular need for this, please submit a feature request at https:
               examples
             ) : { examples };
             return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-              Tabs3.TabPanel,
+              Tabs2.TabPanel,
               {
                 tabId: tab.slug,
                 focusable: false,
@@ -95041,7 +95041,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element319 = __toESM(require_element(), 1);
   var import_html_entities33 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs4 } = unlock(import_components270.privateApis);
+  var { Tabs: Tabs3 } = unlock(import_components270.privateApis);
   var SidebarHeader = (_, ref) => {
     const { postTypeLabel, isRevisionsMode: isRevisionsMode2 } = (0, import_data248.useSelect)((select7) => {
       const { getPostTypeLabel: getPostTypeLabel2 } = select7(store);
@@ -95061,9 +95061,9 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       documentLabel = (0, import_i18n324._x)("Document", "noun, panel");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime532.jsxs)(Tabs4.TabList, { ref, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime532.jsxs)(Tabs3.TabList, { ref, children: [
       /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(
-        Tabs4.Tab,
+        Tabs3.Tab,
         {
           tabId: sidebars.document,
           "data-tab-id": sidebars.document,
@@ -95071,7 +95071,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(
-        Tabs4.Tab,
+        Tabs3.Tab,
         {
           tabId: sidebars.block,
           "data-tab-id": sidebars.block,
@@ -95539,7 +95539,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/sidebar/index.mjs
   var import_jsx_runtime539 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs5 } = unlock(import_components275.privateApis);
+  var { Tabs: Tabs4 } = unlock(import_components275.privateApis);
   var SIDEBAR_ACTIVE_BY_DEFAULT = true;
   var SidebarContent = ({
     tabName,
@@ -95549,7 +95549,7 @@ If there's a particular need for this, please submit a feature request at https:
     postType: postType2
   }) => {
     const tabListRef = (0, import_element324.useRef)(null);
-    const tabsContextValue = (0, import_element324.useContext)(Tabs5.Context);
+    const tabsContextValue = (0, import_element324.useContext)(Tabs4.Context);
     const isRevisionsMode2 = (0, import_data255.useSelect)((select7) => {
       return unlock(select7(store)).isRevisionsMode();
     });
@@ -95591,7 +95591,7 @@ If there's a particular need for this, please submit a feature request at https:
       PluginSidebar,
       {
         identifier: tabName,
-        header: /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(Tabs5.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(header_default3, { ref: tabListRef }) }),
+        header: /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(Tabs4.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(header_default3, { ref: tabListRef }) }),
         closeLabel: (0, import_i18n330.__)("Close Settings"),
         className: "editor-sidebar__panel",
         headerClassName: "editor-sidebar__panel-tabs",
@@ -95602,9 +95602,9 @@ If there's a particular need for this, please submit a feature request at https:
         toggleShortcut: keyboardShortcut,
         icon: (0, import_i18n330.isRTL)() ? drawer_left_default : drawer_right_default,
         isActiveByDefault: SIDEBAR_ACTIVE_BY_DEFAULT,
-        children: /* @__PURE__ */ (0, import_jsx_runtime539.jsxs)(Tabs5.Context.Provider, { value: tabsContextValue, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(Tabs5.TabPanel, { tabId: sidebars.document, focusable: false, children: tabContent }),
-          /* @__PURE__ */ (0, import_jsx_runtime539.jsxs)(Tabs5.TabPanel, { tabId: sidebars.block, focusable: false, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime539.jsxs)(Tabs4.Context.Provider, { value: tabsContextValue, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(Tabs4.TabPanel, { tabId: sidebars.document, focusable: false, children: tabContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime539.jsxs)(Tabs4.TabPanel, { tabId: sidebars.block, focusable: false, children: [
             /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_block_editor97.BlockInspector, {}),
             isRevisionsMode2 && /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(RevisionBlockDiffPanel, {})
           ] })
@@ -95654,7 +95654,7 @@ If there's a particular need for this, please submit a feature request at https:
       [enableComplementaryArea2]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
-      Tabs5,
+      Tabs4,
       {
         selectedTabId: tabName,
         onSelect: onTabSelect,
