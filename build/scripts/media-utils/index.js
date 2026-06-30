@@ -14998,7 +14998,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
       import_components17.__experimentalToggleGroupControl,
       {
-        size: "__unstable-large",
         label: (0, import_i18n26.__)("Density"),
         value: view.layout?.density || "balanced",
         onChange: (value) => {
@@ -22146,7 +22145,6 @@ If there's a particular need for this, please submit a feature request at https:
       import_components27.__experimentalToggleGroupControl,
       {
         className: "dataviews-view-config__sort-direction",
-        __next40pxDefaultSize: true,
         isBlock: true,
         label: (0, import_i18n37.__)("Order"),
         value,
@@ -22190,7 +22188,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
       import_components27.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         isBlock: true,
         label: (0, import_i18n37.__)("Items per page"),
         value: view.perPage || 10,
@@ -23935,7 +23932,6 @@ If there's a particular need for this, please submit a feature request at https:
         required: !!field.isValid?.required,
         markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
-        __next40pxDefaultSize: true,
         isBlock: true,
         label: field.label,
         help: selectedOption?.description || field.description,

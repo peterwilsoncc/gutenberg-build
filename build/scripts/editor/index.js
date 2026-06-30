@@ -30997,7 +30997,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(
       import_components43.__experimentalToggleGroupControl,
       {
-        size: "__unstable-large",
         label: (0, import_i18n97.__)("Density"),
         value: view.layout?.density || "balanced",
         onChange: (value) => {
@@ -38331,7 +38330,6 @@ If there's a particular need for this, please submit a feature request at https:
       import_components53.__experimentalToggleGroupControl,
       {
         className: "dataviews-view-config__sort-direction",
-        __next40pxDefaultSize: true,
         isBlock: true,
         label: (0, import_i18n108.__)("Order"),
         value,
@@ -38375,7 +38373,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
       import_components53.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         isBlock: true,
         label: (0, import_i18n108.__)("Items per page"),
         value: view.perPage || 10,
@@ -40120,7 +40117,6 @@ If there's a particular need for this, please submit a feature request at https:
         required: !!field.isValid?.required,
         markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
-        __next40pxDefaultSize: true,
         isBlock: true,
         label: field.label,
         help: selectedOption?.description || field.description,
@@ -68888,7 +68884,6 @@ If there's a particular need for this, please submit a feature request at https:
           value: headingLevel,
           onChange: (value) => setHeadingLevel(value),
           isBlock: true,
-          size: "__unstable-large",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
               import_components124.__experimentalToggleGroupControlOption,
@@ -70122,7 +70117,6 @@ If there's a particular need for this, please submit a feature request at https:
           isBlock: true,
           onChange: (value) => onShadowChange("inset", value === "inset"),
           hideLabelFromVision: true,
-          __next40pxDefaultSize: true,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
               import_components135.__experimentalToggleGroupControlOption,

@@ -4296,7 +4296,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(
                   import_components.__experimentalToggleGroupControl,
                   {
-                    __next40pxDefaultSize: true,
                     isBlock: true,
                     label: (0, import_i18n.__)("Icon Position"),
                     value: iconPosition,
@@ -15472,7 +15471,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
       import_components27.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n42.__)("Arrow"),
         value,
         onChange,
@@ -27007,7 +27005,6 @@ ${url}
                       navigationButtonType: value
                     }),
                     isBlock: true,
-                    __next40pxDefaultSize: true,
                     help: (0, import_i18n78.__)(
                       "Adjust the appearance of buttons in the lightbox."
                     ),
@@ -34984,7 +34981,6 @@ ${text}
                     import_components61.__experimentalToggleGroupControl,
                     {
                       className: "editor-latest-posts-image-alignment-control",
-                      __next40pxDefaultSize: true,
                       label: (0, import_i18n101.__)("Image alignment"),
                       value: featuredImageAlign || "none",
                       onChange: (value) => setAttributes({
@@ -40697,7 +40693,6 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(
             import_components77.__experimentalToggleGroupControl,
             {
-              __next40pxDefaultSize: true,
               className: "wp-block-navigation__overlay-menu-icon-toggle-group",
               label: (0, import_i18n122.__)("Icon"),
               value: icon4,
@@ -41276,7 +41271,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(
       import_components80.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n126.__)("Overlay Visibility"),
         "aria-label": (0, import_i18n126.__)("Configure overlay visibility"),
         value: overlayMenu,
@@ -41322,7 +41316,6 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(
         import_components81.__experimentalToggleGroupControl,
         {
-          __next40pxDefaultSize: true,
           className: "wp-block-navigation__overlay-menu-icon-toggle-group",
           label: (0, import_i18n127.__)("Icon"),
           value: icon4,
@@ -44529,7 +44522,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(
                   import_components95.__experimentalToggleGroupControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n146.__)("Submenu Visibility"),
                     value: submenuVisibility,
                     onChange: (value) => {
@@ -46961,7 +46953,6 @@ ${text}
                   value: displayMode,
                   onChange: (value) => setAttributes({ displayMode: value }),
                   isBlock: true,
-                  __next40pxDefaultSize: true,
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
                       import_components99.__experimentalToggleGroupControlOption,
@@ -54470,7 +54461,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(
                   import_components114.__experimentalToggleGroupControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n179.__)("Arrow"),
                     value: arrow,
                     onChange: (value) => {
@@ -58482,7 +58472,6 @@ ${text}
                   /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(
                     import_components129.__experimentalToggleGroupControl,
                     {
-                      __next40pxDefaultSize: true,
                       label: (0, import_i18n202.__)("Query type"),
                       isBlock: true,
                       onChange: (value) => {
@@ -58547,7 +58536,6 @@ ${text}
                 ) : /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
                   import_components129.__experimentalToggleGroupControl,
                   {
-                    __next40pxDefaultSize: true,
                     isBlock: true,
                     value: postType,
                     label: postTypeControlLabel,
@@ -60111,7 +60099,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(
       import_components135.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n211.__)("Arrow"),
         value,
         onChange,
@@ -63470,7 +63457,6 @@ ${text}
                         });
                       },
                       isBlock: true,
-                      __next40pxDefaultSize: true,
                       children: PERCENTAGE_WIDTHS.map((widthValue) => {
                         return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
                           import_components146.__experimentalToggleGroupControlOption,
@@ -72901,7 +72887,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime524.jsxs)(
       import_components174.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         label,
         isBlock: true,
         onChange: (newValue) => {

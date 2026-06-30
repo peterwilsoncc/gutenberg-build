@@ -17999,7 +17999,6 @@ function ToggleGroup({
       required: !!field.isValid?.required,
       markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
-      __next40pxDefaultSize: true,
       isBlock: true,
       label: field.label,
       help: selectedOption?.description || field.description,

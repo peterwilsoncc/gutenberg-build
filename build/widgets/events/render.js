@@ -24518,7 +24518,6 @@ function DensityPicker() {
   return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
     import_components17.__experimentalToggleGroupControl,
     {
-      size: "__unstable-large",
       label: (0, import_i18n24.__)("Density"),
       value: view.layout?.density || "balanced",
       onChange: (value) => {
@@ -31710,7 +31709,6 @@ function SortDirectionControl() {
     import_components27.__experimentalToggleGroupControl,
     {
       className: "dataviews-view-config__sort-direction",
-      __next40pxDefaultSize: true,
       isBlock: true,
       label: (0, import_i18n35.__)("Order"),
       value,
@@ -31754,7 +31752,6 @@ function ItemsPerPageControl() {
   return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
     import_components27.__experimentalToggleGroupControl,
     {
-      __next40pxDefaultSize: true,
       isBlock: true,
       label: (0, import_i18n35.__)("Items per page"),
       value: view.perPage || 10,
@@ -33499,7 +33496,6 @@ function ToggleGroup({
       required: !!field.isValid?.required,
       markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
-      __next40pxDefaultSize: true,
       isBlock: true,
       label: field.label,
       help: selectedOption?.description || field.description,

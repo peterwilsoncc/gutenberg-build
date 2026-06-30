@@ -16919,7 +16919,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       import_components11.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n12.__)("Alignment"),
         onChange: onVerticalAlignmentChange,
         value: verticalAlignment,
@@ -17004,7 +17003,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       import_components11.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n12.__)("Justification"),
         value: justifyContent,
         onChange: onJustificationChange,
@@ -17048,7 +17046,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
       import_components11.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         className: "block-editor-hooks__flex-layout-orientation-controls",
         label: (0, import_i18n12.__)("Orientation"),
         value: orientation,
@@ -17316,7 +17313,6 @@ var wp;
             children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
               import_components13.__experimentalToggleGroupControl,
               {
-                __next40pxDefaultSize: true,
                 label: (0, import_i18n14.__)("Justification"),
                 value: justifyContent,
                 onChange: onJustificationChange,
@@ -17951,7 +17947,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
       import_components15.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n15.__)("Grid item position"),
         value: gridPlacement,
         onChange: onChangeType,
@@ -56334,7 +56329,6 @@ var wp;
         value: selectedValue,
         hideLabelFromVision: true,
         onChange: onSelectVariation,
-        __next40pxDefaultSize: true,
         children: variations.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
           import_components132.__experimentalToggleGroupControlOptionIcon,
           {
@@ -58145,7 +58139,6 @@ var wp;
       import_components147.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
-        __next40pxDefaultSize: true,
         label: (0, import_i18n133.__)("Decoration"),
         className: clsx_default(
           "block-editor-text-decoration-control",
@@ -58201,7 +58194,6 @@ var wp;
       import_components148.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
-        __next40pxDefaultSize: true,
         label: (0, import_i18n134.__)("Letter case"),
         className: clsx_default(
           "block-editor-text-transform-control",
@@ -58247,7 +58239,6 @@ var wp;
       import_components149.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
-        __next40pxDefaultSize: true,
         label: (0, import_i18n135.__)("Orientation"),
         className: clsx_default("block-editor-writing-mode-control", className),
         value,
@@ -60891,7 +60882,6 @@ var wp;
             onChange: handleUpdateDimensions,
             value: selectedValue,
             isBlock: true,
-            __next40pxDefaultSize: true,
             children: IMAGE_SIZE_PRESETS.map((scale) => {
               return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
                 import_components160.__experimentalToggleGroupControlOption,
@@ -67009,7 +66999,6 @@ var wp;
       import_components196.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
-        __next40pxDefaultSize: true,
         label: (0, import_i18n182.__)("Text alignment"),
         className: clsx_default(
           "block-editor-text-alignment-control",
@@ -68648,7 +68637,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(
             import_components201.__experimentalToggleGroupControl,
             {
-              size: "__unstable-large",
               label: childLayoutOrientation(parentLayout),
               value: flexControlValue,
               help: helpText(flexControlValue, parentLayout),
@@ -70829,7 +70817,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(
         import_components209.__experimentalToggleGroupControl,
         {
-          size: "__unstable-large",
           label: (0, import_i18n195.__)("Size"),
           value: currentValueForToggle,
           onChange: updateBackgroundSize,
@@ -79916,7 +79903,6 @@ var wp;
         required: !!field.isValid?.required,
         markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
-        __next40pxDefaultSize: true,
         isBlock: true,
         label: field.label,
         help: selectedOption?.description || field.description,
@@ -85801,7 +85787,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
       import_components267.__experimentalToggleGroupControl,
       {
-        __next40pxDefaultSize: true,
         isBlock: true,
         label: (0, import_i18n241.__)("Layout type"),
         hideLabelFromVision: true,
@@ -88525,7 +88510,6 @@ var wp;
             help: scaleHelp[displayValue],
             value: displayValue,
             onChange,
-            size: "__unstable-large",
             children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
               import_components279.__experimentalToggleGroupControlOption,
               {
