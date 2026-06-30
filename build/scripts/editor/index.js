@@ -22883,7 +22883,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
       import_components6.ComboboxControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n22.__)("Parent"),
         help: (0, import_i18n22.__)("Choose a parent page."),
         value: pageId?.toString(),
@@ -25961,7 +25960,6 @@ var wp;
       import_components22.ComboboxControl,
       {
         className: "dataviews-media-field__attached-to",
-        __next40pxDefaultSize: true,
         isLoading,
         label: (0, import_i18n66.__)("Attached to"),
         help,
@@ -80691,7 +80689,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
       import_components173.ComboboxControl,
       {
-        __next40pxDefaultSize: true,
         className: "editor-page-attributes__parent",
         label: (0, import_i18n223.__)("Parent"),
         help: (0, import_i18n223.__)("Choose a parent page."),
@@ -82032,7 +82029,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
       import_components188.ComboboxControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n232.__)("Author"),
         options: authorOptions,
         value: authorId,

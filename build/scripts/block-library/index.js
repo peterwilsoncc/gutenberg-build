@@ -5832,7 +5832,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
       import_components4.ComboboxControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n7.__)("User"),
         help: (0, import_i18n7.__)(
           "Select the avatar user to display, if it is blank it will use the post/page author."
@@ -47780,7 +47779,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
                   import_components101.ComboboxControl,
                   {
-                    __next40pxDefaultSize: true,
                     className: "editor-page-attributes__parent",
                     label: (0, import_i18n156.__)("Parent"),
                     value: parentPageID,
@@ -50811,7 +50809,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
       import_components106.ComboboxControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n165.__)("Author"),
         options: authorOptions,
         value: value?.id,

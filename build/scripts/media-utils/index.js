@@ -26506,7 +26506,6 @@ If there's a particular need for this, please submit a feature request at https:
       import_components47.ComboboxControl,
       {
         className: "dataviews-media-field__attached-to",
-        __next40pxDefaultSize: true,
         isLoading,
         label: (0, import_i18n52.__)("Attached to"),
         help,

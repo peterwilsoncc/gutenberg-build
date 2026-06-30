@@ -30246,7 +30246,6 @@ function BlockGuidelineModal({
     ) : /* @__PURE__ */ React.createElement(
       import_components55.ComboboxControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n51.__)("Block"),
         options: availableBlockOptions,
         value: selectedBlock,
