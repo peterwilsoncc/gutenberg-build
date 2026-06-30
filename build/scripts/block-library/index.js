@@ -28769,7 +28769,14 @@ ${url}
       }
       setAnchor(clientId, anchor);
       return () => setAnchor(clientId, null);
-    }, [anchor, content, clientId, canGenerateAnchors]);
+    }, [
+      anchor,
+      content,
+      clientId,
+      canGenerateAnchors,
+      setAttributes,
+      __unstableMarkNextChangeAsNotPersistent
+    ]);
     const onContentChange = (value) => {
       const newAttrs = { content: value };
       if (canGenerateAnchors && (!anchor || !value || generateAnchor(clientId, content) === anchor)) {
@@ -28777,7 +28784,7 @@ ${url}
       }
       setAttributes(newAttrs);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_jsx_runtime266.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
       import_block_editor103.RichText,
       {
         identifier: "content",
@@ -28790,7 +28797,7 @@ ${url}
         placeholder: placeholder2 || (0, import_i18n83.__)("Heading"),
         ...blockProps
       }
-    ) });
+    );
   }
   var edit_default16 = HeadingEdit;
 
