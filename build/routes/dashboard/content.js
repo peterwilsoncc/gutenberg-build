@@ -23154,8 +23154,6 @@ function WidgetDashboardUIProvider({ children }) {
   const [layoutSettingsOpen, setLayoutSettingsOpen] = (0, import_element89.useState)(false);
   const [resetDialogOpen, setResetDialogOpen] = (0, import_element89.useState)(false);
   const [settingsWidgetUuid, setSettingsWidgetUuid] = (0, import_element89.useState)(null);
-  const [settingsDrawerSide, setSettingsDrawerSide] = (0, import_element89.useState)("right");
-  const [settingsDrawerInset, setSettingsDrawerInset] = (0, import_element89.useState)(0);
   const value = (0, import_element89.useMemo)(
     () => ({
       inserterOpen,
@@ -23165,19 +23163,13 @@ function WidgetDashboardUIProvider({ children }) {
       resetDialogOpen,
       setResetDialogOpen,
       settingsWidgetUuid,
-      setSettingsWidgetUuid,
-      settingsDrawerSide,
-      setSettingsDrawerSide,
-      settingsDrawerInset,
-      setSettingsDrawerInset
+      setSettingsWidgetUuid
     }),
     [
       inserterOpen,
       layoutSettingsOpen,
       resetDialogOpen,
-      settingsWidgetUuid,
-      settingsDrawerSide,
-      settingsDrawerInset
+      settingsWidgetUuid
     ]
   );
   return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Context2.Provider, { value, children });
@@ -42627,19 +42619,6 @@ function WidgetInserter() {
 var import_element172 = __toESM(require_element(), 1);
 var import_i18n68 = __toESM(require_i18n(), 1);
 
-// packages/widget-dashboard/build-module/components/widget-settings/utils/get-admin-menu-inset.mjs
-var ADMIN_MENU_ID = "adminmenuback";
-function getAdminMenuInset() {
-  if (typeof document === "undefined") {
-    return 0;
-  }
-  const adminMenu = document.getElementById(ADMIN_MENU_ID);
-  if (!adminMenu) {
-    return 0;
-  }
-  return Math.max(0, adminMenu.getBoundingClientRect().right);
-}
-
 // packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
 var import_i18n67 = __toESM(require_i18n(), 1);
 function getWidgetSettingsTitle(widgetType) {
@@ -42745,12 +42724,7 @@ function WidgetSettings() {
     cancel: cancelStaging,
     hasUncommittedChanges
   } = useDashboardInternalContext();
-  const {
-    settingsWidgetUuid,
-    setSettingsWidgetUuid,
-    settingsDrawerSide,
-    settingsDrawerInset
-  } = useDashboardUIContext();
+  const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
   const open = settingsWidgetUuid !== null;
   const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element172.useState)(
     settingsWidgetUuid
@@ -42810,10 +42784,6 @@ function WidgetSettings() {
     },
     [cancelStaging, close]
   );
-  const popupStyle = (0, import_element172.useMemo)(
-    () => settingsDrawerSide === "left" && settingsDrawerInset > 0 ? { marginLeft: settingsDrawerInset } : {},
-    [settingsDrawerSide, settingsDrawerInset]
-  );
   const hasForm = !!widget && !!widgetType && fields3.length > 0;
   if (!hasForm) {
     return null;
@@ -42825,55 +42795,47 @@ function WidgetSettings() {
     {
       open,
       onOpenChange: handleOpenChange,
-      swipeDirection: settingsDrawerSide,
+      swipeDirection: "right",
       modal: false,
       disablePointerDismissal: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(
-        drawer_exports.Popup,
-        {
-          size: "medium",
-          className: widget_settings_default.popup,
-          style: popupStyle,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Header, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.Title, { children: title }),
-              /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.CloseIcon, {})
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-              DataForm,
-              {
-                data,
-                fields: fields3,
-                form: form2,
-                onChange: handleChange
-              }
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Footer, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-                Button4,
-                {
-                  variant: "minimal",
-                  tone: "brand",
-                  size: "compact",
-                  onClick: () => handleOpenChange(false),
-                  children: (0, import_i18n68.__)("Cancel")
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-                Button4,
-                {
-                  variant: "solid",
-                  tone: "brand",
-                  size: "compact",
-                  onClick: handleSave,
-                  disabled: !hasUncommittedChanges,
-                  children: (0, import_i18n68.__)("Save")
-                }
-              )
-            ] })
-          ]
-        }
-      )
+      children: /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Popup, { size: "medium", className: widget_settings_default.popup, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Header, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.Title, { children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.CloseIcon, {})
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
+          DataForm,
+          {
+            data,
+            fields: fields3,
+            form: form2,
+            onChange: handleChange
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Footer, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
+            Button4,
+            {
+              variant: "minimal",
+              tone: "brand",
+              size: "compact",
+              onClick: () => handleOpenChange(false),
+              children: (0, import_i18n68.__)("Cancel")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
+            Button4,
+            {
+              variant: "solid",
+              tone: "brand",
+              size: "compact",
+              onClick: handleSave,
+              disabled: !hasUncommittedChanges,
+              children: (0, import_i18n68.__)("Save")
+            }
+          )
+        ] })
+      ] })
     }
   );
 }
@@ -42886,32 +42848,16 @@ function WidgetSettingsTrigger({
   widget,
   widgetType
 }) {
-  const {
-    setSettingsWidgetUuid,
-    setSettingsDrawerSide,
-    setSettingsDrawerInset
-  } = useDashboardUIContext();
-  const open = (0, import_element173.useCallback)(
-    (event) => {
-      const adminMenuInset = getAdminMenuInset();
-      const tile = event.currentTarget.closest(
-        "[data-wp-grid-item-key]"
-      );
-      const rect = (tile ?? event.currentTarget).getBoundingClientRect();
-      const widgetCenter = rect.left + rect.width / 2;
-      const contentCenter = (adminMenuInset + window.innerWidth) / 2;
-      const side = widgetCenter > contentCenter ? "left" : "right";
-      setSettingsDrawerSide(side);
-      setSettingsDrawerInset(side === "left" ? adminMenuInset : 0);
-      setSettingsWidgetUuid(widget.uuid);
-    },
-    [
-      setSettingsDrawerSide,
-      setSettingsDrawerInset,
-      setSettingsWidgetUuid,
-      widget.uuid
-    ]
-  );
+  const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
+  const { cancel } = useDashboardInternalContext();
+  const toggle = (0, import_element173.useCallback)(() => {
+    if (settingsWidgetUuid === widget.uuid) {
+      cancel();
+      setSettingsWidgetUuid(null);
+      return;
+    }
+    setSettingsWidgetUuid(widget.uuid);
+  }, [cancel, settingsWidgetUuid, setSettingsWidgetUuid, widget.uuid]);
   if (!widgetType.attributes?.length) {
     return null;
   }
@@ -42923,7 +42869,7 @@ function WidgetSettingsTrigger({
       variant: "minimal",
       tone: "neutral",
       size: "compact",
-      onClick: open
+      onClick: toggle
     }
   );
 }
