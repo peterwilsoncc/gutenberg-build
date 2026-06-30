@@ -27635,7 +27635,6 @@ If there's a particular need for this, please submit a feature request at https:
             accept: acceptTypes,
             multiple: true,
             onChange: handleFileSelect,
-            __next40pxDefaultSize: true,
             render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
               import_components53.Button,
               {

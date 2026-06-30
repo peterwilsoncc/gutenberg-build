@@ -43470,31 +43470,21 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     onClick,
     render,
+    __next40pxDefaultSize: _next40pxDefaultSize,
     ...props
   }) {
     const ref = (0, import_element139.useRef)(null);
     const openFileDialog = () => {
       ref.current?.click();
     };
-    if (!render) {
-      maybeWarnDeprecated36pxSize({
-        componentName: "FormFileUpload",
-        __next40pxDefaultSize: props.__next40pxDefaultSize,
-        // @ts-expect-error - We don't "officially" support all Button props but this likely happens.
-        size: props.size
-      });
-    }
     const ui = render ? render({
       openFileDialog
-    }) : (
-      // Disable reason: the parent component already takes care of the `__next40pxDefaultSize` prop.
-      // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
-      /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(button_default, {
-        onClick: openFileDialog,
-        ...props,
-        children
-      })
-    );
+    }) : /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(button_default, {
+      onClick: openFileDialog,
+      __next40pxDefaultSize: true,
+      ...props,
+      children
+    });
     const compatAccept = accept?.includes("audio/*") ? `${accept}, audio/mp3, audio/x-m4a, audio/x-m4b, audio/x-m4p, audio/x-wav, audio/webm` : accept;
     return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)("div", {
       className: "components-form-file-upload",
