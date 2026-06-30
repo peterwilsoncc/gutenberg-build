@@ -41744,142 +41744,8 @@ var import_components54 = __toESM(require_components(), 1);
 var import_element167 = __toESM(require_element(), 1);
 var import_i18n63 = __toESM(require_i18n(), 1);
 
-// packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
-var import_element166 = __toESM(require_element(), 1);
-
-// packages/widget-primitives/build-module/tools/get-lazy-widget-component/get-lazy-widget-component.mjs
-var import_element164 = __toESM(require_element(), 1);
-function isValidWidgetModule(module) {
-  return typeof module === "object" && module !== null && "default" in module && typeof module.default === "function";
-}
-var componentCache = /* @__PURE__ */ new Map();
-function getLazyWidgetComponent(renderModule, resolveWidgetModule) {
-  const cached = componentCache.get(renderModule);
-  if (cached) {
-    return cached;
-  }
-  const lazyComponent = (0, import_element164.lazy)(async () => {
-    const module = await resolveWidgetModule(renderModule);
-    if (!isValidWidgetModule(module)) {
-      throw new Error(`Invalid widget module: ${renderModule}`);
-    }
-    return module;
-  });
-  componentCache.set(renderModule, lazyComponent);
-  return lazyComponent;
-}
-
-// packages/widget-primitives/build-module/components/widget-render/widget-render.mjs
+// packages/widget-dashboard/build-module/components/widget-header/widget-header.mjs
 var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
-function WidgetRender({
-  widgetType,
-  attributes,
-  setAttributes,
-  resolveWidgetModule
-}) {
-  const WidgetComponent = getLazyWidgetComponent(
-    widgetType.renderModule,
-    resolveWidgetModule
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_jsx_runtime212.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-    WidgetComponent,
-    {
-      attributes,
-      setAttributes
-    }
-  ) });
-}
-
-// packages/widget-primitives/build-module/hooks/use-widget-types.mjs
-var import_element165 = __toESM(require_element(), 1);
-function useWidgetTypes(records) {
-  const [widgetTypes, setWidgetTypes] = (0, import_element165.useState)([]);
-  const [isResolvingWidgetTypes, setIsResolvingWidgetTypes] = (0, import_element165.useState)(true);
-  (0, import_element165.useEffect)(() => {
-    if (records === null || records === void 0) {
-      setIsResolvingWidgetTypes(true);
-      return;
-    }
-    if (records.length === 0) {
-      setWidgetTypes([]);
-      setIsResolvingWidgetTypes(false);
-      return;
-    }
-    let cancelled = false;
-    setIsResolvingWidgetTypes(true);
-    Promise.all(
-      records.map(async (record) => {
-        if (!record.widget_module) {
-          return null;
-        }
-        try {
-          const module = await import(
-            /* webpackIgnore: true */
-            record.widget_module
-          );
-          if (!module?.default) {
-            return null;
-          }
-          return {
-            ...module.default,
-            name: record.name,
-            renderModule: record.render_module ?? "",
-            ...record.presentation ? { presentation: record.presentation } : {},
-            ...record.category ? { category: record.category } : {}
-          };
-        } catch {
-          return null;
-        }
-      })
-    ).then((results) => {
-      if (cancelled) {
-        return;
-      }
-      setWidgetTypes(
-        results.filter((t2) => t2 !== null)
-      );
-      setIsResolvingWidgetTypes(false);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [records]);
-  return [widgetTypes, isResolvingWidgetTypes];
-}
-
-// packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
-var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
-function WidgetRender2({ widget, widgetType }) {
-  const { layout, onLayoutChange, resolveWidgetModule } = useDashboardInternalContext();
-  const setAttributes = (0, import_element166.useCallback)(
-    (next) => {
-      onLayoutChange(
-        layout.map(
-          (w2) => w2.uuid === widget.uuid ? {
-            ...w2,
-            attributes: {
-              ...w2.attributes,
-              ...next
-            }
-          } : w2
-        )
-      );
-    },
-    [widget.uuid, layout, onLayoutChange]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-    WidgetRender,
-    {
-      widgetType,
-      attributes: widget.attributes,
-      setAttributes,
-      resolveWidgetModule
-    }
-  );
-}
-
-// packages/widget-dashboard/build-module/components/widget-frame/widget-frame.mjs
-var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE52 = "data-wp-hash";
 function getRuntime52() {
   const globalScope = globalThis;
@@ -41961,61 +41827,175 @@ function registerStyle52(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle52("0210d7acb0", "._548cbc532a9fc4f4__headerIcon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}._5848d9de101def77__content{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._475e9e5d90f37dab__bleedContent{padding:0}._605aa8383905f0a9__loading{height:100%}");
+  registerStyle52("751faaf868", ".a7cf38a139398543__widgetHeader{align-items:center;display:flex;gap:var(--wpds-dimension-gap-sm,8px)}._967cd798e5c37202__toolbar,.f41e4aad10324455__identity{align-items:center;display:flex;height:var(--wpds-dimension-size-lg,40px)}.f41e4aad10324455__identity{min-width:0}._53584a4927dfbcf1__icon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}._967cd798e5c37202__toolbar{margin-inline-start:auto}.f32f2cd669c9b4b0__overlay{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);inset-block-start:0;inset-inline:0;pointer-events:none;position:absolute;z-index:1}.f32f2cd669c9b4b0__overlay ._967cd798e5c37202__toolbar{pointer-events:auto}");
 }
-var widget_frame_default = { "headerIcon": "_548cbc532a9fc4f4__headerIcon", "content": "_5848d9de101def77__content", "bleedContent": "_475e9e5d90f37dab__bleedContent", "loading": "_605aa8383905f0a9__loading" };
-var WidgetErrorBoundary = class extends import_element167.Component {
-  state = { hasError: false };
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-  render() {
-    if (this.state.hasError) {
-      return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(notice_exports.Root, { intent: "error", children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(notice_exports.Description, { children: (0, import_i18n63.__)("This widget encountered an error.") }) });
-    }
-    return this.props.children;
-  }
-};
-function LoadingOverlay() {
-  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(Stack, { justify: "center", align: "center", className: widget_frame_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_components54.Spinner, {}) });
-}
-function Header8({ titleId, widgetType }) {
-  if (!widgetType.title) {
-    return null;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", children: [
-    widgetType.icon && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("span", { className: widget_frame_default.headerIcon, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(Icon, { icon: widgetType.icon }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(card_exports.Title, { id: titleId, render: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("h2", {}), children: widgetType.title })
-  ] }) });
-}
-function WidgetFrame({
-  widget,
+var widget_header_default = { "widgetHeader": "a7cf38a139398543__widgetHeader", "identity": "f41e4aad10324455__identity", "toolbar": "_967cd798e5c37202__toolbar", "icon": "_53584a4927dfbcf1__icon", "overlay": "f32f2cd669c9b4b0__overlay" };
+function WidgetHeader({
   widgetType,
-  titleId
+  titleId,
+  showIdentity = false,
+  overlay = false,
+  children
 }) {
-  const { presentation } = widgetType;
-  const isHeaderHidden = presentation === "full-bleed";
-  const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
-  const body = /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_element167.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(WidgetRender2, { widget, widgetType }) }) });
-  return /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(import_jsx_runtime214.Fragment, { children: [
-    !isHeaderHidden && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(Header8, { titleId, widgetType }),
-    /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
-      card_exports.Content,
-      {
-        className: clsx_default(
-          widget_frame_default.content,
-          isBodyBleeding && widget_frame_default.bleedContent
+  return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+    card_exports.Header,
+    {
+      className: clsx_default(widget_header_default.widgetHeader, overlay && widget_header_default.overlay),
+      children: [
+        showIdentity && widgetType?.title && /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+          Stack,
+          {
+            direction: "row",
+            align: "center",
+            gap: "sm",
+            className: widget_header_default.identity,
+            children: [
+              widgetType.icon && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { className: widget_header_default.icon, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Icon, { icon: widgetType.icon }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(card_exports.Title, { id: titleId, render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("h2", {}), children: widgetType.title })
+            ]
+          }
         ),
-        children: [
-          isHeaderHidden && widgetType.title && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("h2", { id: titleId }), children: widgetType.title }),
-          body
-        ]
-      }
-    )
-  ] });
+        children && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("div", { className: widget_header_default.toolbar, children })
+      ]
+    }
+  );
 }
 
-// packages/widget-dashboard/build-module/components/widget-chrome/widget-chrome.mjs
+// packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
+var import_element166 = __toESM(require_element(), 1);
+
+// packages/widget-primitives/build-module/tools/get-lazy-widget-component/get-lazy-widget-component.mjs
+var import_element164 = __toESM(require_element(), 1);
+function isValidWidgetModule(module) {
+  return typeof module === "object" && module !== null && "default" in module && typeof module.default === "function";
+}
+var componentCache = /* @__PURE__ */ new Map();
+function getLazyWidgetComponent(renderModule, resolveWidgetModule) {
+  const cached = componentCache.get(renderModule);
+  if (cached) {
+    return cached;
+  }
+  const lazyComponent = (0, import_element164.lazy)(async () => {
+    const module = await resolveWidgetModule(renderModule);
+    if (!isValidWidgetModule(module)) {
+      throw new Error(`Invalid widget module: ${renderModule}`);
+    }
+    return module;
+  });
+  componentCache.set(renderModule, lazyComponent);
+  return lazyComponent;
+}
+
+// packages/widget-primitives/build-module/components/widget-render/widget-render.mjs
+var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
+function WidgetRender({
+  widgetType,
+  attributes,
+  setAttributes,
+  resolveWidgetModule
+}) {
+  const WidgetComponent = getLazyWidgetComponent(
+    widgetType.renderModule,
+    resolveWidgetModule
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_jsx_runtime213.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+    WidgetComponent,
+    {
+      attributes,
+      setAttributes
+    }
+  ) });
+}
+
+// packages/widget-primitives/build-module/hooks/use-widget-types.mjs
+var import_element165 = __toESM(require_element(), 1);
+function useWidgetTypes(records) {
+  const [widgetTypes, setWidgetTypes] = (0, import_element165.useState)([]);
+  const [isResolvingWidgetTypes, setIsResolvingWidgetTypes] = (0, import_element165.useState)(true);
+  (0, import_element165.useEffect)(() => {
+    if (records === null || records === void 0) {
+      setIsResolvingWidgetTypes(true);
+      return;
+    }
+    if (records.length === 0) {
+      setWidgetTypes([]);
+      setIsResolvingWidgetTypes(false);
+      return;
+    }
+    let cancelled = false;
+    setIsResolvingWidgetTypes(true);
+    Promise.all(
+      records.map(async (record) => {
+        if (!record.widget_module) {
+          return null;
+        }
+        try {
+          const module = await import(
+            /* webpackIgnore: true */
+            record.widget_module
+          );
+          if (!module?.default) {
+            return null;
+          }
+          return {
+            ...module.default,
+            name: record.name,
+            renderModule: record.render_module ?? "",
+            ...record.presentation ? { presentation: record.presentation } : {},
+            ...record.category ? { category: record.category } : {}
+          };
+        } catch {
+          return null;
+        }
+      })
+    ).then((results) => {
+      if (cancelled) {
+        return;
+      }
+      setWidgetTypes(
+        results.filter((t2) => t2 !== null)
+      );
+      setIsResolvingWidgetTypes(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [records]);
+  return [widgetTypes, isResolvingWidgetTypes];
+}
+
+// packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
+var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
+function WidgetRender2({ widget, widgetType }) {
+  const { layout, onLayoutChange, resolveWidgetModule } = useDashboardInternalContext();
+  const setAttributes = (0, import_element166.useCallback)(
+    (next) => {
+      onLayoutChange(
+        layout.map(
+          (w2) => w2.uuid === widget.uuid ? {
+            ...w2,
+            attributes: {
+              ...w2.attributes,
+              ...next
+            }
+          } : w2
+        )
+      );
+    },
+    [widget.uuid, layout, onLayoutChange]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+    WidgetRender,
+    {
+      widgetType,
+      attributes: widget.attributes,
+      setAttributes,
+      resolveWidgetModule
+    }
+  );
+}
+
+// packages/widget-dashboard/build-module/components/widget-frame/widget-frame.mjs
 var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE53 = "data-wp-hash";
 function getRuntime53() {
@@ -42098,169 +42078,59 @@ function registerStyle53(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle53("6d4975b814", "._79b45ce7d3422efe__widgetChrome:has(:focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}.d85f7657585b9203__widgetChromeHeaderIcon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}._9f0be51a1b96c8d7__widgetChromeContent{flex:1;height:100%;min-height:0;min-width:0}._9b694d63bdec1a98__unavailable{height:100%}");
+  registerStyle53("627665ae60", "._5848d9de101def77__content{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._475e9e5d90f37dab__bleedContent{padding:0}._605aa8383905f0a9__loading{height:100%}");
 }
-var widget_chrome_default = { "widgetChrome": "_79b45ce7d3422efe__widgetChrome", "widgetChromeHeaderIcon": "d85f7657585b9203__widgetChromeHeaderIcon", "widgetChromeContent": "_9f0be51a1b96c8d7__widgetChromeContent", "unavailable": "_9b694d63bdec1a98__unavailable" };
-function UnavailableWidget({ widgetTypeName }) {
+var widget_frame_default = { "content": "_5848d9de101def77__content", "bleedContent": "_475e9e5d90f37dab__bleedContent", "loading": "_605aa8383905f0a9__loading" };
+var WidgetErrorBoundary = class extends import_element167.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) {
+      return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(notice_exports.Root, { intent: "error", children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(notice_exports.Description, { children: (0, import_i18n63.__)("This widget encountered an error.") }) });
+    }
+    return this.props.children;
+  }
+};
+function LoadingOverlay() {
+  return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Stack, { justify: "center", align: "center", className: widget_frame_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_components54.Spinner, {}) });
+}
+function WidgetFrame({
+  widget,
+  widgetType,
+  titleId
+}) {
+  const { presentation } = widgetType;
+  const isHeaderHidden = presentation === "full-bleed";
+  const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
+  const body = /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_element167.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetRender2, { widget, widgetType }) }) });
   return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(import_jsx_runtime215.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-      "span",
+    !isHeaderHidden && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+      WidgetHeader,
       {
-        className: widget_chrome_default.widgetChromeHeaderIcon,
-        "aria-hidden": "true",
-        children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Icon, { icon: plugins_default })
+        showIdentity: true,
+        widgetType,
+        titleId
       }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
-      Stack,
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
+      card_exports.Content,
       {
-        direction: "column",
-        justify: "center",
-        align: "center",
-        gap: "md",
-        className: widget_chrome_default.unavailable,
+        className: clsx_default(
+          widget_frame_default.content,
+          isBodyBleeding && widget_frame_default.bleedContent
+        ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Text, { children: (0, import_i18n64.__)("Widget is no longer available.") }),
-          /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("code", {}), children: widgetTypeName })
+          isHeaderHidden && widgetType.title && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("h2", { id: titleId }), children: widgetType.title }),
+          body
         ]
       }
-    ) })
+    )
   ] });
 }
-var WidgetChrome = (0, import_element168.forwardRef)(
-  function WidgetChrome2({ widget, index: index2, className }, ref) {
-    const { widgetTypes, isResolvingWidgetTypes, editMode } = useDashboardInternalContext();
-    const widgetType = widgetTypes.find((t2) => t2.name === widget.type);
-    const titleId = (0, import_element168.useId)();
-    const contextValue = (0, import_element168.useMemo)(
-      () => ({
-        uuid: widget.uuid,
-        name: widget.type,
-        index: index2
-      }),
-      [widget.uuid, widget.type, index2]
-    );
-    if (!widgetType) {
-      if (isResolvingWidgetTypes) {
-        return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-          card_exports.Root,
-          {
-            render: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("section", {}),
-            ref,
-            className: clsx_default(widget_chrome_default.widgetChrome, className),
-            "aria-busy": "true",
-            "aria-label": (0, import_i18n64.__)("Loading"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-              card_exports.Content,
-              {
-                className: widget_chrome_default.widgetChromeContent,
-                children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(LoadingOverlay, {})
-              }
-            )
-          }
-        ) });
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-        card_exports.Root,
-        {
-          render: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("section", {}),
-          ref,
-          className: clsx_default(widget_chrome_default.widgetChrome, className),
-          "aria-label": (0, import_i18n64.__)("Missing widget"),
-          children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
-        }
-      ) });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-      card_exports.Root,
-      {
-        render: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("section", {}),
-        ref,
-        className: clsx_default(widget_chrome_default.widgetChrome, className),
-        "aria-labelledby": widgetType.title ? titleId : void 0,
-        ...editMode ? { inert: "true" } : {},
-        children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-          WidgetFrame,
-          {
-            widget,
-            widgetType,
-            titleId
-          }
-        )
-      }
-    ) });
-  }
-);
 
-// packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
-var import_element171 = __toESM(require_element(), 1);
-var import_i18n66 = __toESM(require_i18n(), 1);
-
-// node_modules/uuid/dist/stringify.js
-var byteToHex = [];
-for (let i2 = 0; i2 < 256; ++i2) {
-  byteToHex.push((i2 + 256).toString(16).slice(1));
-}
-function unsafeStringify(arr, offset4 = 0) {
-  return (byteToHex[arr[offset4 + 0]] + byteToHex[arr[offset4 + 1]] + byteToHex[arr[offset4 + 2]] + byteToHex[arr[offset4 + 3]] + "-" + byteToHex[arr[offset4 + 4]] + byteToHex[arr[offset4 + 5]] + "-" + byteToHex[arr[offset4 + 6]] + byteToHex[arr[offset4 + 7]] + "-" + byteToHex[arr[offset4 + 8]] + byteToHex[arr[offset4 + 9]] + "-" + byteToHex[arr[offset4 + 10]] + byteToHex[arr[offset4 + 11]] + byteToHex[arr[offset4 + 12]] + byteToHex[arr[offset4 + 13]] + byteToHex[arr[offset4 + 14]] + byteToHex[arr[offset4 + 15]]).toLowerCase();
-}
-
-// node_modules/uuid/dist/rng.js
-var rnds8 = new Uint8Array(16);
-function rng() {
-  return crypto.getRandomValues(rnds8);
-}
-
-// node_modules/uuid/dist/v4.js
-function v4(options, buf, offset4) {
-  if (!buf && !options && crypto.randomUUID) {
-    return crypto.randomUUID();
-  }
-  return _v4(options, buf, offset4);
-}
-function _v4(options, buf, offset4) {
-  options = options || {};
-  const rnds = options.random ?? options.rng?.() ?? rng();
-  if (rnds.length < 16) {
-    throw new Error("Random bytes length must be >= 16");
-  }
-  rnds[6] = rnds[6] & 15 | 64;
-  rnds[8] = rnds[8] & 63 | 128;
-  if (buf) {
-    offset4 = offset4 || 0;
-    if (offset4 < 0 || offset4 + 16 > buf.length) {
-      throw new RangeError(`UUID byte range ${offset4}:${offset4 + 15} is out of buffer bounds`);
-    }
-    for (let i2 = 0; i2 < 16; ++i2) {
-      buf[offset4 + i2] = rnds[i2];
-    }
-    return buf;
-  }
-  return unsafeStringify(rnds);
-}
-var v4_default = v4;
-
-// packages/widget-dashboard/build-module/utils/create-dashboard-widget/create-dashboard-widget.mjs
-var DEFAULT_PLACEMENT = {
-  width: 1,
-  height: 2,
-  order: 0
-};
-function createDashboardWidget(widgetType, initialAttributes) {
-  return {
-    uuid: v4_default(),
-    type: widgetType.name,
-    attributes: initialAttributes ?? widgetType.example?.attributes,
-    placement: DEFAULT_PLACEMENT
-  };
-}
-
-// packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
-var import_element170 = __toESM(require_element(), 1);
-var import_i18n65 = __toESM(require_i18n(), 1);
-
-// packages/widget-dashboard/build-module/components/widget-preview-chrome/widget-preview-chrome.mjs
-var import_element169 = __toESM(require_element(), 1);
+// packages/widget-dashboard/build-module/components/widget-chrome/widget-chrome.mjs
 var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE54 = "data-wp-hash";
 function getRuntime54() {
@@ -42343,200 +42213,170 @@ function registerStyle54(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle54("c47f6c464f", "._23cdee3dfcd79c9c__viewport{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border-radius:var(--wpds-border-radius-md,4px);inset:0;overflow:hidden;pointer-events:none;position:absolute;user-select:none}._5312b3880a174b72__canvas{display:grid;height:100%;width:100%}._8b8693cb129db8d2__card{height:100%;min-height:0}");
+  registerStyle54("6d4975b814", "._79b45ce7d3422efe__widgetChrome:has(:focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}.d85f7657585b9203__widgetChromeHeaderIcon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}._9f0be51a1b96c8d7__widgetChromeContent{flex:1;height:100%;min-height:0;min-width:0}._9b694d63bdec1a98__unavailable{height:100%}");
 }
-var widget_preview_chrome_default = { "viewport": "_23cdee3dfcd79c9c__viewport", "canvas": "_5312b3880a174b72__canvas", "card": "_8b8693cb129db8d2__card" };
-function WidgetPreviewChrome({
-  widget,
-  widgetType,
-  index: index2 = 0
-}) {
-  const titleId = (0, import_element169.useId)();
-  const contextValue = (0, import_element169.useMemo)(
-    () => ({
-      uuid: widget.uuid,
-      name: widget.type,
-      index: index2
-    }),
-    [widget.uuid, widget.type, index2]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("div", { className: widget_preview_chrome_default.viewport, ...{ inert: "" }, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("div", { className: widget_preview_chrome_default.canvas, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
-    card_exports.Root,
-    {
-      render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("section", {}),
-      className: widget_preview_chrome_default.card,
-      "aria-labelledby": widgetType.title ? titleId : void 0,
-      children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
-        WidgetFrame,
+var widget_chrome_default = { "widgetChrome": "_79b45ce7d3422efe__widgetChrome", "widgetChromeHeaderIcon": "d85f7657585b9203__widgetChromeHeaderIcon", "widgetChromeContent": "_9f0be51a1b96c8d7__widgetChromeContent", "unavailable": "_9b694d63bdec1a98__unavailable" };
+function UnavailableWidget({ widgetTypeName }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(import_jsx_runtime216.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+      "span",
+      {
+        className: widget_chrome_default.widgetChromeHeaderIcon,
+        "aria-hidden": "true",
+        children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Icon, { icon: plugins_default })
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(
+      Stack,
+      {
+        direction: "column",
+        justify: "center",
+        align: "center",
+        gap: "md",
+        className: widget_chrome_default.unavailable,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Text, { children: (0, import_i18n64.__)("Widget is no longer available.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("code", {}), children: widgetTypeName })
+        ]
+      }
+    ) })
+  ] });
+}
+var WidgetChrome = (0, import_element168.forwardRef)(
+  function WidgetChrome2({ widget, index: index2, className }, ref) {
+    const { widgetTypes, isResolvingWidgetTypes, editMode } = useDashboardInternalContext();
+    const widgetType = widgetTypes.find((t2) => t2.name === widget.type);
+    const titleId = (0, import_element168.useId)();
+    const contextValue = (0, import_element168.useMemo)(
+      () => ({
+        uuid: widget.uuid,
+        name: widget.type,
+        index: index2
+      }),
+      [widget.uuid, widget.type, index2]
+    );
+    if (!widgetType) {
+      if (isResolvingWidgetTypes) {
+        return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+          card_exports.Root,
+          {
+            render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("section", {}),
+            ref,
+            className: clsx_default(widget_chrome_default.widgetChrome, className),
+            "aria-busy": "true",
+            "aria-label": (0, import_i18n64.__)("Loading"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+              card_exports.Content,
+              {
+                className: widget_chrome_default.widgetChromeContent,
+                children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(LoadingOverlay, {})
+              }
+            )
+          }
+        ) });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+        card_exports.Root,
         {
-          widget,
-          widgetType,
-          titleId
+          render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("section", {}),
+          ref,
+          className: clsx_default(widget_chrome_default.widgetChrome, className),
+          "aria-label": (0, import_i18n64.__)("Missing widget"),
+          children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
         }
-      )
+      ) });
     }
-  ) }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+      card_exports.Root,
+      {
+        render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("section", {}),
+        ref,
+        className: clsx_default(widget_chrome_default.widgetChrome, className),
+        "aria-labelledby": widgetType.title ? titleId : void 0,
+        ...editMode ? { inert: "true" } : {},
+        children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+          WidgetFrame,
+          {
+            widget,
+            widgetType,
+            titleId
+          }
+        )
+      }
+    ) });
+  }
+);
+
+// packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
+var import_element171 = __toESM(require_element(), 1);
+var import_i18n66 = __toESM(require_i18n(), 1);
+
+// node_modules/uuid/dist/stringify.js
+var byteToHex = [];
+for (let i2 = 0; i2 < 256; ++i2) {
+  byteToHex.push((i2 + 256).toString(16).slice(1));
+}
+function unsafeStringify(arr, offset4 = 0) {
+  return (byteToHex[arr[offset4 + 0]] + byteToHex[arr[offset4 + 1]] + byteToHex[arr[offset4 + 2]] + byteToHex[arr[offset4 + 3]] + "-" + byteToHex[arr[offset4 + 4]] + byteToHex[arr[offset4 + 5]] + "-" + byteToHex[arr[offset4 + 6]] + byteToHex[arr[offset4 + 7]] + "-" + byteToHex[arr[offset4 + 8]] + byteToHex[arr[offset4 + 9]] + "-" + byteToHex[arr[offset4 + 10]] + byteToHex[arr[offset4 + 11]] + byteToHex[arr[offset4 + 12]] + byteToHex[arr[offset4 + 13]] + byteToHex[arr[offset4 + 14]] + byteToHex[arr[offset4 + 15]]).toLowerCase();
+}
+
+// node_modules/uuid/dist/rng.js
+var rnds8 = new Uint8Array(16);
+function rng() {
+  return crypto.getRandomValues(rnds8);
+}
+
+// node_modules/uuid/dist/v4.js
+function v4(options, buf, offset4) {
+  if (!buf && !options && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return _v4(options, buf, offset4);
+}
+function _v4(options, buf, offset4) {
+  options = options || {};
+  const rnds = options.random ?? options.rng?.() ?? rng();
+  if (rnds.length < 16) {
+    throw new Error("Random bytes length must be >= 16");
+  }
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  if (buf) {
+    offset4 = offset4 || 0;
+    if (offset4 < 0 || offset4 + 16 > buf.length) {
+      throw new RangeError(`UUID byte range ${offset4}:${offset4 + 15} is out of buffer bounds`);
+    }
+    for (let i2 = 0; i2 < 16; ++i2) {
+      buf[offset4 + i2] = rnds[i2];
+    }
+    return buf;
+  }
+  return unsafeStringify(rnds);
+}
+var v4_default = v4;
+
+// packages/widget-dashboard/build-module/utils/create-dashboard-widget/create-dashboard-widget.mjs
+var DEFAULT_PLACEMENT = {
+  width: 1,
+  height: 2,
+  order: 0
+};
+function createDashboardWidget(widgetType, initialAttributes) {
+  return {
+    uuid: v4_default(),
+    type: widgetType.name,
+    attributes: initialAttributes ?? widgetType.example?.attributes,
+    placement: DEFAULT_PLACEMENT
+  };
 }
 
 // packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
+var import_element170 = __toESM(require_element(), 1);
+var import_i18n65 = __toESM(require_i18n(), 1);
+
+// packages/widget-dashboard/build-module/components/widget-preview-chrome/widget-preview-chrome.mjs
+var import_element169 = __toESM(require_element(), 1);
 var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_VIEW = {
-  type: "pickerGrid",
-  page: 1,
-  search: "",
-  mediaField: "preview",
-  titleField: "title",
-  // Larger default tile than the built-in 230.
-  layout: { previewSize: 290 }
-};
-var getItemId = (item) => item.name;
-function WidgetPreview({ item }) {
-  const exampleWidget = (0, import_element170.useMemo)(
-    () => createDashboardWidget(item, item.example?.attributes),
-    [item]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(WidgetPreviewChrome, { widget: exampleWidget, widgetType: item });
-}
-var fields2 = [
-  {
-    id: "title",
-    type: "text",
-    label: (0, import_i18n65.__)("Title"),
-    filterBy: false
-  },
-  {
-    id: "preview",
-    type: "media",
-    render: WidgetPreview
-  },
-  {
-    id: "name",
-    type: "text",
-    enableGlobalSearch: true,
-    enableHiding: false,
-    enableSorting: false,
-    filterBy: false,
-    getValue: ({ item }) => `${item.name.replace(/[\/,\-_]/g, " ")} ${item.title}`
-  }
-];
-function WidgetPicker({
-  onSelect,
-  itemListLabel = (0, import_i18n65.__)("Widget list")
-}) {
-  const { widgetTypes: registeredTypes } = useDashboardInternalContext();
-  const [selection, setSelection] = (0, import_element170.useState)([]);
-  const [view, setView] = (0, import_element170.useState)(DEFAULT_VIEW);
-  const { data: widgetTypes } = filterSortAndPaginate(
-    registeredTypes,
-    view,
-    fields2
-  );
-  const actions = (0, import_element170.useMemo)(
-    () => [
-      {
-        id: "select",
-        label: (0, import_i18n65.__)("Select"),
-        isPrimary: true,
-        supportsBulk: true,
-        callback: (items) => onSelect(items)
-      }
-    ],
-    [onSelect]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
-    dataviews_picker_default,
-    {
-      data: widgetTypes,
-      fields: fields2,
-      view,
-      actions,
-      defaultLayouts: { pickerGrid: {} },
-      onChangeView: setView,
-      isLoading: false,
-      paginationInfo: {
-        totalItems: widgetTypes.length,
-        totalPages: 1
-      },
-      selection,
-      onChangeSelection: setSelection,
-      getItemId,
-      itemListLabel
-    }
-  );
-}
-
-// packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
-var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
-function WidgetInserter() {
-  const { layout, onLayoutChange } = useDashboardInternalContext();
-  const { inserterOpen, setInserterOpen } = useDashboardUIContext();
-  const insertWidgets = (0, import_element171.useCallback)(
-    (widgetTypes) => {
-      if (widgetTypes.length > 0) {
-        const newWidgets = widgetTypes.map(
-          (widgetType) => createDashboardWidget(widgetType)
-        );
-        onLayoutChange([...layout, ...newWidgets]);
-      }
-      setInserterOpen(false);
-    },
-    [layout, onLayoutChange, setInserterOpen]
-  );
-  if (!inserterOpen) {
-    return null;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(dialog_exports.Root, { open: inserterOpen, onOpenChange: setInserterOpen, children: /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)(
-    dialog_exports.Popup,
-    {
-      size: "full",
-      portal: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
-        dialog_exports.Portal,
-        {
-          style: {
-            "--wp-ui-dialog-z-index": 99999
-          }
-        }
-      ),
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)(dialog_exports.Header, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(dialog_exports.Title, { children: (0, import_i18n66.__)("Add widget") }),
-          /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(dialog_exports.CloseIcon, {})
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(dialog_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(WidgetPicker, { onSelect: insertWidgets }) })
-      ]
-    }
-  ) });
-}
-
-// packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
-var import_element172 = __toESM(require_element(), 1);
-var import_i18n68 = __toESM(require_i18n(), 1);
-
-// packages/widget-dashboard/build-module/components/widget-settings/utils/get-admin-menu-inset.mjs
-var ADMIN_MENU_ID = "adminmenuback";
-function getAdminMenuInset() {
-  if (typeof document === "undefined") {
-    return 0;
-  }
-  const adminMenu = document.getElementById(ADMIN_MENU_ID);
-  if (!adminMenu) {
-    return 0;
-  }
-  return Math.max(0, adminMenu.getBoundingClientRect().right);
-}
-
-// packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
-var import_i18n67 = __toESM(require_i18n(), 1);
-function getWidgetSettingsTitle(widgetType) {
-  return widgetType?.title ? (0, import_i18n67.sprintf)(
-    /* translators: %s: Widget title. */
-    (0, import_i18n67.__)("%s settings"),
-    widgetType.title
-  ) : (0, import_i18n67.__)("Widget settings");
-}
-
-// packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
-var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE55 = "data-wp-hash";
 function getRuntime55() {
   const globalScope = globalThis;
@@ -42618,7 +42458,282 @@ function registerStyle55(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle55("809494c486", "._34828f30ba41ad89__popup{margin-block-start:var(--wp-admin--admin-bar--height,0)}");
+  registerStyle55("c47f6c464f", "._23cdee3dfcd79c9c__viewport{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border-radius:var(--wpds-border-radius-md,4px);inset:0;overflow:hidden;pointer-events:none;position:absolute;user-select:none}._5312b3880a174b72__canvas{display:grid;height:100%;width:100%}._8b8693cb129db8d2__card{height:100%;min-height:0}");
+}
+var widget_preview_chrome_default = { "viewport": "_23cdee3dfcd79c9c__viewport", "canvas": "_5312b3880a174b72__canvas", "card": "_8b8693cb129db8d2__card" };
+function WidgetPreviewChrome({
+  widget,
+  widgetType,
+  index: index2 = 0
+}) {
+  const titleId = (0, import_element169.useId)();
+  const contextValue = (0, import_element169.useMemo)(
+    () => ({
+      uuid: widget.uuid,
+      name: widget.type,
+      index: index2
+    }),
+    [widget.uuid, widget.type, index2]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("div", { className: widget_preview_chrome_default.viewport, ...{ inert: "" }, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("div", { className: widget_preview_chrome_default.canvas, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+    card_exports.Root,
+    {
+      render: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("section", {}),
+      className: widget_preview_chrome_default.card,
+      "aria-labelledby": widgetType.title ? titleId : void 0,
+      children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+        WidgetFrame,
+        {
+          widget,
+          widgetType,
+          titleId
+        }
+      )
+    }
+  ) }) }) });
+}
+
+// packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
+var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_VIEW = {
+  type: "pickerGrid",
+  page: 1,
+  search: "",
+  mediaField: "preview",
+  titleField: "title",
+  // Larger default tile than the built-in 230.
+  layout: { previewSize: 290 }
+};
+var getItemId = (item) => item.name;
+function WidgetPreview({ item }) {
+  const exampleWidget = (0, import_element170.useMemo)(
+    () => createDashboardWidget(item, item.example?.attributes),
+    [item]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(WidgetPreviewChrome, { widget: exampleWidget, widgetType: item });
+}
+var fields2 = [
+  {
+    id: "title",
+    type: "text",
+    label: (0, import_i18n65.__)("Title"),
+    filterBy: false
+  },
+  {
+    id: "preview",
+    type: "media",
+    render: WidgetPreview
+  },
+  {
+    id: "name",
+    type: "text",
+    enableGlobalSearch: true,
+    enableHiding: false,
+    enableSorting: false,
+    filterBy: false,
+    getValue: ({ item }) => `${item.name.replace(/[\/,\-_]/g, " ")} ${item.title}`
+  }
+];
+function WidgetPicker({
+  onSelect,
+  itemListLabel = (0, import_i18n65.__)("Widget list")
+}) {
+  const { widgetTypes: registeredTypes } = useDashboardInternalContext();
+  const [selection, setSelection] = (0, import_element170.useState)([]);
+  const [view, setView] = (0, import_element170.useState)(DEFAULT_VIEW);
+  const { data: widgetTypes } = filterSortAndPaginate(
+    registeredTypes,
+    view,
+    fields2
+  );
+  const actions = (0, import_element170.useMemo)(
+    () => [
+      {
+        id: "select",
+        label: (0, import_i18n65.__)("Select"),
+        isPrimary: true,
+        supportsBulk: true,
+        callback: (items) => onSelect(items)
+      }
+    ],
+    [onSelect]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+    dataviews_picker_default,
+    {
+      data: widgetTypes,
+      fields: fields2,
+      view,
+      actions,
+      defaultLayouts: { pickerGrid: {} },
+      onChangeView: setView,
+      isLoading: false,
+      paginationInfo: {
+        totalItems: widgetTypes.length,
+        totalPages: 1
+      },
+      selection,
+      onChangeSelection: setSelection,
+      getItemId,
+      itemListLabel
+    }
+  );
+}
+
+// packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
+var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
+function WidgetInserter() {
+  const { layout, onLayoutChange } = useDashboardInternalContext();
+  const { inserterOpen, setInserterOpen } = useDashboardUIContext();
+  const insertWidgets = (0, import_element171.useCallback)(
+    (widgetTypes) => {
+      if (widgetTypes.length > 0) {
+        const newWidgets = widgetTypes.map(
+          (widgetType) => createDashboardWidget(widgetType)
+        );
+        onLayoutChange([...layout, ...newWidgets]);
+      }
+      setInserterOpen(false);
+    },
+    [layout, onLayoutChange, setInserterOpen]
+  );
+  if (!inserterOpen) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(dialog_exports.Root, { open: inserterOpen, onOpenChange: setInserterOpen, children: /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(
+    dialog_exports.Popup,
+    {
+      size: "full",
+      portal: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+        dialog_exports.Portal,
+        {
+          style: {
+            "--wp-ui-dialog-z-index": 99999
+          }
+        }
+      ),
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(dialog_exports.Header, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(dialog_exports.Title, { children: (0, import_i18n66.__)("Add widget") }),
+          /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(dialog_exports.CloseIcon, {})
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(dialog_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(WidgetPicker, { onSelect: insertWidgets }) })
+      ]
+    }
+  ) });
+}
+
+// packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
+var import_element172 = __toESM(require_element(), 1);
+var import_i18n68 = __toESM(require_i18n(), 1);
+
+// packages/widget-dashboard/build-module/components/widget-settings/utils/get-admin-menu-inset.mjs
+var ADMIN_MENU_ID = "adminmenuback";
+function getAdminMenuInset() {
+  if (typeof document === "undefined") {
+    return 0;
+  }
+  const adminMenu = document.getElementById(ADMIN_MENU_ID);
+  if (!adminMenu) {
+    return 0;
+  }
+  return Math.max(0, adminMenu.getBoundingClientRect().right);
+}
+
+// packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
+var import_i18n67 = __toESM(require_i18n(), 1);
+function getWidgetSettingsTitle(widgetType) {
+  return widgetType?.title ? (0, import_i18n67.sprintf)(
+    /* translators: %s: Widget title. */
+    (0, import_i18n67.__)("%s settings"),
+    widgetType.title
+  ) : (0, import_i18n67.__)("Widget settings");
+}
+
+// packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
+var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE56 = "data-wp-hash";
+function getRuntime56() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument56(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash56(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE56}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE56) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle56(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime56();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash56(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE56, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument56(targetDocument) {
+  const runtime = getRuntime56();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle56(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle56(hash, css) {
+  const runtime = getRuntime56();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle56(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle56("809494c486", "._34828f30ba41ad89__popup{margin-block-start:var(--wp-admin--admin-bar--height,0)}");
 }
 var widget_settings_default = { "popup": "_34828f30ba41ad89__popup" };
 function WidgetSettings() {
@@ -42705,7 +42820,7 @@ function WidgetSettings() {
   }
   const title = getWidgetSettingsTitle(widgetType);
   const data = widget?.attributes ?? widgetType?.example?.attributes ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
     drawer_exports.Root,
     {
       open,
@@ -42713,18 +42828,18 @@ function WidgetSettings() {
       swipeDirection: settingsDrawerSide,
       modal: false,
       disablePointerDismissal: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(
         drawer_exports.Popup,
         {
           size: "medium",
           className: widget_settings_default.popup,
           style: popupStyle,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(drawer_exports.Header, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(drawer_exports.Title, { children: title }),
-              /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(drawer_exports.CloseIcon, {})
+            /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Header, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.Title, { children: title }),
+              /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.CloseIcon, {})
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
               DataForm,
               {
                 data,
@@ -42733,8 +42848,8 @@ function WidgetSettings() {
                 onChange: handleChange
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(drawer_exports.Footer, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Footer, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
                 Button4,
                 {
                   variant: "minimal",
@@ -42744,7 +42859,7 @@ function WidgetSettings() {
                   children: (0, import_i18n68.__)("Cancel")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
                 Button4,
                 {
                   variant: "solid",
@@ -42759,108 +42874,6 @@ function WidgetSettings() {
           ]
         }
       )
-    }
-  );
-}
-
-// packages/widget-dashboard/build-module/components/widget-toolbar/widget-toolbar.mjs
-var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE56 = "data-wp-hash";
-function getRuntime56() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument56(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash56(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE56}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE56) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle56(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime56();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash56(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE56, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument56(targetDocument) {
-  const runtime = getRuntime56();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle56(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle56(hash, css) {
-  const runtime = getRuntime56();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle56(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle56("c8afc26222", "._4a01b99834540429__widgetToolbar{border-radius:var(--wpds-border-radius-md,4px);inset-block-start:var(--wpds-dimension-padding-sm,8px);inset-inline-end:var(--wpds-dimension-padding-sm,8px);padding:var(--wpds-dimension-padding-xs,4px);position:absolute;z-index:1}");
-}
-var widget_toolbar_default = { "widgetToolbar": "_4a01b99834540429__widgetToolbar" };
-function WidgetToolbar({
-  children,
-  className
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-    Stack,
-    {
-      direction: "row",
-      align: "center",
-      gap: "xs",
-      className: clsx_default(widget_toolbar_default.widgetToolbar, className),
-      children
     }
   );
 }
@@ -42913,108 +42926,6 @@ function WidgetSettingsTrigger({
       onClick: open
     }
   );
-}
-
-// packages/widget-dashboard/build-module/components/widget-settings/widget-settings-toolbar.mjs
-var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE57 = "data-wp-hash";
-function getRuntime57() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument57(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash57(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE57}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE57) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle57(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime57();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash57(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE57, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument57(targetDocument) {
-  const runtime = getRuntime57();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle57(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle57(hash, css) {
-  const runtime = getRuntime57();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle57(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle57("76555dc7e2", "._931c420497181bdb__widgetSettingsToolbar{background:color-mix(in srgb,var(--wpds-color-background-surface-neutral,#fcfcfc) 40%,transparent);opacity:0;pointer-events:none}[data-wp-grid-item-key]:focus-within ._931c420497181bdb__widgetSettingsToolbar,[data-wp-grid-item-key]:hover ._931c420497181bdb__widgetSettingsToolbar{opacity:1;pointer-events:auto}@media not (prefers-reduced-motion){._931c420497181bdb__widgetSettingsToolbar{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}");
-}
-var widget_settings_toolbar_default = { "widgetSettingsToolbar": "_931c420497181bdb__widgetSettingsToolbar" };
-function WidgetSettingsToolbar({
-  widget,
-  widgetType
-}) {
-  if (!widgetType.attributes?.length) {
-    return null;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(WidgetToolbar, { className: widget_settings_toolbar_default.widgetSettingsToolbar, children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
-    WidgetSettingsTrigger,
-    {
-      widget,
-      widgetType
-    }
-  ) });
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
@@ -47277,6 +47188,203 @@ var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 // packages/grid/build-module/shared/resize-handle.mjs
 var import_element174 = __toESM(require_element(), 1);
 var import_compose25 = __toESM(require_compose(), 1);
+var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE57 = "data-wp-hash";
+function getRuntime57() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument57(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash57(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE57}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE57) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle57(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime57();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash57(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE57, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument57(targetDocument) {
+  const runtime = getRuntime57();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle57(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle57(hash, css) {
+  const runtime = getRuntime57();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle57(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle57("13645360b3", '._91523dc3a37aecb8__resize-handle-slot{opacity:1}@media (prefers-reduced-motion:no-preference){._91523dc3a37aecb8__resize-handle-slot{transition:opacity var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}[data-wp-grid-dragging] ._91523dc3a37aecb8__resize-handle-slot,[data-wp-grid-resizing] ._91523dc3a37aecb8__resize-handle-slot{opacity:0;pointer-events:none}[data-wp-grid-resizing]\n[data-wp-grid-item-resizing]\n._91523dc3a37aecb8__resize-handle-slot{opacity:1;pointer-events:auto}._4da787f72dc00d8b__resize-handle{border-block-end:12px solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:12px solid transparent;bottom:0;cursor:nwse-resize;height:0;inset-inline-end:0;position:absolute;width:0;z-index:1}._885412b44a137da0__is-horizontal-only{align-items:center;background:transparent;border-style:none;bottom:auto;cursor:ew-resize;display:flex;height:40px;justify-content:center;top:50%;transform:translateY(-50%);width:16px}._885412b44a137da0__is-horizontal-only:before{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-radius:2px;content:"";height:24px;width:4px}@media (forced-colors:active){._885412b44a137da0__is-horizontal-only:before{background-color:Highlight}}');
+}
+var resize_handle_default = { "resize-handle-slot": "_91523dc3a37aecb8__resize-handle-slot", "resize-handle": "_4da787f72dc00d8b__resize-handle", "is-horizontal-only": "_885412b44a137da0__is-horizontal-only" };
+function lockDocumentCursorWhileActive(getDocument2, cursor) {
+  const root = getDocument2().documentElement;
+  const previous = root.style.cursor;
+  root.style.cursor = cursor;
+  return () => {
+    root.style.cursor = previous;
+  };
+}
+function ResizeHandle({
+  itemId,
+  verticalResizable = true,
+  renderResizeHandle
+}) {
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    id: "draggable",
+    data: { itemId }
+  });
+  const ownerDocumentRef = (0, import_element174.useRef)(null);
+  const setOwnerDocumentRef = (0, import_element174.useCallback)((node) => {
+    ownerDocumentRef.current = node?.ownerDocument ?? null;
+  }, []);
+  const mergedRef = (0, import_compose25.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
+  (0, import_element174.useEffect)(() => {
+    if (!isDragging) {
+      return;
+    }
+    const cursor = verticalResizable ? "nwse-resize" : "ew-resize";
+    return lockDocumentCursorWhileActive(
+      () => ownerDocumentRef.current ?? document,
+      cursor
+    );
+  }, [isDragging, verticalResizable]);
+  if (renderResizeHandle) {
+    const RenderResizeHandle = renderResizeHandle;
+    return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
+      RenderResizeHandle,
+      {
+        ref: mergedRef,
+        listeners,
+        attributes,
+        verticalResizable,
+        isResizing: isDragging,
+        itemId
+      }
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
+    "div",
+    {
+      ref: mergedRef,
+      className: clsx_default(
+        resize_handle_default["resize-handle"],
+        !verticalResizable && resize_handle_default["is-horizontal-only"]
+      ),
+      ...listeners,
+      ...attributes
+    }
+  );
+}
+function ResizeHandleWrapper(props) {
+  const throttleDelay = 16;
+  const throttledResize = (0, import_compose25.useThrottle)((delta) => {
+    if (props.onResize) {
+      props.onResize(delta);
+    }
+  }, throttleDelay);
+  const handleDragMove = (event) => {
+    if (event.active.id !== "draggable") {
+      return;
+    }
+    throttledResize({
+      width: event.delta.x,
+      height: event.delta.y
+    });
+  };
+  const handleDragEnd = () => {
+    if (props.onResizeEnd) {
+      props.onResizeEnd();
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
+    DndContext,
+    {
+      autoScroll: {
+        threshold: { x: 5e-3, y: 5e-3 },
+        acceleration: 1
+      },
+      onDragMove: handleDragMove,
+      onDragEnd: handleDragEnd,
+      children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("div", { className: resize_handle_default["resize-handle-slot"], children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(ResizeHandle, { ...props }) })
+    }
+  );
+}
+
+// packages/grid/build-module/shared/resize-snap.mjs
+function clampResizeDelta(delta, initialSize, minSize) {
+  const maxShrinkWidth = initialSize.width - minSize.width;
+  const width = Math.max(delta.width, -maxShrinkWidth);
+  if (minSize.height === void 0) {
+    return { ...delta, width };
+  }
+  const maxShrinkHeight = initialSize.height - minSize.height;
+  const height = Math.max(delta.height, -maxShrinkHeight);
+  return { width, height };
+}
+function gridSpanToPixelSize(columnSpan, rowSpan, columnWidth, gapPx, rowHeightPx) {
+  const widthPx = columnSpan * columnWidth + (columnSpan - 1) * gapPx;
+  const heightPx = rowHeightPx === null ? null : rowSpan * rowHeightPx + (rowSpan - 1) * gapPx;
+  return { widthPx, heightPx };
+}
+
+// packages/grid/build-module/dashboard-grid/grid-item.mjs
 var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE58 = "data-wp-hash";
 function getRuntime58() {
@@ -47359,208 +47467,11 @@ function registerStyle58(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle58("13645360b3", '._91523dc3a37aecb8__resize-handle-slot{opacity:1}@media (prefers-reduced-motion:no-preference){._91523dc3a37aecb8__resize-handle-slot{transition:opacity var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}[data-wp-grid-dragging] ._91523dc3a37aecb8__resize-handle-slot,[data-wp-grid-resizing] ._91523dc3a37aecb8__resize-handle-slot{opacity:0;pointer-events:none}[data-wp-grid-resizing]\n[data-wp-grid-item-resizing]\n._91523dc3a37aecb8__resize-handle-slot{opacity:1;pointer-events:auto}._4da787f72dc00d8b__resize-handle{border-block-end:12px solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:12px solid transparent;bottom:0;cursor:nwse-resize;height:0;inset-inline-end:0;position:absolute;width:0;z-index:1}._885412b44a137da0__is-horizontal-only{align-items:center;background:transparent;border-style:none;bottom:auto;cursor:ew-resize;display:flex;height:40px;justify-content:center;top:50%;transform:translateY(-50%);width:16px}._885412b44a137da0__is-horizontal-only:before{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-radius:2px;content:"";height:24px;width:4px}@media (forced-colors:active){._885412b44a137da0__is-horizontal-only:before{background-color:Highlight}}');
-}
-var resize_handle_default = { "resize-handle-slot": "_91523dc3a37aecb8__resize-handle-slot", "resize-handle": "_4da787f72dc00d8b__resize-handle", "is-horizontal-only": "_885412b44a137da0__is-horizontal-only" };
-function lockDocumentCursorWhileActive(getDocument2, cursor) {
-  const root = getDocument2().documentElement;
-  const previous = root.style.cursor;
-  root.style.cursor = cursor;
-  return () => {
-    root.style.cursor = previous;
-  };
-}
-function ResizeHandle({
-  itemId,
-  verticalResizable = true,
-  renderResizeHandle
-}) {
-  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
-    id: "draggable",
-    data: { itemId }
-  });
-  const ownerDocumentRef = (0, import_element174.useRef)(null);
-  const setOwnerDocumentRef = (0, import_element174.useCallback)((node) => {
-    ownerDocumentRef.current = node?.ownerDocument ?? null;
-  }, []);
-  const mergedRef = (0, import_compose25.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
-  (0, import_element174.useEffect)(() => {
-    if (!isDragging) {
-      return;
-    }
-    const cursor = verticalResizable ? "nwse-resize" : "ew-resize";
-    return lockDocumentCursorWhileActive(
-      () => ownerDocumentRef.current ?? document,
-      cursor
-    );
-  }, [isDragging, verticalResizable]);
-  if (renderResizeHandle) {
-    const RenderResizeHandle = renderResizeHandle;
-    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
-      RenderResizeHandle,
-      {
-        ref: mergedRef,
-        listeners,
-        attributes,
-        verticalResizable,
-        isResizing: isDragging,
-        itemId
-      }
-    );
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
-    "div",
-    {
-      ref: mergedRef,
-      className: clsx_default(
-        resize_handle_default["resize-handle"],
-        !verticalResizable && resize_handle_default["is-horizontal-only"]
-      ),
-      ...listeners,
-      ...attributes
-    }
-  );
-}
-function ResizeHandleWrapper(props) {
-  const throttleDelay = 16;
-  const throttledResize = (0, import_compose25.useThrottle)((delta) => {
-    if (props.onResize) {
-      props.onResize(delta);
-    }
-  }, throttleDelay);
-  const handleDragMove = (event) => {
-    if (event.active.id !== "draggable") {
-      return;
-    }
-    throttledResize({
-      width: event.delta.x,
-      height: event.delta.y
-    });
-  };
-  const handleDragEnd = () => {
-    if (props.onResizeEnd) {
-      props.onResizeEnd();
-    }
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
-    DndContext,
-    {
-      autoScroll: {
-        threshold: { x: 5e-3, y: 5e-3 },
-        acceleration: 1
-      },
-      onDragMove: handleDragMove,
-      onDragEnd: handleDragEnd,
-      children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("div", { className: resize_handle_default["resize-handle-slot"], children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(ResizeHandle, { ...props }) })
-    }
-  );
-}
-
-// packages/grid/build-module/shared/resize-snap.mjs
-function clampResizeDelta(delta, initialSize, minSize) {
-  const maxShrinkWidth = initialSize.width - minSize.width;
-  const width = Math.max(delta.width, -maxShrinkWidth);
-  if (minSize.height === void 0) {
-    return { ...delta, width };
-  }
-  const maxShrinkHeight = initialSize.height - minSize.height;
-  const height = Math.max(delta.height, -maxShrinkHeight);
-  return { width, height };
-}
-function gridSpanToPixelSize(columnSpan, rowSpan, columnWidth, gapPx, rowHeightPx) {
-  const widthPx = columnSpan * columnWidth + (columnSpan - 1) * gapPx;
-  const heightPx = rowHeightPx === null ? null : rowSpan * rowHeightPx + (rowSpan - 1) * gapPx;
-  return { widthPx, heightPx };
-}
-
-// packages/grid/build-module/dashboard-grid/grid-item.mjs
-var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE59 = "data-wp-hash";
-function getRuntime59() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument59(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash59(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE59}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE59) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle59(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime59();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash59(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE59, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument59(targetDocument) {
-  const runtime = getRuntime59();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle59(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle59(hash, css) {
-  const runtime = getRuntime59();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle59(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle59("ac1094954c", "._1c54fe8165d3023e__actionable-area-slot{opacity:1}@media (prefers-reduced-motion:no-preference){._1c54fe8165d3023e__actionable-area-slot{transition:opacity var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}[data-wp-grid-resizing] ._1c54fe8165d3023e__actionable-area-slot{opacity:0;pointer-events:none}");
+  registerStyle58("ac1094954c", "._1c54fe8165d3023e__actionable-area-slot{opacity:1}@media (prefers-reduced-motion:no-preference){._1c54fe8165d3023e__actionable-area-slot{transition:opacity var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}[data-wp-grid-resizing] ._1c54fe8165d3023e__actionable-area-slot{opacity:0;pointer-events:none}");
 }
 var actionable_area_slot_default = { "actionable-area-slot": "_1c54fe8165d3023e__actionable-area-slot" };
 if (typeof process === "undefined" || true) {
-  registerStyle59("62860ded21", "._5d1abcb332a18701__item{position:relative}._54de57c12d3ce67e__item-content{height:100%;position:relative}._3e086aa073b9bbd9__is-resizing{overflow:visible;z-index:1}._3e086aa073b9bbd9__is-resizing ._54de57c12d3ce67e__item-content{overflow:visible;position:relative;z-index:2}._81d4e1a6c979f1e4__is-dragging{pointer-events:none}[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0)}@media not (prefers-reduced-motion:reduce){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{animation:_0447be8a7068a873__wp-grid-item-placeholder-in 0ms linear var(--wpds-motion-duration-sm,.1s) forwards;opacity:1;outline-color:transparent;outline-style:var(--wp-grid-placeholder-outline-style,dashed);outline-width:0}@keyframes _0447be8a7068a873__wp-grid-item-placeholder-in{to{opacity:var(--wp-grid-placeholder-opacity,.4);outline-color:var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));outline-width:var(--wpds-border-width-sm,2px)}}}@media (prefers-reduced-motion:reduce){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)))}}@media (forced-colors:active){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{--wp-grid-placeholder-outline-color:Highlight}}._2028fc095dbc5cb2__preview-overlay{background:transparent;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));border-radius:var(--wp-grid-placeholder-radius,0);box-sizing:border-box;inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:0}@media (forced-colors:active){._2028fc095dbc5cb2__preview-overlay{border-color:Highlight}}");
+  registerStyle58("62860ded21", "._5d1abcb332a18701__item{position:relative}._54de57c12d3ce67e__item-content{height:100%;position:relative}._3e086aa073b9bbd9__is-resizing{overflow:visible;z-index:1}._3e086aa073b9bbd9__is-resizing ._54de57c12d3ce67e__item-content{overflow:visible;position:relative;z-index:2}._81d4e1a6c979f1e4__is-dragging{pointer-events:none}[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0)}@media not (prefers-reduced-motion:reduce){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{animation:_0447be8a7068a873__wp-grid-item-placeholder-in 0ms linear var(--wpds-motion-duration-sm,.1s) forwards;opacity:1;outline-color:transparent;outline-style:var(--wp-grid-placeholder-outline-style,dashed);outline-width:0}@keyframes _0447be8a7068a873__wp-grid-item-placeholder-in{to{opacity:var(--wp-grid-placeholder-opacity,.4);outline-color:var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));outline-width:var(--wpds-border-width-sm,2px)}}}@media (prefers-reduced-motion:reduce){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)))}}@media (forced-colors:active){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{--wp-grid-placeholder-outline-color:Highlight}}._2028fc095dbc5cb2__preview-overlay{background:transparent;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));border-radius:var(--wp-grid-placeholder-radius,0);box-sizing:border-box;inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:0}@media (forced-colors:active){._2028fc095dbc5cb2__preview-overlay{border-color:Highlight}}");
 }
 var grid_item_default = { "item": "_5d1abcb332a18701__item", "item-content": "_54de57c12d3ce67e__item-content", "is-resizing": "_3e086aa073b9bbd9__is-resizing", "is-dragging": "_81d4e1a6c979f1e4__is-dragging", "wp-grid-item-placeholder-in": "_0447be8a7068a873__wp-grid-item-placeholder-in", "preview-overlay": "_2028fc095dbc5cb2__preview-overlay" };
 function getItemCursor(disabled2, interacting) {
@@ -47649,8 +47560,8 @@ function GridItem4({
     width: initialContentSize.width + resizeDelta.width,
     height: verticalResizable ? initialContentSize.height + resizeDelta.height : void 0
   } : void 0;
-  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(SnapPreviewOverlay, { snap: resizeSnapPreview }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
+  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(SnapPreviewOverlay, { snap: resizeSnapPreview }) : null;
+  return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
     "div",
     {
       ref: mergedRef,
@@ -47659,11 +47570,11 @@ function GridItem4({
       ...{ [GRID_ITEM_DATA_KEY]: item.key },
       "data-wp-grid-item-resizing": isResizing || void 0,
       children: [
-        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
           "div",
           {
             className: actionable_area_slot_default["actionable-area-slot"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
               "div",
               {
                 style: { display: "contents" },
@@ -47673,7 +47584,7 @@ function GridItem4({
             )
           }
         ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
           "div",
           {
             ref: setActivatorNodeRef,
@@ -47684,7 +47595,7 @@ function GridItem4({
               cursor: getItemCursor(disabled2, interacting)
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
                 "div",
                 {
                   ref: contentMergedRef,
@@ -47692,7 +47603,7 @@ function GridItem4({
                   style: continuousContentStyle,
                   children: [
                     children,
-                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
                       ResizeHandleWrapper,
                       {
                         itemId: item.key,
@@ -47714,7 +47625,7 @@ function GridItem4({
   );
 }
 function SnapPreviewOverlay({ snap }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
     "div",
     {
       className: grid_item_default["preview-overlay"],
@@ -47728,6 +47639,147 @@ function SnapPreviewOverlay({ snap }) {
 
 // packages/grid/build-module/shared/grid-overlay.mjs
 var import_element176 = __toESM(require_element(), 1);
+var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE59 = "data-wp-hash";
+function getRuntime59() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument59(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash59(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE59}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE59) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle59(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime59();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash59(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE59, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument59(targetDocument) {
+  const runtime = getRuntime59();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle59(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle59(hash, css) {
+  const runtime = getRuntime59();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle59(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle59("63c265b9f4", "._9d372b1b567c1c15__overlay{display:grid;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));inset:0;opacity:0;pointer-events:none;position:absolute;visibility:hidden}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{opacity:1;visibility:visible}@media not (prefers-reduced-motion){._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active .d8e6ee9623aadacf__row,._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active:not(._1cee1202cb622c6b__has-rows) ._04ff499ab60b4891__column{animation:_2d68e980e4534716__grid-overlay-tile-in var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)) both;animation-delay:calc(var(--wp-grid-overlay-wave-delay-step, 28ms)*(var(--wp-grid-overlay-column-index, 0) + var(--wp-grid-overlay-row-index, 0)));opacity:0;transform:scale(.64)}@keyframes _2d68e980e4534716__grid-overlay-tile-in{to{opacity:1;transform:scale(1)}}._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear var(--wpds-motion-duration-sm,.1s)}._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active) ._04ff499ab60b4891__column,._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active) .d8e6ee9623aadacf__row{animation:none;transform:none}}@media (prefers-reduced-motion:reduce){._9d372b1b567c1c15__overlay{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear var(--wpds-motion-duration-sm,.1s)}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear 0s}}._04ff499ab60b4891__column{display:flex;flex-direction:column;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));min-width:0}.d8e6ee9623aadacf__row{background-color:var(--wp-grid-overlay-tile-bg,var(--wpds-color-background-surface-neutral-weak,#f4f4f4));border-radius:var(--wpds-border-radius-lg,8px);box-sizing:border-box;flex:0 0 var(--wp-grid-overlay-row-height);height:var(--wp-grid-overlay-row-height)}");
+}
+var grid_overlay_default = { "overlay": "_9d372b1b567c1c15__overlay", "is-active": "acb42ab28bd5e371__is-active", "row": "d8e6ee9623aadacf__row", "has-rows": "_1cee1202cb622c6b__has-rows", "column": "_04ff499ab60b4891__column", "grid-overlay-tile-in": "_2d68e980e4534716__grid-overlay-tile-in" };
+function GridOverlay({
+  columns,
+  rowHeight,
+  rows,
+  isActive
+}) {
+  const showRows = typeof rowHeight === "number" && typeof rows === "number" && rows > 0;
+  const [waveKey, setWaveKey] = (0, import_element176.useState)(0);
+  (0, import_element176.useEffect)(() => {
+    if (isActive) {
+      setWaveKey((key2) => key2 + 1);
+    }
+  }, [isActive]);
+  const style = {
+    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+    ...showRows ? {
+      "--wp-grid-overlay-row-height": `${rowHeight}px`
+    } : {}
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+    "div",
+    {
+      "aria-hidden": true,
+      className: clsx_default(
+        grid_overlay_default.overlay,
+        isActive && grid_overlay_default["is-active"],
+        showRows && grid_overlay_default["has-rows"]
+      ),
+      style,
+      children: Array.from({ length: columns }, (_column, columnIndex) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+        "div",
+        {
+          className: grid_overlay_default.column,
+          style: {
+            "--wp-grid-overlay-column-index": columnIndex,
+            "--wp-grid-overlay-row-index": 0
+          },
+          children: showRows && Array.from({ length: rows }, (_row, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+            "div",
+            {
+              className: grid_overlay_default.row,
+              style: {
+                "--wp-grid-overlay-row-index": rowIndex
+              }
+            },
+            rowIndex
+          ))
+        },
+        columnIndex
+      ))
+    },
+    waveKey
+  );
+}
+
+// packages/grid/build-module/shared/item-exit-overlay.mjs
 var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE60 = "data-wp-hash";
 function getRuntime60() {
@@ -47810,148 +47862,7 @@ function registerStyle60(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle60("63c265b9f4", "._9d372b1b567c1c15__overlay{display:grid;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));inset:0;opacity:0;pointer-events:none;position:absolute;visibility:hidden}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{opacity:1;visibility:visible}@media not (prefers-reduced-motion){._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active .d8e6ee9623aadacf__row,._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active:not(._1cee1202cb622c6b__has-rows) ._04ff499ab60b4891__column{animation:_2d68e980e4534716__grid-overlay-tile-in var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)) both;animation-delay:calc(var(--wp-grid-overlay-wave-delay-step, 28ms)*(var(--wp-grid-overlay-column-index, 0) + var(--wp-grid-overlay-row-index, 0)));opacity:0;transform:scale(.64)}@keyframes _2d68e980e4534716__grid-overlay-tile-in{to{opacity:1;transform:scale(1)}}._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear var(--wpds-motion-duration-sm,.1s)}._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active) ._04ff499ab60b4891__column,._9d372b1b567c1c15__overlay:not(.acb42ab28bd5e371__is-active) .d8e6ee9623aadacf__row{animation:none;transform:none}}@media (prefers-reduced-motion:reduce){._9d372b1b567c1c15__overlay{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear var(--wpds-motion-duration-sm,.1s)}._9d372b1b567c1c15__overlay.acb42ab28bd5e371__is-active{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),visibility 0s linear 0s}}._04ff499ab60b4891__column{display:flex;flex-direction:column;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));min-width:0}.d8e6ee9623aadacf__row{background-color:var(--wp-grid-overlay-tile-bg,var(--wpds-color-background-surface-neutral-weak,#f4f4f4));border-radius:var(--wpds-border-radius-lg,8px);box-sizing:border-box;flex:0 0 var(--wp-grid-overlay-row-height);height:var(--wp-grid-overlay-row-height)}");
-}
-var grid_overlay_default = { "overlay": "_9d372b1b567c1c15__overlay", "is-active": "acb42ab28bd5e371__is-active", "row": "d8e6ee9623aadacf__row", "has-rows": "_1cee1202cb622c6b__has-rows", "column": "_04ff499ab60b4891__column", "grid-overlay-tile-in": "_2d68e980e4534716__grid-overlay-tile-in" };
-function GridOverlay({
-  columns,
-  rowHeight,
-  rows,
-  isActive
-}) {
-  const showRows = typeof rowHeight === "number" && typeof rows === "number" && rows > 0;
-  const [waveKey, setWaveKey] = (0, import_element176.useState)(0);
-  (0, import_element176.useEffect)(() => {
-    if (isActive) {
-      setWaveKey((key2) => key2 + 1);
-    }
-  }, [isActive]);
-  const style = {
-    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-    ...showRows ? {
-      "--wp-grid-overlay-row-height": `${rowHeight}px`
-    } : {}
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
-    "div",
-    {
-      "aria-hidden": true,
-      className: clsx_default(
-        grid_overlay_default.overlay,
-        isActive && grid_overlay_default["is-active"],
-        showRows && grid_overlay_default["has-rows"]
-      ),
-      style,
-      children: Array.from({ length: columns }, (_column, columnIndex) => /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
-        "div",
-        {
-          className: grid_overlay_default.column,
-          style: {
-            "--wp-grid-overlay-column-index": columnIndex,
-            "--wp-grid-overlay-row-index": 0
-          },
-          children: showRows && Array.from({ length: rows }, (_row, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
-            "div",
-            {
-              className: grid_overlay_default.row,
-              style: {
-                "--wp-grid-overlay-row-index": rowIndex
-              }
-            },
-            rowIndex
-          ))
-        },
-        columnIndex
-      ))
-    },
-    waveKey
-  );
-}
-
-// packages/grid/build-module/shared/item-exit-overlay.mjs
-var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE61 = "data-wp-hash";
-function getRuntime61() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument61(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash61(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE61}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE61) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle61(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime61();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash61(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE61, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument61(targetDocument) {
-  const runtime = getRuntime61();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle61(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle61(hash, css) {
-  const runtime = getRuntime61();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle61(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle61("1e0c56b346", ".f5f31b390af63a56__exit-overlay{opacity:1;overflow:hidden;pointer-events:none;position:absolute;transform:scale(1);transform-origin:center center;z-index:2}@media not (prefers-reduced-motion:reduce){.f5f31b390af63a56__exit-overlay{animation:_5e96d3d4062490e6__wp-grid-item-exit-opacity var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)) forwards,a74da0751a183719__wp-grid-item-exit-scale var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}}@keyframes _5e96d3d4062490e6__wp-grid-item-exit-opacity{0%{opacity:1}to{opacity:0}}@keyframes a74da0751a183719__wp-grid-item-exit-scale{0%{transform:scale(1)}to{transform:scale(.88)}}@media (prefers-reduced-motion:reduce){.f5f31b390af63a56__exit-overlay{display:none}}");
+  registerStyle60("1e0c56b346", ".f5f31b390af63a56__exit-overlay{opacity:1;overflow:hidden;pointer-events:none;position:absolute;transform:scale(1);transform-origin:center center;z-index:2}@media not (prefers-reduced-motion:reduce){.f5f31b390af63a56__exit-overlay{animation:_5e96d3d4062490e6__wp-grid-item-exit-opacity var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)) forwards,a74da0751a183719__wp-grid-item-exit-scale var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}}@keyframes _5e96d3d4062490e6__wp-grid-item-exit-opacity{0%{opacity:1}to{opacity:0}}@keyframes a74da0751a183719__wp-grid-item-exit-scale{0%{transform:scale(1)}to{transform:scale(.88)}}@media (prefers-reduced-motion:reduce){.f5f31b390af63a56__exit-overlay{display:none}}");
 }
 var item_exit_animation_default = { "exit-overlay": "f5f31b390af63a56__exit-overlay", "wp-grid-item-exit-opacity": "_5e96d3d4062490e6__wp-grid-item-exit-opacity", "wp-grid-item-exit-scale": "a74da0751a183719__wp-grid-item-exit-scale" };
 function ItemExitOverlay({
@@ -47960,7 +47871,7 @@ function ItemExitOverlay({
   children,
   onAnimationEnd
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
     "div",
     {
       className: item_exit_animation_default["exit-overlay"],
@@ -48438,9 +48349,9 @@ function createDashboardDragDropAnimation(dragPreviewFrameClassName, exitingFram
 }
 
 // packages/grid/build-module/dashboard-grid/index.mjs
-var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE62 = "data-wp-hash";
-function getRuntime62() {
+var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE61 = "data-wp-hash";
+function getRuntime61() {
   const globalScope = globalThis;
   if (globalScope.__wpStyleRuntime) {
     return globalScope.__wpStyleRuntime;
@@ -48451,28 +48362,28 @@ function getRuntime62() {
     injectedStyles: /* @__PURE__ */ new WeakMap()
   };
   if (typeof document !== "undefined") {
-    registerDocument62(document);
+    registerDocument61(document);
   }
   return globalScope.__wpStyleRuntime;
 }
-function documentContainsStyleHash62(targetDocument, hash) {
+function documentContainsStyleHash61(targetDocument, hash) {
   if (!targetDocument.head) {
     return false;
   }
   for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE62}]`
+    `style[${STYLE_HASH_ATTRIBUTE61}]`
   )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE62) === hash) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE61) === hash) {
       return true;
     }
   }
   return false;
 }
-function injectStyle62(targetDocument, hash, css) {
+function injectStyle61(targetDocument, hash, css) {
   if (!targetDocument.head) {
     return;
   }
-  const runtime = getRuntime62();
+  const runtime = getRuntime61();
   let injectedStyles = runtime.injectedStyles.get(targetDocument);
   if (!injectedStyles) {
     injectedStyles = /* @__PURE__ */ new Set();
@@ -48481,24 +48392,24 @@ function injectStyle62(targetDocument, hash, css) {
   if (injectedStyles.has(hash)) {
     return;
   }
-  if (documentContainsStyleHash62(targetDocument, hash)) {
+  if (documentContainsStyleHash61(targetDocument, hash)) {
     injectedStyles.add(hash);
     return;
   }
   const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE62, hash);
+  style.setAttribute(STYLE_HASH_ATTRIBUTE61, hash);
   style.appendChild(targetDocument.createTextNode(css));
   targetDocument.head.appendChild(style);
   injectedStyles.add(hash);
 }
-function registerDocument62(targetDocument) {
-  const runtime = getRuntime62();
+function registerDocument61(targetDocument) {
+  const runtime = getRuntime61();
   runtime.documents.set(
     targetDocument,
     (runtime.documents.get(targetDocument) ?? 0) + 1
   );
   for (const [hash, css] of runtime.styles) {
-    injectStyle62(targetDocument, hash, css);
+    injectStyle61(targetDocument, hash, css);
   }
   return () => {
     const count = runtime.documents.get(targetDocument);
@@ -48512,19 +48423,19 @@ function registerDocument62(targetDocument) {
     runtime.documents.set(targetDocument, count - 1);
   };
 }
-function registerStyle62(hash, css) {
-  const runtime = getRuntime62();
+function registerStyle61(hash, css) {
+  const runtime = getRuntime61();
   runtime.styles.set(hash, css);
   for (const targetDocument of runtime.documents.keys()) {
-    injectStyle62(targetDocument, hash, css);
+    injectStyle61(targetDocument, hash, css);
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle62("9e5573e51f", "._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:transform var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}@media (prefers-reduced-motion:reduce){._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:none}}");
+  registerStyle61("9e5573e51f", "._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:transform var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}@media (prefers-reduced-motion:reduce){._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:none}}");
 }
 var layout_shift_animation_default = { "layout-animating": "_2db63116caa90ae9__layout-animating" };
 if (typeof process === "undefined" || true) {
-  registerStyle62("52d51e7d5c", "._960c435c33759f46__grid{display:grid;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));position:relative}._48e8cd4225dcb813__drag-preview-frame{border-radius:var(--wp-grid-drag-preview-radius,0);box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005);cursor:grabbing;height:100%;pointer-events:none}._4b471bf24f891d2d__drag-preview-frame__lift{height:100%;transform:scale(var(--wp-grid-drag-preview-scale,1.05));transform-origin:center}@media not (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{animation:_08fdf90ef86c4706__wp-grid-drag-preview-shadow-enter var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) both}._4b471bf24f891d2d__drag-preview-frame__lift{animation:_8aaeb335436989f9__wp-grid-drag-preview-scale-enter var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) both}}@media not (prefers-reduced-motion:reduce){@keyframes _08fdf90ef86c4706__wp-grid-drag-preview-shadow-enter{0%{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}to{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}}@keyframes _8aaeb335436989f9__wp-grid-drag-preview-scale-enter{0%{transform:scale(1)}to{transform:scale(var(--wp-grid-drag-preview-scale,1.05))}}}@media not (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting{animation:a7ead84bfd25ff8a__wp-grid-drag-preview-shadow-exit var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting ._4b471bf24f891d2d__drag-preview-frame__lift{animation:_234ccad5c20d49f8__wp-grid-drag-preview-scale-exit var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}@keyframes a7ead84bfd25ff8a__wp-grid-drag-preview-shadow-exit{0%{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}to{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}}@keyframes _234ccad5c20d49f8__wp-grid-drag-preview-scale-exit{0%{transform:scale(var(--wp-grid-drag-preview-scale,1.05))}to{transform:scale(1)}}}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting ._4b471bf24f891d2d__drag-preview-frame__lift{transform:scale(1)}@media (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}._4b471bf24f891d2d__drag-preview-frame__lift{transform:none}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003);transition:none}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting ._4b471bf24f891d2d__drag-preview-frame__lift{transition:none}}");
+  registerStyle61("52d51e7d5c", "._960c435c33759f46__grid{display:grid;gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));position:relative}._48e8cd4225dcb813__drag-preview-frame{border-radius:var(--wp-grid-drag-preview-radius,0);box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005);cursor:grabbing;height:100%;pointer-events:none}._4b471bf24f891d2d__drag-preview-frame__lift{height:100%;transform:scale(var(--wp-grid-drag-preview-scale,1.05));transform-origin:center}@media not (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{animation:_08fdf90ef86c4706__wp-grid-drag-preview-shadow-enter var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) both}._4b471bf24f891d2d__drag-preview-frame__lift{animation:_8aaeb335436989f9__wp-grid-drag-preview-scale-enter var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) both}}@media not (prefers-reduced-motion:reduce){@keyframes _08fdf90ef86c4706__wp-grid-drag-preview-shadow-enter{0%{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}to{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}}@keyframes _8aaeb335436989f9__wp-grid-drag-preview-scale-enter{0%{transform:scale(1)}to{transform:scale(var(--wp-grid-drag-preview-scale,1.05))}}}@media not (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting{animation:a7ead84bfd25ff8a__wp-grid-drag-preview-shadow-exit var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting ._4b471bf24f891d2d__drag-preview-frame__lift{animation:_234ccad5c20d49f8__wp-grid-drag-preview-scale-exit var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}@keyframes a7ead84bfd25ff8a__wp-grid-drag-preview-shadow-exit{0%{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}to{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}}@keyframes _234ccad5c20d49f8__wp-grid-drag-preview-scale-exit{0%{transform:scale(var(--wp-grid-drag-preview-scale,1.05))}to{transform:scale(1)}}}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting ._4b471bf24f891d2d__drag-preview-frame__lift{transform:scale(1)}@media (prefers-reduced-motion:reduce){._48e8cd4225dcb813__drag-preview-frame{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}._4b471bf24f891d2d__drag-preview-frame__lift{transform:none}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003);transition:none}._48e8cd4225dcb813__drag-preview-frame._66b0aefb2bc02eb9__dragPreviewFrameExiting ._4b471bf24f891d2d__drag-preview-frame__lift{transition:none}}");
 }
 var grid_default3 = { "grid": "_960c435c33759f46__grid", "drag-preview-frame": "_48e8cd4225dcb813__drag-preview-frame", "drag-preview-frame__lift": "_4b471bf24f891d2d__drag-preview-frame__lift", "wp-grid-drag-preview-shadow-enter": "_08fdf90ef86c4706__wp-grid-drag-preview-shadow-enter", "wp-grid-drag-preview-scale-enter": "_8aaeb335436989f9__wp-grid-drag-preview-scale-enter", "dragPreviewFrameExiting": "_66b0aefb2bc02eb9__dragPreviewFrameExiting", "wp-grid-drag-preview-shadow-exit": "a7ead84bfd25ff8a__wp-grid-drag-preview-shadow-exit", "wp-grid-drag-preview-scale-exit": "_234ccad5c20d49f8__wp-grid-drag-preview-scale-exit" };
 var dashboardDragDropAnimation = createDashboardDragDropAnimation(
@@ -48839,7 +48750,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
     });
     const activeClone = activeId ? childrenMap.get(activeId) : null;
     const DragPreview = renderDragPreview;
-    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime227.jsx)("div", { className: grid_default3["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)("div", { className: grid_default3["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
+    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: grid_default3["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: grid_default3["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const overlayRowHeight = typeof rowHeight === "number" ? rowHeight : void 0;
     const overlayRows = (0, import_element179.useMemo)(() => {
@@ -48853,7 +48764,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
       );
     }, [overlayRowHeight, containerHeight, gapPx]);
     const gridOverlay = (0, import_element179.useMemo)(
-      () => /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+      () => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
         Overlay,
         {
           columns: effectiveColumns,
@@ -48892,7 +48803,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
     (0, import_element179.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
-    return /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
       DndContext,
       {
         sensors,
@@ -48905,7 +48816,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
           setActiveId(null);
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
             "div",
             {
               ...divProps,
@@ -48924,7 +48835,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
               },
               children: [
                 gridOverlay,
-                items.map((id) => /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+                items.map((id) => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                   GridItem4,
                   {
                     item: resolvedItemMap.get(
@@ -48947,7 +48858,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
                   id
                 )),
                 remaining,
-                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                   ItemExitOverlay,
                   {
                     itemKey: key2,
@@ -48960,7 +48871,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation, children: dragOverlayContent })
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation, children: dragOverlayContent })
         ]
       }
     );
@@ -48974,9 +48885,9 @@ var import_element182 = __toESM(require_element(), 1);
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
 var import_element180 = __toESM(require_element(), 1);
 var import_compose28 = __toESM(require_compose(), 1);
-var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE63 = "data-wp-hash";
-function getRuntime63() {
+var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE62 = "data-wp-hash";
+function getRuntime62() {
   const globalScope = globalThis;
   if (globalScope.__wpStyleRuntime) {
     return globalScope.__wpStyleRuntime;
@@ -48987,28 +48898,28 @@ function getRuntime63() {
     injectedStyles: /* @__PURE__ */ new WeakMap()
   };
   if (typeof document !== "undefined") {
-    registerDocument63(document);
+    registerDocument62(document);
   }
   return globalScope.__wpStyleRuntime;
 }
-function documentContainsStyleHash63(targetDocument, hash) {
+function documentContainsStyleHash62(targetDocument, hash) {
   if (!targetDocument.head) {
     return false;
   }
   for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE63}]`
+    `style[${STYLE_HASH_ATTRIBUTE62}]`
   )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE63) === hash) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE62) === hash) {
       return true;
     }
   }
   return false;
 }
-function injectStyle63(targetDocument, hash, css) {
+function injectStyle62(targetDocument, hash, css) {
   if (!targetDocument.head) {
     return;
   }
-  const runtime = getRuntime63();
+  const runtime = getRuntime62();
   let injectedStyles = runtime.injectedStyles.get(targetDocument);
   if (!injectedStyles) {
     injectedStyles = /* @__PURE__ */ new Set();
@@ -49017,24 +48928,24 @@ function injectStyle63(targetDocument, hash, css) {
   if (injectedStyles.has(hash)) {
     return;
   }
-  if (documentContainsStyleHash63(targetDocument, hash)) {
+  if (documentContainsStyleHash62(targetDocument, hash)) {
     injectedStyles.add(hash);
     return;
   }
   const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE63, hash);
+  style.setAttribute(STYLE_HASH_ATTRIBUTE62, hash);
   style.appendChild(targetDocument.createTextNode(css));
   targetDocument.head.appendChild(style);
   injectedStyles.add(hash);
 }
-function registerDocument63(targetDocument) {
-  const runtime = getRuntime63();
+function registerDocument62(targetDocument) {
+  const runtime = getRuntime62();
   runtime.documents.set(
     targetDocument,
     (runtime.documents.get(targetDocument) ?? 0) + 1
   );
   for (const [hash, css] of runtime.styles) {
-    injectStyle63(targetDocument, hash, css);
+    injectStyle62(targetDocument, hash, css);
   }
   return () => {
     const count = runtime.documents.get(targetDocument);
@@ -49048,19 +48959,19 @@ function registerDocument63(targetDocument) {
     runtime.documents.set(targetDocument, count - 1);
   };
 }
-function registerStyle63(hash, css) {
-  const runtime = getRuntime63();
+function registerStyle62(hash, css) {
+  const runtime = getRuntime62();
   runtime.styles.set(hash, css);
   for (const targetDocument of runtime.documents.keys()) {
-    injectStyle63(targetDocument, hash, css);
+    injectStyle62(targetDocument, hash, css);
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle63("ac1094954c", "._1c54fe8165d3023e__actionable-area-slot{opacity:1}@media (prefers-reduced-motion:no-preference){._1c54fe8165d3023e__actionable-area-slot{transition:opacity var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}[data-wp-grid-resizing] ._1c54fe8165d3023e__actionable-area-slot{opacity:0;pointer-events:none}");
+  registerStyle62("ac1094954c", "._1c54fe8165d3023e__actionable-area-slot{opacity:1}@media (prefers-reduced-motion:no-preference){._1c54fe8165d3023e__actionable-area-slot{transition:opacity var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}[data-wp-grid-resizing] ._1c54fe8165d3023e__actionable-area-slot{opacity:0;pointer-events:none}");
 }
 var actionable_area_slot_default2 = { "actionable-area-slot": "_1c54fe8165d3023e__actionable-area-slot" };
 if (typeof process === "undefined" || true) {
-  registerStyle63("97a2a51c0b", "._0a62d9f1dff8c7d8__item{position:relative}._20c43fcd930d828a__item-content{height:100%;position:relative}._11928ee35f1a9519__is-resizing{overflow:visible;z-index:1}._11928ee35f1a9519__is-resizing ._20c43fcd930d828a__item-content{overflow:visible;position:relative;z-index:2}.b7fc83c8b16e9ee5__is-dragging{pointer-events:none}[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0)}@media not (prefers-reduced-motion:reduce){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{animation:b026dda570d0eea0__wp-grid-item-placeholder-in 0ms linear var(--wpds-motion-duration-sm,.1s) forwards;opacity:1;outline-color:transparent;outline-style:var(--wp-grid-placeholder-outline-style,dashed);outline-width:0}@keyframes b026dda570d0eea0__wp-grid-item-placeholder-in{to{opacity:var(--wp-grid-placeholder-opacity,.4);outline-color:var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));outline-width:var(--wpds-border-width-sm,2px)}}}@media (prefers-reduced-motion:reduce){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)))}}@media (forced-colors:active){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{--wp-grid-placeholder-outline-color:Highlight}}.cd44faab32c27168__preview-overlay{background:transparent;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));box-sizing:border-box;inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:0}@media (forced-colors:active){.cd44faab32c27168__preview-overlay{border-color:Highlight}}");
+  registerStyle62("97a2a51c0b", "._0a62d9f1dff8c7d8__item{position:relative}._20c43fcd930d828a__item-content{height:100%;position:relative}._11928ee35f1a9519__is-resizing{overflow:visible;z-index:1}._11928ee35f1a9519__is-resizing ._20c43fcd930d828a__item-content{overflow:visible;position:relative;z-index:2}.b7fc83c8b16e9ee5__is-dragging{pointer-events:none}[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0)}@media not (prefers-reduced-motion:reduce){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{animation:b026dda570d0eea0__wp-grid-item-placeholder-in 0ms linear var(--wpds-motion-duration-sm,.1s) forwards;opacity:1;outline-color:transparent;outline-style:var(--wp-grid-placeholder-outline-style,dashed);outline-width:0}@keyframes b026dda570d0eea0__wp-grid-item-placeholder-in{to{opacity:var(--wp-grid-placeholder-opacity,.4);outline-color:var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));outline-width:var(--wpds-border-width-sm,2px)}}}@media (prefers-reduced-motion:reduce){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)))}}@media (forced-colors:active){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{--wp-grid-placeholder-outline-color:Highlight}}.cd44faab32c27168__preview-overlay{background:transparent;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));box-sizing:border-box;inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:0}@media (forced-colors:active){.cd44faab32c27168__preview-overlay{border-color:Highlight}}");
 }
 var lanes_item_default = { "item": "_0a62d9f1dff8c7d8__item", "item-content": "_20c43fcd930d828a__item-content", "is-resizing": "_11928ee35f1a9519__is-resizing", "is-dragging": "b7fc83c8b16e9ee5__is-dragging", "wp-grid-item-placeholder-in": "b026dda570d0eea0__wp-grid-item-placeholder-in", "preview-overlay": "cd44faab32c27168__preview-overlay" };
 function getItemCursor2(disabled2, interacting) {
@@ -49139,7 +49050,7 @@ function LanesItem({
   const continuousContentStyle = resizeDelta && initialContentSize ? {
     width: initialContentSize.width + resizeDelta.width
   } : void 0;
-  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
     "div",
     {
       className: lanes_item_default["preview-overlay"],
@@ -49149,7 +49060,7 @@ function LanesItem({
       }
     }
   ) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(
     "div",
     {
       ref: mergedRef,
@@ -49158,11 +49069,11 @@ function LanesItem({
       ...{ [GRID_ITEM_DATA_KEY]: itemKey },
       "data-wp-grid-item-resizing": isResizing || void 0,
       children: [
-        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
           "div",
           {
             className: actionable_area_slot_default2["actionable-area-slot"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
               "div",
               {
                 style: { display: "contents" },
@@ -49172,7 +49083,7 @@ function LanesItem({
             )
           }
         ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(
           "div",
           {
             ref: setActivatorNodeRef,
@@ -49183,7 +49094,7 @@ function LanesItem({
               cursor: getItemCursor2(disabled2, interacting)
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(
                 "div",
                 {
                   ref: contentMergedRef,
@@ -49191,7 +49102,7 @@ function LanesItem({
                   style: continuousContentStyle,
                   children: [
                     children,
-                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
                       ResizeHandleWrapper,
                       {
                         itemId: itemKey,
@@ -49474,9 +49385,9 @@ function useLanePlacement(container, input) {
 }
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
-var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE64 = "data-wp-hash";
-function getRuntime64() {
+var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE63 = "data-wp-hash";
+function getRuntime63() {
   const globalScope = globalThis;
   if (globalScope.__wpStyleRuntime) {
     return globalScope.__wpStyleRuntime;
@@ -49487,28 +49398,28 @@ function getRuntime64() {
     injectedStyles: /* @__PURE__ */ new WeakMap()
   };
   if (typeof document !== "undefined") {
-    registerDocument64(document);
+    registerDocument63(document);
   }
   return globalScope.__wpStyleRuntime;
 }
-function documentContainsStyleHash64(targetDocument, hash) {
+function documentContainsStyleHash63(targetDocument, hash) {
   if (!targetDocument.head) {
     return false;
   }
   for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE64}]`
+    `style[${STYLE_HASH_ATTRIBUTE63}]`
   )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE64) === hash) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE63) === hash) {
       return true;
     }
   }
   return false;
 }
-function injectStyle64(targetDocument, hash, css) {
+function injectStyle63(targetDocument, hash, css) {
   if (!targetDocument.head) {
     return;
   }
-  const runtime = getRuntime64();
+  const runtime = getRuntime63();
   let injectedStyles = runtime.injectedStyles.get(targetDocument);
   if (!injectedStyles) {
     injectedStyles = /* @__PURE__ */ new Set();
@@ -49517,24 +49428,24 @@ function injectStyle64(targetDocument, hash, css) {
   if (injectedStyles.has(hash)) {
     return;
   }
-  if (documentContainsStyleHash64(targetDocument, hash)) {
+  if (documentContainsStyleHash63(targetDocument, hash)) {
     injectedStyles.add(hash);
     return;
   }
   const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE64, hash);
+  style.setAttribute(STYLE_HASH_ATTRIBUTE63, hash);
   style.appendChild(targetDocument.createTextNode(css));
   targetDocument.head.appendChild(style);
   injectedStyles.add(hash);
 }
-function registerDocument64(targetDocument) {
-  const runtime = getRuntime64();
+function registerDocument63(targetDocument) {
+  const runtime = getRuntime63();
   runtime.documents.set(
     targetDocument,
     (runtime.documents.get(targetDocument) ?? 0) + 1
   );
   for (const [hash, css] of runtime.styles) {
-    injectStyle64(targetDocument, hash, css);
+    injectStyle63(targetDocument, hash, css);
   }
   return () => {
     const count = runtime.documents.get(targetDocument);
@@ -49548,19 +49459,19 @@ function registerDocument64(targetDocument) {
     runtime.documents.set(targetDocument, count - 1);
   };
 }
-function registerStyle64(hash, css) {
-  const runtime = getRuntime64();
+function registerStyle63(hash, css) {
+  const runtime = getRuntime63();
   runtime.styles.set(hash, css);
   for (const targetDocument of runtime.documents.keys()) {
-    injectStyle64(targetDocument, hash, css);
+    injectStyle63(targetDocument, hash, css);
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle64("9e5573e51f", "._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:transform var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}@media (prefers-reduced-motion:reduce){._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:none}}");
+  registerStyle63("9e5573e51f", "._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:transform var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}@media (prefers-reduced-motion:reduce){._2db63116caa90ae9__layout-animating [data-wp-grid-item-key]{transition:none}}");
 }
 var layout_shift_animation_default2 = { "layout-animating": "_2db63116caa90ae9__layout-animating" };
 if (typeof process === "undefined" || true) {
-  registerStyle64("44ea80456a", "._8cc368bc6c2d79c6__lanes{column-gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));display:grid-lanes;position:relative;row-gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px))}@supports not (display:grid-lanes){._8cc368bc6c2d79c6__lanes{display:grid;grid-auto-flow:dense;grid-auto-rows:var(--wp-grid-lane-row-unit,4px);row-gap:0}}._1bfa908a532e32a4__drag-preview-frame{border-radius:var(--wp-grid-drag-preview-radius,0);box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005);cursor:grabbing;height:100%;pointer-events:none}.bd684ee9f92388ed__drag-preview-frame__lift{height:100%;transform:scale(var(--wp-grid-drag-preview-scale,1.05));transform-origin:center}@media not (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame{animation:_5f4a1718cb7927ee__wp-grid-drag-preview-shadow-enter var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) both}.bd684ee9f92388ed__drag-preview-frame__lift{animation:_29f7f02d4f227b1e__wp-grid-drag-preview-scale-enter var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) both}}@media not (prefers-reduced-motion:reduce){@keyframes _5f4a1718cb7927ee__wp-grid-drag-preview-shadow-enter{0%{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}to{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}}@keyframes _29f7f02d4f227b1e__wp-grid-drag-preview-scale-enter{0%{transform:scale(1)}to{transform:scale(var(--wp-grid-drag-preview-scale,1.05))}}}@media not (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting{animation:_6883de14c5fb8559__wp-grid-drag-preview-shadow-exit var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting .bd684ee9f92388ed__drag-preview-frame__lift{animation:_0de4da1cd817e536__wp-grid-drag-preview-scale-exit var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}@keyframes _6883de14c5fb8559__wp-grid-drag-preview-shadow-exit{0%{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}to{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}}@keyframes _0de4da1cd817e536__wp-grid-drag-preview-scale-exit{0%{transform:scale(var(--wp-grid-drag-preview-scale,1.05))}to{transform:scale(1)}}}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting .bd684ee9f92388ed__drag-preview-frame__lift{transform:scale(1)}@media (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}.bd684ee9f92388ed__drag-preview-frame__lift{transform:none}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003);transition:none}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting .bd684ee9f92388ed__drag-preview-frame__lift{transition:none}}");
+  registerStyle63("44ea80456a", "._8cc368bc6c2d79c6__lanes{column-gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px));display:grid-lanes;position:relative;row-gap:var(--wp-grid-gap,var(--wpds-dimension-gap-xl,24px))}@supports not (display:grid-lanes){._8cc368bc6c2d79c6__lanes{display:grid;grid-auto-flow:dense;grid-auto-rows:var(--wp-grid-lane-row-unit,4px);row-gap:0}}._1bfa908a532e32a4__drag-preview-frame{border-radius:var(--wp-grid-drag-preview-radius,0);box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005);cursor:grabbing;height:100%;pointer-events:none}.bd684ee9f92388ed__drag-preview-frame__lift{height:100%;transform:scale(var(--wp-grid-drag-preview-scale,1.05));transform-origin:center}@media not (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame{animation:_5f4a1718cb7927ee__wp-grid-drag-preview-shadow-enter var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) both}.bd684ee9f92388ed__drag-preview-frame__lift{animation:_29f7f02d4f227b1e__wp-grid-drag-preview-scale-enter var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) both}}@media not (prefers-reduced-motion:reduce){@keyframes _5f4a1718cb7927ee__wp-grid-drag-preview-shadow-enter{0%{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}to{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}}@keyframes _29f7f02d4f227b1e__wp-grid-drag-preview-scale-enter{0%{transform:scale(1)}to{transform:scale(var(--wp-grid-drag-preview-scale,1.05))}}}@media not (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting{animation:_6883de14c5fb8559__wp-grid-drag-preview-shadow-exit var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting .bd684ee9f92388ed__drag-preview-frame__lift{animation:_0de4da1cd817e536__wp-grid-drag-preview-scale-exit var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)) forwards}@keyframes _6883de14c5fb8559__wp-grid-drag-preview-shadow-exit{0%{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}to{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}}@keyframes _0de4da1cd817e536__wp-grid-drag-preview-scale-exit{0%{transform:scale(var(--wp-grid-drag-preview-scale,1.05))}to{transform:scale(1)}}}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting .bd684ee9f92388ed__drag-preview-frame__lift{transform:scale(1)}@media (prefers-reduced-motion:reduce){._1bfa908a532e32a4__drag-preview-frame{box-shadow:var(--wpds-elevation-md,0 2px 3px 0 #0000000d,0 4px 5px 0 #0000000a,0 12px 12px 0 #00000008,0 16px 16px 0 #00000005)}.bd684ee9f92388ed__drag-preview-frame__lift{transform:none}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003);transition:none}._1bfa908a532e32a4__drag-preview-frame._13e2d868ade475b5__dragPreviewFrameExiting .bd684ee9f92388ed__drag-preview-frame__lift{transition:none}}");
 }
 var lanes_default = { "lanes": "_8cc368bc6c2d79c6__lanes", "drag-preview-frame": "_1bfa908a532e32a4__drag-preview-frame", "drag-preview-frame__lift": "bd684ee9f92388ed__drag-preview-frame__lift", "wp-grid-drag-preview-shadow-enter": "_5f4a1718cb7927ee__wp-grid-drag-preview-shadow-enter", "wp-grid-drag-preview-scale-enter": "_29f7f02d4f227b1e__wp-grid-drag-preview-scale-enter", "dragPreviewFrameExiting": "_13e2d868ade475b5__dragPreviewFrameExiting", "wp-grid-drag-preview-shadow-exit": "_6883de14c5fb8559__wp-grid-drag-preview-shadow-exit", "wp-grid-drag-preview-scale-exit": "_0de4da1cd817e536__wp-grid-drag-preview-scale-exit" };
 var dashboardDragDropAnimation2 = createDashboardDragDropAnimation(
@@ -49850,10 +49761,10 @@ var DashboardLanes = (0, import_element182.forwardRef)(
     const interacting = activeId !== null || isResizing;
     const activeClone = activeId ? childrenMap.get(activeId) : null;
     const DragPreview = renderDragPreview;
-    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
+    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const gridOverlay = (0, import_element182.useMemo)(
-      () => /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
+      () => /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
       [Overlay, editMode, effectiveColumns]
     );
     const layoutFingerprint = (0, import_element182.useMemo)(() => {
@@ -49879,7 +49790,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
     (0, import_element182.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
-    return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
       DndContext,
       {
         sensors,
@@ -49892,7 +49803,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
           setActiveId(null);
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY2, children: /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY2, children: /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
             "div",
             {
               ...divProps,
@@ -49928,7 +49839,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
                   if (!child) {
                     return null;
                   }
-                  return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
                     LanesItem,
                     {
                       itemKey: id,
@@ -49950,7 +49861,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
                   );
                 }),
                 remaining,
-                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
                   ItemExitOverlay,
                   {
                     itemKey: key2,
@@ -49963,7 +49874,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation2, children: dragOverlayContent })
+          /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation2, children: dragOverlayContent })
         ]
       }
     );
@@ -50020,10 +49931,197 @@ function useDashboardContainerColumnCount(forwardedRef) {
   return { containerRef, columnCount };
 }
 
-// packages/widget-dashboard/build-module/components/widgets/widget-layout-toolbar.mjs
+// packages/widget-dashboard/build-module/components/widget-layout-controls/widget-layout-controls.mjs
 var import_components55 = __toESM(require_components(), 1);
 var import_i18n70 = __toESM(require_i18n(), 1);
+var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
+var { Menu: Menu7 } = unlock2(import_components55.privateApis);
+function WidgetLayoutControls({
+  widget
+}) {
+  const { layout, onLayoutChange } = useDashboardInternalContext();
+  const width = widget.placement?.width;
+  const updateWidth = (nextWidth) => {
+    const nextLayout = layout.map(
+      (currentWidget) => currentWidget.uuid === widget.uuid ? {
+        ...currentWidget,
+        placement: {
+          ...currentWidget.placement,
+          width: nextWidth
+        }
+      } : currentWidget
+    );
+    onLayoutChange(nextLayout);
+  };
+  const onNamedWidthChange = (nextWidth) => {
+    updateWidth(nextWidth);
+  };
+  const onRemove = () => {
+    onLayoutChange(
+      layout.filter(
+        (currentWidget) => currentWidget.uuid !== widget.uuid
+      )
+    );
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(import_jsx_runtime229.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(Menu7, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+        Menu7.TriggerButton,
+        {
+          render: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+            IconButton,
+            {
+              icon: more_vertical_default,
+              label: (0, import_i18n70.__)("Widget options"),
+              size: "compact",
+              variant: "minimal",
+              tone: "neutral"
+            }
+          )
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(Menu7.Group, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.GroupLabel, { children: (0, import_i18n70.__)("Width") }),
+        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+          Menu7.Item,
+          {
+            disabled: width === "fill",
+            onClick: () => onNamedWidthChange("fill"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Use available width") })
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+          Menu7.Item,
+          {
+            disabled: width === "full",
+            onClick: () => onNamedWidthChange("full"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Make full width") })
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+      IconButton,
+      {
+        icon: trash_default,
+        label: (0, import_i18n70.__)("Remove"),
+        size: "compact",
+        variant: "minimal",
+        tone: "neutral",
+        onClick: onRemove
+      }
+    )
+  ] });
+}
+
+// packages/widget-dashboard/build-module/components/widget-toolbar/widget-toolbar.mjs
 var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE64 = "data-wp-hash";
+function getRuntime64() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument64(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash64(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE64}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE64) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle64(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime64();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash64(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE64, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument64(targetDocument) {
+  const runtime = getRuntime64();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle64(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle64(hash, css) {
+  const runtime = getRuntime64();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle64(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle64("e7596f6870", "._4a01b99834540429__widgetToolbar{border-radius:var(--wpds-border-radius-md,4px);padding:var(--wpds-dimension-padding-xs,4px)}._32f1176d3d6fc011__solid{background:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._45a811d7f0b925d2__subtle{background:color-mix(in srgb,var(--wpds-color-background-surface-neutral,#fcfcfc) 40%,transparent);opacity:0;pointer-events:none}[data-wp-grid-item-key]:focus-within ._45a811d7f0b925d2__subtle,[data-wp-grid-item-key]:hover ._45a811d7f0b925d2__subtle{opacity:1;pointer-events:auto}@media not (prefers-reduced-motion){._45a811d7f0b925d2__subtle{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}");
+}
+var widget_toolbar_default = { "widgetToolbar": "_4a01b99834540429__widgetToolbar", "solid": "_32f1176d3d6fc011__solid", "subtle": "_45a811d7f0b925d2__subtle" };
+function WidgetToolbar({
+  children,
+  revealOnHover = false
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
+    Stack,
+    {
+      direction: "row",
+      align: "center",
+      gap: "xs",
+      className: clsx_default(
+        widget_toolbar_default.widgetToolbar,
+        revealOnHover ? widget_toolbar_default.subtle : widget_toolbar_default.solid
+      ),
+      children
+    }
+  );
+}
+
+// packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
+var import_element184 = __toESM(require_element(), 1);
+var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE65 = "data-wp-hash";
 function getRuntime65() {
   const globalScope = globalThis;
@@ -50105,91 +50203,42 @@ function registerStyle65(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle65("2696f7462d", "._6f7360b4588de00a__widgetLayoutToolbar{background:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}");
+  registerStyle65("2e64f95efa", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._61d861c3afc33ad5__handleCorner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._61d861c3afc33ad5__handleCorner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._61d861c3afc33ad5__handleCorner:after{transform-origin:0 100%}._61d861c3afc33ad5__handleCorner.aa1d4aafe4d24e03__resizing:after,._61d861c3afc33ad5__handleCorner:focus-visible:after,._61d861c3afc33ad5__handleCorner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}._86ab3a6eb52bc222__handleHorizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._61d861c3afc33ad5__handleCorner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}._86ab3a6eb52bc222__handleHorizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}._86ab3a6eb52bc222__handleHorizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}._86ab3a6eb52bc222__handleHorizontal.aa1d4aafe4d24e03__resizing:after,._86ab3a6eb52bc222__handleHorizontal:focus-visible:after,._86ab3a6eb52bc222__handleHorizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._61d861c3afc33ad5__handleCorner.aa1d4aafe4d24e03__resizing:after,._61d861c3afc33ad5__handleCorner:after,._61d861c3afc33ad5__handleCorner:focus-visible:after,._61d861c3afc33ad5__handleCorner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}._86ab3a6eb52bc222__handleHorizontal.aa1d4aafe4d24e03__resizing:after,._86ab3a6eb52bc222__handleHorizontal:after,._86ab3a6eb52bc222__handleHorizontal:focus-visible:after,._86ab3a6eb52bc222__handleHorizontal:hover:after{background-color:Highlight}}');
 }
-var widget_layout_toolbar_default = { "widgetLayoutToolbar": "_6f7360b4588de00a__widgetLayoutToolbar" };
-var { Menu: Menu7 } = unlock2(import_components55.privateApis);
-function WidgetLayoutToolbar({
-  widget
-}) {
-  const { layout, onLayoutChange } = useDashboardInternalContext();
-  const width = widget.placement?.width;
-  const updateWidth = (nextWidth) => {
-    const nextLayout = layout.map(
-      (currentWidget) => currentWidget.uuid === widget.uuid ? {
-        ...currentWidget,
-        placement: {
-          ...currentWidget.placement,
-          width: nextWidth
-        }
-      } : currentWidget
-    );
-    onLayoutChange(nextLayout);
-  };
-  const onNamedWidthChange = (nextWidth) => {
-    updateWidth(nextWidth);
-  };
-  const onRemove = () => {
-    onLayoutChange(
-      layout.filter(
-        (currentWidget) => currentWidget.uuid !== widget.uuid
-      )
-    );
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(WidgetToolbar, { className: widget_layout_toolbar_default.widgetLayoutToolbar, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(Menu7, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
-        Menu7.TriggerButton,
-        {
-          render: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
-            IconButton,
-            {
-              icon: more_vertical_default,
-              label: (0, import_i18n70.__)("Widget options"),
-              size: "compact",
-              variant: "minimal",
-              tone: "neutral"
-            }
-          )
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(Menu7.Group, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Menu7.GroupLabel, { children: (0, import_i18n70.__)("Width") }),
-        /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
-          Menu7.Item,
-          {
-            disabled: width === "fill",
-            onClick: () => onNamedWidthChange("fill"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Use available width") })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
-          Menu7.Item,
-          {
-            disabled: width === "full",
-            onClick: () => onNamedWidthChange("full"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Make full width") })
-          }
-        )
-      ] }) })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
-      IconButton,
+var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handleCorner": "_61d861c3afc33ad5__handleCorner", "handleHorizontal": "_86ab3a6eb52bc222__handleHorizontal" };
+var WidgetResizeHandle = (0, import_element184.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+  if (!verticalResizable) {
+    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+      "div",
       {
-        icon: trash_default,
-        label: (0, import_i18n70.__)("Remove"),
-        size: "compact",
-        variant: "minimal",
-        tone: "neutral",
-        onClick: onRemove
+        ref,
+        className: clsx_default(
+          widget_resize_handle_default.handle,
+          widget_resize_handle_default.handleHorizontal,
+          isResizing && widget_resize_handle_default.resizing
+        ),
+        ...listeners,
+        ...attributes
       }
-    )
-  ] });
-}
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+    "div",
+    {
+      ref,
+      className: clsx_default(
+        widget_resize_handle_default.handle,
+        widget_resize_handle_default.handleCorner,
+        isResizing && widget_resize_handle_default.resizing
+      ),
+      ...listeners,
+      ...attributes
+    }
+  );
+});
 
-// packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element184 = __toESM(require_element(), 1);
-var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
+// packages/widget-dashboard/build-module/components/widgets/widgets.mjs
+var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE66 = "data-wp-hash";
 function getRuntime66() {
   const globalScope = globalThis;
@@ -50271,124 +50320,7 @@ function registerStyle66(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle66("2e64f95efa", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._61d861c3afc33ad5__handleCorner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._61d861c3afc33ad5__handleCorner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._61d861c3afc33ad5__handleCorner:after{transform-origin:0 100%}._61d861c3afc33ad5__handleCorner.aa1d4aafe4d24e03__resizing:after,._61d861c3afc33ad5__handleCorner:focus-visible:after,._61d861c3afc33ad5__handleCorner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}._86ab3a6eb52bc222__handleHorizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._61d861c3afc33ad5__handleCorner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}._86ab3a6eb52bc222__handleHorizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}._86ab3a6eb52bc222__handleHorizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}._86ab3a6eb52bc222__handleHorizontal.aa1d4aafe4d24e03__resizing:after,._86ab3a6eb52bc222__handleHorizontal:focus-visible:after,._86ab3a6eb52bc222__handleHorizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._61d861c3afc33ad5__handleCorner.aa1d4aafe4d24e03__resizing:after,._61d861c3afc33ad5__handleCorner:after,._61d861c3afc33ad5__handleCorner:focus-visible:after,._61d861c3afc33ad5__handleCorner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}._86ab3a6eb52bc222__handleHorizontal.aa1d4aafe4d24e03__resizing:after,._86ab3a6eb52bc222__handleHorizontal:after,._86ab3a6eb52bc222__handleHorizontal:focus-visible:after,._86ab3a6eb52bc222__handleHorizontal:hover:after{background-color:Highlight}}');
-}
-var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handleCorner": "_61d861c3afc33ad5__handleCorner", "handleHorizontal": "_86ab3a6eb52bc222__handleHorizontal" };
-var WidgetResizeHandle = (0, import_element184.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
-  if (!verticalResizable) {
-    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
-      "div",
-      {
-        ref,
-        className: clsx_default(
-          widget_resize_handle_default.handle,
-          widget_resize_handle_default.handleHorizontal,
-          isResizing && widget_resize_handle_default.resizing
-        ),
-        ...listeners,
-        ...attributes
-      }
-    );
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
-    "div",
-    {
-      ref,
-      className: clsx_default(
-        widget_resize_handle_default.handle,
-        widget_resize_handle_default.handleCorner,
-        isResizing && widget_resize_handle_default.resizing
-      ),
-      ...listeners,
-      ...attributes
-    }
-  );
-});
-
-// packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE67 = "data-wp-hash";
-function getRuntime67() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument67(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash67(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE67}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE67) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle67(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime67();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash67(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE67, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument67(targetDocument) {
-  const runtime = getRuntime67();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle67(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle67(hash, css) {
-  const runtime = getRuntime67();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle67(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle67("8516d4e5b3", "._942bbd7b48da810c__grid{--wp-grid-placeholder-radius:var(--wpds-border-radius-lg,8px);--wp-grid-drag-preview-radius:var(--wpds-border-radius-lg,8px);container-name:widget-dashboard;container-type:inline-size;width:100%}.a87790b3d11e7d7d__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}._5315dd1c30ef4e77__tileEditMode{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._5315dd1c30ef4e77__tileEditMode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._6b2daa817d860e6e__dragPreview{height:100%}._6b2daa817d860e6e__dragPreview .a87790b3d11e7d7d__tile{box-shadow:none}");
+  registerStyle66("8516d4e5b3", "._942bbd7b48da810c__grid{--wp-grid-placeholder-radius:var(--wpds-border-radius-lg,8px);--wp-grid-drag-preview-radius:var(--wpds-border-radius-lg,8px);container-name:widget-dashboard;container-type:inline-size;width:100%}.a87790b3d11e7d7d__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}._5315dd1c30ef4e77__tileEditMode{box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._5315dd1c30ef4e77__tileEditMode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}._6b2daa817d860e6e__dragPreview{height:100%}._6b2daa817d860e6e__dragPreview .a87790b3d11e7d7d__tile{box-shadow:none}");
 }
 var widgets_default = { "grid": "_942bbd7b48da810c__grid", "tile": "a87790b3d11e7d7d__tile", "tileEditMode": "_5315dd1c30ef4e77__tileEditMode", "dragPreview": "_6b2daa817d860e6e__dragPreview" };
 function toGridLayout(widgets) {
@@ -50463,18 +50395,19 @@ var Widgets = (0, import_element185.forwardRef)(
         (type) => type.name === widget.type
       );
       const hasSettings = !!widgetType?.attributes?.length;
-      let actionableArea;
+      let controls;
       if (editMode) {
-        actionableArea = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetLayoutToolbar, { widget });
+        controls = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetLayoutControls, { widget });
       } else if (hasSettings && widgetType) {
-        actionableArea = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
-          WidgetSettingsToolbar,
+        controls = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+          WidgetSettingsTrigger,
           {
             widget,
             widgetType
           }
         );
       }
+      const actionableArea = controls ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetHeader, { overlay: true, children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetToolbar, { revealOnHover: !editMode, children: controls }) }) : void 0;
       return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
         WidgetChrome,
         {
