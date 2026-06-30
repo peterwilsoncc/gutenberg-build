@@ -46333,6 +46333,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function UnforwardedRadio({
     value,
     children,
+    __next40pxDefaultSize: _next40pxDefaultSize,
     ...props
   }, ref) {
     const {
@@ -46341,24 +46342,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = (0, import_element164.useContext)(RadioGroupContext);
     const selectedValue = useStoreState(store, "value");
     const isChecked = selectedValue !== void 0 && selectedValue === value;
-    maybeWarnDeprecated36pxSize({
-      componentName: "Radio",
-      size: void 0,
-      __next40pxDefaultSize: props.__next40pxDefaultSize
-    });
     return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(Radio, {
       disabled,
       store,
       ref,
       value,
-      render: (
-        // Disable: the parent component already takes care of the `__next40pxDefaultSize` prop.
-        // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
-        /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(button_default, {
-          variant: isChecked ? "primary" : "secondary",
-          ...props
-        })
-      ),
+      render: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(button_default, {
+        variant: isChecked ? "primary" : "secondary",
+        __next40pxDefaultSize: true,
+        ...props
+      }),
       children: children || value
     });
   }
