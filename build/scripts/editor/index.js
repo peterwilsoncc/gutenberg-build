@@ -88103,7 +88103,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n306 = __toESM(require_i18n(), 1);
   var import_preferences24 = __toESM(require_preferences(), 1);
   var import_block_editor85 = __toESM(require_block_editor(), 1);
-  var import_compose76 = __toESM(require_compose(), 1);
+  var import_compose77 = __toESM(require_compose(), 1);
   var import_element303 = __toESM(require_element(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
   var import_notices32 = __toESM(require_notices(), 1);
@@ -91148,6 +91148,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n297 = __toESM(require_i18n(), 1);
   var import_date19 = __toESM(require_date(), 1);
   var import_element293 = __toESM(require_element(), 1);
+  var import_compose69 = __toESM(require_compose(), 1);
   var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
   function RevisionsSlider() {
     const {
@@ -91186,6 +91187,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { setCurrentRevisionId: setCurrentRevisionId2, setRevisionPage: setRevisionPage2 } = unlock(
       (0, import_data210.useDispatch)(store)
     );
+    const focusOnMountRef = (0, import_compose69.useFocusOnMount)(true);
     const isLoading = !rawRevisions;
     const totalPages = Math.ceil(totalRevisions / perPage) || 1;
     const revisions = (0, import_element293.useMemo)(
@@ -91232,6 +91234,7 @@ If there's a particular need for this, please submit a feature request at https:
     const sliderOrSpinner = isLoading || selectedIndex === -1 ? /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_components248.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
       import_components248.RangeControl,
       {
+        ref: focusOnMountRef,
         "aria-valuetext": renderTooltipContent(selectedIndex),
         className: "editor-revisions-header__slider",
         hideLabelFromVision: true,
@@ -91398,7 +91401,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data218 = __toESM(require_data(), 1);
   var import_blocks32 = __toESM(require_blocks(), 1);
   var import_core_data119 = __toESM(require_core_data(), 1);
-  var import_compose74 = __toESM(require_compose(), 1);
+  var import_compose75 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
   var import_data212 = __toESM(require_data(), 1);
@@ -91467,7 +91470,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.mjs
-  var import_compose69 = __toESM(require_compose(), 1);
+  var import_compose70 = __toESM(require_compose(), 1);
   var import_data213 = __toESM(require_data(), 1);
   var import_block_editor77 = __toESM(require_block_editor(), 1);
   var DISTANCE_THRESHOLD = 500;
@@ -91486,7 +91489,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data213.useSelect)(import_block_editor77.store)
     );
     const { selectBlock: selectBlock2 } = (0, import_data213.useDispatch)(import_block_editor77.store);
-    return (0, import_compose69.useRefEffect)(
+    return (0, import_compose70.useRefEffect)(
       (element) => {
         if (!isEnabled) {
           return;
@@ -91539,12 +91542,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/visual-editor/use-zoom-out-mode-exit.mjs
   var import_data214 = __toESM(require_data(), 1);
-  var import_compose70 = __toESM(require_compose(), 1);
+  var import_compose71 = __toESM(require_compose(), 1);
   var import_block_editor78 = __toESM(require_block_editor(), 1);
   function useZoomOutModeExit() {
     const { getSettings: getSettings10, isZoomOut } = unlock((0, import_data214.useSelect)(import_block_editor78.store));
     const { resetZoomLevel } = unlock((0, import_data214.useDispatch)(import_block_editor78.store));
-    return (0, import_compose70.useRefEffect)(
+    return (0, import_compose71.useRefEffect)(
       (node) => {
         function onDoubleClick(event) {
           if (!isZoomOut()) {
@@ -91570,13 +91573,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/visual-editor/use-padding-appender.mjs
   var import_data215 = __toESM(require_data(), 1);
-  var import_compose71 = __toESM(require_compose(), 1);
+  var import_compose72 = __toESM(require_compose(), 1);
   var import_block_editor79 = __toESM(require_block_editor(), 1);
   var import_blocks30 = __toESM(require_blocks(), 1);
   var CSS2 = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
   function usePaddingAppender(enabled) {
     const registry = (0, import_data215.useRegistry)();
-    const effect = (0, import_compose71.useRefEffect)(
+    const effect = (0, import_compose72.useRefEffect)(
       (node) => {
         function onMouseDown(event) {
           if (event.target !== node && // Tests for the parent element because in the iframed editor if the click is
@@ -91617,7 +91620,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/visual-editor/use-edit-content-only-section-exit.mjs
   var import_data216 = __toESM(require_data(), 1);
-  var import_compose72 = __toESM(require_compose(), 1);
+  var import_compose73 = __toESM(require_compose(), 1);
   var import_block_editor80 = __toESM(require_block_editor(), 1);
   function useEditContentOnlySectionExit() {
     const { getEditedContentOnlySection } = unlock(
@@ -91626,7 +91629,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { stopEditingContentOnlySection } = unlock(
       (0, import_data216.useDispatch)(import_block_editor80.store)
     );
-    return (0, import_compose72.useRefEffect)(
+    return (0, import_compose73.useRefEffect)(
       (node) => {
         function onClick(event) {
           const editedContentOnlySection = getEditedContentOnlySection();
@@ -91652,7 +91655,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_data217 = __toESM(require_data(), 1);
-  var import_compose73 = __toESM(require_compose(), 1);
+  var import_compose74 = __toESM(require_compose(), 1);
   var import_blocks31 = __toESM(require_blocks(), 1);
   var import_core_data118 = __toESM(require_core_data(), 1);
   var import_block_editor81 = __toESM(require_block_editor(), 1);
@@ -91742,7 +91745,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const { onManualRetry, secondsRemaining } = useRetryCountdown(connectionStatus);
-    const copyButtonRef = (0, import_compose73.useCopyToClipboard)(() => {
+    const copyButtonRef = (0, import_compose74.useCopyToClipboard)(() => {
       const blocks = (0, import_data217.select)(import_block_editor81.store).getBlocks();
       return (0, import_blocks31.serialize)(blocks);
     });
@@ -91904,7 +91907,7 @@ If there's a particular need for this, please submit a feature request at https:
     contentRef,
     className
   }) {
-    const isMobileViewport = (0, import_compose74.useViewportMatch)("small", "<");
+    const isMobileViewport = (0, import_compose75.useViewportMatch)("small", "<");
     const {
       renderingMode: renderingMode2,
       postContentAttributes,
@@ -92094,7 +92097,7 @@ If there's a particular need for this, please submit a feature request at https:
       ];
     }, [styles, enableResizing, isNavigationPreview, paddingStyle]);
     const typewriterRef = (0, import_block_editor82.__unstableUseTypewriter)();
-    contentRef = (0, import_compose74.useMergeRefs)([
+    contentRef = (0, import_compose75.useMergeRefs)([
       localRef,
       contentRef,
       renderingMode2 === "post-only" ? typewriterRef : null,
@@ -92285,7 +92288,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-revisions-preview/diff-markers.mjs
   var import_element298 = __toESM(require_element(), 1);
-  var import_compose75 = __toESM(require_compose(), 1);
+  var import_compose76 = __toESM(require_compose(), 1);
   var import_data219 = __toESM(require_data(), 1);
   var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_i18n302 = __toESM(require_i18n(), 1);
@@ -92375,7 +92378,7 @@ If there's a particular need for this, please submit a feature request at https:
       subscribersRef.current.add(callback);
       return () => subscribersRef.current.delete(callback);
     }, []);
-    const contentRef = (0, import_compose75.useRefEffect)((element) => {
+    const contentRef = (0, import_compose76.useRefEffect)((element) => {
       const { ownerDocument: ownerDocument2 } = element;
       const { defaultView } = ownerDocument2;
       const resizeObserver = new defaultView.ResizeObserver(() => {
@@ -92387,7 +92390,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     return [
-      (0, import_compose75.useMergeRefs)([contentRef, setIsMounted]),
+      (0, import_compose76.useMergeRefs)([contentRef, setIsMounted]),
       /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
         "div",
         {
@@ -92896,7 +92899,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data224.useDispatch)(store));
     useCollaboratorNotifications(postId2, postType2);
-    const isLargeViewport = (0, import_compose76.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose77.useViewportMatch)("medium");
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n306.__)("Document Overview") : (0, import_i18n306.__)("Block Library");
     const shouldShowStylesCanvas = showStylebook2 || stylesPath2?.startsWith("/revisions");
     const shouldShowBlockEditor = !shouldShowStylesCanvas;
@@ -93839,7 +93842,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/blog-title/index.mjs
   var import_i18n314 = __toESM(require_i18n(), 1);
-  var import_compose77 = __toESM(require_compose(), 1);
+  var import_compose78 = __toESM(require_compose(), 1);
   var import_data234 = __toESM(require_data(), 1);
   var import_core_data127 = __toESM(require_core_data(), 1);
   var import_html_entities32 = __toESM(require_html_entities(), 1);
@@ -93928,7 +93931,7 @@ If there's a particular need for this, please submit a feature request at https:
               placeholder: (0, import_i18n314.__)("No title"),
               size: "__unstable-large",
               value: postsPageTitle,
-              onChange: (0, import_compose77.debounce)(setPostsPageTitle, 300),
+              onChange: (0, import_compose78.debounce)(setPostsPageTitle, 300),
               label: (0, import_i18n314.__)("Blog title"),
               help: (0, import_i18n314.__)(
                 "Set the Posts Page title. Appears in search results, and when the page is shared on social media."
@@ -95654,7 +95657,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n341 = __toESM(require_i18n(), 1);
   var import_data264 = __toESM(require_data(), 1);
   var import_element333 = __toESM(require_element(), 1);
-  var import_compose80 = __toESM(require_compose(), 1);
+  var import_compose81 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor107 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
@@ -95674,7 +95677,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_element328 = __toESM(require_element(), 1);
   var import_components279 = __toESM(require_components(), 1);
-  var import_compose79 = __toESM(require_compose(), 1);
+  var import_compose80 = __toESM(require_compose(), 1);
   var import_i18n335 = __toESM(require_i18n(), 1);
   var import_data258 = __toESM(require_data(), 1);
   var import_dom27 = __toESM(require_dom(), 1);
@@ -95808,14 +95811,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element325 = __toESM(require_element(), 1);
   var import_components277 = __toESM(require_components(), 1);
   var import_i18n332 = __toESM(require_i18n(), 1);
-  var import_compose78 = __toESM(require_compose(), 1);
+  var import_compose79 = __toESM(require_compose(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
   function NoteForm({ onSubmit, onCancel, note, labels }) {
     const [inputComment, setInputComment] = (0, import_element325.useState)(
       note?.content?.raw ?? ""
     );
-    const inputId = (0, import_compose78.useInstanceId)(NoteForm, "comment-input");
+    const inputId = (0, import_compose79.useInstanceId)(NoteForm, "comment-input");
     const isDisabled = inputComment === note?.content?.raw || !sanitizeNoteContent(inputComment).length;
     return /* @__PURE__ */ (0, import_jsx_runtime542.jsxs)(
       Stack,
@@ -96184,7 +96187,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { selectNote: selectNote2 } = unlock((0, import_data258.useDispatch)(store));
     const relatedBlockElement = useBlockElement2(note.blockClientId);
-    const debouncedToggleBlockHighlight = (0, import_compose79.useDebounce)(
+    const debouncedToggleBlockHighlight = (0, import_compose80.useDebounce)(
       toggleBlockHighlight,
       50
     );
@@ -97370,7 +97373,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data264.useDispatch)(import_block_editor107.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data264.useDispatch)(store));
-    const isLargeViewport = (0, import_compose80.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose81.useViewportMatch)("medium");
     const sidebarRef = (0, import_element333.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data264.useSelect)((select7) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select7(import_block_editor107.store);
@@ -97539,7 +97542,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data267 = __toESM(require_data(), 1);
   var import_element334 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
-  var import_compose81 = __toESM(require_compose(), 1);
+  var import_compose82 = __toESM(require_compose(), 1);
   var import_core_data140 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
@@ -97815,10 +97818,10 @@ If there's a particular need for this, please submit a feature request at https:
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
       (0, import_data267.useDispatch)(store)
     );
-    const isMobileViewport = (0, import_compose81.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose82.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
-    const previousActiveArea = (0, import_compose81.usePrevious)(activeComplementaryArea);
+    const previousActiveArea = (0, import_compose82.usePrevious)(activeComplementaryArea);
     (0, import_element334.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
         resetStylesNavigation2();
@@ -98020,7 +98023,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n347 = __toESM(require_i18n(), 1);
-  var import_compose82 = __toESM(require_compose(), 1);
+  var import_compose83 = __toESM(require_compose(), 1);
   var import_data271 = __toESM(require_data(), 1);
   var import_element336 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
@@ -98163,7 +98166,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(PreferencesModalContents, { extraSections }) });
   }
   function PreferencesModalContents({ extraSections = {} }) {
-    const isLargeViewport = (0, import_compose82.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose83.useViewportMatch)("medium");
     const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data271.useSelect)(
       (select7) => {
         const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select7(store));
