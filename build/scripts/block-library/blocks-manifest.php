@@ -4711,7 +4711,14 @@ return array(
 			),
 			'isTopLevelItem' => array(
 				'type' => 'boolean'
+			),
+			'isParentSubmenu' => array(
+				'type' => 'boolean',
+				'default' => true
 			)
+		),
+		'providesContext' => array(
+			'core/isInsideSubmenu' => 'isParentSubmenu'
 		),
 		'usesContext' => array(
 			'textColor',
@@ -4800,10 +4807,6 @@ return array(
 			'parentPageID' => array(
 				'type' => 'integer',
 				'default' => 0
-			),
-			'isNested' => array(
-				'type' => 'boolean',
-				'default' => false
 			)
 		),
 		'usesContext' => array(
@@ -4820,7 +4823,8 @@ return array(
 			'showSubmenuIcon',
 			'style',
 			'openSubmenusOnClick',
-			'submenuVisibility'
+			'submenuVisibility',
+			'core/isInsideSubmenu'
 		),
 		'supports' => array(
 			'anchor' => true,
