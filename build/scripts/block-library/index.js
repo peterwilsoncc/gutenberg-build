@@ -42180,14 +42180,6 @@ ${js}
       },
       [setAttributes]
     );
-    (0, import_element80.useEffect)(() => {
-      if (orientation === "horizontal" && submenuVisibility === "always") {
-        setAttributes({
-          submenuVisibility: "hover",
-          showSubmenuIcon: true
-        });
-      }
-    }, [orientation, submenuVisibility, setAttributes]);
     const recursionId = `navigationMenu/${ref}`;
     const recursionDetected = (0, import_block_editor157.useHasRecursion)(recursionId);
     const { isPreviewMode, onNavigateToEntityRecord, currentTheme } = (0, import_data86.useSelect)(
@@ -42236,6 +42228,20 @@ ${js}
       isInnerBlockSelected,
       innerBlocks
     } = useInnerBlocks(clientId);
+    (0, import_element80.useEffect)(() => {
+      if ((isSelected || isInnerBlockSelected) && orientation === "horizontal" && submenuVisibility === "always") {
+        setAttributes({
+          submenuVisibility: "hover",
+          showSubmenuIcon: true
+        });
+      }
+    }, [
+      isSelected,
+      isInnerBlockSelected,
+      orientation,
+      submenuVisibility,
+      setAttributes
+    ]);
     const hasPageListWithSubmenuRef = (0, import_element80.useRef)(false);
     const hasSubmenus = (0, import_data86.useSelect)(
       (select9) => {
