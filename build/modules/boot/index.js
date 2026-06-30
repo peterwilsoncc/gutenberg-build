@@ -8509,12 +8509,32 @@ function renderSlotWithChildren(slot, defaultSlot, children) {
   return (0, import_element12.cloneElement)(slot ?? defaultSlot, { children });
 }
 
+// packages/ui/build-module/utils/theme-provider.mjs
+var theme = __toESM(require_theme(), 1);
+
 // packages/ui/build-module/lock-unlock.mjs
 var import_private_apis = __toESM(require_private_apis(), 1);
 var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/ui"
 );
+
+// packages/ui/build-module/utils/theme-provider.mjs
+function getThemeProvider() {
+  const themePackage = theme;
+  if (themePackage.ThemeProvider) {
+    return themePackage.ThemeProvider;
+  }
+  if (!themePackage.privateApis) {
+    throw new Error(
+      "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
+    );
+  }
+  return unlock(
+    themePackage.privateApis
+  ).ThemeProvider;
+}
+var ThemeProvider = getThemeProvider();
 
 // packages/ui/build-module/stack/stack.mjs
 var import_element13 = __toESM(require_element(), 1);
@@ -8640,7 +8660,6 @@ __export(tooltip_exports, {
 
 // packages/ui/build-module/tooltip/popup.mjs
 var import_element16 = __toESM(require_element(), 1);
-var import_theme = __toESM(require_theme(), 1);
 
 // packages/ui/build-module/tooltip/portal.mjs
 var import_element14 = __toESM(require_element(), 1);
@@ -8993,7 +9012,6 @@ if (typeof process === "undefined" || true) {
   registerStyle5("789467362f", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--wpds-elevation-sm,0 1px 2px 0 #0000000d,0 2px 3px 0 #0000000a,0 6px 6px 0 #00000008,0 8px 8px 0 #00000005);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
 }
 var style_default4 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
 var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup = (0, import_element16.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
   const popupContent = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
@@ -9385,7 +9403,7 @@ var import_components14 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis5 } from "@wordpress/route";
 var import_element29 = __toESM(require_element(), 1);
 var import_i18n11 = __toESM(require_i18n(), 1);
-var import_theme2 = __toESM(require_theme(), 1);
+var import_theme = __toESM(require_theme(), 1);
 
 // packages/boot/build-module/components/sidebar/index.mjs
 var import_components10 = __toESM(require_components(), 1);
@@ -10703,7 +10721,6 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 var { useLocation: useLocation2, useMatches: useMatches3, Outlet } = unlock2(routePrivateApis5);
-var { ThemeProvider: ThemeProvider2 } = unlock2(import_theme2.privateApis);
 function Root2() {
   const matches = useMatches3();
   const location = useLocation2();
@@ -10720,11 +10737,11 @@ function Root2() {
   }, [location.pathname, isMobileViewport]);
   const themeColors = (0, import_element29.useMemo)(getAdminThemeColors, []);
   return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
-    ThemeProvider2,
+    import_theme.ThemeProvider,
     {
       isRoot: true,
       color: { ...themeColors, background: "#f8f8f8" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(ThemeProvider2, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
         "div",
         {
           className: clsx_default("boot-layout", {
@@ -10787,7 +10804,7 @@ function Root2() {
             ) }),
             !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Sidebar, {}) }),
             /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
-              ThemeProvider2,
+              import_theme.ThemeProvider,
               {
                 color: {
                   ...themeColors,
@@ -10975,7 +10992,7 @@ var import_notices2 = __toESM(require_notices(), 1);
 var import_components15 = __toESM(require_components(), 1);
 var import_element31 = __toESM(require_element(), 1);
 import { privateApis as routePrivateApis7 } from "@wordpress/route";
-var import_theme3 = __toESM(require_theme(), 1);
+var import_theme2 = __toESM(require_theme(), 1);
 var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='a66cc68f6f']")) {
   const style = document.createElement("style");
@@ -10984,7 +11001,6 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   document.head.appendChild(style);
 }
 var { useMatches: useMatches4, Outlet: Outlet2 } = unlock2(routePrivateApis7);
-var { ThemeProvider: ThemeProvider3 } = unlock2(import_theme3.privateApis);
 function RootSinglePage() {
   const matches = useMatches4();
   const currentMatch = matches[matches.length - 1];
@@ -10994,11 +11010,11 @@ function RootSinglePage() {
   useRouteTitle();
   const themeColors = (0, import_element31.useMemo)(getAdminThemeColors, []);
   return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
-    ThemeProvider3,
+    import_theme2.ThemeProvider,
     {
       isRoot: true,
       color: { ...themeColors, background: "#f8f8f8" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ThemeProvider3, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_theme2.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
         "div",
         {
           className: clsx_default(
@@ -11012,7 +11028,7 @@ function RootSinglePage() {
             /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(SavePanel, {}),
             /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
             /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
-              ThemeProvider3,
+              import_theme2.ThemeProvider,
               {
                 color: {
                   ...themeColors,
