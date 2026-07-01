@@ -3273,6 +3273,16 @@ var wp;
       plural: "icons",
       key: "name",
       supportsPagination: false
+    },
+    {
+      label: (0, import_i18n.__)("Icon Collections"),
+      name: "iconCollection",
+      kind: "root",
+      baseURL: "/wp/v2/icon-collections",
+      baseURLParams: { context: "view" },
+      plural: "iconCollections",
+      key: "slug",
+      supportsPagination: false
     }
   ];
   var deprecatedEntities = {
