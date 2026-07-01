@@ -83587,7 +83587,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_hooks51 = __toESM(require_hooks(), 1);
   var import_core_data89 = __toESM(require_core_data(), 1);
   var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
-  function writeInterstitialMessage(targetDocument) {
+  function buildInterstitialMarkup() {
     let markup = (0, import_element249.renderToString)(
       /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)("div", { className: "editor-post-preview-button__interstitial-message", children: [
         /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(import_components204.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 96 96", children: [
@@ -83666,9 +83666,36 @@ If there's a particular need for this, please submit a feature request at https:
 		</style>
 	`;
     markup = (0, import_hooks51.applyFilters)("editor.PostPreview.interstitialMarkup", markup);
+    return markup;
+  }
+  function writeInterstitialMessage(targetDocument, markup) {
     targetDocument.write(markup);
     targetDocument.title = (0, import_i18n247.__)("Generating preview\u2026");
     targetDocument.close();
+  }
+  async function getPreviewDocument(previewWindow) {
+    try {
+      return previewWindow.document;
+    } catch {
+    }
+    previewWindow.location = "about:blank";
+    const timeoutMs = 1e3;
+    const intervalMs = 50;
+    const deadline = Date.now() + timeoutMs;
+    do {
+      await new Promise((resolve) => setTimeout(resolve, intervalMs));
+      try {
+        return previewWindow.document;
+      } catch {
+      }
+    } while (Date.now() < deadline);
+    return null;
+  }
+  async function writeInterstitialIntoPreviewWindow(previewWindow) {
+    const previewDocument = await getPreviewDocument(previewWindow);
+    if (previewDocument) {
+      writeInterstitialMessage(previewDocument, buildInterstitialMarkup());
+    }
   }
   function PostPreviewButton({
     className,
@@ -83704,7 +83731,7 @@ If there's a particular need for this, please submit a feature request at https:
       event.preventDefault();
       const previewWindow = window.open("", targetId);
       previewWindow.focus();
-      writeInterstitialMessage(previewWindow.document);
+      await writeInterstitialIntoPreviewWindow(previewWindow);
       const link = await __unstableSaveForPreview2({ forceIsAutosaveable });
       previewWindow.location = link;
       onPreview?.();
