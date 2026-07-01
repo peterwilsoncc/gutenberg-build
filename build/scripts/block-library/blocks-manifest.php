@@ -5166,12 +5166,10 @@ return array(
 			),
 			'__experimentalBorder' => array(
 				'color' => true,
-				'radius' => true,
 				'style' => true,
 				'width' => true,
 				'__experimentalDefaultControls' => array(
 					'color' => true,
-					'radius' => true,
 					'style' => true,
 					'width' => true
 				)
