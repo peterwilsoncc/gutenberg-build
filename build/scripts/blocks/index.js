@@ -5758,7 +5758,7 @@ var wp;
 
   // packages/blocks/build-module/api/raw-handling/index.mjs
   var import_deprecated10 = __toESM(require_deprecated(), 1);
-  var import_dom12 = __toESM(require_dom(), 1);
+  var import_dom13 = __toESM(require_dom(), 1);
 
   // packages/blocks/build-module/api/raw-handling/get-raw-transforms.mjs
   function getRawTransforms() {
@@ -6263,7 +6263,7 @@ var wp;
   }
 
   // packages/blocks/build-module/api/raw-handling/paste-handler.mjs
-  var import_dom11 = __toESM(require_dom(), 1);
+  var import_dom12 = __toESM(require_dom(), 1);
 
   // packages/blocks/build-module/api/raw-handling/comment-remover.mjs
   var import_dom7 = __toESM(require_dom(), 1);
@@ -7825,6 +7825,35 @@ ${p3}`
     }
   }
 
+  // packages/blocks/build-module/api/raw-handling/format-space-corrector.mjs
+  var import_dom11 = __toESM(require_dom(), 1);
+  function moveEdgeSpace(node, doc, isLeading) {
+    const child = isLeading ? node.firstChild : node.lastChild;
+    if (!child || child.nodeType !== node.TEXT_NODE) {
+      return;
+    }
+    const text2 = child;
+    const edgeIndex = isLeading ? 0 : text2.data.length - 1;
+    if (text2.data[edgeIndex] !== " ") {
+      return;
+    }
+    text2.data = isLeading ? text2.data.slice(1) : text2.data.slice(0, -1);
+    if (!text2.data) {
+      node.removeChild(text2);
+    }
+    node.parentNode.insertBefore(
+      doc.createTextNode(" "),
+      isLeading ? node : node.nextSibling
+    );
+  }
+  function formatSpaceCorrector(node, doc) {
+    if (node.nodeType !== node.ELEMENT_NODE || !(0, import_dom11.isPhrasingContent)(node)) {
+      return;
+    }
+    moveEdgeSpace(node, doc, true);
+    moveEdgeSpace(node, doc, false);
+  }
+
   // packages/blocks/build-module/api/raw-handling/br-remover.mjs
   function brRemover(node) {
     if (node.nodeName !== "BR") {
@@ -7928,12 +7957,16 @@ ${p3}`
       phrasingContentReducer,
       commentRemover
     ]);
-    HTML = (0, import_dom11.removeInvalidHTML)(
+    HTML = (0, import_dom12.removeInvalidHTML)(
       HTML,
-      (0, import_dom11.getPhrasingContentSchema)("paste"),
+      (0, import_dom12.getPhrasingContentSchema)("paste"),
       true
     );
-    HTML = deepFilterHTML(HTML, [htmlFormattingRemover, brRemover]);
+    HTML = deepFilterHTML(HTML, [
+      htmlFormattingRemover,
+      formatSpaceCorrector,
+      brRemover
+    ]);
     log("Processed inline HTML:\n\n", HTML);
     return HTML;
   }
@@ -7989,7 +8022,7 @@ ${p3}`
     if (mode === "AUTO" && !hasShortcodes && isInlineContent(HTML, tagName)) {
       return filterInlineHTML(HTML);
     }
-    const phrasingContentSchema = (0, import_dom11.getPhrasingContentSchema)("paste");
+    const phrasingContentSchema = (0, import_dom12.getPhrasingContentSchema)("paste");
     const blockContentSchema = getBlockContentSchema("paste");
     const blocks = pieces.map((piece) => {
       if (typeof piece !== "string") {
@@ -8016,11 +8049,16 @@ ${p3}`
         ...phrasingContentSchema
       };
       piece = deepFilterHTML(piece, filters, blockContentSchema);
-      piece = (0, import_dom11.removeInvalidHTML)(piece, schema, false);
+      piece = (0, import_dom12.removeInvalidHTML)(piece, schema, false);
       piece = normaliseBlocks(piece);
       piece = deepFilterHTML(
         piece,
-        [htmlFormattingRemover, brRemover, emptyParagraphRemover],
+        [
+          htmlFormattingRemover,
+          formatSpaceCorrector,
+          brRemover,
+          emptyParagraphRemover
+        ],
         blockContentSchema
       );
       log("Processed HTML piece:\n\n", piece);
@@ -8030,7 +8068,7 @@ ${p3}`
       const trimRegex = /^[\n]+|[\n]+$/g;
       const trimmedPlainText = plainText.replace(trimRegex, "");
       if (trimmedPlainText !== "" && trimmedPlainText.indexOf("\n") === -1) {
-        return (0, import_dom11.removeInvalidHTML)(
+        return (0, import_dom12.removeInvalidHTML)(
           getBlockInnerHTML(blocks[0]),
           phrasingContentSchema,
           false
@@ -8046,7 +8084,7 @@ ${p3}`
       since: "5.6",
       alternative: "wp.dom.getPhrasingContentSchema"
     });
-    return (0, import_dom12.getPhrasingContentSchema)(context);
+    return (0, import_dom13.getPhrasingContentSchema)(context);
   }
   function rawHandler({ HTML = "" }) {
     if (HTML.indexOf("<!-- wp:") !== -1) {
