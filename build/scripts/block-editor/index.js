@@ -89314,12 +89314,13 @@ var wp;
   var SLOT_TAG_NAME = "wp-inner-block-slot";
   var LAYOUT = { type: "default", alignments: [] };
   function InnerContent({ clientId }) {
-    const { innerContent, order } = (0, import_data200.useSelect)(
+    const { innerContent, order, selectedClientIds } = (0, import_data200.useSelect)(
       (select3) => {
-        const { getBlock: getBlock2, getBlockOrder: getBlockOrder2 } = select3(store);
+        const { getBlock: getBlock2, getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = select3(store);
         return {
           innerContent: getBlock2(clientId)?.innerContent,
-          order: getBlockOrder2(clientId)
+          order: getBlockOrder2(clientId),
+          selectedClientIds: getSelectedBlockClientIds2()
         };
       },
       [clientId]
@@ -89352,11 +89353,20 @@ var wp;
       ),
       order.map(
         (childClientId, index2) => slots[index2] ? (0, import_element315.createPortal)(
+          // Render the selected block synchronously, as the block list does.
           /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-            block_default2,
+            import_data200.AsyncModeProvider,
             {
-              rootClientId: clientId,
-              clientId: childClientId
+              value: !selectedClientIds.includes(
+                childClientId
+              ),
+              children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                block_default2,
+                {
+                  rootClientId: clientId,
+                  clientId: childClientId
+                }
+              )
             }
           ),
           slots[index2],
