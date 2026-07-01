@@ -450,7 +450,7 @@ body.js.block-editor-page .media-frame select.attachment-filters:last-of-type {
 }
 @media (min-width: 782px) {
   body.js.block-editor-page.is-fullscreen-mode:has(.editor-editor-interface.is-distraction-free) {
-    --wp-admin--admin-bar--height: 0;
+    --wp-admin--admin-bar--height: 0px;
   }
   body.js.block-editor-page.is-fullscreen-mode:has(.editor-editor-interface.is-distraction-free) #wpadminbar {
     display: none;
@@ -487,7 +487,7 @@ body.js.block-editor-page .media-frame select.attachment-filters:last-of-type {
 }
 @media (min-width: 782px) {
   .block-editor__container {
-    min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0));
+    min-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px));
   }
 }
 .block-editor__container img {

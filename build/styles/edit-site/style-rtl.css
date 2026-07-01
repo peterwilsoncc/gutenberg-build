@@ -4764,7 +4764,7 @@ button.font-library__upload-area {
 }
 .edit-site-layout.is-full-canvas .edit-site-layout__sidebar-region {
   position: fixed !important;
-  height: calc(100vh - var(--wp-admin--admin-bar--height, 0));
+  height: calc(100vh - var(--wp-admin--admin-bar--height, 0px));
   right: 0;
   top: var(--wp-admin--admin-bar--height, 0);
 }
@@ -5647,7 +5647,7 @@ body.js.site-editor-php {
 }
 @media (min-width: 782px) {
   body.js.site-editor-php:has(.editor-editor-interface.is-distraction-free) {
-    --wp-admin--admin-bar--height: 0;
+    --wp-admin--admin-bar--height: 0px;
   }
   body.js.site-editor-php:has(.editor-editor-interface.is-distraction-free) #wpadminbar {
     display: none;
@@ -5670,7 +5670,7 @@ body.js.site-editor-php {
   .edit-site {
     bottom: 0;
     right: 0;
-    height: calc(100vh - var(--wp-admin--admin-bar--height, 0));
+    height: calc(100vh - var(--wp-admin--admin-bar--height, 0px));
     padding-top: 0;
     position: fixed;
     left: 0;
