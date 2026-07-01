@@ -61200,7 +61200,6 @@ ${js}
     const isResizable = !isWideAligned && isLargeViewport;
     const [{ naturalWidth, naturalHeight }, setNaturalSize] = (0, import_element119.useState)({});
     const [isEditingImage, setIsEditingImage] = (0, import_element119.useState)(false);
-    const cropButtonRef = useRef();
     const { toggleSelection, __unstableMarkNextChangeAsNotPersistent } = (0, import_data132.useDispatch)(import_block_editor237.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor237.useBlockEditingMode)();
