@@ -28664,7 +28664,8 @@ ${js}
                           onChange: setEditedHtml,
                           placeholder: (0, import_i18n86.__)("Write HTML\u2026"),
                           "aria-label": (0, import_i18n86.__)("HTML"),
-                          className: "block-library-html__modal-editor"
+                          className: "block-library-html__modal-editor",
+                          async: true
                         }
                       )
                     }
@@ -28682,7 +28683,8 @@ ${js}
                           onChange: setEditedCss,
                           placeholder: (0, import_i18n86.__)("Write CSS\u2026"),
                           "aria-label": (0, import_i18n86.__)("CSS"),
-                          className: "block-library-html__modal-editor"
+                          className: "block-library-html__modal-editor",
+                          async: true
                         }
                       )
                     }
@@ -28702,7 +28704,8 @@ ${js}
                             "Write JavaScript\u2026"
                           ),
                           "aria-label": (0, import_i18n86.__)("JavaScript"),
-                          className: "block-library-html__modal-editor"
+                          className: "block-library-html__modal-editor",
+                          async: true
                         }
                       )
                     }
