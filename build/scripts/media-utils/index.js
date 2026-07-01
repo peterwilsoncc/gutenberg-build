@@ -27308,6 +27308,12 @@ If there's a particular need for this, please submit a feature request at https:
     page: 1,
     search: ""
   };
+  function getSelectionFromValue(value) {
+    if (!value) {
+      return [];
+    }
+    return Array.isArray(value) ? value.map(String) : [String(value)];
+  }
   var defaultView = {
     type: LAYOUT_PICKER_GRID2,
     fields: [],
@@ -27355,12 +27361,9 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = (0, import_i18n67.__)("Search media")
   }) {
-    const [selection, setSelection] = (0, import_element83.useState)(() => {
-      if (!value) {
-        return [];
-      }
-      return Array.isArray(value) ? value.map(String) : [String(value)];
-    });
+    const [selection, setSelection] = (0, import_element83.useState)(
+      () => getSelectionFromValue(value)
+    );
     const { createSuccessNotice, removeAllNotices } = (0, import_data13.useDispatch)(import_notices.store);
     const invalidateAttachmentResolutions = useInvalidateAttachmentResolutions();
     const [queryParams, setQueryParams] = (0, import_element83.useState)(
@@ -27548,8 +27551,14 @@ If there's a particular need for this, please submit a feature request at https:
       removeAllNotices("snackbar", NOTICES_CONTEXT);
       onClose?.();
     }, [removeAllNotices, onClose]);
+    const valueRef = (0, import_element83.useRef)(value);
     (0, import_element83.useEffect)(() => {
-      if (!isOpen) {
+      valueRef.current = value;
+    }, [value]);
+    (0, import_element83.useEffect)(() => {
+      if (isOpen) {
+        setSelection(getSelectionFromValue(valueRef.current));
+      } else {
         setQueryParams(defaultQueryParams);
       }
     }, [isOpen]);
