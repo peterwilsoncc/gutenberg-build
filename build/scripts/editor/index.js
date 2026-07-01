@@ -44525,7 +44525,7 @@ If there's a particular need for this, please submit a feature request at https:
       area
     };
   };
-  var enableComplementaryArea = (scope, area) => ({ registry, dispatch: dispatch7 }) => {
+  var enableComplementaryArea = (scope, area) => ({ registry, dispatch: dispatch8 }) => {
     if (!area) {
       return;
     }
@@ -44535,7 +44535,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isComplementaryAreaVisible) {
       registry.dispatch(import_preferences3.store).set(scope, "isComplementaryAreaVisible", true);
     }
-    dispatch7({
+    dispatch8({
       type: "ENABLE_COMPLEMENTARY_AREA",
       scope,
       area
@@ -48790,18 +48790,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
   function useViewportState() {
-    const [viewport, dispatch7] = (0, import_element148.useReducer)(
+    const [viewport, dispatch8] = (0, import_element148.useReducer)(
       viewportReducer,
       DEFAULT_VIEWPORT_STATE
     );
     const setViewportZoom = (0, import_element148.useCallback)((zoom) => {
-      dispatch7({ type: "SET_VIEWPORT_ZOOM", payload: zoom });
+      dispatch8({ type: "SET_VIEWPORT_ZOOM", payload: zoom });
     }, []);
     const setViewportPan = (0, import_element148.useCallback)((pan) => {
-      dispatch7({ type: "SET_VIEWPORT_PAN", payload: pan });
+      dispatch8({ type: "SET_VIEWPORT_PAN", payload: pan });
     }, []);
     const resetViewport = (0, import_element148.useCallback)(() => {
-      dispatch7({ type: "RESET_VIEWPORT" });
+      dispatch8({ type: "RESET_VIEWPORT" });
     }, []);
     return (0, import_element148.useMemo)(
       () => ({ viewport, setViewportZoom, setViewportPan, resetViewport }),
@@ -49610,7 +49610,7 @@ If there's a particular need for this, please submit a feature request at https:
     return a3?.src === b3?.src && a3?.naturalWidth === b3?.naturalWidth && a3?.naturalHeight === b3?.naturalHeight;
   }
   function useMediaEditorState(initialState) {
-    const [state2, dispatch7] = (0, import_element151.useReducer)(
+    const [state2, dispatch8] = (0, import_element151.useReducer)(
       mediaEditorReducer,
       null,
       () => buildInitialMediaEditorState(
@@ -49656,7 +49656,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
         stateRef.current = postState;
-        dispatch7(action);
+        dispatch8(action);
       },
       [pushSnapshot]
     );
@@ -49698,7 +49698,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
       const next = mediaEditorReducer(stateRef.current, action);
       stateRef.current = next;
-      dispatch7(action);
+      dispatch8(action);
       setInitialBaseline(next);
       isGestureOpenRef.current = false;
       gestureSnapshotRef.current = null;
@@ -49747,7 +49747,7 @@ If there's a particular need for this, please submit a feature request at https:
       setHasUndo(historyRef.current.length > 0);
       setHasRedo(true);
       stateRef.current = prev;
-      dispatch7({ type: "RESTORE_SNAPSHOT", payload: prev });
+      dispatch8({ type: "RESTORE_SNAPSHOT", payload: prev });
     }, [endGesture]);
     const redo2 = (0, import_element151.useCallback)(() => {
       endGesture();
@@ -49760,7 +49760,7 @@ If there's a particular need for this, please submit a feature request at https:
       setHasUndo(true);
       setHasRedo(redoStackRef.current.length > 0);
       stateRef.current = next;
-      dispatch7({ type: "RESTORE_SNAPSHOT", payload: next });
+      dispatch8({ type: "RESTORE_SNAPSHOT", payload: next });
     }, [endGesture]);
     const setVisualSize = (0, import_element151.useCallback)((size4) => {
       visualSizeRef.current = size4;
@@ -51688,14 +51688,15 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return _caption.replace(/\s{2}/g, " ");
   };
+  var getCoreMediaQuery = (query = {}) => ({
+    ...query,
+    orderBy: !!query?.search ? "relevance" : "date"
+  });
   var coreMediaFetch = async (query = {}) => {
     const mediaItems = await (0, import_data46.resolveSelect)(import_core_data30.store).getEntityRecords(
       "postType",
       "attachment",
-      {
-        ...query,
-        orderBy: !!query?.search ? "relevance" : "date"
-      }
+      getCoreMediaQuery(query)
     );
     return mediaItems.map((mediaItem) => ({
       ...mediaItem,
@@ -51705,6 +51706,82 @@ If there's a particular need for this, please submit a feature request at https:
       caption: mediaItem.caption?.raw
     }));
   };
+  var getAttachedImagesQuery = (postId2, query = {}) => ({
+    ...query,
+    media_type: "image",
+    parent: postId2
+  });
+  var normalizePostId = (postId2) => {
+    const parsedPostId = typeof postId2 === "number" ? postId2 : Number(postId2);
+    return Number.isInteger(parsedPostId) && parsedPostId > 0 ? parsedPostId : void 0;
+  };
+  var saveAttachmentParent = (attachmentId, postId2) => (
+    // `throwOnError` so a failed REST write rejects (rather than being silently
+    // swallowed), letting the attach/detach handlers surface an error notice
+    // instead of a false success.
+    (0, import_data46.dispatch)(import_core_data30.store).saveEntityRecord(
+      "postType",
+      "attachment",
+      {
+        id: attachmentId,
+        post: postId2
+      },
+      { throwOnError: true }
+    )
+  );
+  var getMediaItemType = (mediaItem) => mediaItem?.media_type || mediaItem?.mime_type?.split("/")[0] || mediaItem?.type;
+  var getImageAttachmentIds = (mediaItems) => [
+    ...new Set(
+      (Array.isArray(mediaItems) ? mediaItems : [mediaItems]).filter(
+        (mediaItem) => getMediaItemType(mediaItem) === "image"
+      ).map((mediaItem) => mediaItem?.id).filter(Boolean)
+    )
+  ];
+  var invalidateAttachedImagesQueries = (postId2, query = {}) => {
+    const { invalidateResolution } = (0, import_data46.dispatch)(import_core_data30.store);
+    invalidateResolution("getEntityRecords", [
+      "postType",
+      "attachment",
+      getCoreMediaQuery(getAttachedImagesQuery(postId2, query))
+    ]);
+  };
+  var getAttachedImagesCategory = (postId2, typeLabel) => ({
+    name: "attached-images",
+    labels: {
+      name: (0, import_i18n142.__)("Attached images"),
+      search_items: (0, import_i18n142.__)("Search attachments")
+    },
+    mediaType: "image",
+    // The post type's singular label (e.g. "Page"), threaded through so the
+    // shared panel can word its attach/detach copy for the current post type.
+    postTypeLabel: typeLabel,
+    // Empty-state message. Providing this also keeps the source in the tab list
+    // when it has no items, so it stays discoverable and the first image can be
+    // attached even with none yet.
+    emptyMessage: typeLabel ? (0, import_i18n142.sprintf)(
+      // translators: %s: Name of the post type e.g: "Page".
+      (0, import_i18n142.__)("No images attached to this %s."),
+      typeLabel
+    ) : (0, import_i18n142.__)("No images attached to this post."),
+    async fetch(query = {}) {
+      return coreMediaFetch(getAttachedImagesQuery(postId2, query));
+    },
+    async attach(mediaItems) {
+      const attachmentIds = getImageAttachmentIds(mediaItems);
+      await Promise.all(
+        attachmentIds.map(
+          (attachmentId) => saveAttachmentParent(attachmentId, postId2)
+        )
+      );
+      return attachmentIds.length;
+    },
+    async detach(mediaItem) {
+      await saveAttachmentParent(mediaItem.id, 0);
+    },
+    invalidate(query = {}) {
+      invalidateAttachedImagesQueries(postId2, query);
+    }
+  });
   var inserterMediaCategories = [
     {
       name: "images",
@@ -51784,7 +51861,16 @@ If there's a particular need for this, please submit a feature request at https:
       isExternalResource: true
     }
   ];
-  var media_categories_default = inserterMediaCategories;
+  function getInserterMediaCategories(postId2, viewablePostTypeLabel) {
+    const currentPostId = normalizePostId(postId2);
+    if (!currentPostId || !viewablePostTypeLabel) {
+      return inserterMediaCategories;
+    }
+    return [
+      getAttachedImagesCategory(currentPostId, viewablePostTypeLabel),
+      ...inserterMediaCategories
+    ];
+  }
 
   // packages/editor/build-module/utils/media-upload/on-success.mjs
   var import_data47 = __toESM(require_data(), 1);
@@ -72232,17 +72318,21 @@ If there's a particular need for this, please submit a feature request at https:
       sectionRootClientId,
       deviceType,
       isNavigationOverlayContext,
-      isRevisionsMode: isRevisionsMode2
+      isRevisionsMode: isRevisionsMode2,
+      viewablePostTypeLabel,
+      currentPostId
     } = (0, import_data64.useSelect)(
       (select7) => {
         const {
           canUser,
           getRawEntityRecord,
           getEntityRecord,
-          getBlockPatternCategories
+          getBlockPatternCategories,
+          getPostType
         } = select7(import_core_data45.store);
         const { get } = select7(import_preferences6.store);
         const { getBlockTypes: getBlockTypes6 } = select7(import_blocks12.store);
+        const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select7(store);
         const { getDeviceType: getDeviceType2, isRevisionsMode: _isRevisionsMode } = unlock(
           select7(store)
         );
@@ -72252,6 +72342,8 @@ If there's a particular need for this, please submit a feature request at https:
           name: "site"
         }) ? getEntityRecord("root", "site") : void 0;
         const baseData = getEntityRecord("root", "__unstableBase");
+        const currentPostType = getCurrentPostType2();
+        const postTypeObject = currentPostType ? getPostType(currentPostType) : void 0;
         function getSectionRootBlock() {
           if (renderingMode2 === "template-locked") {
             return getBlocksByName("core/post-content")?.[0] ?? "";
@@ -72288,6 +72380,12 @@ If there's a particular need for this, please submit a feature request at https:
           }),
           pageOnFront: siteSettings?.page_on_front,
           pageForPosts: siteSettings?.page_for_posts,
+          // The post type's singular name, but only for real, front-end
+          // rendered content (`viewable`). Empty for synced patterns,
+          // navigation and templates, which gates the attached-images
+          // category off for them and words its copy for everything else.
+          viewablePostTypeLabel: postTypeObject?.viewable ? postTypeObject?.labels?.singular_name : void 0,
+          currentPostId: getCurrentPostId2(),
           restBlockPatternCategories: getBlockPatternCategories(),
           sectionRootClientId: getSectionRootBlock(),
           deviceType: getDeviceType2(),
@@ -72352,6 +72450,10 @@ If there's a particular need for this, please submit a feature request at https:
       return settings.allowedBlockTypes;
     }, [settings.allowedBlockTypes, hiddenBlockTypes, blockTypes]);
     const forceDisableFocusMode = settings.focusMode === false;
+    const inserterMediaCategories2 = (0, import_element196.useMemo)(
+      () => getInserterMediaCategories(currentPostId, viewablePostTypeLabel),
+      [currentPostId, viewablePostTypeLabel]
+    );
     return (0, import_element196.useMemo)(() => {
       const blockEditorSettings = {
         ...Object.fromEntries(
@@ -72393,7 +72495,7 @@ If there's a particular need for this, please submit a feature request at https:
         [userPatternCategoriesSelectKey]: __experimentalUserPatternCategoriesSelect,
         __experimentalBlockPatternCategories: blockPatternCategories,
         __experimentalFetchLinkSuggestions: (search, searchOptions) => (0, import_core_data45.__experimentalFetchLinkSuggestions)(search, searchOptions, settings),
-        inserterMediaCategories: media_categories_default,
+        inserterMediaCategories: inserterMediaCategories2,
         __experimentalFetchRichUrlData: import_core_data45.__experimentalFetchUrlData,
         // Todo: This only checks the top level post, not the post within a template or any other entity that can be edited.
         // This might be better as a generic "canUser" selector.
@@ -72445,6 +72547,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasUploadPermissions,
       blockPatterns,
       blockPatternCategories,
+      inserterMediaCategories2,
       canUseUnfilteredHTML,
       undo2,
       createPageEntity,
@@ -76027,7 +76130,7 @@ If there's a particular need for this, please submit a feature request at https:
       id
     };
   }
-  var createTemplate = (template2) => async ({ select: select7, dispatch: dispatch7, registry }) => {
+  var createTemplate = (template2) => async ({ select: select7, dispatch: dispatch8, registry }) => {
     const savedTemplate = await registry.dispatch(import_core_data56.store).saveEntityRecord("postType", "wp_template", template2);
     registry.dispatch(import_core_data56.store).editEntityRecord(
       "postType",
@@ -76044,7 +76147,7 @@ If there's a particular need for this, please submit a feature request at https:
         actions: [
           {
             label: (0, import_i18n203.__)("Go back"),
-            onClick: () => dispatch7.setRenderingMode(
+            onClick: () => dispatch8.setRenderingMode(
               select7.getEditorSettings().defaultRenderingMode
             )
           }
@@ -76367,8 +76470,8 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function setCanvasWidth(width) {
-    return ({ dispatch: dispatch7, registry }) => {
-      dispatch7({
+    return ({ dispatch: dispatch8, registry }) => {
+      dispatch8({
         type: "SET_CANVAS_WIDTH",
         width
       });
@@ -76388,7 +76491,7 @@ If there's a particular need for this, please submit a feature request at https:
       revisionId: revisionId2
     };
   }
-  var setRevisionPage = (page) => async ({ dispatch: dispatch7, select: select7, registry }) => {
+  var setRevisionPage = (page) => async ({ dispatch: dispatch8, select: select7, registry }) => {
     const postType2 = select7.getCurrentPostType();
     const postId2 = select7.getCurrentPostId();
     const entityConfig = registry.select(import_core_data56.store).getEntityConfig("postType", postType2);
@@ -76400,9 +76503,9 @@ If there's a particular need for this, please submit a feature request at https:
       buildRevisionsPageQuery(revisionKey, page)
     );
     registry.batch(() => {
-      dispatch7({ type: "SET_REVISION_PAGE", page });
+      dispatch8({ type: "SET_REVISION_PAGE", page });
       if (revisions?.length) {
-        dispatch7.setCurrentRevisionId(revisions[0][revisionKey]);
+        dispatch8.setCurrentRevisionId(revisions[0][revisionKey]);
       }
     });
   };
@@ -76412,7 +76515,7 @@ If there's a particular need for this, please submit a feature request at https:
       showDiff
     };
   }
-  var restoreRevision = (revisionId2) => async ({ select: select7, dispatch: dispatch7, registry }) => {
+  var restoreRevision = (revisionId2) => async ({ select: select7, dispatch: dispatch8, registry }) => {
     const postType2 = select7.getCurrentPostType();
     const postId2 = select7.getCurrentPostId();
     const entityConfig = registry.select(import_core_data56.store).getEntityConfig("postType", postType2);
@@ -76449,9 +76552,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (revision.meta !== void 0) {
       edits.meta = revision.meta;
     }
-    dispatch7.editPost(edits);
-    dispatch7.setCurrentRevisionId(null);
-    await dispatch7.savePost();
+    dispatch8.editPost(edits);
+    dispatch8.setCurrentRevisionId(null);
+    await dispatch8.savePost();
     registry.dispatch(import_notices19.store).createSuccessNotice(
       (0, import_i18n203.sprintf)(
         /* translators: %s: Date and time of the revision. */
@@ -76473,8 +76576,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/store/actions.mjs
-  var setupEditor = (post2, edits, template2) => ({ dispatch: dispatch7 }) => {
-    dispatch7.setEditedPost(post2.type, post2.id);
+  var setupEditor = (post2, edits, template2) => ({ dispatch: dispatch8 }) => {
+    dispatch8.setEditedPost(post2.type, post2.id);
     const isNewPost = post2.status === "auto-draft";
     if (isNewPost && template2) {
       let content;
@@ -76485,14 +76588,14 @@ If there's a particular need for this, please submit a feature request at https:
       }
       let blocks = (0, import_blocks20.parse)(content);
       blocks = (0, import_blocks20.synchronizeBlocksWithTemplate)(blocks, template2);
-      dispatch7.resetEditorBlocks(blocks, {
+      dispatch8.resetEditorBlocks(blocks, {
         __unstableShouldCreateUndoLevel: false
       });
     }
     if (edits && Object.entries(edits).some(
       ([key, edit]) => edit !== (post2[key]?.raw ?? post2[key])
     )) {
-      dispatch7.editPost(edits);
+      dispatch8.editPost(edits);
     }
   };
   function __experimentalTearDownEditor() {
@@ -76539,12 +76642,12 @@ If there's a particular need for this, please submit a feature request at https:
     const { id, type } = select7.getCurrentPost();
     registry.dispatch(import_core_data57.store).editEntityRecord("postType", type, id, edits, options);
   };
-  var savePost = (options = {}) => async ({ select: select7, dispatch: dispatch7, registry }) => {
+  var savePost = (options = {}) => async ({ select: select7, dispatch: dispatch8, registry }) => {
     if (!select7.isEditedPostSaveable()) {
       return;
     }
     const content = select7.getEditedPostContent();
-    dispatch7.editPost({ content }, { undoIgnore: true });
+    dispatch8.editPost({ content }, { undoIgnore: true });
     const previousRecord = select7.getCurrentPost();
     let edits = {
       id: previousRecord.id,
@@ -76555,7 +76658,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       content
     };
-    dispatch7({ type: "REQUEST_POST_UPDATE_START", options });
+    dispatch8({ type: "REQUEST_POST_UPDATE_START", options });
     let error2 = false;
     try {
       edits = await (0, import_hooks39.applyFiltersAsync)(
@@ -76607,9 +76710,9 @@ If there's a particular need for this, please submit a feature request at https:
         error2 = err;
       }
     }
-    dispatch7({ type: "REQUEST_POST_UPDATE_FINISH", options });
+    dispatch8({ type: "REQUEST_POST_UPDATE_FINISH", options });
     if (typeof window !== "undefined" && window.__experimentalTemplateActivate && !options.isAutosave && previousRecord.type === "wp_template" && (typeof previousRecord.id === "number" || /^\d+$/.test(previousRecord.id))) {
-      templateActivationNotice({ select: select7, dispatch: dispatch7, registry });
+      templateActivationNotice({ select: select7, dispatch: dispatch8, registry });
     }
     if (error2) {
       const args = getNotificationArgumentsForSaveFail({
@@ -76706,26 +76809,26 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return { type: "DO_NOTHING" };
   }
-  var trashPost2 = () => async ({ select: select7, dispatch: dispatch7, registry }) => {
+  var trashPost2 = () => async ({ select: select7, dispatch: dispatch8, registry }) => {
     const postTypeSlug = select7.getCurrentPostType();
     const postType2 = await registry.resolveSelect(import_core_data57.store).getPostType(postTypeSlug);
     const { rest_base: restBase, rest_namespace: restNamespace = "wp/v2" } = postType2;
-    dispatch7({ type: "REQUEST_POST_DELETE_START" });
+    dispatch8({ type: "REQUEST_POST_DELETE_START" });
     try {
       const post2 = select7.getCurrentPost();
       await (0, import_api_fetch7.default)({
         path: `/${restNamespace}/${restBase}/${post2.id}`,
         method: "DELETE"
       });
-      await dispatch7.savePost();
+      await dispatch8.savePost();
     } catch (error2) {
       registry.dispatch(import_notices20.store).createErrorNotice(
         ...getNotificationArgumentsForTrashFail({ error: error2 })
       );
     }
-    dispatch7({ type: "REQUEST_POST_DELETE_FINISH" });
+    dispatch8({ type: "REQUEST_POST_DELETE_FINISH" });
   };
-  var autosave = ({ local = false, ...options } = {}) => async ({ select: select7, dispatch: dispatch7 }) => {
+  var autosave = ({ local = false, ...options } = {}) => async ({ select: select7, dispatch: dispatch8 }) => {
     const post2 = select7.getCurrentPost();
     if (local) {
       const isPostNew = select7.isEditedPostNew();
@@ -76734,18 +76837,18 @@ If there's a particular need for this, please submit a feature request at https:
       const excerpt = select7.getEditedPostAttribute("excerpt");
       localAutosaveSet(post2.id, isPostNew, title, content, excerpt);
     } else {
-      await dispatch7.savePost({ isAutosave: true, ...options });
+      await dispatch8.savePost({ isAutosave: true, ...options });
     }
   };
-  var __unstableSaveForPreview = ({ forceIsAutosaveable } = {}) => async ({ select: select7, dispatch: dispatch7 }) => {
+  var __unstableSaveForPreview = ({ forceIsAutosaveable } = {}) => async ({ select: select7, dispatch: dispatch8 }) => {
     if ((forceIsAutosaveable || select7.isEditedPostAutosaveable()) && !select7.isPostLocked()) {
       const isDraft = ["draft", "auto-draft"].includes(
         select7.getEditedPostAttribute("status")
       );
       if (isDraft) {
-        await dispatch7.savePost({ isPreview: true });
+        await dispatch8.savePost({ isPreview: true });
       } else {
-        await dispatch7.autosave({ isPreview: true });
+        await dispatch8.autosave({ isPreview: true });
       }
     }
     return select7.getEditedPostPreviewLink();
@@ -76800,7 +76903,7 @@ If there's a particular need for this, please submit a feature request at https:
       lockName
     };
   }
-  var resetEditorBlocks = (blocks, options = {}) => ({ select: select7, dispatch: dispatch7, registry }) => {
+  var resetEditorBlocks = (blocks, options = {}) => ({ select: select7, dispatch: dispatch8, registry }) => {
     const { __unstableShouldCreateUndoLevel, selection } = options;
     const edits = { blocks, selection };
     if (__unstableShouldCreateUndoLevel !== false) {
@@ -76812,7 +76915,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       edits.content = ({ blocks: blocksForSerialization = [] }) => (0, import_blocks20.__unstableSerializeAndClean)(blocksForSerialization);
     }
-    dispatch7.editPost(edits);
+    dispatch8.editPost(edits);
   };
   function updateEditorSettings(settings) {
     return {
@@ -76820,19 +76923,19 @@ If there's a particular need for this, please submit a feature request at https:
       settings
     };
   }
-  var setRenderingMode = (mode) => ({ dispatch: dispatch7, registry, select: select7 }) => {
+  var setRenderingMode = (mode) => ({ dispatch: dispatch8, registry, select: select7 }) => {
     if (select7.__unstableIsEditorReady() && !select7.getEditorSettings().isPreviewMode) {
       registry.dispatch(import_block_editor36.store).clearSelectedBlock();
     }
-    dispatch7({
+    dispatch8({
       type: "SET_RENDERING_MODE",
       mode
     });
   };
   function setDeviceType(deviceType) {
-    return ({ dispatch: dispatch7 }) => {
+    return ({ dispatch: dispatch8 }) => {
       const width = getCanvasWidthByDeviceType(deviceType);
-      dispatch7(setCanvasWidth(width));
+      dispatch8(setCanvasWidth(width));
     };
   }
   var toggleEditorPanelEnabled = (panelName) => ({ registry }) => {
@@ -76867,14 +76970,14 @@ If there's a particular need for this, please submit a feature request at https:
       panelName
     };
   }
-  var setIsInserterOpened = (value) => ({ dispatch: dispatch7, registry }) => {
+  var setIsInserterOpened = (value) => ({ dispatch: dispatch8, registry }) => {
     if (typeof value === "object" && value.hasOwnProperty("rootClientId") && value.hasOwnProperty("insertionIndex")) {
       unlock(registry.dispatch(import_block_editor36.store)).setInsertionPoint({
         rootClientId: value.rootClientId,
         index: value.insertionIndex
       });
     }
-    dispatch7({
+    dispatch8({
       type: "SET_IS_INSERTER_OPENED",
       value
     });
@@ -76885,7 +76988,7 @@ If there's a particular need for this, please submit a feature request at https:
       isOpen: isOpen2
     };
   }
-  var toggleDistractionFree = ({ createNotice = true } = {}) => ({ dispatch: dispatch7, registry }) => {
+  var toggleDistractionFree = ({ createNotice = true } = {}) => ({ dispatch: dispatch8, registry }) => {
     const isDistractionFree = registry.select(import_preferences10.store).get("core", "distractionFree");
     if (isDistractionFree) {
       registry.dispatch(import_preferences10.store).set("core", "fixedToolbar", false);
@@ -76893,8 +76996,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isDistractionFree) {
       registry.batch(() => {
         registry.dispatch(import_preferences10.store).set("core", "fixedToolbar", true);
-        dispatch7.setIsInserterOpened(false);
-        dispatch7.setIsListViewOpened(false);
+        dispatch8.setIsInserterOpened(false);
+        dispatch8.setIsListViewOpened(false);
         unlock(
           registry.dispatch(import_block_editor36.store)
         ).resetZoomLevel();
@@ -76969,7 +77072,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var switchEditorMode = (mode) => ({ dispatch: dispatch7, registry }) => {
+  var switchEditorMode = (mode) => ({ dispatch: dispatch8, registry }) => {
     registry.dispatch(import_preferences10.store).set("core", "editorMode", mode);
     if (mode !== "visual") {
       registry.dispatch(import_block_editor36.store).clearSelectedBlock();
@@ -76980,7 +77083,7 @@ If there's a particular need for this, please submit a feature request at https:
     } else if (mode === "text") {
       const isDistractionFree = registry.select(import_preferences10.store).get("core", "distractionFree");
       if (isDistractionFree) {
-        dispatch7.toggleDistractionFree();
+        dispatch8.toggleDistractionFree();
       }
       (0, import_a11y4.speak)((0, import_i18n204.__)("Code editor selected"), "assertive");
     }
@@ -82858,8 +82961,8 @@ If there's a particular need for this, please submit a feature request at https:
     };
   });
   var applyWithDispatch = (0, import_data138.withDispatch)(
-    (dispatch7, { noticeOperations }, { select: select7 }) => {
-      const { editPost: editPost2 } = dispatch7(store);
+    (dispatch8, { noticeOperations }, { select: select7 }) => {
+      const { editPost: editPost2 } = dispatch8(store);
       return {
         onUpdateImage(image) {
           editPost2({ featured_media: image.id });
@@ -96540,7 +96643,7 @@ If there's a particular need for this, please submit a feature request at https:
     edit: NoteFormatEdit
   };
   function NoteFormatEdit({ value, isActive, activeAttributes }) {
-    const dispatch7 = (0, import_data259.useDispatch)();
+    const dispatch8 = (0, import_data259.useDispatch)();
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data259.useSelect)(store3);
     if (!isActive && (0, import_rich_text6.isCollapsed)(value)) {
       return null;
@@ -96549,13 +96652,13 @@ If there's a particular need for this, please submit a feature request at https:
       const currentArea = getActiveComplementaryArea2("core");
       const targetSidebar = currentArea === ALL_NOTES_SIDEBAR ? ALL_NOTES_SIDEBAR : FLOATING_NOTES_SIDEBAR;
       if (currentArea !== targetSidebar) {
-        dispatch7(store3).enableComplementaryArea(
+        dispatch8(store3).enableComplementaryArea(
           "core",
           targetSidebar
         );
       }
       const id = activeAttributes["data-id"];
-      unlock(dispatch7(store)).selectNote(
+      unlock(dispatch8(store)).selectNote(
         id ? Number(id) : "new",
         { focus: true }
       );
@@ -98574,7 +98677,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return overridesValues;
     },
-    setValues({ select: select7, dispatch: dispatch7, clientId, bindings }) {
+    setValues({ select: select7, dispatch: dispatch8, clientId, bindings }) {
       const { getBlockAttributes: getBlockAttributes2, getBlockParentsByBlockName, getBlocks: getBlocks2 } = select7(import_block_editor109.store);
       const currentBlockAttributes = getBlockAttributes2(clientId);
       const blockName = currentBlockAttributes?.metadata?.name;
@@ -98597,7 +98700,7 @@ If there's a particular need for this, please submit a feature request at https:
         const syncBlocksWithSameName = (blocks) => {
           for (const block of blocks) {
             if (block.attributes?.metadata?.name === blockName) {
-              dispatch7(import_block_editor109.store).updateBlockAttributes(
+              dispatch8(import_block_editor109.store).updateBlockAttributes(
                 block.clientId,
                 attributes
               );
@@ -98609,7 +98712,7 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const currentBindingValue = getBlockAttributes2(patternClientId)?.[CONTENT];
-      dispatch7(import_block_editor109.store).updateBlockAttributes(patternClientId, {
+      dispatch8(import_block_editor109.store).updateBlockAttributes(patternClientId, {
         [CONTENT]: {
           ...currentBindingValue,
           [blockName]: {
@@ -98689,7 +98792,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return newValues;
     },
-    setValues({ dispatch: dispatch7, context, bindings, clientId, select: select7 }) {
+    setValues({ dispatch: dispatch8, context, bindings, clientId, select: select7 }) {
       const { getBlockName: getBlockName2 } = select7(import_block_editor110.store);
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
@@ -98699,7 +98802,7 @@ If there's a particular need for this, please submit a feature request at https:
       Object.values(bindings).forEach(({ args, newValue }) => {
         newData[args.field] = newValue;
       });
-      dispatch7(import_core_data142.store).editEntityRecord(
+      dispatch8(import_core_data142.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -98792,12 +98895,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return newValues;
     },
-    setValues({ dispatch: dispatch7, context, bindings }) {
+    setValues({ dispatch: dispatch8, context, bindings }) {
       const newMeta = {};
       Object.values(bindings).forEach(({ args, newValue }) => {
         newMeta[args.key] = newValue;
       });
-      dispatch7(import_core_data143.store).editEntityRecord(
+      dispatch8(import_core_data143.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -98935,7 +99038,7 @@ If there's a particular need for this, please submit a feature request at https:
       return newValues;
     },
     // eslint-disable-next-line no-unused-vars
-    setValues({ dispatch: dispatch7, context, bindings }) {
+    setValues({ dispatch: dispatch8, context, bindings }) {
       return false;
     },
     canUserEditValue({ select: select7, context }) {
