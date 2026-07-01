@@ -16407,12 +16407,8 @@ var wp;
       const { orientation = "horizontal" } = layout;
       let fallbackGapValue = "0.5em";
       if (globalBlockGapValue) {
-        const processedGlobalGap = getGapCSSValue(
-          globalBlockGapValue,
-          "0.5em"
-        );
-        const gapParts = processedGlobalGap.split(" ");
-        fallbackGapValue = gapParts.length > 1 ? gapParts[1] : gapParts[0];
+        const gapBox = getGapBoxControlValueFromStyle(globalBlockGapValue);
+        fallbackGapValue = getSpacingPresetCssVar(gapBox?.left) || getSpacingPresetCssVar(gapBox?.top) || "0.5em";
       }
       const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue(style?.spacing?.blockGap, fallbackGapValue) : void 0;
       const justifyContent = justifyContentMap[layout.justifyContent];
@@ -17089,9 +17085,8 @@ var wp;
       }
       let fallbackGapValue = "1.2rem";
       if (globalBlockGapValue) {
-        const processedGap = getGapCSSValue(globalBlockGapValue, "0.5em");
-        const gapParts = processedGap.split(" ");
-        fallbackGapValue = gapParts.length > 1 ? gapParts[1] : gapParts[0];
+        const gapBox = getGapBoxControlValueFromStyle(globalBlockGapValue);
+        fallbackGapValue = getSpacingPresetCssVar(gapBox?.left) || getSpacingPresetCssVar(gapBox?.top) || "1.2rem";
       }
       const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue(style?.spacing?.blockGap, fallbackGapValue) : void 0;
       let output = "";
