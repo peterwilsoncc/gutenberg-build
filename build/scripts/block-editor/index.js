@@ -23701,6 +23701,7 @@ var wp;
           const storeBlocks = controlledBlocks.map(
             (block) => cloneBlockWithMapping(block, idMappingRef.current)
           );
+          __unstableMarkNextChangeAsNotPersistent2();
           setHasControlledInnerBlocks2(clientId, true);
           if (subscribedRef.current) {
             pendingChangesRef.current.incoming = storeBlocks;
@@ -23718,12 +23719,13 @@ var wp;
       }
     };
     const unsetControlledBlocks = () => {
-      __unstableMarkNextChangeAsNotPersistent2();
       if (clientId) {
+        __unstableMarkNextChangeAsNotPersistent2();
         setHasControlledInnerBlocks2(clientId, false);
         __unstableMarkNextChangeAsNotPersistent2();
         replaceInnerBlocks2(clientId, []);
       } else {
+        __unstableMarkNextChangeAsNotPersistent2();
         resetBlocks2([]);
       }
     };
@@ -60765,7 +60767,7 @@ var wp;
   function useBlockEditingMode(mode2) {
     const context = useBlockEditContext();
     const { clientId = "" } = context;
-    const { setBlockEditingMode: setBlockEditingMode2, unsetBlockEditingMode: unsetBlockEditingMode2 } = (0, import_data174.useDispatch)(store);
+    const registry = (0, import_data174.useRegistry)();
     const globalBlockEditingMode = (0, import_data174.useSelect)(
       (select3) => (
         // Avoid adding the subscription if not needed!
@@ -60774,15 +60776,21 @@ var wp;
       [clientId]
     );
     (0, import_element217.useEffect)(() => {
-      if (mode2) {
-        setBlockEditingMode2(clientId, mode2);
+      if (!mode2) {
+        return;
       }
+      const {
+        setBlockEditingMode: setBlockEditingMode2,
+        unsetBlockEditingMode: unsetBlockEditingMode2,
+        __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2
+      } = registry.dispatch(store);
+      __unstableMarkNextChangeAsNotPersistent2();
+      setBlockEditingMode2(clientId, mode2);
       return () => {
-        if (mode2) {
-          unsetBlockEditingMode2(clientId);
-        }
+        __unstableMarkNextChangeAsNotPersistent2();
+        unsetBlockEditingMode2(clientId);
       };
-    }, [clientId, mode2, setBlockEditingMode2, unsetBlockEditingMode2]);
+    }, [registry, clientId, mode2]);
     return clientId ? context[blockEditingModeKey] : globalBlockEditingMode;
   }
 

@@ -16447,36 +16447,54 @@ var wp;
     );
     const registry = (0, import_data34.useRegistry)();
     (0, import_element29.useEffect)(() => {
-      const { setBlockEditingMode, unsetBlockEditingMode } = registry.dispatch(import_block_editor8.store);
+      const {
+        setBlockEditingMode,
+        unsetBlockEditingMode,
+        __unstableMarkNextChangeAsNotPersistent
+      } = registry.dispatch(import_block_editor8.store);
+      __unstableMarkNextChangeAsNotPersistent();
       setBlockEditingMode("", "disabled");
       return () => {
+        __unstableMarkNextChangeAsNotPersistent();
         unsetBlockEditingMode("");
       };
     }, [registry]);
     (0, import_element29.useEffect)(() => {
-      const { setBlockEditingMode, unsetBlockEditingMode } = registry.dispatch(import_block_editor8.store);
+      const {
+        setBlockEditingMode,
+        unsetBlockEditingMode,
+        __unstableMarkNextChangeAsNotPersistent
+      } = registry.dispatch(import_block_editor8.store);
       registry.batch(() => {
         for (const clientId of templateParts) {
+          __unstableMarkNextChangeAsNotPersistent();
           setBlockEditingMode(clientId, "contentOnly");
         }
       });
       return () => {
         registry.batch(() => {
           for (const clientId of templateParts) {
+            __unstableMarkNextChangeAsNotPersistent();
             unsetBlockEditingMode(clientId);
           }
         });
       };
     }, [templateParts, registry]);
     (0, import_element29.useEffect)(() => {
-      const { setBlockEditingMode, unsetBlockEditingMode } = registry.dispatch(import_block_editor8.store);
+      const {
+        setBlockEditingMode,
+        unsetBlockEditingMode,
+        __unstableMarkNextChangeAsNotPersistent
+      } = registry.dispatch(import_block_editor8.store);
       const contentOnlySet = new Set(contentOnlyIds);
       registry.batch(() => {
         for (const clientId of contentOnlyIds) {
+          __unstableMarkNextChangeAsNotPersistent();
           setBlockEditingMode(clientId, "contentOnly");
         }
         for (const clientId of templatePartChildren) {
           if (!contentOnlySet.has(clientId)) {
+            __unstableMarkNextChangeAsNotPersistent();
             setBlockEditingMode(clientId, "disabled");
           }
         }
@@ -16484,10 +16502,12 @@ var wp;
       return () => {
         registry.batch(() => {
           for (const clientId of contentOnlyIds) {
+            __unstableMarkNextChangeAsNotPersistent();
             unsetBlockEditingMode(clientId);
           }
           for (const clientId of templatePartChildren) {
             if (!contentOnlySet.has(clientId)) {
+              __unstableMarkNextChangeAsNotPersistent();
               unsetBlockEditingMode(clientId);
             }
           }
@@ -16502,20 +16522,27 @@ var wp;
   var import_data35 = __toESM(require_data(), 1);
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   function NavigationBlockEditingMode() {
+    const registry = (0, import_data35.useRegistry)();
     const blockClientId = (0, import_data35.useSelect)(
       (select6) => select6(import_block_editor9.store).getBlockOrder()?.[0],
       []
     );
-    const { setBlockEditingMode, unsetBlockEditingMode } = (0, import_data35.useDispatch)(import_block_editor9.store);
     (0, import_element30.useEffect)(() => {
       if (!blockClientId) {
         return;
       }
+      const {
+        setBlockEditingMode,
+        unsetBlockEditingMode,
+        __unstableMarkNextChangeAsNotPersistent
+      } = registry.dispatch(import_block_editor9.store);
+      __unstableMarkNextChangeAsNotPersistent();
       setBlockEditingMode(blockClientId, "contentOnly");
       return () => {
+        __unstableMarkNextChangeAsNotPersistent();
         unsetBlockEditingMode(blockClientId);
       };
-    }, [blockClientId, unsetBlockEditingMode, setBlockEditingMode]);
+    }, [registry, blockClientId]);
   }
 
   // packages/editor/build-module/components/provider/use-hide-blocks-from-inserter.mjs
