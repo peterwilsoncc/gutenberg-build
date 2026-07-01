@@ -18747,7 +18747,6 @@ function LocationSettingControl({
 // widgets/events/widget.ts
 var widget_default = {
   name: "core/events",
-  title: (0, import_i18n5.__)("WordPress events"),
   icon: calendar_default,
   attributes: [
     {

@@ -41925,12 +41925,22 @@ function useWidgetTypes(records) {
           if (!module?.default) {
             return null;
           }
+          const metadata = module.default;
           return {
-            ...module.default,
+            ...metadata,
             name: record.name,
             renderModule: record.render_module ?? "",
+            /*
+             * `title` is required:
+             * - Server-side title wins
+             * - Then the module's title
+             * - Then the record's name as fallback
+             */
+            title: record.title ?? metadata.title ?? record.name,
             ...record.presentation ? { presentation: record.presentation } : {},
-            ...record.category ? { category: record.category } : {}
+            ...record.category ? { category: record.category } : {},
+            ...record.description ? { description: record.description } : {},
+            ...record.keywords ? { keywords: record.keywords } : {}
           };
         } catch {
           return null;
