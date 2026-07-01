@@ -42482,10 +42482,8 @@ This message will only show in development mode. It won't appear in production. 
       href,
       children,
       className: className2,
-      rel = "",
       ...additionalProps
     } = props;
-    const optimizedRel = [...new Set([...rel.split(" "), "external", "noopener"].filter(Boolean))].join(" ");
     const classes = clsx_default("components-external-link", className2);
     const isInternalAnchor = !!href?.startsWith("#");
     const onClickHandler = (event) => {
@@ -42504,7 +42502,6 @@ This message will only show in development mode. It won't appear in production. 
         href,
         onClick: onClickHandler,
         target: "_blank",
-        rel: optimizedRel,
         ref,
         children: [/* @__PURE__ */ (0, import_jsx_runtime205.jsx)("span", {
           className: "components-external-link__contents",
